@@ -1,9 +1,15 @@
 import React from 'react';
+import Video from './Video';
 
 export default class App extends React.Component {
 
   render() {
-    return <h1>Hi</h1>;
+    return (
+      <div className="App">
+        <h1>[üµ]wave</h1>
+        <Video />
+      </div>
+    );
   }
 
 }
