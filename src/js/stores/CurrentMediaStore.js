@@ -14,7 +14,7 @@ const CurrentMediaStore = assign(new EventEmitter, {
   dispatchToken: dispatcher.register(payload => {
     switch (payload.action) {
     case 'advance':
-      media = payload.video;
+      media = payload.media;
       CurrentMediaStore.emit('change');
       break;
     default:
