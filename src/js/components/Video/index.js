@@ -3,13 +3,15 @@ import YouTube from 'react-youtube';
 import CurrentMediaStore from '../../stores/CurrentMediaStore';
 import styles from './style.css';
 
-function getMediaState() {
-  return CurrentMediaStore.getMedia();
+function getState() {
+  return {
+    media: CurrentMediaStore.getMedia()
+  };
 }
 
 export default class Video extends React.Component {
 
-  state = getMediaState();
+  state = getState();
 
   constructor() {
     super();
@@ -25,17 +27,18 @@ export default class Video extends React.Component {
   }
 
   _onChange() {
-    this.setState(getMediaState());
+    this.setState(getState());
   }
 
   render() {
+    let { media } = this.state;
     let video = '';
 
-    switch (this.state.source) {
+    switch (media.source) {
       case 'youtube':
         video = (
           <YouTube
-            url={'https://youtube.com/watch?v=' + this.state.id}
+            url={'https://youtube.com/watch?v=' + media.id}
             opts={{
               playerVars: {
                 autoplay: 1,
