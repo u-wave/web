@@ -11,12 +11,12 @@ function getState() {
 
 export default class Video extends React.Component {
 
-  state = getState();
-
   constructor() {
     super();
     this._onChange = this._onChange.bind(this);
   }
+
+  state = getState();
 
   componentDidMount() {
     CurrentMediaStore.on('change', this._onChange);
@@ -31,25 +31,28 @@ export default class Video extends React.Component {
   }
 
   render() {
-    let { media } = this.state;
+    const { media } = this.state;
     let video = '';
 
     switch (media.source) {
-      case 'youtube':
-        video = (
-          <YouTube
-            url={'https://youtube.com/watch?v=' + media.id}
-            opts={{
-              playerVars: {
-                autoplay: 1,
-                controls: 0,
-                rel: 0,
-                showinfo: 0,
-                start: 0
-              }
-            }}
-          />
-        );
+    case 'youtube':
+      video = (
+        <YouTube
+          url={'https://youtube.com/watch?v=' + media.id}
+          opts={{
+            playerVars: {
+              autoplay: 1,
+              controls: 0,
+              rel: 0,
+              showinfo: 0,
+              start: 0
+            }
+          }}
+        />
+      );
+      break;
+    default:
+      // empty
     }
 
     return (
