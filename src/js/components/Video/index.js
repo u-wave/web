@@ -39,6 +39,8 @@ export default class Video extends React.Component {
               playerVars: {
                 autoplay: 1,
                 controls: 0,
+                rel: 0,
+                showinfo: 0,
                 start: 0
               }
             }}
