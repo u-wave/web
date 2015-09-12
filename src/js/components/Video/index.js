@@ -1,6 +1,7 @@
 import React from 'react';
 import YouTube from 'react-youtube';
 import CurrentMediaStore from '../../stores/CurrentMediaStore';
+import styles from './style.css';
 
 function getMediaState() {
   return CurrentMediaStore.getMedia();
@@ -49,7 +50,7 @@ export default class Video extends React.Component {
     }
 
     return (
-      <div className="Embed">
+      <div className={styles.video}>
         {video}
       </div>
     );
