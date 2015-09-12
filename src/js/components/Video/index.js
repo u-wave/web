@@ -61,6 +61,8 @@ export default class Video extends React.Component {
           ref="youtube"
           url={'https://youtube.com/watch?v=' + media.id}
           opts={{
+            width: '100%',
+            height: '100%',
             playerVars: {
               autoplay: 1,
               controls: 0,

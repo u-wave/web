@@ -1,3 +1,4 @@
 .video {
   pointer-events: none;
+  height: 100%;
 }
