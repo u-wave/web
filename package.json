@@ -1,0 +1,19 @@
+{
+  "name": "u-wave-web",
+  "version": "0.0.0",
+  "description": "Web client for [üµ]wave servers.",
+  "author": "René Kooi <rene@kooi.me>",
+  "license": "MIT",
+  "repository": "u-wave/u-wave-web",
+  "dependencies": {
+    "flux": "^2.1.1",
+    "react": "^0.13.3"
+  },
+  "devDependencies": {
+    "babelify": "^6.3.0",
+    "browserify": "^11.1.0"
+  },
+  "scripts": {
+    "build": "browserify -t babelify -e src/js/app.js -o lib/out.js && cp src/index.html lib/"
+  }
+}
