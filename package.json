@@ -10,10 +10,15 @@
     "react": "^0.13.3"
   },
   "devDependencies": {
+    "babel-eslint": "^4.1.1",
     "babelify": "^6.3.0",
-    "browserify": "^11.1.0"
+    "browserify": "^11.1.0",
+    "eslint": "^1.4.1",
+    "eslint-config-airbnb": "0.0.8",
+    "eslint-plugin-react": "^3.3.2"
   },
   "scripts": {
+    "test": "eslint src",
     "build": "browserify -t babelify -e src/js/app.js -o lib/out.js && cp src/index.html lib/"
   }
 }
