@@ -1,0 +1,57 @@
+@component Chat {
+  max-height: 100%;
+  overflow-y: scroll;
+  font-size: 10pt;
+}
+
+/* Message styles are still super hacky...
+ * One day! */
+@component ChatMessage {
+  background: #1b1b1b;
+  min-height: 32px;
+  box-sizing: border-box;
+  position: relative;
+
+  &:nth-child(2n + 1) {
+    background: #222222;
+  }
+
+  @descendent avatar {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  @descendent content {
+    position: relative;
+    padding-left: 40px;
+    display: inline-block;
+    margin: 6px 0;
+    width: auto;
+  }
+
+  /** TODO fix hackiness */
+  @descendent username {
+    color: #9ba0a0;
+    font-weight: 600;
+  }
+
+  @descendent text {
+    margin-left: 5px;
+  }
+}
+
+@component ChatAvatar {
+  padding: 4px 0;
+  box-sizing: border-box;
+  text-align: center;
+  height: 32px;
+  width: 40px;
+
+  @descendent image {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+}
