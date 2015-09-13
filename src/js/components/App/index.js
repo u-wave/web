@@ -1,7 +1,7 @@
 import React from 'react';
 import Chat from './Chat';
 import Video from './Video';
-import styles from './App.css';
+import styles from './style.css';
 
 export default class App extends React.Component {
 
