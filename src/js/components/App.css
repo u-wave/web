@@ -1,0 +1,51 @@
+.main {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  background: #777;
+}
+
+.header-bar,
+.bottom-bar {
+  position: absolute;
+  background: #222;
+  color: #eee;
+  height: 50px;
+  left: 0;
+  right: 0;
+}
+
+.title {
+  margin: 0;
+  line-height: 50px;
+}
+
+.bottom-bar {
+  bottom: 0;
+}
+
+.middle {
+  position: absolute;
+  top: 50px;
+  bottom: 50px;
+  left: 0;
+  right: 0;
+}
+
+.left {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 80%;
+}
+.right {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 20%;
+}
