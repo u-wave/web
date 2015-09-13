@@ -1,6 +1,7 @@
 import React from 'react';
 import Chat from '../Chat';
 import Video from '../Video';
+import HeaderBar from '../HeaderBar';
 import styles from './style.css';
 
 export default class App extends React.Component {
@@ -8,9 +9,10 @@ export default class App extends React.Component {
   render() {
     return (
       <div className={styles.main}>
-        <div className={styles['header-bar']}>
-          <h1 className={styles.title}>üwave</h1>
-        </div>
+        <HeaderBar
+          className={styles['header-bar']}
+          title="üwave"
+        />
         <div className={styles.middle}>
           <div className={styles.left}>
             <Video />
