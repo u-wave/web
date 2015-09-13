@@ -19,12 +19,12 @@
   @descendent avatar {
     position: absolute;
     top: 0;
-    left: 0;
+    left: 12px;
   }
 
   @descendent content {
     position: relative;
-    padding-left: 40px;
+    padding-left: 50px;
     display: inline-block;
     margin: 6px 0;
     width: auto;
@@ -46,7 +46,7 @@
   box-sizing: border-box;
   text-align: center;
   height: 32px;
-  width: 40px;
+  width: 32px;
 
   @descendent image {
     width: 24px;
