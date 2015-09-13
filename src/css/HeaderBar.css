@@ -1,6 +1,6 @@
 @component HeaderBar {
   position: absolute;
-  height: 50px;
+  height: 56px;
   left: 0;
   right: 0;
   background: #151515;
@@ -8,19 +8,19 @@
 
   @descendent title {
     float: left;
-    width: 200px;
+    width: 210px;
     margin: 0;
-    line-height: 50px;
+    line-height: 56px;
     background-image: url(https://i.imgur.com/nb8ibxk.png);
     background-repeat: no-repeat;
     background-position: 10px center;
-    background-size: auto 30px;
+    background-size: auto 36px;
     font-size: 0;
   }
 
   @descendent volume {
-    margin: 10px;
-    height: 30px;
+    margin: 15px;
+    height: 26px;
     float: right;
   }
 }
