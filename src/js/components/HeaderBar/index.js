@@ -1,16 +1,20 @@
 import assign from 'object-assign';
 import cx from 'classnames';
 import React from 'react';
-import styles from './style.css';
 
 export default class HeaderBar extends React.Component {
+  static propTypes = {
+    className: React.PropTypes.string,
+    title: React.PropTypes.string
+  }
+
   render() {
-    let props = assign({}, this.props, {
-      className: cx(styles['header-bar'], this.props.className)
+    const props = assign({}, this.props, {
+      className: cx('HeaderBar', this.props.className)
     });
     return (
       <div {...props}>
-        <h1 className={styles.title}>üwave</h1>
+        <h1 className="HeaderBar-title">{props.title}</h1>
       </div>
     );
   }

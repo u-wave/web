@@ -1,0 +1,18 @@
+@component HeaderBar {
+  position: absolute;
+  height: 50px;
+  left: 0;
+  right: 0;
+  background: #151515;
+  color: #eee;
+
+  @descendent title {
+    margin: 0;
+    line-height: 50px;
+    background-image: url(https://i.imgur.com/nb8ibxk.png);
+    background-repeat: no-repeat;
+    background-position: 10px center;
+    background-size: auto 30px;
+    font-size: 0;
+  }
+}

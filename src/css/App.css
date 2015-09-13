@@ -1,0 +1,36 @@
+@component App {
+  font-family: Open Sans, sans-serif;
+
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  background: #777;
+  color: #fff;
+
+  @descendent middle {
+    position: absolute;
+    top: 50px;
+    bottom: 50px;
+    left: 0;
+    right: 0;
+  }
+}
+
+/* TODO proper BEM once we finish designing a layout */
+.left {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 75%;
+}
+.right {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 25%;
+}

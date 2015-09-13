@@ -2,7 +2,6 @@ import React from 'react';
 import YouTube from 'react-youtube';
 import CurrentMediaStore from '../../stores/CurrentMediaStore';
 import VolumeStore from '../../stores/VolumeStore';
-import styles from './style.css';
 
 function getState() {
   return {
@@ -80,7 +79,7 @@ export default class Video extends React.Component {
     }
 
     return (
-      <div className={styles.video}>
+      <div className="Video">
         {video}
       </div>
     );

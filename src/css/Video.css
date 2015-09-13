@@ -1,4 +1,4 @@
-.video {
+@component Video {
   pointer-events: none;
   height: 100%;
 }
