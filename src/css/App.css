@@ -7,7 +7,7 @@
   left: 0;
   right: 0;
 
-  background: #777;
+  background: #151515;
   color: #fff;
 
   @descendent middle {
@@ -19,18 +19,36 @@
   }
 }
 
-/* TODO proper BEM once we finish designing a layout */
-.left {
+@component AppColumn {
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: 75%;
+  height: 100%;
+
+  @modifier left {
+    width: 75%;
+    left: 0;
+  }
+  @modifier right {
+    width: 25%;
+    right: 0;
+  }
 }
-.right {
+
+@component AppRow {
   position: absolute;
-  top: 0;
-  bottom: 0;
+  left: 0;
   right: 0;
-  width: 25%;
+  clear: both;
+
+  @modifier top {
+    height: 56px;
+    top: 0;
+  }
+  @modifier middle {
+    top: 56px;
+    bottom: 60px;
+  }
+  @modifier bottom {
+    height: 60px;
+    bottom: 0;
+  }
 }

@@ -1,10 +1,5 @@
 @component HeaderBar {
-  position: absolute;
-  height: 56px;
-  left: 0;
-  right: 0;
-  background: #151515;
-  color: #eee;
+  height: 100%;
 
   @descendent title {
     float: left;
