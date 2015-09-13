@@ -11,7 +11,7 @@ const VolumeStore = assign(new EventEmitter, {
   },
 
   isMuted() {
-    return snoozed;
+    return muted;
   },
 
   dispatchToken: dispatcher.register(payload => {
