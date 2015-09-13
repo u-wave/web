@@ -6,7 +6,7 @@ import styles from './style.css';
 
 function getState() {
   return {
-    volume: VolumeStore.getVolume(),
+    volume: VolumeStore.isMuted() ? 0 : VolumeStore.getVolume(),
     media: CurrentMediaStore.getMedia()
   };
 }
