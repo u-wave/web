@@ -1,6 +1,7 @@
 import assign from 'object-assign';
 import cx from 'classnames';
 import React from 'react';
+import Volume from './Volume';
 
 export default class HeaderBar extends React.Component {
   static propTypes = {
@@ -15,6 +16,7 @@ export default class HeaderBar extends React.Component {
     return (
       <div {...props}>
         <h1 className="HeaderBar-title">{props.title}</h1>
+        <Volume className="HeaderBar-volume" />
       </div>
     );
   }
