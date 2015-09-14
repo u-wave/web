@@ -1,7 +1,10 @@
+import isEqual from 'is-equal-shallow';
 import React from 'react';
 import YouTube from 'react-youtube';
 import CurrentMediaStore from '../../stores/CurrentMediaStore';
 import VolumeStore from '../../stores/VolumeStore';
+
+const debug = require('debug')('uwave:component:video');
 
 function getState() {
   return {
@@ -24,13 +27,19 @@ export default class Video extends React.Component {
     VolumeStore.on('change', this._onChange);
   }
 
-  componentDidUpdate() {
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextState.volume !== this.state.volume ||
+      !isEqual(nextState.media, this.state.media);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
     const { youtube } = this.refs;
     if (youtube) {
       // only set volume after the YT API is fully initialised.
       // if it fails here because the API isn't ready, the the volume will still
       // be set in onYTReady().
-      if (youtube._internalPlayer) {
+      if (youtube._internalPlayer && prevState.volume !== this.state.volume) {
+        debug('YT: setting volume', this.state);
         youtube._internalPlayer.setVolume(this.state.volume);
       }
     }
