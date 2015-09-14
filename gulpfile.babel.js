@@ -1,11 +1,14 @@
 import babel from 'gulp-babel';
 import browserify from 'browserify';
 import concat from 'gulp-concat';
+import cssnano from 'gulp-cssnano';
 import gulp from 'gulp';
+import minifyHtml from 'gulp-minify-html';
 import postcss from 'gulp-postcss';
 import postcssBem from 'postcss-bem';
 import postcssNested from 'postcss-nested';
 import source from 'vinyl-source-stream';
+import uglify from 'gulp-uglify';
 
 gulp.task('postcss', () => {
   return gulp.src('src/css/**/*.css')
@@ -33,6 +36,23 @@ gulp.task('js', [ 'babel' ], () => {
     .bundle()
     .pipe(source('out.js'))
     .pipe(gulp.dest('lib/'));
+});
+
+gulp.task('min-css', [ 'css' ], () => {
+  return gulp.src('lib/style.css')
+    .pipe(cssnano())
+    .pipe(gulp.dest('dist/'));
+});
+gulp.task('min-js', [ 'js' ], () => {
+  return gulp.src('lib/out.js')
+    .pipe(uglify())
+    .pipe(gulp.dest('dist/'));
+});
+
+gulp.task('dist', [ 'min-js', 'min-css' ], () => {
+  return gulp.src('lib/index.html')
+    .pipe(minifyHtml())
+    .pipe(gulp.dest('dist/'));
 });
 
 gulp.task('watch', () => {
