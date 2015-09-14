@@ -18,4 +18,18 @@
     height: 26px;
     float: right;
   }
+
+  @descendent now-playing {
+    margin: 15px 0 0 100px;
+    float: left;
+    max-width: 50%;
+  }
+}
+
+@component NowPlaying {
+  font-size: 14pt;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
