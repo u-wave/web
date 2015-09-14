@@ -2,17 +2,20 @@ import assign from 'object-assign';
 import cx from 'classnames';
 import React from 'react';
 import CurrentMediaStore from '../../stores/CurrentMediaStore';
-import Volume from './Volume';
-import NowPlaying from './NowPlaying';
+import VolumeStore from '../../stores/VolumeStore';
 import Progress from './Progress';
+import NowPlaying from './NowPlaying';
+import Volume from './Volume';
 
 function getState() {
   const elapsed = CurrentMediaStore.getTimeElapsed();
   const media = CurrentMediaStore.getMedia();
+  const volume = VolumeStore.getVolume();
   return {
     elapsed: elapsed,
     total: media ? media.end - media.start : 0,
-    media: media
+    media: media,
+    volume: volume
   };
 }
 
@@ -31,10 +34,12 @@ export default class HeaderBar extends React.Component {
 
   componentDidMount() {
     CurrentMediaStore.on('change', this.onChange);
+    VolumeStore.on('change', this.onChange);
   }
 
   componentWillUnmount() {
     CurrentMediaStore.off('change', this.onChange);
+    VolumeStore.off('change', this.onChange);
   }
 
   onChange() {
@@ -59,7 +64,10 @@ export default class HeaderBar extends React.Component {
           total={this.state.total}
           elapsed={this.state.elapsed}
         />
-        <Volume className="HeaderBar-volume" />
+        <Volume
+          className="HeaderBar-volume"
+          volume={this.state.volume}
+        />
       </div>
     );
   }

@@ -1,22 +1,17 @@
 import cx from 'classnames';
 import React from 'react';
 import { setVolume } from '../../actions/PlaybackActionCreators';
-import VolumeStore from '../../stores/VolumeStore';
 
 export default class Volume extends React.Component {
 
   static propTypes = {
-    className: React.PropTypes.string
+    className: React.PropTypes.string,
+    volume: React.PropTypes.number
   }
 
-  state = { volume: VolumeStore.getVolume() }
-
-  onChange() {
-    const { value } = this.refs;
-    const input = value.getDOMNode();
-    const volume = parseInt(input.value, 10);
+  onChange(e) {
+    const volume = parseInt(e.target.value, 10);
     setVolume(volume);
-    this.setState({ volume });
   }
 
   render() {
@@ -27,7 +22,7 @@ export default class Volume extends React.Component {
           type="range"
           min="0"
           max="100"
-          value={VolumeStore.getVolume()}
+          value={this.props.volume}
           onChange={this.onChange.bind(this)}
         />
       </div>
