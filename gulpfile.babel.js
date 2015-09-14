@@ -2,6 +2,7 @@ import babel from 'gulp-babel';
 import browserify from 'browserify';
 import concat from 'gulp-concat';
 import cssnano from 'gulp-cssnano';
+import eslint from 'gulp-eslint';
 import gulp from 'gulp';
 import minifyHtml from 'gulp-minify-html';
 import postcss from 'gulp-postcss';
@@ -22,13 +23,19 @@ gulp.task('css', [ 'postcss' ], () => {
     .pipe(gulp.dest('lib/'));
 });
 
+gulp.task('eslint', () => {
+  return gulp.src('src/js/**/*.js')
+    .pipe(eslint())
+    .pipe(eslint.format())
+});
+
 gulp.task('babel', () => {
   return gulp.src('src/js/**/*.js')
     .pipe(babel({ stage: 0 }))
     .pipe(gulp.dest('lib/js/'));
 });
 
-gulp.task('js', [ 'babel' ], () => {
+gulp.task('js', [ 'eslint', 'babel' ], () => {
   return browserify({
     debug: true,
     entries: './lib/js/app.js'
