@@ -24,6 +24,13 @@
     float: left;
     max-width: 50%;
   }
+
+  @descendent progress {
+    position: absolute;
+    bottom: 1px;
+    height: 2px;
+    width: 100%;
+  }
 }
 
 @component NowPlaying {
@@ -32,4 +39,12 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+@component Progress {
+  @descendent fill {
+    background: #9d2053;
+    height: 100%;
+    transition: width 1s;
+  }
 }

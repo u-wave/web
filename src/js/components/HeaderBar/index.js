@@ -4,10 +4,14 @@ import React from 'react';
 import CurrentMediaStore from '../../stores/CurrentMediaStore';
 import Volume from './Volume';
 import NowPlaying from './NowPlaying';
+import Progress from './Progress';
 
 function getState() {
+  const elapsed = CurrentMediaStore.getTimeElapsed();
   const media = CurrentMediaStore.getMedia();
   return {
+    elapsed: elapsed,
+    total: media ? media.end - media.start : 0,
     media: media
   };
 }
@@ -49,6 +53,11 @@ export default class HeaderBar extends React.Component {
           className="HeaderBar-now-playing"
           artist={media.artist}
           title={media.title}
+        />
+        <Progress
+          className="HeaderBar-progress"
+          total={this.state.total}
+          elapsed={this.state.elapsed}
         />
         <Volume className="HeaderBar-volume" />
       </div>
