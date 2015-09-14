@@ -19,7 +19,6 @@
     "babel-eslint": "^4.1.1",
     "babelify": "^6.3.0",
     "browserify": "^11.1.0",
-    "eslint": "^1.4.1",
     "eslint-config-airbnb": "0.0.8",
     "eslint-plugin-react": "^3.3.2",
     "gulp": "^3.9.0",
@@ -35,7 +34,7 @@
     "vinyl-source-stream": "^1.1.0"
   },
   "scripts": {
-    "test": "eslint src gulpfile.babel.js",
+    "test": "gulp eslint",
     "build": "gulp"
   }
 }
