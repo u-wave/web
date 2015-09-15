@@ -18,7 +18,7 @@ export default class NowPlaying extends React.Component {
     return (
       <div className={cx('NowPlaying', this.props.className)}>
         <span className="NowPlaying-artist">{this.props.artist}</span>
-        –
+        <span className="NowPlaying-separator"> – </span>
         <span className="NowPlaying-title">{this.props.title}</span>
       </div>
     );
