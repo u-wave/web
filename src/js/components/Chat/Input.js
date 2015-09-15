@@ -6,6 +6,7 @@ export default class Input extends React.Component {
     return (
       <div className="ChatInput">
         <input
+          className="ChatInput-input"
           type="text"
           placeholder="Click here to chat!"
         />

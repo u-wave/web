@@ -55,3 +55,22 @@
     overflow: hidden;
   }
 }
+
+@component ChatInput {
+  background: #1b1b1b;
+  height: 100%;
+  width: 100%;
+  border-top: 1px solid #303036;
+  box-sizing: border-box;
+
+  @descendent input {
+    margin: 15px 15px 16px 15px;
+    height: 28px;
+    width: calc(100% - 32px);
+    padding: 0 6px;
+    box-sizing: border-box;
+    border: 1px solid #303036;
+    background: #1b1b1b;
+    color: #fff;
+  }
+}
