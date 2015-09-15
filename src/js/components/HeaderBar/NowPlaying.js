@@ -1,4 +1,5 @@
 import cx from 'classnames';
+import isEqual from 'is-equal-shallow';
 import React from 'react';
 
 export default class NowPlaying extends React.Component {
@@ -7,6 +8,11 @@ export default class NowPlaying extends React.Component {
     artist: React.PropTypes.string,
     title: React.PropTypes.string
   };
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return !isEqual(this.props, nextProps) ||
+           !isEqual(this.state, nextState);
+  }
 
   render() {
     return (
