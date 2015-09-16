@@ -72,5 +72,9 @@
     border: 1px solid #303036;
     background: #1b1b1b;
     color: #fff;
+
+    @when focused {
+      border-color: #9d2053;
+    }
   }
 }

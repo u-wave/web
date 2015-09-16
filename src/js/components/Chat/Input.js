@@ -1,3 +1,4 @@
+import cx from 'classnames';
 import React from 'react';
 
 export default class Input extends React.Component {
@@ -12,10 +13,11 @@ export default class Input extends React.Component {
   }
 
   render() {
+    const focusClass = this.state.focused ? 'is-focused' : '';
     return (
-      <div className="ChatInput">
+      <div className={cx('ChatInput', focusClass)}>
         <input
-          className="ChatInput-input"
+          className={cx('ChatInput-input', focusClass)}
           type="text"
           placeholder={this.state.focused ? '' : 'Click here to chat!'}
           onFocus={this.onFocus.bind(this)}
