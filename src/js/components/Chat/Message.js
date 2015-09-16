@@ -1,4 +1,5 @@
 import React from 'react';
+import Avatar from '../Avatar';
 
 export default class Message extends React.Component {
   static propTypes = {
@@ -9,12 +10,10 @@ export default class Message extends React.Component {
   render() {
     return (
       <div className="ChatMessage">
-        <div className="ChatMessage-avatar ChatAvatar">
-          <img
-            className="ChatAvatar-image"
-            src={'https://sigil.cupcake.io/_' + this.props.username}
-          />
-        </div>
+        <Avatar
+          className="ChatMessage-avatar"
+          username={this.props.username}
+        />
         <div className="ChatMessage-content">
           <span className="ChatMessage-username">{this.props.username}</span>
           <span className="ChatMessage-text">{this.props.text}</span>

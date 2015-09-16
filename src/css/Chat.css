@@ -20,6 +20,7 @@
     position: absolute;
     top: 0;
     left: 12px;
+    margin: 4px 0;
   }
 
   @descendent content {
@@ -38,21 +39,6 @@
 
   @descendent text {
     margin-left: 5px;
-  }
-}
-
-@component ChatAvatar {
-  padding: 4px 0;
-  box-sizing: border-box;
-  text-align: center;
-  height: 32px;
-  width: 32px;
-
-  @descendent image {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    overflow: hidden;
   }
 }
 
