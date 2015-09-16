@@ -4,8 +4,8 @@ import dispatcher from '../dispatcher';
 
 const clone = x => assign({}, x);
 
-function tick() {
-  CurrentMediaStore.emit('change');
+function tick(store) {
+  store.emit('change');
 }
 
 let media = {};
@@ -14,7 +14,7 @@ let startTime = null;
 const CurrentMediaStore = assign(new EventEmitter, {
   init() {
     setInterval(() => {
-      tick();
+      tick(CurrentMediaStore);
     }, 1000);
   },
 
