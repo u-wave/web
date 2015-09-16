@@ -5,10 +5,10 @@ export default class Input extends React.Component {
 
   state = { focused: false };
 
-  onFocus(e) {
+  onFocus() {
     this.setState({ focused: true });
   }
-  onBlur(e) {
+  onBlur() {
     this.setState({ focused: false });
   }
 
