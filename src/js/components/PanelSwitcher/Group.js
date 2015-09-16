@@ -31,7 +31,7 @@ export default class Group extends React.Component {
   }
 
   componentWillUnmount() {
-    SelectedPanelStore.off('change', this.onChange);
+    SelectedPanelStore.removeListener('change', this.onChange);
   }
 
   onChange() {

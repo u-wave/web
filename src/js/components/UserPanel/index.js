@@ -43,7 +43,7 @@ export default class UserPanel extends Panel {
   }
 
   componentWillUnmount() {
-    UserStore.off('change', this.onChange);
+    UserStore.removeListener('change', this.onChange);
   }
 
   onChange() {

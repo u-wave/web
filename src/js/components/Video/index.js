@@ -46,8 +46,8 @@ export default class Video extends React.Component {
   }
 
   componentWillUnmount() {
-    CurrentMediaStore.off('change', this._onChange);
-    VolumeStore.off('change', this._onChange);
+    CurrentMediaStore.removeListener('change', this._onChange);
+    VolumeStore.removeListener('change', this._onChange);
   }
 
   onYTReady(event) {

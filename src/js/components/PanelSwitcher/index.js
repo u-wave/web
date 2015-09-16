@@ -27,7 +27,7 @@ export default class PanelSwitcher extends React.Component {
   }
 
   componentWillUnmount() {
-    SelectedPanelStore.off('change', this.onChange);
+    SelectedPanelStore.removeListener('change', this.onChange);
   }
 
   onChange() {

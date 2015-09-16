@@ -38,8 +38,8 @@ export default class HeaderBar extends React.Component {
   }
 
   componentWillUnmount() {
-    CurrentMediaStore.off('change', this.onChange);
-    VolumeStore.off('change', this.onChange);
+    CurrentMediaStore.removeListener('change', this.onChange);
+    VolumeStore.removeListener('change', this.onChange);
   }
 
   onChange() {

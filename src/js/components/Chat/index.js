@@ -21,7 +21,7 @@ export default class Chat extends React.Component {
   }
 
   componentWillUnmount() {
-    ChatStore.off('change', this.onChange);
+    ChatStore.removeListener('change', this.onChange);
   }
 
   onChange() {
