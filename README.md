@@ -1,6 +1,6 @@
 # u-wave-web
 
-Web client for [üµ]wave.
+Web client for [üWave](https://u-wave.github.io).
 
 ## License
 

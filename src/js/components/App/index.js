@@ -15,7 +15,7 @@ export default class App extends React.Component {
           <div className="AppColumn AppColumn--left">
             <HeaderBar
               className="App-header"
-              title="üwave"
+              title="üWave"
             />
           </div>
           <div className="AppColumn AppColumn--right">
