@@ -1,0 +1,8 @@
+@component PanelGroup {
+  height: 100%;
+}
+
+@component Panel {
+  height: 100%;
+  width: 100%;
+}

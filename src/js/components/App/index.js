@@ -4,6 +4,8 @@ import ChatInput from '../Chat/Input';
 import FooterBar from '../FooterBar';
 import HeaderBar from '../HeaderBar';
 import PanelSwitcher from '../PanelSwitcher';
+import PanelGroup from '../PanelSwitcher/Group';
+import Panel from '../PanelSwitcher/Panel';
 import Video from '../Video';
 
 export default class App extends React.Component {
@@ -26,9 +28,17 @@ export default class App extends React.Component {
           <div className="AppColumn AppColumn--left">
             <Video />
           </div>
-          <div className="AppColumn AppColumn--right">
-            <Chat />
-          </div>
+          <PanelGroup className="AppColumn AppColumn--right">
+            <Panel name="chat">
+              <Chat />
+            </Panel>
+            <Panel name="users">
+              [Placeholder]
+            </Panel>
+            <Panel name="waitlist">
+              [Placeholder]
+            </Panel>
+          </PanelGroup>
         </div>
         <div className="AppRow AppRow--bottom BottomBar">
           <div className="AppColumn AppColumn--left">
