@@ -1,6 +1,6 @@
 import { receive } from '../actions/ChatActionCreators';
+import UserStore from '../stores/UserStore';
 
-const usernames = 'Hank, Joanna, Kris, Tom, Kim'.split(', ');
 const messages = [
   // https://en.wikipedia.org/wiki/List_of_linguistic_example_sentences
   'In port, the portly porter ported the port, through the port port.',
@@ -39,9 +39,12 @@ let _id = 0;
 
 export function connect() {
   setTimeout(function n() {
+    const users = UserStore.getOnlineUsers();
+    const user = users[Math.floor(Math.random() * users.length)];
     receive({
       id: _id++,
-      username: usernames[Math.floor(Math.random() * usernames.length)],
+      userId: user.id,
+      username: user.username,
       text: messages[Math.floor(Math.random() * messages.length)]
     });
     setTimeout(n, Math.floor(Math.random() * 2000));
