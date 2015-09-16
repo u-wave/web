@@ -1,5 +1,6 @@
 import babel from 'gulp-babel';
 import browserify from 'browserify';
+import changed from 'gulp-changed';
 import concat from 'gulp-concat';
 import cssnano from 'gulp-cssnano';
 import eslint from 'gulp-eslint';
@@ -30,9 +31,11 @@ gulp.task('eslint', () => {
 });
 
 gulp.task('babel', () => {
+  const DEST = 'lib/js/';
   return gulp.src('src/js/**/*.js')
+    .pipe(changed(DEST))
     .pipe(babel({ stage: 0 }))
-    .pipe(gulp.dest('lib/js/'));
+    .pipe(gulp.dest(DEST));
 });
 
 gulp.task('js', [ 'eslint', 'babel' ], () => {
