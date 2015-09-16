@@ -1,0 +1,12 @@
+@component UserList {
+}
+
+@component UserRow {
+  height: 30px;
+  line-height: 30px;
+
+  @descendent avatar {
+    float: left;
+    margin: 3px 10px;
+  }
+}

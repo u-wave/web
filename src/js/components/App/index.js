@@ -1,6 +1,7 @@
 import React from 'react';
 import Chat from '../Chat';
 import ChatInput from '../Chat/Input';
+import UserPanel from '../UserPanel';
 import FooterBar from '../FooterBar';
 import HeaderBar from '../HeaderBar';
 import PanelSwitcher from '../PanelSwitcher';
@@ -32,9 +33,7 @@ export default class App extends React.Component {
             <Panel name="chat">
               <Chat />
             </Panel>
-            <Panel name="users">
-              [Placeholder]
-            </Panel>
+            <UserPanel name="room" />
             <Panel name="waitlist">
               [Placeholder]
             </Panel>
