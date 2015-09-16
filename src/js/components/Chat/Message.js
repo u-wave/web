@@ -3,20 +3,21 @@ import Avatar from '../Avatar';
 
 export default class Message extends React.Component {
   static propTypes = {
-    username: React.PropTypes.string,
+    user: React.PropTypes.object,
     text: React.PropTypes.string
   }
 
   render() {
+    const { user, text } = this.props;
     return (
       <div className="ChatMessage">
         <Avatar
           className="ChatMessage-avatar"
-          username={this.props.username}
+          user={user}
         />
         <div className="ChatMessage-content">
-          <span className="ChatMessage-username">{this.props.username}</span>
-          <span className="ChatMessage-text">{this.props.text}</span>
+          <span className="ChatMessage-username">{user.username}</span>
+          <span className="ChatMessage-text">{text}</span>
         </div>
       </div>
     );

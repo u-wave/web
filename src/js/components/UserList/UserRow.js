@@ -13,7 +13,7 @@ export default class UserRow extends React.Component {
       <div className={cx('UserRow', this.props.className)}>
         <Avatar
           className="UserRow-avatar"
-          username={this.props.username}
+          user={this.props}
         />
         <span className="UserRow-username">{this.props.username}</span>
       </div>
