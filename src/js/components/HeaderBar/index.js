@@ -4,7 +4,7 @@ import React from 'react';
 import CurrentMediaStore from '../../stores/CurrentMediaStore';
 import VolumeStore from '../../stores/VolumeStore';
 import Progress from './Progress';
-import NowPlaying from './NowPlaying';
+import SongTitle from '../SongTitle';
 import Volume from './Volume';
 
 function getState() {
@@ -54,7 +54,7 @@ export default class HeaderBar extends React.Component {
     return (
       <div {...props}>
         <h1 className="HeaderBar-title">{props.title}</h1>
-        <NowPlaying
+        <SongTitle
           className="HeaderBar-now-playing"
           artist={media.artist}
           title={media.title}

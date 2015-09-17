@@ -35,14 +35,6 @@
   }
 }
 
-@component NowPlaying {
-  font-size: 14pt;
-
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 @component Progress {
   @descendent fill {
     background: $highlight-color;

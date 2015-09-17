@@ -1,0 +1,8 @@
+@component SongTitle {
+  font-size: 14pt;
+  color: #fff;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
