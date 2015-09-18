@@ -1,3 +1,5 @@
+@import "vars.css";
+
 @component HeaderBar {
   height: 100%;
 
@@ -43,7 +45,7 @@
 
 @component Progress {
   @descendent fill {
-    background: #9d2053;
+    background: $highlight-color;
     height: 100%;
     transition: width 1s;
   }

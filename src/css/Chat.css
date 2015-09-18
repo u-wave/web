@@ -1,3 +1,5 @@
+@import "vars.css";
+
 @component Chat {
   height: 100%;
   overflow-y: scroll;
@@ -7,13 +9,13 @@
 /* Message styles are still super hacky...
  * One day! */
 @component ChatMessage {
-  background: #1b1b1b;
+  background: $chat-background-color;
   min-height: 32px;
   box-sizing: border-box;
   position: relative;
 
   &:nth-child(2n + 1) {
-    background: #222222;
+    background: $chat-background-color2;
   }
 
   @descendent avatar {
@@ -43,10 +45,10 @@
 }
 
 @component ChatInput {
-  background: #1b1b1b;
+  background: $chat-background-color;
   height: 100%;
   width: 100%;
-  border-top: 1px solid #303036;
+  border-top: 1px solid $chat-border-color;
   box-sizing: border-box;
 
   @descendent input {
@@ -55,7 +57,7 @@
     width: calc(100% - 32px);
     padding: 0 6px;
     box-sizing: border-box;
-    border: 1px solid #303036;
+    border: 1px solid $chat-border-color;
     background: #1b1b1b;
     color: #fff;
 
