@@ -1,21 +1,15 @@
 import React from 'react';
-import { advance } from './actions/AdvanceActionCreators';
 import App from './components/App';
-import dispatcher from './dispatcher';
+import CurrentMediaStore from './stores/CurrentMediaStore';
 import * as FakeChatSocket from './utils/FakeChatSocket';
+import * as FakeAdvanceSocket from './utils/FakeAdvanceSocket';
 
 React.render(<App />, document.body);
 
 // temporary debug and testing things
 
+CurrentMediaStore.init();
 FakeChatSocket.connect();
+FakeAdvanceSocket.connect();
 
-window.dispatcher = dispatcher;
-
-advance({
-  source: 'youtube',
-  id: 'eYaaZUlnX18',
-  artist: 'D-UNIT',
-  title: 'LUV ME',
-  duration: 3 * 60 + 15
-});
+window.debug = require('debug');
