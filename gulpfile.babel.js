@@ -8,13 +8,20 @@ import gulp from 'gulp';
 import minifyHtml from 'gulp-minify-html';
 import postcss from 'gulp-postcss';
 import postcssBem from 'postcss-bem';
+import postcssImport from 'postcss-import';
 import postcssNested from 'postcss-nested';
+import postcssVars from 'postcss-simple-vars';
 import source from 'vinyl-source-stream';
 import uglify from 'gulp-uglify';
 
 gulp.task('postcss', () => {
   return gulp.src('src/css/**/*.css')
-    .pipe(postcss([ postcssBem(), postcssNested() ]))
+    .pipe(postcss([
+      postcssImport(),
+      postcssBem(),
+      postcssNested(),
+      postcssVars()
+    ]))
     .pipe(gulp.dest('lib/css/'));
 });
 
