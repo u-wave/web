@@ -1,14 +1,7 @@
 import assign from 'object-assign';
 import EventEmitter from 'events';
+import values from 'object-values';
 import dispatcher from '../dispatcher';
-
-function values(obj) {
-  const arr = [];
-  for (const i in obj) if (obj.hasOwnProperty(i)) {
-    arr.push(obj[i]);
-  }
-  return arr;
-}
 
 const users = {
   1425: {
