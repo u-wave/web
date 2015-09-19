@@ -18,9 +18,9 @@ gulp.task('postcss', () => {
   return gulp.src('src/css/**/*.css')
     .pipe(postcss([
       postcssImport(),
+      postcssVars(),
       postcssBem(),
-      postcssNested(),
-      postcssVars()
+      postcssNested()
     ]))
     .pipe(gulp.dest('lib/css/'));
 });
