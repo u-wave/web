@@ -12,7 +12,7 @@ export default class Avatar extends React.Component {
       <div className={cx('Avatar', this.props.className)}>
         <img
           className="Avatar-image"
-          src={'https://sigil.cupcake.io/_' + this.props.user.username}
+          src={this.props.user.avatar}
         />
       </div>
     );
