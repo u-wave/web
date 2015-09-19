@@ -11,11 +11,13 @@ function getState() {
   const elapsed = CurrentMediaStore.getTimeElapsed();
   const media = CurrentMediaStore.getMedia();
   const volume = VolumeStore.getVolume();
+  const muted = VolumeStore.isMuted();
   return {
     elapsed: elapsed,
     total: media ? media.end - media.start : 0,
     media: media,
-    volume: volume
+    volume: volume,
+    muted: muted
   };
 }
 
@@ -67,6 +69,7 @@ export default class HeaderBar extends React.Component {
         <Volume
           className="HeaderBar-volume"
           volume={this.state.volume}
+          muted={this.state.muted}
         />
       </div>
     );
