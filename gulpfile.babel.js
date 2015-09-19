@@ -34,7 +34,8 @@ gulp.task('css', [ 'postcss' ], () => {
 gulp.task('eslint', () => {
   return gulp.src([ 'src/js/**/*.js', 'gulpfile.babel.js' ])
     .pipe(eslint())
-    .pipe(eslint.format());
+    .pipe(eslint.format())
+    .pipe(eslint.failAfterError());
 });
 
 gulp.task('babel', () => {
