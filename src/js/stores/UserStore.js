@@ -4,7 +4,7 @@ import dispatcher from '../dispatcher';
 
 function values(obj) {
   const arr = [];
-  for (let i in obj) if (obj.hasOwnProperty(i)) {
+  for (const i in obj) if (obj.hasOwnProperty(i)) {
     arr.push(obj[i]);
   }
   return arr;
