@@ -1,0 +1,18 @@
+@import "vars.css";
+
+@component FooterBar {
+  height: 100%;
+}
+
+@component NextMedia {
+  color: $muted-text-color;
+  font-size: 11pt;
+  padding: 8px;
+
+  @descendent playlist {
+    color: $text-color;
+  }
+}
+
+@component Eta {
+}
