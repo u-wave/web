@@ -1,11 +1,14 @@
 import React from 'react';
 import NextMedia from './NextMedia';
+import UserInfo from './UserInfo';
 import PlaylistStore from '../../stores/PlaylistStore';
+import UserStore from '../../stores/UserStore';
 
 function getState() {
   return {
     playlist: PlaylistStore.getCurrentPlaylist(),
-    nextMedia: { artist: 'Swings', title: 'Bulldozer' }
+    nextMedia: { artist: 'Swings', title: 'Bulldozer' },
+    user: UserStore.getCurrentUser()
   };
 }
 
@@ -32,6 +35,7 @@ export default class FooterBar extends React.Component {
   render() {
     return (
       <div className="FooterBar">
+        <UserInfo user={this.state.user} />
         <NextMedia
           playlist={this.state.playlist}
           nextMedia={this.state.nextMedia}

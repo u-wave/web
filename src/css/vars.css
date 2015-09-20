@@ -1,6 +1,7 @@
 $text-color: #fff;
 $muted-text-color: #303036;
 $background-color: #151515;
+$background-hover-color: #111;
 $highlight-color: #9d2053;
 
 $footer-border-color: $muted-text-color;

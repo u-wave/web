@@ -37,6 +37,9 @@ const users = {
 };
 
 const UserStore = assign(new EventEmitter, {
+  getCurrentUser() {
+    return UserStore.getUser(2107);
+  },
   getUser(id) {
     return users[id];
   },
