@@ -7,6 +7,7 @@ import eslint from 'gulp-eslint';
 import gulp from 'gulp';
 import minifyHtml from 'gulp-minify-html';
 import postcss from 'gulp-postcss';
+import postcssAutoprefix from 'autoprefixer';
 import postcssBem from 'postcss-bem';
 import postcssImport from 'postcss-import';
 import postcssNested from 'postcss-nested';
@@ -20,7 +21,11 @@ gulp.task('postcss', () => {
       postcssImport(),
       postcssVars(),
       postcssBem(),
-      postcssNested()
+      postcssNested(),
+      postcssAutoprefix({
+        remove: false,
+        browsers: [ 'last 2 versions' ]
+      })
     ]))
     .pipe(gulp.dest('lib/css/'));
 });
