@@ -1,0 +1,30 @@
+@component Loader {
+  position: relative;
+  border: solid rgba(255, 255, 255, 0.2);
+  border-left-color: #ffffff;
+  animation: anim-loader-spin 1.1s infinite linear;
+
+  border-radius: 50%;
+  box-sizing: border-box;
+  width: 90%;
+  height: 90%;
+
+  max-width: 10em;
+  max-height: 10em;
+
+  @modifier tiny {
+    border-width: 3px;
+  }
+  @modifier large {
+    border-width: 1.1em;
+  }
+}
+
+@keyframes anim-loader-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

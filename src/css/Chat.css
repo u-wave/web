@@ -20,6 +20,8 @@
 
   @descendent avatar {
     position: absolute;
+    width: 24px;
+    height: 24px;
     top: 0;
     left: 12px;
     margin: 4px 0;
@@ -41,6 +43,10 @@
 
   @descendent text {
     margin-left: 5px;
+  }
+
+  @modifier loading {
+    opacity: 0.7;
   }
 }
 

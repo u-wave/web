@@ -1,3 +1,4 @@
+import assign from 'object-assign';
 import { receive } from '../actions/ChatActionCreators';
 import UserStore from '../stores/UserStore';
 
@@ -36,6 +37,14 @@ const messages = [
 ];
 
 let _id = 0;
+
+export function send(message) {
+  setTimeout(() => {
+    receive(assign({}, message, {
+      id: Math.floor(Math.random() * 1e9)
+    }));
+  }, Math.floor(Math.random() * 500));
+}
 
 export function connect() {
   setTimeout(function n() {

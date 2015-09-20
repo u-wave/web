@@ -1,5 +1,8 @@
 import cx from 'classnames';
 import React from 'react';
+import { sendChat } from '../../actions/ChatActionCreators';
+
+const ENTER_KEY = 13;
 
 export default class Input extends React.Component {
 
@@ -12,6 +15,13 @@ export default class Input extends React.Component {
     this.setState({ focused: false });
   }
 
+  onKeyDown(e) {
+    if (e.keyCode === ENTER_KEY) {
+      sendChat(e.target.value);
+      e.target.value = '';
+    }
+  }
+
   render() {
     const focusClass = this.state.focused ? 'is-focused' : '';
     return (
@@ -22,6 +32,7 @@ export default class Input extends React.Component {
           placeholder={this.state.focused ? '' : 'Click here to chat!'}
           onFocus={this.onFocus.bind(this)}
           onBlur={this.onBlur.bind(this)}
+          onKeyDown={this.onKeyDown.bind(this)}
         />
       </div>
     );
