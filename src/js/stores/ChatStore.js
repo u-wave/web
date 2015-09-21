@@ -29,7 +29,7 @@ const ChatStore = assign(new EventEmitter, {
       const user = UserStore.getCurrentUser();
       const send = {
         user: user,
-        userId: user.id,
+        userID: user.id,
         text: payload.message,
         timestamp: Date.now(),
         inFlight: true
@@ -45,7 +45,7 @@ const ChatStore = assign(new EventEmitter, {
     case 'chatReceive':
       const message = assign({}, payload.message, {
         inFlight: false,
-        user: UserStore.getUser(payload.message.userId)
+        user: UserStore.getUser(payload.message.userID)
       });
 
       removeInFlightMessage(message);
