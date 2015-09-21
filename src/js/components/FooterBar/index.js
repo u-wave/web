@@ -1,3 +1,4 @@
+import cx from 'classnames';
 import React from 'react';
 import NextMedia from './NextMedia';
 import UserInfo from './UserInfo';
@@ -13,6 +14,10 @@ function getState() {
 }
 
 export default class FooterBar extends React.Component {
+  static propTypes = {
+    className: React.PropTypes.string
+  };
+
   constructor() {
     super();
     this.onChange = this.onChange.bind(this);
@@ -34,7 +39,7 @@ export default class FooterBar extends React.Component {
 
   render() {
     return (
-      <div className="FooterBar">
+      <div className={cx('FooterBar', this.props.className)}>
         <UserInfo user={this.state.user} />
         <NextMedia
           playlist={this.state.playlist}

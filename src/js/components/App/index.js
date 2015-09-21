@@ -40,9 +40,7 @@ export default class App extends React.Component {
           </PanelGroup>
         </div>
         <div className="AppRow AppRow--bottom BottomBar">
-          <div className="AppColumn AppColumn--left">
-            <FooterBar />
-          </div>
+          <FooterBar className="AppColumn AppColumn--left" />
           <div className="AppColumn AppColumn--right">
             <ChatInput />
           </div>

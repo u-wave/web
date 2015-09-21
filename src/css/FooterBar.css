@@ -1,7 +1,6 @@
 @import "vars.css";
 
 @component FooterBar {
-  height: 100%;
   box-sizing: border-box;
   border-top: 1px solid $chat-border-color;
 }
