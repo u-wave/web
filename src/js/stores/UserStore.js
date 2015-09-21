@@ -53,11 +53,11 @@ const UserStore = assign(new EventEmitter, {
   dispatchToken: dispatcher.register(payload => {
     switch (payload.action) {
     case 'join':
-      users[data.id] = payload.user;
+      users[payload.user.id] = payload.user;
       UserStore.emit('change');
       break;
     case 'leave':
-      delete users[payload.userId];
+      delete users[payload.userID];
       UserStore.emit('change');
       break;
     default:

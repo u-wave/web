@@ -1,6 +1,7 @@
 import dispatcher from '../dispatcher';
 import { advance } from '../actions/AdvanceActionCreators';
 import { receive as chatReceive } from '../actions/ChatActionCreators';
+import { join as userJoin, leave as userLeave } from '../actions/UserActionCreators';
 import FakeSocket from './FakeSocket';
 
 const debug = require('debug')('uwave:websocket');
@@ -30,6 +31,13 @@ export function connect() {
       break;
     case 'advance':
       advance(data);
+      break;
+
+    case 'join':
+      userJoin(data);
+      break;
+    case 'leave':
+      userLeave(data);
       break;
     default:
       debug('!unknown socket message type');

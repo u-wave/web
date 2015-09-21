@@ -39,6 +39,7 @@ export default class FakeSocket extends EventEmitter {
     super();
     this._chat = setTimeout(::this.simulateChat, 500);
     this._advance = setTimeout(::this.simulateAdvance, 100);
+    this._users = setTimeout(::this.simulateUsers, 3000);
     this.waitlist = UserStore.getOnlineUsers().map(user => user.id);
   }
 
@@ -59,11 +60,13 @@ export default class FakeSocket extends EventEmitter {
   }
 
   simulateChat() {
+    if (this._chat) clearTimeout(this._chat);
     this.randomChatMessage();
     this._chat = setTimeout(::this.simulateChat, faker.random.number({ min: 50, max: 2000 }));
   }
 
   simulateAdvance() {
+    if (this._advance) clearTimeout(this._advance);
     const dj = this.waitlist.shift();
     if (this.currentMedia) {
       this.waitlist.push(this.currentMedia.dj.id);
@@ -72,6 +75,14 @@ export default class FakeSocket extends EventEmitter {
 
     const wait = this.currentMedia.media.duration * 1000;
     this._advance = setTimeout(::this.simulateAdvance, wait);
+  }
+
+  simulateUsers() {
+    if (this._users) clearTimeout(this._users);
+    if (faker.random.number(4) === 0) {
+      this.randomUserJoinLeave();
+    }
+    this._users = setTimeout(::this.simulateUsers, 3000);
   }
 
   receive(command, data) {
@@ -93,5 +104,24 @@ export default class FakeSocket extends EventEmitter {
   randomAdvance(userID) {
     this.currentMedia = makeRandomAdvance(userID);
     this.receive('advance', this.currentMedia);
+  }
+
+  randomUserJoinLeave() {
+    if (faker.random.boolean()) {
+      // join
+      const username = faker.internet.userName();
+      this.receive('join', {
+        id: faker.random.uuid(),
+        username: username,
+        avatar: faker.internet.avatar(),
+        role: faker.random.number({ min: 0, max: 6 })
+      });
+    } else {
+      // leave
+      const me = UserStore.getCurrentUser();
+      const users = UserStore.getOnlineUsers().filter(user => user !== me);
+      const partyPooper = faker.random.arrayElement(users);
+      this.receive('leave', partyPooper.id);
+    }
   }
 }
