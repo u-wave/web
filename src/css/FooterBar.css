@@ -8,7 +8,7 @@
 
 @component UserInfo {
   box-sizing: border-box;
-  display: inline-block;
+  float: left;
   width: 75px;
   height: 100%;
   padding: 4px;
@@ -21,7 +21,7 @@
 
 @component NextMedia {
   box-sizing: border-box;
-  display: inline-block;
+  float: left;
   cursor: pointer;
   color: $muted-text-color;
   font-size: 11pt;
