@@ -7,8 +7,8 @@ import UserStore from '../../stores/UserStore';
 
 function getState() {
   return {
-    playlist: PlaylistStore.getCurrentPlaylist(),
-    nextMedia: { artist: 'Swings', title: 'Bulldozer' },
+    playlist: PlaylistStore.getActivePlaylist(),
+    nextMedia: PlaylistStore.getActiveMedia()[0],
     user: UserStore.getCurrentUser()
   };
 }
