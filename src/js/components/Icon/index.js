@@ -3,14 +3,15 @@ import React from 'react';
 
 export default class Icon extends React.Component {
   static propTypes = {
+    className: React.PropTypes.string,
     name: React.PropTypes.string
   };
 
   render() {
-    const { name, ...props } = this.props;
+    const { name, className, ...props } = this.props;
     return (
       <i
-        className={cx('material-icons', 'Icon', `Icon--${name}`)}
+        className={cx('material-icons', 'Icon', `Icon--${name}`, className)}
         { ...props }
       >
         {name}
