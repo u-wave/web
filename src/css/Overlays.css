@@ -6,14 +6,14 @@
     transform: translateY(100%);
     &-active {
       transform: translateY(0%);
-      transition: transform 120ms;
+      transition: transform 180ms ease-out;
     }
   }
   @descendent leave {
     transform: translateY(0%);
     &-active {
       transform: translateY(100%);
-      transition: transform 120ms;
+      transition: transform 180ms ease-in;
     }
   }
 }
