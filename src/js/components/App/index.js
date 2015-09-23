@@ -10,26 +10,27 @@ import Panel from '../PanelSwitcher/Panel';
 import Video from '../Video';
 
 export default class App extends React.Component {
-
   render() {
     return (
       <div className="App">
-        <div className="AppRow AppRow--top">
-          <div className="AppColumn AppColumn--left">
+        <div className="AppColumn AppColumn--left">
+          <div className="AppRow AppRow--top">
             <HeaderBar
               className="App-header"
               title="üWave"
             />
           </div>
-          <div className="AppColumn AppColumn--right">
-            <PanelSwitcher />
-          </div>
-        </div>
-        <div className="AppRow AppRow--middle">
-          <div className="AppColumn AppColumn--left">
+          <div className="AppRow AppRow--middle">
             <Video />
           </div>
-          <PanelGroup className="AppColumn AppColumn--right">
+          <FooterBar className="AppRow AppRow--bottom" />
+        </div>
+
+        <div className="AppColumn AppColumn--right">
+          <div className="AppRow AppRow--top">
+            <PanelSwitcher />
+          </div>
+          <PanelGroup className="AppRow AppRow--middle">
             <Panel name="chat">
               <Chat />
             </Panel>
@@ -38,15 +39,11 @@ export default class App extends React.Component {
               [Placeholder]
             </Panel>
           </PanelGroup>
-        </div>
-        <div className="AppRow AppRow--bottom BottomBar">
-          <FooterBar className="AppColumn AppColumn--left" />
-          <div className="AppColumn AppColumn--right">
+          <div className="AppRow AppRow--bottom">
             <ChatInput />
           </div>
         </div>
       </div>
     );
   }
-
 }
