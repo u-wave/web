@@ -1,0 +1,66 @@
+import cx from 'classnames';
+import find from 'array-find';
+import React from 'react';
+import PlaylistStore from '../../stores/PlaylistStore';
+import PlaylistMenu from './Menu';
+import PlaylistHeader from './Header';
+
+function getState() {
+  return {
+    playlists: PlaylistStore.getPlaylists(),
+    activePlaylist: PlaylistStore.getActivePlaylist(),
+    selectedPlaylist: PlaylistStore.getSelectedPlaylist()
+  };
+}
+
+export default class PlaylistManager extends React.Component {
+  static propTypes = {
+    className: React.PropTypes.string
+  };
+
+  constructor() {
+    super();
+    this.onChange = this.onChange.bind(this);
+  }
+
+  state = getState();
+
+  componentDidMount() {
+    PlaylistStore.on('change', this.onChange);
+  }
+
+  componentWillUnmount() {
+    PlaylistStore.removeListener('change', this.onChange);
+  }
+
+  onChange() {
+    this.setState(getState());
+  }
+
+  render() {
+    const { playlists } = this.state;
+    const active = find(playlists, playlist => playlist.active);
+    const selected = find(playlists, playlist => playlist.selected);
+    return (
+      <div className={cx('PlaylistManager', 'AppColumn', 'AppColumn--full', this.props.className)}>
+        <PlaylistHeader
+          className="PlaylistManager-header AppRow AppRow--top"
+          selectedPlaylist={selected}
+        />
+
+        <div className="AppRow AppRow--middle">
+          <PlaylistMenu
+            className="PlaylistManager-menu"
+            playlists={playlists}
+            active={active}
+            selected={selected}
+          />
+
+          <div
+            className="PlaylistManager-panel PlaylistPanel"
+          />
+        </div>
+      </div>
+    );
+  }
+}
