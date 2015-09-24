@@ -22,6 +22,7 @@
 }
 
 @component AppColumn {
+  overflow: hidden;
   position: absolute;
   height: 100%;
 
