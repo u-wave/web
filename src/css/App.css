@@ -26,6 +26,9 @@
   position: absolute;
   height: 100%;
 
+  @modifier full {
+    width: 100%;
+  }
   @modifier left {
     width: 75%;
     left: 0;
