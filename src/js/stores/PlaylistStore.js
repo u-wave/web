@@ -5,13 +5,9 @@ import dispatcher from '../dispatcher';
 
 const playlists = {};
 let activePlaylist = null;
-const activeMedia = [
-  { artist: 'Swings', title: 'Bulldozer' }
-];
+let activeMedia = [];
 let selectedPlaylist = null;
-const selectedMedia = [
-  { artist: '4Minute', title: 'Crazy' }
-];
+let selectedMedia = [];
 
 const PlaylistStore = assign(new EventEmitter, {
   getActivePlaylist() {
@@ -39,10 +35,14 @@ const PlaylistStore = assign(new EventEmitter, {
       if (!activePlaylist && payload.playlists.length > 0) {
         activePlaylist = payload.playlists[0];
         activePlaylist.active = true;
+        // TODO grab this from server or cache instead of playlist obj
+        activeMedia = activePlaylist.media;
       }
       if (!selectedPlaylist && payload.playlists.length > 0) {
         selectedPlaylist = payload.playlists[0];
         selectedPlaylist.selected = true;
+        // TODO grab this from server or cache instead of playlist obj
+        selectedMedia = selectedPlaylist.media;
       }
       PlaylistStore.emit('change');
       break;
@@ -52,6 +52,8 @@ const PlaylistStore = assign(new EventEmitter, {
       }
       activePlaylist = playlists[payload.playlistID];
       activePlaylist.active = true;
+      // TODO grab this from server or cache instead of playlist obj
+      activeMedia = activePlaylist.media;
       PlaylistStore.emit('change');
       break;
     case 'selectPlaylist':
@@ -60,6 +62,8 @@ const PlaylistStore = assign(new EventEmitter, {
       }
       selectedPlaylist = playlists[payload.playlistID];
       selectedPlaylist.selected = true;
+      // TODO grab this from server or cache instead of playlist obj
+      selectedMedia = selectedPlaylist.media;
       PlaylistStore.emit('change');
       break;
     default:

@@ -1,0 +1,60 @@
+@import "vars.css";
+
+@component MediaList {
+}
+
+@component MediaListRow {
+  height: 54px;
+  line-height: 54px;
+
+  &:nth-child(2n+1) {
+    background: hexa($muted-text-color, 0.3);
+  }
+
+  @descendent thumb {
+    box-sizing: border-box;
+    height: 100%;
+    width: 80px;
+    margin: 0 10px;
+    padding: 5px 0;
+    float: left;
+  }
+
+  @descendent artist {
+    float: left;
+    width: calc(50% - 100px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  @descendent title {
+    float: left;
+    width: 50%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  @descendent actions {
+    position: absolute;
+    right: 0;
+    background: $background-color;
+    display: none;
+  }
+
+  /* Kinda hacky, not sure if there's a better way to do this thing without
+   * getting JS involved */
+  &:hover &-actions {
+    display: block;
+  }
+}
+
+@component MediaActions {
+  height: 54px;
+  width: 162px;
+  text-align: right;
+
+  @descendent action {
+    display: inline-block;
+    margin: 15px;
+  }
+}

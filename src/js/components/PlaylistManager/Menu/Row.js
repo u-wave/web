@@ -1,7 +1,6 @@
 import cx from 'classnames';
 import React from 'react';
-
-const selectPlaylist = () => null;
+import { selectPlaylist } from '../../../actions/PlaylistActionCreators';
 
 export default class Menu extends React.Component {
   static propTypes = {
@@ -16,7 +15,7 @@ export default class Menu extends React.Component {
     return (
       <div
         className={cx('PlaylistMenuRow', activeClass, selectedClass, className)}
-        onClick={selectPlaylist}
+        onClick={selectPlaylist.bind(null, playlist.id)}
       >
         {playlist.name}
       </div>

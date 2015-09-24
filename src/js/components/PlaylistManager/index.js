@@ -4,12 +4,13 @@ import React from 'react';
 import PlaylistStore from '../../stores/PlaylistStore';
 import PlaylistMenu from './Menu';
 import PlaylistHeader from './Header';
+import PlaylistPanel from './Panel';
 
 function getState() {
   return {
     playlists: PlaylistStore.getPlaylists(),
-    activePlaylist: PlaylistStore.getActivePlaylist(),
-    selectedPlaylist: PlaylistStore.getSelectedPlaylist()
+    activeMedia: PlaylistStore.getActiveMedia(),
+    selectedMedia: PlaylistStore.getSelectedMedia()
   };
 }
 
@@ -38,7 +39,7 @@ export default class PlaylistManager extends React.Component {
   }
 
   render() {
-    const { playlists } = this.state;
+    const { playlists, selectedMedia } = this.state;
     const active = find(playlists, playlist => playlist.active);
     const selected = find(playlists, playlist => playlist.selected);
     return (
@@ -56,8 +57,10 @@ export default class PlaylistManager extends React.Component {
             selected={selected}
           />
 
-          <div
-            className="PlaylistManager-panel PlaylistPanel"
+          <PlaylistPanel
+            className="PlaylistManager-panel"
+            playlist={selected}
+            media={selectedMedia}
           />
         </div>
       </div>

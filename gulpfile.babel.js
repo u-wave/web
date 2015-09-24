@@ -9,6 +9,7 @@ import minifyHtml from 'gulp-minify-html';
 import postcss from 'gulp-postcss';
 import postcssAutoprefix from 'autoprefixer';
 import postcssBem from 'postcss-bem';
+import postcssHexa from 'postcss-color-hexa';
 import postcssImport from 'postcss-import';
 import postcssNested from 'postcss-nested';
 import postcssVars from 'postcss-simple-vars';
@@ -23,6 +24,7 @@ gulp.task('postcss', () => {
       postcssVars(),
       postcssBem(),
       postcssNested(),
+      postcssHexa(),
       postcssAutoprefix({
         remove: false,
         browsers: [ 'last 2 versions' ]

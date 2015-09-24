@@ -8,6 +8,8 @@ import PanelSwitcher from '../PanelSwitcher';
 import PanelGroup from '../PanelSwitcher/Group';
 import Panel from '../PanelSwitcher/Panel';
 import Video from '../Video';
+import Overlays from './Overlays';
+import PlaylistManager from '../PlaylistManager';
 
 export default class App extends React.Component {
   render() {
@@ -23,6 +25,9 @@ export default class App extends React.Component {
           <div className="AppRow AppRow--middle">
             <Video />
           </div>
+          <Overlays transitionName="Overlay">
+            <PlaylistManager key="playlistManager" />
+          </Overlays>
           <FooterBar className="AppRow AppRow--bottom" />
         </div>
 

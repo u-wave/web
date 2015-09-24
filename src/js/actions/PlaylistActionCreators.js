@@ -7,9 +7,16 @@ export function setPlaylists(playlists) {
   });
 }
 
-export function setCurrent(playlistID) {
+export function selectPlaylist(playlistID) {
   dispatcher.dispatch({
-    action: 'setCurrentPlaylist',
+    action: 'selectPlaylist',
+    playlistID: playlistID
+  });
+}
+
+export function setActivePlaylist(playlistID) {
+  dispatcher.dispatch({
+    action: 'setActivePlaylist',
     playlistID: playlistID
   });
 }

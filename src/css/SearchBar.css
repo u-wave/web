@@ -1,0 +1,24 @@
+@import "vars.css";
+
+@component SearchBar {
+  background: #252727;
+  border-radius: 2px;
+  width: 100%;
+  height: 38px;
+  margin: 8px 0;
+
+  @descendent icon {
+    width: 80px;
+    text-align: center;
+    font-size: 32px;
+    line-height: 38px;
+  }
+
+  @descendent query {
+    background: transparent;
+    height: 100%;
+    border: none;
+    padding: 0;
+    color: $text-color;
+  }
+}
