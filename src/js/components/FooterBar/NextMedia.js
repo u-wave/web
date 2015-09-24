@@ -11,7 +11,7 @@ export default class NextMedia extends React.Component {
   };
 
   render() {
-    const { playlist, nextMedia, className } = this.props;
+    const { playlist, nextMedia, className, ...attrs } = this.props;
     if (!playlist || !nextMedia) {
       return (
         <div className={cx('NextMedia', className)}>
@@ -24,7 +24,7 @@ export default class NextMedia extends React.Component {
     const playlistEl = <span className="NextMedia-playlist">{playlist.name}</span>;
     const etaEl = <Eta className="NextMedia-eta" />;
     return (
-      <div className={cx('NextMedia', className)}>
+      <div className={cx('NextMedia', className)} {...attrs}>
         {mediaEl} from {playlistEl} in {etaEl}
       </div>
     );

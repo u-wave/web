@@ -1,10 +1,21 @@
 import { dispatch } from '../dispatcher';
 
-export function openPlaylistManager() {
+export function openOverlay(overlay) {
   dispatch({
     action: 'openOverlay',
-    overlay: 'playlistManager'
+    overlay: overlay
   });
+}
+
+export function toggleOverlay(overlay) {
+  dispatch({
+    action: 'toggleOverlay',
+    overlay: overlay
+  });
+}
+
+export function togglePlaylistManager() {
+  toggleOverlay('playlistManager');
 }
 
 export function closeAll() {

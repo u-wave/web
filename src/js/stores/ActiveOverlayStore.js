@@ -15,6 +15,14 @@ const ActiveOverlayStore = assign(new EventEmitter, {
       active = payload.overlay;
       ActiveOverlayStore.emit('change');
       break;
+    case 'toggleOverlay':
+      if (payload.overlay === active) {
+        active = null;
+      } else {
+        active = payload.overlay;
+      }
+      ActiveOverlayStore.emit('change');
+      break;
     case 'closeOverlay':
       active = null;
       ActiveOverlayStore.emit('change');

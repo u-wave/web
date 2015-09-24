@@ -3,6 +3,7 @@
 @component FooterBar {
   box-sizing: border-box;
   border-top: 1px solid $chat-border-color;
+  background: $background-color;
 }
 
 @component UserInfo {

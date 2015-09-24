@@ -1,9 +1,10 @@
 import cx from 'classnames';
 import React from 'react';
-import NextMedia from './NextMedia';
-import UserInfo from './UserInfo';
+import { togglePlaylistManager } from '../../actions/OverlayActionCreators';
 import PlaylistStore from '../../stores/PlaylistStore';
 import UserStore from '../../stores/UserStore';
+import NextMedia from './NextMedia';
+import UserInfo from './UserInfo';
 
 function getState() {
   return {
@@ -44,6 +45,7 @@ export default class FooterBar extends React.Component {
         <NextMedia
           playlist={this.state.playlist}
           nextMedia={this.state.nextMedia}
+          onClick={togglePlaylistManager}
         />
       </div>
     );
