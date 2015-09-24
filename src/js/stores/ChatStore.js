@@ -1,7 +1,6 @@
 import assign from 'object-assign';
 import EventEmitter from 'events';
 import dispatcher from '../dispatcher';
-import { send as sendChat } from '../utils/FakeChatSocket';
 import UserStore from './UserStore';
 import escapeRegExp from 'escape-string-regexp';
 
@@ -45,7 +44,6 @@ const ChatStore = assign(new EventEmitter, {
         messages = messages.slice(1);
       }
 
-      sendChat(send);
       ChatStore.emit('change');
       break;
     case 'chatReceive':
