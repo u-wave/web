@@ -1,3 +1,4 @@
+import cx from 'classnames';
 import isEqual from 'is-equal-shallow';
 import React from 'react';
 import YouTube from 'react-youtube';
@@ -62,12 +63,12 @@ export default class Video extends React.Component {
     const { media } = this.state;
     let video = '';
 
-    switch (media.source) {
+    switch (media.sourceType) {
     case 'youtube':
       video = (
         <YouTube
           ref="youtube"
-          url={'https://youtube.com/watch?v=' + media.id}
+          url={`https://youtube.com/watch?v=${media.sourceID}`}
           opts={{
             width: '100%',
             height: '100%',
@@ -88,7 +89,7 @@ export default class Video extends React.Component {
     }
 
     return (
-      <div className="Video">
+      <div className={cx('Video', `Video--${media.sourceType}`)}>
         {video}
       </div>
     );
