@@ -26,6 +26,23 @@
   &:nth-child(2n+1) {
     background: hexa($muted-text-color, 0.3);
   }
+
+  @descendent active-icon {
+    display: block;
+    float: left;
+    width: 24px;
+    height: 44px;
+    line-height: 44px;
+    margin-right: 7px;
+  }
+
+  @when selected {
+    background: rgba(128, 36, 75, 0.5);
+
+    &:nth-child(2n+1) {
+      background: rgba(128, 36, 75, 0.7);
+    }
+  }
 }
 
 @component PlaylistPanel {

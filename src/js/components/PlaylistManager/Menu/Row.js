@@ -1,6 +1,7 @@
 import cx from 'classnames';
 import React from 'react';
 import { selectPlaylist } from '../../../actions/PlaylistActionCreators';
+import Icon from '../../Icon';
 
 export default class Menu extends React.Component {
   static propTypes = {
@@ -10,13 +11,14 @@ export default class Menu extends React.Component {
 
   render() {
     const { className, playlist } = this.props;
-    const activeClass = playlist.active && 'PlaylistMenuRow--active';
-    const selectedClass = playlist.selected && 'PlaylistMenuRow--selected';
+    const activeClass = playlist.active && 'is-active';
+    const selectedClass = playlist.selected && 'is-selected';
     return (
       <div
         className={cx('PlaylistMenuRow', activeClass, selectedClass, className)}
         onClick={selectPlaylist.bind(null, playlist.id)}
       >
+        {playlist.active ? <Icon name="checkbox" className="PlaylistMenuRow-active-icon" /> : ''}
         {playlist.name}
       </div>
     );
