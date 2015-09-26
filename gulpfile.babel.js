@@ -4,6 +4,7 @@ import concat from 'gulp-concat';
 import cssnano from 'gulp-cssnano';
 import eslint from 'gulp-eslint';
 import gulp from 'gulp';
+import { log } from 'gulp-util';
 import minifyHtml from 'gulp-minify-html';
 import postcss from 'gulp-postcss';
 import postcssAutoprefix from 'autoprefixer';
@@ -13,6 +14,7 @@ import postcssNested from 'postcss-nested';
 import postcssVars from 'postcss-simple-vars';
 import source from 'vinyl-source-stream';
 import uglify from 'gulp-uglify';
+import watchify from 'watchify';
 
 gulp.task('postcss', () => {
   return gulp.src('src/css/**/*.css')
@@ -58,6 +60,24 @@ gulp.task('browserify', [ 'eslint' ], () => {
     .pipe(gulp.dest('lib/'));
 });
 
+gulp.task('watchify', () => {
+  const wOpts = {
+    cache: {},
+    packageCache: {}
+  };
+  const w = watchify(makeBrowserify(wOpts));
+  w.on('log', log.bind(null, 'watchify:'));
+
+  function bundle() {
+    w
+      .bundle()
+      .pipe(source('out.js'))
+      .pipe(gulp.dest('lib/'));
+  }
+  w.on('update', bundle);
+  bundle();
+});
+
 gulp.task('js', [ 'browserify' ]);
 
 gulp.task('min-css', [ 'css' ], () => {
@@ -77,8 +97,8 @@ gulp.task('dist', [ 'min-js', 'min-css' ], () => {
     .pipe(gulp.dest('dist/'));
 });
 
-gulp.task('watch', () => {
-  gulp.watch('src/js/**/*.js', [ 'js' ]);
+gulp.task('watch', [ 'watchify' ], () => {
+  gulp.watch([ 'src/js/**/*.js', 'gulpfile.babel.js' ], [ 'eslint' ]);
   gulp.watch('src/css/**/*.css', [ 'css' ]);
 });
 

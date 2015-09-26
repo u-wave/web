@@ -35,7 +35,8 @@
     "postcss-import": "^7.0.0",
     "postcss-nested": "^1.0.0",
     "postcss-simple-vars": "^1.0.1",
-    "vinyl-source-stream": "^1.1.0"
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.4.0"
   },
   "scripts": {
     "test": "gulp eslint",
