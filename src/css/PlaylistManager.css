@@ -31,9 +31,40 @@
 @component PlaylistPanel {
   background: hexa($background-color, 0.96);
   height: 100%;
+}
 
-  @descendent meta {
-    height: 54px;
-    line-height: 54px;
+@component PlaylistMeta {
+  height: 54px;
+  line-height: 54px;
+  font-size: 14pt;
+
+  @descendent name {
+    box-sizing: border-box;
+    width: 50%;
+    padding-left: 15px;
+    float: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  @descendent active {
+    cursor: pointer;
+    padding: 4px;
+    line-height: 46px /* 54px - 2×4px */;
+    box-sizing: border-box;
+    height: 100%;
+    margin-left: 70%;
+    width: 20%;
+    text-align: center;
+  }
+  &--active &-active {
+    cursor: default;
+  }
+
+  @descendent active-icon {
+    /* TODO Align with "Active" font bottom somehow? */
+    font-size: 100%;
+    margin-right: 5px;
   }
 }

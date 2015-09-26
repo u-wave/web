@@ -1,6 +1,7 @@
 import cx from 'classnames';
 import React from 'react';
 import MediaList from '../../MediaList';
+import PlaylistMeta from './Meta';
 
 export default class Panel extends React.Component {
   static propTypes = {
@@ -14,9 +15,12 @@ export default class Panel extends React.Component {
 
     return (
       <div className={cx('PlaylistPanel', className)}>
-        <div className="PlaylistPanel-meta">
-          {playlist.name}
-        </div>
+        <PlaylistMeta
+          className="PlaylistPanel-meta"
+          id={playlist.id}
+          name={playlist.name}
+          active={playlist.active}
+        />
 
         <MediaList
           className="PlaylistPanel-media"
