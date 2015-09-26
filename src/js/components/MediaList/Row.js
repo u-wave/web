@@ -13,7 +13,11 @@ export default class Row extends React.Component {
     return (
       <div className={cx('MediaListRow', className)}>
         <div className="MediaListRow-thumb">
-          <img src={media.thumbnail} alt="" />
+          <img
+            className="MediaListRow-image"
+            src={media.thumbnail}
+            alt=""
+          />
         </div>
         <div className="MediaListRow-artist">
           {media.artist}

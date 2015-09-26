@@ -14,15 +14,20 @@
   @descendent thumb {
     box-sizing: border-box;
     height: 100%;
-    width: 80px;
-    margin: 0 10px;
-    padding: 5px 0;
+    width: 55px;
+    margin: 0 15px;
+    padding: 7px 0;
     float: left;
+  }
+
+  @descendent image {
+    max-width: 100%;
+    max-height: 100%;
   }
 
   @descendent artist {
     float: left;
-    width: calc(50% - 100px);
+    width: calc(50% - 85px);
     overflow: hidden;
     text-overflow: ellipsis;
   }
