@@ -32,6 +32,12 @@
     margin-right: 7px;
   }
 
+  @descendent count {
+    float: right;
+    color: $highlight-color;
+    margin-right: 5px;
+  }
+
   @when selected {
     background: hexa($muted-text-color, 0.3);
   }

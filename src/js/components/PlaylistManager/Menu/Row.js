@@ -20,6 +20,7 @@ export default class Menu extends React.Component {
       >
         {playlist.active ? <Icon name="checkbox" className="PlaylistMenuRow-active-icon" /> : ''}
         {playlist.name}
+        <span className="PlaylistMenuRow-count">{playlist.count}</span>
       </div>
     );
   }
