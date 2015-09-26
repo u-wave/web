@@ -1,6 +1,5 @@
-import babel from 'gulp-babel';
+import babel from 'babelify';
 import browserify from 'browserify';
-import changed from 'gulp-changed';
 import concat from 'gulp-concat';
 import cssnano from 'gulp-cssnano';
 import eslint from 'gulp-eslint';
@@ -43,23 +42,23 @@ gulp.task('eslint', () => {
     .pipe(eslint.failAfterError());
 });
 
-gulp.task('babel', () => {
-  const DEST = 'lib/js/';
-  return gulp.src('src/js/**/*.js')
-    .pipe(changed(DEST))
-    .pipe(babel({ stage: 0 }))
-    .pipe(gulp.dest(DEST));
-});
-
-gulp.task('js', [ 'eslint', 'babel' ], () => {
+function makeBrowserify(opts = {}) {
   return browserify({
+    ...opts,
     debug: true,
-    entries: './lib/js/app.js'
+    entries: './src/js/app.js'
   })
+    .transform(babel.configure({ stage: 0 }));
+}
+
+gulp.task('browserify', [ 'eslint' ], () => {
+  return makeBrowserify()
     .bundle()
     .pipe(source('out.js'))
     .pipe(gulp.dest('lib/'));
 });
+
+gulp.task('js', [ 'browserify' ]);
 
 gulp.task('min-css', [ 'css' ], () => {
   return gulp.src('lib/style.css')
