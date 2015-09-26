@@ -23,10 +23,6 @@
   padding: 0 10px;
   cursor: pointer;
 
-  &:nth-child(2n+1) {
-    background: hexa($muted-text-color, 0.3);
-  }
-
   @descendent active-icon {
     display: block;
     float: left;
@@ -37,11 +33,7 @@
   }
 
   @when selected {
-    background: rgba(128, 36, 75, 0.5);
-
-    &:nth-child(2n+1) {
-      background: rgba(128, 36, 75, 0.7);
-    }
+    background: hexa($muted-text-color, 0.3);
   }
 }
 
