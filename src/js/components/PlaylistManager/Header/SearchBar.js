@@ -20,15 +20,19 @@ export default class SearchBar extends React.Component {
     const { focused } = this.state;
     return (
       <div className={cx('SearchBar', focused ? 'is-focused' : '', this.props.className)}>
-        <Icon className="SearchBar-icon" name="search" />
-        <input
-          ref="value"
-          className="SearchBar-query"
-          type="text"
-          placeholder={focused ? '' : 'Search'}
-          onFocus={this.onFocus.bind(this)}
-          onBlur={this.onBlur.bind(this)}
-        />
+        <div className="SearchBar-icon">
+          <Icon name="search" />
+        </div>
+        <div className="SearchBar-query">
+          <input
+            ref="value"
+            className="SearchBar-input"
+            type="text"
+            placeholder={focused ? '' : 'Search'}
+            onFocus={this.onFocus.bind(this)}
+            onBlur={this.onBlur.bind(this)}
+          />
+        </div>
       </div>
     );
   }
