@@ -42,7 +42,6 @@
   @descendent actions {
     position: absolute;
     right: 0;
-    background: $background-color;
     display: none;
   }
 
