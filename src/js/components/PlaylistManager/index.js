@@ -2,6 +2,7 @@ import cx from 'classnames';
 import find from 'array-find';
 import React from 'react';
 import PlaylistStore from '../../stores/PlaylistStore';
+import SearchStore from '../../stores/SearchStore';
 import PlaylistMenu from './Menu';
 import PlaylistHeader from './Header';
 import PlaylistPanel from './Panel';
@@ -10,7 +11,9 @@ function getState() {
   return {
     playlists: PlaylistStore.getPlaylists(),
     activeMedia: PlaylistStore.getActiveMedia(),
-    selectedMedia: PlaylistStore.getSelectedMedia()
+    selectedMedia: PlaylistStore.getSelectedMedia(),
+
+    searchSource: SearchStore.getSourceType()
   };
 }
 
@@ -28,10 +31,12 @@ export default class PlaylistManager extends React.Component {
 
   componentDidMount() {
     PlaylistStore.on('change', this.onChange);
+    SearchStore.on('change', this.onChange);
   }
 
   componentWillUnmount() {
     PlaylistStore.removeListener('change', this.onChange);
+    SearchStore.removeListener('change', this.onChange);
   }
 
   onChange() {
@@ -39,7 +44,7 @@ export default class PlaylistManager extends React.Component {
   }
 
   render() {
-    const { playlists, selectedMedia } = this.state;
+    const { playlists, selectedMedia, searchSource } = this.state;
     const active = find(playlists, playlist => playlist.active);
     const selected = find(playlists, playlist => playlist.selected);
     return (
@@ -47,6 +52,7 @@ export default class PlaylistManager extends React.Component {
         <PlaylistHeader
           className="PlaylistManager-header AppRow AppRow--top"
           selectedPlaylist={selected}
+          searchSource={searchSource}
         />
 
         <div className="AppRow AppRow--middle">

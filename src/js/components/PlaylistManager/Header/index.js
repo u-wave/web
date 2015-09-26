@@ -5,7 +5,8 @@ import SearchBar from './SearchBar';
 
 export default class Header extends React.Component {
   static propTypes = {
-    className: React.PropTypes.string
+    className: React.PropTypes.string,
+    searchSource: React.PropTypes.string
   };
 
   render() {
@@ -14,7 +15,10 @@ export default class Header extends React.Component {
         className={cx('PlaylistHeader', this.props.className)}
         title="Playlists"
       >
-        <SearchBar className="PlaylistHeader-search" />
+        <SearchBar
+          className="PlaylistHeader-search"
+          source={this.props.searchSource}
+        />
       </OverlayHeader>
     );
   }
