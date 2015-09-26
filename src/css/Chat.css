@@ -18,6 +18,10 @@
     background: $chat-background-color2;
   }
 
+  @modifier mention {
+    box-shadow: 5px 0px 0px $highlight-color inset;
+  }
+
   @descendent avatar {
     position: absolute;
     width: 24px;

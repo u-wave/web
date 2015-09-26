@@ -3,6 +3,7 @@ import EventEmitter from 'events';
 import dispatcher from '../dispatcher';
 import { send as sendChat } from '../utils/FakeChatSocket';
 import UserStore from './UserStore';
+import escapeRegExp from 'escape-string-regexp';
 
 const MAX_MESSAGES = 500;
 let messages = [];
@@ -18,15 +19,20 @@ function removeInFlightMessage(message) {
   }
 }
 
+function hasMention(message, username) {
+  const rx = new RegExp(`@${escapeRegExp(username)}\\b`);
+  return rx.test(message);
+}
+
 const ChatStore = assign(new EventEmitter, {
   getMessages() {
     return messages;
   },
 
   dispatchToken: dispatcher.register(payload => {
+    const user = UserStore.getCurrentUser();
     switch (payload.action) {
     case 'chatSend':
-      const user = UserStore.getCurrentUser();
       const send = {
         user: user,
         userID: user.id,
@@ -47,6 +53,8 @@ const ChatStore = assign(new EventEmitter, {
         inFlight: false,
         user: UserStore.getUser(payload.message.userID)
       });
+
+      message.isMention = hasMention(message.text, user.username);
 
       removeInFlightMessage(message);
 
