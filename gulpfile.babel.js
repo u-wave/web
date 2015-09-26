@@ -5,6 +5,7 @@ import cssnano from 'gulp-cssnano';
 import eslint from 'gulp-eslint';
 import gulp from 'gulp';
 import { log } from 'gulp-util';
+import merge from 'merge-stream';
 import minifyHtml from 'gulp-minify-html';
 import postcss from 'gulp-postcss';
 import postcssAutoprefix from 'autoprefixer';
@@ -93,10 +94,19 @@ gulp.task('min-js', [ 'js' ], () => {
     .pipe(gulp.dest('dist/'));
 });
 
+gulp.task('assets', () => {
+  return gulp.src('assets/**/*')
+    .pipe(gulp.dest('lib/assets/'));
+});
+
 gulp.task('dist', [ 'min-js', 'min-css' ], () => {
-  return gulp.src('lib/index.html')
-    .pipe(minifyHtml())
-    .pipe(gulp.dest('dist/'));
+  return merge(
+    gulp.src('lib/index.html')
+      .pipe(minifyHtml())
+      .pipe(gulp.dest('dist/')),
+    gulp.src('lib/assets/**/*')
+      .pipe(gulp.dest('dist/assets/'))
+  );
 });
 
 gulp.task('watch', [ 'watchify' ], () => {
@@ -104,4 +114,4 @@ gulp.task('watch', [ 'watchify' ], () => {
   gulp.watch('src/css/**/*.css', [ 'css' ]);
 });
 
-gulp.task('default', [ 'js', 'css' ]);
+gulp.task('default', [ 'assets', 'js', 'css' ]);
