@@ -5,13 +5,19 @@ import Actions from './Actions';
 export default class Row extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
-    media: React.PropTypes.object
+    media: React.PropTypes.object,
+    selected: React.PropTypes.bool
+  };
+
+  static defaultProps = {
+    selected: false
   };
 
   render() {
-    const { className, media } = this.props;
+    const { className, media, selected, ...attrs } = this.props;
+    const selectedClass = selected ? 'is-selected' : '';
     return (
-      <div className={cx('MediaListRow', className)}>
+      <div className={cx('MediaListRow', className, selectedClass)} {...attrs}>
         <div className="MediaListRow-thumb">
           <img
             className="MediaListRow-image"

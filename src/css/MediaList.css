@@ -1,6 +1,7 @@
 @import "vars.css";
 
 @component MediaList {
+  overflow-y: auto;
 }
 
 @component MediaListRow {
@@ -9,6 +10,10 @@
 
   &:nth-child(2n+1) {
     background: hexa($muted-text-color, 0.3);
+  }
+
+  @when selected {
+    background: hexa($highlight-color, 0.7);
   }
 
   @descendent thumb {
