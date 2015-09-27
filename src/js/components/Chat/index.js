@@ -20,6 +20,26 @@ export default class Chat extends React.Component {
     ChatStore.on('change', this.onChange);
   }
 
+  componentWillUpdate() {
+    const el = React.findDOMNode(this.refs.chat);
+    const lastMessage = el.lastElementChild;
+    if (lastMessage) {
+      const neededSize = el.scrollTop + el.offsetHeight + lastMessage.offsetHeight;
+      this._isScrolledToBottom = neededSize >= el.scrollHeight - 20;
+    } else {
+      this._isScrolledToBottom = true;
+    }
+    debug('willUpdate', this._isScrolledToBottom);
+  }
+
+  componentDidUpdate() {
+    debug('didUpdate', this._isScrolledToBottom);
+    if (this._isScrolledToBottom) {
+      const el = React.findDOMNode(this.refs.chat);
+      el.scrollTop = el.scrollHeight;
+    }
+  }
+
   componentWillUnmount() {
     ChatStore.removeListener('change', this.onChange);
   }
@@ -30,7 +50,7 @@ export default class Chat extends React.Component {
 
   render() {
     return (
-      <div className="Chat">
+      <div className="Chat" ref="chat">
         {this.state.messages.map(msg => <Message key={msg.id} {...msg} />)}
       </div>
     );
