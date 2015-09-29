@@ -28,10 +28,12 @@ export default class FooterBar extends React.Component {
 
   componentDidMount() {
     PlaylistStore.on('change', this.onChange);
+    UserStore.on('change', this.onChange);
   }
 
   componentWillUnmount() {
     PlaylistStore.removeListener('change', this.onChange);
+    UserStore.removeListener('change', this.onChange);
   }
 
   onChange() {
@@ -39,14 +41,25 @@ export default class FooterBar extends React.Component {
   }
 
   render() {
-    return (
-      <div className={cx('FooterBar', this.props.className)}>
-        <UserInfo user={this.state.user} />
+    const { user, playlist, nextMedia } = this.state;
+
+    let tree;
+    if (user && !user.isGuest) {
+      tree = [
+        <UserInfo user={user} />,
         <NextMedia
-          playlist={this.state.playlist}
-          nextMedia={this.state.nextMedia}
+          playlist={playlist}
+          nextMedia={nextMedia}
           onClick={togglePlaylistManager}
         />
+      ];
+    } else {
+      tree = <div className="FooterBar-guest">You have to log in if you want to play!</div>;
+    }
+
+    return (
+      <div className={cx('FooterBar', this.props.className)}>
+        {tree}
       </div>
     );
   }
