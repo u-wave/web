@@ -1,4 +1,5 @@
 import React from 'react';
+import SettingsStore from '../../stores/SettingsStore';
 import Chat from '../Chat';
 import ChatInput from '../Chat/Input';
 import UserPanel from '../UserPanel';
@@ -11,7 +12,32 @@ import Video from '../Video';
 import Overlays from './Overlays';
 import PlaylistManager from '../PlaylistManager';
 
+function getState() {
+  return {
+    settings: SettingsStore.getAll()
+  };
+}
+
 export default class App extends React.Component {
+  constructor() {
+    super();
+    this.onChange = this.onChange.bind(this);
+  }
+
+  state = getState();
+
+  componentDidMount() {
+    SettingsStore.on('change', this.onChange);
+  }
+
+  componentWillUnmount() {
+    SettingsStore.removeListener('change', this.onChange);
+  }
+
+  onChange() {
+    this.setState(getState());
+  }
+
   render() {
     return (
       <div className="App">
