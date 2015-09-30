@@ -10,7 +10,8 @@ const debug = require('debug')('uwave:component:video');
 function getState() {
   return {
     volume: VolumeStore.isMuted() ? 0 : VolumeStore.getVolume(),
-    media: CurrentMediaStore.getMedia()
+    media: CurrentMediaStore.getMedia(),
+    startTime: CurrentMediaStore.getStartTime()
   };
 }
 
@@ -60,26 +61,30 @@ export default class Video extends React.Component {
   }
 
   render() {
-    const { media } = this.state;
+    const { media, startTime } = this.state;
     let video = '';
+
+    const seek = Math.round((Date.now() - startTime) / 1000);
 
     switch (media.sourceType) {
     case 'youtube':
+      const ytOpts = {
+        width: '100%',
+        height: '100%',
+        playerVars: {
+          autoplay: 1,
+          controls: 0,
+          rel: 0,
+          showinfo: 0,
+          start: (seek || 0) + (media.start || 0)
+        }
+      };
+      const ytUrl = `https://youtube.com/watch?v=${media.sourceID}`;
       video = (
         <YouTube
           ref="youtube"
-          url={`https://youtube.com/watch?v=${media.sourceID}`}
-          opts={{
-            width: '100%',
-            height: '100%',
-            playerVars: {
-              autoplay: 1,
-              controls: 0,
-              rel: 0,
-              showinfo: 0,
-              start: 0
-            }
-          }}
+          url={ytUrl}
+          opts={ytOpts}
           onReady={this.onYTReady.bind(this)}
         />
       );

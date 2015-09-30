@@ -8,12 +8,12 @@ import SongTitle from '../SongTitle';
 import Volume from './Volume';
 
 function getState() {
-  const elapsed = CurrentMediaStore.getTimeElapsed();
+  const startTime = CurrentMediaStore.getStartTime();
   const media = CurrentMediaStore.getMedia();
   const volume = VolumeStore.getVolume();
   const muted = VolumeStore.isMuted();
   return {
-    elapsed: elapsed,
+    startTime: startTime,
     total: media ? media.end - media.start : 0,
     media: media,
     volume: volume,
@@ -64,7 +64,7 @@ export default class HeaderBar extends React.Component {
         <Progress
           className="HeaderBar-progress"
           total={this.state.total}
-          elapsed={this.state.elapsed}
+          startTime={this.state.startTime}
         />
         <Volume
           className="HeaderBar-volume"

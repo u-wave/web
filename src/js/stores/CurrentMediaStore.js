@@ -22,15 +22,19 @@ const CurrentMediaStore = assign(new EventEmitter, {
     return clone(media);
   },
 
+  getStartTime() {
+    return startTime;
+  },
+
   getTimeElapsed() {
-    return Math.floor(Date.now() / 1000 - startTime);
+    return Math.floor((Date.now() - startTime) / 1000);
   },
 
   dispatchToken: dispatcher.register(payload => {
     switch (payload.action) {
     case 'advance':
       media = payload.media;
-      startTime = Math.floor(Date.now() / 1000) - (media.seek || 0);
+      startTime = payload.timestamp;
       CurrentMediaStore.emit('change');
       break;
     default:
