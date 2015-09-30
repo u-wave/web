@@ -39,6 +39,8 @@ export default class App extends React.Component {
   }
 
   render() {
+    const { settings } = this.state;
+
     return (
       <div className="App">
         <div className="AppColumn AppColumn--left">
@@ -49,7 +51,7 @@ export default class App extends React.Component {
             />
           </div>
           <div className="AppRow AppRow--middle">
-            <Video />
+            <Video size={settings.videoSize} />
           </div>
           <Overlays transitionName="Overlay">
             <PlaylistManager key="playlistManager" />

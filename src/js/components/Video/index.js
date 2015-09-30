@@ -16,6 +16,9 @@ function getState() {
 }
 
 export default class Video extends React.Component {
+  static propTypes = {
+    size: React.PropTypes.string
+  };
 
   constructor() {
     super();
@@ -31,6 +34,7 @@ export default class Video extends React.Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     return nextState.volume !== this.state.volume ||
+      nextProps.size !== this.props.size ||
       !isEqual(nextState.media, this.state.media);
   }
 
@@ -61,6 +65,7 @@ export default class Video extends React.Component {
   }
 
   render() {
+    const { size } = this.props;
     const { media, startTime } = this.state;
     let video = '';
 
@@ -81,20 +86,26 @@ export default class Video extends React.Component {
       };
       const ytUrl = `https://youtube.com/watch?v=${media.sourceID}`;
       video = (
-        <YouTube
-          ref="youtube"
-          url={ytUrl}
-          opts={ytOpts}
-          onReady={this.onYTReady.bind(this)}
-        />
+        <div className={cx('YouTubePlayer', `YouTubePlayer--${size}`)}>
+          <YouTube
+            ref="youtube"
+            url={ytUrl}
+            opts={ytOpts}
+            onReady={this.onYTReady.bind(this)}
+          />
+        </div>
       );
       break;
     default:
       // empty
     }
 
+    // TODO let individual players deal with this?
+    const backdrop = <img className="Video-backdrop" src={media.thumbnail} alt="" />;
+
     return (
-      <div className={cx('Video', `Video--${media.sourceType}`)}>
+      <div className={cx('Video', `Video--${media.sourceType}`, `Video--${size}`)}>
+        {backdrop}
         {video}
       </div>
     );
