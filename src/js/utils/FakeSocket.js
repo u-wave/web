@@ -68,13 +68,18 @@ export default class FakeSocket extends EventEmitter {
   simulateAdvance() {
     if (this._advance) clearTimeout(this._advance);
     const dj = this.waitlist.shift();
+    const next = makeRandomAdvance(dj);
+    const duration = (next.media.end - next.media.start) * 1000;
     if (this.currentMedia) {
       this.waitlist.push(this.currentMedia.dj.id);
+    } else {
+      next.played -= Math.floor(Math.random() * duration);
     }
-    this.randomAdvance(dj);
+    this.currentMedia = next;
+    this.receive('advance', this.currentMedia);
 
-    const wait = this.currentMedia.media.duration * 1000;
-    this._advance = setTimeout(::this.simulateAdvance, wait);
+    const endTime = next.played + duration;
+    this._advance = setTimeout(::this.simulateAdvance, endTime - Date.now());
   }
 
   simulateUsers() {
@@ -99,11 +104,6 @@ export default class FakeSocket extends EventEmitter {
       timestamp: Date.now(),
       message: faker.hacker.phrase()
     });
-  }
-
-  randomAdvance(userID) {
-    this.currentMedia = makeRandomAdvance(userID);
-    this.receive('advance', this.currentMedia);
   }
 
   randomUserJoinLeave() {
