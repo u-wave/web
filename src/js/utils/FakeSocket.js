@@ -24,7 +24,8 @@ function makeRandomAdvance(userID) {
       sourceID: sourceID,
       duration: duration,
       start: 0,
-      end: duration
+      end: duration,
+      thumbnail: `https://i.ytimg.com/vi/${sourceID}/sddefault.jpg`
     },
     playlistID: faker.random.number(1e8),
     played: Date.now()
