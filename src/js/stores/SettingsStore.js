@@ -2,7 +2,9 @@ import assign from 'object-assign';
 import EventEmitter from 'events';
 import dispatcher from '../dispatcher';
 
-const settings = {};
+const settings = {
+  videoSize: 'large'
+};
 
 const SettingsStore = assign(new EventEmitter, {
   getAll() {
