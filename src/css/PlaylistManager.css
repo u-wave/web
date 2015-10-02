@@ -46,6 +46,10 @@
 @component PlaylistPanel {
   background: hexa($background-color, 0.96);
   height: 100%;
+
+  @descendent media {
+    height: calc(100% - 54px);
+  }
 }
 
 @component PlaylistMeta {
