@@ -63,7 +63,8 @@
   text-align: right;
 
   @descendent action {
+    cursor: pointer;
     display: inline-block;
-    margin: 15px;
+    padding: 15px;
   }
 }
