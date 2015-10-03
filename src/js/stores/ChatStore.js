@@ -1,6 +1,7 @@
 import assign from 'object-assign';
 import EventEmitter from 'events';
 import dispatcher from '../dispatcher';
+import LoginStore from './LoginStore';
 import UserStore from './UserStore';
 import escapeRegExp from 'escape-string-regexp';
 
@@ -29,7 +30,7 @@ const ChatStore = assign(new EventEmitter, {
   },
 
   dispatchToken: dispatcher.register(payload => {
-    const user = UserStore.getCurrentUser();
+    const user = LoginStore.getUser();
     switch (payload.action) {
     case 'chatSend':
       const send = {
@@ -52,7 +53,9 @@ const ChatStore = assign(new EventEmitter, {
         user: UserStore.getUser(payload.message.userID)
       });
 
-      message.isMention = hasMention(message.text, user.username);
+      if (user) {
+        message.isMention = hasMention(message.text, user.username);
+      }
 
       removeInFlightMessage(message);
 

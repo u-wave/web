@@ -2,7 +2,7 @@ import cx from 'classnames';
 import React from 'react';
 import { togglePlaylistManager } from '../../actions/OverlayActionCreators';
 import PlaylistStore from '../../stores/PlaylistStore';
-import UserStore from '../../stores/UserStore';
+import LoginStore from '../../stores/LoginStore';
 import NextMedia from './NextMedia';
 import UserInfo from './UserInfo';
 
@@ -10,7 +10,7 @@ function getState() {
   return {
     playlist: PlaylistStore.getActivePlaylist(),
     nextMedia: PlaylistStore.getActiveMedia()[0],
-    user: UserStore.getCurrentUser()
+    user: LoginStore.getUser()
   };
 }
 
@@ -28,12 +28,12 @@ export default class FooterBar extends React.Component {
 
   componentDidMount() {
     PlaylistStore.on('change', this.onChange);
-    UserStore.on('change', this.onChange);
+    LoginStore.on('change', this.onChange);
   }
 
   componentWillUnmount() {
     PlaylistStore.removeListener('change', this.onChange);
-    UserStore.removeListener('change', this.onChange);
+    LoginStore.removeListener('change', this.onChange);
   }
 
   onChange() {

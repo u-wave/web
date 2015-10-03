@@ -1,5 +1,6 @@
 import EventEmitter from 'events';
 import faker from 'faker';
+import LoginStore from '../stores/LoginStore';
 import UserStore from '../stores/UserStore';
 
 function makeRandomAdvance(userID) {
@@ -51,7 +52,7 @@ export default class FakeSocket extends EventEmitter {
       if (command === 'chat') {
         this.receive('chatMessage', {
           chatID: faker.random.uuid(),
-          userID: UserStore.getCurrentUser().id,
+          userID: LoginStore.getUser().id,
           timestamp: Date.now(),
           message: data
         });
@@ -118,8 +119,9 @@ export default class FakeSocket extends EventEmitter {
       });
     } else {
       // leave
-      const me = UserStore.getCurrentUser();
-      const users = UserStore.getOnlineUsers().filter(user => user !== me);
+      const me = LoginStore.getUser();
+      const users = UserStore.getOnlineUsers()
+        .filter(user => user.id !== me.id);
       const partyPooper = faker.random.arrayElement(users);
       this.receive('leave', partyPooper.id);
     }
