@@ -10,7 +10,7 @@ const JS_TASKS = [ 'eslint' ];
 const CSS_PATHS = [ 'src/css/**/*.css' ];
 const CSS_TASKS = [ 'css' ];
 
-export default function watch() {
+export default function watchTask() {
   const bundler = browserify({
     debug: true,
     entries: './src/js/app.js',
@@ -25,7 +25,7 @@ export default function watch() {
     return watcher
       .bundle()
       .pipe(source('out.js'))
-      .pipe(gulp.dest('lib/'));
+      .pipe(dest('lib/'));
   }
   watcher.on('update', bundle);
 
