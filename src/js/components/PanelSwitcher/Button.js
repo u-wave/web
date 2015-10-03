@@ -11,9 +11,9 @@ export default class Button extends React.Component {
 
   render() {
     const className = cx(
-      'Button',
+      'PanelButton',
       this.props.className,
-      this.props.active ? 'Button--active' : ''
+      this.props.active ? 'PanelButton--active' : ''
     );
     return (
       <div

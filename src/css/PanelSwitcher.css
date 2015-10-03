@@ -4,7 +4,7 @@
   font-size: 10pt;
 }
 
-@component Button {
+@component PanelButton {
   cursor: pointer;
   box-sizing: border-box;
   float: left;
