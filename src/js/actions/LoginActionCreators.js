@@ -3,10 +3,10 @@ import { post } from '../utils/Request';
 
 const debug = require('debug')('uwave:actions:login');
 
-function loginComplete(token) {
+function loginComplete({ jwt, user }) {
   dispatch({
     action: 'loginComplete',
-    jwt: token
+    jwt, user
   });
 }
 function loginError(err) {
