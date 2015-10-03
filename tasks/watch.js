@@ -1,9 +1,11 @@
-import { dest, watch } from 'gulp';
+import gulp from 'gulp';
 import { log } from 'gulp-util';
 import { configure as babelify } from 'babelify';
 import browserify from 'browserify';
 import watchify from 'watchify';
 import source from 'vinyl-source-stream';
+
+const dest = ::gulp.dest;
 
 const JS_PATHS = [ 'src/js/**/*.js', 'gulpfile.babel.js', 'tasks/*.js' ];
 const JS_TASKS = [ 'eslint' ];
@@ -29,8 +31,8 @@ export default function watchTask() {
   }
   watcher.on('update', bundle);
 
-  watch(JS_PATHS, JS_TASKS);
-  watch(CSS_PATHS, CSS_TASKS);
+  gulp.watch(JS_PATHS, JS_TASKS);
+  gulp.watch(CSS_PATHS, CSS_TASKS);
 
   return bundle();
 }
