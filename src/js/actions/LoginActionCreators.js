@@ -3,17 +3,10 @@ import { post } from '../utils/Request';
 
 const debug = require('debug')('uwave:actions:login');
 
-function loginComplete({ jwt, user }) {
+export function loginComplete({ jwt, user }) {
   dispatch({
     action: 'loginComplete',
     jwt, user
-  });
-}
-function loginError(err) {
-  dispatch({
-    action: 'loginError',
-    error: err,
-    message: err.message
   });
 }
 
@@ -28,9 +21,8 @@ export function register({ email, username, password }) {
     });
 }
 
-export function login({ email, password }) {
-  post('/v1/auth/login', { email, password })
-    .then(res => res.json())
-    .then(loginComplete)
-    .catch(loginError);
+export function openLoginModal() {
+  dispatch({
+    action: 'openLoginModal'
+  });
 }
