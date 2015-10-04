@@ -1,0 +1,63 @@
+@import "vars.css";
+
+$forms-element-margin: 16px;
+$forms-textfield-size: 50px;
+
+@component FormGroup {
+  margin: $forms-element-margin 0;
+  width: 100%;
+  clear: both;
+}
+
+@component TextField {
+  background: #383838;
+  border: 1px solid #2c2c2c;
+  border-top-color: #3e3e3e;
+  border-right-color: #3e3e3e;
+  height: $forms-textfield-size;
+  font-size: 12pt;
+
+  @descendent input {
+    width: calc(100% - $forms-textfield-size);
+    border: 0;
+    height: 100%;
+    background: transparent;
+    line-height: $forms-textfield-size;
+    display: block;
+    float: left;
+    box-sizing: border-box;
+    padding: 0 $forms-element-margin;
+    font-size: 12pt;
+    color: #fff;
+    &::placeholder {
+      color: #9f9d9e;
+    }
+  }
+
+  @descendent icon {
+    width: $forms-textfield-size;
+    height: $forms-textfield-size;
+    line-height: $forms-textfield-size;
+    display: block;
+    float: left;
+    text-align: center;
+  }
+}
+
+@component Button {
+  background: #b20062;
+  height: $forms-textfield-size;
+  color: #fff;
+  border: 1px solid #9f0059;
+  border-top-color: #c1427b;
+  border-right-color: #c1427b;
+  width: 100%;
+  cursor: pointer;
+  font-size: 12pt;
+
+  @descendent loading {
+    width: calc($forms-textfield-size * 0.8);
+    height: calc($forms-textfield-size * 0.8);
+    margin: auto;
+  }
+}
