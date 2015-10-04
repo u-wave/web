@@ -6,10 +6,39 @@
   background: $background-color;
 
   @descendent guest {
-    margin-left: 75px;
+    font-size: 12pt;
+    padding: 0 25px;
+    float: right;
     display: flex;
     align-items: center;
     height: 100%;
+  }
+}
+
+@component FooterAuthButton {
+  box-sizing: border-box;
+  width: 125px;
+  height: 100%;
+  border: 0;
+  border-right: 1px solid $chat-border-color;
+  display: block;
+  float: left;
+  cursor: pointer;
+  color: #fff;
+  font-size: 12pt;
+
+  @modifier login {
+    background: $background-color;
+    &:hover {
+      background: $background-hover-color;
+    }
+  }
+
+  @modifier register {
+    background: #b20062;
+    &:hover {
+      background: $highlight-color;
+    }
   }
 }
 
