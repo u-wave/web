@@ -11,6 +11,7 @@ import Panel from '../PanelSwitcher/Panel';
 import Video from '../Video';
 import Overlays from './Overlays';
 import PlaylistManager from '../PlaylistManager';
+import LoginModal from '../LoginModal';
 
 function getState() {
   return {
@@ -76,6 +77,8 @@ export default class App extends React.Component {
             <ChatInput />
           </div>
         </div>
+
+        <LoginModal />
       </div>
     );
   }
