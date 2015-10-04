@@ -12,6 +12,17 @@ const JS_TASKS = [ 'eslint' ];
 const CSS_PATHS = [ 'src/css/**/*.css' ];
 const CSS_TASKS = [ 'css' ];
 
+let watcher;
+
+function bundle() {
+  return watcher
+    .bundle()
+    .pipe(source('out.js'))
+    .pipe(dest('lib/'));
+}
+
+gulp.task('watch:bundle', bundle);
+
 export default function watchTask() {
   const bundler = browserify({
     debug: true,
@@ -20,16 +31,11 @@ export default function watchTask() {
     packageCache: {}
   }).transform(babelify({ stage: 0 }));
 
-  const watcher = watchify(bundler);
+  watcher = watchify(bundler);
   watcher.on('log', log.bind(null, 'watchify:'));
-
-  function bundle() {
-    return watcher
-      .bundle()
-      .pipe(source('out.js'))
-      .pipe(dest('lib/'));
-  }
-  watcher.on('update', bundle);
+  watcher.on('update', () => {
+    gulp.start('watch:bundle');
+  });
 
   gulp.watch(JS_PATHS, JS_TASKS);
   gulp.watch(CSS_PATHS, CSS_TASKS);
