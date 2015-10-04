@@ -1,6 +1,12 @@
 import 'whatwg-fetch';
 import assign from 'object-assign';
+import BluebirdPromise from 'bluebird';
 import LoginStore from '../stores/LoginStore';
+
+// return Bluebird promises from native fetch calls, too
+function fetch(...args) {
+  return BluebirdPromise.resolve(window.fetch(...args));
+}
 
 function makeUrl(path) {
   let uri = path;
