@@ -4,22 +4,25 @@
   position: relative;
   height: 100%;
   overflow: hidden;
+}
 
-  @descendent backdrop {
-    position: absolute;
-    /* sorta hacky center positioning */
-    top: 50%; left: 50%;
-    transform: translateX(-50%) translateY(-50%);
+@component VideoBackdrop {
+  position: absolute;
+  z-index: 3;
+  /* sorta hacky center positioning */
+  top: 50%; left: 50%;
+  transform: translateX(-50%) translateY(-50%);
 
-    min-width: 100%;
-    min-height: 100%;
-    filter: blur(1em);
-  }
+  min-width: 100%;
+  min-height: 100%;
+  filter: blur(1em);
 }
 
 @component YouTubePlayer {
   width: 100%;
   height: 100%;
+  position: relative;
+  z-index: 4;
 
   @modifier small {
     margin: auto;

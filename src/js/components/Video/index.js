@@ -4,6 +4,7 @@ import React from 'react';
 import YouTube from 'react-youtube';
 import CurrentMediaStore from '../../stores/CurrentMediaStore';
 import VolumeStore from '../../stores/VolumeStore';
+import VideoBackdrop from './VideoBackdrop';
 
 const debug = require('debug')('uwave:component:video');
 
@@ -71,6 +72,8 @@ export default class Video extends React.Component {
 
     const seek = Math.round((Date.now() - startTime) / 1000);
 
+    const backdrop = <VideoBackdrop url={media.thumbnail} />;
+
     switch (media.sourceType) {
     case 'youtube':
       const ytOpts = {
@@ -85,7 +88,8 @@ export default class Video extends React.Component {
         }
       };
       const ytUrl = `https://youtube.com/watch?v=${media.sourceID}`;
-      video = (
+      video = [
+        size === 'small' && backdrop,
         <div className={cx('YouTubePlayer', `YouTubePlayer--${size}`)}>
           <YouTube
             ref="youtube"
@@ -94,18 +98,14 @@ export default class Video extends React.Component {
             onReady={this.onYTReady.bind(this)}
           />
         </div>
-      );
+      ];
       break;
     default:
       // empty
     }
 
-    // TODO let individual players deal with this?
-    const backdrop = <img className="Video-backdrop" src={media.thumbnail} alt="" />;
-
     return (
       <div className={cx('Video', `Video--${media.sourceType}`, `Video--${size}`)}>
-        {backdrop}
         {video}
       </div>
     );
