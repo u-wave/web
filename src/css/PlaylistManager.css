@@ -1,6 +1,8 @@
 @import "vars.css";
 
 @component PlaylistManager {
+  z-index: 10;
+
   @descendent menu {
     width: 33%;
     float: left;
