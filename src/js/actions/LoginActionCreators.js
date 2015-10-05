@@ -23,6 +23,13 @@ export function register({ email, username, password }) {
 
 export function openLoginModal() {
   dispatch({
-    action: 'openLoginModal'
+    action: 'openLoginModal',
+    register: false
+  });
+}
+export function openRegisterModal() {
+  dispatch({
+    action: 'openLoginModal',
+    register: true
   });
 }

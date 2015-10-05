@@ -1,7 +1,7 @@
 import cx from 'classnames';
 import React from 'react';
 import { togglePlaylistManager } from '../../actions/OverlayActionCreators';
-import { openLoginModal } from '../../actions/LoginActionCreators';
+import { openLoginModal, openRegisterModal } from '../../actions/LoginActionCreators';
 import PlaylistStore from '../../stores/PlaylistStore';
 import LoginStore from '../../stores/LoginStore';
 import NextMedia from './NextMedia';
@@ -65,7 +65,10 @@ export default class FooterBar extends React.Component {
         >
           SIGN IN
         </button>,
-        <button className="FooterAuthButton FooterAuthButton--register">
+        <button
+          className="FooterAuthButton FooterAuthButton--register"
+          onClick={openRegisterModal}
+        >
           REGISTER
         </button>,
         <div className="FooterBar-guest">

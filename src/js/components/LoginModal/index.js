@@ -2,17 +2,19 @@ import React from 'react';
 import TransitionGroup from 'react/lib/ReactCSSTransitionGroup';
 import dispatcher from '../../dispatcher';
 import LoginForm from './LoginForm';
+import RegisterForm from './RegisterForm';
 
 /**
  * The LoginModal manages its own "open" state.
  */
 export default class LoginModal extends React.Component {
-  state = { open: false };
+  state = { open: false, register: false };
 
   componentDidMount() {
     this.dispatchToken = dispatcher.register(payload => {
       if (payload.action === 'openLoginModal') {
         this.open();
+        this.setState({ register: payload.register });
       }
     });
   }
@@ -25,16 +27,31 @@ export default class LoginModal extends React.Component {
   }
 
   render() {
-    const { open } = this.state;
-    const form = (
-      <LoginForm
-        onLoggedIn={::this.close}
-        {...this.props}
-      />
-    );
+    const { open, register } = this.state;
+    let form;
+    let title;
+    if (register) {
+      title = 'Register';
+      form = (
+        <RegisterForm
+          key="register"
+          onRegistered={::this.close}
+          {...this.props}
+        />
+      );
+    } else {
+      title = 'Sign in';
+      form = (
+        <LoginForm
+          key="login"
+          onLoggedIn={::this.close}
+          {...this.props}
+        />
+      );
+    }
     const modal = (
       <div className="LoginModal">
-        <h1 className="LoginModal-header">Sign in</h1>
+        <h1 className="LoginModal-header">{title}</h1>
         {form}
       </div>
     );
