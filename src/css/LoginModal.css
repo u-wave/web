@@ -21,6 +21,8 @@ $login-modal-width: 300px;
 
   @descendent header {
     margin: 0;
+    font-size: 2.125em;
+    font-weight: normal;
   }
 
   /* Animation */
