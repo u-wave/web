@@ -14,7 +14,7 @@ export default class NextMedia extends React.Component {
     const { playlist, nextMedia, className, ...attrs } = this.props;
     if (!playlist || !nextMedia) {
       return (
-        <div className={cx('NextMedia', className)}>
+        <div className={cx('NextMedia', className)} {...attrs}>
           You don't have a playlist yet!
         </div>
       );
