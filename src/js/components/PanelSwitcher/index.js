@@ -1,5 +1,6 @@
 import React from 'react';
 import Button from './Button';
+import listen from '../../utils/listen';
 import { selectPanel } from '../../actions/PanelSelectActionCreators';
 import SelectedPanelStore from '../../stores/SelectedPanelStore';
 
@@ -10,24 +11,12 @@ function getState() {
 }
 
 /* TODO think of a reasonable name */
+@listen(SelectedPanelStore)
 export default class PanelSwitcher extends React.Component {
-  constructor() {
-    super();
-    this.onChange = this.onChange.bind(this);
-  }
-
   state = getState();
-
-  componentDidMount() {
-    SelectedPanelStore.on('change', this.onChange);
-  }
 
   shouldComponentUpdate(nextProps, nextState) {
     return nextState.selected !== this.state.selected;
-  }
-
-  componentWillUnmount() {
-    SelectedPanelStore.removeListener('change', this.onChange);
   }
 
   onChange() {

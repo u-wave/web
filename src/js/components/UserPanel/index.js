@@ -3,6 +3,7 @@ import React from 'react';
 import Panel from '../PanelSwitcher/Panel';
 import UserList from '../UserList';
 import UserStore from '../../stores/UserStore';
+import listen from '../../utils/listen';
 
 function getState() {
   return {
@@ -26,25 +27,13 @@ function compareUsers(a, b) {
   return 0;
 }
 
+@listen(UserStore)
 export default class UserPanel extends Panel {
   static propTypes = {
     className: React.PropTypes.string
   };
 
-  constructor() {
-    super();
-    this.onChange = this.onChange.bind(this);
-  }
-
   state = getState();
-
-  componentDidMount() {
-    UserStore.on('change', this.onChange);
-  }
-
-  componentWillUnmount() {
-    UserStore.removeListener('change', this.onChange);
-  }
 
   onChange() {
     this.setState(getState());

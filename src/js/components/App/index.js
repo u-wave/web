@@ -12,6 +12,7 @@ import Video from '../Video';
 import Overlays from './Overlays';
 import PlaylistManager from '../PlaylistManager';
 import LoginModal from '../LoginModal';
+import listen from '../../utils/listen';
 
 function getState() {
   return {
@@ -19,21 +20,10 @@ function getState() {
   };
 }
 
+@listen(SettingsStore)
 export default class App extends React.Component {
-  constructor() {
-    super();
-    this.onChange = this.onChange.bind(this);
-  }
 
   state = getState();
-
-  componentDidMount() {
-    SettingsStore.on('change', this.onChange);
-  }
-
-  componentWillUnmount() {
-    SettingsStore.removeListener('change', this.onChange);
-  }
 
   onChange() {
     this.setState(getState());

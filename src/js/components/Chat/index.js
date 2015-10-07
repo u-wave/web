@@ -1,5 +1,6 @@
 import React from 'react';
 import ChatStore from '../../stores/ChatStore';
+import listen from '../../utils/listen';
 import Message from './Message';
 
 function getState() {
@@ -8,6 +9,7 @@ function getState() {
   };
 }
 
+@listen(ChatStore)
 export default class Chat extends React.Component {
   constructor() {
     super();
@@ -15,10 +17,6 @@ export default class Chat extends React.Component {
   }
 
   state = getState()
-
-  componentDidMount() {
-    ChatStore.on('change', this.onChange);
-  }
 
   componentWillUpdate() {
     const el = this.refs.chat;
@@ -38,10 +36,6 @@ export default class Chat extends React.Component {
       const el = this.refs.chat;
       el.scrollTop = el.scrollHeight;
     }
-  }
-
-  componentWillUnmount() {
-    ChatStore.removeListener('change', this.onChange);
   }
 
   onChange() {

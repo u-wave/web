@@ -4,6 +4,7 @@ import { togglePlaylistManager } from '../../actions/OverlayActionCreators';
 import { openLoginModal, openRegisterModal } from '../../actions/LoginActionCreators';
 import PlaylistStore from '../../stores/PlaylistStore';
 import LoginStore from '../../stores/LoginStore';
+import listen from '../../utils/listen';
 import NextMedia from './NextMedia';
 import UserInfo from './UserInfo';
 
@@ -15,27 +16,13 @@ function getState() {
   };
 }
 
+@listen(PlaylistStore, LoginStore)
 export default class FooterBar extends React.Component {
   static propTypes = {
     className: React.PropTypes.string
   };
 
-  constructor() {
-    super();
-    this.onChange = this.onChange.bind(this);
-  }
-
   state = getState();
-
-  componentDidMount() {
-    PlaylistStore.on('change', this.onChange);
-    LoginStore.on('change', this.onChange);
-  }
-
-  componentWillUnmount() {
-    PlaylistStore.removeListener('change', this.onChange);
-    LoginStore.removeListener('change', this.onChange);
-  }
 
   onChange() {
     this.setState(getState());

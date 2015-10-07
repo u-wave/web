@@ -3,6 +3,7 @@ import find from 'array-find';
 import React from 'react';
 import PlaylistStore from '../../stores/PlaylistStore';
 import SearchStore from '../../stores/SearchStore';
+import listen from '../../utils/listen';
 import PlaylistMenu from './Menu';
 import PlaylistHeader from './Header';
 import PlaylistPanel from './Panel';
@@ -17,27 +18,13 @@ function getState() {
   };
 }
 
+@listen(PlaylistStore, SearchStore)
 export default class PlaylistManager extends React.Component {
   static propTypes = {
     className: React.PropTypes.string
   };
 
-  constructor() {
-    super();
-    this.onChange = this.onChange.bind(this);
-  }
-
   state = getState();
-
-  componentDidMount() {
-    PlaylistStore.on('change', this.onChange);
-    SearchStore.on('change', this.onChange);
-  }
-
-  componentWillUnmount() {
-    PlaylistStore.removeListener('change', this.onChange);
-    SearchStore.removeListener('change', this.onChange);
-  }
 
   onChange() {
     this.setState(getState());

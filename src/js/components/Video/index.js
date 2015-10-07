@@ -3,6 +3,7 @@ import isEqual from 'is-equal-shallow';
 import React from 'react';
 import CurrentMediaStore from '../../stores/CurrentMediaStore';
 import VolumeStore from '../../stores/VolumeStore';
+import listen from '../../utils/listen';
 import YouTubePlayer from './YouTubePlayer';
 
 function getState() {
@@ -13,22 +14,13 @@ function getState() {
   };
 }
 
+@listen(CurrentMediaStore, VolumeStore)
 export default class Video extends React.Component {
   static propTypes = {
     size: React.PropTypes.string
   };
 
-  constructor() {
-    super();
-    this._onChange = this._onChange.bind(this);
-  }
-
   state = getState();
-
-  componentDidMount() {
-    CurrentMediaStore.on('change', this._onChange);
-    VolumeStore.on('change', this._onChange);
-  }
 
   shouldComponentUpdate(nextProps, nextState) {
     return nextState.volume !== this.state.volume ||
@@ -36,12 +28,7 @@ export default class Video extends React.Component {
       !isEqual(nextState.media, this.state.media);
   }
 
-  componentWillUnmount() {
-    CurrentMediaStore.removeListener('change', this._onChange);
-    VolumeStore.removeListener('change', this._onChange);
-  }
-
-  _onChange() {
+  onChange() {
     this.setState(getState());
   }
 
