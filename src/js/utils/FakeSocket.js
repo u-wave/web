@@ -3,6 +3,8 @@ import faker from 'faker';
 import LoginStore from '../stores/LoginStore';
 import UserStore from '../stores/UserStore';
 
+const debug = require('debug')('uwave:util:fakesocket');
+
 function makeRandomAdvance(userID) {
   const mediaList = [
     [ 'youtube', '1nCLBTmjJBY', '4Minute - 미쳐 (Crazy)', 193 ],
@@ -35,6 +37,7 @@ function makeRandomAdvance(userID) {
 export default class FakeSocket extends EventEmitter {
   currentMedia = null;
   waitlist = [];
+  authenticated = false
 
   constructor() {
     super();
@@ -42,17 +45,34 @@ export default class FakeSocket extends EventEmitter {
     this._advance = setTimeout(::this.simulateAdvance, 100);
     this._users = setTimeout(::this.simulateUsers, 3000);
     this.waitlist = UserStore.getOnlineUsers().map(user => user._id);
+
+    // WebSocket compatibility
+    this.on('data', pack => {
+      if (this.onmessage) {
+        this.onmessage({ data: pack });
+      }
+    });
   }
 
   send(pack) {
     // simulate network lag
     setTimeout(() => {
+      if (!this.authenticated) {
+        if (pack === LoginStore.getToken()) {
+          debug('authenticated');
+          this.authenticated = true;
+          this.receive('join', LoginStore.getUser());
+        } else {
+          debug('auth failed for', pack);
+        }
+        return;
+      }
+
       const { command, data } = JSON.parse(pack);
       // totally a working chat server
       if (command === 'sendChat') {
         this.receive('chatMessage', {
-          chatID: faker.random.uuid(),
-          userID: LoginStore.getUser()._id,
+          _id: LoginStore.getUser()._id,
           timestamp: Date.now(),
           message: data
         });
@@ -100,8 +120,7 @@ export default class FakeSocket extends EventEmitter {
 
   randomChatMessage() {
     this.receive('chatMessage', {
-      chatID: faker.random.uuid(),
-      userID: faker.random.arrayElement(UserStore.getOnlineUsers())._id,
+      _id: faker.random.arrayElement(UserStore.getOnlineUsers())._id,
       timestamp: Date.now(),
       message: faker.hacker.phrase()
     });
