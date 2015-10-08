@@ -18,7 +18,7 @@ export default class Menu extends React.Component {
     return (
       <div className={cx('PlaylistMenu', className)}>
         {sorted.map(pl => {
-          return <PlaylistRow key={pl.id} className="PlaylistMenu-row" playlist={pl} />;
+          return <PlaylistRow key={pl._id} className="PlaylistMenu-row" playlist={pl} />;
         })}
       </div>
     );

@@ -42,7 +42,7 @@ const playlists = [
 ];
 
 playlists.forEach(pl => {
-  pl.id = id();
+  pl._id = id();
   pl.count = pl.media.length;
 });
 

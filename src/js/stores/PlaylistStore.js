@@ -30,7 +30,7 @@ const PlaylistStore = assign(new EventEmitter, {
     switch (payload.action) {
     case 'playlists':
       payload.playlists.forEach(playlist => {
-        playlists[playlist.id] = playlist;
+        playlists[playlist._id] = playlist;
       });
       if (!activePlaylist && payload.playlists.length > 0) {
         activePlaylist = payload.playlists[0];

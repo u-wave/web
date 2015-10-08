@@ -16,7 +16,7 @@ export default class Menu extends React.Component {
     return (
       <div
         className={cx('PlaylistMenuRow', activeClass, selectedClass, className)}
-        onClick={selectPlaylist.bind(null, playlist.id)}
+        onClick={selectPlaylist.bind(null, playlist._id)}
       >
         {playlist.active ? <Icon name="checkbox" className="PlaylistMenuRow-active-icon" /> : ''}
         {playlist.name}

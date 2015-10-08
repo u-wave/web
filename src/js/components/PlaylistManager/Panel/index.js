@@ -17,7 +17,7 @@ export default class Panel extends React.Component {
       <div className={cx('PlaylistPanel', className)}>
         <PlaylistMeta
           className="PlaylistPanel-meta"
-          id={playlist.id}
+          id={playlist._id}
           name={playlist.name}
           active={playlist.active}
         />

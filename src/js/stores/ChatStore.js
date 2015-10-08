@@ -35,7 +35,7 @@ const ChatStore = assign(new EventEmitter, {
     case 'chatSend':
       const send = {
         user: user,
-        userID: user.id,
+        userID: user._id,
         text: payload.message,
         timestamp: Date.now(),
         inFlight: true

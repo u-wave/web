@@ -14,7 +14,7 @@ export default class UserList extends React.Component {
         {this.props.users.map(user => {
           return (
             <UserRow
-              key={user.id}
+              key={user._id}
               className="UserList-row"
               {...user}
             />

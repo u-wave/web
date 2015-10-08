@@ -41,7 +41,7 @@ export default class FakeSocket extends EventEmitter {
     this._chat = setTimeout(::this.simulateChat, 500);
     this._advance = setTimeout(::this.simulateAdvance, 100);
     this._users = setTimeout(::this.simulateUsers, 3000);
-    this.waitlist = UserStore.getOnlineUsers().map(user => user.id);
+    this.waitlist = UserStore.getOnlineUsers().map(user => user._id);
   }
 
   send(pack) {
@@ -52,7 +52,7 @@ export default class FakeSocket extends EventEmitter {
       if (command === 'chat') {
         this.receive('chatMessage', {
           chatID: faker.random.uuid(),
-          userID: LoginStore.getUser().id,
+          userID: LoginStore.getUser()._id,
           timestamp: Date.now(),
           message: data
         });
@@ -72,7 +72,7 @@ export default class FakeSocket extends EventEmitter {
     const next = makeRandomAdvance(dj);
     const duration = (next.media.end - next.media.start) * 1000;
     if (this.currentMedia) {
-      this.waitlist.push(this.currentMedia.dj.id);
+      this.waitlist.push(this.currentMedia.dj._id);
     } else {
       next.played -= Math.floor(Math.random() * duration);
     }
@@ -101,7 +101,7 @@ export default class FakeSocket extends EventEmitter {
   randomChatMessage() {
     this.receive('chatMessage', {
       chatID: faker.random.uuid(),
-      userID: faker.random.arrayElement(UserStore.getOnlineUsers()).id,
+      userID: faker.random.arrayElement(UserStore.getOnlineUsers())._id,
       timestamp: Date.now(),
       message: faker.hacker.phrase()
     });
@@ -112,7 +112,7 @@ export default class FakeSocket extends EventEmitter {
       // join
       const username = faker.internet.userName();
       this.receive('join', {
-        id: faker.random.uuid(),
+        _id: faker.random.uuid(),
         username: username,
         avatar: faker.internet.avatar(),
         role: faker.random.number({ min: 0, max: 6 })
@@ -121,9 +121,9 @@ export default class FakeSocket extends EventEmitter {
       // leave
       const me = LoginStore.getUser();
       const users = UserStore.getOnlineUsers()
-        .filter(user => user.id !== me.id);
+        .filter(user => user._id !== me._id);
       const partyPooper = faker.random.arrayElement(users);
-      this.receive('leave', partyPooper.id);
+      this.receive('leave', partyPooper._id);
     }
   }
 }

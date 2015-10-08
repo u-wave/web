@@ -23,8 +23,8 @@ export function connect() {
     switch (command) {
     case 'chatMessage':
       chatReceive({
-        id: data.chatID,
-        userID: data.userID,
+        _id: data._id + '-' + data.timestamp,
+        userID: data._id,
         text: data.message,
         timestamp: data.timestamp
       });
