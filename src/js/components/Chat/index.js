@@ -21,7 +21,7 @@ export default class Chat extends React.Component {
   }
 
   componentWillUpdate() {
-    const el = React.findDOMNode(this.refs.chat);
+    const el = this.refs.chat;
     const lastMessage = el.lastElementChild;
     if (lastMessage) {
       const neededSize = el.scrollTop + el.offsetHeight + lastMessage.offsetHeight;
@@ -35,7 +35,7 @@ export default class Chat extends React.Component {
   componentDidUpdate() {
     debug('didUpdate', this._isScrolledToBottom);
     if (this._isScrolledToBottom) {
-      const el = React.findDOMNode(this.refs.chat);
+      const el = this.refs.chat;
       el.scrollTop = el.scrollHeight;
     }
   }

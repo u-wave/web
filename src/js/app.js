@@ -1,10 +1,11 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import App from './components/App';
 import CurrentMediaStore from './stores/CurrentMediaStore';
 import * as Socket from './utils/Socket';
 import * as FakePlaylists from './utils/FakePlaylists';
 
-React.render(<App />, document.getElementById('app'));
+ReactDOM.render(<App />, document.getElementById('app'));
 
 // temporary debug and testing things
 
