@@ -10,7 +10,10 @@ function getState() {
 
 export default class Overlays extends React.Component {
   static propTypes = {
-    children: React.PropTypes.array
+    children: React.PropTypes.oneOfType([
+      React.PropTypes.element,
+      React.PropTypes.arrayOf(React.PropTypes.element)
+    ])
   };
 
   constructor() {
