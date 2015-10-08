@@ -57,7 +57,11 @@ export default class LoginModal extends React.Component {
     );
     return (
       <span>
-        <TransitionGroup transitionName="LoginModal-showing">
+        <TransitionGroup
+          transitionName="LoginModal-showing"
+          transitionEnterTimeout={230}
+          transitionLeaveTimeout={230}
+        >
           {open && modal}
         </TransitionGroup>
       </span>
