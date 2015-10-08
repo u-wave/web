@@ -1,16 +1,12 @@
 import cx from 'classnames';
 import React from 'react';
 
-export default class Eta extends React.Component {
-  static propTypes = {
-    className: React.PropTypes.string
-  };
+const Eta = ({ className }) => {
+  return (
+    <span className={cx('Eta', className)}>
+      a while
+    </span>
+  );
+};
 
-  render() {
-    return (
-      <span className={cx('Eta', this.props.className)}>
-        a while
-      </span>
-    );
-  }
-}
+export default Eta;

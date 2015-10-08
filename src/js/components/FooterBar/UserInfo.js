@@ -2,20 +2,15 @@ import cx from 'classnames';
 import React from 'react';
 import Avatar from '../Avatar';
 
-export default class UserInfo extends React.Component {
-  static propTypes = {
-    className: React.PropTypes.string,
-    user: React.PropTypes.object
-  };
+const UserInfo = ({ className, user }) => {
+  return (
+    <div className={cx('UserInfo', className)}>
+      <Avatar
+        className="UserInfo-avatar"
+        user={user}
+      />
+    </div>
+  );
+};
 
-  render() {
-    return (
-      <div className={cx('UserInfo', this.props.className)}>
-        <Avatar
-          className="UserInfo-avatar"
-          user={this.props.user}
-        />
-      </div>
-    );
-  }
-}
+export default UserInfo;

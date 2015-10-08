@@ -1,13 +1,8 @@
 import cx from 'classnames';
 import React from 'react';
 
-export default class Loader extends React.Component {
-  static propTypes = {
-    className: React.PropTypes.string,
-    size: React.PropTypes.oneOf([ 'tiny', 'large' ])
-  };
+const Loader = ({ className, size }) => {
+  return <div className={cx('Loader', `Loader-${size}`, className)} />;
+};
 
-  render() {
-    return <div className={cx('Loader', `Loader-${this.props.size}`, this.props.className)} />;
-  }
-}
+export default Loader;
