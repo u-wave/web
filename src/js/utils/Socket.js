@@ -47,7 +47,7 @@ export function connect() {
   dispatchToken = dispatcher.register(payload => {
     switch (payload.action) {
     case 'chatSend':
-      send('chat', payload.message);
+      send('sendChat', payload.message);
       break;
     default:
       // Not for us

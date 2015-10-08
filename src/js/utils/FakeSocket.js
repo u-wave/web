@@ -49,7 +49,7 @@ export default class FakeSocket extends EventEmitter {
     setTimeout(() => {
       const { command, data } = JSON.parse(pack);
       // totally a working chat server
-      if (command === 'chat') {
+      if (command === 'sendChat') {
         this.receive('chatMessage', {
           chatID: faker.random.uuid(),
           userID: LoginStore.getUser()._id,
