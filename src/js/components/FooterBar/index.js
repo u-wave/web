@@ -42,24 +42,23 @@ export default class FooterBar extends React.Component {
 
   render() {
     const { user, playlist, nextMedia } = this.state;
+    const className = cx('FooterBar', this.props.className);
 
-    let tree;
     if (user && !user.isGuest) {
-      tree = [
-        <UserInfo user={user} />,
-        <NextMedia
-          playlist={playlist}
-          nextMedia={nextMedia}
-          onClick={togglePlaylistManager}
-        />
-      ];
-    } else {
-      tree = <div className="FooterBar-guest">You have to log in if you want to play!</div>;
+      return (
+        <div className={className}>
+          <UserInfo user={user} />
+          <NextMedia
+            playlist={playlist}
+            nextMedia={nextMedia}
+            onClick={togglePlaylistManager}
+          />
+        </div>
+      );
     }
-
     return (
-      <div className={cx('FooterBar', this.props.className)}>
-        {tree}
+      <div className={className}>
+        <div className="FooterBar-guest">You have to log in if you want to play!</div>
       </div>
     );
   }
