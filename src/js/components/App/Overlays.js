@@ -42,7 +42,11 @@ export default class Overlays extends React.Component {
     }
     return (
       <div className="Overlays">
-        <TransitionGroup transitionName="Overlay">
+        <TransitionGroup
+          transitionName="Overlay"
+          transitionEnterTimeout={180}
+          transitionLeaveTimeout={180}
+        >
           {view}
         </TransitionGroup>
       </div>
