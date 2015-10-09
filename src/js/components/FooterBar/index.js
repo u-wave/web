@@ -51,13 +51,13 @@ export default class FooterBar extends React.Component {
           onClick={openLoginModal}
         >
           SIGN IN
-        </button>,
+        </button>
         <button
           className="FooterAuthButton FooterAuthButton--register"
           onClick={openRegisterModal}
         >
           REGISTER
-        </button>,
+        </button>
         <div className="FooterBar-guest">
           You have to log in if you want to play!
         </div>
