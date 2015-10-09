@@ -1,4 +1,5 @@
 @component UserList {
+  overflow-y: scroll;
 }
 
 @component UserRow {
