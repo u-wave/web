@@ -4,6 +4,7 @@ import values from 'object-values';
 import dispatcher from '../dispatcher';
 
 const playlists = {};
+const playlistWips = {};
 let activePlaylist = null;
 let activeMedia = [];
 let selectedPlaylist = null;
@@ -23,7 +24,8 @@ const PlaylistStore = assign(new EventEmitter, {
     return selectedMedia;
   },
   getPlaylists() {
-    return values(playlists);
+    return values(playlists)
+      .concat(values(playlistWips));
   },
 
   dispatchToken: dispatcher.register(payload => {
@@ -64,6 +66,28 @@ const PlaylistStore = assign(new EventEmitter, {
       selectedPlaylist.selected = true;
       // TODO grab this from server or cache instead of playlist obj
       selectedMedia = selectedPlaylist.media;
+      PlaylistStore.emit('change');
+      break;
+
+    case 'creatingPlaylist':
+      playlistWips[payload.tempId] = {
+        _id: payload.tempId,
+        name: payload.name,
+        description: payload.description,
+        shared: payload.shared,
+        creating: true
+      };
+      selectedPlaylist = playlistWips[payload.tempId];
+      PlaylistStore.emit('change');
+      break;
+    case 'createdPlaylist':
+      delete playlistWips[payload.tempId];
+      playlists[payload.playlist._id] = payload.playlist;
+      PlaylistStore.emit('change');
+      break;
+    case 'createPlaylistError':
+      delete playlistWips[payload.tempId];
+      debug('could not create playlist', payload.message);
       PlaylistStore.emit('change');
       break;
     default:

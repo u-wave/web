@@ -1,6 +1,7 @@
 import cx from 'classnames';
 import React from 'react';
 import PlaylistRow from './Row';
+import PlaylistCreate from './NewPlaylist';
 
 export default class Menu extends React.Component {
   static propTypes = {
@@ -17,6 +18,7 @@ export default class Menu extends React.Component {
     });
     return (
       <div className={cx('PlaylistMenu', className)}>
+        <PlaylistCreate className="PlaylistMenu-row" />
         {sorted.map(pl => {
           return <PlaylistRow key={pl._id} className="PlaylistMenu-row" playlist={pl} />;
         })}

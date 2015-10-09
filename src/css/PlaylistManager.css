@@ -34,6 +34,13 @@
     margin-right: 7px;
   }
 
+  @descendent loading {
+    width: 24px;
+    height: 24px;
+    float: left;
+    margin: 10px 7px 10px 0;
+  }
+
   @descendent count {
     float: right;
     color: $highlight-color;
