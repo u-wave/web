@@ -5,6 +5,7 @@ import { setPlaylists } from './PlaylistActionCreators';
 const debug = require('debug')('uwave:actions:login');
 
 export function initState() {
+  dispatch({ action: 'loadingPlaylists' });
   get('/v1/now')
     .then(res => res.json())
     .then(state => {
