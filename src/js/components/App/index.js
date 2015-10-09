@@ -1,4 +1,5 @@
 import React from 'react';
+import LoginStore from '../../stores/LoginStore';
 import SettingsStore from '../../stores/SettingsStore';
 import Chat from '../Chat';
 import ChatInput from '../Chat/Input';
@@ -16,11 +17,12 @@ import listen from '../../utils/listen';
 
 function getState() {
   return {
-    settings: SettingsStore.getAll()
+    settings: SettingsStore.getAll(),
+    user: LoginStore.getUser()
   };
 }
 
-@listen(SettingsStore)
+@listen(SettingsStore, LoginStore)
 export default class App extends React.Component {
 
   state = getState();
@@ -30,7 +32,8 @@ export default class App extends React.Component {
   }
 
   render() {
-    const { settings } = this.state;
+    const { settings, user } = this.state;
+    const isLoggedIn = !!user;
 
     return (
       <div className="App">
@@ -63,8 +66,8 @@ export default class App extends React.Component {
               [Placeholder]
             </Panel>
           </PanelGroup>
-          <div className="AppRow AppRow--bottom">
-            <ChatInput />
+          <div className="AppRow AppRow--bottom ChatInputWrapper">
+            {isLoggedIn && <ChatInput />}
           </div>
         </div>
 

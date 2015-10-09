@@ -54,12 +54,15 @@
   }
 }
 
-@component ChatInput {
+@component ChatInputWrapper {
   background: $chat-background-color;
-  height: 100%;
-  width: 100%;
   border-top: 1px solid $chat-border-color;
   box-sizing: border-box;
+}
+
+@component ChatInput {
+  height: 100%;
+  width: 100%;
 
   @descendent input {
     margin: 15px 15px 16px 15px;
