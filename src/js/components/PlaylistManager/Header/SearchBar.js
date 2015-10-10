@@ -3,10 +3,13 @@ import React from 'react';
 import Icon from '../../Icon';
 import SourcePicker from './SourcePicker';
 
+const ENTER_KEY = 13;
+
 export default class SearchBar extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
-    source: React.PropTypes.string
+    source: React.PropTypes.string,
+    onSubmit: React.PropTypes.func
   };
 
   state = { focused: false };
@@ -16,6 +19,13 @@ export default class SearchBar extends React.Component {
   }
   onBlur() {
     this.setState({ focused: false });
+  }
+
+  onKeyDown(e) {
+    const { onSubmit } = this.props;
+    if (e.keyCode === ENTER_KEY) {
+      onSubmit(this.refs.value.value);
+    }
   }
 
   render() {
@@ -36,8 +46,9 @@ export default class SearchBar extends React.Component {
             className="SearchBar-input"
             type="text"
             placeholder={focused ? '' : 'Search'}
-            onFocus={this.onFocus.bind(this)}
-            onBlur={this.onBlur.bind(this)}
+            onFocus={::this.onFocus}
+            onBlur={::this.onBlur}
+            onKeyDown={::this.onKeyDown}
           />
         </div>
       </div>

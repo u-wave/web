@@ -6,7 +6,8 @@ import SearchBar from './SearchBar';
 export default class Header extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
-    searchSource: React.PropTypes.string
+    searchSource: React.PropTypes.string,
+    onSearchSubmit: React.PropTypes.func
   };
 
   render() {
@@ -18,6 +19,7 @@ export default class Header extends React.Component {
         <SearchBar
           className="PlaylistHeader-search"
           source={this.props.searchSource}
+          onSubmit={this.props.onSearchSubmit}
         />
       </OverlayHeader>
     );

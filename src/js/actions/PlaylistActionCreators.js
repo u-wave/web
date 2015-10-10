@@ -116,3 +116,18 @@ export function moveMedia(playlistID, medias, afterID) {
     after: afterID
   });
 }
+
+export function search(query) {
+  dispatch({
+    action: 'searchStart',
+    query
+  });
+  return get('/v1/search', { query })
+    .then(res => res.json())
+    .then(results => {
+      dispatch({
+        action: 'searchComplete',
+        results
+      });
+    });
+}
