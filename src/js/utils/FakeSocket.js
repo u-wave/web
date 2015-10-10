@@ -4,24 +4,23 @@ import UserStore from '../stores/UserStore';
 
 function makeRandomAdvance(userID) {
   const mediaList = [
-    [ '1nCLBTmjJBY', '4Minute - 미쳐 (Crazy)', 193 ],
-    [ 'Qk52ypnGs68', 'T-ARA (티아라) - Number Nine (넘버나인)', 234 ],
-    [ 'zO9RzrhYR-I', 'miss A (미쓰에이) - 다른 남자 말고 너 (Only You)', 202 ],
-    [ '2ips2mM7Zqw', 'BIGBANG - 뱅뱅뱅 (Bang Bang Bang)', 230 ],
-    [ 'Hs8QGv2VqJA', 'BEAST - Good Luck', 250 ],
-    [ 'gEqlF5N8UMs', 'WINNER - 공허해(EMPTY)', 248 ],
-    [ '4xLFxfXWDUk', '4Minute - 오늘 뭐해 (Whatcha Doin\' Today)', 220 ]
+    [ 'youtube', '1nCLBTmjJBY', '4Minute - 미쳐 (Crazy)', 193 ],
+    [ 'youtube', 'Qk52ypnGs68', 'T-ARA (티아라) - Number Nine (넘버나인)', 234 ],
+    [ 'youtube', 'zO9RzrhYR-I', 'miss A (미쓰에이) - 다른 남자 말고 너 (Only You)', 202 ],
+    [ 'youtube', '2ips2mM7Zqw', 'BIGBANG - 뱅뱅뱅 (Bang Bang Bang)', 230 ],
+    [ 'youtube', 'Hs8QGv2VqJA', 'BEAST - Good Luck', 250 ],
+    [ 'youtube', 'gEqlF5N8UMs', 'WINNER - 공허해(EMPTY)', 248 ],
+    [ 'youtube', '4xLFxfXWDUk', '4Minute - 오늘 뭐해 (Whatcha Doin\' Today)', 220 ]
   ];
 
-  const [ sourceID, at, duration ] = faker.random.arrayElement(mediaList);
+  const [ sourceType, sourceID, at, duration ] = faker.random.arrayElement(mediaList);
   const [ artist, title ] = at.split(' - ');
   return {
     historyID: faker.random.uuid(),
     dj: UserStore.getUser(userID),
     media: {
       artist, title,
-      sourceType: 'youtube',
-      sourceID: sourceID,
+      sourceType, sourceID,
       duration: duration,
       start: 0,
       end: duration,
