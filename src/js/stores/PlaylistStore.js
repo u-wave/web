@@ -10,6 +10,26 @@ let activeMedia = [];
 let selectedPlaylist = null;
 let selectedMedia = [];
 
+function selectPlaylist(playlist) {
+  if (selectedPlaylist) {
+    selectedPlaylist.selected = false;
+    selectedMedia = [];
+  }
+  selectedPlaylist = playlist;
+  selectedPlaylist.selected = true;
+  selectedMedia = selectedPlaylist.media || [];
+}
+
+function activatePlaylist(playlist) {
+  if (activePlaylist) {
+    activePlaylist.active = false;
+    activeMedia = [];
+  }
+  activePlaylist = playlist;
+  activePlaylist.active = true;
+  activeMedia = activePlaylist.media || [];
+}
+
 const PlaylistStore = assign(new EventEmitter, {
   getActivePlaylist() {
     return activePlaylist;
@@ -35,37 +55,19 @@ const PlaylistStore = assign(new EventEmitter, {
         playlists[playlist._id] = playlist;
       });
       if (!activePlaylist && payload.playlists.length > 0) {
-        activePlaylist = payload.playlists[0];
-        activePlaylist.active = true;
-        // TODO grab this from server or cache instead of playlist obj
-        activeMedia = activePlaylist.media;
+        activatePlaylist(payload.playlists[0]);
       }
       if (!selectedPlaylist && payload.playlists.length > 0) {
-        selectedPlaylist = payload.playlists[0];
-        selectedPlaylist.selected = true;
-        // TODO grab this from server or cache instead of playlist obj
-        selectedMedia = selectedPlaylist.media;
+        selectPlaylist(payload.playlists[0]);
       }
       PlaylistStore.emit('change');
       break;
     case 'setActivePlaylist':
-      if (activePlaylist) {
-        activePlaylist.active = false;
-      }
-      activePlaylist = playlists[payload.playlistID];
-      activePlaylist.active = true;
-      // TODO grab this from server or cache instead of playlist obj
-      activeMedia = activePlaylist.media;
+      activatePlaylist(playlists[payload.playlistID]);
       PlaylistStore.emit('change');
       break;
     case 'selectPlaylist':
-      if (selectedPlaylist) {
-        selectedPlaylist.selected = false;
-      }
-      selectedPlaylist = playlists[payload.playlistID];
-      selectedPlaylist.selected = true;
-      // TODO grab this from server or cache instead of playlist obj
-      selectedMedia = selectedPlaylist.media;
+      selectPlaylist(playlists[payload.playlistID]);
       PlaylistStore.emit('change');
       break;
 
@@ -77,12 +79,13 @@ const PlaylistStore = assign(new EventEmitter, {
         shared: payload.shared,
         creating: true
       };
-      selectedPlaylist = playlistWips[payload.tempId];
+      selectPlaylist(playlistWips[payload.tempId]);
       PlaylistStore.emit('change');
       break;
     case 'createdPlaylist':
       delete playlistWips[payload.tempId];
       playlists[payload.playlist._id] = payload.playlist;
+      selectPlaylist(payload.playlist);
       PlaylistStore.emit('change');
       break;
     case 'createPlaylistError':
