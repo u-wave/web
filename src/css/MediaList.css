@@ -35,6 +35,7 @@
     width: calc(50% - 85px);
     overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   @descendent title {
@@ -42,6 +43,7 @@
     width: 50%;
     overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   @descendent actions {
