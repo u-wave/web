@@ -4,7 +4,7 @@ import SongTitle from '../SongTitle';
 import Eta from './Eta';
 
 const NextMedia = ({ className, playlist, nextMedia, ...attrs }) => {
-  if (!playlist || !nextMedia) {
+  if (!playlist) {
     return (
       <div className={cx('NextMedia', className)} {...attrs}>
         You don't have a playlist yet!
@@ -12,7 +12,8 @@ const NextMedia = ({ className, playlist, nextMedia, ...attrs }) => {
     );
   }
 
-  const mediaEl = <SongTitle {...nextMedia} />;
+  const mediaEl = nextMedia ? <SongTitle {...nextMedia} />
+    : <div className="SongTitle">This playlist is empty :(</div>;
   const playlistEl = <span className="NextMedia-playlist">{playlist.name}</span>;
   const etaEl = <Eta className="NextMedia-eta" />;
   return (
