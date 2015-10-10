@@ -1,24 +1,43 @@
 import { dispatch } from '../dispatcher';
 import { get, post } from '../utils/Request';
+import LoginStore from '../stores/LoginStore';
 import { setPlaylists } from './PlaylistActionCreators';
 
 const debug = require('debug')('uwave:actions:login');
-
-export function initState() {
-  dispatch({ action: 'loadingPlaylists' });
-  get('/v1/now')
-    .then(res => res.json())
-    .then(state => {
-      setPlaylists(state.playlists);
-    });
-}
 
 export function loginComplete({ jwt, user }) {
   dispatch({
     action: 'loginComplete',
     jwt, user
   });
+  localStorage._session = jwt;
+}
 
+export function initState() {
+  dispatch({ action: 'loadingPlaylists' });
+  get('/v1/now')
+    .then(res => res.json())
+    .then(state => {
+      setPlaylists(state.playlists || []);
+      if (state.user) {
+        loginComplete({
+          jwt: LoginStore.getToken(),
+          user: state.user
+        });
+      }
+    });
+}
+
+export function loginAuthenticated(data) {
+  loginComplete(data);
+  initState();
+}
+
+export function setJWT(jwt) {
+  dispatch({
+    action: 'setSession',
+    jwt
+  });
   initState();
 }
 

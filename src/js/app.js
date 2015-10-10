@@ -3,13 +3,15 @@ import ReactDOM from 'react-dom';
 import App from './components/App';
 import CurrentMediaStore from './stores/CurrentMediaStore';
 import * as Socket from './utils/Socket';
-import * as FakePlaylists from './utils/FakePlaylists';
+import { restore as restoreSession } from './utils/Auth';
 
 ReactDOM.render(<App />, document.getElementById('app'));
 
-// temporary debug and testing things
+if ('_session' in localStorage) {
+  restoreSession(localStorage._session);
+}
 
-FakePlaylists.init();
+// temporary debug and testing things
 CurrentMediaStore.init();
 Socket.connect();
 
