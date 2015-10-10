@@ -1,6 +1,7 @@
 import 'whatwg-fetch';
 import assign from 'object-assign';
 import BluebirdPromise from 'bluebird';
+import { stringify as stringifyQS } from 'querystring';
 import LoginStore from '../stores/LoginStore';
 
 // return Bluebird promises from native fetch calls, too
@@ -8,16 +9,14 @@ function fetch(...args) {
   return BluebirdPromise.resolve(window.fetch(...args));
 }
 
-function makeUrl(path) {
+function makeUrl(path, params = {}) {
   let uri = path;
   const token = LoginStore.getToken();
-  if (token) {
+
+  const query = token ? { token, ...params } : params;
+  if (query) {
     // heh…
-    if (uri.indexOf('?') !== -1) {
-      uri += `&token=${token}`;
-    } else {
-      uri += `?token=${token}`;
-    }
+    uri += (uri.indexOf('?') !== -1 ? '&' : '?') + stringifyQS(query);
   }
 
   return uri;
@@ -33,8 +32,8 @@ function rejectNonOK(response) {
   return response;
 }
 
-export function get(uri) {
-  return fetch(makeUrl(uri), {
+export function get(uri, data) {
+  return fetch(makeUrl(uri, data), {
     method: 'get',
     credentials: 'same-origin'
   }).then(rejectNonOK);
