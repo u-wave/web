@@ -7,6 +7,7 @@ import listen from '../../utils/listen';
 import PlaylistMenu from './Menu';
 import PlaylistHeader from './Header';
 import PlaylistPanel from './Panel';
+import PlaylistPanelEmpty from './Panel/Empty';
 
 function getState() {
   return {
@@ -34,6 +35,20 @@ export default class PlaylistManager extends React.Component {
     const { playlists, selectedMedia, searchSource } = this.state;
     const active = find(playlists, playlist => playlist.active);
     const selected = find(playlists, playlist => playlist.selected);
+
+    let panel;
+    if (selected) {
+      panel = (
+        <PlaylistPanel
+          className="PlaylistManager-panel"
+          playlist={selected}
+          media={selectedMedia}
+        />
+      );
+    } else {
+      panel = <PlaylistPanelEmpty />;
+    }
+
     return (
       <div className={cx('PlaylistManager', 'AppColumn', 'AppColumn--full', this.props.className)}>
         <PlaylistHeader
@@ -50,11 +65,7 @@ export default class PlaylistManager extends React.Component {
             selected={selected}
           />
 
-          <PlaylistPanel
-            className="PlaylistManager-panel"
-            playlist={selected}
-            media={selectedMedia}
-          />
+          {panel}
         </div>
       </div>
     );
