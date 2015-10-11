@@ -15,9 +15,11 @@ function selectPlaylist(playlist) {
     selectedPlaylist.selected = false;
     selectedMedia = [];
   }
-  selectedPlaylist = playlist;
-  selectedPlaylist.selected = true;
-  selectedMedia = selectedPlaylist.media || [];
+  if (playlist) {
+    selectedPlaylist = playlist;
+    selectedPlaylist.selected = true;
+    selectedMedia = selectedPlaylist.media || [];
+  }
 }
 
 function activatePlaylist(playlist) {
@@ -25,9 +27,11 @@ function activatePlaylist(playlist) {
     activePlaylist.active = false;
     activeMedia = [];
   }
-  activePlaylist = playlist;
-  activePlaylist.active = true;
-  activeMedia = activePlaylist.media || [];
+  if (playlist) {
+    activePlaylist = playlist;
+    activePlaylist.active = true;
+    activeMedia = activePlaylist.media || [];
+  }
 }
 
 const PlaylistStore = assign(new EventEmitter, {
@@ -68,6 +72,11 @@ const PlaylistStore = assign(new EventEmitter, {
       break;
     case 'selectPlaylist':
       selectPlaylist(playlists[payload.playlistID]);
+      PlaylistStore.emit('change');
+      break;
+    case 'searchStart':
+      // Switch to displaying search results
+      selectPlaylist(null);
       PlaylistStore.emit('change');
       break;
 

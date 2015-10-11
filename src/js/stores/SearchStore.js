@@ -48,6 +48,13 @@ const SearchStore = assign(new EventEmitter, {
       sourceType = payload.source;
       SearchStore.emit('change');
       break;
+    // Clear when user selects a different playlist
+    case 'selectPlaylist':
+      query = null;
+      results = {};
+      loadingState = IDLE;
+      SearchStore.emit('change');
+      break;
     default:
       // Not for us
     }
