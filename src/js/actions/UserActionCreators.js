@@ -1,14 +1,21 @@
-import dispatcher from '../dispatcher';
+import { dispatch } from '../dispatcher';
+
+export function setUsers(users) {
+  dispatch({
+    action: 'setUsers',
+    users
+  });
+}
 
 export function join(user) {
-  dispatcher.dispatch({
+  dispatch({
     action: 'join',
-    user: user
+    user
   });
 }
 
 export function leave(id) {
-  dispatcher.dispatch({
+  dispatch({
     action: 'leave',
     userID: id
   });

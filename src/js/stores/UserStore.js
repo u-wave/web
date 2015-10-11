@@ -3,38 +3,7 @@ import EventEmitter from 'events';
 import values from 'object-values';
 import dispatcher from '../dispatcher';
 
-const users = {
-  1425: {
-    _id: 1425,
-    username: 'Hank',
-    avatar: 'https://sigil.cupcake.io/Hank',
-    role: 4
-  },
-  2107: {
-    _id: 2107,
-    username: 'Joanna',
-    avatar: 'https://sigil.cupcake.io/Joanna',
-    role: 4
-  },
-  3461: {
-    _id: 3461,
-    username: 'Tom',
-    avatar: 'https://sigil.cupcake.io/Tom',
-    role: 3
-  },
-  6543: {
-    _id: 6543,
-    username: 'Kris',
-    avatar: 'https://sigil.cupcake.io/Kris',
-    role: 1
-  },
-  6544: {
-    _id: 6544,
-    username: 'Kim',
-    avatar: 'https://sigil.cupcake.io/Kim',
-    role: 1
-  }
-};
+let users = {};
 
 const UserStore = assign(new EventEmitter, {
   getUser(id) {
@@ -49,6 +18,12 @@ const UserStore = assign(new EventEmitter, {
 
   dispatchToken: dispatcher.register(payload => {
     switch (payload.action) {
+    case 'setUsers':
+      users = payload.users.reduce((map, user) => {
+        return assign(map, { [user._id]: user });
+      }, {});
+      UserStore.emit('change');
+      break;
     case 'join':
       users[payload.user._id] = payload.user;
       UserStore.emit('change');

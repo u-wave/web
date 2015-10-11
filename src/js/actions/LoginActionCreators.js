@@ -2,6 +2,7 @@ import { dispatch } from '../dispatcher';
 import { get, post } from '../utils/Request';
 import LoginStore from '../stores/LoginStore';
 import { setPlaylists } from './PlaylistActionCreators';
+import { setUsers } from './UserActionCreators';
 
 const debug = require('debug')('uwave:actions:login');
 
@@ -18,6 +19,7 @@ export function initState() {
   get('/v1/now')
     .then(res => res.json())
     .then(state => {
+      setUsers(state.users || []);
       setPlaylists(state.playlists || []);
       if (state.user) {
         loginComplete({
