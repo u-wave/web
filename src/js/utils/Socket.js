@@ -2,7 +2,6 @@ import dispatcher from '../dispatcher';
 import { advance } from '../actions/AdvanceActionCreators';
 import { receive as chatReceive } from '../actions/ChatActionCreators';
 import { join as userJoin, leave as userLeave } from '../actions/UserActionCreators';
-import FakeSocket from './FakeSocket';
 
 const debug = require('debug')('uwave:websocket');
 
@@ -43,7 +42,7 @@ function onMessage(json) {
 }
 
 export function connect(url = location.href.replace(/^http(s)?:/, 'ws$1:')) {
-  socket = new FakeSocket(url);
+  socket = new WebSocket(url);
   socket.onmessage = pack => {
     onMessage(pack.data);
   };
