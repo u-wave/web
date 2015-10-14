@@ -1,7 +1,8 @@
 import gulp from 'gulp';
+import { env } from 'gulp-util';
 
 function exec(taskName) {
-  return () => require(`./tasks/${taskName}`)();
+  return () => require(`./tasks/${taskName}`)(env);
 }
 
 gulp.task('postcss', exec('compile-css'));
