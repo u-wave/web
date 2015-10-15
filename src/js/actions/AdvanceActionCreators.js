@@ -5,8 +5,10 @@ import dispatcher from '../dispatcher';
  */
 export function advance({ media, dj, historyID, playlistID, played }) {
   dispatcher.dispatch({
-    action: 'advance',
-    media, dj, historyID, playlistID,
-    timestamp: played
+    type: 'advance',
+    payload: {
+      media, dj, historyID, playlistID,
+      timestamp: played
+    }
   });
 }

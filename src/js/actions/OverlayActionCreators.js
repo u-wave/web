@@ -2,15 +2,15 @@ import { dispatch } from '../dispatcher';
 
 export function openOverlay(overlay) {
   dispatch({
-    action: 'openOverlay',
-    overlay: overlay
+    type: 'openOverlay',
+    payload: { overlay }
   });
 }
 
 export function toggleOverlay(overlay) {
   dispatch({
-    action: 'toggleOverlay',
-    overlay: overlay
+    type: 'toggleOverlay',
+    payload: { overlay }
   });
 }
 
@@ -19,5 +19,5 @@ export function togglePlaylistManager() {
 }
 
 export function closeAll() {
-  dispatch({ action: 'closeOverlay' });
+  dispatch({ type: 'closeOverlay' });
 }

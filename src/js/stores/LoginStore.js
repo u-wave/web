@@ -13,8 +13,8 @@ const LoginStore = assign(new EventEmitter, {
     return user;
   },
 
-  dispatchToken: dispatcher.register(payload => {
-    switch (payload.action) {
+  dispatchToken: dispatcher.register(({ type, payload }) => {
+    switch (type) {
     case 'setSession':
       jwt = payload.jwt;
       user = null;

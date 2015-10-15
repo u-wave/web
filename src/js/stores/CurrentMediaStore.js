@@ -30,8 +30,8 @@ const CurrentMediaStore = assign(new EventEmitter, {
     return Math.floor((Date.now() - startTime) / 1000);
   },
 
-  dispatchToken: dispatcher.register(payload => {
-    switch (payload.action) {
+  dispatchToken: dispatcher.register(({ type, payload }) => {
+    switch (type) {
     case 'advance':
       media = payload.media;
       startTime = payload.timestamp;

@@ -52,8 +52,8 @@ const PlaylistStore = assign(new EventEmitter, {
       .concat(values(playlistWips));
   },
 
-  dispatchToken: dispatcher.register(payload => {
-    switch (payload.action) {
+  dispatchToken: dispatcher.register(({ type, payload }) => {
+    switch (type) {
     case 'playlists':
       payload.playlists.forEach(playlist => {
         playlists[playlist._id] = playlist;

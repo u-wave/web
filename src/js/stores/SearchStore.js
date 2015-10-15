@@ -31,8 +31,8 @@ const SearchStore = assign(new EventEmitter, {
     return results;
   },
 
-  dispatchToken: dispatcher.register(payload => {
-    switch (payload.action) {
+  dispatchToken: dispatcher.register(({ type, payload }) => {
+    switch (type) {
     case 'searchStart':
       query = payload.query;
       results = {};

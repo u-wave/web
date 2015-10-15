@@ -2,15 +2,17 @@ import dispatcher from '../dispatcher';
 
 export function setVolume(volume) {
   dispatcher.dispatch({
-    action: 'setVolume',
-    volume: volume
+    type: 'setVolume',
+    payload: {
+      volume: volume
+    }
   });
 }
 
 export function mute() {
-  dispatcher.dispatch({ action: 'mute' });
+  dispatcher.dispatch({ type: 'mute' });
 }
 
 export function unmute() {
-  dispatcher.dispatch({ action: 'unmute' });
+  dispatcher.dispatch({ type: 'unmute' });
 }

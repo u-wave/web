@@ -47,8 +47,8 @@ export function connect(url = location.href.replace(/^http(s)?:/, 'ws$1:')) {
     onMessage(pack.data);
   };
 
-  dispatchToken = dispatcher.register(payload => {
-    switch (payload.action) {
+  dispatchToken = dispatcher.register(({ type, payload }) => {
+    switch (type) {
     case 'loginComplete':
       socket.send(payload.jwt);
       break;

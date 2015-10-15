@@ -14,8 +14,8 @@ const VolumeStore = assign(new EventEmitter, {
     return muted;
   },
 
-  dispatchToken: dispatcher.register(payload => {
-    switch (payload.action) {
+  dispatchToken: dispatcher.register(({ type, payload }) => {
+    switch (type) {
     case 'setVolume':
       volume = payload.volume;
       VolumeStore.emit('change');

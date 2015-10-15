@@ -29,9 +29,9 @@ const ChatStore = assign(new EventEmitter, {
     return messages;
   },
 
-  dispatchToken: dispatcher.register(payload => {
+  dispatchToken: dispatcher.register(({ type, payload }) => {
     const user = LoginStore.getUser();
-    switch (payload.action) {
+    switch (type) {
     case 'chatSend':
       const send = {
         user: user,

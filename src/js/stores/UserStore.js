@@ -16,8 +16,8 @@ const UserStore = assign(new EventEmitter, {
     return values(users);
   },
 
-  dispatchToken: dispatcher.register(payload => {
-    switch (payload.action) {
+  dispatchToken: dispatcher.register(({ type, payload }) => {
+    switch (type) {
     case 'setUsers':
       users = payload.users.reduce((map, user) => {
         return assign(map, { [user._id]: user });

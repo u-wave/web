@@ -2,21 +2,23 @@ import { dispatch } from '../dispatcher';
 
 export function setUsers(users) {
   dispatch({
-    action: 'setUsers',
-    users
+    type: 'setUsers',
+    payload: { users }
   });
 }
 
 export function join(user) {
   dispatch({
-    action: 'join',
-    user
+    type: 'join',
+    payload: { user }
   });
 }
 
 export function leave(id) {
   dispatch({
-    action: 'leave',
-    userID: id
+    type: 'leave',
+    payload: {
+      userID: id
+    }
   });
 }

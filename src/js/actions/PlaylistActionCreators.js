@@ -3,42 +3,42 @@ import { get, post } from '../utils/Request';
 
 export function setPlaylists(playlists) {
   dispatch({
-    action: 'playlists',
-    playlists: playlists
+    type: 'playlists',
+    payload: { playlists }
   });
 }
 
 export function selectPlaylist(playlistID) {
   dispatch({
-    action: 'selectPlaylist',
-    playlistID: playlistID
+    type: 'selectPlaylist',
+    payload: { playlistID }
   });
 }
 
 export function setActivePlaylist(playlistID) {
   dispatch({
-    action: 'setActivePlaylist',
-    playlistID: playlistID
+    type: 'setActivePlaylist',
+    payload: { playlistID }
   });
 }
 
 function playlistsComplete(playlists) {
   dispatch({
-    action: 'playlists',
-    playlists: playlists
+    type: 'playlists',
+    payload: { playlists }
   });
 }
 
 function playlistsError(err) {
   dispatch({
-    action: 'playlistsError',
-    error: err,
-    message: err.message
+    type: 'playlists',
+    error: true,
+    payload: err
   });
 }
 
 export function loadPlaylists() {
-  dispatch({ action: 'loadingPlaylists' });
+  dispatch({ type: 'loadingPlaylists' });
   get('/v1/playlists')
     .then(res => res.json())
     .then(playlistsComplete)
@@ -50,24 +50,26 @@ export function createPlaylist(name) {
   const description = '';
   const shared = false;
   dispatch({
-    action: 'creatingPlaylist',
-    tempId,
-    name, description, shared
+    type: 'creatingPlaylist',
+    payload: { name, description, shared },
+    meta: { tempId }
   });
 
   post('/v1/playlists', { name, description, shared })
     .then(res => res.json())
     .then(playlist => {
       dispatch({
-        action: 'createdPlaylist',
-        tempId, playlist
+        type: 'createdPlaylist',
+        payload: { playlist },
+        meta: { tempId }
       });
     })
     .catch(error => {
-      const { message } = error;
       dispatch({
-        action: 'createPlaylistError',
-        tempId, error, message
+        type: 'createdPlaylist',
+        error: true,
+        payload: error,
+        meta: { tempId }
       });
     });
 }
@@ -75,45 +77,41 @@ export function createPlaylist(name) {
 export function addMedia(playlist, media) {
   // POST /v1/playlists/${playlist._id}/media
   dispatch({
-    action: 'addMediaToPlaylist',
-    playlistID: playlist._id,
-    media: media
+    type: 'addingMediaToPlaylist',
+    payload: {
+      playlistID: playlist._id,
+      media: mediaList
+    }
   });
 }
 
 export function editMedia(playlistID, media) {
   dispatch({
-    action: 'showMediaEditDialog',
-    playlistID: playlistID,
-    media: media
+    type: 'showMediaEditDialog',
+    payload: { playlistID, media }
   });
 }
 
 export function updateMedia(playlistID, mediaID, props) {
   dispatch({
-    action: 'updateMedia',
-    playlistID: playlistID,
-    mediaID: mediaID,
-    props: props
+    type: 'updateMedia',
+    payload: { playlistID, mediaID, props }
   });
 }
 
 export function removeMedia(playlistID, mediaID) {
   // DELETE /v1/playlists/${playlistID}/media/${mediaID}
   dispatch({
-    action: 'removeMedia',
-    playlistID: playlistID,
-    mediaID: mediaID
+    type: 'removeMedia',
+    payload: { playlistID, mediaID }
   });
 }
 
 export function moveMedia(playlistID, medias, afterID) {
   // POST
   dispatch({
-    action: 'moveMediaInPlaylist',
-    playlistID: playlistID,
-    medias: medias,
-    after: afterID
+    type: 'moveMediaInPlaylist',
+    payload: { playlistID, medias, after: afterID }
   });
 }
 

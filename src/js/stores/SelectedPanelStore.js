@@ -10,8 +10,8 @@ const SelectedPanelStore = assign(new EventEmitter, {
     return selected || defaultPanel;
   },
 
-  dispatchToken: dispatcher.register(payload => {
-    switch (payload.action) {
+  dispatchToken: dispatcher.register(({ type, payload }) => {
+    switch (type) {
     case 'selectPanel':
       selected = payload.panel;
       SelectedPanelStore.emit('change');

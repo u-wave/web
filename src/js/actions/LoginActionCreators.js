@@ -8,14 +8,14 @@ const debug = require('debug')('uwave:actions:login');
 
 export function loginComplete({ jwt, user }) {
   dispatch({
-    action: 'loginComplete',
-    jwt, user
+    type: 'loginComplete',
+    payload: { jwt, user }
   });
   localStorage._session = jwt;
 }
 
 export function initState() {
-  dispatch({ action: 'loadingPlaylists' });
+  dispatch({ type: 'loadingPlaylists' });
   get('/v1/now')
     .then(res => res.json())
     .then(state => {
@@ -37,8 +37,8 @@ export function loginAuthenticated(data) {
 
 export function setJWT(jwt) {
   dispatch({
-    action: 'setSession',
-    jwt
+    type: 'setSession',
+    payload: { jwt }
   });
   initState();
 }
@@ -56,13 +56,17 @@ export function register({ email, username, password }) {
 
 export function openLoginModal() {
   dispatch({
-    action: 'openLoginModal',
-    register: false
+    type: 'openLoginModal',
+    meta: {
+      register: false
+    }
   });
 }
 export function openRegisterModal() {
   dispatch({
-    action: 'openLoginModal',
-    register: true
+    type: 'openLoginModal',
+    meta: {
+      register: true
+    }
   });
 }

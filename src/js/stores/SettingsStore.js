@@ -14,11 +14,11 @@ const SettingsStore = assign(new EventEmitter, {
     return settings[name];
   },
 
-  dispatchToken: dispatcher.register(payload => {
-    switch (payload.action) {
+  dispatchToken: dispatcher.register(({ type, payload }) => {
+    switch (type) {
     case 'loadSettings':
     case 'setSettings':
-      assign(settings, payload.settings);
+      assign(settings, payload);
       SettingsStore.emit('change');
       break;
     default:

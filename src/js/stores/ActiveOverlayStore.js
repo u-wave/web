@@ -9,8 +9,8 @@ const ActiveOverlayStore = assign(new EventEmitter, {
     return active;
   },
 
-  dispatchToken: dispatcher.register(payload => {
-    switch (payload.action) {
+  dispatchToken: dispatcher.register(({ type, payload }) => {
+    switch (type) {
     case 'openOverlay':
       active = payload.overlay;
       ActiveOverlayStore.emit('change');

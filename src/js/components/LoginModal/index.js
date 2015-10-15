@@ -11,10 +11,10 @@ export default class LoginModal extends React.Component {
   state = { open: false, register: false };
 
   componentDidMount() {
-    this.dispatchToken = dispatcher.register(payload => {
-      if (payload.action === 'openLoginModal') {
+    this.dispatchToken = dispatcher.register(({ type, meta }) => {
+      if (type === 'openLoginModal') {
         this.open();
-        this.setState({ register: payload.register });
+        this.setState({ register: meta.register });
       }
     });
   }
