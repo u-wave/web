@@ -52,7 +52,7 @@ const PlaylistStore = assign(new EventEmitter, {
       .concat(values(playlistWips));
   },
 
-  dispatchToken: dispatcher.register(({ type, payload }) => {
+  dispatchToken: dispatcher.register(({ type, payload, meta }) => {
     switch (type) {
     case 'playlists':
       payload.playlists.forEach(playlist => {
@@ -81,24 +81,24 @@ const PlaylistStore = assign(new EventEmitter, {
       break;
 
     case 'creatingPlaylist':
-      playlistWips[payload.tempId] = {
-        _id: payload.tempId,
+      playlistWips[meta.tempId] = {
+        _id: meta.tempId,
         name: payload.name,
         description: payload.description,
         shared: payload.shared,
         creating: true
       };
-      selectPlaylist(playlistWips[payload.tempId]);
+      selectPlaylist(playlistWips[meta.tempId]);
       PlaylistStore.emit('change');
       break;
     case 'createdPlaylist':
-      delete playlistWips[payload.tempId];
+      delete playlistWips[meta.tempId];
       playlists[payload.playlist._id] = payload.playlist;
       selectPlaylist(payload.playlist);
       PlaylistStore.emit('change');
       break;
     case 'createPlaylistError':
-      delete playlistWips[payload.tempId];
+      delete playlistWips[meta.tempId];
       debug('could not create playlist', payload.message);
       PlaylistStore.emit('change');
       break;
