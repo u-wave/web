@@ -1,11 +1,15 @@
 import { Dispatcher } from 'flux';
 
-const debug = require('debug')('uwave:dispatcher');
+const debugOk = require('debug')('uwave:dispatcher');
+const debugError = require('debug')('uwave:dispatcher');
+debugError.log = ::console.error;
 
 class UWaveDispatcher extends Dispatcher {
-  dispatch(payload) {
-    debug('dispatch', payload.action, payload);
-    super.dispatch(payload);
+  dispatch(action) {
+    const { type, payload, error, meta } = action;
+    const debug = error ? debugError : debugOk;
+    debug(type, payload, meta || '');
+    super.dispatch(action);
   }
 }
 
