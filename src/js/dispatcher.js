@@ -2,7 +2,7 @@ import { Dispatcher } from 'flux';
 
 const debugOk = require('debug')('uwave:dispatcher');
 const debugError = require('debug')('uwave:dispatcher');
-debugError.log = ::console.error;
+debugError.log = ::console.error; // eslint-disable-line no-console
 
 class UWaveDispatcher extends Dispatcher {
   dispatch(action) {
