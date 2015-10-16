@@ -1,22 +1,38 @@
 import React from 'react';
 import TransitionGroup from 'react/lib/ReactCSSTransitionGroup';
 import dispatcher from '../../dispatcher';
+import LoginStore from '../../stores/LoginStore';
+import listen from '../../utils/listen';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
+
+function getState() {
+  return {
+    error: LoginStore.getError(),
+    user: LoginStore.getUser()
+  };
+}
 
 /**
  * The LoginModal manages its own "open" state.
  */
+@listen(LoginStore)
 export default class LoginModal extends React.Component {
-  state = { open: false, register: false };
+  state = { open: false, register: false, ...getState() };
 
   componentDidMount() {
-    this.dispatchToken = dispatcher.register(({ type, meta }) => {
+    this.dispatchToken = dispatcher.register(({ type, meta, error }) => {
       if (type === 'openLoginModal') {
         this.open();
         this.setState({ register: meta.register });
+      } else if (type === 'loginComplete' && !error) {
+        this.close();
       }
     });
+  }
+
+  onChange() {
+    this.setState(getState());
   }
 
   open() {
@@ -27,7 +43,7 @@ export default class LoginModal extends React.Component {
   }
 
   render() {
-    const { open, register } = this.state;
+    const { open, register, error } = this.state;
     let form;
     let title;
     if (register) {
@@ -44,7 +60,7 @@ export default class LoginModal extends React.Component {
       form = (
         <LoginForm
           key="login"
-          onLoggedIn={::this.close}
+          error={error}
           {...this.props}
         />
       );

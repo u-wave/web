@@ -1,5 +1,5 @@
 import React from 'react';
-import { login } from '../../utils/Auth';
+import { login } from '../../actions/LoginActionCreators';
 import Loader from '../Loader';
 import Form from '../Form';
 import TextField from '../Form/TextField';
@@ -7,10 +7,14 @@ import Button from '../Form/Button';
 
 export default class LoginForm extends React.Component {
   static propTypes = {
-    onLoggedIn: React.PropTypes.func.isRequired
+    error: React.PropTypes.object
   };
 
-  state = { busy: false, error: null };
+  state = { busy: false };
+
+  componentWillReceiveProps() {
+    this.setState({ busy: false });
+  }
 
   onSubmit(event) {
     event.preventDefault();
@@ -18,25 +22,16 @@ export default class LoginForm extends React.Component {
     login({
       email: this.refs.email.value,
       password: this.refs.password.value
-    })
-      .then(() => {
-        this.props.onLoggedIn();
-        this.setState({ error: null });
-      })
-      .catch(err => {
-        this.setState({ error: err.message });
-      })
-      .finally(() => {
-        this.setState({ busy: false });
-      });
+    });
   }
 
   render() {
-    const { busy, error } = this.state;
+    const { error } = this.props;
+    const { busy } = this.state;
 
     return (
       <Form className="LoginForm" onSubmit={::this.onSubmit}>
-        {error && <Form.Group>{error}</Form.Group>}
+        {error && <Form.Group>{error.message}</Form.Group>}
         <Form.Group>
           <TextField
             ref="email"

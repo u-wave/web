@@ -35,6 +35,22 @@ export function loginAuthenticated(data) {
   initState();
 }
 
+export function login({ email, password }) {
+  return post('/v1/auth/login', { email, password })
+    .then(res => res.json())
+    .then(res => {
+      loginAuthenticated(res);
+      return res;
+    })
+    .catch(error => {
+      dispatch({
+        type: 'loginComplete',
+        error: true,
+        payload: error
+      });
+    });
+}
+
 export function setJWT(jwt) {
   dispatch({
     type: 'setSession',
