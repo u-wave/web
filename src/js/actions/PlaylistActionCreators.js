@@ -74,7 +74,7 @@ export function createPlaylist(name) {
     });
 }
 
-export function addMedia(playlist, media) {
+export function addMedia(playlist, mediaList) {
   // POST /v1/playlists/${playlist._id}/media
   dispatch({
     type: 'addingMediaToPlaylist',
