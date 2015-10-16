@@ -60,13 +60,24 @@ export function setJWT(jwt) {
 }
 
 export function register({ email, username, password }) {
+  dispatch({ type: 'registerStart' });
   post('/v1/auth/register', { email, username, password, passwordRepeat: password })
     .then(res => res.json())
     .then(user => {
       debug('registered', user);
+      dispatch({
+        type: 'registerComplete',
+        payload: { user }
+      });
+      login({ email, password });
     })
     .catch(err => {
       debug('registration failed', err);
+      dispatch({
+        type: 'registerComplete',
+        error: true,
+        payload: err
+      });
     });
 }
 

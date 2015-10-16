@@ -1,5 +1,5 @@
 import React from 'react';
-import { register } from '../../utils/Auth';
+import { register } from '../../actions/LoginActionCreators';
 import Loader from '../Loader';
 import Form from '../Form';
 import TextField from '../Form/TextField';
@@ -7,10 +7,14 @@ import Button from '../Form/Button';
 
 export default class RegisterForm extends React.Component {
   static propTypes = {
-    onRegistered: React.PropTypes.func.isRequired
+    error: React.PropTypes.object
   };
 
-  state = { busy: false, error: null };
+  state = { busy: false };
+
+  componentWillReceiveProps() {
+    this.setState({ busy: false });
+  }
 
   onSubmit(event) {
     event.preventDefault();
@@ -19,25 +23,16 @@ export default class RegisterForm extends React.Component {
       username: this.refs.username.value,
       email: this.refs.email.value,
       password: this.refs.password.value
-    })
-      .then(() => {
-        this.props.onRegistered();
-        this.setState({ error: null });
-      })
-      .catch(err => {
-        this.setState({ error: err.message });
-      })
-      .finally(() => {
-        this.setState({ busy: false });
-      });
+    });
   }
 
   render() {
-    const { busy, error } = this.state;
+    const { error } = this.props;
+    const { busy } = this.state;
 
     return (
       <Form className="RegisterForm" onSubmit={::this.onSubmit}>
-        {error && <Form.Group>{error}</Form.Group>}
+        {error && <Form.Group>{error.message}</Form.Group>}
         <Form.Group>
           <TextField
             ref="username"

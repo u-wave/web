@@ -51,7 +51,7 @@ export default class LoginModal extends React.Component {
       form = (
         <RegisterForm
           key="register"
-          onRegistered={::this.close}
+          error={error}
           {...this.props}
         />
       );

@@ -37,6 +37,14 @@ const LoginStore = assign(new EventEmitter, {
       }
       LoginStore.emit('change');
       break;
+    case 'registerComplete':
+      if (isError) {
+        jwt = null;
+        user = null;
+        error = payload;
+        LoginStore.emit('change');
+      }
+      break;
     default:
       // Not for us
     }
