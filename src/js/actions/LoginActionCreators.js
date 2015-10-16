@@ -30,8 +30,11 @@ export function initState() {
     });
 }
 
-export function loginAuthenticated(data) {
-  loginComplete(data);
+export function setJWT(jwt) {
+  dispatch({
+    type: 'setSession',
+    payload: { jwt }
+  });
   initState();
 }
 
@@ -39,7 +42,7 @@ export function login({ email, password }) {
   return post('/v1/auth/login', { email, password })
     .then(res => res.json())
     .then(res => {
-      loginAuthenticated(res);
+      setJWT(res.jwt);
       return res;
     })
     .catch(error => {
@@ -49,14 +52,6 @@ export function login({ email, password }) {
         payload: error
       });
     });
-}
-
-export function setJWT(jwt) {
-  dispatch({
-    type: 'setSession',
-    payload: { jwt }
-  });
-  initState();
 }
 
 export function register({ email, username, password }) {
