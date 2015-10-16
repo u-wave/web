@@ -1,7 +1,7 @@
-import dispatcher from '../dispatcher';
+import { dispatch } from '../dispatcher';
 
 export function selectPanel(name) {
-  dispatcher.dispatch({
+  dispatch({
     type: 'selectPanel',
     payload: {
       panel: name

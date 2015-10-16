@@ -1,7 +1,7 @@
-import dispatcher from '../dispatcher';
+import { dispatch } from '../dispatcher';
 
 export function sendChat(text) {
-  dispatcher.dispatch({
+  dispatch({
     type: 'chatSend',
     payload: {
       message: text
@@ -10,7 +10,7 @@ export function sendChat(text) {
 }
 
 export function receive(message) {
-  dispatcher.dispatch({
+  dispatch({
     type: 'chatReceive',
     payload: { message }
   });

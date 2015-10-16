@@ -1,10 +1,10 @@
-import dispatcher from '../dispatcher';
+import { dispatch } from '../dispatcher';
 
 /**
  * Set the current song and DJ.
  */
 export function advance({ media, dj, historyID, playlistID, played }) {
-  dispatcher.dispatch({
+  dispatch({
     type: 'advance',
     payload: {
       media, dj, historyID, playlistID,
