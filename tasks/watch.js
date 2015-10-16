@@ -43,5 +43,8 @@ export default function watchTask() {
   gulp.watch(JS_PATHS, JS_TASKS);
   gulp.watch(CSS_PATHS, CSS_TASKS);
 
+  gulp.start('css');
+  gulp.start('assets');
+
   return bundle();
 }
