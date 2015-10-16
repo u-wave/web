@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './components/App';
 import CurrentMediaStore from './stores/CurrentMediaStore';
 import * as Socket from './utils/Socket';
-import { restore as restoreSession } from './utils/Auth';
+import { setJWT as restoreSession } from './actions/LoginActionCreators';
 
 ReactDOM.render(<App />, document.getElementById('app'));
 
