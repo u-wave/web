@@ -8,6 +8,29 @@ export function setPlaylists(playlists) {
   });
 }
 
+export function loadPlaylist(playlistID) {
+  dispatch({
+    type: 'loadingPlaylist',
+    payload: { playlistID }
+  });
+
+  get(`/v1/playlists/${playlistID}/media`)
+    .then(res => res.json())
+    .then(media => {
+      dispatch({
+        type: 'loadedPlaylist',
+        payload: { playlistID, media }
+      });
+    })
+    .catch(e => {
+      dispatch({
+        type: 'loadedPlaylist',
+        error: true,
+        payload: e
+      });
+    });
+}
+
 export function selectPlaylist(playlistID) {
   dispatch({
     type: 'selectPlaylist',
@@ -45,29 +68,6 @@ export function loadPlaylists() {
     .then(res => res.json())
     .then(playlistsComplete)
     .catch(playlistsError);
-}
-
-export function loadPlaylist(playlistID) {
-  dispatch({
-    type: 'loadingPlaylist',
-    payload: { playlistID }
-  });
-
-  get(`/v1/playlists/${playlistID}/media`)
-    .then(res => res.json())
-    .then(media => {
-      dispatch({
-        type: 'loadedPlaylist',
-        payload: { playlistID, media }
-      });
-    })
-    .catch(e => {
-      dispatch({
-        type: 'loadedPlaylist',
-        error: true,
-        payload: e
-      });
-    });
 }
 
 export function createPlaylist(name) {
