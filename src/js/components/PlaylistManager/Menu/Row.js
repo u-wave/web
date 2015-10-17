@@ -33,7 +33,7 @@ export default class Menu extends React.Component {
       >
         {icon}
         {playlist.name}
-        <span className="PlaylistMenuRow-count">{playlist.count}</span>
+        <span className="PlaylistMenuRow-count">{playlist.size}</span>
       </div>
     );
   }
