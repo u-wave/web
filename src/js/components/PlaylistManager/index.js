@@ -64,6 +64,7 @@ export default class PlaylistManager extends React.Component {
           className="PlaylistManager-panel"
           playlist={selected}
           media={selectedMedia}
+          loading={!!selected.loading}
         />
       );
     } else {
