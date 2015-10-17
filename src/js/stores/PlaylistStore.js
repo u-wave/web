@@ -80,6 +80,24 @@ const PlaylistStore = assign(new EventEmitter, {
       PlaylistStore.emit('change');
       break;
 
+    case 'loadingPlaylist':
+      if (playlists[payload.playlistID]) {
+        playlists[payload.playlistID].loading = true;
+        PlaylistStore.emit('change');
+      }
+      break;
+    case 'loadedPlaylist':
+      if (playlists[payload.playlistID]) {
+        playlists[payload.playlistID].loading = false;
+      }
+      if (selectedPlaylist._id === payload.playlistID) {
+        selectedMedia = payload.media;
+      } else if (activePlaylist._id === payload.playlistID) {
+        activeMedia = payload.media;
+      }
+      PlaylistStore.emit('change');
+      break;
+
     case 'creatingPlaylist':
       playlistWips[meta.tempId] = {
         _id: meta.tempId,
