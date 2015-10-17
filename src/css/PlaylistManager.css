@@ -47,6 +47,10 @@
     margin-right: 5px;
   }
 
+  @modifier create {
+    background-color: $highlight-color;
+  }
+
   @when selected {
     background: hexa($muted-text-color, 0.3);
   }
