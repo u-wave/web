@@ -10,8 +10,18 @@ let dispatchToken = null;
 export { dispatchToken };
 
 let socket = null;
+let queue = [];
+
+function sendRaw(message) {
+  if (socket.readyState === WebSocket.OPEN) {
+    socket.send(message);
+  } else {
+    queue.push(message);
+  }
+}
+
 function send(command, data) {
-  socket.send(JSON.stringify({ command, data }));
+  sendRaw(JSON.stringify({ command, data }));
 }
 
 function onMessage(json) {
@@ -47,11 +57,16 @@ export function connect(url = location.href.replace(/^http(s)?:/, 'ws$1:')) {
   socket.onmessage = pack => {
     onMessage(pack.data);
   };
+  socket.onopen = () => {
+    const messages = queue;
+    queue = [];
+    messages.forEach(sendRaw);
+  };
 
   dispatchToken = dispatcher.register(({ type, payload }) => {
     switch (type) {
     case 'loginComplete':
-      socket.send(payload.jwt);
+      sendRaw(payload.jwt);
       break;
     case 'chatSend':
       send('sendChat', payload.message);
