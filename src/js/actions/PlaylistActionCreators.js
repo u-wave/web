@@ -8,6 +8,13 @@ export function setPlaylists(playlists) {
   });
 }
 
+function flattenPlaylistItem(item) {
+  return {
+    ...item.media,
+    ...item
+  };
+}
+
 export function loadPlaylist(playlistID) {
   dispatch({
     type: 'loadingPlaylist',
@@ -16,6 +23,7 @@ export function loadPlaylist(playlistID) {
 
   get(`/v1/playlists/${playlistID}/media`)
     .then(res => res.json())
+    .map(flattenPlaylistItem)
     .then(media => {
       dispatch({
         type: 'loadedPlaylist',
