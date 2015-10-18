@@ -92,7 +92,8 @@ const PlaylistStore = assign(new EventEmitter, {
       }
       if (selectedPlaylist._id === payload.playlistID) {
         selectedMedia = payload.media;
-      } else if (activePlaylist._id === payload.playlistID) {
+      }
+      if (activePlaylist._id === payload.playlistID) {
         activeMedia = payload.media;
       }
       PlaylistStore.emit('change');
