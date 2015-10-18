@@ -2,6 +2,7 @@ import dispatcher from '../dispatcher';
 import { advance } from '../actions/AdvanceActionCreators';
 import { receive as chatReceive } from '../actions/ChatActionCreators';
 import { join as userJoin, leave as userLeave } from '../actions/UserActionCreators';
+import WebSocket from 'ReconnectingWebSocket';
 
 const debug = require('debug')('uwave:websocket');
 

@@ -6,6 +6,7 @@
   "license": "MIT",
   "repository": "u-wave/u-wave-web",
   "dependencies": {
+    "ReconnectingWebSocket": "github:joewalnes/reconnecting-websocket#283894",
     "array-find": "^1.0.0",
     "bluebird": "^2.10.2",
     "classnames": "^2.1.3",
