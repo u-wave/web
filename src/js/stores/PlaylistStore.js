@@ -34,6 +34,16 @@ function activatePlaylist(playlist) {
   }
 }
 
+// TODO use a stack or counter here to ensure that multiple concurrent
+// operations all get completed before setting the playlist to "not loading"
+function setLoading(playlistId, loading = true) {
+  if (playlists[playlistId] && playlists[playlistId].loading !== loading) {
+    playlists[playlistId].loading = loading;
+    // something changed!
+    return true;
+  }
+}
+
 const PlaylistStore = assign(new EventEmitter, {
   getActivePlaylist() {
     return activePlaylist;
@@ -81,8 +91,7 @@ const PlaylistStore = assign(new EventEmitter, {
       break;
 
     case 'loadingPlaylist':
-      if (playlists[payload.playlistID]) {
-        playlists[payload.playlistID].loading = true;
+      if (setLoading(payload.playlistID)) {
         PlaylistStore.emit('change');
       }
       break;
@@ -120,6 +129,27 @@ const PlaylistStore = assign(new EventEmitter, {
       }
       PlaylistStore.emit('change');
       break;
+
+    case 'addMediaToPlaylist':
+      if (setLoading(payload.playlistID)) {
+        PlaylistStore.emit('change');
+      }
+      break;
+    case 'addedMediaToPlaylist':
+      if (error) break;
+      const updatedPlaylist = playlists[payload.playlistID];
+      if (updatedPlaylist) {
+        updatedPlaylist.loading = false;
+        updatedPlaylist.size = payload.newSize;
+        if (selectedPlaylist === updatedPlaylist) {
+          selectedMedia.push(...payload.appendedMedia);
+        } else if (activePlaylist === updatedPlaylist) {
+          activeMedia.push(...payload.appendedMedia);
+        }
+      }
+      PlaylistStore.emit('change');
+      break;
+
     default:
       // Not for us
     }

@@ -107,13 +107,32 @@ export function createPlaylist(name) {
     });
 }
 
-export function addMedia(playlist, mediaList) {
-  // POST /v1/playlists/${playlist._id}/media
+export function addMedia(playlist, items) {
+  post(`/v1/playlists/${playlist._id}/media`, { items })
+    .then(res => res.json())
+    .then(({ added, playlistSize }) => {
+      dispatch({
+        type: 'addedMediaToPlaylist',
+        payload: {
+          playlistID: playlist._id,
+          newSize: playlistSize,
+          appendedMedia: added.map(flattenPlaylistItem)
+        }
+      });
+    })
+    .catch(error => {
+      dispatch({
+        type: 'addedMediaToPlaylist',
+        error: true,
+        payload: error
+      });
+    });
+
   dispatch({
-    type: 'addingMediaToPlaylist',
+    type: 'addMediaToPlaylist',
     payload: {
       playlistID: playlist._id,
-      media: mediaList
+      media: items
     }
   });
 }
