@@ -6,7 +6,7 @@ const Avatar = ({ className, user }) => {
     <div className={cx('Avatar', className)}>
       <img
         className="Avatar-image"
-        src={user.avatar}
+        src={user.avatar || `https://sigil.cupcake.io/uwave-${encodeURIComponent(user._id)}`}
       />
     </div>
   );
