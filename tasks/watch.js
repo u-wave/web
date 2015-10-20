@@ -15,7 +15,7 @@ const CSS_TASKS = [ 'css' ];
 let watcher;
 
 function bundle() {
-  const stream = watcher.bundle()
+  const stream = watcher.bundle();
   stream.on('error', e => {
     log('watchify error:', e.stack || e.message);
   });
