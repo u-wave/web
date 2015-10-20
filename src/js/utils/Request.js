@@ -4,6 +4,8 @@ import BluebirdPromise from 'bluebird';
 import { stringify as stringifyQS } from 'querystring';
 import LoginStore from '../stores/LoginStore';
 
+const debug = require('debug')('uwave:util:request');
+
 // return Bluebird promises from native fetch calls, too
 function fetch(...args) {
   return BluebirdPromise.resolve(window.fetch(...args));
@@ -33,6 +35,7 @@ function rejectNonOK(response) {
 }
 
 export function get(uri, data) {
+  debug('get', uri, stringifyQS(data));
   return fetch(makeUrl(uri, data), {
     method: 'get',
     credentials: 'same-origin'
@@ -40,6 +43,7 @@ export function get(uri, data) {
 }
 
 export function post(uri, data) {
+  debug('post', uri, JSON.stringify(data));
   return fetch(makeUrl(uri), {
     method: 'post',
     headers: {
@@ -52,6 +56,7 @@ export function post(uri, data) {
 }
 
 export function put(uri, data) {
+  debug('put', uri, JSON.stringify(data));
   return fetch(makeUrl(uri), {
     method: 'put',
     headers: {
@@ -64,6 +69,7 @@ export function put(uri, data) {
 }
 
 export function del(uri, data) {
+  debug('del', uri, JSON.stringify(data));
   return fetch(makeUrl(uri), {
     method: 'delete',
     headers: {
