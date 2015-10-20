@@ -3,7 +3,7 @@ import { get, post } from '../utils/Request';
 
 export function setPlaylists(playlists) {
   dispatch({
-    type: 'playlists',
+    type: 'loadedPlaylists',
     payload: { playlists }
   });
 }
@@ -57,14 +57,14 @@ export function setActivePlaylist(playlistID) {
 
 function playlistsComplete(playlists) {
   dispatch({
-    type: 'playlists',
+    type: 'loadedPlaylists',
     payload: { playlists }
   });
 }
 
 function playlistsError(err) {
   dispatch({
-    type: 'playlists',
+    type: 'loadedPlaylists',
     error: true,
     payload: err
   });

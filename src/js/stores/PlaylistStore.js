@@ -64,7 +64,8 @@ const PlaylistStore = assign(new EventEmitter, {
 
   dispatchToken: dispatcher.register(({ type, payload, meta, error }) => {
     switch (type) {
-    case 'playlists':
+    case 'loadedPlaylists':
+      if (error) break;
       payload.playlists.forEach(playlist => {
         playlists[playlist._id] = playlist;
       });
