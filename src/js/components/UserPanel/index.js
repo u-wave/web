@@ -1,5 +1,6 @@
 import cx from 'classnames';
 import React from 'react';
+import naturalCmp from 'natural-compare';
 import Panel from '../PanelSwitcher/Panel';
 import UserList from '../UserList';
 import UserStore from '../../stores/UserStore';
@@ -18,13 +19,7 @@ function compareUsers(a, b) {
   if (a.role < b.role) {
     return 1;
   }
-  if (a.username.toLowerCase() > b.username.toLowerCase()) {
-    return 1;
-  }
-  if (a.username.toLowerCase() < b.username.toLowerCase()) {
-    return -1;
-  }
-  return 0;
+  return naturalCmp(a.username.toLowerCase(), b.username.toLowerCase());
 }
 
 @listen(UserStore)

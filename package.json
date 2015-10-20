@@ -16,6 +16,7 @@
     "flux": "^2.1.1",
     "is-equal-shallow": "^0.1.3",
     "material-ui": "^0.12.3",
+    "natural-compare": "^1.2.2",
     "object-assign": "^4.0.1",
     "object-values": "^1.0.0",
     "react": "^0.14.0",

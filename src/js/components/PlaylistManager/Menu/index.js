@@ -1,7 +1,10 @@
 import cx from 'classnames';
 import React from 'react';
+import naturalCmp from 'natural-compare';
 import PlaylistRow from './Row';
 import PlaylistCreate from './NewPlaylist';
+
+const byName = (a, b) => naturalCmp(a.name.toLowerCase(), b.name.toLowerCase());
 
 export default class Menu extends React.Component {
   static propTypes = {
@@ -11,11 +14,7 @@ export default class Menu extends React.Component {
 
   render() {
     const { className, playlists } = this.props;
-    const sorted = playlists.slice().sort((a, b) => {
-      if (a.name > b.name) return 1;
-      if (a.name < b.name) return -1;
-      return 0;
-    });
+    const sorted = playlists.slice().sort(byName);
     return (
       <div className={cx('PlaylistMenu', className)}>
         <PlaylistCreate className="PlaylistMenu-row" />
