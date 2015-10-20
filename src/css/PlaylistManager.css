@@ -17,6 +17,7 @@
 @component PlaylistMenu {
   background: hexa($background-color, 0.96);
   height: 100%;
+  overflow-y: auto;
 }
 
 @component PlaylistMenuRow {
