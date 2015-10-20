@@ -8,6 +8,9 @@ import {
   setJWT as restoreSession
 } from './actions/LoginActionCreators';
 
+// Material-UI dependency
+require('react-tap-event-plugin')();
+
 ReactDOM.render(<App />, document.getElementById('app'));
 
 if ('_session' in localStorage) {

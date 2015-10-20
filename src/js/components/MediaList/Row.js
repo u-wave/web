@@ -13,11 +13,21 @@ export default class Row extends React.Component {
     selected: false
   };
 
+  onMouseLeave() {
+    if (this.refs.actions) {
+      this.refs.actions.onMouseLeave();
+    }
+  }
+
   render() {
     const { className, media, selected, ...attrs } = this.props;
     const selectedClass = selected ? 'is-selected' : '';
     return (
-      <div className={cx('MediaListRow', className, selectedClass)} {...attrs}>
+      <div
+        className={cx('MediaListRow', className, selectedClass)}
+        onMouseLeave={::this.onMouseLeave}
+        {...attrs}
+      >
         <div className="MediaListRow-thumb">
           <img
             className="MediaListRow-image"
@@ -31,7 +41,11 @@ export default class Row extends React.Component {
         <div className="MediaListRow-title">
           {media.title}
         </div>
-        <Actions className="MediaListRow-actions" />
+        <Actions
+          ref="actions"
+          className="MediaListRow-actions"
+          media={media}
+        />
       </div>
     );
   }
