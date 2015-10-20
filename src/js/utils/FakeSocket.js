@@ -1,5 +1,5 @@
 import EventEmitter from 'events';
-import faker from 'faker';
+import faker from 'faker/locale/en';
 import LoginStore from '../stores/LoginStore';
 import UserStore from '../stores/UserStore';
 
