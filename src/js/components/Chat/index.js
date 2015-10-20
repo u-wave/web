@@ -11,27 +11,13 @@ function getState() {
 
 @listen(ChatStore)
 export default class Chat extends React.Component {
-  constructor() {
-    super();
-    this.onChange = this.onChange.bind(this);
-  }
-
-  state = getState()
+  state = getState();
 
   componentWillUpdate() {
-    const el = this.refs.chat;
-    const lastMessage = el.lastElementChild;
-    if (lastMessage) {
-      const neededSize = el.scrollTop + el.offsetHeight + lastMessage.offsetHeight;
-      this._isScrolledToBottom = neededSize >= el.scrollHeight - 20;
-    } else {
-      this._isScrolledToBottom = true;
-    }
-    debug('willUpdate', this._isScrolledToBottom);
+    this._isScrolledToBottom = this.isScrolledToBottom();
   }
 
   componentDidUpdate() {
-    debug('didUpdate', this._isScrolledToBottom);
     if (this._isScrolledToBottom) {
       const el = this.refs.chat;
       el.scrollTop = el.scrollHeight;
@@ -40,6 +26,16 @@ export default class Chat extends React.Component {
 
   onChange() {
     this.setState(getState());
+  }
+
+  isScrolledToBottom() {
+    const el = this.refs.chat;
+    const lastMessage = el.lastElementChild;
+    if (lastMessage) {
+      const neededSize = el.scrollTop + el.offsetHeight + lastMessage.offsetHeight;
+      return neededSize >= el.scrollHeight - 20;
+    }
+    return true;
   }
 
   render() {
