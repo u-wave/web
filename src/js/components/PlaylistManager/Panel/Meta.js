@@ -1,6 +1,6 @@
 import cx from 'classnames';
 import React from 'react';
-import { setActivePlaylist } from '../../../actions/PlaylistActionCreators';
+import { activatePlaylist } from '../../../actions/PlaylistActionCreators';
 import Icon from '../../Icon';
 
 export default class PlaylistMeta extends React.Component {
@@ -12,7 +12,7 @@ export default class PlaylistMeta extends React.Component {
   };
 
   activate() {
-    setActivePlaylist(this.props.id);
+    activatePlaylist(this.props.id);
   }
 
   render() {

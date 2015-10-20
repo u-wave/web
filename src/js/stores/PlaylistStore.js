@@ -18,7 +18,11 @@ function selectPlaylist(playlist) {
   if (playlist) {
     selectedPlaylist = playlist;
     selectedPlaylist.selected = true;
-    selectedMedia = selectedPlaylist.media || [];
+    if (activePlaylist && selectedPlaylist._id === activePlaylist._id) {
+      selectedMedia = activeMedia;
+    } else {
+      selectedMedia = selectedPlaylist.media || [];
+    }
   }
 }
 
@@ -30,7 +34,11 @@ function activatePlaylist(playlist) {
   if (playlist) {
     activePlaylist = playlist;
     activePlaylist.active = true;
-    activeMedia = activePlaylist.media || [];
+    if (selectedPlaylist && activePlaylist._id === selectedPlaylist._id) {
+      activeMedia = selectedMedia;
+    } else {
+      activeMedia = activePlaylist.media || [];
+    }
   }
 }
 
@@ -77,7 +85,14 @@ const PlaylistStore = assign(new EventEmitter, {
       }
       PlaylistStore.emit('change');
       break;
-    case 'setActivePlaylist':
+    case 'activatePlaylist':
+      // TODO use a different property here so we can show a loading icon on
+      // the "Active" button only, instead of on top of the entire playlist
+      setLoading(payload.playlistID);
+      PlaylistStore.emit('change');
+      break;
+    case 'activatedPlaylist':
+      setLoading(payload.playlistID, false);
       activatePlaylist(playlists[payload.playlistID]);
       PlaylistStore.emit('change');
       break;

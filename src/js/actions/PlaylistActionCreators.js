@@ -1,5 +1,5 @@
 import { dispatch } from '../dispatcher';
-import { get, post } from '../utils/Request';
+import { get, post, put } from '../utils/Request';
 
 export function setPlaylists(playlists) {
   dispatch({
@@ -48,11 +48,26 @@ export function selectPlaylist(playlistID) {
   loadPlaylist(playlistID);
 }
 
-export function setActivePlaylist(playlistID) {
+export function activatePlaylist(playlistID) {
   dispatch({
-    type: 'setActivePlaylist',
+    type: 'activatePlaylist',
     payload: { playlistID }
   });
+  put(`/v1/playlists/${playlistID}/activate`)
+    .then(() => {
+      dispatch({
+        type: 'activatedPlaylist',
+        payload: { playlistID }
+      });
+    })
+    .catch(error => {
+      dispatch({
+        type: 'activatedPlaylist',
+        error: true,
+        payload: error,
+        meta: { playlistID }
+      });
+    });
 }
 
 function playlistsComplete(playlists) {
