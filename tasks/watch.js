@@ -8,7 +8,7 @@ import source from 'vinyl-source-stream';
 const dest = ::gulp.dest;
 
 const JS_PATHS = [ 'src/js/**/*.js', 'gulpfile.babel.js', 'tasks/*.js' ];
-const JS_TASKS = [ 'eslint' ];
+const JS_TASKS = [ 'js:lint' ];
 const CSS_PATHS = [ 'src/css/**/*.css' ];
 const CSS_TASKS = [ 'css' ];
 
