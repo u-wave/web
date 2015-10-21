@@ -10,7 +10,7 @@ let messages = [];
 
 function removeInFlightMessage(message) {
   for (let i = messages.length - 1; i >= 0; i--) {
-    if (messages[i].user === message.user &&
+    if (messages[i].userID === message.userID &&
         messages[i].inFlight &&
         messages[i].text === message.text) {
       messages.splice(i, 1);
