@@ -1,7 +1,5 @@
-import cx from 'classnames';
-import React from 'react';
+import React, { Component } from 'react';
 import naturalCmp from 'natural-compare';
-import Panel from '../PanelSwitcher/Panel';
 import UserList from '../UserList';
 import UserStore from '../../stores/UserStore';
 import listen from '../../utils/listen';
@@ -23,11 +21,7 @@ function compareUsers(a, b) {
 }
 
 @listen(UserStore)
-export default class UserPanel extends Panel {
-  static propTypes = {
-    className: React.PropTypes.string
-  };
-
+export default class RoomUsers extends Component {
   state = getState();
 
   onChange() {
@@ -40,8 +34,8 @@ export default class UserPanel extends Panel {
 
     return (
       <UserList
-        className={cx('Panel', this.props.className)}
         users={users}
+        {...this.props}
       />
     );
   }

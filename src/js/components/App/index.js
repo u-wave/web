@@ -3,7 +3,7 @@ import LoginStore from '../../stores/LoginStore';
 import SettingsStore from '../../stores/SettingsStore';
 import Chat from '../Chat';
 import ChatInput from '../Chat/Input';
-import UserPanel from '../UserPanel';
+import RoomUserList from '../UserList/RoomUserList';
 import FooterBar from '../FooterBar';
 import HeaderBar from '../HeaderBar';
 import PanelSwitcher from '../PanelSwitcher';
@@ -61,7 +61,9 @@ export default class App extends React.Component {
             <Panel name="chat">
               <Chat />
             </Panel>
-            <UserPanel name="room" />
+            <Panel name="room">
+              <RoomUserList />
+            </Panel>
             <Panel name="waitlist">
               [Placeholder]
             </Panel>
