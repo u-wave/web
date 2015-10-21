@@ -33,11 +33,13 @@ const ChatStore = assign(new EventEmitter, {
     const user = LoginStore.getUser();
     switch (type) {
     case 'chatSend':
+      const timestamp = Date.now();
       const send = {
+        _id: `inflight${timestamp}`,
         user: user,
         userID: user._id,
         text: payload.message,
-        timestamp: Date.now(),
+        timestamp: timestamp,
         inFlight: true
       };
       messages = messages.concat([ send ]);
