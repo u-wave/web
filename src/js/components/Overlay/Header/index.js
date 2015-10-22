@@ -1,12 +1,13 @@
 import cx from 'classnames';
 import React from 'react';
+import oneOrManyChildren from '../../../utils/propTypes/oneOrManyChildren';
 import CloseButton from './Close';
 
 export default class Header extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
     title: React.PropTypes.string,
-    children: React.PropTypes.arrayOf(React.PropTypes.element)
+    children: oneOrManyChildren
   };
 
   render() {

@@ -2,6 +2,7 @@ import React from 'react';
 import TransitionGroup from 'react/lib/ReactCSSTransitionGroup';
 import ActiveOverlayStore from '../../stores/ActiveOverlayStore';
 import listen from '../../utils/listen';
+import oneOrManyChildren from '../../utils/propTypes/oneOrManyChildren';
 
 function getState() {
   return {
@@ -12,10 +13,7 @@ function getState() {
 @listen(ActiveOverlayStore)
 export default class Overlays extends React.Component {
   static propTypes = {
-    children: React.PropTypes.oneOfType([
-      React.PropTypes.element,
-      React.PropTypes.arrayOf(React.PropTypes.element)
-    ])
+    children: oneOrManyChildren
   };
 
   state = getState();
