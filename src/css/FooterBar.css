@@ -13,6 +13,18 @@
     align-items: center;
     height: 100%;
   }
+
+  @descendent user {
+    float: left;
+    height: 100%;
+    width: 75px;
+  }
+
+  @descendent next {
+    float: left;
+    height: 100%;
+    width: calc(100% - 75px);
+  }
 }
 
 @component FooterAuthButton {
@@ -44,8 +56,7 @@
 
 @component UserInfo {
   box-sizing: border-box;
-  float: left;
-  width: 75px;
+  width: 100%;
   height: 100%;
   padding: 4px;
 
@@ -57,13 +68,12 @@
 
 @component NextMedia {
   box-sizing: border-box;
-  float: left;
+  height: 100%;
+  width: 100%;
   cursor: pointer;
   color: $muted-text-color;
   font-size: 11pt;
   padding: 7px;
-  width: calc(100% - 75px);
-  height: 100%;
 
   &:hover {
     background-color: $background-hover-color;

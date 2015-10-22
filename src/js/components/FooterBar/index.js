@@ -35,12 +35,16 @@ export default class FooterBar extends React.Component {
     if (user && !user.isGuest) {
       return (
         <div className={className}>
-          <UserInfo user={user} />
-          <NextMedia
-            playlist={playlist}
-            nextMedia={nextMedia}
-            onClick={togglePlaylistManager}
-          />
+          <div className="FooterBar-user">
+            <UserInfo user={user} />
+          </div>
+          <div className="FooterBar-next">
+            <NextMedia
+              playlist={playlist}
+              nextMedia={nextMedia}
+              onClick={togglePlaylistManager}
+            />
+          </div>
         </div>
       );
     }
