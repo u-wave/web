@@ -8,7 +8,7 @@ function tick(store) {
   store.emit('change');
 }
 
-let media = {};
+let media = null;
 let startTime = null;
 
 const CurrentMediaStore = assign(new EventEmitter, {
@@ -19,7 +19,7 @@ const CurrentMediaStore = assign(new EventEmitter, {
   },
 
   getMedia() {
-    return clone(media);
+    return media ? clone(media) : null;
   },
 
   getStartTime() {

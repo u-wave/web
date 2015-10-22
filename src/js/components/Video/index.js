@@ -35,12 +35,14 @@ export default class Video extends React.Component {
   render() {
     const { size } = this.props;
     const { media, startTime, volume } = this.state;
+
+    if (!media) {
+      return <div className="Video" />;
+    }
+
     let video = '';
-
     const seek = Math.round((Date.now() - startTime) / 1000);
-
     const props = { media, seek, size, volume };
-
     switch (media.sourceType) {
     case 'youtube':
       video = <YouTubePlayer {...props} />;

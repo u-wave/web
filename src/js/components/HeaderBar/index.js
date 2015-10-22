@@ -1,4 +1,3 @@
-import assign from 'object-assign';
 import cx from 'classnames';
 import React from 'react';
 import CurrentMediaStore from '../../stores/CurrentMediaStore';
@@ -36,18 +35,24 @@ export default class HeaderBar extends React.Component {
   }
 
   render() {
-    const props = assign({}, this.props, {
-      className: cx('HeaderBar', this.props.className)
-    });
+    const { title, ...props } = this.props;
     const media = this.state.media;
-    return (
-      <div {...props}>
-        <h1 className="HeaderBar-title">{props.title}</h1>
-        <SongTitle
+
+    const nowPlaying = media
+      ? <SongTitle
           className="HeaderBar-now-playing"
           artist={media.artist}
           title={media.title}
         />
+      : <div className="HeaderBar-now-playing">Nobody is playing!</div>;
+
+    return (
+      <div
+        className={cx('HeaderBar', this.props.className)}
+        {...props}
+      >
+        <h1 className="HeaderBar-title">{title}</h1>
+        {nowPlaying}
         <Progress
           className="HeaderBar-progress"
           total={this.state.total}
