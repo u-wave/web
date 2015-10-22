@@ -4,6 +4,7 @@ import SettingsStore from '../../stores/SettingsStore';
 import Chat from '../Chat';
 import ChatInput from '../Chat/Input';
 import RoomUserList from '../UserList/RoomUserList';
+import WaitList from '../UserList/WaitList';
 import FooterBar from '../FooterBar';
 import HeaderBar from '../HeaderBar';
 import PanelSwitcher from '../PanelSwitcher';
@@ -65,7 +66,7 @@ export default class App extends React.Component {
               <RoomUserList />
             </Panel>
             <Panel name="waitlist">
-              [Placeholder]
+              <WaitList />
             </Panel>
           </PanelGroup>
           <div className="AppRow AppRow--bottom ChatInputWrapper">
