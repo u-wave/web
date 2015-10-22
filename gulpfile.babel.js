@@ -21,7 +21,7 @@ gulp.task('js', sequence('js:lint', 'js:browserify'));
 gulp.task('assets', exec('copy-assets'));
 
 // TODO fix this, it's terrible :P
-gulp.task('dist:final', exec('make-dist'))
+gulp.task('dist:final', exec('make-dist'));
 gulp.task('dist', () => {
   env.minify = true;
   runSeq(

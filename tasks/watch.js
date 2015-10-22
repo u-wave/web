@@ -2,6 +2,7 @@ import gulp from 'gulp';
 import { log } from 'gulp-util';
 import { configure as babelify } from 'babelify';
 import browserify from 'browserify';
+import hmr from 'browserify-hmr';
 import watchify from 'watchify';
 import source from 'vinyl-source-stream';
 
@@ -27,14 +28,26 @@ function bundle() {
 gulp.task('watch:bundle', bundle);
 
 export default function watchTask() {
+  const babel = babelify({
+    stage: 0,
+    plugins: [ 'react-transform' ],
+    extra: {
+      'react-transform': {
+        transforms: [
+          { transform: 'react-transform-hmr', imports: [ 'react' ], locals: [ 'module' ] }
+        ]
+      }
+    }
+  });
   const bundler = browserify({
     debug: true,
     entries: './src/js/app.js',
     cache: {},
     packageCache: {}
-  }).transform(babelify({ stage: 0 }));
+  }).transform(babel);
 
   watcher = watchify(bundler);
+  watcher.plugin(hmr, { mode: 'websocket' });
   watcher.on('log', log.bind(null, 'watchify:'));
   watcher.on('update', () => {
     gulp.start('watch:bundle');
