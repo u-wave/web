@@ -4,7 +4,7 @@ import AddIcon from 'material-ui/lib/svg-icons/content/add';
 import EditIcon from 'material-ui/lib/svg-icons/editor/mode-edit';
 import MoveToFirstIcon from 'material-ui/lib/svg-icons/hardware/keyboard-arrow-up';
 import DeleteIcon from 'material-ui/lib/svg-icons/action/delete';
-import { addMedia, moveMedia } from '../../actions/PlaylistActionCreators';
+import { addMedia, moveMedia, removeMedia } from '../../actions/PlaylistActionCreators';
 import AddingMenu from '../PlaylistManager/AddingMenu';
 import PlaylistStore from '../../stores/PlaylistStore';
 
@@ -35,6 +35,7 @@ export default class Actions extends React.Component {
   }
 
   onDelete() {
+    removeMedia(PlaylistStore.getSelectedPlaylist()._id, this.props.media._id);
   }
 
   onMouseLeave() {

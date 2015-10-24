@@ -1,5 +1,5 @@
 import { dispatch } from '../dispatcher';
-import { get, post, put } from '../utils/Request';
+import { del, get, post, put } from '../utils/Request';
 
 export function setPlaylists(playlists) {
   dispatch({
@@ -168,10 +168,26 @@ export function updateMedia(playlistID, mediaID, props) {
 
 export function removeMedia(playlistID, mediaID) {
   // DELETE /v1/playlists/${playlistID}/media/${mediaID}
+  const payload = { playlistID, mediaID };
   dispatch({
-    type: 'removeMedia',
-    payload: { playlistID, mediaID }
+    type: 'removeMediaFromPlaylist',
+    payload
   });
+  del(`/v1/playlists/${playlistID}/media/${mediaID}`)
+    .then(() => {
+      dispatch({
+        type: 'removedMediaFromPlaylist',
+        payload
+      });
+    })
+    .catch(error => {
+      dispatch({
+        type: 'removedMediaFromPlaylist',
+        error: true,
+        payload: error,
+        meta: payload
+      });
+    });
 }
 
 export function moveMedia(playlistID, medias, afterID) {

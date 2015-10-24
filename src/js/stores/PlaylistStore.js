@@ -202,6 +202,20 @@ const PlaylistStore = assign(new EventEmitter, {
       PlaylistStore.emit('change');
       break;
 
+    case 'removeMediaFromPlaylist':
+      setLoading(payload.playlistID);
+      PlaylistStore.emit('change');
+      break;
+    case 'removedMediaFromPlaylist':
+      setLoading(payload.playlistID, false);
+      if (selectedPlaylistID === payload.playlistID) {
+        selectedMedia = selectedMedia.filter(media => media._id !== payload.mediaID);
+      } else if (activePlaylistID === payload.playlistID) {
+        activeMedia = activeMedia.filter(media => media._id !== payload.mediaID);
+      }
+      PlaylistStore.emit('change');
+      break;
+
     default:
       // Not for us
     }
