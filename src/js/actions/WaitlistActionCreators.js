@@ -1,7 +1,6 @@
 import { dispatch } from '../dispatcher';
 import { del, post, put } from '../utils/Request';
 import LoginStore from '../stores/LoginStore';
-import WaitlistStore from '../stores/WaitlistStore';
 
 export function setWaitList(data) {
   dispatch({
@@ -28,11 +27,10 @@ export function clearWaitlist() {
 
 export function joinWaitlist() {
   const user = LoginStore.getUser();
-  const current = WaitlistStore.getSize();
   dispatch({ type: 'joiningWaitlist' });
   if (user) {
     // TODO don't post an object at all once the API server supports it
-    post('/v1/waitlist', { userID: user._id, position: current })
+    post('/v1/waitlist', { userID: user._id })
       .then(res => res.json())
       .then(waitlist => {
         dispatch({
