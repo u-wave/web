@@ -175,9 +175,27 @@ export function removeMedia(playlistID, mediaID) {
 }
 
 export function moveMedia(playlistID, medias, afterID) {
+  const payload = { playlistID, medias, afterID };
   // POST
   dispatch({
     type: 'moveMediaInPlaylist',
-    payload: { playlistID, medias, after: afterID }
+    payload
   });
+  const items = medias.map(media => media._id);
+  put(`/v1/playlists/${playlistID}/move`, { items, after: afterID })
+    .then(res => res.json())
+    .then(() => {
+      dispatch({
+        type: 'movedMediaInPlaylist',
+        payload
+      });
+    })
+    .catch(error => {
+      dispatch({
+        type: 'movedMediaInPlaylist',
+        error: true,
+        payload: error,
+        meta: payload
+      });
+    });
 }

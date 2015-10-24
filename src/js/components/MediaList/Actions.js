@@ -1,8 +1,9 @@
 import cx from 'classnames';
 import React from 'react';
-import { addMedia } from '../../actions/PlaylistActionCreators';
+import { addMedia, moveMedia } from '../../actions/PlaylistActionCreators';
 import Icon from '../Icon';
 import AddingMenu from '../PlaylistManager/AddingMenu';
+import PlaylistStore from '../../stores/PlaylistStore';
 
 export default class Actions extends React.Component {
   static propTypes = {
@@ -25,6 +26,9 @@ export default class Actions extends React.Component {
   }
 
   onFirst() {
+    // TODO use current selection instead
+    // (and also do this in a much more high level component)
+    moveMedia(PlaylistStore.getSelectedPlaylist()._id, [ this.props.media ], -1);
   }
 
   onDelete() {

@@ -1,5 +1,6 @@
 import assign from 'object-assign';
 import EventEmitter from 'events';
+import findIndex from 'array-findindex';
 import values from 'object-values';
 import dispatcher from '../dispatcher';
 
@@ -43,6 +44,23 @@ function activatePlaylist(playlistID) {
       activeMedia = activePlaylist().media || [];
     }
   }
+}
+
+function replaceArray(target, replacement) {
+  target.splice(0, target.length, ...replacement);
+}
+
+function processMove(list, movedMedia, afterID) {
+  const movedMap = movedMedia.reduce((map, media) => {
+    map[media._id] = true;
+    return map;
+  }, {});
+  const updated = list.filter(media => !movedMap[media._id]);
+  const insertIdx = afterID === -1
+    ? 0
+    : findIndex(updated, media => media._id === afterID) + 1;
+  updated.splice(insertIdx, 0, ...movedMedia);
+  replaceArray(list, updated);
 }
 
 // TODO use a stack or counter here to ensure that multiple concurrent
@@ -166,6 +184,21 @@ const PlaylistStore = assign(new EventEmitter, {
           activeMedia.push(...payload.appendedMedia);
         }
       }
+      PlaylistStore.emit('change');
+      break;
+
+    case 'moveMediaInPlaylist':
+      setLoading(payload.playlistID);
+      PlaylistStore.emit('change');
+      break;
+    case 'movedMediaInPlaylist':
+      if (error) break;
+      if (selectedPlaylistID === payload.playlistID) {
+        processMove(selectedMedia, payload.medias, payload.afterID);
+      } else if (activePlaylistID === payload.playlistID) {
+        processMove(activeMedia, payload.medias, payload.afterID);
+      }
+      setLoading(payload.playlistID, false);
       PlaylistStore.emit('change');
       break;
 
