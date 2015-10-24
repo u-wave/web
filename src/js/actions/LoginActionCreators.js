@@ -1,7 +1,7 @@
 import { dispatch } from '../dispatcher';
 import { get, post } from '../utils/Request';
 import LoginStore from '../stores/LoginStore';
-import { setPlaylists } from './PlaylistActionCreators';
+import { setPlaylists, selectPlaylist } from './PlaylistActionCreators';
 import { setUsers } from './UserActionCreators';
 
 const debug = require('debug')('uwave:actions:login');
@@ -26,6 +26,13 @@ export function initState() {
           jwt: LoginStore.getToken(),
           user: state.user
         });
+      }
+      if (state.activePlaylist) {
+        dispatch({
+          type: 'activatedPlaylist',
+          payload: { playlistID: state.activePlaylist }
+        });
+        selectPlaylist(state.activePlaylist);
       }
     });
 }
