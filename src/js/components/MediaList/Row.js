@@ -2,6 +2,14 @@ import cx from 'classnames';
 import React from 'react';
 import Actions from './Actions';
 
+const padZero = n => n < 10 ? `0${n}` : n;
+function formatDuration(duration) {
+  const h = Math.floor(duration / 3600);
+  const m = Math.floor((duration % 3600) / 60);
+  const s = padZero(Math.floor(duration % 60));
+  return (h > 0 ? [ h, m, s ] : [ m, s ]).join(':');
+}
+
 export default class Row extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
@@ -22,6 +30,11 @@ export default class Row extends React.Component {
   render() {
     const { className, media, selected, ...attrs } = this.props;
     const selectedClass = selected ? 'is-selected' : '';
+    const duration = 'start' in media
+      // playlist item
+      ? media.end - media.start
+      // search result
+      : media.duration;
     return (
       <div
         className={cx('MediaListRow', className, selectedClass)}
@@ -40,6 +53,9 @@ export default class Row extends React.Component {
         </div>
         <div className="MediaListRow-title">
           {media.title}
+        </div>
+        <div className="MediaListRow-duration">
+          {formatDuration(duration)}
         </div>
         <Actions
           ref="actions"

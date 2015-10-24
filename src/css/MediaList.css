@@ -4,6 +4,9 @@
   overflow-y: auto;
 }
 
+$media-list-spacing: 3%;
+$media-list-thumb-width: 85px;
+$media-list-duration-width: 70px;
 @component MediaListRow {
   height: 54px;
   line-height: 54px;
@@ -32,7 +35,8 @@
 
   @descendent artist {
     float: left;
-    width: calc(50% - 85px);
+    width: calc(50% - $media-list-spacing - $media-list-thumb-width - $media-list-duration-width);
+    margin-right: $media-list-spacing;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -40,10 +44,16 @@
 
   @descendent title {
     float: left;
-    width: 50%;
+    width: calc(50% - $media-list-spacing);
+    margin-right: $media-list-spacing;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+
+  @descendent duration {
+    float: left;
+    width: $media-list-duration-width;
   }
 
   @descendent actions {
