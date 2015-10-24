@@ -4,13 +4,23 @@
   z-index: 10;
 
   @descendent menu {
-    width: 33%;
+    width: 33%; /* 25% of total screen width */
     float: left;
+
+    /* menu would be larger than 300px */
+    @media (min-width: 1200px) {
+      width: 300px;
+    }
   }
   @descendent panel {
     position: absolute;
     left: 33%;
     right: 0;
+
+    /* menu would be larger than 300px */
+    @media (min-width: 1200px) {
+      left: 300px;
+    }
   }
 }
 
