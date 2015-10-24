@@ -1,7 +1,7 @@
 import cx from 'classnames';
 import React from 'react';
+import CloseIcon from 'material-ui/lib/svg-icons/hardware/keyboard-arrow-down';
 import { closeAll } from '../../../actions/OverlayActionCreators';
-import Icon from '../../Icon';
 
 export default class Close extends React.Component {
   static propTypes = {
@@ -16,9 +16,10 @@ export default class Close extends React.Component {
         className={cx('OverlayHeaderClose', className)}
         onClick={closeAll}
       >
-        <Icon
+        <CloseIcon
+          color="#fff"
+          style={{ height: 32, width: 32, padding: 12 }}
           className="OverlayHeaderClose-icon"
-          name="keyboard_arrow_down"
         />
       </div>
     );

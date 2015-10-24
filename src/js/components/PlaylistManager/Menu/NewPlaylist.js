@@ -1,7 +1,7 @@
 import cx from 'classnames';
 import React from 'react';
+import CreatePlaylistIcon from 'material-ui/lib/svg-icons/content/add';
 import { createPlaylist } from '../../../actions/PlaylistActionCreators';
-import Icon from '../../Icon';
 
 export default class NewPlaylist extends React.Component {
   static propTypes = {
@@ -19,7 +19,9 @@ export default class NewPlaylist extends React.Component {
         className={cx('PlaylistMenuRow', 'PlaylistMenuRow--create', className)}
         onClick={::this.onClick}
       >
-        <Icon name="add" className="PlaylistMenuRow-active-icon" />
+        <div className="PlaylistMenuRow-active-icon">
+          <CreatePlaylistIcon color="#fff" />
+        </div>
         Create Playlist
       </div>
     );

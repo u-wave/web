@@ -1,7 +1,8 @@
 import cx from 'classnames';
 import React from 'react';
+import ActiveIcon from 'material-ui/lib/svg-icons/toggle/check-box';
+import ActivateIcon from 'material-ui/lib/svg-icons/toggle/check-box-outline-blank';
 import { activatePlaylist } from '../../../actions/PlaylistActionCreators';
-import Icon from '../../Icon';
 
 export default class PlaylistMeta extends React.Component {
   static propTypes = {
@@ -26,10 +27,9 @@ export default class PlaylistMeta extends React.Component {
           className="PlaylistMeta-active"
           onClick={::this.activate}
         >
-          <Icon
-            className="PlaylistMeta-active-icon"
-            name={active ? 'check_box' : 'check_box_outline_blank'}
-          />
+          <div className="PlaylistMeta-active-icon">
+            {active ? <ActiveIcon color="#fff" /> : <ActivateIcon color="#fff" />}
+          </div>
           {active ? 'Active' : 'Activate'}
         </div>
       </div>

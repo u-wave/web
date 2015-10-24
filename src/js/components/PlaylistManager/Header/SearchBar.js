@@ -1,6 +1,6 @@
 import cx from 'classnames';
 import React from 'react';
-import Icon from '../../Icon';
+import SearchIcon from 'material-ui/lib/svg-icons/action/search';
 import SourcePicker from './SourcePicker';
 
 const ENTER_KEY = 13;
@@ -34,7 +34,7 @@ export default class SearchBar extends React.Component {
     return (
       <div className={cx('SearchBar', focused ? 'is-focused' : '', this.props.className)}>
         <div className="SearchBar-icon">
-          <Icon name="search" />
+          <SearchIcon color="#fff" />
         </div>
         <SourcePicker
           className="SearchBar-source"

@@ -39,10 +39,10 @@
   @descendent active-icon {
     display: block;
     float: left;
-    width: 24px;
     height: 44px;
-    line-height: 44px;
     margin-right: 7px;
+    padding-top: 5px;
+    box-sizing: border-box;
   }
 
   @descendent loading {
@@ -111,20 +111,19 @@
   @descendent active {
     cursor: pointer;
     padding: 4px;
-    line-height: 46px /* 54px - 2×4px */;
+    padding-right: 20px;
+    line-height: 46px; /* 54px - 2×4px */
     box-sizing: border-box;
     height: 100%;
-    margin-left: 70%;
-    width: 20%;
-    text-align: center;
+    float: right;
   }
   &--active &-active {
     cursor: default;
   }
 
   @descendent active-icon {
-    /* TODO Align with "Active" font bottom somehow? */
-    font-size: 100%;
+    float: left;
     margin-right: 5px;
+    padding-top: 5px;
   }
 }

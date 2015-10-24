@@ -1,12 +1,11 @@
 import cx from 'classnames';
 import React from 'react';
-import Icon from '../Icon';
 
 export default class TextField extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
     type: React.PropTypes.string,
-    icon: React.PropTypes.string
+    icon: React.PropTypes.element
   };
 
   static defaultProps = {
@@ -27,7 +26,7 @@ export default class TextField extends React.Component {
            type={type}
            {...props}
          />
-        <Icon className="TextField-icon" name={icon} />
+        <div className="TextField-icon">{icon}</div>
       </div>
     );
   }

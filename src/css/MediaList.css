@@ -74,8 +74,10 @@ $media-list-duration-width: 70px;
   text-align: right;
 
   @descendent action {
+    box-sizing: border-box;
+    height: 100%;
     cursor: pointer;
     display: inline-block;
-    padding: 15px;
+    padding: 6px 15px;
   }
 }

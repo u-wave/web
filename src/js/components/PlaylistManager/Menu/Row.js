@@ -1,7 +1,7 @@
 import cx from 'classnames';
 import React from 'react';
+import ActiveIcon from 'material-ui/lib/svg-icons/navigation/check';
 import { selectPlaylist } from '../../../actions/PlaylistActionCreators';
-import Icon from '../../Icon';
 import Loader from '../../Loader';
 
 export default class Menu extends React.Component {
@@ -23,7 +23,11 @@ export default class Menu extends React.Component {
         </div>
       );
     } else if (playlist.active) {
-      icon = <Icon name="checkbox" className="PlaylistMenuRow-active-icon" />;
+      icon = (
+        <div className="PlaylistMenuRow-active-icon">
+          <ActiveIcon color="#fff" />
+        </div>
+      );
     }
 
     return (
