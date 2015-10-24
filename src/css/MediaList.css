@@ -71,7 +71,6 @@ $media-list-duration-width: 70px;
 
 @component MediaActions {
   height: 54px;
-  width: 162px;
   text-align: right;
 
   @descendent action {
