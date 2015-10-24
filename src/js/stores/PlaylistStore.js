@@ -5,39 +5,42 @@ import dispatcher from '../dispatcher';
 
 const playlists = {};
 const playlistWips = {};
-let activePlaylist = null;
+let activePlaylistID = null;
 let activeMedia = [];
-let selectedPlaylist = null;
+let selectedPlaylistID = null;
 let selectedMedia = [];
 
-function selectPlaylist(playlist) {
-  if (selectedPlaylist) {
-    selectedPlaylist.selected = false;
+const activePlaylist = () => playlists[activePlaylistID] || playlistWips[activePlaylistID];
+const selectedPlaylist = () => playlists[selectedPlaylistID] || playlistWips[selectedPlaylistID];
+
+function selectPlaylist(playlistID) {
+  if (selectedPlaylist()) {
+    selectedPlaylist().selected = false;
     selectedMedia = [];
   }
-  if (playlist) {
-    selectedPlaylist = playlist;
-    selectedPlaylist.selected = true;
-    if (activePlaylist && selectedPlaylist._id === activePlaylist._id) {
+  if (playlistID) {
+    selectedPlaylistID = playlistID;
+    selectedPlaylist().selected = true;
+    if (activePlaylistID && selectedPlaylistID === activePlaylistID) {
       selectedMedia = activeMedia;
     } else {
-      selectedMedia = selectedPlaylist.media || [];
+      selectedMedia = selectedPlaylist().media || [];
     }
   }
 }
 
-function activatePlaylist(playlist) {
-  if (activePlaylist) {
-    activePlaylist.active = false;
+function activatePlaylist(playlistID) {
+  if (activePlaylist()) {
+    activePlaylist().active = false;
     activeMedia = [];
   }
-  if (playlist) {
-    activePlaylist = playlist;
-    activePlaylist.active = true;
-    if (selectedPlaylist && activePlaylist._id === selectedPlaylist._id) {
+  if (playlistID) {
+    activePlaylistID = playlistID;
+    activePlaylist().active = true;
+    if (selectedPlaylistID && activePlaylistID === selectedPlaylistID) {
       activeMedia = selectedMedia;
     } else {
-      activeMedia = activePlaylist.media || [];
+      activeMedia = activePlaylist().media || [];
     }
   }
 }
@@ -54,13 +57,13 @@ function setLoading(playlistId, loading = true) {
 
 const PlaylistStore = assign(new EventEmitter, {
   getActivePlaylist() {
-    return activePlaylist;
+    return activePlaylist();
   },
   getActiveMedia() {
     return activeMedia;
   },
   getSelectedPlaylist() {
-    return selectedPlaylist || activePlaylist;
+    return selectedPlaylist() || activePlaylist();
   },
   getSelectedMedia() {
     return selectedMedia;
@@ -77,11 +80,11 @@ const PlaylistStore = assign(new EventEmitter, {
       payload.playlists.forEach(playlist => {
         playlists[playlist._id] = playlist;
       });
-      if (!activePlaylist && payload.playlists.length > 0) {
-        activatePlaylist(payload.playlists[0]);
+      if (!activePlaylistID && payload.playlists.length > 0) {
+        activatePlaylist(payload.playlists[0]._id);
       }
-      if (!selectedPlaylist && payload.playlists.length > 0) {
-        selectPlaylist(payload.playlists[0]);
+      if (!selectedPlaylistID && payload.playlists.length > 0) {
+        selectPlaylist(payload.playlists[0]._id);
       }
       PlaylistStore.emit('change');
       break;
@@ -93,11 +96,11 @@ const PlaylistStore = assign(new EventEmitter, {
       break;
     case 'activatedPlaylist':
       setLoading(payload.playlistID, false);
-      activatePlaylist(playlists[payload.playlistID]);
+      activatePlaylist(payload.playlistID);
       PlaylistStore.emit('change');
       break;
     case 'selectPlaylist':
-      selectPlaylist(playlists[payload.playlistID]);
+      selectPlaylist(payload.playlistID);
       PlaylistStore.emit('change');
       break;
     case 'searchStart':
@@ -115,10 +118,10 @@ const PlaylistStore = assign(new EventEmitter, {
       if (playlists[payload.playlistID]) {
         playlists[payload.playlistID].loading = false;
       }
-      if (selectedPlaylist._id === payload.playlistID) {
+      if (selectedPlaylistID === payload.playlistID) {
         selectedMedia = payload.media;
       }
-      if (activePlaylist._id === payload.playlistID) {
+      if (activePlaylistID === payload.playlistID) {
         activeMedia = payload.media;
       }
       PlaylistStore.emit('change');
@@ -141,7 +144,7 @@ const PlaylistStore = assign(new EventEmitter, {
         debug('could not create playlist', payload.message);
       } else {
         playlists[payload.playlist._id] = payload.playlist;
-        selectPlaylist(payload.playlist);
+        selectPlaylist(payload.playlist._id);
       }
       PlaylistStore.emit('change');
       break;
@@ -157,9 +160,9 @@ const PlaylistStore = assign(new EventEmitter, {
       if (updatedPlaylist) {
         updatedPlaylist.loading = false;
         updatedPlaylist.size = payload.newSize;
-        if (selectedPlaylist === updatedPlaylist) {
+        if (selectedPlaylistID === updatedPlaylist._id) {
           selectedMedia.push(...payload.appendedMedia);
-        } else if (activePlaylist === updatedPlaylist) {
+        } else if (activePlaylistID === updatedPlaylist._id) {
           activeMedia.push(...payload.appendedMedia);
         }
       }
