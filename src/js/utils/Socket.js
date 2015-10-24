@@ -2,6 +2,7 @@ import dispatcher from '../dispatcher';
 import { advance } from '../actions/AdvanceActionCreators';
 import { receive as chatReceive } from '../actions/ChatActionCreators';
 import { join as userJoin, leave as userLeave } from '../actions/UserActionCreators';
+import { joinedWaitlist, leftWaitlist } from '../actions/WaitlistActionCreators';
 import WebSocket from 'ReconnectingWebSocket';
 
 const debug = require('debug')('uwave:websocket');
@@ -39,6 +40,13 @@ function onMessage(json) {
     break;
   case 'advance':
     advance(data);
+    break;
+
+  case 'waitlistJoin':
+    joinedWaitlist(data);
+    break;
+  case 'waitlistLeave':
+    leftWaitlist(data);
     break;
 
   case 'join':
