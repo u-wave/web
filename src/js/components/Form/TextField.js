@@ -14,7 +14,7 @@ export default class TextField extends React.Component {
   };
 
   get value() {
-    return React.findDOMNode(this.refs.input).value;
+    return this.refs.input.value;
   }
 
   render() {
