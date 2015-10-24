@@ -23,7 +23,19 @@
   @descendent next {
     float: left;
     height: 100%;
-    width: calc(100% - 75px);
+    width: calc(100% - 200px);
+  }
+
+  @descendent join {
+    font-size: 12pt;
+    float: right;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 125px;
+    background: $highlight-color;
+    cursor: pointer;
   }
 }
 

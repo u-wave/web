@@ -1,9 +1,11 @@
 import cx from 'classnames';
 import React from 'react';
-import { togglePlaylistManager } from '../../actions/OverlayActionCreators';
 import { openLoginModal, openRegisterModal } from '../../actions/LoginActionCreators';
-import PlaylistStore from '../../stores/PlaylistStore';
+import { togglePlaylistManager } from '../../actions/OverlayActionCreators';
+import { joinWaitlist, leaveWaitlist } from '../../actions/WaitlistActionCreators';
 import LoginStore from '../../stores/LoginStore';
+import PlaylistStore from '../../stores/PlaylistStore';
+import WaitlistStore from '../../stores/WaitlistStore';
 import listen from '../../utils/listen';
 import NextMedia from './NextMedia';
 import UserInfo from './UserInfo';
@@ -12,7 +14,8 @@ function getState() {
   return {
     playlist: PlaylistStore.getActivePlaylist(),
     nextMedia: PlaylistStore.getActiveMedia()[0],
-    user: LoginStore.getUser()
+    user: LoginStore.getUser(),
+    inWaitlist: WaitlistStore.isInWaitlist(LoginStore.getUser())
   };
 }
 
@@ -29,8 +32,11 @@ export default class FooterBar extends React.Component {
   }
 
   render() {
-    const { user, playlist, nextMedia } = this.state;
+    const { user, playlist, nextMedia, inWaitlist } = this.state;
     const className = cx('FooterBar', this.props.className);
+
+    const waitlistAction = inWaitlist ? leaveWaitlist : joinWaitlist;
+    const waitlistText = inWaitlist ? 'Leave Waitlist' : 'Join Waitlist';
 
     if (user && !user.isGuest) {
       return (
@@ -44,6 +50,12 @@ export default class FooterBar extends React.Component {
               nextMedia={nextMedia}
               onClick={togglePlaylistManager}
             />
+          </div>
+          <div
+            className="FooterBar-join"
+            onClick={waitlistAction}
+          >
+            {waitlistText}
           </div>
         </div>
       );
