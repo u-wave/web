@@ -45,6 +45,12 @@ const LoginStore = assign(new EventEmitter, {
         LoginStore.emit('change');
       }
       break;
+    case 'logoutComplete':
+      jwt = null;
+      user = null;
+      error = null;
+      LoginStore.emit('change');
+      break;
     default:
       // Not for us
     }

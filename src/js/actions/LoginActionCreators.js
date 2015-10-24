@@ -88,6 +88,22 @@ export function register({ email, username, password }) {
     });
 }
 
+function logoutComplete() {
+  dispatch({ type: 'logoutComplete' });
+  setPlaylists([]);
+}
+
+export function logout() {
+  const me = LoginStore.getUser();
+  if (me) {
+    dispatch({ type: 'logoutStart' });
+    del(`/v1/auth/session/${me._id}`)
+      .finally(logoutComplete);
+  }
+  delete localStorage._session;
+  logoutComplete();
+}
+
 export function openLoginModal() {
   dispatch({
     type: 'openLoginModal',
