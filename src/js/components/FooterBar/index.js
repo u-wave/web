@@ -19,7 +19,7 @@ function getState() {
   };
 }
 
-@listen(PlaylistStore, LoginStore)
+@listen(PlaylistStore, LoginStore, WaitlistStore)
 export default class FooterBar extends React.Component {
   static propTypes = {
     className: React.PropTypes.string
