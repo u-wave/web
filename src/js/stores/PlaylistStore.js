@@ -135,7 +135,7 @@ const PlaylistStore = assign(new EventEmitter, {
         shared: payload.shared,
         creating: true
       };
-      selectPlaylist(playlistWips[meta.tempId]);
+      selectPlaylist(meta.tempId);
       PlaylistStore.emit('change');
       break;
     case 'createdPlaylist':
