@@ -12,6 +12,7 @@
   width: calc(100% / 3);
   padding-top: 17px;
   text-align: center;
+  text-transform: uppercase;
 
   @modifier active {
     background: #222;

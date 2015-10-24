@@ -20,7 +20,7 @@ export default class Button extends React.Component {
         className={className}
         onClick={this.props.onClick}
       >
-        {this.props.text.toUpperCase()}
+        {this.props.text}
       </div>
     );
   }
