@@ -4,6 +4,7 @@ import React from 'react';
 import CurrentMediaStore from '../../stores/CurrentMediaStore';
 import VolumeStore from '../../stores/VolumeStore';
 import listen from '../../utils/listen';
+import SoundCloudPlayer from './SoundCloudPlayer';
 import YouTubePlayer from './YouTubePlayer';
 
 function getState() {
@@ -44,6 +45,9 @@ export default class Video extends React.Component {
     const seek = Math.round((Date.now() - startTime) / 1000);
     const props = { media, seek, size, volume };
     switch (media.sourceType) {
+    case 'soundcloud':
+      video = <SoundCloudPlayer {...props} />;
+      break;
     case 'youtube':
       video = <YouTubePlayer {...props} />;
       break;
