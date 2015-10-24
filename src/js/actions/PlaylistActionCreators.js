@@ -8,7 +8,7 @@ export function setPlaylists(playlists) {
   });
 }
 
-function flattenPlaylistItem(item) {
+export function flattenPlaylistItem(item) {
   return {
     ...item.media,
     ...item
