@@ -1,6 +1,7 @@
 import { dispatch } from '../dispatcher';
 import { get, post } from '../utils/Request';
 import LoginStore from '../stores/LoginStore';
+import { advance } from './AdvanceActionCreators';
 import { setPlaylists, selectPlaylist } from './PlaylistActionCreators';
 import { setUsers } from './UserActionCreators';
 
@@ -21,6 +22,10 @@ export function initState() {
     .then(state => {
       setUsers(state.users || []);
       setPlaylists(state.playlists || []);
+      if (state.booth) {
+        // TODO don't set this when logging in _after_ entering the page?
+        advance(state.booth);
+      }
       if (state.user) {
         loginComplete({
           jwt: LoginStore.getToken(),
