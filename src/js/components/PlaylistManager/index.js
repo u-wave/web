@@ -1,7 +1,7 @@
 import cx from 'classnames';
 import find from 'array-find';
 import React from 'react';
-import { search } from '../../actions/PlaylistActionCreators';
+import { search } from '../../actions/SearchActionCreators';
 import PlaylistStore from '../../stores/PlaylistStore';
 import SearchStore from '../../stores/SearchStore';
 import listen from '../../utils/listen';

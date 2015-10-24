@@ -181,18 +181,3 @@ export function moveMedia(playlistID, medias, afterID) {
     payload: { playlistID, medias, after: afterID }
   });
 }
-
-export function search(query) {
-  dispatch({
-    action: 'searchStart',
-    query
-  });
-  return get('/v1/search', { query })
-    .then(res => res.json())
-    .then(results => {
-      dispatch({
-        action: 'searchComplete',
-        results
-      });
-    });
-}
