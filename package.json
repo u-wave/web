@@ -50,7 +50,7 @@
     "gulp-uglify": "^1.4.1",
     "gulp-util": "^3.0.6",
     "merge-stream": "^1.0.0",
-    "postcss-bem": "^0.3.1",
+    "postcss-bem": "github:sbstnmsch/postcss-bem#136d50b",
     "postcss-color-hexa": "^1.2.3",
     "postcss-import": "^7.0.0",
     "postcss-nested": "^1.0.0",
