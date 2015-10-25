@@ -1,12 +1,10 @@
-import gulp from 'gulp';
+import gulp, { dest } from 'gulp';
 import { log } from 'gulp-util';
 import { configure as babelify } from 'babelify';
 import browserify from 'browserify';
 import hmr from 'browserify-hmr';
 import watchify from 'watchify';
 import source from 'vinyl-source-stream';
-
-const dest = ::gulp.dest;
 
 const JS_PATHS = [ 'src/js/**/*.js', 'gulpfile.babel.js', 'tasks/*.js' ];
 const JS_TASKS = [ 'js:lint' ];
@@ -39,14 +37,15 @@ export default function watchTask() {
       }
     }
   });
-  const bundler = browserify({
+
+  watcher = browserify({
     debug: true,
     entries: './src/js/app.js',
     cache: {},
     packageCache: {}
-  }).transform(babel);
-
-  watcher = watchify(bundler);
+  });
+  watcher.transform(babel);
+  watcher.plugin(watchify);
   watcher.plugin(hmr, { mode: 'websocket' });
   watcher.on('log', log.bind(null, 'watchify:'));
   watcher.on('update', () => {
