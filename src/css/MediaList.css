@@ -13,7 +13,7 @@ $media-list-duration-width: 70px;
   position: relative;
 
   &:nth-child(2n+1) {
-    background: hexa($muted-text-color, 0.3);
+    background: hexa($media-list-alternate-color, 0.3);
   }
 
   @when selected {

@@ -1,11 +1,13 @@
 $text-color: #fff;
-$muted-text-color: #303036;
+$muted-text-color: #777;
 $background-color: #151515;
 $background-hover-color: #111;
 $highlight-color: #9d2053;
 
-$footer-border-color: $muted-text-color;
+$footer-border-color: #303036;
 
 $chat-background-color: #1b1b1b;
 $chat-background-color2: #222222;
 $chat-border-color: $footer-border-color;
+
+$media-list-alternate-color: #303036;
