@@ -10,6 +10,7 @@ $media-list-duration-width: 70px;
 @component MediaListRow {
   height: 54px;
   line-height: 54px;
+  position: relative;
 
   &:nth-child(2n+1) {
     background: hexa($muted-text-color, 0.3);
