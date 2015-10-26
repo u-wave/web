@@ -73,6 +73,11 @@ $media-list-duration-width: 70px;
 @component MediaActions {
   height: 54px;
   text-align: right;
+  background: $background-color;
+
+  @when selected {
+    background: $highlight-color;
+  }
 
   @descendent action {
     box-sizing: border-box;

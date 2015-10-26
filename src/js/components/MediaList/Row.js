@@ -59,7 +59,7 @@ export default class Row extends React.Component {
         </div>
         <Actions
           ref="actions"
-          className="MediaListRow-actions"
+          className={cx('MediaListRow-actions', selectedClass)}
           media={media}
         />
       </div>
