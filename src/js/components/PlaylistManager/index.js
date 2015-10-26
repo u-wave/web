@@ -86,6 +86,8 @@ export default class PlaylistManager extends React.Component {
             playlists={playlists}
             active={active}
             selected={selected}
+            searchQuery={searchQuery}
+            searchResults={searchResults.length}
           />
 
           {panel}
