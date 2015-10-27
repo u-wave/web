@@ -63,7 +63,7 @@
   }
 
   @when selected {
-    background: hexa($muted-text-color, 0.3);
+    background: hexa($media-list-alternate-color, 0.3);
   }
 }
 
