@@ -1,6 +1,7 @@
 import assign from 'object-assign';
 import EventEmitter from 'events';
 import dispatcher from '../dispatcher';
+import UserStore from './UserStore';
 
 const clone = x => assign({}, x);
 
@@ -9,6 +10,7 @@ function tick(store) {
 }
 
 let media = null;
+let dj = null;
 let startTime = null;
 
 const CurrentMediaStore = assign(new EventEmitter, {
@@ -20,6 +22,10 @@ const CurrentMediaStore = assign(new EventEmitter, {
 
   getMedia() {
     return media ? clone(media) : null;
+  },
+
+  getDJ() {
+    return UserStore.getUser(dj);
   },
 
   getStartTime() {
@@ -34,6 +40,7 @@ const CurrentMediaStore = assign(new EventEmitter, {
     switch (type) {
     case 'advance':
       media = payload.media;
+      dj = payload.userID;
       startTime = payload.timestamp;
       CurrentMediaStore.emit('change');
       break;
