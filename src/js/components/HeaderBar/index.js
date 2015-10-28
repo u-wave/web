@@ -40,11 +40,10 @@ export default class HeaderBar extends React.Component {
 
     const nowPlaying = media
       ? <SongTitle
-          className="HeaderBar-now-playing"
           artist={media.artist}
           title={media.title}
         />
-      : <div className="HeaderBar-now-playing">Nobody is playing!</div>;
+      : 'Nobody is playing!';
 
     return (
       <div
@@ -52,7 +51,9 @@ export default class HeaderBar extends React.Component {
         {...props}
       >
         <h1 className="HeaderBar-title">{title}</h1>
-        {nowPlaying}
+        <div className="HeaderBar-now-playing">
+          {nowPlaying}
+        </div>
         <Progress
           className="HeaderBar-progress"
           total={this.state.total}
