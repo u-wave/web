@@ -56,9 +56,11 @@ export default class HeaderBar extends React.Component {
         <div className="HeaderBar-now-playing">
           {nowPlaying}
         </div>
-        <div className="HeaderBar-dj">
-          played by: {dj.username}
-        </div>
+        {dj && (
+          <div className="HeaderBar-dj">
+            played by: {dj.username}
+          </div>
+        )}
         <Progress
           className="HeaderBar-progress"
           total={this.state.total}
