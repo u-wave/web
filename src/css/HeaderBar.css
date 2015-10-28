@@ -20,9 +20,12 @@
   }
 
   @descendent volume {
-    margin: 15px;
-    height: 26px;
-    float: right;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 200px;
+    padding: 15px;
+    box-sizing: border-box;
   }
 
   @descendent now-playing {

@@ -66,11 +66,12 @@ export default class HeaderBar extends React.Component {
           total={this.state.total}
           startTime={this.state.startTime}
         />
-        <Volume
-          className="HeaderBar-volume"
-          volume={this.state.volume}
-          muted={this.state.muted}
-        />
+        <div className="HeaderBar-volume">
+          <Volume
+            volume={this.state.volume}
+            muted={this.state.muted}
+          />
+        </div>
       </div>
     );
   }
