@@ -20,9 +20,12 @@
   }
 
   @descendent volume {
-    margin: 15px;
-    height: 26px;
-    float: right;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 200px;
+    padding: 15px;
+    box-sizing: border-box;
   }
 
   @descendent now-playing {
@@ -55,5 +58,14 @@
     background: $highlight-color;
     height: 100%;
     transition: width 1s;
+  }
+}
+
+@component VolumeSlider {
+  @descendent slider {
+    height: 24px;
+    display: inline-block;
+    width: calc(100% - 30px);
+    margin-left: 6px;
   }
 }
