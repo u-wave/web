@@ -1,6 +1,8 @@
 import React from 'react';
 import LoginStore from '../../stores/LoginStore';
 import SettingsStore from '../../stores/SettingsStore';
+import ThemeManager from 'material-ui/lib/styles/theme-manager';
+import MuiTheme from '../../MuiTheme';
 import Chat from '../Chat';
 import ChatInput from '../Chat/Input';
 import RoomUserList from '../UserList/RoomUserList';
@@ -25,8 +27,17 @@ function getState() {
 
 @listen(SettingsStore, LoginStore)
 export default class App extends React.Component {
+  static childContextTypes = {
+    muiTheme: React.PropTypes.object
+  };
 
   state = getState();
+
+  getChildContext() {
+    return {
+      muiTheme: ThemeManager.getMuiTheme(MuiTheme)
+    };
+  }
 
   onChange() {
     this.setState(getState());
