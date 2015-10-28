@@ -60,3 +60,12 @@
     transition: width 1s;
   }
 }
+
+@component VolumeSlider {
+  @descendent slider {
+    height: 24px;
+    display: inline-block;
+    width: calc(100% - 30px);
+    margin-left: 6px;
+  }
+}
