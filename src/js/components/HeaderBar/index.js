@@ -10,12 +10,14 @@ import Volume from './Volume';
 function getState() {
   const startTime = CurrentMediaStore.getStartTime();
   const media = CurrentMediaStore.getMedia();
+  const dj = CurrentMediaStore.getDJ();
   const volume = VolumeStore.getVolume();
   const muted = VolumeStore.isMuted();
   return {
     startTime: startTime,
     total: media ? media.end - media.start : 0,
     media: media,
+    dj: dj,
     volume: volume,
     muted: muted
   };
@@ -36,7 +38,7 @@ export default class HeaderBar extends React.Component {
 
   render() {
     const { title, ...props } = this.props;
-    const media = this.state.media;
+    const { media, dj } = this.state;
 
     const nowPlaying = media
       ? <SongTitle
@@ -53,6 +55,9 @@ export default class HeaderBar extends React.Component {
         <h1 className="HeaderBar-title">{title}</h1>
         <div className="HeaderBar-now-playing">
           {nowPlaying}
+        </div>
+        <div className="HeaderBar-dj">
+          played by: {dj.username}
         </div>
         <Progress
           className="HeaderBar-progress"

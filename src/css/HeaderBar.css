@@ -33,6 +33,15 @@
     line-height: 25px;
   }
 
+  @descendent dj {
+    position: absolute;
+    top: 30px;
+    left: 250px;
+    right: 200px;
+    font-size: 80%;
+    color: $muted-text-color;
+  }
+
   @descendent progress {
     position: absolute;
     bottom: 1px;
