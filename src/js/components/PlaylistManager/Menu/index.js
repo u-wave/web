@@ -11,19 +11,21 @@ export default class Menu extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
     playlists: React.PropTypes.array,
+    selected: React.PropTypes.object,
     searchQuery: React.PropTypes.string,
     searchResults: React.PropTypes.number
   };
 
   render() {
-    const { className, playlists, searchQuery, searchResults } = this.props;
+    const { className, playlists, selected, searchQuery, searchResults } = this.props;
     const sorted = playlists.slice().sort(byName);
+    const searchIsSelected = selected ? '' : 'is-selected';
     return (
       <div className={cx('PlaylistMenu', className)}>
         <PlaylistCreateRow className="PlaylistMenu-row" />
         {searchQuery && (
           <SearchResultsRow
-            className="PlaylistMenu-row is-selected"
+            className={cx('PlaylistMenu-row', searchIsSelected)}
             query={searchQuery}
             size={searchResults}
           />

@@ -49,22 +49,22 @@ export default class PlaylistManager extends React.Component {
     const selected = find(playlists, playlist => playlist.selected);
 
     let panel;
-    if (searchQuery) {
-      panel = (
-        <SearchResults
-          className="PlaylistManager-panel"
-          query={searchQuery}
-          results={searchResults}
-          loadingState={searchLoadingState}
-        />
-      );
-    } else if (selected) {
+    if (selected) {
       panel = (
         <PlaylistPanel
           className="PlaylistManager-panel"
           playlist={selected}
           media={selectedMedia}
           loading={!!selected.loading}
+        />
+      );
+    } else if (searchQuery) {
+      panel = (
+        <SearchResults
+          className="PlaylistManager-panel"
+          query={searchQuery}
+          results={searchResults}
+          loadingState={searchLoadingState}
         />
       );
     } else {

@@ -1,6 +1,7 @@
 import cx from 'classnames';
 import React from 'react';
 import SearchIcon from 'material-ui/lib/svg-icons/action/search';
+import { selectPlaylist } from '../../../actions/PlaylistActionCreators';
 
 export default class SearchResultsRow extends React.Component {
   static propTypes = {
@@ -11,6 +12,7 @@ export default class SearchResultsRow extends React.Component {
 
   onClick() {
     // show search results
+    selectPlaylist(null);
   }
 
   render() {
