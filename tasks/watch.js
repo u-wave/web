@@ -1,6 +1,6 @@
 import gulp, { dest } from 'gulp';
 import { log } from 'gulp-util';
-import { configure as babelify } from 'babelify';
+import babelify from 'babelify';
 import browserify from 'browserify';
 import hmr from 'browserify-hmr';
 import watchify from 'watchify';
@@ -26,7 +26,7 @@ function bundle() {
 gulp.task('watch:bundle', bundle);
 
 export default function watchTask() {
-  const babel = babelify({
+  const babelOptions = {
     stage: 0,
     plugins: [ 'react-transform' ],
     extra: {
@@ -37,7 +37,7 @@ export default function watchTask() {
         ]
       }
     }
-  });
+  };
 
   watcher = browserify({
     debug: true,
@@ -45,7 +45,7 @@ export default function watchTask() {
     cache: {},
     packageCache: {}
   });
-  watcher.transform(babel);
+  watcher.transform(babelify, babelOptions);
   watcher.plugin(watchify);
   watcher.plugin(hmr, { mode: 'websocket' });
   watcher.on('log', log.bind(null, 'watchify:'));
