@@ -1,7 +1,10 @@
 import React from 'react';
+import naturalCmp from 'natural-compare';
 import Menu from 'material-ui/lib/menus/menu';
 import MenuItem from 'material-ui/lib/menus/menu-item';
 import PlaylistStore from '../../../stores/PlaylistStore';
+
+const byName = (a, b) => naturalCmp(a.name.toLowerCase(), b.name.toLowerCase());
 
 export default class AddingMenu extends React.Component {
   static propTypes = {
@@ -18,6 +21,7 @@ export default class AddingMenu extends React.Component {
     if (!playlists) {
       playlists = PlaylistStore.getPlaylists();
     }
+    playlists = playlists.slice().sort(byName);
     return (
       <Menu
         style={{ textAlign: 'left' }}
