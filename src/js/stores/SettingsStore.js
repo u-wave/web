@@ -1,5 +1,5 @@
 import assign from 'object-assign';
-import EventEmitter from 'events';
+import EventEmitter from 'eventemitter3';
 import dispatcher from '../dispatcher';
 
 const settings = {
