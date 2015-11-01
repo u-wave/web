@@ -1,5 +1,3 @@
-const onChange = Symbol('onChange listener');
-
 export default function listen(...stores) {
   return Component => {
     const proto = Component.prototype;
@@ -9,18 +7,15 @@ export default function listen(...stores) {
 
     proto.componentDidMount = function componentDidMount() {
       _componentDidMount && _componentDidMount.apply(this, arguments);
-      this[onChange] = ::this.onChange;
       stores.forEach(store => {
-        store.on('change', this[onChange]);
+        store.on('change', this.onChange, this);
       });
     };
 
     proto.componentWillUnmount = function componentWillUnmount() {
-      if (this[onChange]) {
-        stores.forEach(store => {
-          store.removeListener('change', this[onChange]);
-        });
-      }
+      stores.forEach(store => {
+        store.removeListener('change', this.onChange, this);
+      });
       _componentWillUnmount && _componentWillUnmount.apply(this, arguments);
     };
   };
