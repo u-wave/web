@@ -6,9 +6,9 @@ export default {
   spacing: Spacing,
   fontFamily: 'Open Sans, sans-serif',
   palette: {
-    primary1Color: '#9d2053',
-    primary2Color: Colors.cyan700,
-    primary3Color: Colors.lightBlack,
+    primary1Color: '#b20062',
+    primary2Color: '#9d2053',
+    primary3Color: Colors.lightWhite,
     accent1Color: Colors.pinkA200,
     accent2Color: Colors.grey100,
     accent3Color: Colors.grey500,
