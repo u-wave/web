@@ -2,6 +2,7 @@ import cx from 'classnames';
 import React from 'react';
 import Avatar from '../Avatar';
 import Loader from '../Loader';
+import parse from './Markup/parse';
 
 export default class Message extends React.Component {
   static propTypes = {
@@ -36,7 +37,7 @@ export default class Message extends React.Component {
         {avatar}
         <div className="ChatMessage-content">
           <span className="ChatMessage-username">{user.username}</span>
-          <span className="ChatMessage-text">{text}</span>
+          <span className="ChatMessage-text">{parse(text)}</span>
         </div>
       </div>
     );
