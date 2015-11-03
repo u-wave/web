@@ -1,14 +1,7 @@
 import cx from 'classnames';
 import React from 'react';
+import formatDuration from '../../utils/formatDuration';
 import Actions from './Actions';
-
-const padZero = n => n < 10 ? `0${n}` : n;
-function formatDuration(duration) {
-  const h = Math.floor(duration / 3600);
-  const m = Math.floor((duration % 3600) / 60);
-  const s = padZero(Math.floor(duration % 60));
-  return (h > 0 ? [ h, m, s ] : [ m, s ]).join(':');
-}
 
 export default class Row extends React.Component {
   static propTypes = {
