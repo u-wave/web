@@ -1,5 +1,6 @@
 import { dispatch } from '../dispatcher';
 import { get, post } from '../utils/Request';
+import * as Session from '../utils/Session';
 import LoginStore from '../stores/LoginStore';
 import { advance } from './AdvanceActionCreators';
 import { setPlaylists, selectPlaylist } from './PlaylistActionCreators';
@@ -12,7 +13,7 @@ export function loginComplete({ jwt, user }) {
     type: 'loginComplete',
     payload: { jwt, user }
   });
-  localStorage._session = jwt;
+  Session.set(jwt);
 }
 
 export function initState() {
@@ -47,7 +48,6 @@ export function setJWT(jwt) {
     type: 'setSession',
     payload: { jwt }
   });
-  initState();
 }
 
 export function login({ email, password }) {
@@ -55,6 +55,7 @@ export function login({ email, password }) {
     .then(res => res.json())
     .then(res => {
       setJWT(res.jwt);
+      initState();
       return res;
     })
     .catch(error => {
@@ -100,7 +101,7 @@ export function logout() {
     del(`/v1/auth/session/${me._id}`)
       .finally(logoutComplete);
   }
-  delete localStorage._session;
+  Session.unset();
   logoutComplete();
 }
 
