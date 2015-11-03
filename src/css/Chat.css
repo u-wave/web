@@ -56,6 +56,10 @@
   }
 }
 
+@component ChatMention {
+  color: $highlight-color;
+}
+
 @component ChatInputWrapper {
   background: $chat-background-color;
   border-top: 1px solid $chat-border-color;
