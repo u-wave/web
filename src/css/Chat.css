@@ -33,10 +33,12 @@
 
   @descendent content {
     position: relative;
+    box-sizing: border-box;
     padding-left: 50px;
+    width: 100%;
     display: inline-block;
     margin: 6px 0;
-    width: auto;
+    word-wrap: break-word;
   }
 
   /** TODO fix hackiness */
