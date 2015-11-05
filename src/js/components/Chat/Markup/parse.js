@@ -7,6 +7,7 @@ import Code from './Code';
 import Italic from './Italic';
 import StrikeThrough from './StrikeThrough';
 import Mention from './Mention';
+import Link from './Link';
 
 function Token(type, text, raw = text) {
   this.type = type;
@@ -44,6 +45,14 @@ function tokenize(text) {
       return true;
     }
   };
+  const link = type => {
+    const match = /^https?:\/\/[\S]+/.exec(chunk);
+    if (match) {
+      tokens.push(new Token(type, chunk.slice(0, match[0].length)));
+      i += match[0].length;
+      return true;
+    }
+  };
   // eat spaces
   const space = () => {
     // .slice again because `i` changed
@@ -61,7 +70,8 @@ function tokenize(text) {
       delimited('*', 'bold') ||
       delimited('`', 'code') ||
       delimited('~', 'strike') ||
-      mention('@', 'mention');
+      mention('@', 'mention') ||
+      link('link');
     if (!found) {
       let end = chunk.indexOf(' ', 1) + /* eat space */ 1;
       if (end === 0) {// no match, = -1 + 1
@@ -93,6 +103,8 @@ function parse(message) {
       return mention
         ? <Mention key={i} user={mention} />
         : tok.raw;
+    case 'link':
+      return <Link text={tok.text} href={tok.text} />;
     default:
       return tok.text;
     }
