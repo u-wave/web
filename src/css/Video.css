@@ -15,7 +15,10 @@
 
   min-width: 100%;
   min-height: 100%;
-  filter: blur(1em);
+
+  @modifier blurry {
+    filter: blur(1em);
+  }
 }
 
 @component YouTubePlayer {
