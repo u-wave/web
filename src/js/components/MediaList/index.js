@@ -1,5 +1,6 @@
 import cx from 'classnames';
 import React from 'react';
+import itemSelection from 'item-selection/immutable';
 import Row from './Row';
 
 export default class MediaList extends React.Component {
@@ -8,11 +9,13 @@ export default class MediaList extends React.Component {
     media: React.PropTypes.array
   };
 
-  state = { selection: [] };
+  state = { selection: itemSelection(this.props.media) };
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.media !== this.props.media) {
-      this.setState({ selection: [] });
+      this.setState({
+        selection: itemSelection(nextProps.media)
+      });
     }
   }
 
@@ -21,19 +24,15 @@ export default class MediaList extends React.Component {
 
     let { selection } = this.state;
 
-    // TODO shift+click for selecting ranges
-    if (e.ctrlKey) {
-      const where = selection.indexOf(index);
-      if (where === -1) {
-        selection.push(index);
-      } else {
-        selection.splice(where, 1);
-      }
+    if (e.shiftKey) {
+      selection = selection.selectRange(index);
+    } else if (e.ctrlKey) {
+      selection = selection.selectToggle(index);
     } else {
-      selection = [ index ];
+      selection = selection.select(index);
     }
 
-    this.setState({ selection: selection.slice() });
+    this.setState({ selection: selection });
   }
 
   render() {
@@ -46,7 +45,7 @@ export default class MediaList extends React.Component {
             key={i}
             className="MediaList-row"
             media={item}
-            selected={selection.indexOf(i) !== -1}
+            selected={selection.isSelectedIndex(i)}
             onMouseDown={this.selectItem.bind(this, i)}
           />
         ))}
