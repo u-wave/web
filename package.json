@@ -28,6 +28,7 @@
     "react-addons-transition-group": "^0.14.0",
     "react-addons-update": "^0.14.0",
     "react-dom": "^0.14.0",
+    "react-list": "^0.7.3",
     "react-tap-event-plugin": "^0.2.1",
     "react-youtube": "^4.1.1",
     "soundcloud-audio": "^0.1.6",

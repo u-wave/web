@@ -1,5 +1,6 @@
 import cx from 'classnames';
 import React from 'react';
+import List from 'react-list';
 import itemSelection from 'item-selection/immutable';
 import Row from './Row';
 
@@ -35,20 +36,29 @@ export default class MediaList extends React.Component {
     this.setState({ selection: selection });
   }
 
+  renderRow(index, key) {
+    const media = this.props.media[index];
+    const selected = this.state.selection.isSelectedIndex(index);
+    return (
+      <Row
+        key={key}
+        className="MediaList-row"
+        media={media}
+        selected={selected}
+        onMouseDown={e => this.selectItem(index, e)}
+      />
+    );
+  }
+
   render() {
     const { className, media } = this.props;
-    const { selection } = this.state;
     return (
       <div className={cx('MediaList', className)}>
-        {media.map((item, i) => (
-          <Row
-            key={i}
-            className="MediaList-row"
-            media={item}
-            selected={selection.isSelectedIndex(i)}
-            onMouseDown={this.selectItem.bind(this, i)}
-          />
-        ))}
+        <List
+          itemRenderer={::this.renderRow}
+          length={media.length}
+          type="uniform"
+        />
       </div>
     );
   }
