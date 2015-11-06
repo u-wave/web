@@ -20,20 +20,12 @@ gulp.task('js:clean', exec('clean-js'));
 gulp.task('js:browserify', exec('browserify'));
 gulp.task('js', sequence('js:lint', 'js:browserify'));
 
+gulp.task('html', exec('copy-html'));
+
 gulp.task('clean', sequence([ 'js:clean', 'css:clean' ]));
 
 gulp.task('assets', exec('copy-assets'));
 
-// TODO fix this, it's terrible :P
-gulp.task('dist:final', exec('make-dist'));
-gulp.task('dist', () => {
-  env.minify = true;
-  runSeq(
-    [ 'js:browserify', 'css' ],
-    'dist:final'
-  );
-});
-
 gulp.task('watch', exec('watch'));
 
-gulp.task('default', [ 'assets', 'js', 'css' ]);
+gulp.task('default', [ 'assets', 'html', 'js', 'css' ]);

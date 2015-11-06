@@ -58,7 +58,6 @@
     "gulp-postcss": "^6.0.0",
     "gulp-uglify": "^1.4.1",
     "gulp-util": "^3.0.6",
-    "merge-stream": "^1.0.0",
     "postcss-bem": "^0.4.0",
     "postcss-color-hexa": "^1.2.3",
     "postcss-import": "^7.0.0",
