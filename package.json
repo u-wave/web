@@ -43,6 +43,7 @@
     "babelify": "^6.3.0",
     "browserify": "^11.1.0",
     "browserify-hmr": "^0.3.1",
+    "bundle-collapser": "^1.2.1",
     "cssnano": "^3.3.1",
     "del": "^2.0.2",
     "envify": "^3.4.0",
