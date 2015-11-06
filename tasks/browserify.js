@@ -15,6 +15,6 @@ export default function browserifyTask({ minify = false }) {
     .bundle()
     .pipe(source('out.js'))
     .pipe(when(minify, buffer()))
-    .pipe(when(minify, uglify()))
+    .pipe(when(minify, uglify({ compress: { screw_ie8: true }, output: { screw_ie8: true } })))
     .pipe(dest('lib/'));
 }
