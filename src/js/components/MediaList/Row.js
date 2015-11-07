@@ -14,14 +14,19 @@ export default class Row extends React.Component {
     selected: false
   };
 
+  state = { showActions: false };
+
+  onMouseEnter() {
+    this.setState({ showActions: true });
+  }
+
   onMouseLeave() {
-    if (this.refs.actions) {
-      this.refs.actions.onMouseLeave();
-    }
+    this.setState({ showActions: false });
   }
 
   render() {
     const { className, media, selected, ...attrs } = this.props;
+    const { showActions } = this.state;
     const selectedClass = selected ? 'is-selected' : '';
     const duration = 'start' in media
       // playlist item
@@ -31,6 +36,7 @@ export default class Row extends React.Component {
     return (
       <div
         className={cx('MediaListRow', className, selectedClass)}
+        onMouseEnter={::this.onMouseEnter}
         onMouseLeave={::this.onMouseLeave}
         {...attrs}
       >
@@ -50,11 +56,13 @@ export default class Row extends React.Component {
         <div className="MediaListRow-duration">
           {formatDuration(duration)}
         </div>
-        <Actions
-          ref="actions"
-          className={cx('MediaListRow-actions', selectedClass)}
-          media={media}
-        />
+        {showActions && (
+          <Actions
+            ref="actions"
+            className={cx('MediaListRow-actions', selectedClass)}
+            media={media}
+          />
+        )}
       </div>
     );
   }

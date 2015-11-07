@@ -38,10 +38,6 @@ export default class Actions extends React.Component {
     removeMedia(PlaylistStore.getSelectedPlaylist()._id, this.props.media._id);
   }
 
-  onMouseLeave() {
-    this.setState({ adding: false });
-  }
-
   render() {
     const { adding } = this.state;
     return (

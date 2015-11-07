@@ -60,13 +60,6 @@ $media-list-duration-width: 70px;
   @descendent actions {
     position: absolute;
     right: 0;
-    display: none;
-  }
-
-  /* Kinda hacky, not sure if there's a better way to do this thing without
-   * getting JS involved */
-  &:hover &-actions {
-    display: block;
   }
 }
 
