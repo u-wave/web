@@ -13,7 +13,7 @@ import when from 'gulp-if';
 export default function browserifyTask({ minify = false }) {
   const b = browserify({
     debug: !minify,
-    entries: './src/js/app.js'
+    entries: './src/app.js'
   });
 
   b.transform(babelify, { stage: 0, externalHelpers: true });

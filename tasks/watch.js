@@ -6,9 +6,9 @@ import hmr from 'browserify-hmr';
 import watchify from 'watchify';
 import source from 'vinyl-source-stream';
 
-const JS_PATHS = [ 'src/js/**/*.js', 'gulpfile.babel.js', 'tasks/*.js' ];
+const JS_PATHS = [ 'src/**/*.js', 'gulpfile.babel.js', 'tasks/*.js' ];
 const JS_TASKS = [ 'js:lint' ];
-const CSS_PATHS = [ 'src/css/**/*.css' ];
+const CSS_PATHS = [ 'src/**/*.css' ];
 const CSS_TASKS = [ 'css' ];
 
 let watcher;
@@ -41,7 +41,7 @@ export default function watchTask() {
 
   watcher = browserify({
     debug: true,
-    entries: './src/js/app.js',
+    entries: './src/app.js',
     cache: {},
     packageCache: {}
   });

@@ -23,7 +23,7 @@ export default function compileCssTask({ minify = false }) {
   if (minify) {
     processors.push(cssnano());
   }
-  return src('src/css/**/*.css')
+  return src('src/**/*.css')
     .pipe(postcss(processors))
     .pipe(dest('lib/css/'));
 }
