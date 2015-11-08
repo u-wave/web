@@ -1,16 +1,32 @@
+/* Global colours */
 $text-color: #fff;
 $muted-text-color: #777;
 $background-color: #151515;
 $background-hover-color: #111;
 $highlight-color: #9d2053;
 
+/* Footer colours */
 $footer-border-color: #303036;
 
+/* Overlay colours & sizes */
+$overlay-header-close-size: 56px;
+
+/* Chat colours */
 $chat-background-color: #1b1b1b;
 $chat-background-color2: #222222;
 $chat-border-color: $footer-border-color;
 
+/* User related colours */
 $user-list-color: #1b1b1b;
 $user-list-alternate-color: #222222;
 
-$media-list-alternate-color: #303036;
+/* Playlist colours & sizing */
+$media-list-spacing: 3%;
+$media-list-thumb-width: 85px;
+$media-list-duration-width: 70px;
+$media-list-color: transparent;
+$media-list-alternate-color: hexa(#303036, 0.3);
+
+/* Form colours & sizes */
+$forms-element-margin: 16px;
+$forms-textfield-size: 50px;

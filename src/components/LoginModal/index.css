@@ -47,9 +47,3 @@ $login-modal-width: 300px;
     }
   }
 }
-
-@component LoginForm {
-  @descendent forgot {
-    font-size: 10pt;
-  }
-}

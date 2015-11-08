@@ -1,0 +1,28 @@
+@import "vars.css";
+
+@component ChatInputWrapper {
+  background: $chat-background-color;
+  border-top: 1px solid $chat-border-color;
+  box-sizing: border-box;
+}
+
+@component ChatInput {
+  height: 100%;
+  width: 100%;
+
+  @descendent input {
+    margin: 15px 15px 16px 15px;
+    height: 28px;
+    width: calc(100% - 32px);
+    padding: 0 6px;
+    box-sizing: border-box;
+    border: 1px solid $chat-border-color;
+    background: #1b1b1b;
+    color: #fff;
+
+    @when focused {
+      border-color: #9d2053;
+      outline: none;
+    }
+  }
+}

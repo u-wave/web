@@ -1,0 +1,7 @@
+@import "vars.css";
+
+@component LoginForm {
+  @descendent forgot {
+    font-size: 10pt;
+  }
+}

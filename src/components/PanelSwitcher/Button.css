@@ -1,0 +1,17 @@
+@import "vars.css";
+
+@component PanelButton {
+  cursor: pointer;
+  box-sizing: border-box;
+  float: left;
+  height: 100%;
+  width: calc(100% / 3);
+  padding-top: 17px;
+  text-align: center;
+  text-transform: uppercase;
+
+  @modifier active {
+    background: #222;
+    border-bottom: 3px solid white;
+  }
+}

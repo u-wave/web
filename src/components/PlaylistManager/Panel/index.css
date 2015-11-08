@@ -1,0 +1,15 @@
+@import "vars.css";
+
+@component PlaylistPanel {
+  background: hexa($background-color, 0.96);
+  height: 100%;
+
+  @descendent loading {
+    margin: auto;
+    width: 25%;
+  }
+
+  @descendent media {
+    height: calc(100% - 54px);
+  }
+}

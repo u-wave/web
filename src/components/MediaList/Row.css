@@ -1,0 +1,58 @@
+@import "vars.css";
+
+@component MediaListRow {
+  height: 54px;
+  line-height: 54px;
+  position: relative;
+  background: $media-list-color;
+
+  &:nth-child(2n+1) {
+    background: $media-list-alternate-color;
+  }
+
+  @when selected {
+    background: hexa($highlight-color, 0.7);
+  }
+
+  @descendent thumb {
+    box-sizing: border-box;
+    height: 100%;
+    width: 55px;
+    margin: 0 15px;
+    padding: 7px 0;
+    float: left;
+  }
+
+  @descendent image {
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  @descendent artist {
+    float: left;
+    width: calc(50% - $media-list-spacing - $media-list-thumb-width - $media-list-duration-width);
+    margin-right: $media-list-spacing;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  @descendent title {
+    float: left;
+    width: calc(50% - $media-list-spacing);
+    margin-right: $media-list-spacing;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  @descendent duration {
+    float: left;
+    width: $media-list-duration-width;
+  }
+
+  @descendent actions {
+    position: absolute;
+    right: 0;
+  }
+}

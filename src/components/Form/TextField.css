@@ -1,0 +1,37 @@
+@import "vars.css";
+
+@component TextField {
+  background: #383838;
+  border: 1px solid #2c2c2c;
+  border-top-color: #3e3e3e;
+  border-right-color: #3e3e3e;
+  height: $forms-textfield-size;
+  font-size: 12pt;
+
+  @descendent input {
+    width: calc(100% - $forms-textfield-size);
+    border: 0;
+    height: 100%;
+    background: transparent;
+    line-height: $forms-textfield-size;
+    display: block;
+    float: left;
+    box-sizing: border-box;
+    padding: 0 $forms-element-margin;
+    font-size: 12pt;
+    color: #fff;
+    &::placeholder {
+      color: #9f9d9e;
+    }
+  }
+
+  @descendent icon {
+    width: $forms-textfield-size;
+    height: $forms-textfield-size;
+    box-sizing: border-box;
+    padding: 13px;
+    display: block;
+    float: left;
+    text-align: center;
+  }
+}

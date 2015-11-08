@@ -1,0 +1,32 @@
+@import "vars.css";
+
+@component OverlayHeader {
+  background: $background-color;
+
+  @descendent title {
+    float: left;
+    box-sizing: border-box;
+    height: 100%;
+    padding-top: 17px;
+    font-size: 10pt;
+    text-align: center;
+
+    /* max width = 300px */
+    width: 33%;
+    @media (min-width: 1200px) {
+      width: 300px;
+    }
+  }
+
+  @descendent content {
+    float: left;
+    width: calc(100% - 33% - $overlay-header-close-size);
+    @media (min-width: 1200px) {
+      width: calc(100% - 300px - $overlay-header-close-size);
+    }
+  }
+
+  @descendent close {
+    float: left;
+  }
+}

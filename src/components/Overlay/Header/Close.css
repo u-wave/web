@@ -1,0 +1,13 @@
+@import "vars.css";
+
+@component OverlayHeaderClose {
+  cursor: pointer;
+  text-align: center;
+  width: $overlay-header-close-size;
+  height: $overlay-header-close-size;
+
+  @descendent icon {
+    font-size: 32px;
+    line-height: $overlay-header-close-size;
+  }
+}

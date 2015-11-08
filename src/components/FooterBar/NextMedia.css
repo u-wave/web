@@ -1,0 +1,19 @@
+@import "vars.css";
+
+@component NextMedia {
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
+  color: $muted-text-color;
+  font-size: 11pt;
+  padding: 7px;
+
+  &:hover {
+    background-color: $background-hover-color;
+  }
+
+  @descendent playlist {
+    color: $text-color;
+  }
+}
