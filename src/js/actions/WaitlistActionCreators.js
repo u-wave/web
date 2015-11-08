@@ -96,8 +96,9 @@ function putLock(status) {
   });
   put('/v1/waitlist/lock', { lock: status, clear: false })
     .then(res => res.json())
-    .get('locked').tap(setLocked)
+    .then(res => res.locked)
     .then(locked => {
+      setLocked(locked);
       dispatch({
         type: 'modLockedWaitlist',
         payload: { locked }

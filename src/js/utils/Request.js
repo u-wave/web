@@ -1,15 +1,9 @@
 import 'whatwg-fetch';
 import assign from 'object-assign';
-import BluebirdPromise from 'bluebird';
 import { stringify as stringifyQS } from 'querystring';
 import LoginStore from '../stores/LoginStore';
 
 const debug = require('debug')('uwave:util:request');
-
-// return Bluebird promises from native fetch calls, too
-function fetch(...args) {
-  return BluebirdPromise.resolve(window.fetch(...args));
-}
 
 function makeUrl(path, params = {}) {
   let uri = path;

@@ -99,7 +99,8 @@ export function logout() {
   if (me) {
     dispatch({ type: 'logoutStart' });
     del(`/v1/auth/session/${me._id}`)
-      .finally(logoutComplete);
+      .then(logoutComplete)
+      .catch(logoutComplete);
   }
   Session.unset();
   logoutComplete();
