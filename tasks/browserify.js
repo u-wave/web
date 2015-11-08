@@ -37,12 +37,8 @@ export default function browserifyTask({ minify = false }) {
     }
   }
 
-  // add a "babelHelpers =" variable that can be mangled by uglifyjs
   function getHelpers() {
-    return `
-      ${buildExternalHelpers(Object.keys(helpers))}
-      var babelHelpers = (typeof global === 'undefined' ? self : global).babelHelpers;
-    `;
+    return `${buildExternalHelpers(Object.keys(helpers), 'var')}`;
   }
 
   return b
