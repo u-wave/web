@@ -53,6 +53,7 @@
     "gulp-concat": "^2.6.0",
     "gulp-eslint": "^1.0.0",
     "gulp-if": "^2.0.0",
+    "gulp-insert": "^0.5.0",
     "gulp-minify-html": "^1.0.4",
     "gulp-postcss": "^6.0.0",
     "gulp-uglify": "^1.4.1",
