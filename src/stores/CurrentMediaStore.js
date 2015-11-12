@@ -9,6 +9,7 @@ function tick(store) {
   store.emit('change');
 }
 
+let historyID = null;
 let media = null;
 let dj = null;
 let startTime = null;
@@ -18,6 +19,10 @@ const CurrentMediaStore = assign(new EventEmitter, {
     setInterval(() => {
       tick(CurrentMediaStore);
     }, 1000);
+  },
+
+  getHistoryID() {
+    return historyID;
   },
 
   getMedia() {
@@ -39,6 +44,7 @@ const CurrentMediaStore = assign(new EventEmitter, {
   dispatchToken: dispatcher.register(({ type, payload }) => {
     switch (type) {
     case 'advance':
+      historyID = payload.historyID;
       media = payload.media;
       dj = payload.userID;
       startTime = payload.timestamp;
