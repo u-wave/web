@@ -70,27 +70,23 @@ export function activatePlaylist(playlistID) {
     });
 }
 
-function playlistsComplete(playlists) {
-  dispatch({
-    type: 'loadedPlaylists',
-    payload: { playlists }
-  });
-}
-
-function playlistsError(err) {
-  dispatch({
-    type: 'loadedPlaylists',
-    error: true,
-    payload: err
-  });
-}
-
 export function loadPlaylists() {
   dispatch({ type: 'loadingPlaylists' });
   get('/v1/playlists')
     .then(res => res.json())
-    .then(playlistsComplete)
-    .catch(playlistsError);
+    .then(playlists => {
+      dispatch({
+        type: 'loadedPlaylists',
+        payload: { playlists }
+      });
+    })
+    .catch(error => {
+      dispatch({
+        type: 'loadedPlaylists',
+        error: true,
+        payload: error
+      });
+    });
 }
 
 export function createPlaylist(name) {
