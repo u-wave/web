@@ -1,5 +1,12 @@
 @import "vars.css";
 
+::-webkit-scrollbar {
+  width: 12px;
+}
+::-webkit-scrollbar-thumb {
+  background: $scrollbar-color;
+}
+
 @component App {
   font-family: Open Sans, sans-serif;
 
