@@ -80,6 +80,9 @@ const PlaylistStore = assign(new EventEmitter, {
   getActiveMedia() {
     return activeMedia;
   },
+  getNextMedia() {
+    return activeMedia && activeMedia[0] || null;
+  },
   getSelectedPlaylist() {
     return selectedPlaylist() || activePlaylist();
   },

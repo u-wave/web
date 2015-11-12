@@ -15,7 +15,7 @@ import UserInfo from './UserInfo';
 function getState() {
   return {
     playlist: PlaylistStore.getActivePlaylist(),
-    nextMedia: PlaylistStore.getActiveMedia()[0],
+    nextMedia: PlaylistStore.getNextMedia(),
     user: LoginStore.getUser(),
     current: CurrentMediaStore.getMedia(),
     currentStartTime: CurrentMediaStore.getStartTime(),
