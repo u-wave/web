@@ -25,6 +25,13 @@ export function clearWaitlist() {
   dispatch({ type: 'clearWaitlist' });
 }
 
+export function updatedWaitlist(waitlist) {
+  dispatch({
+    type: 'updatedWaitlist',
+    payload: { waitlist }
+  });
+}
+
 export function joinWaitlist() {
   const user = LoginStore.getUser();
   dispatch({ type: 'joiningWaitlist' });

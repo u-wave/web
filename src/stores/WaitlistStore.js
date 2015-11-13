@@ -37,6 +37,7 @@ const WaitlistStore = assign(new EventEmitter, {
       break;
     case 'joinedWaitlist':
     case 'leftWaitlist':
+    case 'updatedWaitlist':
       waitlist = payload.waitlist;
       WaitlistStore.emit('change');
       break;
