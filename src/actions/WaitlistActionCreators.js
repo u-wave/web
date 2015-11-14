@@ -62,6 +62,28 @@ export function joinedWaitlist({ userID, waitlist }) {
   });
 }
 
+export function leaveWaitlist() {
+  const user = LoginStore.getUser();
+  if (user) {
+    dispatch({ type: 'leavingWaitlist' });
+    del(`/v1/waitlist/${user._id}`)
+      .then(res => res.json())
+      .then(waitlist => {
+        dispatch({
+          type: 'leftWaitlistSelf',
+          payload: { waitlist }
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: 'leftWaitlistSelf',
+          error: true,
+          payload: error
+        });
+      });
+  }
+}
+
 export function leftWaitlist({ userID, waitlist }) {
   dispatch({
     type: 'leftWaitlist',
