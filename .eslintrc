@@ -3,8 +3,11 @@
   "parser": "babel-eslint",
 
   "rules": {
-    "comma-dangle": [2, "never"],
+    "comma-dangle": [ 2, "never" ],
+    "new-cap": [ 2, {
+      "capIsNewExceptions": [ "DragDropContext", "DragSource", "DropTarget", "DragLayer" ]
+    } ],
     "react/jsx-quotes": 0,
-    "jsx-quotes": [2, "prefer-double"]
+    "jsx-quotes": [ 2, "prefer-double" ]
   }
 }
