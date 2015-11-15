@@ -8,7 +8,11 @@ import Actions from './Actions';
 const mediaSource = {
   beginDrag(props) {
     return {
-      media: props.selection
+      // fall back to the row's media item if nothing is selected, i.e. if the
+      // user drags a single row without selecting other rows first
+      // TODO perhaps also fall back to the current row's media item if the
+      // current row is not selected?
+      media: props.selection || [ props.media ]
     };
   }
 };

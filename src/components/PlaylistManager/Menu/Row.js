@@ -1,19 +1,37 @@
 import cx from 'classnames';
 import React from 'react';
+import { DropTarget } from 'react-dnd';
 import ActiveIcon from 'material-ui/lib/svg-icons/navigation/check';
-import { selectPlaylist } from '../../../actions/PlaylistActionCreators';
+import { MEDIA } from '../../../constants/DDItemTypes';
+import { selectPlaylist, addMedia } from '../../../actions/PlaylistActionCreators';
 import Loader from '../../Loader';
 
-export default class Menu extends React.Component {
+const playlistTarget = {
+  drop({ playlist }, monitor) {
+    const { media } = monitor.getItem();
+    addMedia(playlist, media);
+  }
+};
+
+const collect = (connect, monitor) => ({
+  connectDropTarget: connect.dropTarget(),
+  isOver: monitor.isOver()
+});
+
+@DropTarget(MEDIA, playlistTarget, collect)
+export default class PlaylistRow extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
-    playlist: React.PropTypes.object
+    playlist: React.PropTypes.object,
+    connectDropTarget: React.PropTypes.func.isRequired,
+    isOver: React.PropTypes.bool.isRequired
   };
 
   render() {
-    const { className, playlist } = this.props;
+    const { className, playlist, connectDropTarget, isOver } = this.props;
     const activeClass = playlist.active && 'is-active';
     const selectedClass = playlist.selected && 'is-selected';
+    const droppableClass = isOver && 'is-droppable';
 
     let icon;
     if (playlist.creating) {
@@ -30,9 +48,9 @@ export default class Menu extends React.Component {
       );
     }
 
-    return (
+    return connectDropTarget(
       <div
-        className={cx('PlaylistMenuRow', activeClass, selectedClass, className)}
+        className={cx('PlaylistMenuRow', activeClass, selectedClass, droppableClass, className)}
         onClick={selectPlaylist.bind(null, playlist._id)}
       >
         {icon}
