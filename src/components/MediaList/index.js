@@ -45,7 +45,7 @@ export default class MediaList extends React.Component {
         className="MediaList-row"
         media={media}
         selected={selected}
-        onMouseDown={e => this.selectItem(index, e)}
+        onClick={e => this.selectItem(index, e)}
       />
     );
   }

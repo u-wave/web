@@ -1,11 +1,29 @@
 import cx from 'classnames';
 import React from 'react';
+import { DragSource } from 'react-dnd';
+import { MEDIA } from '../../constants/DDItemTypes';
 import formatDuration from '../../utils/formatDuration';
 import Actions from './Actions';
 
+const mediaSource = {
+  beginDrag(props) {
+    return {
+      media: props.media
+    };
+  }
+};
+
+const collect = (connect, monitor) => ({
+  connectDragSource: connect.dragSource(),
+  isDragging: monitor.isDragging()
+});
+
+@DragSource(MEDIA, mediaSource, collect)
 export default class Row extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
+    connectDragSource: React.PropTypes.func.isRequired,
+    isDragging: React.PropTypes.bool.isRequired,
     media: React.PropTypes.object,
     selected: React.PropTypes.bool
   };
@@ -25,7 +43,11 @@ export default class Row extends React.Component {
   }
 
   render() {
-    const { className, media, selected, ...attrs } = this.props;
+    const {
+      className, media, selected,
+      connectDragSource, isDragging,
+      ...attrs
+    } = this.props;
     const { showActions } = this.state;
     const selectedClass = selected ? 'is-selected' : '';
     const duration = 'start' in media
@@ -33,7 +55,7 @@ export default class Row extends React.Component {
       ? media.end - media.start
       // search result
       : media.duration;
-    return (
+    return connectDragSource(
       <div
         className={cx('MediaListRow', className, selectedClass)}
         onMouseEnter={::this.onMouseEnter}
