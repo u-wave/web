@@ -13,19 +13,27 @@ function getState() {
 export default class Chat extends React.Component {
   state = getState();
 
+  componentDidMount() {
+    this.scrollToBottom();
+  }
+
   componentWillUpdate() {
     this._isScrolledToBottom = this.isScrolledToBottom();
   }
 
   componentDidUpdate() {
     if (this._isScrolledToBottom) {
-      const el = this.refs.chat;
-      el.scrollTop = el.scrollHeight;
+      this.scrollToBottom();
     }
   }
 
   onChange() {
     this.setState(getState());
+  }
+
+  scrollToBottom() {
+    const el = this.refs.chat;
+    el.scrollTop = el.scrollHeight;
   }
 
   isScrolledToBottom() {
