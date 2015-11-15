@@ -17,7 +17,10 @@ export default class SongTitle extends React.Component {
 
   render() {
     return (
-      <div className={cx('SongTitle', this.props.className)}>
+      <div
+        className={cx('SongTitle', this.props.className)}
+        title={`${this.props.artist} – ${this.props.title}`}
+      >
         <span className="SongTitle-artist">{this.props.artist}</span>
         <span className="SongTitle-separator"> – </span>
         <span className="SongTitle-title">{this.props.title}</span>
