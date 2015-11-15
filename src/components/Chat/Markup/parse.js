@@ -74,10 +74,15 @@ function tokenize(text) {
       link('link');
     if (!found) {
       let end = chunk.indexOf(' ', 1) + /* eat space */ 1;
-      if (end === 0) {// no match, = -1 + 1
+      if (end === 0) { // no match, = -1 + 1
         end = chunk.length;
       }
-      tokens.push(new Token('word', chunk.slice(0, end)));
+      // append to previous token if it was also a word
+      if (tokens.length > 0 && tokens[tokens.length - 1].type === 'word') {
+        tokens[tokens.length - 1].text += chunk.slice(0, end);
+      } else {
+        tokens.push(new Token('word', chunk.slice(0, end)));
+      }
       i += end;
     }
     space();
