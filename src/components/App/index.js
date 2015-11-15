@@ -27,8 +27,8 @@ function getState() {
   };
 }
 
-@listen(SettingsStore, LoginStore)
 @DragDropContext(HTML5Backend)
+@listen(SettingsStore, LoginStore)
 export default class App extends React.Component {
   static childContextTypes = {
     muiTheme: React.PropTypes.object
