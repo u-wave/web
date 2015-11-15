@@ -104,7 +104,7 @@ function parse(message) {
         ? <Mention key={i} user={mention} />
         : tok.raw;
     case 'link':
-      return <Link text={tok.text} href={tok.text} />;
+      return <Link key={i} text={tok.text} href={tok.text} />;
     default:
       return tok.text;
     }
