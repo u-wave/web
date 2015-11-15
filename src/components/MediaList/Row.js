@@ -8,7 +8,7 @@ import Actions from './Actions';
 const mediaSource = {
   beginDrag(props) {
     return {
-      media: props.media
+      media: props.selection
     };
   }
 };
@@ -25,7 +25,8 @@ export default class Row extends React.Component {
     connectDragSource: React.PropTypes.func.isRequired,
     isDragging: React.PropTypes.bool.isRequired,
     media: React.PropTypes.object,
-    selected: React.PropTypes.bool
+    selected: React.PropTypes.bool,
+    selection: React.PropTypes.array
   };
 
   static defaultProps = {

@@ -38,13 +38,15 @@ export default class MediaList extends React.Component {
 
   renderRow(index, key) {
     const media = this.props.media[index];
-    const selected = this.state.selection.isSelectedIndex(index);
+    const { selection } = this.state;
+    const selected = selection.isSelectedIndex(index);
     return (
       <Row
         key={key}
         className="MediaList-row"
         media={media}
         selected={selected}
+        selection={selection.get()}
         onClick={e => this.selectItem(index, e)}
       />
     );
