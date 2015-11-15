@@ -1,4 +1,6 @@
 import React from 'react';
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 import LoginStore from '../../stores/LoginStore';
 import SettingsStore from '../../stores/SettingsStore';
 import ThemeManager from 'material-ui/lib/styles/theme-manager';
@@ -26,6 +28,7 @@ function getState() {
 }
 
 @listen(SettingsStore, LoginStore)
+@DragDropContext(HTML5Backend)
 export default class App extends React.Component {
   static childContextTypes = {
     muiTheme: React.PropTypes.object
