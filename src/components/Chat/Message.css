@@ -29,6 +29,7 @@
     position: relative;
     box-sizing: border-box;
     padding-left: 50px;
+    padding-right: 3px;
     width: 100%;
     display: inline-block;
     margin: 6px 0;
