@@ -1,7 +1,7 @@
 @import "vars.css";
 
 ::-webkit-scrollbar {
-  width: 12px;
+  width: 7px;
 }
 ::-webkit-scrollbar-thumb {
   background: $scrollbar-color;
