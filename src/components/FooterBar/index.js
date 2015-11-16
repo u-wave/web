@@ -32,7 +32,7 @@ function getRemaining(current, startTime) {
 
 function getEta(current, startTime, waitlist, user) {
   const averagePlayDuration = 4 * 60;
-  let position = findIndex(waitlist, id => id === user._id);
+  let position = user ? findIndex(waitlist, waiting => waiting._id === user._id) : -1;
   if (position === -1) {
     position = waitlist.length;
   }
