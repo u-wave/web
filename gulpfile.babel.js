@@ -13,19 +13,19 @@ function exec(taskName) {
 gulp.task('css:clean', exec('clean-css'));
 gulp.task('css:compile', exec('compile-css'));
 gulp.task('css:concat', exec('concat-css'));
-gulp.task('css', sequence('css:compile', 'css:concat'));
+gulp.task('css', sequence('css:clean', 'css:compile', 'css:concat'));
 
 gulp.task('js:lint', exec('lint-js'));
 gulp.task('js:clean', exec('clean-js'));
 gulp.task('js:browserify', exec('browserify'));
-gulp.task('js', sequence('js:lint', 'js:browserify'));
+gulp.task('js', sequence('js:lint', 'js:clean', 'js:browserify'));
 
 gulp.task('html', exec('copy-html'));
 
-gulp.task('clean', sequence([ 'js:clean', 'css:clean' ]));
+gulp.task('clean', exec('clean-all'));
 
 gulp.task('assets', exec('copy-assets'));
 
 gulp.task('watch', exec('watch'));
 
-gulp.task('default', [ 'assets', 'html', 'js', 'css' ]);
+gulp.task('default', sequence('clean', [ 'assets', 'html', 'js', 'css' ]));
