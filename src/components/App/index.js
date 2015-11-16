@@ -60,7 +60,11 @@ export default class App extends React.Component {
             />
           </div>
           <div className="AppRow AppRow--middle">
-            <Video size={settings.videoSize} />
+            <Video
+              size={settings.videoSize}
+              isMuted={settings.muted}
+              volume={settings.volume}
+            />
           </div>
           <Overlays transitionName="Overlay">
             <PlaylistManager key="playlistManager" />

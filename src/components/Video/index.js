@@ -2,30 +2,29 @@ import cx from 'classnames';
 import isEqual from 'is-equal-shallow';
 import React from 'react';
 import CurrentMediaStore from '../../stores/CurrentMediaStore';
-import VolumeStore from '../../stores/VolumeStore';
 import listen from '../../utils/listen';
 import SoundCloudPlayer from './SoundCloudPlayer';
 import YouTubePlayer from './YouTubePlayer';
 
 function getState() {
   return {
-    volume: VolumeStore.isMuted() ? 0 : VolumeStore.getVolume(),
     media: CurrentMediaStore.getMedia(),
     startTime: CurrentMediaStore.getStartTime()
   };
 }
 
-@listen(CurrentMediaStore, VolumeStore)
+@listen(CurrentMediaStore)
 export default class Video extends React.Component {
   static propTypes = {
-    size: React.PropTypes.string
+    size: React.PropTypes.string,
+    volume: React.PropTypes.number,
+    isMuted: React.PropTypes.bool
   };
 
   state = getState();
 
   shouldComponentUpdate(nextProps, nextState) {
-    return nextState.volume !== this.state.volume ||
-      nextProps.size !== this.props.size ||
+    return !isEqual(nextProps, this.props) ||
       !isEqual(nextState.media, this.state.media);
   }
 
@@ -34,8 +33,8 @@ export default class Video extends React.Component {
   }
 
   render() {
-    const { size } = this.props;
-    const { media, startTime, volume } = this.state;
+    const { size, volume, isMuted } = this.props;
+    const { media, startTime } = this.state;
 
     if (!media) {
       return <div className="Video" />;
@@ -43,7 +42,10 @@ export default class Video extends React.Component {
 
     let video = '';
     const seek = Math.round((Date.now() - startTime) / 1000);
-    const props = { media, seek, size, volume };
+    const props = {
+      media, seek, size,
+      volume: isMuted ? 0 : volume
+    };
     switch (media.sourceType) {
     case 'soundcloud':
       video = <SoundCloudPlayer {...props} />;

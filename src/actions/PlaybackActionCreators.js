@@ -1,18 +1,13 @@
-import { dispatch } from '../dispatcher';
+import { set } from './SettingsActionCreators';
 
 export function setVolume(volume) {
-  dispatch({
-    type: 'setVolume',
-    payload: {
-      volume: volume
-    }
-  });
+  set('volume', volume);
 }
 
 export function mute() {
-  dispatch({ type: 'mute' });
+  set('muted', true);
 }
 
 export function unmute() {
-  dispatch({ type: 'unmute' });
+  set('muted', false);
 }

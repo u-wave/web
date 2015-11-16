@@ -3,7 +3,9 @@ import EventEmitter from 'eventemitter3';
 import dispatcher from '../dispatcher';
 
 const settings = {
-  videoSize: 'large'
+  muted: false,
+  videoSize: 'large',
+  volume: 0
 };
 
 const SettingsStore = assign(new EventEmitter, {
