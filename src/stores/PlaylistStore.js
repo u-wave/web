@@ -73,6 +73,12 @@ function setLoading(playlistId, loading = true) {
   }
 }
 
+function setLoadingMedia(media, loading = true) {
+  media.forEach(item => {
+    item.loading = loading;
+  });
+}
+
 const PlaylistStore = assign(new EventEmitter, {
   getActivePlaylist() {
     return activePlaylist();
@@ -191,7 +197,7 @@ const PlaylistStore = assign(new EventEmitter, {
       break;
 
     case 'moveMediaInPlaylist':
-      setLoading(payload.playlistID);
+      setLoadingMedia(payload.medias);
       PlaylistStore.emit('change');
       break;
     case 'movedMediaInPlaylist':
@@ -201,21 +207,21 @@ const PlaylistStore = assign(new EventEmitter, {
       } else if (activePlaylistID === payload.playlistID) {
         processMove(activeMedia, payload.medias, payload.afterID);
       }
-      setLoading(payload.playlistID, false);
+      setLoadingMedia(payload.medias, false);
       PlaylistStore.emit('change');
       break;
 
     case 'removeMediaFromPlaylist':
-      setLoading(payload.playlistID);
+      setLoadingMedia(payload.medias);
       PlaylistStore.emit('change');
       break;
     case 'removedMediaFromPlaylist':
-      setLoading(payload.playlistID, false);
       if (selectedPlaylistID === payload.playlistID) {
         selectedMedia = selectedMedia.filter(media => media._id !== payload.mediaID);
       } else if (activePlaylistID === payload.playlistID) {
         activeMedia = activeMedia.filter(media => media._id !== payload.mediaID);
       }
+      // .loading items have been removed, so there's no need to unset .loading
       PlaylistStore.emit('change');
       break;
 

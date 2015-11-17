@@ -10,8 +10,16 @@
     background: $media-list-alternate-color;
   }
 
+  @when loading {
+    opacity: 0.75;
+  }
+
   @when selected {
     background: hexa($highlight-color, 0.7);
+  }
+
+  @descendent loader {
+    margin: 0 15px;
   }
 
   @descendent thumb {

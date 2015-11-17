@@ -3,6 +3,7 @@ import React from 'react';
 import { DragSource } from 'react-dnd';
 import { MEDIA } from '../../constants/DDItemTypes';
 import formatDuration from '../../utils/formatDuration';
+import MediaLoadingIndicator from '../MediaLoadingIndicator';
 import Actions from './Actions';
 
 const mediaSource = {
@@ -55,25 +56,29 @@ export default class Row extends React.Component {
     } = this.props;
     const { showActions } = this.state;
     const selectedClass = selected ? 'is-selected' : '';
+    const loadingClass = media.loading ? 'is-loading' : '';
     const duration = 'start' in media
       // playlist item
       ? media.end - media.start
       // search result
       : media.duration;
-    return connectDragSource(
-      <div
-        className={cx('MediaListRow', className, selectedClass)}
-        onMouseEnter={::this.onMouseEnter}
-        onMouseLeave={::this.onMouseLeave}
-        {...attrs}
-      >
-        <div className="MediaListRow-thumb">
+    const thumbnail = media.loading
+      ? <MediaLoadingIndicator className="MediaListRow-loader" />
+      : <div className="MediaListRow-thumb">
           <img
             className="MediaListRow-image"
             src={media.thumbnail}
             alt=""
           />
-        </div>
+        </div>;
+    return connectDragSource(
+      <div
+        className={cx('MediaListRow', className, selectedClass, loadingClass)}
+        onMouseEnter={::this.onMouseEnter}
+        onMouseLeave={::this.onMouseLeave}
+        {...attrs}
+      >
+        {thumbnail}
         <div className="MediaListRow-artist">
           {media.artist}
         </div>
