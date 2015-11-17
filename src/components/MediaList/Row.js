@@ -3,7 +3,7 @@ import React from 'react';
 import { DragSource } from 'react-dnd';
 import { MEDIA } from '../../constants/DDItemTypes';
 import formatDuration from '../../utils/formatDuration';
-import MediaLoadingIndicator from '../MediaLoadingIndicator';
+import MediaLoadingIndicator from './MediaLoadingIndicator';
 import Actions from './Actions';
 
 const mediaSource = {
