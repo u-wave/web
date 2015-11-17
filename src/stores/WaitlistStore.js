@@ -11,7 +11,7 @@ const WaitlistStore = assign(new EventEmitter, {
     return locked;
   },
   getUsers() {
-    return waitlist.map(UserStore.getUser, UserStore);
+    return waitlist.map(UserStore.getUser, UserStore).filter(Boolean);
   },
   getSize() {
     return waitlist.length;
