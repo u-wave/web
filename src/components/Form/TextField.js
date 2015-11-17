@@ -5,12 +5,19 @@ export default class TextField extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
     type: React.PropTypes.string,
-    icon: React.PropTypes.element
+    icon: React.PropTypes.element,
+    autofocus: React.PropTypes.bool
   };
 
   static defaultProps = {
     type: 'text'
   };
+
+  componentDidMount() {
+    if (this.props.autofocus) {
+      this.refs.input.focus();
+    }
+  }
 
   get value() {
     return this.refs.input.value;
