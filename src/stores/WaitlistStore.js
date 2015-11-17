@@ -17,7 +17,7 @@ const WaitlistStore = assign(new EventEmitter, {
     return waitlist.length;
   },
   isInWaitlist(user) {
-    return waitlist.some(id => user._id === id);
+    return user && waitlist.some(id => user._id === id);
   },
 
   dispatchToken: dispatcher.register(({ type, payload }) => {
