@@ -37,6 +37,7 @@
   }
 
   @descendent artist {
+    height: 100%;
     float: left;
     width: calc(50% - $media-list-spacing - $media-list-thumb-width - $media-list-duration-width);
     margin-right: $media-list-spacing;
@@ -46,6 +47,7 @@
   }
 
   @descendent title {
+    height: 100%;
     float: left;
     width: calc(50% - $media-list-spacing);
     margin-right: $media-list-spacing;
@@ -55,11 +57,13 @@
   }
 
   @descendent duration {
+    height: 100%;
     float: left;
     width: $media-list-duration-width;
   }
 
   @descendent actions {
+    height: 100%;
     position: absolute;
     right: 0;
   }
