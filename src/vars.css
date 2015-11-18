@@ -26,7 +26,7 @@ $media-list-spacing: 3%;
 $media-list-thumb-width: 85px;
 $media-list-duration-width: 70px;
 $media-list-color: transparent;
-$media-list-alternate-color: hexa(#303036, 0.3);
+$media-list-alternate-color: color(#303036 alpha(* 30%));
 
 /* Form colours & sizes */
 $forms-element-margin: 16px;

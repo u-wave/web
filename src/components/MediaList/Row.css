@@ -15,7 +15,7 @@
   }
 
   @when selected {
-    background: hexa($highlight-color, 0.7);
+    background: color($highlight-color alpha(* 70%));
   }
 
   @descendent loader {

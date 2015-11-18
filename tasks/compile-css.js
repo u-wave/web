@@ -2,8 +2,8 @@ import { src, dest } from 'gulp';
 import postcss from 'gulp-postcss';
 import autoprefix from 'autoprefixer';
 import bem from 'postcss-bem';
+import colorFunction from 'postcss-color-function';
 import cssnano from 'cssnano';
-import hexa from 'postcss-color-hexa';
 import imports from 'postcss-import';
 import nested from 'postcss-nested';
 import variables from 'postcss-simple-vars';
@@ -14,7 +14,7 @@ export default function compileCssTask({ minify = false }) {
     variables(),
     bem(),
     nested(),
-    hexa(),
+    colorFunction(),
     autoprefix({
       remove: false,
       browsers: [ 'last 2 versions' ]

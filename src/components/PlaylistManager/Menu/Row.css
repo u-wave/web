@@ -33,6 +33,6 @@
   }
 
   @when selected {
-    background: hexa($media-list-alternate-color, 0.3);
+    background: $media-list-alternate-color;
   }
 }
