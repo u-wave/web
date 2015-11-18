@@ -1,6 +1,6 @@
 import React from 'react';
 
-const supportsBlur = window.CSS &&
+const supportsBlur = typeof window !== 'undefined' && window.CSS &&
   (CSS.supports('filter', 'blur(1em)') || CSS.supports('-webkit-filter', 'blur(1em)'));
 
 export default class VideoBackdrop extends React.Component {
