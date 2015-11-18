@@ -7,8 +7,7 @@ const debug = require('debug')('uwave:component:video:soundcloud');
 
 const CLIENT_ID = '9d883cdd4c3c54c6dddda2a5b3a11200';
 
-const sc = new SoundCloudAudio(CLIENT_ID);
-sc.audio.autoplay = true;
+let sc;
 
 function getTrack(media, cb) {
   sc._jsonp(`${sc._baseUrl}/tracks/${media.sourceID}.json?client_id=${CLIENT_ID}`, data => {
@@ -26,6 +25,13 @@ export default class SoundCloudPlayer extends React.Component {
   };
 
   state = { track: null };
+
+  componentWillMount() {
+    if (!sc && typeof document !== 'undefined') {
+      sc = new SoundCloudAudio(CLIENT_ID);
+      sc.audio.autoplay = true;
+    }
+  }
 
   componentDidMount() {
     this.play();
