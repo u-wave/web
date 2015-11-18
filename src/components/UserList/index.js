@@ -1,5 +1,6 @@
 import cx from 'classnames';
 import React from 'react';
+import List from 'react-list';
 import UserRow from './UserRow';
 
 export default class UserList extends React.Component {
@@ -8,18 +9,25 @@ export default class UserList extends React.Component {
     users: React.PropTypes.array
   };
 
+  renderRow(index, key) {
+    const user = this.props.users[index];
+    return (
+      <UserRow
+        key={key}
+        className="UserList-row"
+        {...user}
+      />
+    );
+  }
+
   render() {
     return (
       <div className={cx('UserList', this.props.className)}>
-        {this.props.users.map(user => {
-          return (
-            <UserRow
-              key={user._id}
-              className="UserList-row"
-              {...user}
-            />
-          );
-        })}
+        <List
+          itemRenderer={::this.renderRow}
+          length={this.props.users.length}
+          type="uniform"
+        />
       </div>
     );
   }
