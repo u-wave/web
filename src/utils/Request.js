@@ -1,4 +1,3 @@
-import 'whatwg-fetch';
 import assign from 'object-assign';
 import { stringify as stringifyQS } from 'querystring';
 import LoginStore from '../stores/LoginStore';
