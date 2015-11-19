@@ -1,7 +1,7 @@
 @import "vars.css";
 
 @component UserRow {
-  height: 30px;
+  height: 40px;
   line-height: 30px;
   padding: 5px 0;
   background: $user-list-color;
