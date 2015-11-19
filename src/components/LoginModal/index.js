@@ -1,5 +1,5 @@
 import React from 'react';
-import TransitionGroup from 'react/lib/ReactCSSTransitionGroup';
+import TransitionGroup from 'react-addons-css-transition-group';
 import dispatcher from '../../dispatcher';
 import LoginStore from '../../stores/LoginStore';
 import listen from '../../utils/listen';

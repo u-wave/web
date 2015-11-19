@@ -1,5 +1,5 @@
 import React from 'react';
-import TransitionGroup from 'react/lib/ReactCSSTransitionGroup';
+import TransitionGroup from 'react-addons-css-transition-group';
 import ActiveOverlayStore from '../../stores/ActiveOverlayStore';
 import listen from '../../utils/listen';
 import oneOrManyChildren from '../../utils/propTypes/oneOrManyChildren';
