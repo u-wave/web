@@ -5,6 +5,7 @@
   text-align: center;
   width: $overlay-header-close-size;
   height: $overlay-header-close-size;
+  padding: 12px;
 
   @descendent icon {
     font-size: 32px;

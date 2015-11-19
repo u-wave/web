@@ -11,7 +11,7 @@ const Close = ({ className }) => {
     >
       <CloseIcon
         color="#fff"
-        style={{ height: 32, width: 32, padding: 12 }}
+        style={{ height: '100%', width: '100%' }}
         className="OverlayHeaderClose-icon"
       />
     </div>
