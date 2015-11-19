@@ -6,9 +6,11 @@
   float: left;
   height: 100%;
   width: calc(100% / 3);
-  padding-top: 17px;
-  text-align: center;
   text-transform: uppercase;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   @modifier active {
     background: #222;
