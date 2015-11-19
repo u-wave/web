@@ -2,7 +2,6 @@
 
 @component SearchBar {
   cursor: text;
-  box-sizing: border-box;
   background: #252727;
   border: 1px solid #252727;
   border-radius: 2px;

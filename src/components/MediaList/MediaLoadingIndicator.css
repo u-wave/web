@@ -1,13 +1,13 @@
 @import "vars.css";
 
 @component MediaLoadingIndicator {
-  box-sizing: border-box;
   height: 100%;
   width: 55px;
   float: left;
   display: flex;
   align-items: center;
   justify-content: center;
+
   @descendent spinner {
     width: 32px;
     height: 32px;

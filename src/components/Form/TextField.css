@@ -16,7 +16,6 @@
     line-height: $forms-textfield-size;
     display: block;
     float: left;
-    box-sizing: border-box;
     padding: 0 $forms-element-margin;
     font-size: 12pt;
     color: #fff;
@@ -28,7 +27,6 @@
   @descendent icon {
     width: $forms-textfield-size;
     height: $forms-textfield-size;
-    box-sizing: border-box;
     padding: 13px;
     display: block;
     float: left;

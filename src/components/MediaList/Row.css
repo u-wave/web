@@ -23,7 +23,6 @@
   }
 
   @descendent thumb {
-    box-sizing: border-box;
     height: 100%;
     width: 55px;
     margin: 0 15px;

@@ -10,7 +10,6 @@
   }
 
   @descendent action {
-    box-sizing: border-box;
     height: 100%;
     cursor: pointer;
     display: inline-block;

@@ -9,7 +9,6 @@
   animation: anim-loader-spin 1.1s infinite linear;
 
   border-radius: 50%;
-  box-sizing: border-box;
   width: 100%;
 
   @modifier tiny {

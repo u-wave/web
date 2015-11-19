@@ -2,7 +2,6 @@
 
 @component FooterBar {
   z-index: 20; /* on top of overlays */
-  box-sizing: border-box;
   border-top: 1px solid $chat-border-color;
   background: $background-color;
 
@@ -41,7 +40,6 @@
 }
 
 @component FooterAuthButton {
-  box-sizing: border-box;
   width: 125px;
   height: 100%;
   border: 0;

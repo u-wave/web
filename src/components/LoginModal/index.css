@@ -4,7 +4,6 @@ $login-modal-width: 300px;
 
 @component LoginModal {
   position: absolute;
-  box-sizing: border-box;
   top: 15%;
   left: 50%;
   width: $login-modal-width;
