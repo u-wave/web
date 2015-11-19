@@ -7,12 +7,13 @@ import collapse from 'bundle-collapser/plugin';
 import envify from 'envify/custom';
 import { transform as insert } from 'gulp-insert';
 import source from 'vinyl-source-stream';
+import sourcemaps from 'gulp-sourcemaps';
 import uglify from 'gulp-uglify';
 import when from 'gulp-if';
 
-export default function browserifyTask({ minify = false }) {
+export default function browserifyTask({ minify = false, 'source-maps': useSourceMaps = true }) {
   const b = browserify({
-    debug: !minify,
+    debug: useSourceMaps,
     entries: './src/app.js'
   });
 
@@ -46,11 +47,13 @@ export default function browserifyTask({ minify = false }) {
     .bundle()
     .pipe(source('out.js'))
     .pipe(buffer())
-    .pipe(insert(contents => `${getHelpers()}; \n ${contents}`))
-    .pipe(when(minify, uglify({
-      compress: { screw_ie8: true },
-      output: { screw_ie8: true },
-      mangle: { toplevel: true }
-    })))
+    .pipe(when(useSourceMaps, sourcemaps.init({ loadMaps: true })))
+      .pipe(insert(contents => `${getHelpers()}; \n ${contents}`))
+      .pipe(when(minify, uglify({
+        compress: { screw_ie8: true },
+        output: { screw_ie8: true },
+        mangle: { toplevel: true }
+      })))
+    .pipe(when(useSourceMaps, sourcemaps.write()))
     .pipe(dest('lib/'));
 }
