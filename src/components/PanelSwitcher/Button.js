@@ -1,27 +1,19 @@
 import cx from 'classnames';
 import React from 'react';
 
-export default class Button extends React.Component {
-  static propTypes = {
-    className: React.PropTypes.string,
-    text: React.PropTypes.string,
-    active: React.PropTypes.bool,
-    onClick: React.PropTypes.func
-  };
+const Button = ({ className, text, active, onClick }) => {
+  return (
+    <div
+      className={cx(
+        'PanelButton',
+        className,
+        active && 'PanelButton--active'
+      )}
+      onClick={onClick}
+    >
+      {text}
+    </div>
+  );
+};
 
-  render() {
-    const className = cx(
-      'PanelButton',
-      this.props.className,
-      this.props.active ? 'PanelButton--active' : ''
-    );
-    return (
-      <div
-        className={className}
-        onClick={this.props.onClick}
-      >
-        {this.props.text}
-      </div>
-    );
-  }
-}
+export default Button;

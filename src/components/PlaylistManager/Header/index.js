@@ -3,25 +3,19 @@ import React from 'react';
 import OverlayHeader from '../../Overlay/Header';
 import SearchBar from './SearchBar';
 
-export default class Header extends React.Component {
-  static propTypes = {
-    className: React.PropTypes.string,
-    searchSource: React.PropTypes.string,
-    onSearchSubmit: React.PropTypes.func
-  };
+const PlaylistManagerHeader = ({ className, searchSource, onSearchSubmit }) => {
+  return (
+    <OverlayHeader
+      className={cx('PlaylistHeader', className)}
+      title="Playlists"
+    >
+      <SearchBar
+        className="PlaylistHeader-search"
+        source={searchSource}
+        onSubmit={onSearchSubmit}
+      />
+    </OverlayHeader>
+  );
+};
 
-  render() {
-    return (
-      <OverlayHeader
-        className={cx('PlaylistHeader', this.props.className)}
-        title="Playlists"
-      >
-        <SearchBar
-          className="PlaylistHeader-search"
-          source={this.props.searchSource}
-          onSubmit={this.props.onSearchSubmit}
-        />
-      </OverlayHeader>
-    );
-  }
-}
+export default PlaylistManagerHeader;
