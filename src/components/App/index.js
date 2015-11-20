@@ -3,6 +3,7 @@ import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import ActiveOverlayStore from '../../stores/ActiveOverlayStore';
 import LoginStore from '../../stores/LoginStore';
+import SelectedPanelStore from '../../stores/SelectedPanelStore';
 import SettingsStore from '../../stores/SettingsStore';
 import ThemeManager from 'material-ui/lib/styles/theme-manager';
 import MuiTheme from '../../MuiTheme';
@@ -24,13 +25,14 @@ import listen from '../../utils/listen';
 function getState() {
   return {
     activeOverlay: ActiveOverlayStore.getActive(),
+    selectedPanel: SelectedPanelStore.getSelectedPanel(),
     settings: SettingsStore.getAll(),
     user: LoginStore.getUser()
   };
 }
 
 @DragDropContext(HTML5Backend)
-@listen(ActiveOverlayStore, SettingsStore, LoginStore)
+@listen(ActiveOverlayStore, LoginStore, SelectedPanelStore, SettingsStore)
 export default class App extends React.Component {
   static childContextTypes = {
     muiTheme: React.PropTypes.object
@@ -49,7 +51,7 @@ export default class App extends React.Component {
   }
 
   render() {
-    const { settings, user, activeOverlay } = this.state;
+    const { settings, user, activeOverlay, selectedPanel } = this.state;
     const isLoggedIn = !!user;
 
     return (
@@ -76,9 +78,9 @@ export default class App extends React.Component {
 
         <div className="AppColumn AppColumn--right">
           <div className="AppRow AppRow--top">
-            <PanelSwitcher />
+            <PanelSwitcher selected={selectedPanel} />
           </div>
-          <PanelGroup className="AppRow AppRow--middle">
+          <PanelGroup className="AppRow AppRow--middle" selected={selectedPanel}>
             <Panel name="chat">
               <Chat />
             </Panel>
