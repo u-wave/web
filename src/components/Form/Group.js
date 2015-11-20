@@ -1,16 +1,11 @@
 import React from 'react';
 
-export default class FormGroup extends React.Component {
-  static propTypes = {
-    children: React.PropTypes.element
-  };
+const FormGroup = ({ children, ...props }) => {
+  return (
+    <div className="FormGroup" {...props}>
+      {children}
+    </div>
+  );
+};
 
-  render() {
-    const { children, ...props } = this.props;
-    return (
-      <div className="FormGroup" {...props}>
-        {children}
-      </div>
-    );
-  }
-}
+export default FormGroup;

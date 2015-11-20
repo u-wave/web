@@ -4,7 +4,7 @@ import PasswordIcon from 'material-ui/lib/svg-icons/action/lock';
 import UserIcon from 'material-ui/lib/svg-icons/social/person';
 import { register } from '../../actions/LoginActionCreators';
 import Loader from '../Loader';
-import Form from '../Form';
+import { default as Form, FormGroup } from '../Form';
 import TextField from '../Form/TextField';
 import Button from '../Form/Button';
 
@@ -35,8 +35,8 @@ export default class RegisterForm extends React.Component {
 
     return (
       <Form className="RegisterForm" onSubmit={::this.onSubmit}>
-        {error && <Form.Group>{error.message}</Form.Group>}
-        <Form.Group>
+        {error && <FormGroup>{error.message}</FormGroup>}
+        <FormGroup>
           <TextField
             ref="username"
             className="RegisterForm-field"
@@ -44,16 +44,16 @@ export default class RegisterForm extends React.Component {
             icon={<UserIcon color="#9f9d9e" />}
             autofocus
           />
-        </Form.Group>
-        <Form.Group>
+        </FormGroup>
+        <FormGroup>
           <TextField
             ref="email"
             className="RegisterForm-field"
             placeholder="E-Mail"
             icon={<EmailIcon color="#9f9d9e" />}
           />
-        </Form.Group>
-        <Form.Group>
+        </FormGroup>
+        <FormGroup>
           <TextField
             ref="password"
             className="RegisterForm-field"
@@ -61,16 +61,16 @@ export default class RegisterForm extends React.Component {
             placeholder="Password"
             icon={<PasswordIcon color="#9f9d9e" />}
           />
-        </Form.Group>
+        </FormGroup>
 
-        <Form.Group>
+        <FormGroup>
           <Button
             className="RegisterForm-submit"
             disabled={busy}
           >
             {busy ? <div className="Button-loading"><Loader size="tiny" /></div> : 'REGISTER'}
           </Button>
-        </Form.Group>
+        </FormGroup>
       </Form>
     );
   }
