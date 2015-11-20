@@ -1,18 +1,12 @@
 import cx from 'classnames';
 import React from 'react';
 
-export default class EmptyPanel extends React.Component {
-  static propTypes = {
-    className: React.PropTypes.string
-  };
+const EmptyPanel = ({ className }) => {
+  return (
+    <div className={cx('PlaylistPanel', 'PlaylistPanel--empty', className)}>
+      You don't have a playlist yet!
+    </div>
+  );
+};
 
-  render() {
-    const { className } = this.props;
-
-    return (
-      <div className={cx('PlaylistPanel', 'PlaylistPanel--empty', className)}>
-        You don't have a playlist yet!
-      </div>
-    );
-  }
-}
+export default EmptyPanel;
