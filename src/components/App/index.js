@@ -1,6 +1,7 @@
 import React from 'react';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
+import ActiveOverlayStore from '../../stores/ActiveOverlayStore';
 import LoginStore from '../../stores/LoginStore';
 import SettingsStore from '../../stores/SettingsStore';
 import ThemeManager from 'material-ui/lib/styles/theme-manager';
@@ -22,13 +23,14 @@ import listen from '../../utils/listen';
 
 function getState() {
   return {
+    activeOverlay: ActiveOverlayStore.getActive(),
     settings: SettingsStore.getAll(),
     user: LoginStore.getUser()
   };
 }
 
 @DragDropContext(HTML5Backend)
-@listen(SettingsStore, LoginStore)
+@listen(ActiveOverlayStore, SettingsStore, LoginStore)
 export default class App extends React.Component {
   static childContextTypes = {
     muiTheme: React.PropTypes.object
@@ -47,7 +49,7 @@ export default class App extends React.Component {
   }
 
   render() {
-    const { settings, user } = this.state;
+    const { settings, user, activeOverlay } = this.state;
     const isLoggedIn = !!user;
 
     return (
@@ -66,7 +68,7 @@ export default class App extends React.Component {
               volume={settings.volume}
             />
           </div>
-          <Overlays transitionName="Overlay">
+          <Overlays transitionName="Overlay" active={activeOverlay}>
             <PlaylistManager key="playlistManager" />
           </Overlays>
           <FooterBar className="AppRow AppRow--bottom" />
