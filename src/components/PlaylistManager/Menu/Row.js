@@ -3,7 +3,7 @@ import React from 'react';
 import { DropTarget } from 'react-dnd';
 import ActiveIcon from 'material-ui/lib/svg-icons/navigation/check';
 import { MEDIA } from '../../../constants/DDItemTypes';
-import { selectPlaylist, addMedia } from '../../../actions/PlaylistActionCreators';
+import { addMedia } from '../../../actions/PlaylistActionCreators';
 import Loader from '../../Loader';
 
 const playlistTarget = {
@@ -23,12 +23,16 @@ export default class PlaylistRow extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
     playlist: React.PropTypes.object,
+    onClick: React.PropTypes.func,
     connectDropTarget: React.PropTypes.func.isRequired,
     isOver: React.PropTypes.bool.isRequired
   };
 
   render() {
-    const { className, playlist, connectDropTarget, isOver } = this.props;
+    const {
+      className, playlist, onClick,
+      connectDropTarget, isOver
+    } = this.props;
     const activeClass = playlist.active && 'is-active';
     const selectedClass = playlist.selected && 'is-selected';
     const droppableClass = isOver && 'is-droppable';
@@ -51,7 +55,7 @@ export default class PlaylistRow extends React.Component {
     return connectDropTarget(
       <div
         className={cx('PlaylistMenuRow', activeClass, selectedClass, droppableClass, className)}
-        onClick={selectPlaylist.bind(null, playlist._id)}
+        onClick={onClick}
       >
         {icon}
         {playlist.name}

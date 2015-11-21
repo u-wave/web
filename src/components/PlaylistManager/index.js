@@ -1,6 +1,7 @@
 import cx from 'classnames';
 import find from 'array-find';
 import React from 'react';
+import { selectPlaylist } from '../../actions/PlaylistActionCreators';
 import { search } from '../../actions/SearchActionCreators';
 import PlaylistStore from '../../stores/PlaylistStore';
 import SearchStore from '../../stores/SearchStore';
@@ -34,6 +35,10 @@ export default class PlaylistManager extends React.Component {
 
   onChange() {
     this.setState(getState());
+  }
+
+  onSelectPlaylist(playlist) {
+    selectPlaylist(playlist._id);
   }
 
   render() {
@@ -88,6 +93,7 @@ export default class PlaylistManager extends React.Component {
             selected={selected}
             searchQuery={searchQuery}
             searchResults={searchResults.length}
+            onSelectPlaylist={::this.onSelectPlaylist}
           />
 
           {panel}
