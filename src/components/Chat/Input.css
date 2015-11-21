@@ -17,6 +17,7 @@
     border: 1px solid $chat-border-color;
     background: #1b1b1b;
     color: #fff;
+    font-size: 10pt;
 
     @when focused {
       border-color: #9d2053;
