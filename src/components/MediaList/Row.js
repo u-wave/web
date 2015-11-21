@@ -79,10 +79,10 @@ export default class Row extends React.Component {
         {...attrs}
       >
         {thumbnail}
-        <div className="MediaListRow-artist">
+        <div className="MediaListRow-artist" title={media.artist}>
           {media.artist}
         </div>
-        <div className="MediaListRow-title">
+        <div className="MediaListRow-title" title={media.title}>
           {media.title}
         </div>
         <div className="MediaListRow-duration">
