@@ -32,6 +32,7 @@
     display: inline-block;
     margin: 6px 0;
     word-wrap: break-word;
+    overflow: hidden;
   }
 
   /** TODO fix hackiness */
