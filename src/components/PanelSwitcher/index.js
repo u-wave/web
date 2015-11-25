@@ -4,6 +4,7 @@ import { selectPanel } from '../../actions/PanelSelectActionCreators';
 
 /* TODO think of a reasonable name */
 const PanelSwitcher = ({ selected }) => {
+  const highlightOffset = { chat: 0, room: '33%', waitlist: '67%' }[selected];
   return (
     <div className="PanelSwitcher">
       <Button
@@ -20,6 +21,11 @@ const PanelSwitcher = ({ selected }) => {
         text="Waitlist"
         active={selected === 'waitlist'}
         onClick={() => selectPanel('waitlist')}
+      />
+
+      <div
+        className="PanelSwitcher-highlight"
+        style={{ left: highlightOffset }}
       />
     </div>
   );

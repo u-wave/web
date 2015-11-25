@@ -13,6 +13,5 @@
 
   @modifier active {
     background: #222;
-    border-bottom: 3px solid white;
   }
 }
