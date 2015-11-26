@@ -17,7 +17,11 @@ export default function browserifyTask({ minify = false, 'source-maps': useSourc
     entries: './src/app.js'
   });
 
-  b.transform(babelify, { stage: 0, externalHelpers: true });
+  b.transform(babelify, {
+    stage: 0,
+    externalHelpers: true,
+    optional: minify ? [ 'optimisation.react.constantElements' ] : []
+  });
   b.transform(envify({
     _: 'purge',
     NODE_ENV: minify ? 'production' : 'development'
