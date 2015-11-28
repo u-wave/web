@@ -1,41 +1,52 @@
-import assign from 'object-assign';
-import EventEmitter from 'eventemitter3';
 import values from 'object-values';
-import dispatcher from '../dispatcher';
+import Store from './Store';
 
-let users = {};
+const initialState = {};
 
-const UserStore = assign(new EventEmitter, {
+function indexBy(prop, arr) {
+  return arr.reduce((map, item) => {
+    map[item[prop]] = item;
+    return map;
+  }, {});
+}
+function without(prop, obj) {
+  return Object.keys(obj).reduce((newObj, key) => {
+    if (key !== prop) newObj[key] = obj[key];
+    return newObj;
+  }, {});
+}
+
+function reduce(state = initialState, action = {}) {
+  const { type, payload } = action;
+  switch (type) {
+  case 'setUsers':
+    return indexBy('_id', payload.users);
+  case 'join':
+    return {
+      ...state,
+      [payload.user._id]: payload.user
+    };
+  case 'leave':
+    return without(payload.userID, state);
+  default:
+    return state;
+  }
+}
+
+class UserStore extends Store {
+  reduce(state, action) {
+    return reduce(state, action);
+  }
+
   getUser(id) {
-    return users[id];
-  },
+    return this.state[id];
+  }
   getUsers() {
-    return values(users);
-  },
+    return values(this.state);
+  }
   getOnlineUsers() {
-    return values(users);
-  },
+    return values(this.state);
+  }
+}
 
-  dispatchToken: dispatcher.register(({ type, payload }) => {
-    switch (type) {
-    case 'setUsers':
-      users = payload.users.reduce((map, user) => {
-        return assign(map, { [user._id]: user });
-      }, {});
-      UserStore.emit('change');
-      break;
-    case 'join':
-      users[payload.user._id] = payload.user;
-      UserStore.emit('change');
-      break;
-    case 'leave':
-      delete users[payload.userID];
-      UserStore.emit('change');
-      break;
-    default:
-      // Not for us
-    }
-  })
-});
-
-export default UserStore;
+export default new UserStore;
