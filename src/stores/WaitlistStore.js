@@ -1,57 +1,62 @@
-import assign from 'object-assign';
-import EventEmitter from 'eventemitter3';
-import dispatcher from '../dispatcher';
+import Store from './Store';
 import UserStore from './UserStore';
 
-let waitlist = [];
-let locked = false;
+const initialState = {
+  waitlist: [],
+  locked: false
+};
 
-const WaitlistStore = assign(new EventEmitter, {
-  isLocked() {
-    return locked;
-  },
+function reduce(state = initialState, action = {}) {
+  const { type, payload } = action;
+  switch (type) {
+  case 'loadedWaitlist':
+    return {
+      waitlist: payload.waitlist,
+      locked: payload.locked,
+      ...state
+    };
+  case 'lockWaitlist':
+    return {
+      locked: payload.locked,
+      ...state
+    };
+  case 'clearWaitlist':
+    return {
+      waitlist: [],
+      ...state
+    };
+  case 'joinedWaitlist':
+  case 'leftWaitlist':
+  case 'waitlistAdd':
+  case 'waitlistRemove':
+  case 'waitlistMove':
+  case 'updatedWaitlist':
+    return {
+      waitlist: payload.waitlist,
+      ...state
+    };
+  default:
+    return state;
+  }
+}
+
+class WaitlistStore extends Store {
+  reduce(state, action) {
+    return reduce(state, action);
+  }
+
   getUsers() {
-    return waitlist.map(UserStore.getUser, UserStore).filter(Boolean);
-  },
+    return this.state.waitlist.map(UserStore.getUser, UserStore).filter(Boolean);
+  }
   getSize() {
-    return waitlist.length;
-  },
+    return this.state.waitlist.length;
+  }
+  isLocked() {
+    return this.state.locked;
+  }
   isInWaitlist(user) {
-    return user && waitlist.some(id => user._id === id);
-  },
+    return user && this.state.waitlist.some(id => user._id === id);
+  }
+}
 
-  dispatchToken: dispatcher.register(({ type, payload }) => {
-    switch (type) {
-    case 'loadedWaitlist':
-      waitlist = payload.waitlist;
-      locked = payload.locked;
-      WaitlistStore.emit('change');
-      break;
-    case 'lockWaitlist':
-      locked = payload.locked;
-      WaitlistStore.emit('change');
-      break;
-    case 'clearWaitlist':
-      waitlist = [];
-      WaitlistStore.emit('change');
-      break;
-    case 'joinedWaitlist':
-    case 'leftWaitlist':
-    case 'updatedWaitlist':
-      waitlist = payload.waitlist;
-      WaitlistStore.emit('change');
-      break;
-    case 'waitlistAdd':
-    case 'waitlistMove':
-    case 'waitlistRemove':
-      // TODO Add chat log messages
-      waitlist = payload.waitlist;
-      WaitlistStore.emit('change');
-      break;
-    default:
-      // I don't care!
-    }
-  })
-});
-
-export default WaitlistStore;
+export default new WaitlistStore;
