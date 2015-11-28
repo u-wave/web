@@ -1,36 +1,29 @@
-import assign from 'object-assign';
-import EventEmitter from 'eventemitter3';
-import dispatcher from '../dispatcher';
+import Store from './Store';
 
-let active = null;
+const initialState = null;
 
-const ActiveOverlayStore = assign(new EventEmitter, {
+function reduce(state = initialState, action = {}) {
+  const { type, payload } = action;
+  switch (type) {
+  case 'openOverlay':
+    return payload.overlay;
+  case 'toggleOverlay':
+    return state === payload.overlay ? null : payload.overlay;
+  case 'closeOverlay':
+    return null;
+  default:
+    return state;
+  }
+}
+
+class ActiveOverlayStore extends Store {
+  reduce(state, action) {
+    return reduce(state, action);
+  }
+
   getActive() {
-    return active;
-  },
+    return this.state;
+  }
+}
 
-  dispatchToken: dispatcher.register(({ type, payload }) => {
-    switch (type) {
-    case 'openOverlay':
-      active = payload.overlay;
-      ActiveOverlayStore.emit('change');
-      break;
-    case 'toggleOverlay':
-      if (payload.overlay === active) {
-        active = null;
-      } else {
-        active = payload.overlay;
-      }
-      ActiveOverlayStore.emit('change');
-      break;
-    case 'closeOverlay':
-      active = null;
-      ActiveOverlayStore.emit('change');
-      break;
-    default:
-      // Not for us
-    }
-  })
-});
-
-export default ActiveOverlayStore;
+export default new ActiveOverlayStore;
