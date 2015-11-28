@@ -1,59 +1,57 @@
-import assign from 'object-assign';
-import EventEmitter from 'eventemitter3';
-import dispatcher from '../dispatcher';
+import Store from './Store';
 import UserStore from './UserStore';
 
-const clone = x => assign({}, x);
+const initialState = {
+  historyID: null,
+  media: null,
+  dj: null,
+  startTime: null
+};
 
-function tick(store) {
-  store.emit('change');
+function reduce(state = initialState, action = {}) {
+  const { type, payload } = action;
+  switch (type) {
+  case 'advance':
+    return {
+      historyID: payload.historyID,
+      media: payload.media,
+      dj: UserStore.getUser(payload.userID),
+      startTime: payload.timestamp
+    };
+  default:
+    return state;
+  }
 }
 
-let historyID = null;
-let media = null;
-let dj = null;
-let startTime = null;
+class CurrentMediaStore extends Store {
+  constructor() {
+    super();
+    setInterval(() => this.tick(), 1000);
+  }
 
-const CurrentMediaStore = assign(new EventEmitter, {
-  init() {
-    setInterval(() => {
-      tick(CurrentMediaStore);
-    }, 1000);
-  },
+  reduce(state, action) {
+    return reduce(state, action);
+  }
 
   getHistoryID() {
-    return historyID;
-  },
-
+    return this.state.historyID;
+  }
   getMedia() {
-    return media ? clone(media) : null;
-  },
-
+    return this.state.media || null;
+  }
   getDJ() {
-    return UserStore.getUser(dj);
-  },
-
+    return this.state.dj;
+  }
   getStartTime() {
-    return startTime;
-  },
-
+    return this.state.startTime;
+  }
   getTimeElapsed() {
-    return Math.floor((Date.now() - startTime) / 1000);
-  },
+    return Math.floor((Date.now() - this.state.startTime) / 1000);
+  }
 
-  dispatchToken: dispatcher.register(({ type, payload }) => {
-    switch (type) {
-    case 'advance':
-      historyID = payload.historyID;
-      media = payload.media;
-      dj = payload.userID;
-      startTime = payload.timestamp;
-      CurrentMediaStore.emit('change');
-      break;
-    default:
-      // I don't care!
-    }
-  })
-});
+  tick() {
+    this.emit('change');
+  }
+}
 
-export default CurrentMediaStore;
+export default new CurrentMediaStore;
