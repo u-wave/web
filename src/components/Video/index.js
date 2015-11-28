@@ -8,6 +8,7 @@ import YouTubePlayer from './YouTubePlayer';
 
 function getState() {
   return {
+    historyID: CurrentMediaStore.getHistoryID(),
     media: CurrentMediaStore.getMedia(),
     startTime: CurrentMediaStore.getStartTime()
   };
@@ -25,7 +26,7 @@ export default class Video extends React.Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     return !isEqual(nextProps, this.props) ||
-      !isEqual(nextState.media, this.state.media);
+      nextState.historyID !== this.state.historyID;
   }
 
   onChange() {
