@@ -11,7 +11,8 @@ import PlaylistStore from '../../stores/PlaylistStore';
 export default class Actions extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
-    media: React.PropTypes.object
+    media: React.PropTypes.object,
+    selection: React.PropTypes.array
   };
 
   state = { adding: false };
@@ -31,7 +32,7 @@ export default class Actions extends React.Component {
   onFirst() {
     // TODO use current selection instead
     // (and also do this in a much more high level component)
-    moveMedia(PlaylistStore.getSelectedPlaylist()._id, [ this.props.media ], -1);
+    moveMedia(PlaylistStore.getSelectedPlaylist()._id, this.props.selection, -1);
   }
 
   onDelete() {

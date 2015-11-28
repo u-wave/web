@@ -50,7 +50,7 @@ export default class Row extends React.Component {
 
   render() {
     const {
-      className, media, selected,
+      className, media, selection, selected,
       connectDragSource, isDragging,
       ...attrs
     } = this.props;
@@ -92,6 +92,7 @@ export default class Row extends React.Component {
           <Actions
             ref="actions"
             className={cx('MediaListRow-actions', selectedClass)}
+            selection={selection}
             media={media}
           />
         )}
