@@ -1,53 +1,62 @@
-import assign from 'object-assign';
-import EventEmitter from 'eventemitter3';
-import dispatcher from '../dispatcher';
+import Store from './Store';
 
 const SETTINGS_KEY = 'uwaveSettings';
 
-const settings = {
+const initialState = {
   muted: false,
   videoSize: 'large',
   volume: 0
 };
 
-// cookie blocking safe localStorage settings persistence
-function load() {
-  try {
-    assign(settings, JSON.parse(localStorage.getItem(SETTINGS_KEY)));
-  } catch (e) {
-    // Ok!
-  }
-}
-function save() {
-  try {
-    localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
-  } catch (e) {
-    // Ok!
+function reduce(state = initialState, action = {}) {
+  const { type, payload } = action;
+  switch (type) {
+  case 'loadSettings':
+  case 'setSettings':
+    return { ...state, ...payload };
+  default:
+    return state;
   }
 }
 
-const SettingsStore = assign(new EventEmitter, {
+class SettingsStore extends Store {
+  constructor() {
+    super();
+    this.on('change', ::this.save);
+    this.load();
+  }
+
+  reduce(state, action) {
+    return reduce(state, action);
+  }
+
   getAll() {
-    return assign({}, settings);
-  },
+    return this.state;
+  }
   getSetting(name) {
-    return settings[name];
-  },
+    return this.state[name];
+  }
 
-  dispatchToken: dispatcher.register(({ type, payload }) => {
-    switch (type) {
-    case 'loadSettings':
-    case 'setSettings':
-      assign(settings, payload);
-      SettingsStore.emit('change');
-      break;
-    default:
-      // Not for us
+  // localStorage settings persistence. try-catches are to deal with cookie
+  // blocking.
+  load() {
+    try {
+      this.state = this.reduce(this.state, {
+        type: 'loadSettings',
+        payload: JSON.parse(localStorage.getItem(SETTINGS_KEY))
+      });
+    } catch (e) {
+      // Ok!
     }
-  })
-});
+  }
 
-SettingsStore.on('change', save);
-load();
+  save() {
+    try {
+      localStorage.setItem(SETTINGS_KEY, JSON.stringify(this.state));
+    } catch (e) {
+      // Ok!
+    }
+  }
+}
 
-export default SettingsStore;
+export default new SettingsStore;
