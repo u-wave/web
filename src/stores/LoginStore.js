@@ -1,60 +1,61 @@
-import assign from 'object-assign';
-import EventEmitter from 'eventemitter3';
-import dispatcher from '../dispatcher';
+import Store from './Store';
 
-let jwt;
-let user;
-let error;
+const initialState = {
+  jwt: null,
+  user: null,
+  error: null
+};
 
-const LoginStore = assign(new EventEmitter, {
+function reduce(state = initialState, action = {}) {
+  const { type, payload, error: isError } = action;
+  switch (type) {
+  case 'setSession':
+    return {
+      ...state,
+      jwt: payload.jwt,
+      user: null,
+      error: null
+    };
+  case 'loginComplete':
+    return isError ? {
+      ...state,
+      jwt: null,
+      user: null,
+      error: payload
+    } : {
+      ...state,
+      jwt: payload.jwt,
+      user: payload.user,
+      error: null
+    };
+  case 'registerComplete':
+    return {
+      ...state,
+      jwt: null,
+      user: null,
+      error: payload
+    };
+  case 'logoutComplete':
+    return initialState;
+  default:
+    return state;
+  }
+}
+
+class LoginStore extends Store {
+  reduce(state, action) {
+    return reduce(state, action);
+  }
+
   getToken() {
-    return jwt;
-  },
+    return this.state.jwt;
+  }
   getUser() {
-    return user;
-  },
+    return this.state.user;
+  }
   getError() {
-    return error;
-  },
+    return this.state.error;
+  }
+}
 
-  dispatchToken: dispatcher.register(({ type, payload, error: isError }) => {
-    switch (type) {
-    case 'setSession':
-      jwt = payload.jwt;
-      user = null;
-      error = null;
-      LoginStore.emit('change');
-      break;
-    case 'loginComplete':
-      if (isError) {
-        jwt = null;
-        user = null;
-        error = payload;
-      } else {
-        jwt = payload.jwt;
-        user = payload.user;
-        error = null;
-      }
-      LoginStore.emit('change');
-      break;
-    case 'registerComplete':
-      if (isError) {
-        jwt = null;
-        user = null;
-        error = payload;
-        LoginStore.emit('change');
-      }
-      break;
-    case 'logoutComplete':
-      jwt = null;
-      user = null;
-      error = null;
-      LoginStore.emit('change');
-      break;
-    default:
-      // Not for us
-    }
-  })
-});
-
-export default LoginStore;
+export default new LoginStore;
