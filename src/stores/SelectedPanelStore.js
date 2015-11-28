@@ -1,25 +1,25 @@
-import assign from 'object-assign';
-import EventEmitter from 'eventemitter3';
-import dispatcher from '../dispatcher';
+import Store from './Store';
 
-let selected = 0;
-const defaultPanel = 'chat';
+const initialState = 'chat';
 
-const SelectedPanelStore = assign(new EventEmitter, {
+function reduce(state = initialState, action = {}) {
+  const { type, payload } = action;
+  switch (type) {
+  case 'selectPanel':
+    return payload.panel;
+  default:
+    return state;
+  }
+}
+
+class SelectedPanelStore extends Store {
+  reduce(state, action) {
+    return reduce(state, action);
+  }
+
   getSelectedPanel() {
-    return selected || defaultPanel;
-  },
+    return this.state;
+  }
+}
 
-  dispatchToken: dispatcher.register(({ type, payload }) => {
-    switch (type) {
-    case 'selectPanel':
-      selected = payload.panel;
-      SelectedPanelStore.emit('change');
-      break;
-    default:
-      // Not for us
-    }
-  })
-});
-
-export default SelectedPanelStore;
+export default new SelectedPanelStore;
