@@ -12,8 +12,7 @@ function exec(taskName) {
 
 gulp.task('css:clean', exec('clean-css'));
 gulp.task('css:compile', exec('compile-css'));
-gulp.task('css:concat', exec('concat-css'));
-gulp.task('css', sequence('css:clean', 'css:compile', 'css:concat'));
+gulp.task('css', sequence('css:clean', 'css:compile'));
 
 gulp.task('js:lint', exec('lint-js'));
 gulp.task('js:clean', exec('clean-js'));
