@@ -1,57 +1,59 @@
-import assign from 'object-assign';
-import EventEmitter from 'eventemitter3';
-import dispatcher from '../dispatcher';
+import { IDLE, LOADING, LOADED } from '../constants/LoadingStates';
+import Store from './Store';
 
-const IDLE = 0;
-const LOADING = 1;
-const LOADED = 2;
+const initialState = {
+  sourceType: 'youtube',
+  query: null,
+  results: {},
+  loadingState: IDLE
+};
 
-let sourceType = 'youtube';
-let query = null;
-let results = {};
+function reduce(state = initialState, action = {}) {
+  const { type, payload } = action;
+  switch (type) {
+  case 'searchStart':
+    return {
+      ...state,
+      query: payload.query,
+      results: {},
+      loadingState: LOADING
+    };
+  case 'searchComplete':
+    return {
+      ...state,
+      results: payload.results,
+      loadingState: LOADED
+    };
+  case 'setSearchSource':
+    return {
+      ...state,
+      sourceType: payload.source
+    };
+  default:
+    return state;
+  }
+}
 
-let loadingState = IDLE;
-
-const SearchStore = assign(new EventEmitter, {
-  IDLE, LOADING, LOADED,
+class SearchStore extends Store {
+  reduce(state, action) {
+    return reduce(state, action);
+  }
 
   getSourceType() {
-    return sourceType;
-  },
+    return this.state.sourceType;
+  }
   getQuery() {
-    return query;
-  },
+    return this.state.query;
+  }
   getLoadingState() {
-    return loadingState;
-  },
+    return this.state.loadingState;
+  }
   getResults() {
-    return results[sourceType] || [];
-  },
+    return this.state.results[this.state.sourceType] || [];
+  }
   getAllResults() {
-    return results;
-  },
+    return this.state.results;
+  }
+}
 
-  dispatchToken: dispatcher.register(({ type, payload }) => {
-    switch (type) {
-    case 'searchStart':
-      query = payload.query;
-      results = {};
-      loadingState = LOADING;
-      SearchStore.emit('change');
-      break;
-    case 'searchComplete':
-      results = payload.results;
-      loadingState = LOADED;
-      SearchStore.emit('change');
-      break;
-    case 'setSearchSource':
-      sourceType = payload.source;
-      SearchStore.emit('change');
-      break;
-    default:
-      // Not for us
-    }
-  })
-});
-
-export default SearchStore;
+export default new SearchStore;

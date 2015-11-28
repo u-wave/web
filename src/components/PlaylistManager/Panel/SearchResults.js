@@ -1,6 +1,6 @@
 import cx from 'classnames';
 import React from 'react';
-import { LOADED } from '../../../stores/SearchStore';
+import { LOADED } from '../../../constants/LoadingStates';
 import Loader from '../../Loader';
 import MediaList from '../../MediaList';
 
