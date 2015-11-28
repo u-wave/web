@@ -6,6 +6,7 @@ import colorFunction from 'postcss-color-function';
 import cssnano from 'cssnano';
 import imports from 'postcss-import';
 import nested from 'postcss-nested';
+import reduceCalc from 'postcss-calc';
 import variables from 'postcss-simple-vars';
 
 export default function compileCssTask({ minify = false }) {
@@ -15,6 +16,7 @@ export default function compileCssTask({ minify = false }) {
     bem(),
     nested(),
     colorFunction(),
+    reduceCalc(),
     autoprefix({
       remove: false,
       browsers: [ 'last 2 versions' ]
