@@ -1,15 +1,10 @@
+import except from 'except';
 import indexBy from 'index-by';
 import values from 'object-values';
 import Store from './Store';
 
 const initialState = {};
 
-function without(prop, obj) {
-  return Object.keys(obj).reduce((newObj, key) => {
-    if (key !== prop) newObj[key] = obj[key];
-    return newObj;
-  }, {});
-}
 
 function reduce(state = initialState, action = {}) {
   const { type, payload } = action;
@@ -22,7 +17,7 @@ function reduce(state = initialState, action = {}) {
       [payload.user._id]: payload.user
     };
   case 'leave':
-    return without(payload.userID, state);
+    return except(state, payload.userID);
   default:
     return state;
   }
