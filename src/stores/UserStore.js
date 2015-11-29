@@ -1,14 +1,9 @@
+import indexBy from 'index-by';
 import values from 'object-values';
 import Store from './Store';
 
 const initialState = {};
 
-function indexBy(prop, arr) {
-  return arr.reduce((map, item) => {
-    map[item[prop]] = item;
-    return map;
-  }, {});
-}
 function without(prop, obj) {
   return Object.keys(obj).reduce((newObj, key) => {
     if (key !== prop) newObj[key] = obj[key];
@@ -20,7 +15,7 @@ function reduce(state = initialState, action = {}) {
   const { type, payload } = action;
   switch (type) {
   case 'setUsers':
-    return indexBy('_id', payload.users);
+    return indexBy(payload.users, '_id');
   case 'join':
     return {
       ...state,
