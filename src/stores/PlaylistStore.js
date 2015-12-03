@@ -1,234 +1,257 @@
 import assign from 'object-assign';
-import EventEmitter from 'eventemitter3';
+import except from 'except';
 import findIndex from 'array-findindex';
+import indexBy from 'index-by';
+import mapObj from 'object.map';
 import values from 'object-values';
-import dispatcher from '../dispatcher';
+import Store from './Store';
 
-const playlists = {};
-const playlistWips = {};
-let activePlaylistID = null;
-let activeMedia = [];
-let selectedPlaylistID = null;
-let selectedMedia = [];
+const initialState = {
+  playlists: {},
+  activePlaylistID: null,
+  activeMedia: [],
+  selectedPlaylistID: null,
+  selectedMedia: []
+};
 
-const activePlaylist = () => playlists[activePlaylistID] || playlistWips[activePlaylistID];
-const selectedPlaylist = () => playlists[selectedPlaylistID] || playlistWips[selectedPlaylistID];
-
-function selectPlaylist(playlistID) {
-  if (selectedPlaylist()) {
-    selectedPlaylist().selected = false;
-    selectedMedia = [];
+function setLoading(playlists, id, loading = true) {
+  const playlist = playlists[id];
+  if (playlist && playlist.loading !== loading) {
+    return {
+      ...playlists,
+      [id]: { ...playlist, loading }
+    };
   }
-  if (playlistID) {
-    selectedPlaylistID = playlistID;
-    selectedPlaylist().selected = true;
-    if (activePlaylistID && selectedPlaylistID === activePlaylistID) {
-      selectedMedia = activeMedia;
-    } else {
-      selectedMedia = selectedPlaylist().media || [];
-    }
-  }
+  return playlists;
 }
 
-function activatePlaylist(playlistID) {
-  if (activePlaylist()) {
-    activePlaylist().active = false;
-    activeMedia = [];
-  }
-  if (playlistID) {
-    activePlaylistID = playlistID;
-    activePlaylist().active = true;
-    if (selectedPlaylistID && activePlaylistID === selectedPlaylistID) {
-      activeMedia = selectedMedia;
-    } else {
-      activeMedia = activePlaylist().media || [];
-    }
-  }
-}
-
-function replaceArray(target, replacement) {
-  target.splice(0, target.length, ...replacement);
+function deselectAll(playlists) {
+  return mapObj(playlists, playlist => {
+    return playlist.selected
+      ? { ...playlist, selected: false }
+      : playlist;
+  });
 }
 
 function processMove(list, movedMedia, afterID) {
-  const movedMap = movedMedia.reduce((map, media) => {
-    map[media._id] = true;
-    return map;
-  }, {});
+  const movedMap = indexBy(movedMedia, '_id');
   const updated = list.filter(media => !movedMap[media._id]);
   const insertIdx = afterID === -1
     ? 0
     : findIndex(updated, media => media._id === afterID) + 1;
   updated.splice(insertIdx, 0, ...movedMedia);
-  replaceArray(list, updated);
+  return updated;
 }
 
-// TODO use a stack or counter here to ensure that multiple concurrent
-// operations all get completed before setting the playlist to "not loading"
-function setLoading(playlistId, loading = true) {
-  if (playlists[playlistId] && playlists[playlistId].loading !== loading) {
-    playlists[playlistId].loading = loading;
-    // something changed!
-    return true;
+function reduce(state = initialState, action = {}) {
+  const { type, payload, error } = action;
+  switch (type) {
+  case 'loadedPlaylists':
+    return error
+      ? state
+      : {
+        ...state,
+        playlists: indexBy(payload.playlists, '_id')
+      };
+  case 'activatePlaylist':
+    return {
+      ...state,
+      // TODO use a different property here so we can show a loading icon on
+      // the "Active" button only, instead of on top of the entire playlist
+      playlists: setLoading(state.playlists, payload.playlistID)
+    };
+  case 'activatedPlaylist':
+    return {
+      ...state,
+      // set `active` property on all playlists
+      playlists: mapObj(state.playlists, playlist => ({
+        ...playlist,
+        loading: playlist._id === payload.playlistID ? false : playlist.loading,
+        active: playlist._id === payload.playlistID
+      })),
+      activePlaylistID: payload.playlistID,
+      // reuse the selected media collection if we are setting the selected
+      // playlist to active (i.e. most of the time)
+      activeMedia: payload.playlistID === state.selectedPlaylistID
+        ? state.selectedMedia
+        : []
+    };
+  case 'selectPlaylist':
+    return {
+      ...state,
+      // set `selected` property on playlists
+      playlists: mapObj(state.playlists, playlist => ({
+        ...playlist,
+        selected: playlist._id === payload.playlistID
+      })),
+      selectedPlaylistID: payload.playlistID,
+      // reuse the active media collection if we are selecting the active
+      // playlist
+      selectedMedia: payload.playlistID === state.activePlaylistID
+        ? state.activeMedia
+        : []
+    };
+  case 'searchStart':
+    return {
+      ...state,
+      // deselect playlists
+      playlists: deselectAll(state.playlists),
+      selectedPlaylistID: null,
+      selectedMedia: []
+    };
+
+  case 'loadingPlaylist':
+    return {
+      ...state,
+      playlists: setLoading(state.playlists, payload.playlistID)
+    };
+  case 'loadedPlaylist':
+    return {
+      ...state,
+      playlists: setLoading(state.playlists, payload.playlistID, false),
+      selectedMedia: state.selectedPlaylistID === payload.playlistID
+        ? payload.media
+        : state.selectedMedia,
+      activeMedia: state.activePlaylistID === payload.playlistID
+        ? payload.media
+        : state.activeMedia
+    };
+
+  // here be dragons
+  // TODO find a simpler way to store this stuff, that doesn't involve keeping
+  // millions of properties (six properties to be precise) in sync
+  case 'creatingPlaylist':
+    const newPlaylist = {
+      _id: meta.tempId,
+      name: payload.name,
+      description: payload.description,
+      shared: payload.shared,
+      selected: true,
+      creating: true
+    };
+    return {
+      ...state,
+      playlists: assign(
+        deselectAll(state.playlists),
+        { [meta.tempId]: newPlaylist }
+      ),
+      selectedPlaylistID: meta.tempId,
+      selectedMedia: []
+    };
+  case 'createdPlaylist':
+    return {
+      ...state,
+      playlists: assign(
+        deselectAll(except(state.playlists, meta.tempId)),
+        { [payload.playlist._id]: {
+          ...payload.playlist,
+          selected: true
+        } }
+      ),
+      selectedPlaylistID: payload.playlist._id,
+      selectedMedia: []
+    };
+
+  case 'addMediaToPlaylist':
+    return {
+      ...state,
+      playlists: setLoading(state.playlists, payload.playlistID)
+    };
+  case 'addedMediaToPlaylist':
+    if (error) {
+      return state;
+    }
+    const updatedPlaylist = state.playlists[payload.playlistID];
+    if (updatedPlaylist) {
+      return {
+        ...state,
+        playlists: {
+          ...state.playlists,
+          [updatedPlaylist._id]: {
+            ...updatedPlaylist,
+            loading: false,
+            size: payload.newSize
+          }
+        },
+        // append new media to relevant media collection if necessary
+        selectedMedia: state.selectedPlaylistID === updatedPlaylist._id
+          ? [ ...state.selectedMedia, ...payload.appendedMedia ]
+          : state.selectedMedia,
+        activeMedia: state.activePlaylistID === updatedPlaylist._id
+          ? [ ...state.activeMedia, ...payload.appendedMedia ]
+          : state.activeMedia
+      };
+    }
+    return state;
+
+  case 'moveMediaInPlaylist':
+    const isMovingMedia = indexBy(payload.medias, '_id');
+    if (payload.playlistID === state.selectedPlaylistID) {
+      return {
+        ...state,
+        selectedMedia: state.selectedMedia.map(media => ({
+          ...media,
+          loading: isMovingMedia[media._id] || media.loading
+        }))
+      };
+    } else if (payload.playlistID === state.activePlaylistID) {
+      return {
+        ...state,
+        activeMedia: state.activeMedia.map(media => ({
+          ...media,
+          loading: isMovingMedia[media._id] || media.loading
+        }))
+      };
+    }
+    return state;
+  case 'movedMediaInPlaylist':
+    if (error) {
+      return state;
+    }
+    if (state.selectedPlaylistID === payload.playlistID) {
+      return {
+        ...state,
+        selectedMedia: processMove(state.selectedMedia, payload.medias, payload.afterID)
+      };
+    } else if (state.activePlaylistID === payload.playlistID) {
+      return {
+        ...state,
+        activeMedia: processMove(state.activeMedia, payload.medias, payload.afterID)
+      };
+    }
+    return state;
+  default:
+    return state;
   }
 }
 
-function setLoadingMedia(media, loading = true) {
-  media.forEach(item => {
-    item.loading = loading;
-  });
+class PlaylistStore extends Store {
+  reduce(state, action) {
+    return reduce(state, action);
+  }
+
+  getActivePlaylist() {
+    return this.state.playlists[
+      this.state.activePlaylistID
+    ];
+  }
+  getActiveMedia() {
+    return this.state.activeMedia;
+  }
+  getNextMedia() {
+    return this.state.activeMedia && this.state.activeMedia[0] || null;
+  }
+  getSelectedPlaylist() {
+    return this.state.playlists[
+      this.state.selectedPlaylistID
+    ];
+  }
+  getSelectedMedia() {
+    return this.state.selectedMedia;
+  }
+  getPlaylists() {
+    return values(this.state.playlists);
+  }
 }
 
-const PlaylistStore = assign(new EventEmitter, {
-  getActivePlaylist() {
-    return activePlaylist();
-  },
-  getActiveMedia() {
-    return activeMedia;
-  },
-  getNextMedia() {
-    return activeMedia && activeMedia[0] || null;
-  },
-  getSelectedPlaylist() {
-    return selectedPlaylist() || activePlaylist();
-  },
-  getSelectedMedia() {
-    return selectedMedia;
-  },
-  getPlaylists() {
-    return values(playlists)
-      .concat(values(playlistWips));
-  },
-
-  dispatchToken: dispatcher.register(({ type, payload, meta, error }) => {
-    switch (type) {
-    case 'loadedPlaylists':
-      if (error) break;
-      payload.playlists.forEach(playlist => {
-        playlists[playlist._id] = playlist;
-      });
-      if (!activePlaylistID && payload.playlists.length > 0) {
-        activatePlaylist(payload.playlists[0]._id);
-      }
-      if (!selectedPlaylistID && payload.playlists.length > 0) {
-        selectPlaylist(payload.playlists[0]._id);
-      }
-      PlaylistStore.emit('change');
-      break;
-    case 'activatePlaylist':
-      // TODO use a different property here so we can show a loading icon on
-      // the "Active" button only, instead of on top of the entire playlist
-      setLoading(payload.playlistID);
-      PlaylistStore.emit('change');
-      break;
-    case 'activatedPlaylist':
-      setLoading(payload.playlistID, false);
-      activatePlaylist(payload.playlistID);
-      PlaylistStore.emit('change');
-      break;
-    case 'selectPlaylist':
-      selectPlaylist(payload.playlistID);
-      PlaylistStore.emit('change');
-      break;
-    case 'searchStart':
-      // Switch to displaying search results
-      selectPlaylist(null);
-      PlaylistStore.emit('change');
-      break;
-
-    case 'loadingPlaylist':
-      if (setLoading(payload.playlistID)) {
-        PlaylistStore.emit('change');
-      }
-      break;
-    case 'loadedPlaylist':
-      if (playlists[payload.playlistID]) {
-        playlists[payload.playlistID].loading = false;
-      }
-      if (selectedPlaylistID === payload.playlistID) {
-        selectedMedia = payload.media;
-      }
-      if (activePlaylistID === payload.playlistID) {
-        activeMedia = payload.media;
-      }
-      PlaylistStore.emit('change');
-      break;
-
-    case 'creatingPlaylist':
-      playlistWips[meta.tempId] = {
-        _id: meta.tempId,
-        name: payload.name,
-        description: payload.description,
-        shared: payload.shared,
-        creating: true
-      };
-      selectPlaylist(meta.tempId);
-      PlaylistStore.emit('change');
-      break;
-    case 'createdPlaylist':
-      delete playlistWips[meta.tempId];
-      if (error) {
-        debug('could not create playlist', payload.message);
-      } else {
-        playlists[payload.playlist._id] = payload.playlist;
-        selectPlaylist(payload.playlist._id);
-      }
-      PlaylistStore.emit('change');
-      break;
-
-    case 'addMediaToPlaylist':
-      if (setLoading(payload.playlistID)) {
-        PlaylistStore.emit('change');
-      }
-      break;
-    case 'addedMediaToPlaylist':
-      if (error) break;
-      const updatedPlaylist = playlists[payload.playlistID];
-      if (updatedPlaylist) {
-        updatedPlaylist.loading = false;
-        updatedPlaylist.size = payload.newSize;
-        if (selectedPlaylistID === updatedPlaylist._id) {
-          selectedMedia.push(...payload.appendedMedia);
-        } else if (activePlaylistID === updatedPlaylist._id) {
-          activeMedia.push(...payload.appendedMedia);
-        }
-      }
-      PlaylistStore.emit('change');
-      break;
-
-    case 'moveMediaInPlaylist':
-      setLoadingMedia(payload.medias);
-      PlaylistStore.emit('change');
-      break;
-    case 'movedMediaInPlaylist':
-      if (error) break;
-      if (selectedPlaylistID === payload.playlistID) {
-        processMove(selectedMedia, payload.medias, payload.afterID);
-      } else if (activePlaylistID === payload.playlistID) {
-        processMove(activeMedia, payload.medias, payload.afterID);
-      }
-      setLoadingMedia(payload.medias, false);
-      PlaylistStore.emit('change');
-      break;
-
-    case 'removeMediaFromPlaylist':
-      setLoadingMedia(payload.medias);
-      PlaylistStore.emit('change');
-      break;
-    case 'removedMediaFromPlaylist':
-      if (selectedPlaylistID === payload.playlistID) {
-        selectedMedia = selectedMedia.filter(media => media._id !== payload.mediaID);
-      } else if (activePlaylistID === payload.playlistID) {
-        activeMedia = activeMedia.filter(media => media._id !== payload.mediaID);
-      }
-      // .loading items have been removed, so there's no need to unset .loading
-      PlaylistStore.emit('change');
-      break;
-
-    default:
-      // Not for us
-    }
-  })
-});
-
-export default PlaylistStore;
+export default new PlaylistStore;
