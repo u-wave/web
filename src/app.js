@@ -2,7 +2,7 @@ import 'es6-promise';
 import 'whatwg-fetch';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { applyMiddleware, createStore } from 'redux';
+import { applyMiddleware, combineReducers, createStore } from 'redux';
 import { Provider } from 'react-redux';
 import logger from 'redux-logger';
 
@@ -11,10 +11,12 @@ import * as Socket from './utils/Socket';
 import { init as restoreSession } from './utils/Session';
 import { initState } from './actions/LoginActionCreators';
 
-import reducer from './reducers';
+import * as reducers from './reducers';
 
 const createStoreWithMiddleware = applyMiddleware(logger())(createStore);
-const store = createStoreWithMiddleware(reducer);
+const store = createStoreWithMiddleware(
+  combineReducers(reducers)
+);
 
 // Material-UI dependency
 require('react-tap-event-plugin')();
