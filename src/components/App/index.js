@@ -1,7 +1,6 @@
 import React from 'react';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-import ActiveOverlayStore from '../../stores/ActiveOverlayStore';
 import LoginStore from '../../stores/LoginStore';
 import SelectedPanelStore from '../../stores/SelectedPanelStore';
 import SettingsStore from '../../stores/SettingsStore';
@@ -24,7 +23,6 @@ import listen from '../../utils/listen';
 
 function getState() {
   return {
-    activeOverlay: ActiveOverlayStore.getActive(),
     selectedPanel: SelectedPanelStore.getSelectedPanel(),
     settings: SettingsStore.getAll(),
     user: LoginStore.getUser()
@@ -32,8 +30,12 @@ function getState() {
 }
 
 @DragDropContext(HTML5Backend)
-@listen(ActiveOverlayStore, LoginStore, SelectedPanelStore, SettingsStore)
+@listen(LoginStore, SelectedPanelStore, SettingsStore)
 export default class App extends React.Component {
+  static propTypes = {
+    activeOverlay: React.PropTypes.string
+  };
+
   static childContextTypes = {
     muiTheme: React.PropTypes.object
   };
@@ -51,7 +53,8 @@ export default class App extends React.Component {
   }
 
   render() {
-    const { settings, user, activeOverlay, selectedPanel } = this.state;
+    const { activeOverlay } = this.props;
+    const { settings, user, selectedPanel } = this.state;
     const isLoggedIn = !!user;
 
     return (

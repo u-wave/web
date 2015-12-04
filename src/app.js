@@ -2,15 +2,29 @@ import 'es6-promise';
 import 'whatwg-fetch';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/App';
+import { applyMiddleware, createStore } from 'redux';
+import { Provider } from 'react-redux';
+import logger from 'redux-logger';
+
+import AppContainer from './components/App/Container';
 import * as Socket from './utils/Socket';
 import { init as restoreSession } from './utils/Session';
 import { initState } from './actions/LoginActionCreators';
 
+import reducer from './reducers';
+
+const createStoreWithMiddleware = applyMiddleware(logger())(createStore);
+const store = createStoreWithMiddleware(reducer);
+
 // Material-UI dependency
 require('react-tap-event-plugin')();
 
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(
+  <Provider store={store}>
+    <AppContainer />
+  </Provider>,
+  document.getElementById('app')
+);
 
 restoreSession();
 initState();
