@@ -1,9 +1,6 @@
 import cx from 'classnames';
 import findIndex from 'array-findindex';
 import React from 'react';
-import { openLoginModal, openRegisterModal } from '../../actions/LoginActionCreators';
-import { togglePlaylistManager } from '../../actions/OverlayActionCreators';
-import { joinWaitlist, leaveWaitlist } from '../../actions/WaitlistActionCreators';
 import CurrentMediaStore from '../../stores/CurrentMediaStore';
 import LoginStore from '../../stores/LoginStore';
 import PlaylistStore from '../../stores/PlaylistStore';
@@ -42,7 +39,13 @@ function getEta(current, startTime, waitlist, user) {
 @listen(CurrentMediaStore, PlaylistStore, LoginStore, WaitlistStore)
 export default class FooterBar extends React.Component {
   static propTypes = {
-    className: React.PropTypes.string
+    className: React.PropTypes.string,
+
+    openLoginModal: React.PropTypes.func,
+    openRegisterModal: React.PropTypes.func,
+    togglePlaylistManager: React.PropTypes.func,
+    joinWaitlist: React.PropTypes.func,
+    leaveWaitlist: React.PropTypes.func
   };
 
   state = getState();
@@ -52,6 +55,11 @@ export default class FooterBar extends React.Component {
   }
 
   render() {
+    const {
+      openLoginModal, openRegisterModal,
+      togglePlaylistManager,
+      joinWaitlist, leaveWaitlist
+    } = this.props;
     const { current, currentStartTime, user, playlist, nextMedia, inWaitlist, waitlist } = this.state;
     const className = cx('FooterBar', this.props.className);
 

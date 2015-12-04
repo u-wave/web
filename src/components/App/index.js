@@ -9,7 +9,7 @@ import Chat from '../Chat';
 import ChatInput from '../Chat/Input';
 import RoomUserList from '../UserList/RoomUserList';
 import WaitList from '../UserList/WaitList';
-import FooterBar from '../FooterBar';
+import FooterBar from '../FooterBar/Container';
 import HeaderBar from '../HeaderBar';
 import PanelSwitcher from '../PanelSwitcher';
 import PanelGroup from '../PanelSwitcher/Group';
