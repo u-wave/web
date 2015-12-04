@@ -24,6 +24,7 @@
     "normalize.css": "^3.0.3",
     "object-assign": "^4.0.1",
     "object-values": "^1.0.0",
+    "object.map": "^0.2.0",
     "react": "^0.14.3",
     "react-addons-create-fragment": "^0.14.3",
     "react-addons-css-transition-group": "^0.14.3",
