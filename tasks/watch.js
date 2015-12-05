@@ -10,6 +10,8 @@ const JS_PATHS = [ 'src/**/*.js', 'gulpfile.babel.js', 'tasks/*.js' ];
 const JS_TASKS = [ 'js:lint' ];
 const CSS_PATHS = [ 'src/**/*.css' ];
 const CSS_TASKS = [ 'css' ];
+const MIDDLEWARE_PATHS = [ 'src/middleware.js' ];
+const MIDDLEWARE_TASKS = [ 'middleware' ];
 
 let watcher;
 
@@ -55,9 +57,14 @@ export default function watchTask() {
 
   gulp.watch(JS_PATHS, JS_TASKS);
   gulp.watch(CSS_PATHS, CSS_TASKS);
+  // the server does have to be restarted for this to apply, so it's not super
+  // useful to watch. you won't have to rerun the middleware task manually
+  // though, so that's a small plus…
+  gulp.watch(MIDDLEWARE_PATHS, MIDDLEWARE_TASKS);
 
   gulp.start('css');
   gulp.start('assets');
+  gulp.start('middleware');
 
   return bundle();
 }
