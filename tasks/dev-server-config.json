@@ -1,0 +1,10 @@
+{
+  "server": { "port": 6041, "slave": true },
+  "mongo": { "host": "localhost" },
+  "redis": {},
+  "cert": "./tasks/dev-test-secret.txt",
+  "keys": {
+    "youtube": "AIzaSyAlDfeXOvAM1bIYm4kCtAiXOVdeKutdx8I",
+    "soundcloud": "9d883cdd4c3c54c6dddda2a5b3a11200"
+  }
+}

@@ -28,5 +28,6 @@ gulp.task('assets', exec('copy-assets'));
 gulp.task('watch', exec('watch'));
 
 gulp.task('middleware', exec('middleware'));
+gulp.task('serve', exec('serve'));
 
 gulp.task('default', sequence('clean', [ 'assets', 'js', 'css' ], 'html'));
