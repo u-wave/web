@@ -7,7 +7,7 @@ import { joinWaitlist, leaveWaitlist } from '../../actions/WaitlistActionCreator
 
 import FooterBar from './';
 
-function mapStateToProps({ playlists }) {
+function mapStateToProps() {
   return {};
 }
 
