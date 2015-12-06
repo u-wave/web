@@ -22,6 +22,12 @@ const store = createStoreWithMiddleware(
   combineReducers(reducers)
 );
 
+if (module.hot) {
+  module.hot.accept('./reducers/index', () => {
+    store.replaceReducer(require('./reducers/index').default);
+  });
+}
+
 const jwt = readSession();
 if (jwt) {
   store.dispatch(setJWT(jwt));
