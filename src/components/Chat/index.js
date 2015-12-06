@@ -1,14 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
 import Message from './Message';
 
-function mapStateToProps(state) {
-  return {
-    messages: state.chat.messages
-  };
-}
-
-@connect(mapStateToProps)
 export default class Chat extends Component {
   static propTypes = {
     messages: PropTypes.array

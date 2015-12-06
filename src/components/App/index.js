@@ -5,7 +5,7 @@ import LoginStore from '../../stores/LoginStore';
 import SettingsStore from '../../stores/SettingsStore';
 import ThemeManager from 'material-ui/lib/styles/theme-manager';
 import MuiTheme from '../../MuiTheme';
-import Chat from '../Chat';
+import Chat from '../Chat/Container';
 import ChatInput from '../Chat/Input';
 import RoomUserList from '../UserList/RoomUserList';
 import WaitList from '../UserList/WaitList';
