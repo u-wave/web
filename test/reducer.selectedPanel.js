@@ -1,0 +1,28 @@
+import { expect } from 'chai';
+import selectedPanel from '../src/reducers/selectedPanel';
+
+describe('reducers/selectedPanel', () => {
+  it('should default to the chat panel', () => {
+    let state;
+    state = selectedPanel(state, { type: '@@redux/INIT' });
+    expect(state).to.be.a('string');
+    expect(state).to.equal('chat');
+  });
+
+  it('should not respond to unrelated actions', () => {
+    let state = 'room';
+    state = selectedPanel(state, { type: 'randomOtherAction', payload: {} });
+    expect(state).to.equal('room');
+  });
+
+  describe('action: selectPanel', () => {
+    it('should set the current panel', () => {
+      let state = 'chat';
+      state = selectedPanel(state, { type: 'selectPanel', payload: { panel: 'room' } });
+      expect(state).to.be.a('string');
+      expect(state).to.equal('room');
+      state = selectedPanel(state, { type: 'selectPanel', payload: { panel: 'waitlist' } });
+      expect(state).to.equal('waitlist');
+    });
+  });
+});
