@@ -2,7 +2,6 @@ import React from 'react';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import LoginStore from '../../stores/LoginStore';
-import SettingsStore from '../../stores/SettingsStore';
 import ThemeManager from 'material-ui/lib/styles/theme-manager';
 import MuiTheme from '../../MuiTheme';
 import Chat from '../Chat/Container';
@@ -22,17 +21,17 @@ import listen from '../../utils/listen';
 
 function getState() {
   return {
-    settings: SettingsStore.getAll(),
     user: LoginStore.getUser()
   };
 }
 
 @DragDropContext(HTML5Backend)
-@listen(LoginStore, SettingsStore)
+@listen(LoginStore)
 export default class App extends React.Component {
   static propTypes = {
     activeOverlay: React.PropTypes.string,
     selectedPanel: React.PropTypes.string,
+    settings: React.PropTypes.object,
 
     selectPanel: React.PropTypes.func
   };
@@ -55,10 +54,10 @@ export default class App extends React.Component {
 
   render() {
     // state props
-    const { activeOverlay, selectedPanel } = this.props;
+    const { activeOverlay, selectedPanel, settings } = this.props;
     // dispatch handlers
     const { selectPanel } = this.props;
-    const { settings, user } = this.state;
+    const { user } = this.state;
     const isLoggedIn = !!user;
 
     return (

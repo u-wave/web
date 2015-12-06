@@ -1,8 +1,6 @@
-import { dispatch } from '../dispatcher';
-
 export function set(name, value) {
-  dispatch({
+  return {
     type: 'setSettings',
     payload: { [name]: value }
-  });
+  };
 }

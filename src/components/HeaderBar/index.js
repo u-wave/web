@@ -1,29 +1,24 @@
 import cx from 'classnames';
 import React from 'react';
 import CurrentMediaStore from '../../stores/CurrentMediaStore';
-import SettingsStore from '../../stores/SettingsStore';
 import listen from '../../utils/listen';
 import Progress from './Progress';
 import SongTitle from '../SongTitle';
-import Volume from './Volume';
+import VolumeContainer from './VolumeContainer';
 
 function getState() {
   const startTime = CurrentMediaStore.getStartTime();
   const media = CurrentMediaStore.getMedia();
   const dj = CurrentMediaStore.getDJ();
-  const volume = SettingsStore.getSetting('volume');
-  const muted = SettingsStore.getSetting('muted');
   return {
     startTime: startTime,
     total: media ? media.end - media.start : 0,
     media: media,
-    dj: dj,
-    volume: volume,
-    muted: muted
+    dj: dj
   };
 }
 
-@listen(CurrentMediaStore, SettingsStore)
+@listen(CurrentMediaStore)
 export default class HeaderBar extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
@@ -67,10 +62,7 @@ export default class HeaderBar extends React.Component {
           startTime={this.state.startTime}
         />
         <div className="HeaderBar-volume">
-          <Volume
-            volume={this.state.volume}
-            muted={this.state.muted}
-          />
+          <VolumeContainer />
         </div>
       </div>
     );

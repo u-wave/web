@@ -1,13 +1,13 @@
 import { set } from './SettingsActionCreators';
 
 export function setVolume(volume) {
-  set('volume', volume);
+  return set('volume', volume);
 }
 
 export function mute() {
-  set('muted', true);
+  return set('muted', true);
 }
 
 export function unmute() {
-  set('muted', false);
+  return set('muted', false);
 }

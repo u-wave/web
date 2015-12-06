@@ -9,7 +9,8 @@ import App from './';
 function mapStateToProps(state) {
   return {
     activeOverlay: state.activeOverlay,
-    selectedPanel: state.selectedPanel
+    selectedPanel: state.selectedPanel,
+    settings: state.settings
   };
 }
 function mapDispatchToProps(dispatch) {
@@ -23,6 +24,7 @@ export default class AppContainer extends Component {
   static propTypes = {
     activeOverlay: PropTypes.string,
     selectedPanel: PropTypes.string,
+    settings: PropTypes.object,
 
     selectPanel: PropTypes.func
   };
