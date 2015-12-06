@@ -1,4 +1,3 @@
-import LoginStore from '../stores/LoginStore';
 import UserStore from '../stores/UserStore';
 import escapeRegExp from 'escape-string-regexp';
 
@@ -30,13 +29,14 @@ function limit(messages, n) {
 export default function reduce(state = initialState, action = {}) {
   const { type, payload } = action;
   const { messages } = state;
-  const user = LoginStore.getUser();
+  // FIXME remove once mention detection is moved to the Chat container
+  const user = null;
   switch (type) {
   case 'chatSend':
     const inFlightMessage = {
       _id: `inflight${Date.now()}`,
-      user: user,
-      userID: user._id,
+      user: payload.user,
+      userID: payload.user._id,
       text: payload.message,
       timestamp: Date.now(),
       inFlight: true

@@ -1,5 +1,7 @@
 import { dispatch } from '../dispatcher';
 import { del, get, post, put } from '../utils/Request';
+// FIXME temporary hack to get the current session token w/o access to redux store
+import { get as jwt } from '../utils/Session';
 
 export function setPlaylists(playlists) {
   dispatch({
@@ -21,7 +23,7 @@ export function loadPlaylist(playlistID) {
     payload: { playlistID }
   });
 
-  get(`/v1/playlists/${playlistID}/media`)
+  get(jwt(), `/v1/playlists/${playlistID}/media`)
     .then(res => res.json())
     .then(items => items.map(flattenPlaylistItem))
     .then(media => {
@@ -53,7 +55,7 @@ export function activatePlaylist(playlistID) {
     type: 'activatePlaylist',
     payload: { playlistID }
   });
-  put(`/v1/playlists/${playlistID}/activate`)
+  put(jwt(), `/v1/playlists/${playlistID}/activate`)
     .then(() => {
       dispatch({
         type: 'activatedPlaylist',
@@ -72,7 +74,7 @@ export function activatePlaylist(playlistID) {
 
 export function loadPlaylists() {
   dispatch({ type: 'loadingPlaylists' });
-  get('/v1/playlists')
+  get(jwt(), '/v1/playlists')
     .then(res => res.json())
     .then(playlists => {
       dispatch({
@@ -99,7 +101,7 @@ export function createPlaylist(name) {
     meta: { tempId }
   });
 
-  post('/v1/playlists', { name, description, shared })
+  post(jwt(), '/v1/playlists', { name, description, shared })
     .then(res => res.json())
     .then(playlist => {
       dispatch({
@@ -119,7 +121,7 @@ export function createPlaylist(name) {
 }
 
 export function addMedia(playlist, items) {
-  post(`/v1/playlists/${playlist._id}/media`, { items })
+  post(jwt(), `/v1/playlists/${playlist._id}/media`, { items })
     .then(res => res.json())
     .then(({ added, playlistSize }) => {
       dispatch({
@@ -169,7 +171,7 @@ export function removeMedia(playlistID, mediaID) {
     type: 'removeMediaFromPlaylist',
     payload
   });
-  del(`/v1/playlists/${playlistID}/media/${mediaID}`)
+  del(jwt(), `/v1/playlists/${playlistID}/media/${mediaID}`)
     .then(() => {
       dispatch({
         type: 'removedMediaFromPlaylist',
@@ -194,7 +196,7 @@ export function moveMedia(playlistID, medias, afterID) {
     payload
   });
   const items = medias.map(media => media._id);
-  put(`/v1/playlists/${playlistID}/move`, { items, after: afterID })
+  put(jwt(), `/v1/playlists/${playlistID}/move`, { items, after: afterID })
     .then(res => res.json())
     .then(() => {
       dispatch({

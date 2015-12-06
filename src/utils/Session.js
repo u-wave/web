@@ -1,5 +1,3 @@
-import { setJWT } from '../actions/LoginActionCreators';
-
 const SESSION_KEY = '_session';
 
 export function set(jwt) {
@@ -18,12 +16,9 @@ export function unset() {
   }
 }
 
-export function init() {
+export function get() {
   try {
-    const jwt = localStorage.getItem(SESSION_KEY);
-    if (jwt) {
-      setJWT(jwt);
-    }
+    return localStorage.getItem(SESSION_KEY);
   } catch (e) {
     // cookies disabled
   }

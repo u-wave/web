@@ -63,6 +63,10 @@ function onMessage(dispatch, json) {
   }
 }
 
+export function auth(jwt) {
+  sendRaw(jwt);
+}
+
 export function connect(dispatch, url = location.href.replace(/^http(s)?:/, 'ws$1:')) {
   socket = new WebSocket(url);
   socket.onmessage = pack => {
@@ -76,9 +80,6 @@ export function connect(dispatch, url = location.href.replace(/^http(s)?:/, 'ws$
 
   dispatchToken = dispatcher.register(({ type, payload }) => {
     switch (type) {
-    case 'loginComplete':
-      sendRaw(payload.jwt);
-      break;
     case 'chatSend':
       send('sendChat', payload.message);
       break;

@@ -7,18 +7,18 @@ import { joinWaitlist, leaveWaitlist } from '../../actions/WaitlistActionCreator
 
 import FooterBar from './';
 
-function mapStateToProps() {
-  return {};
+function mapStateToProps(state) {
+  return {
+    user: state.auth.user
+  };
 }
 
 function mapDispatchToProps(dispatch) {
-  return {
-    openLoginModal, openRegisterModal,
+  return bindActionCreators({
     joinWaitlist, leaveWaitlist,
-    ...bindActionCreators({
-      togglePlaylistManager
-    }, dispatch)
-  };
+    openLoginModal, openRegisterModal,
+    togglePlaylistManager
+  }, dispatch);
 }
 
 @connect(mapStateToProps, mapDispatchToProps)

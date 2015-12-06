@@ -1,13 +1,15 @@
-import Store from './Store';
-
 const initialState = {
   jwt: null,
   user: null,
-  error: null
+  error: null,
+  modal: {
+    open: false,
+    show: 'login'
+  }
 };
 
-function reduce(state = initialState, action = {}) {
-  const { type, payload, error: isError } = action;
+export default function reduce(state = initialState, action = {}) {
+  const { type, payload, meta, error: isError } = action;
   switch (type) {
   case 'setSession':
     return {
@@ -26,7 +28,11 @@ function reduce(state = initialState, action = {}) {
       ...state,
       jwt: payload.jwt,
       user: payload.user,
-      error: null
+      error: null,
+      modal: {
+        ...state.modal,
+        open: false
+      }
     };
   case 'registerComplete':
     return {
@@ -37,25 +43,19 @@ function reduce(state = initialState, action = {}) {
     };
   case 'logoutComplete':
     return initialState;
+  case 'openLoginModal':
+    return {
+      ...state,
+      modal: {
+        ...state.modal,
+        open: true,
+        show: meta.register ? 'register' : 'login'
+      }
+    };
   default:
     return state;
   }
 }
 
-class LoginStore extends Store {
-  reduce(state, action) {
-    return reduce(state, action);
-  }
-
-  getToken() {
-    return this.state.jwt;
-  }
-  getUser() {
-    return this.state.user;
-  }
-  getError() {
-    return this.state.error;
-  }
-}
-
-export default new LoginStore;
+export const getToken = state => state.auth.jwt;
+export const getUser = state => state.auth.user;

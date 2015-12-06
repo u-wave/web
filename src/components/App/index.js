@@ -1,7 +1,6 @@
 import React from 'react';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-import LoginStore from '../../stores/LoginStore';
 import ThemeManager from 'material-ui/lib/styles/theme-manager';
 import MuiTheme from '../../MuiTheme';
 import Chat from '../Chat/Container';
@@ -16,23 +15,18 @@ import Panel from '../PanelSwitcher/Panel';
 import Video from '../Video';
 import Overlays from './Overlays';
 import PlaylistManager from '../PlaylistManager';
-import LoginModal from '../LoginModal';
-import listen from '../../utils/listen';
-
-function getState() {
-  return {
-    user: LoginStore.getUser()
-  };
-}
+import LoginModal from '../LoginModal/Container';
 
 @DragDropContext(HTML5Backend)
-@listen(LoginStore)
 export default class App extends React.Component {
   static propTypes = {
     activeOverlay: React.PropTypes.string,
     selectedPanel: React.PropTypes.string,
     settings: React.PropTypes.object,
+    user: React.PropTypes.object,
 
+    onLogin: React.PropTypes.func,
+    onRegister: React.PropTypes.func,
     selectPanel: React.PropTypes.func
   };
 
@@ -40,24 +34,17 @@ export default class App extends React.Component {
     muiTheme: React.PropTypes.object
   };
 
-  state = getState();
-
   getChildContext() {
     return {
       muiTheme: ThemeManager.getMuiTheme(MuiTheme)
     };
   }
 
-  onChange() {
-    this.setState(getState());
-  }
-
   render() {
     // state props
-    const { activeOverlay, selectedPanel, settings } = this.props;
+    const { activeOverlay, selectedPanel, settings, user } = this.props;
     // dispatch handlers
-    const { selectPanel } = this.props;
-    const { user } = this.state;
+    const { onLogin, onRegister, selectPanel } = this.props;
     const isLoggedIn = !!user;
 
     return (
@@ -98,11 +85,14 @@ export default class App extends React.Component {
             </Panel>
           </PanelGroup>
           <div className="AppRow AppRow--bottom ChatInputWrapper">
-            {isLoggedIn && <ChatInput />}
+            {isLoggedIn && <ChatInput user={user} />}
           </div>
         </div>
 
-        <LoginModal />
+        <LoginModal
+          onLogin={onLogin}
+          onRegister={onRegister}
+        />
       </div>
     );
   }

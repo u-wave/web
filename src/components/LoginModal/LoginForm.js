@@ -1,7 +1,6 @@
 import React from 'react';
 import EmailIcon from 'material-ui/lib/svg-icons/communication/email';
 import PasswordIcon from 'material-ui/lib/svg-icons/action/lock';
-import { login } from '../../actions/LoginActionCreators';
 import Loader from '../Loader';
 import { default as Form, FormGroup } from '../Form';
 import TextField from '../Form/TextField';
@@ -9,7 +8,8 @@ import Button from '../Form/Button';
 
 export default class LoginForm extends React.Component {
   static propTypes = {
-    error: React.PropTypes.object
+    error: React.PropTypes.object,
+    onLogin: React.PropTypes.func
   };
 
   state = { busy: false };
@@ -21,7 +21,7 @@ export default class LoginForm extends React.Component {
   onSubmit(event) {
     event.preventDefault();
     this.setState({ busy: true });
-    login({
+    this.props.onLogin({
       email: this.refs.email.value,
       password: this.refs.password.value
     });

@@ -1,6 +1,7 @@
 import { dispatch } from '../dispatcher';
 import { del, post, put } from '../utils/Request';
-import LoginStore from '../stores/LoginStore';
+// FIXME temporary hack to get the current session token w/o access to redux store
+import { get as jwt } from '../utils/Session';
 
 export function setWaitList(data) {
   dispatch({
@@ -32,12 +33,11 @@ export function updatedWaitlist(waitlist) {
   });
 }
 
-export function joinWaitlist() {
-  const user = LoginStore.getUser();
+export function joinWaitlist(user) {
   dispatch({ type: 'joiningWaitlist' });
   if (user) {
     // TODO don't post an object at all once the API server supports it
-    post('/v1/waitlist', { userID: user._id })
+    post(jwt(), '/v1/waitlist', { userID: user._id })
       .then(res => res.json())
       .then(waitlist => {
         dispatch({
@@ -62,11 +62,10 @@ export function joinedWaitlist({ userID, waitlist }) {
   });
 }
 
-export function leaveWaitlist() {
-  const user = LoginStore.getUser();
+export function leaveWaitlist(user) {
   if (user) {
     dispatch({ type: 'leavingWaitlist' });
-    del(`/v1/waitlist/${user._id}`)
+    del(jwt(), `/v1/waitlist/${user._id}`)
       .then(res => res.json())
       .then(waitlist => {
         dispatch({
@@ -123,7 +122,7 @@ function putLock(status) {
     type: 'modLockWaitlist',
     payload: { locked: status }
   });
-  put('/v1/waitlist/lock', { lock: status, clear: false })
+  put(jwt(), '/v1/waitlist/lock', { lock: status, clear: false })
     .then(res => res.json())
     .then(res => res.locked)
     .then(locked => {
@@ -151,7 +150,7 @@ export function modUnlockWaitlist() {
 
 export function modClearWaitlist() {
   dispatch({ type: 'modClearWaitlist' });
-  del('/v1/waitlist')
+  del(jwt(), '/v1/waitlist')
     .then(res => res.json())
     .then(() => {
       dispatch({ type: 'modClearedWaitlist' });

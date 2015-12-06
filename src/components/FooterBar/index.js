@@ -2,7 +2,6 @@ import cx from 'classnames';
 import findIndex from 'array-findindex';
 import React from 'react';
 import CurrentMediaStore from '../../stores/CurrentMediaStore';
-import LoginStore from '../../stores/LoginStore';
 import PlaylistStore from '../../stores/PlaylistStore';
 import WaitlistStore from '../../stores/WaitlistStore';
 import listen from '../../utils/listen';
@@ -13,11 +12,9 @@ function getState() {
   return {
     playlist: PlaylistStore.getActivePlaylist(),
     nextMedia: PlaylistStore.getNextMedia(),
-    user: LoginStore.getUser(),
     current: CurrentMediaStore.getMedia(),
     currentStartTime: CurrentMediaStore.getStartTime(),
-    waitlist: WaitlistStore.getUsers(),
-    inWaitlist: WaitlistStore.isInWaitlist(LoginStore.getUser())
+    waitlist: WaitlistStore.getUsers()
   };
 }
 
@@ -36,10 +33,11 @@ function getEta(current, startTime, waitlist, user) {
   return position * averagePlayDuration + (current ? getRemaining(current, startTime) : 0);
 }
 
-@listen(CurrentMediaStore, PlaylistStore, LoginStore, WaitlistStore)
+@listen(CurrentMediaStore, PlaylistStore, WaitlistStore)
 export default class FooterBar extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
+    user: React.PropTypes.object,
 
     openLoginModal: React.PropTypes.func,
     openRegisterModal: React.PropTypes.func,
@@ -60,9 +58,11 @@ export default class FooterBar extends React.Component {
       togglePlaylistManager,
       joinWaitlist, leaveWaitlist
     } = this.props;
-    const { current, currentStartTime, user, playlist, nextMedia, inWaitlist, waitlist } = this.state;
+    const { user } = this.props;
+    const { current, currentStartTime, playlist, nextMedia, waitlist } = this.state;
     const className = cx('FooterBar', this.props.className);
 
+    const inWaitlist = waitlist.some(wl => wl._id === user._id);
     const waitlistAction = inWaitlist ? leaveWaitlist : joinWaitlist;
     const waitlistText = inWaitlist ? 'Leave Waitlist' : 'Join Waitlist';
     const eta = getEta(current, currentStartTime, waitlist, user);
@@ -83,7 +83,7 @@ export default class FooterBar extends React.Component {
           </div>
           <div
             className="FooterBar-join"
-            onClick={waitlistAction}
+            onClick={() => waitlistAction(user)}
           >
             {waitlistText}
           </div>

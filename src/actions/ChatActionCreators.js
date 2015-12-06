@@ -1,9 +1,10 @@
 import { dispatch } from '../dispatcher';
 
-export function sendChat(text) {
+export function sendChat(user, text) {
   dispatch({
     type: 'chatSend',
     payload: {
+      user,
       message: text
     }
   });
