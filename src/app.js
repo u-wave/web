@@ -32,6 +32,6 @@ restoreSession();
 initState();
 
 // temporary debug and testing things
-Socket.connect();
+Socket.connect(store.dispatch);
 
 window.debug = require('debug');

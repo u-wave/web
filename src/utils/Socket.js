@@ -25,18 +25,18 @@ function send(command, data) {
   sendRaw(JSON.stringify({ command, data }));
 }
 
-function onMessage(json) {
+function onMessage(dispatch, json) {
   const { command, data } = JSON.parse(json);
   debug(command, data);
   // convert between server & client message formats
   switch (command) {
   case 'chatMessage':
-    chatReceive({
+    dispatch(chatReceive({
       _id: data._id + '-' + data.timestamp,
       userID: data._id,
       text: data.message,
       timestamp: data.timestamp
-    });
+    }));
     break;
   case 'advance':
     advance(data);
@@ -63,10 +63,10 @@ function onMessage(json) {
   }
 }
 
-export function connect(url = location.href.replace(/^http(s)?:/, 'ws$1:')) {
+export function connect(dispatch, url = location.href.replace(/^http(s)?:/, 'ws$1:')) {
   socket = new WebSocket(url);
   socket.onmessage = pack => {
-    onMessage(pack.data);
+    onMessage(dispatch, pack.data);
   };
   socket.onopen = () => {
     const messages = queue;

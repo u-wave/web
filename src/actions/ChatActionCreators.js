@@ -10,8 +10,8 @@ export function sendChat(text) {
 }
 
 export function receive(message) {
-  dispatch({
+  return {
     type: 'chatReceive',
     payload: { message }
-  });
+  };
 }
