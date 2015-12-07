@@ -4,7 +4,8 @@ function tryRequire(path, message) {
   try {
     return require(path);
   } catch (e) {
-    throw new Error(message);
+    e.message = `${message}\n"${path}" threw: ${e.message}`;
+    throw e;
   }
 }
 
