@@ -1,41 +1,28 @@
 import cx from 'classnames';
 import find from 'array-find';
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
+import { IDLE, LOADING, LOADED } from '../../constants/LoadingStates';
 import { selectPlaylist } from '../../actions/PlaylistActionCreators';
 import { search } from '../../actions/SearchActionCreators';
-import PlaylistStore from '../../stores/PlaylistStore';
-import SearchStore from '../../stores/SearchStore';
-import listen from '../../utils/listen';
 import PlaylistMenu from './Menu';
 import PlaylistHeader from './Header';
 import PlaylistPanel from './Panel';
 import PlaylistPanelEmpty from './Panel/Empty';
 import SearchResults from './Panel/SearchResults';
 
-function getState() {
-  return {
-    playlists: PlaylistStore.getPlaylists(),
-    activeMedia: PlaylistStore.getActiveMedia(),
-    selectedMedia: PlaylistStore.getSelectedMedia(),
-
-    searchSource: SearchStore.getSourceType(),
-    searchQuery: SearchStore.getQuery(),
-    searchResults: SearchStore.getResults(),
-    searchLoadingState: SearchStore.getLoadingState()
-  };
-}
-
-@listen(PlaylistStore, SearchStore)
-export default class PlaylistManager extends React.Component {
+export default class PlaylistManager extends Component {
   static propTypes = {
-    className: React.PropTypes.string
+    className: PropTypes.string,
+
+    playlists: PropTypes.array,
+    activeMedia: PropTypes.array,
+    selectedMedia: PropTypes.array,
+
+    searchSource: PropTypes.oneOf([ 'youtube', 'soundcloud' ]),
+    searchQuery: PropTypes.string,
+    searchResults: PropTypes.object,
+    searchLoadingState: PropTypes.oneOf([ IDLE, LOADING, LOADED ])
   };
-
-  state = getState();
-
-  onChange() {
-    this.setState(getState());
-  }
 
   onSelectPlaylist(playlist) {
     selectPlaylist(playlist._id);
@@ -49,7 +36,7 @@ export default class PlaylistManager extends React.Component {
       searchQuery,
       searchResults,
       searchLoadingState
-    } = this.state;
+    } = this.props;
     const active = find(playlists, playlist => playlist.active);
     const selected = find(playlists, playlist => playlist.selected);
 
@@ -92,7 +79,7 @@ export default class PlaylistManager extends React.Component {
             active={active}
             selected={selected}
             searchQuery={searchQuery}
-            searchResults={searchResults.length}
+            searchResults={searchResults ? searchResults.length : 0}
             onSelectPlaylist={::this.onSelectPlaylist}
           />
 

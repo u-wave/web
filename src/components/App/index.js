@@ -14,7 +14,7 @@ import PanelGroup from '../PanelSwitcher/Group';
 import Panel from '../PanelSwitcher/Panel';
 import Video from '../Video/Container';
 import Overlays from './Overlays';
-import PlaylistManager from '../PlaylistManager';
+import PlaylistManager from '../PlaylistManager/Container';
 import LoginModal from '../LoginModal/Container';
 
 @DragDropContext(HTML5Backend)
