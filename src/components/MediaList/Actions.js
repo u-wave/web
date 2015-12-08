@@ -4,9 +4,8 @@ import AddIcon from 'material-ui/lib/svg-icons/content/add';
 import EditIcon from 'material-ui/lib/svg-icons/editor/mode-edit';
 import MoveToFirstIcon from 'material-ui/lib/svg-icons/hardware/keyboard-arrow-up';
 import DeleteIcon from 'material-ui/lib/svg-icons/action/delete';
-import { addMedia, moveMedia, removeMedia } from '../../actions/PlaylistActionCreators';
+import { addMedia } from '../../actions/PlaylistActionCreators';
 import AddingMenu from '../PlaylistManager/AddingMenu/Container';
-import PlaylistStore from '../../stores/PlaylistStore';
 
 export default class Actions extends React.Component {
   static propTypes = {
@@ -18,25 +17,26 @@ export default class Actions extends React.Component {
   state = { adding: false };
 
   onAdd() {
+    // TODO add an action child component for adding media to playlists
     this.setState({ adding: true });
   }
 
   onAddTo(playlist) {
     this.setState({ adding: false });
+    // FIXME dispatch this
     addMedia(playlist, [ this.props.media ]);
   }
 
   onEdit() {
+    // TODO add an action child component for editing playlist items
   }
 
   onFirst() {
-    // TODO use current selection instead
-    // (and also do this in a much more high level component)
-    moveMedia(PlaylistStore.getSelectedPlaylist()._id, this.props.selection, -1);
+    // TODO add an Action child component for moving playlist items
   }
 
   onDelete() {
-    removeMedia(PlaylistStore.getSelectedPlaylist()._id, this.props.media._id);
+    // TODO add an Action child component for deleting playlist items
   }
 
   render() {
