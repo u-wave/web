@@ -1,4 +1,3 @@
-import dispatcher from '../dispatcher';
 import { advance } from '../actions/AdvanceActionCreators';
 import { receive as chatReceive } from '../actions/ChatActionCreators';
 import { join as userJoin, leave as userLeave } from '../actions/UserActionCreators';
@@ -6,9 +5,6 @@ import { joinedWaitlist, leftWaitlist, updatedWaitlist } from '../actions/Waitli
 import WebSocket from 'ReconnectingWebSocket';
 
 const debug = require('debug')('uwave:websocket');
-
-let dispatchToken = null;
-export { dispatchToken };
 
 let socket = null;
 let queue = [];
@@ -67,6 +63,10 @@ export function auth(jwt) {
   sendRaw(jwt);
 }
 
+export function sendMessage(chatMessage) {
+  send('sendChat', chatMessage.payload.message);
+}
+
 export function connect(dispatch, url = location.href.replace(/^http(s)?:/, 'ws$1:')) {
   socket = new WebSocket(url);
   socket.onmessage = pack => {
@@ -77,14 +77,4 @@ export function connect(dispatch, url = location.href.replace(/^http(s)?:/, 'ws$
     queue = [];
     messages.forEach(sendRaw);
   };
-
-  dispatchToken = dispatcher.register(({ type, payload }) => {
-    switch (type) {
-    case 'chatSend':
-      send('sendChat', payload.message);
-      break;
-    default:
-      // Not for us
-    }
-  });
 }

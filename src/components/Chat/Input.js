@@ -1,12 +1,11 @@
 import cx from 'classnames';
 import React, { Component, PropTypes } from 'react';
-import { sendChat } from '../../actions/ChatActionCreators';
 
 const ENTER_KEY = 13;
 
 export default class Input extends Component {
   static propTypes = {
-    user: PropTypes.object
+    send: PropTypes.func
   };
 
   state = { focused: false };
@@ -22,7 +21,7 @@ export default class Input extends Component {
     if (e.keyCode === ENTER_KEY) {
       const value = e.target.value.trim();
       if (value.length > 0) {
-        sendChat(this.props.user, value);
+        this.props.send(value);
       }
       e.target.value = '';
     }

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import { login, register } from '../../actions/LoginActionCreators';
 import { selectPanel } from '../../actions/PanelSelectActionCreators';
+import { sendChat } from '../../actions/ChatActionCreators';
 
 import App from './';
 
@@ -18,6 +19,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     selectPanel,
+    sendChatMessage: sendChat,
     onLogin: login,
     onRegister: register
   }, dispatch);
@@ -33,7 +35,8 @@ export default class AppContainer extends Component {
 
     onLogin: PropTypes.func,
     onRegister: PropTypes.func,
-    selectPanel: PropTypes.func
+    selectPanel: PropTypes.func,
+    sendChatMessage: PropTypes.func
   };
 
   render() {

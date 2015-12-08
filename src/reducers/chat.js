@@ -1,4 +1,3 @@
-import UserStore from '../stores/UserStore';
 import escapeRegExp from 'escape-string-regexp';
 
 const MAX_MESSAGES = 500;
@@ -48,8 +47,7 @@ export default function reduce(state = initialState, action = {}) {
   case 'chatReceive':
     const message = {
       ...payload.message,
-      inFlight: false,
-      user: UserStore.getUser(payload.message.userID)
+      inFlight: false
     };
 
     if (user) {

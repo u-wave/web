@@ -5,7 +5,10 @@ import Chat from './index';
 
 function mapStateToProps(state) {
   return {
-    messages: state.chat.messages
+    messages: state.chat.messages.map(message => ({
+      ...message,
+      user: state.users[message.userID]
+    }))
   };
 }
 
