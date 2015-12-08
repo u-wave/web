@@ -53,10 +53,10 @@ function onMessage(dispatch, json) {
     break;
 
   case 'join':
-    userJoin(data);
+    dispatch(userJoin(data));
     break;
   case 'leave':
-    userLeave(data);
+    dispatch(userLeave(data));
     break;
   default:
     debug('!unknown socket message type');
