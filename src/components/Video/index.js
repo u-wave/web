@@ -1,41 +1,29 @@
 import cx from 'classnames';
 import isEqual from 'is-equal-shallow';
-import React from 'react';
-import CurrentMediaStore from '../../stores/CurrentMediaStore';
-import listen from '../../utils/listen';
+import React, { Component, PropTypes } from 'react';
 import SoundCloudPlayer from './SoundCloudPlayer';
 import YouTubePlayer from './YouTubePlayer';
 
-function getState() {
-  return {
-    historyID: CurrentMediaStore.getHistoryID(),
-    media: CurrentMediaStore.getMedia(),
-    startTime: CurrentMediaStore.getStartTime()
-  };
-}
-
-@listen(CurrentMediaStore)
-export default class Video extends React.Component {
+export default class Video extends Component {
   static propTypes = {
-    size: React.PropTypes.string,
-    volume: React.PropTypes.number,
-    isMuted: React.PropTypes.bool
+    size: PropTypes.string,
+    volume: PropTypes.number,
+    isMuted: PropTypes.bool,
+    historyID: PropTypes.string,
+    media: PropTypes.object,
+    startTime: PropTypes.number
   };
 
-  state = getState();
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return !isEqual(nextProps, this.props) ||
-      nextState.historyID !== this.state.historyID;
-  }
-
-  onChange() {
-    this.setState(getState());
+  shouldComponentUpdate(nextProps) {
+    return !isEqual(nextProps, this.props);
   }
 
   render() {
-    const { size, volume, isMuted } = this.props;
-    const { media, startTime } = this.state;
+    const {
+      size,
+      volume, isMuted,
+      media, startTime
+    } = this.props;
 
     if (!media) {
       return <div className="Video" />;

@@ -12,7 +12,7 @@ import HeaderBar from '../HeaderBar';
 import PanelSwitcher from '../PanelSwitcher';
 import PanelGroup from '../PanelSwitcher/Group';
 import Panel from '../PanelSwitcher/Panel';
-import Video from '../Video';
+import Video from '../Video/Container';
 import Overlays from './Overlays';
 import PlaylistManager from '../PlaylistManager';
 import LoginModal from '../LoginModal/Container';
