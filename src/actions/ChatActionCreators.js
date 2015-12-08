@@ -1,4 +1,7 @@
+import escapeRegExp from 'escape-string-regexp';
 import { sendMessage } from '../utils/Socket';
+
+const debug = require('debug')('uwave:actions:chat');
 
 export function prepareMessage(user, text) {
   return {
@@ -18,9 +21,26 @@ export function sendChat(user, text) {
   };
 }
 
+function playMentionSound() {
+  // TODO
+  debug('mention sound here');
+}
+
+function hasMention(text, username) {
+  const rx = new RegExp(`@${escapeRegExp(username)}\\b`);
+  return rx.test(text);
+}
+
 export function receive(message) {
-  return {
-    type: 'chatReceive',
-    payload: { message }
+  return (dispatch, getState) => {
+    const user = getState().auth.user;
+    const isMention = user ? hasMention(message.text, user.username) : false;
+    dispatch({
+      type: 'chatReceive',
+      payload: { message, isMention }
+    });
+    if (isMention) {
+      playMentionSound();
+    }
   };
 }

@@ -1,5 +1,3 @@
-import escapeRegExp from 'escape-string-regexp';
-
 const MAX_MESSAGES = 500;
 
 const initialState = {
@@ -16,11 +14,6 @@ function removeInFlightMessage(messages, remove) {
   ));
 }
 
-function hasMention(message, username) {
-  const rx = new RegExp(`@${escapeRegExp(username)}\\b`);
-  return rx.test(message);
-}
-
 function limit(messages, n) {
   return messages.length > n ? messages.slice(1) : messages;
 }
@@ -28,8 +21,6 @@ function limit(messages, n) {
 export default function reduce(state = initialState, action = {}) {
   const { type, payload } = action;
   const { messages } = state;
-  // FIXME remove once mention detection is moved to the Chat container
-  const user = null;
   switch (type) {
   case 'chatSend':
     const inFlightMessage = {
@@ -47,12 +38,9 @@ export default function reduce(state = initialState, action = {}) {
   case 'chatReceive':
     const message = {
       ...payload.message,
-      inFlight: false
+      inFlight: false,
+      isMention: payload.isMention
     };
-
-    if (user) {
-      message.isMention = hasMention(message.text, user.username);
-    }
 
     return {
       ...state,
