@@ -1,32 +1,20 @@
-import cx from 'classnames';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import UserList from '../UserList';
-import WaitlistStore from '../../stores/WaitlistStore';
-import listen from '../../utils/listen';
 
-function getState() {
+function mapStateToProps(state) {
   return {
-    users: WaitlistStore.getUsers()
+    users: state.waitlist.waitlist
   };
 }
 
-@listen(WaitlistStore)
-export default class WaitList extends Component {
-  static propTypes = {
-    className: React.PropTypes.string
-  };
-
-  state = getState();
-
-  onChange() {
-    this.setState(getState());
-  }
-
+@connect(mapStateToProps)
+export default class WaitListContainer extends Component {
   render() {
     return (
       <UserList
-        className={cx('WaitList', this.props.className)}
-        users={this.state.users}
+        className="WaitList"
+        {...this.props}
       />
     );
   }
