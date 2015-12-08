@@ -1,4 +1,3 @@
-import { dispatch } from '../dispatcher';
 import { get, post } from '../utils/Request';
 import * as Session from '../utils/Session';
 import * as Socket from '../utils/Socket';
