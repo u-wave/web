@@ -39,7 +39,7 @@ function onMessage(dispatch, json) {
     }));
     break;
   case 'advance':
-    advance(data);
+    dispatch(advance(data));
     break;
 
   case 'waitlistJoin':
