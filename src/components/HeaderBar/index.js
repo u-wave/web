@@ -1,39 +1,26 @@
 import cx from 'classnames';
-import React from 'react';
-import CurrentMediaStore from '../../stores/CurrentMediaStore';
-import listen from '../../utils/listen';
+import React, { Component, PropTypes } from 'react';
 import Progress from './Progress';
 import SongTitle from '../SongTitle';
 import VolumeContainer from './VolumeContainer';
 
-function getState() {
-  const startTime = CurrentMediaStore.getStartTime();
-  const media = CurrentMediaStore.getMedia();
-  const dj = CurrentMediaStore.getDJ();
-  return {
-    startTime: startTime,
-    total: media ? media.end - media.start : 0,
-    media: media,
-    dj: dj
-  };
-}
-
-@listen(CurrentMediaStore)
-export default class HeaderBar extends React.Component {
+export default class HeaderBar extends Component {
   static propTypes = {
-    className: React.PropTypes.string,
-    title: React.PropTypes.string
+    className: PropTypes.string,
+    title: PropTypes.string,
+
+    dj: PropTypes.object,
+    media: PropTypes.object,
+    mediaDuration: PropTypes.number,
+    mediaStartTime: PropTypes.number
   };
-
-  state = getState();
-
-  onChange() {
-    this.setState(getState());
-  }
 
   render() {
-    const { title, ...props } = this.props;
-    const { media, dj } = this.state;
+    const {
+      className, title,
+      dj, media, mediaDuration, mediaStartTime,
+      ...props
+    } = this.props;
 
     const nowPlaying = media
       ? <SongTitle
@@ -44,7 +31,7 @@ export default class HeaderBar extends React.Component {
 
     return (
       <div
-        className={cx('HeaderBar', this.props.className)}
+        className={cx('HeaderBar', className)}
         {...props}
       >
         <h1 className="HeaderBar-title">{title}</h1>
@@ -58,8 +45,8 @@ export default class HeaderBar extends React.Component {
         )}
         <Progress
           className="HeaderBar-progress"
-          total={this.state.total}
-          startTime={this.state.startTime}
+          total={mediaDuration}
+          startTime={mediaStartTime}
         />
         <div className="HeaderBar-volume">
           <VolumeContainer />

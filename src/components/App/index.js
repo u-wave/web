@@ -8,7 +8,7 @@ import ChatInput from '../Chat/Input';
 import RoomUserList from '../UserList/RoomUserList';
 import WaitList from '../UserList/WaitList';
 import FooterBar from '../FooterBar/Container';
-import HeaderBar from '../HeaderBar';
+import HeaderBar from '../HeaderBar/Container';
 import PanelSwitcher from '../PanelSwitcher';
 import PanelGroup from '../PanelSwitcher/Group';
 import Panel from '../PanelSwitcher/Panel';
