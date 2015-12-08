@@ -17,21 +17,21 @@ export function loginComplete({ jwt, user }) {
 }
 
 export function initState() {
-  return (reduxDispatch, getState) => {
+  return (dispatch, getState) => {
     const jwt = getState().auth.jwt;
     dispatch({ type: 'loadingPlaylists' });
     get(jwt, '/v1/now')
       .then(res => res.json())
       .then(state => {
-        setUsers(state.users || []);
-        setPlaylists(state.playlists || []);
+        dispatch(setUsers(state.users || []));
+        dispatch(setPlaylists(state.playlists || []));
         if (state.booth) {
           // TODO don't set this when logging in _after_ entering the page?
-          advance(state.booth);
+          dispatch(advance(state.booth));
         }
         if (state.user) {
           const token = getState().auth.jwt;
-          reduxDispatch(loginComplete({
+          dispatch(loginComplete({
             jwt: token,
             user: state.user
           }));
@@ -41,7 +41,7 @@ export function initState() {
             type: 'activatedPlaylist',
             payload: { playlistID: state.activePlaylist }
           });
-          selectPlaylist(state.activePlaylist);
+          dispatch(selectPlaylist(state.activePlaylist));
         }
       });
   };
@@ -55,18 +55,18 @@ export function setJWT(jwt) {
 }
 
 export function login({ email, password }) {
-  return (reduxDispatch, getState) => {
+  return (dispatch, getState) => {
     const jwt = getState().auth.jwt;
     post(jwt, '/v1/auth/login', { email, password })
       .then(res => res.json())
       .then(res => {
         Session.set(res.jwt);
-        reduxDispatch(setJWT(res.jwt));
-        reduxDispatch(initState());
+        dispatch(setJWT(res.jwt));
+        dispatch(initState());
         return res;
       })
       .catch(error => {
-        reduxDispatch({
+        dispatch({
           type: 'loginComplete',
           error: true,
           payload: error
@@ -76,22 +76,22 @@ export function login({ email, password }) {
 }
 
 export function register({ email, username, password }) {
-  return (reduxDispatch, getState) => {
+  return (dispatch, getState) => {
     const jwt = getState().auth.jwt;
-    reduxDispatch({ type: 'registerStart' });
+    dispatch({ type: 'registerStart' });
     post(jwt, '/v1/auth/register', { email, username, password, passwordRepeat: password })
       .then(res => res.json())
       .then(user => {
         debug('registered', user);
-        reduxDispatch({
+        dispatch({
           type: 'registerComplete',
           payload: { user }
         });
-        reduxDispatch(login({ email, password }));
+        dispatch(login({ email, password }));
       })
       .catch(err => {
         debug('registration failed', err);
-        reduxDispatch({
+        dispatch({
           type: 'registerComplete',
           error: true,
           payload: err
@@ -101,24 +101,24 @@ export function register({ email, username, password }) {
 }
 
 function logoutComplete() {
-  return reduxDispatch => {
-    reduxDispatch({ type: 'logoutComplete' });
+  return dispatch => {
+    dispatch({ type: 'logoutComplete' });
     setPlaylists([]);
   };
 }
 
 export function logout() {
-  return (reduxDispatch, getState) => {
+  return (dispatch, getState) => {
     const jwt = getState().auth.jwt;
     const me = getState().auth.user;
     if (me) {
-      reduxDispatch({ type: 'logoutStart' });
+      dispatch({ type: 'logoutStart' });
       del(jwt, `/v1/auth/session/${me._id}`)
         .then(logoutComplete)
         .catch(logoutComplete)
-        .then(reduxDispatch);
+        .then(dispatch);
     } else {
-      reduxDispatch(logoutComplete());
+      dispatch(logoutComplete());
     }
     Session.unset();
   };
