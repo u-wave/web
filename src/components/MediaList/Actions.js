@@ -5,7 +5,7 @@ import EditIcon from 'material-ui/lib/svg-icons/editor/mode-edit';
 import MoveToFirstIcon from 'material-ui/lib/svg-icons/hardware/keyboard-arrow-up';
 import DeleteIcon from 'material-ui/lib/svg-icons/action/delete';
 import { addMedia, moveMedia, removeMedia } from '../../actions/PlaylistActionCreators';
-import AddingMenu from '../PlaylistManager/AddingMenu';
+import AddingMenu from '../PlaylistManager/AddingMenu/Container';
 import PlaylistStore from '../../stores/PlaylistStore';
 
 export default class Actions extends React.Component {
