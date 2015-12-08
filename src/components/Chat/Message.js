@@ -2,9 +2,9 @@ import cx from 'classnames';
 import React from 'react';
 import Avatar from '../Avatar';
 import Loader from '../Loader';
-import parse from './Markup/parse';
+import compile from './Markup/compile';
 
-const Message = ({ user, text, inFlight, isMention }) => {
+const Message = ({ user, text, parsedText, inFlight, isMention }) => {
   let avatar;
   if (inFlight) {
     avatar = (
@@ -21,6 +21,8 @@ const Message = ({ user, text, inFlight, isMention }) => {
     );
   }
 
+  const children = parsedText ? compile(parsedText) : text;
+
   const inFlightClass = inFlight ? 'ChatMessage--loading' : '';
   const mentionClass = isMention ? 'ChatMessage--mention' : '';
   return (
@@ -28,7 +30,7 @@ const Message = ({ user, text, inFlight, isMention }) => {
       {avatar}
       <div className="ChatMessage-content">
         <span className="ChatMessage-username">{user.username}</span>
-        <span className="ChatMessage-text">{parse(text)}</span>
+        <span className="ChatMessage-text">{children}</span>
       </div>
     </div>
   );

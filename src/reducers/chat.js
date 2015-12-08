@@ -28,6 +28,7 @@ export default function reduce(state = initialState, action = {}) {
       user: payload.user,
       userID: payload.user._id,
       text: payload.message,
+      parsedText: payload.parsed,
       timestamp: Date.now(),
       inFlight: true
     };
@@ -39,6 +40,7 @@ export default function reduce(state = initialState, action = {}) {
     const message = {
       ...payload.message,
       inFlight: false,
+      parsedText: payload.parsed,
       isMention: payload.isMention
     };
 

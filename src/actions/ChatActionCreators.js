@@ -1,21 +1,26 @@
 import escapeRegExp from 'escape-string-regexp';
+import values from 'object-values';
+
+import parseChatMarkup from '../utils/parseChatMarkup';
 import { sendMessage } from '../utils/Socket';
 
 const debug = require('debug')('uwave:actions:chat');
 
-export function prepareMessage(user, text) {
+export function prepareMessage(user, text, parseOpts = {}) {
   return {
     type: 'chatSend',
     payload: {
       user,
-      message: text
+      message: text,
+      parsed: parseChatMarkup(text, parseOpts)
     }
   };
 }
 
 export function sendChat(user, text) {
-  return dispatch => {
-    const message = prepareMessage(user, text);
+  return (dispatch, getState) => {
+    const users = values(getState().users);
+    const message = prepareMessage(user, text, { users });
     dispatch(message);
     sendMessage(message);
   };
@@ -34,10 +39,15 @@ function hasMention(text, username) {
 export function receive(message) {
   return (dispatch, getState) => {
     const user = getState().auth.user;
+    const users = values(getState().users);
     const isMention = user ? hasMention(message.text, user.username) : false;
     dispatch({
       type: 'chatReceive',
-      payload: { message, isMention }
+      payload: {
+        message,
+        isMention,
+        parsed: parseChatMarkup(message.text, { users })
+      }
     });
     if (isMention) {
       playMentionSound();
