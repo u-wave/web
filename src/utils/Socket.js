@@ -43,13 +43,13 @@ function onMessage(dispatch, json) {
     break;
 
   case 'waitlistJoin':
-    joinedWaitlist(data);
+    dispatch(joinedWaitlist(data));
     break;
   case 'waitlistLeave':
-    leftWaitlist(data);
+    dispatch(leftWaitlist(data));
     break;
   case 'waitlistUpdate':
-    updatedWaitlist(data);
+    dispatch(updatedWaitlist(data));
     break;
 
   case 'join':
