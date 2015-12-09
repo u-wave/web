@@ -7,18 +7,15 @@ import WebSocket from 'ReconnectingWebSocket';
 const debug = require('debug')('uwave:websocket');
 
 let socket = null;
+let sentJWT = false;
 let queue = [];
 
-function sendRaw(message) {
-  if (socket.readyState === WebSocket.OPEN) {
-    socket.send(message);
-  } else {
-    queue.push(message);
-  }
-}
-
 function send(command, data) {
-  sendRaw(JSON.stringify({ command, data }));
+  if (socket.readyState === WebSocket.OPEN) {
+    socket.send(JSON.stringify({ command, data }));
+  } else {
+    queue.push({ command, data });
+  }
 }
 
 function onMessage(dispatch, json) {
@@ -60,21 +57,31 @@ function onMessage(dispatch, json) {
 }
 
 export function auth(jwt) {
-  sendRaw(jwt);
+  if (!sentJWT && socket.readyState === WebSocket.OPEN) {
+    socket.send(jwt);
+  }
 }
 
 export function sendMessage(chatMessage) {
   send('sendChat', chatMessage.payload.message);
 }
 
-export function connect(dispatch, url = location.href.replace(/^http(s)?:/, 'ws$1:')) {
+export function connect(store, url = location.href.replace(/^http(s)?:/, 'ws$1:')) {
   socket = new WebSocket(url);
   socket.onmessage = pack => {
-    onMessage(dispatch, pack.data);
+    onMessage(store.dispatch, pack.data);
   };
   socket.onopen = () => {
+    const jwt = store.getState().auth.jwt;
+    debug('open', jwt);
+    if (jwt) {
+      socket.send(jwt);
+      sentJWT = jwt;
+    } else {
+      sentJWT = false;
+    }
     const messages = queue;
     queue = [];
-    messages.forEach(sendRaw);
+    messages.forEach(msg => send(msg.command, msg.data));
   };
 }
