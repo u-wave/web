@@ -46,6 +46,6 @@ ReactDOM.render(
 store.dispatch(initState());
 
 // temporary debug and testing things
-Socket.connect(store.dispatch);
+Socket.connect(store);
 
 window.debug = require('debug');
