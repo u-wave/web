@@ -1,0 +1,57 @@
+import { expect } from 'chai';
+import booth from '../src/reducers/booth';
+
+describe('reducers/booth', () => {
+  const initialState = () => booth(undefined, { type: '@@redux/INIT' });
+  it('should not respond to unrelated actions', () => {
+    let state = { historyID: 'someRandomID' };
+    state = booth(state, { type: 'randomOtherAction', payload: {} });
+    expect(state.historyID).to.equal('someRandomID');
+  });
+
+  it('should default to an empty DJ booth', () => {
+    const state = booth(undefined, { type: '@@redux/INIT' });
+    expect(state).to.be.an('object');
+    expect(state).to.contain.all.keys([ 'historyID', 'djID', 'media', 'startTime' ]);
+    expect(state.historyID).to.be.null;
+    expect(state.djID).to.be.null;
+    expect(state.media).to.be.null;
+    expect(state.startTime).to.be.null;
+  });
+
+  describe('action: advance', () => {
+    it('should advance to the next song if there is one', () => {
+      // Weirdly, there are two different advance object formats in use
+      // client-side.
+      // TODO fix that? :P
+      const state = booth(initialState(), {
+        type: 'advance',
+        payload: {
+          historyID: 'someRandomID',
+          userID: 'seventeen',
+          media: { artist: 'about tess', title: 'Imaginedit' },
+          timestamp: 1449767164107
+        }
+      });
+      expect(state).to.eql({
+        historyID: 'someRandomID',
+        djID: 'seventeen',
+        media: { artist: 'about tess', title: 'Imaginedit' },
+        startTime: 1449767164107
+      });
+    });
+
+    it('should stop playing if there is no next song', () => {
+      const state = booth(initialState(), {
+        type: 'advance',
+        payload: null
+      });
+      expect(state).to.eql({
+        historyID: null,
+        djID: null,
+        media: null,
+        startTime: null
+      });
+    });
+  });
+});
