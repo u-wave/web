@@ -1,8 +1,6 @@
 import React from 'react';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-import ThemeManager from 'material-ui/lib/styles/theme-manager';
-import MuiTheme from '../../MuiTheme';
 import Chat from '../Chat/Container';
 import ChatInput from '../Chat/Input';
 import RoomUserList from '../UserList/RoomUserList';
@@ -30,16 +28,6 @@ export default class App extends React.Component {
     selectPanel: React.PropTypes.func,
     sendChatMessage: React.PropTypes.func
   };
-
-  static childContextTypes = {
-    muiTheme: React.PropTypes.object
-  };
-
-  getChildContext() {
-    return {
-      muiTheme: ThemeManager.getMuiTheme(MuiTheme)
-    };
-  }
 
   render() {
     // state props
