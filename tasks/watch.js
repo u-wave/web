@@ -4,12 +4,15 @@ import babelify from 'babelify';
 import browserify from 'browserify';
 import hmr from 'browserify-hmr';
 import watchify from 'watchify';
+import seq from 'run-sequence';
 import source from 'vinyl-source-stream';
 
 const JS_PATHS = [ 'src/**/*.js', 'gulpfile.babel.js', 'tasks/*.js' ];
 const JS_TASKS = [ 'js:lint' ];
 const CSS_PATHS = [ 'src/**/*.css' ];
 const CSS_TASKS = [ 'css' ];
+const HTML_PATHS = [ 'src/index.html' ];
+const HTML_TASKS = [ 'html '];
 const MIDDLEWARE_PATHS = [ 'src/middleware.js' ];
 const MIDDLEWARE_TASKS = [ 'middleware' ];
 
@@ -57,14 +60,13 @@ export default function watchTask() {
 
   gulp.watch(JS_PATHS, JS_TASKS);
   gulp.watch(CSS_PATHS, CSS_TASKS);
+  gulp.watch(HTML_PATHS, HTML_TASKS);
   // the server does have to be restarted for this to apply, so it's not super
   // useful to watch. you won't have to rerun the middleware task manually
   // though, so that's a small plus…
   gulp.watch(MIDDLEWARE_PATHS, MIDDLEWARE_TASKS);
 
-  gulp.start('css');
-  gulp.start('assets');
-  gulp.start('middleware');
+  seq('assets', 'css', 'html', 'middleware');
 
   return bundle();
 }
