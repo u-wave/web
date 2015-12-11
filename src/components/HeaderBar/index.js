@@ -8,6 +8,7 @@ export default class HeaderBar extends Component {
   static propTypes = {
     className: PropTypes.string,
     title: PropTypes.string,
+    currentTime: PropTypes.number,
 
     dj: PropTypes.object,
     media: PropTypes.object,
@@ -17,7 +18,7 @@ export default class HeaderBar extends Component {
 
   render() {
     const {
-      className, title,
+      className, title, currentTime,
       dj, media, mediaDuration, mediaStartTime,
       ...props
     } = this.props;
@@ -45,8 +46,9 @@ export default class HeaderBar extends Component {
         )}
         <Progress
           className="HeaderBar-progress"
-          total={mediaDuration}
+          duration={mediaDuration}
           startTime={mediaStartTime}
+          currentTime={currentTime}
         />
         <div className="HeaderBar-volume">
           <VolumeContainer />

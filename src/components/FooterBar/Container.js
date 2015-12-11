@@ -9,25 +9,25 @@ import { joinWaitlist, leaveWaitlist } from '../../actions/WaitlistActionCreator
 
 import FooterBar from './';
 
-function getRemaining(current, startTime) {
+function getRemaining(current, currentTime, startTime) {
   const duration = current.end - current.start; // seconds
-  const elapsed = (Date.now() - startTime) / 1000; // ms → seconds
+  const elapsed = (currentTime - startTime) / 1000; // ms → seconds
   return duration - elapsed;
 }
 
-function getEta(current, startTime, waitlist, user) {
+function getEta(current, currentTime, startTime, waitlist, user) {
   const averagePlayDuration = 4 * 60;
   let position = user ? findIndex(waitlist, waiting => waiting._id === user._id) : -1;
   if (position === -1) {
     position = waitlist.length;
   }
-  return position * averagePlayDuration + (current ? getRemaining(current, startTime) : 0);
+  return position * averagePlayDuration + (current ? getRemaining(current, currentTime, startTime) : 0);
 }
 
-function mapStateToProps({ auth, booth, playlists, waitlist }) {
+function mapStateToProps({ auth, booth, playlists, time, waitlist }) {
   return {
     eta: booth.media && auth.user
-      ? getEta(booth.media, booth.startTime, waitlist.waitlist, auth.user)
+      ? getEta(booth.media, time, booth.startTime, waitlist.waitlist, auth.user)
       : 0,
     playlist: playlists.playlists[playlists.activePlaylistID],
     nextMedia: playlists.activeMedia[0],

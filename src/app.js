@@ -11,12 +11,16 @@ import AppContainer from './components/App/Container';
 import * as Socket from './utils/Socket';
 import { get as readSession } from './utils/Session';
 import { initState, setJWT } from './actions/LoginActionCreators';
+import { startTicking } from './actions/TickerActionCreators';
 
 import * as reducers from './reducers';
 
 const createStoreWithMiddleware = applyMiddleware(
   thunk,
-  logger()
+  logger({
+    // avoid log spam
+    predicate: (getState, action) => action.type !== 'tick'
+  })
 )(createStore);
 const store = createStoreWithMiddleware(
   combineReducers(reducers)
@@ -44,8 +48,8 @@ ReactDOM.render(
 );
 
 store.dispatch(initState());
+store.dispatch(startTicking());
 
-// temporary debug and testing things
 Socket.connect(store);
 
 window.debug = require('debug');
