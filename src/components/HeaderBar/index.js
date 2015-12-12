@@ -2,7 +2,7 @@ import cx from 'classnames';
 import React, { Component, PropTypes } from 'react';
 import Progress from './Progress';
 import SongTitle from '../SongTitle';
-import VolumeContainer from './VolumeContainer';
+import Volume from './Volume';
 
 export default class HeaderBar extends Component {
   static propTypes = {
@@ -13,13 +13,21 @@ export default class HeaderBar extends Component {
     dj: PropTypes.object,
     media: PropTypes.object,
     mediaDuration: PropTypes.number,
-    mediaStartTime: PropTypes.number
+    mediaStartTime: PropTypes.number,
+    volume: PropTypes.number,
+    muted: PropTypes.bool,
+
+    onVolumeChange: PropTypes.func,
+    onVolumeMute: PropTypes.func,
+    onVolumeUnmute: PropTypes.func
   };
 
   render() {
     const {
       className, title, currentTime,
       dj, media, mediaDuration, mediaStartTime,
+      volume, muted,
+      onVolumeChange, onVolumeMute, onVolumeUnmute,
       ...props
     } = this.props;
 
@@ -51,7 +59,13 @@ export default class HeaderBar extends Component {
           currentTime={currentTime}
         />
         <div className="HeaderBar-volume">
-          <VolumeContainer />
+          <Volume
+            volume={volume}
+            muted={muted}
+            onVolumeChange={onVolumeChange}
+            onMute={onVolumeMute}
+            onUnmute={onVolumeUnmute}
+          />
         </div>
       </div>
     );
