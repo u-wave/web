@@ -27,8 +27,10 @@ const store = createStoreWithMiddleware(
 );
 
 if (module.hot) {
-  module.hot.accept('./reducers/index', () => {
-    store.replaceReducer(require('./reducers/index').default);
+  module.hot.accept('./reducers', () => {
+    store.replaceReducer(combineReducers(
+      require('./reducers')
+    ));
   });
 }
 
