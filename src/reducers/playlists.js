@@ -218,6 +218,55 @@ export default function reduce(state = initialState, action = {}) {
       };
     }
     return state;
+
+  case 'removeMediaFromPlaylist':
+    const isRemovingMedia = indexBy(payload.medias, '_id');
+    if (payload.playlistID === state.selectedPlaylistID) {
+      return {
+        ...state,
+        selectedMedia: state.selectedMedia.map(media => ({
+          ...media,
+          loading: isRemovingMedia[media._id] || media.loading
+        }))
+      };
+    } else if (payload.playlistID === state.activePlaylistID) {
+      return {
+        ...state,
+        activeMedia: state.activeMedia.map(media => ({
+          ...media,
+          loading: isRemovingMedia[media._id] || media.loading
+        }))
+      };
+    }
+    return state;
+  case 'removedMediaFromPlaylist':
+    if (error) {
+      return state;
+    }
+    const isRemovedMedia = indexBy(payload.removedMedia, '_id');
+    const removedFromPlaylist = state.playlists[payload.playlistID];
+    const newState = {
+      ...state,
+      playlists: {
+        ...state.playlists,
+        [removedFromPlaylist._id]: {
+          ...removedFromPlaylist,
+          size: payload.newSize
+        }
+      }
+    };
+    if (state.selectedPlaylistID === payload.playlistID) {
+      return assign(
+        newState,
+        { selectedMedia: state.selectedMedia.filter(media => !isRemovedMedia[media._id]) }
+      );
+    } else if (state.activePlaylistID === payload.playlistID) {
+      return assign(
+        newState,
+        { activeMedia: state.activeMedia.filter(media => !isRemovedMedia[media._id]) }
+      );
+    }
+    return newState;
   default:
     return state;
   }

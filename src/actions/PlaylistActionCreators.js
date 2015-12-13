@@ -215,28 +215,31 @@ export function updateMedia(playlistID, mediaID, props) {
   };
 }
 
-export function removeMedia(playlistID, mediaID) {
+export function removeMedia(playlistID, medias) {
   return (dispatch, getState) => {
     const jwt = getState().auth.jwt;
-
-    const payload = { playlistID, mediaID };
     dispatch({
       type: 'removeMediaFromPlaylist',
-      payload
+      payload: { playlistID, medias }
     });
-    del(jwt, `/v1/playlists/${playlistID}/media/${mediaID}`)
-      .then(() => {
+    const items = medias.map(media => media._id);
+    del(jwt, `/v1/playlists/${playlistID}/media`, { items })
+      .then(res => res.json())
+      .then(({ removed, playlistSize }) => {
         dispatch({
           type: 'removedMediaFromPlaylist',
-          payload
+          payload: {
+            playlistID,
+            newSize: playlistSize,
+            removedMedia: removed.map(flattenPlaylistItem)
+          }
         });
       })
       .catch(error => {
         dispatch({
           type: 'removedMediaFromPlaylist',
           error: true,
-          payload: error,
-          meta: payload
+          payload: error
         });
       });
   };
