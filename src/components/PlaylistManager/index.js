@@ -21,7 +21,12 @@ export default class PlaylistManager extends Component {
     searchSource: PropTypes.oneOf([ 'youtube', 'soundcloud' ]),
     searchQuery: PropTypes.string,
     searchResults: PropTypes.object,
-    searchLoadingState: PropTypes.oneOf([ IDLE, LOADING, LOADED ])
+    searchLoadingState: PropTypes.oneOf([ IDLE, LOADING, LOADED ]),
+
+    onAddToPlaylist: PropTypes.func,
+    onMoveToFirst: PropTypes.func,
+    onEditMedia: PropTypes.func,
+    onRemoveFromPlaylist: PropTypes.func
   };
 
   onSelectPlaylist(playlist) {
@@ -40,6 +45,13 @@ export default class PlaylistManager extends Component {
     const active = find(playlists, playlist => playlist.active);
     const selected = find(playlists, playlist => playlist.selected);
 
+    const actions = {
+      onAddToPlaylist: this.props.onAddToPlaylist,
+      onMoveToFirst: this.props.onMoveToFirst(selected._id),
+      onEditMedia: this.props.onEditMedia(selected._id),
+      onRemoveFromPlaylist: this.props.onRemoveFromPlaylist(selected._id)
+    };
+
     let panel;
     if (selected) {
       panel = (
@@ -48,6 +60,7 @@ export default class PlaylistManager extends Component {
           playlist={selected}
           media={selectedMedia}
           loading={!!selected.loading}
+          {...actions}
         />
       );
     } else if (searchQuery) {
@@ -57,6 +70,7 @@ export default class PlaylistManager extends Component {
           query={searchQuery}
           results={searchResults}
           loadingState={searchLoadingState}
+          {...actions}
         />
       );
     } else {

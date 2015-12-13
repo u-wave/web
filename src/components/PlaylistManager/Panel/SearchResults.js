@@ -4,11 +4,19 @@ import { LOADED } from '../../../constants/LoadingStates';
 import Loader from '../../Loader';
 import MediaList from '../../MediaList';
 
-const SearchResults = ({ className, query, results, loadingState }) => {
+import AddToPlaylistAction from '../../MediaList/Actions/AddToPlaylist';
+
+const SearchResults = ({ className, query, results, loadingState, onAddToPlaylist }) => {
   const list = loadingState === LOADED
     ? <MediaList
         className="PlaylistPanel-media"
         media={results}
+        makeActions={(media, selection) => [
+          <AddToPlaylistAction
+            key="add"
+            onAdd={() => onAddToPlaylist(media, selection)}
+          />
+        ]}
       />
     : <div className="PlaylistPanel-loading"> <Loader size="large" /> </div>;
 

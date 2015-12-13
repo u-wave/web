@@ -31,7 +31,9 @@ export default class Row extends React.Component {
     isDragging: React.PropTypes.bool.isRequired,
     media: React.PropTypes.object,
     selected: React.PropTypes.bool,
-    selection: React.PropTypes.array
+    selection: React.PropTypes.array,
+
+    makeActions: React.PropTypes.func
   };
 
   static defaultProps = {
@@ -52,6 +54,9 @@ export default class Row extends React.Component {
     const {
       className, media, selection, selected,
       connectDragSource, isDragging,
+      // actions
+      makeActions,
+      // etc
       ...attrs
     } = this.props;
     const { showActions } = this.state;
@@ -94,6 +99,7 @@ export default class Row extends React.Component {
             className={cx('MediaListRow-actions', selectedClass)}
             selection={selection}
             media={media}
+            makeActions={makeActions}
           />
         )}
       </div>
