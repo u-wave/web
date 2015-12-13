@@ -49,7 +49,9 @@ export function selectPlaylist(playlistID) {
       payload: { playlistID }
     });
 
-    dispatch(loadPlaylist(playlistID));
+    if (playlistID) {
+      dispatch(loadPlaylist(playlistID));
+    }
   };
 }
 

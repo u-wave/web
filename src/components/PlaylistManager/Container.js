@@ -10,6 +10,7 @@ import {
   removeMedia,
   selectPlaylist
 } from '../../actions/PlaylistActionCreators';
+import { search, setSource as setSearchSource } from '../../actions/SearchActionCreators';
 
 import PlaylistManager from './';
 
@@ -49,7 +50,10 @@ const mapDispatchToProps = dispatch => {
     onMoveToFirst,
     onEditMedia,
     onRemoveFromPlaylist,
-    onSelectPlaylist: selectPlaylist
+    onSelectPlaylist: selectPlaylist,
+    onSelectSearchResults: () => selectPlaylist(null),
+    onSearchSubmit: search,
+    onSearchSourceChange: setSearchSource
   }, dispatch);
 
   return {

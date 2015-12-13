@@ -1,22 +1,22 @@
 import cx from 'classnames';
-import React from 'react';
-import { setSource } from '../../../actions/SearchActionCreators';
+import React, { Component, PropTypes } from 'react';
 
-export default class SourcePicker extends React.Component {
+export default class SourcePicker extends Component {
   static propTypes = {
-    className: React.PropTypes.string,
-    selected: React.PropTypes.string
+    className: PropTypes.string,
+    selected: PropTypes.string,
+    onChange: PropTypes.func
   };
 
   createElement(sourceName) {
-    const activeClass = this.props.selected === sourceName ? 'SourcePickerElement--active' : '';
-    const props = {
-      className: cx('SourcePickerElement', `SourcePickerElement--${sourceName}`, activeClass),
-      onClick() {
-        setSource(sourceName);
-      }
-    };
-    return <div {...props} />;
+    const { selected, onChange } = this.props;
+    const activeClass = selected === sourceName ? 'SourcePickerElement--active' : '';
+    return (
+      <div
+        className={cx('SourcePickerElement', `SourcePickerElement--${sourceName}`, activeClass)}
+        onClick={() => onChange(sourceName)}
+      />
+    );
   }
 
   render() {

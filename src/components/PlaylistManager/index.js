@@ -1,7 +1,6 @@
 import cx from 'classnames';
 import React, { Component, PropTypes } from 'react';
 import { IDLE, LOADING, LOADED } from '../../constants/LoadingStates';
-import { search } from '../../actions/SearchActionCreators';
 import PlaylistMenu from './Menu';
 import PlaylistHeader from './Header';
 import PlaylistPanel from './Panel';
@@ -25,6 +24,9 @@ export default class PlaylistManager extends Component {
 
     onCloseOverlay: PropTypes.func,
     onSelectPlaylist: PropTypes.func,
+    onSelectSearchResults: PropTypes.func,
+    onSearchSubmit: PropTypes.func,
+    onSearchSourceChange: PropTypes.func,
     onAddToPlaylist: PropTypes.func,
     onMoveToFirst: PropTypes.func,
     onEditMedia: PropTypes.func,
@@ -42,7 +44,10 @@ export default class PlaylistManager extends Component {
       searchResults,
       searchLoadingState,
       onCloseOverlay,
-      onSelectPlaylist
+      onSelectPlaylist,
+      onSelectSearchResults,
+      onSearchSubmit,
+      onSearchSourceChange
     } = this.props;
 
     let panel;
@@ -81,7 +86,8 @@ export default class PlaylistManager extends Component {
           className="PlaylistManager-header AppRow AppRow--top"
           selectedPlaylist={selectedPlaylist}
           searchSource={searchSource}
-          onSearchSubmit={search}
+          onSearchSubmit={onSearchSubmit}
+          onSearchSourceChange={onSearchSourceChange}
           onCloseOverlay={onCloseOverlay}
         />
 
@@ -94,6 +100,7 @@ export default class PlaylistManager extends Component {
             searchQuery={searchQuery}
             searchResults={searchResults ? searchResults.length : 0}
             onSelectPlaylist={playlist => onSelectPlaylist(playlist._id)}
+            onSelectSearchResults={onSelectSearchResults}
           />
 
           {panel}
