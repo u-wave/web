@@ -22,6 +22,8 @@ const selectionOrOne = (media, selection) => {
 
 const mapStateToProps = ({ playlists, mediaSearch }) => ({
   playlists: values(playlists.playlists),
+  activePlaylist: playlists.playlists[playlists.activePlaylistID],
+  selectedPlaylist: playlists.playlists[playlists.selectedPlaylistID],
   activeMedia: playlists.activeMedia,
   selectedMedia: playlists.selectedMedia,
 

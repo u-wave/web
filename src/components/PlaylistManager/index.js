@@ -1,5 +1,4 @@
 import cx from 'classnames';
-import find from 'array-find';
 import React, { Component, PropTypes } from 'react';
 import { IDLE, LOADING, LOADED } from '../../constants/LoadingStates';
 import { search } from '../../actions/SearchActionCreators';
@@ -14,7 +13,9 @@ export default class PlaylistManager extends Component {
     className: PropTypes.string,
 
     playlists: PropTypes.array,
+    activePlaylist: PropTypes.object,
     activeMedia: PropTypes.array,
+    selectedPlaylist: PropTypes.object,
     selectedMedia: PropTypes.array,
 
     searchSource: PropTypes.oneOf([ 'youtube', 'soundcloud' ]),
@@ -33,6 +34,8 @@ export default class PlaylistManager extends Component {
   render() {
     const {
       playlists,
+      activePlaylist,
+      selectedPlaylist,
       selectedMedia,
       searchSource,
       searchQuery,
@@ -41,35 +44,31 @@ export default class PlaylistManager extends Component {
       onCloseOverlay,
       onSelectPlaylist
     } = this.props;
-    const active = find(playlists, playlist => playlist.active);
-    const selected = find(playlists, playlist => playlist.selected);
-
-    const mediaActions = {
-      onAddToPlaylist: this.props.onAddToPlaylist,
-      onMoveToFirst: this.props.onMoveToFirst(selected._id),
-      onEditMedia: this.props.onEditMedia(selected._id),
-      onRemoveFromPlaylist: this.props.onRemoveFromPlaylist(selected._id)
-    };
 
     let panel;
-    if (selected) {
+    if (selectedPlaylist) {
+      const { onAddToPlaylist, onMoveToFirst, onEditMedia, onRemoveFromPlaylist } = this.props;
       panel = (
         <PlaylistPanel
           className="PlaylistManager-panel"
-          playlist={selected}
+          playlist={selectedPlaylist}
           media={selectedMedia}
-          loading={!!selected.loading}
-          {...mediaActions}
+          loading={!!selectedPlaylist.loading}
+          onAddToPlaylist={onAddToPlaylist}
+          onMoveToFirst={onMoveToFirst(selectedPlaylist._id)}
+          onEditMedia={onEditMedia(selectedPlaylist._id)}
+          onRemoveFromPlaylist={onRemoveFromPlaylist(selectedPlaylist._id)}
         />
       );
     } else if (searchQuery) {
+      const { onAddToPlaylist } = this.props;
       panel = (
         <SearchResults
           className="PlaylistManager-panel"
           query={searchQuery}
           results={searchResults}
           loadingState={searchLoadingState}
-          {...mediaActions}
+          onAddToPlaylist={onAddToPlaylist}
         />
       );
     } else {
@@ -80,7 +79,7 @@ export default class PlaylistManager extends Component {
       <div className={cx('PlaylistManager', 'AppColumn', 'AppColumn--full', this.props.className)}>
         <PlaylistHeader
           className="PlaylistManager-header AppRow AppRow--top"
-          selectedPlaylist={selected}
+          selectedPlaylist={selectedPlaylist}
           searchSource={searchSource}
           onSearchSubmit={search}
           onCloseOverlay={onCloseOverlay}
@@ -90,8 +89,8 @@ export default class PlaylistManager extends Component {
           <PlaylistMenu
             className="PlaylistManager-menu"
             playlists={playlists}
-            active={active}
-            selected={selected}
+            active={activePlaylist}
+            selected={selectedPlaylist}
             searchQuery={searchQuery}
             searchResults={searchResults ? searchResults.length : 0}
             onSelectPlaylist={playlist => onSelectPlaylist(playlist._id)}
