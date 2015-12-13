@@ -32,7 +32,11 @@ const makeActions = ({ onAddToPlaylist, onMoveToFirst, onEditMedia, onRemoveFrom
   ];
 };
 
-const PlaylistPanel = ({ className, playlist, media, loading, ...props }) => {
+const PlaylistPanel = ({
+  className, playlist, media, loading,
+  onActivatePlaylist,
+  ...props
+}) => {
   const list = loading
     ? <div className="PlaylistPanel-loading">
         <Loader size="large" />
@@ -50,6 +54,7 @@ const PlaylistPanel = ({ className, playlist, media, loading, ...props }) => {
         id={playlist._id}
         name={playlist.name}
         active={playlist.active}
+        onActivatePlaylist={onActivatePlaylist}
       />
       {list}
     </div>
