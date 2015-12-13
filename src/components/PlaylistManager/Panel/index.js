@@ -32,8 +32,7 @@ const makeActions = ({ onAddToPlaylist, onMoveToFirst, onEditMedia, onRemoveFrom
   ];
 };
 
-const PlaylistPanel = props => {
-  const { className, playlist, media, loading } = props;
+const PlaylistPanel = ({ className, playlist, media, loading, ...props }) => {
   const list = loading
     ? <div className="PlaylistPanel-loading">
         <Loader size="large" />
