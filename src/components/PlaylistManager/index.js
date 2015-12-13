@@ -23,6 +23,7 @@ export default class PlaylistManager extends Component {
     searchLoadingState: PropTypes.oneOf([ IDLE, LOADING, LOADED ]),
 
     onCloseOverlay: PropTypes.func,
+    onCreatePlaylist: PropTypes.func,
     onActivatePlaylist: PropTypes.func,
     onSelectPlaylist: PropTypes.func,
     onSelectSearchResults: PropTypes.func,
@@ -45,6 +46,7 @@ export default class PlaylistManager extends Component {
       searchResults,
       searchLoadingState,
       onCloseOverlay,
+      onCreatePlaylist,
       onActivatePlaylist,
       onSelectPlaylist,
       onSelectSearchResults,
@@ -102,6 +104,7 @@ export default class PlaylistManager extends Component {
             selected={selectedPlaylist}
             searchQuery={searchQuery}
             searchResults={searchResults ? searchResults.length : 0}
+            onCreatePlaylist={onCreatePlaylist}
             onSelectPlaylist={playlist => onSelectPlaylist(playlist._id)}
             onSelectSearchResults={onSelectSearchResults}
           />

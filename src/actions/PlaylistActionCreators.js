@@ -104,7 +104,7 @@ export function loadPlaylists() {
   };
 }
 
-export function createPlaylist(name) {
+function doCreatePlaylist(name) {
   return (dispatch, getState) => {
     const jwt = getState().auth.jwt;
 
@@ -134,6 +134,15 @@ export function createPlaylist(name) {
           meta: { tempId }
         });
       });
+  };
+}
+
+export function createPlaylist() {
+  return dispatch => {
+    const name = prompt('Playlist name?');
+    if (name) {
+      dispatch(doCreatePlaylist(name));
+    }
   };
 }
 

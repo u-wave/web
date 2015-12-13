@@ -8,6 +8,7 @@ import {
   editMedia,
   moveMedia,
   removeMedia,
+  createPlaylist,
   activatePlaylist,
   selectPlaylist
 } from '../../actions/PlaylistActionCreators';
@@ -51,6 +52,7 @@ const mapDispatchToProps = dispatch => {
     onMoveToFirst,
     onEditMedia,
     onRemoveFromPlaylist,
+    onCreatePlaylist: createPlaylist,
     onActivatePlaylist: activatePlaylist,
     onSelectPlaylist: selectPlaylist,
     onSelectSearchResults: () => selectPlaylist(null),

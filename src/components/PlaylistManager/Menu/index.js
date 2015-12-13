@@ -9,13 +9,16 @@ const byName = (a, b) => naturalCmp(a.name.toLowerCase(), b.name.toLowerCase());
 
 const Menu = ({
   className, playlists, selected, searchQuery, searchResults,
-  onSelectPlaylist, onSelectSearchResults
+  onCreatePlaylist, onSelectPlaylist, onSelectSearchResults
 }) => {
   const sorted = playlists.slice().sort(byName);
   const searchIsSelected = selected ? '' : 'is-selected';
   return (
     <div className={cx('PlaylistMenu', className)}>
-      <PlaylistCreateRow className="PlaylistMenu-row" />
+      <PlaylistCreateRow
+        className="PlaylistMenu-row"
+        onClick={onCreatePlaylist}
+      />
       {searchQuery && (
         <SearchResultsRow
           className={cx('PlaylistMenu-row', searchIsSelected)}

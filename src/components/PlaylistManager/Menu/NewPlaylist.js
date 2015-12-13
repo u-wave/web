@@ -1,23 +1,19 @@
 import cx from 'classnames';
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import CreatePlaylistIcon from 'material-ui/lib/svg-icons/content/add';
-import { createPlaylist } from '../../../actions/PlaylistActionCreators';
 
-export default class NewPlaylist extends React.Component {
+export default class NewPlaylist extends Component {
   static propTypes = {
-    className: React.PropTypes.string
+    className: PropTypes.string,
+    onClick: PropTypes.func
   };
 
-  onClick() {
-    createPlaylist(prompt('Name?'));
-  }
-
   render() {
-    const { className } = this.props;
+    const { className, onClick } = this.props;
     return (
       <div
         className={cx('PlaylistMenuRow', 'PlaylistMenuRow--create', className)}
-        onClick={::this.onClick}
+        onClick={onClick}
       >
         <div className="PlaylistMenuRow-active-icon">
           <CreatePlaylistIcon color="#fff" />

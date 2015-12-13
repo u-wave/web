@@ -42,7 +42,7 @@ function processMove(list, movedMedia, afterID) {
 }
 
 export default function reduce(state = initialState, action = {}) {
-  const { type, payload, error } = action;
+  const { type, payload, meta, error } = action;
   switch (type) {
   case 'loadedPlaylists':
     return error
@@ -140,7 +140,7 @@ export default function reduce(state = initialState, action = {}) {
     return {
       ...state,
       playlists: assign(
-        deselectAll(except(state.playlists, meta.tempId)),
+        deselectAll(except(state.playlists, `${meta.tempId}`)),
         { [payload.playlist._id]: {
           ...payload.playlist,
           selected: true
