@@ -1,15 +1,14 @@
 import cx from 'classnames';
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import { DropTarget } from 'react-dnd';
 import ActiveIcon from 'material-ui/lib/svg-icons/navigation/check';
 import { MEDIA } from '../../../constants/DDItemTypes';
-import { addMedia } from '../../../actions/PlaylistActionCreators';
 import Loader from '../../Loader';
 
 const playlistTarget = {
-  drop({ playlist }, monitor) {
+  drop({ playlist, onAddToPlaylist }, monitor) {
     const { media } = monitor.getItem();
-    addMedia(playlist, media);
+    onAddToPlaylist(playlist, media);
   }
 };
 
@@ -19,13 +18,15 @@ const collect = (connect, monitor) => ({
 });
 
 @DropTarget(MEDIA, playlistTarget, collect)
-export default class PlaylistRow extends React.Component {
+export default class PlaylistRow extends Component {
   static propTypes = {
-    className: React.PropTypes.string,
-    playlist: React.PropTypes.object,
-    onClick: React.PropTypes.func,
-    connectDropTarget: React.PropTypes.func.isRequired,
-    isOver: React.PropTypes.bool.isRequired
+    className: PropTypes.string,
+    playlist: PropTypes.object,
+    isOver: PropTypes.bool.isRequired,
+
+    connectDropTarget: PropTypes.func.isRequired,
+    onClick: PropTypes.func,
+    onAddToPlaylist: PropTypes.func
   };
 
   render() {

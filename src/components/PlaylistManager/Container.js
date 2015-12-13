@@ -5,6 +5,8 @@ import curry from 'curry';
 import values from 'object-values';
 
 import {
+  addMedia,
+  addMediaMenu,
   editMedia,
   moveMedia,
   removeMedia,
@@ -37,9 +39,8 @@ const mapStateToProps = ({ playlists, mediaSearch }) => ({
 });
 
 const mapDispatchToProps = dispatch => {
-  const onAddToPlaylist = () => {
-    throw new Error('unimplemented');
-  };
+  const onOpenAddMediaMenu = (position, media, selection) =>
+    addMediaMenu(selectionOrOne(media, selection), position);
   const onRemoveFromPlaylist = (playlist, media, selection) =>
     removeMedia(playlist, selectionOrOne(media, selection));
   const onMoveToFirst = (playlist, media, selection) =>
@@ -48,10 +49,11 @@ const mapDispatchToProps = dispatch => {
     editMedia(playlist, media);
 
   const bound = bindActionCreators({
-    onAddToPlaylist,
+    onOpenAddMediaMenu,
     onMoveToFirst,
     onEditMedia,
     onRemoveFromPlaylist,
+    onAddToPlaylist: addMedia,
     onCreatePlaylist: createPlaylist,
     onActivatePlaylist: activatePlaylist,
     onSelectPlaylist: selectPlaylist,
@@ -62,7 +64,7 @@ const mapDispatchToProps = dispatch => {
 
   return {
     ...bound,
-    onAddToPlaylist: bound.onAddToPlaylist,
+    onOpenAddMediaMenu: curry.to(3, bound.onOpenAddMediaMenu),
     onMoveToFirst: curry.to(3, bound.onMoveToFirst),
     onEditMedia: curry.to(2, bound.onEditMedia),
     onRemoveFromPlaylist: curry.to(3, bound.onRemoveFromPlaylist)

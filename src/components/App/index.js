@@ -14,6 +14,7 @@ import Video from '../Video/Container';
 import Overlays from './Overlays';
 import PlaylistManager from '../PlaylistManager/Container';
 import LoginModal from '../LoginModal/Container';
+import AddToPlaylistMenu from '../PlaylistManager/AddingMenu/Container';
 
 @DragDropContext(HTML5Backend)
 export default class App extends React.Component {
@@ -86,6 +87,8 @@ export default class App extends React.Component {
           onLogin={onLogin}
           onRegister={onRegister}
         />
+
+        <AddToPlaylistMenu />
       </div>
     );
   }

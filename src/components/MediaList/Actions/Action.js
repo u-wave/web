@@ -1,15 +1,21 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 
-const Action = ({ children, onAction, ...attrs }) => {
-  return (
-    <div
-      className="MediaActions-action"
-      onClick={onAction}
-      {...attrs}
-    >
-      {children}
-    </div>
-  );
-};
+export default class Action extends Component {
+  static propTypes = {
+    children: PropTypes.element,
+    onAction: PropTypes.func
+  };
 
-export default Action;
+  render() {
+    const { children, onAction, ...attrs } = this.props;
+    return (
+      <div
+        className="MediaActions-action"
+        onClick={onAction}
+        {...attrs}
+      >
+        {children}
+      </div>
+    );
+  }
+}

@@ -30,6 +30,7 @@ export default class PlaylistManager extends Component {
     onSearchSubmit: PropTypes.func,
     onSearchSourceChange: PropTypes.func,
     onAddToPlaylist: PropTypes.func,
+    onOpenAddMediaMenu: PropTypes.func,
     onMoveToFirst: PropTypes.func,
     onEditMedia: PropTypes.func,
     onRemoveFromPlaylist: PropTypes.func
@@ -47,6 +48,7 @@ export default class PlaylistManager extends Component {
       searchLoadingState,
       onCloseOverlay,
       onCreatePlaylist,
+      onAddToPlaylist,
       onActivatePlaylist,
       onSelectPlaylist,
       onSelectSearchResults,
@@ -56,7 +58,7 @@ export default class PlaylistManager extends Component {
 
     let panel;
     if (selectedPlaylist) {
-      const { onAddToPlaylist, onMoveToFirst, onEditMedia, onRemoveFromPlaylist } = this.props;
+      const { onOpenAddMediaMenu, onMoveToFirst, onEditMedia, onRemoveFromPlaylist } = this.props;
       panel = (
         <PlaylistPanel
           className="PlaylistManager-panel"
@@ -64,21 +66,21 @@ export default class PlaylistManager extends Component {
           media={selectedMedia}
           loading={!!selectedPlaylist.loading}
           onActivatePlaylist={onActivatePlaylist}
-          onAddToPlaylist={onAddToPlaylist}
+          onOpenAddMediaMenu={onOpenAddMediaMenu}
           onMoveToFirst={onMoveToFirst(selectedPlaylist._id)}
           onEditMedia={onEditMedia(selectedPlaylist._id)}
           onRemoveFromPlaylist={onRemoveFromPlaylist(selectedPlaylist._id)}
         />
       );
     } else if (searchQuery) {
-      const { onAddToPlaylist } = this.props;
+      const { onOpenAddMediaMenu } = this.props;
       panel = (
         <SearchResults
           className="PlaylistManager-panel"
           query={searchQuery}
           results={searchResults}
           loadingState={searchLoadingState}
-          onAddToPlaylist={onAddToPlaylist}
+          onOpenAddMediaMenu={onOpenAddMediaMenu}
         />
       );
     } else {
@@ -105,6 +107,7 @@ export default class PlaylistManager extends Component {
             searchQuery={searchQuery}
             searchResults={searchResults ? searchResults.length : 0}
             onCreatePlaylist={onCreatePlaylist}
+            onAddToPlaylist={onAddToPlaylist}
             onSelectPlaylist={playlist => onSelectPlaylist(playlist._id)}
             onSelectSearchResults={onSelectSearchResults}
           />

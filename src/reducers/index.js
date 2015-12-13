@@ -1,4 +1,5 @@
 export activeOverlay from './activeOverlay';
+export addToPlaylistMenu from './addToPlaylistMenu';
 export auth from './auth';
 export booth from './booth';
 export chat from './chat';

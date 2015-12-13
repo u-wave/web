@@ -7,7 +7,8 @@ export default class SearchResultsRow extends Component {
     className: PropTypes.string,
     query: PropTypes.string,
     size: PropTypes.number,
-    onClick: PropTypes.func
+    onClick: PropTypes.func,
+    onAddToPlaylist: PropTypes.func
   };
 
   render() {

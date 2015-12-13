@@ -1,3 +1,4 @@
+import values from 'object-values';
 import { del, get, post, put } from '../utils/Request';
 
 export function setPlaylists(playlists) {
@@ -146,7 +147,25 @@ export function createPlaylist() {
   };
 }
 
-export function addMedia(playlist, items) {
+export function addMediaMenu(items, position) {
+  return (dispatch, getState) => {
+    const playlists = values(getState().playlists.playlists);
+    dispatch({
+      type: 'openAddToPlaylistMenu',
+      payload: {
+        media: items,
+        playlists,
+        position
+      }
+    });
+  };
+}
+
+export function closeAddMediaMenu() {
+  return { type: 'closeAddToPlaylistMenu' };
+}
+
+export function addMedia(playlist, items, afterID = null) {
   return (dispatch, getState) => {
     const jwt = getState().auth.jwt;
 
@@ -154,11 +173,12 @@ export function addMedia(playlist, items) {
       type: 'addMediaToPlaylist',
       payload: {
         playlistID: playlist._id,
-        media: items
+        media: items,
+        afterID
       }
     });
 
-    post(jwt, `/v1/playlists/${playlist._id}/media`, { items })
+    post(jwt, `/v1/playlists/${playlist._id}/media`, { items, after: afterID })
       .then(res => res.json())
       .then(({ added, playlistSize }) => {
         dispatch({
@@ -166,6 +186,7 @@ export function addMedia(playlist, items) {
           payload: {
             playlistID: playlist._id,
             newSize: playlistSize,
+            afterID: afterID,
             appendedMedia: added.map(flattenPlaylistItem)
           }
         });

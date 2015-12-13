@@ -9,11 +9,11 @@ import RemoveFromPlaylistAction from '../../MediaList/Actions/RemoveFromPlaylist
 import EditMediaAction from '../../MediaList/Actions/EditMedia';
 import MoveToFirstAction from '../../MediaList/Actions/MoveToFirst';
 
-const makeActions = ({ onAddToPlaylist, onMoveToFirst, onEditMedia, onRemoveFromPlaylist }) => {
+const makeActions = ({ onOpenAddMediaMenu, onMoveToFirst, onEditMedia, onRemoveFromPlaylist }) => {
   return (media, selection, index) => [
     <AddToPlaylistAction
       key="add"
-      onAdd={() => onAddToPlaylist(media, selection)}
+      onAdd={position => onOpenAddMediaMenu(position, media, selection)}
     />,
     index > 0 && (
       <MoveToFirstAction

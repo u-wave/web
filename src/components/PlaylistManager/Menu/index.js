@@ -9,7 +9,7 @@ const byName = (a, b) => naturalCmp(a.name.toLowerCase(), b.name.toLowerCase());
 
 const Menu = ({
   className, playlists, selected, searchQuery, searchResults,
-  onCreatePlaylist, onSelectPlaylist, onSelectSearchResults
+  onCreatePlaylist, onSelectPlaylist, onSelectSearchResults, onAddToPlaylist
 }) => {
   const sorted = playlists.slice().sort(byName);
   const searchIsSelected = selected ? '' : 'is-selected';
@@ -34,6 +34,7 @@ const Menu = ({
             className="PlaylistMenu-row"
             playlist={pl}
             onClick={() => onSelectPlaylist(pl)}
+            onAddToPlaylist={onAddToPlaylist}
           />
         );
       })}

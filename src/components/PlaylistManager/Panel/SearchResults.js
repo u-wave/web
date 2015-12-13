@@ -6,7 +6,7 @@ import MediaList from '../../MediaList';
 
 import AddToPlaylistAction from '../../MediaList/Actions/AddToPlaylist';
 
-const SearchResults = ({ className, query, results, loadingState, onAddToPlaylist }) => {
+const SearchResults = ({ className, query, results, loadingState, onOpenAddMediaMenu }) => {
   const list = loadingState === LOADED
     ? <MediaList
         className="PlaylistPanel-media"
@@ -14,7 +14,7 @@ const SearchResults = ({ className, query, results, loadingState, onAddToPlaylis
         makeActions={(media, selection) => [
           <AddToPlaylistAction
             key="add"
-            onAdd={() => onAddToPlaylist(media, selection)}
+            onAdd={position => onOpenAddMediaMenu(position, media, selection)}
           />
         ]}
       />
