@@ -23,6 +23,7 @@ export default class PlaylistManager extends Component {
     searchResults: PropTypes.object,
     searchLoadingState: PropTypes.oneOf([ IDLE, LOADING, LOADED ]),
 
+    onCloseOverlay: PropTypes.func,
     onAddToPlaylist: PropTypes.func,
     onMoveToFirst: PropTypes.func,
     onEditMedia: PropTypes.func,
@@ -40,12 +41,13 @@ export default class PlaylistManager extends Component {
       searchSource,
       searchQuery,
       searchResults,
-      searchLoadingState
+      searchLoadingState,
+      onCloseOverlay
     } = this.props;
     const active = find(playlists, playlist => playlist.active);
     const selected = find(playlists, playlist => playlist.selected);
 
-    const actions = {
+    const mediaActions = {
       onAddToPlaylist: this.props.onAddToPlaylist,
       onMoveToFirst: this.props.onMoveToFirst(selected._id),
       onEditMedia: this.props.onEditMedia(selected._id),
@@ -60,7 +62,7 @@ export default class PlaylistManager extends Component {
           playlist={selected}
           media={selectedMedia}
           loading={!!selected.loading}
-          {...actions}
+          {...mediaActions}
         />
       );
     } else if (searchQuery) {
@@ -70,7 +72,7 @@ export default class PlaylistManager extends Component {
           query={searchQuery}
           results={searchResults}
           loadingState={searchLoadingState}
-          {...actions}
+          {...mediaActions}
         />
       );
     } else {
@@ -84,6 +86,7 @@ export default class PlaylistManager extends Component {
           selectedPlaylist={selected}
           searchSource={searchSource}
           onSearchSubmit={search}
+          onCloseOverlay={onCloseOverlay}
         />
 
         <div className="AppRow AppRow--middle">

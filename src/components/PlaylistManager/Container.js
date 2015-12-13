@@ -48,12 +48,14 @@ const mapDispatchToProps = dispatch => {
     onRemoveFromPlaylist
   }, dispatch);
 
-  return {
+  const mediaActions = {
     onAddToPlaylist: bound.onAddToPlaylist,
     onMoveToFirst: curry.to(3, bound.onMoveToFirst),
     onEditMedia: curry.to(2, bound.onEditMedia),
     onRemoveFromPlaylist: curry.to(3, bound.onRemoveFromPlaylist)
   };
+
+  return mediaActions;
 };
 
 @connect(mapStateToProps, mapDispatchToProps)

@@ -25,6 +25,7 @@ export default class App extends React.Component {
 
     onLogin: React.PropTypes.func,
     onRegister: React.PropTypes.func,
+    onCloseOverlay: React.PropTypes.func,
     selectPanel: React.PropTypes.func,
     sendChatMessage: React.PropTypes.func
   };
@@ -33,7 +34,7 @@ export default class App extends React.Component {
     // state props
     const { activeOverlay, selectedPanel, settings, user } = this.props;
     // dispatch handlers
-    const { onLogin, onRegister, selectPanel, sendChatMessage } = this.props;
+    const { onLogin, onRegister, onCloseOverlay, selectPanel, sendChatMessage } = this.props;
     const isLoggedIn = !!user;
 
     return (
@@ -53,7 +54,10 @@ export default class App extends React.Component {
             />
           </div>
           <Overlays transitionName="Overlay" active={activeOverlay}>
-            <PlaylistManager key="playlistManager" />
+            <PlaylistManager
+              key="playlistManager"
+              onCloseOverlay={onCloseOverlay}
+            />
           </Overlays>
           <FooterBar className="AppRow AppRow--bottom" />
         </div>
