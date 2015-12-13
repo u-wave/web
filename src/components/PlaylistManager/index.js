@@ -2,7 +2,6 @@ import cx from 'classnames';
 import find from 'array-find';
 import React, { Component, PropTypes } from 'react';
 import { IDLE, LOADING, LOADED } from '../../constants/LoadingStates';
-import { selectPlaylist } from '../../actions/PlaylistActionCreators';
 import { search } from '../../actions/SearchActionCreators';
 import PlaylistMenu from './Menu';
 import PlaylistHeader from './Header';
@@ -24,15 +23,12 @@ export default class PlaylistManager extends Component {
     searchLoadingState: PropTypes.oneOf([ IDLE, LOADING, LOADED ]),
 
     onCloseOverlay: PropTypes.func,
+    onSelectPlaylist: PropTypes.func,
     onAddToPlaylist: PropTypes.func,
     onMoveToFirst: PropTypes.func,
     onEditMedia: PropTypes.func,
     onRemoveFromPlaylist: PropTypes.func
   };
-
-  onSelectPlaylist(playlist) {
-    selectPlaylist(playlist._id);
-  }
 
   render() {
     const {
@@ -42,7 +38,8 @@ export default class PlaylistManager extends Component {
       searchQuery,
       searchResults,
       searchLoadingState,
-      onCloseOverlay
+      onCloseOverlay,
+      onSelectPlaylist
     } = this.props;
     const active = find(playlists, playlist => playlist.active);
     const selected = find(playlists, playlist => playlist.selected);
@@ -97,7 +94,7 @@ export default class PlaylistManager extends Component {
             selected={selected}
             searchQuery={searchQuery}
             searchResults={searchResults ? searchResults.length : 0}
-            onSelectPlaylist={::this.onSelectPlaylist}
+            onSelectPlaylist={playlist => onSelectPlaylist(playlist._id)}
           />
 
           {panel}

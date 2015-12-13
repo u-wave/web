@@ -7,7 +7,8 @@ import values from 'object-values';
 import {
   editMedia,
   moveMedia,
-  removeMedia
+  removeMedia,
+  selectPlaylist
 } from '../../actions/PlaylistActionCreators';
 
 import PlaylistManager from './';
@@ -45,17 +46,17 @@ const mapDispatchToProps = dispatch => {
     onAddToPlaylist,
     onMoveToFirst,
     onEditMedia,
-    onRemoveFromPlaylist
+    onRemoveFromPlaylist,
+    onSelectPlaylist: selectPlaylist
   }, dispatch);
 
-  const mediaActions = {
+  return {
+    ...bound,
     onAddToPlaylist: bound.onAddToPlaylist,
     onMoveToFirst: curry.to(3, bound.onMoveToFirst),
     onEditMedia: curry.to(2, bound.onEditMedia),
     onRemoveFromPlaylist: curry.to(3, bound.onRemoveFromPlaylist)
   };
-
-  return mediaActions;
 };
 
 @connect(mapStateToProps, mapDispatchToProps)
