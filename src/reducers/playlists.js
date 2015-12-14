@@ -41,6 +41,23 @@ function processMove(list, movedMedia, afterID) {
   return updated;
 }
 
+// Applies a function to the media list belonging to `playlistID` if it is found
+// locally, i.e. in either the active or the selected playlist.
+function applyMediaChangeTo(state, playlistID, modify) {
+  if (playlistID === state.selectedPlaylistID) {
+    return {
+      ...state,
+      selectedMedia: modify(state.selectedMedia)
+    };
+  } else if (playlistID === state.activePlaylistID) {
+    return {
+      ...state,
+      activeMedia: modify(state.activeMedia)
+    };
+  }
+  return state;
+}
+
 export default function reduce(state = initialState, action = {}) {
   const { type, payload, meta, error } = action;
   switch (type) {
@@ -184,89 +201,46 @@ export default function reduce(state = initialState, action = {}) {
 
   case 'moveMediaInPlaylist':
     const isMovingMedia = indexBy(payload.medias, '_id');
-    if (payload.playlistID === state.selectedPlaylistID) {
-      return {
-        ...state,
-        selectedMedia: state.selectedMedia.map(media => ({
-          ...media,
-          loading: isMovingMedia[media._id] || media.loading
-        }))
-      };
-    } else if (payload.playlistID === state.activePlaylistID) {
-      return {
-        ...state,
-        activeMedia: state.activeMedia.map(media => ({
-          ...media,
-          loading: isMovingMedia[media._id] || media.loading
-        }))
-      };
-    }
-    return state;
+    return applyMediaChangeTo(state, payload.playlistID, playlist =>
+      playlist.map(media => ({
+        ...media,
+        loading: isMovingMedia[media._id] || media.loading
+      }))
+    );
   case 'movedMediaInPlaylist':
     if (error) {
       return state;
     }
-    if (state.selectedPlaylistID === payload.playlistID) {
-      return {
-        ...state,
-        selectedMedia: processMove(state.selectedMedia, payload.medias, payload.afterID)
-      };
-    } else if (state.activePlaylistID === payload.playlistID) {
-      return {
-        ...state,
-        activeMedia: processMove(state.activeMedia, payload.medias, payload.afterID)
-      };
-    }
-    return state;
+    return applyMediaChangeTo(state, payload.playlistID, playlist =>
+      processMove(playlist, payload.medias, payload.afterID)
+    );
 
   case 'removeMediaFromPlaylist':
     const isRemovingMedia = indexBy(payload.medias, '_id');
-    if (payload.playlistID === state.selectedPlaylistID) {
-      return {
-        ...state,
-        selectedMedia: state.selectedMedia.map(media => ({
-          ...media,
-          loading: isRemovingMedia[media._id] || media.loading
-        }))
-      };
-    } else if (payload.playlistID === state.activePlaylistID) {
-      return {
-        ...state,
-        activeMedia: state.activeMedia.map(media => ({
-          ...media,
-          loading: isRemovingMedia[media._id] || media.loading
-        }))
-      };
-    }
-    return state;
+    return applyMediaChangeTo(state, payload.playlistID, playlist =>
+      playlist.map(media => ({
+        ...media,
+        loading: isRemovingMedia[media._id] || media.loading
+      }))
+    );
   case 'removedMediaFromPlaylist':
     if (error) {
       return state;
     }
     const isRemovedMedia = indexBy(payload.removedMedia, '_id');
     const removedFromPlaylist = state.playlists[payload.playlistID];
-    const newState = {
-      ...state,
-      playlists: {
+    return assign(
+      applyMediaChangeTo(state, payload.playlistID, playlist =>
+        playlist.filter(media => !isRemovedMedia[media._id])
+      ),
+      { playlists: {
         ...state.playlists,
         [removedFromPlaylist._id]: {
           ...removedFromPlaylist,
           size: payload.newSize
         }
-      }
-    };
-    if (state.selectedPlaylistID === payload.playlistID) {
-      return assign(
-        newState,
-        { selectedMedia: state.selectedMedia.filter(media => !isRemovedMedia[media._id]) }
-      );
-    } else if (state.activePlaylistID === payload.playlistID) {
-      return assign(
-        newState,
-        { activeMedia: state.activeMedia.filter(media => !isRemovedMedia[media._id]) }
-      );
-    }
-    return newState;
+      } }
+    );
   default:
     return state;
   }
