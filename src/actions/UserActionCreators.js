@@ -1,24 +1,24 @@
-import { dispatch } from '../dispatcher';
+import { LOAD, JOIN, LEAVE } from '../constants/actionTypes/users';
 
 export function setUsers(users) {
-  dispatch({
-    type: 'setUsers',
+  return {
+    type: LOAD,
     payload: { users }
-  });
+  };
 }
 
 export function join(user) {
-  dispatch({
-    type: 'join',
+  return {
+    type: JOIN,
     payload: { user }
-  });
+  };
 }
 
 export function leave(id) {
-  dispatch({
-    type: 'leave',
+  return {
+    type: LEAVE,
     payload: {
       userID: id
     }
-  });
+  };
 }

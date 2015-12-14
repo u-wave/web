@@ -1,75 +1,86 @@
 import cx from 'classnames';
-import find from 'array-find';
-import React from 'react';
-import { selectPlaylist } from '../../actions/PlaylistActionCreators';
-import { search } from '../../actions/SearchActionCreators';
-import PlaylistStore from '../../stores/PlaylistStore';
-import SearchStore from '../../stores/SearchStore';
-import listen from '../../utils/listen';
+import React, { Component, PropTypes } from 'react';
+import { IDLE, LOADING, LOADED } from '../../constants/LoadingStates';
 import PlaylistMenu from './Menu';
 import PlaylistHeader from './Header';
 import PlaylistPanel from './Panel';
 import PlaylistPanelEmpty from './Panel/Empty';
 import SearchResults from './Panel/SearchResults';
 
-function getState() {
-  return {
-    playlists: PlaylistStore.getPlaylists(),
-    activeMedia: PlaylistStore.getActiveMedia(),
-    selectedMedia: PlaylistStore.getSelectedMedia(),
-
-    searchSource: SearchStore.getSourceType(),
-    searchQuery: SearchStore.getQuery(),
-    searchResults: SearchStore.getResults(),
-    searchLoadingState: SearchStore.getLoadingState()
-  };
-}
-
-@listen(PlaylistStore, SearchStore)
-export default class PlaylistManager extends React.Component {
+export default class PlaylistManager extends Component {
   static propTypes = {
-    className: React.PropTypes.string
+    className: PropTypes.string,
+
+    playlists: PropTypes.array,
+    activePlaylist: PropTypes.object,
+    activeMedia: PropTypes.array,
+    selectedPlaylist: PropTypes.object,
+    selectedMedia: PropTypes.array,
+
+    searchSource: PropTypes.oneOf([ 'youtube', 'soundcloud' ]),
+    searchQuery: PropTypes.string,
+    searchResults: PropTypes.object,
+    searchLoadingState: PropTypes.oneOf([ IDLE, LOADING, LOADED ]),
+
+    onCloseOverlay: PropTypes.func,
+    onCreatePlaylist: PropTypes.func,
+    onActivatePlaylist: PropTypes.func,
+    onSelectPlaylist: PropTypes.func,
+    onSelectSearchResults: PropTypes.func,
+    onSearchSubmit: PropTypes.func,
+    onSearchSourceChange: PropTypes.func,
+    onAddToPlaylist: PropTypes.func,
+    onOpenAddMediaMenu: PropTypes.func,
+    onMoveToFirst: PropTypes.func,
+    onEditMedia: PropTypes.func,
+    onRemoveFromPlaylist: PropTypes.func
   };
-
-  state = getState();
-
-  onChange() {
-    this.setState(getState());
-  }
-
-  onSelectPlaylist(playlist) {
-    selectPlaylist(playlist._id);
-  }
 
   render() {
     const {
       playlists,
+      activePlaylist,
+      selectedPlaylist,
       selectedMedia,
       searchSource,
       searchQuery,
       searchResults,
-      searchLoadingState
-    } = this.state;
-    const active = find(playlists, playlist => playlist.active);
-    const selected = find(playlists, playlist => playlist.selected);
+      searchLoadingState,
+      onCloseOverlay,
+      onCreatePlaylist,
+      onAddToPlaylist,
+      onActivatePlaylist,
+      onSelectPlaylist,
+      onSelectSearchResults,
+      onSearchSubmit,
+      onSearchSourceChange
+    } = this.props;
 
     let panel;
-    if (selected) {
+    if (selectedPlaylist) {
+      const { onOpenAddMediaMenu, onMoveToFirst, onEditMedia, onRemoveFromPlaylist } = this.props;
       panel = (
         <PlaylistPanel
           className="PlaylistManager-panel"
-          playlist={selected}
+          playlist={selectedPlaylist}
           media={selectedMedia}
-          loading={!!selected.loading}
+          loading={!!selectedPlaylist.loading}
+          onActivatePlaylist={onActivatePlaylist}
+          onOpenAddMediaMenu={onOpenAddMediaMenu}
+          onMoveToFirst={onMoveToFirst(selectedPlaylist._id)}
+          onEditMedia={onEditMedia(selectedPlaylist._id)}
+          onRemoveFromPlaylist={onRemoveFromPlaylist(selectedPlaylist._id)}
         />
       );
     } else if (searchQuery) {
+      const { onOpenAddMediaMenu } = this.props;
       panel = (
         <SearchResults
           className="PlaylistManager-panel"
           query={searchQuery}
           results={searchResults}
           loadingState={searchLoadingState}
+          onOpenAddMediaMenu={onOpenAddMediaMenu}
         />
       );
     } else {
@@ -80,20 +91,25 @@ export default class PlaylistManager extends React.Component {
       <div className={cx('PlaylistManager', 'AppColumn', 'AppColumn--full', this.props.className)}>
         <PlaylistHeader
           className="PlaylistManager-header AppRow AppRow--top"
-          selectedPlaylist={selected}
+          selectedPlaylist={selectedPlaylist}
           searchSource={searchSource}
-          onSearchSubmit={search}
+          onSearchSubmit={onSearchSubmit}
+          onSearchSourceChange={onSearchSourceChange}
+          onCloseOverlay={onCloseOverlay}
         />
 
         <div className="AppRow AppRow--middle">
           <PlaylistMenu
             className="PlaylistManager-menu"
             playlists={playlists}
-            active={active}
-            selected={selected}
+            active={activePlaylist}
+            selected={selectedPlaylist}
             searchQuery={searchQuery}
-            searchResults={searchResults.length}
-            onSelectPlaylist={::this.onSelectPlaylist}
+            searchResults={searchResults ? searchResults.length : 0}
+            onCreatePlaylist={onCreatePlaylist}
+            onAddToPlaylist={onAddToPlaylist}
+            onSelectPlaylist={playlist => onSelectPlaylist(playlist._id)}
+            onSelectSearchResults={onSelectSearchResults}
           />
 
           {panel}

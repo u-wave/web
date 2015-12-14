@@ -1,13 +1,4 @@
 import find from 'array-find';
-import React from 'react';
-import UserStore from '../../../stores/UserStore';
-
-import Bold from './Bold';
-import Code from './Code';
-import Italic from './Italic';
-import StrikeThrough from './StrikeThrough';
-import Mention from './Mention';
-import Link from './Link';
 
 function Token(type, text, raw = text) {
   this.type = type;
@@ -91,27 +82,30 @@ function tokenize(text) {
   return tokens;
 }
 
-function parse(message) {
-  const users = UserStore.getUsers();
-  return tokenize(message).map((tok, i) => {
-    switch (tok.type) {
+// Parses a chat message into a tree-ish structure.
+// Options:
+//  * users: User objects that can be mentioned.
+function parse(message, opts) {
+  const { users } = opts;
+  return tokenize(message).map(token => {
+    switch (token.type) {
     case 'italic':
-      return <Italic key={i}>{parse(tok.text)}</Italic>;
+      return { type: 'italic', content: parse(token.text, opts) };
     case 'bold':
-      return <Bold key={i}>{parse(tok.text)}</Bold>;
+      return { type: 'bold', content: parse(token.text, opts) };
     case 'code':
-      return <Code key={i}>{tok.text}</Code>;
+      return { type: 'code', content: [ token.text ] };
     case 'strike':
-      return <StrikeThrough key={i}>{parse(tok.text)}</StrikeThrough>;
+      return { type: 'strike', content: parse(token.text, opts) };
     case 'mention':
-      const mention = find(users, user => user.username === tok.text);
+      const mention = users && find(users, user => user.username === token.text);
       return mention
-        ? <Mention key={i} user={mention} />
-        : tok.raw;
+        ? { type: 'mention', user: mention }
+        : token.raw;
     case 'link':
-      return <Link key={i} text={tok.text} href={tok.text} />;
+      return { type: 'link', text: token.text, href: token.text };
     default:
-      return tok.text;
+      return token.text;
     }
   });
 }

@@ -1,4 +1,3 @@
-import dispatcher from '../dispatcher';
 import { advance } from '../actions/AdvanceActionCreators';
 import { receive as chatReceive } from '../actions/ChatActionCreators';
 import { join as userJoin, leave as userLeave } from '../actions/UserActionCreators';
@@ -7,83 +6,82 @@ import WebSocket from 'ReconnectingWebSocket';
 
 const debug = require('debug')('uwave:websocket');
 
-let dispatchToken = null;
-export { dispatchToken };
-
 let socket = null;
+let sentJWT = false;
 let queue = [];
 
-function sendRaw(message) {
+function send(command, data) {
   if (socket.readyState === WebSocket.OPEN) {
-    socket.send(message);
+    socket.send(JSON.stringify({ command, data }));
   } else {
-    queue.push(message);
+    queue.push({ command, data });
   }
 }
 
-function send(command, data) {
-  sendRaw(JSON.stringify({ command, data }));
-}
-
-function onMessage(json) {
+function onMessage(dispatch, json) {
   const { command, data } = JSON.parse(json);
   debug(command, data);
   // convert between server & client message formats
   switch (command) {
   case 'chatMessage':
-    chatReceive({
+    dispatch(chatReceive({
       _id: data._id + '-' + data.timestamp,
       userID: data._id,
       text: data.message,
       timestamp: data.timestamp
-    });
+    }));
     break;
   case 'advance':
-    advance(data);
+    dispatch(advance(data));
     break;
 
   case 'waitlistJoin':
-    joinedWaitlist(data);
+    dispatch(joinedWaitlist(data));
     break;
   case 'waitlistLeave':
-    leftWaitlist(data);
+    dispatch(leftWaitlist(data));
     break;
   case 'waitlistUpdate':
-    updatedWaitlist(data);
+    dispatch(updatedWaitlist(data));
     break;
 
   case 'join':
-    userJoin(data);
+    dispatch(userJoin(data));
     break;
   case 'leave':
-    userLeave(data);
+    dispatch(userLeave(data));
     break;
   default:
     debug('!unknown socket message type');
   }
 }
 
-export function connect(url = location.href.replace(/^http(s)?:/, 'ws$1:')) {
+export function auth(jwt) {
+  if (!sentJWT && socket.readyState === WebSocket.OPEN) {
+    socket.send(jwt);
+  }
+}
+
+export function sendMessage(chatMessage) {
+  send('sendChat', chatMessage.payload.message);
+}
+
+export function connect(store, url = location.href.replace(/^http(s)?:/, 'ws$1:')) {
   socket = new WebSocket(url);
   socket.onmessage = pack => {
-    onMessage(pack.data);
+    onMessage(store.dispatch, pack.data);
   };
   socket.onopen = () => {
+    const jwt = store.getState().auth.jwt;
+    debug('open', jwt);
+    if (jwt) {
+      socket.send(jwt);
+      sentJWT = jwt;
+    } else {
+      sentJWT = false;
+    }
     const messages = queue;
     queue = [];
-    messages.forEach(sendRaw);
+    messages.forEach(msg => send(msg.command, msg.data));
   };
-
-  dispatchToken = dispatcher.register(({ type, payload }) => {
-    switch (type) {
-    case 'loginComplete':
-      sendRaw(payload.jwt);
-      break;
-    case 'chatSend':
-      send('sendChat', payload.message);
-      break;
-    default:
-      // Not for us
-    }
-  });
 }

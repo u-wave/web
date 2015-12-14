@@ -1,11 +1,23 @@
-import { dispatch } from '../dispatcher';
+import values from 'object-values';
+
+import {
+  LOAD_ALL_PLAYLISTS_START, LOAD_ALL_PLAYLISTS_COMPLETE,
+  LOAD_PLAYLIST_START, LOAD_PLAYLIST_COMPLETE,
+  SELECT_PLAYLIST,
+  ACTIVATE_PLAYLIST_START, ACTIVATE_PLAYLIST_COMPLETE,
+  CREATE_PLAYLIST_START, CREATE_PLAYLIST_COMPLETE,
+  OPEN_ADD_MEDIA_MENU, CLOSE_ADD_MEDIA_MENU,
+  ADD_MEDIA_START, ADD_MEDIA_COMPLETE,
+  REMOVE_MEDIA_START, REMOVE_MEDIA_COMPLETE,
+  MOVE_MEDIA_START, MOVE_MEDIA_COMPLETE
+} from '../constants/actionTypes/playlists';
 import { del, get, post, put } from '../utils/Request';
 
 export function setPlaylists(playlists) {
-  dispatch({
-    type: 'loadedPlaylists',
+  return {
+    type: LOAD_ALL_PLAYLISTS_COMPLETE,
     payload: { playlists }
-  });
+  };
 }
 
 export function flattenPlaylistItem(item) {
@@ -16,198 +28,260 @@ export function flattenPlaylistItem(item) {
 }
 
 export function loadPlaylist(playlistID) {
-  dispatch({
-    type: 'loadingPlaylist',
-    payload: { playlistID }
-  });
+  return (dispatch, getState) => {
+    const jwt = getState().auth.jwt;
 
-  get(`/v1/playlists/${playlistID}/media`)
-    .then(res => res.json())
-    .then(items => items.map(flattenPlaylistItem))
-    .then(media => {
-      dispatch({
-        type: 'loadedPlaylist',
-        payload: { playlistID, media }
-      });
-    })
-    .catch(e => {
-      dispatch({
-        type: 'loadedPlaylist',
-        error: true,
-        payload: e
-      });
+    dispatch({
+      type: LOAD_PLAYLIST_START,
+      payload: { playlistID }
     });
+
+    get(jwt, `/v1/playlists/${playlistID}/media`)
+      .then(res => res.json())
+      .then(items => items.map(flattenPlaylistItem))
+      .then(media => {
+        dispatch({
+          type: LOAD_PLAYLIST_COMPLETE,
+          payload: { playlistID, media }
+        });
+      })
+      .catch(e => {
+        dispatch({
+          type: LOAD_PLAYLIST_COMPLETE,
+          error: true,
+          payload: e
+        });
+      });
+  };
 }
 
 export function selectPlaylist(playlistID) {
-  dispatch({
-    type: 'selectPlaylist',
-    payload: { playlistID }
-  });
+  return dispatch => {
+    dispatch({
+      type: SELECT_PLAYLIST,
+      payload: { playlistID }
+    });
 
-  loadPlaylist(playlistID);
+    if (playlistID) {
+      dispatch(loadPlaylist(playlistID));
+    }
+  };
 }
 
 export function activatePlaylist(playlistID) {
-  dispatch({
-    type: 'activatePlaylist',
-    payload: { playlistID }
-  });
-  put(`/v1/playlists/${playlistID}/activate`)
-    .then(() => {
-      dispatch({
-        type: 'activatedPlaylist',
-        payload: { playlistID }
-      });
-    })
-    .catch(error => {
-      dispatch({
-        type: 'activatedPlaylist',
-        error: true,
-        payload: error,
-        meta: { playlistID }
-      });
+  return (dispatch, getState) => {
+    const jwt = getState().auth.jwt;
+
+    dispatch({
+      type: ACTIVATE_PLAYLIST_START,
+      payload: { playlistID }
     });
+    put(jwt, `/v1/playlists/${playlistID}/activate`)
+      .then(() => {
+        dispatch({
+          type: ACTIVATE_PLAYLIST_COMPLETE,
+          payload: { playlistID }
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: ACTIVATE_PLAYLIST_COMPLETE,
+          error: true,
+          payload: error,
+          meta: { playlistID }
+        });
+      });
+  };
 }
 
 export function loadPlaylists() {
-  dispatch({ type: 'loadingPlaylists' });
-  get('/v1/playlists')
-    .then(res => res.json())
-    .then(playlists => {
-      dispatch({
-        type: 'loadedPlaylists',
-        payload: { playlists }
+  return (dispatch, getState) => {
+    const jwt = getState().auth.jwt;
+
+    dispatch({ type: LOAD_ALL_PLAYLISTS_START });
+    get(jwt, '/v1/playlists')
+      .then(res => res.json())
+      .then(playlists => {
+        dispatch({
+          type: LOAD_ALL_PLAYLISTS_COMPLETE,
+          payload: { playlists }
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: LOAD_ALL_PLAYLISTS_COMPLETE,
+          error: true,
+          payload: error
+        });
       });
-    })
-    .catch(error => {
-      dispatch({
-        type: 'loadedPlaylists',
-        error: true,
-        payload: error
-      });
-    });
+  };
 }
 
-export function createPlaylist(name) {
-  const tempId = -Date.now();
-  const description = '';
-  const shared = false;
-  dispatch({
-    type: 'creatingPlaylist',
-    payload: { name, description, shared },
-    meta: { tempId }
-  });
+function doCreatePlaylist(name) {
+  return (dispatch, getState) => {
+    const jwt = getState().auth.jwt;
 
-  post('/v1/playlists', { name, description, shared })
-    .then(res => res.json())
-    .then(playlist => {
-      dispatch({
-        type: 'createdPlaylist',
-        payload: { playlist },
-        meta: { tempId }
-      });
-    })
-    .catch(error => {
-      dispatch({
-        type: 'createdPlaylist',
-        error: true,
-        payload: error,
-        meta: { tempId }
-      });
+    const tempId = -Date.now();
+    const description = '';
+    const shared = false;
+    dispatch({
+      type: CREATE_PLAYLIST_START,
+      payload: { name, description, shared },
+      meta: { tempId }
     });
+
+    post(jwt, '/v1/playlists', { name, description, shared })
+      .then(res => res.json())
+      .then(playlist => {
+        dispatch({
+          type: CREATE_PLAYLIST_COMPLETE,
+          payload: { playlist },
+          meta: { tempId }
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: CREATE_PLAYLIST_COMPLETE,
+          error: true,
+          payload: error,
+          meta: { tempId }
+        });
+      });
+  };
 }
 
-export function addMedia(playlist, items) {
-  post(`/v1/playlists/${playlist._id}/media`, { items })
-    .then(res => res.json())
-    .then(({ added, playlistSize }) => {
-      dispatch({
-        type: 'addedMediaToPlaylist',
-        payload: {
-          playlistID: playlist._id,
-          newSize: playlistSize,
-          appendedMedia: added.map(flattenPlaylistItem)
-        }
-      });
-    })
-    .catch(error => {
-      dispatch({
-        type: 'addedMediaToPlaylist',
-        error: true,
-        payload: error
-      });
-    });
-
-  dispatch({
-    type: 'addMediaToPlaylist',
-    payload: {
-      playlistID: playlist._id,
-      media: items
+export function createPlaylist() {
+  return dispatch => {
+    const name = prompt('Playlist name?');
+    if (name) {
+      dispatch(doCreatePlaylist(name));
     }
-  });
+  };
+}
+
+export function addMediaMenu(items, position) {
+  return (dispatch, getState) => {
+    const playlists = values(getState().playlists.playlists);
+    dispatch({
+      type: OPEN_ADD_MEDIA_MENU,
+      payload: {
+        media: items,
+        playlists,
+        position
+      }
+    });
+  };
+}
+
+export function closeAddMediaMenu() {
+  return { type: CLOSE_ADD_MEDIA_MENU };
+}
+
+export function addMedia(playlist, items, afterID = null) {
+  return (dispatch, getState) => {
+    const jwt = getState().auth.jwt;
+
+    dispatch({
+      type: ADD_MEDIA_START,
+      payload: {
+        playlistID: playlist._id,
+        media: items,
+        afterID
+      }
+    });
+
+    post(jwt, `/v1/playlists/${playlist._id}/media`, { items, after: afterID })
+      .then(res => res.json())
+      .then(({ added, playlistSize }) => {
+        dispatch({
+          type: ADD_MEDIA_COMPLETE,
+          payload: {
+            playlistID: playlist._id,
+            newSize: playlistSize,
+            afterID: afterID,
+            appendedMedia: added.map(flattenPlaylistItem)
+          }
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: ADD_MEDIA_COMPLETE,
+          error: true,
+          payload: error
+        });
+      });
+  };
 }
 
 export function editMedia(playlistID, media) {
-  dispatch({
-    type: 'showMediaEditDialog',
+  return {
+    type: 'editMedia',
     payload: { playlistID, media }
-  });
+  };
 }
 
 export function updateMedia(playlistID, mediaID, props) {
-  dispatch({
+  return {
     type: 'updateMedia',
     payload: { playlistID, mediaID, props }
-  });
+  };
 }
 
-export function removeMedia(playlistID, mediaID) {
-  // DELETE /v1/playlists/${playlistID}/media/${mediaID}
-  const payload = { playlistID, mediaID };
-  dispatch({
-    type: 'removeMediaFromPlaylist',
-    payload
-  });
-  del(`/v1/playlists/${playlistID}/media/${mediaID}`)
-    .then(() => {
-      dispatch({
-        type: 'removedMediaFromPlaylist',
-        payload
-      });
-    })
-    .catch(error => {
-      dispatch({
-        type: 'removedMediaFromPlaylist',
-        error: true,
-        payload: error,
-        meta: payload
-      });
+export function removeMedia(playlistID, medias) {
+  return (dispatch, getState) => {
+    const jwt = getState().auth.jwt;
+    dispatch({
+      type: REMOVE_MEDIA_START,
+      payload: { playlistID, medias }
     });
+    const items = medias.map(media => media._id);
+    del(jwt, `/v1/playlists/${playlistID}/media`, { items })
+      .then(res => res.json())
+      .then(({ removed, playlistSize }) => {
+        dispatch({
+          type: REMOVE_MEDIA_COMPLETE,
+          payload: {
+            playlistID,
+            newSize: playlistSize,
+            removedMedia: removed.map(flattenPlaylistItem)
+          }
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: REMOVE_MEDIA_COMPLETE,
+          error: true,
+          payload: error
+        });
+      });
+  };
 }
 
 export function moveMedia(playlistID, medias, afterID) {
-  const payload = { playlistID, medias, afterID };
-  // POST
-  dispatch({
-    type: 'moveMediaInPlaylist',
-    payload
-  });
-  const items = medias.map(media => media._id);
-  put(`/v1/playlists/${playlistID}/move`, { items, after: afterID })
-    .then(res => res.json())
-    .then(() => {
-      dispatch({
-        type: 'movedMediaInPlaylist',
-        payload
-      });
-    })
-    .catch(error => {
-      dispatch({
-        type: 'movedMediaInPlaylist',
-        error: true,
-        payload: error,
-        meta: payload
-      });
+  return (dispatch, getState) => {
+    const jwt = getState().auth.jwt;
+
+    const payload = { playlistID, medias, afterID };
+    dispatch({
+      type: MOVE_MEDIA_START,
+      payload
     });
+    const items = medias.map(media => media._id);
+    put(jwt, `/v1/playlists/${playlistID}/move`, { items, after: afterID })
+      .then(res => res.json())
+      .then(() => {
+        dispatch({
+          type: MOVE_MEDIA_COMPLETE,
+          payload
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: MOVE_MEDIA_COMPLETE,
+          error: true,
+          payload: error,
+          meta: payload
+        });
+      });
+  };
 }

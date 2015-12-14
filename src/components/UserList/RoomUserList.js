@@ -1,14 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import naturalCmp from 'natural-compare';
+import values from 'object-values';
 import UserList from '../UserList';
-import UserStore from '../../stores/UserStore';
-import listen from '../../utils/listen';
-
-function getState() {
-  return {
-    users: UserStore.getOnlineUsers()
-  };
-}
 
 function compareUsers(a, b) {
   if (a.role > b.role) {
@@ -20,23 +14,15 @@ function compareUsers(a, b) {
   return naturalCmp(a.username.toLowerCase(), b.username.toLowerCase());
 }
 
-@listen(UserStore)
-export default class RoomUsers extends Component {
-  state = getState();
+function mapStateToProps(state) {
+  return {
+    users: values(state.users).sort(compareUsers)
+  };
+}
 
-  onChange() {
-    this.setState(getState());
-  }
-
+@connect(mapStateToProps)
+export default class RoomUsersContainer extends Component {
   render() {
-    const users = this.state.users.slice();
-    users.sort(compareUsers);
-
-    return (
-      <UserList
-        users={users}
-        {...this.props}
-      />
-    );
+    return <UserList {...this.props} />;
   }
 }

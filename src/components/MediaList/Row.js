@@ -6,14 +6,13 @@ import formatDuration from '../../utils/formatDuration';
 import MediaLoadingIndicator from './MediaLoadingIndicator';
 import Actions from './Actions';
 
+const inSelection = (selection, media) =>
+  selection.some(item => item._id === media._id);
+
 const mediaSource = {
-  beginDrag(props) {
+  beginDrag({ selection, media }) {
     return {
-      // fall back to the row's media item if nothing is selected, i.e. if the
-      // user drags a single row without selecting other rows first
-      // TODO perhaps also fall back to the current row's media item if the
-      // current row is not selected?
-      media: props.selection || [ props.media ]
+      media: inSelection(selection, media) ? selection : [ media ]
     };
   }
 };
@@ -31,7 +30,9 @@ export default class Row extends React.Component {
     isDragging: React.PropTypes.bool.isRequired,
     media: React.PropTypes.object,
     selected: React.PropTypes.bool,
-    selection: React.PropTypes.array
+    selection: React.PropTypes.array,
+
+    makeActions: React.PropTypes.func
   };
 
   static defaultProps = {
@@ -52,6 +53,9 @@ export default class Row extends React.Component {
     const {
       className, media, selection, selected,
       connectDragSource, isDragging,
+      // actions
+      makeActions,
+      // etc
       ...attrs
     } = this.props;
     const { showActions } = this.state;
@@ -94,6 +98,7 @@ export default class Row extends React.Component {
             className={cx('MediaListRow-actions', selectedClass)}
             selection={selection}
             media={media}
+            makeActions={makeActions}
           />
         )}
       </div>

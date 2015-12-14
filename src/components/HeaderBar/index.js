@@ -1,44 +1,35 @@
 import cx from 'classnames';
-import React from 'react';
-import CurrentMediaStore from '../../stores/CurrentMediaStore';
-import SettingsStore from '../../stores/SettingsStore';
-import listen from '../../utils/listen';
+import React, { Component, PropTypes } from 'react';
 import Progress from './Progress';
 import SongTitle from '../SongTitle';
 import Volume from './Volume';
 
-function getState() {
-  const startTime = CurrentMediaStore.getStartTime();
-  const media = CurrentMediaStore.getMedia();
-  const dj = CurrentMediaStore.getDJ();
-  const volume = SettingsStore.getSetting('volume');
-  const muted = SettingsStore.getSetting('muted');
-  return {
-    startTime: startTime,
-    total: media ? media.end - media.start : 0,
-    media: media,
-    dj: dj,
-    volume: volume,
-    muted: muted
-  };
-}
-
-@listen(CurrentMediaStore, SettingsStore)
-export default class HeaderBar extends React.Component {
+export default class HeaderBar extends Component {
   static propTypes = {
-    className: React.PropTypes.string,
-    title: React.PropTypes.string
+    className: PropTypes.string,
+    title: PropTypes.string,
+    currentTime: PropTypes.number,
+
+    dj: PropTypes.object,
+    media: PropTypes.object,
+    mediaDuration: PropTypes.number,
+    mediaStartTime: PropTypes.number,
+    volume: PropTypes.number,
+    muted: PropTypes.bool,
+
+    onVolumeChange: PropTypes.func,
+    onVolumeMute: PropTypes.func,
+    onVolumeUnmute: PropTypes.func
   };
-
-  state = getState();
-
-  onChange() {
-    this.setState(getState());
-  }
 
   render() {
-    const { title, ...props } = this.props;
-    const { media, dj } = this.state;
+    const {
+      className, title, currentTime,
+      dj, media, mediaDuration, mediaStartTime,
+      volume, muted,
+      onVolumeChange, onVolumeMute, onVolumeUnmute,
+      ...props
+    } = this.props;
 
     const nowPlaying = media
       ? <SongTitle
@@ -49,7 +40,7 @@ export default class HeaderBar extends React.Component {
 
     return (
       <div
-        className={cx('HeaderBar', this.props.className)}
+        className={cx('HeaderBar', className)}
         {...props}
       >
         <h1 className="HeaderBar-title">{title}</h1>
@@ -63,13 +54,17 @@ export default class HeaderBar extends React.Component {
         )}
         <Progress
           className="HeaderBar-progress"
-          total={this.state.total}
-          startTime={this.state.startTime}
+          duration={mediaDuration}
+          startTime={mediaStartTime}
+          currentTime={currentTime}
         />
         <div className="HeaderBar-volume">
           <Volume
-            volume={this.state.volume}
-            muted={this.state.muted}
+            volume={volume}
+            muted={muted}
+            onVolumeChange={onVolumeChange}
+            onMute={onVolumeMute}
+            onUnmute={onVolumeUnmute}
           />
         </div>
       </div>

@@ -1,14 +1,22 @@
 import cx from 'classnames';
 import React from 'react';
-import { LOADED } from '../../../stores/SearchStore';
+import { LOADED } from '../../../constants/LoadingStates';
 import Loader from '../../Loader';
 import MediaList from '../../MediaList';
 
-const SearchResults = ({ className, query, results, loadingState }) => {
+import AddToPlaylistAction from '../../MediaList/Actions/AddToPlaylist';
+
+const SearchResults = ({ className, query, results, loadingState, onOpenAddMediaMenu }) => {
   const list = loadingState === LOADED
     ? <MediaList
         className="PlaylistPanel-media"
         media={results}
+        makeActions={(media, selection) => [
+          <AddToPlaylistAction
+            key="add"
+            onAdd={position => onOpenAddMediaMenu(position, media, selection)}
+          />
+        ]}
       />
     : <div className="PlaylistPanel-loading"> <Loader size="large" /> </div>;
 

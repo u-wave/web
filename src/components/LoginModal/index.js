@@ -1,57 +1,30 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import TransitionGroup from 'react-addons-css-transition-group';
-import dispatcher from '../../dispatcher';
-import LoginStore from '../../stores/LoginStore';
-import listen from '../../utils/listen';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
-
-function getState() {
-  return {
-    error: LoginStore.getError(),
-    user: LoginStore.getUser()
-  };
-}
 
 /**
  * The LoginModal manages its own "open" state.
  */
-@listen(LoginStore)
-export default class LoginModal extends React.Component {
-  state = { open: false, register: false, ...getState() };
+export default class LoginModal extends Component {
+  static propTypes = {
+    open: PropTypes.bool,
+    show: PropTypes.string,
+    error: PropTypes.string,
 
-  componentDidMount() {
-    this.dispatchToken = dispatcher.register(({ type, meta, error }) => {
-      if (type === 'openLoginModal') {
-        this.open();
-        this.setState({ register: meta.register });
-      } else if (type === 'loginComplete' && !error) {
-        this.close();
-      }
-    });
-  }
-
-  onChange() {
-    this.setState(getState());
-  }
-
-  open() {
-    this.setState({ open: true });
-  }
-  close() {
-    this.setState({ open: false });
-  }
+    onLogin: PropTypes.func,
+    onRegister: PropTypes.func
+  };
 
   render() {
-    const { open, register, error } = this.state;
+    const { open, show } = this.props;
     let form;
     let title;
-    if (register) {
+    if (show === 'register') {
       title = 'Register';
       form = (
         <RegisterForm
           key="register"
-          error={error}
           {...this.props}
         />
       );
@@ -60,7 +33,6 @@ export default class LoginModal extends React.Component {
       form = (
         <LoginForm
           key="login"
-          error={error}
           {...this.props}
         />
       );

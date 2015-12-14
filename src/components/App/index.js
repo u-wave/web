@@ -1,57 +1,41 @@
 import React from 'react';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-import ActiveOverlayStore from '../../stores/ActiveOverlayStore';
-import LoginStore from '../../stores/LoginStore';
-import SelectedPanelStore from '../../stores/SelectedPanelStore';
-import SettingsStore from '../../stores/SettingsStore';
-import ThemeManager from 'material-ui/lib/styles/theme-manager';
-import MuiTheme from '../../MuiTheme';
-import Chat from '../Chat';
+import Chat from '../Chat/Container';
 import ChatInput from '../Chat/Input';
 import RoomUserList from '../UserList/RoomUserList';
 import WaitList from '../UserList/WaitList';
-import FooterBar from '../FooterBar';
-import HeaderBar from '../HeaderBar';
+import FooterBar from '../FooterBar/Container';
+import HeaderBar from '../HeaderBar/Container';
 import PanelSwitcher from '../PanelSwitcher';
 import PanelGroup from '../PanelSwitcher/Group';
 import Panel from '../PanelSwitcher/Panel';
-import Video from '../Video';
+import Video from '../Video/Container';
 import Overlays from './Overlays';
-import PlaylistManager from '../PlaylistManager';
-import LoginModal from '../LoginModal';
-import listen from '../../utils/listen';
-
-function getState() {
-  return {
-    activeOverlay: ActiveOverlayStore.getActive(),
-    selectedPanel: SelectedPanelStore.getSelectedPanel(),
-    settings: SettingsStore.getAll(),
-    user: LoginStore.getUser()
-  };
-}
+import PlaylistManager from '../PlaylistManager/Container';
+import LoginModal from '../LoginModal/Container';
+import AddToPlaylistMenu from '../PlaylistManager/AddingMenu/Container';
 
 @DragDropContext(HTML5Backend)
-@listen(ActiveOverlayStore, LoginStore, SelectedPanelStore, SettingsStore)
 export default class App extends React.Component {
-  static childContextTypes = {
-    muiTheme: React.PropTypes.object
+  static propTypes = {
+    activeOverlay: React.PropTypes.string,
+    selectedPanel: React.PropTypes.string,
+    settings: React.PropTypes.object,
+    user: React.PropTypes.object,
+
+    onLogin: React.PropTypes.func,
+    onRegister: React.PropTypes.func,
+    onCloseOverlay: React.PropTypes.func,
+    selectPanel: React.PropTypes.func,
+    sendChatMessage: React.PropTypes.func
   };
 
-  state = getState();
-
-  getChildContext() {
-    return {
-      muiTheme: ThemeManager.getMuiTheme(MuiTheme)
-    };
-  }
-
-  onChange() {
-    this.setState(getState());
-  }
-
   render() {
-    const { settings, user, activeOverlay, selectedPanel } = this.state;
+    // state props
+    const { activeOverlay, selectedPanel, settings, user } = this.props;
+    // dispatch handlers
+    const { onLogin, onRegister, onCloseOverlay, selectPanel, sendChatMessage } = this.props;
     const isLoggedIn = !!user;
 
     return (
@@ -71,14 +55,17 @@ export default class App extends React.Component {
             />
           </div>
           <Overlays transitionName="Overlay" active={activeOverlay}>
-            <PlaylistManager key="playlistManager" />
+            <PlaylistManager
+              key="playlistManager"
+              onCloseOverlay={onCloseOverlay}
+            />
           </Overlays>
           <FooterBar className="AppRow AppRow--bottom" />
         </div>
 
         <div className="AppColumn AppColumn--right">
           <div className="AppRow AppRow--top">
-            <PanelSwitcher selected={selectedPanel} />
+            <PanelSwitcher selected={selectedPanel} selectPanel={selectPanel} />
           </div>
           <PanelGroup className="AppRow AppRow--middle" selected={selectedPanel}>
             <Panel name="chat">
@@ -92,11 +79,16 @@ export default class App extends React.Component {
             </Panel>
           </PanelGroup>
           <div className="AppRow AppRow--bottom ChatInputWrapper">
-            {isLoggedIn && <ChatInput />}
+            {isLoggedIn && <ChatInput send={message => sendChatMessage(user, message)} />}
           </div>
         </div>
 
-        <LoginModal />
+        <LoginModal
+          onLogin={onLogin}
+          onRegister={onRegister}
+        />
+
+        <AddToPlaylistMenu />
       </div>
     );
   }

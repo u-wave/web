@@ -1,17 +1,10 @@
-import React from 'react';
-import ChatStore from '../../stores/ChatStore';
-import listen from '../../utils/listen';
+import React, { Component, PropTypes } from 'react';
 import Message from './Message';
 
-function getState() {
-  return {
-    messages: ChatStore.getMessages()
+export default class Chat extends Component {
+  static propTypes = {
+    messages: PropTypes.array
   };
-}
-
-@listen(ChatStore)
-export default class Chat extends React.Component {
-  state = getState();
 
   componentDidMount() {
     this.scrollToBottom();
@@ -25,10 +18,6 @@ export default class Chat extends React.Component {
     if (this._isScrolledToBottom) {
       this.scrollToBottom();
     }
-  }
-
-  onChange() {
-    this.setState(getState());
   }
 
   scrollToBottom() {
@@ -49,7 +38,7 @@ export default class Chat extends React.Component {
   render() {
     return (
       <div className="Chat" ref="chat">
-        {this.state.messages.map(msg => <Message key={msg._id} {...msg} />)}
+        {this.props.messages.map(msg => <Message key={msg._id} {...msg} />)}
       </div>
     );
   }

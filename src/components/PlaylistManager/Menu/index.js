@@ -7,17 +7,24 @@ import SearchResultsRow from './SearchResultsRow';
 
 const byName = (a, b) => naturalCmp(a.name.toLowerCase(), b.name.toLowerCase());
 
-const Menu = ({ className, playlists, selected, searchQuery, searchResults, onSelectPlaylist }) => {
+const Menu = ({
+  className, playlists, selected, searchQuery, searchResults,
+  onCreatePlaylist, onSelectPlaylist, onSelectSearchResults, onAddToPlaylist
+}) => {
   const sorted = playlists.slice().sort(byName);
   const searchIsSelected = selected ? '' : 'is-selected';
   return (
     <div className={cx('PlaylistMenu', className)}>
-      <PlaylistCreateRow className="PlaylistMenu-row" />
+      <PlaylistCreateRow
+        className="PlaylistMenu-row"
+        onClick={onCreatePlaylist}
+      />
       {searchQuery && (
         <SearchResultsRow
           className={cx('PlaylistMenu-row', searchIsSelected)}
           query={searchQuery}
           size={searchResults}
+          onClick={onSelectSearchResults}
         />
       )}
       {sorted.map(pl => {
@@ -27,6 +34,7 @@ const Menu = ({ className, playlists, selected, searchQuery, searchResults, onSe
             className="PlaylistMenu-row"
             playlist={pl}
             onClick={() => onSelectPlaylist(pl)}
+            onAddToPlaylist={onAddToPlaylist}
           />
         );
       })}

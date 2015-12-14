@@ -4,7 +4,39 @@ import MediaList from '../../MediaList';
 import Loader from '../../Loader';
 import PlaylistMeta from './Meta';
 
-const PlaylistPanel = ({ className, playlist, media, loading }) => {
+import AddToPlaylistAction from '../../MediaList/Actions/AddToPlaylist';
+import RemoveFromPlaylistAction from '../../MediaList/Actions/RemoveFromPlaylist';
+import EditMediaAction from '../../MediaList/Actions/EditMedia';
+import MoveToFirstAction from '../../MediaList/Actions/MoveToFirst';
+
+const makeActions = ({ onOpenAddMediaMenu, onMoveToFirst, onEditMedia, onRemoveFromPlaylist }) => {
+  return (media, selection, index) => [
+    <AddToPlaylistAction
+      key="add"
+      onAdd={position => onOpenAddMediaMenu(position, media, selection)}
+    />,
+    index > 0 && (
+      <MoveToFirstAction
+        key="first"
+        onFirst={() => onMoveToFirst(media, selection)}
+      />
+    ),
+    <EditMediaAction
+      key="edit"
+      onEdit={() => onEditMedia(media)}
+    />,
+    <RemoveFromPlaylistAction
+      key="remove"
+      onRemove={() => onRemoveFromPlaylist(media, selection)}
+    />
+  ];
+};
+
+const PlaylistPanel = ({
+  className, playlist, media, loading,
+  onActivatePlaylist,
+  ...props
+}) => {
   const list = loading
     ? <div className="PlaylistPanel-loading">
         <Loader size="large" />
@@ -12,6 +44,7 @@ const PlaylistPanel = ({ className, playlist, media, loading }) => {
     : <MediaList
         className="PlaylistPanel-media"
         media={media}
+        makeActions={makeActions(props)}
       />;
 
   return (
@@ -21,6 +54,7 @@ const PlaylistPanel = ({ className, playlist, media, loading }) => {
         id={playlist._id}
         name={playlist.name}
         active={playlist.active}
+        onActivatePlaylist={onActivatePlaylist}
       />
       {list}
     </div>

@@ -1,12 +1,10 @@
 import assign from 'object-assign';
 import { stringify as stringifyQS } from 'querystring';
-import LoginStore from '../stores/LoginStore';
 
 const debug = require('debug')('uwave:util:request');
 
-function makeUrl(path, params = {}) {
+function makeUrl(token, path, params = {}) {
   let uri = path;
-  const token = LoginStore.getToken();
 
   const query = token ? { token, ...params } : params;
   if (query) {
@@ -27,17 +25,17 @@ function rejectNonOK(response) {
   return response;
 }
 
-export function get(uri, data) {
+export function get(token, uri, data) {
   debug('get', uri, stringifyQS(data));
-  return fetch(makeUrl(uri, data), {
+  return fetch(makeUrl(token, uri, data), {
     method: 'get',
     credentials: 'same-origin'
   }).then(rejectNonOK);
 }
 
-export function post(uri, data) {
+export function post(token, uri, data) {
   debug('post', uri, JSON.stringify(data));
-  return fetch(makeUrl(uri), {
+  return fetch(makeUrl(token, uri), {
     method: 'post',
     headers: {
       'Accept': 'application/json',
@@ -48,9 +46,9 @@ export function post(uri, data) {
   }).then(rejectNonOK);
 }
 
-export function put(uri, data) {
+export function put(token, uri, data) {
   debug('put', uri, JSON.stringify(data));
-  return fetch(makeUrl(uri), {
+  return fetch(makeUrl(token, uri), {
     method: 'put',
     headers: {
       'Accept': 'application/json',
@@ -61,9 +59,9 @@ export function put(uri, data) {
   }).then(rejectNonOK);
 }
 
-export function del(uri, data) {
+export function del(token, uri, data) {
   debug('del', uri, JSON.stringify(data));
-  return fetch(makeUrl(uri), {
+  return fetch(makeUrl(token, uri), {
     method: 'delete',
     headers: {
       'Accept': 'application/json',

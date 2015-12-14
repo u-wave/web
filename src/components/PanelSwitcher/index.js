@@ -1,9 +1,8 @@
 import React from 'react';
 import Button from './Button';
-import { selectPanel } from '../../actions/PanelSelectActionCreators';
 
 /* TODO think of a reasonable name */
-const PanelSwitcher = ({ selected }) => {
+const PanelSwitcher = ({ selected, selectPanel }) => {
   const highlightOffset = { chat: 0, room: '33%', waitlist: '67%' }[selected];
   return (
     <div className="PanelSwitcher">

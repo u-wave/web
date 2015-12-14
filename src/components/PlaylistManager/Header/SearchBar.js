@@ -1,15 +1,16 @@
 import cx from 'classnames';
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import SearchIcon from 'material-ui/lib/svg-icons/action/search';
 import SourcePicker from './SourcePicker';
 
 const ENTER_KEY = 13;
 
-export default class SearchBar extends React.Component {
+export default class SearchBar extends Component {
   static propTypes = {
-    className: React.PropTypes.string,
-    source: React.PropTypes.string,
-    onSubmit: React.PropTypes.func
+    className: PropTypes.string,
+    source: PropTypes.string,
+    onSubmit: PropTypes.func,
+    onSourceChange: PropTypes.func
   };
 
   state = { focused: false };
@@ -29,7 +30,7 @@ export default class SearchBar extends React.Component {
   }
 
   render() {
-    const { source } = this.props;
+    const { source, onSourceChange } = this.props;
     const { focused } = this.state;
     return (
       <div className={cx('SearchBar', focused ? 'is-focused' : '', this.props.className)}>
@@ -39,6 +40,7 @@ export default class SearchBar extends React.Component {
         <SourcePicker
           className="SearchBar-source"
           selected={source}
+          onChange={onSourceChange}
         />
         <div className="SearchBar-query">
           <input

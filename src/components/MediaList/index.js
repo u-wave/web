@@ -7,7 +7,12 @@ import Row from './Row';
 export default class MediaList extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
-    media: React.PropTypes.array
+    media: React.PropTypes.array,
+    makeActions: React.PropTypes.func
+  };
+
+  static defaultProps = {
+    makeActions: () => <span />
   };
 
   state = { selection: itemSelection(this.props.media) };
@@ -37,6 +42,7 @@ export default class MediaList extends React.Component {
   }
 
   renderRow(index, key) {
+    const makeActions = this.props.makeActions;
     const media = this.props.media[index];
     const { selection } = this.state;
     const selected = selection.isSelectedIndex(index);
@@ -48,6 +54,7 @@ export default class MediaList extends React.Component {
         selected={selected}
         selection={selection.get()}
         onClick={e => this.selectItem(index, e)}
+        makeActions={() => makeActions(media, selection, index)}
       />
     );
   }

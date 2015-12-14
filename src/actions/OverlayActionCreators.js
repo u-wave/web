@@ -1,23 +1,23 @@
-import { dispatch } from '../dispatcher';
+import { OPEN_OVERLAY, CLOSE_OVERLAY, TOGGLE_OVERLAY } from '../constants/actionTypes/overlay';
 
 export function openOverlay(overlay) {
-  dispatch({
-    type: 'openOverlay',
+  return {
+    type: OPEN_OVERLAY,
     payload: { overlay }
-  });
+  };
 }
 
 export function toggleOverlay(overlay) {
-  dispatch({
-    type: 'toggleOverlay',
+  return {
+    type: TOGGLE_OVERLAY,
     payload: { overlay }
-  });
+  };
 }
 
 export function togglePlaylistManager() {
-  toggleOverlay('playlistManager');
+  return toggleOverlay('playlistManager');
 }
 
 export function closeAll() {
-  dispatch({ type: 'closeOverlay' });
+  return { type: CLOSE_OVERLAY };
 }

@@ -1,10 +1,10 @@
-import { dispatch } from '../dispatcher';
+import { SELECT_PANEL} from '../constants/actionTypes/panel';
 
 export function selectPanel(name) {
-  dispatch({
-    type: 'selectPanel',
+  return {
+    type: SELECT_PANEL,
     payload: {
       panel: name
     }
-  });
+  };
 }

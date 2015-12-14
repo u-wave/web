@@ -1,26 +1,22 @@
 import cx from 'classnames';
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import SearchIcon from 'material-ui/lib/svg-icons/action/search';
-import { selectPlaylist } from '../../../actions/PlaylistActionCreators';
 
-export default class SearchResultsRow extends React.Component {
+export default class SearchResultsRow extends Component {
   static propTypes = {
-    className: React.PropTypes.string,
-    query: React.PropTypes.string,
-    size: React.PropTypes.number
+    className: PropTypes.string,
+    query: PropTypes.string,
+    size: PropTypes.number,
+    onClick: PropTypes.func,
+    onAddToPlaylist: PropTypes.func
   };
 
-  onClick() {
-    // show search results
-    selectPlaylist(null);
-  }
-
   render() {
-    const { className, query, size } = this.props;
+    const { className, query, size, onClick } = this.props;
     return (
       <div
         className={cx('PlaylistMenuRow', 'PlaylistMenuRow--search', className)}
-        onClick={::this.onClick}
+        onClick={onClick}
       >
         <div className="PlaylistMenuRow-active-icon">
           <SearchIcon color="#fff" />

@@ -1,8 +1,8 @@
-import { dispatch } from '../dispatcher';
+import { SET } from '../constants/actionTypes/settings';
 
 export function set(name, value) {
-  dispatch({
-    type: 'setSettings',
+  return {
+    type: SET,
     payload: { [name]: value }
-  });
+  };
 }

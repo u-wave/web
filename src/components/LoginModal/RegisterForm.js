@@ -2,7 +2,6 @@ import React from 'react';
 import EmailIcon from 'material-ui/lib/svg-icons/communication/email';
 import PasswordIcon from 'material-ui/lib/svg-icons/action/lock';
 import UserIcon from 'material-ui/lib/svg-icons/social/person';
-import { register } from '../../actions/LoginActionCreators';
 import Loader from '../Loader';
 import { default as Form, FormGroup } from '../Form';
 import TextField from '../Form/TextField';
@@ -10,7 +9,8 @@ import Button from '../Form/Button';
 
 export default class RegisterForm extends React.Component {
   static propTypes = {
-    error: React.PropTypes.object
+    error: React.PropTypes.object,
+    onRegister: React.PropTypes.func
   };
 
   state = { busy: false };
@@ -22,7 +22,7 @@ export default class RegisterForm extends React.Component {
   onSubmit(event) {
     event.preventDefault();
     this.setState({ busy: true });
-    register({
+    this.props.onRegister({
       username: this.refs.username.value,
       email: this.refs.email.value,
       password: this.refs.password.value
