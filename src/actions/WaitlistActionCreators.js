@@ -1,8 +1,17 @@
+import {
+  LOAD,
+  LOCK, CLEAR,
+  UPDATE, JOIN, LEAVE,
+  DO_JOIN_START, DO_JOIN_COMPLETE,
+  DO_LEAVE_START, DO_LEAVE_COMPLETE,
+  DO_LOCK_START, DO_LOCK_COMPLETE,
+  DO_CLEAR_START, DO_CLEAR_COMPLETE
+} from '../constants/actionTypes/waitlist';
 import { del, post, put } from '../utils/Request';
 
 export function setWaitList(data) {
   return {
-    type: 'loadedWaitlist',
+    type: LOAD,
     payload: {
       waitlist: data.waitlist,
       locked: data.locked
@@ -12,7 +21,7 @@ export function setWaitList(data) {
 
 export function setLocked(lock) {
   return {
-    type: 'lockWaitlist',
+    type: LOCK,
     payload: {
       locked: lock
     }
@@ -20,12 +29,12 @@ export function setLocked(lock) {
 }
 
 export function clearWaitlist() {
-  return { type: 'clearWaitlist' };
+  return { type: CLEAR };
 }
 
 export function updatedWaitlist(waitlist) {
   return {
-    type: 'updatedWaitlist',
+    type: UPDATE,
     payload: { waitlist }
   };
 }
@@ -34,20 +43,20 @@ export function joinWaitlist(user) {
   return (dispatch, getState) => {
     const jwt = getState().auth.jwt;
 
-    dispatch({ type: 'joiningWaitlist' });
+    dispatch({ type: DO_JOIN_START });
     if (user) {
       // TODO don't post an object at all once the API server supports it
       post(jwt, '/v1/waitlist', { userID: user._id })
         .then(res => res.json())
         .then(waitlist => {
           dispatch({
-            type: 'joinedWaitlistSelf',
+            type: DO_JOIN_COMPLETE,
             payload: { waitlist }
           });
         })
         .catch(error => {
           dispatch({
-            type: 'joinedWaitlistSelf',
+            type: DO_JOIN_COMPLETE,
             error: true,
             payload: error
           });
@@ -58,7 +67,7 @@ export function joinWaitlist(user) {
 
 export function joinedWaitlist({ userID, waitlist }) {
   return {
-    type: 'joinedWaitlist',
+    type: JOIN,
     payload: { userID, waitlist }
   };
 }
@@ -68,18 +77,18 @@ export function leaveWaitlist(user) {
     const jwt = getState().auth.jwt;
 
     if (user) {
-      dispatch({ type: 'leavingWaitlist' });
+      dispatch({ type: DO_LEAVE_START });
       del(jwt, `/v1/waitlist/${user._id}`)
         .then(res => res.json())
         .then(waitlist => {
           dispatch({
-            type: 'leftWaitlistSelf',
+            type: DO_LEAVE_COMPLETE,
             payload: { waitlist }
           });
         })
         .catch(error => {
           dispatch({
-            type: 'leftWaitlistSelf',
+            type: DO_LEAVE_COMPLETE,
             error: true,
             payload: error
           });
@@ -90,7 +99,7 @@ export function leaveWaitlist(user) {
 
 export function leftWaitlist({ userID, waitlist }) {
   return {
-    type: 'leftWaitlist',
+    type: LEAVE,
     payload: { userID, waitlist }
   };
 }
@@ -127,7 +136,7 @@ function putLock(status) {
     const jwt = getState().auth.jwt;
 
     dispatch({
-      type: 'modLockWaitlist',
+      type: DO_LOCK_START,
       payload: { locked: status }
     });
     put(jwt, '/v1/waitlist/lock', { lock: status, clear: false })
@@ -136,13 +145,13 @@ function putLock(status) {
       .then(locked => {
         setLocked(locked);
         dispatch({
-          type: 'modLockedWaitlist',
+          type: DO_LOCK_COMPLETE,
           payload: { locked }
         });
       })
       .catch(error => {
         dispatch({
-          type: 'modLockedWaitlist',
+          type: DO_LOCK_COMPLETE,
           error: true,
           payload: error
         });
@@ -161,15 +170,15 @@ export function modClearWaitlist() {
   return (dispatch, getState) => {
     const jwt = getState().auth.jwt;
 
-    dispatch({ type: 'modClearWaitlist' });
+    dispatch({ type: DO_CLEAR_START });
     del(jwt, '/v1/waitlist')
       .then(res => res.json())
       .then(() => {
-        dispatch({ type: 'modClearedWaitlist' });
+        dispatch({ type: DO_CLEAR_COMPLETE });
       })
       .catch(error => {
         dispatch({
-          type: 'modClearWaitlist',
+          type: DO_CLEAR_COMPLETE,
           error: true,
           payload: error
         });

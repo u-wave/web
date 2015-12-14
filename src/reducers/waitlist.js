@@ -1,3 +1,9 @@
+import {
+  LOAD,
+  LOCK, CLEAR,
+  UPDATE, JOIN, LEAVE
+} from '../constants/actionTypes/waitlist';
+
 const initialState = {
   waitlist: [],
   locked: false
@@ -6,28 +12,28 @@ const initialState = {
 export default function reduce(state = initialState, action = {}) {
   const { type, payload } = action;
   switch (type) {
-  case 'loadedWaitlist':
+  case LOAD:
     return {
       waitlist: payload.waitlist,
       locked: payload.locked,
       ...state
     };
-  case 'lockWaitlist':
+  case LOCK:
     return {
       locked: payload.locked,
       ...state
     };
-  case 'clearWaitlist':
+  case CLEAR:
     return {
       waitlist: [],
       ...state
     };
-  case 'joinedWaitlist':
-  case 'leftWaitlist':
+  case JOIN:
+  case LEAVE:
   case 'waitlistAdd':
   case 'waitlistRemove':
   case 'waitlistMove':
-  case 'updatedWaitlist':
+  case UPDATE:
     return {
       waitlist: payload.waitlist,
       ...state

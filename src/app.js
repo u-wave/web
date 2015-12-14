@@ -10,6 +10,7 @@ import thunk from 'redux-thunk';
 import AppContainer from './components/App/Container';
 import * as Socket from './utils/Socket';
 import { get as readSession } from './utils/Session';
+import { TICK } from './constants/actionTypes/time';
 import { initState, setJWT } from './actions/LoginActionCreators';
 import { startTicking } from './actions/TickerActionCreators';
 
@@ -19,7 +20,7 @@ const createStoreWithMiddleware = applyMiddleware(
   thunk,
   logger({
     // avoid log spam
-    predicate: (getState, action) => action.type !== 'tick'
+    predicate: (getState, action) => action.type !== TICK
   })
 )(createStore);
 const store = createStoreWithMiddleware(

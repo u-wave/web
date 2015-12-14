@@ -1,8 +1,10 @@
 import compose from 'fj-compose';
 
+import { TICK } from '../constants/actionTypes/time';
+
 export function tick() {
   return {
-    type: 'tick',
+    type: TICK,
     payload: 1
   };
 }

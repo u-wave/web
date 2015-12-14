@@ -1,3 +1,13 @@
+import {
+  OPEN_LOGIN_MODAL,
+  REGISTER_START, REGISTER_COMPLETE,
+  LOGIN_START, LOGIN_COMPLETE, SET_TOKEN,
+  LOGOUT_START, LOGOUT_COMPLETE
+} from '../constants/actionTypes/auth';
+import {
+  LOAD_ALL_PLAYLISTS_START,
+  ACTIVATE_PLAYLIST_COMPLETE
+} from '../constants/actionTypes/playlists';
 import { get, post } from '../utils/Request';
 import * as Session from '../utils/Session';
 import * as Socket from '../utils/Socket';
@@ -10,7 +20,7 @@ const debug = require('debug')('uwave:actions:login');
 export function loginComplete({ jwt, user }) {
   Socket.auth(jwt);
   return {
-    type: 'loginComplete',
+    type: LOGIN_COMPLETE,
     payload: { jwt, user }
   };
 }
@@ -18,7 +28,7 @@ export function loginComplete({ jwt, user }) {
 export function initState() {
   return (dispatch, getState) => {
     const jwt = getState().auth.jwt;
-    dispatch({ type: 'loadingPlaylists' });
+    dispatch({ type: LOAD_ALL_PLAYLISTS_START });
     get(jwt, '/v1/now')
       .then(res => res.json())
       .then(state => {
@@ -37,7 +47,7 @@ export function initState() {
         }
         if (state.activePlaylist) {
           dispatch({
-            type: 'activatedPlaylist',
+            type: ACTIVATE_PLAYLIST_COMPLETE,
             payload: { playlistID: state.activePlaylist }
           });
           dispatch(selectPlaylist(state.activePlaylist));
@@ -48,7 +58,7 @@ export function initState() {
 
 export function setJWT(jwt) {
   return {
-    type: 'setSession',
+    type: SET_TOKEN,
     payload: { jwt }
   };
 }
@@ -56,6 +66,7 @@ export function setJWT(jwt) {
 export function login({ email, password }) {
   return (dispatch, getState) => {
     const jwt = getState().auth.jwt;
+    dispatch({ type: LOGIN_START });
     post(jwt, '/v1/auth/login', { email, password })
       .then(res => res.json())
       .then(res => {
@@ -66,7 +77,7 @@ export function login({ email, password }) {
       })
       .catch(error => {
         dispatch({
-          type: 'loginComplete',
+          type: LOGIN_COMPLETE,
           error: true,
           payload: error
         });
@@ -77,13 +88,13 @@ export function login({ email, password }) {
 export function register({ email, username, password }) {
   return (dispatch, getState) => {
     const jwt = getState().auth.jwt;
-    dispatch({ type: 'registerStart' });
+    dispatch({ type: REGISTER_START });
     post(jwt, '/v1/auth/register', { email, username, password, passwordRepeat: password })
       .then(res => res.json())
       .then(user => {
         debug('registered', user);
         dispatch({
-          type: 'registerComplete',
+          type: REGISTER_COMPLETE,
           payload: { user }
         });
         dispatch(login({ email, password }));
@@ -91,7 +102,7 @@ export function register({ email, username, password }) {
       .catch(err => {
         debug('registration failed', err);
         dispatch({
-          type: 'registerComplete',
+          type: REGISTER_COMPLETE,
           error: true,
           payload: err
         });
@@ -101,7 +112,7 @@ export function register({ email, username, password }) {
 
 function logoutComplete() {
   return dispatch => {
-    dispatch({ type: 'logoutComplete' });
+    dispatch({ type: LOGOUT_COMPLETE });
     setPlaylists([]);
   };
 }
@@ -111,7 +122,7 @@ export function logout() {
     const jwt = getState().auth.jwt;
     const me = getState().auth.user;
     if (me) {
-      dispatch({ type: 'logoutStart' });
+      dispatch({ type: LOGOUT_START });
       del(jwt, `/v1/auth/session/${me._id}`)
         .then(logoutComplete)
         .catch(logoutComplete)
@@ -125,7 +136,7 @@ export function logout() {
 
 export function openLoginModal() {
   return {
-    type: 'openLoginModal',
+    type: OPEN_LOGIN_MODAL,
     meta: {
       register: false
     }
@@ -133,7 +144,7 @@ export function openLoginModal() {
 }
 export function openRegisterModal() {
   return {
-    type: 'openLoginModal',
+    type: OPEN_LOGIN_MODAL,
     meta: {
       register: true
     }

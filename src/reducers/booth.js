@@ -1,3 +1,5 @@
+import { ADVANCE } from '../constants/actionTypes/booth';
+
 const initialState = {
   historyID: null,
   media: null,
@@ -8,7 +10,7 @@ const initialState = {
 export default function reduce(state = initialState, action = {}) {
   const { type, payload } = action;
   switch (type) {
-  case 'advance':
+  case ADVANCE:
     if (payload) {
       return {
         ...state,

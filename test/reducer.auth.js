@@ -1,4 +1,7 @@
 import { expect } from 'chai';
+import {
+  LOGIN_COMPLETE, SET_TOKEN
+} from '../src/constants/actionTypes/auth';
 import auth from '../src/reducers/auth';
 
 describe('reducers/auth', () => {
@@ -33,7 +36,7 @@ describe('reducers/auth', () => {
   describe('action: setSession', () => {
     it('should set the current session token', () => {
       let state = initialState();
-      state = auth(state, { type: 'setSession', payload: { jwt: 'test token' } });
+      state = auth(state, { type: SET_TOKEN, payload: { jwt: 'test token' } });
       expect(state.jwt).to.equal('test token');
     });
   });
@@ -43,7 +46,7 @@ describe('reducers/auth', () => {
       let state = initialState();
       const userObj = { _id: Math.random() };
       state = auth(state, {
-        type: 'loginComplete',
+        type: LOGIN_COMPLETE,
         payload: { jwt: 'test token', user: userObj }
       });
       expect(state.jwt).to.equal('test token');
@@ -54,7 +57,7 @@ describe('reducers/auth', () => {
     it('should save the error if unsuccessful', () => {
       let state = initialState();
       state = auth(state, {
-        type: 'loginComplete',
+        type: LOGIN_COMPLETE,
         payload: new Error('failed'),
         error: true
       });
@@ -68,7 +71,7 @@ describe('reducers/auth', () => {
       let state = initialState();
       state.modal = { ...state.modal, open: true, show: 'login' };
       state = auth(state, {
-        type: 'loginComplete',
+        type: LOGIN_COMPLETE,
         payload: { jwt: 'test token', user: {} }
       });
       expect(state.modal).to.eql({
@@ -81,7 +84,7 @@ describe('reducers/auth', () => {
       let state = initialState();
       state.modal = { ...state.modal, open: true, show: 'login' };
       state = auth(state, {
-        type: 'loginComplete',
+        type: LOGIN_COMPLETE,
         payload: new Error,
         error: true
       });

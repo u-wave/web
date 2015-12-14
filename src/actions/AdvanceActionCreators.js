@@ -1,3 +1,4 @@
+import { ADVANCE } from '../constants/actionTypes/booth';
 import { flattenPlaylistItem } from './PlaylistActionCreators';
 
 /**
@@ -5,7 +6,7 @@ import { flattenPlaylistItem } from './PlaylistActionCreators';
  */
 export function advance({ media, userID, historyID, playlistID, played }) {
   return {
-    type: 'advance',
+    type: ADVANCE,
     payload: {
       userID, historyID, playlistID,
       media: flattenPlaylistItem(media),

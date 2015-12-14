@@ -1,3 +1,5 @@
+import { RECEIVE_MESSAGE, SEND_MESSAGE } from '../constants/actionTypes/chat';
+
 const MAX_MESSAGES = 500;
 
 const initialState = {
@@ -22,7 +24,7 @@ export default function reduce(state = initialState, action = {}) {
   const { type, payload } = action;
   const { messages } = state;
   switch (type) {
-  case 'chatSend':
+  case SEND_MESSAGE:
     const inFlightMessage = {
       _id: `inflight${Date.now()}`,
       user: payload.user,
@@ -36,7 +38,7 @@ export default function reduce(state = initialState, action = {}) {
       ...state,
       messages: limit(messages.concat([ inFlightMessage ]), MAX_MESSAGES)
     };
-  case 'chatReceive':
+  case RECEIVE_MESSAGE:
     const message = {
       ...payload.message,
       inFlight: false,

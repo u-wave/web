@@ -1,13 +1,15 @@
+import { OPEN_OVERLAY, CLOSE_OVERLAY, TOGGLE_OVERLAY } from '../constants/actionTypes/overlay';
+
 export function openOverlay(overlay) {
   return {
-    type: 'openOverlay',
+    type: OPEN_OVERLAY,
     payload: { overlay }
   };
 }
 
 export function toggleOverlay(overlay) {
   return {
-    type: 'toggleOverlay',
+    type: TOGGLE_OVERLAY,
     payload: { overlay }
   };
 }
@@ -17,5 +19,5 @@ export function togglePlaylistManager() {
 }
 
 export function closeAll() {
-  return { type: 'closeOverlay' };
+  return { type: CLOSE_OVERLAY };
 }

@@ -1,6 +1,8 @@
+import { SET } from '../constants/actionTypes/settings';
+
 export function set(name, value) {
   return {
-    type: 'setSettings',
+    type: SET,
     payload: { [name]: value }
   };
 }

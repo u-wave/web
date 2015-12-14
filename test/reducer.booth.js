@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import { ADVANCE } from '../src/constants/actionTypes/booth';
 import booth from '../src/reducers/booth';
 
 describe('reducers/booth', () => {
@@ -25,7 +26,7 @@ describe('reducers/booth', () => {
       // client-side.
       // TODO fix that? :P
       const state = booth(initialState(), {
-        type: 'advance',
+        type: ADVANCE,
         payload: {
           historyID: 'someRandomID',
           userID: 'seventeen',
@@ -43,7 +44,7 @@ describe('reducers/booth', () => {
 
     it('should stop playing if there is no next song', () => {
       const state = booth(initialState(), {
-        type: 'advance',
+        type: ADVANCE,
         payload: null
       });
       expect(state).to.eql({

@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import { SELECT_PANEL } from '../src/constants/actionTypes/panel';
 import selectedPanel from '../src/reducers/selectedPanel';
 
 describe('reducers/selectedPanel', () => {
@@ -18,10 +19,10 @@ describe('reducers/selectedPanel', () => {
   describe('action: selectPanel', () => {
     it('should set the current panel', () => {
       let state = 'chat';
-      state = selectedPanel(state, { type: 'selectPanel', payload: { panel: 'room' } });
+      state = selectedPanel(state, { type: SELECT_PANEL, payload: { panel: 'room' } });
       expect(state).to.be.a('string');
       expect(state).to.equal('room');
-      state = selectedPanel(state, { type: 'selectPanel', payload: { panel: 'waitlist' } });
+      state = selectedPanel(state, { type: SELECT_PANEL, payload: { panel: 'waitlist' } });
       expect(state).to.equal('waitlist');
     });
   });

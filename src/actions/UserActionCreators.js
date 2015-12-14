@@ -1,20 +1,22 @@
+import { LOAD, JOIN, LEAVE } from '../constants/actionTypes/users';
+
 export function setUsers(users) {
   return {
-    type: 'setUsers',
+    type: LOAD,
     payload: { users }
   };
 }
 
 export function join(user) {
   return {
-    type: 'join',
+    type: JOIN,
     payload: { user }
   };
 }
 
 export function leave(id) {
   return {
-    type: 'leave',
+    type: LEAVE,
     payload: {
       userID: id
     }

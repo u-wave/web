@@ -1,9 +1,21 @@
 import values from 'object-values';
+
+import {
+  LOAD_ALL_PLAYLISTS_START, LOAD_ALL_PLAYLISTS_COMPLETE,
+  LOAD_PLAYLIST_START, LOAD_PLAYLIST_COMPLETE,
+  SELECT_PLAYLIST,
+  ACTIVATE_PLAYLIST_START, ACTIVATE_PLAYLIST_COMPLETE,
+  CREATE_PLAYLIST_START, CREATE_PLAYLIST_COMPLETE,
+  OPEN_ADD_MEDIA_MENU, CLOSE_ADD_MEDIA_MENU,
+  ADD_MEDIA_START, ADD_MEDIA_COMPLETE,
+  REMOVE_MEDIA_START, REMOVE_MEDIA_COMPLETE,
+  MOVE_MEDIA_START, MOVE_MEDIA_COMPLETE
+} from '../constants/actionTypes/playlists';
 import { del, get, post, put } from '../utils/Request';
 
 export function setPlaylists(playlists) {
   return {
-    type: 'loadedPlaylists',
+    type: LOAD_ALL_PLAYLISTS_COMPLETE,
     payload: { playlists }
   };
 }
@@ -20,7 +32,7 @@ export function loadPlaylist(playlistID) {
     const jwt = getState().auth.jwt;
 
     dispatch({
-      type: 'loadingPlaylist',
+      type: LOAD_PLAYLIST_START,
       payload: { playlistID }
     });
 
@@ -29,13 +41,13 @@ export function loadPlaylist(playlistID) {
       .then(items => items.map(flattenPlaylistItem))
       .then(media => {
         dispatch({
-          type: 'loadedPlaylist',
+          type: LOAD_PLAYLIST_COMPLETE,
           payload: { playlistID, media }
         });
       })
       .catch(e => {
         dispatch({
-          type: 'loadedPlaylist',
+          type: LOAD_PLAYLIST_COMPLETE,
           error: true,
           payload: e
         });
@@ -46,7 +58,7 @@ export function loadPlaylist(playlistID) {
 export function selectPlaylist(playlistID) {
   return dispatch => {
     dispatch({
-      type: 'selectPlaylist',
+      type: SELECT_PLAYLIST,
       payload: { playlistID }
     });
 
@@ -61,19 +73,19 @@ export function activatePlaylist(playlistID) {
     const jwt = getState().auth.jwt;
 
     dispatch({
-      type: 'activatePlaylist',
+      type: ACTIVATE_PLAYLIST_START,
       payload: { playlistID }
     });
     put(jwt, `/v1/playlists/${playlistID}/activate`)
       .then(() => {
         dispatch({
-          type: 'activatedPlaylist',
+          type: ACTIVATE_PLAYLIST_COMPLETE,
           payload: { playlistID }
         });
       })
       .catch(error => {
         dispatch({
-          type: 'activatedPlaylist',
+          type: ACTIVATE_PLAYLIST_COMPLETE,
           error: true,
           payload: error,
           meta: { playlistID }
@@ -86,18 +98,18 @@ export function loadPlaylists() {
   return (dispatch, getState) => {
     const jwt = getState().auth.jwt;
 
-    dispatch({ type: 'loadingPlaylists' });
+    dispatch({ type: LOAD_ALL_PLAYLISTS_START });
     get(jwt, '/v1/playlists')
       .then(res => res.json())
       .then(playlists => {
         dispatch({
-          type: 'loadedPlaylists',
+          type: LOAD_ALL_PLAYLISTS_COMPLETE,
           payload: { playlists }
         });
       })
       .catch(error => {
         dispatch({
-          type: 'loadedPlaylists',
+          type: LOAD_ALL_PLAYLISTS_COMPLETE,
           error: true,
           payload: error
         });
@@ -113,7 +125,7 @@ function doCreatePlaylist(name) {
     const description = '';
     const shared = false;
     dispatch({
-      type: 'creatingPlaylist',
+      type: CREATE_PLAYLIST_START,
       payload: { name, description, shared },
       meta: { tempId }
     });
@@ -122,14 +134,14 @@ function doCreatePlaylist(name) {
       .then(res => res.json())
       .then(playlist => {
         dispatch({
-          type: 'createdPlaylist',
+          type: CREATE_PLAYLIST_COMPLETE,
           payload: { playlist },
           meta: { tempId }
         });
       })
       .catch(error => {
         dispatch({
-          type: 'createdPlaylist',
+          type: CREATE_PLAYLIST_COMPLETE,
           error: true,
           payload: error,
           meta: { tempId }
@@ -151,7 +163,7 @@ export function addMediaMenu(items, position) {
   return (dispatch, getState) => {
     const playlists = values(getState().playlists.playlists);
     dispatch({
-      type: 'openAddToPlaylistMenu',
+      type: OPEN_ADD_MEDIA_MENU,
       payload: {
         media: items,
         playlists,
@@ -162,7 +174,7 @@ export function addMediaMenu(items, position) {
 }
 
 export function closeAddMediaMenu() {
-  return { type: 'closeAddToPlaylistMenu' };
+  return { type: CLOSE_ADD_MEDIA_MENU };
 }
 
 export function addMedia(playlist, items, afterID = null) {
@@ -170,7 +182,7 @@ export function addMedia(playlist, items, afterID = null) {
     const jwt = getState().auth.jwt;
 
     dispatch({
-      type: 'addMediaToPlaylist',
+      type: ADD_MEDIA_START,
       payload: {
         playlistID: playlist._id,
         media: items,
@@ -182,7 +194,7 @@ export function addMedia(playlist, items, afterID = null) {
       .then(res => res.json())
       .then(({ added, playlistSize }) => {
         dispatch({
-          type: 'addedMediaToPlaylist',
+          type: ADD_MEDIA_COMPLETE,
           payload: {
             playlistID: playlist._id,
             newSize: playlistSize,
@@ -193,7 +205,7 @@ export function addMedia(playlist, items, afterID = null) {
       })
       .catch(error => {
         dispatch({
-          type: 'addedMediaToPlaylist',
+          type: ADD_MEDIA_COMPLETE,
           error: true,
           payload: error
         });
@@ -219,7 +231,7 @@ export function removeMedia(playlistID, medias) {
   return (dispatch, getState) => {
     const jwt = getState().auth.jwt;
     dispatch({
-      type: 'removeMediaFromPlaylist',
+      type: REMOVE_MEDIA_START,
       payload: { playlistID, medias }
     });
     const items = medias.map(media => media._id);
@@ -227,7 +239,7 @@ export function removeMedia(playlistID, medias) {
       .then(res => res.json())
       .then(({ removed, playlistSize }) => {
         dispatch({
-          type: 'removedMediaFromPlaylist',
+          type: REMOVE_MEDIA_COMPLETE,
           payload: {
             playlistID,
             newSize: playlistSize,
@@ -237,7 +249,7 @@ export function removeMedia(playlistID, medias) {
       })
       .catch(error => {
         dispatch({
-          type: 'removedMediaFromPlaylist',
+          type: REMOVE_MEDIA_COMPLETE,
           error: true,
           payload: error
         });
@@ -251,7 +263,7 @@ export function moveMedia(playlistID, medias, afterID) {
 
     const payload = { playlistID, medias, afterID };
     dispatch({
-      type: 'moveMediaInPlaylist',
+      type: MOVE_MEDIA_START,
       payload
     });
     const items = medias.map(media => media._id);
@@ -259,13 +271,13 @@ export function moveMedia(playlistID, medias, afterID) {
       .then(res => res.json())
       .then(() => {
         dispatch({
-          type: 'movedMediaInPlaylist',
+          type: MOVE_MEDIA_COMPLETE,
           payload
         });
       })
       .catch(error => {
         dispatch({
-          type: 'movedMediaInPlaylist',
+          type: MOVE_MEDIA_COMPLETE,
           error: true,
           payload: error,
           meta: payload

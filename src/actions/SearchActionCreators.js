@@ -1,8 +1,11 @@
+import {
+  SET_SEARCH_SOURCE, SEARCH_START, SEARCH_COMPLETE
+} from '../constants/actionTypes/search';
 import { get } from '../utils/Request';
 
 export function setSource(source) {
   return {
-    type: 'setSearchSource',
+    type: SET_SEARCH_SOURCE,
     payload: {
       source: source
     }
@@ -14,14 +17,14 @@ export function search(query) {
     const jwt = getState().auth.jwt;
 
     dispatch({
-      type: 'searchStart',
+      type: SEARCH_START,
       payload: { query }
     });
     get(jwt, '/v1/search', { query })
       .then(res => res.json())
       .then(results => {
         dispatch({
-          type: 'searchComplete',
+          type: SEARCH_COMPLETE,
           payload: { results }
         });
       });

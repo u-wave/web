@@ -1,4 +1,8 @@
 import { expect } from 'chai';
+import {
+  SEND_MESSAGE, RECEIVE_MESSAGE
+} from '../src/constants/actionTypes/chat';
+
 import chat from '../src/reducers/chat';
 
 describe('reducers/chat', () => {
@@ -30,7 +34,7 @@ describe('reducers/chat', () => {
       let state = initialState();
       expect(state.messages).to.have.length(0);
       state = chat(state, {
-        type: 'chatReceive',
+        type: RECEIVE_MESSAGE,
         payload: {
           message: testMessage,
           parsed: [ testMessage.text ],
@@ -71,7 +75,7 @@ describe('reducers/chat', () => {
 
     it('should add an in-flight message to the messages list immediately', () => {
       let state = initialState();
-      state = chat(state, { type: 'chatSend', payload: testMessage });
+      state = chat(state, { type: SEND_MESSAGE, payload: testMessage });
       expect(state.messages).to.have.length(1);
       expect(state.messages[0]).to.be.an('object');
       // TODO Call this "text" everywhere

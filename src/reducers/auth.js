@@ -1,3 +1,10 @@
+import {
+  OPEN_LOGIN_MODAL,
+  REGISTER_COMPLETE,
+  LOGIN_COMPLETE, SET_TOKEN,
+  LOGOUT_COMPLETE
+} from '../constants/actionTypes/auth';
+
 const initialState = {
   jwt: null,
   user: null,
@@ -11,14 +18,14 @@ const initialState = {
 export default function reduce(state = initialState, action = {}) {
   const { type, payload, meta, error: isError } = action;
   switch (type) {
-  case 'setSession':
+  case SET_TOKEN:
     return {
       ...state,
       jwt: payload.jwt,
       user: null,
       error: null
     };
-  case 'loginComplete':
+  case LOGIN_COMPLETE:
     return isError ? {
       ...state,
       jwt: null,
@@ -34,16 +41,16 @@ export default function reduce(state = initialState, action = {}) {
         open: false
       }
     };
-  case 'registerComplete':
+  case REGISTER_COMPLETE:
     return {
       ...state,
       jwt: null,
       user: null,
       error: payload
     };
-  case 'logoutComplete':
+  case LOGOUT_COMPLETE:
     return initialState;
-  case 'openLoginModal':
+  case OPEN_LOGIN_MODAL:
     return {
       ...state,
       modal: {

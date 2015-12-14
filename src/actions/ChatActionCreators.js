@@ -1,6 +1,7 @@
 import escapeRegExp from 'escape-string-regexp';
 import values from 'object-values';
 
+import { SEND_MESSAGE, RECEIVE_MESSAGE } from '../constants/actionTypes/chat';
 import parseChatMarkup from '../utils/parseChatMarkup';
 import { sendMessage } from '../utils/Socket';
 
@@ -8,7 +9,7 @@ const debug = require('debug')('uwave:actions:chat');
 
 export function prepareMessage(user, text, parseOpts = {}) {
   return {
-    type: 'chatSend',
+    type: SEND_MESSAGE,
     payload: {
       user,
       message: text,
@@ -42,7 +43,7 @@ export function receive(message) {
     const users = values(getState().users);
     const isMention = user ? hasMention(message.text, user.username) : false;
     dispatch({
-      type: 'chatReceive',
+      type: RECEIVE_MESSAGE,
       payload: {
         message,
         isMention,

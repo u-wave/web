@@ -1,6 +1,8 @@
+import { SELECT_PANEL} from '../constants/actionTypes/panel';
+
 export function selectPanel(name) {
   return {
-    type: 'selectPanel',
+    type: SELECT_PANEL,
     payload: {
       panel: name
     }

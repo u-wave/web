@@ -1,3 +1,6 @@
+import {
+  SET_SEARCH_SOURCE, SEARCH_START, SEARCH_COMPLETE
+} from '../constants/actionTypes/search';
 import { IDLE, LOADING, LOADED } from '../constants/LoadingStates';
 
 const initialState = {
@@ -10,20 +13,20 @@ const initialState = {
 export default function reduce(state = initialState, action = {}) {
   const { type, payload } = action;
   switch (type) {
-  case 'searchStart':
+  case SEARCH_START:
     return {
       ...state,
       query: payload.query,
       results: {},
       loadingState: LOADING
     };
-  case 'searchComplete':
+  case SEARCH_COMPLETE:
     return {
       ...state,
       results: payload.results,
       loadingState: LOADED
     };
-  case 'setSearchSource':
+  case SET_SEARCH_SOURCE:
     return {
       ...state,
       sourceType: payload.source

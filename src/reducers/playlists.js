@@ -4,6 +4,18 @@ import findIndex from 'array-findindex';
 import indexBy from 'index-by';
 import mapObj from 'object.map';
 
+import {
+  LOAD_ALL_PLAYLISTS_COMPLETE,
+  LOAD_PLAYLIST_START, LOAD_PLAYLIST_COMPLETE,
+  SELECT_PLAYLIST,
+  ACTIVATE_PLAYLIST_START, ACTIVATE_PLAYLIST_COMPLETE,
+  CREATE_PLAYLIST_START, CREATE_PLAYLIST_COMPLETE,
+  ADD_MEDIA_START, ADD_MEDIA_COMPLETE,
+  REMOVE_MEDIA_START, REMOVE_MEDIA_COMPLETE,
+  MOVE_MEDIA_START, MOVE_MEDIA_COMPLETE
+} from '../constants/actionTypes/playlists';
+import { SEARCH_START } from '../constants/actionTypes/search';
+
 const initialState = {
   playlists: {},
   activePlaylistID: null,
@@ -61,21 +73,21 @@ function applyMediaChangeTo(state, playlistID, modify) {
 export default function reduce(state = initialState, action = {}) {
   const { type, payload, meta, error } = action;
   switch (type) {
-  case 'loadedPlaylists':
+  case LOAD_ALL_PLAYLISTS_COMPLETE:
     return error
       ? state
       : {
         ...state,
         playlists: indexBy(payload.playlists, '_id')
       };
-  case 'activatePlaylist':
+  case ACTIVATE_PLAYLIST_START:
     return {
       ...state,
       // TODO use a different property here so we can show a loading icon on
       // the "Active" button only, instead of on top of the entire playlist
       playlists: setLoading(state.playlists, payload.playlistID)
     };
-  case 'activatedPlaylist':
+  case ACTIVATE_PLAYLIST_COMPLETE:
     return {
       ...state,
       // set `active` property on all playlists
@@ -91,7 +103,7 @@ export default function reduce(state = initialState, action = {}) {
         ? state.selectedMedia
         : []
     };
-  case 'selectPlaylist':
+  case SELECT_PLAYLIST:
     return {
       ...state,
       // set `selected` property on playlists
@@ -106,7 +118,7 @@ export default function reduce(state = initialState, action = {}) {
         ? state.activeMedia
         : []
     };
-  case 'searchStart':
+  case SEARCH_START:
     return {
       ...state,
       // deselect playlists
@@ -115,12 +127,12 @@ export default function reduce(state = initialState, action = {}) {
       selectedMedia: []
     };
 
-  case 'loadingPlaylist':
+  case LOAD_PLAYLIST_START:
     return {
       ...state,
       playlists: setLoading(state.playlists, payload.playlistID)
     };
-  case 'loadedPlaylist':
+  case LOAD_PLAYLIST_COMPLETE:
     return {
       ...state,
       playlists: setLoading(state.playlists, payload.playlistID, false),
@@ -135,7 +147,7 @@ export default function reduce(state = initialState, action = {}) {
   // here be dragons
   // TODO find a simpler way to store this stuff, that doesn't involve keeping
   // millions of properties (six properties to be precise) in sync
-  case 'creatingPlaylist':
+  case CREATE_PLAYLIST_START:
     const newPlaylist = {
       _id: meta.tempId,
       name: payload.name,
@@ -153,7 +165,7 @@ export default function reduce(state = initialState, action = {}) {
       selectedPlaylistID: meta.tempId,
       selectedMedia: []
     };
-  case 'createdPlaylist':
+  case CREATE_PLAYLIST_COMPLETE:
     return {
       ...state,
       playlists: assign(
@@ -167,12 +179,12 @@ export default function reduce(state = initialState, action = {}) {
       selectedMedia: []
     };
 
-  case 'addMediaToPlaylist':
+  case ADD_MEDIA_START:
     return {
       ...state,
       playlists: setLoading(state.playlists, payload.playlistID)
     };
-  case 'addedMediaToPlaylist':
+  case ADD_MEDIA_COMPLETE:
     if (error) {
       return state;
     }
@@ -199,7 +211,7 @@ export default function reduce(state = initialState, action = {}) {
     }
     return state;
 
-  case 'moveMediaInPlaylist':
+  case MOVE_MEDIA_START:
     const isMovingMedia = indexBy(payload.medias, '_id');
     return applyMediaChangeTo(state, payload.playlistID, playlist =>
       playlist.map(media => ({
@@ -207,7 +219,7 @@ export default function reduce(state = initialState, action = {}) {
         loading: isMovingMedia[media._id] || media.loading
       }))
     );
-  case 'movedMediaInPlaylist':
+  case MOVE_MEDIA_COMPLETE:
     if (error) {
       return state;
     }
@@ -215,7 +227,7 @@ export default function reduce(state = initialState, action = {}) {
       processMove(playlist, payload.medias, payload.afterID)
     );
 
-  case 'removeMediaFromPlaylist':
+  case REMOVE_MEDIA_START:
     const isRemovingMedia = indexBy(payload.medias, '_id');
     return applyMediaChangeTo(state, payload.playlistID, playlist =>
       playlist.map(media => ({
@@ -223,7 +235,7 @@ export default function reduce(state = initialState, action = {}) {
         loading: isRemovingMedia[media._id] || media.loading
       }))
     );
-  case 'removedMediaFromPlaylist':
+  case REMOVE_MEDIA_COMPLETE:
     if (error) {
       return state;
     }
