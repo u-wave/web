@@ -11,7 +11,7 @@ import {
 import { get, post } from '../utils/Request';
 import * as Session from '../utils/Session';
 import * as Socket from '../utils/Socket';
-import { advance } from './AdvanceActionCreators';
+import { advance } from './BoothActionCreators';
 import { setPlaylists, selectPlaylist } from './PlaylistActionCreators';
 import { setUsers } from './UserActionCreators';
 

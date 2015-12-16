@@ -1,4 +1,4 @@
-import { advance } from '../actions/AdvanceActionCreators';
+import { advance } from '../actions/BoothActionCreators';
 import { receive as chatReceive } from '../actions/ChatActionCreators';
 import { join as userJoin, leave as userLeave } from '../actions/UserActionCreators';
 import { joinedWaitlist, leftWaitlist, updatedWaitlist } from '../actions/WaitlistActionCreators';
