@@ -18,6 +18,10 @@ export function togglePlaylistManager() {
   return toggleOverlay('playlistManager');
 }
 
+export function toggleSettings() {
+  return toggleOverlay('settings');
+}
+
 export function closeAll() {
   return { type: CLOSE_OVERLAY };
 }

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { openLoginDialog, openRegisterDialog } from '../actions/DialogActionCreators';
-import { togglePlaylistManager } from '../actions/OverlayActionCreators';
+import { togglePlaylistManager, toggleSettings } from '../actions/OverlayActionCreators';
 import { joinWaitlist, leaveWaitlist } from '../actions/WaitlistActionCreators';
 import { openFavoriteMenu, doUpvote, doDownvote } from '../actions/VoteActionCreators';
 
@@ -36,7 +36,7 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     joinWaitlist, leaveWaitlist,
     openLoginDialog, openRegisterDialog,
-    togglePlaylistManager,
+    togglePlaylistManager, toggleSettings,
     onFavorite: openFavoriteMenu,
     onUpvote: doUpvote,
     onDownvote: doDownvote

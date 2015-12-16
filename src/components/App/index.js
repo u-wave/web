@@ -13,6 +13,7 @@ import Panel from '../PanelSwitcher/Panel';
 import Video from '../../containers/Video';
 import Overlays from './Overlays';
 import PlaylistManager from '../../containers/PlaylistManager';
+import SettingsManager from '../SettingsManager';
 
 import Dialogs from '../Dialogs';
 import AddToPlaylistMenu from '../../containers/AddToPlaylistMenu';
@@ -62,6 +63,10 @@ export default class App extends React.Component {
           <Overlays transitionName="Overlay" active={activeOverlay}>
             <PlaylistManager
               key="playlistManager"
+              onCloseOverlay={onCloseOverlay}
+            />
+            <SettingsManager
+              key="settings"
               onCloseOverlay={onCloseOverlay}
             />
           </Overlays>
