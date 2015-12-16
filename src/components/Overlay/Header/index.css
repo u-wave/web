@@ -2,6 +2,7 @@
 
 @component OverlayHeader {
   background: $background-color;
+  height: $header-height;
 
   @descendent title {
     float: left;
@@ -19,6 +20,7 @@
 
   @descendent content {
     float: left;
+    height: 100%;
     width: calc(100% - 33% - $overlay-header-close-size);
     @media (min-width: 1200px) {
       width: calc(100% - 300px - $overlay-header-close-size);

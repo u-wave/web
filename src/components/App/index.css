@@ -26,8 +26,8 @@
 
   @descendent middle {
     position: absolute;
-    top: 56px;
-    bottom: 60px;
+    top: $header-height;
+    bottom: $footer-height;
     left: 0;
     right: 0;
   }
@@ -58,15 +58,15 @@
   clear: both;
 
   @modifier top {
-    height: 56px;
+    height: $header-height;
     top: 0;
   }
   @modifier middle {
-    top: 56px;
-    bottom: 60px;
+    top: $header-height;
+    bottom: $footer-height;
   }
   @modifier bottom {
-    height: 60px;
+    height: $footer-height;
     bottom: 0;
   }
 }

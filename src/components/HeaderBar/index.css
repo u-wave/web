@@ -11,7 +11,8 @@
     left: 0;
     width: 210px;
     margin: 0;
-    line-height: 56px;
+    line-height: $header-height;
+    height: $header-height;
     background-image: url(assets/img/logo-white.png);
     background-repeat: no-repeat;
     background-position: 10px center;

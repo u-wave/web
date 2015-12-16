@@ -6,11 +6,15 @@ $background-hover-color: #111;
 $highlight-color: #9d2053;
 $scrollbar-color: #5f5f5f;
 
+/* Sizes */
+$header-height: 56px;
+$footer-height: 60px;
+
 /* Footer colours */
 $footer-border-color: #303036;
 
 /* Overlay colours & sizes */
-$overlay-header-close-size: 56px;
+$overlay-header-close-size: $header-height;
 
 /* Chat colours */
 $chat-background-color: #1b1b1b;
