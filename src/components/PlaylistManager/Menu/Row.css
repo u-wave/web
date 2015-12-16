@@ -5,6 +5,8 @@
   line-height: 44px;
   padding: 0 10px;
   cursor: pointer;
+  display: flex;
+  justify-content: space-between;
 
   @descendent active-icon {
     display: block;
@@ -21,8 +23,16 @@
     margin: 10px 7px 10px 0;
   }
 
+  @descendent title {
+    align-self: flex-start;
+    /* dot dot dot */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
   @descendent count {
-    float: right;
+    align-self: flex-end;
     color: $highlight-color;
     margin-right: 5px;
   }

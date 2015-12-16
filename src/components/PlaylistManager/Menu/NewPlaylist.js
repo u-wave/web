@@ -15,10 +15,12 @@ export default class NewPlaylist extends Component {
         className={cx('PlaylistMenuRow', 'PlaylistMenuRow--create', className)}
         onClick={onClick}
       >
-        <div className="PlaylistMenuRow-active-icon">
-          <CreatePlaylistIcon color="#fff" />
+        <div className="PlaylistMenuRow-title">
+          <div className="PlaylistMenuRow-active-icon">
+            <CreatePlaylistIcon color="#fff" />
+          </div>
+          Create Playlist
         </div>
-        Create Playlist
       </div>
     );
   }

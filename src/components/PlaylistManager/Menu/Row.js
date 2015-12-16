@@ -58,9 +58,11 @@ export default class PlaylistRow extends Component {
         className={cx('PlaylistMenuRow', activeClass, selectedClass, droppableClass, className)}
         onClick={onClick}
       >
-        {icon}
-        {playlist.name}
-        <span className="PlaylistMenuRow-count">{playlist.size}</span>
+        <div className="PlaylistMenuRow-title">
+          {icon}
+          {playlist.name}
+        </div>
+        <div className="PlaylistMenuRow-count">{playlist.size}</div>
       </div>
     );
   }

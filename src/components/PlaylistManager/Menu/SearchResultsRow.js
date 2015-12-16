@@ -18,11 +18,13 @@ export default class SearchResultsRow extends Component {
         className={cx('PlaylistMenuRow', 'PlaylistMenuRow--search', className)}
         onClick={onClick}
       >
-        <div className="PlaylistMenuRow-active-icon">
-          <SearchIcon color="#fff" />
+        <div className="PlaylistMenuRow-title">
+          <div className="PlaylistMenuRow-active-icon">
+            <SearchIcon color="#fff" />
+          </div>
+          "{query}"
         </div>
-        "{query}"
-        <span className="PlaylistMenuRow-count">{size}</span>
+        <div className="PlaylistMenuRow-count">{size}</div>
       </div>
     );
   }
