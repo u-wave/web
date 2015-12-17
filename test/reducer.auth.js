@@ -33,7 +33,7 @@ describe('reducers/auth', () => {
     expect(state.modal.open).to.be.false;
   });
 
-  describe('action: setSession', () => {
+  describe('action: auth/SET_TOKEN', () => {
     it('should set the current session token', () => {
       let state = initialState();
       state = auth(state, { type: SET_TOKEN, payload: { jwt: 'test token' } });
@@ -41,7 +41,7 @@ describe('reducers/auth', () => {
     });
   });
 
-  describe('action: loginComplete', () => {
+  describe('action: auth/LOGIN_COMPLETE', () => {
     it('should set the current user if successful', () => {
       let state = initialState();
       const userObj = { _id: Math.random() };

@@ -22,7 +22,7 @@ describe('reducers/chat', () => {
     expect(state.messages).to.be.empty;
   });
 
-  describe('action: chatReceive', () => {
+  describe('action: chat/RECEIVE_MESSAGE', () => {
     const testMessage = {
       _id: '643abc235-1449941591374',
       userID: '643abc235',
@@ -57,7 +57,7 @@ describe('reducers/chat', () => {
     });
   });
 
-  describe('action: chatSend', () => {
+  describe('action: chat/SEND_MESSAGE', () => {
     const testMessage = {
       user: { _id: '643abc235' },
       message: 'Message text',

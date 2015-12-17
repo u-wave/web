@@ -16,7 +16,7 @@ describe('reducers/selectedPanel', () => {
     expect(state).to.equal('room');
   });
 
-  describe('action: selectPanel', () => {
+  describe('action: panel/SELECT_PANEL', () => {
     it('should set the current panel', () => {
       let state = 'chat';
       state = selectedPanel(state, { type: SELECT_PANEL, payload: { panel: 'room' } });

@@ -20,7 +20,7 @@ describe('reducers/booth', () => {
     expect(state.startTime).to.be.null;
   });
 
-  describe('action: advance', () => {
+  describe('action: booth/ADVANCE', () => {
     it('should advance to the next song if there is one', () => {
       // Weirdly, there are two different advance object formats in use
       // client-side.

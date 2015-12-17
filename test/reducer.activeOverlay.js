@@ -11,7 +11,7 @@ describe('reducers/activeOverlay', () => {
     expect(state).to.equal('playlistManager');
   });
 
-  describe('action: openOverlay', () => {
+  describe('action: overlay/OPEN_OVERLAY', () => {
     it('should set the current overlay', () => {
       let state;
       state = activeOverlay(state, { type: OPEN_OVERLAY, payload: { overlay: 'playlistManager' } });
@@ -22,7 +22,7 @@ describe('reducers/activeOverlay', () => {
     });
   });
 
-  describe('action: closeOverlay', () => {
+  describe('action: overlay/CLOSE_OVERLAY', () => {
     it('should close the current overlay', () => {
       let state = 'anOverlay';
       state = activeOverlay(state, { type: CLOSE_OVERLAY });
@@ -30,7 +30,7 @@ describe('reducers/activeOverlay', () => {
     });
   });
 
-  describe('action: toggleOverlay', () => {
+  describe('action: overlay/TOGGLE_OVERLAY', () => {
     it('should close the given overlay if it is currently open', () => {
       let state = 'playlistManager';
       state = activeOverlay(state, { type: TOGGLE_OVERLAY, payload: { overlay: 'playlistManager' } });
