@@ -1,11 +1,10 @@
 import escapeRegExp from 'escape-string-regexp';
 import values from 'object-values';
+import audio from 'play-audio';
 
 import { SEND_MESSAGE, RECEIVE_MESSAGE } from '../constants/actionTypes/chat';
 import parseChatMarkup from '../utils/parseChatMarkup';
 import { sendMessage } from '../utils/Socket';
-
-const debug = require('debug')('uwave:actions:chat');
 
 export function prepareMessage(user, text, parseOpts = {}) {
   return {
@@ -27,9 +26,9 @@ export function sendChat(user, text) {
   };
 }
 
+const mentionSound = audio(['assets/audio/mention.opus', 'assets/audio/mention.mp3']);
 function playMentionSound() {
-  // TODO
-  debug('mention sound here');
+  mentionSound.play();
 }
 
 function hasMention(text, username) {
@@ -50,7 +49,7 @@ export function receive(message) {
         parsed: parseChatMarkup(message.text, { users })
       }
     });
-    if (isMention) {
+    if (isMention && getState().settings.mentionSound) {
       playMentionSound();
     }
   };

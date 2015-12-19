@@ -57,4 +57,7 @@ the `--no-source-maps` flag to remove source maps from the minified output.
 
 ## License
 
-[MIT](./LICENSE)
+The üWave web client is licensed under the [MIT](./LICENSE) license.
+
+The default [mention sound file](./assets/audio/mention.opus) comes from a
+[Sonics.io](http://sonics.io) pack and is under the [Sonics.io License](http://sonics.io/license).
