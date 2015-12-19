@@ -14,29 +14,26 @@ export default function reduce(state = initialState, action = {}) {
   switch (type) {
   case LOAD:
     return {
+      ...state,
       waitlist: payload.waitlist,
-      locked: payload.locked,
-      ...state
+      locked: payload.locked
     };
   case LOCK:
     return {
-      locked: payload.locked,
-      ...state
+      ...state,
+      locked: payload.locked
     };
   case CLEAR:
     return {
-      waitlist: [],
-      ...state
+      ...state,
+      waitlist: []
     };
   case JOIN:
   case LEAVE:
-  case 'waitlistAdd':
-  case 'waitlistRemove':
-  case 'waitlistMove':
   case UPDATE:
     return {
-      waitlist: payload.waitlist,
-      ...state
+      ...state,
+      waitlist: payload.waitlist
     };
   default:
     return state;
