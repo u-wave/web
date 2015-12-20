@@ -14,6 +14,10 @@ export function toggleOverlay(overlay) {
   };
 }
 
+export function toggleRoomHistory() {
+  return toggleOverlay('roomHistory');
+}
+
 export function togglePlaylistManager() {
   return toggleOverlay('playlistManager');
 }

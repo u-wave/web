@@ -10,7 +10,7 @@ import {
 import { get, post } from '../utils/Request';
 import * as Session from '../utils/Session';
 import * as Socket from '../utils/Socket';
-import { advance } from './BoothActionCreators';
+import { advance, loadHistory } from './BoothActionCreators';
 import { setPlaylists, selectPlaylist } from './PlaylistActionCreators';
 import { closeLoginDialog } from './DialogActionCreators';
 import { setUsers } from './UserActionCreators';
@@ -57,6 +57,8 @@ export function initState() {
           dispatch(selectPlaylist(state.activePlaylist));
         }
       });
+
+    dispatch(loadHistory());
   };
 }
 
