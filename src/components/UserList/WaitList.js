@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import UserList from '../UserList';
 
-function mapStateToProps(state) {
+function mapStateToProps({ waitlist, users }) {
   return {
-    users: state.waitlist.waitlist
+    users: waitlist.waitlist.map(id => users[id])
   };
 }
 
