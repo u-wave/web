@@ -7,20 +7,23 @@ const PanelSwitcher = ({ selected, selectPanel }) => {
   return (
     <div className="PanelSwitcher">
       <Button
-        text="Chat"
         active={selected === 'chat'}
         onClick={() => selectPanel('chat')}
-      />
+      >
+        Chat
+      </Button>
       <Button
-        text="Room"
         active={selected === 'room'}
         onClick={() => selectPanel('room')}
-      />
+      >
+        Room
+      </Button>
       <Button
-        text="Waitlist"
         active={selected === 'waitlist'}
         onClick={() => selectPanel('waitlist')}
-      />
+      >
+        Waitlist
+      </Button>
 
       <div
         className="PanelSwitcher-highlight"

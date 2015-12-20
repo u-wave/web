@@ -6,8 +6,10 @@
   height: 100%;
   width: calc(100% / 3);
   text-transform: uppercase;
+  text-align: center;
 
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 

@@ -1,7 +1,7 @@
 import cx from 'classnames';
 import React from 'react';
 
-const Button = ({ className, text, active, onClick }) => {
+const Button = ({ className, children, active, onClick }) => {
   return (
     <div
       className={cx(
@@ -11,7 +11,7 @@ const Button = ({ className, text, active, onClick }) => {
       )}
       onClick={onClick}
     >
-      {text}
+      {children}
     </div>
   );
 };
