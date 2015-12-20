@@ -1,9 +1,10 @@
-import { applyMiddleware, combineReducers, createStore } from 'redux';
+import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 
 import { TICK } from '../constants/actionTypes/time';
 
+import persistSettings from './persistSettings';
 import * as reducers from '../reducers';
 
 export default function createUwaveStore() {
@@ -15,7 +16,10 @@ export default function createUwaveStore() {
     })
   ];
 
-  const createStoreWithMiddleware = applyMiddleware(...middleware)(createStore);
+  const createStoreWithMiddleware = compose(
+    applyMiddleware(...middleware),
+    persistSettings
+  )(createStore);
   const store = createStoreWithMiddleware(
     combineReducers(reducers)
   );
