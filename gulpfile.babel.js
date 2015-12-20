@@ -17,7 +17,7 @@ gulp.task('css', sequence('css:clean', 'css:compile'));
 gulp.task('js:lint', exec('lint-js'));
 gulp.task('js:clean', exec('clean-js'));
 gulp.task('js:browserify', exec('browserify'));
-gulp.task('js', sequence('js:lint', 'js:clean', 'js:browserify'));
+gulp.task('js', sequence('js:clean', 'js:browserify'));
 
 gulp.task('html', exec('copy-html'));
 
