@@ -23,6 +23,8 @@ export default class App extends React.Component {
     selectedPanel: React.PropTypes.string,
     settings: React.PropTypes.object,
     user: React.PropTypes.object,
+    waitlistPosition: React.PropTypes.number,
+    waitlistSize: React.PropTypes.number,
 
     onLogin: React.PropTypes.func,
     onRegister: React.PropTypes.func,
@@ -33,7 +35,10 @@ export default class App extends React.Component {
 
   render() {
     // state props
-    const { activeOverlay, selectedPanel, settings, user } = this.props;
+    const {
+      activeOverlay, selectedPanel, settings, user,
+      waitlistPosition, waitlistSize
+    } = this.props;
     // dispatch handlers
     const { onLogin, onRegister, onCloseOverlay, selectPanel, sendChatMessage } = this.props;
     const isLoggedIn = !!user;
@@ -65,7 +70,12 @@ export default class App extends React.Component {
 
         <div className="AppColumn AppColumn--right">
           <div className="AppRow AppRow--top">
-            <PanelSwitcher selected={selectedPanel} selectPanel={selectPanel} />
+            <PanelSwitcher
+              selected={selectedPanel}
+              waitlistPosition={waitlistPosition}
+              waitlistSize={waitlistSize}
+              selectPanel={selectPanel}
+            />
           </div>
           <PanelGroup className="AppRow AppRow--middle" selected={selectedPanel}>
             <Panel name="chat">
