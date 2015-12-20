@@ -17,7 +17,7 @@ function getRemaining(current, currentTime, startTime) {
 
 function getEta(current, currentTime, startTime, waitlist, user) {
   const averagePlayDuration = 4 * 60;
-  let position = user ? findIndex(waitlist, waiting => waiting._id === user._id) : -1;
+  let position = user ? findIndex(waitlist, wlId => wlId === user._id) : -1;
   if (position === -1) {
     position = waitlist.length;
   }
@@ -25,14 +25,18 @@ function getEta(current, currentTime, startTime, waitlist, user) {
 }
 
 function mapStateToProps({ auth, booth, playlists, time, waitlist }) {
+  const user = auth.user;
   return {
     eta: booth.media && auth.user
-      ? getEta(booth.media, time, booth.startTime, waitlist.waitlist, auth.user)
+      ? getEta(booth.media, time, booth.startTime, waitlist.waitlist, user)
       : 0,
     playlist: playlists.playlists[playlists.activePlaylistID],
     nextMedia: playlists.activeMedia[0],
-    user: auth.user,
-    userInWaitlist: waitlist.waitlist.some(wl => wl._id === auth.user._id)
+    user,
+    userInWaitlist: user
+      ? waitlist.waitlist.some(wlId => wlId === user._id) ||
+        !!booth.djID && booth.djID === user._id
+      : false
   };
 }
 
