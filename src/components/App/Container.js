@@ -11,14 +11,17 @@ import { sendChat } from '../../actions/ChatActionCreators';
 import MuiTheme from '../../MuiTheme';
 import App from './';
 
-function mapStateToProps(state) {
-  return {
-    activeOverlay: state.activeOverlay,
-    selectedPanel: state.selectedPanel,
-    settings: state.settings,
-    user: state.auth.user
-  };
-}
+const mapStateToProps = ({
+  activeOverlay, selectedPanel, settings, auth, waitlist
+}) => ({
+  activeOverlay,
+  selectedPanel,
+  settings,
+  user: auth.user,
+  waitlistPosition: auth.user ? waitlist.waitlist.indexOf(auth.user._id) : -1,
+  waitlistSize: waitlist.waitlist.length
+});
+
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     selectPanel,
