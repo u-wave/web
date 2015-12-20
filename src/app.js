@@ -2,43 +2,27 @@ import 'es6-promise';
 import 'whatwg-fetch';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { applyMiddleware, combineReducers, createStore } from 'redux';
 import { Provider } from 'react-redux';
-import logger from 'redux-logger';
-import thunk from 'redux-thunk';
 
 import AppContainer from './components/App/Container';
 import * as Socket from './utils/Socket';
 import { get as readSession } from './utils/Session';
-import { TICK } from './constants/actionTypes/time';
 import { initState, setJWT } from './actions/LoginActionCreators';
 import { startTicking } from './actions/TickerActionCreators';
 
-import * as reducers from './reducers';
+import configureStore from './store/configureStore';
 
-const createStoreWithMiddleware = applyMiddleware(
-  thunk,
-  logger({
-    // avoid log spam
-    predicate: (getState, action) => action.type !== TICK
-  })
-)(createStore);
-const store = createStoreWithMiddleware(
-  combineReducers(reducers)
-);
-
-if (module.hot) {
-  module.hot.accept('./reducers', () => {
-    store.replaceReducer(combineReducers(
-      require('./reducers')
-    ));
-  });
-}
+const store = configureStore();
 
 const jwt = readSession();
 if (jwt) {
   store.dispatch(setJWT(jwt));
 }
+
+store.dispatch(initState());
+store.dispatch(startTicking());
+
+Socket.connect(store);
 
 // Material-UI dependency
 require('react-tap-event-plugin')();
@@ -49,10 +33,5 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('app')
 );
-
-store.dispatch(initState());
-store.dispatch(startTicking());
-
-Socket.connect(store);
 
 window.debug = require('debug');
