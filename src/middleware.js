@@ -1,7 +1,4 @@
-import { createReadStream } from 'fs';
-import { join as joinPath } from 'path';
-
-function express() {
+function getExpress() {
   try {
     return require('express');
   } catch (e) {
@@ -10,10 +7,7 @@ function express() {
 }
 
 export default function uwaveWebClient(basePath = __dirname) {
-  const createRouter = express().Router;
-  return createRouter()
-    .get('/', (req, res) => {
-      createReadStream(joinPath(basePath, './index.html')).pipe(res);
-    })
-    .use(express().static(basePath));
+  const express = getExpress();
+  return express.Router() // eslint-disable-line new-cap
+    .use(express.static(basePath));
 }
