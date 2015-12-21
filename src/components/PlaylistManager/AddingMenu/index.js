@@ -1,5 +1,6 @@
 import find from 'array-find';
 import React, { Component, PropTypes } from 'react';
+import ActiveIcon from 'material-ui/lib/svg-icons/navigation/check';
 import Menu from 'material-ui/lib/menus/menu';
 import MenuItem from 'material-ui/lib/menus/menu-item';
 import RenderToLayer from 'material-ui/lib/render-to-layer';
@@ -69,7 +70,7 @@ export default class AddingMenu extends Component {
               value={playlist._id}
               primaryText={playlist.name}
               secondaryText={`${playlist.size || 0}`}
-              checked={!!playlist.active}
+              leftIcon={playlist.active ? <ActiveIcon style={{ width: 48, height: 48 }} /> : null}
             />
           ))}
         </Menu>
