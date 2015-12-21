@@ -12,7 +12,7 @@ const JS_TASKS = [ 'js:lint' ];
 const CSS_PATHS = [ 'src/**/*.css' ];
 const CSS_TASKS = [ 'css' ];
 const HTML_PATHS = [ 'src/index.html' ];
-const HTML_TASKS = [ 'html '];
+const HTML_TASKS = [ 'html' ];
 const MIDDLEWARE_PATHS = [ 'src/middleware.js' ];
 const MIDDLEWARE_TASKS = [ 'middleware' ];
 
