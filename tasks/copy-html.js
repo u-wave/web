@@ -1,7 +1,8 @@
 import { src, dest } from 'gulp';
-import { transform as replace } from 'gulp-insert';
+import { transform } from 'gulp-insert';
 import { readFileSync } from 'fs';
 import { join as joinPath } from 'path';
+import cheerio from 'cheerio';
 import minifyHtml from 'gulp-minify-html';
 import when from 'gulp-if';
 
@@ -14,12 +15,23 @@ function renderApp() {
   return renderToString(<App />);
 }
 
+const apply = (selector, fn) =>
+  contents => {
+    const $ = cheerio.load(contents);
+    fn($(selector));
+    return $.html();
+  };
+
+const insert = (selector, fn) =>
+  transform(apply(selector,
+    el => el.html(fn())
+  ));
+
 export default function copyHtmlTask({ minify = false, prerender = false }) {
   return src('src/index.html')
-    .pipe(when(prerender, replace(contents => contents.replace('<!-- App -->', renderApp))))
-    .pipe(when(minify, replace(contents => contents.replace(
-      '<link rel="stylesheet" href="style.css">',
-      `<style>${readFileSync(COMPILED_CSS_PATH, 'utf8')}</style>`
+    .pipe(when(prerender, insert('#app', renderApp)))
+    .pipe(when(minify, transform(apply('link[href="style.css"]', el =>
+      el.replaceWith(`<style>${readFileSync(COMPILED_CSS_PATH, 'utf8')}</style>`)
     ))))
     .pipe(when(minify, minifyHtml()))
     .pipe(dest('lib/'));
