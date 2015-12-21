@@ -3,8 +3,6 @@ import React, { Component, PropTypes } from 'react';
 import SearchIcon from 'material-ui/lib/svg-icons/action/search';
 import SourcePicker from './SourcePicker';
 
-const ENTER_KEY = 13;
-
 export default class SearchBar extends Component {
   static propTypes = {
     className: PropTypes.string,
@@ -24,7 +22,7 @@ export default class SearchBar extends Component {
 
   onKeyDown(e) {
     const { onSubmit } = this.props;
-    if (e.keyCode === ENTER_KEY) {
+    if (e.key === 'Enter') {
       onSubmit(this.refs.value.value);
     }
   }

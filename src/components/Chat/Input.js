@@ -1,8 +1,6 @@
 import cx from 'classnames';
 import React, { Component, PropTypes } from 'react';
 
-const ENTER_KEY = 13;
-
 export default class Input extends Component {
   static propTypes = {
     send: PropTypes.func
@@ -18,7 +16,7 @@ export default class Input extends Component {
   }
 
   onKeyDown(e) {
-    if (e.keyCode === ENTER_KEY) {
+    if (e.key === 'Enter') {
       const value = e.target.value.trim();
       if (value.length > 0) {
         this.props.send(value);
