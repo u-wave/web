@@ -52,8 +52,51 @@ describe('reducers/chat', () => {
       expect(state.messages[0]).to.have.property('inFlight', false);
     });
 
-    it.skip('should remove matching in-flight sent messages', () => {
-      // TODO
+    it('should remove matching in-flight sent messages', () => {
+      let state = initialState();
+      expect(state.messages).to.have.length(0);
+
+      // test setup: start w/ one received message and one that's been sent but
+      // is pending.
+      state = chat(state, {
+        type: RECEIVE_MESSAGE,
+        payload: {
+          message: testMessage,
+          parsed: [ testMessage.text ],
+          isMention: false
+        }
+      });
+      expect(state.messages).to.have.length(1);
+
+      const messageText = 'test message 🐼';
+      const user = { _id: 'a user id' };
+      state = chat(state, {
+        type: SEND_MESSAGE,
+        payload: {
+          user,
+          message: messageText,
+          parsed: [ messageText ]
+        }
+      });
+      expect(state.messages).to.have.length(2);
+      expect(state.messages[1]).to.have.property('inFlight', true);
+
+      // actual test: RECEIVE-ing a sent message should replace that message in
+      // the messages list.
+      state = chat(state, {
+        type: RECEIVE_MESSAGE,
+        payload: {
+          message: {
+            _id: 'a user id-1449941591374',
+            userID: user._id,
+            text: messageText,
+            timestamp: 1449941591374
+          },
+          parsed: [ messageText ]
+        }
+      });
+      expect(state.messages).to.have.length(2);
+      expect(state.messages[1]).to.have.property('inFlight', false);
     });
   });
 
