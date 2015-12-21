@@ -38,18 +38,24 @@ function hasMention(text, username) {
 
 export function receive(message) {
   return (dispatch, getState) => {
-    const user = getState().auth.user;
-    const users = values(getState().users);
-    const isMention = user ? hasMention(message.text, user.username) : false;
+    const { auth, settings, users } = getState();
+    const isMention = auth.user
+      ? hasMention(message.text, auth.user.username)
+      : false;
+
     dispatch({
       type: RECEIVE_MESSAGE,
       payload: {
-        message,
+        message: {
+          ...message,
+          user: users[message.userID]
+        },
         isMention,
-        parsed: parseChatMarkup(message.text, { users })
+        parsed: parseChatMarkup(message.text, { users: values(users) })
       }
     });
-    if (isMention && getState().settings.mentionSound) {
+
+    if (isMention && settings.mentionSound) {
       playMentionSound();
     }
   };

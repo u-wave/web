@@ -3,14 +3,9 @@ import { connect } from 'react-redux';
 
 import Chat from './index';
 
-function mapStateToProps(state) {
-  return {
-    messages: state.chat.messages.map(message => ({
-      ...message,
-      user: state.users[message.userID]
-    }))
-  };
-}
+const mapStateToProps = state => ({
+  messages: state.chat.messages
+});
 
 @connect(mapStateToProps)
 export default class ChatContainer extends Component {
