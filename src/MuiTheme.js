@@ -13,8 +13,8 @@ export default {
     accent2Color: Colors.grey100,
     accent3Color: Colors.grey500,
     textColor: Colors.white,
-    alternateTextColor: Colors.white,
-    canvasColor: Colors.white,
+    alternateTextColor: '#777777',
+    canvasColor: '#303030',
     borderColor: Colors.grey300,
     disabledColor: ColorManipulator.fade(Colors.darkBlack, 0.3)
   }
