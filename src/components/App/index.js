@@ -30,6 +30,7 @@ export default class App extends React.Component {
     waitlistSize: React.PropTypes.number,
 
     onCloseOverlay: React.PropTypes.func,
+    onSettingChange: React.PropTypes.func,
     selectPanel: React.PropTypes.func,
     sendChatMessage: React.PropTypes.func
   };
@@ -41,7 +42,10 @@ export default class App extends React.Component {
       waitlistPosition, waitlistSize
     } = this.props;
     // dispatch handlers
-    const { onCloseOverlay, selectPanel, sendChatMessage } = this.props;
+    const {
+      onCloseOverlay, onSettingChange,
+      selectPanel, sendChatMessage
+    } = this.props;
     const isLoggedIn = !!user;
 
     return (
@@ -67,7 +71,10 @@ export default class App extends React.Component {
             />
             <SettingsManager
               key="settings"
+              user={user}
+              settings={settings}
               onCloseOverlay={onCloseOverlay}
+              onSettingChange={onSettingChange}
             />
           </Overlays>
           <FooterBar className="AppRow AppRow--bottom" />

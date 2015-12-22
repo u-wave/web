@@ -8,6 +8,7 @@ import ThemeDecorator from 'material-ui/lib/styles/theme-decorator';
 import { closeAll } from '../actions/OverlayActionCreators';
 import { selectPanel } from '../actions/PanelSelectActionCreators';
 import { sendChat } from '../actions/ChatActionCreators';
+import { set as setSetting } from '../actions/SettingsActionCreators';
 
 import { sizeSelector, positionSelector } from '../selectors/waitlistSelectors';
 import { currentUserSelector } from '../selectors/userSelectors';
@@ -28,7 +29,8 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     selectPanel,
     sendChatMessage: sendChat,
-    onCloseOverlay: closeAll
+    onCloseOverlay: closeAll,
+    onSettingChange: setSetting
   }, dispatch);
 }
 
@@ -42,6 +44,7 @@ export default class AppContainer extends Component {
     user: PropTypes.object,
 
     onCloseOverlay: PropTypes.func,
+    onSettingChange: setSetting,
     selectPanel: PropTypes.func,
     sendChatMessage: PropTypes.func
   };

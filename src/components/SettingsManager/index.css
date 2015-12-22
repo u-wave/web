@@ -4,6 +4,7 @@
   z-index: 10;
 
   @descendent body {
-    background: $background-color;
+    overflow-y: scroll;
+    background: color($background-color alpha(* 96%));
   }
 }
