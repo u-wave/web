@@ -10,6 +10,10 @@ const attempt = fn => {
   }
 };
 
+// [Store enhancer][1] that saves and loads app settings to and from
+// localStorage.
+//
+// [1]: http://redux.js.org/docs/Glossary.html#store-enhancer
 const persistSettings = next => (reducer, initialState) => {
   const settings = attempt(() =>
     JSON.parse(localStorage.getItem(SETTINGS_KEY))
