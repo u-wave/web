@@ -12,12 +12,12 @@ describe('reducers/booth', () => {
 
   it('should default to an empty DJ booth', () => {
     const state = booth(undefined, { type: '@@redux/INIT' });
-    expect(state).to.be.an('object');
-    expect(state).to.contain.all.keys([ 'historyID', 'djID', 'media', 'startTime' ]);
-    expect(state.historyID).to.be.null;
-    expect(state.djID).to.be.null;
-    expect(state.media).to.be.null;
-    expect(state.startTime).to.be.null;
+    expect(state).to.eql({
+      historyID: null,
+      djID: null,
+      media: null,
+      startTime: null
+    });
   });
 
   describe('action: booth/ADVANCE', () => {

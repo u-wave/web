@@ -19,8 +19,8 @@ describe('reducers/auth', () => {
   it('should default to a logged-out session', () => {
     let state;
     state = auth(state, { type: '@@redux/INIT' });
-    expect(state).to.be.an('object');
     expect(state).to.contain.all.keys([ 'jwt', 'user', 'error' ]);
+
     expect(state.jwt).to.be.null;
     expect(state.user).to.be.null;
     expect(state.error).to.be.null;
@@ -28,8 +28,8 @@ describe('reducers/auth', () => {
   it('should default to a closed login modal', () => {
     let state;
     state = auth(state, { type: '@@redux/INIT' });
-    expect(state.modal).to.be.an('object');
     expect(state.modal).to.contain.all.keys([ 'open', 'show' ]);
+
     expect(state.modal.open).to.be.false;
   });
 

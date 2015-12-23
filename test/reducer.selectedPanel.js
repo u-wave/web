@@ -6,7 +6,6 @@ describe('reducers/selectedPanel', () => {
   it('should default to the chat panel', () => {
     let state;
     state = selectedPanel(state, { type: '@@redux/INIT' });
-    expect(state).to.be.a('string');
     expect(state).to.equal('chat');
   });
 
@@ -20,7 +19,6 @@ describe('reducers/selectedPanel', () => {
     it('should set the current panel', () => {
       let state = 'chat';
       state = selectedPanel(state, { type: SELECT_PANEL, payload: { panel: 'room' } });
-      expect(state).to.be.a('string');
       expect(state).to.equal('room');
       state = selectedPanel(state, { type: SELECT_PANEL, payload: { panel: 'waitlist' } });
       expect(state).to.equal('waitlist');

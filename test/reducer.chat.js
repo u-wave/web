@@ -16,10 +16,7 @@ describe('reducers/chat', () => {
 
   it('should default to an empty list of messages', () => {
     const state = chat(undefined, { type: '@@redux/INIT' });
-    expect(state).to.be.an('object');
-    expect(state).to.contain.all.keys([ 'messages' ]);
-    expect(state.messages).to.be.an('array');
-    expect(state.messages).to.be.empty;
+    expect(state).to.eql({ messages: [] });
   });
 
   describe('action: chat/RECEIVE_MESSAGE', () => {
@@ -41,15 +38,17 @@ describe('reducers/chat', () => {
           isMention: false
         }
       });
-      expect(state.messages).to.have.length(1);
-      expect(state.messages[0]).to.be.an('object');
-      [ 'userID', 'text', 'timestamp' ].forEach(key => {
-        expect(state.messages[0]).to.have.property(key, testMessage[key]);
+      expect(state).to.eql({
+        messages: [{
+          _id: testMessage._id,
+          userID: testMessage.userID,
+          text: testMessage.text,
+          parsedText: [ testMessage.text ],
+          timestamp: testMessage.timestamp,
+          isMention: false,
+          inFlight: false
+        }]
       });
-      // TODO Just call it parsedText everywhere
-      expect(state.messages[0].parsedText).to.eql([ testMessage.text ]);
-      expect(state.messages[0]).to.have.property('isMention', false);
-      expect(state.messages[0]).to.have.property('inFlight', false);
     });
 
     it('should remove matching in-flight sent messages', () => {
@@ -120,12 +119,15 @@ describe('reducers/chat', () => {
       let state = initialState();
       state = chat(state, { type: SEND_MESSAGE, payload: testMessage });
       expect(state.messages).to.have.length(1);
-      expect(state.messages[0]).to.be.an('object');
+      const message = state.messages[0];
+      expect(message).to.be.an('object');
+      expect(message).to.have.property('_id');
+      expect(message.userID).to.equal(testMessage.user._id);
       // TODO Call this "text" everywhere
-      expect(state.messages[0]).to.have.property('text', testMessage.message);
-      expect(state.messages[0].parsedText).to.eql(testMessage.parsed);
-      expect(state.messages[0]).to.have.property('timestamp', Date.now());
-      expect(state.messages[0]).to.have.property('inFlight', true);
+      expect(message.text).to.equal(testMessage.message);
+      expect(message.parsedText).to.eql(testMessage.parsed);
+      expect(message.timestamp).to.equal(Date.now());
+      expect(message.inFlight).to.be.true;
     });
   });
 });

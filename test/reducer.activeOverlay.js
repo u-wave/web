@@ -15,7 +15,6 @@ describe('reducers/activeOverlay', () => {
     it('should set the current overlay', () => {
       let state;
       state = activeOverlay(state, { type: OPEN_OVERLAY, payload: { overlay: 'playlistManager' } });
-      expect(state).to.be.a('string');
       expect(state).to.equal('playlistManager');
       state = activeOverlay(state, { type: OPEN_OVERLAY, payload: { overlay: 'settings' } });
       expect(state).to.equal('settings');
