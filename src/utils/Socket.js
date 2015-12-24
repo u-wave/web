@@ -10,12 +10,29 @@ let socket = null;
 let sentJWT = false;
 let queue = [];
 
+function maybeAuthenticateOnConnect(state) {
+  const jwt = state.auth.jwt;
+  debug('open', jwt);
+  if (jwt) {
+    socket.send(jwt);
+    sentJWT = jwt;
+  } else {
+    sentJWT = false;
+  }
+}
+
 function send(command, data) {
   if (socket.readyState === WebSocket.OPEN) {
     socket.send(JSON.stringify({ command, data }));
   } else {
     queue.push({ command, data });
   }
+}
+
+function drainQueuedMessages() {
+  const messages = queue;
+  queue = [];
+  messages.forEach(msg => send(msg.command, msg.data));
 }
 
 function onMessage(dispatch, json) {
@@ -72,16 +89,7 @@ export function connect(store, url = location.href.replace(/^http(s)?:/, 'ws$1:'
     onMessage(store.dispatch, pack.data);
   };
   socket.onopen = () => {
-    const jwt = store.getState().auth.jwt;
-    debug('open', jwt);
-    if (jwt) {
-      socket.send(jwt);
-      sentJWT = jwt;
-    } else {
-      sentJWT = false;
-    }
-    const messages = queue;
-    queue = [];
-    messages.forEach(msg => send(msg.command, msg.data));
+    maybeAuthenticateOnConnect(store.getState());
+    drainQueuedMessages();
   };
 }

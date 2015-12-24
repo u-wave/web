@@ -9,6 +9,7 @@ import * as reducers from '../reducers';
 
 export default function createUwaveStore() {
   const middleware = [
+    // for async actions
     thunk,
     logger({
       // avoid log spam
