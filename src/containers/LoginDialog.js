@@ -5,10 +5,10 @@ import { login, register } from '../actions/LoginActionCreators';
 
 import LoginDialog from '../components/Dialogs/LoginDialog';
 
-const mapStateToProps = state => ({
-  error: state.auth.error,
-  open: state.auth.modal.open,
-  show: state.auth.modal.show
+const mapStateToProps = ({ dialogs, auth }) => ({
+  ...dialogs.login.payload,
+  error: auth.error,
+  open: dialogs.login.open
 });
 const mapDispatchToProps = dispatch => bindActionCreators({
   onLogin: login,

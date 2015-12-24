@@ -19,18 +19,11 @@ describe('reducers/auth', () => {
   it('should default to a logged-out session', () => {
     let state;
     state = auth(state, { type: '@@redux/INIT' });
-    expect(state).to.contain.all.keys([ 'jwt', 'user', 'error' ]);
-
-    expect(state.jwt).to.be.null;
-    expect(state.user).to.be.null;
-    expect(state.error).to.be.null;
-  });
-  it('should default to a closed login modal', () => {
-    let state;
-    state = auth(state, { type: '@@redux/INIT' });
-    expect(state.modal).to.contain.all.keys([ 'open', 'show' ]);
-
-    expect(state.modal.open).to.be.false;
+    expect(state).to.eql({
+      jwt: null,
+      user: null,
+      error: null
+    });
   });
 
   describe('action: auth/SET_TOKEN', () => {
@@ -65,33 +58,6 @@ describe('reducers/auth', () => {
       expect(state.user).to.be.null;
       expect(state.error).to.be.instanceOf(Error);
       expect(state.error.message).to.equal('failed');
-    });
-
-    it('should close the login modal if successful', () => {
-      let state = initialState();
-      state.modal = { ...state.modal, open: true, show: 'login' };
-      state = auth(state, {
-        type: LOGIN_COMPLETE,
-        payload: { jwt: 'test token', user: {} }
-      });
-      expect(state.modal).to.eql({
-        open: false,
-        show: 'login'
-      });
-    });
-
-    it('should not close login modal if unsuccessful', () => {
-      let state = initialState();
-      state.modal = { ...state.modal, open: true, show: 'login' };
-      state = auth(state, {
-        type: LOGIN_COMPLETE,
-        payload: new Error,
-        error: true
-      });
-      expect(state.modal).to.eql({
-        open: true,
-        show: 'login'
-      });
     });
   });
 });

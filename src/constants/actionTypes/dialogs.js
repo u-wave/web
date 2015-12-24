@@ -1,2 +1,5 @@
 export const OPEN_EDIT_MEDIA_DIALOG = 'dialogs/OPEN_EDIT_MEDIA_DIALOG';
 export const CLOSE_EDIT_MEDIA_DIALOG = 'dialogs/CLOSE_EDIT_MEDIA_DIALOG';
+
+export const OPEN_LOGIN_DIALOG = 'auth/OPEN_LOGIN_DIALOG';
+export const CLOSE_LOGIN_DIALOG = 'auth/CLOSE_LOGIN_DIALOG';

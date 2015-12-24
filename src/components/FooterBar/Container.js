@@ -3,7 +3,7 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { openLoginDialog, openRegisterDialog } from '../../actions/LoginActionCreators';
+import { openLoginDialog, openRegisterDialog } from '../../actions/DialogActionCreators';
 import { togglePlaylistManager } from '../../actions/OverlayActionCreators';
 import { joinWaitlist, leaveWaitlist } from '../../actions/WaitlistActionCreators';
 

@@ -1,5 +1,4 @@
 import {
-  OPEN_LOGIN_DIALOG,
   REGISTER_START, REGISTER_COMPLETE,
   LOGIN_START, LOGIN_COMPLETE, SET_TOKEN,
   LOGOUT_START, LOGOUT_COMPLETE
@@ -13,15 +12,19 @@ import * as Session from '../utils/Session';
 import * as Socket from '../utils/Socket';
 import { advance } from './BoothActionCreators';
 import { setPlaylists, selectPlaylist } from './PlaylistActionCreators';
+import { closeLoginDialog } from './DialogActionCreators';
 import { setUsers } from './UserActionCreators';
 
 const debug = require('debug')('uwave:actions:login');
 
 export function loginComplete({ jwt, user }) {
   Socket.auth(jwt);
-  return {
-    type: LOGIN_COMPLETE,
-    payload: { jwt, user }
+  return dispatch => {
+    dispatch({
+      type: LOGIN_COMPLETE,
+      payload: { jwt, user }
+    });
+    dispatch(closeLoginDialog());
   };
 }
 
@@ -131,22 +134,5 @@ export function logout() {
       dispatch(logoutComplete());
     }
     Session.unset();
-  };
-}
-
-export function openLoginDialog() {
-  return {
-    type: OPEN_LOGIN_DIALOG,
-    meta: {
-      register: false
-    }
-  };
-}
-export function openRegisterDialog() {
-  return {
-    type: OPEN_LOGIN_DIALOG,
-    meta: {
-      register: true
-    }
   };
 }
