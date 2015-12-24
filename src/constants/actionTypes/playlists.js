@@ -22,3 +22,6 @@ export const REMOVE_MEDIA_COMPLETE = 'playlists/REMOVE_MEDIA_COMPLETE';
 
 export const MOVE_MEDIA_START = 'playlists/MOVE_MEDIA_START';
 export const MOVE_MEDIA_COMPLETE = 'playlists/MOVE_MEDIA_COMPLETE';
+
+export const UPDATE_MEDIA_START = 'playlists/UPDATE_MEDIA_START';
+export const UPDATE_MEDIA_COMPLETE = 'playlists/UPDATE_MEDIA_COMPLETE';

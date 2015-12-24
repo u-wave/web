@@ -5,7 +5,6 @@ import { createStructuredSelector } from 'reselect';
 import ThemeManager from 'material-ui/lib/styles/theme-manager';
 
 import { closeAll } from '../actions/OverlayActionCreators';
-import { login, register } from '../actions/LoginActionCreators';
 import { selectPanel } from '../actions/PanelSelectActionCreators';
 import { sendChat } from '../actions/ChatActionCreators';
 
@@ -28,9 +27,7 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     selectPanel,
     sendChatMessage: sendChat,
-    onCloseOverlay: closeAll,
-    onLogin: login,
-    onRegister: register
+    onCloseOverlay: closeAll
   }, dispatch);
 }
 
@@ -42,8 +39,6 @@ export default class AppContainer extends Component {
     settings: PropTypes.object,
     user: PropTypes.object,
 
-    onLogin: PropTypes.func,
-    onRegister: PropTypes.func,
     onCloseOverlay: PropTypes.func,
     selectPanel: PropTypes.func,
     sendChatMessage: PropTypes.func

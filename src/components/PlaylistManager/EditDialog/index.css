@@ -1,0 +1,19 @@
+@import "vars.css";
+
+@component EditMediaDialog {
+}
+
+@component EditMediaDialogGroup {
+  display: flex;
+  justify-content: space-between;
+
+  @descendent field {
+    flex-grow: 0.5;
+  }
+
+  @descendent label {
+    line-height: 50px;
+    white-space: nowrap;
+    padding: 0 20px;
+  }
+}

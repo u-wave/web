@@ -3,6 +3,7 @@ export addToPlaylistMenu from './addToPlaylistMenu';
 export auth from './auth';
 export booth from './booth';
 export chat from './chat';
+export dialogs from './dialogs';
 export mediaSearch from './mediaSearch';
 export playlists from './playlists';
 export selectedPanel from './selectedPanel';

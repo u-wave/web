@@ -1,0 +1,2 @@
+export const OPEN_EDIT_MEDIA_DIALOG = 'dialogs/OPEN_EDIT_MEDIA_DIALOG';
+export const CLOSE_EDIT_MEDIA_DIALOG = 'dialogs/CLOSE_EDIT_MEDIA_DIALOG';

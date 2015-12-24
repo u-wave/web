@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import TransitionGroup from 'react-addons-css-transition-group';
+import Dialog from 'material-ui/lib/dialog';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 
@@ -37,22 +37,11 @@ export default class LoginModal extends Component {
         />
       );
     }
-    const modal = (
-      <div className="LoginModal">
+    return (
+      <Dialog className="LoginModal" open={open}>
         <h1 className="LoginModal-header">{title}</h1>
         {form}
-      </div>
-    );
-    return (
-      <span>
-        <TransitionGroup
-          transitionName="LoginModal-showing"
-          transitionEnterTimeout={230}
-          transitionLeaveTimeout={230}
-        >
-          {open && modal}
-        </TransitionGroup>
-      </span>
+      </Dialog>
     );
   }
 }

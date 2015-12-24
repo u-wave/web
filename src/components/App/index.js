@@ -13,7 +13,8 @@ import Panel from '../PanelSwitcher/Panel';
 import Video from '../../containers/Video';
 import Overlays from './Overlays';
 import PlaylistManager from '../../containers/PlaylistManager';
-import LoginModal from '../../containers/LoginModal';
+
+import Dialogs from './Dialogs';
 import AddToPlaylistMenu from '../../containers/AddToPlaylistMenu';
 import DragLayer from '../../containers/DragLayer';
 
@@ -27,8 +28,6 @@ export default class App extends React.Component {
     waitlistPosition: React.PropTypes.number,
     waitlistSize: React.PropTypes.number,
 
-    onLogin: React.PropTypes.func,
-    onRegister: React.PropTypes.func,
     onCloseOverlay: React.PropTypes.func,
     selectPanel: React.PropTypes.func,
     sendChatMessage: React.PropTypes.func
@@ -41,7 +40,7 @@ export default class App extends React.Component {
       waitlistPosition, waitlistSize
     } = this.props;
     // dispatch handlers
-    const { onLogin, onRegister, onCloseOverlay, selectPanel, sendChatMessage } = this.props;
+    const { onCloseOverlay, selectPanel, sendChatMessage } = this.props;
     const isLoggedIn = !!user;
 
     return (
@@ -94,10 +93,7 @@ export default class App extends React.Component {
           </div>
         </div>
 
-        <LoginModal
-          onLogin={onLogin}
-          onRegister={onRegister}
-        />
+        <Dialogs />
 
         <AddToPlaylistMenu />
         <DragLayer />
