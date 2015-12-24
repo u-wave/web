@@ -3,10 +3,7 @@ import Dialog from 'material-ui/lib/dialog';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 
-/**
- * The LoginModal manages its own "open" state.
- */
-export default class LoginModal extends Component {
+export default class LoginDialog extends Component {
   static propTypes = {
     open: PropTypes.bool,
     show: PropTypes.string,
@@ -22,24 +19,17 @@ export default class LoginModal extends Component {
     let title;
     if (show === 'register') {
       title = 'Register';
-      form = (
-        <RegisterForm
-          key="register"
-          {...this.props}
-        />
-      );
+      form = <RegisterForm {...this.props} />;
     } else {
       title = 'Sign in';
-      form = (
-        <LoginForm
-          key="login"
-          {...this.props}
-        />
-      );
+      form = <LoginForm {...this.props} />;
     }
     return (
-      <Dialog className="LoginModal" open={open}>
-        <h1 className="LoginModal-header">{title}</h1>
+      <Dialog
+        contentStyle={{ maxWidth: 350 }}
+        title={title}
+        open={open}
+      >
         {form}
       </Dialog>
     );

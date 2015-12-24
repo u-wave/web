@@ -1,5 +1,5 @@
 import {
-  OPEN_LOGIN_MODAL,
+  OPEN_LOGIN_DIALOG,
   REGISTER_COMPLETE,
   LOGIN_COMPLETE, SET_TOKEN,
   LOGOUT_COMPLETE
@@ -50,7 +50,7 @@ export default function reduce(state = initialState, action = {}) {
     };
   case LOGOUT_COMPLETE:
     return initialState;
-  case OPEN_LOGIN_MODAL:
+  case OPEN_LOGIN_DIALOG:
     return {
       ...state,
       modal: {

@@ -14,7 +14,7 @@ import Video from '../../containers/Video';
 import Overlays from './Overlays';
 import PlaylistManager from '../../containers/PlaylistManager';
 
-import Dialogs from './Dialogs';
+import Dialogs from '../Dialogs';
 import AddToPlaylistMenu from '../../containers/AddToPlaylistMenu';
 import DragLayer from '../../containers/DragLayer';
 

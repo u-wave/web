@@ -18,7 +18,7 @@ const parseDuration = str => str.split(':')
   .map(part => parseInt(part.trim(), 10))
   .reduce((duration, part) => duration * 60 + part, 0);
 
-export default class EditDialog extends Component {
+export default class EditMediaDialog extends Component {
   static propTypes = {
     open: PropTypes.boolean,
     media: PropTypes.object,

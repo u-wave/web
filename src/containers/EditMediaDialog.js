@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { updateMedia } from '../actions/PlaylistActionCreators';
 import { closeEditMediaDialog} from '../actions/DialogActionCreators';
 
-import EditDialog from '../components/PlaylistManager/EditDialog';
+import EditMediaDialog from '../components/Dialogs/EditMediaDialog';
 
 const mapStateToProps = ({ dialogs }) => ({
   ...dialogs.editMedia.payload,
@@ -27,7 +27,7 @@ export default class EditMediaDialogContainer extends Component {
   render() {
     const { onUpdateMedia, playlistID, media, ...props } = this.props;
     return (
-      <EditDialog
+      <EditMediaDialog
         {...props}
         media={media}
         onEditedMedia={update => onUpdateMedia(playlistID, media._id, update)}

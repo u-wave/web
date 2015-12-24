@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { login, register } from '../actions/LoginActionCreators';
 
-import LoginModal from '../components/LoginModal';
+import LoginDialog from '../components/Dialogs/LoginDialog';
 
 const mapStateToProps = state => ({
   error: state.auth.error,
@@ -16,8 +16,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 }, dispatch);
 
 @connect(mapStateToProps, mapDispatchToProps)
-export default class LoginModalContainer extends Component {
+export default class LoginDialogContainer extends Component {
   render() {
-    return <LoginModal {...this.props} />;
+    return <LoginDialog {...this.props} />;
   }
 }

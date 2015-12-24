@@ -1,5 +1,5 @@
 import {
-  OPEN_LOGIN_MODAL,
+  OPEN_LOGIN_DIALOG,
   REGISTER_START, REGISTER_COMPLETE,
   LOGIN_START, LOGIN_COMPLETE, SET_TOKEN,
   LOGOUT_START, LOGOUT_COMPLETE
@@ -134,17 +134,17 @@ export function logout() {
   };
 }
 
-export function openLoginModal() {
+export function openLoginDialog() {
   return {
-    type: OPEN_LOGIN_MODAL,
+    type: OPEN_LOGIN_DIALOG,
     meta: {
       register: false
     }
   };
 }
-export function openRegisterModal() {
+export function openRegisterDialog() {
   return {
-    type: OPEN_LOGIN_MODAL,
+    type: OPEN_LOGIN_DIALOG,
     meta: {
       register: true
     }

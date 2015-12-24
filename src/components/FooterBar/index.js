@@ -12,8 +12,8 @@ export default class FooterBar extends Component {
     user: PropTypes.object,
     userInWaitlist: PropTypes.bool,
 
-    openLoginModal: PropTypes.func,
-    openRegisterModal: PropTypes.func,
+    openLoginDialog: PropTypes.func,
+    openRegisterDialog: PropTypes.func,
     togglePlaylistManager: PropTypes.func,
     joinWaitlist: PropTypes.func,
     leaveWaitlist: PropTypes.func
@@ -21,7 +21,7 @@ export default class FooterBar extends Component {
 
   render() {
     const {
-      openLoginModal, openRegisterModal,
+      openLoginDialog, openRegisterDialog,
       togglePlaylistManager,
       joinWaitlist, leaveWaitlist
     } = this.props;
@@ -62,13 +62,13 @@ export default class FooterBar extends Component {
       <div className={className}>
         <button
           className="FooterAuthButton FooterAuthButton--login"
-          onClick={openLoginModal}
+          onClick={openLoginDialog}
         >
           SIGN IN
         </button>
         <button
           className="FooterAuthButton FooterAuthButton--register"
-          onClick={openRegisterModal}
+          onClick={openRegisterDialog}
         >
           REGISTER
         </button>
