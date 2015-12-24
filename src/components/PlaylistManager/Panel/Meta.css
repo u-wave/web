@@ -4,31 +4,22 @@
   height: 54px;
   line-height: 54px;
   font-size: 14pt;
+  display: flex;
+  justify-content: space-between;
 
   @descendent name {
-    width: 50%;
+    flex-grow: 1;
     padding-left: 15px;
-    float: left;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
 
   @descendent active {
-    cursor: pointer;
-    padding: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding-right: 20px;
-    line-height: 46px; /* 54px - 2×4px */
     height: 100%;
-    float: right;
-  }
-  &--active &-active {
-    cursor: default;
-  }
-
-  @descendent active-icon {
-    float: left;
-    margin-right: 5px;
-    padding-top: 5px;
   }
 }
