@@ -66,7 +66,7 @@ export default class EditMediaDialog extends Component {
   }
 
   render() {
-    const { open, media } = this.props;
+    const { open, media, onCloseDialog } = this.props;
     const { errors } = this.state;
     let content = null;
     if (open) {
@@ -128,7 +128,11 @@ export default class EditMediaDialog extends Component {
       );
     }
     return (
-      <Dialog className="Dialog" open={open}>
+      <Dialog
+        className="Dialog"
+        open={open}
+        onRequestClose={onCloseDialog}
+      >
         {content}
       </Dialog>
     );

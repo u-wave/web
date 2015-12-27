@@ -10,11 +10,12 @@ export default class LoginDialog extends Component {
     error: PropTypes.string,
 
     onLogin: PropTypes.func,
-    onRegister: PropTypes.func
+    onRegister: PropTypes.func,
+    onCloseDialog: PropTypes.func
   };
 
   render() {
-    const { open, show } = this.props;
+    const { open, show, onCloseDialog } = this.props;
     let form;
     let title;
     if (show === 'register') {
@@ -29,6 +30,7 @@ export default class LoginDialog extends Component {
         contentStyle={{ maxWidth: 350 }}
         title={title}
         open={open}
+        onRequestClose={onCloseDialog}
       >
         {form}
       </Dialog>
