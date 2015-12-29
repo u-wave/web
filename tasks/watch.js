@@ -7,6 +7,13 @@ import watchify from 'watchify';
 import seq from 'run-sequence';
 import source from 'vinyl-source-stream';
 
+// The watch task is a bit like a "live" version of the JS and CSS tasks.
+// It recompiles both CSS and JS on change. If you combine this task with the
+// Serve task, you'll also get real live updates in the browser, as well, which
+// is really nice for developing!
+
+// TODO add moar comments below ☟
+
 const JS_PATHS = [ 'src/**/*.js', 'gulpfile.babel.js', 'tasks/*.js' ];
 const JS_TASKS = [ 'js:lint' ];
 const CSS_PATHS = [ 'src/**/*.css' ];
@@ -28,6 +35,9 @@ function bundle() {
     .pipe(dest('lib/'));
 }
 
+// Define a separate Gulp task for the Browserify bundling. This will be run
+// on update instead of immediately calling bundle(), mostly because this will
+// log a few lines so you can see that it's recompiling.
 gulp.task('watch:bundle', bundle);
 
 export default function watchTask() {
