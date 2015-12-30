@@ -29,29 +29,46 @@ export function flattenPlaylistItem(item) {
   };
 }
 
-export function loadPlaylist(playlistID) {
+const inFlightPlaylists = {};
+export function loadPlaylist(playlistID, page = 0) {
   return (dispatch, getState) => {
+    const key = `${playlistID}:${page}`;
+
+    // Prevent duplicate loading.
+    if (inFlightPlaylists[key]) return;
+
     const jwt = getState().auth.jwt;
 
     dispatch({
       type: LOAD_PLAYLIST_START,
-      payload: { playlistID }
+      payload: { playlistID },
+      meta: { page }
     });
 
-    get(jwt, `/v1/playlists/${playlistID}/media`)
+    inFlightPlaylists[key] = true;
+    get(jwt, `/v1/playlists/${playlistID}/media`, { page, limit: 50 })
       .then(res => res.json())
-      .then(items => items.map(flattenPlaylistItem))
-      .then(media => {
+      .then(res => {
+        inFlightPlaylists[key] = false;
         dispatch({
           type: LOAD_PLAYLIST_COMPLETE,
-          payload: { playlistID, media }
+          payload: {
+            playlistID,
+            media: res.result.map(flattenPlaylistItem)
+          },
+          meta: {
+            page: res.page,
+            pageSize: res.size
+          }
         });
       })
       .catch(e => {
+        inFlightPlaylists[key] = false;
         dispatch({
           type: LOAD_PLAYLIST_COMPLETE,
           error: true,
-          payload: e
+          payload: e,
+          meta: { page }
         });
       });
   };

@@ -12,7 +12,8 @@ import {
   removeMedia,
   createPlaylist,
   activatePlaylist,
-  selectPlaylist
+  selectPlaylist,
+  loadPlaylist
 } from '../actions/PlaylistActionCreators';
 import { search, setSource as setSearchSource } from '../actions/SearchActionCreators';
 
@@ -53,6 +54,7 @@ const mapDispatchToProps = dispatch => {
     onActivatePlaylist: activatePlaylist,
     onSelectPlaylist: selectPlaylist,
     onSelectSearchResults: () => selectPlaylist(null),
+    onLoadPlaylistPage: loadPlaylist,
     onSearchSubmit: search,
     onSearchSourceChange: setSearchSource
   }, dispatch);
@@ -62,6 +64,7 @@ const mapDispatchToProps = dispatch => {
     onOpenAddMediaMenu: curry.to(3, bound.onOpenAddMediaMenu),
     onMoveToFirst: curry.to(3, bound.onMoveToFirst),
     onEditMedia: curry.to(2, bound.onEditMedia),
+    onLoadPlaylistPage: curry.to(2, bound.onLoadPlaylistPage),
     onRemoveFromPlaylist: curry.to(3, bound.onRemoveFromPlaylist)
   };
 };

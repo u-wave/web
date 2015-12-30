@@ -1,17 +1,23 @@
 import cx from 'classnames';
-import React from 'react';
-import List from 'react-list';
+import React, { Component, PropTypes } from 'react';
+import PaginatedList from '../PaginatedList';
 import itemSelection from 'item-selection/immutable';
 import Row from './Row';
+import LoadingRow from './LoadingRow';
 
-export default class MediaList extends React.Component {
+export default class MediaList extends Component {
   static propTypes = {
-    className: React.PropTypes.string,
-    media: React.PropTypes.array,
-    makeActions: React.PropTypes.func
+    className: PropTypes.string,
+    media: PropTypes.array,
+    size: PropTypes.number,
+    onRequestPage: PropTypes.func,
+
+    makeActions: PropTypes.func
   };
 
   static defaultProps = {
+    // The `size` property is only necessary for lazy loading.
+    size: null,
     makeActions: () => <span />
   };
 
@@ -46,6 +52,15 @@ export default class MediaList extends React.Component {
     const media = this.props.media[index];
     const { selection } = this.state;
     const selected = selection.isSelectedIndex(index);
+    if (!media) {
+      return (
+        <LoadingRow
+          key={key}
+          className="MediaList-row"
+          selected={selected}
+        />
+      );
+    }
     return (
       <Row
         key={key}
@@ -60,13 +75,17 @@ export default class MediaList extends React.Component {
   }
 
   render() {
-    const { className, media } = this.props;
+    const { className, media, size, onRequestPage } = this.props;
     return (
       <div className={cx('MediaList', className)}>
-        <List
+        <PaginatedList
           itemRenderer={::this.renderRow}
-          length={media.length}
+          items={media}
+          length={size || media.length}
           type="uniform"
+          itemHeight={54}
+          pageSize={50}
+          onRequestPage={onRequestPage}
         />
       </div>
     );
