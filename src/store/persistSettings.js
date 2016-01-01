@@ -1,3 +1,4 @@
+import { loadSettings } from '../actions/SettingsActionCreators';
 import isEqual from 'is-equal-shallow';
 
 const SETTINGS_KEY = 'uwaveSettings';
@@ -19,7 +20,9 @@ const persistSettings = next => (reducer, initialState) => {
     JSON.parse(localStorage.getItem(SETTINGS_KEY))
   );
 
-  const store = next(reducer, { ...initialState, settings });
+  const store = next(reducer, initialState);
+
+  store.dispatch(loadSettings(settings));
 
   let prevSettings = settings;
   store.subscribe(() => {

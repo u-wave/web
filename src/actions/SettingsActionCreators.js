@@ -1,4 +1,11 @@
-import { SET } from '../constants/actionTypes/settings';
+import { LOAD, SET } from '../constants/actionTypes/settings';
+
+export function loadSettings(obj) {
+  return {
+    type: LOAD,
+    payload: obj
+  };
+}
 
 export function set(name, value) {
   return {
