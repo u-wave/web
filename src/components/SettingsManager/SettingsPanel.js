@@ -22,6 +22,12 @@ export default class SettingsPanel extends Component {
 
     const toggles = [
       <Toggle
+        label="Play Audio/Video"
+        labelPosition="right"
+        defaultToggled={settings.videoEnabled}
+        onToggle={(e, value) => onSettingChange('videoEnabled', value)}
+      />,
+      <Toggle
         label="Full-size Video"
         labelPosition="right"
         defaultToggled={settings.videoSize === 'large'}

@@ -8,13 +8,14 @@ export default class YouTubePlayer extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
     size: React.PropTypes.string,
+    enabled: React.PropTypes.bool,
     media: React.PropTypes.object,
     seek: React.PropTypes.number,
     volume: React.PropTypes.number
   };
 
   render() {
-    const { className, size, media } = this.props;
+    const { className, enabled, size, media } = this.props;
     const sizeClass = `YouTubePlayer--${size}`;
 
     let backdrop;
@@ -26,11 +27,11 @@ export default class YouTubePlayer extends React.Component {
       <span>
         {backdrop}
         <div className={cx('YouTubePlayer', sizeClass, className)}>
-          <YouTubePlayerEmbed
+          {enabled && <YouTubePlayerEmbed
             media={media}
             seek={this.props.seek}
             volume={this.props.volume}
-          />
+          />}
         </div>
       </span>
     );

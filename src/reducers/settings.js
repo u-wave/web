@@ -3,6 +3,7 @@ import { LOAD, SET } from '../constants/actionTypes/settings';
 const initialState = {
   mentionSound: true,
   muted: false,
+  videoEnabled: true,
   videoSize: 'large',
   volume: 0
 };

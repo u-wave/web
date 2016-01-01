@@ -59,6 +59,7 @@ export default class App extends React.Component {
           </div>
           <div className="AppRow AppRow--middle">
             <Video
+              enabled={settings.videoEnabled}
               size={settings.videoSize}
               isMuted={settings.muted}
               volume={settings.volume}

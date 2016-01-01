@@ -21,6 +21,7 @@ function getTrack(media, cb) {
 export default class SoundCloudPlayer extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
+    enabled: React.PropTypes.bool,
     media: React.PropTypes.object,
     seek: React.PropTypes.number,
     volume: React.PropTypes.number
@@ -49,17 +50,32 @@ export default class SoundCloudPlayer extends React.Component {
     if (prevProps.volume !== this.props.volume) {
       sc.audio.volume = this.props.volume / 100;
     }
+    if (prevProps.enabled !== this.props.enabled) {
+      if (this.props.enabled) {
+        this.play();
+      } else {
+        this.stop();
+      }
+    }
   }
 
   play() {
     this.setState({ track: null });
-    getTrack(this.props.media, track => {
-      this.setState({ track: track });
-      sc.play();
-      debug('currentTime', this.props.seek);
-      sc.audio.currentTime = this.props.seek;
-      sc.audio.volume = this.props.volume / 100;
-    });
+    if (this.props.enabled) {
+      getTrack(this.props.media, track => {
+        this.setState({ track: track });
+        sc.play();
+        debug('currentTime', this.props.seek);
+        sc.audio.currentTime = this.props.seek;
+        sc.audio.volume = this.props.volume / 100;
+      });
+    } else {
+      this.stop();
+    }
+  }
+
+  stop() {
+    sc.stop();
   }
 
   render() {
