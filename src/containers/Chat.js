@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import { chatSelector } from '../selectors/chatSelectors';
 import Chat from '../components/Chat';
 
-const mapStateToProps = state => ({
-  messages: state.chat.messages
-});
-
-@connect(mapStateToProps)
+@connect(chatSelector)
 export default class ChatContainer extends Component {
   render() {
     return <Chat {...this.props} />;

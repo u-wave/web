@@ -1,20 +1,22 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import { setVolume, mute, unmute } from '../actions/PlaybackActionCreators';
 
+import { djSelector, startTimeSelector, mediaSelector, mediaDurationSelector } from '../selectors/boothSelectors';
+import { currentTimeSelector } from '../selectors/timeSelectors';
+import { volumeSelector, isMutedSelector } from '../selectors/settingSelectors';
 import HeaderBar from '../components/HeaderBar';
 
-const mapStateToProps = state => ({
-  mediaStartTime: state.booth.startTime,
-  mediaDuration: state.booth.media
-    ? state.booth.media.end - state.booth.media.start
-    : 0,
-  media: state.booth.media,
-  dj: state.users[state.booth.djID],
-  currentTime: state.time,
-  volume: state.settings.volume,
-  muted: state.settings.muted
+const mapStateToProps = createStructuredSelector({
+  mediaStartTime: startTimeSelector,
+  mediaDuration: mediaDurationSelector,
+  media: mediaSelector,
+  dj: djSelector,
+  currentTime: currentTimeSelector,
+  volume: volumeSelector,
+  muted: isMutedSelector
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
