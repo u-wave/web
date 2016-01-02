@@ -5,7 +5,7 @@ import { TICK } from '../constants/actionTypes/time';
 export function tick() {
   return {
     type: TICK,
-    payload: 1
+    payload: Date.now()
   };
 }
 
