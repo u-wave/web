@@ -1,9 +1,9 @@
 import { expect } from 'chai';
 import {
   SEND_MESSAGE, RECEIVE_MESSAGE
-} from '../src/constants/actionTypes/chat';
+} from '../../src/constants/actionTypes/chat';
 
-import chat from '../src/reducers/chat';
+import chat from '../../src/reducers/chat';
 
 describe('reducers/chat', () => {
   const initialState = () => chat(undefined, { type: '@@redux/INIT' });

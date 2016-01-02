@@ -1,6 +1,6 @@
 import { expect } from 'chai';
-import { LOAD, SET } from '../src/constants/actionTypes/settings';
-import settings from '../src/reducers/settings';
+import { LOAD, SET } from '../../src/constants/actionTypes/settings';
+import settings from '../../src/reducers/settings';
 
 describe('reducers/settings', () => {
   const initialState = () => settings(undefined, { type: '@@redux/INIT' });
