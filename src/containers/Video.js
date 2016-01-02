@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Video from './index';
+import Video from '../components/Video';
 
 const mapStateToProps = state => ({
   historyID: state.booth.historyID,

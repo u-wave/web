@@ -3,9 +3,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import naturalCmp from 'natural-compare';
 import values from 'object-values';
-import { addMedia, closeAddMediaMenu } from '../../../actions/PlaylistActionCreators';
+import { addMedia, closeAddMediaMenu } from '../actions/PlaylistActionCreators';
 
-import AddingMenu from './';
+import AddToPlaylistMenu from '../components/AddToPlaylistMenu';
 
 const byName = (a, b) => naturalCmp(a.name.toLowerCase(), b.name.toLowerCase());
 
@@ -22,13 +22,13 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 }, dispatch);
 
 @connect(mapStateToProps, mapDispatchToProps)
-export default class AddingMenuContainer extends Component {
+export default class AddToPlaylistMenuContainer extends Component {
   static propTypes = {
     open: PropTypes.bool
   };
   render() {
     return this.props.open
-      ? <AddingMenu {...this.props} />
+      ? <AddToPlaylistMenu {...this.props} />
       : <span />;
   }
 }

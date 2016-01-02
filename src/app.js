@@ -7,7 +7,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
-import AppContainer from './components/App/Container';
+import AppContainer from './containers/App';
 import * as Socket from './utils/Socket';
 import { get as readSession } from './utils/Session';
 import { initState, setJWT } from './actions/LoginActionCreators';

@@ -3,11 +3,11 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { openLoginModal, openRegisterModal } from '../../actions/LoginActionCreators';
-import { togglePlaylistManager } from '../../actions/OverlayActionCreators';
-import { joinWaitlist, leaveWaitlist } from '../../actions/WaitlistActionCreators';
+import { openLoginModal, openRegisterModal } from '../actions/LoginActionCreators';
+import { togglePlaylistManager } from '../actions/OverlayActionCreators';
+import { joinWaitlist, leaveWaitlist } from '../actions/WaitlistActionCreators';
 
-import FooterBar from './';
+import FooterBar from '../components/FooterBar';
 
 function getRemaining(current, currentTime, startTime) {
   const duration = current.end - current.start; // seconds

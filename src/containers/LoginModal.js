@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { login, register } from '../../actions/LoginActionCreators';
+import { login, register } from '../actions/LoginActionCreators';
 
-import LoginModal from './index';
+import LoginModal from '../components/LoginModal';
 
 const mapStateToProps = state => ({
   error: state.auth.error,

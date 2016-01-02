@@ -3,13 +3,13 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import ThemeManager from 'material-ui/lib/styles/theme-manager';
 
-import { closeAll } from '../../actions/OverlayActionCreators';
-import { login, register } from '../../actions/LoginActionCreators';
-import { selectPanel } from '../../actions/PanelSelectActionCreators';
-import { sendChat } from '../../actions/ChatActionCreators';
+import { closeAll } from '../actions/OverlayActionCreators';
+import { login, register } from '../actions/LoginActionCreators';
+import { selectPanel } from '../actions/PanelSelectActionCreators';
+import { sendChat } from '../actions/ChatActionCreators';
 
-import MuiTheme from '../../MuiTheme';
-import App from './';
+import MuiTheme from '../MuiTheme';
+import App from '../components/App';
 
 const mapStateToProps = ({
   activeOverlay, selectedPanel, settings, auth, waitlist

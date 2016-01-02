@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { setVolume, mute, unmute } from '../../actions/PlaybackActionCreators';
+import { setVolume, mute, unmute } from '../actions/PlaybackActionCreators';
 
-import HeaderBar from './';
+import HeaderBar from '../components/HeaderBar';
 
 const mapStateToProps = state => ({
   mediaStartTime: state.booth.startTime,

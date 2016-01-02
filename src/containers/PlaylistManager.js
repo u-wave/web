@@ -13,10 +13,10 @@ import {
   createPlaylist,
   activatePlaylist,
   selectPlaylist
-} from '../../actions/PlaylistActionCreators';
-import { search, setSource as setSearchSource } from '../../actions/SearchActionCreators';
+} from '../actions/PlaylistActionCreators';
+import { search, setSource as setSearchSource } from '../actions/SearchActionCreators';
 
-import PlaylistManager from './';
+import PlaylistManager from '../components/PlaylistManager';
 
 const selectionOrOne = (media, selection) => {
   if (selection.isSelected(media)) {
