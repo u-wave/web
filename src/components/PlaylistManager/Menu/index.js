@@ -1,17 +1,13 @@
 import cx from 'classnames';
 import React from 'react';
-import naturalCmp from 'natural-compare';
 import PlaylistRow from './Row';
 import PlaylistCreateRow from './NewPlaylist';
 import SearchResultsRow from './SearchResultsRow';
-
-const byName = (a, b) => naturalCmp(a.name.toLowerCase(), b.name.toLowerCase());
 
 const Menu = ({
   className, playlists, selected, searchQuery, searchResults,
   onCreatePlaylist, onSelectPlaylist, onSelectSearchResults, onAddToPlaylist
 }) => {
-  const sorted = playlists.slice().sort(byName);
   const searchIsSelected = selected ? '' : 'is-selected';
   return (
     <div
@@ -30,7 +26,7 @@ const Menu = ({
           onClick={onSelectSearchResults}
         />
       )}
-      {sorted.map(pl => {
+      {playlists.map(pl => {
         return (
           <PlaylistRow
             key={pl._id}

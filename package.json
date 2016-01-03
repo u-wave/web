@@ -42,6 +42,7 @@
     "redux": "^3.0.4",
     "redux-logger": "^2.0.4",
     "redux-thunk": "^1.0.0",
+    "reselect": "^2.0.1",
     "soundcloud-audio": "^0.1.6",
     "truncate-url": "^0.1.2",
     "whatwg-fetch": "^0.9.0"

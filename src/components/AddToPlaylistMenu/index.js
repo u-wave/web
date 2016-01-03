@@ -26,7 +26,7 @@ const positionInsideWindow = (position, expectedHeight) => {
   return constrained;
 };
 
-export default class AddingMenu extends Component {
+export default class AddToPlaylistMenu extends Component {
   static propTypes = {
     onClose: PropTypes.func.isRequired,
     onSelect: PropTypes.func.isRequired,

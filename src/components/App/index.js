@@ -1,20 +1,20 @@
 import React from 'react';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-import Chat from '../Chat/Container';
+import Chat from '../../containers/Chat';
 import ChatInput from '../Chat/Input';
-import RoomUserList from '../UserList/RoomUserList';
-import WaitList from '../UserList/WaitList';
-import FooterBar from '../FooterBar/Container';
-import HeaderBar from '../HeaderBar/Container';
+import RoomUserList from '../../containers/RoomUserList';
+import WaitList from '../../containers/WaitList';
+import FooterBar from '../../containers/FooterBar';
+import HeaderBar from '../../containers/HeaderBar';
 import PanelSwitcher from '../PanelSwitcher';
 import PanelGroup from '../PanelSwitcher/Group';
 import Panel from '../PanelSwitcher/Panel';
-import Video from '../Video/Container';
+import Video from '../../containers/Video';
 import Overlays from './Overlays';
-import PlaylistManager from '../PlaylistManager/Container';
-import LoginModal from '../LoginModal/Container';
-import AddToPlaylistMenu from '../PlaylistManager/AddingMenu/Container';
+import PlaylistManager from '../../containers/PlaylistManager';
+import LoginModal from '../../containers/LoginModal';
+import AddToPlaylistMenu from '../../containers/AddToPlaylistMenu';
 
 @DragDropContext(HTML5Backend)
 export default class App extends React.Component {

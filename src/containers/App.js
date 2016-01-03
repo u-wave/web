@@ -1,25 +1,27 @@
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import ThemeManager from 'material-ui/lib/styles/theme-manager';
 
-import { closeAll } from '../../actions/OverlayActionCreators';
-import { login, register } from '../../actions/LoginActionCreators';
-import { selectPanel } from '../../actions/PanelSelectActionCreators';
-import { sendChat } from '../../actions/ChatActionCreators';
+import { closeAll } from '../actions/OverlayActionCreators';
+import { login, register } from '../actions/LoginActionCreators';
+import { selectPanel } from '../actions/PanelSelectActionCreators';
+import { sendChat } from '../actions/ChatActionCreators';
 
-import MuiTheme from '../../MuiTheme';
-import App from './';
+import { sizeSelector, positionSelector } from '../selectors/waitlistSelectors';
+import { currentUserSelector } from '../selectors/userSelectors';
+import { settingsSelector } from '../selectors/settingSelectors';
+import MuiTheme from '../MuiTheme';
+import App from '../components/App';
 
-const mapStateToProps = ({
-  activeOverlay, selectedPanel, settings, auth, waitlist
-}) => ({
-  activeOverlay,
-  selectedPanel,
-  settings,
-  user: auth.user,
-  waitlistPosition: auth.user ? waitlist.waitlist.indexOf(auth.user._id) : -1,
-  waitlistSize: waitlist.waitlist.length
+const mapStateToProps = createStructuredSelector({
+  activeOverlay: state => state.activeOverlay,
+  selectedPanel: state => state.selectedPanel,
+  settings: settingsSelector,
+  user: currentUserSelector,
+  waitlistPosition: positionSelector,
+  waitlistSize: sizeSelector
 });
 
 function mapDispatchToProps(dispatch) {

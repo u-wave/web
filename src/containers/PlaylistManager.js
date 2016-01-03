@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { createSelector } from 'reselect';
 import curry from 'curry';
-import values from 'object-values';
 
 import {
   addMedia,
@@ -13,10 +13,18 @@ import {
   createPlaylist,
   activatePlaylist,
   selectPlaylist
-} from '../../actions/PlaylistActionCreators';
-import { search, setSource as setSearchSource } from '../../actions/SearchActionCreators';
+} from '../actions/PlaylistActionCreators';
+import { search, setSource as setSearchSource } from '../actions/SearchActionCreators';
 
-import PlaylistManager from './';
+import { playlistsIndexSelector } from '../selectors/playlistSelectors';
+import { searchSelector } from '../selectors/searchSelectors';
+import PlaylistManager from '../components/PlaylistManager';
+
+const mapStateToProps = createSelector(
+  playlistsIndexSelector,
+  searchSelector,
+  (playlists, mediaSearch) => ({ ...playlists, ...mediaSearch })
+);
 
 const selectionOrOne = (media, selection) => {
   if (selection.isSelected(media)) {
@@ -24,19 +32,6 @@ const selectionOrOne = (media, selection) => {
   }
   return [ media ];
 };
-
-const mapStateToProps = ({ playlists, mediaSearch }) => ({
-  playlists: values(playlists.playlists),
-  activePlaylist: playlists.playlists[playlists.activePlaylistID],
-  selectedPlaylist: playlists.playlists[playlists.selectedPlaylistID],
-  activeMedia: playlists.activeMedia,
-  selectedMedia: playlists.selectedMedia,
-
-  searchSource: mediaSearch.sourceType,
-  searchQuery: mediaSearch.query,
-  searchResults: mediaSearch.results[mediaSearch.sourceType],
-  searchLoadingState: mediaSearch.loadingState
-});
 
 const mapDispatchToProps = dispatch => {
   const onOpenAddMediaMenu = (position, media, selection) =>
