@@ -6,6 +6,7 @@ const authSelector = state => state.auth;
 
 export const usersSelector = state => state.users;
 
+export const authErrorSelector = createSelector(authSelector, auth => auth.error);
 export const currentUserSelector = createSelector(authSelector, auth => auth.user);
 
 function compareUsers(a, b) {

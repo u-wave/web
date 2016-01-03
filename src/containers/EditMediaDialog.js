@@ -4,18 +4,15 @@ import { connect } from 'react-redux';
 import { updateMedia } from '../actions/PlaylistActionCreators';
 import { closeEditMediaDialog} from '../actions/DialogActionCreators';
 
+import { editMediaDialogSelector } from '../selectors/dialogSelectors';
 import EditMediaDialog from '../components/Dialogs/EditMediaDialog';
 
-const mapStateToProps = ({ dialogs }) => ({
-  ...dialogs.editMedia.payload,
-  open: dialogs.editMedia.open
-});
 const mapDispatchToProps = dispatch => bindActionCreators({
   onUpdateMedia: updateMedia,
   onCloseDialog: closeEditMediaDialog
 }, dispatch);
 
-@connect(mapStateToProps, mapDispatchToProps)
+@connect(editMediaDialogSelector, mapDispatchToProps)
 export default class EditMediaDialogContainer extends Component {
   static propTypes = {
     playlistID: PropTypes.string.isRequired,
