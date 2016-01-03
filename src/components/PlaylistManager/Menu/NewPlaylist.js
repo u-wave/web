@@ -12,6 +12,7 @@ export default class NewPlaylist extends Component {
     const { className, onClick } = this.props;
     return (
       <div
+        role="menuitem"
         className={cx('PlaylistMenuRow', 'PlaylistMenuRow--create', className)}
         onClick={onClick}
       >

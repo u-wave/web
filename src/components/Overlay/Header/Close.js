@@ -5,6 +5,7 @@ import CloseIcon from 'material-ui/lib/svg-icons/hardware/keyboard-arrow-down';
 const Close = ({ className, onClose }) => {
   return (
     <div
+      role="button"
       className={cx('OverlayHeaderClose', className)}
       onClick={onClose}
     >

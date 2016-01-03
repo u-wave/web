@@ -10,6 +10,7 @@ export default class Action extends Component {
     const { children, onAction, ...attrs } = this.props;
     return (
       <div
+        role="button"
         className="MediaActions-action"
         onClick={onAction}
         {...attrs}

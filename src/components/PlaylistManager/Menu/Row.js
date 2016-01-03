@@ -55,6 +55,7 @@ export default class PlaylistRow extends Component {
 
     return connectDropTarget(
       <div
+        role="menuitem"
         className={cx('PlaylistMenuRow', activeClass, selectedClass, droppableClass, className)}
         onClick={onClick}
       >

@@ -14,7 +14,10 @@ const Menu = ({
   const sorted = playlists.slice().sort(byName);
   const searchIsSelected = selected ? '' : 'is-selected';
   return (
-    <div className={cx('PlaylistMenu', className)}>
+    <div
+      role="menu"
+      className={cx('PlaylistMenu', className)}
+    >
       <PlaylistCreateRow
         className="PlaylistMenu-row"
         onClick={onCreatePlaylist}

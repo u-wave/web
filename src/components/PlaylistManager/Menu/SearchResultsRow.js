@@ -7,14 +7,14 @@ export default class SearchResultsRow extends Component {
     className: PropTypes.string,
     query: PropTypes.string,
     size: PropTypes.number,
-    onClick: PropTypes.func,
-    onAddToPlaylist: PropTypes.func
+    onClick: PropTypes.func
   };
 
   render() {
     const { className, query, size, onClick } = this.props;
     return (
       <div
+        role="menuitem"
         className={cx('PlaylistMenuRow', 'PlaylistMenuRow--search', className)}
         onClick={onClick}
       >
