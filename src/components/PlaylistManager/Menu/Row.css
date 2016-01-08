@@ -44,4 +44,7 @@
   @when selected {
     background: $media-list-alternate-color;
   }
+  @when droppable {
+    background: $media-list-alternate-color;
+  }
 }
