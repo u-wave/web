@@ -15,8 +15,7 @@ import Overlays from './Overlays';
 import PlaylistManager from '../../containers/PlaylistManager';
 import LoginModal from '../../containers/LoginModal';
 import AddToPlaylistMenu from '../../containers/AddToPlaylistMenu';
-
-import DragLayer from '../MediaList/MediaDragLayer';
+import DragLayer from '../../containers/DragLayer';
 
 @DragDropContext(HTML5Backend)
 export default class App extends React.Component {
