@@ -1,6 +1,7 @@
 import cx from 'classnames';
 import React from 'react';
 import { DragSource } from 'react-dnd';
+import { getEmptyImage } from 'react-dnd-html5-backend';
 import { MEDIA } from '../../constants/DDItemTypes';
 import formatDuration from '../../utils/formatDuration';
 import MediaLoadingIndicator from './MediaLoadingIndicator';
@@ -19,6 +20,7 @@ const mediaSource = {
 
 const collect = (connect, monitor) => ({
   connectDragSource: connect.dragSource(),
+  connectDragPreview: connect.dragPreview(),
   isDragging: monitor.isDragging()
 });
 
@@ -27,6 +29,7 @@ export default class Row extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
     connectDragSource: React.PropTypes.func.isRequired,
+    connectDragPreview: React.PropTypes.func.isRequired,
     isDragging: React.PropTypes.bool.isRequired,
     media: React.PropTypes.object,
     selected: React.PropTypes.bool,
@@ -40,6 +43,10 @@ export default class Row extends React.Component {
   };
 
   state = { showActions: false };
+
+  componentDidMount() {
+    this.props.connectDragPreview(getEmptyImage());
+  }
 
   onMouseEnter() {
     this.setState({ showActions: true });

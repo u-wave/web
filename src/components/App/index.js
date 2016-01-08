@@ -16,6 +16,8 @@ import PlaylistManager from '../../containers/PlaylistManager';
 import LoginModal from '../../containers/LoginModal';
 import AddToPlaylistMenu from '../../containers/AddToPlaylistMenu';
 
+import DragLayer from '../MediaList/MediaDragLayer';
+
 @DragDropContext(HTML5Backend)
 export default class App extends React.Component {
   static propTypes = {
@@ -99,6 +101,7 @@ export default class App extends React.Component {
         />
 
         <AddToPlaylistMenu />
+        <DragLayer />
       </div>
     );
   }
