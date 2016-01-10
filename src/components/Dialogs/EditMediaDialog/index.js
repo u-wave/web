@@ -70,6 +70,55 @@ export default class EditMediaDialog extends Component {
     const { errors } = this.state;
     let content = null;
     if (open) {
+      const artistInput = (
+        <TextField
+          ref="artist"
+          className="EditMediaDialogGroup-field"
+          placeholder="Artist"
+          defaultValue={media.artist}
+          icon={<ArtistIcon color="#9f9d9e"/>}
+          autofocus
+        />
+      );
+      const artistTitleLabel = (
+        <label className="EditMediaDialogGroup-label">–</label>
+      );
+      const titleInput = (
+        <TextField
+          ref="title"
+          className="EditMediaDialogGroup-field"
+          placeholder="Title"
+          defaultValue={media.title}
+          icon={<TitleIcon color="#9f9d9e"/>}
+        />
+      );
+
+      const fromLabel = (
+        <label className="EditMediaDialogGroup-label">Play from:</label>
+      );
+      const fromInput = (
+        <TextField
+          ref="start"
+          className="EditMediaDialogGroup-field"
+          placeholder="Artist"
+          defaultValue={formatDuration(media.start)}
+          icon={<StartIcon color="#9f9d9e"/>}
+          autofocus
+        />
+      );
+      const toLabel = (
+        <label className="EditMediaDialogGroup-label">to:</label>
+      );
+      const toInput = (
+        <TextField
+          ref="end"
+          className="EditMediaDialogGroup-field"
+          placeholder="Title"
+          defaultValue={formatDuration(media.end)}
+          icon={<EndIcon color="#9f9d9e"/>}
+        />
+      );
+
       content = (
         <Form className="EditMediaDialog" onSubmit={::this.handleSubmit}>
           <h1 className="Dialog-header">Edit Media</h1>
@@ -80,44 +129,33 @@ export default class EditMediaDialog extends Component {
             </FormGroup>
           )}
 
-          <FormGroup className="EditMediaDialogGroup">
-            <TextField
-              ref="artist"
-              className="EditMediaDialogGroup-field"
-              placeholder="Artist"
-              defaultValue={media.artist}
-              icon={<ArtistIcon color="#9f9d9e"/>}
-              autofocus
-            />
-            <label className="EditMediaDialogGroup-label">–</label>
-            <TextField
-              ref="title"
-              className="EditMediaDialogGroup-field"
-              placeholder="Title"
-              defaultValue={media.title}
-              icon={<TitleIcon color="#9f9d9e"/>}
-            />
-          </FormGroup>
-
-          <FormGroup className="EditMediaDialogGroup EditMediaDialogGroup--timings">
-            <label className="EditMediaDialogGroup-label">Play from:</label>
-            <TextField
-              ref="start"
-              className="EditMediaDialogGroup-field"
-              placeholder="Artist"
-              defaultValue={formatDuration(media.start)}
-              icon={<StartIcon color="#9f9d9e"/>}
-              autofocus
-            />
-            <label className="EditMediaDialogGroup-label">to:</label>
-            <TextField
-              ref="end"
-              className="EditMediaDialogGroup-field"
-              placeholder="Title"
-              defaultValue={formatDuration(media.end)}
-              icon={<EndIcon color="#9f9d9e"/>}
-            />
-          </FormGroup>
+          <div className="EditMediaDialogForm">
+            <div className="EditMediaDialogForm-column">
+              <FormGroup className="EditMediaDialogGroup">
+                {artistInput}
+              </FormGroup>
+              <FormGroup className="EditMediaDialogGroup">
+                {fromLabel}
+                {fromInput}
+              </FormGroup>
+            </div>
+            <div className="EditMediaDialogForm-separator">
+              <FormGroup className="EditMediaDialogGroup">
+                {artistTitleLabel}
+              </FormGroup>
+              <FormGroup className="EditMediaDialogGroup">
+                {toLabel}
+              </FormGroup>
+            </div>
+            <div className="EditMediaDialogForm-column">
+              <FormGroup className="EditMediaDialogGroup">
+                {titleInput}
+              </FormGroup>
+              <FormGroup className="EditMediaDialogGroup">
+                {toInput}
+              </FormGroup>
+            </div>
+          </div>
 
           <FormGroup>
             <Button className="EditMediaDialog-submit">

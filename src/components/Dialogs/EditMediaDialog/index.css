@@ -3,9 +3,20 @@
 @component EditMediaDialog {
 }
 
-@component EditMediaDialogGroup {
+@component EditMediaDialogForm {
   display: flex;
   justify-content: space-between;
+  @descendent column {
+    width: 50%;
+  }
+  @descendent separator {
+    /* Pushes columns to the side! */
+  }
+}
+
+@component EditMediaDialogGroup {
+  display: flex;
+  justify-content: center;
 
   @descendent field {
     flex-grow: 0.5;
@@ -15,5 +26,18 @@
     line-height: 50px;
     white-space: nowrap;
     padding: 0 20px;
+  }
+
+  /* Some hacks below:
+   * TODO Use a CSS class on FormGroups to achieve this instead?
+   * Overriding things like this is a bit poopy. */
+  /* Re-apply FormGroup margin--this isn't _actually_ the first child. */
+  &:first-child {
+    margin-top: $forms-element-margin;
+  }
+  /* Ignore the 15px margin-bottom, we have another FormGroup below that'll be
+   * adding 15px! */
+  &:last-child {
+    margin-bottom: 0px;
   }
 }
