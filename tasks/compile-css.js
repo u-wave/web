@@ -25,11 +25,15 @@ export default function compileCssTask({ minify = false, 'source-maps': useSourc
       browsers: [ 'last 2 versions' ]
     })
   ];
+
+  if (minify) {
+    processors.push(cssnano());
+  }
+
   return src('src/**/*.css')
     .pipe(when(useSourceMaps, sourcemaps.init()))
-      .pipe(postcss(processors))
       .pipe(concat('style.css'))
-      .pipe(when(minify, postcss([ cssnano() ])))
+      .pipe(postcss(processors))
     .pipe(when(useSourceMaps, sourcemaps.write()))
     .pipe(dest('lib/'));
 }
