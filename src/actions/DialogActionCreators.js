@@ -20,7 +20,7 @@ export function openLoginDialog() {
     payload: { show: 'login' }
   };
 }
-export function openRegistorDialog() {
+export function openRegisterDialog() {
   return {
     type: OPEN_LOGIN_DIALOG,
     payload: { show: 'register' }

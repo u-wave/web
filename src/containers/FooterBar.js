@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { openLoginModal, openRegisterModal } from '../actions/LoginActionCreators';
+import { openLoginDialog, openRegisterDialog } from '../actions/DialogActionCreators';
 import { togglePlaylistManager } from '../actions/OverlayActionCreators';
 import { joinWaitlist, leaveWaitlist } from '../actions/WaitlistActionCreators';
 
@@ -23,7 +23,7 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     joinWaitlist, leaveWaitlist,
-    openLoginModal, openRegisterModal,
+    openLoginDialog, openRegisterDialog,
     togglePlaylistManager
   }, dispatch);
 }
