@@ -1,5 +1,4 @@
 import {
-  OPEN_LOGIN_MODAL,
   REGISTER_COMPLETE,
   LOGIN_COMPLETE, SET_TOKEN,
   LOGOUT_COMPLETE
@@ -8,15 +7,11 @@ import {
 const initialState = {
   jwt: null,
   user: null,
-  error: null,
-  modal: {
-    open: false,
-    show: 'login'
-  }
+  error: null
 };
 
 export default function reduce(state = initialState, action = {}) {
-  const { type, payload, meta, error: isError } = action;
+  const { type, payload, error: isError } = action;
   switch (type) {
   case SET_TOKEN:
     return {
@@ -35,11 +30,7 @@ export default function reduce(state = initialState, action = {}) {
       ...state,
       jwt: payload.jwt,
       user: payload.user,
-      error: null,
-      modal: {
-        ...state.modal,
-        open: false
-      }
+      error: null
     };
   case REGISTER_COMPLETE:
     return {
@@ -50,15 +41,6 @@ export default function reduce(state = initialState, action = {}) {
     };
   case LOGOUT_COMPLETE:
     return initialState;
-  case OPEN_LOGIN_MODAL:
-    return {
-      ...state,
-      modal: {
-        ...state.modal,
-        open: true,
-        show: meta.register ? 'register' : 'login'
-      }
-    };
   default:
     return state;
   }

@@ -9,8 +9,10 @@ import {
   OPEN_ADD_MEDIA_MENU, CLOSE_ADD_MEDIA_MENU,
   ADD_MEDIA_START, ADD_MEDIA_COMPLETE,
   REMOVE_MEDIA_START, REMOVE_MEDIA_COMPLETE,
-  MOVE_MEDIA_START, MOVE_MEDIA_COMPLETE
+  MOVE_MEDIA_START, MOVE_MEDIA_COMPLETE,
+  UPDATE_MEDIA_START, UPDATE_MEDIA_COMPLETE
 } from '../constants/actionTypes/playlists';
+import { openEditMediaDialog } from './DialogActionCreators';
 import { del, get, post, put } from '../utils/Request';
 
 export function setPlaylists(playlists) {
@@ -214,16 +216,28 @@ export function addMedia(playlist, items, afterID = null) {
 }
 
 export function editMedia(playlistID, media) {
-  return {
-    type: 'editMedia',
-    payload: { playlistID, media }
-  };
+  return openEditMediaDialog(playlistID, media);
 }
 
 export function updateMedia(playlistID, mediaID, props) {
-  return {
-    type: 'updateMedia',
-    payload: { playlistID, mediaID, props }
+  return (dispatch, getState) => {
+    const jwt = getState().auth.jwt;
+    dispatch({
+      type: UPDATE_MEDIA_START,
+      payload: { playlistID, mediaID, props }
+    });
+    put(jwt, `/v1/playlists/${playlistID}/media/${mediaID}`, props)
+      .then(res => res.json())
+      .then(media => dispatch({
+        type: UPDATE_MEDIA_COMPLETE,
+        payload: { playlistID, mediaID, media }
+      }))
+      .catch(err => dispatch({
+        type: UPDATE_MEDIA_COMPLETE,
+        payload: err,
+        error: true,
+        meta: { playlistID, mediaID, props }
+      }));
   };
 }
 

@@ -12,7 +12,8 @@ import {
   CREATE_PLAYLIST_START, CREATE_PLAYLIST_COMPLETE,
   ADD_MEDIA_START, ADD_MEDIA_COMPLETE,
   REMOVE_MEDIA_START, REMOVE_MEDIA_COMPLETE,
-  MOVE_MEDIA_START, MOVE_MEDIA_COMPLETE
+  MOVE_MEDIA_START, MOVE_MEDIA_COMPLETE,
+  UPDATE_MEDIA_START, UPDATE_MEDIA_COMPLETE
 } from '../constants/actionTypes/playlists';
 import { SEARCH_START } from '../constants/actionTypes/search';
 
@@ -210,6 +211,23 @@ export default function reduce(state = initialState, action = {}) {
       };
     }
     return state;
+
+  case UPDATE_MEDIA_START:
+    return applyMediaChangeTo(state, payload.playlistID, playlist =>
+      playlist.map(media =>
+        media._id === payload.mediaID
+          ? { ...media, loading: true }
+          : media
+      )
+    );
+  case UPDATE_MEDIA_COMPLETE:
+    return applyMediaChangeTo(state, payload.playlistID, playlist =>
+      playlist.map(media =>
+        media._id === payload.mediaID
+          ? { ...media, ...payload.media, loading: false }
+          : media
+      )
+    );
 
   case MOVE_MEDIA_START:
     const isMovingMedia = indexBy(payload.medias, '_id');

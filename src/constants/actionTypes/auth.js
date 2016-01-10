@@ -8,5 +8,3 @@ export const LOGIN_COMPLETE = 'auth/LOGIN_COMPLETE';
 
 export const LOGOUT_START = 'auth/LOGOUT_START';
 export const LOGOUT_COMPLETE = 'auth/LOGOUT_COMPLETE';
-
-export const OPEN_LOGIN_MODAL = 'auth/OPEN_LOGIN_MODAL';

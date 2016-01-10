@@ -4,4 +4,8 @@
   margin: $forms-element-margin 0;
   width: 100%;
   clear: both;
+
+  &:first-child {
+    margin-top: 0;
+  }
 }

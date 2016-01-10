@@ -1,0 +1,8 @@
+@import "vars.css";
+
+@component Dialogs {
+  z-index: 100;
+  position: absolute;
+  width: 0;
+  height: 0;
+}

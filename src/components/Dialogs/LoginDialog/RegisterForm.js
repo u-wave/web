@@ -2,10 +2,11 @@ import React from 'react';
 import EmailIcon from 'material-ui/lib/svg-icons/communication/email';
 import PasswordIcon from 'material-ui/lib/svg-icons/action/lock';
 import UserIcon from 'material-ui/lib/svg-icons/social/person';
-import Loader from '../Loader';
-import { default as Form, FormGroup } from '../Form';
-import TextField from '../Form/TextField';
-import Button from '../Form/Button';
+import Loader from '../../Loader';
+import Form from '../../Form';
+import FormGroup from '../../Form/Group';
+import TextField from '../../Form/TextField';
+import Button from '../../Form/Button';
 
 export default class RegisterForm extends React.Component {
   static propTypes = {
