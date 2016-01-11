@@ -48,7 +48,6 @@ export default class YouTubePlayer extends React.Component {
         start: (seek || 0) + (media.start || 0)
       }
     };
-    const url = `https://youtube.com/watch?v=${media.sourceID}`;
 
     let backdrop;
     if (size === 'small') {
@@ -61,7 +60,7 @@ export default class YouTubePlayer extends React.Component {
         <div className={cx('YouTubePlayer', sizeClass, className)}>
           <YouTube
             ref="player"
-            url={url}
+            videoId={media.sourceID}
             opts={opts}
             onReady={::this.onYTReady}
           />
