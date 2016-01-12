@@ -19,8 +19,14 @@ const COMPILED_CSS_PATH = joinPath(__dirname, '../lib/style.css');
 function renderApp() {
   const React = require('react');
   const { renderToString } = require('react-dom/server');
-  const App = require('../src/components/App');
-  return renderToString(<App />);
+  const { Provider } = require('react-redux');
+  const App = require('../src/containers/App');
+  const store = require('../src/store/configureStore')();
+  return renderToString(
+    <Provider store={store}>
+      <App />
+    </Provider>
+  );
 }
 
 // Used to apply a function to a DOM element identified by `selector`.
