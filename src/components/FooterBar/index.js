@@ -2,6 +2,7 @@ import cx from 'classnames';
 import React, { Component, PropTypes } from 'react';
 import NextMedia from './NextMedia';
 import UserInfo from './UserInfo';
+import ResponseBar from './Responses/Bar';
 
 export default class FooterBar extends Component {
   static propTypes = {
@@ -11,24 +12,36 @@ export default class FooterBar extends Component {
     playlist: PropTypes.object,
     user: PropTypes.object,
     userInWaitlist: PropTypes.bool,
+    isFavorite: PropTypes.bool,
+    favoritesCount: PropTypes.number,
+    isUpvote: PropTypes.bool,
+    upvotesCount: PropTypes.number,
+    isDownvote: PropTypes.bool,
+    downvotesCount: PropTypes.number,
 
     openLoginDialog: PropTypes.func,
     openRegisterDialog: PropTypes.func,
     togglePlaylistManager: PropTypes.func,
     joinWaitlist: PropTypes.func,
-    leaveWaitlist: PropTypes.func
+    leaveWaitlist: PropTypes.func,
+    onFavorite: PropTypes.func,
+    onUpvote: PropTypes.func,
+    onDownvote: PropTypes.func
   };
 
   render() {
     const {
       openLoginDialog, openRegisterDialog,
       togglePlaylistManager,
-      joinWaitlist, leaveWaitlist
+      joinWaitlist, leaveWaitlist,
+      onFavorite, onUpvote, onDownvote
     } = this.props;
     const {
       user, userInWaitlist,
       playlist, nextMedia,
-      eta
+      eta,
+      isFavorite, isUpvote, isDownvote,
+      favoritesCount, upvotesCount, downvotesCount
     } = this.props;
     const className = cx('FooterBar', this.props.className);
 
@@ -47,6 +60,19 @@ export default class FooterBar extends Component {
               nextMedia={nextMedia}
               eta={eta}
               onClick={togglePlaylistManager}
+            />
+          </div>
+          <div className="FooterBar-responses">
+            <ResponseBar
+              onFavorite={onFavorite}
+              onUpvote={onUpvote}
+              onDownvote={onDownvote}
+              isFavorite={isFavorite}
+              favoritesCount={favoritesCount}
+              isUpvote={isUpvote}
+              upvotesCount={upvotesCount}
+              isDownvote={isDownvote}
+              downvotesCount={downvotesCount}
             />
           </div>
           <div

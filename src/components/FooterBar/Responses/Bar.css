@@ -1,0 +1,27 @@
+@import "vars.css";
+
+@component AudienceResponse {
+  height: 100%;
+  width: 100%;
+  padding-right: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+@component ResponseButton {
+  height: 100%;
+  min-width: 50px;
+  border: 0;
+  background: none;
+
+  &:hover {
+    background-color: $background-hover-color;
+  }
+
+  @descendent count {
+    display: block;
+    text-align: center;
+    font-size: 80%;
+  }
+}

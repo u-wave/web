@@ -6,10 +6,16 @@ import { createStructuredSelector } from 'reselect';
 import { openLoginDialog, openRegisterDialog } from '../actions/DialogActionCreators';
 import { togglePlaylistManager } from '../actions/OverlayActionCreators';
 import { joinWaitlist, leaveWaitlist } from '../actions/WaitlistActionCreators';
+import { openFavoriteMenu, doUpvote, doDownvote } from '../actions/VoteActionCreators';
 
 import { activePlaylistSelector, nextMediaSelector } from '../selectors/playlistSelectors';
 import { currentUserSelector } from '../selectors/userSelectors';
 import { etaSelector, userInWaitlistSelector } from '../selectors/waitlistSelectors';
+import {
+  isFavoriteSelector, favoritesCountSelector,
+  isDownvoteSelector, downvotesCountSelector,
+  isUpvoteSelector, upvotesCountSelector
+} from '../selectors/voteSelectors';
 import FooterBar from '../components/FooterBar';
 
 const mapStateToProps = createStructuredSelector({
@@ -17,14 +23,23 @@ const mapStateToProps = createStructuredSelector({
   playlist: activePlaylistSelector,
   nextMedia: nextMediaSelector,
   user: currentUserSelector,
-  userInWaitlist: userInWaitlistSelector
+  userInWaitlist: userInWaitlistSelector,
+  isFavorite: isFavoriteSelector,
+  favoritesCount: favoritesCountSelector,
+  isUpvote: isUpvoteSelector,
+  upvotesCount: upvotesCountSelector,
+  isDownvote: isDownvoteSelector,
+  downvotesCount: downvotesCountSelector
 });
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     joinWaitlist, leaveWaitlist,
     openLoginDialog, openRegisterDialog,
-    togglePlaylistManager
+    togglePlaylistManager,
+    onFavorite: openFavoriteMenu,
+    onUpvote: doUpvote,
+    onDownvote: doDownvote
   }, dispatch);
 }
 

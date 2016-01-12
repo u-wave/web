@@ -2,6 +2,7 @@ import { advance } from '../actions/BoothActionCreators';
 import { receive as chatReceive } from '../actions/ChatActionCreators';
 import { join as userJoin, leave as userLeave } from '../actions/UserActionCreators';
 import { joinedWaitlist, leftWaitlist, updatedWaitlist } from '../actions/WaitlistActionCreators';
+import { favorited, receiveVote } from '../actions/VoteActionCreators';
 
 const debug = require('debug')('uwave:websocket');
 
@@ -50,6 +51,15 @@ function onMessage(dispatch, json) {
   case 'advance':
     dispatch(advance(data));
     break;
+  case 'favorite':
+    dispatch(favorited(data));
+    break;
+  case 'vote':
+    dispatch(receiveVote({
+      userID: data._id,
+      vote: data.value
+    }));
+    break;
 
   case 'waitlistJoin':
     dispatch(joinedWaitlist(data));
@@ -80,6 +90,10 @@ export function auth(jwt) {
 
 export function sendMessage(chatMessage) {
   send('sendChat', chatMessage.payload.message);
+}
+
+export function sendVote(vote) {
+  send('vote', vote);
 }
 
 export function connect(store, url = location.href.replace(/^http(s)?:/, 'ws$1:')) {
