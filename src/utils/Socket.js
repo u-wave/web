@@ -2,7 +2,6 @@ import { advance } from '../actions/BoothActionCreators';
 import { receive as chatReceive } from '../actions/ChatActionCreators';
 import { join as userJoin, leave as userLeave } from '../actions/UserActionCreators';
 import { joinedWaitlist, leftWaitlist, updatedWaitlist } from '../actions/WaitlistActionCreators';
-import WebSocket from 'ReconnectingWebSocket';
 
 const debug = require('debug')('uwave:websocket');
 
@@ -84,6 +83,7 @@ export function sendMessage(chatMessage) {
 }
 
 export function connect(store, url = location.href.replace(/^http(s)?:/, 'ws$1:')) {
+  const WebSocket = require('ReconnectingWebSocket');
   socket = new WebSocket(url);
   socket.onmessage = pack => {
     onMessage(store.dispatch, pack.data);
