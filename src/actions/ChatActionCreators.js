@@ -26,8 +26,11 @@ export function sendChat(user, text) {
   };
 }
 
-const mentionSound = audio(['assets/audio/mention.opus', 'assets/audio/mention.mp3']);
+let mentionSound;
 function playMentionSound() {
+  if (!mentionSound) {
+    mentionSound = audio(['assets/audio/mention.opus', 'assets/audio/mention.mp3']);
+  }
   mentionSound.play();
 }
 
