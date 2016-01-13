@@ -99,7 +99,11 @@ export default function browserifyTask({ minify = false, 'source-maps': useSourc
       .pipe(when(minify, uglify({
         // Yeah… Enables some riskier minification that doesn't work in IE8.
         // But üWave doesn't work in IE8 _anyway_, so we don't care.
-        compress: { screw_ie8: true },
+        compress: {
+          screw_ie8: true,
+          pure_getters: true,
+          unsafe: true
+        },
         output: { screw_ie8: true },
         // Rename top-level (global scope) variables to shorter names too.
         // There's no other code that depends on those variables to be
