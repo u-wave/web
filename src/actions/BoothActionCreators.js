@@ -4,7 +4,14 @@ import { flattenPlaylistItem } from './PlaylistActionCreators';
 /**
  * Set the current song and DJ.
  */
-export function advance({ media, userID, historyID, playlistID, played }) {
+export function advance(nextBooth) {
+  if (!nextBooth) {
+    return {
+      type: ADVANCE,
+      payload: null
+    };
+  }
+  const { media, userID, historyID, playlistID, played } = nextBooth;
   return {
     type: ADVANCE,
     payload: {
