@@ -71,6 +71,22 @@ function applyMediaChangeTo(state, playlistID, modify) {
   return state;
 }
 
+function fill(array, value) {
+  for (let i = 0, l = array.length; i < l; i++) {
+    array[i] = value;
+  }
+  return array;
+}
+
+function mergePlaylistPage(playlist, oldMedia, newMedia, { page, pageSize }) {
+  const media = fill(Array(playlist.size), null);
+  oldMedia.forEach((item, i) => media[i] = item);
+  newMedia.forEach((item, i) =>
+    media[i + page * pageSize] = item
+  );
+  return media;
+}
+
 export default function reduce(state = initialState, action = {}) {
   const { type, payload, meta, error } = action;
   switch (type) {
@@ -129,6 +145,9 @@ export default function reduce(state = initialState, action = {}) {
     };
 
   case LOAD_PLAYLIST_START:
+    if (meta.page !== 0) {
+      return state;
+    }
     return {
       ...state,
       playlists: setLoading(state.playlists, payload.playlistID)
@@ -138,10 +157,20 @@ export default function reduce(state = initialState, action = {}) {
       ...state,
       playlists: setLoading(state.playlists, payload.playlistID, false),
       selectedMedia: state.selectedPlaylistID === payload.playlistID
-        ? payload.media
+        ? mergePlaylistPage(
+            state.playlists[state.selectedPlaylistID],
+            state.selectedMedia,
+            payload.media,
+            meta
+          )
         : state.selectedMedia,
       activeMedia: state.activePlaylistID === payload.playlistID
-        ? payload.media
+        ? mergePlaylistPage(
+            state.playlists[state.activePlaylistID],
+            state.activeMedia,
+            payload.media,
+            meta
+          )
         : state.activeMedia
     };
 

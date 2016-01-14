@@ -33,7 +33,8 @@ export default class PlaylistManager extends Component {
     onOpenAddMediaMenu: PropTypes.func,
     onMoveToFirst: PropTypes.func,
     onEditMedia: PropTypes.func,
-    onRemoveFromPlaylist: PropTypes.func
+    onRemoveFromPlaylist: PropTypes.func,
+    onLoadPlaylistPage: PropTypes.func
   };
 
   render() {
@@ -58,7 +59,12 @@ export default class PlaylistManager extends Component {
 
     let panel;
     if (selectedPlaylist) {
-      const { onOpenAddMediaMenu, onMoveToFirst, onEditMedia, onRemoveFromPlaylist } = this.props;
+      const {
+        onOpenAddMediaMenu,
+        onMoveToFirst, onEditMedia,
+        onRemoveFromPlaylist,
+        onLoadPlaylistPage
+      } = this.props;
       panel = (
         <PlaylistPanel
           className="PlaylistManager-panel"
@@ -70,6 +76,7 @@ export default class PlaylistManager extends Component {
           onMoveToFirst={onMoveToFirst(selectedPlaylist._id)}
           onEditMedia={onEditMedia(selectedPlaylist._id)}
           onRemoveFromPlaylist={onRemoveFromPlaylist(selectedPlaylist._id)}
+          onLoadPlaylistPage={onLoadPlaylistPage(selectedPlaylist._id)}
         />
       );
     } else if (searchQuery) {
