@@ -14,17 +14,24 @@ export default class YouTubePlayer extends React.Component {
     volume: React.PropTypes.number
   };
 
-  componentDidUpdate(prevProps) {
+  componentWillReceiveProps(nextProps) {
     const { player } = this.refs;
     if (player) {
       // only set volume after the YT API is fully initialised.
       // if it fails here because the API isn't ready, the the volume will still
       // be set in onYTReady().
-      if (player._internalPlayer && prevProps.volume !== this.props.volume) {
-        debug('YT: setting volume', this.props.volume);
-        player._internalPlayer.setVolume(this.props.volume);
+      if (player._internalPlayer && this.props.volume !== nextProps.volume) {
+        debug('YT: setting volume', nextProps.volume);
+        player._internalPlayer.setVolume(nextProps.volume);
       }
     }
+  }
+
+  shouldComponentUpdate(nextProps) {
+    // Only rerender when the media changes. This avoids react-youtube resetting
+    // the YouTube player when only the volume changes.
+    return this.props.media !== nextProps.media ||
+      this.props.media._id !== nextProps.media._id;
   }
 
   onYTReady(event) {
