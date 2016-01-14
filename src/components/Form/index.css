@@ -8,4 +8,8 @@
   &:first-child {
     margin-top: 0;
   }
+
+  @modifier noSpacing {
+    margin: 0;
+  }
 }

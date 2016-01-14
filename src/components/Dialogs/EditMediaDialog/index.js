@@ -121,8 +121,6 @@ export default class EditMediaDialog extends Component {
 
       content = (
         <Form className="EditMediaDialog" onSubmit={::this.handleSubmit}>
-          <h1 className="Dialog-header">Edit Media</h1>
-
           {errors && errors.length > 0 && (
             <FormGroup>
               {errors.map(error => <div>{error}</div>)}
@@ -157,7 +155,7 @@ export default class EditMediaDialog extends Component {
             </div>
           </div>
 
-          <FormGroup>
+          <FormGroup className="FormGroup--noSpacing">
             <Button className="EditMediaDialog-submit">
               Save
             </Button>
@@ -168,6 +166,7 @@ export default class EditMediaDialog extends Component {
     return (
       <Dialog
         className="Dialog"
+        title="Edit Media"
         open={open}
         onRequestClose={onCloseDialog}
       >
