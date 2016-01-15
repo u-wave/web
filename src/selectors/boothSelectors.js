@@ -6,7 +6,7 @@ const baseSelector = state => state.booth;
 
 const historyIDSelector = createSelector(baseSelector, booth => booth.historyID);
 export const mediaSelector = createSelector(baseSelector, booth => booth.media);
-export const startTimeSelector = createSelector(baseSelector, booth => booth.startTime);
+export const startTimeSelector = createSelector(baseSelector, booth => booth.startTime || 0);
 
 export const mediaDurationSelector = createSelector(
   mediaSelector,
@@ -24,6 +24,12 @@ export const timeRemainingSelector = createSelector(
   mediaDurationSelector,
   timeElapsedSelector,
   (duration, elapsed) => duration > 0 ? duration - elapsed : 0
+);
+
+export const mediaProgressSelector = createSelector(
+  mediaDurationSelector,
+  timeElapsedSelector,
+  (duration, elapsed) => duration ? elapsed / duration : 0
 );
 
 export const djSelector = createSelector(
