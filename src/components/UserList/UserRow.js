@@ -2,7 +2,7 @@ import cx from 'classnames';
 import React from 'react';
 import Avatar from '../Avatar';
 
-const UserRow = ({ className, ...user }) => {
+const UserRow = ({ className, user }) => {
   return (
     <div className={cx('UserRow', className)}>
       <Avatar

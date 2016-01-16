@@ -12,7 +12,7 @@ const UserList = ({ className, users }) => {
           <UserRow
             key={key}
             className="UserList-row"
-            {...users[index]}
+            user={users[index]}
           />
         )}
         length={users.length}
