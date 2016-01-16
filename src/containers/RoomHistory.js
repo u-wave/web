@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import curry from 'curry';
 
 import { addMediaMenu } from '../actions/PlaylistActionCreators';
 
+import { roomHistorySelector } from '../selectors/roomHistorySelectors';
 import RoomHistory from '../components/RoomHistory';
 
 const selectionOrOne = (media, selection) => {
@@ -14,10 +16,8 @@ const selectionOrOne = (media, selection) => {
   return [ media ];
 };
 
-const mapStateToProps = state => ({
-  media: state.roomHistory.slice()
-    .sort((a, b) => a.timestamp < b.timestamp ? 1 : -1)
-    .map(entry => entry.media)
+const mapStateToProps = createStructuredSelector({
+  media: roomHistorySelector
 });
 
 const mapDispatchToProps = dispatch => {
