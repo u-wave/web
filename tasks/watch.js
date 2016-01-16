@@ -56,12 +56,10 @@ export default function watchTask() {
   // We have a lot more options to hand to Babel now, because we want our React
   // components to rerender when the files are updated.
   const babelOptions = {
-    stage: 0,
     // The react-transform plugin for Babel allows us to apply transforms to
     // React Components only.
-    plugins: [ 'react-transform' ],
-    extra: {
-      'react-transform': {
+    plugins: [
+      [ 'react-transform', {
         transforms: [
           // The HMR React transform is the thing that rerenders React
           // components when their source code change. HMR is short for Hot
@@ -75,8 +73,8 @@ export default function watchTask() {
           // an error occured, with stack trace and all.
           { transform: 'react-transform-catch-errors', imports: [ 'react', 'redbox-react' ] }
         ]
-      }
-    }
+      } ]
+    ]
   };
 
   // Browserify again! For more on Browserify, see the /tasks/browserify.js

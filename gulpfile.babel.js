@@ -7,7 +7,7 @@ function sequence(...tasks) {
 }
 
 function exec(taskName) {
-  return () => require(`./tasks/${taskName}`)(env);
+  return () => require(`./tasks/${taskName}`).default(env);
 }
 
 gulp.task('css:clean', exec('clean-css'));
