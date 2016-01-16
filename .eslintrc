@@ -5,7 +5,7 @@
   "rules": {
     "comma-dangle": [ 2, "never" ],
     "new-cap": [ 2, {
-      "capIsNewExceptions": [ "DragDropContext", "DragSource", "DropTarget", "DragLayer" ]
+      "capIsNewExceptions": [ "DragDropContext", "DragSource", "DropTarget", "DragLayer", "ThemeDecorator" ]
     } ],
     "react/jsx-quotes": 0,
     "jsx-quotes": [ 2, "prefer-double" ]

@@ -2,7 +2,8 @@ import conf from './dev-server-config.json';
 
 function tryRequire(path, message) {
   try {
-    return require(path);
+    const mod = require(path);
+    return mod.default || mod;
   } catch (e) {
     e.message = `${message}\n"${path}" threw: ${e.message}`;
     throw e;

@@ -10,10 +10,10 @@ export default class AddToPlaylist extends Component {
   };
 
   position() {
-    const position = findDOMNode(this.refs.button).getBoundingClientRect();
+    const pos = findDOMNode(this.refs.button).getBoundingClientRect();
     return {
-      x: position.left,
-      y: position.top
+      x: pos.left,
+      y: pos.top
     };
   }
 

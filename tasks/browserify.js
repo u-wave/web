@@ -31,17 +31,18 @@ export default function browserifyTask({ minify = false, 'source-maps': useSourc
   // Babelify transforms the üWave source code, which is written in JavaScript
   // of the future and JSX, to JavaScript of today.
   b.transform(babelify, {
-    stage: 0,
-    // Babel uses helpers for some common tasks like merging objects or creating
-    // classes. Normally it'd add them right at the top of every file, but we'll
-    // generate our own helper file later, so we can use its External Helpers
-    // feature.
-    // https://developit.github.io/babel-legacy-docs/docs/advanced/external-helpers/
-    externalHelpers: true,
-    // The constantElements transform moves React Elements that are always the
-    // same _out_ of the render() method of components, so that they are only
-    // rendered once and then reused instead of rerendered all the time.
-    optional: minify ? [ 'optimisation.react.constantElements' ] : []
+    plugins: [
+      // Babel uses helpers for some common tasks like merging objects or creating
+      // classes. Normally it'd add them right at the top of every file, but we'll
+      // generate our own helper file later, so we can use its External Helpers
+      // feature.
+      // https://developit.github.io/babel-legacy-docs/docs/advanced/external-helpers/
+      'external-helpers',
+      // The constantElements transform moves React Elements that are always the
+      // same _out_ of the render() method of components, so that they are only
+      // rendered once and then reused instead of rerendered all the time.
+      minify ? 'transform-react-constant-elements' : null
+    ].filter(plugin => !!plugin)
   });
 
   // Envify replaces `process.env.*` occurrences with constant values. This is
