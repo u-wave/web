@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import ThemeManager from 'material-ui/lib/styles/theme-manager';
+import ThemeDecorator from 'material-ui/lib/styles/theme-decorator';
 
 import { closeAll } from '../actions/OverlayActionCreators';
 import { selectPanel } from '../actions/PanelSelectActionCreators';
@@ -31,6 +32,7 @@ function mapDispatchToProps(dispatch) {
   }, dispatch);
 }
 
+@ThemeDecorator(ThemeManager.getMuiTheme(MuiTheme))
 @connect(mapStateToProps, mapDispatchToProps)
 export default class AppContainer extends Component {
   static propTypes = {
@@ -43,16 +45,6 @@ export default class AppContainer extends Component {
     selectPanel: PropTypes.func,
     sendChatMessage: PropTypes.func
   };
-
-  static childContextTypes = {
-    muiTheme: React.PropTypes.object
-  };
-
-  getChildContext() {
-    return {
-      muiTheme: ThemeManager.getMuiTheme(MuiTheme)
-    };
-  }
 
   render() {
     return <App {...this.props} />;
