@@ -20,8 +20,8 @@ function renderApp() {
   const React = require('react');
   const { renderToString } = require('react-dom/server');
   const { Provider } = require('react-redux');
-  const App = require('../src/containers/App');
-  const store = require('../src/store/configureStore')();
+  const App = require('../src/containers/App').default;
+  const store = require('../src/store/configureStore').default();
   return renderToString(
     <Provider store={store}>
       <App />
