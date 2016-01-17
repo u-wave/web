@@ -60,18 +60,15 @@ function processMove(list, movedMedia, afterID) {
 // Applies a function to the media list belonging to `playlistID` if it is found
 // locally, i.e. in either the active or the selected playlist.
 function applyMediaChangeTo(state, playlistID, modify) {
-  if (playlistID === state.selectedPlaylistID) {
-    return {
-      ...state,
-      selectedMedia: modify(state.selectedMedia)
-    };
-  } else if (playlistID === state.activePlaylistID) {
-    return {
-      ...state,
-      activeMedia: modify(state.activeMedia)
-    };
-  }
-  return state;
+  return {
+    ...state,
+    selectedMedia: playlistID === state.selectedPlaylistID
+      ? modify(state.selectedMedia)
+      : state.selectedMedia,
+    activeMedia: playlistID === state.activePlaylistID
+      ? modify(state.activeMedia)
+      : state.activeMedia
+  };
 }
 
 function fill(array, value) {
