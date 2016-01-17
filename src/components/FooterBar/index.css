@@ -12,7 +12,9 @@
     padding: 0 25px;
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     height: 100%;
+    flex-grow: 1;
   }
 
   @descendent user {
