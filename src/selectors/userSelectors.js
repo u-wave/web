@@ -8,6 +8,7 @@ export const usersSelector = state => state.users;
 
 export const authErrorSelector = createSelector(authSelector, auth => auth.error);
 export const currentUserSelector = createSelector(authSelector, auth => auth.user);
+export const tokenSelector = createSelector(authSelector, auth => auth.jwt);
 
 function compareUsers(a, b) {
   if (a.role > b.role) {

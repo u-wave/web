@@ -31,7 +31,6 @@ export default class AddToPlaylistMenu extends Component {
     onClose: PropTypes.func.isRequired,
     onSelect: PropTypes.func.isRequired,
     playlists: PropTypes.arrayOf(PropTypes.object),
-    media: PropTypes.arrayOf(PropTypes.object),
     position: PropTypes.shape({
       x: PropTypes.number,
       y: PropTypes.number
@@ -42,8 +41,7 @@ export default class AddToPlaylistMenu extends Component {
     const playlistID = item.props.value;
     this.props.onClose();
     this.props.onSelect(
-      find(this.props.playlists, pl => pl._id === playlistID),
-      this.props.media
+      find(this.props.playlists, pl => pl._id === playlistID)
     );
   }
 

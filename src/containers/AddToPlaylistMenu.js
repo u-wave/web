@@ -1,24 +1,74 @@
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import { addMedia, closeAddMediaMenu } from '../actions/PlaylistActionCreators';
+import { favoriteMedia } from '../actions/VoteActionCreators';
 
-import { addToPlaylistMenuSelector } from '../selectors/addToPlaylistMenuSelectors';
+import {
+  isFavoriteSelector, isOpenSelector, positionSelector,
+  mediaSelector, historyIDSelector
+} from '../selectors/addToPlaylistMenuSelectors';
+import { playlistsSelector } from '../selectors/playlistSelectors';
 import AddToPlaylistMenu from '../components/AddToPlaylistMenu';
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   onClose: closeAddMediaMenu,
-  onSelect: addMedia
+  onAddMedia: addMedia,
+  onFavoriteMedia: favoriteMedia
 }, dispatch);
 
-@connect(addToPlaylistMenuSelector, mapDispatchToProps)
+const mapStateToProps = createStructuredSelector({
+  isFavorite: isFavoriteSelector,
+  isOpen: isOpenSelector,
+  position: positionSelector,
+  playlists: playlistsSelector,
+  media: mediaSelector,
+  historyID: historyIDSelector
+});
+
+@connect(mapStateToProps, mapDispatchToProps)
 export default class AddToPlaylistMenuContainer extends Component {
   static propTypes = {
-    open: PropTypes.bool
+    isFavorite: PropTypes.bool,
+    isOpen: PropTypes.bool,
+    position: PropTypes.shape({
+      x: PropTypes.number.isRequired,
+      y: PropTypes.number.isRequired
+    }),
+    playlists: PropTypes.arrayOf(PropTypes.object),
+
+    media: PropTypes.arrayOf(PropTypes.object),
+    historyID: PropTypes.string,
+
+    onClose: PropTypes.func.isRequired,
+    onAddMedia: PropTypes.func.isRequired,
+    onFavoriteMedia: PropTypes.func.isRequired
   };
+
   render() {
-    return this.props.open
-      ? <AddToPlaylistMenu {...this.props} />
-      : <span />;
+    const { onAddMedia, onFavoriteMedia, onClose } = this.props;
+    const { isOpen, position, isFavorite, playlists, media, historyID } = this.props;
+    if (!isOpen) {
+      return <span />;
+    }
+
+    const onSelect = playlist => {
+      if (isFavorite) {
+        onFavoriteMedia(playlist, historyID);
+      } else {
+        onAddMedia(playlist, media);
+      }
+    };
+
+    return (
+      <AddToPlaylistMenu
+        open={isOpen}
+        position={position}
+        playlists={playlists}
+        onClose={onClose}
+        onSelect={onSelect}
+      />
+    );
   }
 }

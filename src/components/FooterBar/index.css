@@ -1,6 +1,8 @@
 @import "vars.css";
 
 @component FooterBar {
+  display: flex;
+  justify-content: space-between;
   z-index: 20; /* on top of overlays */
   border-top: 1px solid $chat-border-color;
   background: $background-color;
@@ -8,22 +10,23 @@
   @descendent guest {
     font-size: 12pt;
     padding: 0 25px;
-    float: right;
     display: flex;
     align-items: center;
     height: 100%;
   }
 
   @descendent user {
-    float: left;
     height: 100%;
     width: 75px;
   }
 
   @descendent next {
-    float: left;
+    flex-grow: 1;
     height: 100%;
-    width: calc(100% - 200px);
+  }
+
+  @descendent responses {
+    height: 100%;
   }
 
   @descendent join {

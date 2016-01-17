@@ -1,0 +1,27 @@
+import { createSelector } from 'reselect';
+import { currentUserSelector } from './userSelectors';
+
+const baseSelector = state => state.votes;
+
+const createPropSelector = (base, prop) => createSelector(base, obj => obj[prop]);
+const createIsSelector = type => createSelector(
+  type,
+  currentUserSelector,
+  (users, me) => me && users.indexOf(me._id) > -1
+);
+const createCountSelector = type => createSelector(
+  type,
+  array => array.length
+);
+
+export const favoritesSelector = createPropSelector(baseSelector, 'favorites');
+export const upvotesSelector = createPropSelector(baseSelector, 'upvotes');
+export const downvotesSelector = createPropSelector(baseSelector, 'downvotes');
+
+export const isFavoriteSelector = createIsSelector(favoritesSelector);
+export const isUpvoteSelector = createIsSelector(upvotesSelector);
+export const isDownvoteSelector = createIsSelector(downvotesSelector);
+
+export const favoritesCountSelector = createCountSelector(favoritesSelector);
+export const upvotesCountSelector = createCountSelector(upvotesSelector);
+export const downvotesCountSelector = createCountSelector(downvotesSelector);

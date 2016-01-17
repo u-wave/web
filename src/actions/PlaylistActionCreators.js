@@ -184,9 +184,12 @@ export function addMediaMenu(items, position) {
     dispatch({
       type: OPEN_ADD_MEDIA_MENU,
       payload: {
-        media: items,
+        media: items
+      },
+      meta: {
         playlists,
-        position
+        position,
+        type: 'add'
       }
     });
   };
