@@ -18,7 +18,8 @@ export default class Button extends Component {
           tooltipPosition="top-center"
           style={{
             height: 36,
-            padding: '6px 12px'
+            width: 36,
+            padding: '6px 12px 6px 0'
           }}
           {...props}
         >
