@@ -14,6 +14,7 @@ import { advance } from './BoothActionCreators';
 import { setPlaylists, selectPlaylist } from './PlaylistActionCreators';
 import { closeLoginDialog } from './DialogActionCreators';
 import { setUsers } from './UserActionCreators';
+import { currentUserSelector, tokenSelector } from '../selectors/userSelectors';
 
 const debug = require('debug')('uwave:actions:login');
 
@@ -30,7 +31,7 @@ export function loginComplete({ jwt, user }) {
 
 export function initState() {
   return (dispatch, getState) => {
-    const jwt = getState().auth.jwt;
+    const jwt = tokenSelector(getState());
     dispatch({ type: LOAD_ALL_PLAYLISTS_START });
     get(jwt, '/v1/now')
       .then(res => res.json())
@@ -42,7 +43,7 @@ export function initState() {
           dispatch(advance(state.booth));
         }
         if (state.user) {
-          const token = getState().auth.jwt;
+          const token = tokenSelector(getState());
           dispatch(loginComplete({
             jwt: token,
             user: state.user
@@ -68,7 +69,7 @@ export function setJWT(jwt) {
 
 export function login({ email, password }) {
   return (dispatch, getState) => {
-    const jwt = getState().auth.jwt;
+    const jwt = tokenSelector(getState());
     dispatch({ type: LOGIN_START });
     post(jwt, '/v1/auth/login', { email, password })
       .then(res => res.json())
@@ -90,7 +91,7 @@ export function login({ email, password }) {
 
 export function register({ email, username, password }) {
   return (dispatch, getState) => {
-    const jwt = getState().auth.jwt;
+    const jwt = tokenSelector(getState());
     dispatch({ type: REGISTER_START });
     post(jwt, '/v1/auth/register', { email, username, password, passwordRepeat: password })
       .then(res => res.json())
@@ -122,8 +123,8 @@ function logoutComplete() {
 
 export function logout() {
   return (dispatch, getState) => {
-    const jwt = getState().auth.jwt;
-    const me = getState().auth.user;
+    const jwt = tokenSelector(getState());
+    const me = currentUserSelector(getState());
     if (me) {
       dispatch({ type: LOGOUT_START });
       del(jwt, `/v1/auth/session/${me._id}`)

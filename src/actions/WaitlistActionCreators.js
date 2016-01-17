@@ -8,6 +8,7 @@ import {
   DO_CLEAR_START, DO_CLEAR_COMPLETE
 } from '../constants/actionTypes/waitlist';
 import { del, post, put } from '../utils/Request';
+import { tokenSelector } from '../selectors/userSelectors';
 
 export function setWaitList(data) {
   return {
@@ -41,7 +42,7 @@ export function updatedWaitlist(waitlist) {
 
 export function joinWaitlist(user) {
   return (dispatch, getState) => {
-    const jwt = getState().auth.jwt;
+    const jwt = tokenSelector(getState());
 
     dispatch({ type: DO_JOIN_START });
     if (user) {
@@ -74,7 +75,7 @@ export function joinedWaitlist({ userID, waitlist }) {
 
 export function leaveWaitlist(user) {
   return (dispatch, getState) => {
-    const jwt = getState().auth.jwt;
+    const jwt = tokenSelector(getState());
 
     if (user) {
       dispatch({ type: DO_LEAVE_START });
@@ -133,7 +134,7 @@ export function modRemove({ userID, moderatorID, reason, waitlist }) {
 
 function putLock(status) {
   return (dispatch, getState) => {
-    const jwt = getState().auth.jwt;
+    const jwt = tokenSelector(getState());
 
     dispatch({
       type: DO_LOCK_START,
@@ -168,7 +169,7 @@ export function modUnlockWaitlist() {
 
 export function modClearWaitlist() {
   return (dispatch, getState) => {
-    const jwt = getState().auth.jwt;
+    const jwt = tokenSelector(getState());
 
     dispatch({ type: DO_CLEAR_START });
     del(jwt, '/v1/waitlist')
