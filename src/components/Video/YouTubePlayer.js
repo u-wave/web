@@ -40,9 +40,11 @@ export default class YouTubePlayer extends React.Component {
       height: '100%',
       playerVars: {
         autoplay: 1,
-        controls: 0,
-        rel: 0,
-        showinfo: 0,
+        controls: 0,        // do not show player controls in the bottom
+        rel: 0,             // do not show related videos after the video finishes
+        showinfo: 0,        // do not show video title etc in the frame
+        iv_load_policy: 3,  // disable annotations
+        modestbranding: 1,  // hide youtube logo
         start: (seek || 0) + (media.start || 0)
       }
     };
