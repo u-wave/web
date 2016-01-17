@@ -1,5 +1,5 @@
 import { post } from '../utils/Request';
-import { mediaSelector } from '../selectors/boothSelectors';
+import { historyIDSelector } from '../selectors/boothSelectors';
 import { playlistsSelector } from '../selectors/playlistSelectors';
 import { tokenSelector } from '../selectors/userSelectors';
 import { sendVote } from '../utils/Socket';
@@ -39,19 +39,21 @@ export function doDownvote() {
 export function openFavoriteMenu(position) {
   return (dispatch, getState) => {
     const playlists = playlistsSelector(getState());
-    const currentMedia = mediaSelector(getState());
+    const historyID = historyIDSelector(getState());
     dispatch({
       type: OPEN_ADD_MEDIA_MENU,
-      payload: {
-        media: [ currentMedia ],
+      payload: { historyID },
+      meta: {
         playlists,
-        position
+        position,
+        type: 'favorite'
       }
     });
   };
 }
 
-export function favoriteMedia(historyID, playlistID) {
+export function favoriteMedia(playlist, historyID) {
+  const playlistID = playlist._id;
   return (dispatch, getState) => {
     const jwt = tokenSelector(getState());
     dispatch({

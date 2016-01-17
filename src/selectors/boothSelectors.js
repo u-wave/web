@@ -4,7 +4,7 @@ import { usersSelector } from './userSelectors';
 
 const baseSelector = state => state.booth;
 
-const historyIDSelector = createSelector(baseSelector, booth => booth.historyID);
+export const historyIDSelector = createSelector(baseSelector, booth => booth.historyID);
 export const mediaSelector = createSelector(baseSelector, booth => booth.media);
 export const startTimeSelector = createSelector(baseSelector, booth => booth.startTime || 0);
 
