@@ -44,14 +44,17 @@ function deselectAll(playlists) {
   });
 }
 
+// Moves a list of media items to a given position in the playlist.
 function processMove(list, movedMedia, afterID) {
-  const movedMap = indexBy(movedMedia, '_id');
-  const updated = list.filter(media => !movedMap[media._id]);
+  // Take all moved media items out of the playlist…
+  const wasMoved = indexBy(movedMedia, '_id');
+  const newPlaylist = list.filter(media => media === null || !wasMoved[media._id]);
+  // …and add them back in at the correct place.
   const insertIdx = afterID === -1
     ? 0
-    : findIndex(updated, media => media._id === afterID) + 1;
-  updated.splice(insertIdx, 0, ...movedMedia);
-  return updated;
+    : findIndex(newPlaylist, media => media._id === afterID) + 1;
+  newPlaylist.splice(insertIdx, 0, ...movedMedia);
+  return newPlaylist;
 }
 
 // Applies a function to the media list belonging to `playlistID` if it is found
@@ -136,9 +139,10 @@ export default function reduce(state = initialState, action = {}) {
         : []
     };
   case SEARCH_START:
+    // We deselect playlists when doing a search, so the UI can switch to the
+    // search results view instead.
     return {
       ...state,
-      // deselect playlists
       playlists: deselectAll(state.playlists),
       selectedPlaylistID: null,
       selectedMedia: []
@@ -177,6 +181,8 @@ export default function reduce(state = initialState, action = {}) {
   // here be dragons
   // TODO find a simpler way to store this stuff, that doesn't involve keeping
   // millions of properties (six properties to be precise) in sync
+  // Playlists that are being created have a temporary ID that is used until the
+  // real ID comes back from the server.
   case CREATE_PLAYLIST_START:
     const newPlaylist = {
       _id: meta.tempId,
@@ -244,7 +250,7 @@ export default function reduce(state = initialState, action = {}) {
   case UPDATE_MEDIA_START:
     return applyMediaChangeTo(state, payload.playlistID, playlist =>
       playlist.map(media =>
-        media._id === payload.mediaID
+        media && media._id === payload.mediaID
           ? { ...media, loading: true }
           : media
       )
@@ -252,7 +258,7 @@ export default function reduce(state = initialState, action = {}) {
   case UPDATE_MEDIA_COMPLETE:
     return applyMediaChangeTo(state, payload.playlistID, playlist =>
       playlist.map(media =>
-        media._id === payload.mediaID
+        media && media._id === payload.mediaID
           ? { ...media, ...payload.media, loading: false }
           : media
       )
@@ -261,7 +267,7 @@ export default function reduce(state = initialState, action = {}) {
   case MOVE_MEDIA_START:
     const isMovingMedia = indexBy(payload.medias, '_id');
     return applyMediaChangeTo(state, payload.playlistID, playlist =>
-      playlist.map(media => ({
+      playlist.map(media => media && ({
         ...media,
         loading: isMovingMedia[media._id] || media.loading
       }))
@@ -277,7 +283,7 @@ export default function reduce(state = initialState, action = {}) {
   case REMOVE_MEDIA_START:
     const isRemovingMedia = indexBy(payload.medias, '_id');
     return applyMediaChangeTo(state, payload.playlistID, playlist =>
-      playlist.map(media => ({
+      playlist.map(media => media && ({
         ...media,
         loading: isRemovingMedia[media._id] || media.loading
       }))
@@ -290,7 +296,7 @@ export default function reduce(state = initialState, action = {}) {
     const removedFromPlaylist = state.playlists[payload.playlistID];
     return assign(
       applyMediaChangeTo(state, payload.playlistID, playlist =>
-        playlist.filter(media => !isRemovedMedia[media._id])
+        playlist.filter(media => media === null || !isRemovedMedia[media._id])
       ),
       { playlists: {
         ...state.playlists,
