@@ -2,6 +2,7 @@ import {
   SET_SEARCH_SOURCE, SEARCH_START, SEARCH_COMPLETE
 } from '../constants/actionTypes/search';
 import { get } from '../utils/Request';
+import { tokenSelector } from '../selectors/userSelectors';
 
 export function setSource(source) {
   return {
@@ -14,7 +15,7 @@ export function setSource(source) {
 
 export function search(query) {
   return (dispatch, getState) => {
-    const jwt = getState().auth.jwt;
+    const jwt = tokenSelector(getState());
 
     dispatch({
       type: SEARCH_START,

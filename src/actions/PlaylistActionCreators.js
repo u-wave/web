@@ -1,5 +1,3 @@
-import values from 'object-values';
-
 import {
   LOAD_ALL_PLAYLISTS_START, LOAD_ALL_PLAYLISTS_COMPLETE,
   LOAD_PLAYLIST_START, LOAD_PLAYLIST_COMPLETE,
@@ -14,6 +12,8 @@ import {
 } from '../constants/actionTypes/playlists';
 import { openEditMediaDialog } from './DialogActionCreators';
 import { del, get, post, put } from '../utils/Request';
+import { playlistsSelector } from '../selectors/playlistSelectors';
+import { tokenSelector } from '../selectors/userSelectors';
 
 export function setPlaylists(playlists) {
   return {
@@ -37,7 +37,7 @@ export function loadPlaylist(playlistID, page = 0) {
     // Prevent duplicate loading.
     if (inFlightPlaylists[key]) return;
 
-    const jwt = getState().auth.jwt;
+    const jwt = tokenSelector(getState());
 
     dispatch({
       type: LOAD_PLAYLIST_START,
@@ -89,7 +89,7 @@ export function selectPlaylist(playlistID) {
 
 export function activatePlaylist(playlistID) {
   return (dispatch, getState) => {
-    const jwt = getState().auth.jwt;
+    const jwt = tokenSelector(getState());
 
     dispatch({
       type: ACTIVATE_PLAYLIST_START,
@@ -115,7 +115,7 @@ export function activatePlaylist(playlistID) {
 
 export function loadPlaylists() {
   return (dispatch, getState) => {
-    const jwt = getState().auth.jwt;
+    const jwt = tokenSelector(getState());
 
     dispatch({ type: LOAD_ALL_PLAYLISTS_START });
     get(jwt, '/v1/playlists')
@@ -138,7 +138,7 @@ export function loadPlaylists() {
 
 function doCreatePlaylist(name) {
   return (dispatch, getState) => {
-    const jwt = getState().auth.jwt;
+    const jwt = tokenSelector(getState());
 
     const tempId = -Date.now();
     const description = '';
@@ -180,7 +180,7 @@ export function createPlaylist() {
 
 export function addMediaMenu(items, position) {
   return (dispatch, getState) => {
-    const playlists = values(getState().playlists.playlists);
+    const playlists = playlistsSelector(getState());
     dispatch({
       type: OPEN_ADD_MEDIA_MENU,
       payload: {
@@ -201,7 +201,7 @@ export function closeAddMediaMenu() {
 
 export function addMedia(playlist, items, afterID = null) {
   return (dispatch, getState) => {
-    const jwt = getState().auth.jwt;
+    const jwt = tokenSelector(getState());
 
     dispatch({
       type: ADD_MEDIA_START,
@@ -241,7 +241,7 @@ export function editMedia(playlistID, media) {
 
 export function updateMedia(playlistID, mediaID, props) {
   return (dispatch, getState) => {
-    const jwt = getState().auth.jwt;
+    const jwt = tokenSelector(getState());
     dispatch({
       type: UPDATE_MEDIA_START,
       payload: { playlistID, mediaID, props }
@@ -263,7 +263,7 @@ export function updateMedia(playlistID, mediaID, props) {
 
 export function removeMedia(playlistID, medias) {
   return (dispatch, getState) => {
-    const jwt = getState().auth.jwt;
+    const jwt = tokenSelector(getState());
     dispatch({
       type: REMOVE_MEDIA_START,
       payload: { playlistID, medias }
@@ -293,7 +293,7 @@ export function removeMedia(playlistID, medias) {
 
 export function moveMedia(playlistID, medias, afterID) {
   return (dispatch, getState) => {
-    const jwt = getState().auth.jwt;
+    const jwt = tokenSelector(getState());
 
     const payload = { playlistID, medias, afterID };
     dispatch({

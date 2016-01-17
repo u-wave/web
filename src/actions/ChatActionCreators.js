@@ -5,6 +5,8 @@ import audio from 'play-audio';
 import { SEND_MESSAGE, RECEIVE_MESSAGE } from '../constants/actionTypes/chat';
 import parseChatMarkup from '../utils/parseChatMarkup';
 import { sendMessage } from '../utils/Socket';
+import { settingsSelector } from '../selectors/settingSelectors';
+import { currentUserSelector, usersSelector, userListSelector } from '../selectors/userSelectors';
 
 export function prepareMessage(user, text, parseOpts = {}) {
   return {
@@ -19,7 +21,7 @@ export function prepareMessage(user, text, parseOpts = {}) {
 
 export function sendChat(user, text) {
   return (dispatch, getState) => {
-    const users = values(getState().users);
+    const users = userListSelector(getState());
     const message = prepareMessage(user, text, { users });
     dispatch(message);
     sendMessage(message);
@@ -41,9 +43,11 @@ function hasMention(text, username) {
 
 export function receive(message) {
   return (dispatch, getState) => {
-    const { auth, settings, users } = getState();
-    const isMention = auth.user
-      ? hasMention(message.text, auth.user.username)
+    const settings = settingsSelector(getState());
+    const user = currentUserSelector(getState());
+    const users = usersSelector(getState());
+    const isMention = user
+      ? hasMention(message.text, user.username)
       : false;
 
     dispatch({
