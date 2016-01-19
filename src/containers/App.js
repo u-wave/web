@@ -44,7 +44,7 @@ export default class AppContainer extends Component {
     user: PropTypes.object,
 
     onCloseOverlay: PropTypes.func,
-    onSettingChange: setSetting,
+    onSettingChange: PropTypes.func,
     selectPanel: PropTypes.func,
     sendChatMessage: PropTypes.func
   };
