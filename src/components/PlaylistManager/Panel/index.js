@@ -34,7 +34,7 @@ const makeActions = ({ onOpenAddMediaMenu, onMoveToFirst, onEditMedia, onRemoveF
 
 const PlaylistPanel = ({
   className, playlist, media, loading,
-  onActivatePlaylist, onLoadPlaylistPage,
+  onActivatePlaylist, onRenamePlaylist, onLoadPlaylistPage,
   ...props
 }) => {
   const list = loading
@@ -57,6 +57,7 @@ const PlaylistPanel = ({
         name={playlist.name}
         active={playlist.active}
         onActivatePlaylist={onActivatePlaylist}
+        onRenamePlaylist={onRenamePlaylist}
       />
       {list}
     </div>

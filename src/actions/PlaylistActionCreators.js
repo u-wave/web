@@ -4,6 +4,7 @@ import {
   SELECT_PLAYLIST,
   ACTIVATE_PLAYLIST_START, ACTIVATE_PLAYLIST_COMPLETE,
   CREATE_PLAYLIST_START, CREATE_PLAYLIST_COMPLETE,
+  RENAME_PLAYLIST_START, RENAME_PLAYLIST_COMPLETE,
   OPEN_ADD_MEDIA_MENU, CLOSE_ADD_MEDIA_MENU,
   ADD_MEDIA_START, ADD_MEDIA_COMPLETE,
   REMOVE_MEDIA_START, REMOVE_MEDIA_COMPLETE,
@@ -192,6 +193,37 @@ export function createPlaylist() {
     const name = prompt('Playlist name?');
     if (name) {
       dispatch(doCreatePlaylist(name));
+    }
+  };
+}
+
+export function renamePlaylist(playlistID, name) {
+  return (dispatch, getState) => {
+    const jwt = tokenSelector(getState());
+    dispatch({
+      type: RENAME_PLAYLIST_START,
+      payload: { playlistID, name }
+    });
+    put(jwt, `/v1/playlists/${playlistID}/rename`, { name })
+      .then(res => res.json())
+      .then(playlist => dispatch({
+        type: RENAME_PLAYLIST_COMPLETE,
+        payload: { playlistID, name: playlist.name }
+      }))
+      .catch(error => dispatch({
+        type: RENAME_PLAYLIST_COMPLETE,
+        error: true,
+        payload: error,
+        meta: { playlistID, name }
+      }));
+  };
+}
+
+export function askRenamePlaylist(playlistID) {
+  return dispatch => {
+    const name = prompt('Name?');
+    if (name) {
+      dispatch(renamePlaylist(playlistID, name));
     }
   };
 }

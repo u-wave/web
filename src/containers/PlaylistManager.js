@@ -10,6 +10,7 @@ import {
   moveMedia,
   removeMedia,
   createPlaylist,
+  askRenamePlaylist,
   activatePlaylist,
   selectPlaylist,
   loadPlaylist
@@ -50,6 +51,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onRemoveFromPlaylist,
   onAddToPlaylist: addMedia,
   onCreatePlaylist: createPlaylist,
+  onRenamePlaylist: askRenamePlaylist,
   onActivatePlaylist: activatePlaylist,
   onSelectPlaylist: selectPlaylist,
   onSelectSearchResults: selectSearchResults,
