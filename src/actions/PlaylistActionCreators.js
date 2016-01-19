@@ -165,7 +165,7 @@ export function createPlaylistComplete(playlist, tempId) {
   };
 }
 
-function doCreatePlaylist(name) {
+export function createPlaylist(name) {
   return (dispatch, getState) => {
     const jwt = tokenSelector(getState());
 
@@ -188,11 +188,11 @@ function doCreatePlaylist(name) {
   };
 }
 
-export function createPlaylist() {
+export function askCreatePlaylist() {
   return dispatch => {
     const name = prompt('Playlist name?');
     if (name) {
-      dispatch(doCreatePlaylist(name));
+      dispatch(createPlaylist(name));
     }
   };
 }
