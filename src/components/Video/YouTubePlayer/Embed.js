@@ -1,30 +1,33 @@
-import cx from 'classnames';
 import React from 'react';
 import YouTube from 'react-youtube';
-import VideoBackdrop from './VideoBackdrop';
 
 const debug = require('debug')('uwave:component:video:youtube');
 
-export default class YouTubePlayer extends React.Component {
+export default class YouTubePlayerEmbed extends React.Component {
   static propTypes = {
-    className: React.PropTypes.string,
-    size: React.PropTypes.string,
     media: React.PropTypes.object,
     seek: React.PropTypes.number,
     volume: React.PropTypes.number
   };
 
-  componentDidUpdate(prevProps) {
+  componentWillReceiveProps(nextProps) {
     const { player } = this.refs;
     if (player) {
       // only set volume after the YT API is fully initialised.
       // if it fails here because the API isn't ready, the the volume will still
       // be set in onYTReady().
-      if (player._internalPlayer && prevProps.volume !== this.props.volume) {
-        debug('YT: setting volume', this.props.volume);
-        player._internalPlayer.setVolume(this.props.volume);
+      if (player._internalPlayer && this.props.volume !== nextProps.volume) {
+        debug('YT: setting volume', nextProps.volume);
+        player._internalPlayer.setVolume(nextProps.volume);
       }
     }
+  }
+
+  shouldComponentUpdate(nextProps) {
+    // Only rerender when the media changes. This avoids react-youtube resetting
+    // the YouTube player when only the volume changes.
+    return this.props.media !== nextProps.media ||
+      this.props.media._id !== nextProps.media._id;
   }
 
   onYTReady(event) {
@@ -32,8 +35,7 @@ export default class YouTubePlayer extends React.Component {
   }
 
   render() {
-    const { className, size, media, seek } = this.props;
-    const sizeClass = `YouTubePlayer--${size}`;
+    const { media, seek } = this.props;
 
     const opts = {
       width: '100%',
@@ -48,25 +50,14 @@ export default class YouTubePlayer extends React.Component {
         start: (seek || 0) + (media.start || 0)
       }
     };
-    const url = `https://youtube.com/watch?v=${media.sourceID}`;
 
-    let backdrop;
-    if (size === 'small') {
-      backdrop = <VideoBackdrop url={media.thumbnail} />;
-    }
-    // Wrapper span so the backdrop can be full-size…
     return (
-      <span>
-        {backdrop}
-        <div className={cx('YouTubePlayer', sizeClass, className)}>
-          <YouTube
-            ref="player"
-            url={url}
-            opts={opts}
-            onReady={::this.onYTReady}
-          />
-        </div>
-      </span>
+      <YouTube
+        ref="player"
+        videoId={media.sourceID}
+        opts={opts}
+        onReady={::this.onYTReady}
+      />
     );
   }
 }
