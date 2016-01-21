@@ -1,14 +1,10 @@
-import cx from 'classnames';
 import React from 'react';
 import YouTube from 'react-youtube';
-import VideoBackdrop from './VideoBackdrop';
 
 const debug = require('debug')('uwave:component:video:youtube');
 
-export default class YouTubePlayer extends React.Component {
+export default class YouTubePlayerEmbed extends React.Component {
   static propTypes = {
-    className: React.PropTypes.string,
-    size: React.PropTypes.string,
     media: React.PropTypes.object,
     seek: React.PropTypes.number,
     volume: React.PropTypes.number
@@ -39,8 +35,7 @@ export default class YouTubePlayer extends React.Component {
   }
 
   render() {
-    const { className, size, media, seek } = this.props;
-    const sizeClass = `YouTubePlayer--${size}`;
+    const { media, seek } = this.props;
 
     const opts = {
       width: '100%',
@@ -56,23 +51,13 @@ export default class YouTubePlayer extends React.Component {
       }
     };
 
-    let backdrop;
-    if (size === 'small') {
-      backdrop = <VideoBackdrop url={media.thumbnail} />;
-    }
-    // Wrapper span so the backdrop can be full-size…
     return (
-      <span>
-        {backdrop}
-        <div className={cx('YouTubePlayer', sizeClass, className)}>
-          <YouTube
-            ref="player"
-            videoId={media.sourceID}
-            opts={opts}
-            onReady={::this.onYTReady}
-          />
-        </div>
-      </span>
+      <YouTube
+        ref="player"
+        videoId={media.sourceID}
+        opts={opts}
+        onReady={::this.onYTReady}
+      />
     );
   }
 }
