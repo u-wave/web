@@ -63,10 +63,11 @@ export default class SoundCloudPlayer extends React.Component {
     if (this.props.enabled) {
       getTrack(this.props.media, track => {
         this.setState({ track: track });
-        sc.play();
-        debug('currentTime', this.props.seek);
-        sc.audio.currentTime = this.props.seek;
+        const seek = this.props.seek + (this.props.media.start || 0);
+        debug('currentTime', seek);
+        sc.audio.currentTime = seek;
         sc.audio.volume = this.props.volume / 100;
+        sc.play();
       });
     } else {
       this.stop();
