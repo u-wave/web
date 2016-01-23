@@ -1,0 +1,12 @@
+@import "vars.css";
+
+@component SettingsPanelProfile {
+  @descendent username {
+    font-size: 120%;
+    font-weight: normal;
+  }
+  @descendent avatar {
+    width: 120px;
+    height: 120px;
+  }
+}

@@ -1,6 +1,6 @@
 import { advance } from '../actions/BoothActionCreators';
 import { receive as chatReceive } from '../actions/ChatActionCreators';
-import { join as userJoin, leave as userLeave } from '../actions/UserActionCreators';
+import { join as userJoin, leave as userLeave, changeUsername } from '../actions/UserActionCreators';
 import { joinedWaitlist, leftWaitlist, updatedWaitlist } from '../actions/WaitlistActionCreators';
 import { favorited, receiveVote } from '../actions/VoteActionCreators';
 
@@ -76,6 +76,9 @@ function onMessage(dispatch, json) {
     break;
   case 'leave':
     dispatch(userLeave(data));
+    break;
+  case 'nameChange':
+    dispatch(changeUsername(data.userID, data.username));
     break;
   default:
     debug('!unknown socket message type');

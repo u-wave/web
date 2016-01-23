@@ -6,6 +6,7 @@ import YouTubePlayer from './YouTubePlayer';
 
 export default class Video extends Component {
   static propTypes = {
+    enabled: PropTypes.bool,
     size: PropTypes.string,
     volume: PropTypes.number,
     isMuted: PropTypes.bool,
@@ -20,7 +21,7 @@ export default class Video extends Component {
 
   render() {
     const {
-      size,
+      enabled, size,
       volume, isMuted,
       media, startTime
     } = this.props;
@@ -32,6 +33,7 @@ export default class Video extends Component {
     let video = '';
     const seek = Math.round((Date.now() - startTime) / 1000);
     const props = {
+      enabled,
       media, seek, size,
       volume: isMuted ? 0 : volume
     };

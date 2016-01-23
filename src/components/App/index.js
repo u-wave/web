@@ -13,6 +13,7 @@ import Panel from '../PanelSwitcher/Panel';
 import Video from '../../containers/Video';
 import Overlays from './Overlays';
 import PlaylistManager from '../../containers/PlaylistManager';
+import SettingsManager from '../../containers/SettingsManager';
 
 import Dialogs from '../Dialogs';
 import AddToPlaylistMenu from '../../containers/AddToPlaylistMenu';
@@ -40,7 +41,10 @@ export default class App extends React.Component {
       waitlistPosition, waitlistSize
     } = this.props;
     // dispatch handlers
-    const { onCloseOverlay, selectPanel, sendChatMessage } = this.props;
+    const {
+      onCloseOverlay,
+      selectPanel, sendChatMessage
+    } = this.props;
     const isLoggedIn = !!user;
 
     return (
@@ -54,6 +58,7 @@ export default class App extends React.Component {
           </div>
           <div className="AppRow AppRow--middle">
             <Video
+              enabled={settings.videoEnabled}
               size={settings.videoSize}
               isMuted={settings.muted}
               volume={settings.volume}
@@ -62,6 +67,10 @@ export default class App extends React.Component {
           <Overlays transitionName="Overlay" active={activeOverlay}>
             <PlaylistManager
               key="playlistManager"
+              onCloseOverlay={onCloseOverlay}
+            />
+            <SettingsManager
+              key="settings"
               onCloseOverlay={onCloseOverlay}
             />
           </Overlays>

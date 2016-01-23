@@ -22,6 +22,7 @@ export default class FooterBar extends Component {
     openLoginDialog: PropTypes.func,
     openRegisterDialog: PropTypes.func,
     togglePlaylistManager: PropTypes.func,
+    toggleSettings: PropTypes.func,
     joinWaitlist: PropTypes.func,
     leaveWaitlist: PropTypes.func,
     onFavorite: PropTypes.func,
@@ -32,7 +33,7 @@ export default class FooterBar extends Component {
   render() {
     const {
       openLoginDialog, openRegisterDialog,
-      togglePlaylistManager,
+      togglePlaylistManager, toggleSettings,
       joinWaitlist, leaveWaitlist,
       onFavorite, onUpvote, onDownvote
     } = this.props;
@@ -52,7 +53,10 @@ export default class FooterBar extends Component {
       return (
         <div className={className}>
           <div className="FooterBar-user">
-            <UserInfo user={user} />
+            <UserInfo
+              user={user}
+              onClick={toggleSettings}
+            />
           </div>
           <div className="FooterBar-next">
             <NextMedia
