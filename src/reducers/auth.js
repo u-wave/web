@@ -3,6 +3,9 @@ import {
   LOGIN_COMPLETE, SET_TOKEN,
   LOGOUT_COMPLETE
 } from '../constants/actionTypes/auth';
+import {
+  DO_CHANGE_USERNAME_COMPLETE
+} from '../constants/actionTypes/users';
 
 const initialState = {
   jwt: null,
@@ -41,6 +44,17 @@ export default function reduce(state = initialState, action = {}) {
     };
   case LOGOUT_COMPLETE:
     return initialState;
+  case DO_CHANGE_USERNAME_COMPLETE:
+    if (!isError && state.user) {
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          username: payload.username
+        }
+      };
+    }
+    return state;
   default:
     return state;
   }

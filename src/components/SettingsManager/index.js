@@ -11,11 +11,15 @@ export default class SettingsManager extends Component {
     user: PropTypes.object,
 
     onCloseOverlay: PropTypes.func.isRequired,
-    onSettingChange: PropTypes.func.isRequired
+    onSettingChange: PropTypes.func.isRequired,
+    onChangeUsername: PropTypes.func.isRequired
   };
 
   render() {
-    const { className, settings, user, onCloseOverlay, onSettingChange } = this.props;
+    const {
+      className, settings, user,
+      onCloseOverlay, onSettingChange, onChangeUsername
+    } = this.props;
     return (
       <div className={cx('SettingsManager', 'AppColumn', 'AppColumn--full', className)}>
         <OverlayHeader
@@ -26,6 +30,7 @@ export default class SettingsManager extends Component {
           <SettingsPanel
             user={user}
             settings={settings}
+            onChangeUsername={onChangeUsername}
             onSettingChange={onSettingChange}
           />
         </div>

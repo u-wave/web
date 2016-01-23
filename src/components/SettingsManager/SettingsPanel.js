@@ -29,14 +29,21 @@ export default class SettingsPanel extends Component {
     className: PropTypes.string,
     settings: PropTypes.object.isRequired,
     user: PropTypes.object,
-    onSettingChange: PropTypes.func.isRequired
+    onSettingChange: PropTypes.func.isRequired,
+    onChangeUsername: PropTypes.func.isRequired
   };
 
   render() {
-    const { className, settings, user, onSettingChange } = this.props;
+    const {
+      className, settings, user,
+      onSettingChange, onChangeUsername
+    } = this.props;
 
     const profile = user && [
-      <Profile user={user} />,
+      <Profile
+        user={user}
+        onChangeUsername={onChangeUsername}
+      />,
       <hr className="SettingsPanel-divider" />
     ];
 

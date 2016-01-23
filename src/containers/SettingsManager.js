@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { set as setSetting } from '../actions/SettingsActionCreators';
+import { doChangeUsername } from '../actions/UserActionCreators';
 import { currentUserSelector } from '../selectors/userSelectors';
 import { settingsSelector } from '../selectors/settingSelectors';
 
@@ -15,7 +16,8 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  onSettingChange: setSetting
+  onSettingChange: setSetting,
+  onChangeUsername: doChangeUsername
 }, dispatch);
 
 @connect(mapStateToProps, mapDispatchToProps)
