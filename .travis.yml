@@ -1,5 +1,8 @@
 language: node_js
 sudo: false
+cache:
+  directories:
+    - $HOME/.npm
 script:
   - gulp
   - npm test
