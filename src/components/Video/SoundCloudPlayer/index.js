@@ -40,23 +40,22 @@ export default class SoundCloudPlayer extends React.Component {
     this.play();
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.media.sourceID !== this.props.media.sourceID) {
-      this.play();
-    }
-  }
-
   componentDidUpdate(prevProps) {
     if (prevProps.volume !== this.props.volume) {
       sc.audio.volume = this.props.volume / 100;
     }
-    if (prevProps.enabled !== this.props.enabled) {
+    if (prevProps.media.sourceID !== this.props.media.sourceID ||
+        prevProps.enabled !== this.props.enabled) {
       if (this.props.enabled) {
         this.play();
       } else {
         this.stop();
       }
     }
+  }
+
+  componentWillUnmount() {
+    this.stop();
   }
 
   play() {
