@@ -1,7 +1,9 @@
 import cx from 'classnames';
 import React from 'react';
 import SoundCloudAudio from 'soundcloud-audio';
-import VideoBackdrop from './VideoBackdrop';
+import VideoBackdrop from '../VideoBackdrop';
+
+import SongInfo from './SongInfo';
 
 const debug = require('debug')('uwave:component:video:soundcloud');
 
@@ -69,25 +71,29 @@ export default class SoundCloudPlayer extends React.Component {
     return (
       <div className={cx('SoundCloudPlayer', this.props.className)}>
         <VideoBackdrop url={track.artwork_url} />
-        <img
-          className="SoundCloudPlayer-art"
-          src={track.artwork_url}
-          alt=""
-        />
-        <a
-          href={user.permalink_url}
-          target="_blank"
-          className="SoundCloudPlayer-uploader"
-        >
-          Uploaded by {user.username}
-        </a>
-        <a
-          href={track.permalink_url}
-          target="_blank"
-          className="SoundCloudPlayer-permalink"
-        >
-          View on SoundCloud
-        </a>
+        <div className="SoundCloudPlayer-meta">
+          <div className="SoundCloudPlayer-info">
+            <img
+              className="SoundCloudPlayer-art"
+              src={track.artwork_url}
+              alt=""
+            />
+            <SongInfo
+              artist={user.username}
+              title={track.title}
+              artistUrl={user.permalink_url}
+              trackUrl={track.permalink_url}
+            />
+            <div style={{ clear: 'both' }} />
+          </div>
+          <a
+            href={track.permalink_url}
+            target="_blank"
+            className="SoundCloudPlayer-permalink"
+          >
+            View on <img src="assets/img/soundcloud-inline.png" />
+          </a>
+        </div>
       </div>
     );
   }
