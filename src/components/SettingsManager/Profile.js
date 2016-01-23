@@ -40,6 +40,7 @@ export default class Profile extends Component {
           {user.username}
           <IconButton
             style={buttonStyle}
+            iconStyle={{ width: 24, height: 24, padding: 2 }}
             onClick={::this.handleNameChange}
           >
             <EditIcon
@@ -48,7 +49,6 @@ export default class Profile extends Component {
             />
           </IconButton>
         </h2>
-        <div style={{ clear: 'both' }} />
       </div>
     );
   }
