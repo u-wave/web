@@ -13,7 +13,7 @@ import Panel from '../PanelSwitcher/Panel';
 import Video from '../../containers/Video';
 import Overlays from './Overlays';
 import PlaylistManager from '../../containers/PlaylistManager';
-import SettingsManager from '../SettingsManager';
+import SettingsManager from '../../containers/SettingsManager';
 
 import Dialogs from '../Dialogs';
 import AddToPlaylistMenu from '../../containers/AddToPlaylistMenu';
@@ -30,7 +30,6 @@ export default class App extends React.Component {
     waitlistSize: React.PropTypes.number,
 
     onCloseOverlay: React.PropTypes.func,
-    onSettingChange: React.PropTypes.func,
     selectPanel: React.PropTypes.func,
     sendChatMessage: React.PropTypes.func
   };
@@ -43,7 +42,7 @@ export default class App extends React.Component {
     } = this.props;
     // dispatch handlers
     const {
-      onCloseOverlay, onSettingChange,
+      onCloseOverlay,
       selectPanel, sendChatMessage
     } = this.props;
     const isLoggedIn = !!user;
@@ -72,10 +71,7 @@ export default class App extends React.Component {
             />
             <SettingsManager
               key="settings"
-              user={user}
-              settings={settings}
               onCloseOverlay={onCloseOverlay}
-              onSettingChange={onSettingChange}
             />
           </Overlays>
           <FooterBar className="AppRow AppRow--bottom" />
