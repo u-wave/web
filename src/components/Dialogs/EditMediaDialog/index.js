@@ -100,7 +100,7 @@ export default class EditMediaDialog extends Component {
         <TextField
           ref="start"
           className="EditMediaDialogGroup-field"
-          placeholder="Artist"
+          placeholder="0:00"
           defaultValue={formatDuration(media.start)}
           icon={<StartIcon color="#9f9d9e"/>}
           autofocus
@@ -113,7 +113,7 @@ export default class EditMediaDialog extends Component {
         <TextField
           ref="end"
           className="EditMediaDialogGroup-field"
-          placeholder="Title"
+          placeholder={formatDuration(media.duration)}
           defaultValue={formatDuration(media.end)}
           icon={<EndIcon color="#9f9d9e"/>}
         />
