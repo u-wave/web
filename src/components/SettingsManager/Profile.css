@@ -1,7 +1,13 @@
 @import "vars.css";
 
 @component SettingsPanelProfile {
+  @descendent username {
+    float: left;
+    margin: 0 0 0 50px;
+    font-weight: normal;
+  }
   @descendent avatar {
+    float: left;
     width: 120px;
     height: 120px;
   }

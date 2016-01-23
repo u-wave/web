@@ -5,6 +5,14 @@ import EditIcon from 'material-ui/lib/svg-icons/editor/mode-edit';
 
 import Avatar from '../Avatar';
 
+const buttonStyle = {
+  padding: 2,
+  height: 28,
+  width: 28,
+  marginLeft: 5,
+  verticalAlign: 'bottom'
+};
+
 export default class Profile extends Component {
   static propTypes = {
     className: PropTypes.string,
@@ -28,14 +36,19 @@ export default class Profile extends Component {
           className="SettingsPanelProfile-avatar"
           user={user}
         />
-        <h2>
+        <h2 className="SettingsPanelProfile-username">
           {user.username}
           <IconButton
+            style={buttonStyle}
             onClick={::this.handleNameChange}
           >
-            <EditIcon />
+            <EditIcon
+              color="#777"
+              hoverColor="#fff"
+            />
           </IconButton>
         </h2>
+        <div style={{ clear: 'both' }} />
       </div>
     );
   }
