@@ -6,5 +6,5 @@ const baseSelector = state => state.roomHistory;
 
 export const roomHistorySelector = createSelector(
   baseSelector,
-  history => history.slice().sort(byTimestamp).map(entry => entry.media)
+  history => history.slice().sort(byTimestamp)
 );

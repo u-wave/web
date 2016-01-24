@@ -5,6 +5,8 @@ import OverlayHeader from '../Overlay/Header';
 import MediaList from '../MediaList';
 import AddToPlaylistAction from '../MediaList/Actions/AddToPlaylist';
 
+import HistoryRow from './Row';
+
 const RoomHistory = ({ className, onCloseOverlay, onOpenAddMediaMenu, ...props }) => {
   return (
     <div className={cx('RoomHistory', 'AppColumn', 'AppColumn--full', className)}>
@@ -17,6 +19,7 @@ const RoomHistory = ({ className, onCloseOverlay, onOpenAddMediaMenu, ...props }
         <MediaList
           {...props}
           className="RoomHistory-list"
+          rowComponent={HistoryRow}
           makeActions={(media, selection) => [
             <AddToPlaylistAction
               key="add"
