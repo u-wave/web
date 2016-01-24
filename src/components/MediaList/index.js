@@ -11,6 +11,7 @@ export default class MediaList extends Component {
     media: PropTypes.array,
     size: PropTypes.number,
     onRequestPage: PropTypes.func,
+    rowComponent: PropTypes.func,
 
     makeActions: PropTypes.func
   };
@@ -18,6 +19,7 @@ export default class MediaList extends Component {
   static defaultProps = {
     // The `size` property is only necessary for lazy loading.
     size: null,
+    rowComponent: Row,
     makeActions: () => <span />
   };
 
@@ -61,8 +63,9 @@ export default class MediaList extends Component {
         />
       );
     }
+    const MediaRow = this.props.rowComponent;
     return (
-      <Row
+      <MediaRow
         key={key}
         className="MediaList-row"
         media={media}
