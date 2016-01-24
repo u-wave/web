@@ -1,10 +1,16 @@
 @import "vars.css";
 
 @component SongTitle {
-  font-size: 14pt;
   color: $text-color;
 
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  @modifier large {
+    font-size: 14pt;
+  }
+  @modifier mediaRow {
+    font-size: 1em;
+  }
 }
