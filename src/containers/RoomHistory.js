@@ -6,7 +6,7 @@ import curry from 'curry';
 
 import { addMediaMenu } from '../actions/PlaylistActionCreators';
 
-import { roomHistorySelector } from '../selectors/roomHistorySelectors';
+import { roomHistoryWithVotesSelector } from '../selectors/roomHistorySelectors';
 import RoomHistory from '../components/RoomHistory';
 
 const selectionOrOne = (media, selection) => {
@@ -17,7 +17,7 @@ const selectionOrOne = (media, selection) => {
 };
 
 const mapStateToProps = createStructuredSelector({
-  media: roomHistorySelector
+  media: roomHistoryWithVotesSelector
 });
 
 const mapDispatchToProps = dispatch => {

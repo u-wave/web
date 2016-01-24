@@ -7,6 +7,8 @@ import { MEDIA } from '../../constants/DDItemTypes';
 import SongTitle from '../SongTitle';
 import Actions from '../MediaList/Actions';
 
+import HistoryVotes from './Votes';
+
 const inSelection = (selection, media) =>
   selection.some(item => item._id === media._id);
 
@@ -66,7 +68,7 @@ export default class HistoryRow extends React.Component {
       // etc
       ...attrs
     } = this.props;
-    const { media, timestamp, user } = historyEntry;
+    const { media, timestamp, user, stats } = historyEntry;
     const { showActions } = this.state;
     const selectedClass = selected ? 'is-selected' : '';
     const thumbnail = (
@@ -92,6 +94,9 @@ export default class HistoryRow extends React.Component {
           artist={media.artist}
           title={media.title}
         />
+        <div className="HistoryRow-votes">
+          <HistoryVotes {...stats} />
+        </div>
         <div className="HistoryRow-user">
           {user.username}
         </div>

@@ -1,6 +1,9 @@
 @import "vars.css";
 
-$history-list-time-width: 200px;
+$history-list-thumb-width: 85px;
+$history-list-user-width: 130px;
+$history-list-time-width: 170px;
+$history-list-votes-width: 250px;
 
 @component HistoryRow {
   height: 54px;
@@ -33,17 +36,23 @@ $history-list-time-width: 200px;
     font-size: 1em;
     height: 100%;
     float: left;
-    width: calc(100% - $media-list-spacing - $media-list-thumb-width - $history-list-time-width - 150px);
+    width: calc(100% - $media-list-spacing - $history-list-thumb-width - $history-list-time-width - $history-list-user-width - $history-list-votes-width);
     margin-right: $media-list-spacing;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
 
+  @descendent votes {
+    height: 100%;
+    float: left;
+    width: $history-list-votes-width;
+  }
+
   @descendent user {
     height: 100%;
     float: left;
-    width: 150px;
+    width: $history-list-user-width;
     text-align: right;
     overflow: hidden;
     text-overflow: ellipsis;
