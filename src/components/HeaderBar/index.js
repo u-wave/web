@@ -17,7 +17,8 @@ export default class HeaderBar extends Component {
 
     onVolumeChange: PropTypes.func,
     onVolumeMute: PropTypes.func,
-    onVolumeUnmute: PropTypes.func
+    onVolumeUnmute: PropTypes.func,
+    onToggleRoomHistory: PropTypes.func
   };
 
   render() {
@@ -26,6 +27,7 @@ export default class HeaderBar extends Component {
       dj, media, mediaProgress,
       volume, muted,
       onVolumeChange, onVolumeMute, onVolumeUnmute,
+      onToggleRoomHistory,
       ...props
     } = this.props;
 
@@ -42,14 +44,16 @@ export default class HeaderBar extends Component {
         {...props}
       >
         <h1 className="HeaderBar-title">{title}</h1>
-        <div className="HeaderBar-now-playing">
-          {nowPlaying}
-        </div>
-        {dj && (
-          <div className="HeaderBar-dj">
-            played by: {dj.username}
+        <div onClick={onToggleRoomHistory}>
+          <div className="HeaderBar-now-playing">
+            {nowPlaying}
           </div>
-        )}
+          {dj && (
+            <div className="HeaderBar-dj">
+              played by: {dj.username}
+            </div>
+          )}
+        </div>
         <Progress
           className="HeaderBar-progress"
           percent={mediaProgress}

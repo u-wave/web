@@ -1,0 +1,12 @@
+@import "vars.css";
+
+.RoomHistory {
+  z-index: 10;
+
+  &-body {
+    background: color($background-color alpha(* 96%));
+  }
+  &-list {
+    max-height: 100%;
+  }
+}

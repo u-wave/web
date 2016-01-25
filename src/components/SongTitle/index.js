@@ -1,10 +1,10 @@
 import cx from 'classnames';
 import React from 'react';
 
-const SongTitle = ({ className, artist, title }) => {
+const SongTitle = ({ className, artist, title, size = 'large' }) => {
   return (
     <div
-      className={cx('SongTitle', className)}
+      className={cx('SongTitle', `SongTitle--${size}`, className)}
       title={`${artist} – ${title}`}
     >
       <span className="SongTitle-artist">{artist}</span>

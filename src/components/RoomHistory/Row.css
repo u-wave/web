@@ -1,0 +1,76 @@
+@import "vars.css";
+
+$history-list-thumb-width: 85px;
+$history-list-user-width: 130px;
+$history-list-time-width: 170px;
+$history-list-votes-width: 250px;
+
+@component HistoryRow {
+  height: 54px;
+  line-height: 54px;
+  position: relative;
+  background: $media-list-color;
+
+  &:nth-child(2n+1) {
+    background: $media-list-alternate-color;
+  }
+
+  @when selected {
+    background: color($highlight-color alpha(* 70%));
+  }
+
+  @descendent thumb {
+    height: 100%;
+    width: 55px;
+    margin: 0 15px;
+    padding: 7px 0;
+    float: left;
+  }
+
+  @descendent image {
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  @descendent song {
+    font-size: 1em;
+    height: 100%;
+    float: left;
+    width: calc(100% - $media-list-spacing - $history-list-thumb-width - $history-list-time-width - $history-list-user-width - $history-list-votes-width);
+    margin-right: $media-list-spacing;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  @descendent votes {
+    height: 100%;
+    float: left;
+    width: $history-list-votes-width;
+  }
+
+  @descendent user {
+    height: 100%;
+    float: left;
+    width: $history-list-user-width;
+    text-align: right;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  @descendent time {
+    height: 100%;
+    float: left;
+    text-align: right;
+    padding-right: 20px;
+    color: $muted-text-color;
+    width: $history-list-time-width;
+  }
+
+  @descendent actions {
+    height: 100%;
+    position: absolute;
+    right: 0;
+  }
+}
