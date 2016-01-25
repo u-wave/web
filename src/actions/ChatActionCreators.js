@@ -1,7 +1,10 @@
 import escapeRegExp from 'escape-string-regexp';
 import values from 'object-values';
 
-import { SEND_MESSAGE, RECEIVE_MESSAGE, LOG } from '../constants/actionTypes/chat';
+import {
+  SEND_MESSAGE, RECEIVE_MESSAGE, LOG,
+  REMOVE_MESSAGE, REMOVE_USER_MESSAGES, REMOVE_ALL_MESSAGES
+} from '../constants/actionTypes/chat';
 import parseChatMarkup from '../utils/parseChatMarkup';
 import { sendMessage } from '../utils/Socket';
 import { execute } from '../utils/ChatCommands';
@@ -93,5 +96,25 @@ export function log(text) {
       _id: logIdx++,
       text
     }
+  };
+}
+
+export function removeMessage(id) {
+  return {
+    type: REMOVE_MESSAGE,
+    payload: { _id: id }
+  };
+}
+
+export function removeMessagesByUser(userID) {
+  return {
+    type: REMOVE_USER_MESSAGES,
+    payload: { userID }
+  };
+}
+
+export function removeAllMessages() {
+  return {
+    type: REMOVE_ALL_MESSAGES
   };
 }

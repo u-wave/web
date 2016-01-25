@@ -1,4 +1,7 @@
-import { RECEIVE_MESSAGE, SEND_MESSAGE, LOG } from '../constants/actionTypes/chat';
+import {
+  RECEIVE_MESSAGE, SEND_MESSAGE, LOG,
+  REMOVE_MESSAGE, REMOVE_USER_MESSAGES, REMOVE_ALL_MESSAGES
+} from '../constants/actionTypes/chat';
 
 const MAX_MESSAGES = 500;
 
@@ -70,6 +73,23 @@ export default function reduce(state = initialState, action = {}) {
         messages.concat([ logMessage ]), MAX_MESSAGES
       )
     };
+
+  case REMOVE_MESSAGE:
+    return {
+      ...state,
+      messages: state.messages.filter(msg => msg._id !== payload._id)
+    };
+  case REMOVE_USER_MESSAGES:
+    return {
+      ...state,
+      messages: state.messages.filter(msg => msg.userID !== payload.userID)
+    };
+  case REMOVE_ALL_MESSAGES:
+    return {
+      ...state,
+      messages: []
+    };
+
   default:
     return state;
   }

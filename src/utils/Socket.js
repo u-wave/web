@@ -1,5 +1,8 @@
 import { advance } from '../actions/BoothActionCreators';
-import { receive as chatReceive } from '../actions/ChatActionCreators';
+import {
+  receive as chatReceive,
+  removeMessage, removeMessagesByUser, removeAllMessages
+} from '../actions/ChatActionCreators';
 import { cyclePlaylist } from '../actions/PlaylistActionCreators';
 import { join as userJoin, leave as userLeave, changeUsername } from '../actions/UserActionCreators';
 import {
@@ -53,6 +56,16 @@ function onMessage(dispatch, json) {
       timestamp: data.timestamp
     }));
     break;
+  case 'chatDelete':
+    dispatch(removeAllMessages());
+    break;
+  case 'chatDeleteByID':
+    dispatch(removeMessage(data.chatID));
+    break;
+  case 'chatDeleteByUser':
+    dispatch(removeMessagesByUser(data.userID));
+    break;
+
   case 'advance':
     dispatch(advance(data));
     break;
