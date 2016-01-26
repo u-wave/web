@@ -27,8 +27,8 @@ export default function reduce(state = initialState, action = {}) {
       return state;
     }
     return [
-      ...state,
-      normalize(payload)
+      normalize(payload),
+      ...state
     ];
   default:
     return state;

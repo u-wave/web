@@ -5,6 +5,8 @@ import {
 import { flattenPlaylistItem } from './PlaylistActionCreators';
 import { get } from '../utils/Request';
 
+import { usersSelector } from '../selectors/userSelectors';
+
 /**
  * Set the current song and DJ.
  */
@@ -16,13 +18,16 @@ export function advance(nextBooth) {
     };
   }
   const { media, userID, historyID, playlistID, played } = nextBooth;
-  return {
-    type: ADVANCE,
-    payload: {
-      userID, historyID, playlistID,
-      media: flattenPlaylistItem(media),
-      timestamp: played
-    }
+  return (dispatch, getState) => {
+    const user = usersSelector(getState())[userID];
+    dispatch({
+      type: ADVANCE,
+      payload: {
+        userID, historyID, playlistID, user,
+        media: flattenPlaylistItem(media),
+        timestamp: played
+      }
+    });
   };
 }
 
