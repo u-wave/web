@@ -37,6 +37,41 @@ export default class PlaylistManager extends Component {
     onLoadPlaylistPage: PropTypes.func
   };
 
+  withSelected(fn) {
+    const selectedPlaylist = this.props.selectedPlaylist;
+    if (selectedPlaylist) {
+      fn(selectedPlaylist);
+    }
+  }
+
+  handleMoveToFirst = (media, selection) => {
+    this.withSelected(selectedPlaylist =>
+      this.props.onMoveToFirst(selectedPlaylist._id, media, selection)
+    );
+  };
+
+  handleEditMedia = media => {
+    this.withSelected(selectedPlaylist =>
+      this.props.onEditMedia(selectedPlaylist._id, media)
+    );
+  };
+
+  handleRemoveFromPlaylist = (media, selection) => {
+    this.withSelected(selectedPlaylist =>
+      this.props.onRemoveFromPlaylist(selectedPlaylist._id, media, selection)
+    );
+  };
+
+  handleLoadPlaylistPage = page => {
+    this.withSelected(selectedPlaylist =>
+      this.props.onLoadPlaylistPage(selectedPlaylist._id, page)
+    );
+  };
+
+  handleSelectPlaylist = playlist => {
+    this.props.onSelectPlaylist(playlist._id);
+  };
+
   render() {
     const {
       playlists,
@@ -51,7 +86,6 @@ export default class PlaylistManager extends Component {
       onCreatePlaylist,
       onAddToPlaylist,
       onActivatePlaylist,
-      onSelectPlaylist,
       onSelectSearchResults,
       onSearchSubmit,
       onSearchSourceChange
@@ -59,12 +93,6 @@ export default class PlaylistManager extends Component {
 
     let panel;
     if (selectedPlaylist) {
-      const {
-        onOpenAddMediaMenu,
-        onMoveToFirst, onEditMedia,
-        onRemoveFromPlaylist,
-        onLoadPlaylistPage
-      } = this.props;
       panel = (
         <PlaylistPanel
           className="PlaylistManager-panel"
@@ -72,11 +100,11 @@ export default class PlaylistManager extends Component {
           media={selectedMedia}
           loading={!!selectedPlaylist.loading}
           onActivatePlaylist={onActivatePlaylist}
-          onOpenAddMediaMenu={onOpenAddMediaMenu}
-          onMoveToFirst={(media, selection) => onMoveToFirst(selectedPlaylist._id, media, selection)}
-          onEditMedia={media => onEditMedia(selectedPlaylist._id, media)}
-          onRemoveFromPlaylist={(media, selection) => onRemoveFromPlaylist(selectedPlaylist._id, media, selection)}
-          onLoadPlaylistPage={page => onLoadPlaylistPage(selectedPlaylist._id, page)}
+          onOpenAddMediaMenu={this.props.onOpenAddMediaMenu}
+          onMoveToFirst={this.handleMoveToFirst}
+          onEditMedia={this.handleEditMedia}
+          onRemoveFromPlaylist={this.handleRemoveFromPlaylist}
+          onLoadPlaylistPage={this.handleLoadPlaylistPage}
         />
       );
     } else if (searchQuery) {
@@ -115,7 +143,7 @@ export default class PlaylistManager extends Component {
             searchResults={searchResults ? searchResults.length : 0}
             onCreatePlaylist={onCreatePlaylist}
             onAddToPlaylist={onAddToPlaylist}
-            onSelectPlaylist={playlist => onSelectPlaylist(playlist._id)}
+            onSelectPlaylist={this.handleSelectPlaylist}
             onSelectSearchResults={onSelectSearchResults}
           />
 
