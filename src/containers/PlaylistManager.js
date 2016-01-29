@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import curry from 'curry';
 
 import {
   addMedia,
@@ -34,40 +33,30 @@ const selectionOrOne = (media, selection) => {
   return [ media ];
 };
 
-const mapDispatchToProps = dispatch => {
-  const onOpenAddMediaMenu = (position, media, selection) =>
-    addMediaMenu(selectionOrOne(media, selection), position);
-  const onRemoveFromPlaylist = (playlist, media, selection) =>
-    removeMedia(playlist, selectionOrOne(media, selection));
-  const onMoveToFirst = (playlist, media, selection) =>
-    moveMedia(playlist, selectionOrOne(media, selection), -1);
-  const onEditMedia = (playlist, media) =>
-    editMedia(playlist, media);
+const selectSearchResults = () => selectPlaylist(null);
+const onOpenAddMediaMenu = (position, media, selection) =>
+  addMediaMenu(selectionOrOne(media, selection), position);
+const onRemoveFromPlaylist = (playlist, media, selection) =>
+  removeMedia(playlist, selectionOrOne(media, selection));
+const onMoveToFirst = (playlist, media, selection) =>
+  moveMedia(playlist, selectionOrOne(media, selection), -1);
+const onEditMedia = (playlist, media) =>
+  editMedia(playlist, media);
 
-  const bound = bindActionCreators({
-    onOpenAddMediaMenu,
-    onMoveToFirst,
-    onEditMedia,
-    onRemoveFromPlaylist,
-    onAddToPlaylist: addMedia,
-    onCreatePlaylist: createPlaylist,
-    onActivatePlaylist: activatePlaylist,
-    onSelectPlaylist: selectPlaylist,
-    onSelectSearchResults: () => selectPlaylist(null),
-    onLoadPlaylistPage: loadPlaylist,
-    onSearchSubmit: search,
-    onSearchSourceChange: setSearchSource
-  }, dispatch);
-
-  return {
-    ...bound,
-    onOpenAddMediaMenu: curry.to(3, bound.onOpenAddMediaMenu),
-    onMoveToFirst: curry.to(3, bound.onMoveToFirst),
-    onEditMedia: curry.to(2, bound.onEditMedia),
-    onLoadPlaylistPage: curry.to(2, bound.onLoadPlaylistPage),
-    onRemoveFromPlaylist: curry.to(3, bound.onRemoveFromPlaylist)
-  };
-};
+const mapDispatchToProps = dispatch => bindActionCreators({
+  onOpenAddMediaMenu,
+  onMoveToFirst,
+  onEditMedia,
+  onRemoveFromPlaylist,
+  onAddToPlaylist: addMedia,
+  onCreatePlaylist: createPlaylist,
+  onActivatePlaylist: activatePlaylist,
+  onSelectPlaylist: selectPlaylist,
+  onSelectSearchResults: selectSearchResults,
+  onLoadPlaylistPage: loadPlaylist,
+  onSearchSubmit: search,
+  onSearchSourceChange: setSearchSource
+}, dispatch);
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class PlaylistManagerContainer extends Component {
