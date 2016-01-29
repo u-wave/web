@@ -101,6 +101,8 @@
     "lint": "gulp js:lint",
     "mocha": "mocha --compilers js:babel-register",
     "test": "npm run mocha && npm run lint",
-    "build": "gulp"
+    "build": "gulp",
+    "watch": "gulp watch",
+    "start": "gulp serve"
   }
 }
