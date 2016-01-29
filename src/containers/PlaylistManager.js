@@ -34,16 +34,17 @@ const selectionOrOne = (media, selection) => {
   return [ media ];
 };
 
-const mapDispatchToProps = dispatch => {
-  const onOpenAddMediaMenu = (position, media, selection) =>
-    addMediaMenu(selectionOrOne(media, selection), position);
-  const onRemoveFromPlaylist = (playlist, media, selection) =>
-    removeMedia(playlist, selectionOrOne(media, selection));
-  const onMoveToFirst = (playlist, media, selection) =>
-    moveMedia(playlist, selectionOrOne(media, selection), -1);
-  const onEditMedia = (playlist, media) =>
-    editMedia(playlist, media);
+const selectSearchResults = () => selectPlaylist(null);
+const onOpenAddMediaMenu = (position, media, selection) =>
+  addMediaMenu(selectionOrOne(media, selection), position);
+const onRemoveFromPlaylist = (playlist, media, selection) =>
+  removeMedia(playlist, selectionOrOne(media, selection));
+const onMoveToFirst = (playlist, media, selection) =>
+  moveMedia(playlist, selectionOrOne(media, selection), -1);
+const onEditMedia = (playlist, media) =>
+  editMedia(playlist, media);
 
+const mapDispatchToProps = dispatch => {
   const bound = bindActionCreators({
     onOpenAddMediaMenu,
     onMoveToFirst,
@@ -53,7 +54,7 @@ const mapDispatchToProps = dispatch => {
     onCreatePlaylist: createPlaylist,
     onActivatePlaylist: activatePlaylist,
     onSelectPlaylist: selectPlaylist,
-    onSelectSearchResults: () => selectPlaylist(null),
+    onSelectSearchResults: selectSearchResults,
     onLoadPlaylistPage: loadPlaylist,
     onSearchSubmit: search,
     onSearchSourceChange: setSearchSource

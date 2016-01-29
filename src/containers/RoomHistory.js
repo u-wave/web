@@ -20,14 +20,15 @@ const mapStateToProps = createStructuredSelector({
   media: roomHistoryWithVotesSelector
 });
 
+const onOpenAddMediaMenu = (position, media, selection) =>
+  addMediaMenu(selectionOrOne(media, selection), position);
 const mapDispatchToProps = dispatch => {
-  const onOpenAddMediaMenu = bindActionCreators(
-    (position, media, selection) =>
-      addMediaMenu(selectionOrOne(media, selection), position),
+  const onOpenAddMediaMenuBound = bindActionCreators(
+    onOpenAddMediaMenu,
     dispatch
   );
   return {
-    onOpenAddMediaMenu: curry.to(3, onOpenAddMediaMenu)
+    onOpenAddMediaMenu: curry.to(3, onOpenAddMediaMenuBound)
   };
 };
 
