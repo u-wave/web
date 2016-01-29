@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import curry from 'curry';
 
 import { addMediaMenu } from '../actions/PlaylistActionCreators';
 
@@ -22,15 +21,9 @@ const mapStateToProps = createStructuredSelector({
 
 const onOpenAddMediaMenu = (position, media, selection) =>
   addMediaMenu(selectionOrOne(media, selection), position);
-const mapDispatchToProps = dispatch => {
-  const onOpenAddMediaMenuBound = bindActionCreators(
-    onOpenAddMediaMenu,
-    dispatch
-  );
-  return {
-    onOpenAddMediaMenu: curry.to(3, onOpenAddMediaMenuBound)
-  };
-};
+const mapDispatchToProps = dispatch => bindActionCreators({
+  onOpenAddMediaMenu
+}, dispatch);
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class RoomHistoryContainer extends Component {

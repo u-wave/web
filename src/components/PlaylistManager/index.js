@@ -73,10 +73,10 @@ export default class PlaylistManager extends Component {
           loading={!!selectedPlaylist.loading}
           onActivatePlaylist={onActivatePlaylist}
           onOpenAddMediaMenu={onOpenAddMediaMenu}
-          onMoveToFirst={onMoveToFirst(selectedPlaylist._id)}
-          onEditMedia={onEditMedia(selectedPlaylist._id)}
-          onRemoveFromPlaylist={onRemoveFromPlaylist(selectedPlaylist._id)}
-          onLoadPlaylistPage={onLoadPlaylistPage(selectedPlaylist._id)}
+          onMoveToFirst={(media, selection) => onMoveToFirst(selectedPlaylist._id, media, selection)}
+          onEditMedia={media => onEditMedia(selectedPlaylist._id, media)}
+          onRemoveFromPlaylist={(media, selection) => onRemoveFromPlaylist(selectedPlaylist._id, media, selection)}
+          onLoadPlaylistPage={page => onLoadPlaylistPage(selectedPlaylist._id, page)}
         />
       );
     } else if (searchQuery) {

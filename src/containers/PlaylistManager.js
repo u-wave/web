@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import curry from 'curry';
 
 import {
   addMedia,
@@ -44,31 +43,20 @@ const onMoveToFirst = (playlist, media, selection) =>
 const onEditMedia = (playlist, media) =>
   editMedia(playlist, media);
 
-const mapDispatchToProps = dispatch => {
-  const bound = bindActionCreators({
-    onOpenAddMediaMenu,
-    onMoveToFirst,
-    onEditMedia,
-    onRemoveFromPlaylist,
-    onAddToPlaylist: addMedia,
-    onCreatePlaylist: createPlaylist,
-    onActivatePlaylist: activatePlaylist,
-    onSelectPlaylist: selectPlaylist,
-    onSelectSearchResults: selectSearchResults,
-    onLoadPlaylistPage: loadPlaylist,
-    onSearchSubmit: search,
-    onSearchSourceChange: setSearchSource
-  }, dispatch);
-
-  return {
-    ...bound,
-    onOpenAddMediaMenu: curry.to(3, bound.onOpenAddMediaMenu),
-    onMoveToFirst: curry.to(3, bound.onMoveToFirst),
-    onEditMedia: curry.to(2, bound.onEditMedia),
-    onLoadPlaylistPage: curry.to(2, bound.onLoadPlaylistPage),
-    onRemoveFromPlaylist: curry.to(3, bound.onRemoveFromPlaylist)
-  };
-};
+const mapDispatchToProps = dispatch => bindActionCreators({
+  onOpenAddMediaMenu,
+  onMoveToFirst,
+  onEditMedia,
+  onRemoveFromPlaylist,
+  onAddToPlaylist: addMedia,
+  onCreatePlaylist: createPlaylist,
+  onActivatePlaylist: activatePlaylist,
+  onSelectPlaylist: selectPlaylist,
+  onSelectSearchResults: selectSearchResults,
+  onLoadPlaylistPage: loadPlaylist,
+  onSearchSubmit: search,
+  onSearchSourceChange: setSearchSource
+}, dispatch);
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class PlaylistManagerContainer extends Component {
