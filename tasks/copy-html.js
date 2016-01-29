@@ -3,7 +3,7 @@ import { transform } from 'gulp-insert';
 import { readFileSync } from 'fs';
 import { join as joinPath } from 'path';
 import cheerio from 'cheerio';
-import minifyHtml from 'gulp-minify-html';
+import minifyHtml from 'gulp-htmlmin';
 import when from 'gulp-if';
 
 // The core function of the HTML task is to copy the index.html file from the
@@ -46,6 +46,18 @@ const insert = (selector, fn) =>
     el => el.html(fn())
   ));
 
+const enableMinifierOptions = arr => {
+  const object = {};
+  arr.forEach(key => object[key] = true);
+  return object;
+};
+
+const minifierOptions = enableMinifierOptions([
+  'removeComments', 'collapseWhitespace', 'collapseBooleanAttributes',
+  'removeTagWhitespace', 'removeAttributeQuotes', 'removeRedundantAttributes',
+  'removeScriptTypeAttributes', 'removeStyleLinkTypeAttributes', 'removeOptionalTags'
+]);
+
 export default function copyHtmlTask({ minify = false, prerender = false }) {
   return src('src/index.html')
     .pipe(when(prerender, insert('#app', renderApp)))
@@ -55,6 +67,6 @@ export default function copyHtmlTask({ minify = false, prerender = false }) {
       el.replaceWith(`<style>${readFileSync(COMPILED_CSS_PATH, 'utf8')}</style>`)
     ))))
     // minifyHtml makes HTML really, really compact.
-    .pipe(when(minify, minifyHtml()))
+    .pipe(when(minify, minifyHtml(minifierOptions)))
     .pipe(dest('lib/'));
 }
