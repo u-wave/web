@@ -9,8 +9,9 @@ import HistoryRow from './Row';
 
 const RoomHistory = ({ className, onCloseOverlay, onOpenAddMediaMenu, ...props }) => {
   return (
-    <div className={cx('RoomHistory', 'AppColumn', 'AppColumn--full', className)}>
+    <div className={cx('RoomHistory', 'Overlay--from-top', 'AppColumn', 'AppColumn--full', className)}>
       <OverlayHeader
+        direction="top"
         className="AppRow AppRow--top"
         title="History"
         onCloseOverlay={onCloseOverlay}
