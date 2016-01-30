@@ -2,7 +2,7 @@ import cx from 'classnames';
 import React from 'react';
 import CloseButton from './Close';
 
-const Header = ({ className, title, children, onCloseOverlay }) => {
+const Header = ({ className, title, children, onCloseOverlay, direction = 'bottom' }) => {
   return (
     <div className={cx('OverlayHeader', className)}>
       <div className="OverlayHeader-title">
@@ -12,6 +12,7 @@ const Header = ({ className, title, children, onCloseOverlay }) => {
         {children}
       </div>
       <CloseButton
+        direction={direction}
         className="OverlayHeader-close"
         onClose={onCloseOverlay}
       />

@@ -1,8 +1,15 @@
 import cx from 'classnames';
 import React from 'react';
-import CloseIcon from 'material-ui/lib/svg-icons/hardware/keyboard-arrow-down';
+import CloseBottomIcon from 'material-ui/lib/svg-icons/hardware/keyboard-arrow-down';
+import CloseTopIcon from 'material-ui/lib/svg-icons/hardware/keyboard-arrow-up';
 
-const Close = ({ className, onClose }) => {
+const icons = {
+  bottom: CloseBottomIcon,
+  top: CloseTopIcon
+};
+
+const Close = ({ className, onClose, direction }) => {
+  const CloseIcon = icons[direction];
   return (
     <div
       role="button"
