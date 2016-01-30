@@ -23,5 +23,5 @@ const addOwnVoteProps = id => entry => ({
 export const roomHistoryWithVotesSelector = createSelector(
   roomHistorySelector,
   currentUserSelector,
-  (history, user) => history.map(addOwnVoteProps(user._id))
+  (history, user) => user ? history.map(addOwnVoteProps(user._id)) : history
 );
