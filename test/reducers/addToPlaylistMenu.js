@@ -11,7 +11,9 @@ describe('reducers/addToPlaylistMenu', () => {
     expect(state).to.eql({
       open: false,
       position: { x: 0, y: 0 },
-      media: []
+      playlists: [],
+      type: null,
+      data: null
     });
   });
 
@@ -21,15 +23,21 @@ describe('reducers/addToPlaylistMenu', () => {
       state = addToPlaylistMenu(state, {
         type: OPEN_ADD_MEDIA_MENU,
         payload: {
+          media: [ { _id: 'mmedia' } ]
+        },
+        meta: {
+          type: 'favorite',
           position: { x: 800, y: 300 },
-          media: [ { _id: 'hoi' } ]
+          playlists: [ { _id: 'pplaylist' } ]
         }
       });
-      expect(state).to.eql({
-        open: true,
-        position: { x: 800, y: 300 },
-        media: [ { _id: 'hoi' } ]
+      expect(state.data).to.eql({
+        media: [ { _id: 'mmedia' } ]
       });
+      expect(state.open).to.be.true;
+      expect(state.type).to.equal('favorite');
+      expect(state.position).to.eql({ x: 800, y: 300 });
+      expect(state.playlists).to.eql([ { _id: 'pplaylist' } ]);
     });
   });
 
@@ -38,11 +46,16 @@ describe('reducers/addToPlaylistMenu', () => {
       let state = {
         open: true,
         position: { x: 800, y: 300 },
-        media: [ { _id: 'hoi' } ]
+        playlists: [],
+        type: 'add',
+        data: {
+          media: [ { _id: 'hoi' } ]
+        }
       };
       state = addToPlaylistMenu(state, { type: CLOSE_ADD_MEDIA_MENU });
       expect(state.open).to.be.false;
-      expect(state.media).to.have.length(0);
+      expect(state.playlists).to.have.length(0);
+      expect(state.data).to.be.null;
     });
   });
 });
