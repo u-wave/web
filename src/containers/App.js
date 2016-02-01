@@ -7,7 +7,7 @@ import ThemeDecorator from 'material-ui/lib/styles/theme-decorator';
 
 import { closeAll } from '../actions/OverlayActionCreators';
 import { selectPanel } from '../actions/PanelSelectActionCreators';
-import { sendChat } from '../actions/ChatActionCreators';
+import { inputMessage } from '../actions/ChatActionCreators';
 
 import { sizeSelector, positionSelector } from '../selectors/waitlistSelectors';
 import { currentUserSelector } from '../selectors/userSelectors';
@@ -27,7 +27,7 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     selectPanel,
-    sendChatMessage: sendChat,
+    sendChatMessage: inputMessage,
     onCloseOverlay: closeAll
   }, dispatch);
 }

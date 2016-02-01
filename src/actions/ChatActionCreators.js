@@ -5,6 +5,7 @@ import audio from 'play-audio';
 import { SEND_MESSAGE, RECEIVE_MESSAGE, LOG } from '../constants/actionTypes/chat';
 import parseChatMarkup from '../utils/parseChatMarkup';
 import { sendMessage } from '../utils/Socket';
+import { execute } from '../utils/ChatCommands';
 import { settingsSelector } from '../selectors/settingSelectors';
 import { currentUserSelector, usersSelector, userListSelector } from '../selectors/userSelectors';
 
@@ -25,6 +26,21 @@ export function sendChat(user, text) {
     const message = prepareMessage(user, text, { users });
     dispatch(message);
     sendMessage(message);
+  };
+}
+
+export function inputMessage(text) {
+  return (dispatch, getState) => {
+    if (text[0] === '/') {
+      const [ command, ...params ] = text.split(' ');
+      const result = command && execute(command.slice(1), params);
+      if (result) {
+        dispatch(result);
+        return;
+      }
+    }
+    const user = currentUserSelector(getState());
+    dispatch(sendChat(user, text));
   };
 }
 
