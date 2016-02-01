@@ -41,6 +41,7 @@ describe('reducers/chat', () => {
       expect(state).to.eql({
         messages: [{
           _id: testMessage._id,
+          type: 'chat',
           userID: testMessage.userID,
           text: testMessage.text,
           parsedText: [ testMessage.text ],

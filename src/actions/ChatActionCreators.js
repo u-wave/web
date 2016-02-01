@@ -2,7 +2,7 @@ import escapeRegExp from 'escape-string-regexp';
 import values from 'object-values';
 import audio from 'play-audio';
 
-import { SEND_MESSAGE, RECEIVE_MESSAGE } from '../constants/actionTypes/chat';
+import { SEND_MESSAGE, RECEIVE_MESSAGE, LOG } from '../constants/actionTypes/chat';
 import parseChatMarkup from '../utils/parseChatMarkup';
 import { sendMessage } from '../utils/Socket';
 import { settingsSelector } from '../selectors/settingSelectors';
@@ -65,5 +65,12 @@ export function receive(message) {
     if (isMention && settings.mentionSound) {
       playMentionSound();
     }
+  };
+}
+
+export function log(text) {
+  return {
+    type: LOG,
+    payload: { text }
   };
 }

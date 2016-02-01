@@ -1,4 +1,6 @@
 import React, { Component, PropTypes } from 'react';
+
+import LogMessage from './LogMessage';
 import Message from './Message';
 
 export default class Chat extends Component {
@@ -35,10 +37,17 @@ export default class Chat extends Component {
     return true;
   }
 
+  renderMessage(msg) {
+    if (msg.type === 'log') {
+      return <LogMessage key={msg._id} {...msg} />;
+    }
+    return <Message key={msg._id} {...msg} />;
+  }
+
   render() {
     return (
       <div className="Chat" ref="chat">
-        {this.props.messages.map(msg => <Message key={msg._id} {...msg} />)}
+        {this.props.messages.map(this.renderMessage, this)}
       </div>
     );
   }
