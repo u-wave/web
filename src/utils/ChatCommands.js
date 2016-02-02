@@ -6,27 +6,37 @@ export function getCommands() {
   return commands;
 }
 
-export function register(name, description, action) {
-  commands[name] = { description, action };
+export function register(name, description, { action, guard }) {
+  commands[name] = { description, action, guard };
 }
 
-export function execute(name, args = []) {
+export function canExecute(state, { guard } = {}) {
+  return guard ? guard(state) : true;
+}
+
+export function execute(state, name, args = []) {
   debug('execute', name, args);
   if (commands[name]) {
-    return commands[name].action(...args);
+    const allowed = canExecute(state, commands[name]);
+    debug('canExecute', allowed);
+    if (allowed) {
+      return commands[name].action(...args);
+    }
   }
 }
 
 // TODO move default commands to some other file!
 import { log } from '../actions/ChatActionCreators';
 
-register('help', 'List available commands.', () =>
-  dispatch => {
+register('help', 'List available commands.', {
+  action: () => (dispatch, getState) => {
     const available = getCommands();
     dispatch(log('Available commands:'));
     Object.keys(available).forEach(name => {
-      const { description } = available[name];
-      dispatch(log(`/${name} - ${description}`));
+      const command = available[name];
+      if (canExecute(getState(), command)) {
+        dispatch(log(`/${name} - ${command.description}`));
+      }
     });
   }
-);
+});

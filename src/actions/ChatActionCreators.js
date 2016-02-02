@@ -33,9 +33,11 @@ export function inputMessage(text) {
   return (dispatch, getState) => {
     if (text[0] === '/') {
       const [ command, ...params ] = text.split(' ');
-      const result = command && execute(command.slice(1), params);
-      if (result) {
-        dispatch(result);
+      if (command) {
+        const result = execute(getState(), command.slice(1), params);
+        if (result) {
+          dispatch(result);
+        }
         return;
       }
     }
