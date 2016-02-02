@@ -103,7 +103,7 @@ export default class App extends React.Component {
             </Panel>
           </PanelGroup>
           <div className="AppRow AppRow--bottom ChatInputWrapper">
-            {isLoggedIn && <ChatInput send={message => sendChatMessage(user, message)} />}
+            {isLoggedIn && <ChatInput send={sendChatMessage} />}
           </div>
         </div>
 

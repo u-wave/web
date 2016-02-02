@@ -1,8 +1,11 @@
-import { RECEIVE_MESSAGE, SEND_MESSAGE } from '../constants/actionTypes/chat';
+import { RECEIVE_MESSAGE, SEND_MESSAGE, LOG } from '../constants/actionTypes/chat';
 
 const MAX_MESSAGES = 500;
 
 const initialState = {
+  /**
+   * All messages, including log messages and in-flight messages.
+   */
   messages: []
 };
 
@@ -27,6 +30,7 @@ export default function reduce(state = initialState, action = {}) {
   case SEND_MESSAGE:
     const inFlightMessage = {
       _id: `inflight${Date.now()}`,
+      type: 'chat',
       user: payload.user,
       userID: payload.user._id,
       text: payload.message,
@@ -41,6 +45,7 @@ export default function reduce(state = initialState, action = {}) {
   case RECEIVE_MESSAGE:
     const message = {
       ...payload.message,
+      type: 'chat',
       inFlight: false,
       parsedText: payload.parsed,
       isMention: payload.isMention
@@ -51,6 +56,18 @@ export default function reduce(state = initialState, action = {}) {
       messages: limit(
         removeInFlightMessage(messages, message).concat([ message ]),
         MAX_MESSAGES
+      )
+    };
+  case LOG:
+    const logMessage = {
+      type: 'log',
+      _id: `log-${Date.now()}`,
+      text: payload.text
+    };
+    return {
+      ...state,
+      messages: limit(
+        messages.concat([ logMessage ]), MAX_MESSAGES
       )
     };
   default:
