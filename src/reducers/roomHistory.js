@@ -23,7 +23,7 @@ export default function reduce(state = initialState, action = {}) {
   case LOAD_HISTORY_COMPLETE:
     return payload.map(normalize);
   case ADVANCE:
-    if (state.some(entry => entry._id === payload.historyID)) {
+    if (payload === null || state.some(entry => entry._id === payload.historyID)) {
       return state;
     }
     return [
