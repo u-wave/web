@@ -27,6 +27,8 @@ export function execute(state, name, args = []) {
 
 // TODO move default commands to some other file!
 import { log } from '../actions/ChatActionCreators';
+import { skipCurrentDJ } from '../actions/ModerationActionCreators';
+import { currentUserSelector } from '../selectors/userSelectors';
 
 register('help', 'List available commands.', {
   action: () => (dispatch, getState) => {
@@ -39,4 +41,10 @@ register('help', 'List available commands.', {
       }
     });
   }
+});
+
+const ROLE_MODERATOR = 3;
+register('skip', 'Skip the current DJ.', {
+  guard: state => currentUserSelector(state).role >= ROLE_MODERATOR,
+  action: (...args) => skipCurrentDJ(args ? args.join(' ') : '[No reason given]')
 });
