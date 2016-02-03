@@ -1,8 +1,10 @@
 import cx from 'classnames';
 import React, { Component, PropTypes } from 'react';
+
 import Progress from './Progress';
 import SongTitle from '../SongTitle';
 import Volume from './Volume';
+import HistoryButton from './HistoryButton';
 
 export default class HeaderBar extends Component {
   static propTypes = {
@@ -44,16 +46,14 @@ export default class HeaderBar extends Component {
         {...props}
       >
         <h1 className="HeaderBar-title">{title}</h1>
-        <div onClick={onToggleRoomHistory}>
-          <div className="HeaderBar-now-playing">
-            {nowPlaying}
-          </div>
-          {dj && (
-            <div className="HeaderBar-dj">
-              played by: {dj.username}
-            </div>
-          )}
+        <div className="HeaderBar-now-playing">
+          {nowPlaying}
         </div>
+        {dj && (
+          <div className="HeaderBar-dj">
+            played by: {dj.username}
+          </div>
+        )}
         <Progress
           className="HeaderBar-progress"
           percent={mediaProgress}
@@ -66,6 +66,9 @@ export default class HeaderBar extends Component {
             onMute={onVolumeMute}
             onUnmute={onVolumeUnmute}
           />
+        </div>
+        <div className="HeaderBar-history">
+          <HistoryButton onClick={onToggleRoomHistory} />
         </div>
       </div>
     );
