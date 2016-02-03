@@ -1,5 +1,7 @@
 import cx from 'classnames';
 import React, { Component, PropTypes } from 'react';
+import FlatButton from 'material-ui/lib/flat-button';
+
 import NextMedia from './NextMedia';
 import UserInfo from './UserInfo';
 import ResponseBar from './Responses/Bar';
@@ -30,7 +32,12 @@ export default class FooterBar extends Component {
     onDownvote: PropTypes.func
   };
 
+  static contextTypes = {
+    muiTheme: PropTypes.object
+  };
+
   render() {
+    const { rawTheme } = this.context.muiTheme;
     const {
       openLoginDialog, openRegisterDialog,
       togglePlaylistManager, toggleSettings,
@@ -79,12 +86,15 @@ export default class FooterBar extends Component {
               downvotesCount={downvotesCount}
             />
           </div>
-          <div
+          <FlatButton
+            backgroundColor={rawTheme.palette.primary1Color}
+            hoverColor={rawTheme.palette.primary2Color}
+            rippleColor={rawTheme.palette.primary3Color}
             className="FooterBar-join"
             onClick={() => waitlistAction(user)}
           >
             {waitlistText}
-          </div>
+          </FlatButton>
         </div>
       );
     }
