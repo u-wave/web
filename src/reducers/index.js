@@ -9,6 +9,7 @@ export playlists from './playlists';
 export roomHistory from './roomHistory';
 export selectedPanel from './selectedPanel';
 export settings from './settings';
+export theme from './theme';
 export time from './time';
 export users from './users';
 export waitlist from './waitlist';
