@@ -4,5 +4,5 @@ export default function formatDuration(duration) {
   const h = Math.floor(duration / 3600);
   const m = Math.floor((duration % 3600) / 60);
   const s = padZero(Math.floor(duration % 60));
-  return (h > 0 ? [ h, m, s ] : [ m, s ]).join(':');
+  return (h > 0 ? [ h, padZero(m), s ] : [ m, s ]).join(':');
 }
