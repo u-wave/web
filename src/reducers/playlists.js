@@ -11,6 +11,7 @@ import {
   ACTIVATE_PLAYLIST_START, ACTIVATE_PLAYLIST_COMPLETE,
   CREATE_PLAYLIST_START, CREATE_PLAYLIST_COMPLETE,
   RENAME_PLAYLIST_START, RENAME_PLAYLIST_COMPLETE,
+  DELETE_PLAYLIST_START, DELETE_PLAYLIST_COMPLETE,
   ADD_MEDIA_START, ADD_MEDIA_COMPLETE,
   REMOVE_MEDIA_START, REMOVE_MEDIA_COMPLETE,
   MOVE_MEDIA_START, MOVE_MEDIA_COMPLETE,
@@ -234,6 +235,26 @@ export default function reduce(state = initialState, action = {}) {
       };
     }
     return state;
+  case DELETE_PLAYLIST_START:
+    return {
+      ...state,
+      playlists: setLoading(state.playlists, payload.playlistID)
+    };
+  case DELETE_PLAYLIST_COMPLETE:
+    const newPlaylists = except(state.playlists, payload.playlistID);
+    // TODO handle case where the active playlist is deleted.
+    if (state.selectedPlaylistID === payload.playlistID) {
+      return {
+        ...state,
+        selectedPlaylistID: state.activePlaylistID,
+        selectedMedia: state.activeMedia,
+        playlists: newPlaylists
+      };
+    }
+    return {
+      ...state,
+      playlists: newPlaylists
+    };
 
   case ADD_MEDIA_START:
     return {

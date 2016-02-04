@@ -5,6 +5,7 @@ import {
   ACTIVATE_PLAYLIST_START, ACTIVATE_PLAYLIST_COMPLETE,
   CREATE_PLAYLIST_START, CREATE_PLAYLIST_COMPLETE,
   RENAME_PLAYLIST_START, RENAME_PLAYLIST_COMPLETE,
+  DELETE_PLAYLIST_START, DELETE_PLAYLIST_COMPLETE,
   OPEN_ADD_MEDIA_MENU, CLOSE_ADD_MEDIA_MENU,
   ADD_MEDIA_START, ADD_MEDIA_COMPLETE,
   REMOVE_MEDIA_START, REMOVE_MEDIA_COMPLETE,
@@ -224,6 +225,37 @@ export function askRenamePlaylist(playlistID) {
     const name = prompt('Name?');
     if (name) {
       dispatch(renamePlaylist(playlistID, name));
+    }
+  };
+}
+
+export function deletePlaylist(playlistID) {
+  return (dispatch, getState) => {
+    const jwt = tokenSelector(getState());
+    dispatch({
+      type: DELETE_PLAYLIST_START,
+      payload: { playlistID }
+    });
+
+    del(jwt, `/v1/playlists/${playlistID}`)
+      .then(res => res.json())
+      .then(() => dispatch({
+        type: DELETE_PLAYLIST_COMPLETE,
+        payload: { playlistID }
+      }))
+      .catch(error => dispatch({
+        type: DELETE_PLAYLIST_COMPLETE,
+        error: true,
+        payload: error,
+        meta: { playlistID }
+      }));
+  };
+}
+
+export function askDeletePlaylist(playlistID) {
+  return dispatch => {
+    if (confirm('Sure?')) {
+      dispatch(deletePlaylist(playlistID));
     }
   };
 }
