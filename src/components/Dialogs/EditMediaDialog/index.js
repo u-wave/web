@@ -68,6 +68,7 @@ export default class EditMediaDialog extends Component {
   render() {
     const { open, media, onCloseDialog } = this.props;
     const { errors } = this.state;
+    const baseTabIndex = 1000;
     let content = null;
     if (open) {
       const artistInput = (
@@ -77,6 +78,7 @@ export default class EditMediaDialog extends Component {
           placeholder="Artist"
           defaultValue={media.artist}
           icon={<ArtistIcon color="#9f9d9e"/>}
+          tabIndex={baseTabIndex}
           autofocus
         />
       );
@@ -90,6 +92,7 @@ export default class EditMediaDialog extends Component {
           placeholder="Title"
           defaultValue={media.title}
           icon={<TitleIcon color="#9f9d9e"/>}
+          tabIndex={baseTabIndex + 1}
         />
       );
 
@@ -103,7 +106,7 @@ export default class EditMediaDialog extends Component {
           placeholder="0:00"
           defaultValue={formatDuration(media.start)}
           icon={<StartIcon color="#9f9d9e"/>}
-          autofocus
+          tabIndex={baseTabIndex + 2}
         />
       );
       const toLabel = (
@@ -116,6 +119,7 @@ export default class EditMediaDialog extends Component {
           placeholder={formatDuration(media.duration)}
           defaultValue={formatDuration(media.end)}
           icon={<EndIcon color="#9f9d9e"/>}
+          tabIndex={baseTabIndex + 3}
         />
       );
 
