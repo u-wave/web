@@ -16,6 +16,8 @@ import when from 'gulp-if';
 // components and Redux reducers, and dependency files like React itself.
 
 export default function browserifyTask({ minify = false, 'source-maps': useSourceMaps = true }) {
+  process.env.NODE_ENV = minify ? 'production' : 'development';
+
   // Browserify works by passing a single entry point file, which contains the
   // code that starts the application. It'll combine all of them into a single
   // file that can be included simply by using a <script> tag.
@@ -37,12 +39,8 @@ export default function browserifyTask({ minify = false, 'source-maps': useSourc
       // generate our own helper file later, so we can use its External Helpers
       // feature.
       // https://developit.github.io/babel-legacy-docs/docs/advanced/external-helpers/
-      'external-helpers',
-      // The constantElements transform moves React Elements that are always the
-      // same _out_ of the render() method of components, so that they are only
-      // rendered once and then reused instead of rerendered all the time.
-      minify ? 'transform-react-constant-elements' : null
-    ].filter(plugin => !!plugin)
+      'external-helpers'
+    ]
   });
 
   // Envify replaces `process.env.*` occurrences with constant values. This is
@@ -54,7 +52,7 @@ export default function browserifyTask({ minify = false, 'source-maps': useSourc
   // …which will be removed by uglify.js later down the line.
   b.transform(envify({
     _: 'purge',
-    NODE_ENV: minify ? 'production' : 'development'
+    NODE_ENV: process.env.NODE_ENV
   }), { global: true });
 
   if (minify) {

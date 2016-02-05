@@ -5,5 +5,13 @@
     "transform-export-extensions",
     "transform-function-bind",
     "transform-decorators-legacy"
-  ]
+  ],
+  "env": {
+    "production": {
+      "plugins": [
+        "transform-react-constant-elements",
+        "transform-react-remove-prop-types"
+      ]
+    }
+  }
 }
