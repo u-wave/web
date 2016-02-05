@@ -20,7 +20,7 @@ const parseDuration = str => str.split(':')
 
 export default class EditMediaDialog extends Component {
   static propTypes = {
-    open: PropTypes.boolean,
+    open: PropTypes.bool,
     media: PropTypes.object,
 
     onEditedMedia: PropTypes.func.isRequired,
