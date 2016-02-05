@@ -62,6 +62,7 @@
     "babel-preset-stage-2": "^6.3.13",
     "babel-register": "^6.4.3",
     "babelify": "^7.2.0",
+    "browser-resolve": "^1.11.1",
     "browserify": "^13.0.0",
     "browserify-hmr": "^0.3.1",
     "bundle-collapser": "^1.2.1",
@@ -96,6 +97,7 @@
     "react-transform-hmr": "^1.0.1",
     "redbox-react": "^1.1.1",
     "run-sequence": "^1.1.4",
+    "through2": "^2.0.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.4.0"
   },
