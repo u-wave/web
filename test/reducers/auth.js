@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 import {
   LOGIN_COMPLETE, SET_TOKEN
-} from '../src/constants/actionTypes/auth';
-import auth from '../src/reducers/auth';
+} from '../../src/constants/actionTypes/auth';
+import auth from '../../src/reducers/auth';
 
 describe('reducers/auth', () => {
   const initialState = () => {

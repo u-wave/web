@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 import {
   OPEN_OVERLAY, CLOSE_OVERLAY, TOGGLE_OVERLAY
-} from '../src/constants/actionTypes/overlay';
-import activeOverlay from '../src/reducers/activeOverlay';
+} from '../../src/constants/actionTypes/overlay';
+import activeOverlay from '../../src/reducers/activeOverlay';
 
 describe('reducers/activeOverlay', () => {
   it('should not respond to unrelated actions', () => {

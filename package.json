@@ -103,7 +103,7 @@
   },
   "scripts": {
     "lint": "gulp js:lint",
-    "mocha": "mocha --compilers js:babel-register",
+    "mocha": "mocha --compilers js:babel-register --recursive test",
     "test": "npm run mocha && npm run lint",
     "build": "gulp",
     "watch": "gulp watch",
