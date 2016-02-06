@@ -12,6 +12,13 @@
   background: $scrollbar-color;
 }
 
+a {
+  color: $link-color;
+}
+a:visited {
+  color: $link-visited-color;
+}
+
 @component App {
   font-family: Open Sans, sans-serif;
 
