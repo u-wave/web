@@ -13,10 +13,10 @@
 }
 
 a {
-  color: #9d2053;
+  color: $link-color;
 }
 a:visited {
-  color: #633246;
+  color: $link-visited-color;
 }
 
 @component App {
