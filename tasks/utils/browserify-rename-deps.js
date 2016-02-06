@@ -1,3 +1,4 @@
+import path from 'path';
 import through from 'through2';
 import bresolve from 'browser-resolve';
 
@@ -5,9 +6,15 @@ import bresolve from 'browser-resolve';
 // Pass an object like `{ bluebird: 'my-favourite-ponyfill' }`, and your
 // generated bundle will contain your favourite ponyfill instead of Bluebird.
 
+// Make sure paths `bresolve`d by renameDeps work the same as paths used
+// elsewhere in our gulp tasks (relative to the project root).
+const bresolveOpts = {
+  filename: path.join(__dirname, '../../gulpfile.babel.js')
+};
+
 const rewireDependency = (row, oldDep, newDep) => {
   return new Promise((resolve, reject) => {
-    bresolve(newDep, (e, file) => {
+    bresolve(newDep, bresolveOpts, (e, file) => {
       if (e) return reject(e);
       row.deps[oldDep] = file;
       resolve();
@@ -32,6 +39,10 @@ export default function renameDeps(b, map) {
   }));
 
   // All require calls to the specified dependencies will be replaced, so we
-  // can ignore them to also remove them from the bundle.
-  depNames.forEach(dep => b.ignore(dep));
+  // can ignore them to also remove them from the bundle. Also ensure that the
+  // replacements are included in the bundle.
+  depNames.forEach(dep => {
+    b.ignore(dep);
+    b.require(map[dep]);
+  });
 }

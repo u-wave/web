@@ -37,7 +37,7 @@ export default function browserifyTask({ minify = false, 'source-maps': useSourc
   // most basic Promises functionality, so we can just use the es6-promise
   // polyfill module that we already use elsewhere. This shaves some 20kb off
   // the final minified+gzipped bundle (that's > 15%).
-  b.plugin(renameDeps, { bluebird: 'es6-promise' });
+  b.plugin(renameDeps, { bluebird: './src/utils/Promise' });
 
   // Babelify transforms the üWave source code, which is written in JavaScript
   // of the future and JSX, to JavaScript of today.
