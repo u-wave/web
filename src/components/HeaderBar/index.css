@@ -22,17 +22,26 @@
 
   @descendent volume {
     position: absolute;
-    right: 0;
+    right: $header-height;
     top: 0;
     width: 200px;
     padding: 15px;
+  }
+
+  @descendent history {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: $header-height;
+    background: #111;
   }
 
   @descendent now-playing {
     position: absolute;
     top: 5px;
     left: 250px;
-    right: 200px;
+    right: calc(200px + $header-height);
     line-height: 25px;
   }
 
