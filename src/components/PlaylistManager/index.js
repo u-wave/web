@@ -1,6 +1,9 @@
 import cx from 'classnames';
 import React, { Component, PropTypes } from 'react';
+
 import { IDLE, LOADING, LOADED } from '../../constants/LoadingStates';
+import Overlay from '../Overlay';
+
 import PlaylistMenu from './Menu';
 import PlaylistHeader from './Header';
 import PlaylistPanel from './Panel';
@@ -123,7 +126,7 @@ export default class PlaylistManager extends Component {
     }
 
     return (
-      <div className={cx('PlaylistManager', 'AppColumn', 'AppColumn--full', this.props.className)}>
+      <Overlay className={cx('PlaylistManager', 'AppColumn', 'AppColumn--full', this.props.className)}>
         <PlaylistHeader
           className="PlaylistManager-header AppRow AppRow--top"
           selectedPlaylist={selectedPlaylist}
@@ -149,7 +152,7 @@ export default class PlaylistManager extends Component {
 
           {panel}
         </div>
-      </div>
+      </Overlay>
     );
   }
 }

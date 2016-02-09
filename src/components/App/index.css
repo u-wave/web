@@ -41,7 +41,6 @@ a:visited {
 }
 
 @component AppColumn {
-  overflow: hidden;
   position: absolute;
   height: 100%;
 

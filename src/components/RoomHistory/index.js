@@ -1,6 +1,7 @@
 import cx from 'classnames';
 import React from 'react';
 
+import Overlay from '../Overlay';
 import OverlayHeader from '../Overlay/Header';
 import MediaList from '../MediaList';
 import AddToPlaylistAction from '../MediaList/Actions/AddToPlaylist';
@@ -9,7 +10,10 @@ import HistoryRow from './Row';
 
 const RoomHistory = ({ className, onCloseOverlay, onOpenAddMediaMenu, ...props }) => {
   return (
-    <div className={cx('RoomHistory', 'Overlay--from-top', 'AppColumn', 'AppColumn--full', className)}>
+    <Overlay
+      className={cx('RoomHistory', 'AppColumn', 'AppColumn--full', className)}
+      direction="top"
+    >
       <OverlayHeader
         direction="top"
         className="AppRow AppRow--top"
@@ -29,7 +33,7 @@ const RoomHistory = ({ className, onCloseOverlay, onOpenAddMediaMenu, ...props }
           ]}
         />
       </div>
-    </div>
+    </Overlay>
   );
 };
 

@@ -1,21 +1,16 @@
 import React from 'react';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-import Chat from '../../containers/Chat';
-import ChatInput from '../Chat/Input';
-import RoomUserList from '../../containers/RoomUserList';
-import WaitList from '../../containers/WaitList';
+
 import FooterBar from '../../containers/FooterBar';
 import HeaderBar from '../../containers/HeaderBar';
-import PanelSwitcher from '../PanelSwitcher';
-import PanelGroup from '../PanelSwitcher/Group';
-import Panel from '../PanelSwitcher/Panel';
 import Video from '../../containers/Video';
 import Overlays from './Overlays';
 import PlaylistManager from '../../containers/PlaylistManager';
 import RoomHistory from '../../containers/RoomHistory';
 import SettingsManager from '../../containers/SettingsManager';
 
+import SidePanels from '../SidePanels';
 import Dialogs from '../Dialogs';
 import AddToPlaylistMenu from '../../containers/AddToPlaylistMenu';
 import DragLayer from '../../containers/DragLayer';
@@ -83,28 +78,14 @@ export default class App extends React.Component {
         </div>
 
         <div className="AppColumn AppColumn--right">
-          <div className="AppRow AppRow--top">
-            <PanelSwitcher
-              selected={selectedPanel}
-              waitlistPosition={waitlistPosition}
-              waitlistSize={waitlistSize}
-              selectPanel={selectPanel}
-            />
-          </div>
-          <PanelGroup className="AppRow AppRow--middle" selected={selectedPanel}>
-            <Panel name="chat">
-              <Chat />
-            </Panel>
-            <Panel name="room">
-              <RoomUserList />
-            </Panel>
-            <Panel name="waitlist">
-              <WaitList />
-            </Panel>
-          </PanelGroup>
-          <div className="AppRow AppRow--bottom ChatInputWrapper">
-            {isLoggedIn && <ChatInput send={sendChatMessage} />}
-          </div>
+          <SidePanels
+            selected={selectedPanel}
+            isLoggedIn={isLoggedIn}
+            waitlistSize={waitlistSize}
+            waitlistPosition={waitlistPosition}
+            onChange={selectPanel}
+            sendChatMessage={sendChatMessage}
+          />
         </div>
 
         <Dialogs />
