@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import { advanceToEmpty, loadHistoryComplete } from '../../src/actions/BoothActionCreators';
 import { ADVANCE, LOAD_HISTORY_COMPLETE } from '../../src/constants/actionTypes/booth';
 import roomHistory from '../../src/reducers/roomHistory';
 
@@ -45,10 +46,11 @@ describe('reducers/roomHistory', () => {
   describe('action: LOAD_HISTORY_COMPLETE', () => {
     it('should normalize the loaded history entries', () => {
       let state = initialState();
-      state = roomHistory(state, {
-        type: LOAD_HISTORY_COMPLETE,
-        payload: [ serverHistoryEntry ]
-      });
+      state = roomHistory(state, loadHistoryComplete({
+        result: [ serverHistoryEntry ],
+        page: 0,
+        size: 1
+      }));
       expect(state).to.eql([ {
         _id: '56b12b90d6bfe93733bece96',
         user: {
@@ -89,10 +91,11 @@ describe('reducers/roomHistory', () => {
 
   describe('action: ADVANCE', () => {
     it('prepends a new history entry', () => {
-      let state = roomHistory(undefined, {
-        type: LOAD_HISTORY_COMPLETE,
-        payload: [ serverHistoryEntry ]
-      });
+      let state = roomHistory(undefined, loadHistoryComplete({
+        result: [ serverHistoryEntry ],
+        page: 0,
+        size: 1
+      }));
       expect(state).to.have.length(1);
       expect(state[0]._id).to.equal('56b12b90d6bfe93733bece96');
       state = roomHistory(state, {
@@ -151,16 +154,14 @@ describe('reducers/roomHistory', () => {
       });
     });
     it('works with NULL advances', () => {
-      let state = roomHistory(undefined, {
-        type: LOAD_HISTORY_COMPLETE,
-        payload: [ serverHistoryEntry ]
-      });
+      let state = roomHistory(undefined, loadHistoryComplete({
+        result: [ serverHistoryEntry ],
+        page: 0,
+        size: 1
+      }));
       expect(state).to.have.length(1);
 
-      state = roomHistory(state, {
-        type: ADVANCE,
-        payload: null
-      });
+      state = roomHistory(state, advanceToEmpty());
       expect(state).to.have.length(1);
     });
   });
