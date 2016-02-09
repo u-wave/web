@@ -14,7 +14,9 @@ import {
 } from '../constants/actionTypes/playlists';
 import { openEditMediaDialog } from './DialogActionCreators';
 import { del, get, post, put } from '../utils/Request';
-import { playlistsSelector } from '../selectors/playlistSelectors';
+import {
+  playlistsSelector, activePlaylistIDSelector, selectedPlaylistIDSelector
+} from '../selectors/playlistSelectors';
 import { tokenSelector } from '../selectors/userSelectors';
 
 export function setPlaylists(playlists) {
@@ -229,20 +231,63 @@ export function askRenamePlaylist(playlistID) {
   };
 }
 
+/**
+ * Select or activate a different playlist than the one given.
+ * @return Promise
+ */
+
+export function deselectPlaylist(playlistID) {
+  return (dispatch, getState) => {
+    const selectedID = selectedPlaylistIDSelector(getState());
+    const activeID = activePlaylistIDSelector(getState());
+    if (playlistID === selectedID) {
+      dispatch(selectPlaylist(activeID));
+    }
+  };
+}
+
+export function deletePlaylistStart(playlistID) {
+  return {
+    type: DELETE_PLAYLIST_START,
+    payload: { playlistID }
+  };
+}
+
+export function deletePlaylistComplete(playlistID) {
+  return {
+    type: DELETE_PLAYLIST_COMPLETE,
+    payload: { playlistID }
+  };
+}
+
+export function cannotDeleteActivePlaylist(playlistID) {
+  return {
+    type: DELETE_PLAYLIST_COMPLETE,
+    error: true,
+    payload: new Error(
+      'The active playlist cannot be deleted. ' +
+      'Activate a different playlist first, before deleting this one.'
+    ),
+    meta: { playlistID }
+  };
+}
+
 export function deletePlaylist(playlistID) {
   return (dispatch, getState) => {
     const jwt = tokenSelector(getState());
-    dispatch({
-      type: DELETE_PLAYLIST_START,
-      payload: { playlistID }
-    });
+    const activeID = activePlaylistIDSelector(getState());
+
+    if (playlistID === activeID) {
+      dispatch(cannotDeleteActivePlaylist(playlistID));
+      return;
+    }
+
+    dispatch(deselectPlaylist(playlistID));
+    dispatch(deletePlaylistStart(playlistID));
 
     del(jwt, `/v1/playlists/${playlistID}`)
       .then(res => res.json())
-      .then(() => dispatch({
-        type: DELETE_PLAYLIST_COMPLETE,
-        payload: { playlistID }
-      }))
+      .then(() => dispatch(deletePlaylistComplete(playlistID)))
       .catch(error => dispatch({
         type: DELETE_PLAYLIST_COMPLETE,
         error: true,

@@ -11,7 +11,7 @@ export const playlistsSelector = createSelector(
   playlists => values(playlists.playlists).sort(byName)
 );
 
-const activePlaylistIDSelector = createSelector(
+export const activePlaylistIDSelector = createSelector(
   baseSelector,
   playlists => playlists.activePlaylistID
 );
@@ -22,7 +22,7 @@ export const activePlaylistSelector = createSelector(
   (playlists, activeID) => playlists.playlists[activeID]
 );
 
-const selectedPlaylistIDSelector = createSelector(
+export const selectedPlaylistIDSelector = createSelector(
   baseSelector,
   playlists => playlists.selectedPlaylistID
 );

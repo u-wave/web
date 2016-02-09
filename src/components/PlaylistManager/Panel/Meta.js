@@ -34,6 +34,7 @@ const PlaylistMeta = ({
       </IconButton>
       <IconButton
         onClick={() => onDeletePlaylist(id)}
+        disabled={active}
         tooltip="Delete"
         tooltipPosition="top-center"
       >
