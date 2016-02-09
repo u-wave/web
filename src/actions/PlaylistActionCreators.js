@@ -317,7 +317,7 @@ export function removeMedia(playlistID, items) {
   return (dispatch, getState) => {
     const jwt = tokenSelector(getState());
     dispatch(removeMediaStart(playlistID, items));
-    const itemIDs = medias.map(media => media._id);
+    const itemIDs = items.map(media => media._id);
     del(jwt, `/v1/playlists/${playlistID}/media`, { items: itemIDs })
       .then(res => res.json())
       .then(({ removed, playlistSize }) =>
