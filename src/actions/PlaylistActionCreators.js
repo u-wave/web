@@ -87,21 +87,27 @@ export function selectPlaylist(playlistID) {
   };
 }
 
+export function activatePlaylistStart(playlistID) {
+  return {
+    type: ACTIVATE_PLAYLIST_START,
+    payload: { playlistID }
+  };
+}
+
+export function activatePlaylistComplete(playlistID) {
+  return {
+    type: ACTIVATE_PLAYLIST_COMPLETE,
+    payload: { playlistID }
+  };
+}
+
 export function activatePlaylist(playlistID) {
   return (dispatch, getState) => {
     const jwt = tokenSelector(getState());
 
-    dispatch({
-      type: ACTIVATE_PLAYLIST_START,
-      payload: { playlistID }
-    });
+    dispatch(activatePlaylistStart(playlistID));
     put(jwt, `/v1/playlists/${playlistID}/activate`)
-      .then(() => {
-        dispatch({
-          type: ACTIVATE_PLAYLIST_COMPLETE,
-          payload: { playlistID }
-        });
-      })
+      .then(() => dispatch(activatePlaylistComplete(playlistID)))
       .catch(error => {
         dispatch({
           type: ACTIVATE_PLAYLIST_COMPLETE,
@@ -113,19 +119,25 @@ export function activatePlaylist(playlistID) {
   };
 }
 
+export function loadPlaylistsStart() {
+  return { type: LOAD_ALL_PLAYLISTS_START };
+}
+
+export function loadPlaylistsComplete(playlists) {
+  return {
+    type: LOAD_ALL_PLAYLISTS_COMPLETE,
+    payload: { playlists }
+  };
+}
+
 export function loadPlaylists() {
   return (dispatch, getState) => {
     const jwt = tokenSelector(getState());
 
-    dispatch({ type: LOAD_ALL_PLAYLISTS_START });
+    dispatch(loadPlaylistsStart());
     get(jwt, '/v1/playlists')
       .then(res => res.json())
-      .then(playlists => {
-        dispatch({
-          type: LOAD_ALL_PLAYLISTS_COMPLETE,
-          payload: { playlists }
-        });
-      })
+      .then(playlists => dispatch(loadPlaylistsComplete(playlists)))
       .catch(error => {
         dispatch({
           type: LOAD_ALL_PLAYLISTS_COMPLETE,
@@ -136,6 +148,22 @@ export function loadPlaylists() {
   };
 }
 
+export function createPlaylistStart(props, tempId) {
+  return {
+    type: CREATE_PLAYLIST_START,
+    payload: props,
+    meta: { tempId }
+  };
+}
+
+export function createPlaylistComplete(playlist, tempId) {
+  return {
+    type: CREATE_PLAYLIST_COMPLETE,
+    payload: { playlist },
+    meta: { tempId }
+  };
+}
+
 function doCreatePlaylist(name) {
   return (dispatch, getState) => {
     const jwt = tokenSelector(getState());
@@ -143,21 +171,11 @@ function doCreatePlaylist(name) {
     const tempId = -Date.now();
     const description = '';
     const shared = false;
-    dispatch({
-      type: CREATE_PLAYLIST_START,
-      payload: { name, description, shared },
-      meta: { tempId }
-    });
+    dispatch(createPlaylistStart({ name, description, shared }, tempId));
 
     post(jwt, '/v1/playlists', { name, description, shared })
       .then(res => res.json())
-      .then(playlist => {
-        dispatch({
-          type: CREATE_PLAYLIST_COMPLETE,
-          payload: { playlist },
-          meta: { tempId }
-        });
-      })
+      .then(playlist => dispatch(createPlaylistComplete(playlist, tempId)))
       .catch(error => {
         dispatch({
           type: CREATE_PLAYLIST_COMPLETE,
@@ -199,32 +217,40 @@ export function closeAddMediaMenu() {
   return { type: CLOSE_ADD_MEDIA_MENU };
 }
 
+export function addMediaStart(playlistID, media, afterID) {
+  return {
+    type: ADD_MEDIA_START,
+    payload: { playlistID, media, afterID }
+  };
+}
+
+export function addMediaComplete(playlistID, newSize, insert) {
+  return {
+    type: ADD_MEDIA_COMPLETE,
+    payload: {
+      playlistID,
+      newSize,
+      afterID: insert.afterID,
+      appendedMedia: insert.media
+    }
+  };
+}
+
 export function addMedia(playlist, items, afterID = null) {
   return (dispatch, getState) => {
     const jwt = tokenSelector(getState());
 
-    dispatch({
-      type: ADD_MEDIA_START,
-      payload: {
-        playlistID: playlist._id,
-        media: items,
-        afterID
-      }
-    });
+    dispatch(addMediaStart(playlist._id, items, afterID));
 
     post(jwt, `/v1/playlists/${playlist._id}/media`, { items, after: afterID })
       .then(res => res.json())
-      .then(({ added, playlistSize }) => {
-        dispatch({
-          type: ADD_MEDIA_COMPLETE,
-          payload: {
-            playlistID: playlist._id,
-            newSize: playlistSize,
-            afterID: afterID,
-            appendedMedia: added.map(flattenPlaylistItem)
-          }
-        });
-      })
+      .then(({ added, playlistSize }) =>
+        dispatch(addMediaComplete(
+          playlist._id,
+          playlistSize,
+          { afterID, media: added.map(flattenPlaylistItem) }
+        ))
+      )
       .catch(error => {
         dispatch({
           type: ADD_MEDIA_COMPLETE,
@@ -239,19 +265,27 @@ export function editMedia(playlistID, media) {
   return openEditMediaDialog(playlistID, media);
 }
 
+export function updateMediaStart(playlistID, mediaID, props) {
+  return {
+    type: UPDATE_MEDIA_START,
+    payload: { playlistID, mediaID, props }
+  };
+}
+
+export function updateMediaComplete(playlistID, mediaID, media) {
+  return {
+    type: UPDATE_MEDIA_COMPLETE,
+    payload: { playlistID, mediaID, media }
+  };
+}
+
 export function updateMedia(playlistID, mediaID, props) {
   return (dispatch, getState) => {
     const jwt = tokenSelector(getState());
-    dispatch({
-      type: UPDATE_MEDIA_START,
-      payload: { playlistID, mediaID, props }
-    });
+    dispatch(updateMediaStart(playlistID, mediaID, props));
     put(jwt, `/v1/playlists/${playlistID}/media/${mediaID}`, props)
       .then(res => res.json())
-      .then(media => dispatch({
-        type: UPDATE_MEDIA_COMPLETE,
-        payload: { playlistID, mediaID, media }
-      }))
+      .then(media => dispatch(playlistID, mediaID, media))
       .catch(err => dispatch({
         type: UPDATE_MEDIA_COMPLETE,
         payload: err,
@@ -261,26 +295,38 @@ export function updateMedia(playlistID, mediaID, props) {
   };
 }
 
-export function removeMedia(playlistID, medias) {
+export function removeMediaStart(playlistID, items) {
+  return {
+    type: REMOVE_MEDIA_START,
+    payload: { playlistID, medias: items }
+  };
+}
+
+export function removeMediaComplete(playlistID, newSize, removedMedia) {
+  return {
+    type: REMOVE_MEDIA_COMPLETE,
+    payload: {
+      playlistID,
+      newSize,
+      removedMedia
+    }
+  };
+}
+
+export function removeMedia(playlistID, items) {
   return (dispatch, getState) => {
     const jwt = tokenSelector(getState());
-    dispatch({
-      type: REMOVE_MEDIA_START,
-      payload: { playlistID, medias }
-    });
-    const items = medias.map(media => media._id);
-    del(jwt, `/v1/playlists/${playlistID}/media`, { items })
+    dispatch(removeMediaStart(playlistID, items));
+    const itemIDs = medias.map(media => media._id);
+    del(jwt, `/v1/playlists/${playlistID}/media`, { items: itemIDs })
       .then(res => res.json())
-      .then(({ removed, playlistSize }) => {
-        dispatch({
-          type: REMOVE_MEDIA_COMPLETE,
-          payload: {
-            playlistID,
-            newSize: playlistSize,
-            removedMedia: removed.map(flattenPlaylistItem)
-          }
-        });
-      })
+      .then(({ removed, playlistSize }) =>
+        dispatch(removeMediaComplete(
+          playlistID,
+          playlistSize,
+          removed.map(flattenPlaylistItem)
+        ))
+      )
       .catch(error => {
         dispatch({
           type: REMOVE_MEDIA_COMPLETE,
@@ -291,30 +337,35 @@ export function removeMedia(playlistID, medias) {
   };
 }
 
+export function moveMediaStart(playlistID, items, afterID) {
+  return {
+    type: MOVE_MEDIA_START,
+    payload: { playlistID, afterID, medias: items }
+  };
+}
+
+export function moveMediaComplete(playlistID, items, afterID) {
+  return {
+    type: MOVE_MEDIA_COMPLETE,
+    payload: { playlistID, afterID, medias: items }
+  };
+}
+
 export function moveMedia(playlistID, medias, afterID) {
   return (dispatch, getState) => {
     const jwt = tokenSelector(getState());
 
-    const payload = { playlistID, medias, afterID };
-    dispatch({
-      type: MOVE_MEDIA_START,
-      payload
-    });
+    dispatch(moveMediaStart(playlistID, medias, afterID));
     const items = medias.map(media => media._id);
     put(jwt, `/v1/playlists/${playlistID}/move`, { items, after: afterID })
       .then(res => res.json())
-      .then(() => {
-        dispatch({
-          type: MOVE_MEDIA_COMPLETE,
-          payload
-        });
-      })
+      .then(() => dispatch(moveMediaComplete(playlistID, medias, afterID)))
       .catch(error => {
         dispatch({
           type: MOVE_MEDIA_COMPLETE,
           error: true,
           payload: error,
-          meta: payload
+          meta: { playlistID, medias, afterID }
         });
       });
   };

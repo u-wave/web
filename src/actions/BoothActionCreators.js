@@ -7,15 +7,19 @@ import { get } from '../utils/Request';
 
 import { usersSelector } from '../selectors/userSelectors';
 
+export function advanceToEmpty() {
+  return {
+    type: ADVANCE,
+    payload: null
+  };
+}
+
 /**
  * Set the current song and DJ.
  */
 export function advance(nextBooth) {
   if (!nextBooth) {
-    return {
-      type: ADVANCE,
-      payload: null
-    };
+    return advanceToEmpty();
   }
   const { media, userID, historyID, playlistID, played } = nextBooth;
   return (dispatch, getState) => {
@@ -31,20 +35,23 @@ export function advance(nextBooth) {
   };
 }
 
+export function loadHistoryStart() {
+  return { type: LOAD_HISTORY_START };
+}
+
+export function loadHistoryComplete({ result, page, size }) {
+  return {
+    type: LOAD_HISTORY_COMPLETE,
+    payload: result,
+    meta: { page, size }
+  };
+}
+
 export function loadHistory() {
   return dispatch => {
-    dispatch({ type: LOAD_HISTORY_START });
+    dispatch(loadHistoryStart());
     get(null, '/v1/booth/history')
       .then(res => res.json())
-      .then(history => {
-        dispatch({
-          type: LOAD_HISTORY_COMPLETE,
-          payload: history.result,
-          meta: {
-            page: history.page,
-            size: history.size
-          }
-        });
-      });
+      .then(history => dispatch(loadHistoryComplete(history)));
   };
 }
