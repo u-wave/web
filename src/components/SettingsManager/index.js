@@ -1,5 +1,7 @@
 import cx from 'classnames';
 import React, { Component, PropTypes } from 'react';
+
+import Overlay from '../Overlay';
 import OverlayHeader from '../Overlay/Header';
 
 import SettingsPanel from './SettingsPanel';
@@ -21,7 +23,7 @@ export default class SettingsManager extends Component {
       onCloseOverlay, onSettingChange, onChangeUsername
     } = this.props;
     return (
-      <div className={cx('SettingsManager', 'AppColumn', 'AppColumn--full', className)}>
+      <Overlay className={cx('SettingsManager', 'AppColumn', 'AppColumn--full', className)}>
         <OverlayHeader
           title="Settings"
           onCloseOverlay={onCloseOverlay}
@@ -34,7 +36,7 @@ export default class SettingsManager extends Component {
             onSettingChange={onSettingChange}
           />
         </div>
-      </div>
+      </Overlay>
     );
   }
 }
