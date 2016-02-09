@@ -173,6 +173,7 @@ export default class EditMediaDialog extends Component {
         title="Edit Media"
         open={open}
         onRequestClose={onCloseDialog}
+        autoScrollBodyContent
       >
         {content}
       </Dialog>

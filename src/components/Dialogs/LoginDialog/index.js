@@ -31,6 +31,7 @@ export default class LoginDialog extends Component {
         title={title}
         open={open}
         onRequestClose={onCloseDialog}
+        autoScrollBodyContent
       >
         {form}
       </Dialog>
