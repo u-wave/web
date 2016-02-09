@@ -285,7 +285,7 @@ export function updateMedia(playlistID, mediaID, props) {
     dispatch(updateMediaStart(playlistID, mediaID, props));
     put(jwt, `/v1/playlists/${playlistID}/media/${mediaID}`, props)
       .then(res => res.json())
-      .then(media => dispatch(playlistID, mediaID, media))
+      .then(media => dispatch(updateMediaComplete(playlistID, mediaID, media)))
       .catch(err => dispatch({
         type: UPDATE_MEDIA_COMPLETE,
         payload: err,
