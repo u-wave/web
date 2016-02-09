@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import {
   OPEN_ADD_MEDIA_MENU, CLOSE_ADD_MEDIA_MENU
 } from '../../src/constants/actionTypes/playlists';
+import { closeAddMediaMenu } from '../../src/actions/PlaylistActionCreators';
 import addToPlaylistMenu from '../../src/reducers/addToPlaylistMenu';
 
 describe('reducers/addToPlaylistMenu', () => {
@@ -52,7 +53,7 @@ describe('reducers/addToPlaylistMenu', () => {
           media: [ { _id: 'hoi' } ]
         }
       };
-      state = addToPlaylistMenu(state, { type: CLOSE_ADD_MEDIA_MENU });
+      state = addToPlaylistMenu(state, closeAddMediaMenu());
       expect(state.open).to.be.false;
       expect(state.playlists).to.have.length(0);
       expect(state.data).to.be.null;

@@ -1,5 +1,6 @@
 import { expect } from 'chai';
 import { ADVANCE } from '../../src/constants/actionTypes/booth';
+import { advanceToEmpty } from '../../src/actions/BoothActionCreators';
 import booth from '../../src/reducers/booth';
 
 describe('reducers/booth', () => {
@@ -43,10 +44,7 @@ describe('reducers/booth', () => {
     });
 
     it('should stop playing if there is no next song', () => {
-      const state = booth(initialState(), {
-        type: ADVANCE,
-        payload: null
-      });
+      const state = booth(initialState(), advanceToEmpty());
       expect(state).to.eql({
         historyID: null,
         djID: null,

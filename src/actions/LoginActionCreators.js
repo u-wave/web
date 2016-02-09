@@ -3,15 +3,14 @@ import {
   LOGIN_START, LOGIN_COMPLETE, SET_TOKEN,
   LOGOUT_START, LOGOUT_COMPLETE
 } from '../constants/actionTypes/auth';
-import {
-  LOAD_ALL_PLAYLISTS_START,
-  ACTIVATE_PLAYLIST_COMPLETE
-} from '../constants/actionTypes/playlists';
+import { LOAD_ALL_PLAYLISTS_START } from '../constants/actionTypes/playlists';
 import { get, post } from '../utils/Request';
 import * as Session from '../utils/Session';
 import * as Socket from '../utils/Socket';
 import { advance, loadHistory } from './BoothActionCreators';
-import { setPlaylists, selectPlaylist } from './PlaylistActionCreators';
+import {
+  setPlaylists, selectPlaylist, activatePlaylistComplete
+} from './PlaylistActionCreators';
 import { closeLoginDialog } from './DialogActionCreators';
 import { setUsers } from './UserActionCreators';
 import { currentUserSelector, tokenSelector } from '../selectors/userSelectors';
@@ -29,34 +28,35 @@ export function loginComplete({ jwt, user }) {
   };
 }
 
+export function loadedState(state) {
+  return (dispatch, getState) => {
+    dispatch(setUsers(state.users || []));
+    dispatch(setPlaylists(state.playlists || []));
+    if (state.booth) {
+      // TODO don't set this when logging in _after_ entering the page?
+      dispatch(advance(state.booth));
+    }
+    if (state.user) {
+      const token = tokenSelector(getState());
+      dispatch(loginComplete({
+        jwt: token,
+        user: state.user
+      }));
+    }
+    if (state.activePlaylist) {
+      dispatch(activatePlaylistComplete(state.activePlaylist));
+      dispatch(selectPlaylist(state.activePlaylist));
+    }
+  };
+}
+
 export function initState() {
   return (dispatch, getState) => {
     const jwt = tokenSelector(getState());
     dispatch({ type: LOAD_ALL_PLAYLISTS_START });
     get(jwt, '/v1/now')
       .then(res => res.json())
-      .then(state => {
-        dispatch(setUsers(state.users || []));
-        dispatch(setPlaylists(state.playlists || []));
-        if (state.booth) {
-          // TODO don't set this when logging in _after_ entering the page?
-          dispatch(advance(state.booth));
-        }
-        if (state.user) {
-          const token = tokenSelector(getState());
-          dispatch(loginComplete({
-            jwt: token,
-            user: state.user
-          }));
-        }
-        if (state.activePlaylist) {
-          dispatch({
-            type: ACTIVATE_PLAYLIST_COMPLETE,
-            payload: { playlistID: state.activePlaylist }
-          });
-          dispatch(selectPlaylist(state.activePlaylist));
-        }
-      });
+      .then(state => dispatch(loadedState(state)));
 
     dispatch(loadHistory());
   };
@@ -69,10 +69,14 @@ export function setJWT(jwt) {
   };
 }
 
+function loginStart() {
+  return { type: LOGIN_START };
+}
+
 export function login({ email, password }) {
   return (dispatch, getState) => {
     const jwt = tokenSelector(getState());
-    dispatch({ type: LOGIN_START });
+    dispatch(loginStart());
     post(jwt, '/v1/auth/login', { email, password })
       .then(res => res.json())
       .then(res => {
@@ -116,6 +120,10 @@ export function register({ email, username, password }) {
   };
 }
 
+function logoutStart() {
+  return { type: LOGOUT_START };
+}
+
 function logoutComplete() {
   return dispatch => {
     dispatch({ type: LOGOUT_COMPLETE });
@@ -128,7 +136,7 @@ export function logout() {
     const jwt = tokenSelector(getState());
     const me = currentUserSelector(getState());
     if (me) {
-      dispatch({ type: LOGOUT_START });
+      dispatch(logoutStart());
       del(jwt, `/v1/auth/session/${me._id}`)
         .then(logoutComplete)
         .catch(logoutComplete)
