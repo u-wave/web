@@ -1,14 +1,17 @@
 @import "vars.css";
 
 @component Button {
-  background: #b20062;
-  height: $forms-textfield-size;
-  color: #fff;
-  border: 1px solid #9f0059;
-  border-top-color: #c1427b;
-  border-right-color: #c1427b;
   width: 100%;
+  height: $forms-textfield-size;
   cursor: pointer;
+
+  background: $highlight-color;
+  border: 1px solid color($highlight-color blend(black 10%));
+  border-bottom-color: color($highlight-color blend(white 5%));
+  border-right-color: color($highlight-color blend(white 5%));
+
+  color: #fff;
+  text-transform: uppercase;
   font-size: 12pt;
 
   @descendent loading {
