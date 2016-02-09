@@ -298,8 +298,11 @@ export function deletePlaylist(playlistID) {
 }
 
 export function askDeletePlaylist(playlistID) {
-  return dispatch => {
-    if (confirm('Sure?')) {
+  return (dispatch, getState) => {
+    const activeID = activePlaylistIDSelector(getState());
+    if (activeID === playlistID) {
+      dispatch(cannotDeleteActivePlaylist(playlistID));
+    } else if (confirm('Sure?')) {
       dispatch(deletePlaylist(playlistID));
     }
   };

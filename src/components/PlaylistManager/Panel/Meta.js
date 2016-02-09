@@ -34,11 +34,10 @@ const PlaylistMeta = ({
       </IconButton>
       <IconButton
         onClick={() => onDeletePlaylist(id)}
-        disabled={active}
         tooltip="Delete"
         tooltipPosition="top-center"
       >
-        <DeleteIcon color="#555" hoverColor="#fff" />
+        <DeleteIcon color="#555" hoverColor={active ? '#555' : '#fff'} />
       </IconButton>
     </div>
   );
