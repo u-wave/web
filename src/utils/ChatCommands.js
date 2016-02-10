@@ -26,9 +26,13 @@ export function execute(state, name, args = []) {
 }
 
 // TODO move default commands to some other file!
+import find from 'array-find';
 import { log } from '../actions/ChatActionCreators';
-import { skipCurrentDJ } from '../actions/ModerationActionCreators';
-import { currentUserSelector } from '../selectors/userSelectors';
+import {
+  skipCurrentDJ,
+  deleteChatMessagesByUser, deleteAllChatMessages
+} from '../actions/ModerationActionCreators';
+import { currentUserSelector, userListSelector } from '../selectors/userSelectors';
 
 register('help', 'List available commands.', {
   action: () => (dispatch, getState) => {
@@ -48,3 +52,24 @@ register('skip', 'Skip the current DJ.', {
   guard: state => currentUserSelector(state).role >= ROLE_MODERATOR,
   action: (...args) => skipCurrentDJ(args ? args.join(' ') : '[No reason given]')
 });
+
+register('clearchat',
+  'Delete all chat messages. ' +
+  'Pass a username ("/clearchat kool_panda") to only delete messages by that user.',
+  {
+    guard: state => currentUserSelector(state).role >= ROLE_MODERATOR,
+    action: (...args) => (dispatch, getState) => {
+      const username = args.join(' ').trim();
+      if (username) {
+        const users = userListSelector(getState());
+        const lname = username.toLowerCase();
+        const user = find(users, o => o.username.toLowerCase() === lname);
+        if (user) {
+          return dispatch(deleteChatMessagesByUser(user._id));
+        }
+        return dispatch(log(`User ${username} is not online right now.`));
+      }
+      return dispatch(deleteAllChatMessages());
+    }
+  }
+);
