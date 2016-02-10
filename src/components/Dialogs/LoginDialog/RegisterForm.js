@@ -50,6 +50,7 @@ export default class RegisterForm extends React.Component {
           <TextField
             ref="email"
             className="RegisterForm-field"
+            type="email"
             placeholder="E-Mail"
             icon={<EmailIcon color="#9f9d9e" />}
           />
