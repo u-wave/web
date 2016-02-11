@@ -27,6 +27,8 @@ export default class PlaylistManager extends Component {
 
     onCloseOverlay: PropTypes.func,
     onCreatePlaylist: PropTypes.func,
+    onRenamePlaylist: PropTypes.func,
+    onDeletePlaylist: PropTypes.func,
     onActivatePlaylist: PropTypes.func,
     onSelectPlaylist: PropTypes.func,
     onSelectSearchResults: PropTypes.func,
@@ -87,8 +89,10 @@ export default class PlaylistManager extends Component {
       searchLoadingState,
       onCloseOverlay,
       onCreatePlaylist,
+      onDeletePlaylist,
       onAddToPlaylist,
       onActivatePlaylist,
+      onRenamePlaylist,
       onSelectSearchResults,
       onSearchSubmit,
       onSearchSourceChange
@@ -103,6 +107,8 @@ export default class PlaylistManager extends Component {
           media={selectedMedia}
           loading={!!selectedPlaylist.loading}
           onActivatePlaylist={onActivatePlaylist}
+          onRenamePlaylist={onRenamePlaylist}
+          onDeletePlaylist={onDeletePlaylist}
           onOpenAddMediaMenu={this.props.onOpenAddMediaMenu}
           onMoveToFirst={this.handleMoveToFirst}
           onEditMedia={this.handleEditMedia}

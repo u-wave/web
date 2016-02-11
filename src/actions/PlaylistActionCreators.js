@@ -4,6 +4,8 @@ import {
   SELECT_PLAYLIST,
   ACTIVATE_PLAYLIST_START, ACTIVATE_PLAYLIST_COMPLETE,
   CREATE_PLAYLIST_START, CREATE_PLAYLIST_COMPLETE,
+  RENAME_PLAYLIST_START, RENAME_PLAYLIST_COMPLETE,
+  DELETE_PLAYLIST_START, DELETE_PLAYLIST_COMPLETE,
   OPEN_ADD_MEDIA_MENU, CLOSE_ADD_MEDIA_MENU,
   ADD_MEDIA_START, ADD_MEDIA_COMPLETE,
   REMOVE_MEDIA_START, REMOVE_MEDIA_COMPLETE,
@@ -12,7 +14,9 @@ import {
 } from '../constants/actionTypes/playlists';
 import { openEditMediaDialog } from './DialogActionCreators';
 import { del, get, post, put } from '../utils/Request';
-import { playlistsSelector } from '../selectors/playlistSelectors';
+import {
+  playlistsSelector, activePlaylistIDSelector, selectedPlaylistIDSelector
+} from '../selectors/playlistSelectors';
 import { tokenSelector } from '../selectors/userSelectors';
 
 export function setPlaylists(playlists) {
@@ -164,7 +168,7 @@ export function createPlaylistComplete(playlist, tempId) {
   };
 }
 
-function doCreatePlaylist(name) {
+export function createPlaylist(name) {
   return (dispatch, getState) => {
     const jwt = tokenSelector(getState());
 
@@ -187,11 +191,119 @@ function doCreatePlaylist(name) {
   };
 }
 
-export function createPlaylist() {
+export function askCreatePlaylist() {
   return dispatch => {
     const name = prompt('Playlist name?');
     if (name) {
-      dispatch(doCreatePlaylist(name));
+      dispatch(createPlaylist(name));
+    }
+  };
+}
+
+export function renamePlaylist(playlistID, name) {
+  return (dispatch, getState) => {
+    const jwt = tokenSelector(getState());
+    dispatch({
+      type: RENAME_PLAYLIST_START,
+      payload: { playlistID, name }
+    });
+    put(jwt, `/v1/playlists/${playlistID}/rename`, { name })
+      .then(res => res.json())
+      .then(playlist => dispatch({
+        type: RENAME_PLAYLIST_COMPLETE,
+        payload: { playlistID, name: playlist.name }
+      }))
+      .catch(error => dispatch({
+        type: RENAME_PLAYLIST_COMPLETE,
+        error: true,
+        payload: error,
+        meta: { playlistID, name }
+      }));
+  };
+}
+
+export function askRenamePlaylist(playlistID) {
+  return dispatch => {
+    const name = prompt('Name?');
+    if (name) {
+      dispatch(renamePlaylist(playlistID, name));
+    }
+  };
+}
+
+/**
+ * Select or activate a different playlist than the one given.
+ * @return Promise
+ */
+
+export function deselectPlaylist(playlistID) {
+  return (dispatch, getState) => {
+    const selectedID = selectedPlaylistIDSelector(getState());
+    const activeID = activePlaylistIDSelector(getState());
+    if (playlistID === selectedID) {
+      dispatch(selectPlaylist(activeID));
+    }
+  };
+}
+
+export function deletePlaylistStart(playlistID) {
+  return {
+    type: DELETE_PLAYLIST_START,
+    payload: { playlistID }
+  };
+}
+
+export function deletePlaylistComplete(playlistID) {
+  return {
+    type: DELETE_PLAYLIST_COMPLETE,
+    payload: { playlistID }
+  };
+}
+
+export function cannotDeleteActivePlaylist(playlistID) {
+  return {
+    type: DELETE_PLAYLIST_COMPLETE,
+    error: true,
+    payload: new Error(
+      'The active playlist cannot be deleted. ' +
+      'Activate a different playlist first, before deleting this one.'
+    ),
+    meta: { playlistID }
+  };
+}
+
+export function deletePlaylist(playlistID) {
+  return (dispatch, getState) => {
+    const jwt = tokenSelector(getState());
+    const activeID = activePlaylistIDSelector(getState());
+
+    if (playlistID === activeID) {
+      dispatch(cannotDeleteActivePlaylist(playlistID));
+      return;
+    }
+
+    dispatch(deselectPlaylist(playlistID));
+    dispatch(deletePlaylistStart(playlistID));
+
+    del(jwt, `/v1/playlists/${playlistID}`)
+      .then(res => res.json())
+      .then(() => dispatch(deletePlaylistComplete(playlistID)))
+      .catch(error => dispatch({
+        type: DELETE_PLAYLIST_COMPLETE,
+        error: true,
+        payload: error,
+        meta: { playlistID }
+      }));
+  };
+}
+
+export function askDeletePlaylist(playlistID) {
+  return (dispatch, getState) => {
+    const activeID = activePlaylistIDSelector(getState());
+    if (activeID === playlistID) {
+      dispatch(cannotDeleteActivePlaylist(playlistID));
+    } else if (confirm('Sure?')) {
+      dispatch(deletePlaylist(playlistID));
     }
   };
 }
