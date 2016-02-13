@@ -9,10 +9,11 @@ import { roomHistoryWithVotesSelector } from '../selectors/roomHistorySelectors'
 import RoomHistory from '../components/RoomHistory';
 
 const selectionOrOne = (media, selection) => {
+  // History entries store the played media on their `.media` property
   if (selection.isSelected(media)) {
-    return selection.get();
+    return selection.get().map(item => item.media);
   }
-  return [ media ];
+  return [ media.media ];
 };
 
 const mapStateToProps = createStructuredSelector({
