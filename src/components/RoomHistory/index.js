@@ -3,10 +3,8 @@ import React from 'react';
 
 import Overlay from '../Overlay';
 import OverlayHeader from '../Overlay/Header';
-import MediaList from '../MediaList';
-import AddToPlaylistAction from '../MediaList/Actions/AddToPlaylist';
 
-import HistoryRow from './Row';
+import HistoryList from './HistoryList';
 
 const RoomHistory = ({ className, onCloseOverlay, onOpenAddMediaMenu, ...props }) => {
   return (
@@ -21,16 +19,9 @@ const RoomHistory = ({ className, onCloseOverlay, onOpenAddMediaMenu, ...props }
         onCloseOverlay={onCloseOverlay}
       />
       <div className="RoomHistory-body AppRow AppRow--middle">
-        <MediaList
+        <HistoryList
+          onOpenAddMediaMenu={onOpenAddMediaMenu}
           {...props}
-          className="RoomHistory-list"
-          rowComponent={HistoryRow}
-          makeActions={(media, selection) => [
-            <AddToPlaylistAction
-              key="add"
-              onAdd={position => onOpenAddMediaMenu(position, media, selection)}
-            />
-          ]}
         />
       </div>
     </Overlay>
