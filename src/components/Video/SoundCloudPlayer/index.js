@@ -61,13 +61,20 @@ export default class SoundCloudPlayer extends React.Component {
   play() {
     this.setState({ track: null });
     if (this.props.enabled) {
+      // In Firefox we have to wait for the "canplaythrough" event before
+      // seeking.
+      // http://stackoverflow.com/a/34970444
+      const doSeek = () => {
+        sc.audio.currentTime = this.props.seek + (this.props.media.start || 0);
+        sc.audio.volume = this.props.volume / 100;
+        sc.audio.removeEventListener('canplaythrough', doSeek, false);
+      };
+
       getTrack(this.props.media, track => {
         this.setState({ track: track });
-        const seek = this.props.seek + (this.props.media.start || 0);
-        debug('currentTime', seek);
-        sc.audio.currentTime = seek;
-        sc.audio.volume = this.props.volume / 100;
+        debug('currentTime', this.props.seek);
         sc.play();
+        sc.audio.addEventListener('canplaythrough', doSeek, false);
       });
     } else {
       this.stop();
