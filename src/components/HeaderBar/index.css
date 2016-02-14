@@ -4,7 +4,7 @@
   position: relative;
   height: 100%;
   width: 100%;
-  z-index: 2; /* below overlays, above video */
+  z-index: 4; /* below overlays, above video */
 
   @descendent title {
     position: absolute;
@@ -60,5 +60,8 @@
     bottom: 1px;
     height: 2px;
     width: 100%;
+    /* show above the history button background fill colour,
+     * but below the history icon and tooltip */
+    z-index: 6;
   }
 }
