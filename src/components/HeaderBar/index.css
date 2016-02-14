@@ -60,5 +60,8 @@
     bottom: 1px;
     height: 2px;
     width: 100%;
+    /* show above the history button background fill colour,
+     * but below the history icon and tooltip */
+    z-index: 6;
   }
 }
