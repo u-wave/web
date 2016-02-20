@@ -1,5 +1,4 @@
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
-import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 
 import { TICK } from '../constants/actionTypes/time';
@@ -22,13 +21,13 @@ export default function createUwaveStore() {
     // Redux-Logger logs state changes to the console, including the
     // Before-state, the Action object, and the After-state. Invaluable for
     // debugging :)
-    logger({
+    process.env.NODE_ENV !== 'production' && require('redux-logger')({
       // üWave has a Time store that changes every second with the TICK action,
       // but we don't need to see that happening all the time. This hides the
       // TICK actions from the logs.
       predicate: (getState, action) => action.type !== TICK
     })
-  ];
+  ].filter(Boolean);
 
   // Creating a function to create a store! What a time to be alive :)
   const createStoreWithMiddleware = compose(
