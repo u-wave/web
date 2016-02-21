@@ -21,6 +21,11 @@ export default function serveTask({ port = conf.server.port }) {
     'Could not find the u-wave API module. Did you run `npm install u-wave-api-v1`?'
   );
 
+  process.on('unhandledRejection', reason => {
+    console.error('Unhandled rejection:');
+    throw reason;
+  });
+
   const server = new UWaveServer(conf);
   const v1 = new UWaveAPI(conf);
 
