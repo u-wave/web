@@ -38,6 +38,7 @@ export default class YouTubePlayerEmbed extends React.Component {
     const { media, seek } = this.props;
 
     const opts = {
+      videoId: media.sourceID,
       width: '100%',
       height: '100%',
       playerVars: {
