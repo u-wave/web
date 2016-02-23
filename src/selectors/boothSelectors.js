@@ -1,6 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { currentTimeSelector } from './timeSelectors';
-import { usersSelector } from './userSelectors';
+import { currentUserSelector, usersSelector } from './userSelectors';
 
 const baseSelector = state => state.booth;
 
@@ -36,6 +36,12 @@ export const djSelector = createSelector(
   baseSelector,
   usersSelector,
   (booth, users) => users[booth.djID]
+);
+
+export const isCurrentDJSelector = createSelector(
+  djSelector,
+  currentUserSelector,
+  (dj, me) => dj && me && dj._id === me._id
 );
 
 export const videoSelector = createStructuredSelector({
