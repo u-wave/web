@@ -13,6 +13,7 @@ import {
 } from './PlaylistActionCreators';
 import { closeLoginDialog } from './DialogActionCreators';
 import { setUsers } from './UserActionCreators';
+import { setWaitList } from './WaitlistActionCreators';
 import { currentUserSelector, tokenSelector } from '../selectors/userSelectors';
 
 const debug = require('debug')('uwave:actions:login');
@@ -32,6 +33,10 @@ export function loadedState(state) {
   return (dispatch, getState) => {
     dispatch(setUsers(state.users || []));
     dispatch(setPlaylists(state.playlists || []));
+    dispatch(setWaitList({
+      waitlist: state.waitlist,
+      locked: state.waitlistLocked
+    }));
     if (state.booth) {
       // TODO don't set this when logging in _after_ entering the page?
       dispatch(advance(state.booth));
