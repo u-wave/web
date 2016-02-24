@@ -5,4 +5,5 @@
   height: 100%;
   overflow: hidden;
   background: black;
+  pointer-events: none;
 }
