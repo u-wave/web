@@ -71,7 +71,7 @@ export default class SoundCloudPlayer extends React.Component {
       };
 
       getTrack(this.props.media, track => {
-        this.setState({ track: track });
+        this.setState({ track });
         debug('currentTime', this.props.seek);
         sc.play();
         sc.audio.addEventListener('canplaythrough', doSeek, false);

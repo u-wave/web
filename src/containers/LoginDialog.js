@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { login, register } from '../actions/LoginActionCreators';
-import { closeLoginDialog} from '../actions/DialogActionCreators';
+import { closeLoginDialog } from '../actions/DialogActionCreators';
 
 import { loginDialogSelector } from '../selectors/dialogSelectors';
 import LoginDialog from '../components/Dialogs/LoginDialog';

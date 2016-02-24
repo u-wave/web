@@ -46,7 +46,7 @@ export default class MediaList extends Component {
       selection = selection.select(index);
     }
 
-    this.setState({ selection: selection });
+    this.setState({ selection });
   }
 
   renderRow(index, key) {

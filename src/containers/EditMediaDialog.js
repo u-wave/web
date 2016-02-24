@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { updateMedia } from '../actions/PlaylistActionCreators';
-import { closeEditMediaDialog} from '../actions/DialogActionCreators';
+import { closeEditMediaDialog } from '../actions/DialogActionCreators';
 
 import { editMediaDialogSelector } from '../selectors/dialogSelectors';
 import EditMediaDialog from '../components/Dialogs/EditMediaDialog';

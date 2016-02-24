@@ -7,8 +7,10 @@ import MediaList from '../../MediaList';
 import AddToPlaylistAction from '../../MediaList/Actions/AddToPlaylist';
 
 const SearchResults = ({ className, query, results, loadingState, onOpenAddMediaMenu }) => {
-  const list = loadingState === LOADED
-    ? <MediaList
+  let list;
+  if (loadingState === LOADED) {
+    list = (
+      <MediaList
         className="PlaylistPanel-media"
         media={results}
         makeActions={(media, selection) => [
@@ -18,7 +20,14 @@ const SearchResults = ({ className, query, results, loadingState, onOpenAddMedia
           />
         ]}
       />
-    : <div className="PlaylistPanel-loading"> <Loader size="large" /> </div>;
+    );
+  } else {
+    list = (
+      <div className="PlaylistPanel-loading">
+        <Loader size="large" />
+      </div>
+    );
+  }
 
   return (
     <div className={cx('PlaylistPanel', 'SearchResults', className)}>

@@ -45,6 +45,6 @@ describe('reducers/playlists', () => {
   });
 
   describe('action: playlists/LOAD_PLAYLIST', () => {
-    let state = playlists(undefined, { type: '@@redux/INIT' });
+    // Nothing yet
   });
 });

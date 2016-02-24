@@ -1,7 +1,5 @@
 import { expect } from 'chai';
-import {
-  OPEN_ADD_MEDIA_MENU, CLOSE_ADD_MEDIA_MENU
-} from '../../src/constants/actionTypes/playlists';
+import { OPEN_ADD_MEDIA_MENU } from '../../src/constants/actionTypes/playlists';
 import { closeAddMediaMenu } from '../../src/actions/PlaylistActionCreators';
 import addToPlaylistMenu from '../../src/reducers/addToPlaylistMenu';
 

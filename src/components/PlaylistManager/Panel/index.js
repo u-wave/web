@@ -37,17 +37,24 @@ const PlaylistPanel = ({
   onActivatePlaylist, onRenamePlaylist, onDeletePlaylist, onLoadPlaylistPage,
   ...props
 }) => {
-  const list = loading
-    ? <div className="PlaylistPanel-loading">
+  let list;
+  if (loading) {
+    list = (
+      <div className="PlaylistPanel-loading">
         <Loader size="large" />
       </div>
-    : <MediaList
+    );
+  } else {
+    list = (
+      <MediaList
         className="PlaylistPanel-media"
         size={playlist.size}
         media={media}
         makeActions={makeActions(props)}
         onRequestPage={onLoadPlaylistPage}
-      />;
+      />
+    );
+  }
 
   return (
     <div className={cx('PlaylistPanel', className)}>

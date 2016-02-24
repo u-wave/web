@@ -28,11 +28,11 @@ export default class TextField extends React.Component {
     return (
       <div className={cx('TextField', className)}>
         <input
-           ref="input"
-           className="TextField-input"
-           type={type}
-           {...props}
-         />
+          ref="input"
+          className="TextField-input"
+          type={type}
+          {...props}
+        />
         <div className="TextField-icon">{icon}</div>
       </div>
     );
