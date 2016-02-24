@@ -61,6 +61,9 @@ export default class AddToPlaylistMenu extends Component {
           autoWidth={false}
           onItemTouchTap={::this.onSelect}
         >
+		<MenuItem
+            primaryText="New Playlist"
+        />
           {playlists.map(playlist => (
             <MenuItem
               key={playlist._id}
