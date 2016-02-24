@@ -3,11 +3,11 @@
   "parser": "babel-eslint",
 
   "rules": {
+    "array-bracket-spacing": [ 2, "always" ],
     "comma-dangle": [ 2, "never" ],
+    "indent": [ 2, 2, { "SwitchCase": 0 } ],
     "new-cap": [ 2, {
       "capIsNewExceptions": [ "DragDropContext", "DragSource", "DropTarget", "DragLayer", "ThemeDecorator" ]
-    } ],
-    "react/jsx-quotes": 0,
-    "jsx-quotes": [ 2, "prefer-double" ]
+    } ]
   }
 }
