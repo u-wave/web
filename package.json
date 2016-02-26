@@ -71,7 +71,7 @@
     "cssnano": "^3.3.1",
     "del": "^2.0.2",
     "envify": "^3.4.0",
-    "eslint-config-airbnb": "0.0.8",
+    "eslint-config-airbnb": "^2.1.1",
     "eslint-plugin-react": "^3.3.2",
     "express": "^4.13.3",
     "gulp": "^3.9.0",

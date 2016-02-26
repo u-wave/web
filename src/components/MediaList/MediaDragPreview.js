@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import ListIcon from 'material-ui/lib/svg-icons/action/list';
 
 const transformStyle = transform => ({
-  transform: transform,
+  transform,
   WebkitTransform: transform
 });
 

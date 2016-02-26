@@ -7,9 +7,7 @@ import { tokenSelector } from '../selectors/userSelectors';
 export function setSource(source) {
   return {
     type: SET_SEARCH_SOURCE,
-    payload: {
-      source: source
-    }
+    payload: { source }
   };
 }
 

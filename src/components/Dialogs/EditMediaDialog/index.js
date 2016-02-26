@@ -53,7 +53,7 @@ export default class EditMediaDialog extends Component {
     }
 
     if (errors.length > 0) {
-      return this.setState({ errors: errors });
+      return this.setState({ errors });
     }
 
     onEditedMedia({

@@ -4,7 +4,7 @@ import {
   LOGOUT_START, LOGOUT_COMPLETE
 } from '../constants/actionTypes/auth';
 import { LOAD_ALL_PLAYLISTS_START } from '../constants/actionTypes/playlists';
-import { get, post } from '../utils/Request';
+import { del, get, post } from '../utils/Request';
 import * as Session from '../utils/Session';
 import * as Socket from '../utils/Socket';
 import { advance, loadHistory } from './BoothActionCreators';

@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { advanceToEmpty, loadHistoryComplete } from '../../src/actions/BoothActionCreators';
-import { ADVANCE, LOAD_HISTORY_COMPLETE } from '../../src/constants/actionTypes/booth';
+import { ADVANCE } from '../../src/constants/actionTypes/booth';
 import roomHistory from '../../src/reducers/roomHistory';
 
 const initialState = () => roomHistory(undefined, { type: '@@redux/INIT' });

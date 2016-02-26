@@ -48,12 +48,14 @@ export default class AddToPlaylistMenu extends Component {
     const { playlists, position } = this.props;
     const fixedPosition = positionInsideWindow(position, playlists.length * 48);
     return (
-      <div style={{
-        position: 'absolute',
-        left: fixedPosition.x,
-        top: fixedPosition.y,
-        width: MENU_WIDTH + RANDOM_MUI_PADDING + SCROLLBAR_WIDTH
-      }}>
+      <div
+        style={{
+          position: 'absolute',
+          left: fixedPosition.x,
+          top: fixedPosition.y,
+          width: MENU_WIDTH + RANDOM_MUI_PADDING + SCROLLBAR_WIDTH
+        }}
+      >
         <Menu
           style={{ textAlign: 'left', zIndex: 30 }}
           maxHeight={MENU_HEIGHT}
@@ -61,9 +63,9 @@ export default class AddToPlaylistMenu extends Component {
           autoWidth={false}
           onItemTouchTap={::this.onSelect}
         >
-		<MenuItem
+          <MenuItem
             primaryText="New Playlist"
-        />
+          />
           {playlists.map(playlist => (
             <MenuItem
               key={playlist._id}

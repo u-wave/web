@@ -39,7 +39,7 @@ describe('reducers/chat', () => {
         }
       });
       expect(state).to.eql({
-        messages: [{
+        messages: [ {
           _id: testMessage._id,
           type: 'chat',
           userID: testMessage.userID,
@@ -48,7 +48,7 @@ describe('reducers/chat', () => {
           timestamp: testMessage.timestamp,
           isMention: false,
           inFlight: false
-        }]
+        } ]
       });
     });
 

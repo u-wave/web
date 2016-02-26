@@ -49,7 +49,7 @@ export function inputMessage(text) {
 let mentionSound;
 function playMentionSound() {
   if (!mentionSound) {
-    mentionSound = audio(['assets/audio/mention.opus', 'assets/audio/mention.mp3']);
+    mentionSound = audio([ 'assets/audio/mention.opus', 'assets/audio/mention.mp3' ]);
   }
   mentionSound.play();
 }
