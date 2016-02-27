@@ -11,6 +11,8 @@ import {
   DO_UPVOTE, DO_DOWNVOTE
 } from '../constants/actionTypes/votes';
 
+import { addMediaStart, addMediaComplete, flattenPlaylistItem } from './PlaylistActionCreators';
+
 export function favorited({ userID, historyID }) {
   return {
     type: FAVORITE,
@@ -52,21 +54,36 @@ export function openFavoriteMenu(position) {
   };
 }
 
+export function favoriteMediaStart(playlistID, historyID) {
+  return {
+    type: DO_FAVORITE_START,
+    payload: { historyID, playlistID }
+  };
+}
+
+export function favoriteMediaComplete(playlistID, historyID, changes) {
+  return {
+    type: DO_FAVORITE_COMPLETE,
+    payload: changes,
+    meta: { historyID, playlistID }
+  };
+}
+
 export function favoriteMedia(playlist, historyID) {
   const playlistID = playlist._id;
   return (dispatch, getState) => {
     const jwt = tokenSelector(getState());
-    dispatch({
-      type: DO_FAVORITE_START,
-      payload: { historyID, playlistID }
-    });
+    dispatch(favoriteMediaStart(playlistID, historyID));
+    dispatch(addMediaStart(playlistID, []));
     post(jwt, `/v1/booth/favorite`, { historyID, playlistID })
       .then(res => res.json())
-      .then(res => dispatch({
-        type: DO_FAVORITE_COMPLETE,
-        payload: res,
-        meta: { historyID, playlistID }
-      }))
+      .then(changes => {
+        dispatch(favoriteMediaComplete(playlistID, historyID, changes));
+        dispatch(addMediaComplete(playlistID, changes.playlistSize, {
+          afterID: null,
+          media: changes.added.map(flattenPlaylistItem)
+        }));
+      })
       .catch(error => dispatch({
         type: DO_FAVORITE_COMPLETE,
         error: true,
