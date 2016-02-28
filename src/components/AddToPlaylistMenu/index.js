@@ -46,7 +46,7 @@ export default class AddToPlaylistMenu extends Component {
 
   renderLayer() {
     const { playlists, position } = this.props;
-    const fixedPosition = positionInsideWindow(position, playlists.length * 48);
+    const fixedPosition = positionInsideWindow(position, (playlists.length + 1) * 48);
     return (
       <div
         style={{
