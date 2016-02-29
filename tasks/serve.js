@@ -31,7 +31,6 @@ export default function serveTask({ port = conf.server.port }) {
 
   server.on('stopped', () => process.exit(0));
   server.on('started', uwave => {
-    v1.registerModels(uwave);
     v1.registerWSServer(uwave);
   });
 
