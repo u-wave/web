@@ -32,7 +32,9 @@ import {
   skipCurrentDJ,
   deleteChatMessagesByUser, deleteAllChatMessages
 } from '../actions/ModerationActionCreators';
-import { joinWaitlist } from '../actions/WaitlistActionCreators';
+import {
+  joinWaitlist, modClearWaitlist
+} from '../actions/WaitlistActionCreators';
 import { currentUserSelector, userListSelector } from '../selectors/userSelectors';
 
 const ROLE_MODERATOR = 3;
@@ -96,4 +98,10 @@ register(
       return dispatch(log(`User ${username} is not online right now.`));
     }
   }
+);
+
+register(
+  'wlclear',
+  'Remove everyone from the waitlist.',
+  { guard: isModerator, action: modClearWaitlist }
 );
