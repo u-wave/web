@@ -1,6 +1,8 @@
 import cx from 'classnames';
 import React from 'react';
 
+const dontBubble = event => event.stopPropagation();
+
 export default class Actions extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
@@ -13,7 +15,10 @@ export default class Actions extends React.Component {
     const { className, makeActions, media } = this.props;
     const actions = makeActions(media);
     return (
-      <div className={cx('MediaActions', className)}>
+      <div
+        className={cx('MediaActions', className)}
+        onClick={dontBubble}
+      >
         {actions}
       </div>
     );
