@@ -32,7 +32,11 @@ import {
   skipCurrentDJ,
   deleteChatMessagesByUser, deleteAllChatMessages
 } from '../actions/ModerationActionCreators';
+import { joinWaitlist } from '../actions/WaitlistActionCreators';
 import { currentUserSelector, userListSelector } from '../selectors/userSelectors';
+
+const ROLE_MODERATOR = 3;
+const isModerator = state => currentUserSelector(state).role >= ROLE_MODERATOR;
 
 register('help', 'List available commands.', {
   action: () => (dispatch, getState) => {
@@ -47,9 +51,8 @@ register('help', 'List available commands.', {
   }
 });
 
-const ROLE_MODERATOR = 3;
 register('skip', 'Skip the current DJ.', {
-  guard: state => currentUserSelector(state).role >= ROLE_MODERATOR,
+  guard: isModerator,
   action: (...args) => skipCurrentDJ(args ? args.join(' ') : '[No reason given]')
 });
 
@@ -57,7 +60,7 @@ register('clearchat',
   'Delete all chat messages. ' +
   'Pass a username ("/clearchat kool_panda") to only delete messages by that user.',
   {
-    guard: state => currentUserSelector(state).role >= ROLE_MODERATOR,
+    guard: isModerator,
     action: (...args) => (dispatch, getState) => {
       const username = args.join(' ').trim();
       if (username) {
@@ -70,6 +73,27 @@ register('clearchat',
         return dispatch(log(`User ${username} is not online right now.`));
       }
       return dispatch(deleteAllChatMessages());
+    }
+  }
+);
+
+register(
+  'wladd',
+  'Add a user to the waitlist. Syntax: "/wladd username"',
+  {
+    guard: isModerator,
+    action: username => (dispatch, getState) => {
+      if (!username) {
+        return dispatch(log('Provide a user to add to the waitlist. Syntax: "/wladd username"'));
+      }
+
+      const users = userListSelector(getState());
+      const lname = username.toLowerCase();
+      const user = find(users, o => o.username.toLowerCase() === lname);
+      if (user) {
+        return dispatch(joinWaitlist(user));
+      }
+      return dispatch(log(`User ${username} is not online right now.`));
     }
   }
 );
