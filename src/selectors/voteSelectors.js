@@ -1,4 +1,4 @@
-import { createSelector } from 'reselect';
+import { createSelector, createStructuredSelector } from 'reselect';
 import { currentUserSelector } from './userSelectors';
 
 const baseSelector = state => state.votes;
@@ -17,6 +17,12 @@ const createCountSelector = type => createSelector(
 export const favoritesSelector = createPropSelector(baseSelector, 'favorites');
 export const upvotesSelector = createPropSelector(baseSelector, 'upvotes');
 export const downvotesSelector = createPropSelector(baseSelector, 'downvotes');
+
+export const currentVotesSelector = createStructuredSelector({
+  favorites: favoritesSelector,
+  upvotes: upvotesSelector,
+  downvotes: downvotesSelector
+});
 
 export const isFavoriteSelector = createIsSelector(favoritesSelector);
 export const isUpvoteSelector = createIsSelector(upvotesSelector);

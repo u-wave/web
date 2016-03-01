@@ -18,18 +18,15 @@ const normalize = entry => ({
 });
 
 export default function reduce(state = initialState, action = {}) {
-  const { type, payload } = action;
+  const { type, payload, meta } = action;
   switch (type) {
   case LOAD_HISTORY_COMPLETE:
     return payload.map(normalize);
   case ADVANCE:
-    if (payload === null || state.some(entry => entry._id === payload.historyID)) {
+    if (!meta || !meta.previous) {
       return state;
     }
-    return [
-      normalize(payload),
-      ...state
-    ];
+    return [ normalize(meta.previous), ...state ];
   default:
     return state;
   }

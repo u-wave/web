@@ -5,12 +5,16 @@ import {
 import { flattenPlaylistItem } from './PlaylistActionCreators';
 import { get } from '../utils/Request';
 
+import { currentPlaySelector } from '../selectors/roomHistorySelectors';
 import { usersSelector } from '../selectors/userSelectors';
 
 export function advanceToEmpty() {
-  return {
-    type: ADVANCE,
-    payload: null
+  return (dispatch, getState) => {
+    dispatch({
+      type: ADVANCE,
+      payload: null,
+      meta: { previous: currentPlaySelector(getState()) }
+    });
   };
 }
 
@@ -30,6 +34,9 @@ export function advance(nextBooth) {
         userID, historyID, playlistID, user,
         media: flattenPlaylistItem(media),
         timestamp: played
+      },
+      meta: {
+        previous: currentPlaySelector(getState())
       }
     });
   };
