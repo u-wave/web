@@ -40,6 +40,7 @@
     "router": "^1.1.4",
     "serve-static": "^1.10.2",
     "soundcloud-audio": "^0.1.6",
+    "splitargs": "0.0.5",
     "truncate-url": "^0.1.2",
     "whatwg-fetch": "^0.11.0"
   },

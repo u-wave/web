@@ -1,5 +1,6 @@
 import escapeRegExp from 'escape-string-regexp';
 import values from 'object-values';
+import splitargs from 'splitargs';
 
 import {
   SEND_MESSAGE, RECEIVE_MESSAGE, LOG,
@@ -34,9 +35,9 @@ export function sendChat(user, text) {
 export function inputMessage(text) {
   return (dispatch, getState) => {
     if (text[0] === '/') {
-      const [ command, ...params ] = text.split(' ');
+      const [ command, ...params ] = splitargs(text.slice(1));
       if (command) {
-        const result = execute(getState(), command.slice(1), params);
+        const result = execute(getState(), command, params);
         if (result) {
           dispatch(result);
         }
