@@ -33,7 +33,8 @@ import {
   deleteChatMessagesByUser, deleteAllChatMessages
 } from '../actions/ModerationActionCreators';
 import {
-  joinWaitlist, modClearWaitlist
+  joinWaitlist,
+  modClearWaitlist, modLockWaitlist, modUnlockWaitlist
 } from '../actions/WaitlistActionCreators';
 import { currentUserSelector, userListSelector } from '../selectors/userSelectors';
 
@@ -104,4 +105,16 @@ register(
   'wlclear',
   'Remove everyone from the waitlist.',
   { guard: isModerator, action: modClearWaitlist }
+);
+
+register(
+  'wllock',
+  'Lock the waitlist.',
+  { guard: isModerator, action: modLockWaitlist }
+);
+
+register(
+  'wlunlock',
+  'Unlock the waitlist.',
+  { guard: isModerator, action: modUnlockWaitlist }
 );
