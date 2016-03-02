@@ -33,10 +33,11 @@ import {
   deleteChatMessagesByUser, deleteAllChatMessages
 } from '../actions/ModerationActionCreators';
 import {
-  joinWaitlist,
+  joinWaitlist, leaveWaitlist,
   modClearWaitlist, modLockWaitlist, modUnlockWaitlist
 } from '../actions/WaitlistActionCreators';
 import { currentUserSelector, userListSelector } from '../selectors/userSelectors';
+import { waitlistUsersSelector } from '../selectors/waitlistSelectors';
 
 const ROLE_MODERATOR = 3;
 const isModerator = state => currentUserSelector(state).role >= ROLE_MODERATOR;
@@ -97,6 +98,27 @@ register(
         return dispatch(joinWaitlist(user));
       }
       return dispatch(log(`User ${username} is not online right now.`));
+    }
+  }
+);
+
+register(
+  'wlremove',
+  'Remove a user from the waitlist. Syntax: "/wlremove username"',
+  {
+    guard: isModerator,
+    action: username => (dispatch, getState) => {
+      if (!username) {
+        return dispatch(log('Provide a user to remove from the waitlist. Syntax: "/wlremove username"'));
+      }
+
+      const users = waitlistUsersSelector(getState());
+      const lname = username.toLowerCase();
+      const user = find(users, o => o.username.toLowerCase() === lname);
+      if (user) {
+        return dispatch(leaveWaitlist(user));
+      }
+      return dispatch(log(`User ${username} is not in the waitlist.`));
     }
   }
 );
