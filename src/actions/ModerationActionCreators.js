@@ -1,9 +1,10 @@
-import { del, post } from '../utils/Request';
+import { del, post, put } from '../utils/Request';
 import { djSelector } from '../selectors/boothSelectors';
 import { tokenSelector } from '../selectors/userSelectors';
 
 import {
-  SKIP_DJ_START, SKIP_DJ_COMPLETE
+  SKIP_DJ_START, SKIP_DJ_COMPLETE,
+  MOVE_USER_START, MOVE_USER_COMPLETE
 } from '../constants/actionTypes/moderation';
 
 import {
@@ -33,6 +34,36 @@ export function skipCurrentDJ(reason = '') {
         error: true,
         payload: error,
         meta: payload
+      }));
+  };
+}
+
+export function moveWaitlistUserStart(user, position) {
+  return {
+    type: MOVE_USER_START,
+    payload: { user, position }
+  };
+}
+
+export function moveWaitlistUserComplete(user, position) {
+  return {
+    type: MOVE_USER_COMPLETE,
+    payload: { user, position }
+  };
+}
+
+export function moveWaitlistUser(user, position) {
+  return (dispatch, getState) => {
+    const jwt = tokenSelector(getState());
+    dispatch(moveWaitlistUserStart(user, position));
+    put(jwt, `/v1/waitlist/move`, { userID: user._id, position })
+      .then(res => res.json())
+      .then(() => dispatch(moveWaitlistUserComplete(user, position)))
+      .catch(error => dispatch({
+        type: MOVE_USER_COMPLETE,
+        error: true,
+        payload: error,
+        meta: { user, position }
       }));
   };
 }

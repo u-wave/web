@@ -30,6 +30,7 @@ import find from 'array-find';
 import { log } from '../actions/ChatActionCreators';
 import {
   skipCurrentDJ,
+  moveWaitlistUser,
   deleteChatMessagesByUser, deleteAllChatMessages
 } from '../actions/ModerationActionCreators';
 import {
@@ -139,4 +140,30 @@ register(
   'wlunlock',
   'Unlock the waitlist.',
   { guard: isModerator, action: modUnlockWaitlist }
+);
+
+register(
+  'wlmove',
+  'Move a user to a different position in the waitlist. ' +
+  'Syntax: "/wlmove username position"',
+  {
+    guard: isModerator,
+    action: (username, posStr) => (dispatch, getState) => {
+      if (!username) {
+        return dispatch(log('Provide a user to move in the waitlist. Syntax: "/wlmove username position"'));
+      }
+      const position = parseInt(posStr, 10) - 1;
+      if (!isFinite(position) || position < 0) {
+        return dispatch(log(`Provide a position to move @${username} to. Syntax: "/wlmove username position"`));
+      }
+
+      const users = waitlistUsersSelector(getState());
+      const lname = username.toLowerCase();
+      const user = find(users, o => o.username.toLowerCase() === lname);
+      if (user) {
+        return dispatch(moveWaitlistUser(user, position));
+      }
+      return dispatch(log(`User ${username} is not in the waitlist.`));
+    }
+  }
 );
