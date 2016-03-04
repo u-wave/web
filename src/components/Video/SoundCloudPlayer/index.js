@@ -21,6 +21,7 @@ function getTrack(media, cb) {
 export default class SoundCloudPlayer extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
+    active: React.PropTypes.bool.isRequired,
     enabled: React.PropTypes.bool,
     media: React.PropTypes.object,
     seek: React.PropTypes.number,
@@ -45,8 +46,9 @@ export default class SoundCloudPlayer extends React.Component {
       sc.audio.volume = this.props.volume / 100;
     }
     if (prevProps.media.sourceID !== this.props.media.sourceID ||
-        prevProps.enabled !== this.props.enabled) {
-      if (this.props.enabled) {
+        prevProps.enabled !== this.props.enabled ||
+        prevProps.active !== this.props.active) {
+      if (this.props.enabled && this.props.active) {
         this.play();
       } else {
         this.stop();
@@ -60,7 +62,7 @@ export default class SoundCloudPlayer extends React.Component {
 
   play() {
     this.setState({ track: null });
-    if (this.props.enabled) {
+    if (this.props.enabled && this.props.active) {
       // In Firefox we have to wait for the "canplaythrough" event before
       // seeking.
       // http://stackoverflow.com/a/34970444
@@ -86,7 +88,11 @@ export default class SoundCloudPlayer extends React.Component {
   }
 
   render() {
+    const { active } = this.props;
     const { track } = this.state;
+    if (!active) {
+      return null;
+    }
     if (!track) {
       return <div className={cx('SoundCloudPlayer', this.props.className)} />;
     }

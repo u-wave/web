@@ -4,6 +4,11 @@ import React, { Component, PropTypes } from 'react';
 import SoundCloudPlayer from './SoundCloudPlayer';
 import YouTubePlayer from './YouTubePlayer';
 
+const sources = [
+  [ 'youtube', YouTubePlayer ],
+  [ 'soundcloud', SoundCloudPlayer ]
+];
+
 export default class Video extends Component {
   static propTypes = {
     enabled: PropTypes.bool,
@@ -30,27 +35,22 @@ export default class Video extends Component {
       return <div className="Video" />;
     }
 
-    let video = '';
     const seek = Math.round((Date.now() - startTime) / 1000);
     const props = {
       enabled,
       media, seek, size,
       volume: isMuted ? 0 : volume
     };
-    switch (media.sourceType) {
-    case 'soundcloud':
-      video = <SoundCloudPlayer {...props} />;
-      break;
-    case 'youtube':
-      video = <YouTubePlayer {...props} />;
-      break;
-    default:
-      // empty
-    }
 
     return (
       <div className={cx('Video', `Video--${media.sourceType}`, `Video--${size}`)}>
-        {video}
+        {sources.map(([ type, Player ]) => (
+          <Player
+            key={type}
+            {...props}
+            active={media.sourceType === type}
+          />
+        ))}
       </div>
     );
   }

@@ -8,6 +8,7 @@ export default class YouTubePlayer extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
     size: React.PropTypes.string,
+    active: React.PropTypes.bool.isRequired,
     enabled: React.PropTypes.bool,
     media: React.PropTypes.object,
     seek: React.PropTypes.number,
@@ -29,6 +30,7 @@ export default class YouTubePlayer extends React.Component {
         <div className={cx('YouTubePlayer', sizeClass, className)}>
           {enabled && <YouTubePlayerEmbed
             media={media}
+            active={this.props.active}
             seek={this.props.seek}
             volume={this.props.volume}
           />}
