@@ -27,16 +27,13 @@ export default function serveTask({ port = conf.server.port }) {
   });
 
   const server = new UWaveServer(conf);
-  const v1 = new UWaveAPI(conf);
+  const v1 = new UWaveAPI(server, conf);
 
   server.on('stopped', () => process.exit(0));
-  server.on('started', uwave => {
-    v1.registerWSServer(uwave);
-  });
 
-  server.registerAPI('/v1', v1.router);
-
-  server.app.use(uwaveClient());
+  server.app
+    .use('/v1', v1.router)
+    .use(uwaveClient());
 
   server.start();
   server.server.listen(port);
