@@ -11,6 +11,8 @@ import * as reducers from '../reducers';
 // on in üWave, so it's kind of manageable.
 
 export default function createUwaveStore() {
+  const enableLogging = process.env.NODE_ENV === 'production' &&
+    process.env.NODE_ENV !== 'testing';
   const middleware = [
     // Redux-Thunk allows dispatching a function to the store instead of an
     // action object. These functions can then dispatch action objects as they
@@ -21,7 +23,7 @@ export default function createUwaveStore() {
     // Redux-Logger logs state changes to the console, including the
     // Before-state, the Action object, and the After-state. Invaluable for
     // debugging :)
-    process.env.NODE_ENV !== 'production' && require('redux-logger')({
+    enableLogging && require('redux-logger')({
       // üWave has a Time store that changes every second with the TICK action,
       // but we don't need to see that happening all the time. This hides the
       // TICK actions from the logs.
