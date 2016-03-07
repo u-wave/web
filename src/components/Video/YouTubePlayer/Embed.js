@@ -5,6 +5,7 @@ const debug = require('debug')('uwave:component:video:youtube');
 
 export default class YouTubePlayerEmbed extends React.Component {
   static propTypes = {
+    active: React.PropTypes.bool.isRequired,
     media: React.PropTypes.object,
     seek: React.PropTypes.number,
     volume: React.PropTypes.number
@@ -27,7 +28,8 @@ export default class YouTubePlayerEmbed extends React.Component {
     // Only rerender when the media changes. This avoids react-youtube resetting
     // the YouTube player when only the volume changes.
     return this.props.media !== nextProps.media ||
-      this.props.media._id !== nextProps.media._id;
+      this.props.media._id !== nextProps.media._id ||
+      this.props.active !== nextProps.active;
   }
 
   onYTReady(event) {
@@ -35,7 +37,7 @@ export default class YouTubePlayerEmbed extends React.Component {
   }
 
   render() {
-    const { media, seek } = this.props;
+    const { active, media, seek } = this.props;
 
     const opts = {
       width: '100%',
@@ -54,7 +56,7 @@ export default class YouTubePlayerEmbed extends React.Component {
     return (
       <YouTube
         ref="player"
-        videoId={media.sourceID}
+        videoId={active ? media.sourceID : null}
         opts={opts}
         onReady={::this.onYTReady}
       />
