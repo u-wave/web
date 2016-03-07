@@ -1,16 +1,16 @@
 import { expect } from 'chai';
-import { advanceToEmpty, loadHistoryComplete } from '../../src/actions/BoothActionCreators';
-import { ADVANCE } from '../../src/constants/actionTypes/booth';
-import roomHistory from '../../src/reducers/roomHistory';
 
-const initialState = () => roomHistory(undefined, { type: '@@redux/INIT' });
+import createStore from '../../src/store/configureStore';
+import { setUsers } from '../../src/actions/UserActionCreators';
+import { advance, loadHistoryComplete } from '../../src/actions/BoothActionCreators';
+import * as s from '../../src/selectors/roomHistorySelectors';
 
 describe('reducers/roomHistory', () => {
   it('should default to an empty array', () => {
-    let state;
-    state = roomHistory(state, { type: '@@redux/INIT' });
-    expect(state).to.be.an('array');
-    expect(state).to.have.length(0);
+    const { getState } = createStore();
+    expect(s.roomHistorySelector(getState())).to.eql(
+      []
+    );
   });
 
   const serverHistoryEntry = {
@@ -45,13 +45,13 @@ describe('reducers/roomHistory', () => {
 
   describe('action: LOAD_HISTORY_COMPLETE', () => {
     it('should normalize the loaded history entries', () => {
-      let state = initialState();
-      state = roomHistory(state, loadHistoryComplete({
+      const { dispatch, getState } = createStore();
+      dispatch(loadHistoryComplete({
         result: [ serverHistoryEntry ],
         page: 0,
         size: 1
       }));
-      expect(state).to.eql([ {
+      expect(s.roomHistorySelector(getState())).to.eql([ {
         _id: '56b12b90d6bfe93733bece96',
         user: {
           _id: '563ba1e3f059363574f4d0d9',
@@ -91,78 +91,60 @@ describe('reducers/roomHistory', () => {
 
   describe('action: ADVANCE', () => {
     it('prepends a new history entry', () => {
-      let state = roomHistory(undefined, loadHistoryComplete({
+      const { dispatch, getState } = createStore();
+      dispatch(setUsers({
+        users: [ {
+          _id: '562b748139c99dde22c6a499',
+          slug: 'reanna',
+          username: 'ReAnna'
+        } ]
+      }));
+
+      dispatch(loadHistoryComplete({
         result: [ serverHistoryEntry ],
         page: 0,
         size: 1
       }));
-      expect(state).to.have.length(1);
-      expect(state[0]._id).to.equal('56b12b90d6bfe93733bece96');
-      state = roomHistory(state, {
-        type: ADVANCE,
-        payload: {
-          historyID: '56b12c59d6bfe93733bece97',
-          userID: '562b748139c99dde22c6a499',
-          playlistID: '563f390cf059363574f4d4dd',
-          user: {
-            _id: '562b748139c99dde22c6a499',
-            slug: 'reanna',
-            username: 'ReAnna'
-          },
+      expect(s.roomHistorySelector(getState())).to.have.length(1);
+      expect(s.roomHistorySelector(getState())[0]._id).to.equal('56b12b90d6bfe93733bece96');
+
+      dispatch(advance({
+        historyID: '56b12c59d6bfe93733bece97',
+        userID: '562b748139c99dde22c6a499',
+        playlistID: '563f390cf059363574f4d4dd',
+        played: new Date('2016-02-02T22:23:21.519Z').getTime(),
+        media: {
           media: {
             _id: '569ac78a2b029e7d71a2ce43',
             sourceType: 'youtube',
             sourceID: '7SvxB_NL5cs',
-            artist: 'Eleanoora Rosenholm',
-            title: 'Maailmanloppu',
             thumbnail: 'https://i.ytimg.com/vi/7SvxB_NL5cs/hqdefault.jpg',
-            duration: 267,
-            start: 0,
-            end: 267
+            duration: 267
           },
-          timestamp: new Date('2016-02-02T22:23:21.519Z').getTime()
-        }
-      });
-
-      expect(state).to.have.length(2);
-      expect(state[1]._id).to.equal('56b12b90d6bfe93733bece96');
-
-      expect(state[0]).to.eql({
-        _id: '56b12c59d6bfe93733bece97',
-        user: {
-          _id: '562b748139c99dde22c6a499',
-          slug: 'reanna',
-          username: 'ReAnna'
-        },
-        media: {
-          _id: '569ac78a2b029e7d71a2ce43',
-          sourceType: 'youtube',
-          sourceID: '7SvxB_NL5cs',
           artist: 'Eleanoora Rosenholm',
           title: 'Maailmanloppu',
-          thumbnail: 'https://i.ytimg.com/vi/7SvxB_NL5cs/hqdefault.jpg',
-          duration: 267,
           start: 0,
           end: 267
-        },
-        stats: {
-          favorites: [],
-          downvotes: [],
-          upvotes: []
-        },
-        timestamp: new Date('2016-02-02T22:23:21.519Z').getTime()
-      });
+        }
+      }));
+
+      expect(s.roomHistorySelector(getState())).to.have.length(2);
+      expect(s.roomHistorySelector(getState())[1]._id).to.equal('56b12b90d6bfe93733bece96');
+
+      expect(s.roomHistorySelector(getState())[0]._id).to.equal('56b12c59d6bfe93733bece97');
     });
+
     it('works with NULL advances', () => {
-      let state = roomHistory(undefined, loadHistoryComplete({
+      const { dispatch, getState } = createStore();
+      dispatch(loadHistoryComplete({
         result: [ serverHistoryEntry ],
         page: 0,
         size: 1
       }));
-      expect(state).to.have.length(1);
+      expect(s.roomHistorySelector(getState())).to.have.length(1);
 
-      state = roomHistory(state, advanceToEmpty());
-      expect(state).to.have.length(1);
+      dispatch(advance());
+      expect(s.roomHistorySelector(getState())).to.have.length(1);
     });
   });
 });
