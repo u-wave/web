@@ -1,63 +1,60 @@
 import { expect } from 'chai';
-import {
-  LOGIN_COMPLETE, SET_TOKEN
-} from '../../src/constants/actionTypes/auth';
-import auth from '../../src/reducers/auth';
+import proxyquire from 'proxyquire';
+
+import { LOGIN_COMPLETE } from '../../src/constants/actionTypes/auth';
+
+import createStore from '../../src/store/configureStore';
+import * as s from '../../src/selectors/userSelectors';
+const {
+  loginComplete,
+  setJWT
+} = proxyquire('../../src/actions/LoginActionCreators', {
+  '../utils/Socket': { auth() {} }
+});
 
 describe('reducers/auth', () => {
-  const initialState = () => {
-    const state = auth(undefined, { type: '@@redux/INIT' });
-    expect(state.jwt).to.be.null;
-    return state;
-  };
-
   it('should not respond to unrelated actions', () => {
-    let state = { jwt: 'abc' };
-    state = auth(state, { type: 'randomOtherAction', payload: {} });
-    expect(state).to.eql({ jwt: 'abc' });
+    const { dispatch, getState } = createStore();
+    expect(s.tokenSelector(getState())).to.be.null;
+    dispatch({ type: 'randomOtherAction', payload: {} });
+    expect(s.tokenSelector(getState())).to.be.null;
   });
   it('should default to a logged-out session', () => {
-    let state;
-    state = auth(state, { type: '@@redux/INIT' });
-    expect(state).to.eql({
-      jwt: null,
-      user: null,
-      error: null
-    });
+    const { getState } = createStore();
+    expect(s.tokenSelector(getState())).to.be.null;
+    expect(s.currentUserSelector(getState())).to.be.null;
+    expect(s.authErrorSelector(getState())).to.be.null;
   });
 
   describe('action: auth/SET_TOKEN', () => {
+    const { dispatch, getState } = createStore();
     it('should set the current session token', () => {
-      let state = initialState();
-      state = auth(state, { type: SET_TOKEN, payload: { jwt: 'test token' } });
-      expect(state.jwt).to.equal('test token');
+      dispatch(setJWT('test token'));
+      expect(s.tokenSelector(getState())).to.equal('test token');
     });
   });
 
   describe('action: auth/LOGIN_COMPLETE', () => {
+    const { dispatch, getState } = createStore();
     it('should set the current user if successful', () => {
-      let state = initialState();
-      const userObj = { _id: Math.random() };
-      state = auth(state, {
-        type: LOGIN_COMPLETE,
-        payload: { jwt: 'test token', user: userObj }
-      });
-      expect(state.jwt).to.equal('test token');
-      expect(state.user).to.eql(userObj);
-      expect(state.error).to.be.null;
+      const userObj = { _id: 'test user' };
+      dispatch(loginComplete({ jwt: 'test token', user: userObj }));
+      expect(s.tokenSelector(getState())).to.equal('test token');
+      expect(s.currentUserSelector(getState())).to.eql(userObj);
+      expect(s.authErrorSelector(getState())).to.be.null;
     });
 
     it('should save the error if unsuccessful', () => {
-      let state = initialState();
-      state = auth(state, {
+      dispatch({
         type: LOGIN_COMPLETE,
         payload: new Error('failed'),
         error: true
       });
-      expect(state.jwt).to.be.null;
-      expect(state.user).to.be.null;
-      expect(state.error).to.be.instanceOf(Error);
-      expect(state.error.message).to.equal('failed');
+      expect(s.tokenSelector(getState())).to.be.null;
+      expect(s.currentUserSelector(getState())).to.be.null;
+      expect(s.authErrorSelector(getState()))
+        .to.be.instanceof(Error)
+        .and.to.have.property('message', 'failed');
     });
   });
 });
