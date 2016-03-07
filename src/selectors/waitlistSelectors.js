@@ -47,5 +47,5 @@ export const etaSelector = createSelector(
   positionSelector,
   sizeSelector,
   (remaining, position, size) =>
-    (position === -1 ? size : position - 1) * averagePlayDuration + remaining
+    (position === -1 ? size : position) * averagePlayDuration + remaining
 );
