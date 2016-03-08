@@ -54,5 +54,4 @@ export default class Video extends Component {
       </div>
     );
   }
-
 }

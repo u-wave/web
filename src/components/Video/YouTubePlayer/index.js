@@ -16,21 +16,21 @@ export default class YouTubePlayer extends React.Component {
   };
 
   render() {
-    const { className, enabled, size, media } = this.props;
+    const { active, className, enabled, size, media } = this.props;
     const sizeClass = `YouTubePlayer--${size}`;
 
     let backdrop;
-    if (size === 'small') {
+    if (active && size === 'small') {
       backdrop = <VideoBackdrop url={media.thumbnail} />;
     }
     // Wrapper span so the backdrop can be full-size…
     return (
-      <span>
+      <span hidden={!active}>
         {backdrop}
         <div className={cx('YouTubePlayer', sizeClass, className)}>
           {enabled && <YouTubePlayerEmbed
             media={media}
-            active={this.props.active}
+            active={active}
             seek={this.props.seek}
             volume={this.props.volume}
           />}
