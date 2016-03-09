@@ -1,5 +1,6 @@
 export const LOAD_PLAYLIST_START = 'playlists/LOAD_PLAYLIST_START';
 export const LOAD_PLAYLIST_COMPLETE = 'playlists/LOAD_PLAYLIST_COMPLETE';
+export const PLAYLIST_CYCLED = 'playlists/PLAYLIST_CYCLED';
 
 export const SELECT_PLAYLIST = 'playlists/SELECT_PLAYLIST';
 

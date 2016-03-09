@@ -7,6 +7,7 @@ import mapObj from 'object.map';
 import {
   LOAD_ALL_PLAYLISTS_COMPLETE,
   LOAD_PLAYLIST_START, LOAD_PLAYLIST_COMPLETE,
+  PLAYLIST_CYCLED,
   SELECT_PLAYLIST,
   ACTIVATE_PLAYLIST_START, ACTIVATE_PLAYLIST_COMPLETE,
   CREATE_PLAYLIST_START, CREATE_PLAYLIST_COMPLETE,
@@ -176,6 +177,26 @@ export default function reduce(state = initialState, action = {}) {
           )
         : state.activeMedia
     };
+
+  case PLAYLIST_CYCLED:
+    if (payload.playlistID === state.activePlaylistID) {
+      const activePlaylist = state.playlists[state.activePlaylistID];
+      const activeMedia = state.activeMedia.slice(1);
+      activeMedia[activePlaylist.size - 1] = state.activeMedia[0];
+      return {
+        ...state,
+        activeMedia
+      };
+    } else if (payload.playlistID === state.selectedPlaylistID) {
+      const selectedPlaylist = state.playlists[state.selectedPlaylistID];
+      const selectedMedia = state.selectedMedia.slice(1);
+      selectedMedia[selectedPlaylist.size - 1] = state.selectedMedia[0];
+      return {
+        ...state,
+        selectedMedia
+      };
+    }
+    return state;
 
   // here be dragons
   // TODO find a simpler way to store this stuff, that doesn't involve keeping

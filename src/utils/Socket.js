@@ -1,5 +1,6 @@
 import { advance } from '../actions/BoothActionCreators';
 import { receive as chatReceive } from '../actions/ChatActionCreators';
+import { cyclePlaylist } from '../actions/PlaylistActionCreators';
 import { join as userJoin, leave as userLeave, changeUsername } from '../actions/UserActionCreators';
 import { joinedWaitlist, leftWaitlist, updatedWaitlist } from '../actions/WaitlistActionCreators';
 import { favorited, receiveVote } from '../actions/VoteActionCreators';
@@ -69,6 +70,10 @@ function onMessage(dispatch, json) {
     break;
   case 'waitlistUpdate':
     dispatch(updatedWaitlist(data));
+    break;
+
+  case 'playlistCycle':
+    dispatch(cyclePlaylist(data.playlistID));
     break;
 
   case 'join':
