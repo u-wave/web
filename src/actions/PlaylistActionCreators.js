@@ -1,6 +1,7 @@
 import {
   LOAD_ALL_PLAYLISTS_START, LOAD_ALL_PLAYLISTS_COMPLETE,
   LOAD_PLAYLIST_START, LOAD_PLAYLIST_COMPLETE,
+  PLAYLIST_CYCLED,
   SELECT_PLAYLIST,
   ACTIVATE_PLAYLIST_START, ACTIVATE_PLAYLIST_COMPLETE,
   CREATE_PLAYLIST_START, CREATE_PLAYLIST_COMPLETE,
@@ -15,9 +16,13 @@ import {
 import { openEditMediaDialog } from './DialogActionCreators';
 import { del, get, post, put } from '../utils/Request';
 import {
-  playlistsSelector, activePlaylistIDSelector, selectedPlaylistIDSelector
+  playlistsSelector,
+  activePlaylistIDSelector, selectedPlaylistIDSelector,
+  activePlaylistSelector, selectedPlaylistSelector
 } from '../selectors/playlistSelectors';
 import { tokenSelector } from '../selectors/userSelectors';
+
+const MEDIA_PAGE_SIZE = 50;
 
 export function setPlaylists(playlists) {
   return {
@@ -50,7 +55,7 @@ export function loadPlaylist(playlistID, page = 0) {
     });
 
     inFlightPlaylists[key] = true;
-    get(jwt, `/v1/playlists/${playlistID}/media`, { page, limit: 50 })
+    get(jwt, `/v1/playlists/${playlistID}/media`, { page, limit: MEDIA_PAGE_SIZE })
       .then(res => res.json())
       .then(res => {
         inFlightPlaylists[key] = false;
@@ -87,6 +92,51 @@ export function selectPlaylist(playlistID) {
 
     if (playlistID) {
       dispatch(loadPlaylist(playlistID));
+    }
+  };
+}
+
+export function playlistCycled(playlistID) {
+  return {
+    type: PLAYLIST_CYCLED,
+    payload: { playlistID }
+  };
+}
+
+function shouldLoadAfterCycle(playlist) {
+  const media = playlist.media;
+  // If the playlist was fully loaded, we can cycle naively
+  if (media.length === playlist.size && media.every(Boolean)) {
+    return false;
+  }
+  // If the first page _after_ cycle is fully loaded, we also don't need to do
+  // anything.
+  if (media.length > MEDIA_PAGE_SIZE &&
+      media.slice(1, 1 + MEDIA_PAGE_SIZE).every(Boolean)) {
+    return false;
+  }
+  // Otherwise, there will be unloaded items on the first page after cycling,
+  // so we want to eagerly load the page again.
+  return true;
+}
+
+export function cyclePlaylist(playlistID) {
+  return (dispatch, getState) => {
+    const activePlaylist = activePlaylistSelector(getState());
+    const selectedPlaylist = selectedPlaylistSelector(getState());
+
+    let playlist;
+
+    if (playlistID === activePlaylist._id) {
+      playlist = activePlaylist;
+    } else if (playlistID === selectedPlaylist._id) {
+      playlist = selectedPlaylist;
+    }
+
+    dispatch(playlistCycled(playlistID));
+
+    if (playlist && shouldLoadAfterCycle(playlist)) {
+      dispatch(loadPlaylist(playlistID, 0));
     }
   };
 }

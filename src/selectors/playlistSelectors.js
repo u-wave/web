@@ -16,10 +16,19 @@ export const activePlaylistIDSelector = createSelector(
   playlists => playlists.activePlaylistID
 );
 
+const activeMediaSelector = createSelector(
+  baseSelector,
+  playlists => playlists.activeMedia
+);
+
 export const activePlaylistSelector = createSelector(
   baseSelector,
   activePlaylistIDSelector,
-  (playlists, activeID) => playlists.playlists[activeID]
+  activeMediaSelector,
+  (playlists, activeID, activeMedia) => ({
+    ...playlists.playlists[activeID],
+    media: activeMedia
+  })
 );
 
 export const selectedPlaylistIDSelector = createSelector(
@@ -27,20 +36,19 @@ export const selectedPlaylistIDSelector = createSelector(
   playlists => playlists.selectedPlaylistID
 );
 
-const selectedPlaylistSelector = createSelector(
-  baseSelector,
-  selectedPlaylistIDSelector,
-  (playlists, selectedID) => playlists.playlists[selectedID]
-);
-
-const activeMediaSelector = createSelector(
-  baseSelector,
-  playlists => playlists.activeMedia
-);
-
 const selectedMediaSelector = createSelector(
   baseSelector,
   playlists => playlists.selectedMedia
+);
+
+export const selectedPlaylistSelector = createSelector(
+  baseSelector,
+  selectedPlaylistIDSelector,
+  selectedMediaSelector,
+  (playlists, selectedID, selectedMedia) => ({
+    ...playlists.playlists[selectedID],
+    media: selectedMedia
+  })
 );
 
 export const nextMediaSelector = createSelector(
