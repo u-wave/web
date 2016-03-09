@@ -1,6 +1,5 @@
 import cx from 'classnames';
 import React from 'react';
-import FormGroup from './Group';
 
 const Form = ({ children, className, ...props }) => {
   return (
@@ -11,4 +10,3 @@ const Form = ({ children, className, ...props }) => {
 };
 
 export default Form;
-export { FormGroup };
