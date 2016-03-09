@@ -179,24 +179,26 @@ export default function reduce(state = initialState, action = {}) {
     };
 
   case PLAYLIST_CYCLED:
+    let newState = state;
     if (payload.playlistID === state.activePlaylistID) {
       const activePlaylist = state.playlists[state.activePlaylistID];
       const activeMedia = state.activeMedia.slice(1);
       activeMedia[activePlaylist.size - 1] = state.activeMedia[0];
-      return {
-        ...state,
+      newState = {
+        ...newState,
         activeMedia
       };
-    } else if (payload.playlistID === state.selectedPlaylistID) {
+    }
+    if (payload.playlistID === state.selectedPlaylistID) {
       const selectedPlaylist = state.playlists[state.selectedPlaylistID];
       const selectedMedia = state.selectedMedia.slice(1);
       selectedMedia[selectedPlaylist.size - 1] = state.selectedMedia[0];
-      return {
-        ...state,
+      newState = {
+        ...newState,
         selectedMedia
       };
     }
-    return state;
+    return newState;
 
   // here be dragons
   // TODO find a simpler way to store this stuff, that doesn't involve keeping
