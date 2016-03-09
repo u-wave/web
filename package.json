@@ -93,6 +93,7 @@
     "postcss-import": "^7.0.0",
     "postcss-nested": "^1.0.0",
     "postcss-simple-vars": "^1.0.1",
+    "proxyquire": "^1.7.4",
     "react-transform-catch-errors": "^1.0.0",
     "react-transform-hmr": "^1.0.1",
     "redbox-react": "^1.1.1",
@@ -103,7 +104,7 @@
   },
   "scripts": {
     "lint": "gulp js:lint",
-    "mocha": "mocha --compilers js:babel-register --recursive test",
+    "mocha": "NODE_ENV=testing mocha --compilers js:babel-register --recursive test",
     "test": "npm run mocha && npm run lint",
     "build": "gulp",
     "watch": "gulp watch",
