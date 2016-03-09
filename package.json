@@ -74,6 +74,7 @@
     "eslint-config-airbnb": "^2.1.1",
     "eslint-plugin-react": "^3.3.2",
     "express": "^4.13.3",
+    "fetch-mock": "^4.1.1",
     "gulp": "^3.9.0",
     "gulp-babel": "^6.1.1",
     "gulp-buffer": "0.0.2",
