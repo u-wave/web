@@ -1,46 +1,84 @@
 import { expect } from 'chai';
-import indexBy from 'index-by';
-import {
-  SELECT_PLAYLIST
-} from '../../src/constants/actionTypes/playlists';
-import playlists from '../../src/reducers/playlists';
+import fetch from 'fetch-mock';
 
-const initialTestState = {
-  playlists: indexBy([
-    { _id: 1, name: 'Playlist One', size: 50 },
-    { _id: 2, name: 'Playlist Two', size: 0 },
-    { _id: 3, name: 'Playlist Three', size: 500 },
-    { _id: 4, name: 'Playlist Four', size: 120 }
-  ], '_id'),
-  activePlaylistID: null,
-  activeMedia: [],
-  selectedPlaylistID: null,
-  selectedMedia: []
-};
+import createStore from '../../src/store/configureStore';
+import * as a from '../../src/actions/PlaylistActionCreators';
+import * as s from '../../src/selectors/playlistSelectors';
+
+const initialiseStore = a.setPlaylists([
+  { _id: 1, name: 'Playlist One', size: 50 },
+  { _id: 2, name: 'Playlist Two', size: 0 },
+  { _id: 3, name: 'Playlist Three', size: 500 },
+  { _id: 4, name: 'Playlist Four', size: 120 }
+]);
 
 describe('reducers/playlists', () => {
+  beforeEach(() => {
+    fetch.mock(/\/v1\/playlists\/\w+\/media/, []);
+  });
+  afterEach(() => {
+    fetch.restore();
+  });
+
   it('should not respond to unrelated actions', () => {
-    let state = { some: 'state' };
-    state = playlists(state, { type: 'randomOtherAction', payload: {} });
-    expect(state).to.eql({ some: 'state' });
+    const { dispatch, getState } = createStore();
+    expect(s.playlistsSelector(getState())).to.eql([]);
+    dispatch({ type: 'randomOtherAction', payload: {} });
+    expect(s.playlistsSelector(getState())).to.eql([]);
   });
 
   describe('action: playlists/SELECT_PLAYLIST', () => {
     it('sets the given playlist as the current playlist', () => {
-      let state = initialTestState;
-      let selectedPlaylist;
+      const { dispatch, getState } = createStore();
+      dispatch(initialiseStore);
 
-      expect(state.selectedPlaylistID).to.be.null;
+      expect(
+        s.selectedPlaylistIDSelector(getState())
+      ).to.be.null;
 
-      state = playlists(state, { type: SELECT_PLAYLIST, payload: { playlistID: 1 } });
-      selectedPlaylist = state.playlists[state.selectedPlaylistID];
-      expect(state.selectedPlaylistID).to.equal(1);
-      expect(selectedPlaylist).to.have.property('selected', true);
+      dispatch(a.selectPlaylist(1));
+      expect(
+        s.selectedPlaylistIDSelector(getState())
+      ).to.equal(1);
+      expect(
+        s.selectedPlaylistSelector(getState())
+      ).to.have.property('selected', true);
 
-      state = playlists(state, { type: SELECT_PLAYLIST, payload: { playlistID: 3 } });
-      selectedPlaylist = state.playlists[state.selectedPlaylistID];
-      expect(state.selectedPlaylistID).to.equal(3);
-      expect(selectedPlaylist).to.have.property('selected', true);
+      dispatch(a.selectPlaylist(3));
+      expect(
+        s.selectedPlaylistIDSelector(getState())
+      ).to.equal(3);
+      expect(
+        s.selectedPlaylistSelector(getState())
+      ).to.have.property('selected', true);
+
+      dispatch(a.selectPlaylist(null));
+      expect(
+        s.selectedPlaylistIDSelector(getState())
+      ).to.be.null;
+      expect(
+        s.selectedPlaylistSelector(getState())
+      ).to.be.null;
+    });
+
+    it('loads playlist items for a newly selected playlist', () => {
+      const { dispatch } = createStore();
+      dispatch(initialiseStore);
+
+      dispatch(a.selectPlaylist(1));
+
+      expect(fetch.called()).to.be.true;
+    });
+
+    it('does not attempt to playlist items when deselecting a playlist', () => {
+      const { dispatch } = createStore();
+      dispatch(initialiseStore);
+
+      dispatch(a.selectPlaylist(1));
+      fetch.reset();
+      dispatch(a.selectPlaylist(null));
+
+      expect(fetch.called()).to.be.false;
     });
   });
 
