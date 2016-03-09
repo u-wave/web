@@ -38,14 +38,8 @@ export function flattenPlaylistItem(item) {
   };
 }
 
-const inFlightPlaylists = {};
 export function loadPlaylist(playlistID, page = 0) {
   return (dispatch, getState) => {
-    const key = `${playlistID}:${page}`;
-
-    // Prevent duplicate loading.
-    if (inFlightPlaylists[key]) return;
-
     const jwt = tokenSelector(getState());
 
     dispatch({
@@ -54,11 +48,9 @@ export function loadPlaylist(playlistID, page = 0) {
       meta: { page }
     });
 
-    inFlightPlaylists[key] = true;
-    get(jwt, `/v1/playlists/${playlistID}/media`, { page, limit: MEDIA_PAGE_SIZE })
+    return get(jwt, `/v1/playlists/${playlistID}/media`, { page, limit: MEDIA_PAGE_SIZE })
       .then(res => res.json())
       .then(res => {
-        inFlightPlaylists[key] = false;
         dispatch({
           type: LOAD_PLAYLIST_COMPLETE,
           payload: {
@@ -72,7 +64,6 @@ export function loadPlaylist(playlistID, page = 0) {
         });
       })
       .catch(e => {
-        inFlightPlaylists[key] = false;
         dispatch({
           type: LOAD_PLAYLIST_COMPLETE,
           error: true,
