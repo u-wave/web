@@ -8,6 +8,7 @@ import { togglePlaylistManager, toggleSettings } from '../actions/OverlayActionC
 import { joinWaitlist, leaveWaitlist } from '../actions/WaitlistActionCreators';
 import { openFavoriteMenu, doUpvote, doDownvote } from '../actions/VoteActionCreators';
 
+import { isCurrentDJSelector } from '../selectors/boothSelectors';
 import { activePlaylistSelector, nextMediaSelector } from '../selectors/playlistSelectors';
 import { currentUserSelector } from '../selectors/userSelectors';
 import { etaSelector, userInWaitlistSelector } from '../selectors/waitlistSelectors';
@@ -24,6 +25,7 @@ const mapStateToProps = createStructuredSelector({
   nextMedia: nextMediaSelector,
   user: currentUserSelector,
   userInWaitlist: userInWaitlistSelector,
+  userIsDJ: isCurrentDJSelector,
   isFavorite: isFavoriteSelector,
   favoritesCount: favoritesCountSelector,
   isUpvote: isUpvoteSelector,
