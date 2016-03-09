@@ -3,7 +3,9 @@ import React from 'react';
 import SongTitle from '../SongTitle';
 import Eta from './Eta';
 
-const NextMedia = ({ className, playlist, nextMedia, eta, ...attrs }) => {
+const NextMedia = ({
+  className, playlist, nextMedia, userIsDJ, eta, ...attrs
+}) => {
   if (!playlist) {
     return (
       <div className={cx('NextMedia', className)} {...attrs}>
@@ -15,7 +17,13 @@ const NextMedia = ({ className, playlist, nextMedia, eta, ...attrs }) => {
   const mediaEl = nextMedia ? <SongTitle {...nextMedia} />
     : <div className="SongTitle">This playlist is empty :(</div>;
   const playlistEl = <span className="NextMedia-playlist">{playlist.name}</span>;
-  const etaEl = <Eta className="NextMedia-eta" eta={eta} />;
+  const etaEl = (
+    <Eta
+      className="NextMedia-eta"
+      eta={eta}
+      nowPlaying={userIsDJ}
+    />
+  );
   return (
     <div className={cx('NextMedia', className)} {...attrs}>
       {mediaEl} from {playlistEl} {etaEl}

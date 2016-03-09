@@ -14,6 +14,7 @@ export default class FooterBar extends Component {
     playlist: PropTypes.object,
     user: PropTypes.object,
     userInWaitlist: PropTypes.bool,
+    userIsDJ: PropTypes.bool,
     isFavorite: PropTypes.bool,
     favoritesCount: PropTypes.number,
     isUpvote: PropTypes.bool,
@@ -45,7 +46,7 @@ export default class FooterBar extends Component {
       onFavorite, onUpvote, onDownvote
     } = this.props;
     const {
-      user, userInWaitlist,
+      user, userInWaitlist, userIsDJ,
       playlist, nextMedia,
       eta,
       isFavorite, isUpvote, isDownvote,
@@ -69,6 +70,7 @@ export default class FooterBar extends Component {
             <NextMedia
               playlist={playlist}
               nextMedia={nextMedia}
+              userIsDJ={userIsDJ}
               eta={eta}
               onClick={togglePlaylistManager}
             />
