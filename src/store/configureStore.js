@@ -11,7 +11,7 @@ import * as reducers from '../reducers';
 // on in üWave, so it's kind of manageable.
 
 export default function createUwaveStore() {
-  const enableLogging = process.env.NODE_ENV === 'production' &&
+  const enableLogging = process.env.NODE_ENV !== 'production' &&
     process.env.NODE_ENV !== 'testing';
   const middleware = [
     // Redux-Thunk allows dispatching a function to the store instead of an
