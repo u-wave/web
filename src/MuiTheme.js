@@ -5,6 +5,13 @@ import Spacing from 'material-ui/lib/styles/spacing';
 export default {
   spacing: Spacing,
   fontFamily: 'Open Sans, sans-serif',
+  rankColors: {
+    admin: '#ce1836',
+    manager: '#f85931',
+    moderator: '#a3a948',
+    special: '#edb92e',
+    default: ''
+  },
   palette: {
     primary1Color: '#9d2053',
     primary2Color: '#b20062',
