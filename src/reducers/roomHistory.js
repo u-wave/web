@@ -23,6 +23,13 @@ export default function reduce(state = initialState, action = {}) {
   case LOAD_HISTORY_COMPLETE:
     return payload.map(normalize);
   case ADVANCE:
+    const mostRecent = state[0];
+    // If the currently playing track is already in the history, remove it--
+    // it'll be added back on the next advance, and will be handled by the
+    // roomHistorySelector in the mean time.
+    if (mostRecent && payload && mostRecent._id === payload.historyID) {
+      return state.slice(1);
+    }
     if (!meta || !meta.previous) {
       return state;
     }
