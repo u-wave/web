@@ -5,12 +5,17 @@ import {
 import { flattenPlaylistItem } from './PlaylistActionCreators';
 import { get } from '../utils/Request';
 
+import { historyIDSelector } from '../selectors/boothSelectors';
+import { currentPlaySelector } from '../selectors/roomHistorySelectors';
 import { usersSelector } from '../selectors/userSelectors';
 
 export function advanceToEmpty() {
-  return {
-    type: ADVANCE,
-    payload: null
+  return (dispatch, getState) => {
+    dispatch({
+      type: ADVANCE,
+      payload: null,
+      meta: { previous: currentPlaySelector(getState()) }
+    });
   };
 }
 
@@ -30,6 +35,9 @@ export function advance(nextBooth) {
         userID, historyID, playlistID, user,
         media: flattenPlaylistItem(media),
         timestamp: played
+      },
+      meta: {
+        previous: currentPlaySelector(getState())
       }
     });
   };
@@ -40,10 +48,17 @@ export function loadHistoryStart() {
 }
 
 export function loadHistoryComplete({ result, page, size }) {
-  return {
-    type: LOAD_HISTORY_COMPLETE,
-    payload: result,
-    meta: { page, size }
+  return (dispatch, getState) => {
+    const currentHistoryID = historyIDSelector(getState());
+    let playHistory = result;
+    if (result[0] && result[0]._id === currentHistoryID) {
+      playHistory = playHistory.slice(1);
+    }
+    dispatch({
+      type: LOAD_HISTORY_COMPLETE,
+      payload: playHistory,
+      meta: { page, size }
+    });
   };
 }
 
