@@ -128,10 +128,10 @@ describe('reducers/roomHistory', () => {
         }
       }));
 
-      expect(s.roomHistorySelector(getState())).to.have.length(2);
-      expect(s.roomHistorySelector(getState())[1]._id).to.equal('56b12b90d6bfe93733bece96');
+      expect(s.roomHistoryWithVotesSelector(getState())).to.have.length(2);
+      expect(s.roomHistoryWithVotesSelector(getState())[1]._id).to.equal('56b12b90d6bfe93733bece96');
 
-      expect(s.roomHistorySelector(getState())[0]._id).to.equal('56b12c59d6bfe93733bece97');
+      expect(s.roomHistoryWithVotesSelector(getState())[0]._id).to.equal('56b12c59d6bfe93733bece97');
     });
 
     it('works with NULL advances', () => {
