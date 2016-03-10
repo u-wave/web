@@ -1,6 +1,8 @@
 import cx from 'classnames';
 import React from 'react';
+
 import Avatar from '../Avatar';
+import Username from '../Username';
 
 const UserRow = ({ className, user }) => {
   return (
@@ -9,7 +11,7 @@ const UserRow = ({ className, user }) => {
         className="UserRow-avatar"
         user={user}
       />
-      <span className="UserRow-username">{user.username}</span>
+      <Username className="UserRow-username" user={user} />
     </div>
   );
 };

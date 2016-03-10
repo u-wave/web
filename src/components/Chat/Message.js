@@ -1,6 +1,9 @@
 import cx from 'classnames';
 import React from 'react';
+
 import Avatar from '../Avatar';
+import Username from '../Username';
+
 import Loader from '../Loader';
 import compile from './Markup/compile';
 
@@ -29,7 +32,7 @@ const Message = ({ user, text, parsedText, inFlight, isMention }) => {
     <div className={cx('ChatMessage', inFlightClass, mentionClass)}>
       {avatar}
       <div className="ChatMessage-content">
-        <span className="ChatMessage-username">{user.username}</span>
+        <Username className="ChatMessage-username" user={user} />
         <span className="ChatMessage-text">{children}</span>
       </div>
     </div>
