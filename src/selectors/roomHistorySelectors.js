@@ -31,12 +31,17 @@ export const currentPlaySelector = createSelector(
   startTimeSelector,
   djSelector,
   currentVotesSelector,
-  (user, _id, media, timestamp, dj, stats) =>
-    _id ? addOwnVoteProps(user._id)({
-      _id,
+  (user, historyID, media, timestamp, dj, stats) => {
+    if (!historyID) {
+      return null;
+    }
+    const entry = {
+      _id: historyID,
       user: dj,
       media, timestamp, stats
-    }) : null
+    };
+    return user ? addOwnVoteProps(user._id)(entry) : entry;
+  }
 );
 
 export const roomHistoryWithVotesSelector = createSelector(
