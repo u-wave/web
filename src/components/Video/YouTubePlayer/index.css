@@ -5,6 +5,7 @@
   height: 100%;
   position: relative;
   z-index: 3;
+  pointer-events: none;
 
   @modifier small {
     margin: auto;
