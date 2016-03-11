@@ -3,11 +3,11 @@ import {
   LOAD_HISTORY_START, LOAD_HISTORY_COMPLETE
 } from '../constants/actionTypes/booth';
 import { flattenPlaylistItem } from './PlaylistActionCreators';
-import { get } from '../utils/Request';
+import { get, post } from '../utils/Request';
 
-import { historyIDSelector } from '../selectors/boothSelectors';
+import { historyIDSelector, isCurrentDJSelector } from '../selectors/boothSelectors';
 import { currentPlaySelector } from '../selectors/roomHistorySelectors';
-import { usersSelector } from '../selectors/userSelectors';
+import { usersSelector, tokenSelector } from '../selectors/userSelectors';
 
 export function advanceToEmpty() {
   return (dispatch, getState) => {
@@ -40,6 +40,17 @@ export function advance(nextBooth) {
         previous: currentPlaySelector(getState())
       }
     });
+  };
+}
+
+export function skipSelf() {
+  return (dispatch, getState) => {
+    const jwt = tokenSelector(getState());
+
+    if (isCurrentDJSelector(getState())) {
+      return post(jwt, '/v1/booth/skip');
+    }
+    return Promise.reject(new Error('You\'re not currently playing.'));
   };
 }
 
