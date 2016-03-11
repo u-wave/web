@@ -41,10 +41,11 @@ export default class SettingsPanel extends Component {
 
     const profile = user && [
       <Profile
+        key="profile"
         user={user}
         onChangeUsername={onChangeUsername}
       />,
-      <hr className="SettingsPanel-divider" />
+      <hr key="divider" className="SettingsPanel-divider" />
     ];
 
     const toggles = [
@@ -73,8 +74,13 @@ export default class SettingsPanel extends Component {
         {profile}
         <h2 className="SettingsPanel-header">Settings</h2>
         <div className="SettingsPanel-column SettingsPanel-column--left">
-          {toggles.map(toggle =>
-            <div className="SettingsPanel-toggle">{toggle}</div>
+          {toggles.map((toggle, i) =>
+            <div
+              key={i}
+              className="SettingsPanel-toggle"
+            >
+              {toggle}
+            </div>
           )}
         </div>
         <div className="SettingsPanel-column SettingsPanel-column--right">
