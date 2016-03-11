@@ -30,6 +30,14 @@
 
   @descendent responses {
     height: 100%;
+    @modifier spaced {
+      padding-right: 1rem;
+    }
+  }
+
+  @descendent skip {
+    height: 100%;
+    padding-right: 0.5rem;
   }
 
   @descendent join {

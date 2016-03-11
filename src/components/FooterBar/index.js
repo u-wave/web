@@ -1,10 +1,17 @@
 import cx from 'classnames';
 import React, { Component, PropTypes } from 'react';
+import IconButton from 'material-ui/lib/icon-button';
 import FlatButton from 'material-ui/lib/flat-button';
+import SkipIcon from 'material-ui/lib/svg-icons/av/skip-next';
 
 import NextMedia from './NextMedia';
 import UserInfo from './UserInfo';
 import ResponseBar from './Responses/Bar';
+
+const fullSize = {
+  height: '100%',
+  width: '100%'
+};
 
 export default class FooterBar extends Component {
   static propTypes = {
@@ -15,6 +22,7 @@ export default class FooterBar extends Component {
     user: PropTypes.object,
     userInWaitlist: PropTypes.bool,
     userIsDJ: PropTypes.bool,
+    showSkip: PropTypes.bool,
     isFavorite: PropTypes.bool,
     favoritesCount: PropTypes.number,
     isUpvote: PropTypes.bool,
@@ -28,6 +36,7 @@ export default class FooterBar extends Component {
     toggleSettings: PropTypes.func,
     joinWaitlist: PropTypes.func,
     leaveWaitlist: PropTypes.func,
+    onSkipTurn: PropTypes.func.isRequired,
     onFavorite: PropTypes.func,
     onUpvote: PropTypes.func,
     onDownvote: PropTypes.func
@@ -36,6 +45,24 @@ export default class FooterBar extends Component {
   static contextTypes = {
     muiTheme: PropTypes.object
   };
+
+  renderSkipButton() {
+    if (!this.props.showSkip) {
+      return null;
+    }
+    return (
+      <div className="FooterBar-skip">
+        <IconButton
+          tooltip="Skip your turn"
+          tooltipPosition="top-center"
+          style={fullSize}
+          onClick={this.props.onSkipTurn}
+        >
+          <SkipIcon />
+        </IconButton>
+      </div>
+    );
+  }
 
   render() {
     const { rawTheme } = this.context.muiTheme;
@@ -47,7 +74,7 @@ export default class FooterBar extends Component {
     } = this.props;
     const {
       user, userInWaitlist, userIsDJ,
-      playlist, nextMedia,
+      playlist, nextMedia, showSkip,
       eta,
       isFavorite, isUpvote, isDownvote,
       favoritesCount, upvotesCount, downvotesCount
@@ -75,7 +102,12 @@ export default class FooterBar extends Component {
               onClick={togglePlaylistManager}
             />
           </div>
-          <div className="FooterBar-responses">
+          <div
+            className={cx(
+              'FooterBar-responses',
+              !showSkip && 'FooterBar-responses--spaced'
+            )}
+          >
             <ResponseBar
               onFavorite={onFavorite}
               onUpvote={onUpvote}
@@ -88,6 +120,7 @@ export default class FooterBar extends Component {
               downvotesCount={downvotesCount}
             />
           </div>
+          {this.renderSkipButton()}
           <FlatButton
             backgroundColor={rawTheme.palette.primary1Color}
             hoverColor={rawTheme.palette.primary2Color}
