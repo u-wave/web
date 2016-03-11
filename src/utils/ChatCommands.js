@@ -30,15 +30,18 @@ import find from 'array-find';
 import { log } from '../actions/ChatActionCreators';
 import {
   skipCurrentDJ,
-  moveWaitlistUser,
+  moveWaitlistUser, removeWaitlistUser,
   deleteChatMessagesByUser, deleteAllChatMessages
 } from '../actions/ModerationActionCreators';
 import {
-  joinWaitlist, leaveWaitlist,
+  joinWaitlist,
   modClearWaitlist, modLockWaitlist, modUnlockWaitlist
 } from '../actions/WaitlistActionCreators';
 import { currentUserSelector, userListSelector } from '../selectors/userSelectors';
-import { waitlistUsersSelector } from '../selectors/waitlistSelectors';
+import {
+  djAndWaitlistUsersSelector,
+  waitlistUsersSelector
+} from '../selectors/waitlistSelectors';
 
 const ROLE_MODERATOR = 3;
 const isModerator = state => currentUserSelector(state).role >= ROLE_MODERATOR;
@@ -113,11 +116,11 @@ register(
         return dispatch(log('Provide a user to remove from the waitlist. Syntax: "/wlremove username"'));
       }
 
-      const users = waitlistUsersSelector(getState());
+      const users = djAndWaitlistUsersSelector(getState());
       const lname = username.toLowerCase();
       const user = find(users, o => o.username.toLowerCase() === lname);
       if (user) {
-        return dispatch(leaveWaitlist(user));
+        return dispatch(removeWaitlistUser(user));
       }
       return dispatch(log(`User ${username} is not in the waitlist.`));
     }

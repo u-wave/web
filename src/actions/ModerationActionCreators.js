@@ -4,26 +4,31 @@ import { tokenSelector } from '../selectors/userSelectors';
 
 import {
   SKIP_DJ_START, SKIP_DJ_COMPLETE,
-  MOVE_USER_START, MOVE_USER_COMPLETE
+  MOVE_USER_START, MOVE_USER_COMPLETE,
+  REMOVE_USER_START, REMOVE_USER_COMPLETE
 } from '../constants/actionTypes/moderation';
 
 import {
   removeMessage, removeMessagesByUser, removeAllMessages
 } from './ChatActionCreators';
 
-export function skipCurrentDJ(reason = '') {
+export function skipCurrentDJ(reason = '', shouldRemove = false) {
   return (dispatch, getState) => {
     const jwt = tokenSelector(getState());
     const dj = djSelector(getState());
     if (!dj) {
-      return;
+      return null;
     }
-    const payload = { userID: dj._id, reason };
+    const payload = {
+      userID: dj._id,
+      reason,
+      remove: shouldRemove
+    };
     dispatch({
       type: SKIP_DJ_START,
       payload
     });
-    post(jwt, `/v1/booth/skip`, payload)
+    return post(jwt, `/v1/booth/skip`, payload)
       .then(res => res.json())
       .then(() => dispatch({
         type: SKIP_DJ_COMPLETE,
@@ -34,6 +39,48 @@ export function skipCurrentDJ(reason = '') {
         error: true,
         payload: error,
         meta: payload
+      }));
+  };
+}
+
+export function removeCurrentDJ(reason = '') {
+  return skipCurrentDJ(reason, true);
+}
+
+export function removeWaitlistUserStart(user) {
+  return {
+    type: REMOVE_USER_START,
+    payload: { user }
+  };
+}
+
+export function removeWaitlistUserComplete(user) {
+  return {
+    type: REMOVE_USER_COMPLETE,
+    payload: { user }
+  };
+}
+
+export function removeWaitlistUser(user) {
+  return (dispatch, getState) => {
+    dispatch(removeWaitlistUserStart(user));
+
+    const jwt = tokenSelector(getState());
+    const currentDJ = djSelector(getState());
+    let promise;
+    if (currentDJ && currentDJ._id === user._id) {
+      promise = dispatch(removeCurrentDJ());
+    } else {
+      promise = del(jwt, `/v1/waitlist/${user._id}`)
+        .then(res => res.json());
+    }
+
+    return promise
+      .then(() => dispatch(removeWaitlistUserComplete(user)))
+      .catch(error => dispatch({
+        type: REMOVE_USER_COMPLETE,
+        error: true,
+        payload: error
       }));
   };
 }

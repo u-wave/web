@@ -1,5 +1,5 @@
 import { createSelector, createStructuredSelector } from 'reselect';
-import { timeRemainingSelector, isCurrentDJSelector } from './boothSelectors';
+import { timeRemainingSelector, djSelector, isCurrentDJSelector } from './boothSelectors';
 import { currentUserSelector, usersSelector } from './userSelectors';
 
 const baseSelector = state => state.waitlist;
@@ -16,6 +16,12 @@ export const waitlistUsersSelector = createSelector(
   waitlistIDsSelector,
   usersSelector,
   (ids, users) => ids.map(id => users[id])
+);
+
+export const djAndWaitlistUsersSelector = createSelector(
+  djSelector,
+  waitlistUsersSelector,
+  (dj, waitlist) => [ dj, ...waitlist ]
 );
 
 export const positionSelector = createSelector(
