@@ -46,6 +46,34 @@ export default class FooterBar extends Component {
     muiTheme: PropTypes.object
   };
 
+  constructor(props) {
+    super(props);
+
+    this.handleSkipTurn = this.handleSkipTurn.bind(this);
+    this.handleJoinWaitlist = this.handleJoinWaitlist.bind(this);
+    this.handleLeaveWaitlist = this.handleLeaveWaitlist.bind(this);
+  }
+
+  handleSkipTurn() {
+    if (this.props.showSkip) {
+      return this.props.onSkipTurn({ remove: false });
+    }
+  }
+
+  handleJoinWaitlist() {
+    if (this.props.user) {
+      return this.props.joinWaitlist(this.props.user);
+    }
+  }
+
+  handleLeaveWaitlist() {
+    if (this.props.userIsDJ) {
+      return this.props.onSkipTurn({ remove: true });
+    } else if (this.props.user) {
+      return this.props.leaveWaitlist(this.props.user);
+    }
+  }
+
   renderSkipButton() {
     if (!this.props.showSkip) {
       return null;
@@ -56,7 +84,7 @@ export default class FooterBar extends Component {
           tooltip="Skip your turn"
           tooltipPosition="top-center"
           style={fullSize}
-          onClick={this.props.onSkipTurn}
+          onClick={this.handleSkipTurn}
         >
           <SkipIcon />
         </IconButton>
@@ -69,7 +97,6 @@ export default class FooterBar extends Component {
     const {
       openLoginDialog, openRegisterDialog,
       togglePlaylistManager, toggleSettings,
-      joinWaitlist, leaveWaitlist,
       onFavorite, onUpvote, onDownvote
     } = this.props;
     const {
@@ -81,7 +108,7 @@ export default class FooterBar extends Component {
     } = this.props;
     const className = cx('FooterBar', this.props.className);
 
-    const waitlistAction = userInWaitlist ? leaveWaitlist : joinWaitlist;
+    const waitlistAction = userInWaitlist ? this.handleLeaveWaitlist : this.handleJoinWaitlist;
     const waitlistText = userInWaitlist ? 'Leave Waitlist' : 'Join Waitlist';
 
     if (user && !user.isGuest) {
@@ -126,7 +153,7 @@ export default class FooterBar extends Component {
             hoverColor={rawTheme.palette.primary2Color}
             rippleColor={rawTheme.palette.primary3Color}
             className="FooterBar-join"
-            onClick={() => waitlistAction(user)}
+            onClick={waitlistAction}
           >
             {waitlistText}
           </FlatButton>
