@@ -50,6 +50,10 @@
     width: 125px;
     background: $highlight-color;
     cursor: pointer;
+
+    @modifier locked {
+      width: 140px;
+    }
   }
 }
 

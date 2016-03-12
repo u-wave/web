@@ -12,7 +12,7 @@ import { openFavoriteMenu, doUpvote, doDownvote } from '../actions/VoteActionCre
 import { isCurrentDJSelector, canSkipSelector } from '../selectors/boothSelectors';
 import { activePlaylistSelector, nextMediaSelector } from '../selectors/playlistSelectors';
 import { currentUserSelector } from '../selectors/userSelectors';
-import { etaSelector, userInWaitlistSelector } from '../selectors/waitlistSelectors';
+import { etaSelector, userInWaitlistSelector, isLockedSelector } from '../selectors/waitlistSelectors';
 import { currentVoteStatsSelector } from '../selectors/voteSelectors';
 import FooterBar from '../components/FooterBar';
 
@@ -24,6 +24,7 @@ const mapStateToProps = createStructuredSelector({
   userInWaitlist: userInWaitlistSelector,
   userIsDJ: isCurrentDJSelector,
   showSkip: canSkipSelector,
+  waitlistIsLocked: isLockedSelector,
   voteStats: currentVoteStatsSelector
 });
 
