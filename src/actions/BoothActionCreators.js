@@ -43,12 +43,13 @@ export function advance(nextBooth) {
   };
 }
 
-export function skipSelf() {
+export function skipSelf(opts = {}) {
+  const remove = !!opts.remove;
   return (dispatch, getState) => {
     const jwt = tokenSelector(getState());
 
     if (isCurrentDJSelector(getState())) {
-      return post(jwt, '/v1/booth/skip');
+      return post(jwt, '/v1/booth/skip', { remove });
     }
     return Promise.reject(new Error('You\'re not currently playing.'));
   };
