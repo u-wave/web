@@ -5,7 +5,8 @@ import { tokenSelector } from '../selectors/userSelectors';
 import {
   SKIP_DJ_START, SKIP_DJ_COMPLETE,
   MOVE_USER_START, MOVE_USER_COMPLETE,
-  REMOVE_USER_START, REMOVE_USER_COMPLETE
+  REMOVE_USER_START, REMOVE_USER_COMPLETE,
+  SET_USER_ROLE_START, SET_USER_ROLE_COMPLETE
 } from '../constants/actionTypes/moderation';
 
 import {
@@ -111,6 +112,37 @@ export function moveWaitlistUser(user, position) {
         error: true,
         payload: error,
         meta: { user, position }
+      }));
+  };
+}
+
+export function setUserRoleStart(user, role) {
+  return {
+    type: SET_USER_ROLE_START,
+    payload: { user, role }
+  };
+}
+
+export function setUserRoleComplete(user, role) {
+  return {
+    type: SET_USER_ROLE_COMPLETE,
+    payload: { user, role }
+  };
+}
+
+export function setUserRole(user, role) {
+  const userID = typeof user === 'object' ? user._id : user;
+  return (dispatch, getState) => {
+    const jwt = tokenSelector(getState());
+    dispatch(setUserRoleStart(user, role));
+    return put(jwt, `/v1/users/${userID}/role`, { role })
+      .then(res => res.json())
+      .then(() => dispatch(setUserRoleComplete(user, role)))
+      .catch(error => dispatch({
+        type: SET_USER_ROLE_COMPLETE,
+        error: true,
+        payload: error,
+        meta: { user, role }
       }));
   };
 }

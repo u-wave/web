@@ -31,7 +31,8 @@ import { log } from '../actions/ChatActionCreators';
 import {
   skipCurrentDJ,
   moveWaitlistUser, removeWaitlistUser,
-  deleteChatMessagesByUser, deleteAllChatMessages
+  deleteChatMessagesByUser, deleteAllChatMessages,
+  setUserRole
 } from '../actions/ModerationActionCreators';
 import {
   joinWaitlist,
@@ -43,8 +44,11 @@ import {
   waitlistUsersSelector
 } from '../selectors/waitlistSelectors';
 
-const ROLE_MODERATOR = 3;
-const isModerator = state => currentUserSelector(state).role >= ROLE_MODERATOR;
+const ROLE_MODERATOR = 2;
+const ROLE_MANAGER = 3;
+const hasRole = role => state => currentUserSelector(state).role >= role;
+const isModerator = hasRole(ROLE_MODERATOR);
+const isManager = hasRole(ROLE_MANAGER);
 
 register('help', 'List available commands.', {
   action: () => (dispatch, getState) => {
@@ -167,6 +171,39 @@ register(
         return dispatch(moveWaitlistUser(user, position));
       }
       return dispatch(log(`User ${username} is not in the waitlist.`));
+    }
+  }
+);
+
+const roleNames = {
+  user: 0,
+  default: 0,
+  normal: 0,
+  none: 0,
+  special: 1,
+  moderator: 2,
+  mod: 2,
+  manager: 3,
+  admin: 4
+};
+register(
+  'userrole',
+  'Assign a different role to a user. Syntax: "/userrole username role"',
+  {
+    guard: isManager,
+    action: (username, role) => (dispatch, getState) => {
+      if (!username) {
+        return dispatch(log('Provide a user to promote or demote.'));
+      }
+      if (!(role in roleNames)) {
+        return dispatch(log(
+          `Provide a role to promote ${username} to. [user, special, moderator, manager, admin]`
+        ));
+      }
+      const users = userListSelector(getState());
+      const lname = username.toLowerCase();
+      const user = find(users, o => o.username.toLowerCase() === lname);
+      return dispatch(setUserRole(user, roleNames[role]));
     }
   }
 );
