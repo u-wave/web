@@ -3,12 +3,13 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
+import { skipSelf } from '../actions/BoothActionCreators';
 import { openLoginDialog, openRegisterDialog } from '../actions/DialogActionCreators';
 import { togglePlaylistManager, toggleSettings } from '../actions/OverlayActionCreators';
 import { joinWaitlist, leaveWaitlist } from '../actions/WaitlistActionCreators';
 import { openFavoriteMenu, doUpvote, doDownvote } from '../actions/VoteActionCreators';
 
-import { isCurrentDJSelector } from '../selectors/boothSelectors';
+import { isCurrentDJSelector, canSkipSelector } from '../selectors/boothSelectors';
 import { activePlaylistSelector, nextMediaSelector } from '../selectors/playlistSelectors';
 import { currentUserSelector } from '../selectors/userSelectors';
 import { etaSelector, userInWaitlistSelector } from '../selectors/waitlistSelectors';
@@ -26,6 +27,7 @@ const mapStateToProps = createStructuredSelector({
   user: currentUserSelector,
   userInWaitlist: userInWaitlistSelector,
   userIsDJ: isCurrentDJSelector,
+  showSkip: canSkipSelector,
   isFavorite: isFavoriteSelector,
   favoritesCount: favoritesCountSelector,
   isUpvote: isUpvoteSelector,
@@ -39,6 +41,7 @@ function mapDispatchToProps(dispatch) {
     joinWaitlist, leaveWaitlist,
     openLoginDialog, openRegisterDialog,
     togglePlaylistManager, toggleSettings,
+    onSkipTurn: skipSelf,
     onFavorite: openFavoriteMenu,
     onUpvote: doUpvote,
     onDownvote: doDownvote

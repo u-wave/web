@@ -49,3 +49,16 @@ export const videoSelector = createStructuredSelector({
   media: mediaSelector,
   startTime: startTimeSelector
 });
+
+export const canSkipSelector = createSelector(
+  historyIDSelector,
+  isCurrentDJSelector,
+  currentUserSelector,
+  (historyID, isCurrentDJ, user) => {
+    if (!historyID || !user) {
+      return false;
+    }
+    // TODO also allow when user is moderator
+    return isCurrentDJ;
+  }
+);

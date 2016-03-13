@@ -3,7 +3,6 @@
 @component AudienceResponse {
   height: 100%;
   width: 100%;
-  padding-right: 1rem;
   display: flex;
   justify-content: space-around;
   align-items: center;
