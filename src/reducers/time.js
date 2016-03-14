@@ -1,9 +1,17 @@
-import { TICK } from '../constants/actionTypes/time';
+import { TICK, OFFSET } from '../constants/actionTypes/time';
 
-const initialState = 0;
+const initialState = {
+  time: 0,
+  offset: 0
+};
 
 export default function reduce(state = initialState, action = {}) {
-  return action.type === TICK
-    ? action.payload
-    : state;
+  switch (action.type) {
+  case TICK:
+    return { ...state, time: action.payload };
+  case OFFSET:
+    return { ...state, offset: action.payload };
+  default:
+    return state;
+  }
 }
