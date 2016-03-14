@@ -13,7 +13,7 @@ export const mediaDurationSelector = createSelector(
   media => media ? media.end - media.start : 0
 );
 
-const timeElapsedSelector = createSelector(
+export const timeElapsedSelector = createSelector(
   startTimeSelector,
   currentTimeSelector,
   // in seconds! because media duration is in seconds, too.
@@ -47,7 +47,7 @@ export const isCurrentDJSelector = createSelector(
 export const videoSelector = createStructuredSelector({
   historyID: historyIDSelector,
   media: mediaSelector,
-  startTime: startTimeSelector
+  seek: timeElapsedSelector
 });
 
 export const canSkipSelector = createSelector(

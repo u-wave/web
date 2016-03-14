@@ -31,7 +31,7 @@ export default class YouTubePlayer extends React.Component {
           {enabled && <YouTubePlayerEmbed
             media={media}
             active={active}
-            seek={this.props.seek}
+            seek={Math.round(this.props.seek)}
             volume={this.props.volume}
           />}
         </div>
