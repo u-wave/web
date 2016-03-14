@@ -31,3 +31,12 @@ export const isDownvoteSelector = createIsSelector(downvotesSelector);
 export const favoritesCountSelector = createCountSelector(favoritesSelector);
 export const upvotesCountSelector = createCountSelector(upvotesSelector);
 export const downvotesCountSelector = createCountSelector(downvotesSelector);
+
+export const currentVoteStatsSelector = createStructuredSelector({
+  isFavorite: isFavoriteSelector,
+  isUpvote: isUpvoteSelector,
+  isDownvote: isDownvoteSelector,
+  favoritesCount: favoritesCountSelector,
+  upvotesCount: upvotesCountSelector,
+  downvotesCount: downvotesCountSelector
+});

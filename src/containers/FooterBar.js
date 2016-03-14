@@ -13,11 +13,7 @@ import { isCurrentDJSelector, canSkipSelector } from '../selectors/boothSelector
 import { activePlaylistSelector, nextMediaSelector } from '../selectors/playlistSelectors';
 import { currentUserSelector } from '../selectors/userSelectors';
 import { etaSelector, userInWaitlistSelector } from '../selectors/waitlistSelectors';
-import {
-  isFavoriteSelector, favoritesCountSelector,
-  isDownvoteSelector, downvotesCountSelector,
-  isUpvoteSelector, upvotesCountSelector
-} from '../selectors/voteSelectors';
+import { currentVoteStatsSelector } from '../selectors/voteSelectors';
 import FooterBar from '../components/FooterBar';
 
 const mapStateToProps = createStructuredSelector({
@@ -28,12 +24,7 @@ const mapStateToProps = createStructuredSelector({
   userInWaitlist: userInWaitlistSelector,
   userIsDJ: isCurrentDJSelector,
   showSkip: canSkipSelector,
-  isFavorite: isFavoriteSelector,
-  favoritesCount: favoritesCountSelector,
-  isUpvote: isUpvoteSelector,
-  upvotesCount: upvotesCountSelector,
-  isDownvote: isDownvoteSelector,
-  downvotesCount: downvotesCountSelector
+  voteStats: currentVoteStatsSelector
 });
 
 function mapDispatchToProps(dispatch) {
