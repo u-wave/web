@@ -17,7 +17,7 @@ export const timeElapsedSelector = createSelector(
   startTimeSelector,
   currentTimeSelector,
   // in seconds! because media duration is in seconds, too.
-  (startTime, currentTime) => startTime ? (currentTime - startTime) / 1000 : 0
+  (startTime, currentTime) => startTime ? Math.max((currentTime - startTime) / 1000, 0) : 0
 );
 
 export const timeRemainingSelector = createSelector(
