@@ -29,7 +29,10 @@ export const timeRemainingSelector = createSelector(
 export const mediaProgressSelector = createSelector(
   mediaDurationSelector,
   timeElapsedSelector,
-  (duration, elapsed) => duration ? elapsed / duration : 0
+  (duration, elapsed) => duration
+    // Ensure that the result is between 0 and 1
+    ? Math.max(0, Math.min(1, elapsed / duration))
+    : 0
 );
 
 export const djSelector = createSelector(
