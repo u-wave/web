@@ -1,4 +1,6 @@
 import conf from './dev-server-config.json';
+import { readFileSync } from 'fs';
+import { join } from 'path';
 
 function tryRequire(path, message) {
   try {
@@ -26,15 +28,17 @@ export default function serveTask({ port = conf.server.port }) {
     throw reason;
   });
 
-  const server = new UWaveServer(conf);
-  const v1 = new UWaveAPI(server, conf);
+  const uw = new UWaveServer(conf);
+  const v1 = new UWaveAPI(uw, {
+    secret: readFileSync(join(__dirname, './dev-test-secret.txt'))
+  });
 
-  server.on('stopped', () => process.exit(0));
+  uw.on('stopped', () => process.exit(0));
 
-  server.app
+  uw.app
     .use('/v1', v1.router)
     .use(uwaveClient());
 
-  server.start();
-  server.server.listen(port);
+  uw.start();
+  uw.server.listen(port);
 }
