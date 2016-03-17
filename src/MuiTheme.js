@@ -6,10 +6,10 @@ export default {
   spacing: Spacing,
   fontFamily: 'Open Sans, sans-serif',
   rankColors: {
-    admin: '#ce1836',
-    manager: '#f85931',
-    moderator: '#a3a948',
-    special: '#edb92e',
+    admin: '#ff3b74',
+    manager: '#05daa5',
+    moderator: '#00b3dc',
+    special: '#fc911d',
     default: ''
   },
   palette: {
