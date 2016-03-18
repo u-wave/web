@@ -1,4 +1,3 @@
-import compose from 'fj-compose';
 import { get } from '../utils/Request';
 
 import { TICK, OFFSET } from '../constants/actionTypes/time';
@@ -29,5 +28,8 @@ export function sync() {
 }
 
 export function startTicking() {
-  return dispatch => setInterval(compose(dispatch, tick), 1000);
+  return dispatch => {
+    dispatch(tick());
+    setInterval(() => dispatch(tick()), 1000);
+  };
 }
