@@ -12,6 +12,7 @@ import {
   setPlaylists, selectPlaylist, activatePlaylistComplete
 } from './PlaylistActionCreators';
 import { closeLoginDialog } from './DialogActionCreators';
+import { syncTimestamps } from './TickerActionCreators';
 import { setUsers } from './UserActionCreators';
 import { setWaitList } from './WaitlistActionCreators';
 import { currentUserSelector, tokenSelector } from '../selectors/userSelectors';
@@ -59,9 +60,13 @@ export function initState() {
   return (dispatch, getState) => {
     const jwt = tokenSelector(getState());
     dispatch({ type: LOAD_ALL_PLAYLISTS_START });
+    const beforeTime = Date.now();
     get(jwt, '/v1/now')
       .then(res => res.json())
-      .then(state => dispatch(loadedState(state)));
+      .then(state => {
+        dispatch(syncTimestamps(beforeTime, state.time));
+        dispatch(loadedState(state));
+      });
 
     dispatch(loadHistory());
   };

@@ -17,7 +17,7 @@ export default class Video extends Component {
     isMuted: PropTypes.bool,
     historyID: PropTypes.string,
     media: PropTypes.object,
-    startTime: PropTypes.number
+    seek: PropTypes.number
   };
 
   shouldComponentUpdate(nextProps) {
@@ -28,14 +28,13 @@ export default class Video extends Component {
     const {
       enabled, size,
       volume, isMuted,
-      media, startTime
+      media, seek
     } = this.props;
 
     if (!media) {
       return <div className="Video" />;
     }
 
-    const seek = Math.round((Date.now() - startTime) / 1000);
     const props = {
       enabled,
       media, seek, size,
