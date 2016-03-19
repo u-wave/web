@@ -94,6 +94,7 @@
     "postcss-calc": "^5.0.0",
     "postcss-color-function": "^2.0.0",
     "postcss-import": "^7.0.0",
+    "postcss-map": "^0.8.0",
     "postcss-nested": "^1.0.0",
     "postcss-simple-vars": "^1.0.1",
     "proxyquire": "^1.7.4",

@@ -2,6 +2,7 @@ import cx from 'classnames';
 import React, { Component, PropTypes } from 'react';
 import IconButton from 'material-ui/lib/icon-button';
 import EditIcon from 'material-ui/lib/svg-icons/editor/mode-edit';
+import muiThemeable from 'material-ui/lib/muiThemeable';
 
 import Avatar from '../Avatar';
 
@@ -13,12 +14,14 @@ const buttonStyle = {
   verticalAlign: 'bottom'
 };
 
+@muiThemeable
 export default class Profile extends Component {
   static propTypes = {
     className: PropTypes.string,
     user: PropTypes.object.isRequired,
 
-    onChangeUsername: PropTypes.func.isRequired
+    onChangeUsername: PropTypes.func.isRequired,
+    muiTheme: PropTypes.object.isRequired
   };
 
   handleNameChange() {
@@ -29,7 +32,7 @@ export default class Profile extends Component {
   }
 
   render() {
-    const { className, user } = this.props;
+    const { className, user, muiTheme } = this.props;
     return (
       <div className={cx('SettingsPanelProfile', className)}>
         <Avatar
@@ -45,7 +48,7 @@ export default class Profile extends Component {
           >
             <EditIcon
               color="#777"
-              hoverColor="#fff"
+              hoverColor={muiTheme.rawTheme.palette.textColor}
             />
           </IconButton>
         </h2>

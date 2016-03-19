@@ -1,15 +1,18 @@
 import cx from 'classnames';
 import React, { Component, PropTypes } from 'react';
 import CreatePlaylistIcon from 'material-ui/lib/svg-icons/content/add';
+import muiThemeable from 'material-ui/lib/muiThemeable';
 
+@muiThemeable
 export default class NewPlaylist extends Component {
   static propTypes = {
     className: PropTypes.string,
-    onClick: PropTypes.func
+    onClick: PropTypes.func,
+    muiTheme: PropTypes.object
   };
 
   render() {
-    const { className, onClick } = this.props;
+    const { className, onClick, muiTheme } = this.props;
     return (
       <div
         role="menuitem"
@@ -18,7 +21,7 @@ export default class NewPlaylist extends Component {
       >
         <div className="PlaylistMenuRow-title">
           <div className="PlaylistMenuRow-active-icon">
-            <CreatePlaylistIcon color="#fff" />
+            <CreatePlaylistIcon color={muiTheme.rawTheme.palette.textColor} />
           </div>
           Create Playlist
         </div>

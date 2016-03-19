@@ -10,7 +10,7 @@
   border-bottom-color: color($highlight-color blend(white 5%));
   border-right-color: color($highlight-color blend(white 5%));
 
-  color: #fff;
+  color: $text-color;
   text-transform: uppercase;
   font-size: 12pt;
 

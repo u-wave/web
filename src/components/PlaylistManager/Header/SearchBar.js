@@ -1,14 +1,18 @@
 import cx from 'classnames';
 import React, { Component, PropTypes } from 'react';
 import SearchIcon from 'material-ui/lib/svg-icons/action/search';
+import muiThemeable from 'material-ui/lib/muiThemeable';
+
 import SourcePicker from './SourcePicker';
 
+@muiThemeable
 export default class SearchBar extends Component {
   static propTypes = {
     className: PropTypes.string,
     source: PropTypes.string,
     onSubmit: PropTypes.func,
-    onSourceChange: PropTypes.func
+    onSourceChange: PropTypes.func,
+    muiTheme: PropTypes.object.isRequired
   };
 
   state = { focused: false };
@@ -28,12 +32,12 @@ export default class SearchBar extends Component {
   }
 
   render() {
-    const { source, onSourceChange } = this.props;
+    const { source, onSourceChange, muiTheme } = this.props;
     const { focused } = this.state;
     return (
       <div className={cx('SearchBar', focused ? 'is-focused' : '', this.props.className)}>
         <div className="SearchBar-icon">
-          <SearchIcon color="#fff" />
+          <SearchIcon color={muiTheme.rawTheme.palette.textColor} />
         </div>
         <SourcePicker
           className="SearchBar-source"
