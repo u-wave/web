@@ -23,12 +23,7 @@ export default class FooterBar extends Component {
     userInWaitlist: PropTypes.bool,
     userIsDJ: PropTypes.bool,
     showSkip: PropTypes.bool,
-    isFavorite: PropTypes.bool,
-    favoritesCount: PropTypes.number,
-    isUpvote: PropTypes.bool,
-    upvotesCount: PropTypes.number,
-    isDownvote: PropTypes.bool,
-    downvotesCount: PropTypes.number,
+    voteStats: PropTypes.object,
 
     openLoginDialog: PropTypes.func,
     openRegisterDialog: PropTypes.func,
@@ -103,8 +98,7 @@ export default class FooterBar extends Component {
       user, userInWaitlist, userIsDJ,
       playlist, nextMedia, showSkip,
       eta,
-      isFavorite, isUpvote, isDownvote,
-      favoritesCount, upvotesCount, downvotesCount
+      voteStats
     } = this.props;
     const className = cx('FooterBar', this.props.className);
 
@@ -139,12 +133,7 @@ export default class FooterBar extends Component {
               onFavorite={onFavorite}
               onUpvote={onUpvote}
               onDownvote={onDownvote}
-              isFavorite={isFavorite}
-              favoritesCount={favoritesCount}
-              isUpvote={isUpvote}
-              upvotesCount={upvotesCount}
-              isDownvote={isDownvote}
-              downvotesCount={downvotesCount}
+              {...voteStats}
             />
           </div>
           {this.renderSkipButton()}
