@@ -85,7 +85,7 @@ function playMentionSound() {
 }
 
 function hasMention(text, username) {
-  const rx = new RegExp(`@${escapeRegExp(username)}\\b`);
+  const rx = new RegExp(`@${escapeRegExp(username)}\\b`, 'i');
   return rx.test(text);
 }
 

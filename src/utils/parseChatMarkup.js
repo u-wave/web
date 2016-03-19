@@ -98,7 +98,7 @@ function parse(message, opts) {
     case 'strike':
       return { type: 'strike', content: parse(token.text, opts) };
     case 'mention':
-      const mention = users && find(users, user => user.username === token.text);
+      const mention = users && find(users, user => user.username.toLowerCase() === token.text.toLowerCase());
       return mention
         ? { type: 'mention', user: mention }
         : token.raw;
