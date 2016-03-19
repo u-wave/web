@@ -45,6 +45,13 @@ Socket.connect(store);
 // wants this!
 require('react-tap-event-plugin')();
 
+const uw = createExtensions(store);
+
+if (process.env.UWAVE_CONFIG) {
+  const config = require(process.env.UWAVE_CONFIG);
+  (config.default || config)(uw);
+}
+
 // Render üWave! 😱
 ReactDOM.render(
   // <Provider> does some magic to make all of the @connect calls in the React
@@ -62,4 +69,4 @@ ReactDOM.render(
 // page.
 window.debug = require('debug');
 
-window.uw = createExtensions(store);
+window.uw = uw;
