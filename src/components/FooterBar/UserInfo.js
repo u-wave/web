@@ -2,6 +2,7 @@ import cx from 'classnames';
 import * as React from 'react';
 import pure from 'recompose/pure';
 import SettingsIcon from 'material-ui/svg-icons/action/settings';
+import muiThemeable from 'material-ui/styles/muiThemeable';
 
 import Avatar from '../Avatar';
 
@@ -10,7 +11,7 @@ const fullSizeStyle = {
   height: '100%'
 };
 
-const UserInfo = ({ className, user, ...attrs }) => (
+const UserInfo = ({ className, user, muiTheme, ...attrs }) => (
   <div
     className={cx('UserInfo', className)}
     {...attrs}
@@ -21,7 +22,7 @@ const UserInfo = ({ className, user, ...attrs }) => (
     />
     <div className="UserInfo-settings">
       <SettingsIcon
-        color="#fff"
+        color={muiTheme.palette.textColor}
         style={fullSizeStyle}
       />
     </div>
@@ -30,7 +31,8 @@ const UserInfo = ({ className, user, ...attrs }) => (
 
 UserInfo.propTypes = {
   className: React.PropTypes.string,
+  muiTheme: React.PropTypes.object.isRequired,
   user: React.PropTypes.object.isRequired
 };
 
-export default pure(UserInfo);
+export default muiThemeable()(pure(UserInfo));

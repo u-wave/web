@@ -1,6 +1,7 @@
 import * as React from 'react';
 import IconButton from 'material-ui/IconButton';
 import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
+import muiThemeable from 'material-ui/styles/muiThemeable';
 
 import PromptDialog from '../Dialogs/PromptDialog';
 
@@ -18,8 +19,11 @@ const changeNameIconStyle = {
   padding: 2
 };
 
+@muiThemeable()
 export default class ChangeUsernameButton extends React.Component {
   static propTypes = {
+    muiTheme: React.PropTypes.object.isRequired,
+
     onChangeUsername: React.PropTypes.func.isRequired,
     initialUsername: React.PropTypes.string
   };
@@ -45,6 +49,11 @@ export default class ChangeUsernameButton extends React.Component {
       .then(this.closeDialog.bind(this));
 
   render() {
+    const {
+      muiTheme,
+      initialUsername
+    } = this.props;
+
     return (
       <IconButton
         style={changeNameButtonStyle}
@@ -53,14 +62,14 @@ export default class ChangeUsernameButton extends React.Component {
       >
         <EditIcon
           color="#777"
-          hoverColor="#fff"
+          hoverColor={muiTheme.palette.textColor}
         />
         {this.state.changingUsername && (
           <PromptDialog
             title="Change Username"
             submitLabel="Save"
             icon={<EditIcon color="#777" />}
-            value={this.props.initialUsername}
+            value={initialUsername}
             onSubmit={this.handleSubmit}
             onCancel={this.handleClose}
           />

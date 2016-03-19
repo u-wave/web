@@ -1,12 +1,16 @@
 import * as React from 'react';
 import IconButton from 'material-ui/IconButton';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
+import muiThemeable from 'material-ui/styles/muiThemeable';
 
 import ConfirmDialog from '../../Dialogs/ConfirmDialog';
 import FormGroup from '../../Form/Group';
 
+@muiThemeable()
 export default class DeletePlaylistButton extends React.Component {
   static propTypes = {
+    muiTheme: React.PropTypes.object.isRequired,
+
     onDelete: React.PropTypes.func.isRequired,
     onNotDeletable: React.PropTypes.func.isRequired,
     active: React.PropTypes.bool
@@ -37,7 +41,12 @@ export default class DeletePlaylistButton extends React.Component {
       .then(this.closeDialog.bind(this));
 
   render() {
-    const hoverColor = this.props.active ? '#555' : '#fff';
+    const {
+      muiTheme,
+      active
+    } = this.props;
+
+    const hoverColor = active ? '#555' : muiTheme.palette.textColor;
     return (
       <IconButton
         onClick={this.handleOpen}

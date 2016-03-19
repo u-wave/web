@@ -16,11 +16,11 @@
     padding: 0 6px;
     border: 1px solid $chat-border-color;
     background: #222222;
-    color: #fff;
+    color: $text-color;
     font-size: 10pt;
 
     @when focused {
-      border-color: #9d2053;
+      border-color: $highbright-color;
       outline: none;
     }
   }

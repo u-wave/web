@@ -1,12 +1,15 @@
 import React, { Component, PropTypes } from 'react';
 import { findDOMNode } from 'react-dom';
 import AddIcon from 'material-ui/svg-icons/content/add';
+import muiThemeable from 'material-ui/styles/muiThemeable';
 
 import Action from './Action';
 
+@muiThemeable()
 export default class AddToPlaylist extends Component {
   static propTypes = {
-    onAdd: PropTypes.func
+    onAdd: PropTypes.func,
+    muiTheme: PropTypes.object.isRequired
   };
 
   position() {
@@ -18,14 +21,14 @@ export default class AddToPlaylist extends Component {
   }
 
   render() {
-    const { onAdd, ...props } = this.props;
+    const { onAdd, muiTheme, ...props } = this.props;
     return (
       <Action
         ref="button"
         {...props}
         onAction={media => onAdd(this.position(), media)}
       >
-        <AddIcon color="#fff" />
+        <AddIcon color={muiTheme.palette.textColor} />
       </Action>
     );
   }

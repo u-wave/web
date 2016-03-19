@@ -1,11 +1,15 @@
 import cx from 'classnames';
 import * as React from 'react';
 import CreatePlaylistIcon from 'material-ui/svg-icons/content/add';
+import muiThemeable from 'material-ui/styles/muiThemeable';
 
 import PromptDialog from '../../Dialogs/PromptDialog';
 
+@muiThemeable()
 export default class NewPlaylist extends React.Component {
   static propTypes = {
+    muiTheme: React.PropTypes.object.isRequired,
+
     className: React.PropTypes.string,
     onCreatePlaylist: React.PropTypes.func.isRequired
   };
@@ -31,7 +35,11 @@ export default class NewPlaylist extends React.Component {
       .then(this.closeDialog.bind(this));
 
   render() {
-    const { className } = this.props;
+    const {
+      muiTheme,
+      className
+    } = this.props;
+
     return (
       <div
         role="menuitem"
@@ -40,7 +48,7 @@ export default class NewPlaylist extends React.Component {
       >
         <div className="PlaylistMenuRow-title">
           <div className="PlaylistMenuRow-active-icon">
-            <CreatePlaylistIcon color="#fff" />
+            <CreatePlaylistIcon color={muiTheme.palette.textColor} />
           </div>
           Create Playlist
         </div>

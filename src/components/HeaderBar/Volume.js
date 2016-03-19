@@ -1,10 +1,11 @@
 import cx from 'classnames';
-import React from 'react';
+import * as React from 'react';
 import Slider from 'material-ui/Slider';
 import VolumeDownIcon from 'material-ui/svg-icons/av/volume-down';
 import VolumeMuteIcon from 'material-ui/svg-icons/av/volume-mute';
 import VolumeOffIcon from 'material-ui/svg-icons/av/volume-off';
 import VolumeUpIcon from 'material-ui/svg-icons/av/volume-up';
+import muiThemeable from 'material-ui/styles/muiThemeable';
 
 const sliderStyle = {
   // The material-ui Slider has a 24px margin on top that we can't override,
@@ -14,6 +15,7 @@ const sliderStyle = {
   marginBottom: 3
 };
 
+@muiThemeable()
 export default class Volume extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
@@ -22,7 +24,8 @@ export default class Volume extends React.Component {
 
     onVolumeChange: React.PropTypes.func,
     onMute: React.PropTypes.func,
-    onUnmute: React.PropTypes.func
+    onUnmute: React.PropTypes.func,
+    muiTheme: React.PropTypes.object.isRequired
   };
 
   shouldComponentUpdate(nextProps) {
@@ -43,18 +46,26 @@ export default class Volume extends React.Component {
   };
 
   render() {
+    const {
+      muiTheme,
+      className,
+      muted,
+      volume
+    } = this.props;
+
     let VolumeIcon = VolumeUpIcon;
-    if (this.props.muted) {
+    if (muted) {
       VolumeIcon = VolumeOffIcon;
-    } else if (this.props.volume === 0) {
+    } else if (volume === 0) {
       VolumeIcon = VolumeMuteIcon;
-    } else if (this.props.volume < 50) {
+    } else if (volume < 50) {
       VolumeIcon = VolumeDownIcon;
     }
+
     return (
-      <div className={cx('VolumeSlider', this.props.className)}>
+      <div className={cx('VolumeSlider', className)}>
         <VolumeIcon
-          color="#fff"
+          color={muiTheme.palette.textColor}
           onClick={this.handleMuteClick}
         />
         <div className="VolumeSlider-slider">
@@ -62,7 +73,7 @@ export default class Volume extends React.Component {
             name="volume"
             min={0}
             max={100}
-            defaultValue={this.props.volume}
+            defaultValue={volume}
             style={sliderStyle}
             onChange={this.handleVolumeChange}
           />
