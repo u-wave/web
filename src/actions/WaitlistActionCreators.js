@@ -1,7 +1,7 @@
 import {
   LOAD,
   LOCK, CLEAR,
-  UPDATE, JOIN, LEAVE,
+  UPDATE, JOIN, LEAVE, MOVE,
   DO_JOIN_START, DO_JOIN_COMPLETE,
   DO_LEAVE_START, DO_LEAVE_COMPLETE,
   DO_LOCK_START, DO_LOCK_COMPLETE,
@@ -102,6 +102,17 @@ export function leftWaitlist({ userID, waitlist }) {
   return {
     type: LEAVE,
     payload: { userID, waitlist }
+  };
+}
+
+export function movedInWaitlist({ userID, moderatorID, position, waitlist }) {
+  return dispatch => {
+    dispatch({
+      type: MOVE,
+      payload: { userID, position },
+      meta: { moderatorID }
+    });
+    dispatch(updatedWaitlist(waitlist));
   };
 }
 

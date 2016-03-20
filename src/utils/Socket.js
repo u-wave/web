@@ -7,7 +7,7 @@ import { cyclePlaylist } from '../actions/PlaylistActionCreators';
 import { join as userJoin, leave as userLeave, changeUsername } from '../actions/UserActionCreators';
 import {
   joinedWaitlist, leftWaitlist,
-  updatedWaitlist,
+  updatedWaitlist, movedInWaitlist,
   setLocked as setWaitlistLocked
 } from '../actions/WaitlistActionCreators';
 import { favorited, receiveVote } from '../actions/VoteActionCreators';
@@ -90,6 +90,9 @@ function onMessage(dispatch, json) {
     break;
   case 'waitlistLock':
     dispatch(setWaitlistLocked(data.locked));
+    break;
+  case 'waitlistMove':
+    dispatch(movedInWaitlist(data));
     break;
 
   case 'playlistCycle':

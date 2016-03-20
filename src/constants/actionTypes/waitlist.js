@@ -6,6 +6,7 @@ export const CLEAR = 'waitlist/CLEAR';
 export const UPDATE = 'waitlist/UPDATE';
 export const JOIN = 'waitlist/JOIN';
 export const LEAVE = 'waitlist/LEAVE';
+export const MOVE = 'waitlist/MOVE';
 
 export const DO_JOIN_START = 'waitlist/DO_JOIN_START';
 export const DO_JOIN_COMPLETE = 'waitlist/DO_JOIN_COMPLETE';
