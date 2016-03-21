@@ -4,6 +4,7 @@ import { translate } from 'react-i18next';
 import Dialog from 'material-ui/Dialog';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
+import ResetPasswordForm from './ResetPasswordForm';
 
 const contentStyle = {
   maxWidth: 350
@@ -20,6 +21,10 @@ export default class LoginDialog extends React.Component {
     open: React.PropTypes.bool,
     show: React.PropTypes.string,
     onCloseDialog: React.PropTypes.func
+    onLogin: React.PropTypes.func,
+    onRegister: React.PropTypes.func,
+    onResetPassword: React.PropTypes.func,
+    onCloseDialog: React.PropTypes.func
   };
 
   render() {
@@ -29,6 +34,9 @@ export default class LoginDialog extends React.Component {
     if (show === 'register') {
       title = t('login.register');
       form = <RegisterForm {...this.props} />;
+    } else if (show === 'reset') {
+      title = 'Reset Password';
+      form = <ResetPasswordForm {...this.props} />;
     } else {
       title = t('login.login');
       form = <LoginForm {...this.props} />;
