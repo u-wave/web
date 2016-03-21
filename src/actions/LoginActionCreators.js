@@ -19,8 +19,8 @@ import { receiveMotd } from './ChatActionCreators';
 import {
   setPlaylists, selectPlaylist, activatePlaylistComplete
 } from './PlaylistActionCreators';
-import { closeLoginDialog } from './DialogActionCreators';
 import { syncTimestamps } from './TickerActionCreators';
+import { openResetPasswordDialog, closeLoginDialog } from './DialogActionCreators';
 import { setUsers } from './UserActionCreators';
 import { setVoteStats } from './VoteActionCreators';
 import { setWaitList } from './WaitlistActionCreators';
@@ -162,5 +162,13 @@ export function logout() {
     } else {
       dispatch(logoutComplete());
     }
+  };
+}
+
+export function resetPassword(email) {
+  return dispatch => {
+    const jwt = tokenSelector(getState());
+    post(jwt, `/v1/auth/password/reset`, email)
+      .then(dispatch);
   };
 }

@@ -44,3 +44,14 @@ export function openRegisterDialog() {
 export function closeLoginDialog() {
   return { type: CLOSE_LOGIN_DIALOG };
 }
+
+export function openResetPasswordDialog() {
+  return {
+    type: OPEN_RESET_PASSWORD_DIALOG,
+    payload: { show: 'reset' }
+  };
+}
+
+export function closeResetPasswordDialog() {
+  return { type: CLOSE_RESET_PASSWORD_DIALOG };
+}
