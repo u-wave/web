@@ -116,33 +116,6 @@ export function movedInWaitlist({ userID, moderatorID, position, waitlist }) {
   };
 }
 
-export function modAdd({ userID, moderatorID, position, waitlist }) {
-  return {
-    type: 'addToWaitlist',
-    payload: {
-      userID, moderatorID, position, waitlist
-    }
-  };
-}
-
-export function modMove({ userID, moderatorID, position, waitlist }) {
-  return {
-    type: 'moveInWaitlist',
-    payload: {
-      userID, moderatorID, position, waitlist
-    }
-  };
-}
-
-export function modRemove({ userID, moderatorID, reason, waitlist }) {
-  return {
-    type: 'removeFromWaitlist',
-    payload: {
-      userID, moderatorID, reason, waitlist
-    }
-  };
-}
-
 function putLock(status) {
   return (dispatch, getState) => {
     const jwt = tokenSelector(getState());
