@@ -15,7 +15,7 @@
     width: calc(100% - 32px);
     padding: 0 6px;
     border: 1px solid $chat-border-color;
-    background: #1b1b1b;
+    background: #222222;
     color: #fff;
     font-size: 10pt;
 
