@@ -10,14 +10,14 @@
   width: 100%;
 
   @descendent input {
-    margin: 15px 15px 16px 15px;
+    margin: 7px 0px 0px 15px;
     height: 28px;
-    width: calc(100% - 32px);
+    width: 100%;
     padding: 0 6px;
-    border: 1px solid $chat-border-color;
+    border: 0px solid $chat-border-color;
     background: #222222;
-    color: #fff;
-    font-size: 10pt;
+    color: white;
+    font-size: 5pt;
 
     @when focused {
       border-color: #9d2053;

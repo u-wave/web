@@ -1,7 +1,8 @@
 import cx from 'classnames';
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
+import AutoComplete from 'material-ui/lib/auto-complete';
 
-export default class Input extends Component {
+export default class Input extends React.Component {
   static propTypes = {
     send: PropTypes.func
   };
@@ -21,23 +22,36 @@ export default class Input extends Component {
       if (value.length > 0) {
         this.props.send(value);
       }
-      e.target.value = '';
+      e.target.searchText = '';
     }
   }
 
+  handleSelect() { this.setState({ searchText: '' }); }
+  handleUpdateInput(t) { this.setState({ searchText: t }); }
+
   render() {
+    const dataSource = [ '/skip', '/setrole', '/wladd', '/wlremove' ];
     const { focused } = this.state;
     const focusClass = focused ? 'is-focused' : '';
+
     return (
       <div className={cx('ChatInput', focusClass)}>
-        <input
-          className={cx('ChatInput-input', focusClass)}
-          type="text"
-          placeholder={focused ? '' : 'Click here to chat!'}
-          onFocus={::this.onFocus}
-          onBlur={::this.onBlur}
-          onKeyDown={::this.onKeyDown}
-        />
+      <AutoComplete
+        className={cx('ChatInput-input', focusClass)}
+        fullWidth={false}
+        style={{
+          width: '95%',
+          color: '#000'
+        }}
+        hintText="Click here to chat!"
+        filter={AutoComplete.fuzzyFilter}
+        dataSource={dataSource}
+        onKeyDown={::this.onKeyDown}
+        searchText={this.state.searchText}
+        searchText={this.state.searchText}
+        onNewRequest={this.handleSelect.bind(this)}
+        onUpdateInput={this.handleUpdateInput.bind(this)}
+      />
       </div>
     );
   }
