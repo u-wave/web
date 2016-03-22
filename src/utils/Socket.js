@@ -4,7 +4,12 @@ import {
   removeMessage, removeMessagesByUser, removeAllMessages
 } from '../actions/ChatActionCreators';
 import { cyclePlaylist } from '../actions/PlaylistActionCreators';
-import { join as userJoin, leave as userLeave, changeUsername } from '../actions/UserActionCreators';
+import {
+  join as userJoin,
+  leave as userLeave,
+  changeUsername,
+  changeUserRole
+} from '../actions/UserActionCreators';
 import {
   joinedWaitlist, leftWaitlist,
   updatedWaitlist, movedInWaitlist,
@@ -107,6 +112,9 @@ function onMessage(dispatch, json) {
     break;
   case 'nameChange':
     dispatch(changeUsername(data.userID, data.username));
+    break;
+  case 'roleChange':
+    dispatch(changeUserRole(data.userID, data.role));
     break;
   default:
     debug('!unknown socket message type');
