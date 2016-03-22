@@ -37,21 +37,21 @@ export default class Input extends React.Component {
     return (
       <div className={cx('ChatInput', focusClass)}>
       <AutoComplete
-      className={cx('ChatInput-input', focusClass)}
+        className={cx('ChatInput-input', focusClass)}
         fullWidth={false}
         style={{
           width: '95%',
           color: '#000'
         }}
-      hintText="Click here to chat!"
-      filter={AutoComplete.fuzzyFilter}
+        hintText="Click here to chat!"
+        filter={AutoComplete.fuzzyFilter}
         dataSource={dataSource}
         onKeyDown={::this.onKeyDown}
         searchText={this.state.searchText}
         searchText={this.state.searchText}
         onNewRequest={this.handleSelect.bind(this)}
         onUpdateInput={this.handleUpdateInput.bind(this)}
-          />
+      />
       </div>
     );
   }
