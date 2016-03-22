@@ -1,7 +1,6 @@
 import cx from 'classnames';
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 import AutoComplete from 'material-ui/lib/auto-complete';
-import MenuItem from 'material-ui/lib/menus/menu-item';
 
 export default class Input extends React.Component {
   static propTypes = {
@@ -27,9 +26,8 @@ export default class Input extends React.Component {
     }
   }
 
-  handleSelect(t) { this.setState( { searchText: '' }); }
+  handleSelect() { this.setState({ searchText: '' }); }
   handleUpdateInput(t) { this.setState({ searchText: t }); }
-
 
   render() {
     const dataSource = [ '/skip', '/setrole', '/wladd', '/wlremove' ];
@@ -40,20 +38,20 @@ export default class Input extends React.Component {
       <div className={cx('ChatInput', focusClass)}>
       <AutoComplete
       className={cx('ChatInput-input', focusClass)}
-      fullWidth={false}
-      style={{
-        width: '95%',
-        color: '#000'
-      }}
+        fullWidth={false}
+        style={{
+          width: '95%',
+          color: '#000'
+        }}
       hintText="Click here to chat!"
       filter={AutoComplete.fuzzyFilter}
-      dataSource={dataSource}
-      onKeyDown={::this.onKeyDown}
-      searchText={this.state.searchText}
-      searchText={this.state.searchText}
-      onNewRequest={this.handleSelect.bind(this)}
-      onUpdateInput={this.handleUpdateInput.bind(this)}
-        />
+        dataSource={dataSource}
+        onKeyDown={::this.onKeyDown}
+        searchText={this.state.searchText}
+        searchText={this.state.searchText}
+        onNewRequest={this.handleSelect.bind(this)}
+        onUpdateInput={this.handleUpdateInput.bind(this)}
+          />
       </div>
     );
   }
