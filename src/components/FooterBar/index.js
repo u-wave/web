@@ -23,6 +23,7 @@ export default class FooterBar extends Component {
     user: PropTypes.object,
     userInWaitlist: PropTypes.bool,
     userIsDJ: PropTypes.bool,
+    currentDJ: PropTypes.object,
     showSkip: PropTypes.bool,
     waitlistIsLocked: PropTypes.bool,
     voteStats: PropTypes.object,
@@ -34,6 +35,7 @@ export default class FooterBar extends Component {
     joinWaitlist: PropTypes.func,
     leaveWaitlist: PropTypes.func,
     onSkipTurn: PropTypes.func.isRequired,
+    onModSkip: PropTypes.func.isRequired,
     onFavorite: PropTypes.func,
     onUpvote: PropTypes.func,
     onDownvote: PropTypes.func
@@ -52,9 +54,13 @@ export default class FooterBar extends Component {
   }
 
   handleSkipTurn() {
-    if (this.props.showSkip) {
-      return this.props.onSkipTurn({ remove: false });
+    if (!this.props.showSkip) {
+      return null;
     }
+    if (!this.props.userIsDJ) {
+      return this.props.onModSkip();
+    }
+    return this.props.onSkipTurn({ remove: false });
   }
 
   handleJoinWaitlist() {
@@ -75,10 +81,15 @@ export default class FooterBar extends Component {
     if (!this.props.showSkip) {
       return null;
     }
+    let message = 'Skip your turn';
+    if (!this.props.userIsDJ) {
+      message = `Skip ${this.props.currentDJ.username}'s turn`;
+    }
+
     return (
       <div className="FooterBar-skip">
         <IconButton
-          tooltip="Skip your turn"
+          tooltip={message}
           tooltipPosition="top-center"
           style={fullSize}
           onClick={this.handleSkipTurn}
