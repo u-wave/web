@@ -169,6 +169,8 @@ export function resetPassword(email) {
   return dispatch => {
     const jwt = tokenSelector(getState());
     post(jwt, `/v1/auth/password/reset`, email)
-      .then(dispatch);
+      .then(dispatch)
+      .then(res.json())
+      .then({ type: RESET_PASSWORD_COMPLETE });
   };
 }
