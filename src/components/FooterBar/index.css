@@ -72,9 +72,9 @@
   }
 
   @modifier register {
-    background: #b20062;
+    background: $highlight-color;
     &:hover {
-      background: $highlight-color;
+      background: $highbright-color;
     }
   }
 }
