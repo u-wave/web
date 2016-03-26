@@ -207,3 +207,25 @@ register(
     }
   }
 );
+
+import ms from 'ms';
+import { muteUser } from '../actions/ModerationActionCreators';
+register(
+  'mute',
+  'Mute a user in chat, preventing them from chatting. Syntax: "/mute username duration"',
+  {
+    guard: isModerator,
+    action: (username, duration = '30m') => (dispatch, getState) => {
+      if (!username) {
+        return dispatch(log('Provide a user to mute.'));
+      }
+      const users = userListSelector(getState());
+      const lname = username.toLowerCase();
+      const user = find(users, o => o.username.toLowerCase() === lname);
+      if (!user) {
+        return dispatch(log(`User "${username}" is not online.`));
+      }
+      return dispatch(muteUser(user, ms(`${duration}`)));
+    }
+  }
+);

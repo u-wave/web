@@ -6,6 +6,7 @@ import {
   SKIP_DJ_START, SKIP_DJ_COMPLETE,
   MOVE_USER_START, MOVE_USER_COMPLETE,
   REMOVE_USER_START, REMOVE_USER_COMPLETE,
+  MUTE_USER_START, MUTE_USER_COMPLETE,
   SET_USER_ROLE_START, SET_USER_ROLE_COMPLETE
 } from '../constants/actionTypes/moderation';
 
@@ -185,6 +186,41 @@ export function deleteAllChatMessages() {
       .then(() => dispatch(removeAllMessages()))
       .catch(error => dispatch({
         type: undefined,
+        error: true,
+        payload: error
+      }));
+  };
+}
+
+export function muteUserStart(userID, duration) {
+  return {
+    type: MUTE_USER_START,
+    payload: { userID, duration }
+  };
+}
+
+export function muteUserComplete(userID, duration) {
+  return {
+    type: MUTE_USER_COMPLETE,
+    payload: { userID, duration }
+  };
+}
+
+/**
+ * Mute a user in the chat. Defaults to 10 minutes.
+ */
+export function muteUser(user, duration = 10 * 60 * 1000) {
+  const userID = typeof user === 'object' ? user._id : user;
+  return (dispatch, getState) => {
+    const jwt = tokenSelector(getState());
+    dispatch(muteUserStart(userID, duration));
+    return post(jwt, `/v1/users/${userID}/mute`, { time: duration })
+      .then(res => res.json())
+      .then(() => dispatch(
+        muteUserComplete(userID, duration)
+      ))
+      .catch(error => dispatch({
+        type: MUTE_USER_COMPLETE,
         error: true,
         payload: error
       }));
