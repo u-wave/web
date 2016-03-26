@@ -1,5 +1,6 @@
 import escapeRegExp from 'escape-string-regexp';
 import values from 'object-values';
+import ms from 'ms';
 import splitargs from 'splitargs';
 
 import {
@@ -10,10 +11,25 @@ import {
 import parseChatMarkup from '../utils/parseChatMarkup';
 import { sendMessage } from '../utils/Socket';
 import { execute } from '../utils/ChatCommands';
-import { muteTimeoutsSelector, mutedUserIDsSelector } from '../selectors/chatSelectors';
+import {
+  muteTimeoutsSelector,
+  mutedUserIDsSelector,
+  currentUserMuteSelector
+} from '../selectors/chatSelectors';
 import { settingsSelector } from '../selectors/settingSelectors';
 import { currentUserSelector, usersSelector, userListSelector } from '../selectors/userSelectors';
 import { currentTimeSelector } from '../selectors/timeSelectors';
+
+let logIdx = Date.now();
+export function log(text) {
+  return {
+    type: LOG,
+    payload: {
+      _id: logIdx++,
+      text
+    }
+  };
+}
 
 export function prepareMessage(user, text, parseOpts = {}) {
   return {
@@ -28,6 +44,14 @@ export function prepareMessage(user, text, parseOpts = {}) {
 
 export function sendChat(user, text) {
   return (dispatch, getState) => {
+    const mute = currentUserMuteSelector(getState());
+    if (mute) {
+      const timeLeft = ms(mute.expires - Date.now(), { long: true });
+      return dispatch(log(
+        `You have been muted, and cannot chat for another ${timeLeft}.`
+      ));
+    }
+
     const users = userListSelector(getState());
     const message = prepareMessage(user, text, { users });
     dispatch(message);
@@ -97,17 +121,6 @@ export function receive(message) {
 
     if (isMention && settings.mentionSound) {
       playMentionSound();
-    }
-  };
-}
-
-let logIdx = Date.now();
-export function log(text) {
-  return {
-    type: LOG,
-    payload: {
-      _id: logIdx++,
-      text
     }
   };
 }

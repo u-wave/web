@@ -1,7 +1,7 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import objMap from 'object.map';
 
-import { usersSelector } from './userSelectors';
+import { usersSelector, currentUserSelector } from './userSelectors';
 
 const baseSelector = state => state.chat;
 
@@ -26,4 +26,10 @@ export const mutedUsersSelector = createSelector(
   mutedUserIDsSelector,
   usersSelector,
   (mutedIDs, users) => mutedIDs.map(userID => users[userID])
+);
+
+export const currentUserMuteSelector = createSelector(
+  currentUserSelector,
+  mutesSelector,
+  (user, mutes) => user ? mutes[user._id] : null
 );
