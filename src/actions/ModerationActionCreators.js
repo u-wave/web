@@ -7,6 +7,7 @@ import {
   MOVE_USER_START, MOVE_USER_COMPLETE,
   REMOVE_USER_START, REMOVE_USER_COMPLETE,
   MUTE_USER_START, MUTE_USER_COMPLETE,
+  UNMUTE_USER_START, UNMUTE_USER_COMPLETE,
   SET_USER_ROLE_START, SET_USER_ROLE_COMPLETE
 } from '../constants/actionTypes/moderation';
 
@@ -221,6 +222,35 @@ export function muteUser(user, duration = 10 * 60 * 1000) {
       ))
       .catch(error => dispatch({
         type: MUTE_USER_COMPLETE,
+        error: true,
+        payload: error
+      }));
+  };
+}
+
+export function unmuteUserStart(userID) {
+  return {
+    type: UNMUTE_USER_START,
+    payload: { userID }
+  };
+}
+
+export function unmuteUserComplete(userID) {
+  return {
+    type: UNMUTE_USER_COMPLETE,
+    payload: { userID }
+  };
+}
+
+export function unmuteUser(user) {
+  const userID = typeof user === 'object' ? user._id : user;
+  return (dispatch, getState) => {
+    const jwt = tokenSelector(getState());
+    return del(jwt, `/v1/users/${userID}/mute`)
+      .then(res => res.json())
+      .then(() => dispatch(unmuteUserComplete(userID)))
+      .catch(error => dispatch({
+        type: UNMUTE_USER_COMPLETE,
         error: true,
         payload: error
       }));

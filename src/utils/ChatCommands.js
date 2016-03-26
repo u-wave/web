@@ -209,7 +209,8 @@ register(
 );
 
 import ms from 'ms';
-import { muteUser } from '../actions/ModerationActionCreators';
+import { mutedUserIDsSelector } from '../selectors/chatSelectors';
+import { muteUser, unmuteUser } from '../actions/ModerationActionCreators';
 register(
   'mute',
   'Mute a user in chat, preventing them from chatting. Syntax: "/mute username duration"',
@@ -226,6 +227,30 @@ register(
         return dispatch(log(`User "${username}" is not online.`));
       }
       return dispatch(muteUser(user, ms(`${duration}`)));
+    }
+  }
+);
+
+register(
+  'unmute',
+  'Unmute a user in chat. Syntax: "/unmute username"',
+  {
+    guard: isModerator,
+    action: username => (dispatch, getState) => {
+      if (!username) {
+        return dispatch(log('Provide a user to unmute.'));
+      }
+      const mutes = mutedUserIDsSelector(getState());
+      const users = userListSelector(getState());
+      const lname = username.toLowerCase();
+      const user = find(users, o => o.username.toLowerCase() === lname);
+      if (!user) {
+        return dispatch(log(`User "${username}" is not online.`));
+      }
+      if (mutes.indexOf(user._id) !== -1) {
+        return dispatch(log(`User "${username}" is not muted.`));
+      }
+      return dispatch(unmuteUser(user));
     }
   }
 );
