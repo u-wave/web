@@ -114,7 +114,7 @@ describe('reducers/chat', () => {
 
     let dateNow;
     beforeEach(() => {
-      dateNow = Date.now();
+      dateNow = Date.now;
       Date.now = () => 1251669600000;
     });
     afterEach(() => {
@@ -149,6 +149,85 @@ describe('reducers/chat', () => {
       expect(
         s.messagesSelector(getState())
       ).to.have.length(MESSAGES);
+    });
+  });
+
+  describe('Mutes', () => {
+    let dispatch;
+    let getState;
+    const testUsers = [
+      { _id: '1', username: 'User One' },
+      { _id: '2', username: 'User Two' },
+      { _id: '3', username: 'User Three' },
+      { _id: '4', username: 'User Four' }
+    ];
+
+    beforeEach(() => {
+      ({ dispatch, getState } = createStore());
+      dispatch(setUsers(testUsers));
+    });
+
+    const addTestMute = () => {
+      dispatch(a.muteUser('1', {
+        moderatorID: '4',
+        expires: Date.now() + 3000
+      }));
+    };
+
+    it('chat/MUTE_USER should register muted users', () => {
+      expect(
+        s.mutedUsersSelector(getState())
+      ).to.have.length(0);
+
+      dispatch(a.muteUser('1', {
+        moderatorID: '4',
+        expires: Date.now() + 3000
+      }));
+
+      expect(
+        s.mutedUsersSelector(getState())
+      ).to.eql([ testUsers[0] ]);
+    });
+
+    it('should not process messages received from muted users', () => {
+      expect(
+        s.messagesSelector(getState())
+      ).to.have.length(0);
+
+      addTestMute();
+      dispatch(a.receive({
+        _id: 'abc',
+        userID: '1',
+        text: '*Spam*'
+      }));
+
+      expect(
+        s.messagesSelector(getState())
+      ).to.have.length(0);
+    });
+
+    it('chat/UNMUTE_USERS should remove users from the muted list', () => {
+      addTestMute();
+
+      expect(
+        s.mutedUsersSelector(getState())
+      ).to.have.length(1);
+      dispatch(a.unmuteUser('1', { moderatorID: '3' }));
+      expect(
+        s.mutedUsersSelector(getState())
+      ).to.have.length(0);
+
+      expect(
+        s.messagesSelector(getState())
+      ).to.have.length(0);
+      dispatch(a.receive({
+        _id: 'abc',
+        userID: '1',
+        text: '*Spam*'
+      }));
+      expect(
+        s.messagesSelector(getState())
+      ).to.have.length(1);
     });
   });
 });

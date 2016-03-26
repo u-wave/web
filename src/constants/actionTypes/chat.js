@@ -7,3 +7,6 @@ export const LOG = 'chat/LOG';
 export const REMOVE_MESSAGE = 'chat/REMOVE_MESSAGE';
 export const REMOVE_USER_MESSAGES = 'chat/REMOVE_USER_MESSAGES';
 export const REMOVE_ALL_MESSAGES = 'chat/REMOVE_ALL_MESSAGES';
+
+export const MUTE_USER = 'chat/MUTE_USER';
+export const UNMUTE_USER = 'chat/UNMUTE_USER';

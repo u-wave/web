@@ -1,6 +1,9 @@
+import except from 'except';
+
 import {
   RECEIVE_MESSAGE, SEND_MESSAGE, LOG,
-  REMOVE_MESSAGE, REMOVE_USER_MESSAGES, REMOVE_ALL_MESSAGES
+  REMOVE_MESSAGE, REMOVE_USER_MESSAGES, REMOVE_ALL_MESSAGES,
+  MUTE_USER, UNMUTE_USER
 } from '../constants/actionTypes/chat';
 
 const MAX_MESSAGES = 500;
@@ -9,7 +12,11 @@ const initialState = {
   /**
    * All messages, including log messages and in-flight messages.
    */
-  messages: []
+  messages: [],
+  /**
+   * Mutes and their expiration times.
+   */
+  mutedUsers: {}
 };
 
 function removeInFlightMessage(messages, remove) {
@@ -88,6 +95,24 @@ export default function reduce(state = initialState, action = {}) {
     return {
       ...state,
       messages: []
+    };
+
+  case MUTE_USER:
+    return {
+      ...state,
+      mutedUsers: {
+        ...state.mutedUsers,
+        [payload.userID]: {
+          mutedBy: payload.moderatorID,
+          expires: payload.expires,
+          expirationTimer: payload.expirationTimer
+        }
+      }
+    };
+  case UNMUTE_USER:
+    return {
+      ...state,
+      mutedUsers: except(state.mutedUsers, payload.userID)
     };
 
   default:

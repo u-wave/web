@@ -1,7 +1,8 @@
 import { advance } from '../actions/BoothActionCreators';
 import {
   receive as chatReceive,
-  removeMessage, removeMessagesByUser, removeAllMessages
+  removeMessage, removeMessagesByUser, removeAllMessages,
+  muteUser as chatMute, unmuteUser as chatUnmute
 } from '../actions/ChatActionCreators';
 import { cyclePlaylist } from '../actions/PlaylistActionCreators';
 import {
@@ -69,6 +70,17 @@ function onMessage(dispatch, json) {
     break;
   case 'chatDeleteByUser':
     dispatch(removeMessagesByUser(data.userID));
+    break;
+  case 'chatMute':
+    dispatch(chatMute(data.userID, {
+      moderatorID: data.moderatorID,
+      expires: data.expires
+    }));
+    break;
+  case 'chatUnmute':
+    dispatch(chatUnmute(data.userID, {
+      moderatorID: data.moderatorID
+    }));
     break;
 
   case 'advance':
