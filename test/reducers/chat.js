@@ -138,4 +138,17 @@ describe('reducers/chat', () => {
       expect(message.inFlight).to.be.true;
     });
   });
+
+  describe('issue #179', () => {
+    it('logging many messages simultaneously should not drop messages', () => {
+      const MESSAGES = 100;
+      const { dispatch, getState } = createStore();
+      for (let i = 0; i < MESSAGES; i++) {
+        dispatch(a.log(`Test message ${i}`));
+      }
+      expect(
+        s.messagesSelector(getState())
+      ).to.have.length(MESSAGES);
+    });
+  });
 });

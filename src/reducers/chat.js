@@ -61,7 +61,7 @@ export default function reduce(state = initialState, action = {}) {
   case LOG:
     const logMessage = {
       type: 'log',
-      _id: `log-${Date.now()}`,
+      _id: `log-${payload._id}`,
       text: payload.text
     };
     return {
