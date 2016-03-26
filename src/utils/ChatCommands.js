@@ -27,6 +27,13 @@ export function execute(state, name, args = []) {
 
 // TODO move default commands to some other file!
 import find from 'array-find';
+import { currentUserSelector, userListSelector } from '../selectors/userSelectors';
+
+function findUser(users, username) {
+  const lname = username.toLowerCase();
+  return find(users, o => o.username.toLowerCase() === lname);
+}
+
 import { log } from '../actions/ChatActionCreators';
 import {
   skipCurrentDJ,
@@ -38,7 +45,6 @@ import {
   joinWaitlist,
   modClearWaitlist, modLockWaitlist, modUnlockWaitlist
 } from '../actions/WaitlistActionCreators';
-import { currentUserSelector, userListSelector } from '../selectors/userSelectors';
 import {
   djAndWaitlistUsersSelector,
   waitlistUsersSelector
@@ -76,9 +82,7 @@ register('clearchat',
     action: (...args) => (dispatch, getState) => {
       const username = args.join(' ').trim();
       if (username) {
-        const users = userListSelector(getState());
-        const lname = username.toLowerCase();
-        const user = find(users, o => o.username.toLowerCase() === lname);
+        const user = findUser(userListSelector(getState()), username);
         if (user) {
           return dispatch(deleteChatMessagesByUser(user._id));
         }
@@ -99,9 +103,7 @@ register(
         return dispatch(log('Provide a user to add to the waitlist. Syntax: "/wladd username"'));
       }
 
-      const users = userListSelector(getState());
-      const lname = username.toLowerCase();
-      const user = find(users, o => o.username.toLowerCase() === lname);
+      const user = findUser(userListSelector(getState()), username);
       if (user) {
         return dispatch(joinWaitlist(user));
       }
@@ -120,9 +122,10 @@ register(
         return dispatch(log('Provide a user to remove from the waitlist. Syntax: "/wlremove username"'));
       }
 
-      const users = djAndWaitlistUsersSelector(getState());
-      const lname = username.toLowerCase();
-      const user = find(users, o => o.username.toLowerCase() === lname);
+      const user = findUser(
+        djAndWaitlistUsersSelector(getState()),
+        username
+      );
       if (user) {
         return dispatch(removeWaitlistUser(user));
       }
@@ -164,9 +167,10 @@ register(
         return dispatch(log(`Provide a position to move @${username} to. Syntax: "/wlmove username position"`));
       }
 
-      const users = waitlistUsersSelector(getState());
-      const lname = username.toLowerCase();
-      const user = find(users, o => o.username.toLowerCase() === lname);
+      const user = findUser(
+        waitlistUsersSelector(getState()),
+        username
+      );
       if (user) {
         return dispatch(moveWaitlistUser(user, position));
       }
@@ -200,16 +204,17 @@ register(
           `Provide a role to promote ${username} to. [user, special, moderator, manager, admin]`
         ));
       }
-      const users = userListSelector(getState());
-      const lname = username.toLowerCase();
-      const user = find(users, o => o.username.toLowerCase() === lname);
+      const user = findUser(
+        userListSelector(getState()),
+        username
+      );
       return dispatch(setUserRole(user, roleNames[role]));
     }
   }
 );
 
 import ms from 'ms';
-import { mutedUserIDsSelector } from '../selectors/chatSelectors';
+import { mutedUsersSelector } from '../selectors/chatSelectors';
 import { muteUser, unmuteUser } from '../actions/ModerationActionCreators';
 register(
   'mute',
@@ -220,9 +225,10 @@ register(
       if (!username) {
         return dispatch(log('Provide a user to mute.'));
       }
-      const users = userListSelector(getState());
-      const lname = username.toLowerCase();
-      const user = find(users, o => o.username.toLowerCase() === lname);
+      const user = findUser(
+        userListSelector(getState()),
+        username
+      );
       if (!user) {
         return dispatch(log(`User "${username}" is not online.`));
       }
@@ -240,14 +246,8 @@ register(
       if (!username) {
         return dispatch(log('Provide a user to unmute.'));
       }
-      const mutes = mutedUserIDsSelector(getState());
-      const users = userListSelector(getState());
-      const lname = username.toLowerCase();
-      const user = find(users, o => o.username.toLowerCase() === lname);
+      const user = findUser(mutedUsersSelector(getState()), username);
       if (!user) {
-        return dispatch(log(`User "${username}" is not online.`));
-      }
-      if (mutes.indexOf(user._id) !== -1) {
         return dispatch(log(`User "${username}" is not muted.`));
       }
       return dispatch(unmuteUser(user));
