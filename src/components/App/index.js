@@ -5,6 +5,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import FooterBar from '../../containers/FooterBar';
 import HeaderBar from '../../containers/HeaderBar';
 import Video from '../../containers/Video';
+import ErrorArea from '../../containers/ErrorArea';
 import Overlays from './Overlays';
 import PlaylistManager from '../../containers/PlaylistManager';
 import RoomHistory from '../../containers/RoomHistory';
@@ -59,6 +60,7 @@ export default class App extends React.Component {
               isMuted={settings.muted}
               volume={settings.volume}
             />
+            <ErrorArea />
           </div>
           <Overlays transitionName="Overlay" active={activeOverlay}>
             <PlaylistManager

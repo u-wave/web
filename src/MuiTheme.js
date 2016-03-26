@@ -23,6 +23,11 @@ export default {
     alternateTextColor: '#777777',
     canvasColor: '#303030',
     borderColor: Colors.grey300,
-    disabledColor: ColorManipulator.fade(Colors.darkBlack, 0.3)
+    disabledColor: ColorManipulator.fade(Colors.darkBlack, 0.3),
+
+    notifications: {
+      errorBackgroundColor: '#9d202f',
+      errorTextColor: Colors.white
+    }
   }
 };
