@@ -1,22 +1,31 @@
 import { expect } from 'chai';
-import {
-  SEND_MESSAGE, RECEIVE_MESSAGE
-} from '../../src/constants/actionTypes/chat';
+import proxyquire from 'proxyquire';
 
-import chat from '../../src/reducers/chat';
+import createStore from '../../src/store/configureStore';
+import { setUsers } from '../../src/actions/UserActionCreators';
+import * as s from '../../src/selectors/chatSelectors';
+
+const a = proxyquire('../../src/actions/ChatActionCreators', {
+  '../utils/Socket': {
+    sendMessage() {}
+  }
+});
 
 describe('reducers/chat', () => {
-  const initialState = () => chat(undefined, { type: '@@redux/INIT' });
-
   it('should not respond to unrelated actions', () => {
-    let state = { messages: [] };
-    state = chat(state, { type: 'randomOtherAction', payload: {} });
-    expect(state).to.eql({ messages: [] });
+    const { dispatch, getState } = createStore();
+    const initial = s.chatSelector(getState());
+    dispatch({ type: 'randomOtherAction', payload: {} });
+    expect(
+      s.chatSelector(getState())
+    ).to.eql(initial);
   });
 
   it('should default to an empty list of messages', () => {
-    const state = chat(undefined, { type: '@@redux/INIT' });
-    expect(state).to.eql({ messages: [] });
+    const { getState } = createStore();
+    expect(
+      s.messagesSelector(getState())
+    ).to.eql([]);
   });
 
   describe('action: chat/RECEIVE_MESSAGE', () => {
@@ -26,77 +35,73 @@ describe('reducers/chat', () => {
       text: 'Message text',
       timestamp: 1449941591374
     };
+    const testUser = {
+      _id: '643abc235',
+      username: 'TestUser'
+    };
 
     it('should add a message to the messages list', () => {
-      let state = initialState();
-      expect(state.messages).to.have.length(0);
-      state = chat(state, {
-        type: RECEIVE_MESSAGE,
-        payload: {
-          message: testMessage,
-          parsed: [ testMessage.text ],
-          isMention: false
-        }
-      });
-      expect(state).to.eql({
-        messages: [ {
-          _id: testMessage._id,
-          type: 'chat',
-          userID: testMessage.userID,
-          text: testMessage.text,
-          parsedText: [ testMessage.text ],
-          timestamp: testMessage.timestamp,
-          isMention: false,
-          inFlight: false
-        } ]
+      const { dispatch, getState } = createStore();
+      dispatch(setUsers([ testUser ]));
+
+      expect(
+        s.messagesSelector(getState())
+      ).to.have.length(0);
+
+      dispatch(a.receive(testMessage));
+
+      expect(
+        s.messagesSelector(getState())[0]
+      ).to.eql({
+        _id: testMessage._id,
+        type: 'chat',
+        userID: testMessage.userID,
+        user: testUser,
+        text: testMessage.text,
+        parsedText: [ testMessage.text ],
+        timestamp: testMessage.timestamp,
+        isMention: false,
+        inFlight: false
       });
     });
 
     it('should remove matching in-flight sent messages', () => {
-      let state = initialState();
-      expect(state.messages).to.have.length(0);
+      const inFlightUser = {
+        _id: 'a user id',
+        username: 'SendingUser'
+      };
+
+      const { dispatch, getState } = createStore();
+      dispatch(setUsers([ testUser, inFlightUser ]));
 
       // test setup: start w/ one received message and one that's been sent but
       // is pending.
-      state = chat(state, {
-        type: RECEIVE_MESSAGE,
-        payload: {
-          message: testMessage,
-          parsed: [ testMessage.text ],
-          isMention: false
-        }
-      });
-      expect(state.messages).to.have.length(1);
+      dispatch(a.receive(testMessage));
 
       const messageText = 'test message 🐼';
-      const user = { _id: 'a user id' };
-      state = chat(state, {
-        type: SEND_MESSAGE,
-        payload: {
-          user,
-          message: messageText,
-          parsed: [ messageText ]
-        }
-      });
-      expect(state.messages).to.have.length(2);
-      expect(state.messages[1]).to.have.property('inFlight', true);
+      dispatch(a.sendChat(inFlightUser, messageText));
+      expect(
+        s.messagesSelector(getState())
+      ).to.have.length(2);
+      expect(
+        s.messagesSelector(getState())[1]
+      ).to.have.property('inFlight', true);
 
       // actual test: RECEIVE-ing a sent message should replace that message in
       // the messages list.
-      state = chat(state, {
-        type: RECEIVE_MESSAGE,
-        payload: {
-          message: {
-            _id: 'a user id-1449941591374',
-            userID: user._id,
-            text: messageText,
-            timestamp: 1449941591374
-          },
-          parsed: [ messageText ]
-        }
-      });
-      expect(state.messages).to.have.length(2);
-      expect(state.messages[1]).to.have.property('inFlight', false);
+      dispatch(a.receive({
+        _id: 'a user id-1449941591374',
+        userID: inFlightUser._id,
+        text: messageText,
+        timestamp: 1449941591374
+      }));
+
+      expect(
+        s.messagesSelector(getState())
+      ).to.have.length(2);
+      expect(
+        s.messagesSelector(getState())[1]
+      ).to.have.property('inFlight', false);
     });
   });
 
@@ -117,10 +122,12 @@ describe('reducers/chat', () => {
     });
 
     it('should add an in-flight message to the messages list immediately', () => {
-      let state = initialState();
-      state = chat(state, { type: SEND_MESSAGE, payload: testMessage });
-      expect(state.messages).to.have.length(1);
-      const message = state.messages[0];
+      const { dispatch, getState } = createStore();
+      dispatch(a.sendChat(testMessage.user, testMessage.message));
+      expect(
+        s.messagesSelector(getState())
+      ).to.have.length(1);
+      const message = s.messagesSelector(getState())[0];
       expect(message).to.be.an('object');
       expect(message).to.have.property('_id');
       expect(message.userID).to.equal(testMessage.user._id);
