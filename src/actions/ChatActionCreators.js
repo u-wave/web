@@ -86,9 +86,13 @@ export function receive(message) {
   };
 }
 
+let logIdx = Date.now();
 export function log(text) {
   return {
     type: LOG,
-    payload: { text }
+    payload: {
+      _id: logIdx++,
+      text
+    }
   };
 }
