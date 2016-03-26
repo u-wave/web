@@ -3,11 +3,18 @@ import Snackbar from 'material-ui/lib/snackbar';
 import muiThemeable from 'material-ui/lib/muiThemeable';
 import { createSelector } from 'reselect';
 
+const wrapperStyle = {
+  // Prevent clicks from hitting the overlay. Ensures the chat input can be
+  // focused even if a snackbar is open.
+  pointerEvents: 'none'
+};
 const snackbarStyle = {
   // Allow multiline snackbars.
   height: 'auto',
   lineHeight: '24px',
-  padding: '12px 24px'
+  padding: '12px 24px',
+  // Allow clicks on snackbars themselves.
+  pointerEvents: 'initial'
 };
 
 // Create a material-ui theme with the error notification theme applied.
@@ -55,6 +62,7 @@ export default class ErrorArea extends React.Component {
     return (
       <div className="ErrorArea">
         <Snackbar
+          style={wrapperStyle}
           bodyStyle={snackbarStyle}
           open={!!error}
           message={error || ''}
