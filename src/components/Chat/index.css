@@ -1,4 +1,6 @@
-@import "vars.css";
+@import "./Input.css";
+@import "./LogMessage.css";
+@import "./Message.css";
 
 @component Chat {
   height: 100%;

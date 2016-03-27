@@ -1,5 +1,3 @@
-@import "vars.css";
-
 @component DragLayerContainer {
   position: fixed;
   pointer-events: none;

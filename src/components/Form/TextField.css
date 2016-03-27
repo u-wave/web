@@ -1,4 +1,4 @@
-@import "vars.css";
+@import "../../vars.css";
 
 @component TextField {
   background: #383838;

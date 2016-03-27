@@ -1,4 +1,6 @@
-@import "vars.css";
+@import "../../vars.css";
+@import "./Profile.css";
+@import "./SettingsPanel.css";
 
 @component SettingsManager {
   z-index: 10;

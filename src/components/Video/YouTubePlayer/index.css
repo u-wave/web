@@ -1,5 +1,3 @@
-@import "vars.css";
-
 @component YouTubePlayer {
   width: 100%;
   height: 100%;

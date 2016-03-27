@@ -1,4 +1,5 @@
-@import "vars.css";
+@import "../../vars.css";
+@import "./Row.css";
 
 .RoomHistory {
   z-index: 10;

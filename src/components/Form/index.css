@@ -1,4 +1,6 @@
-@import "vars.css";
+@import "../../vars.css";
+@import "./Button.css";
+@import "./TextField.css";
 
 @component FormGroup {
   margin: $forms-element-margin 0;

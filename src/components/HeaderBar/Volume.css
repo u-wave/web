@@ -1,5 +1,3 @@
-@import "vars.css";
-
 @component VolumeSlider {
   @descendent slider {
     height: 24px;

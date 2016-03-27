@@ -1,4 +1,7 @@
-@import "vars.css";
+@import "./Actions.css";
+@import "./MediaDragPreview.css";
+@import "./MediaLoadingIndicator.css";
+@import "./Row.css";
 
 @component MediaList {
   overflow-y: auto;

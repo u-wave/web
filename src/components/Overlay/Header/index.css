@@ -1,4 +1,5 @@
-@import "vars.css";
+@import "../../../vars.css";
+@import "./Close.css";
 
 @component OverlayHeader {
   background: $background-color;

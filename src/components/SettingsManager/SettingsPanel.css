@@ -1,4 +1,4 @@
-@import "vars.css";
+@import "../../vars.css";
 
 @component SettingsPanel {
   padding: 20px 50px;

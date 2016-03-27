@@ -1,5 +1,4 @@
 import { src, dest } from 'gulp';
-import concat from 'gulp-concat';
 import sourcemaps from 'gulp-sourcemaps';
 import when from 'gulp-if';
 import postcss from 'gulp-postcss';
@@ -30,9 +29,8 @@ export default function compileCssTask({ minify = false, 'source-maps': useSourc
     processors.push(cssnano());
   }
 
-  return src('src/**/*.css')
+  return src('src/app.css')
     .pipe(when(useSourceMaps, sourcemaps.init()))
-      .pipe(concat('style.css'))
       .pipe(postcss(processors))
     .pipe(when(useSourceMaps, sourcemaps.write()))
     .pipe(dest('lib/'));

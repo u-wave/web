@@ -1,4 +1,7 @@
-@import "vars.css";
+@import "../../vars.css";
+@import "./NextMedia.css";
+@import "./UserInfo.css";
+@import "./Responses";
 
 @component FooterBar {
   display: flex;

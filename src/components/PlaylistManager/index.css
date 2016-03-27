@@ -1,4 +1,6 @@
-@import "vars.css";
+@import "./Header";
+@import "./Menu";
+@import "./Panel";
 
 @component PlaylistManager {
   z-index: 10;

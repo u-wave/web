@@ -1,5 +1,3 @@
-@import "vars.css";
-
 @component SettingsPanelProfile {
   @descendent username {
     font-size: 120%;
