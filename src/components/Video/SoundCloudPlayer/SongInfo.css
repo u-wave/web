@@ -9,5 +9,9 @@
     @modifier track {
       font-weight: bold;
     }
+
+    &:visited {
+      color: $text-color;
+    }
   }
 }
