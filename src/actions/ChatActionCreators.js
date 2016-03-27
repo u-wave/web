@@ -1,6 +1,5 @@
 import escapeRegExp from 'escape-string-regexp';
 import values from 'object-values';
-import audio from 'play-audio';
 
 import { SEND_MESSAGE, RECEIVE_MESSAGE, LOG } from '../constants/actionTypes/chat';
 import parseChatMarkup from '../utils/parseChatMarkup';
@@ -49,7 +48,7 @@ export function inputMessage(text) {
 let mentionSound;
 function playMentionSound() {
   if (!mentionSound) {
-    mentionSound = audio([ 'assets/audio/mention.opus', 'assets/audio/mention.mp3' ]);
+    mentionSound = new Audio('assets/audio/mention.mp3');
   }
   mentionSound.play();
 }
