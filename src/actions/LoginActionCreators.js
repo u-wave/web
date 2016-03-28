@@ -4,7 +4,7 @@ import {
   LOGOUT_START, LOGOUT_COMPLETE
 } from '../constants/actionTypes/auth';
 import { LOAD_ALL_PLAYLISTS_START } from '../constants/actionTypes/playlists';
-import { del, get, post } from '../utils/Request';
+import { get, post } from '../utils/Request';
 import * as Session from '../utils/Session';
 import * as Socket from '../utils/Socket';
 import { advance, loadHistory } from './BoothActionCreators';
@@ -143,17 +143,13 @@ function logoutComplete() {
 
 export function logout() {
   return (dispatch, getState) => {
-    const jwt = tokenSelector(getState());
     const me = currentUserSelector(getState());
+    Session.unset();
     if (me) {
       dispatch(logoutStart());
-      del(jwt, `/v1/auth/session/${me._id}`)
-        .then(logoutComplete)
-        .catch(logoutComplete)
-        .then(dispatch);
+      dispatch(logoutComplete());
     } else {
       dispatch(logoutComplete());
     }
-    Session.unset();
   };
 }
