@@ -35,7 +35,6 @@
     overflow: hidden;
   }
 
-  /** TODO fix hackiness */
   @descendent username {
     color: #9ba0a0;
     font-weight: 600;
