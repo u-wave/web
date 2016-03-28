@@ -12,5 +12,8 @@ export const MUTE_USER_COMPLETE = 'moderation/MUTE_USER_COMPLETE';
 export const UNMUTE_USER_START = 'moderation/UNMUTE_USER_START';
 export const UNMUTE_USER_COMPLETE = 'moderation/UNMUTE_USER_COMPLETE';
 
+export const BAN_USER_START = 'moderation/BAN_USER_START';
+export const BAN_USER_COMPLETE = 'moderation/BAN_USER_COMPLETE';
+
 export const SET_USER_ROLE_START = 'moderation/SET_USER_ROLE_START';
 export const SET_USER_ROLE_COMPLETE = 'moderation/SET_USER_ROLE_COMPLETE';

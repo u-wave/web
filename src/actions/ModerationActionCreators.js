@@ -8,6 +8,7 @@ import {
   REMOVE_USER_START, REMOVE_USER_COMPLETE,
   MUTE_USER_START, MUTE_USER_COMPLETE,
   UNMUTE_USER_START, UNMUTE_USER_COMPLETE,
+  BAN_USER_START, BAN_USER_COMPLETE,
   SET_USER_ROLE_START, SET_USER_ROLE_COMPLETE
 } from '../constants/actionTypes/moderation';
 
@@ -251,6 +252,42 @@ export function unmuteUser(user) {
       .then(() => dispatch(unmuteUserComplete(userID)))
       .catch(error => dispatch({
         type: UNMUTE_USER_COMPLETE,
+        error: true,
+        payload: error
+      }));
+  };
+}
+
+export function banUserStart(userID, duration, permanent) {
+  return {
+    type: BAN_USER_START,
+    payload: { userID, duration, permanent }
+  };
+}
+
+export function banUserComplete(ban) {
+  return {
+    type: BAN_USER_COMPLETE,
+    payload: ban
+  };
+}
+
+/**
+ * Ban a user. Defaults to 24 hours.
+ */
+export function banUser(user, { duration = 24 * 60 * 60 * 1000, permanent = false }) {
+  const userID = typeof user === 'object' ? user._id : user;
+  return (dispatch, getState) => {
+    const jwt = tokenSelector(getState());
+
+    dispatch(banUserStart(userID, duration, permanent));
+    return post(jwt, `/v1/bans`, { userID, duration, permanent })
+      .then(res => res.json())
+      .then(ban => dispatch(
+        banUserComplete(ban)
+      ))
+      .catch(error => dispatch({
+        type: BAN_USER_COMPLETE,
         error: true,
         payload: error
       }));
