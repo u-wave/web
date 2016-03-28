@@ -9,6 +9,8 @@ $scrollbar-color: #5f5f5f;
 
 $link-color: map(theme, palette, linkColor);
 
+$logo-url: map(logoUrl);
+
 /* Sizes */
 $header-height: 56px;
 $footer-height: 60px;

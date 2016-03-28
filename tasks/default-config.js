@@ -38,6 +38,7 @@ function makePalette({
 export default function (uw) {
 
   uw.applyTheme({
+    logoUrl: 'assets/img/logo-white.png',
     rankColors: {
       admin: '#ff3b74',
       manager: '#05daa5',
