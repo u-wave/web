@@ -4,7 +4,7 @@ import { currentUserSelector, usersSelector } from './userSelectors';
 
 const baseSelector = state => state.waitlist;
 
-const lockedSelector = createSelector(baseSelector, wl => wl.locked);
+export const isLockedSelector = createSelector(baseSelector, wl => !!wl.locked);
 const waitlistIDsSelector = createSelector(baseSelector, wl => wl.waitlist);
 
 export const sizeSelector = createSelector(
@@ -36,7 +36,7 @@ export const userInWaitlistSelector = createSelector(
 );
 
 export const waitlistSelector = createStructuredSelector({
-  locked: lockedSelector,
+  locked: isLockedSelector,
   users: waitlistUsersSelector
 });
 

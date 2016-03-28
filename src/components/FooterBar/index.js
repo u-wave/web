@@ -2,6 +2,7 @@ import cx from 'classnames';
 import React, { Component, PropTypes } from 'react';
 import IconButton from 'material-ui/lib/icon-button';
 import FlatButton from 'material-ui/lib/flat-button';
+import LockedIcon from 'material-ui/lib/svg-icons/action/lock';
 import SkipIcon from 'material-ui/lib/svg-icons/av/skip-next';
 
 import NextMedia from './NextMedia';
@@ -23,6 +24,7 @@ export default class FooterBar extends Component {
     userInWaitlist: PropTypes.bool,
     userIsDJ: PropTypes.bool,
     showSkip: PropTypes.bool,
+    waitlistIsLocked: PropTypes.bool,
     voteStats: PropTypes.object,
 
     openLoginDialog: PropTypes.func,
@@ -87,23 +89,55 @@ export default class FooterBar extends Component {
     );
   }
 
+  renderWaitlistButton() {
+    const { muiTheme } = this.context;
+    const { rawTheme } = muiTheme;
+    const { userInWaitlist, waitlistIsLocked } = this.props;
+
+    let icon;
+    if (waitlistIsLocked) {
+      const iconColor =
+        // The user can still leave the waitlist, if it's locked…
+        userInWaitlist ? muiTheme.flatButton.textColor :
+        // …but cannot join the waitlist.
+        muiTheme.flatButton.disabledTextColor;
+      icon = (
+        <LockedIcon
+          style={{ width: '1em', height: '1em' }}
+          color={iconColor}
+        />
+      );
+    }
+
+    return (
+      <FlatButton
+        className={cx('FooterBar-join', waitlistIsLocked && 'FooterBar-join--locked')}
+        disabled={waitlistIsLocked && !userInWaitlist}
+        onClick={userInWaitlist ? this.handleLeaveWaitlist : this.handleJoinWaitlist}
+        backgroundColor={rawTheme.palette.primary1Color}
+        hoverColor={rawTheme.palette.primary2Color}
+        rippleColor={rawTheme.palette.primary3Color}
+      >
+        {icon}
+        {waitlistIsLocked && ' '}
+        {userInWaitlist ? 'Leave Waitlist' : 'Join Waitlist'}
+      </FlatButton>
+    );
+  }
+
   render() {
-    const { rawTheme } = this.context.muiTheme;
     const {
       openLoginDialog, openRegisterDialog,
       togglePlaylistManager, toggleSettings,
       onFavorite, onUpvote, onDownvote
     } = this.props;
     const {
-      user, userInWaitlist, userIsDJ,
+      user, userIsDJ,
       playlist, nextMedia, showSkip,
       eta,
       voteStats
     } = this.props;
     const className = cx('FooterBar', this.props.className);
-
-    const waitlistAction = userInWaitlist ? this.handleLeaveWaitlist : this.handleJoinWaitlist;
-    const waitlistText = userInWaitlist ? 'Leave Waitlist' : 'Join Waitlist';
 
     if (user && !user.isGuest) {
       return (
@@ -137,15 +171,7 @@ export default class FooterBar extends Component {
             />
           </div>
           {this.renderSkipButton()}
-          <FlatButton
-            backgroundColor={rawTheme.palette.primary1Color}
-            hoverColor={rawTheme.palette.primary2Color}
-            rippleColor={rawTheme.palette.primary3Color}
-            className="FooterBar-join"
-            onClick={waitlistAction}
-          >
-            {waitlistText}
-          </FlatButton>
+          {this.renderWaitlistButton()}
         </div>
       );
     }
