@@ -2,11 +2,14 @@ import React from 'react';
 import EmailIcon from 'material-ui/svg-icons/communication/email';
 import PasswordIcon from 'material-ui/svg-icons/action/lock';
 import UserIcon from 'material-ui/svg-icons/social/person';
+
 import Loader from '../../Loader';
 import Form from '../../Form';
 import FormGroup from '../../Form/Group';
 import TextField from '../../Form/TextField';
 import Button from '../../Form/Button';
+
+import ReCaptcha from '../../ReCaptcha';
 
 export default class RegisterForm extends React.Component {
   static propTypes = {
@@ -63,6 +66,11 @@ export default class RegisterForm extends React.Component {
             placeholder="Password"
             icon={<PasswordIcon color="#9f9d9e" />}
           />
+        </FormGroup>
+
+        <FormGroup>
+          {/* TODO put this in config */}
+          <ReCaptcha sitekey="6LfxCxwTAAAAAKgvwHB8cBRvDQhFrAunvpUyxuLv" />
         </FormGroup>
 
         <FormGroup>
