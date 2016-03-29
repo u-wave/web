@@ -17,7 +17,10 @@ export default class RegisterForm extends React.Component {
     onRegister: React.PropTypes.func
   };
 
-  state = { busy: false };
+  state = {
+    busy: false,
+    captchaResponse: null
+  };
 
   componentWillReceiveProps() {
     this.setState({ busy: false });
@@ -29,7 +32,14 @@ export default class RegisterForm extends React.Component {
     this.props.onRegister({
       username: this.refs.username.value,
       email: this.refs.email.value,
-      password: this.refs.password.value
+      password: this.refs.password.value,
+      grecaptcha: this.state.captchaResponse
+    });
+  };
+
+  handleCaptchaResponse = response => {
+    this.setState({
+      captchaResponse: response
     });
   };
 
@@ -70,7 +80,10 @@ export default class RegisterForm extends React.Component {
 
         <FormGroup>
           {/* TODO put this in config */}
-          <ReCaptcha sitekey="6LfxCxwTAAAAAKgvwHB8cBRvDQhFrAunvpUyxuLv" />
+          <ReCaptcha
+            sitekey="6LfxCxwTAAAAAKgvwHB8cBRvDQhFrAunvpUyxuLv"
+            onResponse={this.handleCaptchaResponse}
+          />
         </FormGroup>
 
         <FormGroup>

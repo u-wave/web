@@ -98,8 +98,8 @@ export function login({ email, password }) {
   });
 }
 
-export function register({ email, username, password }) {
-  return post('/auth/register', { email, username, password, passwordRepeat: password }, {
+export function register({ email, username, password, grecaptcha }) {
+  return post('/auth/register', { email, username, password, grecaptcha }, {
     onStart: () => ({ type: REGISTER_START }),
     onComplete: user => dispatch => {
       debug('registered', user);

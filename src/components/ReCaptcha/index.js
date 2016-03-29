@@ -15,7 +15,8 @@ window[onloadCallbackName] = () => {
 
 export default class ReCaptcha extends React.Component {
   static propTypes = {
-    sitekey: React.PropTypes.string.isRequired
+    sitekey: React.PropTypes.string.isRequired,
+    onResponse: React.PropTypes.func.isRequired
   };
 
   state = { grecaptcha: window.grecaptcha };
