@@ -156,7 +156,7 @@ export default class PlaylistManager extends Component {
         />
       );
     } else {
-      panel = <PlaylistPanelEmpty />;
+      panel = <PlaylistPanelEmpty className="PlaylistManager-panel" />;
     }
 
     return (

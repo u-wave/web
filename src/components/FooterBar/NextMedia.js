@@ -11,7 +11,7 @@ const NextMedia = ({
   if (!playlist) {
     return (
       <div className={cx('NextMedia', className)} {...attrs}>
-        You don't have a playlist yet!
+        You don't have a playlist yet! Click here to create one.
       </div>
     );
   }
