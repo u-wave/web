@@ -111,7 +111,13 @@ export function sendVote(vote) {
   send('vote', vote);
 }
 
-export function connect(store, url = location.href.replace(/^http(s)?:/, 'ws$1:')) {
+function defaultUrl() {
+  const port = location.port || (location.protocol === 'https:' ? 443 : 80);
+  const protocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+  return `${protocol}//${location.hostname}:${port}`;
+}
+
+export function connect(store, url = defaultUrl()) {
   const WebSocket = require('ReconnectingWebSocket');
   socket = new WebSocket(url);
   socket.onmessage = pack => {
