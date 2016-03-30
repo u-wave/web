@@ -221,6 +221,7 @@ export function createPlaylistComplete(playlist, tempId) {
 export function createPlaylist(name) {
   return (dispatch, getState) => {
     const jwt = tokenSelector(getState());
+    const isFirstPlaylist = !activePlaylistIDSelector(getState());
 
     const tempId = -Date.now();
     const description = '';
@@ -229,7 +230,12 @@ export function createPlaylist(name) {
 
     post(jwt, '/v1/playlists', { name, description, shared })
       .then(res => res.json())
-      .then(playlist => dispatch(createPlaylistComplete(playlist, tempId)))
+      .then(playlist => () => {
+        dispatch(createPlaylistComplete(playlist, tempId));
+        if (isFirstPlaylist) {
+          dispatch(activatePlaylistComplete(playlist._id));
+        }
+      })
       .catch(error => {
         dispatch({
           type: CREATE_PLAYLIST_COMPLETE,
