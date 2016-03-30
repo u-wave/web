@@ -230,7 +230,7 @@ export function createPlaylist(name) {
 
     post(jwt, '/v1/playlists', { name, description, shared })
       .then(res => res.json())
-      .then(playlist => () => {
+      .then(playlist => {
         dispatch(createPlaylistComplete(playlist, tempId));
         if (isFirstPlaylist) {
           dispatch(activatePlaylistComplete(playlist._id));
