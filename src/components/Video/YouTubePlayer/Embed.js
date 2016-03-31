@@ -34,6 +34,7 @@ export default class YouTubePlayerEmbed extends React.Component {
 
   onYTReady(event) {
     event.target.setVolume(this.props.volume);
+    event.target.setPlaybackRate(1);
   }
 
   render() {
