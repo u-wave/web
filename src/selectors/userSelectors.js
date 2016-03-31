@@ -10,6 +10,21 @@ export const authErrorSelector = createSelector(authSelector, auth => auth.error
 export const currentUserSelector = createSelector(authSelector, auth => auth.user);
 export const tokenSelector = createSelector(authSelector, auth => auth.jwt);
 
+const currentRoleSelector = createSelector(
+  currentUserSelector,
+  user => user.role
+);
+
+export const isModeratorSelector = createSelector(
+  currentRoleSelector,
+  role => role >= 2
+);
+
+export const isManagerSelector = createSelector(
+  currentRoleSelector,
+  role => role >= 3
+);
+
 function compareUsers(a, b) {
   if (a.role > b.role) {
     return -1;

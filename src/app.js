@@ -15,6 +15,9 @@ import { startTicking } from './actions/TickerActionCreators';
 
 import configureStore from './store/configureStore';
 
+// Register default chat commands.
+import './utils/commands';
+
 // The Store holds all of the application state. The @connect calls in the React
 // Container components use this store to access state.
 const store = configureStore();
