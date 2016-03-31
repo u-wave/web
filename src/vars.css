@@ -8,8 +8,8 @@ $highbright-color: #b20062;
 $scrollbar-color: #5f5f5f;
 
 /* Link colors */
-$link-color: #9d2053;
-$link-visited-color: #633246;
+$link-color: #c72e6c;
+$link-visited-color: $link-color;
 
 /* Sizes */
 $header-height: 56px;
