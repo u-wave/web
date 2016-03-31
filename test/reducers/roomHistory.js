@@ -40,7 +40,7 @@ describe('reducers/roomHistory', () => {
     favorites: [],
     downvotes: [],
     upvotes: [],
-    played: '2016-02-02T22:20:00.468Z'
+    playedAt: '2016-02-02T22:20:00.468Z'
   };
 
   describe('action: LOAD_HISTORY_COMPLETE', () => {
@@ -112,7 +112,7 @@ describe('reducers/roomHistory', () => {
         historyID: '56b12c59d6bfe93733bece97',
         userID: '562b748139c99dde22c6a499',
         playlistID: '563f390cf059363574f4d4dd',
-        played: new Date('2016-02-02T22:23:21.519Z').getTime(),
+        playedAt: new Date('2016-02-02T22:23:21.519Z').getTime(),
         media: {
           media: {
             _id: '569ac78a2b029e7d71a2ce43',

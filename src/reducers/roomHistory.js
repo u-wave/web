@@ -9,7 +9,7 @@ const normalize = entry => ({
     ...entry.media.media,
     ...entry.media
   },
-  timestamp: new Date(entry.timestamp || entry.played).getTime(),
+  timestamp: new Date(entry.timestamp || entry.playedAt).getTime(),
   stats: entry.stats || {
     upvotes: entry.upvotes || [],
     downvotes: entry.downvotes || [],

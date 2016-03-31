@@ -26,7 +26,7 @@ export function advance(nextBooth) {
   if (!nextBooth) {
     return advanceToEmpty();
   }
-  const { media, userID, historyID, playlistID, played } = nextBooth;
+  const { media, userID, historyID, playlistID, playedAt } = nextBooth;
   return (dispatch, getState) => {
     const user = usersSelector(getState())[userID];
     dispatch({
@@ -34,7 +34,7 @@ export function advance(nextBooth) {
       payload: {
         userID, historyID, playlistID, user,
         media: flattenPlaylistItem(media),
-        timestamp: played
+        timestamp: playedAt
       },
       meta: {
         previous: currentPlaySelector(getState())
