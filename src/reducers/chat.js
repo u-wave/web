@@ -104,7 +104,7 @@ export default function reduce(state = initialState, action = {}) {
         ...state.mutedUsers,
         [payload.userID]: {
           mutedBy: payload.moderatorID,
-          expires: payload.expires,
+          expiresAt: payload.expiresAt,
           expirationTimer: payload.expirationTimer
         }
       }

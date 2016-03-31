@@ -46,7 +46,7 @@ export function sendChat(user, text) {
   return (dispatch, getState) => {
     const mute = currentUserMuteSelector(getState());
     if (mute) {
-      const timeLeft = ms(mute.expires - Date.now(), { long: true });
+      const timeLeft = ms(mute.expiresAt - Date.now(), { long: true });
       return dispatch(log(
         `You have been muted, and cannot chat for another ${timeLeft}.`
       ));
@@ -152,15 +152,15 @@ function expireMute(userID) {
   };
 }
 
-export function muteUser(userID, { moderatorID, expires }) {
+export function muteUser(userID, { moderatorID, expiresAt }) {
   return (dispatch, getState) => {
     const currentTime = currentTimeSelector(getState());
-    const expireIn = expires - currentTime;
+    const expireIn = expiresAt - currentTime;
 
     dispatch({
       type: MUTE_USER,
       payload: {
-        userID, moderatorID, expires,
+        userID, moderatorID, expiresAt,
         expirationTimer: expireIn > 0 ?
           setTimeout(() => dispatch(expireMute(userID)), expireIn) : null
       }

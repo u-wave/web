@@ -74,7 +74,7 @@ function onMessage(dispatch, json) {
   case 'chatMute':
     dispatch(chatMute(data.userID, {
       moderatorID: data.moderatorID,
-      expires: data.expires
+      expiresAt: data.expiresAt
     }));
     break;
   case 'chatUnmute':
