@@ -1,3 +1,5 @@
+import find from 'array-find';
+
 const debug = require('debug')('uwave:chat-commands');
 
 const commands = {};
@@ -25,18 +27,8 @@ export function execute(state, name, args = []) {
   }
 }
 
-// TODO move default commands to some other file!
-import { log } from '../actions/ChatActionCreators';
-
-register('help', 'List available commands.', {
-  action: () => (dispatch, getState) => {
-    const available = getCommands();
-    dispatch(log('Available commands:'));
-    Object.keys(available).forEach(name => {
-      const command = available[name];
-      if (canExecute(getState(), command)) {
-        dispatch(log(`/${name} - ${command.description}`));
-      }
-    });
-  }
-});
+// Helper to consistently find online users in command handlers.
+export function findUser(users, username) {
+  const lname = username.toLowerCase();
+  return find(users, o => o.username.toLowerCase() === lname);
+}

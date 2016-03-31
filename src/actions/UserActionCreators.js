@@ -1,5 +1,6 @@
 import {
-  LOAD, JOIN, LEAVE, CHANGE_USERNAME,
+  LOAD, JOIN, LEAVE,
+  CHANGE_USERNAME, CHANGE_ROLE,
   DO_CHANGE_USERNAME_START, DO_CHANGE_USERNAME_COMPLETE
 } from '../constants/actionTypes/users';
 import { tokenSelector, currentUserSelector } from '../selectors/userSelectors';
@@ -57,5 +58,12 @@ export function doChangeUsername(username) {
         payload: error,
         meta: { username }
       }));
+  };
+}
+
+export function changeUserRole(userID, role) {
+  return {
+    type: CHANGE_ROLE,
+    payload: { userID, role }
   };
 }

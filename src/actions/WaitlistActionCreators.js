@@ -1,7 +1,7 @@
 import {
   LOAD,
   LOCK, CLEAR,
-  UPDATE, JOIN, LEAVE,
+  UPDATE, JOIN, LEAVE, MOVE,
   DO_JOIN_START, DO_JOIN_COMPLETE,
   DO_LEAVE_START, DO_LEAVE_COMPLETE,
   DO_LOCK_START, DO_LOCK_COMPLETE,
@@ -105,30 +105,14 @@ export function leftWaitlist({ userID, waitlist }) {
   };
 }
 
-export function modAdd({ userID, moderatorID, position, waitlist }) {
-  return {
-    type: 'addToWaitlist',
-    payload: {
-      userID, moderatorID, position, waitlist
-    }
-  };
-}
-
-export function modMove({ userID, moderatorID, position, waitlist }) {
-  return {
-    type: 'moveInWaitlist',
-    payload: {
-      userID, moderatorID, position, waitlist
-    }
-  };
-}
-
-export function modRemove({ userID, moderatorID, reason, waitlist }) {
-  return {
-    type: 'removeFromWaitlist',
-    payload: {
-      userID, moderatorID, reason, waitlist
-    }
+export function movedInWaitlist({ userID, moderatorID, position, waitlist }) {
+  return dispatch => {
+    dispatch({
+      type: MOVE,
+      payload: { userID, position },
+      meta: { moderatorID }
+    });
+    dispatch(updatedWaitlist(waitlist));
   };
 }
 

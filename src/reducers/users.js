@@ -1,7 +1,12 @@
 import except from 'except';
 import indexBy from 'index-by';
 
-import { LOAD, JOIN, LEAVE, CHANGE_USERNAME } from '../constants/actionTypes/users';
+import {
+  LOAD,
+  JOIN, LEAVE,
+  CHANGE_USERNAME,
+  CHANGE_ROLE
+} from '../constants/actionTypes/users';
 
 const initialState = {};
 
@@ -32,6 +37,17 @@ export default function reduce(state = initialState, action = {}) {
         [payload.userID]: {
           ...state[payload.userID],
           username: payload.username
+        }
+      };
+    }
+    return state;
+  case CHANGE_ROLE:
+    if (state[payload.userID]) {
+      return {
+        ...state,
+        [payload.userID]: {
+          ...state[payload.userID],
+          role: payload.role
         }
       };
     }

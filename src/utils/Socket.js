@@ -1,10 +1,19 @@
 import { advance } from '../actions/BoothActionCreators';
-import { receive as chatReceive } from '../actions/ChatActionCreators';
+import {
+  receive as chatReceive,
+  removeMessage, removeMessagesByUser, removeAllMessages,
+  muteUser as chatMute, unmuteUser as chatUnmute
+} from '../actions/ChatActionCreators';
 import { cyclePlaylist } from '../actions/PlaylistActionCreators';
-import { join as userJoin, leave as userLeave, changeUsername } from '../actions/UserActionCreators';
+import {
+  join as userJoin,
+  leave as userLeave,
+  changeUsername,
+  changeUserRole
+} from '../actions/UserActionCreators';
 import {
   joinedWaitlist, leftWaitlist,
-  updatedWaitlist,
+  updatedWaitlist, movedInWaitlist,
   setLocked as setWaitlistLocked
 } from '../actions/WaitlistActionCreators';
 import { favorited, receiveVote } from '../actions/VoteActionCreators';
@@ -40,61 +49,82 @@ function drainQueuedMessages() {
   messages.forEach(msg => send(msg.command, msg.data));
 }
 
+const actions = {
+  chatMessage({ _id, message, timestamp }) {
+    return chatReceive({
+      _id: `${_id}-${timestamp}`,
+      userID: _id,
+      text: message,
+      timestamp
+    });
+  },
+  chatDelete() {
+    return removeAllMessages();
+  },
+  chatDeleteByID({ chatID }) {
+    return removeMessage(chatID);
+  },
+  chatDeleteByUser({ userID }) {
+    return removeMessagesByUser(userID);
+  },
+  chatMute({ userID, expiresAt, moderatorID }) {
+    return chatMute(userID, { moderatorID, expiresAt });
+  },
+  chatUnmute({ userID, moderatorID }) {
+    return chatUnmute(userID, { moderatorID });
+  },
+  advance(booth) {
+    return advance(booth);
+  },
+  favorite({ userID, historyID }) {
+    return favorited({ userID, historyID });
+  },
+  vote({ _id, value }) {
+    return receiveVote({ userID: _id, vote: value });
+  },
+  waitlistJoin({ userID, waitlist }) {
+    return joinedWaitlist({ userID, waitlist });
+  },
+  waitlistLeave({ userID, waitlist }) {
+    return leftWaitlist({ userID, waitlist });
+  },
+  waitlistUpdate(waitlist) {
+    return updatedWaitlist(waitlist);
+  },
+  waitlistLock({ locked }) {
+    return setWaitlistLocked(locked);
+  },
+  waitlistMove({ userID, moderatorID, position, waitlist }) {
+    return movedInWaitlist({ userID, moderatorID, position, waitlist });
+  },
+  playlistCycle({ playlistID }) {
+    return cyclePlaylist(playlistID);
+  },
+  join(user) {
+    return userJoin(user);
+  },
+  leave(userID) {
+    return userLeave(userID);
+  },
+  nameChange({ userID, username }) {
+    return changeUsername(userID, username);
+  },
+  roleChange({ userID, role }) {
+    return changeUserRole(userID, role);
+  }
+};
+
 function onMessage(dispatch, json) {
   const { command, data } = JSON.parse(json);
   debug(command, data);
-  // convert between server & client message formats
-  switch (command) {
-  case 'chatMessage':
-    dispatch(chatReceive({
-      _id: data._id + '-' + data.timestamp,
-      userID: data._id,
-      text: data.message,
-      timestamp: data.timestamp
-    }));
-    break;
-  case 'advance':
-    dispatch(advance(data));
-    break;
-  case 'favorite':
-    dispatch(favorited(data));
-    break;
-  case 'vote':
-    dispatch(receiveVote({
-      userID: data._id,
-      vote: data.value
-    }));
-    break;
-
-  case 'waitlistJoin':
-    dispatch(joinedWaitlist(data));
-    break;
-  case 'waitlistLeave':
-    dispatch(leftWaitlist(data));
-    break;
-  case 'waitlistUpdate':
-    dispatch(updatedWaitlist(data));
-    break;
-  case 'waitlistLock':
-    dispatch(setWaitlistLocked(data.locked));
-    break;
-
-  case 'playlistCycle':
-    dispatch(cyclePlaylist(data.playlistID));
-    break;
-
-  case 'join':
-    dispatch(userJoin(data));
-    break;
-  case 'leave':
-    dispatch(userLeave(data));
-    break;
-  case 'nameChange':
-    dispatch(changeUsername(data.userID, data.username));
-    break;
-  default:
-    debug('!unknown socket message type');
+  if (typeof actions[command] === 'function') {
+    const action = actions[command](data);
+    if (action) {
+      dispatch(action);
+      return;
+    }
   }
+  debug('!unknown socket message type');
 }
 
 export function auth(jwt) {

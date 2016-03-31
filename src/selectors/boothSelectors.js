@@ -53,6 +53,9 @@ export const videoSelector = createStructuredSelector({
   seek: timeElapsedSelector
 });
 
+// TODO use a permissions-based system instead of role IDs:
+// "user.can('booth.skip')"
+const ROLE_MODERATOR = 2;
 export const canSkipSelector = createSelector(
   historyIDSelector,
   isCurrentDJSelector,
@@ -61,7 +64,6 @@ export const canSkipSelector = createSelector(
     if (!historyID || !user) {
       return false;
     }
-    // TODO also allow when user is moderator
-    return isCurrentDJ;
+    return isCurrentDJ || user.role >= ROLE_MODERATOR;
   }
 );
