@@ -11,7 +11,7 @@ import PlaylistManager from '../../containers/PlaylistManager';
 import RoomHistory from '../../containers/RoomHistory';
 import SettingsManager from '../../containers/SettingsManager';
 
-import SidePanels from '../SidePanels';
+import SidePanels from '../../containers/SidePanels';
 import Dialogs from '../Dialogs';
 import AddToPlaylistMenu from '../../containers/AddToPlaylistMenu';
 import DragLayer from '../../containers/DragLayer';
@@ -20,27 +20,22 @@ import DragLayer from '../../containers/DragLayer';
 export default class App extends React.Component {
   static propTypes = {
     activeOverlay: React.PropTypes.string,
-    selectedPanel: React.PropTypes.string,
     settings: React.PropTypes.object,
     user: React.PropTypes.object,
-    waitlistPosition: React.PropTypes.number,
-    waitlistSize: React.PropTypes.number,
 
     onCloseOverlay: React.PropTypes.func,
-    selectPanel: React.PropTypes.func,
     sendChatMessage: React.PropTypes.func
   };
 
   render() {
     // state props
     const {
-      activeOverlay, selectedPanel, settings, user,
-      waitlistPosition, waitlistSize
+      activeOverlay, settings, user
     } = this.props;
     // dispatch handlers
     const {
       onCloseOverlay,
-      selectPanel, sendChatMessage
+      sendChatMessage
     } = this.props;
     const isLoggedIn = !!user;
 
@@ -81,11 +76,7 @@ export default class App extends React.Component {
 
         <div className="AppColumn AppColumn--right">
           <SidePanels
-            selected={selectedPanel}
             isLoggedIn={isLoggedIn}
-            waitlistSize={waitlistSize}
-            waitlistPosition={waitlistPosition}
-            onChange={selectPanel}
             sendChatMessage={sendChatMessage}
           />
         </div>

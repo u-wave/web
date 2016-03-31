@@ -4,10 +4,8 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { closeAll } from '../actions/OverlayActionCreators';
-import { selectPanel } from '../actions/PanelSelectActionCreators';
 import { inputMessage } from '../actions/ChatActionCreators';
 
-import { sizeSelector, positionSelector } from '../selectors/waitlistSelectors';
 import { currentUserSelector } from '../selectors/userSelectors';
 import { settingsSelector, muiThemeSelector } from '../selectors/settingSelectors';
 import App from '../components/App';
@@ -15,17 +13,13 @@ import MuiTheme from '../components/MuiTheme';
 
 const mapStateToProps = createStructuredSelector({
   activeOverlay: state => state.activeOverlay,
-  selectedPanel: state => state.selectedPanel,
   settings: settingsSelector,
   user: currentUserSelector,
-  theme: muiThemeSelector,
-  waitlistPosition: positionSelector,
-  waitlistSize: sizeSelector
+  theme: muiThemeSelector
 });
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    selectPanel,
     sendChatMessage: inputMessage,
     onCloseOverlay: closeAll
   }, dispatch);
