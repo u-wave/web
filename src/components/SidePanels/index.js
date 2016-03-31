@@ -58,7 +58,9 @@ const getWaitlistLabel = (size, position) => {
 };
 
 const SidePanels = ({
-  selected, isLoggedIn, waitlistSize, waitlistPosition,
+  selected, isLoggedIn,
+  onlineUsersCount,
+  waitlistSize, waitlistPosition,
   onChange, sendChatMessage
 }) => {
   // Checking for strings in the onChange handler here because the ChatInput
@@ -92,7 +94,10 @@ const SidePanels = ({
       </Tab>
       <Tab
         disableTouchRipple
-        label="Room"
+        label={[
+          'Room',
+          <span style={{ fontSize: '125%' }}>{onlineUsersCount}</span>
+        ]}
         value="room"
         style={selected === 'room' ? activeTabStyle : tabStyle}
       >

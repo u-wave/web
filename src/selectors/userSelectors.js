@@ -24,3 +24,8 @@ export const userListSelector = createSelector(
   usersSelector,
   users => values(users).sort(compareUsers)
 );
+
+export const userCountSelector = createSelector(
+  userListSelector,
+  users => users.length
+);

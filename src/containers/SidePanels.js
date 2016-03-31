@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { selectPanel } from '../actions/PanelSelectActionCreators';
+import { userCountSelector } from '../selectors/userSelectors';
 import {
   sizeSelector as waitlistSizeSelector,
   positionSelector as waitlistPositionSelector
@@ -13,7 +14,8 @@ import SidePanels from '../components/SidePanels';
 const mapStateToProps = createStructuredSelector({
   selectedPanel: state => state.selectedPanel,
   waitlistPosition: waitlistPositionSelector,
-  waitlistSize: waitlistSizeSelector
+  waitlistSize: waitlistSizeSelector,
+  onlineUsersCount: userCountSelector
 });
 
 function mapDispatchToProps(dispatch) {
