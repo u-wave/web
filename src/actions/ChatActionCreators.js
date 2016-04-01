@@ -2,13 +2,13 @@ import escapeRegExp from 'escape-string-regexp';
 import values from 'object-values';
 import ms from 'ms';
 import splitargs from 'splitargs';
+import parseChatMarkup from 'u-wave-parse-chat-markup';
 
 import {
   SEND_MESSAGE, RECEIVE_MESSAGE, LOG,
   REMOVE_MESSAGE, REMOVE_USER_MESSAGES, REMOVE_ALL_MESSAGES,
   MUTE_USER, UNMUTE_USER
 } from '../constants/actionTypes/chat';
-import parseChatMarkup from '../utils/parseChatMarkup';
 import { sendMessage } from '../utils/Socket';
 import { execute } from '../utils/ChatCommands';
 import {
