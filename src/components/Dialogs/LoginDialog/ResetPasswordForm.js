@@ -48,7 +48,7 @@ export default class ResetPasswordForm extends React.Component {
             className="ResetPasswordForm-submit"
             disabled={busy}
           >
-            {busy ? <div className="Button-loading"><Loader size="tiny" /></div> : 'RESETPASSWORD'}
+            {busy ? <div className="Button-loading"><Loader size="tiny" /></div> : 'RESET PASSWORD'}
           </Button>
         </FormGroup>
       </Form>
