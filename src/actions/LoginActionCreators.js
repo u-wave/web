@@ -168,10 +168,23 @@ export function logout() {
 export function resetPassword(email) {
   return (dispatch, getState) => {
     const jwt = tokenSelector(getState());
-    post(jwt, `/v1/auth/password/reset`, email)
-      .then(res.json())
-      .then(() => dispatch({
-        type: RESET_PASSWORD_COMPLETE
-      }));
+    post(null, `/v1/auth/password/reset`, email)
+      .then(res => res.json())
+      .then(token => {
+        debug('reset token', token);
+        dispatch({
+          type: RESET_PASSWORD_COMPLETE,
+          payload: "Password reset successfully"
+        });
+        return;
+      })
+      .catch(err => {
+        debug('password reset error', err);
+        dispatch({
+          type: RESET_PASSWORD_COMPLETE,
+          error: true,
+          payload: err
+        });
+      });
   };
 }
