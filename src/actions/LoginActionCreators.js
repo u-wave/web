@@ -166,11 +166,12 @@ export function logout() {
 }
 
 export function resetPassword(email) {
-  return dispatch => {
+  return (dispatch, getState) => {
     const jwt = tokenSelector(getState());
     post(jwt, `/v1/auth/password/reset`, email)
-      .then(dispatch)
       .then(res.json())
-      .then({ type: RESET_PASSWORD_COMPLETE });
+      .then(() => dispatch({
+        type: RESET_PASSWORD_COMPLETE
+      }));
   };
 }
