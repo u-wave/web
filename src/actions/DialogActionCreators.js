@@ -48,7 +48,7 @@ export function closeLoginDialog() {
 
 export function openResetPasswordDialog() {
   return {
-    type: OPEN_RESET_PASSWORD_DIALOG,
+    type: OPEN_LOGIN_DIALOG,
     payload: { show: 'reset' }
   };
 }
