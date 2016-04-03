@@ -1,4 +1,4 @@
-import { createSelector, createStructuredSelector } from 'reselect';
+import { createSelector } from 'reselect';
 import objMap from 'object.map';
 
 import { usersSelector, currentUserSelector } from './userSelectors';
@@ -7,10 +7,6 @@ const baseSelector = state => state.chat;
 
 export const messagesSelector = createSelector(baseSelector, chat => chat.messages);
 const mutesSelector = createSelector(baseSelector, chat => chat.mutedUsers);
-
-export const chatSelector = createStructuredSelector({
-  messages: messagesSelector
-});
 
 export const muteTimeoutsSelector = createSelector(
   mutesSelector,

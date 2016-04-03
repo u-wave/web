@@ -12,5 +12,5 @@ gulp.task('assets:copy', () =>
 );
 
 export default function copyAssetsTask() {
-  return seq([ 'assets:copy', 'assets:favicon' ]);
+  return seq([ 'assets:copy', 'assets:favicon', 'assets:emoji' ]);
 }

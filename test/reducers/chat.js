@@ -14,10 +14,10 @@ const a = proxyquire('../../src/actions/ChatActionCreators', {
 describe('reducers/chat', () => {
   it('should not respond to unrelated actions', () => {
     const { dispatch, getState } = createStore();
-    const initial = s.chatSelector(getState());
+    const initial = s.messagesSelector(getState());
     dispatch({ type: 'randomOtherAction', payload: {} });
     expect(
-      s.chatSelector(getState())
+      s.messagesSelector(getState())
     ).to.eql(initial);
   });
 

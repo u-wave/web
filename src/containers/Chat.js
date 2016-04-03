@@ -1,6 +1,13 @@
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 
-import { chatSelector } from '../selectors/chatSelectors';
+import { messagesSelector } from '../selectors/chatSelectors';
+import { availableEmojiSelector } from '../selectors/emojiSelectors';
 import Chat from '../components/Chat';
 
-export default connect(chatSelector)(Chat);
+const mapStateToProps = createStructuredSelector({
+  messages: messagesSelector,
+  availableEmoji: availableEmojiSelector
+});
+
+export default connect(mapStateToProps)(Chat);

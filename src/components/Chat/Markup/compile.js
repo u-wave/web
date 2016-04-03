@@ -8,7 +8,7 @@ import Mention from './Mention';
 import Link from './Link';
 import Emoji from './Emoji';
 
-export default function compile(tree) {
+export default function compile(tree, { availableEmoji = [] } = {}) {
   return tree.map((node, i) => {
     if (typeof node === 'string') {
       return node;
@@ -17,7 +17,10 @@ export default function compile(tree) {
     } else if (node.type === 'link') {
       return <Link key={i} text={node.text} href={node.href} />;
     } else if (node.type === 'emoji') {
-      return <Emoji key={i} name={node.name} />;
+      if (availableEmoji.indexOf(node.name) !== -1) {
+        return <Emoji key={i} name={node.name} />;
+      }
+      return `:${node.name}:`;
     }
 
     switch (node.type) {
