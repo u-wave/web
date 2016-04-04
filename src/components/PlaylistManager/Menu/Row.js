@@ -2,6 +2,8 @@ import cx from 'classnames';
 import React, { Component, PropTypes } from 'react';
 import { DropTarget } from 'react-dnd';
 import ActiveIcon from 'material-ui/lib/svg-icons/navigation/check';
+import muiThemeable from 'material-ui/lib/muiThemeable';
+
 import { MEDIA } from '../../../constants/DDItemTypes';
 import Loader from '../../Loader';
 
@@ -17,6 +19,7 @@ const collect = (connect, monitor) => ({
   isOver: monitor.isOver()
 });
 
+@muiThemeable
 @DropTarget(MEDIA, playlistTarget, collect)
 export default class PlaylistRow extends Component {
   static propTypes = {
@@ -26,13 +29,16 @@ export default class PlaylistRow extends Component {
 
     connectDropTarget: PropTypes.func.isRequired,
     onClick: PropTypes.func,
-    onAddToPlaylist: PropTypes.func
+    onAddToPlaylist: PropTypes.func,
+
+    muiTheme: PropTypes.object.isRequired
   };
 
   render() {
     const {
       className, playlist, onClick,
-      connectDropTarget, isOver
+      connectDropTarget, isOver,
+      muiTheme
     } = this.props;
     const activeClass = playlist.active && 'is-active';
     const selectedClass = playlist.selected && 'is-selected';
@@ -48,7 +54,7 @@ export default class PlaylistRow extends Component {
     } else if (playlist.active) {
       icon = (
         <div className="PlaylistMenuRow-active-icon">
-          <ActiveIcon color="#fff" />
+          <ActiveIcon color={muiTheme.rawTheme.palette.textColor} />
         </div>
       );
     }

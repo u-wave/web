@@ -1,10 +1,11 @@
 import React from 'react';
 import IconButton from 'material-ui/lib/icon-button';
 import HistoryIcon from 'material-ui/lib/svg-icons/action/history';
+import muiThemeable from 'material-ui/lib/muiThemeable';
 
 const fullSize = { width: '100%', height: '100%' };
 
-const HistoryButton = ({ onClick }) => (
+const HistoryButton = ({ onClick, muiTheme }) => (
   <IconButton
     className="HeaderHistoryButton"
     style={fullSize}
@@ -14,10 +15,10 @@ const HistoryButton = ({ onClick }) => (
   >
     <HistoryIcon
       style={fullSize}
-      color="#fff"
+      color={muiTheme.rawTheme.palette.textColor}
       className="HeaderHistoryButton-icon"
     />
   </IconButton>
 );
 
-export default HistoryButton;
+export default muiThemeable(HistoryButton);

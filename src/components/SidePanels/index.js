@@ -1,6 +1,7 @@
 import React from 'react';
 import Tabs from 'material-ui/lib/tabs/tabs';
 import Tab from 'material-ui/lib/tabs/tab';
+import muiThemeable from 'material-ui/lib/muiThemeable';
 
 import Chat from '../../containers/Chat';
 import ChatInput from '../Chat/Input';
@@ -9,39 +10,39 @@ import WaitList from '../../containers/WaitList';
 
 import PanelTemplate from './PanelTemplate';
 
-const tabItemContainerStyle = {
+const tabItemContainerStyle = ({ rawTheme }) => ({
   height: 56,
-  backgroundColor: '#151515'
-};
+  backgroundColor: rawTheme.palette.backgroundColor
+});
 
-const tabStyle = {
+const tabStyle = ({ rawTheme }) => ({
   float: 'left',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
-  color: '#fff',
+  color: rawTheme.palette.textColor,
   fontSize: '10pt',
   height: '100%',
-  backgroundColor: '#151515'
-};
+  backgroundColor: rawTheme.palette.backgroundColor
+});
 
-const activeTabStyle = {
-  ...tabStyle,
+const activeTabStyle = theme => ({
+  ...tabStyle(theme),
   backgroundColor: '#222'
-};
+});
 
-const inkBarStyle = {
+const inkBarStyle = ({ rawTheme }) => ({
   height: 3,
   marginTop: -3,
-  backgroundColor: '#fff'
-};
+  backgroundColor: rawTheme.palette.textColor
+});
 
-const contentStyle = {
+const contentStyle = () => ({
   // This ensures that the `position:absolute`s on divs _inside_ container
   // elements align correctly.
   position: 'static'
-};
+});
 
 const getWaitlistLabel = (size, position) => {
   if (size > 0) {
@@ -58,6 +59,7 @@ const getWaitlistLabel = (size, position) => {
 };
 
 const SidePanels = ({
+  muiTheme,
   selected, isLoggedIn,
   onlineUsersCount,
   waitlistSize, waitlistPosition,
@@ -71,9 +73,9 @@ const SidePanels = ({
     <Tabs
       value={selected}
       onChange={tab => typeof tab === 'string' && onChange(tab)}
-      tabItemContainerStyle={tabItemContainerStyle}
-      inkBarStyle={inkBarStyle}
-      contentContainerStyle={contentStyle}
+      tabItemContainerStyle={tabItemContainerStyle(muiTheme)}
+      inkBarStyle={inkBarStyle(muiTheme)}
+      contentContainerStyle={contentStyle(muiTheme)}
       tabTemplate={PanelTemplate}
     >
       {/* Disabled touch ripples on tabs because they're offset weirdly. Also,
@@ -83,7 +85,7 @@ const SidePanels = ({
         disableTouchRipple
         label="Chat"
         value="chat"
-        style={selected === 'chat' ? activeTabStyle : tabStyle}
+        style={selected === 'chat' ? activeTabStyle(muiTheme) : tabStyle(muiTheme)}
       >
         <div className="AppRow AppRow--middle">
           <Chat />
@@ -99,7 +101,7 @@ const SidePanels = ({
           <span style={{ fontSize: '125%' }}>{onlineUsersCount}</span>
         ]}
         value="room"
-        style={selected === 'room' ? activeTabStyle : tabStyle}
+        style={selected === 'room' ? activeTabStyle(muiTheme) : tabStyle(muiTheme)}
       >
         <div className="AppRow AppRow--middle">
           <RoomUserList />
@@ -109,7 +111,7 @@ const SidePanels = ({
         disableTouchRipple
         label={getWaitlistLabel(waitlistSize, waitlistPosition)}
         value="waitlist"
-        style={selected === 'waitlist' ? activeTabStyle : tabStyle}
+        style={selected === 'waitlist' ? activeTabStyle(muiTheme) : tabStyle(muiTheme)}
       >
         <div className="AppRow AppRow--middle">
           <WaitList />
@@ -119,4 +121,4 @@ const SidePanels = ({
   );
 };
 
-export default SidePanels;
+export default muiThemeable(SidePanels);

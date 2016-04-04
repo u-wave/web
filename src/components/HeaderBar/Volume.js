@@ -5,7 +5,9 @@ import VolumeDownIcon from 'material-ui/lib/svg-icons/av/volume-down';
 import VolumeMuteIcon from 'material-ui/lib/svg-icons/av/volume-mute';
 import VolumeOffIcon from 'material-ui/lib/svg-icons/av/volume-off';
 import VolumeUpIcon from 'material-ui/lib/svg-icons/av/volume-up';
+import muiThemeable from 'material-ui/lib/muiThemeable';
 
+@muiThemeable
 export default class Volume extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
@@ -14,7 +16,8 @@ export default class Volume extends React.Component {
 
     onVolumeChange: React.PropTypes.func,
     onMute: React.PropTypes.func,
-    onUnmute: React.PropTypes.func
+    onUnmute: React.PropTypes.func,
+    muiTheme: React.PropTypes.object.isRequired
   };
 
   handleVolumeChange(e, volume) {
@@ -41,7 +44,7 @@ export default class Volume extends React.Component {
     return (
       <div className={cx('VolumeSlider', this.props.className)}>
         <VolumeIcon
-          color="#fff"
+          color={this.props.muiTheme.rawTheme.palette.textColor}
           onClick={::this.handleMuteClick}
         />
         <div className="VolumeSlider-slider">

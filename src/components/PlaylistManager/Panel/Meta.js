@@ -6,11 +6,14 @@ import ActiveIcon from 'material-ui/lib/svg-icons/toggle/check-box';
 import ActivateIcon from 'material-ui/lib/svg-icons/toggle/check-box-outline-blank';
 import EditIcon from 'material-ui/lib/svg-icons/editor/mode-edit';
 import DeleteIcon from 'material-ui/lib/svg-icons/action/delete';
+import muiThemeable from 'material-ui/lib/muiThemeable';
 
 const PlaylistMeta = ({
   className, active, id, name,
-  onActivatePlaylist, onRenamePlaylist, onDeletePlaylist
+  onActivatePlaylist, onRenamePlaylist, onDeletePlaylist,
+  muiTheme
 }) => {
+  const iconColor = muiTheme.rawTheme.palette.textColor;
   return (
     <div className={cx('PlaylistMeta', className, active ? 'PlaylistMeta--active' : '')}>
       <div className="PlaylistMeta-name">
@@ -20,8 +23,8 @@ const PlaylistMeta = ({
         <Checkbox
           checked={active}
           onCheck={() => !active && onActivatePlaylist(id)}
-          checkedIcon={<ActiveIcon color="#fff" />}
-          unCheckedIcon={<ActivateIcon color="#fff" />}
+          checkedIcon={<ActiveIcon color={iconColor} />}
+          unCheckedIcon={<ActivateIcon color={iconColor} />}
           label={active ? 'Active' : 'Activate'}
         />
       </div>
@@ -30,17 +33,17 @@ const PlaylistMeta = ({
         tooltip="Rename"
         tooltipPosition="top-center"
       >
-        <EditIcon color="#555" hoverColor="#fff" />
+        <EditIcon color="#555" hoverColor={iconColor} />
       </IconButton>
       <IconButton
         onClick={() => onDeletePlaylist(id)}
         tooltip="Delete"
         tooltipPosition="top-center"
       >
-        <DeleteIcon color="#555" hoverColor={active ? '#555' : '#fff'} />
+        <DeleteIcon color="#555" hoverColor={active ? '#555' : iconColor} />
       </IconButton>
     </div>
   );
 };
 
-export default PlaylistMeta;
+export default muiThemeable(PlaylistMeta);

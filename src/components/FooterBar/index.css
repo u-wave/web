@@ -65,7 +65,7 @@
   display: block;
   float: left;
   cursor: pointer;
-  color: #fff;
+  color: $text-color;
   font-size: 12pt;
 
   @modifier login {

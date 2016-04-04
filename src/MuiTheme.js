@@ -13,6 +13,9 @@ export default {
     default: ''
   },
   palette: {
+    backgroundColor: '#151515',
+    linkColor: '#c72e6c',
+
     primary1Color: '#9d2053',
     primary2Color: '#b20062',
     primary3Color: Colors.lightWhite,

@@ -1,14 +1,15 @@
 import React from 'react';
 import MoveToFirstIcon from 'material-ui/lib/svg-icons/hardware/keyboard-arrow-up';
+import muiThemeable from 'material-ui/lib/muiThemeable';
 
 import Action from './Action';
 
-const MoveToFirst = ({ onFirst, ...props }) => {
+const MoveToFirst = ({ onFirst, muiTheme, ...props }) => {
   return (
     <Action {...props} onAction={onFirst}>
-      <MoveToFirstIcon color="#fff" />
+      <MoveToFirstIcon color={muiTheme.rawTheme.palette.textColor} />
     </Action>
   );
 };
 
-export default MoveToFirst;
+export default muiThemeable(MoveToFirst);

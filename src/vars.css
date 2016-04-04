@@ -1,15 +1,15 @@
 /* Global colours */
-$text-color: #fff;
-$muted-text-color: #777;
-$background-color: #151515;
-$background-hover-color: #111;
-$highlight-color: #9d2053;
-$highbright-color: #b20062;
+$text-color: map(theme, palette, textColor);
+$muted-text-color: map(theme, palette, alternateTextColor);
+$background-color: map(theme, palette, backgroundColor);
+$background-hover-color: map(theme, palette, backgroundHighlightColor);
+$highlight-color: map(theme, palette, primary1Color);
+$highbright-color: map(theme, palette, primary2Color);
 $scrollbar-color: #5f5f5f;
 
-/* Link colors */
-$link-color: #c72e6c;
-$link-visited-color: $link-color;
+$link-color: map(theme, palette, linkColor);
+
+$logo-url: map(logoUrl);
 
 /* Sizes */
 $header-height: 56px;
@@ -22,13 +22,13 @@ $footer-border-color: #303036;
 $overlay-header-close-size: $header-height;
 
 /* Chat colours */
-$chat-background-color: #1b1b1b;
-$chat-background-color2: #222222;
+$chat-background-color: map(theme, palette, chatColor);
+$chat-background-color2: map(theme, palette, chatColorAlternate);
 $chat-border-color: $footer-border-color;
 
 /* User related colours */
-$user-list-color: #1b1b1b;
-$user-list-alternate-color: #222222;
+$user-list-color: map(theme, palette, chatColor);
+$user-list-alternate-color: map(theme, palette, chatColorAlternate);
 
 /* Playlist colours & sizing */
 $media-list-spacing: 3%;

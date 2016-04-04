@@ -1,3 +1,4 @@
+import * as path from 'path';
 import { dest } from 'gulp';
 import { buildExternalHelpers } from 'babel-core';
 import babelify from 'babelify';
@@ -17,7 +18,7 @@ import renameDeps from './utils/browserify-rename-deps';
 // called a "bundle". It includes both üWave's own modules, like the React
 // components and Redux reducers, and dependency files like React itself.
 
-export default function browserifyTask({ minify = false, 'source-maps': useSourceMaps = true }) {
+export default function browserifyTask({ config, minify = false, 'source-maps': useSourceMaps = true }) {
   process.env.NODE_ENV = minify ? 'production' : 'development';
 
   // Browserify works by passing a single entry point file, which contains the
@@ -61,7 +62,8 @@ export default function browserifyTask({ minify = false, 'source-maps': useSourc
   // …which will be removed by uglify.js later down the line.
   b.transform(envify({
     _: 'purge',
-    NODE_ENV: process.env.NODE_ENV
+    NODE_ENV: process.env.NODE_ENV,
+    UWAVE_CONFIG: path.resolve(config)
   }), { global: true });
 
   if (minify) {

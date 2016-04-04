@@ -2,12 +2,24 @@ import gulp from 'gulp';
 import { env } from 'gulp-util';
 import runSeq from 'run-sequence';
 
+import * as uw from './tasks/utils/extension';
+
+function readBuildConfig(path) {
+  const lib = require(path);
+  const makeConfig = typeof lib === 'function' ? lib : lib.default;
+  return makeConfig(uw);
+}
+
+env.config = env.config || env.c || './tasks/default-config';
+
+const config = readBuildConfig(env.config);
+
 function sequence(...tasks) {
   return cb => runSeq(...tasks, cb);
 }
 
 function exec(taskName) {
-  return () => require(`./tasks/${taskName}`).default(env);
+  return () => require(`./tasks/${taskName}`).default(env, config);
 }
 
 gulp.task('css:clean', exec('clean-css'));

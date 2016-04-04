@@ -11,10 +11,16 @@ import imports from 'postcss-import';
 import nested from 'postcss-nested';
 import reduceCalc from 'postcss-calc';
 import variables from 'postcss-simple-vars';
+import map from 'postcss-map';
+
+import { getTheme } from './utils/extension';
 
 export default function compileCssTask({ minify = false, 'source-maps': useSourceMaps = true }) {
   const processors = [
     imports(),
+    map({
+      maps: [ { theme: getTheme() } ]
+    }),
     variables(),
     bem(),
     nested(),

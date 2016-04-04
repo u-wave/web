@@ -1,17 +1,20 @@
 import cx from 'classnames';
 import React, { Component, PropTypes } from 'react';
 import SearchIcon from 'material-ui/lib/svg-icons/action/search';
+import muiThemeable from 'material-ui/lib/muiThemeable';
 
+@muiThemeable
 export default class SearchResultsRow extends Component {
   static propTypes = {
     className: PropTypes.string,
     query: PropTypes.string,
     size: PropTypes.number,
-    onClick: PropTypes.func
+    onClick: PropTypes.func,
+    muiTheme: PropTypes.object.isRequired
   };
 
   render() {
-    const { className, query, size, onClick } = this.props;
+    const { className, query, size, onClick, muiTheme } = this.props;
     return (
       <div
         role="menuitem"
@@ -20,7 +23,7 @@ export default class SearchResultsRow extends Component {
       >
         <div className="PlaylistMenuRow-title">
           <div className="PlaylistMenuRow-active-icon">
-            <SearchIcon color="#fff" />
+            <SearchIcon color={muiTheme.rawTheme.palette.textColor} />
           </div>
           "{query}"
         </div>

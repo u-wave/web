@@ -2,13 +2,14 @@ import cx from 'classnames';
 import React from 'react';
 import CloseBottomIcon from 'material-ui/lib/svg-icons/hardware/keyboard-arrow-down';
 import CloseTopIcon from 'material-ui/lib/svg-icons/hardware/keyboard-arrow-up';
+import muiThemeable from 'material-ui/lib/muiThemeable';
 
 const icons = {
   bottom: CloseBottomIcon,
   top: CloseTopIcon
 };
 
-const Close = ({ className, onClose, direction }) => {
+const Close = ({ className, onClose, direction, muiTheme }) => {
   const CloseIcon = icons[direction];
   return (
     <div
@@ -17,7 +18,7 @@ const Close = ({ className, onClose, direction }) => {
       onClick={onClose}
     >
       <CloseIcon
-        color="#fff"
+        color={muiTheme.rawTheme.palette.textColor}
         style={{ height: '100%', width: '100%' }}
         className="OverlayHeaderClose-icon"
       />
@@ -25,4 +26,4 @@ const Close = ({ className, onClose, direction }) => {
   );
 };
 
-export default Close;
+export default muiThemeable(Close);
