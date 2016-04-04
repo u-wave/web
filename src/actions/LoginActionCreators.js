@@ -9,7 +9,11 @@ import {
   LOGIN_COMPLETE,
   SET_TOKEN,
   LOGOUT_START,
-  LOGOUT_COMPLETE
+  LOGOUT_COMPLETE,
+
+  RESET_PASSWORD_COMPLETE,
+  REGISTER_START,
+  REGISTER_COMPLETE
 } from '../constants/actionTypes/auth';
 import { LOAD_ALL_PLAYLISTS_START } from '../constants/actionTypes/playlists';
 import * as Session from '../utils/Session';
@@ -176,7 +180,7 @@ export function resetPassword(email) {
           type: RESET_PASSWORD_COMPLETE,
           payload: "Password reset successfully"
         });
-        return;
+      dispatch(closeLoginDialog());
       })
       .catch(err => {
         debug('password reset error', err);
