@@ -1,48 +1,47 @@
-import React, { Component, PropTypes } from 'react';
+import * as React from 'react';
 
 import Favorite from './Favorite';
 import Upvote from './Upvote';
 import Downvote from './Downvote';
 
-export default class ResponseBar extends Component {
-  static propTypes = {
-    isUpvote: PropTypes.bool,
-    isFavorite: PropTypes.bool,
-    isDownvote: PropTypes.bool,
+const ResponseBar = ({
+  isUpvote, upvotesCount, onUpvote,
+  isDownvote, downvotesCount, onDownvote,
+  isFavorite, favoritesCount, onFavorite
+}) => {
+  return (
+    <div className="AudienceResponse">
+      <Upvote
+        onUpvote={onUpvote}
+        count={upvotesCount}
+        active={isUpvote}
+      />
+      <Favorite
+        onFavorite={onFavorite}
+        count={favoritesCount}
+        active={isFavorite}
+      />
+      <Downvote
+        onDownvote={onDownvote}
+        count={downvotesCount}
+        active={isDownvote}
+      />
+    </div>
+  );
+};
 
-    upvotesCount: PropTypes.number.isRequired,
-    favoritesCount: PropTypes.number.isRequired,
-    downvotesCount: PropTypes.number.isRequired,
+ResponseBar.propTypes = {
+  isUpvote: React.PropTypes.bool,
+  isFavorite: React.PropTypes.bool,
+  isDownvote: React.PropTypes.bool,
 
-    onUpvote: PropTypes.func.isRequired,
-    onFavorite: PropTypes.func.isRequired,
-    onDownvote: PropTypes.func.isRequired
-  };
+  upvotesCount: React.PropTypes.number.isRequired,
+  favoritesCount: React.PropTypes.number.isRequired,
+  downvotesCount: React.PropTypes.number.isRequired,
 
-  render() {
-    const {
-      isFavorite, isUpvote, isDownvote,
-      favoritesCount, upvotesCount, downvotesCount,
-      onFavorite, onUpvote, onDownvote
-    } = this.props;
-    return (
-      <div className="AudienceResponse">
-        <Upvote
-          onUpvote={onUpvote}
-          count={upvotesCount}
-          active={isUpvote}
-        />
-        <Favorite
-          onFavorite={onFavorite}
-          count={favoritesCount}
-          active={isFavorite}
-        />
-        <Downvote
-          onDownvote={onDownvote}
-          count={downvotesCount}
-          active={isDownvote}
-        />
-      </div>
-    );
-  }
-}
+  onUpvote: React.PropTypes.func.isRequired,
+  onFavorite: React.PropTypes.func.isRequired,
+  onDownvote: React.PropTypes.func.isRequired
+};
+
+export default ResponseBar;
