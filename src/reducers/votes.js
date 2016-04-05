@@ -1,5 +1,6 @@
 import { ADVANCE } from '../constants/actionTypes/booth';
 import {
+  LOAD_VOTES,
   FAVORITE, UPVOTE, DOWNVOTE,
   DO_FAVORITE_START, DO_FAVORITE_COMPLETE
 } from '../constants/actionTypes/votes';
@@ -15,6 +16,13 @@ export default function reduce(state = initialState, action = {}) {
   switch (type) {
   case ADVANCE:
     return initialState;
+  case LOAD_VOTES:
+    return {
+      ...state,
+      upvotes: payload.upvotes,
+      downvotes: payload.downvotes,
+      favorites: payload.favorites
+    };
   case UPVOTE:
     return {
       ...state,

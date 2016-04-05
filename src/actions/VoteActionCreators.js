@@ -6,12 +6,20 @@ import { sendVote } from '../utils/Socket';
 
 import { OPEN_ADD_MEDIA_MENU } from '../constants/actionTypes/playlists';
 import {
+  LOAD_VOTES,
   FAVORITE, UPVOTE, DOWNVOTE,
   DO_FAVORITE_START, DO_FAVORITE_COMPLETE,
   DO_UPVOTE, DO_DOWNVOTE
 } from '../constants/actionTypes/votes';
 
 import { addMediaStart, addMediaComplete, flattenPlaylistItem } from './PlaylistActionCreators';
+
+export function setVoteStats(voteStats) {
+  return {
+    type: LOAD_VOTES,
+    payload: voteStats
+  };
+}
 
 export function favorited({ userID, historyID }) {
   return {
