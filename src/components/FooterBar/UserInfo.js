@@ -1,5 +1,6 @@
 import cx from 'classnames';
-import React from 'react';
+import * as React from 'react';
+import pure from 'recompose/pure';
 import SettingsIcon from 'material-ui/lib/svg-icons/action/settings';
 
 import Avatar from '../Avatar';
@@ -29,4 +30,4 @@ const UserInfo = ({ className, user, ...attrs }) => {
   );
 };
 
-export default UserInfo;
+export default pure(UserInfo);

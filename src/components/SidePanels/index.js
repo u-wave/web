@@ -1,4 +1,5 @@
-import React from 'react';
+import * as React from 'react';
+import pure from 'recompose/pure';
 import Tabs from 'material-ui/lib/tabs/tabs';
 import Tab from 'material-ui/lib/tabs/tab';
 
@@ -123,4 +124,4 @@ const SidePanels = ({
   );
 };
 
-export default SidePanels;
+export default pure(SidePanels);

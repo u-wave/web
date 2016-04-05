@@ -1,4 +1,5 @@
 import * as React from 'react';
+import pure from 'recompose/pure';
 import IconButton from 'material-ui/lib/icon-button';
 import SkipIcon from 'material-ui/lib/svg-icons/av/skip-next';
 
@@ -31,4 +32,4 @@ SkipButton.propTypes = {
   onClick: React.PropTypes.func.isRequired
 };
 
-export default SkipButton;
+export default pure(SkipButton);

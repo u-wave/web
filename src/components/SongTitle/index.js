@@ -1,5 +1,6 @@
 import cx from 'classnames';
 import React from 'react';
+import pure from 'recompose/pure';
 
 const SongTitle = ({ className, artist, title, size = 'large' }) => {
   return (
@@ -14,4 +15,4 @@ const SongTitle = ({ className, artist, title, size = 'large' }) => {
   );
 };
 
-export default SongTitle;
+export default pure(SongTitle);

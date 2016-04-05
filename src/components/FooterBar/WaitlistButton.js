@@ -1,5 +1,6 @@
 import cx from 'classnames';
 import * as React from 'react';
+import pure from 'recompose/pure';
 import muiThemeable from 'material-ui/lib/muiThemeable';
 import FlatButton from 'material-ui/lib/flat-button';
 import LockedIcon from 'material-ui/lib/svg-icons/action/lock';
@@ -46,4 +47,4 @@ const WaitlistButton = ({
   );
 };
 
-export default muiThemeable(WaitlistButton);
+export default muiThemeable(pure(WaitlistButton));

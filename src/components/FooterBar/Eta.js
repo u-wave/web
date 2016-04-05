@@ -1,5 +1,6 @@
 import cx from 'classnames';
-import React from 'react';
+import * as React from 'react';
+import pure from 'recompose/pure';
 import formatDuration from '../../utils/formatDuration';
 
 const getEtaText = eta => eta > 0 ? `in ${formatDuration(eta)}` : '';
@@ -12,4 +13,4 @@ const Eta = ({ className, eta, nowPlaying }) => {
   );
 };
 
-export default Eta;
+export default pure(Eta);

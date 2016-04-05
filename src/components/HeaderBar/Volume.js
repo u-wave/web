@@ -22,6 +22,11 @@ export default class Volume extends React.Component {
     onUnmute: React.PropTypes.func
   };
 
+  shouldComponentUpdate(nextProps) {
+    return this.props.volume !== nextProps.volume ||
+      this.props.muted !== nextProps.muted;
+  }
+
   handleVolumeChange = (e, volume) => {
     this.props.onVolumeChange(volume);
   };

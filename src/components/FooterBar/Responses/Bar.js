@@ -1,4 +1,5 @@
 import * as React from 'react';
+import pure from 'recompose/pure';
 
 import Favorite from './Favorite';
 import Upvote from './Upvote';
@@ -44,4 +45,4 @@ ResponseBar.propTypes = {
   onDownvote: React.PropTypes.func.isRequired
 };
 
-export default ResponseBar;
+export default pure(ResponseBar);

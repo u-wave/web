@@ -1,10 +1,12 @@
 import cx from 'classnames';
-import React from 'react';
+import * as React from 'react';
+import pure from 'recompose/pure';
 import SongTitle from '../SongTitle';
 import Eta from './Eta';
 
 const NextMedia = ({
-  className, playlist, nextMedia, userIsDJ, eta, ...attrs
+  className, playlist, nextMedia, userIsDJ, eta,
+  ...attrs
 }) => {
   if (!playlist) {
     return (
@@ -31,4 +33,4 @@ const NextMedia = ({
   );
 };
 
-export default NextMedia;
+export default pure(NextMedia);
