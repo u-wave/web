@@ -12,7 +12,7 @@ import when from 'gulp-if';
 // time. Both of those will make it feel like üWave loads incredibly fast, even
 // though it won't do much until the JavaScript is loaded as well.
 
-const COMPILED_CSS_PATH = joinPath(__dirname, '../lib/style.css');
+const COMPILED_CSS_PATH = joinPath(__dirname, '../lib/app.css');
 
 // Renders the React app to a string. It's surprisingly straightforward because
 // React is cool.
@@ -63,7 +63,7 @@ export default function copyHtmlTask({ minify = false, prerender = false }) {
     .pipe(when(prerender, insert('#app', renderApp)))
     // When minifying, we inline the app CSS in a <style> tag. This saves an
     // HTTP request when loading the page.
-    .pipe(when(minify, transform(apply('link[href="style.css"]', el =>
+    .pipe(when(minify, transform(apply('link[href="app.css"]', el =>
       el.replaceWith(`<style>${readFileSync(COMPILED_CSS_PATH, 'utf8')}</style>`)
     ))))
     // minifyHtml makes HTML really, really compact.

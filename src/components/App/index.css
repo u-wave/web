@@ -1,5 +1,4 @@
-@import "normalize.css";
-@import "vars.css";
+@import "../../vars.css";
 
 *, *::after, *::before {
   box-sizing: border-box;

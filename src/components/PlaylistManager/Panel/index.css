@@ -1,4 +1,6 @@
-@import "vars.css";
+@import "../../../vars.css";
+@import "./Meta.css";
+@import "./SearchResults.css";
 
 @component PlaylistPanel {
   background: color($background-color alpha(* 96%));

@@ -1,4 +1,4 @@
-@import "vars.css";
+@import "../../../vars.css";
 
 @component SoundCloudSongInfo {
   @descendent link {

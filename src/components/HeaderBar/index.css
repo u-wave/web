@@ -1,4 +1,7 @@
-@import "vars.css";
+@import "../../vars.css";
+@import "./HeaderHistoryButton.css";
+@import "./Progress.css";
+@import "./Volume.css";
 
 @component HeaderBar {
   position: relative;

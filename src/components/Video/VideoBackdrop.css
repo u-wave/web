@@ -1,5 +1,3 @@
-@import "vars.css";
-
 @component VideoBackdrop {
   position: absolute;
   z-index: 3;

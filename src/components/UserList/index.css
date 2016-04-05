@@ -1,4 +1,4 @@
-@import "vars.css";
+@import "./UserRow.css";
 
 @component UserList {
   width: 100%;

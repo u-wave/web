@@ -1,4 +1,4 @@
-@import "vars.css";
+@import "../../vars.css";
 
 @component SongTitle {
   color: $text-color;

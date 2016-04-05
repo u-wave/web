@@ -1,5 +1,3 @@
-@import "vars.css";
-
 @component Avatar {
   text-align: center;
   height: 24px;
