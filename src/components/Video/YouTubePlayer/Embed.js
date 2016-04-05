@@ -32,10 +32,10 @@ export default class YouTubePlayerEmbed extends React.Component {
       this.props.active !== nextProps.active;
   }
 
-  onYTReady(event) {
+  handleYTReady = event => {
     event.target.setVolume(this.props.volume);
     event.target.setPlaybackRate(1);
-  }
+  };
 
   render() {
     const { active, media, seek } = this.props;
@@ -59,7 +59,7 @@ export default class YouTubePlayerEmbed extends React.Component {
         ref="player"
         videoId={active ? media.sourceID : null}
         opts={opts}
-        onReady={::this.onYTReady}
+        onReady={this.handleYTReady}
       />
     );
   }

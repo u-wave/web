@@ -48,13 +48,13 @@ export default class Row extends React.Component {
     this.props.connectDragPreview(getEmptyImage());
   }
 
-  onMouseEnter() {
+  handleMouseEnter = () => {
     this.setState({ showActions: true });
-  }
+  };
 
-  onMouseLeave() {
+  handleMouseLeave = () => {
     this.setState({ showActions: false });
-  }
+  };
 
   render() {
     const {
@@ -85,8 +85,8 @@ export default class Row extends React.Component {
     return connectDragSource(
       <div
         className={cx('MediaListRow', className, selectedClass, loadingClass)}
-        onMouseEnter={::this.onMouseEnter}
-        onMouseLeave={::this.onMouseLeave}
+        onMouseEnter={this.handleMouseEnter}
+        onMouseLeave={this.handleMouseLeave}
         {...attrs}
       >
         {thumbnail}

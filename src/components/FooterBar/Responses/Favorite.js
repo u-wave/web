@@ -24,15 +24,19 @@ export default class Favorite extends Component {
     };
   }
 
+  handleFavorite = () => {
+    this.props.onFavorite(this.position());
+  };
+
   render() {
     const { rawTheme } = this.context.muiTheme;
-    const { active, count, onFavorite } = this.props;
+    const { active, count } = this.props;
     const CurrentIcon = active ? FavoritedIcon : FavoriteIcon;
     return (
       <Button
         ref="button"
         tooltip="Favorite"
-        onClick={() => onFavorite(this.position())}
+        onClick={this.handleFavorite}
         count={count}
       >
         <CurrentIcon color={rawTheme.palette.primary1Color} />

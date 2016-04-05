@@ -18,7 +18,7 @@ export default class SettingsManager extends Component {
     onLogout: PropTypes.func.isRequired
   };
 
-  onLogout = () => {
+  handleLogout = () => {
     this.props.onCloseOverlay();
     this.props.onLogout();
   };
@@ -40,7 +40,7 @@ export default class SettingsManager extends Component {
             settings={settings}
             onChangeUsername={onChangeUsername}
             onSettingChange={onSettingChange}
-            onLogout={this.onLogout}
+            onLogout={this.handleLogout}
           />
         </div>
       </Overlay>

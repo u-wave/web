@@ -36,15 +36,15 @@ export default class AddToPlaylistMenu extends Component {
     })
   };
 
-  onSelect(e, item) {
+  handleSelect = (e, item) => {
     const playlistID = item.props.value;
     this.props.onClose();
     this.props.onSelect(
       find(this.props.playlists, pl => pl._id === playlistID)
     );
-  }
+  };
 
-  renderLayer() {
+  renderLayer = () => {
     const { playlists, position } = this.props;
     const fixedPosition = positionInsideWindow(position, (playlists.length + 1) * 48);
     return (
@@ -61,7 +61,7 @@ export default class AddToPlaylistMenu extends Component {
           maxHeight={MENU_HEIGHT}
           width={MENU_WIDTH}
           autoWidth={false}
-          onItemTouchTap={::this.onSelect}
+          onItemTouchTap={this.handleSelect}
         >
           <MenuItem
             primaryText="New Playlist"
@@ -78,7 +78,7 @@ export default class AddToPlaylistMenu extends Component {
         </Menu>
       </div>
     );
-  }
+  };
 
   render() {
     const { onClose } = this.props;
@@ -86,7 +86,7 @@ export default class AddToPlaylistMenu extends Component {
       <RenderToLayer
         open
         componentClickAway={onClose}
-        render={::this.renderLayer}
+        render={this.renderLayer}
       />
     );
   }

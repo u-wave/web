@@ -21,12 +21,12 @@ export default class Profile extends Component {
     onChangeUsername: PropTypes.func.isRequired
   };
 
-  handleNameChange() {
+  handleNameChange = () => {
     const newName = prompt('Name?');
     if (newName) {
       this.props.onChangeUsername(newName);
     }
-  }
+  };
 
   render() {
     const { className, user } = this.props;
@@ -41,7 +41,7 @@ export default class Profile extends Component {
           <IconButton
             style={buttonStyle}
             iconStyle={{ width: 24, height: 24, padding: 2 }}
-            onClick={::this.handleNameChange}
+            onClick={this.handleNameChange}
           >
             <EditIcon
               color="#777"

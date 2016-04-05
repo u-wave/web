@@ -17,17 +17,17 @@ export default class Volume extends React.Component {
     onUnmute: React.PropTypes.func
   };
 
-  handleVolumeChange(e, volume) {
+  handleVolumeChange = (e, volume) => {
     this.props.onVolumeChange(volume);
-  }
+  };
 
-  handleMuteClick() {
+  handleMuteClick = () => {
     if (this.props.muted) {
       this.props.onUnmute();
     } else {
       this.props.onMute();
     }
-  }
+  };
 
   render() {
     let VolumeIcon = VolumeUpIcon;
@@ -42,7 +42,7 @@ export default class Volume extends React.Component {
       <div className={cx('VolumeSlider', this.props.className)}>
         <VolumeIcon
           color="#fff"
-          onClick={::this.handleMuteClick}
+          onClick={this.handleMuteClick}
         />
         <div className="VolumeSlider-slider">
           <Slider
@@ -51,7 +51,7 @@ export default class Volume extends React.Component {
             max={100}
             defaultValue={this.props.volume}
             style={{ marginTop: 3, marginBottom: 3 }}
-            onChange={::this.handleVolumeChange}
+            onChange={this.handleVolumeChange}
           />
         </div>
       </div>

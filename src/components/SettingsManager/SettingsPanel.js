@@ -35,16 +35,28 @@ export default class SettingsPanel extends Component {
     onLogout: PropTypes.func.isRequired
   };
 
-  onLogout = () => {
+  handleLogout = () => {
     if (confirm('Sure?')) {
       this.props.onLogout();
     }
   };
 
+  handleVideoEnabledChange = (e, value) => {
+    this.props.onSettingChange('videoEnabled', value);
+  };
+
+  handleVideoSizeChange = (e, value) => {
+    this.props.onSettingChange('videoSize', value ? 'large' : 'small');
+  };
+
+  handleMentionSoundChange = (e, value) => {
+    this.props.onSettingChange('mentionSound', value);
+  };
+
   render() {
     const {
       className, settings, user,
-      onSettingChange, onChangeUsername
+      onChangeUsername
     } = this.props;
 
     const profile = user && [
@@ -61,19 +73,19 @@ export default class SettingsPanel extends Component {
         label="Play Audio/Video"
         labelPosition="right"
         defaultToggled={settings.videoEnabled}
-        onToggle={(e, value) => onSettingChange('videoEnabled', value)}
+        onToggle={this.handleVideoEnabledChange}
       />,
       <Toggle
         label="Full-size Video"
         labelPosition="right"
         defaultToggled={settings.videoSize === 'large'}
-        onToggle={(e, value) => onSettingChange('videoSize', value ? 'large' : 'small')}
+        onToggle={this.handleVideoSizeChange}
       />,
       <Toggle
         label="Chat Mention Sound"
         labelPosition="right"
         defaultToggled={settings.mentionSound}
-        onToggle={(e, value) => onSettingChange('mentionSound', value)}
+        onToggle={this.handleMentionSoundChange}
       />
     ];
 
@@ -94,7 +106,7 @@ export default class SettingsPanel extends Component {
             label="Sign out"
             labelPosition="after"
             icon={<LogoutIcon />}
-            onClick={this.onLogout}
+            onClick={this.handleLogout}
           />
         </div>
         <div className="SettingsPanel-column SettingsPanel-column--right">

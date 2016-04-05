@@ -49,7 +49,7 @@ export default class MediaList extends Component {
     this.setState({ selection });
   }
 
-  renderRow(index, key) {
+  renderRow = (index, key) => {
     const makeActions = this.props.makeActions;
     const media = this.props.media[index];
     const { selection } = this.state;
@@ -75,14 +75,14 @@ export default class MediaList extends Component {
         makeActions={() => makeActions(media, selection, index)}
       />
     );
-  }
+  };
 
   render() {
     const { className, media, size, onRequestPage } = this.props;
     return (
       <div className={cx('MediaList', className)}>
         <PaginatedList
-          itemRenderer={::this.renderRow}
+          itemRenderer={this.renderRow}
           items={media}
           length={size || media.length}
           type="uniform"

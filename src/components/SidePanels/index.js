@@ -70,7 +70,7 @@ const SidePanels = ({
   return (
     <Tabs
       value={selected}
-      onChange={tab => typeof tab === 'string' && onChange(tab)}
+      onChange={onChange}
       tabItemContainerStyle={tabItemContainerStyle}
       inkBarStyle={inkBarStyle}
       contentContainerStyle={contentStyle}
