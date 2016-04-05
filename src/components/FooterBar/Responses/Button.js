@@ -1,6 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import IconButton from 'material-ui/lib/icon-button';
 
+const buttonStyle = {
+  height: 36,
+  width: 36,
+  padding: '6px 12px 6px 0'
+};
+
 export default class Button extends Component {
   static propTypes = {
     onClick: PropTypes.func.isRequired,
@@ -11,16 +17,10 @@ export default class Button extends Component {
   render() {
     const { count, children, ...props } = this.props;
     return (
-      <div
-        className="ResponseButton"
-      >
+      <div className="ResponseButton">
         <IconButton
           tooltipPosition="top-center"
-          style={{
-            height: 36,
-            width: 36,
-            padding: '6px 12px 6px 0'
-          }}
+          style={buttonStyle}
           {...props}
         >
           {children}

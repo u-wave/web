@@ -6,6 +6,11 @@ import VolumeMuteIcon from 'material-ui/lib/svg-icons/av/volume-mute';
 import VolumeOffIcon from 'material-ui/lib/svg-icons/av/volume-off';
 import VolumeUpIcon from 'material-ui/lib/svg-icons/av/volume-up';
 
+const sliderStyle = {
+  marginTop: 3,
+  marginBottom: 3
+};
+
 export default class Volume extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
@@ -50,7 +55,7 @@ export default class Volume extends React.Component {
             min={0}
             max={100}
             defaultValue={this.props.volume}
-            style={{ marginTop: 3, marginBottom: 3 }}
+            style={sliderStyle}
             onChange={this.handleVolumeChange}
           />
         </div>

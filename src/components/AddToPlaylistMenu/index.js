@@ -25,6 +25,11 @@ const positionInsideWindow = (position, expectedHeight) => {
   return constrained;
 };
 
+const menuStyle = {
+  textAlign: 'left',
+  zIndex: 30
+};
+
 export default class AddToPlaylistMenu extends Component {
   static propTypes = {
     onClose: PropTypes.func.isRequired,
@@ -57,7 +62,7 @@ export default class AddToPlaylistMenu extends Component {
         }}
       >
         <Menu
-          style={{ textAlign: 'left', zIndex: 30 }}
+          style={menuStyle}
           maxHeight={MENU_HEIGHT}
           width={MENU_WIDTH}
           autoWidth={false}

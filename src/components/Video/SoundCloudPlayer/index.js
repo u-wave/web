@@ -18,6 +18,8 @@ function getTrack(media, cb) {
   });
 }
 
+const clearStyle = { clear: 'both' };
+
 export default class SoundCloudPlayer extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
@@ -113,7 +115,7 @@ export default class SoundCloudPlayer extends React.Component {
               artistUrl={user.permalink_url}
               trackUrl={track.permalink_url}
             />
-            <div style={{ clear: 'both' }} />
+          <div style={clearStyle} />
           </div>
           <a
             href={track.permalink_url}

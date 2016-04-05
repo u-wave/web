@@ -14,6 +14,11 @@ const getItemStyles = offset => offset
     )
   : { display: 'none' };
 
+const dragIconStyle = {
+  verticalAlign: 'bottom',
+  marginRight: 3
+};
+
 export default class MediaDragPreview extends Component {
   static propTypes = {
     items: PropTypes.object,
@@ -40,7 +45,7 @@ export default class MediaDragPreview extends Component {
       >
         <ListIcon
           color={rawTheme.palette.textColor}
-          style={{ verticalAlign: 'bottom', marginRight: 3 }}
+          style={dragIconStyle}
         />
         {items.media.length}
       </div>

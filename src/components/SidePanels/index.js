@@ -43,6 +43,10 @@ const contentStyle = {
   position: 'static'
 };
 
+const subHeaderStyle = {
+  fontSize: '125%'
+};
+
 const getWaitlistLabel = (size, position) => {
   if (size > 0) {
     const posText = position !== -1
@@ -51,7 +55,7 @@ const getWaitlistLabel = (size, position) => {
 
     return [
       'Waitlist',
-      <span style={{ fontSize: '125%' }}>{posText}</span>
+      <span style={subHeaderStyle}>{posText}</span>
     ];
   }
   return 'Waitlist';
@@ -96,7 +100,7 @@ const SidePanels = ({
         disableTouchRipple
         label={[
           'Room',
-          <span style={{ fontSize: '125%' }}>{onlineUsersCount}</span>
+          <span style={subHeaderStyle}>{onlineUsersCount}</span>
         ]}
         value="room"
         style={selected === 'room' ? activeTabStyle : tabStyle}

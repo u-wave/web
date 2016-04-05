@@ -5,12 +5,18 @@ import EditIcon from 'material-ui/lib/svg-icons/editor/mode-edit';
 
 import Avatar from '../Avatar';
 
-const buttonStyle = {
+const changeNameButtonStyle = {
   padding: 2,
   height: 28,
   width: 28,
   marginLeft: 5,
   verticalAlign: 'bottom'
+};
+
+const changeNameIconStyle = {
+  width: 24,
+  height: 24,
+  padding: 2
 };
 
 export default class Profile extends Component {
@@ -39,8 +45,8 @@ export default class Profile extends Component {
         <h2 className="SettingsPanelProfile-username">
           {user.username}
           <IconButton
-            style={buttonStyle}
-            iconStyle={{ width: 24, height: 24, padding: 2 }}
+            style={changeNameButtonStyle}
+            iconStyle={changeNameIconStyle}
             onClick={this.handleNameChange}
           >
             <EditIcon

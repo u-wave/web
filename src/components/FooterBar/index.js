@@ -14,6 +14,11 @@ const fullSize = {
   width: '100%'
 };
 
+const inlineIconStyle = {
+  width: '1em',
+  height: '1em'
+};
+
 export default class FooterBar extends Component {
   static propTypes = {
     className: PropTypes.string,
@@ -114,7 +119,7 @@ export default class FooterBar extends Component {
         muiTheme.flatButton.disabledTextColor;
       icon = (
         <LockedIcon
-          style={{ width: '1em', height: '1em' }}
+          style={inlineIconStyle}
           color={iconColor}
         />
       );
