@@ -14,6 +14,7 @@ import {
 import { closeLoginDialog } from './DialogActionCreators';
 import { syncTimestamps } from './TickerActionCreators';
 import { setUsers } from './UserActionCreators';
+import { setVoteStats } from './VoteActionCreators';
 import { setWaitList } from './WaitlistActionCreators';
 import { currentUserSelector, tokenSelector } from '../selectors/userSelectors';
 
@@ -41,6 +42,7 @@ export function loadedState(state) {
     if (state.booth) {
       // TODO don't set this when logging in _after_ entering the page?
       dispatch(advance(state.booth));
+      dispatch(setVoteStats(state.booth.stats));
     }
     if (state.user) {
       const token = tokenSelector(getState());
