@@ -31,7 +31,7 @@ export default class EditMediaDialog extends Component {
     errors: null
   };
 
-  handleSubmit(e) {
+  handleSubmit = e => {
     e.preventDefault();
 
     const { media, onEditedMedia, onCloseDialog } = this.props;
@@ -63,7 +63,7 @@ export default class EditMediaDialog extends Component {
       end: endSeconds
     });
     onCloseDialog();
-  }
+  };
 
   render() {
     const { open, media, onCloseDialog } = this.props;
@@ -124,7 +124,7 @@ export default class EditMediaDialog extends Component {
       );
 
       content = (
-        <Form className="EditMediaDialog" onSubmit={::this.handleSubmit}>
+        <Form className="EditMediaDialog" onSubmit={this.handleSubmit}>
           {errors && errors.length > 0 && (
             <FormGroup>
               {errors.map(error => <div>{error}</div>)}

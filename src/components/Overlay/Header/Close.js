@@ -8,6 +8,11 @@ const icons = {
   top: CloseTopIcon
 };
 
+const fullSizeStyle = {
+  height: '100%',
+  width: '100%'
+};
+
 const Close = ({ className, onClose, direction }) => {
   const CloseIcon = icons[direction];
   return (
@@ -18,7 +23,7 @@ const Close = ({ className, onClose, direction }) => {
     >
       <CloseIcon
         color="#fff"
-        style={{ height: '100%', width: '100%' }}
+        style={fullSizeStyle}
         className="OverlayHeaderClose-icon"
       />
     </div>

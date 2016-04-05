@@ -52,7 +52,7 @@ export default class ErrorArea extends React.Component {
     return errorThemeSelector(this.props);
   }
 
-  onDismiss = (...args) => {
+  handleDismiss = (...args) => {
     this.props.onDismiss(...args);
   };
 
@@ -66,7 +66,7 @@ export default class ErrorArea extends React.Component {
           bodyStyle={snackbarStyle}
           open={!!error}
           message={error || ''}
-          onRequestClose={this.onDismiss}
+          onRequestClose={this.handleDismiss}
         />
       </div>
     );

@@ -8,14 +8,15 @@ export default class Input extends Component {
 
   state = { focused: false };
 
-  onFocus() {
+  handleFocus = () => {
     this.setState({ focused: true });
-  }
-  onBlur() {
+  };
+  handleBlur = () => {
     this.setState({ focused: false });
-  }
+  };
 
-  onKeyDown(e) {
+  handleKeyDown = e => {
+    e.stopPropagation();
     if (e.key === 'Enter') {
       const value = e.target.value.trim();
       if (value.length > 0) {
@@ -23,7 +24,7 @@ export default class Input extends Component {
       }
       e.target.value = '';
     }
-  }
+  };
 
   render() {
     const { focused } = this.state;
@@ -34,9 +35,9 @@ export default class Input extends Component {
           className={cx('ChatInput-input', focusClass)}
           type="text"
           placeholder={focused ? '' : 'Click here to chat!'}
-          onFocus={::this.onFocus}
-          onBlur={::this.onBlur}
-          onKeyDown={::this.onKeyDown}
+          onFocus={this.handleFocus}
+          onBlur={this.handleBlur}
+          onKeyDown={this.handleKeyDown}
         />
       </div>
     );

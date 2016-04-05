@@ -17,11 +17,7 @@ export default class PaginatedList extends Component {
     pageSize: 25
   };
 
-  componentWillMount() {
-    this.handleScrollB = ::this.handleScroll;
-  }
-
-  handleScroll(e) {
+  handleScroll = e => {
     const { itemHeight, pageSize, items, length, onRequestPage } = this.props;
     const scroller = e.target;
 
@@ -46,21 +42,21 @@ export default class PaginatedList extends Component {
     unloadedPages.forEach(page =>
       onRequestPage(page)
     );
-  }
+  };
 
-  addScrollListener(list) {
+  addScrollListener = list => {
     if (!list) return;
     const scroller = list.getScrollParent();
-    scroller.removeEventListener('scroll', this.handleScrollB);
+    scroller.removeEventListener('scroll', this.handleScroll);
     if (this.props.onRequestPage) {
-      scroller.addEventListener('scroll', this.handleScrollB);
+      scroller.addEventListener('scroll', this.handleScroll);
     }
-  }
+  };
 
   render() {
     return (
       <List
-        ref={::this.addScrollListener}
+        ref={this.addScrollListener}
         {...this.props}
       />
     );

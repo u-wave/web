@@ -1,5 +1,6 @@
 import cx from 'classnames';
 import React, { PropTypes } from 'react';
+import pure from 'recompose/pure';
 import themeable from 'material-ui/lib/muiThemeable';
 
 // TODO define role names server-side instead of role numbers
@@ -34,4 +35,4 @@ Username.propTypes = {
 };
 
 // NB themeable signature will change in material-ui v0.15
-export default themeable(Username);
+export default themeable(pure(Username));

@@ -6,6 +6,11 @@ import VolumeMuteIcon from 'material-ui/lib/svg-icons/av/volume-mute';
 import VolumeOffIcon from 'material-ui/lib/svg-icons/av/volume-off';
 import VolumeUpIcon from 'material-ui/lib/svg-icons/av/volume-up';
 
+const sliderStyle = {
+  marginTop: 3,
+  marginBottom: 3
+};
+
 export default class Volume extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
@@ -17,17 +22,22 @@ export default class Volume extends React.Component {
     onUnmute: React.PropTypes.func
   };
 
-  handleVolumeChange(e, volume) {
-    this.props.onVolumeChange(volume);
+  shouldComponentUpdate(nextProps) {
+    return this.props.volume !== nextProps.volume ||
+      this.props.muted !== nextProps.muted;
   }
 
-  handleMuteClick() {
+  handleVolumeChange = (e, volume) => {
+    this.props.onVolumeChange(volume);
+  };
+
+  handleMuteClick = () => {
     if (this.props.muted) {
       this.props.onUnmute();
     } else {
       this.props.onMute();
     }
-  }
+  };
 
   render() {
     let VolumeIcon = VolumeUpIcon;
@@ -42,7 +52,7 @@ export default class Volume extends React.Component {
       <div className={cx('VolumeSlider', this.props.className)}>
         <VolumeIcon
           color="#fff"
-          onClick={::this.handleMuteClick}
+          onClick={this.handleMuteClick}
         />
         <div className="VolumeSlider-slider">
           <Slider
@@ -50,8 +60,8 @@ export default class Volume extends React.Component {
             min={0}
             max={100}
             defaultValue={this.props.volume}
-            style={{ marginTop: 3, marginBottom: 3 }}
-            onChange={::this.handleVolumeChange}
+            style={sliderStyle}
+            onChange={this.handleVolumeChange}
           />
         </div>
       </div>

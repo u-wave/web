@@ -1,4 +1,5 @@
-import React from 'react';
+import * as React from 'react';
+import pure from 'recompose/pure';
 import Tabs from 'material-ui/lib/tabs/tabs';
 import Tab from 'material-ui/lib/tabs/tab';
 
@@ -43,6 +44,10 @@ const contentStyle = {
   position: 'static'
 };
 
+const subHeaderStyle = {
+  fontSize: '125%'
+};
+
 const getWaitlistLabel = (size, position) => {
   if (size > 0) {
     const posText = position !== -1
@@ -51,7 +56,7 @@ const getWaitlistLabel = (size, position) => {
 
     return [
       'Waitlist',
-      <span style={{ fontSize: '125%' }}>{posText}</span>
+      <span style={subHeaderStyle}>{posText}</span>
     ];
   }
   return 'Waitlist';
@@ -70,7 +75,7 @@ const SidePanels = ({
   return (
     <Tabs
       value={selected}
-      onChange={tab => typeof tab === 'string' && onChange(tab)}
+      onChange={onChange}
       tabItemContainerStyle={tabItemContainerStyle}
       inkBarStyle={inkBarStyle}
       contentContainerStyle={contentStyle}
@@ -96,7 +101,7 @@ const SidePanels = ({
         disableTouchRipple
         label={[
           'Room',
-          <span style={{ fontSize: '125%' }}>{onlineUsersCount}</span>
+          <span style={subHeaderStyle}>{onlineUsersCount}</span>
         ]}
         value="room"
         style={selected === 'room' ? activeTabStyle : tabStyle}
@@ -119,4 +124,4 @@ const SidePanels = ({
   );
 };
 
-export default SidePanels;
+export default pure(SidePanels);

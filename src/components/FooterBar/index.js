@@ -1,18 +1,11 @@
 import cx from 'classnames';
 import React, { Component, PropTypes } from 'react';
-import IconButton from 'material-ui/lib/icon-button';
-import FlatButton from 'material-ui/lib/flat-button';
-import LockedIcon from 'material-ui/lib/svg-icons/action/lock';
-import SkipIcon from 'material-ui/lib/svg-icons/av/skip-next';
 
 import NextMedia from './NextMedia';
 import UserInfo from './UserInfo';
+import SkipButton from './SkipButton';
+import WaitlistButton from './WaitlistButton';
 import ResponseBar from './Responses/Bar';
-
-const fullSize = {
-  height: '100%',
-  width: '100%'
-};
 
 export default class FooterBar extends Component {
   static propTypes = {
@@ -77,65 +70,6 @@ export default class FooterBar extends Component {
     }
   }
 
-  renderSkipButton() {
-    if (!this.props.showSkip) {
-      return null;
-    }
-    let message = 'Skip your turn';
-    if (!this.props.userIsDJ) {
-      message = `Skip ${this.props.currentDJ.username}'s turn`;
-    }
-
-    return (
-      <div className="FooterBar-skip">
-        <IconButton
-          tooltip={message}
-          tooltipPosition="top-center"
-          style={fullSize}
-          onClick={this.handleSkipTurn}
-        >
-          <SkipIcon />
-        </IconButton>
-      </div>
-    );
-  }
-
-  renderWaitlistButton() {
-    const { muiTheme } = this.context;
-    const { rawTheme } = muiTheme;
-    const { userInWaitlist, waitlistIsLocked } = this.props;
-
-    let icon;
-    if (waitlistIsLocked) {
-      const iconColor =
-        // The user can still leave the waitlist, if it's locked…
-        userInWaitlist ? muiTheme.flatButton.textColor :
-        // …but cannot join the waitlist.
-        muiTheme.flatButton.disabledTextColor;
-      icon = (
-        <LockedIcon
-          style={{ width: '1em', height: '1em' }}
-          color={iconColor}
-        />
-      );
-    }
-
-    return (
-      <FlatButton
-        className={cx('FooterBar-join', waitlistIsLocked && 'FooterBar-join--locked')}
-        disabled={waitlistIsLocked && !userInWaitlist}
-        onClick={userInWaitlist ? this.handleLeaveWaitlist : this.handleJoinWaitlist}
-        backgroundColor={rawTheme.palette.primary1Color}
-        hoverColor={rawTheme.palette.primary2Color}
-        rippleColor={rawTheme.palette.primary3Color}
-      >
-        {icon}
-        {waitlistIsLocked && ' '}
-        {userInWaitlist ? 'Leave Waitlist' : 'Join Waitlist'}
-      </FlatButton>
-    );
-  }
-
   render() {
     const {
       openLoginDialog, openRegisterDialog,
@@ -143,7 +77,7 @@ export default class FooterBar extends Component {
       onFavorite, onUpvote, onDownvote
     } = this.props;
     const {
-      user, userIsDJ,
+      user, userIsDJ, userInWaitlist,
       playlist, nextMedia, showSkip,
       eta,
       voteStats
@@ -181,8 +115,20 @@ export default class FooterBar extends Component {
               {...voteStats}
             />
           </div>
-          {this.renderSkipButton()}
-          {this.renderWaitlistButton()}
+          {this.props.showSkip && (
+            <div className="FooterBar-skip">
+              <SkipButton
+                userIsDJ={userIsDJ}
+                currentDJ={this.props.currentDJ}
+                onClick={this.handleSkipTurn}
+              />
+            </div>
+          )}
+          <WaitlistButton
+            isLocked={this.props.waitlistIsLocked}
+            userInWaitlist={userInWaitlist}
+            onClick={userInWaitlist ? this.handleLeaveWaitlist : this.handleJoinWaitlist}
+          />
         </div>
       );
     }

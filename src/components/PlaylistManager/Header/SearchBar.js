@@ -13,19 +13,19 @@ export default class SearchBar extends Component {
 
   state = { focused: false };
 
-  onFocus() {
+  handleFocus = () => {
     this.setState({ focused: true });
-  }
-  onBlur() {
+  };
+  handleBlur = () => {
     this.setState({ focused: false });
-  }
+  };
 
-  onKeyDown(e) {
+  handleKeyDown = e => {
     const { onSubmit } = this.props;
     if (e.key === 'Enter') {
       onSubmit(this.refs.value.value);
     }
-  }
+  };
 
   render() {
     const { source, onSourceChange } = this.props;
@@ -46,9 +46,9 @@ export default class SearchBar extends Component {
             className="SearchBar-input"
             type="text"
             placeholder={focused ? '' : 'Search'}
-            onFocus={::this.onFocus}
-            onBlur={::this.onBlur}
-            onKeyDown={::this.onKeyDown}
+            onFocus={this.handleFocus}
+            onBlur={this.handleBlur}
+            onKeyDown={this.handleKeyDown}
           />
         </div>
       </div>
