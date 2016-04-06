@@ -67,11 +67,12 @@ export default class MediaList extends Component {
       );
     }
     const MediaRow = this.props.rowComponent;
+    const isAlternate = index % 2 === 0;
     return (
       <MediaRow
         key={key}
         {...props}
-        className="MediaList-row"
+        className={cx('MediaList-row', isAlternate && 'MediaListRow--alternate')}
         media={media}
         selected={selected}
         selection={selection.get()}
