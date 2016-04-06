@@ -2,7 +2,9 @@ import cx from 'classnames';
 import React from 'react';
 import MediaList from '../../MediaList';
 import Loader from '../../Loader';
+
 import PlaylistMeta from './Meta';
+import PlaylistItemRow from './PlaylistItemRow';
 
 import AddToPlaylistAction from '../../MediaList/Actions/AddToPlaylist';
 import RemoveFromPlaylistAction from '../../MediaList/Actions/RemoveFromPlaylist';
@@ -35,6 +37,7 @@ const makeActions = ({ onOpenAddMediaMenu, onMoveToFirst, onEditMedia, onRemoveF
 const PlaylistPanel = ({
   className, playlist, media, loading,
   onActivatePlaylist, onRenamePlaylist, onDeletePlaylist, onLoadPlaylistPage,
+  onMoveMedia,
   ...props
 }) => {
   let list;
@@ -50,6 +53,8 @@ const PlaylistPanel = ({
         className="PlaylistPanel-media"
         size={playlist.size}
         media={media}
+        rowComponent={PlaylistItemRow}
+        rowProps={{ onMoveMedia }}
         makeActions={makeActions(props)}
         onRequestPage={onLoadPlaylistPage}
       />

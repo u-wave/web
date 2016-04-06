@@ -38,6 +38,7 @@ export default class PlaylistManager extends Component {
     onOpenAddMediaMenu: PropTypes.func,
     onMoveToFirst: PropTypes.func,
     onEditMedia: PropTypes.func,
+    onMoveMedia: PropTypes.func,
     onRemoveFromPlaylist: PropTypes.func,
     onLoadPlaylistPage: PropTypes.func
   };
@@ -58,6 +59,12 @@ export default class PlaylistManager extends Component {
   handleEditMedia = media => {
     this.withSelected(selectedPlaylist =>
       this.props.onEditMedia(selectedPlaylist._id, media)
+    );
+  };
+
+  handleMoveMedia = (media, opts) => {
+    this.withSelected(selectedPlaylist =>
+      this.props.onMoveMedia(selectedPlaylist._id, media, opts)
     );
   };
 
@@ -111,6 +118,7 @@ export default class PlaylistManager extends Component {
           onDeletePlaylist={onDeletePlaylist}
           onOpenAddMediaMenu={this.props.onOpenAddMediaMenu}
           onMoveToFirst={this.handleMoveToFirst}
+          onMoveMedia={this.handleMoveMedia}
           onEditMedia={this.handleEditMedia}
           onRemoveFromPlaylist={this.handleRemoveFromPlaylist}
           onLoadPlaylistPage={this.handleLoadPlaylistPage}
