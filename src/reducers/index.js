@@ -5,6 +5,7 @@ export booth from './booth';
 export chat from './chat';
 export dialogs from './dialogs';
 export errors from './errors';
+export imports from './imports';
 export mediaSearch from './mediaSearch';
 export playlists from './playlists';
 export roomHistory from './roomHistory';

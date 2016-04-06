@@ -8,6 +8,7 @@ import PlaylistMenu from './Menu';
 import PlaylistHeader from './Header';
 import PlaylistPanel from './Panel';
 import PlaylistPanelEmpty from './Panel/Empty';
+import PlaylistImport from '../../containers/PlaylistImportManager';
 import SearchResults from './Panel/SearchResults';
 
 export default class PlaylistManager extends Component {
@@ -19,6 +20,8 @@ export default class PlaylistManager extends Component {
     activeMedia: PropTypes.array,
     selectedPlaylist: PropTypes.object,
     selectedMedia: PropTypes.array,
+
+    showImportPanel: PropTypes.bool.isRequired,
 
     searchSource: PropTypes.oneOf([ 'youtube', 'soundcloud' ]),
     searchQuery: PropTypes.string,
@@ -34,6 +37,7 @@ export default class PlaylistManager extends Component {
     onSelectSearchResults: PropTypes.func,
     onSearchSubmit: PropTypes.func,
     onSearchSourceChange: PropTypes.func,
+    onShowImportPanel: PropTypes.func,
     onAddToPlaylist: PropTypes.func,
     onOpenAddMediaMenu: PropTypes.func,
     onMoveToFirst: PropTypes.func,
@@ -90,10 +94,14 @@ export default class PlaylistManager extends Component {
       activePlaylist,
       selectedPlaylist,
       selectedMedia,
+
+      showImportPanel,
+
       searchSource,
       searchQuery,
       searchResults,
       searchLoadingState,
+
       onCloseOverlay,
       onCreatePlaylist,
       onDeletePlaylist,
@@ -102,11 +110,18 @@ export default class PlaylistManager extends Component {
       onRenamePlaylist,
       onSelectSearchResults,
       onSearchSubmit,
-      onSearchSourceChange
+      onSearchSourceChange,
+      onShowImportPanel
     } = this.props;
 
     let panel;
-    if (selectedPlaylist) {
+    if (showImportPanel) {
+      panel = (
+        <div className="PlaylistPanel PlaylistManager-panel">
+          <PlaylistImport />
+        </div>
+      );
+    } else if (selectedPlaylist) {
       panel = (
         <PlaylistPanel
           className="PlaylistManager-panel"
@@ -156,12 +171,14 @@ export default class PlaylistManager extends Component {
             playlists={playlists}
             active={activePlaylist}
             selected={selectedPlaylist}
+            showImportPanel={showImportPanel}
             searchQuery={searchQuery}
             searchResults={searchResults ? searchResults.length : 0}
             onCreatePlaylist={onCreatePlaylist}
             onAddToPlaylist={onAddToPlaylist}
             onSelectPlaylist={this.handleSelectPlaylist}
             onSelectSearchResults={onSelectSearchResults}
+            onShowImportPanel={onShowImportPanel}
           />
 
           {panel}

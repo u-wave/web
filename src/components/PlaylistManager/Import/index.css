@@ -1,0 +1,11 @@
+@import "../../../vars.css";
+
+@component PlaylistImport {
+  height: 100%;
+  background: $background-color;
+
+  @descendent source {
+    padding: 16px;
+    width: 50%;
+  }
+}

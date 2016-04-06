@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
 import {
+  showImportPanel
+} from '../actions/ImportActionCreators';
+import {
   addMedia,
   addMediaMenu,
   editMedia,
@@ -16,16 +19,25 @@ import {
   selectPlaylist,
   loadPlaylist
 } from '../actions/PlaylistActionCreators';
-import { search, setSource as setSearchSource } from '../actions/SearchActionCreators';
+import {
+  search,
+  setSource as setSearchSource
+} from '../actions/SearchActionCreators';
 
 import { playlistsIndexSelector } from '../selectors/playlistSelectors';
 import { searchSelector } from '../selectors/searchSelectors';
+import { showImportPanelSelector } from '../selectors/importSelectors';
 import PlaylistManager from '../components/PlaylistManager';
 
 const mapStateToProps = createSelector(
   playlistsIndexSelector,
   searchSelector,
-  (playlists, mediaSearch) => ({ ...playlists, ...mediaSearch })
+  showImportPanelSelector,
+  (playlists, mediaSearch, showingImportPanel) => ({
+    ...playlists,
+    ...mediaSearch,
+    showImportPanel: showingImportPanel
+  })
 );
 
 const selectionOrOne = (media, selection) => {
@@ -63,7 +75,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onSelectSearchResults: selectSearchResults,
   onLoadPlaylistPage: loadPlaylist,
   onSearchSubmit: search,
-  onSearchSourceChange: setSearchSource
+  onSearchSourceChange: setSearchSource,
+  onShowImportPanel: showImportPanel
 }, dispatch);
 
 @connect(mapStateToProps, mapDispatchToProps)
