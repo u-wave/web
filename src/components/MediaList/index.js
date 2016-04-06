@@ -80,22 +80,30 @@ export default class MediaList extends Component {
 
   render() {
     const { className, media, size, onRequestPage } = this.props;
-    return (
-      <div className={cx('MediaList', className)}>
+    let list = (
+      <BaseList
+        itemRenderer={this.renderRow}
+        length={size || media.length}
+        type="uniform"
+        forceUpdateOnMediaChange={media}
+        forceUpdateOnSelectionChange={this.state.selection}
+      />
+    );
+    if (onRequestPage) {
+      list = (
         <LazyList
           items={media}
           length={size || media.length}
           pageSize={50}
           onRequestPage={onRequestPage}
         >
-          <BaseList
-            itemRenderer={this.renderRow}
-            length={size || media.length}
-            type="uniform"
-            forceUpdateOnMediaChange={media}
-            forceUpdateOnSelectionChange={this.state.selection}
-          />
+          {list}
         </LazyList>
+      );
+    }
+    return (
+      <div className={cx('MediaList', className)}>
+        {list}
       </div>
     );
   }
