@@ -1,6 +1,7 @@
 import cx from 'classnames';
 import React, { Component, PropTypes } from 'react';
-import PaginatedList from '../PaginatedList';
+import BaseList from 'react-list';
+import LazyList from 'react-list-lazy-load';
 import itemSelection from 'item-selection/immutable';
 import Row from './Row';
 import LoadingRow from './LoadingRow';
@@ -79,17 +80,30 @@ export default class MediaList extends Component {
 
   render() {
     const { className, media, size, onRequestPage } = this.props;
-    return (
-      <div className={cx('MediaList', className)}>
-        <PaginatedList
-          itemRenderer={this.renderRow}
+    let list = (
+      <BaseList
+        itemRenderer={this.renderRow}
+        length={size || media.length}
+        type="uniform"
+        forceUpdateOnMediaChange={media}
+        forceUpdateOnSelectionChange={this.state.selection}
+      />
+    );
+    if (onRequestPage) {
+      list = (
+        <LazyList
           items={media}
           length={size || media.length}
-          type="uniform"
-          itemHeight={54}
           pageSize={50}
           onRequestPage={onRequestPage}
-        />
+        >
+          {list}
+        </LazyList>
+      );
+    }
+    return (
+      <div className={cx('MediaList', className)}>
+        {list}
       </div>
     );
   }
