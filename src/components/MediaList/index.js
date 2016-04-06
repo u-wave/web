@@ -92,6 +92,8 @@ export default class MediaList extends Component {
             itemRenderer={this.renderRow}
             length={size || media.length}
             type="uniform"
+            forceUpdateOnMediaChange={media}
+            forceUpdateOnSelectionChange={this.state.selection}
           />
         </LazyList>
       </div>
