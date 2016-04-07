@@ -4,6 +4,9 @@
   @descendent fill {
     background: $highlight-color;
     height: 100%;
-    transition: width 1s linear;
+    width: 100%;
+    transform: scaleX(0);
+    transform-origin: top left;
+    transition: transform 1s linear;
   }
 }
