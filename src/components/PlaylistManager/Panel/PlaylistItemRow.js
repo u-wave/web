@@ -21,6 +21,11 @@ const mediaTarget = {
     if (item.media) {
       const media = item.media;
       const thisID = props.media._id;
+      // Do not attempt to move when the selection is dropped on top of an item
+      // that is in the selection.
+      if (media.some(playlistItem => playlistItem._id === thisID)) {
+        return;
+      }
       const insertBefore = isDraggingNearTopOfRow(monitor, component);
       props.onMoveMedia(
         media,
