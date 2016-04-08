@@ -1,12 +1,12 @@
-/* eslint-disable react/prefer-stateless-function */
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-import { closeAll } from '../actions/OverlayActionCreators';
 import { inputMessage } from '../actions/ChatActionCreators';
+import { closeAll } from '../actions/OverlayActionCreators';
+import { createTimer } from '../actions/TickerActionCreators';
 
 import { currentUserSelector } from '../selectors/userSelectors';
 import { settingsSelector, muiThemeSelector } from '../selectors/settingSelectors';
@@ -21,6 +21,7 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
+    createTimer,
     sendChatMessage: inputMessage,
     onCloseOverlay: closeAll
   }, dispatch);
@@ -29,8 +30,25 @@ function mapDispatchToProps(dispatch) {
 @connect(mapStateToProps, mapDispatchToProps)
 export default class AppContainer extends Component {
   static propTypes = {
-    muiTheme: PropTypes.object
+    muiTheme: PropTypes.object,
+    createTimer: PropTypes.func.isRequired
   };
+
+  static childContextTypes = {
+    timerCallbacks: PropTypes.arrayOf(PropTypes.func)
+  };
+
+  getChildContext() {
+    return {
+      timerCallbacks: this.timerCallbacks
+    };
+  }
+
+  componentWillMount() {
+    // Start the clock! üWave stores the current time in the application state
+    // primarily to make sure that different timers in the UI update simultaneously.
+    this.timerCallbacks = this.props.createTimer();
+  }
 
   render() {
     return (
@@ -40,4 +58,3 @@ export default class AppContainer extends Component {
     );
   }
 }
-/* eslint-enable react/prefer-stateless-function */

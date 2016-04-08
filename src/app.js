@@ -11,7 +11,6 @@ import AppContainer from './containers/App';
 import * as Socket from './utils/Socket';
 import { get as readSession } from './utils/Session';
 import { initState, setJWT } from './actions/LoginActionCreators';
-import { startTicking } from './actions/TickerActionCreators';
 
 import configureStore from './store/configureStore';
 
@@ -40,10 +39,6 @@ if (jwt) {
 
 // Load application state like the current DJ, online users, etc.
 store.dispatch(initState());
-
-// Start the clock! üWave stores the current time in the application state
-// primarily to make sure that different timers in the UI update simultaneously.
-store.dispatch(startTicking());
 
 // WebSocket connections! It uses the `store` object to dispatch actions
 // received from the üWave server.

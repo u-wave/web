@@ -2,10 +2,11 @@ import cx from 'classnames';
 import React from 'react';
 import { DragSource } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
-import TimeAgo from 'react-timeago';
 import { MEDIA } from '../../constants/DDItemTypes';
-import SongTitle from '../SongTitle';
+
 import Actions from '../MediaList/Actions';
+import SongTitle from '../SongTitle';
+import TimeAgo from '../TimeAgo';
 
 import HistoryVotes from './Votes';
 
@@ -106,8 +107,8 @@ export default class HistoryRow extends React.Component {
         <div className="HistoryRow-user">
           {user.username}
         </div>
-        <div className="HistoryRow-time">
-          <TimeAgo date={timestamp} live />
+        <div className="HistoryRow-time" dateTime={timestamp}>
+          <TimeAgo timestamp={timestamp} />
         </div>
         {showActions && (
           <Actions
