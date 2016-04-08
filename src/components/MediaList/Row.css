@@ -6,7 +6,7 @@
   position: relative;
   background: $media-list-color;
 
-  &:nth-child(2n+1) {
+  @modifier alternate {
     background: $media-list-alternate-color;
   }
 

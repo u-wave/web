@@ -11,7 +11,7 @@ export const playlistsSelector = createSelector(
   playlists => values(playlists.playlists).sort(byName)
 );
 
-const playlistItemsSelector = createSelector(
+export const playlistItemsSelector = createSelector(
   baseSelector,
   playlists => playlists.playlistItems
 );

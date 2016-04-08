@@ -16,7 +16,7 @@ import {
 import { openEditMediaDialog } from './DialogActionCreators';
 import { del, get, post, put } from '../utils/Request';
 import {
-  playlistsSelector,
+  playlistsSelector, playlistItemsSelector,
   activePlaylistIDSelector, selectedPlaylistIDSelector,
   activePlaylistSelector, selectedPlaylistSelector
 } from '../selectors/playlistSelectors';
@@ -510,9 +510,31 @@ export function moveMediaComplete(playlistID, items, afterID) {
   };
 }
 
-export function moveMedia(playlistID, medias, afterID) {
+function resolveMoveOptions(playlist = [], opts = {}) {
+  if (opts.after) {
+    return opts.after;
+  }
+  if (opts.before) {
+    for (let i = 0, l = playlist.length; i < l; i++) {
+      if (playlist[i] && playlist[i]._id === opts.before) {
+        if (i === 0) {
+          return -1;
+        }
+        return playlist[i - 1]._id;
+      }
+    }
+  }
+  if (opts.at === 'start') {
+    return -1;
+  }
+  return null;
+}
+
+export function moveMedia(playlistID, medias, opts) {
   return (dispatch, getState) => {
     const jwt = tokenSelector(getState());
+    const playlistItems = playlistItemsSelector(getState())[playlistID];
+    const afterID = resolveMoveOptions(playlistItems, opts);
 
     dispatch(moveMediaStart(playlistID, medias, afterID));
     const items = medias.map(media => media._id);

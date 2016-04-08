@@ -41,14 +41,18 @@ const onOpenAddMediaMenu = (position, media, selection) =>
 const onRemoveFromPlaylist = (playlist, media, selection) =>
   removeMedia(playlist, selectionOrOne(media, selection));
 const onMoveToFirst = (playlist, media, selection) =>
-  moveMedia(playlist, selectionOrOne(media, selection), -1);
+  moveMedia(playlist, selectionOrOne(media, selection), { at: 'start' });
 const onEditMedia = (playlist, media) =>
   editMedia(playlist, media);
+
+const onMoveMedia = (playlist, media, opts) =>
+  moveMedia(playlist, media, opts);
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   onOpenAddMediaMenu,
   onMoveToFirst,
   onEditMedia,
+  onMoveMedia,
   onRemoveFromPlaylist,
   onAddToPlaylist: addMedia,
   onCreatePlaylist: askCreatePlaylist,

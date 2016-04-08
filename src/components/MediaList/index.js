@@ -13,6 +13,7 @@ export default class MediaList extends Component {
     size: PropTypes.number,
     onRequestPage: PropTypes.func,
     rowComponent: PropTypes.func,
+    rowProps: PropTypes.object,
 
     makeActions: PropTypes.func
   };
@@ -52,6 +53,7 @@ export default class MediaList extends Component {
 
   renderRow = (index, key) => {
     const makeActions = this.props.makeActions;
+    const props = this.props.rowProps || {};
     const media = this.props.media[index];
     const { selection } = this.state;
     const selected = selection.isSelectedIndex(index);
@@ -65,10 +67,12 @@ export default class MediaList extends Component {
       );
     }
     const MediaRow = this.props.rowComponent;
+    const isAlternate = index % 2 === 0;
     return (
       <MediaRow
         key={key}
-        className="MediaList-row"
+        {...props}
+        className={cx('MediaList-row', isAlternate && 'MediaListRow--alternate')}
         media={media}
         selected={selected}
         selection={selection.get()}
