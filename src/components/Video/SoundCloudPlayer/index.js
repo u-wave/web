@@ -1,6 +1,5 @@
 import cx from 'classnames';
 import React from 'react';
-import SoundCloudAudio from 'soundcloud-audio';
 import VideoBackdrop from '../VideoBackdrop';
 
 import SongInfo from './SongInfo';
@@ -8,15 +7,6 @@ import SongInfo from './SongInfo';
 const debug = require('debug')('uwave:component:video:soundcloud');
 
 const CLIENT_ID = '9d883cdd4c3c54c6dddda2a5b3a11200';
-
-let sc;
-
-function getTrack(media, cb) {
-  sc._jsonp(`${sc._baseUrl}/tracks/${media.sourceID}.json?client_id=${CLIENT_ID}`, data => {
-    sc._track = data;
-    cb(data);
-  });
-}
 
 const clearStyle = { clear: 'both' };
 
@@ -30,22 +20,15 @@ export default class SoundCloudPlayer extends React.Component {
     volume: React.PropTypes.number
   };
 
-  state = { track: null };
-
-  componentWillMount() {
-    if (!sc && typeof document !== 'undefined') {
-      sc = new SoundCloudAudio(CLIENT_ID);
-      sc.audio.autoplay = true;
-    }
-  }
-
   componentDidMount() {
+    this.audio = new Audio();
+    this.audio.autoplay = true;
     this.play();
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.volume !== this.props.volume) {
-      sc.audio.volume = this.props.volume / 100;
+      this.audio.volume = this.props.volume / 100;
     }
     if (prevProps.media.sourceID !== this.props.media.sourceID ||
         prevProps.enabled !== this.props.enabled ||
@@ -63,62 +46,61 @@ export default class SoundCloudPlayer extends React.Component {
   }
 
   play() {
-    this.setState({ track: null });
     if (this.props.enabled && this.props.active) {
       // In Firefox we have to wait for the "canplaythrough" event before
       // seeking.
       // http://stackoverflow.com/a/34970444
       const doSeek = () => {
-        sc.audio.currentTime = this.props.seek + (this.props.media.start || 0);
-        sc.audio.volume = this.props.volume / 100;
-        sc.audio.removeEventListener('canplaythrough', doSeek, false);
+        this.audio.currentTime = this.props.seek + (this.props.media.start || 0);
+        this.audio.volume = this.props.volume / 100;
+        this.audio.removeEventListener('canplaythrough', doSeek, false);
       };
 
-      getTrack(this.props.media, track => {
-        this.setState({ track });
-        debug('currentTime', this.props.seek);
-        sc.play();
-        sc.audio.addEventListener('canplaythrough', doSeek, false);
-      });
+      const { streamUrl } = this.props.media.sourceData;
+      this.audio.src = `${streamUrl}?client_id=${CLIENT_ID}`;
+      this.audio.play();
+      debug('currentTime', this.props.seek);
+      this.audio.addEventListener('canplaythrough', doSeek, false);
     } else {
       this.stop();
     }
   }
 
   stop() {
-    sc.stop();
+    this.audio.pause();
   }
 
   render() {
-    const { active } = this.props;
-    const { track } = this.state;
-    if (!active) {
+    if (!this.props.active) {
       return null;
     }
-    if (!track) {
+
+    const { media } = this.props;
+    const { sourceData } = media;
+    if (!sourceData) {
       return <div className={cx('SoundCloudPlayer', this.props.className)} />;
     }
-    const user = track.user;
+
     return (
       <div className={cx('SoundCloudPlayer', this.props.className)}>
-        <VideoBackdrop url={track.artwork_url} />
+        <VideoBackdrop url={media.thumbnail} />
         <div className="SoundCloudPlayer-meta">
           <div className="SoundCloudPlayer-info">
             <img
               className="SoundCloudPlayer-art"
-              src={track.artwork_url}
+              src={media.thumbnail}
               alt=""
             />
             <SongInfo
-              artist={user.username}
-              title={track.title}
-              artistUrl={user.permalink_url}
-              trackUrl={track.permalink_url}
+              artist={sourceData.username}
+              title={sourceData.fullTitle}
+              artistUrl={sourceData.artistUrl}
+              trackUrl={sourceData.permalinkUrl}
             />
           <div style={clearStyle} />
           </div>
           <a
-            href={track.permalink_url}
+            href={sourceData.permalinkUrl}
             target="_blank"
             className="SoundCloudPlayer-permalink"
           >
