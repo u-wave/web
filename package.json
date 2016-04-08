@@ -1,10 +1,16 @@
 {
   "name": "u-wave-web",
-  "version": "0.0.0",
-  "description": "Web client for [üµ]wave servers.",
-  "author": "René Kooi <rene@kooi.me>",
+  "version": "1.0.0-beta.1",
+  "description": "Web client for üWave servers.",
   "license": "MIT",
   "repository": "u-wave/u-wave-web",
+  "author": "Renée Kooi <renee@kooi.me>",
+  "contributors": [
+    "Felix Wong <felix@fawong.com>",
+    "Frederic Lotz <Frederic.Lotz@studmail.w-hs.de>",
+    "Huskitch <huskitch@gmail.com>",
+    "xBytez <me@xbytez.eu>"
+  ],
   "main": "lib/middleware.js",
   "engines": {
     "node": ">= 4",
