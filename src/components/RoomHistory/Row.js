@@ -35,6 +35,7 @@ export default class HistoryRow extends React.Component {
     selected: React.PropTypes.bool,
     selection: React.PropTypes.array,
 
+    onOpenPreviewMediaDialog: React.PropTypes.func,
     makeActions: React.PropTypes.func
   };
 
@@ -54,6 +55,12 @@ export default class HistoryRow extends React.Component {
 
   handleMouseLeave = () => {
     this.setState({ showActions: false });
+  };
+
+  handleDoubleClick = () => {
+    this.props.onOpenPreviewMediaDialog(
+      this.props.media.media
+    );
   };
 
   render() {
@@ -83,6 +90,7 @@ export default class HistoryRow extends React.Component {
         className={cx('MediaListRow', 'HistoryRow', className, selectedClass)}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
+        onDoubleClick={this.handleDoubleClick}
         {...attrs}
       >
         {thumbnail}

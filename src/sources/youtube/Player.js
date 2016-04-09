@@ -34,6 +34,7 @@ export default class YouTubePlayer extends React.Component {
             active={active}
             seek={Math.round(this.props.seek)}
             volume={this.props.volume}
+            showControls={mode === 'preview'}
           />}
         </div>
       </span>

@@ -50,7 +50,7 @@ export default class YouTubePlayerEmbed extends React.Component {
       height: '100%',
       playerVars: {
         autoplay: 1,
-        controls: showControls,
+        controls: showControls ? 1 : 0,
         rel: 0,             // do not show related videos after the video finishes
         showinfo: 0,        // do not show video title etc in the frame
         iv_load_policy: 3,  // disable annotations

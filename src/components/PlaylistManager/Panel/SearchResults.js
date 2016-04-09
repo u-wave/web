@@ -6,13 +6,19 @@ import MediaList from '../../MediaList';
 
 import AddToPlaylistAction from '../../MediaList/Actions/AddToPlaylist';
 
-const SearchResults = ({ className, query, results, loadingState, onOpenAddMediaMenu }) => {
+const SearchResults = ({
+  className,
+  query, results, loadingState,
+  onOpenAddMediaMenu,
+  onOpenPreviewMediaDialog
+}) => {
   let list;
   if (loadingState === LOADED) {
     list = (
       <MediaList
         className="PlaylistPanel-media"
         media={results}
+        onOpenPreviewMediaDialog={onOpenPreviewMediaDialog}
         makeActions={(media, selection) => [
           <AddToPlaylistAction
             key="add"
@@ -44,7 +50,8 @@ SearchResults.propTypes = {
   query: React.PropTypes.string.isRequired,
   results: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
   loadingState: React.PropTypes.oneOf([ IDLE, LOADING, LOADED ]).isRequired,
-  onOpenAddMediaMenu: React.PropTypes.func.isRequired
+  onOpenAddMediaMenu: React.PropTypes.func.isRequired,
+  onOpenPreviewMediaDialog: React.PropTypes.func.isRequired
 };
 
 export default SearchResults;

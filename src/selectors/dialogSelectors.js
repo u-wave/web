@@ -1,5 +1,6 @@
 import assign from 'object-assign';
 import { createSelector } from 'reselect';
+import { volumeSelector } from './settingSelectors';
 import { authErrorSelector } from './userSelectors';
 
 const baseSelector = state => state.dialogs;
@@ -15,4 +16,13 @@ export const loginDialogSelector = createSelector(
 export const editMediaDialogSelector = createSelector(
   baseSelector,
   dialogs => merge(dialogs.editMedia)
+);
+
+export const previewMediaDialogSelector = createSelector(
+  baseSelector,
+  volumeSelector,
+  (dialogs, volume) => ({
+    ...merge(dialogs.previewMedia),
+    volume
+  })
 );

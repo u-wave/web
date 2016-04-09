@@ -6,7 +6,13 @@ import OverlayHeader from '../Overlay/Header';
 
 import HistoryList from './HistoryList';
 
-const RoomHistory = ({ className, onCloseOverlay, onOpenAddMediaMenu, ...props }) => (
+const RoomHistory = ({
+  className,
+  onCloseOverlay,
+  onOpenAddMediaMenu,
+  onOpenPreviewMediaDialog,
+  ...props
+}) => (
   <Overlay
     className={cx('RoomHistory', 'AppColumn', 'AppColumn--full', className)}
     direction="top"
@@ -20,6 +26,7 @@ const RoomHistory = ({ className, onCloseOverlay, onOpenAddMediaMenu, ...props }
     <div className="RoomHistory-body AppRow AppRow--middle">
       <HistoryList
         onOpenAddMediaMenu={onOpenAddMediaMenu}
+        onOpenPreviewMediaDialog={onOpenPreviewMediaDialog}
         {...props}
       />
     </div>
@@ -29,7 +36,8 @@ const RoomHistory = ({ className, onCloseOverlay, onOpenAddMediaMenu, ...props }
 RoomHistory.propTypes = {
   className: React.PropTypes.string,
   onCloseOverlay: React.PropTypes.func.isRequired,
-  onOpenAddMediaMenu: React.PropTypes.func.isRequired
+  onOpenAddMediaMenu: React.PropTypes.func.isRequired,
+  onOpenPreviewMediaDialog: React.PropTypes.func.isRequired
 };
 
 export default RoomHistory;
