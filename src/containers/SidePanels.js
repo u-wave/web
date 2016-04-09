@@ -1,4 +1,3 @@
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
@@ -19,9 +18,16 @@ const mapStateToProps = createStructuredSelector({
 });
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    onChange: selectPanel
-  }, dispatch);
+  return {
+    onChange: panelName => {
+      // Ensure that we're actually switching panels--otherwise change events
+      // from eg. the chat box bubble up and trigger a panel rerender on every
+      // keypress.
+      if (typeof panelName === 'string') {
+        dispatch(selectPanel(panelName));
+      }
+    }
+  };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SidePanels);
