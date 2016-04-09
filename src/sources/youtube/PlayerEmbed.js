@@ -8,7 +8,12 @@ export default class YouTubePlayerEmbed extends React.Component {
     active: React.PropTypes.bool.isRequired,
     media: React.PropTypes.object,
     seek: React.PropTypes.number,
-    volume: React.PropTypes.number
+    volume: React.PropTypes.number,
+    showControls: React.PropTypes.bool
+  };
+
+  static defaultProps = {
+    showControls: false
   };
 
   componentWillReceiveProps(nextProps) {
@@ -38,19 +43,20 @@ export default class YouTubePlayerEmbed extends React.Component {
   };
 
   render() {
-    const { active, media, seek } = this.props;
+    const { active, media, seek, showControls } = this.props;
 
     const opts = {
       width: '100%',
       height: '100%',
       playerVars: {
         autoplay: 1,
-        controls: 0,        // do not show player controls in the bottom
+        controls: showControls,
         rel: 0,             // do not show related videos after the video finishes
         showinfo: 0,        // do not show video title etc in the frame
         iv_load_policy: 3,  // disable annotations
         modestbranding: 1,  // hide youtube logo
-        start: (seek || 0) + (media.start || 0)
+        start: (seek || 0) + (media.start || 0),
+        end: media.end || media.duration
       }
     };
 

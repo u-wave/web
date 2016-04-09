@@ -8,7 +8,7 @@ import YouTubePlayerEmbed from './PlayerEmbed';
 export default class YouTubePlayer extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
-    size: React.PropTypes.string,
+    mode: React.PropTypes.oneOf([ 'small', 'large', 'preview' ]),
     active: React.PropTypes.bool.isRequired,
     enabled: React.PropTypes.bool,
     media: React.PropTypes.object,
@@ -17,18 +17,18 @@ export default class YouTubePlayer extends React.Component {
   };
 
   render() {
-    const { active, className, enabled, size, media } = this.props;
-    const sizeClass = `src-youtube-Player--${size}`;
+    const { active, className, enabled, mode, media } = this.props;
+    const modeClass = `src-youtube-Player--${mode}`;
 
     let backdrop;
-    if (active && size === 'small') {
+    if (active && mode !== 'large') {
       backdrop = <VideoBackdrop url={media.thumbnail} />;
     }
     // Wrapper span so the backdrop can be full-size…
     return (
       <span hidden={!active}>
         {backdrop}
-        <div className={cx('src-youtube-Player', sizeClass, className)}>
+        <div className={cx('src-youtube-Player', modeClass, className)}>
           {enabled && <YouTubePlayerEmbed
             media={media}
             active={active}

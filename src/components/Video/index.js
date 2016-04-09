@@ -32,7 +32,8 @@ export default class Video extends Component {
 
     const props = {
       enabled,
-      media, seek, size,
+      media, seek,
+      mode: size,
       volume: isMuted ? 0 : volume
     };
 
