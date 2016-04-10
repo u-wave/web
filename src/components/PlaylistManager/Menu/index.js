@@ -12,6 +12,7 @@ const Menu = ({
   onShowImportPanel
 }) => {
   const searchIsSelected = selected ? '' : 'is-selected';
+  const importIsSelected = showImportPanel ? 'is-selected' : '';
   return (
     <div
       role="menu"
@@ -34,6 +35,7 @@ const Menu = ({
           <PlaylistRow
             key={pl._id}
             className="PlaylistMenu-row"
+            selected={pl.selected && !showImportPanel}
             playlist={pl}
             onClick={() => onSelectPlaylist(pl)}
             onAddToPlaylist={onAddToPlaylist}
@@ -41,7 +43,7 @@ const Menu = ({
         );
       })}
       <PlaylistImportRow
-        className={cx('PlaylistMenu-row', showImportPanel ? 'is-selected' : '')}
+        className={cx('PlaylistMenu-row', importIsSelected)}
         onClick={onShowImportPanel}
       />
     </div>
