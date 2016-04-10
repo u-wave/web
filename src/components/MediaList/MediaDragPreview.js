@@ -2,10 +2,7 @@ import assign from 'object-assign';
 import React, { Component, PropTypes } from 'react';
 import ListIcon from 'material-ui/lib/svg-icons/action/list';
 
-const transformStyle = transform => ({
-  transform,
-  WebkitTransform: transform
-});
+import transformStyle from '../../utils/transformStyle';
 
 const getItemStyles = offset => offset
   ? assign(
