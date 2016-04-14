@@ -6,6 +6,7 @@ import Italic from './Italic';
 import StrikeThrough from './StrikeThrough';
 import Mention from './Mention';
 import Link from './Link';
+import Emoji from './Emoji';
 
 export default function compile(tree) {
   return tree.map((node, i) => {
@@ -15,6 +16,8 @@ export default function compile(tree) {
       return <Mention key={i} user={node.user} />;
     } else if (node.type === 'link') {
       return <Link key={i} text={node.text} href={node.href} />;
+    } else if (node.type === 'emoji') {
+      return <Emoji key={i} name={node.name} />;
     }
 
     switch (node.type) {
