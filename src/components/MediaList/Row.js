@@ -78,6 +78,7 @@ export default class Row extends React.Component {
       : <div className="MediaListRow-thumb">
           <img
             className="MediaListRow-image"
+            key={media._id}
             src={media.thumbnail}
             alt=""
           />
