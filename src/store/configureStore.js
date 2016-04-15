@@ -11,9 +11,10 @@ import * as reducers from '../reducers';
 // things coming together in one place. Luckily, we don't have _that_ much going
 // on in üWave, so it's kind of manageable.
 
-export default function createUwaveStore() {
+export default function createUwaveStore(initialState = {}) {
   const enableLogging = process.env.NODE_ENV !== 'production' &&
     process.env.NODE_ENV !== 'testing';
+
   const middleware = [
     // Redux-Thunk allows dispatching a function to the store instead of an
     // action object. These functions can then dispatch action objects as they
@@ -35,25 +36,23 @@ export default function createUwaveStore() {
     })
   ].filter(Boolean);
 
-  // Creating a function to create a store! What a time to be alive :)
-  const createStoreWithMiddleware = compose(
-    // Adds all of the above ☝ features to the store.
-    applyMiddleware(...middleware),
-    // Keeps the user's settings in localStorage, so that a refresh doesn't
-    // reset all your preferences.
-    // This is done separately from the Middleware features, because it changes
-    // the _initial_ `settings` state, something that Middleware can't do.
-    persistSettings
-  )(createStore);
-
-  // Yes! We made it :)
-  const store = createStoreWithMiddleware(
+  const store = createStore(
     // Finish up the reducer function by combining all the different reducers
     // into one big reducer that works on one big state object.
-    combineReducers(reducers)
+    combineReducers(reducers),
+    initialState,
+    compose(
+      // Adds all of the above ☝ middleware features to the store.
+      applyMiddleware(...middleware),
+      // Keeps the user's settings in localStorage, so that a refresh doesn't
+      // reset all your preferences.
+      // This is done separately from the Middleware features, because it changes
+      // the _initial_ `settings` state, something that Middleware can't do.
+      persistSettings
+    )
   );
 
-  if (module.hot) {
+  if (process.env.NODE_ENV === 'development' && module.hot) {
     // Update the store's reducer function when the reducer source code has
     // changed. See /tasks/watch.js for more on Hot Reloading!
     // This is only used when debugging, not in a deployed app.
