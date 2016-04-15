@@ -1,4 +1,7 @@
-import { createSelector, createStructuredSelector } from 'reselect';
+import { createSelector } from 'reselect';
+
+import { isPreviewMediaDialogOpenSelector } from './dialogSelectors';
+import { isMutedSelector, volumeSelector } from './settingSelectors';
 import { currentTimeSelector } from './timeSelectors';
 import { currentUserSelector, usersSelector } from './userSelectors';
 
@@ -49,12 +52,6 @@ export const isCurrentDJSelector = createSelector(
   (dj, me) => dj && me && dj._id === me._id
 );
 
-export const videoSelector = createStructuredSelector({
-  historyID: historyIDSelector,
-  media: mediaSelector,
-  seek: timeElapsedSelector
-});
-
 // TODO use a permissions-based system instead of role IDs:
 // "user.can('booth.skip')"
 const ROLE_MODERATOR = 2;
@@ -68,4 +65,12 @@ export const canSkipSelector = createSelector(
     }
     return isCurrentDJ || user.role >= ROLE_MODERATOR;
   }
+);
+
+export const playbackVolumeSelector = createSelector(
+  volumeSelector,
+  isMutedSelector,
+  isPreviewMediaDialogOpenSelector,
+  (volume, isMuted, isPreviewMediaDialogOpen) =>
+    (isMuted || isPreviewMediaDialogOpen ? 0 : volume)
 );

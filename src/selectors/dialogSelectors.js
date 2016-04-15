@@ -26,3 +26,8 @@ export const previewMediaDialogSelector = createSelector(
     volume
   })
 );
+
+export const isPreviewMediaDialogOpenSelector = createSelector(
+  baseSelector,
+  dialogs => dialogs.previewMedia && !!dialogs.previewMedia.open
+);
