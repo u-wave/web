@@ -1,5 +1,8 @@
 @import "../../../vars.css";
 
+@import "./ImportPanelHeader.css";
+@import "./YouTube";
+
 @component PlaylistImport {
   height: 100%;
   background: $background-color;

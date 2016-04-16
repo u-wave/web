@@ -1,0 +1,23 @@
+@component ImportPanelHeader {
+  height: 54px;
+  line-height: 54px;
+  font-size: 14pt;
+  display: flex;
+  justify-content: space-between;
+
+  @descendent content {
+    flex-grow: 1;
+    padding-left: 15px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /*@descendent active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-right: 20px;
+    height: 100%;
+  }*/
+}
