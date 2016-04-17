@@ -22,10 +22,10 @@ function getImportablePlaylistStart(url) {
   };
 }
 
-function getImportablePlaylistComplete(url, items) {
+function getImportablePlaylistComplete(url, playlist, items) {
   return {
     type: GET_IMPORTABLE_PLAYLIST_COMPLETE,
-    payload: { url, items }
+    payload: { url, playlist, items }
   };
 }
 
@@ -37,8 +37,8 @@ export function getImportablePlaylist(url) {
 
     return get(jwt, '/v1/import/youtube/playlist', { url })
       .then(res => res.json())
-      .then(playlist => dispatch(
-        getImportablePlaylistComplete(url, playlist)
+      .then(({ playlist, items }) => dispatch(
+        getImportablePlaylistComplete(url, playlist, items)
       ))
       .catch(error => dispatch({
         type: GET_IMPORTABLE_PLAYLIST_COMPLETE,

@@ -1,0 +1,11 @@
+@component-namespace yt-import {
+  @component PlaylistPanel {
+    @descendent header {
+      display: flex;
+    }
+
+    @descendent name {
+      flex-grow: 1;
+    }
+  }
+}

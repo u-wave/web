@@ -1,10 +1,7 @@
 import * as React from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 
-import {
-  addMediaMenu as openAddMediaMenu
-} from '../../../../actions/PlaylistActionCreators';
+import IconButton from 'material-ui/lib/icon-button';
+import ImportIcon from 'material-ui/lib/svg-icons/av/playlist-add';
 
 import MediaList from '../../../MediaList';
 import AddToPlaylistAction from '../../../MediaList/Actions/AddToPlaylist';
@@ -17,47 +14,50 @@ const selectionOrOne = (media, selection) => {
   return [ media ];
 };
 
-const mapStateToProps = () => ({
-  // nothing
-});
-
-const mapDispatchToProps = dispatch => bindActionCreators({
-  onOpenAddMediaMenu: openAddMediaMenu
-}, dispatch);
-
-@connect(mapStateToProps, mapDispatchToProps)
 export default class YouTubeImportPlaylistPanel extends React.Component {
   static propTypes = {
+    importingPlaylist: React.PropTypes.shape({
+      sourceID: React.PropTypes.string,
+      name: React.PropTypes.string
+    }).isRequired,
     importingPlaylistItems: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
 
+    onImportPlaylist: React.PropTypes.func.isRequired,
     onOpenAddMediaMenu: React.PropTypes.func.isRequired,
     onClosePanel: React.PropTypes.func.isRequired
   };
 
   handleImportFull = () => {
-  };
-
-  handleAddToPlaylist = (position, media, selection) => {
-    console.log(position, media, selection);
+    const {
+      importingPlaylist,
+      onImportPlaylist
+    } = this.props;
+    onImportPlaylist(importingPlaylist.sourceID, importingPlaylist.name);
   };
 
   render() {
     const {
+      importingPlaylist,
       importingPlaylistItems,
       onOpenAddMediaMenu,
       onClosePanel
     } = this.props;
 
     return (
-      <div className="PlaylistPanel SearchResults">
-        <ImportPanelHeader
-          className="SearchResults-query"
-          onClosePanel={onClosePanel}
-        >
-          YouTube Playlist
-          <a onClick={this.handleImportFull}>
-            Import All ({importingPlaylistItems.length})
-          </a>
+      <div className="PlaylistPanel yt-import-PlaylistPanel">
+        <ImportPanelHeader onClosePanel={onClosePanel}>
+          <div className="yt-import-PlaylistPanel-header">
+            <div className="yt-import-PlaylistPanel-name">
+              {importingPlaylist.name}
+            </div>
+            <IconButton
+              onClick={this.handleImportFull}
+              tooltip={`Import All (${importingPlaylistItems.length})`}
+              tooltipPosition="top-center"
+            >
+              <ImportIcon color="#555" hoverColor="#fff" />
+            </IconButton>
+          </div>
         </ImportPanelHeader>
         <MediaList
           className="PlaylistPanel-media"

@@ -39,7 +39,7 @@ export default function reduce(state = initialState, action = {}) {
     return {
       ...state,
       importingState: LOADED,
-      importingPlaylistName: payload.name,
+      importingPlaylist: payload.playlist,
       importingPlaylistItems: payload.items
     };
   case GET_CHANNEL_PLAYLISTS_START:

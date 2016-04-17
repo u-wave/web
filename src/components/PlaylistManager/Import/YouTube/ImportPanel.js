@@ -6,13 +6,17 @@ import { IDLE, LOADING, LOADED } from '../../../../constants/LoadingStates';
 import Loader from '../../../Loader';
 import ImportPanelHeader from '../ImportPanelHeader';
 
+import {
+  addMediaMenu as openAddMediaMenu
+} from '../../../../actions/PlaylistActionCreators';
 import { importPlaylist } from './actions';
 import ChannelPanel from './ChannelPanel';
 import PlaylistPanel from './PlaylistPanel';
 
 const mapStateToProps = () => ({});
 const mapDispatchToProps = dispatch => bindActionCreators({
-  onImportPlaylist: importPlaylist
+  onImportPlaylist: importPlaylist,
+  onOpenAddMediaMenu: openAddMediaMenu
 }, dispatch);
 
 @connect(mapStateToProps, mapDispatchToProps)
