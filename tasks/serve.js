@@ -1,6 +1,8 @@
-import conf from './dev-server-config.json';
-import { readFileSync } from 'fs';
-import { join } from 'path';
+import 'loud-rejection/register';
+import express from 'express';
+import { Buffer } from 'buffer';
+
+import config from './dev-server-config.json';
 
 function tryRequire(path, message) {
   try {
@@ -12,33 +14,30 @@ function tryRequire(path, message) {
   }
 }
 
-export default function serveTask({ port = conf.server.port }) {
-  const uwaveClient = tryRequire('../lib/middleware',
-    'Could not find the client middleware. Did you run `gulp middleware`?'
+export default function serveTask({ port = config.server.port }) {
+  const uwave = tryRequire('u-wave-core',
+    'Could not find the u-wave core module. Did you run `npm install u-wave-core`?'
   );
-  const UWaveServer = tryRequire('u-wave/lib/server',
-    'Could not find the u-wave server module. Did you run `npm install u-wave`?'
-  );
-  const UWaveAPI = tryRequire('u-wave-api-v1/lib/api',
+  const createWebApi = tryRequire('u-wave-api-v1',
     'Could not find the u-wave API module. Did you run `npm install u-wave-api-v1`?'
   );
+  const createWebClient = tryRequire('../lib/middleware',
+    'Could not find the client middleware. Did you run `gulp middleware`?'
+  );
 
-  process.on('unhandledRejection', reason => {
-    console.error('Unhandled rejection:');
-    throw reason;
+  const uw = uwave(config);
+
+  const app = express();
+  const server = app.listen(port);
+
+  app
+    .use('/v1', createWebApi(uw, {
+      server,
+      secret: new Buffer('none', 'utf8')
+    }))
+    .use(createWebClient(uw, {}));
+
+  uw.on('stopped', () => {
+    process.exit(0);
   });
-
-  const uw = new UWaveServer(conf);
-  const v1 = new UWaveAPI(uw, {
-    secret: readFileSync(join(__dirname, './dev-test-secret.txt'))
-  });
-
-  uw.on('stopped', () => process.exit(0));
-
-  uw.app
-    .use('/v1', v1.router)
-    .use(uwaveClient());
-
-  uw.start();
-  uw.server.listen(port);
 }

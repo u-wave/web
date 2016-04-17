@@ -5,6 +5,7 @@
   "author": "René Kooi <rene@kooi.me>",
   "license": "MIT",
   "repository": "u-wave/u-wave-web",
+  "main": "lib/middleware.js",
   "engines": {
     "node": ">= 4",
     "npm": ">= 3"
@@ -95,6 +96,7 @@
     "gulp-sourcemaps": "^1.6.0",
     "gulp-uglify": "^1.4.1",
     "gulp-util": "^3.0.6",
+    "loud-rejection": "^1.3.0",
     "mocha": "^2.3.4",
     "postcss-bem": "^0.4.0",
     "postcss-calc": "^5.0.0",
