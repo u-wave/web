@@ -38,31 +38,37 @@ export function flattenPlaylistItem(item) {
   };
 }
 
+export function loadPlaylistStart(playlistID, page) {
+  return {
+    type: LOAD_PLAYLIST_START,
+    payload: { playlistID },
+    meta: { page }
+  };
+}
+
+export function loadPlaylistComplete(playlistID, media, pagination) {
+  return {
+    type: LOAD_PLAYLIST_COMPLETE,
+    payload: { playlistID, media },
+    meta: pagination
+  };
+}
+
 export function loadPlaylist(playlistID, page = 0) {
   return (dispatch, getState) => {
     const jwt = tokenSelector(getState());
 
-    dispatch({
-      type: LOAD_PLAYLIST_START,
-      payload: { playlistID },
-      meta: { page }
-    });
+    dispatch(loadPlaylistStart(playlistID, page));
 
     return get(jwt, `/v1/playlists/${playlistID}/media`, { page, limit: MEDIA_PAGE_SIZE })
       .then(res => res.json())
-      .then(res => {
-        dispatch({
-          type: LOAD_PLAYLIST_COMPLETE,
-          payload: {
-            playlistID,
-            media: res.result.map(flattenPlaylistItem)
-          },
-          meta: {
-            page: res.page,
-            pageSize: res.size
-          }
-        });
-      })
+      .then(res => dispatch(
+        loadPlaylistComplete(
+          playlistID,
+          res.result.map(flattenPlaylistItem),
+          { page: res.page, pageSize: res.size }
+        )
+      ))
       .catch(e => {
         dispatch({
           type: LOAD_PLAYLIST_COMPLETE,

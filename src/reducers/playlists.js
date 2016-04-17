@@ -43,7 +43,7 @@ function processMove(list, movedMedia, afterID) {
   // …and add them back in at the correct place.
   const insertIdx = afterID === -1
     ? 0
-    : findIndex(newPlaylist, media => media._id === afterID) + 1;
+    : findIndex(newPlaylist, media => media !== null && media._id === afterID) + 1;
   newPlaylist.splice(insertIdx, 0, ...movedMedia);
   return newPlaylist;
 }
