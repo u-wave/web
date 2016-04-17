@@ -28,7 +28,7 @@ export default class PlaylistRow extends React.Component {
       <div className="MediaListRow-thumb">
         <img
           className="MediaListRow-image"
-          key={playlist._id}
+          key={playlist.id}
           src={playlist.thumbnail}
           alt=""
         />
