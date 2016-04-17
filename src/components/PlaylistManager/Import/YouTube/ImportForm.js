@@ -1,7 +1,8 @@
 import * as React from 'react';
 import PlaylistIcon from 'material-ui/lib/svg-icons/av/playlist-play';
 
-import ImportSourceForm from '../ImportSourceForm';
+import ImportSourceBlock from '../ImportSourceBlock';
+import Form from '../../../Form';
 import FormGroup from '../../../Form/Group';
 import TextField from '../../../Form/TextField';
 import Button from '../../../Form/Button';
@@ -39,42 +40,37 @@ export default class YoutubeImportForm extends React.Component {
     this.props.onShowImportPanel();
   };
 
-  handleSubmit = e => {
-    e.preventDefault();
-  };
-
   render() {
     return (
-      <ImportSourceForm
+      <ImportSourceBlock
         title="YouTube"
         sourceType="youtube"
-        onImport={this.handleSubmit}
       >
-        <FormGroup>
-          <TextField
-            ref="channel"
-            placeholder="Channel URL"
-            icon={<PlaylistIcon color="#9f9d9e" />}
-          />
-        </FormGroup>
-        <FormGroup>
-          <Button onClick={this.handleImportChannel}>
-            Import From Channel
-          </Button>
-        </FormGroup>
-        <FormGroup>
-          <TextField
-            ref="playlist"
-            placeholder="Playlist URL"
-            icon={<PlaylistIcon color="#9f9d9e" />}
-          />
-        </FormGroup>
-        <FormGroup>
-          <Button onClick={this.handleImportPlaylist}>
-            Import Playlist
-          </Button>
-        </FormGroup>
-      </ImportSourceForm>
+        <Form onSubmit={this.handleImportChannel}>
+          <FormGroup>
+            <TextField
+              ref="channel"
+              placeholder="Channel URL"
+              icon={<PlaylistIcon color="#9f9d9e" />}
+            />
+          </FormGroup>
+          <FormGroup>
+            <Button>Import From Channel</Button>
+          </FormGroup>
+        </Form>
+        <Form onSubmit={this.handleImportPlaylist}>
+          <FormGroup>
+            <TextField
+              ref="playlist"
+              placeholder="Playlist URL"
+              icon={<PlaylistIcon color="#9f9d9e" />}
+            />
+          </FormGroup>
+          <FormGroup>
+            <Button>Import Playlist</Button>
+          </FormGroup>
+        </Form>
+      </ImportSourceBlock>
     );
   }
 }

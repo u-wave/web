@@ -1,6 +1,7 @@
 @import "../../../vars.css";
 
 @import "./ImportPanelHeader.css";
+@import "./ImportSourceBlock.css";
 @import "./YouTube";
 
 @component PlaylistImport {

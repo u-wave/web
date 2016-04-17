@@ -1,0 +1,9 @@
+@component ImportSourceBlock {
+  @descendent image {
+    max-width: 100%;
+    max-height: 50px;
+    display: block;
+    margin: auto;
+    margin-bottom: 16px;
+  }
+}
