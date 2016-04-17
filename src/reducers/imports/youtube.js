@@ -19,7 +19,7 @@ const initialState = {
 };
 
 export default function reduce(state = initialState, action = {}) {
-  const { type, payload } = action;
+  const { type, error, payload } = action;
   switch (type) {
   case GET_IMPORTABLE_PLAYLIST_START:
     return {
@@ -28,6 +28,14 @@ export default function reduce(state = initialState, action = {}) {
       importingState: LOADING
     };
   case GET_IMPORTABLE_PLAYLIST_COMPLETE:
+    if (error) {
+      return {
+        ...state,
+        type: null,
+        importingState: IDLE
+      };
+    }
+
     return {
       ...state,
       importingState: LOADED,
@@ -41,6 +49,14 @@ export default function reduce(state = initialState, action = {}) {
       importingState: LOADING
     };
   case GET_CHANNEL_PLAYLISTS_COMPLETE:
+    if (error) {
+      return {
+        ...state,
+        type: null,
+        importingState: IDLE
+      };
+    }
+
     return {
       ...state,
       importingState: LOADED,

@@ -110,10 +110,6 @@ function mergePlaylistPage(playlist, oldMedia, newMedia, { page, pageSize }) {
 export default function reduce(state = initialState, action = {}) {
   const { type, payload, meta, error } = action;
 
-  if (error) {
-    return state;
-  }
-
   switch (type) {
   case LOAD_ALL_PLAYLISTS_COMPLETE:
     return {
@@ -125,6 +121,10 @@ export default function reduce(state = initialState, action = {}) {
     // the "Active" button only, instead of on top of the entire playlist
     return setPlaylistLoading(state, payload.playlistID);
   case ACTIVATE_PLAYLIST_COMPLETE:
+    if (error) {
+      return setPlaylistLoading(state, meta.playlistID, false);
+    }
+
     return {
       ...state,
       // set `active` property on all playlists
@@ -160,6 +160,10 @@ export default function reduce(state = initialState, action = {}) {
     }
     return setPlaylistLoading(state, payload.playlistID);
   case LOAD_PLAYLIST_COMPLETE:
+    if (error) {
+      return setPlaylistLoading(state, meta.playlistID, false);
+    }
+
     return updatePlaylistAndItems(
       state,
       payload.playlistID,
@@ -197,6 +201,13 @@ export default function reduce(state = initialState, action = {}) {
       selectedPlaylistID: meta.tempId
     };
   case CREATE_PLAYLIST_COMPLETE:
+    if (error) {
+      return {
+        ...state,
+        playlists: except(state.playlists, `${meta.tempId}`)
+      };
+    }
+
     return {
       ...state,
       playlists: assign(
@@ -212,6 +223,10 @@ export default function reduce(state = initialState, action = {}) {
   case RENAME_PLAYLIST_START:
     return setPlaylistLoading(state, payload.playlistID);
   case RENAME_PLAYLIST_COMPLETE:
+    if (error) {
+      return setPlaylistLoading(state, meta.playlistID, false);
+    }
+
     const renamedPlaylist = state.playlists[payload.playlistID];
     if (renamedPlaylist) {
       return updatePlaylist(state, payload.playlistID, playlist => ({
@@ -224,6 +239,10 @@ export default function reduce(state = initialState, action = {}) {
   case DELETE_PLAYLIST_START:
     return setPlaylistLoading(state, payload.playlistID);
   case DELETE_PLAYLIST_COMPLETE:
+    if (error) {
+      return setPlaylistLoading(state, meta.playlistID, false);
+    }
+
     return {
       ...state,
       // When deleting the selected playlist, select the active playlist instead.
@@ -236,6 +255,10 @@ export default function reduce(state = initialState, action = {}) {
   case ADD_MEDIA_START:
     return setPlaylistLoading(state, payload.playlistID);
   case ADD_MEDIA_COMPLETE:
+    if (error) {
+      return setPlaylistLoading(state, meta.playlistID, false);
+    }
+
     return updatePlaylistAndItems(
       state,
       payload.playlistID,
