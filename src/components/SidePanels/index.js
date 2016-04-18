@@ -1,7 +1,6 @@
 import * as React from 'react';
 import pure from 'recompose/pure';
-import Tabs from 'material-ui/lib/tabs/tabs';
-import Tab from 'material-ui/lib/tabs/tab';
+import { Tabs, Tab } from 'material-ui/Tabs';
 
 import Chat from '../../containers/Chat';
 import ChatInput from '../Chat/Input';

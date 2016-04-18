@@ -1,9 +1,9 @@
 import cx from 'classnames';
 import React, { Component, PropTypes } from 'react';
-import Toggle from 'material-ui/lib/toggle';
-import FlatButton from 'material-ui/lib/flat-button';
-import LicenseIcon from 'material-ui/lib/svg-icons/action/copyright';
-import LogoutIcon from 'material-ui/lib/svg-icons/action/power-settings-new';
+import Toggle from 'material-ui/Toggle';
+import FlatButton from 'material-ui/FlatButton';
+import LicenseIcon from 'material-ui/svg-icons/action/copyright';
+import LogoutIcon from 'material-ui/svg-icons/action/power-settings-new';
 
 import GithubIcon from './GithubIcon';
 import Profile from './Profile';

@@ -1,7 +1,7 @@
 import cx from 'classnames';
 import React, { Component, PropTypes } from 'react';
 import { DropTarget } from 'react-dnd';
-import ActiveIcon from 'material-ui/lib/svg-icons/navigation/check';
+import ActiveIcon from 'material-ui/svg-icons/navigation/check';
 import { MEDIA } from '../../../constants/DDItemTypes';
 import Loader from '../../Loader';
 

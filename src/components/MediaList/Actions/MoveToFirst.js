@@ -1,5 +1,5 @@
 import * as React from 'react';
-import MoveToFirstIcon from 'material-ui/lib/svg-icons/hardware/keyboard-arrow-up';
+import MoveToFirstIcon from 'material-ui/svg-icons/hardware/keyboard-arrow-up';
 
 import Action from './Action';
 

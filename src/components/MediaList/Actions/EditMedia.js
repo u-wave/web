@@ -1,5 +1,5 @@
 import * as React from 'react';
-import EditIcon from 'material-ui/lib/svg-icons/editor/mode-edit';
+import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 
 import Action from './Action';
 

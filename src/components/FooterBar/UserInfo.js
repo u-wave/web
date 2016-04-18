@@ -1,7 +1,7 @@
 import cx from 'classnames';
 import * as React from 'react';
 import pure from 'recompose/pure';
-import SettingsIcon from 'material-ui/lib/svg-icons/action/settings';
+import SettingsIcon from 'material-ui/svg-icons/action/settings';
 
 import Avatar from '../Avatar';
 

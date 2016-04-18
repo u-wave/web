@@ -1,10 +1,10 @@
 import React, { Component, PropTypes } from 'react';
-import Dialog from 'material-ui/lib/dialog';
+import Dialog from 'material-ui/Dialog';
 
-import ArtistIcon from 'material-ui/lib/svg-icons/hardware/headset';
-import TitleIcon from 'material-ui/lib/svg-icons/image/music-note';
-import StartIcon from 'material-ui/lib/svg-icons/av/play-arrow';
-import EndIcon from 'material-ui/lib/svg-icons/av/stop';
+import ArtistIcon from 'material-ui/svg-icons/hardware/headset';
+import TitleIcon from 'material-ui/svg-icons/image/music-note';
+import StartIcon from 'material-ui/svg-icons/av/play-arrow';
+import EndIcon from 'material-ui/svg-icons/av/stop';
 
 import formatDuration from '../../../utils/formatDuration';
 

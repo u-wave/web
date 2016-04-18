@@ -1,5 +1,5 @@
 import * as React from 'react';
-import DeleteIcon from 'material-ui/lib/svg-icons/action/delete';
+import DeleteIcon from 'material-ui/svg-icons/action/delete';
 
 import Action from './Action';
 

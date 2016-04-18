@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { findDOMNode } from 'react-dom';
-import FavoritedIcon from 'material-ui/lib/svg-icons/action/favorite';
-import FavoriteIcon from 'material-ui/lib/svg-icons/action/favorite-border';
+import FavoritedIcon from 'material-ui/svg-icons/action/favorite';
+import FavoriteIcon from 'material-ui/svg-icons/action/favorite-border';
 
 import Button from './Button';
 
@@ -29,7 +29,7 @@ export default class Favorite extends Component {
   };
 
   render() {
-    const { rawTheme } = this.context.muiTheme;
+    const { muiTheme } = this.context;
     const { active, count } = this.props;
     const CurrentIcon = active ? FavoritedIcon : FavoriteIcon;
     return (
@@ -39,7 +39,7 @@ export default class Favorite extends Component {
         onClick={this.handleFavorite}
         count={count}
       >
-        <CurrentIcon color={rawTheme.palette.primary1Color} />
+        <CurrentIcon color={muiTheme.palette.primary1Color} />
       </Button>
     );
   }

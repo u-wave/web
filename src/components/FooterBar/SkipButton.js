@@ -1,7 +1,7 @@
 import * as React from 'react';
 import pure from 'recompose/pure';
-import IconButton from 'material-ui/lib/icon-button';
-import SkipIcon from 'material-ui/lib/svg-icons/av/skip-next';
+import IconButton from 'material-ui/IconButton';
+import SkipIcon from 'material-ui/svg-icons/av/skip-next';
 
 const fullSizeStyle = {
   height: '100%',

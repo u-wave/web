@@ -1,9 +1,9 @@
 import cx from 'classnames';
 import * as React from 'react';
 import pure from 'recompose/pure';
-import muiThemeable from 'material-ui/lib/muiThemeable';
-import FlatButton from 'material-ui/lib/flat-button';
-import LockedIcon from 'material-ui/lib/svg-icons/action/lock';
+import muiThemeable from 'material-ui/styles/muiThemeable';
+import FlatButton from 'material-ui/FlatButton';
+import LockedIcon from 'material-ui/svg-icons/action/lock';
 
 const inlineIconStyle = {
   width: '1em',
@@ -14,8 +14,6 @@ const WaitlistButton = ({
   muiTheme,
   userInWaitlist, isLocked, onClick
 }) => {
-  const { rawTheme } = muiTheme;
-
   let icon;
   if (isLocked) {
     const iconColor =
@@ -36,9 +34,9 @@ const WaitlistButton = ({
       className={cx('FooterBar-join', isLocked && 'FooterBar-join--locked')}
       disabled={isLocked && !userInWaitlist}
       onClick={onClick}
-      backgroundColor={rawTheme.palette.primary1Color}
-      hoverColor={rawTheme.palette.primary2Color}
-      rippleColor={rawTheme.palette.primary3Color}
+      backgroundColor={muiTheme.palette.primary1Color}
+      hoverColor={muiTheme.palette.primary2Color}
+      rippleColor={muiTheme.palette.primary3Color}
     >
       {icon}
       {isLocked && ' '}
@@ -54,4 +52,4 @@ WaitlistButton.propTypes = {
   onClick: React.PropTypes.func.isRequired
 };
 
-export default muiThemeable(pure(WaitlistButton));
+export default muiThemeable()(pure(WaitlistButton));

@@ -1,6 +1,6 @@
 import cx from 'classnames';
 import React, { Component, PropTypes } from 'react';
-import SearchIcon from 'material-ui/lib/svg-icons/action/search';
+import SearchIcon from 'material-ui/svg-icons/action/search';
 import SourcePicker from './SourcePicker';
 
 export default class SearchBar extends Component {
