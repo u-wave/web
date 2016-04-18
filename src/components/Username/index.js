@@ -1,7 +1,7 @@
 import cx from 'classnames';
 import React, { PropTypes } from 'react';
 import pure from 'recompose/pure';
-import themeable from 'material-ui/lib/muiThemeable';
+import muiThemeable from 'material-ui/styles/muiThemeable';
 
 // TODO define role names server-side instead of role numbers
 const tempRoleIDToRoleName = {
@@ -13,7 +13,7 @@ const tempRoleIDToRoleName = {
 };
 
 const Username = ({ className, muiTheme, user }) => {
-  const { rankColors } = muiTheme.rawTheme;
+  const rankColors = muiTheme.rankColors;
   const roleName = tempRoleIDToRoleName[Math.min(user.role, 4)];
   let styles;
   if (rankColors[roleName]) {
@@ -35,5 +35,4 @@ Username.propTypes = {
   muiTheme: PropTypes.object.isRequired
 };
 
-// NB themeable signature will change in material-ui v0.15
-export default themeable(pure(Username));
+export default muiThemeable()(pure(Username));

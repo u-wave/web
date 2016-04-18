@@ -1,7 +1,7 @@
 import * as React from 'react';
 import pure from 'recompose/pure';
-import IconButton from 'material-ui/lib/icon-button';
-import HistoryIcon from 'material-ui/lib/svg-icons/action/history';
+import IconButton from 'material-ui/IconButton';
+import HistoryIcon from 'material-ui/svg-icons/action/history';
 
 const fullSize = { width: '100%', height: '100%' };
 

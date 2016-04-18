@@ -1,11 +1,11 @@
 import cx from 'classnames';
 import * as React from 'react';
-import Checkbox from 'material-ui/lib/checkbox';
-import IconButton from 'material-ui/lib/icon-button';
-import ActiveIcon from 'material-ui/lib/svg-icons/toggle/check-box';
-import ActivateIcon from 'material-ui/lib/svg-icons/toggle/check-box-outline-blank';
-import EditIcon from 'material-ui/lib/svg-icons/editor/mode-edit';
-import DeleteIcon from 'material-ui/lib/svg-icons/action/delete';
+import Checkbox from 'material-ui/Checkbox';
+import IconButton from 'material-ui/IconButton';
+import ActiveIcon from 'material-ui/svg-icons/toggle/check-box';
+import ActivateIcon from 'material-ui/svg-icons/toggle/check-box-outline-blank';
+import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
+import DeleteIcon from 'material-ui/svg-icons/action/delete';
 
 const PlaylistMeta = ({
   className, active, id, name,
@@ -20,7 +20,7 @@ const PlaylistMeta = ({
         checked={active}
         onCheck={() => !active && onActivatePlaylist(id)}
         checkedIcon={<ActiveIcon color="#fff" />}
-        unCheckedIcon={<ActivateIcon color="#fff" />}
+        uncheckedIcon={<ActivateIcon color="#fff" />}
         label={active ? 'Active' : 'Activate'}
       />
     </div>

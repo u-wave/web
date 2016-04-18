@@ -1,6 +1,6 @@
 import * as React from 'react';
-import Snackbar from 'material-ui/lib/snackbar';
-import muiThemeable from 'material-ui/lib/muiThemeable';
+import Snackbar from 'material-ui/Snackbar';
+import muiThemeable from 'material-ui/styles/muiThemeable';
 import { createSelector } from 'reselect';
 
 const wrapperStyle = {
@@ -22,7 +22,7 @@ const snackbarStyle = {
 const errorThemeSelector = createSelector(
   props => props.muiTheme,
   muiTheme => {
-    const notifyTheme = muiTheme.rawTheme.palette.notifications;
+    const notifyTheme = muiTheme.palette.notifications;
     return {
       muiTheme: {
         ...muiTheme,
@@ -36,7 +36,7 @@ const errorThemeSelector = createSelector(
   }
 );
 
-@muiThemeable
+@muiThemeable()
 export default class ErrorArea extends React.Component {
   static propTypes = {
     error: React.PropTypes.string,

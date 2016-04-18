@@ -1,8 +1,8 @@
 import cx from 'classnames';
 import * as React from 'react';
 
-import IconButton from 'material-ui/lib/icon-button';
-import ImportIcon from 'material-ui/lib/svg-icons/av/playlist-add';
+import IconButton from 'material-ui/IconButton';
+import ImportIcon from 'material-ui/svg-icons/av/playlist-add';
 
 export default class PlaylistRow extends React.Component {
   static propTypes = {

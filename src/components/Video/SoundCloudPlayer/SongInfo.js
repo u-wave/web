@@ -1,6 +1,6 @@
 import * as React from 'react';
-import ArtistIcon from 'material-ui/lib/svg-icons/hardware/headset';
-import TitleIcon from 'material-ui/lib/svg-icons/image/music-note';
+import ArtistIcon from 'material-ui/svg-icons/hardware/headset';
+import TitleIcon from 'material-ui/svg-icons/image/music-note';
 
 const iconStyles = {
   float: 'left',

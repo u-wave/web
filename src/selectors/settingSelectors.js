@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import ThemeManager from 'material-ui/lib/styles/theme-manager';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 export const settingsSelector = state => state.settings;
 
@@ -7,7 +7,7 @@ export const themeSelector = state => state.theme;
 
 export const muiThemeSelector = createSelector(
   themeSelector,
-  theme => ThemeManager.getMuiTheme(theme)
+  theme => getMuiTheme(theme)
 );
 
 export const volumeSelector = createSelector(

@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { findDOMNode } from 'react-dom';
-import AddIcon from 'material-ui/lib/svg-icons/content/add';
+import AddIcon from 'material-ui/svg-icons/content/add';
 
 import Action from './Action';
 

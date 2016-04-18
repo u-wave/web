@@ -1,7 +1,7 @@
 import cx from 'classnames';
 import * as React from 'react';
-import CloseBottomIcon from 'material-ui/lib/svg-icons/hardware/keyboard-arrow-down';
-import CloseTopIcon from 'material-ui/lib/svg-icons/hardware/keyboard-arrow-up';
+import CloseBottomIcon from 'material-ui/svg-icons/hardware/keyboard-arrow-down';
+import CloseTopIcon from 'material-ui/svg-icons/hardware/keyboard-arrow-up';
 
 const icons = {
   bottom: CloseBottomIcon,
