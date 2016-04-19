@@ -3,14 +3,13 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { IDLE, LOADING, LOADED } from '../../constants/LoadingStates';
-import Loader from '../../components/Loader';
-import ImportPanelHeader from '../../components/PlaylistManager/Import/ImportPanelHeader';
 
 import {
   addMediaMenu as openAddMediaMenu
 } from '../../actions/PlaylistActionCreators';
 import { PLAYLIST, CHANNEL } from './constants';
 import { importPlaylist } from './actions';
+import LoadingPanel from './LoadingPanel';
 import ChannelPanel from './ChannelPanel';
 import PlaylistPanel from './PlaylistPanel';
 
@@ -43,13 +42,6 @@ export default class YouTubeImportPanel extends React.Component {
       }
       return <ChannelPanel {...props} />;
     }
-    return (
-      <div className="PlaylistPanel">
-        <ImportPanelHeader onClosePanel={this.props.onClosePanel} />
-        <div className="PlaylistPanel-loading">
-          <Loader size="large" />
-        </div>
-      </div>
-    );
+    return <LoadingPanel {...props} />;
   }
 }
