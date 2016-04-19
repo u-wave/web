@@ -4,9 +4,9 @@ import {
   LOGOUT_START, LOGOUT_COMPLETE
 } from '../constants/actionTypes/auth';
 import { LOAD_ALL_PLAYLISTS_START } from '../constants/actionTypes/playlists';
-import { get, post } from '../utils/Request';
 import * as Session from '../utils/Session';
 import * as Socket from '../utils/Socket';
+import { get, post } from './RequestActionCreators';
 import { advance, loadHistory } from './BoothActionCreators';
 import {
   setPlaylists, selectPlaylist, activatePlaylistComplete
@@ -59,19 +59,16 @@ export function loadedState(state) {
 }
 
 export function initState() {
-  return (dispatch, getState) => {
-    const jwt = tokenSelector(getState());
-    dispatch({ type: LOAD_ALL_PLAYLISTS_START });
-    const beforeTime = Date.now();
-    get(jwt, '/v1/now')
-      .then(res => res.json())
-      .then(state => {
-        dispatch(syncTimestamps(beforeTime, state.time));
-        dispatch(loadedState(state));
-      });
+  const beforeTime = Date.now();
 
-    dispatch(loadHistory());
-  };
+  return get('/now', {
+    onStart: () => ({ type: LOAD_ALL_PLAYLISTS_START }),
+    onComplete: state => dispatch => {
+      dispatch(syncTimestamps(beforeTime, state.time));
+      dispatch(loadedState(state));
+      dispatch(loadHistory());
+    }
+  });
 }
 
 export function setJWT(jwt) {
@@ -86,50 +83,38 @@ function loginStart() {
 }
 
 export function login({ email, password }) {
-  return (dispatch, getState) => {
-    const jwt = tokenSelector(getState());
-    dispatch(loginStart());
-    post(jwt, '/v1/auth/login', { email, password })
-      .then(res => res.json())
-      .then(res => {
-        Session.set(res.jwt);
-        dispatch(setJWT(res.jwt));
-        dispatch(initState());
-        return res;
-      })
-      .catch(error => {
-        dispatch({
-          type: LOGIN_COMPLETE,
-          error: true,
-          payload: error
-        });
-      });
-  };
+  return post('/auth/login', { email, password }, {
+    onStart: loginStart,
+    onComplete: res => dispatch => {
+      Session.set(res.jwt);
+      dispatch(setJWT(res.jwt));
+      dispatch(initState());
+    },
+    onError: error => ({
+      type: LOGIN_COMPLETE,
+      error: true,
+      payload: error
+    })
+  });
 }
 
 export function register({ email, username, password }) {
-  return (dispatch, getState) => {
-    const jwt = tokenSelector(getState());
-    dispatch({ type: REGISTER_START });
-    post(jwt, '/v1/auth/register', { email, username, password, passwordRepeat: password })
-      .then(res => res.json())
-      .then(user => {
-        debug('registered', user);
-        dispatch({
-          type: REGISTER_COMPLETE,
-          payload: { user }
-        });
-        dispatch(login({ email, password }));
-      })
-      .catch(err => {
-        debug('registration failed', err);
-        dispatch({
-          type: REGISTER_COMPLETE,
-          error: true,
-          payload: err
-        });
+  return post('/auth/register', { email, username, password, passwordRepeat: password }, {
+    onStart: () => ({ type: REGISTER_START }),
+    onComplete: user => dispatch => {
+      debug('registered', user);
+      dispatch({
+        type: REGISTER_COMPLETE,
+        payload: { user }
       });
-  };
+      dispatch(login({ email, password }));
+    },
+    onError: error => ({
+      type: REGISTER_COMPLETE,
+      error: true,
+      payload: error
+    })
+  });
 }
 
 function logoutStart() {
@@ -139,7 +124,7 @@ function logoutStart() {
 function logoutComplete() {
   return dispatch => {
     dispatch({ type: LOGOUT_COMPLETE });
-    setPlaylists([]);
+    dispatch(setPlaylists([]));
   };
 }
 

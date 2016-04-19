@@ -1,4 +1,4 @@
-import { get } from '../utils/Request';
+import { get } from './RequestActionCreators';
 
 import { TICK, OFFSET } from '../constants/actionTypes/time';
 
@@ -18,13 +18,10 @@ export function syncTimestamps(clientTimeBefore, serverTime) {
 }
 
 export function sync() {
-  return dispatch => {
-    const before = Date.now();
-    return get(null, '/v1/server/time')
-      .then(res => res.json())
-      .then(serverTime => syncTimestamps(before, serverTime))
-      .then(dispatch);
-  };
+  const before = Date.now();
+  return get('/server/time', {
+    onComplete: serverTime => syncTimestamps(before, serverTime)
+  });
 }
 
 export function startTicking() {

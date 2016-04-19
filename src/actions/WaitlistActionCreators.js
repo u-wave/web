@@ -7,8 +7,7 @@ import {
   DO_LOCK_START, DO_LOCK_COMPLETE,
   DO_CLEAR_START, DO_CLEAR_COMPLETE
 } from '../constants/actionTypes/waitlist';
-import { del, post, put } from '../utils/Request';
-import { tokenSelector } from '../selectors/userSelectors';
+import { del, post, put } from './RequestActionCreators';
 
 export function setWaitList(data) {
   return {
@@ -41,28 +40,23 @@ export function updatedWaitlist(waitlist) {
 }
 
 export function joinWaitlist(user) {
-  return (dispatch, getState) => {
-    const jwt = tokenSelector(getState());
-
-    dispatch({ type: DO_JOIN_START });
-    if (user) {
-      // TODO don't post an object at all once the API server supports it
-      post(jwt, '/v1/waitlist', { userID: user._id })
-        .then(res => res.json())
-        .then(waitlist => {
-          dispatch({
-            type: DO_JOIN_COMPLETE,
-            payload: { waitlist }
-          });
-        })
-        .catch(error => {
-          dispatch({
-            type: DO_JOIN_COMPLETE,
-            error: true,
-            payload: error
-          });
-        });
+  return dispatch => {
+    if (!user) {
+      return null;
     }
+    // TODO don't post an object at all once the API server supports it
+    return dispatch(post('/waitlist', { userID: user._id }, {
+      onStart: () => ({ type: DO_JOIN_START }),
+      onComplete: waitlist => ({
+        type: DO_JOIN_COMPLETE,
+        payload: { waitlist }
+      }),
+      onError: error => ({
+        type: DO_JOIN_COMPLETE,
+        error: true,
+        payload: error
+      })
+    }));
   };
 }
 
@@ -74,27 +68,22 @@ export function joinedWaitlist({ userID, waitlist }) {
 }
 
 export function leaveWaitlist(user) {
-  return (dispatch, getState) => {
-    const jwt = tokenSelector(getState());
-
-    if (user) {
-      dispatch({ type: DO_LEAVE_START });
-      del(jwt, `/v1/waitlist/${user._id}`)
-        .then(res => res.json())
-        .then(waitlist => {
-          dispatch({
-            type: DO_LEAVE_COMPLETE,
-            payload: { waitlist }
-          });
-        })
-        .catch(error => {
-          dispatch({
-            type: DO_LEAVE_COMPLETE,
-            error: true,
-            payload: error
-          });
-        });
+  return dispatch => {
+    if (!user) {
+      return null;
     }
+    return dispatch(del(`/waitlist/${user._id}`, {}, {
+      onStart: () => ({ type: DO_LEAVE_START }),
+      onComplete: waitlist => ({
+        type: DO_LEAVE_COMPLETE,
+        payload: { waitlist }
+      }),
+      onError: error => ({
+        type: DO_LEAVE_COMPLETE,
+        error: true,
+        payload: error
+      })
+    }));
   };
 }
 
@@ -117,31 +106,21 @@ export function movedInWaitlist({ userID, moderatorID, position, waitlist }) {
 }
 
 function putLock(status) {
-  return (dispatch, getState) => {
-    const jwt = tokenSelector(getState());
-
-    dispatch({
+  return put('/waitlist/lock', { lock: status, clear: false }, {
+    onStart: () => ({
       type: DO_LOCK_START,
       payload: { locked: status }
-    });
-    put(jwt, '/v1/waitlist/lock', { lock: status, clear: false })
-      .then(res => res.json())
-      .then(res => res.locked)
-      .then(locked => {
-        setLocked(locked);
-        dispatch({
-          type: DO_LOCK_COMPLETE,
-          payload: { locked }
-        });
-      })
-      .catch(error => {
-        dispatch({
-          type: DO_LOCK_COMPLETE,
-          error: true,
-          payload: error
-        });
-      });
-  };
+    }),
+    onComplete: res => ({
+      type: DO_LOCK_COMPLETE,
+      payload: { locked: res.locked }
+    }),
+    onError: error => ({
+      type: DO_LOCK_COMPLETE,
+      error: true,
+      payload: error
+    })
+  });
 }
 
 export function modLockWaitlist() {
@@ -152,21 +131,13 @@ export function modUnlockWaitlist() {
 }
 
 export function modClearWaitlist() {
-  return (dispatch, getState) => {
-    const jwt = tokenSelector(getState());
-
-    dispatch({ type: DO_CLEAR_START });
-    del(jwt, '/v1/waitlist')
-      .then(res => res.json())
-      .then(() => {
-        dispatch({ type: DO_CLEAR_COMPLETE });
-      })
-      .catch(error => {
-        dispatch({
-          type: DO_CLEAR_COMPLETE,
-          error: true,
-          payload: error
-        });
-      });
-  };
+  return del('/waitlist', {}, {
+    onStart: () => ({ type: DO_CLEAR_START }),
+    onComplete: () => ({ type: DO_CLEAR_COMPLETE }),
+    onError: error => ({
+      type: DO_CLEAR_COMPLETE,
+      error: true,
+      payload: error
+    })
+  });
 }

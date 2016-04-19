@@ -1,7 +1,6 @@
-import { post } from '../utils/Request';
+import { post } from './RequestActionCreators';
 import { historyIDSelector } from '../selectors/boothSelectors';
 import { playlistsSelector } from '../selectors/playlistSelectors';
-import { tokenSelector } from '../selectors/userSelectors';
 import { sendVote } from '../utils/Socket';
 
 import { OPEN_ADD_MEDIA_MENU } from '../constants/actionTypes/playlists';
@@ -79,24 +78,23 @@ export function favoriteMediaComplete(playlistID, historyID, changes) {
 
 export function favoriteMedia(playlist, historyID) {
   const playlistID = playlist._id;
-  return (dispatch, getState) => {
-    const jwt = tokenSelector(getState());
-    dispatch(favoriteMediaStart(playlistID, historyID));
-    dispatch(addMediaStart(playlistID, []));
-    post(jwt, `/v1/booth/favorite`, { historyID, playlistID })
-      .then(res => res.json())
-      .then(changes => {
-        dispatch(favoriteMediaComplete(playlistID, historyID, changes));
-        dispatch(addMediaComplete(playlistID, changes.playlistSize, {
-          afterID: null,
-          media: changes.added.map(flattenPlaylistItem)
-        }));
-      })
-      .catch(error => dispatch({
-        type: DO_FAVORITE_COMPLETE,
-        error: true,
-        payload: error,
-        meta: { historyID, playlistID }
+  return post(`/booth/favorite`, { historyID, playlistID }, {
+    onStart: () => dispatch => {
+      dispatch(favoriteMediaStart(playlistID, historyID));
+      dispatch(addMediaStart(playlistID, []));
+    },
+    onComplete: changes => dispatch => {
+      dispatch(favoriteMediaComplete(playlistID, historyID, changes));
+      dispatch(addMediaComplete(playlistID, changes.playlistSize, {
+        afterID: null,
+        media: changes.added.map(flattenPlaylistItem)
       }));
-  };
+    },
+    onError: error => ({
+      type: DO_FAVORITE_COMPLETE,
+      error: true,
+      payload: error,
+      meta: { historyID, playlistID }
+    })
+  });
 }
