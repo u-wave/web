@@ -1,11 +1,11 @@
 import * as React from 'react';
 import PlaylistIcon from 'material-ui/lib/svg-icons/av/playlist-play';
 
-import ImportSourceBlock from '../ImportSourceBlock';
-import Form from '../../../Form';
-import FormGroup from '../../../Form/Group';
-import TextField from '../../../Form/TextField';
-import Button from '../../../Form/Button';
+import ImportSourceBlock from '../../components/PlaylistManager/Import/ImportSourceBlock';
+import Form from '../../components/Form';
+import FormGroup from '../../components/Form/Group';
+import TextField from '../../components/Form/TextField';
+import Button from '../../components/Form/Button';
 
 import {
   getChannelPlaylists,

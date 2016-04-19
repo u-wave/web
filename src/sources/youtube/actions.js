@@ -1,19 +1,19 @@
-import { get, post } from '../../../../utils/Request';
-import { tokenSelector } from '../../../../selectors/userSelectors';
+import { get, post } from '../../utils/Request';
+import { tokenSelector } from '../../selectors/userSelectors';
 
 import {
   createPlaylistStart,
   createPlaylistComplete
-} from '../../../../actions/PlaylistActionCreators';
+} from '../../actions/PlaylistActionCreators';
 
-export const GET_IMPORTABLE_PLAYLIST_START = 'youtube/import/GET_IMPORTABLE_PLAYLIST_START';
-export const GET_IMPORTABLE_PLAYLIST_COMPLETE = 'youtube/import/GET_IMPORTABLE_PLAYLIST_COMPLETE';
-
-export const GET_CHANNEL_PLAYLISTS_START = 'youtube/import/GET_CHANNEL_PLAYLISTS_START';
-export const GET_CHANNEL_PLAYLISTS_COMPLETE = 'youtube/import/GET_CHANNEL_PLAYLISTS_COMPLETE';
-
-export const IMPORT_PLAYLIST_START = 'youtube/import/IMPORT_PLAYLIST_START';
-export const IMPORT_PLAYLIST_COMPLETE = 'youtube/import/IMPORT_PLAYLIST_COMPLETE';
+import {
+  GET_IMPORTABLE_PLAYLIST_START,
+  GET_IMPORTABLE_PLAYLIST_COMPLETE,
+  GET_CHANNEL_PLAYLISTS_START,
+  GET_CHANNEL_PLAYLISTS_COMPLETE,
+  IMPORT_PLAYLIST_START,
+  IMPORT_PLAYLIST_COMPLETE
+} from './constants';
 
 function getImportablePlaylistStart(url) {
   return {

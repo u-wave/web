@@ -7,7 +7,7 @@ import {
   SELECT_PLAYLIST
 } from '../constants/actionTypes/playlists';
 
-import * as sourceReducers from './imports/index';
+import * as sources from '../sources';
 
 const initialState = {
   showPanel: false,
@@ -15,10 +15,14 @@ const initialState = {
 };
 
 function reduceSources(state, action) {
-  return Object.keys(sourceReducers).reduce((newState, sourceName) => {
+  return Object.keys(sources).reduce((newState, sourceName) => {
+    const source = sources[sourceName];
+    if (!source.reducer) {
+      return newState;
+    }
     return {
       ...newState,
-      [sourceName]: sourceReducers[sourceName](newState[sourceName], action)
+      [sourceName]: source.reducer(newState[sourceName], action)
     };
   }, state);
 }

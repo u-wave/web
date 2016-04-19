@@ -3,9 +3,9 @@ import * as React from 'react';
 import IconButton from 'material-ui/lib/icon-button';
 import ImportIcon from 'material-ui/lib/svg-icons/av/playlist-add';
 
-import MediaList from '../../../MediaList';
-import AddToPlaylistAction from '../../../MediaList/Actions/AddToPlaylist';
-import ImportPanelHeader from '../ImportPanelHeader';
+import MediaList from '../../components/MediaList';
+import AddToPlaylistAction from '../../components/MediaList/Actions/AddToPlaylist';
+import ImportPanelHeader from '../../components/PlaylistManager/Import/ImportPanelHeader';
 
 const selectionOrOne = (media, selection) => {
   if (selection.isSelected(media)) {

@@ -2,13 +2,14 @@ import * as React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { IDLE, LOADING, LOADED } from '../../../../constants/LoadingStates';
-import Loader from '../../../Loader';
-import ImportPanelHeader from '../ImportPanelHeader';
+import { IDLE, LOADING, LOADED } from '../../constants/LoadingStates';
+import Loader from '../../components/Loader';
+import ImportPanelHeader from '../../components/PlaylistManager/Import/ImportPanelHeader';
 
 import {
   addMediaMenu as openAddMediaMenu
-} from '../../../../actions/PlaylistActionCreators';
+} from '../../actions/PlaylistActionCreators';
+import { PLAYLIST, CHANNEL } from './constants';
 import { importPlaylist } from './actions';
 import ChannelPanel from './ChannelPanel';
 import PlaylistPanel from './PlaylistPanel';
@@ -22,7 +23,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 @connect(mapStateToProps, mapDispatchToProps)
 export default class YouTubeImportPanel extends React.Component {
   static propTypes = {
-    type: React.PropTypes.oneOf([ 'youtube/import/PLAYLIST', 'youtube/import/CHANNEL' ]).isRequired,
+    type: React.PropTypes.oneOf([ PLAYLIST, CHANNEL ]).isRequired,
     importingState: React.PropTypes.oneOf([ IDLE, LOADING, LOADED ]),
 
     onClosePanel: React.PropTypes.func.isRequired,
@@ -37,7 +38,7 @@ export default class YouTubeImportPanel extends React.Component {
     } = this.props;
 
     if (importingState === LOADED) {
-      if (type === 'youtube/import/PLAYLIST') {
+      if (type === PLAYLIST) {
         return <PlaylistPanel {...props} />;
       }
       return <ChannelPanel {...props} />;

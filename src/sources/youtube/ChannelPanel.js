@@ -1,7 +1,7 @@
 import * as React from 'react';
 import List from 'react-list';
 
-import ImportPanelHeader from '../ImportPanelHeader';
+import ImportPanelHeader from '../../components/PlaylistManager/Import/ImportPanelHeader';
 
 import PlaylistRow from './PlaylistRow';
 

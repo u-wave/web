@@ -1,15 +1,6 @@
 import * as React from 'react';
 
-import YouTubeImportForm from './YouTube/ImportForm';
-import YouTubeImportPanel from './YouTube/ImportPanel';
-
-const SOURCE_TYPE_PANELS = {
-  youtube: YouTubeImportPanel
-};
-
-const SOURCE_TYPE_FORMS = {
-  youtube: YouTubeImportForm
-};
+import * as sources from '../../../sources';
 
 export default class PlaylistImport extends React.Component {
   static propTypes = {
@@ -24,7 +15,7 @@ export default class PlaylistImport extends React.Component {
     const { selectedSourceType, sourceStates } = this.props;
     if (selectedSourceType) {
       const { onHideImportPanel } = this.props;
-      const Panel = SOURCE_TYPE_PANELS[selectedSourceType];
+      const Panel = sources[selectedSourceType].ImportPanel;
       const state = sourceStates[selectedSourceType];
       return (
         <Panel
@@ -37,14 +28,16 @@ export default class PlaylistImport extends React.Component {
     const { onShowImportPanel } = this.props;
 
     const forms = [];
-    Object.keys(SOURCE_TYPE_FORMS).forEach(sourceType => {
-      const ImportFormComponent = SOURCE_TYPE_FORMS[sourceType];
-      forms.push(
-        <ImportFormComponent
-          key={sourceType}
-          onShowImportPanel={() => onShowImportPanel(sourceType)}
-        />
-      );
+    Object.keys(sources).forEach(sourceType => {
+      const ImportForm = sources[sourceType].ImportForm;
+      if (ImportForm) {
+        forms.push(
+          <ImportForm
+            key={sourceType}
+            onShowImportPanel={() => onShowImportPanel(sourceType)}
+          />
+        );
+      }
     });
 
     return (

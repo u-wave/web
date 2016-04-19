@@ -1,0 +1,11 @@
+export const PLAYLIST = 'youtube/import/PLAYLIST';
+export const CHANNEL = 'youtube/import/CHANNEL';
+
+export const GET_IMPORTABLE_PLAYLIST_START = 'youtube/import/GET_IMPORTABLE_PLAYLIST_START';
+export const GET_IMPORTABLE_PLAYLIST_COMPLETE = 'youtube/import/GET_IMPORTABLE_PLAYLIST_COMPLETE';
+
+export const GET_CHANNEL_PLAYLISTS_START = 'youtube/import/GET_CHANNEL_PLAYLISTS_START';
+export const GET_CHANNEL_PLAYLISTS_COMPLETE = 'youtube/import/GET_CHANNEL_PLAYLISTS_COMPLETE';
+
+export const IMPORT_PLAYLIST_START = 'youtube/import/IMPORT_PLAYLIST_START';
+export const IMPORT_PLAYLIST_COMPLETE = 'youtube/import/IMPORT_PLAYLIST_COMPLETE';
