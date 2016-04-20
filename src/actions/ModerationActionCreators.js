@@ -28,7 +28,7 @@ export function skipCurrentDJ(reason = '', shouldRemove = false) {
       reason,
       remove: shouldRemove
     };
-    return dispatch(post(`/booth/skip`, payload, {
+    return dispatch(post('/booth/skip', payload, {
       onStart: () => ({ type: SKIP_DJ_START, payload }),
       onComplete: () => ({ type: SKIP_DJ_COMPLETE, payload }),
       onError: error => ({
@@ -96,7 +96,7 @@ export function moveWaitlistUserComplete(user, position) {
 }
 
 export function moveWaitlistUser(user, position) {
-  return put(`/waitlist/move`, { userID: user._id, position }, {
+  return put('/waitlist/move', { userID: user._id, position }, {
     onStart: () => moveWaitlistUserStart(user, position),
     onComplete: () => moveWaitlistUserComplete(user, position),
     onError: error => ({
@@ -247,7 +247,7 @@ export function banUserComplete(ban) {
  */
 export function banUser(user, { duration = 24 * 60 * 60 * 1000, permanent = false }) {
   const userID = typeof user === 'object' ? user._id : user;
-  return post(`/bans`, { userID, duration, permanent }, {
+  return post('/bans', { userID, duration, permanent }, {
     onStart: () => banUserStart(userID, duration, permanent),
     onComplete: banUserComplete,
     onError: error => ({

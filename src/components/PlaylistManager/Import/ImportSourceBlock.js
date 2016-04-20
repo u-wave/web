@@ -15,4 +15,10 @@ const ImportSourceBlock = ({
   </div>
 );
 
+ImportSourceBlock.propTypes = {
+  sourceType: React.PropTypes.string.isRequired,
+  title: React.PropTypes.string.isRequired,
+  children: React.PropTypes.node.isRequired
+};
+
 export default ImportSourceBlock;

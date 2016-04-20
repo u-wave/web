@@ -1,14 +1,16 @@
 import cx from 'classnames';
-import React from 'react';
+import * as React from 'react';
 
-const LogMessage = ({ text }) => {
-  return (
-    <div className={cx('ChatMessage', 'ChatMessage--log')}>
-      <div className="ChatMessage-content">
-        <span className="ChatMessage-text">{text}</span>
-      </div>
+const LogMessage = ({ text }) => (
+  <div className={cx('ChatMessage', 'ChatMessage--log')}>
+    <div className="ChatMessage-content">
+      <span className="ChatMessage-text">{text}</span>
     </div>
-  );
+  </div>
+);
+
+LogMessage.propTypes = {
+  text: React.PropTypes.string.isRequired
 };
 
 export default LogMessage;

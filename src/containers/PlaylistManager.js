@@ -1,4 +1,3 @@
-import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
@@ -79,9 +78,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onShowImportPanel: showImportPanel
 }, dispatch);
 
-@connect(mapStateToProps, mapDispatchToProps)
-export default class PlaylistManagerContainer extends Component {
-  render() {
-    return <PlaylistManager {...this.props} />;
-  }
-}
+export default connect(mapStateToProps, mapDispatchToProps)(PlaylistManager);

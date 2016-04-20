@@ -6,17 +6,26 @@ import mapObj from 'object.map';
 
 import {
   LOAD_ALL_PLAYLISTS_COMPLETE,
-  LOAD_PLAYLIST_START, LOAD_PLAYLIST_COMPLETE,
+  LOAD_PLAYLIST_START,
+  LOAD_PLAYLIST_COMPLETE,
   PLAYLIST_CYCLED,
   SELECT_PLAYLIST,
-  ACTIVATE_PLAYLIST_START, ACTIVATE_PLAYLIST_COMPLETE,
-  CREATE_PLAYLIST_START, CREATE_PLAYLIST_COMPLETE,
-  RENAME_PLAYLIST_START, RENAME_PLAYLIST_COMPLETE,
-  DELETE_PLAYLIST_START, DELETE_PLAYLIST_COMPLETE,
-  ADD_MEDIA_START, ADD_MEDIA_COMPLETE,
-  REMOVE_MEDIA_START, REMOVE_MEDIA_COMPLETE,
-  MOVE_MEDIA_START, MOVE_MEDIA_COMPLETE,
-  UPDATE_MEDIA_START, UPDATE_MEDIA_COMPLETE
+  ACTIVATE_PLAYLIST_START,
+  ACTIVATE_PLAYLIST_COMPLETE,
+  CREATE_PLAYLIST_START,
+  CREATE_PLAYLIST_COMPLETE,
+  RENAME_PLAYLIST_START,
+  RENAME_PLAYLIST_COMPLETE,
+  DELETE_PLAYLIST_START,
+  DELETE_PLAYLIST_COMPLETE,
+  ADD_MEDIA_START,
+  ADD_MEDIA_COMPLETE,
+  REMOVE_MEDIA_START,
+  REMOVE_MEDIA_COMPLETE,
+  MOVE_MEDIA_START,
+  MOVE_MEDIA_COMPLETE,
+  UPDATE_MEDIA_START,
+  UPDATE_MEDIA_COMPLETE
 } from '../constants/actionTypes/playlists';
 import { SEARCH_START } from '../constants/actionTypes/search';
 
@@ -28,11 +37,11 @@ const initialState = {
 };
 
 function deselectAll(playlists) {
-  return mapObj(playlists, playlist => {
-    return playlist.selected
+  return mapObj(playlists, playlist => (
+    playlist.selected
       ? { ...playlist, selected: false }
-      : playlist;
-  });
+      : playlist
+  ));
 }
 
 // Moves a list of media items to a given position in the playlist.
@@ -93,17 +102,19 @@ function setPlaylistLoading(state, id, loading = true) {
 
 function fill(array, value) {
   for (let i = 0, l = array.length; i < l; i++) {
-    array[i] = value;
+    array[i] = value; // eslint-disable-line no-param-reassign
   }
   return array;
 }
 
 function mergePlaylistPage(playlist, oldMedia, newMedia, { page, pageSize }) {
   const media = fill(Array(playlist.size), null);
-  oldMedia.forEach((item, i) => media[i] = item);
-  newMedia.forEach((item, i) =>
-    media[i + page * pageSize] = item
-  );
+  oldMedia.forEach((item, i) => {
+    media[i] = item;
+  });
+  newMedia.forEach((item, i) => {
+    media[i + page * pageSize] = item;
+  });
   return media;
 }
 
@@ -183,7 +194,7 @@ export default function reduce(state = initialState, action = {}) {
   // millions of properties (six properties to be precise) in sync
   // Playlists that are being created have a temporary ID that is used until the
   // real ID comes back from the server.
-  case CREATE_PLAYLIST_START:
+  case CREATE_PLAYLIST_START: {
     const newPlaylist = {
       _id: meta.tempId,
       name: payload.name,
@@ -200,6 +211,7 @@ export default function reduce(state = initialState, action = {}) {
       ),
       selectedPlaylistID: meta.tempId
     };
+  }
   case CREATE_PLAYLIST_COMPLETE:
     if (error) {
       return {
@@ -222,7 +234,7 @@ export default function reduce(state = initialState, action = {}) {
 
   case RENAME_PLAYLIST_START:
     return setPlaylistLoading(state, payload.playlistID);
-  case RENAME_PLAYLIST_COMPLETE:
+  case RENAME_PLAYLIST_COMPLETE: {
     if (error) {
       return setPlaylistLoading(state, meta.playlistID, false);
     }
@@ -236,6 +248,7 @@ export default function reduce(state = initialState, action = {}) {
       }));
     }
     return state;
+  }
   case DELETE_PLAYLIST_START:
     return setPlaylistLoading(state, payload.playlistID);
   case DELETE_PLAYLIST_COMPLETE:
@@ -272,22 +285,22 @@ export default function reduce(state = initialState, action = {}) {
 
   case UPDATE_MEDIA_START:
     return updatePlaylistItems(state, payload.playlistID, items =>
-      items.map(media =>
+      items.map(media => (
         media && media._id === payload.mediaID
           ? { ...media, loading: true }
           : media
-      )
+      ))
     );
   case UPDATE_MEDIA_COMPLETE:
     return updatePlaylistItems(state, payload.playlistID, items =>
-      items.map(media =>
+      items.map(media => (
         media && media._id === payload.mediaID
           ? { ...media, ...payload.media, loading: false }
           : media
-      )
+      ))
     );
 
-  case MOVE_MEDIA_START:
+  case MOVE_MEDIA_START: {
     const isMovingMedia = indexBy(payload.medias, '_id');
     return updatePlaylistItems(state, payload.playlistID, items =>
       items.map(media => media && ({
@@ -295,12 +308,13 @@ export default function reduce(state = initialState, action = {}) {
         loading: isMovingMedia[media._id] || media.loading
       }))
     );
+  }
   case MOVE_MEDIA_COMPLETE:
     return updatePlaylistItems(state, payload.playlistID, items =>
       processMove(items, payload.medias, payload.afterID)
     );
 
-  case REMOVE_MEDIA_START:
+  case REMOVE_MEDIA_START: {
     const isRemovingMedia = indexBy(payload.medias, '_id');
     return updatePlaylistItems(state, payload.playlistID, items =>
       items.map(media => media && ({
@@ -308,7 +322,8 @@ export default function reduce(state = initialState, action = {}) {
         loading: isRemovingMedia[media._id] || media.loading
       }))
     );
-  case REMOVE_MEDIA_COMPLETE:
+  }
+  case REMOVE_MEDIA_COMPLETE: {
     const isRemovedMedia = indexBy(payload.removedMedia, '_id');
     return updatePlaylistAndItems(
       state,
@@ -316,6 +331,7 @@ export default function reduce(state = initialState, action = {}) {
       playlist => ({ ...playlist, size: payload.newSize }),
       items => items.filter(media => media === null || !isRemovedMedia[media._id])
     );
+  }
   default:
     return state;
   }

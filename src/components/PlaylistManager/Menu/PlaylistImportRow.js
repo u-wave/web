@@ -1,3 +1,4 @@
+/* eslint-disable react/prefer-stateless-function */
 import cx from 'classnames';
 import * as React from 'react';
 import ImportIcon from 'material-ui/lib/svg-icons/action/input';
@@ -41,3 +42,4 @@ export default class PlaylistImportRow extends React.Component {
     );
   }
 }
+/* eslint-enable react/prefer-stateless-function */

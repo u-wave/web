@@ -1,9 +1,14 @@
 import except from 'except';
 
 import {
-  RECEIVE_MESSAGE, SEND_MESSAGE, LOG,
-  REMOVE_MESSAGE, REMOVE_USER_MESSAGES, REMOVE_ALL_MESSAGES,
-  MUTE_USER, UNMUTE_USER
+  RECEIVE_MESSAGE,
+  SEND_MESSAGE,
+  LOG,
+  REMOVE_MESSAGE,
+  REMOVE_USER_MESSAGES,
+  REMOVE_ALL_MESSAGES,
+  MUTE_USER,
+  UNMUTE_USER
 } from '../constants/actionTypes/chat';
 
 const MAX_MESSAGES = 500;
@@ -37,7 +42,7 @@ export default function reduce(state = initialState, action = {}) {
   const { type, payload } = action;
   const { messages } = state;
   switch (type) {
-  case SEND_MESSAGE:
+  case SEND_MESSAGE: {
     const inFlightMessage = {
       _id: `inflight${Date.now()}`,
       type: 'chat',
@@ -52,7 +57,8 @@ export default function reduce(state = initialState, action = {}) {
       ...state,
       messages: limit(messages.concat([ inFlightMessage ]), MAX_MESSAGES)
     };
-  case RECEIVE_MESSAGE:
+  }
+  case RECEIVE_MESSAGE: {
     const message = {
       ...payload.message,
       type: 'chat',
@@ -68,7 +74,8 @@ export default function reduce(state = initialState, action = {}) {
         MAX_MESSAGES
       )
     };
-  case LOG:
+  }
+  case LOG: {
     const logMessage = {
       type: 'log',
       _id: `log-${payload._id}`,
@@ -80,6 +87,7 @@ export default function reduce(state = initialState, action = {}) {
         messages.concat([ logMessage ]), MAX_MESSAGES
       )
     };
+  }
 
   case REMOVE_MESSAGE:
     return {

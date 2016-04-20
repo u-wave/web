@@ -1,12 +1,14 @@
 import cx from 'classnames';
-import React from 'react';
+import * as React from 'react';
 
-const EmptyPanel = ({ className }) => {
-  return (
-    <div className={cx('PlaylistPanel', 'PlaylistPanel--empty', className)}>
-      You don't have a playlist yet!
-    </div>
-  );
+const EmptyPanel = ({ className }) => (
+  <div className={cx('PlaylistPanel', 'PlaylistPanel--empty', className)}>
+    You don't have a playlist yet!
+  </div>
+);
+
+EmptyPanel.propTypes = {
+  className: React.PropTypes.string
 };
 
 export default EmptyPanel;

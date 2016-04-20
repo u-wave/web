@@ -47,4 +47,11 @@ const WaitlistButton = ({
   );
 };
 
+WaitlistButton.propTypes = {
+  muiTheme: React.PropTypes.object.isRequired,
+  userInWaitlist: React.PropTypes.bool,
+  isLocked: React.PropTypes.bool,
+  onClick: React.PropTypes.func.isRequired
+};
+
 export default muiThemeable(pure(WaitlistButton));

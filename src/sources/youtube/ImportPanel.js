@@ -19,29 +19,22 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onOpenAddMediaMenu: openAddMediaMenu
 }, dispatch);
 
-@connect(mapStateToProps, mapDispatchToProps)
-export default class YouTubeImportPanel extends React.Component {
-  static propTypes = {
-    type: React.PropTypes.oneOf([ PLAYLIST, CHANNEL ]).isRequired,
-    importingState: React.PropTypes.oneOf([ IDLE, LOADING, LOADED ]),
-
-    onClosePanel: React.PropTypes.func.isRequired,
-    onImportPlaylist: React.PropTypes.func.isRequired
-  };
-
-  render() {
-    const {
-      type,
-      importingState,
-      ...props
-    } = this.props;
-
-    if (importingState === LOADED) {
-      if (type === PLAYLIST) {
-        return <PlaylistPanel {...props} />;
-      }
-      return <ChannelPanel {...props} />;
+const YouTubeImportPanel = ({ type, importingState, ...props }) => {
+  if (importingState === LOADED) {
+    if (type === PLAYLIST) {
+      return <PlaylistPanel {...props} />;
     }
-    return <LoadingPanel {...props} />;
+    return <ChannelPanel {...props} />;
   }
-}
+  return <LoadingPanel {...props} />;
+};
+
+YouTubeImportPanel.propTypes = {
+  type: React.PropTypes.oneOf([ PLAYLIST, CHANNEL ]).isRequired,
+  importingState: React.PropTypes.oneOf([ IDLE, LOADING, LOADED ]),
+
+  onClosePanel: React.PropTypes.func.isRequired,
+  onImportPlaylist: React.PropTypes.func.isRequired
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(YouTubeImportPanel);

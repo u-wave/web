@@ -9,27 +9,25 @@ const ResponseBar = ({
   isUpvote, upvotesCount, onUpvote,
   isDownvote, downvotesCount, onDownvote,
   isFavorite, favoritesCount, onFavorite
-}) => {
-  return (
-    <div className="AudienceResponse">
-      <Upvote
-        onUpvote={onUpvote}
-        count={upvotesCount}
-        active={isUpvote}
-      />
-      <Favorite
-        onFavorite={onFavorite}
-        count={favoritesCount}
-        active={isFavorite}
-      />
-      <Downvote
-        onDownvote={onDownvote}
-        count={downvotesCount}
-        active={isDownvote}
-      />
-    </div>
-  );
-};
+}) => (
+  <div className="AudienceResponse">
+    <Upvote
+      onUpvote={onUpvote}
+      count={upvotesCount}
+      active={isUpvote}
+    />
+    <Favorite
+      onFavorite={onFavorite}
+      count={favoritesCount}
+      active={isFavorite}
+    />
+    <Downvote
+      onDownvote={onDownvote}
+      count={downvotesCount}
+      active={isDownvote}
+    />
+  </div>
+);
 
 ResponseBar.propTypes = {
   isUpvote: React.PropTypes.bool,

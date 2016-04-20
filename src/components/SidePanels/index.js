@@ -67,61 +67,65 @@ const SidePanels = ({
   onlineUsersCount,
   waitlistSize, waitlistPosition,
   onChange, sendChatMessage
-}) => {
-  // Checking for strings in the onChange handler here because the ChatInput
-  // change events bubble up. ChatInput events are React SyntheticEvents, and
-  // the onChange event fired by <Tabs /> are strings (<Tab /> values).
-  // TODO figure out how to avoid ChatInput bubbling!
-  return (
-    <Tabs
-      value={selected}
-      onChange={onChange}
-      tabItemContainerStyle={tabItemContainerStyle}
-      inkBarStyle={inkBarStyle}
-      contentContainerStyle={contentStyle}
-      tabTemplate={PanelTemplate}
+}) => (
+  <Tabs
+    value={selected}
+    onChange={onChange}
+    tabItemContainerStyle={tabItemContainerStyle}
+    inkBarStyle={inkBarStyle}
+    contentContainerStyle={contentStyle}
+    tabTemplate={PanelTemplate}
+  >
+    {/* Disabled touch ripples on tabs because they're offset weirdly. Also,
+      * they interfere with the flexbox column layout for the Waitlist
+      * position, because they add a wrapper <div />.*/}
+    <Tab
+      disableTouchRipple
+      label="Chat"
+      value="chat"
+      style={selected === 'chat' ? activeTabStyle : tabStyle}
     >
-      {/* Disabled touch ripples on tabs because they're offset weirdly. Also,
-        * they interfere with the flexbox column layout for the Waitlist
-        * position, because they add a wrapper <div />.*/}
-      <Tab
-        disableTouchRipple
-        label="Chat"
-        value="chat"
-        style={selected === 'chat' ? activeTabStyle : tabStyle}
-      >
-        <div className="AppRow AppRow--middle">
-          <Chat />
-        </div>
-        <div className="AppRow AppRow--bottom ChatInputWrapper">
-          {isLoggedIn && <ChatInput send={sendChatMessage} />}
-        </div>
-      </Tab>
-      <Tab
-        disableTouchRipple
-        label={[
-          'Room',
-          <span style={subHeaderStyle}>{onlineUsersCount}</span>
-        ]}
-        value="room"
-        style={selected === 'room' ? activeTabStyle : tabStyle}
-      >
-        <div className="AppRow AppRow--middle">
-          <RoomUserList />
-        </div>
-      </Tab>
-      <Tab
-        disableTouchRipple
-        label={getWaitlistLabel(waitlistSize, waitlistPosition)}
-        value="waitlist"
-        style={selected === 'waitlist' ? activeTabStyle : tabStyle}
-      >
-        <div className="AppRow AppRow--middle">
-          <WaitList />
-        </div>
-      </Tab>
-    </Tabs>
-  );
+      <div className="AppRow AppRow--middle">
+        <Chat />
+      </div>
+      <div className="AppRow AppRow--bottom ChatInputWrapper">
+        {isLoggedIn && <ChatInput send={sendChatMessage} />}
+      </div>
+    </Tab>
+    <Tab
+      disableTouchRipple
+      label={[
+        'Room',
+        <span style={subHeaderStyle}>{onlineUsersCount}</span>
+      ]}
+      value="room"
+      style={selected === 'room' ? activeTabStyle : tabStyle}
+    >
+      <div className="AppRow AppRow--middle">
+        <RoomUserList />
+      </div>
+    </Tab>
+    <Tab
+      disableTouchRipple
+      label={getWaitlistLabel(waitlistSize, waitlistPosition)}
+      value="waitlist"
+      style={selected === 'waitlist' ? activeTabStyle : tabStyle}
+    >
+      <div className="AppRow AppRow--middle">
+        <WaitList />
+      </div>
+    </Tab>
+  </Tabs>
+);
+
+SidePanels.propTypes = {
+  selected: React.PropTypes.bool.isRequired,
+  isLoggedIn: React.PropTypes.bool.isRequired,
+  onlineUsersCount: React.PropTypes.number.isRequired,
+  waitlistSize: React.PropTypes.number.isRequired,
+  waitlistPosition: React.PropTypes.number.isRequired,
+  onChange: React.PropTypes.func.isRequired,
+  sendChatMessage: React.PropTypes.func.isRequired
 };
 
 export default pure(SidePanels);

@@ -1,5 +1,5 @@
 import cx from 'classnames';
-import React from 'react';
+import * as React from 'react';
 import MediaList from '../../MediaList';
 import Loader from '../../Loader';
 
@@ -11,8 +11,8 @@ import RemoveFromPlaylistAction from '../../MediaList/Actions/RemoveFromPlaylist
 import EditMediaAction from '../../MediaList/Actions/EditMedia';
 import MoveToFirstAction from '../../MediaList/Actions/MoveToFirst';
 
-const makeActions = ({ onOpenAddMediaMenu, onMoveToFirst, onEditMedia, onRemoveFromPlaylist }) => {
-  return (media, selection, index) => [
+const makeActions = ({ onOpenAddMediaMenu, onMoveToFirst, onEditMedia, onRemoveFromPlaylist }) =>
+  (media, selection, index) => [
     <AddToPlaylistAction
       key="add"
       onAdd={position => onOpenAddMediaMenu(position, media, selection)}
@@ -32,7 +32,6 @@ const makeActions = ({ onOpenAddMediaMenu, onMoveToFirst, onEditMedia, onRemoveF
       onRemove={() => onRemoveFromPlaylist(media, selection)}
     />
   ];
-};
 
 const PlaylistPanel = ({
   className, playlist, media, loading,
@@ -75,6 +74,18 @@ const PlaylistPanel = ({
       {list}
     </div>
   );
+};
+
+PlaylistPanel.propTypes = {
+  className: React.PropTypes.string,
+  playlist: React.PropTypes.object.isRequired,
+  media: React.PropTypes.object.isRequired,
+  loading: React.PropTypes.bool.isRequired,
+  onActivatePlaylist: React.PropTypes.func.isRequired,
+  onRenamePlaylist: React.PropTypes.func.isRequired,
+  onDeletePlaylist: React.PropTypes.func.isRequired,
+  onLoadPlaylistPage: React.PropTypes.func.isRequired,
+  onMoveMedia: React.PropTypes.func.isRequired
 };
 
 export default PlaylistPanel;

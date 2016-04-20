@@ -1,4 +1,3 @@
-import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
@@ -9,9 +8,4 @@ const mapStateToProps = createStructuredSelector({
   users: userListSelector
 });
 
-@connect(mapStateToProps)
-export default class RoomUsersContainer extends Component {
-  render() {
-    return <UserList {...this.props} />;
-  }
-}
+export default connect(mapStateToProps)(UserList);

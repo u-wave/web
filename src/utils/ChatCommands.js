@@ -25,6 +25,7 @@ export function execute(state, name, args = []) {
       return commands[name].action(...args);
     }
   }
+  return null;
 }
 
 // Helper to consistently find online users in command handlers.

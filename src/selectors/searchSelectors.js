@@ -30,7 +30,7 @@ const searchResultsSelector = createSelector(
 
 const searchResultsCountSelector = createSelector(
   searchResultsSelector,
-  results => results ? results.length : 0
+  results => (results ? results.length : 0)
 );
 
 export const searchSelector = createStructuredSelector({

@@ -5,7 +5,7 @@ import {
 import { currentUserSelector } from './userSelectors';
 import { currentVotesSelector } from './voteSelectors';
 
-const byTimestamp = (a, b) => a.timestamp < b.timestamp ? 1 : -1;
+const byTimestamp = (a, b) => (a.timestamp < b.timestamp ? 1 : -1);
 
 const baseSelector = state => state.roomHistory;
 

@@ -60,6 +60,7 @@ export default class FooterBar extends Component {
     if (this.props.user) {
       return this.props.joinWaitlist(this.props.user);
     }
+    return null;
   }
 
   handleLeaveWaitlist() {
@@ -68,6 +69,7 @@ export default class FooterBar extends Component {
     } else if (this.props.user) {
       return this.props.leaveWaitlist(this.props.user);
     }
+    return null;
   }
 
   render() {

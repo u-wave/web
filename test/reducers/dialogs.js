@@ -37,27 +37,37 @@ const testDialogClose = (type, prop, text) => {
 
 describe('reducers/dialogs', () => {
   it('should default to a closed media edit dialog', () => {
-    let state;
-    state = dialogs(state, { type: '@@redux/INIT' });
+    const state = dialogs(undefined, { type: '@@redux/INIT' });
     expect(state.editMedia).to.eql(closedDialog);
   });
   it('should default to a closed login dialog', () => {
-    let state;
-    state = dialogs(state, { type: '@@redux/INIT' });
+    const state = dialogs(undefined, { type: '@@redux/INIT' });
     expect(state.login).to.eql(closedDialog);
   });
 
   describe('action: OPEN_EDIT_MEDIA_DIALOG', () => {
-    testDialogOpen(OPEN_EDIT_MEDIA_DIALOG, 'editMedia', 'should open the media edit dialog w/ the given payload');
+    testDialogOpen(
+      OPEN_EDIT_MEDIA_DIALOG, 'editMedia',
+      'should open the media edit dialog w/ the given payload'
+    );
   });
   describe('action: CLOSE_EDIT_MEDIA_DIALOG', () => {
-    testDialogClose(CLOSE_EDIT_MEDIA_DIALOG, 'editMedia', 'should close the media edit dialog w/ the given payload');
+    testDialogClose(
+      CLOSE_EDIT_MEDIA_DIALOG, 'editMedia',
+      'should close the media edit dialog w/ the given payload'
+    );
   });
 
   describe('action: OPEN_LOGIN_DIALOG', () => {
-    testDialogOpen(OPEN_LOGIN_DIALOG, 'login', 'should open the login dialog w/ the given payload');
+    testDialogOpen(
+      OPEN_LOGIN_DIALOG, 'login',
+      'should open the login dialog w/ the given payload'
+    );
   });
   describe('action: CLOSE_LOGIN_DIALOG', () => {
-    testDialogClose(CLOSE_LOGIN_DIALOG, 'login', 'should close the login dialog w/ the given payload');
+    testDialogClose(
+      CLOSE_LOGIN_DIALOG, 'login',
+      'should close the login dialog w/ the given payload'
+    );
   });
 });

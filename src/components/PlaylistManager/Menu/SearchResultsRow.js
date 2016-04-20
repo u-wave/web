@@ -1,3 +1,4 @@
+/* eslint-disable react/prefer-stateless-function */
 import cx from 'classnames';
 import React, { Component, PropTypes } from 'react';
 import SearchIcon from 'material-ui/lib/svg-icons/action/search';
@@ -29,3 +30,4 @@ export default class SearchResultsRow extends Component {
     );
   }
 }
+/* eslint-enable react/prefer-stateless-function */

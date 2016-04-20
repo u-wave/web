@@ -52,7 +52,9 @@ register(
     guard: isModeratorSelector,
     action: username => (dispatch, getState) => {
       if (!username) {
-        return dispatch(log('Provide a user to remove from the waitlist. Syntax: "/wlremove username"'));
+        return dispatch(
+          log('Provide a user to remove from the waitlist. Syntax: "/wlremove username"')
+        );
       }
 
       const user = findUser(
@@ -93,11 +95,15 @@ register(
     guard: isModeratorSelector,
     action: (username, posStr) => (dispatch, getState) => {
       if (!username) {
-        return dispatch(log('Provide a user to move in the waitlist. Syntax: "/wlmove username position"'));
+        return dispatch(
+          log('Provide a user to move in the waitlist. Syntax: "/wlmove username position"')
+        );
       }
       const position = parseInt(posStr, 10) - 1;
       if (!isFinite(position) || position < 0) {
-        return dispatch(log(`Provide a position to move @${username} to. Syntax: "/wlmove username position"`));
+        return dispatch(
+          log(`Provide a position to move @${username} to. Syntax: "/wlmove username position"`)
+        );
       }
 
       const user = findUser(

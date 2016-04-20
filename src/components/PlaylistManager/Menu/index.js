@@ -1,5 +1,5 @@
 import cx from 'classnames';
-import React from 'react';
+import * as React from 'react';
 import PlaylistRow from './Row';
 import PlaylistCreateRow from './NewPlaylist';
 import SearchResultsRow from './SearchResultsRow';
@@ -30,24 +30,35 @@ const Menu = ({
           onClick={onSelectSearchResults}
         />
       )}
-      {playlists.map(pl => {
-        return (
-          <PlaylistRow
-            key={pl._id}
-            className="PlaylistMenu-row"
-            selected={pl.selected && !showImportPanel}
-            playlist={pl}
-            onClick={() => onSelectPlaylist(pl)}
-            onAddToPlaylist={onAddToPlaylist}
-          />
-        );
-      })}
+      {playlists.map(pl => (
+        <PlaylistRow
+          key={pl._id}
+          className="PlaylistMenu-row"
+          playlist={pl}
+          onClick={() => onSelectPlaylist(pl)}
+          onAddToPlaylist={onAddToPlaylist}
+        />
+      ))}
       <PlaylistImportRow
         className={cx('PlaylistMenu-row', importIsSelected)}
         onClick={onShowImportPanel}
       />
     </div>
   );
+};
+
+Menu.propTypes = {
+  className: React.PropTypes.string,
+  playlists: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
+  selected: React.PropTypes.bool.isRequired,
+  showImportPanel: React.PropTypes.bool.isRequired,
+  searchQuery: React.PropTypes.string.isRequired,
+  searchResults: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
+  onCreatePlaylist: React.PropTypes.func.isRequired,
+  onSelectPlaylist: React.PropTypes.func.isRequired,
+  onSelectSearchResults: React.PropTypes.func.isRequired,
+  onAddToPlaylist: React.PropTypes.func.isRequired,
+  onShowImportPanel: React.PropTypes.func.isRequired
 };
 
 export default Menu;
