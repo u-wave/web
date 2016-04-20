@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import pure from 'recompose/pure';
 import IconButton from 'material-ui/lib/icon-button';
 import HistoryIcon from 'material-ui/lib/svg-icons/action/history';
@@ -20,5 +20,9 @@ const HistoryButton = ({ onClick }) => (
     />
   </IconButton>
 );
+
+HistoryButton.propTypes = {
+  onClick: React.PropTypes.func.isRequired
+};
 
 export default pure(HistoryButton);

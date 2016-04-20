@@ -48,7 +48,9 @@ const insert = (selector, fn) =>
 
 const enableMinifierOptions = arr => {
   const object = {};
-  arr.forEach(key => object[key] = true);
+  arr.forEach(key => {
+    object[key] = true;
+  });
   return object;
 };
 

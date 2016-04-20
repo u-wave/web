@@ -1,3 +1,4 @@
+/* eslint-disable react/prefer-stateless-function */
 import React, { Component, PropTypes } from 'react';
 import UpvoteIcon from 'material-ui/lib/svg-icons/action/thumb-up';
 
@@ -23,3 +24,4 @@ export default class Upvote extends Component {
     );
   }
 }
+/* eslint-enable react/prefer-stateless-function */

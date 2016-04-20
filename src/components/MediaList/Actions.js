@@ -1,3 +1,4 @@
+/* eslint-disable react/prefer-stateless-function */
 import cx from 'classnames';
 import React from 'react';
 
@@ -24,3 +25,4 @@ export default class Actions extends React.Component {
     );
   }
 }
+/* eslint-enable react/prefer-stateless-function */

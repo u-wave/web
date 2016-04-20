@@ -1,4 +1,4 @@
-const padZero = n => n < 10 ? `0${n}` : n;
+const padZero = n => (n < 10 ? `0${n}` : n);
 
 export default function formatDuration(duration) {
   const h = Math.floor(duration / 3600);

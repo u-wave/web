@@ -31,7 +31,8 @@ const Username = ({ className, muiTheme, user }) => {
 
 Username.propTypes = {
   className: PropTypes.string,
-  user: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired,
+  muiTheme: PropTypes.object.isRequired
 };
 
 // NB themeable signature will change in material-ui v0.15

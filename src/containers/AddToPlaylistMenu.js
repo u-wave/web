@@ -1,3 +1,4 @@
+/* eslint-disable react/prefer-stateless-function */
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -72,3 +73,4 @@ export default class AddToPlaylistMenuContainer extends Component {
     );
   }
 }
+/* eslint-enable react/prefer-stateless-function */

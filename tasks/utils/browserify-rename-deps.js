@@ -12,25 +12,25 @@ const bresolveOpts = {
   filename: path.join(__dirname, '../../gulpfile.babel.js')
 };
 
-const rewireDependency = (row, oldDep, newDep) => {
-  return new Promise((resolve, reject) => {
+const rewireDependency = (row, oldDep, newDep) =>
+  new Promise((resolve, reject) => {
     bresolve(newDep, bresolveOpts, (e, file) => {
-      if (e) return reject(e);
-      row.deps[oldDep] = file;
-      resolve();
+      if (e) {
+        reject(e);
+      } else {
+        row.deps[oldDep] = file; // eslint-disable-line no-param-reassign
+        resolve();
+      }
     });
   });
-};
 
 export default function renameDeps(b, map) {
   const depNames = Object.keys(map);
 
   b.pipeline.get('deps').push(through.obj(function processFile(row, enc, next) {
-    depNames.reduce((p, dep) => {
-      return row.deps[dep]
-        ? p.then(() => rewireDependency(row, dep, map[dep]))
-        : p;
-    }, Promise.resolve())
+    depNames.reduce((p, dep) => (
+      row.deps[dep] ? p.then(() => rewireDependency(row, dep, map[dep])) : p
+    ), Promise.resolve())
       .then(() => {
         this.push(row);
         next();

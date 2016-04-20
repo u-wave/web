@@ -13,13 +13,13 @@ export const mediaSelector = createSelector(
   dataSelector,
   isOpenSelector,
   isFavoriteSelector,
-  (data, isOpen, isFavorite) => isOpen && !isFavorite ? data.media : null
+  (data, isOpen, isFavorite) => (isOpen && !isFavorite ? data.media : null)
 );
 export const historyIDSelector = createSelector(
   dataSelector,
   isOpenSelector,
   isFavoriteSelector,
-  (data, isOpen, isFavorite) => isOpen && isFavorite ? data.historyID : null
+  (data, isOpen, isFavorite) => (isOpen && isFavorite ? data.historyID : null)
 );
 
 export const addToPlaylistMenuSelector = createStructuredSelector({

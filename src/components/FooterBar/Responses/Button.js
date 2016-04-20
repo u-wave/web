@@ -1,3 +1,4 @@
+/* eslint-disable react/prefer-stateless-function */
 import React, { Component, PropTypes } from 'react';
 import IconButton from 'material-ui/lib/icon-button';
 
@@ -30,3 +31,4 @@ export default class Button extends Component {
     );
   }
 }
+/* eslint-enable react/prefer-stateless-function */

@@ -22,4 +22,5 @@ export function get() {
   } catch (e) {
     // cookies disabled
   }
+  return null;
 }

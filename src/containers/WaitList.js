@@ -1,3 +1,4 @@
+/* eslint-disable react/prefer-stateless-function */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -20,3 +21,4 @@ export default class WaitListContainer extends Component {
     );
   }
 }
+/* eslint-enable react/prefer-stateless-function */

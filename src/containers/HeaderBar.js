@@ -1,4 +1,3 @@
-import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -24,9 +23,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onToggleRoomHistory: toggleRoomHistory
 }, dispatch);
 
-@connect(mapStateToProps, mapDispatchToProps)
-export default class HeaderBarContainer extends Component {
-  render() {
-    return <HeaderBar {...this.props} />;
-  }
-}
+export default connect(mapStateToProps, mapDispatchToProps)(HeaderBar);

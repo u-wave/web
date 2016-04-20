@@ -1,3 +1,4 @@
+/* eslint-disable react/prefer-stateless-function */
 import React, { Component, PropTypes } from 'react';
 
 export default class Action extends Component {
@@ -20,3 +21,4 @@ export default class Action extends Component {
     );
   }
 }
+/* eslint-enable react/prefer-stateless-function */

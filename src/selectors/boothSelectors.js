@@ -10,29 +10,31 @@ export const startTimeSelector = createSelector(baseSelector, booth => booth.sta
 
 export const mediaDurationSelector = createSelector(
   mediaSelector,
-  media => media ? media.end - media.start : 0
+  media => (media ? media.end - media.start : 0)
 );
 
 export const timeElapsedSelector = createSelector(
   startTimeSelector,
   currentTimeSelector,
   // in seconds! because media duration is in seconds, too.
-  (startTime, currentTime) => startTime ? Math.max((currentTime - startTime) / 1000, 0) : 0
+  (startTime, currentTime) => (startTime ? Math.max((currentTime - startTime) / 1000, 0) : 0)
 );
 
 export const timeRemainingSelector = createSelector(
   mediaDurationSelector,
   timeElapsedSelector,
-  (duration, elapsed) => duration > 0 ? duration - elapsed : 0
+  (duration, elapsed) => (duration > 0 ? duration - elapsed : 0)
 );
 
 export const mediaProgressSelector = createSelector(
   mediaDurationSelector,
   timeElapsedSelector,
-  (duration, elapsed) => duration
-    // Ensure that the result is between 0 and 1
-    ? Math.max(0, Math.min(1, elapsed / duration))
-    : 0
+  (duration, elapsed) => (
+    duration
+      // Ensure that the result is between 0 and 1
+      ? Math.max(0, Math.min(1, elapsed / duration))
+      : 0
+  )
 );
 
 export const djSelector = createSelector(

@@ -1,3 +1,4 @@
+/* eslint-disable react/prefer-stateless-function */
 import cx from 'classnames';
 import React, { Component, PropTypes } from 'react';
 
@@ -76,3 +77,4 @@ export default class HeaderBar extends Component {
     );
   }
 }
+/* eslint-enable react/prefer-stateless-function */

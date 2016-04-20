@@ -1,4 +1,3 @@
-import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -23,9 +22,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onLogout: logout
 }, dispatch);
 
-@connect(mapStateToProps, mapDispatchToProps)
-export default class SettingsManagerContainer extends Component {
-  render() {
-    return <SettingsManager {...this.props} />;
-  }
-}
+export default connect(mapStateToProps, mapDispatchToProps)(SettingsManager);

@@ -1,3 +1,4 @@
+/* eslint-disable react/prefer-stateless-function */
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -39,3 +40,4 @@ export default class AppContainer extends Component {
     );
   }
 }
+/* eslint-enable react/prefer-stateless-function */

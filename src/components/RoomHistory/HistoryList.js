@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 import MediaList from '../MediaList';
 import AddToPlaylistAction from '../MediaList/Actions/AddToPlaylist';
@@ -15,15 +15,17 @@ const addMediaActions = onOpenAddMediaMenu =>
 
 const noActions = () => [];
 
-const HistoryList = ({ onOpenAddMediaMenu, ...props }) => {
-  return (
-    <MediaList
-      {...props}
-      className="RoomHistory-list"
-      rowComponent={HistoryRow}
-      makeActions={onOpenAddMediaMenu ? addMediaActions(onOpenAddMediaMenu) : noActions}
-    />
-  );
+const HistoryList = ({ onOpenAddMediaMenu, ...props }) => (
+  <MediaList
+    {...props}
+    className="RoomHistory-list"
+    rowComponent={HistoryRow}
+    makeActions={onOpenAddMediaMenu ? addMediaActions(onOpenAddMediaMenu) : noActions}
+  />
+);
+
+HistoryList.propTypes = {
+  onOpenAddMediaMenu: React.PropTypes.func.isRequired
 };
 
 export default HistoryList;

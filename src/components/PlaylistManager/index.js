@@ -140,7 +140,14 @@ export default class PlaylistManager extends Component {
     }
 
     return (
-      <Overlay className={cx('PlaylistManager', 'AppColumn', 'AppColumn--full', this.props.className)}>
+      <Overlay
+        className={cx(
+          'PlaylistManager',
+          'AppColumn',
+          'AppColumn--full',
+          this.props.className
+        )}
+      >
         <PlaylistHeader
           className="PlaylistManager-header AppRow AppRow--top"
           selectedPlaylist={selectedPlaylist}

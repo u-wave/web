@@ -1,5 +1,5 @@
 import cx from 'classnames';
-import React from 'react';
+import * as React from 'react';
 
 import Avatar from '../Avatar';
 import Username from '../Username';
@@ -37,6 +37,14 @@ const Message = ({ user, text, parsedText, inFlight, isMention }) => {
       </div>
     </div>
   );
+};
+
+Message.propTypes = {
+  user: React.PropTypes.object.isRequired,
+  text: React.PropTypes.string.isRequired,
+  parsedText: React.PropTypes.array.isRequired,
+  inFlight: React.PropTypes.bool,
+  isMention: React.PropTypes.bool.isRequired
 };
 
 export default Message;
