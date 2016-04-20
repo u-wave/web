@@ -30,7 +30,7 @@
     "react-dnd-html5-backend": "^2.0.0",
     "react-dom": "^15.0.1",
     "react-list": "^0.7.3",
-    "react-list-lazy-load": "^1.0.1",
+    "react-list-lazy-load": "^1.0.3",
     "react-redux": "^4.0.0",
     "react-tap-event-plugin": "^1.0.0",
     "react-timeago": "^3.0.0",
