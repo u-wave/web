@@ -1,0 +1,15 @@
+@import "../../../vars.css";
+
+@import "./ImportPanel.css";
+@import "./ImportPanelHeader.css";
+@import "./ImportSourceBlock.css";
+
+@component PlaylistImport {
+  height: 100%;
+  background: $background-color;
+
+  @descendent source {
+    padding: 16px;
+    width: 50%;
+  }
+}

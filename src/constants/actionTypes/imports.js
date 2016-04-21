@@ -1,0 +1,4 @@
+export const SHOW_IMPORT_PANEL = 'imports/SHOW_IMPORT_PANEL';
+export const HIDE_IMPORT_PANEL = 'imports/HIDE_IMPORT_PANEL';
+export const SHOW_IMPORT_SOURCE_PANEL = 'imports/SHOW_IMPORT_SOURCE_PANEL';
+export const HIDE_IMPORT_SOURCE_PANEL = 'imports/HIDE_IMPORT_SOURCE_PANEL';

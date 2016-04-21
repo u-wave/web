@@ -3,12 +3,16 @@ import React from 'react';
 import PlaylistRow from './Row';
 import PlaylistCreateRow from './NewPlaylist';
 import SearchResultsRow from './SearchResultsRow';
+import PlaylistImportRow from './PlaylistImportRow';
 
 const Menu = ({
-  className, playlists, selected, searchQuery, searchResults,
-  onCreatePlaylist, onSelectPlaylist, onSelectSearchResults, onAddToPlaylist
+  className, playlists, searchQuery, searchResults,
+  selected, showImportPanel,
+  onCreatePlaylist, onSelectPlaylist, onSelectSearchResults, onAddToPlaylist,
+  onShowImportPanel
 }) => {
   const searchIsSelected = selected ? '' : 'is-selected';
+  const importIsSelected = showImportPanel ? 'is-selected' : '';
   return (
     <div
       role="menu"
@@ -31,12 +35,17 @@ const Menu = ({
           <PlaylistRow
             key={pl._id}
             className="PlaylistMenu-row"
+            selected={pl.selected && !showImportPanel}
             playlist={pl}
             onClick={() => onSelectPlaylist(pl)}
             onAddToPlaylist={onAddToPlaylist}
           />
         );
       })}
+      <PlaylistImportRow
+        className={cx('PlaylistMenu-row', importIsSelected)}
+        onClick={onShowImportPanel}
+      />
     </div>
   );
 };

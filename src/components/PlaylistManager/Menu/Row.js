@@ -22,6 +22,7 @@ export default class PlaylistRow extends Component {
   static propTypes = {
     className: PropTypes.string,
     playlist: PropTypes.object,
+    selected: PropTypes.bool,
     isOver: PropTypes.bool.isRequired,
 
     connectDropTarget: PropTypes.func.isRequired,
@@ -31,11 +32,17 @@ export default class PlaylistRow extends Component {
 
   render() {
     const {
-      className, playlist, onClick,
-      connectDropTarget, isOver
+      className,
+      playlist,
+      selected,
+
+      onClick,
+
+      connectDropTarget,
+      isOver
     } = this.props;
     const activeClass = playlist.active && 'is-active';
-    const selectedClass = playlist.selected && 'is-selected';
+    const selectedClass = selected && 'is-selected';
     const droppableClass = isOver && 'is-droppable';
 
     let icon;
