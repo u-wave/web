@@ -39,7 +39,7 @@
     "redux": "^3.0.4",
     "redux-logger": "^2.0.4",
     "redux-thunk": "^1.0.0",
-    "reselect": "^2.0.1",
+    "reselect": "^2.5.0",
     "router": "^1.1.4",
     "serve-static": "^1.10.2",
     "splitargs": "0.0.5",
