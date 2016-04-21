@@ -34,11 +34,11 @@ export default class ChannelPanel extends React.Component {
     } = this.props;
 
     return (
-      <div className="PlaylistPanel SearchResults ChannelPanel">
+      <div className="ImportPanel ChannelPanel">
         <ImportPanelHeader onClosePanel={onClosePanel}>
           {`${importingChannelTitle}'s Playlists`}
         </ImportPanelHeader>
-        <div className="MediaList PlaylistPanel-media">
+        <div className="MediaList ImportPanel-body">
           <List
             type="uniform"
             length={importablePlaylists.length}

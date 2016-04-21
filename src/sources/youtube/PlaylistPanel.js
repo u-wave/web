@@ -44,7 +44,7 @@ export default class YouTubeImportPlaylistPanel extends React.Component {
     } = this.props;
 
     return (
-      <div className="PlaylistPanel yt-import-PlaylistPanel">
+      <div className="ImportPanel yt-import-PlaylistPanel">
         <ImportPanelHeader onClosePanel={onClosePanel}>
           <div className="yt-import-PlaylistPanel-header">
             <div className="yt-import-PlaylistPanel-name">
@@ -60,7 +60,7 @@ export default class YouTubeImportPlaylistPanel extends React.Component {
           </div>
         </ImportPanelHeader>
         <MediaList
-          className="PlaylistPanel-media"
+          className="ImportPanel-body"
           media={importingPlaylistItems}
           makeActions={(media, selection) => [
             <AddToPlaylistAction

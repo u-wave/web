@@ -4,9 +4,9 @@ import Loader from '../../components/Loader';
 import ImportPanelHeader from '../../components/PlaylistManager/Import/ImportPanelHeader';
 
 const LoadingPanel = ({ onClosePanel }) => (
-  <div className="PlaylistPanel">
+  <div className="ImportPanel">
     <ImportPanelHeader onClosePanel={onClosePanel} />
-    <div className="PlaylistPanel-loading">
+    <div className="ImportPanel-loading">
       <Loader size="large" />
     </div>
   </div>
