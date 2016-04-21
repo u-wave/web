@@ -16,10 +16,6 @@ const tabItemContainerStyle = {
 
 const tabStyle = {
   float: 'left',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
   color: '#fff',
   fontSize: '10pt',
   height: '100%',
@@ -28,7 +24,7 @@ const tabStyle = {
 
 const activeTabStyle = {
   ...tabStyle,
-  backgroundColor: '#222'
+  backgroundColor: 'rgba(48, 48, 48, 0.3)'
 };
 
 const inkBarStyle = {
@@ -55,7 +51,7 @@ const getWaitlistLabel = (size, position) => {
 
     return [
       'Waitlist',
-      <span style={subHeaderStyle}>{posText}</span>
+      <span key="sub" style={subHeaderStyle}>{posText}</span>
     ];
   }
   return 'Waitlist';
@@ -77,8 +73,15 @@ const SidePanels = ({
   >
     {/* Disabled touch ripples on tabs because they're offset weirdly. Also,
       * they interfere with the flexbox column layout for the Waitlist
-      * position, because they add a wrapper <div />.*/}
+      * position, because they add a wrapper <div />.
+      *
+      * NB: SidePanel-tab includes some !important styles because material-ui
+      * has an otherwise unstyleable element inside its tab bar that breaks our
+      * user and waitlist position counter elements. material-ui uses it to
+      * properly position tab labels. The overrides remove the height and
+      * padding constraints from that in-between element. */}
     <Tab
+      className="SidePanel-tab"
       disableTouchRipple
       label="Chat"
       value="chat"
@@ -92,10 +95,11 @@ const SidePanels = ({
       </div>
     </Tab>
     <Tab
+      className="SidePanel-tab"
       disableTouchRipple
       label={[
         'Room',
-        <span style={subHeaderStyle}>{onlineUsersCount}</span>
+        <span key="sub" style={subHeaderStyle}>{onlineUsersCount}</span>
       ]}
       value="room"
       style={selected === 'room' ? activeTabStyle : tabStyle}
@@ -105,6 +109,7 @@ const SidePanels = ({
       </div>
     </Tab>
     <Tab
+      className="SidePanel-tab"
       disableTouchRipple
       label={getWaitlistLabel(waitlistSize, waitlistPosition)}
       value="waitlist"
@@ -118,7 +123,7 @@ const SidePanels = ({
 );
 
 SidePanels.propTypes = {
-  selected: React.PropTypes.bool.isRequired,
+  selected: React.PropTypes.string.isRequired,
   isLoggedIn: React.PropTypes.bool.isRequired,
   onlineUsersCount: React.PropTypes.number.isRequired,
   waitlistSize: React.PropTypes.number.isRequired,

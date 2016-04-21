@@ -11,7 +11,7 @@ import {
 import SidePanels from '../components/SidePanels';
 
 const mapStateToProps = createStructuredSelector({
-  selectedPanel: state => state.selectedPanel,
+  selected: state => state.selectedPanel,
   waitlistPosition: waitlistPositionSelector,
   waitlistSize: waitlistSizeSelector,
   onlineUsersCount: userCountSelector
