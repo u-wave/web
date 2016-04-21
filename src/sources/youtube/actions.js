@@ -1,5 +1,4 @@
-import { get, post } from '../../utils/Request';
-import { tokenSelector } from '../../selectors/userSelectors';
+import { get, post } from '../../actions/RequestActionCreators';
 
 import {
   createPlaylistStart,
@@ -30,23 +29,18 @@ function getImportablePlaylistComplete(url, playlist, items) {
 }
 
 export function getImportablePlaylist(url) {
-  return (dispatch, getState) => {
-    const jwt = tokenSelector(getState());
-
-    dispatch(getImportablePlaylistStart(url));
-
-    return get(jwt, '/v1/import/youtube/playlist', { url })
-      .then(res => res.json())
-      .then(({ playlist, items }) => dispatch(
-        getImportablePlaylistComplete(url, playlist, items)
-      ))
-      .catch(error => dispatch({
-        type: GET_IMPORTABLE_PLAYLIST_COMPLETE,
-        error: true,
-        payload: error,
-        meta: { url }
-      }));
-  };
+  return get('/import/youtube/playlist', {
+    qs: { url },
+    onStart: () => getImportablePlaylistStart(url),
+    onComplete: ({ playlist, items }) =>
+      getImportablePlaylistComplete(url, playlist, items),
+    onError: error => ({
+      type: GET_IMPORTABLE_PLAYLIST_COMPLETE,
+      error: true,
+      payload: error,
+      meta: { url }
+    })
+  });
 }
 
 function importPlaylistStart(id, name) {
@@ -71,23 +65,16 @@ function importPlaylistComplete(id, playlist) {
 }
 
 export function importPlaylist(id, name) {
-  return (dispatch, getState) => {
-    const jwt = tokenSelector(getState());
-
-    dispatch(importPlaylistStart(id, name));
-
-    return post(jwt, '/v1/import/youtube/importplaylist', { id, name })
-      .then(res => res.json())
-      .then(playlist => dispatch(
-        importPlaylistComplete(id, playlist)
-      ))
-      .catch(error => dispatch({
-        type: IMPORT_PLAYLIST_COMPLETE,
-        error: true,
-        payload: error,
-        meta: { id }
-      }));
-  };
+  return post('/import/youtube/importplaylist', { id, name }, {
+    onStart: () => importPlaylistStart(id, name),
+    onComplete: playlist => importPlaylistComplete(id, playlist),
+    onError: error => ({
+      type: IMPORT_PLAYLIST_COMPLETE,
+      error: true,
+      payload: error,
+      meta: { id }
+    })
+  });
 }
 
 function getChannelPlaylistsStart(url) {
@@ -108,21 +95,16 @@ function getChannelPlaylistsComplete(channel, playlists) {
 }
 
 export function getChannelPlaylists(url) {
-  return (dispatch, getState) => {
-    const jwt = tokenSelector(getState());
-
-    dispatch(getChannelPlaylistsStart(url));
-
-    return get(jwt, '/v1/import/youtube/channel', { url })
-      .then(res => res.json())
-      .then(({ channel, playlists }) => dispatch(
-        getChannelPlaylistsComplete(channel, playlists)
-      ))
-      .catch(error => dispatch({
-        type: GET_CHANNEL_PLAYLISTS_COMPLETE,
-        error: true,
-        payload: error,
-        meta: { url }
-      }));
-  };
+  return get('/import/youtube/channel', {
+    qs: { url },
+    onStart: () => getChannelPlaylistsStart(url),
+    onComplete: ({ channel, playlists }) =>
+      getChannelPlaylistsComplete(channel, playlists),
+    onError: error => ({
+      type: GET_CHANNEL_PLAYLISTS_COMPLETE,
+      error: true,
+      payload: error,
+      meta: { url }
+    })
+  });
 }
