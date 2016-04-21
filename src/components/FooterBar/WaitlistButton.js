@@ -34,6 +34,14 @@ const WaitlistButton = ({
       className={cx('FooterBar-join', isLocked && 'FooterBar-join--locked')}
       disabled={isLocked && !userInWaitlist}
       onClick={onClick}
+      style={{
+        // Workaround for a React issue where `background` and
+        // `background-color` styles are applied in the incorrect order, leading
+        // the material-ui builtin "background: None" style to override the
+        // backgroundColor prop below on the initial render.
+        // https://github.com/facebook/react/issues/6524
+        background: muiTheme.palette.primary1Color
+      }}
       backgroundColor={muiTheme.palette.primary1Color}
       hoverColor={muiTheme.palette.primary2Color}
       rippleColor={muiTheme.palette.primary3Color}
