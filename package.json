@@ -5,6 +5,10 @@
   "author": "René Kooi <rene@kooi.me>",
   "license": "MIT",
   "repository": "u-wave/u-wave-web",
+  "engines": {
+    "node": ">= 4",
+    "npm": ">= 3"
+  },
   "dependencies": {
     "ReconnectingWebSocket": "joewalnes/reconnecting-websocket#283894",
     "array-find": "^1.0.0",
