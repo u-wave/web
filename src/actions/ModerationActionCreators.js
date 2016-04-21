@@ -28,7 +28,7 @@ export function skipCurrentDJ(reason = '', shouldRemove = false) {
       reason,
       remove: shouldRemove
     };
-    return post(`/booth/skip`, payload, {
+    return dispatch(post(`/booth/skip`, payload, {
       onStart: () => ({ type: SKIP_DJ_START, payload }),
       onComplete: () => ({ type: SKIP_DJ_COMPLETE, payload }),
       onError: error => ({
@@ -37,7 +37,7 @@ export function skipCurrentDJ(reason = '', shouldRemove = false) {
         payload: error,
         meta: payload
       })
-    });
+    }));
   };
 }
 
