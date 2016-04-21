@@ -1,10 +1,10 @@
 import React, { Component, PropTypes } from 'react';
-import Dialog from 'material-ui/lib/dialog';
+import Dialog from 'material-ui/Dialog';
 
-import ArtistIcon from 'material-ui/lib/svg-icons/hardware/headset';
-import TitleIcon from 'material-ui/lib/svg-icons/image/music-note';
-import StartIcon from 'material-ui/lib/svg-icons/av/play-arrow';
-import EndIcon from 'material-ui/lib/svg-icons/av/stop';
+import ArtistIcon from 'material-ui/svg-icons/hardware/headset';
+import TitleIcon from 'material-ui/svg-icons/image/music-note';
+import StartIcon from 'material-ui/svg-icons/av/play-arrow';
+import EndIcon from 'material-ui/svg-icons/av/stop';
 
 import formatDuration from '../../../utils/formatDuration';
 
@@ -53,7 +53,8 @@ export default class EditMediaDialog extends Component {
     }
 
     if (errors.length > 0) {
-      return this.setState({ errors });
+      this.setState({ errors });
+      return;
     }
 
     onEditedMedia({
@@ -77,7 +78,7 @@ export default class EditMediaDialog extends Component {
           className="EditMediaDialogGroup-field"
           placeholder="Artist"
           defaultValue={media.artist}
-          icon={<ArtistIcon color="#9f9d9e"/>}
+          icon={<ArtistIcon color="#9f9d9e" />}
           tabIndex={baseTabIndex}
           autofocus
         />
@@ -91,7 +92,7 @@ export default class EditMediaDialog extends Component {
           className="EditMediaDialogGroup-field"
           placeholder="Title"
           defaultValue={media.title}
-          icon={<TitleIcon color="#9f9d9e"/>}
+          icon={<TitleIcon color="#9f9d9e" />}
           tabIndex={baseTabIndex + 1}
         />
       );
@@ -105,7 +106,7 @@ export default class EditMediaDialog extends Component {
           className="EditMediaDialogGroup-field"
           placeholder="0:00"
           defaultValue={formatDuration(media.start)}
-          icon={<StartIcon color="#9f9d9e"/>}
+          icon={<StartIcon color="#9f9d9e" />}
           tabIndex={baseTabIndex + 2}
         />
       );
@@ -118,7 +119,7 @@ export default class EditMediaDialog extends Component {
           className="EditMediaDialogGroup-field"
           placeholder={formatDuration(media.duration)}
           defaultValue={formatDuration(media.end)}
-          icon={<EndIcon color="#9f9d9e"/>}
+          icon={<EndIcon color="#9f9d9e" />}
           tabIndex={baseTabIndex + 3}
         />
       );

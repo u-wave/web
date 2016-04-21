@@ -15,4 +15,9 @@ const Progress = ({ className, percent }) => {
   );
 };
 
+Progress.propTypes = {
+  className: React.PropTypes.string,
+  percent: React.PropTypes.number.isRequired
+};
+
 export default Progress;

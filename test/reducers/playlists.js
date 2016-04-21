@@ -140,8 +140,9 @@ describe('reducers/playlists', () => {
         8
       ));
 
+      const getID = item => (item ? item._id : null);
       expect(
-        s.selectedPlaylistSelector(getState()).media.map(item => item ? item._id : null)
+        s.selectedPlaylistSelector(getState()).media.map(getID)
       ).to.eql([
         6, null, 8, 5, 9
       ]);

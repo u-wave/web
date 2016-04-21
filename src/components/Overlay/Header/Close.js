@@ -1,7 +1,7 @@
 import cx from 'classnames';
-import React from 'react';
-import CloseBottomIcon from 'material-ui/lib/svg-icons/hardware/keyboard-arrow-down';
-import CloseTopIcon from 'material-ui/lib/svg-icons/hardware/keyboard-arrow-up';
+import * as React from 'react';
+import CloseBottomIcon from 'material-ui/svg-icons/hardware/keyboard-arrow-down';
+import CloseTopIcon from 'material-ui/svg-icons/hardware/keyboard-arrow-up';
 
 const icons = {
   bottom: CloseBottomIcon,
@@ -28,6 +28,12 @@ const Close = ({ className, onClose, direction }) => {
       />
     </div>
   );
+};
+
+Close.propTypes = {
+  className: React.PropTypes.string,
+  direction: React.PropTypes.string.isRequired,
+  onClose: React.PropTypes.func.isRequired
 };
 
 export default Close;

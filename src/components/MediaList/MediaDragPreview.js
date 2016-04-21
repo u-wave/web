@@ -1,15 +1,16 @@
+/* eslint-disable react/prefer-stateless-function */
 import assign from 'object-assign';
 import React, { Component, PropTypes } from 'react';
-import ListIcon from 'material-ui/lib/svg-icons/action/list';
+import ListIcon from 'material-ui/svg-icons/action/list';
 
 import transformStyle from '../../utils/transformStyle';
 
-const getItemStyles = offset => offset
-  ? assign(
-      { display: 'inline-block' },
-      transformStyle(`translate(${offset.x}px, ${offset.y}px)`)
-    )
-  : { display: 'none' };
+const getItemStyles = offset => (
+  offset ? assign(
+    { display: 'inline-block' },
+    transformStyle(`translate(${offset.x}px, ${offset.y}px)`)
+  ) : { display: 'none' }
+);
 
 const dragIconStyle = {
   verticalAlign: 'bottom',
@@ -30,7 +31,7 @@ export default class MediaDragPreview extends Component {
   };
 
   render() {
-    const { rawTheme } = this.context.muiTheme;
+    const { muiTheme } = this.context;
     const { items, currentOffset } = this.props;
     if (!items || !items.media) {
       return null;
@@ -41,7 +42,7 @@ export default class MediaDragPreview extends Component {
         style={getItemStyles(currentOffset)}
       >
         <ListIcon
-          color={rawTheme.palette.textColor}
+          color={muiTheme.palette.textColor}
           style={dragIconStyle}
         />
         {items.media.length}
@@ -49,3 +50,4 @@ export default class MediaDragPreview extends Component {
     );
   }
 }
+/* eslint-enable react/prefer-stateless-function */

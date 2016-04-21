@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 const supportsBlur = typeof window !== 'undefined' && window.CSS &&
   (CSS.supports('filter', 'blur(1em)') || CSS.supports('-webkit-filter', 'blur(1em)'));
@@ -42,6 +42,10 @@ const VideoBackdrop = ({ url }) => {
     );
   }
   return <img className="VideoBackdrop VideoBackdrop--blurry" src={url} alt="" />;
+};
+
+VideoBackdrop.propTypes = {
+  url: React.PropTypes.string.isRequired
 };
 
 export default VideoBackdrop;

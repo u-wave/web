@@ -1,8 +1,9 @@
 import find from 'array-find';
 import React, { Component, PropTypes } from 'react';
-import Menu from 'material-ui/lib/menus/menu';
-import MenuItem from 'material-ui/lib/menus/menu-item';
-import RenderToLayer from 'material-ui/lib/render-to-layer';
+import Menu from 'material-ui/Menu';
+import MenuItem from 'material-ui/MenuItem';
+// 😱
+import RenderToLayer from 'material-ui/internal/RenderToLayer';
 
 const MENU_HEIGHT = 320;
 const MENU_WIDTH = 280;

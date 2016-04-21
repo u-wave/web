@@ -31,5 +31,5 @@ export const mutedUsersSelector = createSelector(
 export const currentUserMuteSelector = createSelector(
   currentUserSelector,
   mutesSelector,
-  (user, mutes) => user ? mutes[user._id] : null
+  (user, mutes) => (user ? mutes[user._id] : null)
 );

@@ -1,6 +1,6 @@
 import React from 'react';
-import EmailIcon from 'material-ui/lib/svg-icons/communication/email';
-import PasswordIcon from 'material-ui/lib/svg-icons/action/lock';
+import EmailIcon from 'material-ui/svg-icons/communication/email';
+import PasswordIcon from 'material-ui/svg-icons/action/lock';
 import Loader from '../../Loader';
 import Form from '../../Form';
 import FormGroup from '../../Form/Group';
@@ -41,7 +41,7 @@ export default class LoginForm extends React.Component {
             className="LoginForm-field"
             type="email"
             placeholder="E-Mail"
-            icon={<EmailIcon color="#9f9d9e"/>}
+            icon={<EmailIcon color="#9f9d9e" />}
             autofocus
           />
         </FormGroup>
@@ -51,7 +51,7 @@ export default class LoginForm extends React.Component {
             className="LoginForm-field"
             type="password"
             placeholder="Password"
-            icon={<PasswordIcon color="#9f9d9e"/>}
+            icon={<PasswordIcon color="#9f9d9e" />}
           />
         </FormGroup>
 

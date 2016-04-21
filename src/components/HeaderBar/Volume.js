@@ -1,10 +1,10 @@
 import cx from 'classnames';
 import React from 'react';
-import Slider from 'material-ui/lib/slider';
-import VolumeDownIcon from 'material-ui/lib/svg-icons/av/volume-down';
-import VolumeMuteIcon from 'material-ui/lib/svg-icons/av/volume-mute';
-import VolumeOffIcon from 'material-ui/lib/svg-icons/av/volume-off';
-import VolumeUpIcon from 'material-ui/lib/svg-icons/av/volume-up';
+import Slider from 'material-ui/Slider';
+import VolumeDownIcon from 'material-ui/svg-icons/av/volume-down';
+import VolumeMuteIcon from 'material-ui/svg-icons/av/volume-mute';
+import VolumeOffIcon from 'material-ui/svg-icons/av/volume-off';
+import VolumeUpIcon from 'material-ui/svg-icons/av/volume-up';
 
 const sliderStyle = {
   marginTop: 3,

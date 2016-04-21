@@ -1,5 +1,6 @@
+/* eslint-disable react/prefer-stateless-function */
 import React, { Component, PropTypes } from 'react';
-import Dialog from 'material-ui/lib/dialog';
+import Dialog from 'material-ui/Dialog';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 
@@ -38,3 +39,4 @@ export default class LoginDialog extends Component {
     );
   }
 }
+/* eslint-enable react/prefer-stateless-function */

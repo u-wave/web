@@ -4,8 +4,7 @@ import selectedPanel from '../../src/reducers/selectedPanel';
 
 describe('reducers/selectedPanel', () => {
   it('should default to the chat panel', () => {
-    let state;
-    state = selectedPanel(state, { type: '@@redux/INIT' });
+    const state = selectedPanel(undefined, { type: '@@redux/INIT' });
     expect(state).to.equal('chat');
   });
 

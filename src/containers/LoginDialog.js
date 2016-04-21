@@ -1,4 +1,3 @@
-import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { login, register } from '../actions/LoginActionCreators';
@@ -13,9 +12,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onCloseDialog: closeLoginDialog
 }, dispatch);
 
-@connect(loginDialogSelector, mapDispatchToProps)
-export default class LoginDialogContainer extends Component {
-  render() {
-    return <LoginDialog {...this.props} />;
-  }
-}
+export default connect(loginDialogSelector, mapDispatchToProps)(LoginDialog);

@@ -1,3 +1,4 @@
+/* eslint-disable react/prefer-stateless-function */
 import React from 'react';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -89,3 +90,4 @@ export default class App extends React.Component {
     );
   }
 }
+/* eslint-enable react/prefer-stateless-function */

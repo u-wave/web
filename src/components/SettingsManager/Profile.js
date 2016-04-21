@@ -1,7 +1,7 @@
 import cx from 'classnames';
 import React, { Component, PropTypes } from 'react';
-import IconButton from 'material-ui/lib/icon-button';
-import EditIcon from 'material-ui/lib/svg-icons/editor/mode-edit';
+import IconButton from 'material-ui/IconButton';
+import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 
 import Avatar from '../Avatar';
 

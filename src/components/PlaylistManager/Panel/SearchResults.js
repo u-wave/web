@@ -1,6 +1,6 @@
 import cx from 'classnames';
-import React from 'react';
-import { LOADED } from '../../../constants/LoadingStates';
+import * as React from 'react';
+import { IDLE, LOADING, LOADED } from '../../../constants/LoadingStates';
 import Loader from '../../Loader';
 import MediaList from '../../MediaList';
 
@@ -37,6 +37,14 @@ const SearchResults = ({ className, query, results, loadingState, onOpenAddMedia
       {list}
     </div>
   );
+};
+
+SearchResults.propTypes = {
+  className: React.PropTypes.string,
+  query: React.PropTypes.string.isRequired,
+  results: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
+  loadingState: React.PropTypes.oneOf([ IDLE, LOADING, LOADED ]).isRequired,
+  onOpenAddMediaMenu: React.PropTypes.func.isRequired
 };
 
 export default SearchResults;

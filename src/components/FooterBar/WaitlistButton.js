@@ -1,9 +1,9 @@
 import cx from 'classnames';
 import * as React from 'react';
 import pure from 'recompose/pure';
-import muiThemeable from 'material-ui/lib/muiThemeable';
-import FlatButton from 'material-ui/lib/flat-button';
-import LockedIcon from 'material-ui/lib/svg-icons/action/lock';
+import muiThemeable from 'material-ui/styles/muiThemeable';
+import FlatButton from 'material-ui/FlatButton';
+import LockedIcon from 'material-ui/svg-icons/action/lock';
 
 const inlineIconStyle = {
   width: '1em',
@@ -14,8 +14,6 @@ const WaitlistButton = ({
   muiTheme,
   userInWaitlist, isLocked, onClick
 }) => {
-  const { rawTheme } = muiTheme;
-
   let icon;
   if (isLocked) {
     const iconColor =
@@ -36,9 +34,17 @@ const WaitlistButton = ({
       className={cx('FooterBar-join', isLocked && 'FooterBar-join--locked')}
       disabled={isLocked && !userInWaitlist}
       onClick={onClick}
-      backgroundColor={rawTheme.palette.primary1Color}
-      hoverColor={rawTheme.palette.primary2Color}
-      rippleColor={rawTheme.palette.primary3Color}
+      style={{
+        // Workaround for a React issue where `background` and
+        // `background-color` styles are applied in the incorrect order, leading
+        // the material-ui builtin "background: None" style to override the
+        // backgroundColor prop below on the initial render.
+        // https://github.com/facebook/react/issues/6524
+        background: muiTheme.palette.primary1Color
+      }}
+      backgroundColor={muiTheme.palette.primary1Color}
+      hoverColor={muiTheme.palette.primary2Color}
+      rippleColor={muiTheme.palette.primary3Color}
     >
       {icon}
       {isLocked && ' '}
@@ -47,4 +53,11 @@ const WaitlistButton = ({
   );
 };
 
-export default muiThemeable(pure(WaitlistButton));
+WaitlistButton.propTypes = {
+  muiTheme: React.PropTypes.object.isRequired,
+  userInWaitlist: React.PropTypes.bool,
+  isLocked: React.PropTypes.bool,
+  onClick: React.PropTypes.func.isRequired
+};
+
+export default muiThemeable()(pure(WaitlistButton));

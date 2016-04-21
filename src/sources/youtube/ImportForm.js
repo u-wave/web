@@ -1,5 +1,5 @@
 import * as React from 'react';
-import PlaylistIcon from 'material-ui/lib/svg-icons/av/playlist-play';
+import PlaylistIcon from 'material-ui/svg-icons/av/playlist-play';
 
 import ImportSourceBlock from '../../components/PlaylistManager/Import/ImportSourceBlock';
 import Form from '../../components/Form';

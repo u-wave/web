@@ -61,7 +61,7 @@ export default function middleware(overrideOptions = {}) {
     const requestOptions = {
       method,
       headers: {
-        'Accept': 'application/json',
+        Accept: 'application/json',
         'Content-Type': 'application/json'
       },
       credentials: 'same-origin'

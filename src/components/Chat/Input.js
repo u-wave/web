@@ -22,7 +22,7 @@ export default class Input extends Component {
       if (value.length > 0) {
         this.props.send(value);
       }
-      e.target.value = '';
+      e.target.value = ''; // eslint-disable-line no-param-reassign
     }
   };
 

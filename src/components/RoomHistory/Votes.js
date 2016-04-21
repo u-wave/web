@@ -1,8 +1,8 @@
-import React from 'react';
-import DownvoteIcon from 'material-ui/lib/svg-icons/action/thumb-down';
-import UpvoteIcon from 'material-ui/lib/svg-icons/action/thumb-up';
-import FavoritedIcon from 'material-ui/lib/svg-icons/action/favorite';
-import FavoriteIcon from 'material-ui/lib/svg-icons/action/favorite-border';
+import * as React from 'react';
+import DownvoteIcon from 'material-ui/svg-icons/action/thumb-down';
+import UpvoteIcon from 'material-ui/svg-icons/action/thumb-up';
+import FavoritedIcon from 'material-ui/svg-icons/action/favorite';
+import FavoriteIcon from 'material-ui/svg-icons/action/favorite-border';
 
 import theme from '../../MuiTheme';
 
@@ -39,6 +39,15 @@ const Votes = ({ upvotes, downvotes, favorites, isUpvote, isDownvote, isFavorite
       </div>
     </div>
   );
+};
+
+Votes.propTypes = {
+  upvotes: React.PropTypes.array.isRequired,
+  favorites: React.PropTypes.array.isRequired,
+  downvotes: React.PropTypes.array.isRequired,
+  isUpvote: React.PropTypes.bool.isRequired,
+  isFavorite: React.PropTypes.bool.isRequired,
+  isDownvote: React.PropTypes.bool.isRequired
 };
 
 export default Votes;

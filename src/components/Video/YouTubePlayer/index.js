@@ -1,3 +1,4 @@
+/* eslint-disable react/prefer-stateless-function */
 import cx from 'classnames';
 import React from 'react';
 
@@ -39,3 +40,4 @@ export default class YouTubePlayer extends React.Component {
     );
   }
 }
+/* eslint-enable react/prefer-stateless-function */

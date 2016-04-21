@@ -78,7 +78,7 @@ export function favoriteMediaComplete(playlistID, historyID, changes) {
 
 export function favoriteMedia(playlist, historyID) {
   const playlistID = playlist._id;
-  return post(`/booth/favorite`, { historyID, playlistID }, {
+  return post('/booth/favorite', { historyID, playlistID }, {
     onStart: () => dispatch => {
       dispatch(favoriteMediaStart(playlistID, historyID));
       dispatch(addMediaStart(playlistID, []));

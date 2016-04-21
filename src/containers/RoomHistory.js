@@ -1,4 +1,3 @@
-import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -26,9 +25,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onOpenAddMediaMenu
 }, dispatch);
 
-@connect(mapStateToProps, mapDispatchToProps)
-export default class RoomHistoryContainer extends Component {
-  render() {
-    return <RoomHistory {...this.props} />;
-  }
-}
+export default connect(mapStateToProps, mapDispatchToProps)(RoomHistory);

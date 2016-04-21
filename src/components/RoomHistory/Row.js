@@ -20,10 +20,9 @@ const mediaSource = {
   }
 };
 
-const collect = (connect, monitor) => ({
+const collect = connect => ({
   connectDragSource: connect.dragSource(),
-  connectDragPreview: connect.dragPreview(),
-  isDragging: monitor.isDragging()
+  connectDragPreview: connect.dragPreview()
 });
 
 @DragSource(MEDIA, mediaSource, collect)
@@ -32,7 +31,6 @@ export default class HistoryRow extends React.Component {
     className: React.PropTypes.string,
     connectDragSource: React.PropTypes.func.isRequired,
     connectDragPreview: React.PropTypes.func.isRequired,
-    isDragging: React.PropTypes.bool.isRequired,
     media: React.PropTypes.object,
     selected: React.PropTypes.bool,
     selection: React.PropTypes.array,
@@ -62,7 +60,7 @@ export default class HistoryRow extends React.Component {
     const {
       media: historyEntry,
       className, selection, selected,
-      connectDragSource, isDragging,
+      connectDragSource,
       // actions
       makeActions,
       // etc

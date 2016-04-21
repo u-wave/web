@@ -1,5 +1,6 @@
+/* eslint-disable react/prefer-stateless-function */
 import React, { Component, PropTypes } from 'react';
-import DownvoteIcon from 'material-ui/lib/svg-icons/action/thumb-down';
+import DownvoteIcon from 'material-ui/svg-icons/action/thumb-down';
 
 import Button from './Button';
 
@@ -23,3 +24,4 @@ export default class Downvote extends Component {
     );
   }
 }
+/* eslint-enable react/prefer-stateless-function */

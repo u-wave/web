@@ -33,4 +33,12 @@ const NextMedia = ({
   );
 };
 
+NextMedia.propTypes = {
+  className: React.PropTypes.string,
+  playlist: React.PropTypes.object,
+  nextMedia: React.PropTypes.object,
+  userIsDJ: React.PropTypes.bool,
+  eta: React.PropTypes.number
+};
+
 export default pure(NextMedia);

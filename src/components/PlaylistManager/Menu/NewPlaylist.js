@@ -1,6 +1,7 @@
+/* eslint-disable react/prefer-stateless-function */
 import cx from 'classnames';
 import React, { Component, PropTypes } from 'react';
-import CreatePlaylistIcon from 'material-ui/lib/svg-icons/content/add';
+import CreatePlaylistIcon from 'material-ui/svg-icons/content/add';
 
 export default class NewPlaylist extends Component {
   static propTypes = {
@@ -26,3 +27,4 @@ export default class NewPlaylist extends Component {
     );
   }
 }
+/* eslint-enable react/prefer-stateless-function */

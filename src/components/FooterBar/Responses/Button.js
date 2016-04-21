@@ -1,5 +1,6 @@
+/* eslint-disable react/prefer-stateless-function */
 import React, { Component, PropTypes } from 'react';
-import IconButton from 'material-ui/lib/icon-button';
+import IconButton from 'material-ui/IconButton';
 
 const buttonStyle = {
   height: 36,
@@ -30,3 +31,4 @@ export default class Button extends Component {
     );
   }
 }
+/* eslint-enable react/prefer-stateless-function */

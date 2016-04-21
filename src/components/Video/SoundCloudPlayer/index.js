@@ -104,7 +104,11 @@ export default class SoundCloudPlayer extends React.Component {
             target="_blank"
             className="SoundCloudPlayer-permalink"
           >
-            View on <img src="assets/img/soundcloud-inline.png" />
+            View on
+            <img
+              src="assets/img/soundcloud-inline.png"
+              alt="SoundCloud"
+            />
           </a>
         </div>
       </div>

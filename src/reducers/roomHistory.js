@@ -22,7 +22,7 @@ export default function reduce(state = initialState, action = {}) {
   switch (type) {
   case LOAD_HISTORY_COMPLETE:
     return payload.map(normalize);
-  case ADVANCE:
+  case ADVANCE: {
     const mostRecent = state[0];
     // If the currently playing track is already in the history, remove it--
     // it'll be added back on the next advance, and will be handled by the
@@ -34,6 +34,7 @@ export default function reduce(state = initialState, action = {}) {
       return state;
     }
     return [ normalize(meta.previous), ...state ];
+  }
   default:
     return state;
   }
