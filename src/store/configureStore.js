@@ -4,6 +4,7 @@ import thunk from 'redux-thunk';
 import { TICK } from '../constants/actionTypes/time';
 
 import persistSettings from './persistSettings';
+import webApiRequest from './request';
 import * as reducers from '../reducers';
 
 // Setting up a store in Redux can be kind of messy because there are a lot of
@@ -20,6 +21,9 @@ export default function createUwaveStore() {
     // send HTTP requests. Those might dispatch an action object once the
     // request finishes.
     thunk,
+    // This allows dispatching REQUEST_START actions to the store, which will
+    // then be executed and handled as HTTP requests by the middleware.
+    webApiRequest(),
     // Redux-Logger logs state changes to the console, including the
     // Before-state, the Action object, and the After-state. Invaluable for
     // debugging :)

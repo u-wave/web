@@ -3,8 +3,8 @@ import {
   CHANGE_USERNAME, CHANGE_ROLE,
   DO_CHANGE_USERNAME_START, DO_CHANGE_USERNAME_COMPLETE
 } from '../constants/actionTypes/users';
-import { tokenSelector, currentUserSelector } from '../selectors/userSelectors';
-import { put } from '../utils/Request';
+import { currentUserSelector } from '../selectors/userSelectors';
+import { put } from './RequestActionCreators';
 
 export function setUsers(users) {
   return {
@@ -38,26 +38,24 @@ export function changeUsername(userID, username) {
 
 export function doChangeUsername(username) {
   return (dispatch, getState) => {
-    const jwt = tokenSelector(getState());
     const user = currentUserSelector(getState());
 
-    dispatch({
-      type: DO_CHANGE_USERNAME_START,
-      payload: { username }
-    });
-
-    put(jwt, `/v1/users/${user._id}/username`, { username })
-      .then(res => res.json())
-      .then(updated => dispatch({
+    return dispatch(put(`/users/${user._id}/username`, { username }, {
+      onStart: () => ({
+        type: DO_CHANGE_USERNAME_START,
+        payload: { username }
+      }),
+      onComplete: updated => ({
         type: DO_CHANGE_USERNAME_COMPLETE,
         payload: { username: updated.username }
-      }))
-      .catch(error => dispatch({
+      }),
+      onError: error => ({
         type: DO_CHANGE_USERNAME_COMPLETE,
         error: true,
         payload: error,
         meta: { username }
-      }));
+      })
+    }));
   };
 }
 
