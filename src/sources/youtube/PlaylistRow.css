@@ -2,7 +2,7 @@
 
 $yt-import-button-width: 54px;
 
-@component-namespace yt-import {
+@component-namespace src-youtube {
   @component PlaylistRow {
     @descendent info {
       height: 100%;

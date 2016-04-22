@@ -1,4 +1,4 @@
-@component-namespace yt-import {
+@component-namespace src-youtube {
   @component PlaylistPanel {
     @descendent header {
       display: flex;

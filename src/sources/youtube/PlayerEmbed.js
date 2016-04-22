@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import YouTube from 'react-youtube';
 
 const debug = require('debug')('uwave:component:video:youtube');

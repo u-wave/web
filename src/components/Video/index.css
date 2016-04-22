@@ -1,6 +1,4 @@
 @import "./VideoBackdrop.css";
-@import "./SoundCloudPlayer";
-@import "./YouTubePlayer";
 
 @component Video {
   position: relative;

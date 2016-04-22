@@ -37,19 +37,19 @@ export default class PlaylistRow extends React.Component {
 
     return (
       <div
-        className={cx('MediaListRow', 'yt-import-PlaylistRow', className)}
+        className={cx('MediaListRow', 'src-youtube-PlaylistRow', className)}
         {...attrs}
       >
         {thumbnail}
-        <div className="yt-import-PlaylistRow-info" title={playlist.description}>
-          <div className="yt-import-PlaylistRow-name">
+        <div className="src-youtube-PlaylistRow-info" title={playlist.description}>
+          <div className="src-youtube-PlaylistRow-name">
             {playlist.name}
           </div>
-          <div className="yt-import-PlaylistRow-size">
+          <div className="src-youtube-PlaylistRow-size">
             Items: {playlist.size}
           </div>
         </div>
-        <div className="yt-import-PlaylistRow-import">
+        <div className="src-youtube-PlaylistRow-import">
           <IconButton
             style={{
               width: '100%',

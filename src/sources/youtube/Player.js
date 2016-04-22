@@ -1,9 +1,9 @@
 /* eslint-disable react/prefer-stateless-function */
 import cx from 'classnames';
-import React from 'react';
+import * as React from 'react';
 
-import VideoBackdrop from '../VideoBackdrop';
-import YouTubePlayerEmbed from './Embed';
+import VideoBackdrop from '../../components/Video/VideoBackdrop';
+import YouTubePlayerEmbed from './PlayerEmbed';
 
 export default class YouTubePlayer extends React.Component {
   static propTypes = {
@@ -18,7 +18,7 @@ export default class YouTubePlayer extends React.Component {
 
   render() {
     const { active, className, enabled, size, media } = this.props;
-    const sizeClass = `YouTubePlayer--${size}`;
+    const sizeClass = `src-youtube-Player--${size}`;
 
     let backdrop;
     if (active && size === 'small') {
@@ -28,7 +28,7 @@ export default class YouTubePlayer extends React.Component {
     return (
       <span hidden={!active}>
         {backdrop}
-        <div className={cx('YouTubePlayer', sizeClass, className)}>
+        <div className={cx('src-youtube-Player', sizeClass, className)}>
           {enabled && <YouTubePlayerEmbed
             media={media}
             active={active}

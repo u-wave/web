@@ -44,10 +44,10 @@ export default class YouTubeImportPlaylistPanel extends React.Component {
     } = this.props;
 
     return (
-      <div className="ImportPanel yt-import-PlaylistPanel">
+      <div className="ImportPanel src-youtube-PlaylistPanel">
         <ImportPanelHeader onClosePanel={onClosePanel}>
-          <div className="yt-import-PlaylistPanel-header">
-            <div className="yt-import-PlaylistPanel-name">
+          <div className="src-youtube-PlaylistPanel-header">
+            <div className="src-youtube-PlaylistPanel-name">
               {importingPlaylist.name}
             </div>
             <IconButton

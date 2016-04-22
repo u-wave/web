@@ -1,0 +1,19 @@
+@import "../../vars.css";
+
+@component-namespace src-soundcloud {
+  @component SongInfo {
+    @descendent link {
+      font: 14pt;
+      color: $text-color;
+      display: block;
+      height: 25px;
+      @modifier track {
+        font-weight: bold;
+      }
+
+      &:visited {
+        color: $text-color;
+      }
+    }
+  }
+}

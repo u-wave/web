@@ -1,13 +1,8 @@
 import cx from 'classnames';
 import isEqual from 'is-equal-shallow';
 import React, { Component, PropTypes } from 'react';
-import SoundCloudPlayer from './SoundCloudPlayer';
-import YouTubePlayer from './YouTubePlayer';
 
-const sources = [
-  [ 'youtube', YouTubePlayer ],
-  [ 'soundcloud', SoundCloudPlayer ]
-];
+import * as sources from '../../sources';
 
 export default class Video extends Component {
   static propTypes = {
@@ -41,15 +36,23 @@ export default class Video extends Component {
       volume: isMuted ? 0 : volume
     };
 
+    const players = Object.keys(sources).map(sourceType => {
+      if (sources[sourceType].Player) {
+        const { Player } = sources[sourceType];
+        return (
+          <Player
+            key={sourceType}
+            {...props}
+            active={media.sourceType === sourceType}
+          />
+        );
+      }
+      return null;
+    }).filter(Boolean);
+
     return (
       <div className={cx('Video', `Video--${media.sourceType}`, `Video--${size}`)}>
-        {sources.map(([ type, Player ]) => (
-          <Player
-            key={type}
-            {...props}
-            active={media.sourceType === type}
-          />
-        ))}
+        {players}
       </div>
     );
   }
