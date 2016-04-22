@@ -1,0 +1,12 @@
+@component SidePanel {
+  @descendent tab {
+    /* material-ui needs box-sizing: content-box on an element that is not
+     * inline-styleable :( */
+    > div {
+      box-sizing: content-box;
+      /* OK please don't hurt me :( */
+      height: auto !important;
+      padding: 0 !important;
+    }
+  }
+}
