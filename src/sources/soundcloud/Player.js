@@ -1,6 +1,6 @@
 import cx from 'classnames';
-import React from 'react';
-import VideoBackdrop from '../VideoBackdrop';
+import * as React from 'react';
+import VideoBackdrop from '../../components/Video/VideoBackdrop';
 
 import SongInfo from './SongInfo';
 
@@ -78,16 +78,16 @@ export default class SoundCloudPlayer extends React.Component {
     const { media } = this.props;
     const { sourceData } = media;
     if (!sourceData) {
-      return <div className={cx('SoundCloudPlayer', this.props.className)} />;
+      return <div className={cx('src-soundcloud-Player', this.props.className)} />;
     }
 
     return (
-      <div className={cx('SoundCloudPlayer', this.props.className)}>
+      <div className={cx('src-soundcloud-Player', this.props.className)}>
         <VideoBackdrop url={media.thumbnail} />
-        <div className="SoundCloudPlayer-meta">
-          <div className="SoundCloudPlayer-info">
+        <div className="src-soundcloud-Player-meta">
+          <div className="src-soundcloud-Player-info">
             <img
-              className="SoundCloudPlayer-art"
+              className="src-soundcloud-Player-art"
               src={media.thumbnail}
               alt=""
             />
@@ -102,7 +102,7 @@ export default class SoundCloudPlayer extends React.Component {
           <a
             href={sourceData.permalinkUrl}
             target="_blank"
-            className="SoundCloudPlayer-permalink"
+            className="src-soundcloud-Player-permalink"
           >
             View on
             <img

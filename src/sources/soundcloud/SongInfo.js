@@ -8,9 +8,9 @@ const iconStyles = {
 };
 
 const SongInfo = ({ artist, title, artistUrl, trackUrl }) => (
-  <div className="SoundCloudSongInfo">
+  <div className="src-soundcloud-SongInfo">
     <a
-      className="SoundCloudSongInfo-link SoundCloudSongInfo-link--artist"
+      className="src-soundcloud-SongInfo-link src-soundcloud-SongInfo-link--artist"
       target="_blank"
       href={artistUrl}
     >
@@ -18,7 +18,7 @@ const SongInfo = ({ artist, title, artistUrl, trackUrl }) => (
       {artist}
     </a>
     <a
-      className="SoundCloudSongInfo-link SoundCloudSongInfo-link--track"
+      className="src-soundcloud-SongInfo-link src-soundcloud-SongInfo-link--track"
       target="_blank"
       href={trackUrl}
     >
