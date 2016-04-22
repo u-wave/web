@@ -54,6 +54,25 @@ export default class Row extends React.Component {
     this.setState({ showActions: false });
   };
 
+  renderThumbnail() {
+    const { media } = this.props;
+
+    if (media.loading) {
+      return <MediaLoadingIndicator className="MediaListRow-loader" />;
+    }
+
+    return (
+      <div className="MediaListRow-thumb">
+        <img
+          className="MediaListRow-image"
+          key={media._id}
+          src={media.thumbnail}
+          alt=""
+        />
+      </div>
+    );
+  }
+
   render() {
     const {
       className, media, selection, selected,
@@ -71,16 +90,6 @@ export default class Row extends React.Component {
       ? media.end - media.start
       // search result
       : media.duration;
-    const thumbnail = media.loading
-      ? <MediaLoadingIndicator className="MediaListRow-loader" />
-      : <div className="MediaListRow-thumb">
-          <img
-            className="MediaListRow-image"
-            key={media._id}
-            src={media.thumbnail}
-            alt=""
-          />
-        </div>;
     return connectDragSource(
       <div
         className={cx('MediaListRow', className, selectedClass, loadingClass)}
@@ -88,7 +97,7 @@ export default class Row extends React.Component {
         onMouseLeave={this.handleMouseLeave}
         {...attrs}
       >
-        {thumbnail}
+        {this.renderThumbnail()}
         <div className="MediaListRow-artist" title={media.artist}>
           {media.artist}
         </div>

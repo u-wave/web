@@ -97,7 +97,7 @@ export default class SoundCloudPlayer extends React.Component {
               artistUrl={sourceData.artistUrl}
               trackUrl={sourceData.permalinkUrl}
             />
-          <div style={clearStyle} />
+            <div style={clearStyle} />
           </div>
           <a
             href={sourceData.permalinkUrl}

@@ -3,11 +3,13 @@
   "parser": "babel-eslint",
 
   "rules": {
-    "array-bracket-spacing": [ 2, "always" ],
-    "comma-dangle": [ 2, "never" ],
-    "indent": [ 2, 2, { "SwitchCase": 0 } ],
-    "new-cap": [ 2, {
+    "array-bracket-spacing": [ "error", "always" ],
+    "comma-dangle": [ "error", "never" ],
+    "indent": [ "error", 2, { "SwitchCase": 0 } ],
+    "new-cap": [ "error", {
       "capIsNewExceptions": [ "DragDropContext", "DragSource", "DropTarget", "DragLayer", "ThemeDecorator" ]
-    } ]
+    } ],
+    "no-underscore-dangle": "off",
+    "global-require": "off"
   }
 }
