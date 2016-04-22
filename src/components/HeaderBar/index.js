@@ -35,12 +35,7 @@ export default class HeaderBar extends Component {
     } = this.props;
 
     const nowPlaying = media
-      ? (
-        <SongTitle
-          artist={media.artist}
-          title={media.title}
-        />
-      )
+      ? <SongTitle artist={media.artist} title={media.title} />
       : 'Nobody is playing!';
 
     return (
