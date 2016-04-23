@@ -12,7 +12,9 @@ const linkStyle = {
   display: 'block',
   height: 24,
   lineHeight: '24px',
-  marginBottom: 20
+  marginBottom: 20,
+  textAlign: 'left',
+  WebkitAppearance: 'initial*'
 };
 const iconStyle = { verticalAlign: 'top' };
 
@@ -21,6 +23,7 @@ const linkProps = {
   linkButton: true,
   target: '_blank',
   labelPosition: 'after',
+  backgroundColor: 'transparent',
   hoverColor: 'transparent',
   textTransform: 'none'
 };

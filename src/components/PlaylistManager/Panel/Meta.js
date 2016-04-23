@@ -7,6 +7,8 @@ import ActivateIcon from 'material-ui/svg-icons/toggle/check-box-outline-blank';
 import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
 
+const checkboxIconStyle = { fill: '#fff' };
+
 const PlaylistMeta = ({
   className, active, id, name,
   onActivatePlaylist, onRenamePlaylist, onDeletePlaylist
@@ -21,6 +23,7 @@ const PlaylistMeta = ({
         onCheck={() => !active && onActivatePlaylist(id)}
         checkedIcon={<ActiveIcon color="#fff" />}
         uncheckedIcon={<ActivateIcon color="#fff" />}
+        iconStyle={checkboxIconStyle}
         label={active ? 'Active' : 'Activate'}
       />
     </div>
