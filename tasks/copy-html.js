@@ -6,6 +6,9 @@ import cheerio from 'cheerio';
 import minifyHtml from 'gulp-htmlmin';
 import when from 'gulp-if';
 
+import renderLoadingScreen from './utils/renderLoadingScreen';
+import renderApp from './utils/renderApp';
+
 // The core function of the HTML task is to copy the index.html file from the
 // source directory to the compiled directory. However, it can also do a few
 // more things, like minification and prerendering the üWave React app ahead of
@@ -13,21 +16,6 @@ import when from 'gulp-if';
 // though it won't do much until the JavaScript is loaded as well.
 
 const COMPILED_CSS_PATH = joinPath(__dirname, '../lib/app.css');
-
-// Renders the React app to a string. It's surprisingly straightforward because
-// React is cool.
-function renderApp() {
-  const React = require('react');
-  const { renderToString } = require('react-dom/server');
-  const { Provider } = require('react-redux');
-  const App = require('../src/containers/App').default;
-  const store = require('../src/store/configureStore').default();
-  return renderToString(
-    <Provider store={store}>
-      <App />
-    </Provider>
-  );
-}
 
 // Used to apply a function to a DOM element identified by `selector`.
 const apply = (selector, fn) =>
@@ -62,6 +50,7 @@ const minifierOptions = enableMinifierOptions([
 
 export default function copyHtmlTask({ minify = false, prerender = false }) {
   return src('src/index.html')
+    .pipe(insert('#app-loading', renderLoadingScreen))
     .pipe(when(prerender, insert('#app', renderApp)))
     // When minifying, we inline the app CSS in a <style> tag. This saves an
     // HTTP request when loading the page.

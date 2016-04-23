@@ -55,6 +55,9 @@ ReactDOM.render(
   document.getElementById('app')
 );
 
+// We're done, so remove the loading screen.
+document.getElementById('app-loading').innerHTML = '';
+
 // This exposes a global `debug.enable()` function that you can call to get some
 // extra debug output.
 // Usually you'll want to do `debug.enable('uwave:*')` and then refresh the
