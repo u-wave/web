@@ -9,9 +9,11 @@ const GRECAPTCHA_API = 'https://www.google.com/recaptcha/api.js';
 const onloadCallbackName = 'grecaptchaOnload__$';
 const onloadCallbacks = [];
 
-window[onloadCallbackName] = () => {
-  onloadCallbacks.forEach(fn => fn(window.grecaptcha));
-};
+if (typeof window !== 'undefined') {
+  window[onloadCallbackName] = () => {
+    onloadCallbacks.forEach(fn => fn(window.grecaptcha));
+  };
+}
 
 export default class ReCaptcha extends React.Component {
   static propTypes = {
