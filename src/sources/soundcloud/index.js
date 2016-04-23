@@ -1,1 +1,1 @@
-export Player from './Player';
+export Player from './PlayerWrapper';
