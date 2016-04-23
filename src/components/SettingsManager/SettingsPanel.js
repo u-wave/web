@@ -14,7 +14,7 @@ const linkStyle = {
   lineHeight: '24px',
   marginBottom: 20,
   textAlign: 'left',
-  WebkitAppearance: 'initial*'
+  WebkitAppearance: 'initial'
 };
 const iconStyle = { verticalAlign: 'top' };
 
