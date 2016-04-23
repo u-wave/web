@@ -1,6 +1,7 @@
 @import "./Dialog.css";
 @import "./EditMediaDialog";
 @import "./LoginDialog";
+@import "./PreviewMediaDialog";
 
 @component Dialogs {
   z-index: 100;

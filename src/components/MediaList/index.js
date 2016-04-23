@@ -15,6 +15,7 @@ export default class MediaList extends Component {
     rowComponent: PropTypes.func,
     rowProps: PropTypes.object,
 
+    onOpenPreviewMediaDialog: PropTypes.func,
     makeActions: PropTypes.func
   };
 
@@ -77,6 +78,7 @@ export default class MediaList extends Component {
         selected={selected}
         selection={selection.get()}
         onClick={e => this.selectItem(index, e)}
+        onOpenPreviewMediaDialog={this.props.onOpenPreviewMediaDialog}
         makeActions={() => makeActions(media, selection, index)}
       />
     );

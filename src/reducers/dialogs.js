@@ -1,10 +1,15 @@
 import {
   OPEN_EDIT_MEDIA_DIALOG, CLOSE_EDIT_MEDIA_DIALOG,
+  OPEN_PREVIEW_MEDIA_DIALOG, CLOSE_PREVIEW_MEDIA_DIALOG,
   OPEN_LOGIN_DIALOG, CLOSE_LOGIN_DIALOG
 } from '../constants/actionTypes/dialogs';
 
 const initialState = {
   editMedia: {
+    open: false,
+    payload: {}
+  },
+  previewMedia: {
     open: false,
     payload: {}
   },
@@ -31,6 +36,10 @@ export default function reduce(state = initialState, action = {}) {
     return openDialog(state, 'editMedia', payload);
   case CLOSE_EDIT_MEDIA_DIALOG:
     return closeDialog(state, 'editMedia');
+  case OPEN_PREVIEW_MEDIA_DIALOG:
+    return openDialog(state, 'previewMedia', payload);
+  case CLOSE_PREVIEW_MEDIA_DIALOG:
+    return closeDialog(state, 'previewMedia');
   case OPEN_LOGIN_DIALOG:
     return openDialog(state, 'login', payload);
   case CLOSE_LOGIN_DIALOG:

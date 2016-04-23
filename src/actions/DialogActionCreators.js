@@ -1,5 +1,6 @@
 import {
   OPEN_EDIT_MEDIA_DIALOG, CLOSE_EDIT_MEDIA_DIALOG,
+  OPEN_PREVIEW_MEDIA_DIALOG, CLOSE_PREVIEW_MEDIA_DIALOG,
   OPEN_LOGIN_DIALOG, CLOSE_LOGIN_DIALOG
 } from '../constants/actionTypes/dialogs';
 
@@ -12,6 +13,19 @@ export function openEditMediaDialog(playlistID, media) {
 
 export function closeEditMediaDialog() {
   return { type: CLOSE_EDIT_MEDIA_DIALOG };
+}
+
+export function openPreviewMediaDialog(media) {
+  return {
+    type: OPEN_PREVIEW_MEDIA_DIALOG,
+    payload: { media }
+  };
+}
+
+export function closePreviewMediaDialog() {
+  return {
+    type: CLOSE_PREVIEW_MEDIA_DIALOG
+  };
 }
 
 export function openLoginDialog() {

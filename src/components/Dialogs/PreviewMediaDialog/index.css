@@ -1,0 +1,6 @@
+@component PreviewMediaDialog {
+  @descendent content {
+    overflow: hidden;
+    position: relative;
+  }
+}

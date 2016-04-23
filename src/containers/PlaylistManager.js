@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
 import {
+  openPreviewMediaDialog
+} from '../actions/DialogActionCreators';
+import {
   showImportPanel
 } from '../actions/ImportActionCreators';
 import {
@@ -65,6 +68,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onEditMedia,
   onMoveMedia,
   onRemoveFromPlaylist,
+  onOpenPreviewMediaDialog: openPreviewMediaDialog,
   onAddToPlaylist: addMedia,
   onCreatePlaylist: askCreatePlaylist,
   onRenamePlaylist: askRenamePlaylist,

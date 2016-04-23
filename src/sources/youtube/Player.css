@@ -4,9 +4,19 @@
     height: 100%;
     position: relative;
     z-index: 3;
-    pointer-events: none;
+
+    @modifier large {
+      pointer-events: none;
+    }
 
     @modifier small {
+      margin: auto;
+      width: 640px;
+      height: 360px;
+      pointer-events: none;
+    }
+
+    @modifier preview {
       margin: auto;
       width: 640px;
       height: 360px;

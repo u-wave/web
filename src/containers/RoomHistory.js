@@ -2,6 +2,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
+import { openPreviewMediaDialog } from '../actions/DialogActionCreators';
 import { addMediaMenu } from '../actions/PlaylistActionCreators';
 
 import { roomHistoryWithVotesSelector } from '../selectors/roomHistorySelectors';
@@ -22,7 +23,8 @@ const mapStateToProps = createStructuredSelector({
 const onOpenAddMediaMenu = (position, media, selection) =>
   addMediaMenu(selectionOrOne(media, selection), position);
 const mapDispatchToProps = dispatch => bindActionCreators({
-  onOpenAddMediaMenu
+  onOpenAddMediaMenu,
+  onOpenPreviewMediaDialog: openPreviewMediaDialog
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(RoomHistory);

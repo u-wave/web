@@ -37,6 +37,7 @@ const PlaylistPanel = ({
   className, playlist, media, loading,
   onActivatePlaylist, onRenamePlaylist, onDeletePlaylist, onLoadPlaylistPage,
   onMoveMedia,
+  onOpenPreviewMediaDialog,
   ...props
 }) => {
   let list;
@@ -54,6 +55,7 @@ const PlaylistPanel = ({
         media={media}
         rowComponent={PlaylistItemRow}
         rowProps={{ onMoveMedia }}
+        onOpenPreviewMediaDialog={onOpenPreviewMediaDialog}
         makeActions={makeActions(props)}
         onRequestPage={onLoadPlaylistPage}
       />
@@ -85,7 +87,8 @@ PlaylistPanel.propTypes = {
   onRenamePlaylist: React.PropTypes.func.isRequired,
   onDeletePlaylist: React.PropTypes.func.isRequired,
   onLoadPlaylistPage: React.PropTypes.func.isRequired,
-  onMoveMedia: React.PropTypes.func.isRequired
+  onMoveMedia: React.PropTypes.func.isRequired,
+  onOpenPreviewMediaDialog: React.PropTypes.func.isRequired
 };
 
 export default PlaylistPanel;

@@ -44,6 +44,7 @@ export default class PlaylistManager extends Component {
     onEditMedia: PropTypes.func,
     onMoveMedia: PropTypes.func,
     onRemoveFromPlaylist: PropTypes.func,
+    onOpenPreviewMediaDialog: PropTypes.func,
     onLoadPlaylistPage: PropTypes.func
   };
 
@@ -111,7 +112,10 @@ export default class PlaylistManager extends Component {
       onSelectSearchResults,
       onSearchSubmit,
       onSearchSourceChange,
-      onShowImportPanel
+      onShowImportPanel,
+
+      onOpenPreviewMediaDialog,
+      onOpenAddMediaMenu
     } = this.props;
 
     let panel;
@@ -131,7 +135,8 @@ export default class PlaylistManager extends Component {
           onActivatePlaylist={onActivatePlaylist}
           onRenamePlaylist={onRenamePlaylist}
           onDeletePlaylist={onDeletePlaylist}
-          onOpenAddMediaMenu={this.props.onOpenAddMediaMenu}
+          onOpenPreviewMediaDialog={onOpenPreviewMediaDialog}
+          onOpenAddMediaMenu={onOpenAddMediaMenu}
           onMoveToFirst={this.handleMoveToFirst}
           onMoveMedia={this.handleMoveMedia}
           onEditMedia={this.handleEditMedia}
@@ -140,13 +145,13 @@ export default class PlaylistManager extends Component {
         />
       );
     } else if (searchQuery) {
-      const { onOpenAddMediaMenu } = this.props;
       panel = (
         <SearchResults
           className="PlaylistManager-panel"
           query={searchQuery}
           results={searchResults}
           loadingState={searchLoadingState}
+          onOpenPreviewMediaDialog={onOpenPreviewMediaDialog}
           onOpenAddMediaMenu={onOpenAddMediaMenu}
         />
       );
