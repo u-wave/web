@@ -1,5 +1,6 @@
 import find from 'array-find';
 import React, { Component, PropTypes } from 'react';
+import Paper from 'material-ui/Paper';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 // 😱
@@ -29,6 +30,9 @@ const positionInsideWindow = (position, expectedHeight) => {
 const menuStyle = {
   textAlign: 'left',
   zIndex: 30
+};
+const menuItemStyle = {
+  WebkitAppearance: 'initial'
 };
 
 export default class AddToPlaylistMenu extends Component {
@@ -62,26 +66,30 @@ export default class AddToPlaylistMenu extends Component {
           width: MENU_WIDTH + RANDOM_MUI_PADDING + SCROLLBAR_WIDTH
         }}
       >
-        <Menu
-          style={menuStyle}
-          maxHeight={MENU_HEIGHT}
-          width={MENU_WIDTH}
-          autoWidth={false}
-          onItemTouchTap={this.handleSelect}
-        >
-          <MenuItem
-            primaryText="New Playlist"
-          />
-          {playlists.map(playlist => (
+        <Paper>
+          <Menu
+            style={menuStyle}
+            maxHeight={MENU_HEIGHT}
+            width={MENU_WIDTH}
+            autoWidth={false}
+            onItemTouchTap={this.handleSelect}
+          >
             <MenuItem
-              key={playlist._id}
-              value={playlist._id}
-              primaryText={playlist.name}
-              secondaryText={`${playlist.size || 0}`}
-              checked={!!playlist.active}
+              style={menuItemStyle}
+              primaryText="New Playlist"
             />
-          ))}
-        </Menu>
+            {playlists.map(playlist => (
+              <MenuItem
+                key={playlist._id}
+                style={menuItemStyle}
+                value={playlist._id}
+                primaryText={playlist.name}
+                secondaryText={`${playlist.size || 0}`}
+                checked={!!playlist.active}
+              />
+            ))}
+          </Menu>
+        </Paper>
       </div>
     );
   };
