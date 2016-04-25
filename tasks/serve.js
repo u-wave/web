@@ -14,7 +14,7 @@ function tryRequire(path, message) {
   }
 }
 
-export default function serveTask({ port = config.server.port }) {
+export default function serveTask({ port = config.port }) {
   const uwave = tryRequire('u-wave-core',
     'Could not find the u-wave core module. Did you run `npm install u-wave-core`?'
   );
@@ -25,7 +25,13 @@ export default function serveTask({ port = config.server.port }) {
     'Could not find the client middleware. Did you run `gulp middleware`?'
   );
 
+  const ytSource = require('u-wave-source-youtube');
+  const scSource = require('u-wave-source-soundcloud');
+
   const uw = uwave(config);
+
+  uw.source('youtube', ytSource, config.sources.youtube);
+  uw.source('soundcloud', scSource, config.sources.soundcloud);
 
   const app = express();
   const server = app.listen(port);

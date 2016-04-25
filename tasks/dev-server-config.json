@@ -1,7 +1,11 @@
 {
-  "server": { "port": 6041 },
-  "keys": {
-    "youtube": "AIzaSyAlDfeXOvAM1bIYm4kCtAiXOVdeKutdx8I",
-    "soundcloud": "9d883cdd4c3c54c6dddda2a5b3a11200"
+  "port": 6041,
+  "sources": {
+    "youtube": {
+      "key": "AIzaSyAlDfeXOvAM1bIYm4kCtAiXOVdeKutdx8I"
+    },
+    "soundcloud": {
+      "key": "9d883cdd4c3c54c6dddda2a5b3a11200"
+    }
   }
 }
