@@ -178,7 +178,7 @@ export function resetPassword(email) {
         debug('reset token', token);
         dispatch({
           type: RESET_PASSWORD_COMPLETE,
-          payload: "Password reset successfully"
+          payload: "Successfully sent password reset email"
         });
       dispatch(closeLoginDialog());
       })
