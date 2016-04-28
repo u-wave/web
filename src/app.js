@@ -12,6 +12,7 @@ import * as Socket from './utils/Socket';
 import { get as readSession } from './utils/Session';
 import { initState, setJWT } from './actions/LoginActionCreators';
 import { startTicking } from './actions/TickerActionCreators';
+import createExtensions from './extensions';
 
 import configureStore from './store/configureStore';
 
@@ -63,3 +64,5 @@ document.getElementById('app-loading').innerHTML = '';
 // Usually you'll want to do `debug.enable('uwave:*')` and then refresh the
 // page.
 window.debug = require('debug');
+
+window.uw = createExtensions(store);
