@@ -1,9 +1,7 @@
 import extension from './extension';
-import createApis from './api';
 
 export default function createExtensions(store) {
-  return {
-    extension,
-    ...createApis(store)
-  };
+  return extension(store, 'main', main => {
+    main.extension = extension.bind(null, store);
+  });
 }
