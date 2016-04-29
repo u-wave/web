@@ -377,8 +377,29 @@ export function addMediaComplete(playlistID, newSize, insert) {
   };
 }
 
+/**
+ * Keep only the playlist item properties that are necessary to add an item to
+ * a playlist. The rest ("thumbnail" etc) is left out for smaller payloads.
+ */
+
+function minimizePlaylistItem(item) {
+  return {
+    sourceType: item.sourceType,
+    sourceID: item.sourceID,
+    artist: item.artist,
+    title: item.title,
+    start: item.start,
+    end: item.end
+  };
+}
+
 export function addMedia(playlist, items, afterID = null) {
-  return post(`/playlists/${playlist._id}/media`, { items, after: afterID }, {
+  const payload = {
+    items: items.map(minimizePlaylistItem),
+    after: afterID
+  };
+
+  return post(`/playlists/${playlist._id}/media`, payload, {
     onStart: () => addMediaStart(playlist._id, items, afterID),
     onComplete: ({ added, playlistSize }) => addMediaComplete(
       playlist._id,
