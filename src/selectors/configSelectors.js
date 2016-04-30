@@ -15,7 +15,7 @@ export const requestOptionsSelector = createSelector(
 
 export const availableEmojiImagesSelector = createSelector(
   configSelector,
-  config => config.emoji
+  config => config.emoji || {}
 );
 
 export const availableEmojiNamesSelector = createSelector(
