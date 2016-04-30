@@ -6,6 +6,7 @@ import {
   requestComplete,
   requestCompleteError
 } from '../actions/RequestActionCreators';
+import { requestOptionsSelector } from '../selectors/configSelectors';
 import { tokenSelector } from '../selectors/userSelectors';
 
 function makeUrl(token, path, params = {}) {
@@ -31,16 +32,20 @@ function rejectNonOK(response) {
 }
 
 const defaultOptions = {
-  baseUrl: '/v1'
+  apiUrl: '/v1'
 };
 
-export default function middleware(overrideOptions = {}) {
-  const opts = { ...defaultOptions, ...overrideOptions };
-
+export default function middleware(middlewareOptions = {}) {
   return ({ dispatch, getState }) => next => action => {
     if (action.type !== REQUEST_START) {
       return next(action);
     }
+
+    const opts = {
+      ...defaultOptions,
+      ...middlewareOptions,
+      ...requestOptionsSelector(getState())
+    };
 
     const token = tokenSelector(getState());
     const { method, url, qs, data } = action.payload;
@@ -56,7 +61,7 @@ export default function middleware(overrideOptions = {}) {
       method, url, qs, data
     };
 
-    const requestUrl = makeUrl(token, opts.baseUrl + url, qs);
+    const requestUrl = makeUrl(token, opts.apiUrl + url, qs);
 
     const requestOptions = {
       method,

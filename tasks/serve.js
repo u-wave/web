@@ -36,12 +36,14 @@ export default function serveTask({ port = config.port }) {
   const app = express();
   const server = app.listen(port);
 
+  const apiUrl = '/v1';
+
   app
-    .use('/v1', createWebApi(uw, {
+    .use(apiUrl, createWebApi(uw, {
       server,
       secret: new Buffer('none', 'utf8')
     }))
-    .use(createWebClient(uw, {}));
+    .use(createWebClient(uw, { apiUrl }));
 
   uw.on('stopped', () => {
     process.exit(0);

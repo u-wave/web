@@ -18,9 +18,19 @@ import configureStore from './store/configureStore';
 // Register default chat commands.
 import './utils/commands';
 
+function readApplicationConfig() {
+  try {
+    return JSON.parse(document.getElementById('u-wave-config').textContent);
+  } catch (e) {
+    return {};
+  }
+}
+
 // The Store holds all of the application state. The @connect calls in the React
 // Container components use this store to access state.
-const store = configureStore();
+const store = configureStore({
+  config: readApplicationConfig()
+});
 
 // Check if we have a previous login session going.
 const jwt = readSession();

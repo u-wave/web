@@ -3,6 +3,7 @@ export addToPlaylistMenu from './addToPlaylistMenu';
 export auth from './auth';
 export booth from './booth';
 export chat from './chat';
+export config from './config';
 export dialogs from './dialogs';
 export errors from './errors';
 export imports from './imports';
