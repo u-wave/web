@@ -1,24 +1,22 @@
-/* eslint-disable react/prefer-stateless-function */
-import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
+import { moveWaitlistUser } from '../actions/ModerationActionCreators';
 import { waitlistUsersSelector } from '../selectors/waitlistSelectors';
-import UserList from '../components/UserList';
+import { isModeratorSelector } from '../selectors/userSelectors';
+import WaitList from '../components/WaitList';
 
 const mapStateToProps = createStructuredSelector({
-  users: waitlistUsersSelector
+  users: waitlistUsersSelector,
+  canMoveUsers: isModeratorSelector
 });
 
-@connect(mapStateToProps)
-export default class WaitListContainer extends Component {
-  render() {
-    return (
-      <UserList
-        className="WaitList"
-        {...this.props}
-      />
-    );
-  }
-}
-/* eslint-enable react/prefer-stateless-function */
+const mapDispatchToProps = dispatch => ({
+  onMoveUser: user => bindActionCreators(
+    position => moveWaitlistUser(user, position),
+    dispatch
+  )
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(WaitList);

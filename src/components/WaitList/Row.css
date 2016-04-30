@@ -1,0 +1,16 @@
+@component UserRow {
+  @descendent position {
+    float: left;
+    text-align: center;
+    padding: 0 0 0 7px;
+  }
+
+  @descendent handle {
+    float: right;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    cursor: move;
+    padding: 0 4px;
+  }
+}

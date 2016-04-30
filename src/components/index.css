@@ -16,6 +16,6 @@
 @import "./SidePanels";
 @import "./SongTitle";
 @import "./Video";
-
 @import "./UserList";
 @import "./RoomUserList";
+@import "./WaitList";
