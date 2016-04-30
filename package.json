@@ -33,7 +33,7 @@
     "react-addons-css-transition-group": "^15.0.1",
     "react-dnd": "^2.0.2",
     "react-dnd-html5-backend": "^2.0.0",
-    "react-dom": "^15.0.1",
+    "react-dom": "^15.0.2",
     "react-list": "^0.7.3",
     "react-list-lazy-load": "^1.0.3",
     "react-redux": "^4.0.0",
