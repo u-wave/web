@@ -1,0 +1,9 @@
+$recaptcha-iframe-height: 78px;
+
+@component ReCaptcha {
+  @descendent spinner {
+    width: $recaptcha-iframe-height;
+    height: $recaptcha-iframe-height;
+    margin: auto;
+  }
+}

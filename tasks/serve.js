@@ -40,6 +40,7 @@ export default function serveTask({ port = config.port }) {
 
   app
     .use(apiUrl, createWebApi(uw, {
+      recaptcha: false,
       server,
       secret: new Buffer('none', 'utf8')
     }))

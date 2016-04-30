@@ -2,19 +2,28 @@ import React from 'react';
 import EmailIcon from 'material-ui/svg-icons/communication/email';
 import PasswordIcon from 'material-ui/svg-icons/action/lock';
 import UserIcon from 'material-ui/svg-icons/social/person';
+
 import Loader from '../../Loader';
 import Form from '../../Form';
 import FormGroup from '../../Form/Group';
 import TextField from '../../Form/TextField';
 import Button from '../../Form/Button';
 
+import ReCaptcha from '../../ReCaptcha';
+
 export default class RegisterForm extends React.Component {
   static propTypes = {
+    useReCaptcha: React.PropTypes.bool,
+    reCaptchaSiteKey: React.PropTypes.string,
     error: React.PropTypes.object,
+
     onRegister: React.PropTypes.func
   };
 
-  state = { busy: false };
+  state = {
+    busy: false,
+    captchaResponse: null
+  };
 
   componentWillReceiveProps() {
     this.setState({ busy: false });
@@ -26,9 +35,30 @@ export default class RegisterForm extends React.Component {
     this.props.onRegister({
       username: this.refs.username.value,
       email: this.refs.email.value,
-      password: this.refs.password.value
+      password: this.refs.password.value,
+      grecaptcha: this.state.captchaResponse
     });
   };
+
+  handleCaptchaResponse = response => {
+    this.setState({
+      captchaResponse: response
+    });
+  };
+
+  renderCaptcha() {
+    if (!this.props.useReCaptcha) {
+      return null;
+    }
+    return (
+      <FormGroup>
+        <ReCaptcha
+          sitekey={this.props.reCaptchaSiteKey}
+          onResponse={this.handleCaptchaResponse}
+        />
+      </FormGroup>
+    );
+  }
 
   render() {
     const { error } = this.props;
@@ -64,6 +94,8 @@ export default class RegisterForm extends React.Component {
             icon={<PasswordIcon color="#9f9d9e" />}
           />
         </FormGroup>
+
+        {this.renderCaptcha()}
 
         <FormGroup>
           <Button

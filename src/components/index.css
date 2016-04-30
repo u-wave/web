@@ -10,6 +10,7 @@
 @import "./MediaList";
 @import "./Overlay";
 @import "./PlaylistManager";
+@import "./ReCaptcha";
 @import "./RoomHistory";
 @import "./SettingsManager";
 @import "./SidePanels";
