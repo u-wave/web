@@ -15,7 +15,7 @@ export const loginDialogSelector = createSelector(
   (dialogs, error, siteKey) => assign(merge(dialogs.login), {
     error,
     useReCaptcha: !!siteKey,
-    reCaptchaSiteKey: siteKey ? { key: siteKey } : null
+    reCaptchaSiteKey: siteKey || null
   })
 );
 
