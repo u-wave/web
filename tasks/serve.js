@@ -25,6 +25,14 @@ export default function serveTask({ port = config.port }) {
     'Could not find the client middleware. Did you run `gulp middleware`?'
   );
 
+  let emoji = {};
+  try {
+    emoji = require('../lib/emoji.json');
+  } catch (e) {
+    console.warn('No precompiled Emoji set found: emoji disabled.');
+    console.warn('To enable emoji on the dev server, run `gulp assets`.');
+  }
+
   const ytSource = require('u-wave-source-youtube');
   const scSource = require('u-wave-source-soundcloud');
 
@@ -44,7 +52,10 @@ export default function serveTask({ port = config.port }) {
       server,
       secret: new Buffer('none', 'utf8')
     }))
-    .use(createWebClient(uw, { apiUrl }));
+    .use(createWebClient(uw, {
+      apiUrl,
+      emoji
+    }));
 
   uw.on('stopped', () => {
     process.exit(0);

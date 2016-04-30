@@ -1,0 +1,11 @@
+@component Emoji {
+  /* Same size as the surrounding text */
+  height: 1.3em;
+  width: 1.3em;
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+  display: inline-block;
+  /* Hide text */
+  text-indent: -9999px;
+}

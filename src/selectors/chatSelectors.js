@@ -1,16 +1,22 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import objMap from 'object.map';
 
+import {
+  availableEmojiNamesSelector,
+  availableEmojiImagesSelector
+} from './configSelectors';
 import { usersSelector, currentUserSelector } from './userSelectors';
 
 const baseSelector = state => state.chat;
 
 export const messagesSelector = createSelector(baseSelector, chat => chat.messages);
-const mutesSelector = createSelector(baseSelector, chat => chat.mutedUsers);
 
-export const chatSelector = createStructuredSelector({
-  messages: messagesSelector
+export const markupCompilerOptionsSelector = createStructuredSelector({
+  availableEmoji: availableEmojiNamesSelector,
+  emojiImages: availableEmojiImagesSelector
 });
+
+const mutesSelector = createSelector(baseSelector, chat => chat.mutedUsers);
 
 export const muteTimeoutsSelector = createSelector(
   mutesSelector,

@@ -1,6 +1,15 @@
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 
-import { chatSelector } from '../selectors/chatSelectors';
+import {
+  messagesSelector,
+  markupCompilerOptionsSelector
+} from '../selectors/chatSelectors';
 import Chat from '../components/Chat';
 
-export default connect(chatSelector)(Chat);
+const mapStateToProps = createStructuredSelector({
+  messages: messagesSelector,
+  compileOptions: markupCompilerOptionsSelector
+});
+
+export default connect(mapStateToProps)(Chat);

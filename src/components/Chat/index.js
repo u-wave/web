@@ -5,7 +5,11 @@ import Message from './Message';
 
 export default class Chat extends Component {
   static propTypes = {
-    messages: PropTypes.array
+    messages: PropTypes.array,
+    compileOptions: PropTypes.shape({
+      availableEmoji: PropTypes.array,
+      emojiImages: PropTypes.object
+    })
   };
 
   componentDidMount() {
@@ -41,7 +45,13 @@ export default class Chat extends Component {
     if (msg.type === 'log') {
       return <LogMessage key={msg._id} {...msg} />;
     }
-    return <Message key={msg._id} {...msg} />;
+    return (
+      <Message
+        key={msg._id}
+        compileOptions={this.props.compileOptions}
+        {...msg}
+      />
+    );
   }
 
   render() {
