@@ -1,0 +1,13 @@
+@component UserRow {
+  @descendent votes {
+    float: right;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    margin-right: 4px;
+  }
+
+  @descendent voteIcon {
+    margin: 0 4px;
+  }
+}
