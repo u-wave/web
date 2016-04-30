@@ -12,13 +12,16 @@ const baseDir = path.join(
 
 export default function emojiTask() {
   const emojiRenames = {};
-  const emojiNames = [];
+  const emojiImages = {};
   values(emojiOne).forEach(emoji => {
-    const { unicode, shortname } = emoji;
+    const { unicode, shortname, aliases } = emoji;
     // Strip colons
     const name = shortname.slice(1, -1);
     emojiRenames[unicode] = name;
-    emojiNames.push(name);
+    emojiImages[name] = `${name}.png`;
+    aliases.forEach(alias => {
+      emojiImages[alias.slice(1, -1)] = `${name}.png`;
+    });
   });
 
   return gulp.src(path.join(baseDir, '*.png'))
@@ -29,7 +32,7 @@ export default function emojiTask() {
       this.push(file);
       cb();
     }, cb => {
-      writeFile('./lib/emoji.json', JSON.stringify(emojiNames), cb);
+      writeFile('./lib/emoji.json', JSON.stringify(emojiImages), cb);
     }))
     .pipe(gulp.dest('./lib/assets/emoji'));
 }

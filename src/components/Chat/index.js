@@ -6,7 +6,10 @@ import Message from './Message';
 export default class Chat extends Component {
   static propTypes = {
     messages: PropTypes.array,
-    availableEmoji: PropTypes.array
+    compileOptions: PropTypes.shape({
+      availableEmoji: PropTypes.array,
+      emojiImages: PropTypes.object
+    })
   };
 
   componentDidMount() {
@@ -45,7 +48,7 @@ export default class Chat extends Component {
     return (
       <Message
         key={msg._id}
-        availableEmoji={this.props.availableEmoji}
+        compileOptions={this.props.compileOptions}
         {...msg}
       />
     );

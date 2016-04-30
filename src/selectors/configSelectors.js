@@ -12,3 +12,13 @@ export const requestOptionsSelector = createSelector(
     return options;
   }
 );
+
+export const availableEmojiImagesSelector = createSelector(
+  configSelector,
+  config => config.emoji
+);
+
+export const availableEmojiNamesSelector = createSelector(
+  availableEmojiImagesSelector,
+  emoji => Object.keys(emoji)
+);

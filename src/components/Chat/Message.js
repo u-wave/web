@@ -7,7 +7,7 @@ import Username from '../Username';
 import Loader from '../Loader';
 import compile from './Markup/compile';
 
-const Message = ({ user, text, parsedText, inFlight, isMention, availableEmoji }) => {
+const Message = ({ user, text, parsedText, inFlight, isMention, compileOptions }) => {
   let avatar;
   if (inFlight) {
     avatar = (
@@ -24,7 +24,7 @@ const Message = ({ user, text, parsedText, inFlight, isMention, availableEmoji }
     );
   }
 
-  const children = parsedText ? compile(parsedText, { availableEmoji }) : text;
+  const children = parsedText ? compile(parsedText, compileOptions) : text;
 
   const inFlightClass = inFlight ? 'ChatMessage--loading' : '';
   const mentionClass = isMention ? 'ChatMessage--mention' : '';
@@ -43,9 +43,12 @@ Message.propTypes = {
   user: React.PropTypes.object.isRequired,
   text: React.PropTypes.string.isRequired,
   parsedText: React.PropTypes.array.isRequired,
-  availableEmoji: React.PropTypes.array,
   inFlight: React.PropTypes.bool,
-  isMention: React.PropTypes.bool.isRequired
+  isMention: React.PropTypes.bool.isRequired,
+  compileOptions: React.PropTypes.shape({
+    availableEmoji: React.PropTypes.array,
+    emojiImages: React.PropTypes.object
+  })
 };
 
 export default Message;

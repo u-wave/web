@@ -13,8 +13,12 @@ gulp.task('assets:copy', () =>
 
 export default function copyAssetsTask() {
   return new Promise((resolve, reject) =>
-    seq([ 'assets:copy', 'assets:favicon', 'assets:emoji' ], err =>
-      err ? reject(err) : resolve()
-    )
+    seq([ 'assets:copy', 'assets:favicon', 'assets:emoji' ], err => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve();
+      }
+    })
   );
 }

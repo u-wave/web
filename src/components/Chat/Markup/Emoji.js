@@ -1,10 +1,10 @@
 import * as React from 'react';
 
-const Emoji = ({ name, ...props }) => (
+const Emoji = ({ name, image, ...props }) => (
   <span
     {...props}
     className="Emoji"
-    style={{ backgroundImage: `url(/assets/emoji/${name}.png)` }}
+    style={{ backgroundImage: `url(/assets/emoji/${image})` }}
     data-emoji={name}
   >
     {`:${name}:`}
@@ -12,7 +12,8 @@ const Emoji = ({ name, ...props }) => (
 );
 
 Emoji.propTypes = {
-  name: React.PropTypes.string.isRequired
+  name: React.PropTypes.string.isRequired,
+  image: React.PropTypes.string.isRequired
 };
 
 export default Emoji;
