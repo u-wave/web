@@ -12,3 +12,13 @@ export const requestOptionsSelector = createSelector(
     return options;
   }
 );
+
+const reCaptchaSelector = createSelector(
+  configSelector,
+  config => config.recaptcha
+);
+
+export const reCaptchaSiteKeySelector = createSelector(
+  reCaptchaSelector,
+  rc => (rc ? rc.key : false)
+);

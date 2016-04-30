@@ -13,7 +13,10 @@ import ReCaptcha from '../../ReCaptcha';
 
 export default class RegisterForm extends React.Component {
   static propTypes = {
+    useReCaptcha: React.PropTypes.bool,
+    reCaptchaSiteKey: React.PropTypes.string,
     error: React.PropTypes.object,
+
     onRegister: React.PropTypes.func
   };
 
@@ -42,6 +45,20 @@ export default class RegisterForm extends React.Component {
       captchaResponse: response
     });
   };
+
+  renderCaptcha() {
+    if (!this.props.useReCaptcha) {
+      return null;
+    }
+    return (
+      <FormGroup>
+        <ReCaptcha
+          sitekey={this.props.reCaptchaSiteKey}
+          onResponse={this.handleCaptchaResponse}
+        />
+      </FormGroup>
+    );
+  }
 
   render() {
     const { error } = this.props;
@@ -78,13 +95,7 @@ export default class RegisterForm extends React.Component {
           />
         </FormGroup>
 
-        <FormGroup>
-          {/* TODO put this in config */}
-          <ReCaptcha
-            sitekey="6LfxCxwTAAAAAKgvwHB8cBRvDQhFrAunvpUyxuLv"
-            onResponse={this.handleCaptchaResponse}
-          />
-        </FormGroup>
+        {this.renderCaptcha()}
 
         <FormGroup>
           <Button

@@ -1,5 +1,6 @@
 import assign from 'object-assign';
 import { createSelector } from 'reselect';
+import { reCaptchaSiteKeySelector } from './configSelectors';
 import { volumeSelector } from './settingSelectors';
 import { authErrorSelector } from './userSelectors';
 
@@ -10,7 +11,12 @@ const merge = dialog => ({ ...dialog.payload, open: dialog.open });
 export const loginDialogSelector = createSelector(
   baseSelector,
   authErrorSelector,
-  (dialogs, error) => assign(merge(dialogs.login), { error })
+  reCaptchaSiteKeySelector,
+  (dialogs, error, siteKey) => assign(merge(dialogs.login), {
+    error,
+    useReCaptcha: !!siteKey,
+    reCaptchaSiteKey: siteKey ? { key: siteKey } : null
+  })
 );
 
 export const editMediaDialogSelector = createSelector(
