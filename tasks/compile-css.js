@@ -32,6 +32,6 @@ export default function compileCssTask({ minify = false, 'source-maps': useSourc
   return src('src/app.css')
     .pipe(when(useSourceMaps, sourcemaps.init()))
       .pipe(postcss(processors))
-    .pipe(when(useSourceMaps, sourcemaps.write()))
+    .pipe(when(useSourceMaps, sourcemaps.write('./')))
     .pipe(dest('lib/'));
 }
