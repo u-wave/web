@@ -118,7 +118,7 @@ export default function browserifyTask({ minify = false, 'source-maps': useSourc
         // available, so it doesn't really matter what they're called!
         mangle: { toplevel: true }
       })))
-    .pipe(when(useSourceMaps, sourcemaps.write()))
+    .pipe(when(useSourceMaps, sourcemaps.write('./')))
     // Output to lib/out.js!
     .pipe(dest('lib/'));
 }
