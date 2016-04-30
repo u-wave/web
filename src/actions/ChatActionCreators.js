@@ -78,11 +78,13 @@ export function inputMessage(text) {
 }
 
 let mentionSound;
+if (typeof window !== 'undefined' && window.Audio) {
+  mentionSound = new window.Audio('assets/audio/mention.mp3');
+}
 function playMentionSound() {
-  if (!mentionSound) {
-    mentionSound = new Audio('assets/audio/mention.mp3');
+  if (mentionSound) {
+    mentionSound.play();
   }
-  mentionSound.play();
 }
 
 function hasMention(text, username) {
