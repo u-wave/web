@@ -5,6 +5,7 @@ import splitargs from 'splitargs';
 import parseChatMarkup from 'u-wave-parse-chat-markup';
 
 import {
+  SET_MOTD,
   SEND_MESSAGE, RECEIVE_MESSAGE, LOG,
   REMOVE_MESSAGE, REMOVE_USER_MESSAGES, REMOVE_ALL_MESSAGES,
   MUTE_USER, UNMUTE_USER
@@ -19,6 +20,13 @@ import {
 import { settingsSelector } from '../selectors/settingSelectors';
 import { currentUserSelector, usersSelector, userListSelector } from '../selectors/userSelectors';
 import { currentTimeSelector } from '../selectors/timeSelectors';
+
+export function setMotd(text) {
+  return {
+    type: SET_MOTD,
+    payload: parseChatMarkup(text, {})
+  };
+}
 
 let logIdx = Date.now();
 export function log(text) {

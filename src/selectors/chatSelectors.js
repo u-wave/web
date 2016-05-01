@@ -9,6 +9,8 @@ import { usersSelector, currentUserSelector } from './userSelectors';
 
 const baseSelector = state => state.chat;
 
+export const motdSelector = createSelector(baseSelector, chat => chat.motd);
+
 export const messagesSelector = createSelector(baseSelector, chat => chat.messages);
 
 export const markupCompilerOptionsSelector = createStructuredSelector({

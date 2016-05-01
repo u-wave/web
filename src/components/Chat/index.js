@@ -2,10 +2,12 @@ import React, { Component, PropTypes } from 'react';
 
 import LogMessage from './LogMessage';
 import Message from './Message';
+import Motd from './Motd';
 
 export default class Chat extends Component {
   static propTypes = {
     messages: PropTypes.array,
+    motd: PropTypes.node,
     compileOptions: PropTypes.shape({
       availableEmoji: PropTypes.array,
       emojiImages: PropTypes.object
@@ -41,6 +43,17 @@ export default class Chat extends Component {
     return true;
   }
 
+  renderMotd() {
+    if (!this.props.motd) {
+      return null;
+    }
+    return (
+      <Motd compileOptions={this.props.compileOptions}>
+        {this.props.motd}
+      </Motd>
+    );
+  }
+
   renderMessage(msg) {
     if (msg.type === 'log') {
       return <LogMessage key={msg._id} {...msg} />;
@@ -57,6 +70,7 @@ export default class Chat extends Component {
   render() {
     return (
       <div className="Chat" ref="chat">
+        {this.renderMotd()}
         {this.props.messages.map(this.renderMessage, this)}
       </div>
     );

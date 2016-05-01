@@ -2,6 +2,7 @@
 @import "./Input.css";
 @import "./LogMessage.css";
 @import "./Message.css";
+@import "./Motd.css";
 
 @component Chat {
   height: 100%;

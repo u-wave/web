@@ -8,6 +8,7 @@ import * as Session from '../utils/Session';
 import * as Socket from '../utils/Socket';
 import { get, post } from './RequestActionCreators';
 import { advance, loadHistory } from './BoothActionCreators';
+import { setMotd } from './ChatActionCreators';
 import {
   setPlaylists, selectPlaylist, activatePlaylistComplete
 } from './PlaylistActionCreators';
@@ -33,6 +34,9 @@ export function loginComplete({ jwt, user }) {
 
 export function loadedState(state) {
   return (dispatch, getState) => {
+    if (state.motd) {
+      dispatch(setMotd(state.motd));
+    }
     dispatch(setUsers(state.users || []));
     dispatch(setPlaylists(state.playlists || []));
     dispatch(setWaitList({
