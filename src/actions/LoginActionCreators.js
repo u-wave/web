@@ -131,10 +131,11 @@ function logoutComplete() {
 export function logout() {
   return (dispatch, getState) => {
     const me = currentUserSelector(getState());
+    dispatch(logoutStart());
     Session.unset();
     if (me) {
-      dispatch(logoutStart());
       dispatch(logoutComplete());
+      Socket.reconnect();
     } else {
       dispatch(logoutComplete());
     }

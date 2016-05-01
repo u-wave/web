@@ -147,6 +147,12 @@ function defaultUrl() {
   return `${protocol}//${location.hostname}:${port}`;
 }
 
+export function reconnect() {
+  if (socket) {
+    socket.refresh();
+  }
+}
+
 export function connect(store, url = defaultUrl()) {
   const WebSocket = require('ReconnectingWebSocket');
   socket = new WebSocket(url);
