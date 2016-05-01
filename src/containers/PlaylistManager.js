@@ -23,6 +23,7 @@ import {
 } from '../actions/PlaylistActionCreators';
 import {
   search,
+  showSearchResults,
   setSource as setSearchSource
 } from '../actions/SearchActionCreators';
 
@@ -49,7 +50,6 @@ const selectionOrOne = (media, selection) => {
   return [ media ];
 };
 
-const selectSearchResults = () => selectPlaylist(null);
 const onOpenAddMediaMenu = (position, media, selection) =>
   addMediaMenu(selectionOrOne(media, selection), position);
 const onRemoveFromPlaylist = (playlist, media, selection) =>
@@ -75,7 +75,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onDeletePlaylist: askDeletePlaylist,
   onActivatePlaylist: activatePlaylist,
   onSelectPlaylist: selectPlaylist,
-  onSelectSearchResults: selectSearchResults,
+  onSelectSearchResults: showSearchResults,
   onLoadPlaylistPage: loadPlaylist,
   onSearchSubmit: search,
   onSearchSourceChange: setSearchSource,
