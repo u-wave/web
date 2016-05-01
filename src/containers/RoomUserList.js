@@ -1,11 +1,25 @@
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
+import { createSelector, createStructuredSelector } from 'reselect';
 
 import { userListSelector } from '../selectors/userSelectors';
-import UserList from '../components/UserList';
+import { currentVotesSelector } from '../selectors/voteSelectors';
+import RoomUserList from '../components/RoomUserList';
+
+const userListWithVotesSelector = createSelector(
+  userListSelector,
+  currentVotesSelector,
+  (users, votes) => users.map(user => ({
+    ...user,
+    votes: {
+      upvote: votes.upvotes.indexOf(user._id) !== -1,
+      downvote: votes.downvotes.indexOf(user._id) !== -1,
+      favorite: votes.favorites.indexOf(user._id) !== -1
+    }
+  }))
+);
 
 const mapStateToProps = createStructuredSelector({
-  users: userListSelector
+  users: userListWithVotesSelector
 });
 
-export default connect(mapStateToProps)(UserList);
+export default connect(mapStateToProps)(RoomUserList);

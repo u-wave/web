@@ -12,6 +12,7 @@
 @import "./PlaylistManager";
 @import "./ReCaptcha";
 @import "./RoomHistory";
+@import "./RoomUserList";
 @import "./SettingsManager";
 @import "./SidePanels";
 @import "./SongTitle";
