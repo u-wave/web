@@ -1,5 +1,5 @@
 import React from 'react';
-import EmailIcon from 'material-ui/lib/svg-icons/communication/email';
+import EmailIcon from 'material-ui/svg-icons/communication/email';
 import Loader from '../../Loader';
 import Form from '../../Form';
 import FormGroup from '../../Form/Group';
