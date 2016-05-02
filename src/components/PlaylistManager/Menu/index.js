@@ -7,12 +7,13 @@ import PlaylistImportRow from './PlaylistImportRow';
 
 const Menu = ({
   className, playlists, searchQuery, searchResults,
-  selected, showImportPanel,
+  selected, showSearchResults, showImportPanel,
   onCreatePlaylist, onSelectPlaylist, onSelectSearchResults, onAddToPlaylist,
   onShowImportPanel
 }) => {
-  const searchIsSelected = selected ? '' : 'is-selected';
+  const searchIsSelected = showSearchResults ? 'is-selected' : '';
   const importIsSelected = showImportPanel ? 'is-selected' : '';
+  const isSelectingPlaylist = selected && !showSearchResults && !showImportPanel;
   return (
     <div
       role="menu"
@@ -35,6 +36,7 @@ const Menu = ({
           key={pl._id}
           className="PlaylistMenu-row"
           playlist={pl}
+          selected={isSelectingPlaylist && selected._id === pl._id}
           onClick={() => onSelectPlaylist(pl)}
           onAddToPlaylist={onAddToPlaylist}
         />
@@ -50,7 +52,8 @@ const Menu = ({
 Menu.propTypes = {
   className: React.PropTypes.string,
   playlists: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
-  selected: React.PropTypes.bool.isRequired,
+  selected: React.PropTypes.object.isRequired,
+  showSearchResults: React.PropTypes.bool.isRequired,
   showImportPanel: React.PropTypes.bool.isRequired,
   searchQuery: React.PropTypes.string.isRequired,
   searchResults: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,

@@ -21,6 +21,7 @@ export default class PlaylistManager extends Component {
     selectedPlaylist: PropTypes.object,
     selectedMedia: PropTypes.array,
 
+    showSearchResults: PropTypes.bool.isRequired,
     showImportPanel: PropTypes.bool.isRequired,
 
     searchSource: PropTypes.oneOf([ 'youtube', 'soundcloud' ]),
@@ -96,6 +97,7 @@ export default class PlaylistManager extends Component {
       selectedPlaylist,
       selectedMedia,
 
+      showSearchResults,
       showImportPanel,
 
       searchSource,
@@ -125,6 +127,17 @@ export default class PlaylistManager extends Component {
           <PlaylistImport />
         </div>
       );
+    } else if (showSearchResults) {
+      panel = (
+        <SearchResults
+          className="PlaylistManager-panel"
+          query={searchQuery}
+          results={searchResults}
+          loadingState={searchLoadingState}
+          onOpenPreviewMediaDialog={onOpenPreviewMediaDialog}
+          onOpenAddMediaMenu={onOpenAddMediaMenu}
+        />
+      );
     } else if (selectedPlaylist) {
       panel = (
         <PlaylistPanel
@@ -144,19 +157,8 @@ export default class PlaylistManager extends Component {
           onLoadPlaylistPage={this.handleLoadPlaylistPage}
         />
       );
-    } else if (searchQuery) {
-      panel = (
-        <SearchResults
-          className="PlaylistManager-panel"
-          query={searchQuery}
-          results={searchResults}
-          loadingState={searchLoadingState}
-          onOpenPreviewMediaDialog={onOpenPreviewMediaDialog}
-          onOpenAddMediaMenu={onOpenAddMediaMenu}
-        />
-      );
     } else {
-      panel = <PlaylistPanelEmpty />;
+      panel = <PlaylistPanelEmpty className="PlaylistManager-panel" />;
     }
 
     return (
@@ -183,6 +185,7 @@ export default class PlaylistManager extends Component {
             playlists={playlists}
             active={activePlaylist}
             selected={selectedPlaylist}
+            showSearchResults={showSearchResults}
             showImportPanel={showImportPanel}
             searchQuery={searchQuery}
             searchResults={searchResults ? searchResults.length : 0}

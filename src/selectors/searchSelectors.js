@@ -33,7 +33,13 @@ const searchResultsCountSelector = createSelector(
   results => (results ? results.length : 0)
 );
 
+const showSearchResultsSelector = createSelector(
+  baseSearchSelector,
+  search => !!search.showResults
+);
+
 export const searchSelector = createStructuredSelector({
+  showSearchResults: showSearchResultsSelector,
   searchSource: searchSourceTypeSelector,
   searchQuery: searchQuerySelector,
   searchResults: searchResultsSelector,

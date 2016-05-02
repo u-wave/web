@@ -15,4 +15,8 @@
   @descendent media {
     height: calc(100% - 54px);
   }
+
+  @modifier empty {
+    padding: 16px;
+  }
 }

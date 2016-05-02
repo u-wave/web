@@ -6,6 +6,9 @@ import {
 import {
   SELECT_PLAYLIST
 } from '../constants/actionTypes/playlists';
+import {
+  SHOW_SEARCH_RESULTS
+} from '../constants/actionTypes/search';
 
 import * as sources from '../sources';
 
@@ -36,6 +39,7 @@ function reduceImport(state = initialState, action = {}) {
       showPanel: true
     };
   case SELECT_PLAYLIST:
+  case SHOW_SEARCH_RESULTS:
     return {
       ...state,
       showPanel: false
