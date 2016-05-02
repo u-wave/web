@@ -1,6 +1,7 @@
 import { get } from './RequestActionCreators';
 
 import { SET_TIMER, OFFSET } from '../constants/actionTypes/time';
+import { timerSelector } from '../selectors/timeSelectors';
 
 export function syncTimestamps(clientTimeBefore, serverTime) {
   const clientTimeAfter = Date.now();
@@ -28,5 +29,16 @@ export function createTimer() {
       payload: intv
     });
     return callbacks;
+  };
+}
+
+export function stopTimer() {
+  return (dispatch, getState) => {
+    const timer = timerSelector(getState());
+    clearInterval(timer);
+    dispatch({
+      type: SET_TIMER,
+      payload: null
+    });
   };
 }
