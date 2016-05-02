@@ -94,7 +94,7 @@
     "gulp-htmlmin": "^2.0.0",
     "gulp-if": "^2.0.0",
     "gulp-insert": "^0.5.0",
-    "gulp-postcss": "^6.0.0",
+    "gulp-postcss": "^6.1.1",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-uglify": "^1.4.1",
     "gulp-util": "^3.0.6",
