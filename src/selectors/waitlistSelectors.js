@@ -29,9 +29,7 @@ export const positionSelector = createSelector(
   currentUserSelector,
   (ids, user) => {
     if (!user) return -1;
-    const position = ids.indexOf(user._id);
-    if (position === -1) return -1;
-    return position;
+    return ids.indexOf(user._id);
   }
 );
 
@@ -48,10 +46,15 @@ export const waitlistSelector = createStructuredSelector({
 
 // Most videos come in at around 4 minutes.
 const averagePlayDuration = 4 * 60;
-export const etaSelector = createSelector(
-  timeRemainingSelector,
+export const baseEtaSelector = createSelector(
   positionSelector,
   sizeSelector,
-  (remaining, position, size) =>
-    (position === -1 ? size : position) * averagePlayDuration + remaining
+  (position, size) =>
+    (position === -1 ? size : position) * averagePlayDuration
+);
+
+export const etaSelector = createSelector(
+  baseEtaSelector,
+  timeRemainingSelector,
+  (eta, remaining) => eta + remaining
 );

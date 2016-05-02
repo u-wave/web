@@ -10,7 +10,8 @@ import ResponseBar from './Responses/Bar';
 export default class FooterBar extends Component {
   static propTypes = {
     className: PropTypes.string,
-    eta: PropTypes.number,
+    baseEta: PropTypes.number,
+    mediaEndTime: PropTypes.number,
     nextMedia: PropTypes.object,
     playlist: PropTypes.object,
     user: PropTypes.object,
@@ -81,7 +82,7 @@ export default class FooterBar extends Component {
     const {
       user, userIsDJ, userInWaitlist,
       playlist, nextMedia, showSkip,
-      eta,
+      baseEta, mediaEndTime,
       voteStats
     } = this.props;
     const className = cx('FooterBar', this.props.className);
@@ -100,7 +101,8 @@ export default class FooterBar extends Component {
               playlist={playlist}
               nextMedia={nextMedia}
               userIsDJ={userIsDJ}
-              eta={eta}
+              baseEta={baseEta}
+              mediaEndTime={mediaEndTime}
               onClick={togglePlaylistManager}
             />
           </div>
