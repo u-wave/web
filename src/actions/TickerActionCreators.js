@@ -1,13 +1,7 @@
 import { get } from './RequestActionCreators';
 
-import { TICK, OFFSET } from '../constants/actionTypes/time';
-
-export function tick() {
-  return {
-    type: TICK,
-    payload: Date.now()
-  };
-}
+import { SET_TIMER, OFFSET } from '../constants/actionTypes/time';
+import { timerSelector } from '../selectors/timeSelectors';
 
 export function syncTimestamps(clientTimeBefore, serverTime) {
   const clientTimeAfter = Date.now();
@@ -24,9 +18,27 @@ export function sync() {
   });
 }
 
-export function startTicking() {
+export function createTimer() {
   return dispatch => {
-    dispatch(tick());
-    setInterval(() => dispatch(tick()), 1000);
+    const callbacks = [];
+    const intv = setInterval(() => {
+      callbacks.forEach(cb => cb());
+    }, 1000);
+    dispatch({
+      type: SET_TIMER,
+      payload: intv
+    });
+    return callbacks;
+  };
+}
+
+export function stopTimer() {
+  return (dispatch, getState) => {
+    const timer = timerSelector(getState());
+    clearInterval(timer);
+    dispatch({
+      type: SET_TIMER,
+      payload: null
+    });
   };
 }

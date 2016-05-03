@@ -14,7 +14,7 @@ export default class HeaderBar extends Component {
 
     dj: PropTypes.object,
     media: PropTypes.object,
-    mediaProgress: PropTypes.number,
+    mediaStartTime: PropTypes.number,
     volume: PropTypes.number,
     muted: PropTypes.bool,
 
@@ -27,7 +27,7 @@ export default class HeaderBar extends Component {
   render() {
     const {
       className, title,
-      dj, media, mediaProgress,
+      dj, media, mediaStartTime,
       volume, muted,
       onVolumeChange, onVolumeMute, onVolumeUnmute,
       onToggleRoomHistory,
@@ -54,7 +54,8 @@ export default class HeaderBar extends Component {
         )}
         <Progress
           className="HeaderBar-progress"
-          percent={mediaProgress}
+          media={media}
+          startTime={mediaStartTime}
         />
         <div className="HeaderBar-volume">
           <Volume

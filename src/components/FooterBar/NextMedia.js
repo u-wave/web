@@ -5,7 +5,8 @@ import SongTitle from '../SongTitle';
 import Eta from './Eta';
 
 const NextMedia = ({
-  className, playlist, nextMedia, userIsDJ, eta,
+  className, playlist, nextMedia, userIsDJ,
+  baseEta, mediaEndTime,
   ...attrs
 }) => {
   if (!playlist) {
@@ -22,7 +23,8 @@ const NextMedia = ({
   const etaEl = (
     <Eta
       className="NextMedia-eta"
-      eta={eta}
+      base={baseEta}
+      endTime={mediaEndTime}
       nowPlaying={userIsDJ}
     />
   );
@@ -38,7 +40,8 @@ NextMedia.propTypes = {
   playlist: React.PropTypes.object,
   nextMedia: React.PropTypes.object,
   userIsDJ: React.PropTypes.bool,
-  eta: React.PropTypes.number
+  baseEta: React.PropTypes.number,
+  mediaEndTime: React.PropTypes.number
 };
 
 export default pure(NextMedia);

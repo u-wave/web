@@ -14,7 +14,8 @@ import { openFavoriteMenu, doUpvote, doDownvote } from '../actions/VoteActionCre
 import {
   djSelector,
   isCurrentDJSelector,
-  canSkipSelector
+  canSkipSelector,
+  endTimeSelector
 } from '../selectors/boothSelectors';
 import {
   activePlaylistSelector,
@@ -24,7 +25,7 @@ import {
   currentUserSelector
 } from '../selectors/userSelectors';
 import {
-  etaSelector,
+  baseEtaSelector,
   userInWaitlistSelector,
   isLockedSelector
 } from '../selectors/waitlistSelectors';
@@ -35,7 +36,8 @@ import {
 import FooterBar from '../components/FooterBar';
 
 const mapStateToProps = createStructuredSelector({
-  eta: etaSelector,
+  baseEta: baseEtaSelector,
+  mediaEndTime: endTimeSelector,
   playlist: activePlaylistSelector,
   nextMedia: nextMediaSelector,
   user: currentUserSelector,
