@@ -109,7 +109,7 @@
     "proxyquire": "^1.7.4",
     "react-transform-catch-errors": "^1.0.0",
     "react-transform-hmr": "^1.0.1",
-    "redbox-react": "^1.1.1",
+    "redbox-react": "^1.2.4",
     "run-sequence": "^1.1.4",
     "through2": "^2.0.0",
     "u-wave-source-soundcloud": "^1.0.0",
