@@ -5,12 +5,24 @@ import splitargs from 'splitargs';
 import parseChatMarkup from 'u-wave-parse-chat-markup';
 
 import {
-  SET_MOTD,
-  SEND_MESSAGE, RECEIVE_MESSAGE, LOG,
-  REMOVE_MESSAGE, REMOVE_USER_MESSAGES, REMOVE_ALL_MESSAGES,
-  MUTE_USER, UNMUTE_USER
+  RECEIVE_MOTD,
+  SET_MOTD_START,
+  SET_MOTD_COMPLETE,
+
+  SEND_MESSAGE,
+  RECEIVE_MESSAGE,
+
+  LOG,
+
+  REMOVE_MESSAGE,
+  REMOVE_USER_MESSAGES,
+  REMOVE_ALL_MESSAGES,
+
+  MUTE_USER,
+  UNMUTE_USER
 } from '../constants/actionTypes/chat';
 import { sendMessage } from '../utils/Socket';
+import { put } from './RequestActionCreators';
 import { execute } from '../utils/ChatCommands';
 import {
   muteTimeoutsSelector,
@@ -21,9 +33,9 @@ import { settingsSelector } from '../selectors/settingSelectors';
 import { currentUserSelector, usersSelector, userListSelector } from '../selectors/userSelectors';
 import { currentTimeSelector } from '../selectors/timeSelectors';
 
-export function setMotd(text) {
+export function receiveMotd(text) {
   return {
-    type: SET_MOTD,
+    type: RECEIVE_MOTD,
     payload: parseChatMarkup(text, {})
   };
 }
@@ -190,4 +202,33 @@ export function unmuteUser(userID, { moderatorID }) {
       payload: { userID, moderatorID }
     });
   };
+}
+
+export function setMotdStart(motd) {
+  return {
+    type: SET_MOTD_START,
+    payload: motd
+  };
+}
+
+export function setMotdComplete(motd) {
+  return {
+    type: SET_MOTD_COMPLETE,
+    payload: motd
+  };
+}
+
+export function setMotd(text) {
+  return put('/motd', { motd: text }, {
+    onStart: () => setMotdStart(text),
+    onComplete: ({ motd }) => dispatch => {
+      dispatch(setMotdComplete(motd));
+      dispatch(log(`Message of the Day is now: ${motd}`));
+    },
+    onError: error => ({
+      type: SET_MOTD_COMPLETE,
+      error: true,
+      payload: error
+    })
+  });
 }
