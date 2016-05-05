@@ -22,7 +22,7 @@ export default function serveTask({ port = config.port }) {
     'Could not find the u-wave API module. Did you run `npm install u-wave-api-v1`?'
   );
   const createWebClient = tryRequire('../lib/middleware',
-    'Could not find the client middleware. Did you run `gulp middleware`?'
+    'Could not find the client middleware. Did you run `npm run build`?'
   );
 
   let emoji = {};
