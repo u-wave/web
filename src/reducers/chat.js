@@ -1,6 +1,7 @@
 import except from 'except';
 
 import {
+  RECEIVE_MOTD,
   RECEIVE_MESSAGE,
   SEND_MESSAGE,
   LOG,
@@ -14,6 +15,11 @@ import {
 const MAX_MESSAGES = 500;
 
 const initialState = {
+  /**
+   * Message of the Day, a message shown at the very top of the Chat box. Can be
+   * used for announcements, for example, or a welcome message.
+   */
+  motd: '',
   /**
    * All messages, including log messages and in-flight messages.
    */
@@ -42,6 +48,11 @@ export default function reduce(state = initialState, action = {}) {
   const { type, payload } = action;
   const { messages } = state;
   switch (type) {
+  case RECEIVE_MOTD:
+    return {
+      ...state,
+      motd: payload
+    };
   case SEND_MESSAGE: {
     const inFlightMessage = {
       _id: `inflight${Date.now()}`,

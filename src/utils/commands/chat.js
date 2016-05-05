@@ -1,14 +1,30 @@
 import { register, findUser } from '../ChatCommands';
-import { log } from '../../actions/ChatActionCreators';
 
 import {
   userListSelector,
-  isModeratorSelector
+  isModeratorSelector,
+  isManagerSelector
 } from '../../selectors/userSelectors';
 import {
   deleteChatMessagesByUser,
   deleteAllChatMessages
 } from '../../actions/ModerationActionCreators';
+import {
+  log,
+  setMotd
+} from '../../actions/ChatActionCreators';
+
+register(
+  'motd',
+  'Set the Message of the Day, displayed at the very top of the chat.',
+  {
+    guard: isManagerSelector,
+    action: (...args) => {
+      const motd = args.join(' ');
+      return setMotd(motd);
+    }
+  }
+);
 
 register(
   'clearchat',
