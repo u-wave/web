@@ -3,6 +3,7 @@ import * as React from 'react';
 import Checkbox from 'material-ui/Checkbox';
 import ActiveIcon from 'material-ui/svg-icons/toggle/check-box';
 import ActivateIcon from 'material-ui/svg-icons/toggle/check-box-outline-blank';
+import muiThemeable from 'material-ui/styles/muiThemeable';
 
 import RenamePlaylistButton from './RenamePlaylistButton';
 import DeletePlaylistButton from './DeletePlaylistButton';

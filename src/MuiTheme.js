@@ -1,8 +1,8 @@
-import * as Colors from 'material-ui/styles/colors';
-import * as ColorManipulator from 'material-ui/utils/colorManipulator';
+import { black, darkBlack, white } from 'material-ui/styles/colors';
+import { fade } from 'material-ui/utils/colorManipulator';
 import * as Spacing from 'material-ui/styles/spacing';
 
-const backgroundColor = '#151515';
+import createPalette from './utils/createPalette';
 
 export default {
   spacing: Spacing,
@@ -14,32 +14,21 @@ export default {
     special: '#fc911d',
     default: ''
   },
-  palette: {
-    nullColor: Colors.black,
-
-    backgroundColor,
-    backgroundHighlightColor: ColorManipulator.lighten(backgroundColor, 0.1, '1.0'),
-
-    chatColor: ColorManipulator.darken(backgroundColor, 0.1),
-    chatColorAlternate: ColorManipulator.darken(backgroundColor, 0.15),
-
+  palette: createPalette({
+    nullColor: black,
+    backgroundColor: '#151515',
+    backgroundHighlightColor: '#111111',
     linkColor: '#c72e6c',
-
-    primary1Color: '#9d2053',
-    primary2Color: '#b20062',
-    primary3Color: Colors.lightWhite,
-    accent1Color: Colors.pinkA200,
-    accent2Color: Colors.grey100,
-    accent3Color: Colors.grey500,
-    textColor: Colors.white,
-    alternateTextColor: '#777777',
+    primaryColor: '#9d2053',
+    highlightColor: '#b20062',
+    textColor: white,
     canvasColor: '#303030',
-    borderColor: ColorManipulator.fade(Colors.fullWhite, 0.3),
-    disabledColor: ColorManipulator.fade(Colors.darkBlack, 0.3),
+    borderColor: fade(white, 0.3),
+    disabledColor: fade(darkBlack, 0.3),
 
     notifications: {
       errorBackgroundColor: '#9d202f',
-      errorTextColor: Colors.white
+      errorTextColor: white
     }
-  }
+  })
 };
