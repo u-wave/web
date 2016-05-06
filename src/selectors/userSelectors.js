@@ -50,3 +50,9 @@ export const guestCountSelector = createSelector(
   usersBaseSelector,
   base => base.guests
 );
+
+export const listenerCountSelector = createSelector(
+  userCountSelector,
+  guestCountSelector,
+  (users, guests) => users + guests
+);
