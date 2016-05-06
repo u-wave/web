@@ -7,7 +7,10 @@ import VolumeOffIcon from 'material-ui/svg-icons/av/volume-off';
 import VolumeUpIcon from 'material-ui/svg-icons/av/volume-up';
 
 const sliderStyle = {
-  marginTop: 3,
+  // The material-ui Slider has a 24px margin on top that we can't override,
+  // but we can compensate for it here.
+  // TODO Do this properly when/if material-ui gets a better styling solution.
+  marginTop: -21,
   marginBottom: 3
 };
 
