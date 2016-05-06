@@ -9,7 +9,8 @@ import {
   join as userJoin,
   leave as userLeave,
   changeUsername,
-  changeUserRole
+  changeUserRole,
+  receiveGuestCount
 } from '../actions/UserActionCreators';
 import {
   joinedWaitlist, leftWaitlist,
@@ -111,7 +112,8 @@ const actions = {
   },
   roleChange({ userID, role }) {
     return changeUserRole(userID, role);
-  }
+  },
+  guests: receiveGuestCount
 };
 
 function onMessage(dispatch, json) {

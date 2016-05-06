@@ -4,7 +4,8 @@ import values from 'object-values';
 
 const authSelector = state => state.auth;
 
-export const usersSelector = state => state.users;
+const usersBaseSelector = state => state.users;
+export const usersSelector = createSelector(usersBaseSelector, base => base.users);
 
 export const authErrorSelector = createSelector(authSelector, auth => auth.error);
 export const currentUserSelector = createSelector(authSelector, auth => auth.user);
@@ -43,4 +44,9 @@ export const userListSelector = createSelector(
 export const userCountSelector = createSelector(
   userListSelector,
   users => users.length
+);
+
+export const guestCountSelector = createSelector(
+  usersBaseSelector,
+  base => base.guests
 );
