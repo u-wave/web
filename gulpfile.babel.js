@@ -16,8 +16,9 @@ gulp.task('css', sequence('css:clean', 'css:compile'));
 
 gulp.task('js:lint', exec('lint-js'));
 gulp.task('js:clean', exec('clean-js'));
+gulp.task('js:babel', exec('babel'));
 gulp.task('js:browserify', exec('browserify'));
-gulp.task('js', sequence('js:clean', 'js:browserify'));
+gulp.task('js', sequence([ 'js:babel', 'js:browserify' ]));
 
 gulp.task('html', exec('copy-html'));
 
@@ -28,7 +29,7 @@ gulp.task('assets', exec('copy-assets'));
 
 gulp.task('watch', exec('watch'));
 
-gulp.task('middleware', exec('middleware'));
+gulp.task('middleware', exec('babel')); // compatibility
 gulp.task('serve', exec('serve'));
 
-gulp.task('default', sequence('clean', 'assets', [ 'js', 'css', 'middleware' ], 'html'));
+gulp.task('default', sequence('clean', 'assets', 'js', 'css', 'html'));

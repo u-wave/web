@@ -17,17 +17,15 @@ import renameDeps from './utils/browserify-rename-deps';
 // These constants are used to figure out which tasks to run when a file
 // changes.
 const JS_PATHS = [ 'src/**/*.js', 'gulpfile.babel.js', 'tasks/*.js' ];
-// Note that we're only _linting_ our JavaScript here! The re-bundling is done
+// Note that we're not bundling our JavaScript here! The re-bundling is done
 // separately below.
-const JS_TASKS = [ 'js:lint' ];
+const JS_TASKS = [ 'js:lint', 'js:babel' ];
 
 const CSS_PATHS = [ 'src/**/*.css' ];
 const CSS_TASKS = [ 'css' ];
 
 const HTML_PATHS = [ 'src/index.html' ];
 const HTML_TASKS = [ 'html' ];
-const MIDDLEWARE_PATHS = [ 'src/middleware.js' ];
-const MIDDLEWARE_TASKS = [ 'middleware' ];
 
 // This will hold our file watcher object that'll recompile our JavaScript on
 // change. Yes, this is global! Luckily we can be fairly certain that only one
@@ -113,18 +111,22 @@ export default function watchTask() {
   gulp.watch(JS_PATHS, JS_TASKS);
   gulp.watch(CSS_PATHS, CSS_TASKS);
   gulp.watch(HTML_PATHS, HTML_TASKS);
-  // the server does have to be restarted for this to apply, so it's not super
-  // useful to watch. you won't have to rerun the middleware task manually
-  // though, so that's a small plus…
-  gulp.watch(MIDDLEWARE_PATHS, MIDDLEWARE_TASKS);
 
-  // Run a bunch of other tasks to make sure we have everything to run the üWave
-  // application, ready to go. This isn't strictly necessary, but you don't have
-  // to remember to run plain `gulp` before `gulp watch` now, so that's nice.
-  seq('assets', 'css', 'html', 'middleware');
-
-  // Create an initial bundle.
-  // The "watch" task will finish once the initial bundle is created, but
-  // Watchify will keep running, so no need to worry :)
-  return bundle();
+  return new Promise((resolve, reject) => {
+    // Run a bunch of other tasks to make sure we have everything to run the üWave
+    // application, ready to go. This isn't strictly necessary, but you don't have
+    // to remember to run plain `gulp` before `gulp watch` now, so that's nice.
+    seq('assets', 'js:babel', 'css', 'html', (err) => {
+      if (err) {
+        reject(err);
+      } else {
+        // Create an initial bundle.
+        // The "watch" task will finish once the initial bundle is created, but
+        // Watchify will keep running, so no need to worry :)
+        bundle()
+          .on('error', reject)
+          .on('end', resolve);
+      }
+    });
+  });
 }
