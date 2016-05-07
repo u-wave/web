@@ -9,13 +9,12 @@ import {
 import { requestOptionsSelector } from '../selectors/configSelectors';
 import { tokenSelector } from '../selectors/userSelectors';
 
-function makeUrl(token, path, params = {}) {
+function makeUrl(path, params = {}) {
   let uri = path;
 
-  const query = token ? { token, ...params } : params;
-  if (query) {
+  if (params) {
     // heh…
-    uri += (uri.indexOf('?') !== -1 ? '&' : '?') + stringifyQS(query);
+    uri += (uri.indexOf('?') !== -1 ? '&' : '?') + stringifyQS(params);
   }
 
   return uri;
@@ -61,7 +60,7 @@ export default function middleware(middlewareOptions = {}) {
       method, url, qs, data
     };
 
-    const requestUrl = makeUrl(token, opts.apiUrl + url, qs);
+    const requestUrl = makeUrl(opts.apiUrl + url, qs);
 
     const requestOptions = {
       method,
@@ -71,6 +70,10 @@ export default function middleware(middlewareOptions = {}) {
       },
       credentials: 'same-origin'
     };
+
+    if (token) {
+      requestOptions.headers.Authorization = `JWT ${token}`;
+    }
 
     if (method !== 'get') {
       requestOptions.body = JSON.stringify(data);
