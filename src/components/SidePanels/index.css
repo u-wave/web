@@ -8,5 +8,11 @@
       height: auto !important;
       padding: 0 !important;
     }
+
+    @descendent guests {
+      margin-left: 5px;
+      font-size: 80%;
+      color: #777;
+    }
   }
 }

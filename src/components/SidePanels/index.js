@@ -43,6 +43,21 @@ const subHeaderStyle = {
   fontSize: '125%'
 };
 
+const getUserListLabel = (users, guests) => [
+  'Room',
+  <span key="sub" style={subHeaderStyle}>
+    {users}
+    {guests > 0 && (
+      <span
+        className="SidePanel-tab-guests"
+        title="Guests"
+      >
+        {guests}
+      </span>
+    )}
+  </span>
+];
+
 const getWaitlistLabel = (size, position) => {
   if (size > 0) {
     const posText = position !== -1
@@ -58,10 +73,14 @@ const getWaitlistLabel = (size, position) => {
 };
 
 const SidePanels = ({
-  selected, isLoggedIn,
+  selected,
+  isLoggedIn,
   onlineUsersCount,
-  waitlistSize, waitlistPosition,
-  onChange, sendChatMessage
+  onlineGuestsCount,
+  waitlistSize,
+  waitlistPosition,
+  onChange,
+  sendChatMessage
 }) => (
   <Tabs
     value={selected}
@@ -97,10 +116,7 @@ const SidePanels = ({
     <Tab
       className="SidePanel-tab"
       disableTouchRipple
-      label={[
-        'Room',
-        <span key="sub" style={subHeaderStyle}>{onlineUsersCount}</span>
-      ]}
+      label={getUserListLabel(onlineUsersCount, onlineGuestsCount)}
       value="room"
       style={selected === 'room' ? activeTabStyle : tabStyle}
     >
@@ -126,6 +142,7 @@ SidePanels.propTypes = {
   selected: React.PropTypes.string.isRequired,
   isLoggedIn: React.PropTypes.bool.isRequired,
   onlineUsersCount: React.PropTypes.number.isRequired,
+  onlineGuestsCount: React.PropTypes.number.isRequired,
   waitlistSize: React.PropTypes.number.isRequired,
   waitlistPosition: React.PropTypes.number.isRequired,
   onChange: React.PropTypes.func.isRequired,
