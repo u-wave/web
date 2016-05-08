@@ -58,10 +58,13 @@ const getWaitlistLabel = (size, position) => {
 };
 
 const SidePanels = ({
-  selected, isLoggedIn,
-  onlineUsersCount,
-  waitlistSize, waitlistPosition,
-  onChange, sendChatMessage
+  selected,
+  isLoggedIn,
+  listenerCount,
+  waitlistSize,
+  waitlistPosition,
+  onChange,
+  sendChatMessage
 }) => (
   <Tabs
     value={selected}
@@ -99,7 +102,9 @@ const SidePanels = ({
       disableTouchRipple
       label={[
         'Room',
-        <span key="sub" style={subHeaderStyle}>{onlineUsersCount}</span>
+        <span key="sub" style={subHeaderStyle}>
+          {listenerCount}
+        </span>
       ]}
       value="room"
       style={selected === 'room' ? activeTabStyle : tabStyle}
@@ -125,7 +130,7 @@ const SidePanels = ({
 SidePanels.propTypes = {
   selected: React.PropTypes.string.isRequired,
   isLoggedIn: React.PropTypes.bool.isRequired,
-  onlineUsersCount: React.PropTypes.number.isRequired,
+  listenerCount: React.PropTypes.number.isRequired,
   waitlistSize: React.PropTypes.number.isRequired,
   waitlistPosition: React.PropTypes.number.isRequired,
   onChange: React.PropTypes.func.isRequired,
