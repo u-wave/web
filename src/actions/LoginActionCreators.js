@@ -1,7 +1,13 @@
 import {
-  REGISTER_START, REGISTER_COMPLETE,
-  LOGIN_START, LOGIN_COMPLETE, SET_TOKEN,
-  LOGOUT_START, LOGOUT_COMPLETE
+  INIT_STATE,
+
+  REGISTER_START,
+  REGISTER_COMPLETE,
+  LOGIN_START,
+  LOGIN_COMPLETE,
+  SET_TOKEN,
+  LOGOUT_START,
+  LOGOUT_COMPLETE
 } from '../constants/actionTypes/auth';
 import { LOAD_ALL_PLAYLISTS_START } from '../constants/actionTypes/playlists';
 import * as Session from '../utils/Session';
@@ -34,6 +40,10 @@ export function loginComplete({ jwt, user }) {
 
 export function loadedState(state) {
   return (dispatch, getState) => {
+    dispatch({
+      type: INIT_STATE,
+      payload: state
+    });
     if (state.motd) {
       dispatch(receiveMotd(state.motd));
     }

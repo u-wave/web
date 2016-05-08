@@ -1,7 +1,10 @@
 import { connect } from 'react-redux';
 import { createSelector, createStructuredSelector } from 'reselect';
 
-import { userListSelector } from '../selectors/userSelectors';
+import {
+  userListSelector,
+  guestCountSelector
+} from '../selectors/userSelectors';
 import { currentVotesSelector } from '../selectors/voteSelectors';
 import RoomUserList from '../components/RoomUserList';
 
@@ -19,7 +22,8 @@ const userListWithVotesSelector = createSelector(
 );
 
 const mapStateToProps = createStructuredSelector({
-  users: userListWithVotesSelector
+  users: userListWithVotesSelector,
+  guests: guestCountSelector
 });
 
 export default connect(mapStateToProps)(RoomUserList);

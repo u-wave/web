@@ -1,16 +1,31 @@
 import except from 'except';
 import indexBy from 'index-by';
+import { combineReducers } from 'redux';
 
 import {
+  INIT_STATE
+} from '../constants/actionTypes/auth';
+import {
   LOAD,
-  JOIN, LEAVE,
+  JOIN,
+  LEAVE,
   CHANGE_USERNAME,
-  CHANGE_ROLE
+  CHANGE_ROLE,
+
+  RECEIVE_GUEST_COUNT
 } from '../constants/actionTypes/users';
 
-const initialState = {};
+function guestsReducer(state = 0, action = {}) {
+  if (action.type === INIT_STATE) {
+    return action.payload.guests;
+  }
+  if (action.type === RECEIVE_GUEST_COUNT) {
+    return action.payload.guests;
+  }
+  return state;
+}
 
-export default function reduce(state = initialState, action = {}) {
+function usersReducer(state = {}, action = {}) {
   const { type, payload } = action;
   switch (type) {
   case LOAD:
@@ -56,3 +71,10 @@ export default function reduce(state = initialState, action = {}) {
     return state;
   }
 }
+
+const reduce = combineReducers({
+  guests: guestsReducer,
+  users: usersReducer
+});
+
+export default reduce;

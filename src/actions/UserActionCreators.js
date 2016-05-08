@@ -1,7 +1,14 @@
 import {
-  LOAD, JOIN, LEAVE,
-  CHANGE_USERNAME, CHANGE_ROLE,
-  DO_CHANGE_USERNAME_START, DO_CHANGE_USERNAME_COMPLETE
+  LOAD,
+  JOIN,
+  LEAVE,
+  CHANGE_USERNAME,
+  CHANGE_ROLE,
+
+  RECEIVE_GUEST_COUNT,
+
+  DO_CHANGE_USERNAME_START,
+  DO_CHANGE_USERNAME_COMPLETE
 } from '../constants/actionTypes/users';
 import { currentUserSelector } from '../selectors/userSelectors';
 import { put } from './RequestActionCreators';
@@ -10,6 +17,13 @@ export function setUsers(users) {
   return {
     type: LOAD,
     payload: { users }
+  };
+}
+
+export function receiveGuestCount(guests) {
+  return {
+    type: RECEIVE_GUEST_COUNT,
+    payload: { guests }
   };
 }
 

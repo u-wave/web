@@ -1,3 +1,5 @@
+export const INIT_STATE = 'auth/INIT_STATE';
+
 export const SET_TOKEN = 'auth/SET_TOKEN';
 
 export const REGISTER_START = 'auth/REGISTER_START';
