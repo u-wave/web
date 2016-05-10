@@ -256,15 +256,6 @@ export function renamePlaylist(playlistID, name) {
   });
 }
 
-export function askRenamePlaylist(playlistID) {
-  return dispatch => {
-    const name = prompt('Name?');
-    if (name) {
-      dispatch(renamePlaylist(playlistID, name));
-    }
-  };
-}
-
 /**
  * Select or activate a different playlist than the one given.
  * @return Promise
