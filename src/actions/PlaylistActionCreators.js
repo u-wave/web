@@ -228,15 +228,6 @@ export function createPlaylist(name) {
   });
 }
 
-export function askCreatePlaylist() {
-  return dispatch => {
-    const name = prompt('Playlist name?');
-    if (name) {
-      dispatch(createPlaylist(name));
-    }
-  };
-}
-
 export function renamePlaylist(playlistID, name) {
   return put(`/playlists/${playlistID}/rename`, { name }, {
     onStart: () => ({

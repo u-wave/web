@@ -1,21 +1,42 @@
-/* eslint-disable react/prefer-stateless-function */
 import cx from 'classnames';
-import React, { Component, PropTypes } from 'react';
+import * as React from 'react';
 import CreatePlaylistIcon from 'material-ui/svg-icons/content/add';
 
-export default class NewPlaylist extends Component {
+import PromptDialog from '../../Dialogs/PromptDialog';
+
+export default class NewPlaylist extends React.Component {
   static propTypes = {
-    className: PropTypes.string,
-    onClick: PropTypes.func
+    className: React.PropTypes.string,
+    onCreatePlaylist: React.PropTypes.func.isRequired
   };
 
+  state = {
+    creating: false
+  };
+
+  closeDialog() {
+    this.setState({ creating: false });
+  }
+
+  handleOpen = () => {
+    this.setState({ creating: true });
+  };
+
+  handleClose = () => {
+    this.closeDialog();
+  };
+
+  handleSubmit = playlistName =>
+    Promise.resolve(this.props.onCreatePlaylist(playlistName))
+      .then(this.closeDialog.bind(this));
+
   render() {
-    const { className, onClick } = this.props;
+    const { className } = this.props;
     return (
       <div
         role="menuitem"
         className={cx('PlaylistMenuRow', 'PlaylistMenuRow--create', className)}
-        onClick={onClick}
+        onClick={this.handleOpen}
       >
         <div className="PlaylistMenuRow-title">
           <div className="PlaylistMenuRow-active-icon">
@@ -23,8 +44,16 @@ export default class NewPlaylist extends Component {
           </div>
           Create Playlist
         </div>
+        {this.state.creating && (
+          <PromptDialog
+            title="Playlist Name"
+            icon={<CreatePlaylistIcon color="#777" />}
+            submitLabel="Create"
+            onSubmit={this.handleSubmit}
+            onCancel={this.handleClose}
+          />
+        )}
       </div>
     );
   }
 }
-/* eslint-enable react/prefer-stateless-function */
