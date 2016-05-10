@@ -1,61 +1,30 @@
 import cx from 'classnames';
-import React, { Component, PropTypes } from 'react';
-import IconButton from 'material-ui/IconButton';
-import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
+import * as React from 'react';
 
 import Avatar from '../Avatar';
+import ChangeUsernameButton from './ChangeUsernameButton';
 
-const changeNameButtonStyle = {
-  padding: 2,
-  height: 28,
-  width: 28,
-  marginLeft: 5,
-  verticalAlign: 'bottom'
+const Profile = ({ className, user, onChangeUsername }) => (
+  <div className={cx('SettingsPanelProfile', className)}>
+    <Avatar
+      className="SettingsPanelProfile-avatar"
+      user={user}
+    />
+    <h2 className="SettingsPanelProfile-username">
+      {user.username}
+      <ChangeUsernameButton
+        onChangeUsername={onChangeUsername}
+        initialUsername={user.username}
+      />
+    </h2>
+  </div>
+);
+
+Profile.propTypes = {
+  className: React.PropTypes.string,
+  user: React.PropTypes.object.isRequired,
+
+  onChangeUsername: React.PropTypes.func.isRequired
 };
 
-const changeNameIconStyle = {
-  width: 24,
-  height: 24,
-  padding: 2
-};
-
-export default class Profile extends Component {
-  static propTypes = {
-    className: PropTypes.string,
-    user: PropTypes.object.isRequired,
-
-    onChangeUsername: PropTypes.func.isRequired
-  };
-
-  handleNameChange = () => {
-    const newName = prompt('Name?');
-    if (newName) {
-      this.props.onChangeUsername(newName);
-    }
-  };
-
-  render() {
-    const { className, user } = this.props;
-    return (
-      <div className={cx('SettingsPanelProfile', className)}>
-        <Avatar
-          className="SettingsPanelProfile-avatar"
-          user={user}
-        />
-        <h2 className="SettingsPanelProfile-username">
-          {user.username}
-          <IconButton
-            style={changeNameButtonStyle}
-            iconStyle={changeNameIconStyle}
-            onClick={this.handleNameChange}
-          >
-            <EditIcon
-              color="#777"
-              hoverColor="#fff"
-            />
-          </IconButton>
-        </h2>
-      </div>
-    );
-  }
-}
+export default Profile;
