@@ -7,8 +7,6 @@ import watchify from 'watchify';
 import seq from 'run-sequence';
 import source from 'vinyl-source-stream';
 
-import renameDeps from './utils/browserify-rename-deps';
-
 // The watch task is a bit like a "live" version of the JS and CSS tasks.
 // It recompiles both CSS and JS on change. If you combine this task with the
 // Serve task, you'll also get real live updates in the browser, as well, which
@@ -88,7 +86,7 @@ export default function watchTask() {
     packageCache: {}
   });
   watcher.transform(babelify, babelOptions);
-  watcher.plugin(renameDeps, { bluebird: './src/utils/Promise' });
+  watcher.require('./src/utils/Promise', { expose: 'bluebird' });
   // So this is where Part 1 of the magic happens. Watchify watches our
   // JavaScript files for changes, and if the files change, it emits an "update"
   // event. We can then re-run the browserify.bundle() call to get a new
