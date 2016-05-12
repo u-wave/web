@@ -2,6 +2,7 @@ import { dest } from 'gulp';
 import { buildExternalHelpers } from 'babel-core';
 import babelify from 'babelify';
 import browserify from 'browserify';
+import uglifyify from 'uglifyify';
 import buffer from 'gulp-buffer';
 import collapse from 'bundle-collapser/plugin';
 import envify from 'envify/custom';
@@ -63,6 +64,10 @@ export default function browserifyTask({ minify = false, 'source-maps': useSourc
   }), { global: true });
 
   if (minify) {
+    b.transform(uglifyify, {
+      global: true,
+      mangle: false
+    });
     // Browserify assigns numbers to all modules, but normally uses the full
     // module names in the compiled source. That's perfectly fine, but we can
     // shave off a bunch of bytes if it'd just use the assigned numbers instead,
