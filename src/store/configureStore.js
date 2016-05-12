@@ -1,8 +1,6 @@
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
 
-import { TICK } from '../constants/actionTypes/time';
-
 import persistSettings from './persistSettings';
 import webApiRequest from './request';
 import * as reducers from '../reducers';
@@ -28,12 +26,7 @@ export default function createUwaveStore(initialState = {}) {
     // Redux-Logger logs state changes to the console, including the
     // Before-state, the Action object, and the After-state. Invaluable for
     // debugging :)
-    enableLogging && require('redux-logger')({
-      // üWave has a Time store that changes every second with the TICK action,
-      // but we don't need to see that happening all the time. This hides the
-      // TICK actions from the logs.
-      predicate: (getState, action) => action.type !== TICK
-    })
+    enableLogging && require('redux-logger')()
   ].filter(Boolean);
 
   const store = createStore(
