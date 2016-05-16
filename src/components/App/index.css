@@ -27,8 +27,6 @@ a:visited {
   left: 0;
   right: 0;
 
-  overflow: hidden;
-
   background: $background-color;
   color: $text-color;
 
