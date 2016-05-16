@@ -61,8 +61,12 @@ export function loadPlaylist(playlistID, page = 0) {
     onStart: () => loadPlaylistStart(playlistID, page),
     onComplete: res => loadPlaylistComplete(
       playlistID,
-      res.result.map(flattenPlaylistItem),
-      { page: res.page, pageSize: res.size }
+      res.data.map(flattenPlaylistItem),
+      {
+        page: res.meta.offset / res.meta.pageSize,
+        pageSize: res.meta.pageSize,
+        size: res.meta.total
+      }
     ),
     onError: error => ({
       type: LOAD_PLAYLIST_COMPLETE,
@@ -467,10 +471,10 @@ export function removeMedia(playlistID, items) {
   const itemIDs = items.map(media => media._id);
   return del(`/playlists/${playlistID}/media`, { items: itemIDs }, {
     onStart: () => removeMediaStart(playlistID, items),
-    onComplete: ({ removed, playlistSize }) => removeMediaComplete(
+    onComplete: ({ playlistSize }) => removeMediaComplete(
       playlistID,
       playlistSize,
-      removed.map(flattenPlaylistItem)
+      items
     ),
     onError: error => ({
       type: REMOVE_MEDIA_COMPLETE,
