@@ -312,17 +312,6 @@ export function deletePlaylist(playlistID) {
   };
 }
 
-export function askDeletePlaylist(playlistID) {
-  return (dispatch, getState) => {
-    const activeID = activePlaylistIDSelector(getState());
-    if (activeID === playlistID) {
-      dispatch(cannotDeleteActivePlaylist(playlistID));
-    } else if (confirm('Sure?')) {
-      dispatch(deletePlaylist(playlistID));
-    }
-  };
-}
-
 export function addMediaMenu(items, position) {
   return (dispatch, getState) => {
     const playlists = playlistsSelector(getState());
