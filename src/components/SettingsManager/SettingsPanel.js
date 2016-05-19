@@ -3,10 +3,10 @@ import React, { Component, PropTypes } from 'react';
 import Toggle from 'material-ui/Toggle';
 import FlatButton from 'material-ui/FlatButton';
 import LicenseIcon from 'material-ui/svg-icons/action/copyright';
-import LogoutIcon from 'material-ui/svg-icons/action/power-settings-new';
 
 import GithubIcon from './GithubIcon';
 import Profile from './Profile';
+import LogoutButton from './LogoutButton';
 
 const linkStyle = {
   display: 'block',
@@ -38,12 +38,6 @@ export default class SettingsPanel extends Component {
     onLogout: PropTypes.func.isRequired
   };
 
-  handleLogout = () => {
-    if (confirm('Sure?')) {
-      this.props.onLogout();
-    }
-  };
-
   handleVideoEnabledChange = (e, value) => {
     this.props.onSettingChange('videoEnabled', value);
   };
@@ -58,8 +52,11 @@ export default class SettingsPanel extends Component {
 
   render() {
     const {
-      className, settings, user,
-      onChangeUsername
+      className,
+      settings,
+      user,
+      onChangeUsername,
+      onLogout
     } = this.props;
 
     const profile = user && [
@@ -105,12 +102,7 @@ export default class SettingsPanel extends Component {
               {toggle}
             </div>
           )}
-          <FlatButton
-            label="Sign out"
-            labelPosition="after"
-            icon={<LogoutIcon />}
-            onClick={this.handleLogout}
-          />
+          <LogoutButton onLogout={onLogout} />
         </div>
         <div className="SettingsPanel-column SettingsPanel-column--right">
           <FlatButton
