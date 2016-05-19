@@ -1,17 +1,23 @@
 import cx from 'classnames';
 import * as React from 'react';
 import Checkbox from 'material-ui/Checkbox';
-import IconButton from 'material-ui/IconButton';
 import ActiveIcon from 'material-ui/svg-icons/toggle/check-box';
 import ActivateIcon from 'material-ui/svg-icons/toggle/check-box-outline-blank';
-import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
-import DeleteIcon from 'material-ui/svg-icons/action/delete';
+
+import RenamePlaylistButton from './RenamePlaylistButton';
+import DeletePlaylistButton from './DeletePlaylistButton';
 
 const checkboxIconStyle = { fill: '#fff' };
 
 const PlaylistMeta = ({
-  className, active, id, name,
-  onActivatePlaylist, onRenamePlaylist, onDeletePlaylist
+  className,
+  active,
+  id,
+  name,
+  onActivatePlaylist,
+  onRenamePlaylist,
+  onDeletePlaylist,
+  onNotDeletable
 }) => (
   <div className={cx('PlaylistMeta', className, active ? 'PlaylistMeta--active' : '')}>
     <div className="PlaylistMeta-name">
@@ -27,20 +33,15 @@ const PlaylistMeta = ({
         label={active ? 'Active' : 'Activate'}
       />
     </div>
-    <IconButton
-      onClick={() => onRenamePlaylist(id)}
-      tooltip="Rename"
-      tooltipPosition="top-center"
-    >
-      <EditIcon color="#555" hoverColor="#fff" />
-    </IconButton>
-    <IconButton
-      onClick={() => onDeletePlaylist(id)}
-      tooltip="Delete"
-      tooltipPosition="top-center"
-    >
-      <DeleteIcon color="#555" hoverColor={active ? '#555' : '#fff'} />
-    </IconButton>
+    <RenamePlaylistButton
+      initialName={name}
+      onRename={newName => onRenamePlaylist(id, newName)}
+    />
+    <DeletePlaylistButton
+      active={active}
+      onNotDeletable={onNotDeletable}
+      onDelete={() => onDeletePlaylist(id)}
+    />
   </div>
 );
 
@@ -51,7 +52,8 @@ PlaylistMeta.propTypes = {
   name: React.PropTypes.string.isRequired,
   onActivatePlaylist: React.PropTypes.func.isRequired,
   onRenamePlaylist: React.PropTypes.func.isRequired,
-  onDeletePlaylist: React.PropTypes.func.isRequired
+  onDeletePlaylist: React.PropTypes.func.isRequired,
+  onNotDeletable: React.PropTypes.func.isRequired
 };
 
 export default PlaylistMeta;

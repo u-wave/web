@@ -228,15 +228,6 @@ export function createPlaylist(name) {
   });
 }
 
-export function askCreatePlaylist() {
-  return dispatch => {
-    const name = prompt('Playlist name?');
-    if (name) {
-      dispatch(createPlaylist(name));
-    }
-  };
-}
-
 export function renamePlaylist(playlistID, name) {
   return put(`/playlists/${playlistID}/rename`, { name }, {
     onStart: () => ({
@@ -254,15 +245,6 @@ export function renamePlaylist(playlistID, name) {
       meta: { playlistID, name }
     })
   });
-}
-
-export function askRenamePlaylist(playlistID) {
-  return dispatch => {
-    const name = prompt('Name?');
-    if (name) {
-      dispatch(renamePlaylist(playlistID, name));
-    }
-  };
 }
 
 /**
@@ -327,17 +309,6 @@ export function deletePlaylist(playlistID) {
         meta: { playlistID }
       })
     }));
-  };
-}
-
-export function askDeletePlaylist(playlistID) {
-  return (dispatch, getState) => {
-    const activeID = activePlaylistIDSelector(getState());
-    if (activeID === playlistID) {
-      dispatch(cannotDeleteActivePlaylist(playlistID));
-    } else if (confirm('Sure?')) {
-      dispatch(deletePlaylist(playlistID));
-    }
   };
 }
 

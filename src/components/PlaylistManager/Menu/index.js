@@ -21,7 +21,7 @@ const Menu = ({
     >
       <PlaylistCreateRow
         className="PlaylistMenu-row"
-        onClick={onCreatePlaylist}
+        onCreatePlaylist={onCreatePlaylist}
       />
       {searchQuery && (
         <SearchResultsRow
