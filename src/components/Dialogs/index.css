@@ -1,4 +1,5 @@
 @import "./Dialog.css";
+@import "./ConfirmDialog";
 @import "./EditMediaDialog";
 @import "./LoginDialog";
 @import "./PreviewMediaDialog";

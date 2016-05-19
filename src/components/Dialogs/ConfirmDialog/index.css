@@ -1,0 +1,14 @@
+@component ConfirmDialog {
+  @descendent buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  @descendent spacer {
+    width: 40px;
+  }
+
+  @descendent button {
+    width: 50%;
+  }
+}
