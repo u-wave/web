@@ -1,8 +1,11 @@
 import { advance } from '../actions/BoothActionCreators';
 import {
   receive as chatReceive,
-  removeMessage, removeMessagesByUser, removeAllMessages,
-  muteUser as chatMute, unmuteUser as chatUnmute
+  removeMessage,
+  removeMessagesByUser,
+  removeAllMessages,
+  muteUser as chatMute,
+  unmuteUser as chatUnmute
 } from '../actions/ChatActionCreators';
 import { cyclePlaylist } from '../actions/PlaylistActionCreators';
 import {
@@ -13,8 +16,11 @@ import {
   receiveGuestCount
 } from '../actions/UserActionCreators';
 import {
-  joinedWaitlist, leftWaitlist,
-  updatedWaitlist, movedInWaitlist,
+  clearWaitlist,
+  joinedWaitlist,
+  leftWaitlist,
+  updatedWaitlist,
+  movedInWaitlist,
   setLocked as setWaitlistLocked
 } from '../actions/WaitlistActionCreators';
 import { favorited, receiveVote } from '../actions/VoteActionCreators';
@@ -97,6 +103,17 @@ const actions = {
   },
   waitlistMove({ userID, moderatorID, position, waitlist }) {
     return movedInWaitlist({ userID, moderatorID, position, waitlist });
+  },
+  // TODO Treat moderator force-add and force-remove differently from voluntary
+  // joins and leaves.
+  waitlistAdd({ userID, waitlist }) {
+    return joinedWaitlist({ userID, waitlist });
+  },
+  waitlistRemove({ userID, waitlist }) {
+    return leftWaitlist({ userID, waitlist });
+  },
+  waitlistClear() {
+    return clearWaitlist();
   },
   playlistCycle({ playlistID }) {
     return cyclePlaylist(playlistID);
