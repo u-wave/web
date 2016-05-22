@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 const PanelTemplate = ({ selected, children }) => (
-  <div style={{ display: selected ? 'block' : 'none' }}>
+  <div style={{ visibility: selected ? 'visible' : 'hidden' }}>
     {children}
   </div>
 );
