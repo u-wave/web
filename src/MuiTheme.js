@@ -22,7 +22,7 @@ export default {
     textColor: Colors.white,
     alternateTextColor: '#777777',
     canvasColor: '#303030',
-    borderColor: Colors.grey300,
+    borderColor: ColorManipulator.fade(Colors.fullWhite, 0.3),
     disabledColor: ColorManipulator.fade(Colors.darkBlack, 0.3),
 
     notifications: {
