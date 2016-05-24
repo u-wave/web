@@ -11,6 +11,10 @@
   background: $scrollbar-color;
 }
 
+:focus {
+  outline-color: $highlight-color;
+}
+
 a {
   color: $link-color;
 }

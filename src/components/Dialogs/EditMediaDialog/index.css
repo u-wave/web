@@ -19,7 +19,7 @@
   justify-content: center;
 
   @descendent field {
-    flex-grow: 0.5;
+    flex-grow: 1;
   }
 
   @descendent label {

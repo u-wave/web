@@ -9,7 +9,7 @@
   font-size: 12pt;
 
   @descendent input {
-    width: calc(100% - $forms-textfield-size);
+    width: 100%;
     border: 0;
     height: 100%;
     background: transparent;
@@ -17,8 +17,10 @@
     display: block;
     float: left;
     padding: 0 $forms-element-margin;
+    padding-right: $forms-textfield-size;
     font-size: 12pt;
     color: #fff;
+
     &::placeholder {
       color: #9f9d9e;
     }
@@ -27,6 +29,7 @@
   @descendent icon {
     width: $forms-textfield-size;
     height: $forms-textfield-size;
+    margin-left: -$forms-textfield-size;
     padding: 13px;
     display: block;
     float: left;
