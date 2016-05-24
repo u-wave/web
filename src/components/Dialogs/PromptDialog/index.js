@@ -1,3 +1,4 @@
+import cx from 'classnames';
 import * as React from 'react';
 import Dialog from 'material-ui/Dialog';
 
@@ -16,6 +17,10 @@ export default class PromptDialog extends React.Component {
     inputType: React.PropTypes.string,
     icon: React.PropTypes.node,
     value: React.PropTypes.string,
+
+    bodyClassName: React.PropTypes.string,
+    contentClassName: React.PropTypes.string,
+    titleClassName: React.PropTypes.string,
 
     onSubmit: React.PropTypes.func.isRequired,
     onCancel: React.PropTypes.func.isRequired
@@ -58,6 +63,11 @@ export default class PromptDialog extends React.Component {
       inputType,
       placeholder,
       submitLabel,
+
+      bodyClassName,
+      contentClassName,
+      titleClassName,
+
       ...props
     } = this.props;
     const {
@@ -68,9 +78,11 @@ export default class PromptDialog extends React.Component {
     return (
       <Dialog
         {...props}
+        contentClassName={cx('Dialog', contentClassName)}
+        bodyClassName={cx('Dialog-body', bodyClassName)}
+        titleClassName={cx('Dialog-title', titleClassName)}
         onRequestClose={this.handleClose}
         open
-        autoScrollBodyContent
       >
         <Form onSubmit={this.handleSubmit}>
           {children}

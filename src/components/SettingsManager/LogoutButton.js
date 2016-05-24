@@ -40,12 +40,11 @@ export default class LogoutButton extends React.Component {
       >
         {this.state.loggingOut && (
           <ConfirmDialog
-            title="Sign Out"
             confirmLabel="Sign Out"
             onConfirm={this.handleConfirm}
             onCancel={this.handleClose}
           >
-            <FormGroup>Are you sure you want to log out?</FormGroup>
+            <FormGroup>Are you sure you want to sign out?</FormGroup>
           </ConfirmDialog>
         )}
       </FlatButton>

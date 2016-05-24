@@ -63,7 +63,6 @@ export default class ConfirmDialog extends React.Component {
         {...props}
         onRequestClose={this.handleClose}
         open
-        autoScrollBodyContent
       >
         <Form onSubmit={this.handleSubmit}>
           {children}

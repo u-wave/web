@@ -4,6 +4,14 @@ import Dialog from 'material-ui/Dialog';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 
+const contentStyle = {
+  maxWidth: 350
+};
+
+const bodyStyle = {
+  padding: 24
+};
+
 export default class LoginDialog extends Component {
   static propTypes = {
     open: PropTypes.bool,
@@ -28,7 +36,11 @@ export default class LoginDialog extends Component {
     }
     return (
       <Dialog
-        contentStyle={{ maxWidth: 350 }}
+        contentClassName="Dialog LoginDialog"
+        bodyClassName="Dialog-body"
+        titleClassName="Dialog-title"
+        contentStyle={contentStyle}
+        bodyStyle={bodyStyle}
         title={title}
         open={open}
         onRequestClose={onCloseDialog}
