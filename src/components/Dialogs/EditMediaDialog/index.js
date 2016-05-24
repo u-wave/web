@@ -1,3 +1,4 @@
+import cx from 'classnames';
 import React, { Component, PropTypes } from 'react';
 import Dialog from 'material-ui/Dialog';
 
@@ -22,6 +23,10 @@ export default class EditMediaDialog extends Component {
   static propTypes = {
     open: PropTypes.bool,
     media: PropTypes.object,
+
+    bodyClassName: PropTypes.string,
+    contentClassName: PropTypes.string,
+    titleClassName: PropTypes.string,
 
     onEditedMedia: PropTypes.func.isRequired,
     onCloseDialog: PropTypes.func.isRequired
@@ -67,7 +72,17 @@ export default class EditMediaDialog extends Component {
   };
 
   render() {
-    const { open, media, onCloseDialog } = this.props;
+    const {
+      open,
+      media,
+      onCloseDialog,
+
+      bodyClassName,
+      contentClassName,
+      titleClassName,
+
+      ...props
+    } = this.props;
     const { errors } = this.state;
     const baseTabIndex = 1000;
     let content = null;
@@ -170,11 +185,13 @@ export default class EditMediaDialog extends Component {
     }
     return (
       <Dialog
-        className="Dialog"
+        {...props}
+        contentClassName={cx('Dialog', contentClassName)}
+        bodyClassName={cx('Dialog-body', bodyClassName)}
+        titleClassName={cx('Dialog-title', titleClassName)}
         title="Edit Media"
         open={open}
         onRequestClose={onCloseDialog}
-        autoScrollBodyContent
       >
         {content}
       </Dialog>

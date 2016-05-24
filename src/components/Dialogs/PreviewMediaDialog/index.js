@@ -14,7 +14,13 @@ export default class PreviewMediaDialog extends React.Component {
   };
 
   render() {
-    const { open, media, volume, onCloseDialog } = this.props;
+    const {
+      open,
+      media,
+      volume,
+      onCloseDialog
+    } = this.props;
+
     let content = null;
     if (open) {
       content = (
@@ -29,7 +35,9 @@ export default class PreviewMediaDialog extends React.Component {
     }
     return (
       <Dialog
-        className="Dialog PreviewMediaDialog"
+        contentClassName="Dialog PreviewMediaDialog"
+        bodyClassName="Dialog-body"
+        titleClassName="Dialog-title"
         title={open ? `${media.artist} – ${media.title}` : 'Preview Media'}
         open={open}
         onRequestClose={onCloseDialog}
