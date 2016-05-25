@@ -1,3 +1,6 @@
+/* Utilities */
+$-average-color: color(black blend(white 50%));
+
 /* Global colours */
 $text-color: map(theme, palette, textColor);
 $muted-text-color: map(theme, palette, alternateTextColor);
@@ -14,7 +17,7 @@ $header-height: 56px;
 $footer-height: 60px;
 
 /* Footer colours */
-$footer-border-color: #303036;
+$footer-border-color: color($background-color blend($-average-color 30%));
 
 /* Overlay colours & sizes */
 $overlay-header-close-size: $header-height;
