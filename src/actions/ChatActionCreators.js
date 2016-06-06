@@ -1,5 +1,4 @@
 import escapeRegExp from 'escape-string-regexp';
-import values from 'object-values';
 import ms from 'ms';
 import splitargs from 'splitargs';
 import parseChatMarkup from 'u-wave-parse-chat-markup';
@@ -30,7 +29,10 @@ import {
   currentUserMuteSelector
 } from '../selectors/chatSelectors';
 import { settingsSelector } from '../selectors/settingSelectors';
-import { currentUserSelector, usersSelector, userListSelector } from '../selectors/userSelectors';
+import {
+  currentUserSelector,
+  userListSelector
+} from '../selectors/userSelectors';
 import { currentTimeSelector } from '../selectors/timeSelectors';
 
 export function receiveMotd(text) {
@@ -51,18 +53,38 @@ export function log(text) {
   };
 }
 
+/**
+ * Attach user objects to mentions in a parsed chat message.
+ *
+ * @param {Array} tree Parsed message.
+ * @param {Array.<{username: string}>} users List of users.
+ */
+function resolveMentions(tree, users) {
+  tree.forEach(node => {
+    if (node.type === 'mention') {
+      /* eslint-disable no-param-reassign */
+      node.user = users.find(user => user.username.toLowerCase() === node.mention);
+      /* eslint-enable no-param-reassign */
+    } else if (node.content) {
+      resolveMentions(node.content, users);
+    }
+  });
+}
+
 export function prepareMessage(user, text, parseOpts = {}) {
+  const parsed = parseChatMarkup(text, parseOpts);
+  resolveMentions(parsed, parseOpts.users);
   return {
     type: SEND_MESSAGE,
     payload: {
       user,
       message: text,
-      parsed: parseChatMarkup(text, parseOpts)
+      parsed
     }
   };
 }
 
-export function sendChat(user, text) {
+export function sendChat(from, text) {
   return (dispatch, getState) => {
     const mute = currentUserMuteSelector(getState());
     if (mute) {
@@ -74,7 +96,8 @@ export function sendChat(user, text) {
     }
 
     const users = userListSelector(getState());
-    const message = prepareMessage(user, text, { users });
+    const mentions = users.map(user => user.username);
+    const message = prepareMessage(from, text, { mentions, users });
     dispatch(message);
     sendMessage(message);
   };
@@ -119,26 +142,30 @@ function isMuted(state, userID) {
 export function receive(message) {
   return (dispatch, getState) => {
     const settings = settingsSelector(getState());
-    const user = currentUserSelector(getState());
-    const users = usersSelector(getState());
+    const currentUser = currentUserSelector(getState());
+    const users = userListSelector(getState());
+    const mentions = users.map(user => user.username);
 
     if (isMuted(getState(), message.userID)) {
       return;
     }
 
-    const isMention = user
-      ? hasMention(message.text, user.username)
+    const isMention = currentUser
+      ? hasMention(message.text, currentUser.username)
       : false;
+
+    const parsed = parseChatMarkup(message.text, { mentions });
+    resolveMentions(parsed, users);
 
     dispatch({
       type: RECEIVE_MESSAGE,
       payload: {
         message: {
           ...message,
-          user: users[message.userID]
+          user: users.find(user => user._id === message.userID)
         },
         isMention,
-        parsed: parseChatMarkup(message.text, { users: values(users) })
+        parsed
       }
     });
 
