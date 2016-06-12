@@ -11,9 +11,7 @@ import {
   LOGOUT_START,
   LOGOUT_COMPLETE,
 
-  RESET_PASSWORD_COMPLETE,
-  REGISTER_START,
-  REGISTER_COMPLETE
+  RESET_PASSWORD_COMPLETE
 } from '../constants/actionTypes/auth';
 import { LOAD_ALL_PLAYLISTS_START } from '../constants/actionTypes/playlists';
 import * as Session from '../utils/Session';
