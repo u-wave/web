@@ -34,6 +34,7 @@ export default class PlaylistManager extends Component {
     onRenamePlaylist: PropTypes.func,
     onDeletePlaylist: PropTypes.func,
     onNotDeletable: PropTypes.func,
+    onShufflePlaylist: PropTypes.func,
     onActivatePlaylist: PropTypes.func,
     onSelectPlaylist: PropTypes.func,
     onSelectSearchResults: PropTypes.func,
@@ -56,6 +57,12 @@ export default class PlaylistManager extends Component {
       fn(selectedPlaylist);
     }
   }
+
+  handleShufflePlaylist = () => {
+    this.withSelected(selectedPlaylist =>
+      this.props.onShufflePlaylist(selectedPlaylist._id)
+    );
+  };
 
   handleMoveToFirst = (media, selection) => {
     this.withSelected(selectedPlaylist =>
@@ -147,6 +154,7 @@ export default class PlaylistManager extends Component {
           playlist={selectedPlaylist}
           media={selectedMedia}
           loading={!!selectedPlaylist.loading}
+          onShufflePlaylist={this.handleShufflePlaylist}
           onActivatePlaylist={onActivatePlaylist}
           onRenamePlaylist={onRenamePlaylist}
           onDeletePlaylist={onDeletePlaylist}

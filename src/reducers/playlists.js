@@ -25,7 +25,8 @@ import {
   MOVE_MEDIA_START,
   MOVE_MEDIA_COMPLETE,
   UPDATE_MEDIA_START,
-  UPDATE_MEDIA_COMPLETE
+  UPDATE_MEDIA_COMPLETE,
+  SHUFFLE_PLAYLIST_COMPLETE
 } from '../constants/actionTypes/playlists';
 import { SEARCH_START } from '../constants/actionTypes/search';
 
@@ -181,6 +182,9 @@ export default function reduce(state = initialState, action = {}) {
       playlist => ({ ...playlist, loading: false }),
       (items, playlist) => mergePlaylistPage(playlist, items, payload.media, meta)
     );
+  case SHUFFLE_PLAYLIST_COMPLETE:
+    // Clear the local playlist item cache.
+    return updatePlaylistItems(state, payload.playlistID, () => []);
 
   case PLAYLIST_CYCLED:
     return updatePlaylistItems(state, payload.playlistID, (items, playlist) => {

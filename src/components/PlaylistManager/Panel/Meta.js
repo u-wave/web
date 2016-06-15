@@ -1,6 +1,8 @@
 import cx from 'classnames';
 import * as React from 'react';
 import Checkbox from 'material-ui/Checkbox';
+import IconButton from 'material-ui/IconButton';
+import ShuffleIcon from 'material-ui/svg-icons/av/shuffle';
 import ActiveIcon from 'material-ui/svg-icons/toggle/check-box';
 import ActivateIcon from 'material-ui/svg-icons/toggle/check-box-outline-blank';
 
@@ -14,6 +16,7 @@ const PlaylistMeta = ({
   active,
   id,
   name,
+  onShufflePlaylist,
   onActivatePlaylist,
   onRenamePlaylist,
   onDeletePlaylist,
@@ -33,6 +36,13 @@ const PlaylistMeta = ({
         label={active ? 'Active' : 'Activate'}
       />
     </div>
+    <IconButton
+      onClick={onShufflePlaylist}
+      tooltip="Shuffle"
+      tooltipPosition="top-center"
+    >
+      <ShuffleIcon color="#555" hoverColor="#fff" />
+    </IconButton>
     <RenamePlaylistButton
       initialName={name}
       onRename={newName => onRenamePlaylist(id, newName)}
@@ -50,6 +60,7 @@ PlaylistMeta.propTypes = {
   active: React.PropTypes.bool.isRequired,
   id: React.PropTypes.string.isRequired,
   name: React.PropTypes.string.isRequired,
+  onShufflePlaylist: React.PropTypes.func.isRequired,
   onActivatePlaylist: React.PropTypes.func.isRequired,
   onRenamePlaylist: React.PropTypes.func.isRequired,
   onDeletePlaylist: React.PropTypes.func.isRequired,

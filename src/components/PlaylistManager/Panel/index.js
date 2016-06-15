@@ -35,8 +35,12 @@ const makeActions = ({ onOpenAddMediaMenu, onMoveToFirst, onEditMedia, onRemoveF
 
 const PlaylistPanel = ({
   className, playlist, media, loading,
-  onActivatePlaylist, onRenamePlaylist, onDeletePlaylist, onLoadPlaylistPage,
+  onShufflePlaylist,
+  onActivatePlaylist,
+  onRenamePlaylist,
+  onDeletePlaylist,
   onNotDeletable,
+  onLoadPlaylistPage,
   onMoveMedia,
   onOpenPreviewMediaDialog,
   ...props
@@ -70,6 +74,7 @@ const PlaylistPanel = ({
         id={playlist._id}
         name={playlist.name}
         active={playlist.active}
+        onShufflePlaylist={onShufflePlaylist}
         onActivatePlaylist={onActivatePlaylist}
         onRenamePlaylist={onRenamePlaylist}
         onDeletePlaylist={onDeletePlaylist}
@@ -85,6 +90,7 @@ PlaylistPanel.propTypes = {
   playlist: React.PropTypes.object.isRequired,
   media: React.PropTypes.object.isRequired,
   loading: React.PropTypes.bool.isRequired,
+  onShufflePlaylist: React.PropTypes.func.isRequired,
   onActivatePlaylist: React.PropTypes.func.isRequired,
   onRenamePlaylist: React.PropTypes.func.isRequired,
   onDeletePlaylist: React.PropTypes.func.isRequired,

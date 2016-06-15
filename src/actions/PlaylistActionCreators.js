@@ -11,7 +11,8 @@ import {
   ADD_MEDIA_START, ADD_MEDIA_COMPLETE,
   REMOVE_MEDIA_START, REMOVE_MEDIA_COMPLETE,
   MOVE_MEDIA_START, MOVE_MEDIA_COMPLETE,
-  UPDATE_MEDIA_START, UPDATE_MEDIA_COMPLETE
+  UPDATE_MEDIA_START, UPDATE_MEDIA_COMPLETE,
+  SHUFFLE_PLAYLIST_START, SHUFFLE_PLAYLIST_COMPLETE
 } from '../constants/actionTypes/playlists';
 
 import { openEditMediaDialog } from './DialogActionCreators';
@@ -507,4 +508,34 @@ export function moveMedia(playlistID, medias, opts) {
       })
     }));
   };
+}
+
+export function shufflePlaylistStart(playlistID) {
+  return {
+    type: SHUFFLE_PLAYLIST_START,
+    payload: { playlistID }
+  };
+}
+
+export function shufflePlaylistComplete(playlistID) {
+  return dispatch => {
+    dispatch({
+      type: SHUFFLE_PLAYLIST_COMPLETE,
+      payload: { playlistID }
+    });
+    dispatch(loadPlaylist(playlistID));
+  };
+}
+
+export function shufflePlaylist(playlistID) {
+  return post(`/playlists/${playlistID}/shuffle`, {}, {
+    onStart: () => shufflePlaylistStart(playlistID),
+    onComplete: () => shufflePlaylistComplete(playlistID),
+    onError: error => ({
+      type: SHUFFLE_PLAYLIST_COMPLETE,
+      error: true,
+      payload: error,
+      meta: { playlistID }
+    })
+  });
 }

@@ -18,6 +18,7 @@ import {
   renamePlaylist,
   deletePlaylist,
   cannotDeleteActivePlaylist,
+  shufflePlaylist,
   activatePlaylist,
   selectPlaylist,
   loadPlaylist
@@ -75,6 +76,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onRenamePlaylist: renamePlaylist,
   onDeletePlaylist: deletePlaylist,
   onNotDeletable: cannotDeleteActivePlaylist,
+  onShufflePlaylist: shufflePlaylist,
   onActivatePlaylist: activatePlaylist,
   onSelectPlaylist: selectPlaylist,
   onSelectSearchResults: showSearchResults,
