@@ -22,9 +22,9 @@ export default class YouTubePlayerEmbed extends React.Component {
       // only set volume after the YT API is fully initialised.
       // if it fails here because the API isn't ready, the the volume will still
       // be set in onYTReady().
-      if (player._internalPlayer && this.props.volume !== nextProps.volume) {
+      if (player.internalPlayer && this.props.volume !== nextProps.volume) {
         debug('YT: setting volume', nextProps.volume);
-        player._internalPlayer.setVolume(nextProps.volume);
+        player.internalPlayer.setVolume(nextProps.volume);
       }
     }
   }
