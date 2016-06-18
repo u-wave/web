@@ -56,6 +56,39 @@ const selectedMediaSelector = createSelector(
   (playlistItems, selectedPlaylist) => playlistItems[selectedPlaylist] || []
 );
 
+const filterSelector = createSelector(
+  baseSelector,
+  base => base.currentFilter
+);
+
+const currentFilterSelector = createSelector(
+  filterSelector,
+  selectedPlaylistIDSelector,
+  (filter, selectedID) => {
+    if (filter && filter.playlistID === selectedID) {
+      return filter;
+    }
+    return null;
+  }
+);
+
+export const playlistItemFilterSelector = createSelector(
+  currentFilterSelector,
+  filter => filter && filter.filter
+);
+
+export const filteredSelectedPlaylistItemsSelector = createSelector(
+  selectedPlaylistIDSelector,
+  selectedMediaSelector,
+  currentFilterSelector,
+  (selectedID, selectedItems, filter) => {
+    if (filter) {
+      return filter.items;
+    }
+    return selectedItems;
+  }
+);
+
 export const selectedPlaylistSelector = createSelector(
   baseSelector,
   selectedPlaylistIDSelector,
@@ -74,5 +107,6 @@ export const playlistsIndexSelector = createStructuredSelector({
   activePlaylist: activePlaylistSelector,
   selectedPlaylist: selectedPlaylistSelector,
   activeMedia: activeMediaSelector,
-  selectedMedia: selectedMediaSelector
+  selectedMedia: filteredSelectedPlaylistItemsSelector,
+  currentFilter: playlistItemFilterSelector
 });

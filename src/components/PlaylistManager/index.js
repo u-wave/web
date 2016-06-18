@@ -20,6 +20,7 @@ export default class PlaylistManager extends Component {
     activeMedia: PropTypes.array,
     selectedPlaylist: PropTypes.object,
     selectedMedia: PropTypes.array,
+    currentFilter: PropTypes.string,
 
     showSearchResults: PropTypes.bool.isRequired,
     showImportPanel: PropTypes.bool.isRequired,
@@ -36,6 +37,7 @@ export default class PlaylistManager extends Component {
     onNotDeletable: PropTypes.func,
     onShufflePlaylist: PropTypes.func,
     onActivatePlaylist: PropTypes.func,
+    onFilterPlaylistItems: PropTypes.func,
     onSelectPlaylist: PropTypes.func,
     onSelectSearchResults: PropTypes.func,
     onSearchSubmit: PropTypes.func,
@@ -48,7 +50,8 @@ export default class PlaylistManager extends Component {
     onMoveMedia: PropTypes.func,
     onRemoveFromPlaylist: PropTypes.func,
     onOpenPreviewMediaDialog: PropTypes.func,
-    onLoadPlaylistPage: PropTypes.func
+    onLoadPlaylistPage: PropTypes.func,
+    onLoadFilteredPlaylistPage: PropTypes.func
   };
 
   withSelected(fn) {
@@ -89,8 +92,16 @@ export default class PlaylistManager extends Component {
   };
 
   handleLoadPlaylistPage = page => {
+    const loadPlaylistPage = this.props.currentFilter ?
+      this.props.onLoadFilteredPlaylistPage : this.props.onLoadPlaylistPage;
     this.withSelected(selectedPlaylist =>
-      this.props.onLoadPlaylistPage(selectedPlaylist._id, page)
+      loadPlaylistPage(selectedPlaylist._id, page)
+    );
+  };
+
+  handleFilterPlaylistItems = filter => {
+    this.withSelected(selectedPlaylist =>
+      this.props.onFilterPlaylistItems(selectedPlaylist._id, filter)
     );
   };
 
@@ -166,6 +177,7 @@ export default class PlaylistManager extends Component {
           onEditMedia={this.handleEditMedia}
           onRemoveFromPlaylist={this.handleRemoveFromPlaylist}
           onLoadPlaylistPage={this.handleLoadPlaylistPage}
+          onFilterPlaylistItems={this.handleFilterPlaylistItems}
         />
       );
     } else {

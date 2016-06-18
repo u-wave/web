@@ -41,6 +41,7 @@ const PlaylistPanel = ({
   onDeletePlaylist,
   onNotDeletable,
   onLoadPlaylistPage,
+  onFilterPlaylistItems,
   onMoveMedia,
   onOpenPreviewMediaDialog,
   ...props
@@ -56,7 +57,7 @@ const PlaylistPanel = ({
     list = (
       <MediaList
         className="PlaylistPanel-media"
-        size={playlist.size}
+        size={media.length}
         media={media}
         rowComponent={PlaylistItemRow}
         rowProps={{ onMoveMedia }}
@@ -79,6 +80,7 @@ const PlaylistPanel = ({
         onRenamePlaylist={onRenamePlaylist}
         onDeletePlaylist={onDeletePlaylist}
         onNotDeletable={onNotDeletable}
+        onFilter={onFilterPlaylistItems}
       />
       {list}
     </div>
@@ -95,6 +97,7 @@ PlaylistPanel.propTypes = {
   onRenamePlaylist: React.PropTypes.func.isRequired,
   onDeletePlaylist: React.PropTypes.func.isRequired,
   onLoadPlaylistPage: React.PropTypes.func.isRequired,
+  onFilterPlaylistItems: React.PropTypes.func.isRequired,
   onNotDeletable: React.PropTypes.func.isRequired,
   onMoveMedia: React.PropTypes.func.isRequired,
   onOpenPreviewMediaDialog: React.PropTypes.func.isRequired

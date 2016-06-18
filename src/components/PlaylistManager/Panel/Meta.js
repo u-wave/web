@@ -5,9 +5,11 @@ import IconButton from 'material-ui/IconButton';
 import ShuffleIcon from 'material-ui/svg-icons/av/shuffle';
 import ActiveIcon from 'material-ui/svg-icons/toggle/check-box';
 import ActivateIcon from 'material-ui/svg-icons/toggle/check-box-outline-blank';
+import FilterIcon from 'material-ui/svg-icons/action/search';
 
 import RenamePlaylistButton from './RenamePlaylistButton';
 import DeletePlaylistButton from './DeletePlaylistButton';
+import PlaylistFilter from './PlaylistFilter';
 
 const checkboxIconStyle = { fill: '#fff' };
 
@@ -20,7 +22,8 @@ const PlaylistMeta = ({
   onActivatePlaylist,
   onRenamePlaylist,
   onDeletePlaylist,
-  onNotDeletable
+  onNotDeletable,
+  onFilter
 }) => (
   <div className={cx('PlaylistMeta', className, active ? 'PlaylistMeta--active' : '')}>
     <div className="PlaylistMeta-name">
@@ -36,6 +39,12 @@ const PlaylistMeta = ({
         label={active ? 'Active' : 'Activate'}
       />
     </div>
+    <PlaylistFilter
+      onFilter={onFilter}
+    />
+    <IconButton>
+      <FilterIcon color="#555" hoverColor="#fff" />
+    </IconButton>
     <IconButton
       onClick={onShufflePlaylist}
       tooltip="Shuffle"
@@ -64,7 +73,8 @@ PlaylistMeta.propTypes = {
   onActivatePlaylist: React.PropTypes.func.isRequired,
   onRenamePlaylist: React.PropTypes.func.isRequired,
   onDeletePlaylist: React.PropTypes.func.isRequired,
-  onNotDeletable: React.PropTypes.func.isRequired
+  onNotDeletable: React.PropTypes.func.isRequired,
+  onFilter: React.PropTypes.func.isRequired
 };
 
 export default PlaylistMeta;

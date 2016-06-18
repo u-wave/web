@@ -1,5 +1,6 @@
 import assign from 'object-assign';
 import except from 'except';
+import escapeStringRegExp from 'escape-string-regexp';
 import findIndex from 'array-findindex';
 import indexBy from 'index-by';
 import mapObj from 'object.map';
@@ -26,7 +27,9 @@ import {
   MOVE_MEDIA_COMPLETE,
   UPDATE_MEDIA_START,
   UPDATE_MEDIA_COMPLETE,
-  SHUFFLE_PLAYLIST_COMPLETE
+  SHUFFLE_PLAYLIST_COMPLETE,
+  FILTER_PLAYLIST_ITEMS,
+  FILTER_PLAYLIST_ITEMS_COMPLETE
 } from '../constants/actionTypes/playlists';
 import { SEARCH_START } from '../constants/actionTypes/search';
 
@@ -34,7 +37,8 @@ const initialState = {
   playlists: {},
   playlistItems: {},
   activePlaylistID: null,
-  selectedPlaylistID: null
+  selectedPlaylistID: null,
+  currentFilter: {}
 };
 
 function deselectAll(playlists) {
@@ -108,8 +112,8 @@ function fill(array, value) {
   return array;
 }
 
-function mergePlaylistPage(playlist, oldMedia, newMedia, { page, pageSize }) {
-  const media = fill(Array(playlist.size), null);
+function mergePlaylistPage(size, oldMedia, newMedia, { page, pageSize }) {
+  const media = fill(Array(size), null);
   oldMedia.forEach((item, i) => {
     media[i] = item;
   });
@@ -117,6 +121,17 @@ function mergePlaylistPage(playlist, oldMedia, newMedia, { page, pageSize }) {
     media[i + page * pageSize] = item;
   });
   return media;
+}
+
+function filterCachedPlaylistItems(state, playlistID, filter) {
+  const rx = new RegExp(escapeStringRegExp(filter), 'i');
+  const playlist = state.playlistItems[playlistID];
+  if (playlist) {
+    return playlist.filter(item => item && (
+      rx.test(item.artist) || rx.test(item.title)
+    ));
+  }
+  return [];
 }
 
 export default function reduce(state = initialState, action = {}) {
@@ -180,11 +195,43 @@ export default function reduce(state = initialState, action = {}) {
       state,
       payload.playlistID,
       playlist => ({ ...playlist, loading: false }),
-      (items, playlist) => mergePlaylistPage(playlist, items, payload.media, meta)
+      items => mergePlaylistPage(meta.size, items, payload.media, meta)
     );
   case SHUFFLE_PLAYLIST_COMPLETE:
     // Clear the local playlist item cache.
     return updatePlaylistItems(state, payload.playlistID, () => []);
+
+  case FILTER_PLAYLIST_ITEMS:
+    // Only the selected playlist can be filtered.
+    if (payload.playlistID !== state.selectedPlaylistID) {
+      return state;
+    }
+    if (!payload.filter) {
+      return {
+        ...state,
+        currentFilter: null
+      };
+    }
+    return {
+      ...state,
+      currentFilter: {
+        playlistID: payload.playlistID,
+        filter: payload.filter,
+        items: filterCachedPlaylistItems(state, payload.playlistID, payload.filter)
+      }
+    };
+  case FILTER_PLAYLIST_ITEMS_COMPLETE: {
+    // Only the selected playlist can be filtered.
+    if (payload.playlistID !== state.selectedPlaylistID) {
+      return state;
+    }
+    const currentFilter = state.currentFilter;
+    const items = mergePlaylistPage(meta.size, currentFilter.items, payload.media, meta);
+    return {
+      ...state,
+      currentFilter: { ...currentFilter, items }
+    };
+  }
 
   case PLAYLIST_CYCLED:
     return updatePlaylistItems(state, payload.playlistID, (items, playlist) => {
