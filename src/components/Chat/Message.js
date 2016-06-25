@@ -7,7 +7,18 @@ import Username from '../Username';
 import Loader from '../Loader';
 import compile from './Markup/compile';
 
-const Message = ({ user, text, parsedText, inFlight, isMention, compileOptions }) => {
+const padZero = n => (n < 10 ? `0${n}` : n);
+const formatTime = date => `${padZero(date.getHours())}:${padZero(date.getMinutes())}`;
+
+const Message = ({
+  user,
+  text,
+  parsedText,
+  inFlight,
+  isMention,
+  timestamp,
+  compileOptions
+}) => {
   let avatar;
   if (inFlight) {
     avatar = (
@@ -26,12 +37,20 @@ const Message = ({ user, text, parsedText, inFlight, isMention, compileOptions }
 
   const children = parsedText ? compile(parsedText, compileOptions) : text;
 
+  const date = new Date(timestamp);
+
   const inFlightClass = inFlight ? 'ChatMessage--loading' : '';
   const mentionClass = isMention ? 'ChatMessage--mention' : '';
   return (
     <div className={cx('ChatMessage', inFlightClass, mentionClass)}>
       {avatar}
       <div className="ChatMessage-content">
+        <time
+          className="ChatMessage-timestamp"
+          dateTime={date.toISOString()}
+        >
+          {formatTime(date)}
+        </time>
         <Username className="ChatMessage-username" user={user} />
         <span className="ChatMessage-text">{children}</span>
       </div>
@@ -44,6 +63,7 @@ Message.propTypes = {
   text: React.PropTypes.string.isRequired,
   parsedText: React.PropTypes.array.isRequired,
   inFlight: React.PropTypes.bool,
+  timestamp: React.PropTypes.number.isRequired,
   isMention: React.PropTypes.bool.isRequired,
   compileOptions: React.PropTypes.shape({
     availableEmoji: React.PropTypes.array,
