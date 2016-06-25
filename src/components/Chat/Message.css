@@ -9,10 +9,27 @@
 
   &:nth-child(2n + 1) {
     background: $chat-background-color2;
+    .ChatMessage-timestamp {
+      background: $chat-background-color2;
+    }
   }
 
   @modifier mention {
     box-shadow: 5px 0px 0px $highlight-color inset;
+  }
+
+  @descendent timestamp {
+    background: $chat-background-color;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0 6px;
+    display: none;
+    font-size: 80%;
+    color: color($text-color blend(#777777 33%));
+  }
+  &:hover .ChatMessage-timestamp {
+    display: block;
   }
 
   @descendent avatar {
