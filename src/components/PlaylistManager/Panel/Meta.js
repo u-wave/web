@@ -5,7 +5,6 @@ import IconButton from 'material-ui/IconButton';
 import ShuffleIcon from 'material-ui/svg-icons/av/shuffle';
 import ActiveIcon from 'material-ui/svg-icons/toggle/check-box';
 import ActivateIcon from 'material-ui/svg-icons/toggle/check-box-outline-blank';
-import FilterIcon from 'material-ui/svg-icons/action/search';
 
 import RenamePlaylistButton from './RenamePlaylistButton';
 import DeletePlaylistButton from './DeletePlaylistButton';
@@ -42,9 +41,6 @@ const PlaylistMeta = ({
     <PlaylistFilter
       onFilter={onFilter}
     />
-    <IconButton>
-      <FilterIcon color="#555" hoverColor="#fff" />
-    </IconButton>
     <IconButton
       onClick={onShufflePlaylist}
       tooltip="Shuffle"

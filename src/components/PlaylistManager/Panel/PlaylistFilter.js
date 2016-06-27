@@ -1,5 +1,8 @@
+import cx from 'classnames';
 import * as React from 'react';
 import debounce from 'lodash/debounce';
+import IconButton from 'material-ui/IconButton';
+import FilterIcon from 'material-ui/svg-icons/action/search';
 
 export default class PlaylistFilter extends React.Component {
   static propTypes = {
@@ -15,17 +18,46 @@ export default class PlaylistFilter extends React.Component {
     this.props.onFilter(value);
   }, 200);
 
+  clearFilter() {
+    if (this.state.value !== '') {
+      this.props.onFilter('');
+    }
+  }
+
+  handleClick = () => {
+    const isOpen = !this.state.open;
+    if (isOpen) {
+      this.input.focus();
+    } else {
+      this.clearFilter();
+    }
+
+    this.setState({
+      open: isOpen,
+      value: ''
+    });
+  };
+
   handleChange = event => {
     this.setState({ value: event.target.value });
     this.onFilter(event.target.value);
   };
 
+  refInput = input => {
+    this.input = input;
+  };
+
   render() {
+    const isOpen = this.state.open;
     return (
       <div className="PlaylistMediaFilter">
+        <IconButton onClick={this.handleClick}>
+          <FilterIcon color={isOpen ? '#fff' : '#555'} hoverColor="#fff" />
+        </IconButton>
         <input
           type="text"
-          className="PlaylistMediaFilter-input"
+          ref={this.refInput}
+          className={cx('PlaylistMediaFilter-input', isOpen && 'is-open')}
           value={this.state.value}
           onChange={this.handleChange}
         />
