@@ -105,7 +105,7 @@
     "postcss-color-function": "^2.0.0",
     "postcss-import": "^8.0.2",
     "postcss-nested": "^1.0.0",
-    "postcss-simple-vars": "^2.0.0",
+    "postcss-simple-vars": "^3.0.0",
     "proxyquire": "^1.7.4",
     "react-transform-catch-errors": "^1.0.0",
     "react-transform-hmr": "^1.0.1",
