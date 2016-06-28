@@ -54,7 +54,11 @@ export default class PlaylistFilter extends React.Component {
     const isOpen = this.state.open;
     return (
       <div className="PlaylistMediaFilter">
-        <IconButton onClick={this.handleClick}>
+        <IconButton
+          onClick={this.handleClick}
+          tooltip="Filter"
+          tooltipPosition="top-center"
+        >
           <FilterIcon color={isOpen ? '#fff' : '#555'} hoverColor="#fff" />
         </IconButton>
         <input
