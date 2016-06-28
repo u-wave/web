@@ -26,15 +26,18 @@ export default class PlaylistFilter extends React.Component {
 
   handleClick = () => {
     const isOpen = !this.state.open;
-    if (isOpen) {
-      this.input.focus();
-    } else {
+
+    if (!isOpen) {
       this.clearFilter();
     }
 
     this.setState({
       open: isOpen,
       value: ''
+    }, () => {
+      if (isOpen) {
+        this.input.focus();
+      }
     });
   };
 
