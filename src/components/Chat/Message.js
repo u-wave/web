@@ -7,8 +7,7 @@ import Username from '../Username';
 import Loader from '../Loader';
 import compile from './Markup/compile';
 
-const padZero = n => (n < 10 ? `0${n}` : n);
-const formatTime = date => `${padZero(date.getHours())}:${padZero(date.getMinutes())}`;
+const timeFormatOptions = { hour: 'numeric', minute: 'numeric' };
 
 const Message = ({
   user,
@@ -49,7 +48,7 @@ const Message = ({
           className="ChatMessage-timestamp"
           dateTime={date.toISOString()}
         >
-          {formatTime(date)}
+          {date.toLocaleTimeString([], timeFormatOptions)}
         </time>
         <Username className="ChatMessage-username" user={user} />
         <span className="ChatMessage-text">{children}</span>
