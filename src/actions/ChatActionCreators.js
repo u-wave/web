@@ -1,4 +1,4 @@
-import escapeRegExp from 'escape-string-regexp';
+import find from 'array-find';
 import ms from 'ms';
 import splitargs from 'splitargs';
 import parseChatMarkup from 'u-wave-parse-chat-markup';
@@ -34,6 +34,12 @@ import {
 } from '../selectors/userSelectors';
 import { currentTimeSelector } from '../selectors/timeSelectors';
 
+import {
+  getAvailableGroupMentions,
+  resolveMentions,
+  hasMention
+} from '../utils/chatMentions';
+
 export function receiveMotd(text) {
   return {
     type: RECEIVE_MOTD,
@@ -52,27 +58,9 @@ export function log(text) {
   };
 }
 
-/**
- * Attach user objects to mentions in a parsed chat message.
- *
- * @param {Array} tree Parsed message.
- * @param {Array.<{username: string}>} users List of users.
- */
-function resolveMentions(tree, users) {
-  tree.forEach(node => {
-    if (node.type === 'mention') {
-      /* eslint-disable no-param-reassign */
-      node.user = users.find(user => user.username.toLowerCase() === node.mention);
-      /* eslint-enable no-param-reassign */
-    } else if (node.content) {
-      resolveMentions(node.content, users);
-    }
-  });
-}
-
-export function prepareMessage(user, text, parseOpts = {}) {
+export function prepareMessage(state, user, text, parseOpts = {}) {
   const parsed = parseChatMarkup(text, parseOpts);
-  resolveMentions(parsed, parseOpts.users);
+  resolveMentions(parsed, state);
   return {
     type: SEND_MESSAGE,
     payload: {
@@ -83,7 +71,7 @@ export function prepareMessage(user, text, parseOpts = {}) {
   };
 }
 
-export function sendChat(from, text) {
+export function sendChat(sender, text) {
   return (dispatch, getState) => {
     const mute = currentUserMuteSelector(getState());
     if (mute) {
@@ -95,8 +83,12 @@ export function sendChat(from, text) {
     }
 
     const users = userListSelector(getState());
-    const mentions = users.map(user => user.username);
-    const message = prepareMessage(from, text, { mentions, users });
+    const message = prepareMessage(getState(), sender, text, {
+      mentions: [
+        ...users.map(user => user.username),
+        ...getAvailableGroupMentions(sender)
+      ]
+    });
     dispatch(message);
   };
 }
@@ -128,11 +120,6 @@ function playMentionSound() {
   }
 }
 
-function hasMention(text, username) {
-  const rx = new RegExp(`@${escapeRegExp(username)}\\b`, 'i');
-  return rx.test(text);
-}
-
 function isMuted(state, userID) {
   return mutedUserIDsSelector(state).indexOf(userID) !== -1;
 }
@@ -142,25 +129,27 @@ export function receive(message) {
     const settings = settingsSelector(getState());
     const currentUser = currentUserSelector(getState());
     const users = userListSelector(getState());
-    const mentions = users.map(user => user.username);
+    const sender = find(users, user => user._id === message.userID);
+    const mentions = [
+      ...users.map(user => user.username),
+      ...getAvailableGroupMentions(sender)
+    ];
 
     if (isMuted(getState(), message.userID)) {
       return;
     }
 
-    const isMention = currentUser
-      ? hasMention(message.text, currentUser.username)
-      : false;
-
     const parsed = parseChatMarkup(message.text, { mentions });
-    resolveMentions(parsed, users);
+    resolveMentions(parsed, getState());
+
+    const isMention = currentUser ? hasMention(parsed, currentUser._id) : false;
 
     dispatch({
       type: RECEIVE_MESSAGE,
       payload: {
         message: {
           ...message,
-          user: users.find(user => user._id === message.userID)
+          user: sender
         },
         isMention,
         parsed
