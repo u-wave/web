@@ -16,26 +16,23 @@ import when from 'gulp-if';
 // called a "bundle". It includes both üWave's own modules, like the React
 // components and Redux reducers, and dependency files like React itself.
 
-export default function browserifyTask({ minify = false, 'source-maps': useSourceMaps = true }) {
+export default function browserifyTask({ minify = false }) {
   process.env.NODE_ENV = minify ? 'production' : 'development';
 
   // Browserify works by passing a single entry point file, which contains the
   // code that starts the application. It'll combine all of them into a single
   // file that can be included simply by using a <script> tag.
   const b = browserify({
-    // This allows us to disable source maps from the command line. Source maps
-    // take up a lot of space in the final file, so it's not so nice to have
-    // them when you're actually deploying.
-    debug: useSourceMaps,
+    debug: true,
     // The main üWave application file.
     entries: './src/app.js'
   });
 
   // Replace Bluebird with es6-promise.
-  // Bluebird is only used by a dependency of react-youtube and only for its
-  // most basic Promises functionality, so we can just use the es6-promise
-  // polyfill module that we already use elsewhere. This shaves some 20kb off
-  // the final minified+gzipped bundle (that's > 15%).
+  // Bluebird is only used by dependencies for its most basic Promises
+  // functionality, so we can just use the es6-promise olyfill module that we
+  // already use elsewhere. This shaves some 20kb off the final minified+gzipped
+  // bundle (that's > 15%).
   b.require('./src/utils/Promise', { expose: 'bluebird' });
 
   // Babelify transforms the üWave source code, which is written in JavaScript
@@ -105,7 +102,7 @@ export default function browserifyTask({ minify = false, 'source-maps': useSourc
     // The generated bundle is a stream, but Uglify.js doesn't work on streams,
     // so we convert it to a Buffer instead.
     .pipe(buffer())
-    .pipe(when(useSourceMaps, sourcemaps.init({ loadMaps: true })))
+    .pipe(sourcemaps.init({ loadMaps: true }))
       .pipe(insert(contents => `${getHelpers()}; \n ${contents}`))
       .pipe(when(minify, uglify({
         // Yeah… Enables some riskier minification that doesn't work in IE8.
@@ -121,7 +118,7 @@ export default function browserifyTask({ minify = false, 'source-maps': useSourc
         // available, so it doesn't really matter what they're called!
         mangle: { toplevel: true }
       })))
-    .pipe(when(useSourceMaps, sourcemaps.write('./')))
+    .pipe(sourcemaps.write('./'))
     // Output to lib/out.js!
     .pipe(dest('lib/'));
 }
