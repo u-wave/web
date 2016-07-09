@@ -1,11 +1,15 @@
 import cx from 'classnames';
-import React, { Component, PropTypes } from 'react';
+import * as React from 'react';
 
-export default class SourcePicker extends Component {
+import injectMediaSources from '../../../utils/injectMediaSources';
+
+class SourcePicker extends React.Component {
   static propTypes = {
-    className: PropTypes.string,
-    selected: PropTypes.string,
-    onChange: PropTypes.func
+    className: React.PropTypes.string,
+    selected: React.PropTypes.string,
+    onChange: React.PropTypes.func,
+
+    getAllMediaSources: React.PropTypes.func.isRequired
   };
 
   createElement(sourceName) {
@@ -20,11 +24,13 @@ export default class SourcePicker extends Component {
   }
 
   render() {
+    const sourceNames = Object.keys(this.props.getAllMediaSources());
     return (
       <div className={cx('SourcePicker', this.props.className)}>
-        {this.createElement('youtube')}
-        {this.createElement('soundcloud')}
+        {sourceNames.map(this.createElement, this)}
       </div>
     );
   }
 }
+
+export default injectMediaSources()(SourcePicker);

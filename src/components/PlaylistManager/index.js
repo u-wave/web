@@ -25,7 +25,7 @@ export default class PlaylistManager extends Component {
     showSearchResults: PropTypes.bool.isRequired,
     showImportPanel: PropTypes.bool.isRequired,
 
-    searchSource: PropTypes.oneOf([ 'youtube', 'soundcloud' ]),
+    searchSource: PropTypes.string,
     searchQuery: PropTypes.string,
     searchResults: PropTypes.object,
     searchLoadingState: PropTypes.oneOf([ IDLE, LOADING, LOADED ]),

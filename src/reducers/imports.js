@@ -10,27 +10,12 @@ import {
   SHOW_SEARCH_RESULTS
 } from '../constants/actionTypes/search';
 
-import * as sources from '../sources';
-
 const initialState = {
   showPanel: false,
   sourceType: null
 };
 
-function reduceSources(state, action) {
-  return Object.keys(sources).reduce((newState, sourceName) => {
-    const source = sources[sourceName];
-    if (!source.reducer) {
-      return newState;
-    }
-    return {
-      ...newState,
-      [sourceName]: source.reducer(newState[sourceName], action)
-    };
-  }, state);
-}
-
-function reduceImport(state = initialState, action = {}) {
+export default function reduce(state = initialState, action = {}) {
   const { type, payload } = action;
   switch (type) {
   case SHOW_IMPORT_PANEL:
@@ -57,8 +42,4 @@ function reduceImport(state = initialState, action = {}) {
   default:
     return state;
   }
-}
-
-export default function reduce(state, action) {
-  return reduceSources(reduceImport(state, action), action);
 }

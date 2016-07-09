@@ -4,12 +4,13 @@ import thunk from 'redux-thunk';
 import persistSettings from './persistSettings';
 import webApiRequest from './request';
 import * as reducers from '../reducers';
+import createSourcesReducer from '../reducers/createSourcesReducer';
 
 // Setting up a store in Redux can be kind of messy because there are a lot of
 // things coming together in one place. Luckily, we don't have _that_ much going
 // on in üWave, so it's kind of manageable.
 
-export default function createUwaveStore(initialState = {}) {
+export default function createUwaveStore(initialState = {}, options = {}) {
   const enableLogging = process.env.NODE_ENV !== 'production' &&
     process.env.NODE_ENV !== 'testing';
 
@@ -32,7 +33,10 @@ export default function createUwaveStore(initialState = {}) {
   const store = createStore(
     // Finish up the reducer function by combining all the different reducers
     // into one big reducer that works on one big state object.
-    combineReducers(reducers),
+    combineReducers({
+      ...reducers,
+      sources: createSourcesReducer(options)
+    }),
     initialState,
     compose(
       // Adds all of the above ☝ middleware features to the store.

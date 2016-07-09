@@ -1,20 +1,17 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 
 import {
   showImportSourcePanel,
   hideImportSourcePanel
 } from '../actions/ImportActionCreators';
+import { selectedSourceTypeSelector } from '../selectors/importSelectors';
 import PlaylistImport from '../components/PlaylistManager/Import';
 
-const mapStateToProps = state => ({
-  selectedSourceType: state.imports.sourceType,
-  sourceStates: Object.keys(state.imports)
-    .filter(sourceType => typeof state.imports[sourceType] === 'object')
-    .reduce((states, sourceType) => ({
-      ...states,
-      [sourceType]: state.imports[sourceType]
-    }), {})
+const mapStateToProps = createStructuredSelector({
+  selectedSourceType: selectedSourceTypeSelector,
+  sourceStates: state => state.sources
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

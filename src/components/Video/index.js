@@ -2,10 +2,12 @@ import cx from 'classnames';
 import isEqual from 'is-equal-shallow';
 import React, { Component, PropTypes } from 'react';
 
-import * as sources from '../../sources';
+import injectMediaSources from '../../utils/injectMediaSources';
 
+@injectMediaSources()
 export default class Video extends Component {
   static propTypes = {
+    getAllMediaSources: PropTypes.func.isRequired,
     enabled: PropTypes.bool,
     size: PropTypes.string,
     volume: PropTypes.number,
@@ -21,6 +23,7 @@ export default class Video extends Component {
 
   render() {
     const {
+      getAllMediaSources,
       enabled, size,
       volume, isMuted,
       media, seek
@@ -37,6 +40,7 @@ export default class Video extends Component {
       volume: isMuted ? 0 : volume
     };
 
+    const sources = getAllMediaSources();
     const players = Object.keys(sources).map(sourceType => {
       if (sources[sourceType].Player) {
         const { Player } = sources[sourceType];
