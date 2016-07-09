@@ -9,6 +9,7 @@ const WaitList = ({
   className,
   users,
   onMoveUser,
+  onRemoveUser,
   canMoveUsers
 }) => {
   const Row = canMoveUsers ? DraggableRow : SimpleRow;
@@ -28,7 +29,8 @@ const WaitList = ({
             className="UserList-row"
             position={index}
             user={users[index]}
-            onMoveUser={onMoveUser(users[index])}
+            onMoveUser={position => onMoveUser(users[index], position)}
+            onRemoveUser={() => onRemoveUser(users[index])}
           />
         )}
         length={users.length}
@@ -42,7 +44,8 @@ WaitList.propTypes = {
   className: React.PropTypes.string,
   users: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
   canMoveUsers: React.PropTypes.boolean,
-  onMoveUser: React.PropTypes.func.isRequired
+  onMoveUser: React.PropTypes.func.isRequired,
+  onRemoveUser: React.PropTypes.func.isRequired
 };
 
 export default WaitList;

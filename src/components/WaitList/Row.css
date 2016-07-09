@@ -5,12 +5,24 @@
     padding: 0 0 0 7px;
   }
 
-  @descendent handle {
+  @descendent tools {
     float: right;
-    display: flex;
+    height: 100%;
+    padding: 5px;
+  }
+
+  /* TODO use `@descendent handle, remove` here when supported by postcss-bem */
+  @descendent tool {
+    display: inline-flex;
     align-items: center;
     height: 100%;
-    cursor: move;
     padding: 0 4px;
+  }
+
+  @descendent handle {
+    cursor: move;
+  }
+  @descendent remove {
+    cursor: pointer;
   }
 }

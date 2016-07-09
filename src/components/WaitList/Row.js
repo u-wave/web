@@ -3,6 +3,7 @@ import * as React from 'react';
 import { compose } from 'redux';
 import { DragSource, DropTarget } from 'react-dnd';
 import DragIcon from 'material-ui/svg-icons/editor/drag-handle';
+import RemoveIcon from 'material-ui/svg-icons/navigation/close';
 
 import { WAITLIST_USER } from '../../constants/DDItemTypes';
 import isDraggingNearTopOfRow from '../../utils/isDraggingNearTopOfRow';
@@ -47,7 +48,8 @@ const DraggableRow = ({
   user,
   connectDragPreview,
   connectDragSource,
-  connectDropTarget
+  connectDropTarget,
+  onRemoveUser
 }) => connectDropTarget(connectDragPreview(
   <div className={cx('UserRow', 'UserRow--queue', className)}>
     <Position position={position + 1} />
@@ -56,11 +58,19 @@ const DraggableRow = ({
       user={user}
     />
     <Username className="UserRow-username" user={user} />
-    {connectDragSource(
-      <div className="UserRow-handle">
-        <DragIcon />
+    <div className="UserRow-tools">
+      {connectDragSource(
+        <div className="UserRow-tool UserRow-handle">
+          <DragIcon />
+        </div>
+      )}
+      <div
+        className="UserRow-tool UserRow-remove"
+        onClick={onRemoveUser}
+      >
+        <RemoveIcon />
       </div>
-    )}
+    </div>
   </div>
 ));
 
@@ -71,7 +81,8 @@ DraggableRow.propTypes = {
   connectDragPreview: React.PropTypes.func.isRequired,
   connectDragSource: React.PropTypes.func.isRequired,
   connectDropTarget: React.PropTypes.func.isRequired,
-  onMoveUser: React.PropTypes.func.isRequired
+  onMoveUser: React.PropTypes.func.isRequired,
+  onRemoveUser: React.PropTypes.func.isRequired
 };
 
 export default compose(
