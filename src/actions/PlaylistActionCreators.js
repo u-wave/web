@@ -1,6 +1,8 @@
 import {
   LOAD_ALL_PLAYLISTS_START, LOAD_ALL_PLAYLISTS_COMPLETE,
   LOAD_PLAYLIST_START, LOAD_PLAYLIST_COMPLETE,
+  FILTER_PLAYLIST_ITEMS,
+  FILTER_PLAYLIST_ITEMS_START, FILTER_PLAYLIST_ITEMS_COMPLETE,
   PLAYLIST_CYCLED,
   SELECT_PLAYLIST,
   ACTIVATE_PLAYLIST_START, ACTIVATE_PLAYLIST_COMPLETE,
@@ -19,9 +21,13 @@ import { openEditMediaDialog } from './DialogActionCreators';
 import { del, get, post, put } from './RequestActionCreators';
 
 import {
-  playlistsSelector, playlistItemsSelector,
-  activePlaylistIDSelector, selectedPlaylistIDSelector,
-  activePlaylistSelector, selectedPlaylistSelector
+  playlistsSelector,
+  playlistItemsSelector,
+  playlistItemFilterSelector,
+  activePlaylistIDSelector,
+  selectedPlaylistIDSelector,
+  activePlaylistSelector,
+  selectedPlaylistSelector
 } from '../selectors/playlistSelectors';
 
 const MEDIA_PAGE_SIZE = 50;
@@ -76,6 +82,61 @@ export function loadPlaylist(playlistID, page = 0) {
       meta: { page }
     })
   });
+}
+
+export function filterPlaylistItemsStart(playlistID, page, filter) {
+  return {
+    type: FILTER_PLAYLIST_ITEMS_START,
+    payload: { playlistID, filter },
+    meta: { page }
+  };
+}
+
+export function filterPlaylistItemsComplete(playlistID, media, pagination) {
+  return {
+    type: FILTER_PLAYLIST_ITEMS_COMPLETE,
+    payload: { playlistID, media },
+    meta: pagination
+  };
+}
+
+export function loadFilteredPlaylistItems(playlistID, page = 0) {
+  return (dispatch, getState) => {
+    const filter = playlistItemFilterSelector(getState()) || '';
+    return dispatch(get(`/playlists/${playlistID}/media`, {
+      qs: { filter, page, limit: MEDIA_PAGE_SIZE },
+      onStart: () => filterPlaylistItemsStart(playlistID, page, filter),
+      onComplete: res => filterPlaylistItemsComplete(
+        playlistID,
+        res.data.map(flattenPlaylistItem),
+        {
+          page: res.meta.offset / res.meta.pageSize,
+          pageSize: res.meta.pageSize,
+          size: res.meta.results,
+          filter
+        }
+      ),
+      onError: error => ({
+        type: FILTER_PLAYLIST_ITEMS_COMPLETE,
+        error: true,
+        payload: error,
+        meta: { page }
+      })
+    }));
+  };
+}
+
+export function filterPlaylistItems(playlistID, filter) {
+  return dispatch => {
+    dispatch({
+      type: FILTER_PLAYLIST_ITEMS,
+      payload: { playlistID, filter }
+    });
+
+    const loadAll = loadPlaylist(playlistID, 0);
+    const loadFiltered = loadFilteredPlaylistItems(playlistID, 0);
+    dispatch(filter === '' ? loadAll : loadFiltered);
+  };
 }
 
 export function selectPlaylist(playlistID) {

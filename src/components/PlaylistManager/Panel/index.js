@@ -4,6 +4,7 @@ import MediaList from '../../MediaList';
 import Loader from '../../Loader';
 
 import PlaylistMeta from './Meta';
+import PlainItemRow from '../../MediaList/Row';
 import PlaylistItemRow from './PlaylistItemRow';
 
 import AddToPlaylistAction from '../../MediaList/Actions/AddToPlaylist';
@@ -34,13 +35,18 @@ const makeActions = ({ onOpenAddMediaMenu, onMoveToFirst, onEditMedia, onRemoveF
   ];
 
 const PlaylistPanel = ({
-  className, playlist, media, loading,
+  className,
+  playlist,
+  media,
+  loading,
+  isFiltered,
   onShufflePlaylist,
   onActivatePlaylist,
   onRenamePlaylist,
   onDeletePlaylist,
   onNotDeletable,
   onLoadPlaylistPage,
+  onFilterPlaylistItems,
   onMoveMedia,
   onOpenPreviewMediaDialog,
   ...props
@@ -56,9 +62,9 @@ const PlaylistPanel = ({
     list = (
       <MediaList
         className="PlaylistPanel-media"
-        size={playlist.size}
+        size={media.length}
         media={media}
-        rowComponent={PlaylistItemRow}
+        rowComponent={isFiltered ? PlainItemRow : PlaylistItemRow}
         rowProps={{ onMoveMedia }}
         onOpenPreviewMediaDialog={onOpenPreviewMediaDialog}
         makeActions={makeActions(props)}
@@ -79,6 +85,7 @@ const PlaylistPanel = ({
         onRenamePlaylist={onRenamePlaylist}
         onDeletePlaylist={onDeletePlaylist}
         onNotDeletable={onNotDeletable}
+        onFilter={onFilterPlaylistItems}
       />
       {list}
     </div>
@@ -90,11 +97,13 @@ PlaylistPanel.propTypes = {
   playlist: React.PropTypes.object.isRequired,
   media: React.PropTypes.object.isRequired,
   loading: React.PropTypes.bool.isRequired,
+  isFiltered: React.PropTypes.bool.isRequired,
   onShufflePlaylist: React.PropTypes.func.isRequired,
   onActivatePlaylist: React.PropTypes.func.isRequired,
   onRenamePlaylist: React.PropTypes.func.isRequired,
   onDeletePlaylist: React.PropTypes.func.isRequired,
   onLoadPlaylistPage: React.PropTypes.func.isRequired,
+  onFilterPlaylistItems: React.PropTypes.func.isRequired,
   onNotDeletable: React.PropTypes.func.isRequired,
   onMoveMedia: React.PropTypes.func.isRequired,
   onOpenPreviewMediaDialog: React.PropTypes.func.isRequired

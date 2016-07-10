@@ -14,6 +14,7 @@ import {
   editMedia,
   moveMedia,
   removeMedia,
+  filterPlaylistItems,
   createPlaylist,
   renamePlaylist,
   deletePlaylist,
@@ -21,7 +22,8 @@ import {
   shufflePlaylist,
   activatePlaylist,
   selectPlaylist,
-  loadPlaylist
+  loadPlaylist,
+  loadFilteredPlaylistItems
 } from '../actions/PlaylistActionCreators';
 import {
   search,
@@ -78,9 +80,11 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onNotDeletable: cannotDeleteActivePlaylist,
   onShufflePlaylist: shufflePlaylist,
   onActivatePlaylist: activatePlaylist,
+  onFilterPlaylistItems: filterPlaylistItems,
   onSelectPlaylist: selectPlaylist,
   onSelectSearchResults: showSearchResults,
   onLoadPlaylistPage: loadPlaylist,
+  onLoadFilteredPlaylistPage: loadFilteredPlaylistItems,
   onSearchSubmit: search,
   onSearchSourceChange: setSearchSource,
   onShowImportPanel: showImportPanel
