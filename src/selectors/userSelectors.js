@@ -13,7 +13,7 @@ export const tokenSelector = createSelector(authSelector, auth => auth.jwt);
 
 const currentRoleSelector = createSelector(
   currentUserSelector,
-  user => user.role
+  user => (user ? user.role : 0)
 );
 
 export const isModeratorSelector = createSelector(

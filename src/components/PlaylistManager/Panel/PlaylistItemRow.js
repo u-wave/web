@@ -1,19 +1,10 @@
 import * as React from 'react';
 import { DropTarget } from 'react-dnd';
-import { findDOMNode } from 'react-dom';
 
 import { MEDIA } from '../../../constants/DDItemTypes';
+import isDraggingNearTopOfRow from '../../../utils/isDraggingNearTopOfRow';
 
 import MediaRow from '../../MediaList/Row';
-
-const isDraggingNearTopOfRow = (monitor, component) => {
-  const componentRect = findDOMNode(component).getBoundingClientRect();
-  const clientOffset = monitor.getClientOffset();
-
-  const middle = Math.ceil(componentRect.height / 2);
-  const topOffset = clientOffset.y - componentRect.top;
-  return topOffset < middle;
-};
 
 const mediaTarget = {
   drop(props, monitor, component) {

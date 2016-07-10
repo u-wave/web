@@ -1,0 +1,34 @@
+@component UserRow {
+  @descendent position {
+    float: left;
+    text-align: center;
+    padding: 0 0 0 7px;
+  }
+
+  @descendent drop-indicator {
+    background: white;
+    height: 3px;
+    width: 100%;
+  }
+
+  @descendent tools {
+    float: right;
+    height: 100%;
+    padding: 5px;
+  }
+
+  /* TODO use `@descendent handle, remove` here when supported by postcss-bem */
+  @descendent tool {
+    display: inline-flex;
+    align-items: center;
+    height: 100%;
+    padding: 0 4px;
+  }
+
+  @descendent handle {
+    cursor: move;
+  }
+  @descendent remove {
+    cursor: pointer;
+  }
+}

@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { DragLayer } from 'react-dnd';
-import { MEDIA } from '../constants/DDItemTypes';
+import { MEDIA, WAITLIST_USER } from '../constants/DDItemTypes';
 
 import MediaDragPreview from '../components/MediaList/MediaDragPreview';
 
@@ -12,7 +12,7 @@ import MediaDragPreview from '../components/MediaList/MediaDragPreview';
 }))
 export default class DragLayerContainer extends Component {
   static propTypes = {
-    type: PropTypes.oneOf([ MEDIA ]),
+    type: PropTypes.oneOf([ MEDIA, WAITLIST_USER ]),
     items: PropTypes.object,
     currentOffset: PropTypes.shape({
       x: PropTypes.number.isRequired,
