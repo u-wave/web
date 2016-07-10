@@ -115,6 +115,7 @@ export default class PlaylistManager extends Component {
       activePlaylist,
       selectedPlaylist,
       selectedMedia,
+      currentFilter,
 
       showSearchResults,
       showImportPanel,
@@ -165,6 +166,7 @@ export default class PlaylistManager extends Component {
           playlist={selectedPlaylist}
           media={selectedMedia}
           loading={!!selectedPlaylist.loading}
+          isFiltered={!!currentFilter}
           onShufflePlaylist={this.handleShufflePlaylist}
           onActivatePlaylist={onActivatePlaylist}
           onRenamePlaylist={onRenamePlaylist}

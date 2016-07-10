@@ -4,6 +4,7 @@ import MediaList from '../../MediaList';
 import Loader from '../../Loader';
 
 import PlaylistMeta from './Meta';
+import PlainItemRow from '../../MediaList/Row';
 import PlaylistItemRow from './PlaylistItemRow';
 
 import AddToPlaylistAction from '../../MediaList/Actions/AddToPlaylist';
@@ -34,7 +35,11 @@ const makeActions = ({ onOpenAddMediaMenu, onMoveToFirst, onEditMedia, onRemoveF
   ];
 
 const PlaylistPanel = ({
-  className, playlist, media, loading,
+  className,
+  playlist,
+  media,
+  loading,
+  isFiltered,
   onShufflePlaylist,
   onActivatePlaylist,
   onRenamePlaylist,
@@ -59,7 +64,7 @@ const PlaylistPanel = ({
         className="PlaylistPanel-media"
         size={media.length}
         media={media}
-        rowComponent={PlaylistItemRow}
+        rowComponent={isFiltered ? PlainItemRow : PlaylistItemRow}
         rowProps={{ onMoveMedia }}
         onOpenPreviewMediaDialog={onOpenPreviewMediaDialog}
         makeActions={makeActions(props)}
@@ -92,6 +97,7 @@ PlaylistPanel.propTypes = {
   playlist: React.PropTypes.object.isRequired,
   media: React.PropTypes.object.isRequired,
   loading: React.PropTypes.bool.isRequired,
+  isFiltered: React.PropTypes.bool.isRequired,
   onShufflePlaylist: React.PropTypes.func.isRequired,
   onActivatePlaylist: React.PropTypes.func.isRequired,
   onRenamePlaylist: React.PropTypes.func.isRequired,
