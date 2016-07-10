@@ -82,12 +82,20 @@ function updatePlaylistItems(state, playlistID, modify) {
   const playlist = state.playlists[playlistID];
   const media = state.playlistItems[playlistID];
   if (playlist) {
+    let nextFilter = state.currentFilter;
+    if (state.selectedPlaylistID === playlistID && nextFilter) {
+      nextFilter = {
+        ...nextFilter,
+        items: modify(nextFilter.items || [], playlist)
+      };
+    }
     return {
       ...state,
       playlistItems: {
         ...state.playlistItems,
         [playlistID]: modify(media || [], playlist)
-      }
+      },
+      currentFilter: nextFilter
     };
   }
   return state;
