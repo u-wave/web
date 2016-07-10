@@ -1,8 +1,8 @@
 @component UserRow {
-  @descendent position {
-    float: left;
-    text-align: center;
-    padding: 0 0 0 7px;
+  @descendent drop-indicator {
+    background: white;
+    height: 3px;
+    width: 100%;
   }
 
   @descendent tools {

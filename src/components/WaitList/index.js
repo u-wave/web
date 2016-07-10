@@ -2,7 +2,7 @@ import cx from 'classnames';
 import * as React from 'react';
 import List from 'react-list';
 
-import DraggableRow from './Row';
+import ModRow from './ModRow';
 import SimpleRow from './SimpleRow';
 
 const WaitList = ({
@@ -12,7 +12,7 @@ const WaitList = ({
   onRemoveUser,
   canMoveUsers
 }) => {
-  const Row = canMoveUsers ? DraggableRow : SimpleRow;
+  const Row = canMoveUsers ? ModRow : SimpleRow;
   return (
     <div
       className={cx(
