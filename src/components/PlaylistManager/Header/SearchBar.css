@@ -44,33 +44,7 @@
 
   @descendent source {
     float: right;
-    width: 100px;
+    margin: 0 5px;
     height: 100%;
-  }
-}
-
-@component SourcePicker {
-}
-
-@component SourcePickerElement {
-  float: left;
-  width: 45%;
-  margin: 2.5%;
-  height: 90%;
-  cursor: pointer;
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: contain;
-
-  opacity: 0.5;
-  @modifier active {
-    opacity: 1;
-  }
-
-  @modifier soundcloud {
-    background-image: url(assets/img/soundcloud.png);
-  }
-  @modifier youtube {
-    background-image: url(assets/img/youtube.png);
   }
 }
