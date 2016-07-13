@@ -1,6 +1,8 @@
-import * as Colors from 'material-ui/styles/colors';
-import * as ColorManipulator from 'material-ui/utils/colorManipulator';
+import { black, darkBlack, white } from 'material-ui/styles/colors';
+import { fade } from 'material-ui/utils/colorManipulator';
 import * as Spacing from 'material-ui/styles/spacing';
+
+import createPalette from './utils/createPalette';
 
 export default {
   spacing: Spacing,
@@ -12,22 +14,21 @@ export default {
     special: '#fc911d',
     default: ''
   },
-  palette: {
-    primary1Color: '#9d2053',
-    primary2Color: '#b20062',
-    primary3Color: Colors.lightWhite,
-    accent1Color: Colors.pinkA200,
-    accent2Color: Colors.grey100,
-    accent3Color: Colors.grey500,
-    textColor: Colors.white,
-    alternateTextColor: '#777777',
+  palette: createPalette({
+    nullColor: black,
+    backgroundColor: '#151515',
+    backgroundHighlightColor: '#111111',
+    linkColor: '#c72e6c',
+    primaryColor: '#9d2053',
+    highlightColor: '#b20062',
+    textColor: white,
     canvasColor: '#303030',
-    borderColor: ColorManipulator.fade(Colors.fullWhite, 0.3),
-    disabledColor: ColorManipulator.fade(Colors.darkBlack, 0.3),
+    borderColor: fade(white, 0.3),
+    disabledColor: fade(darkBlack, 0.3),
 
     notifications: {
       errorBackgroundColor: '#9d202f',
-      errorTextColor: Colors.white
+      errorTextColor: white
     }
-  }
+  })
 };

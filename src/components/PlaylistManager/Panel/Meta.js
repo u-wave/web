@@ -5,6 +5,7 @@ import IconButton from 'material-ui/IconButton';
 import ShuffleIcon from 'material-ui/svg-icons/av/shuffle';
 import ActiveIcon from 'material-ui/svg-icons/toggle/check-box';
 import ActivateIcon from 'material-ui/svg-icons/toggle/check-box-outline-blank';
+import muiThemeable from 'material-ui/styles/muiThemeable';
 
 import RenamePlaylistButton from './RenamePlaylistButton';
 import DeletePlaylistButton from './DeletePlaylistButton';
@@ -13,6 +14,7 @@ import PlaylistFilter from './PlaylistFilter';
 const checkboxIconStyle = { fill: '#fff' };
 
 const PlaylistMeta = ({
+  muiTheme,
   className,
   active,
   id,
@@ -32,8 +34,8 @@ const PlaylistMeta = ({
       <Checkbox
         checked={active}
         onCheck={() => !active && onActivatePlaylist(id)}
-        checkedIcon={<ActiveIcon color="#fff" />}
-        uncheckedIcon={<ActivateIcon color="#fff" />}
+        checkedIcon={<ActiveIcon color={muiTheme.palette.textColor} />}
+        uncheckedIcon={<ActivateIcon color={muiTheme.palette.textColor} />}
         iconStyle={checkboxIconStyle}
         label={active ? 'Active' : 'Activate'}
       />
@@ -61,6 +63,7 @@ const PlaylistMeta = ({
 );
 
 PlaylistMeta.propTypes = {
+  muiTheme: React.PropTypes.object.isRequired,
   className: React.PropTypes.string,
   active: React.PropTypes.bool.isRequired,
   id: React.PropTypes.string.isRequired,
@@ -73,4 +76,4 @@ PlaylistMeta.propTypes = {
   onFilter: React.PropTypes.func.isRequired
 };
 
-export default PlaylistMeta;
+export default muiThemeable()(PlaylistMeta);

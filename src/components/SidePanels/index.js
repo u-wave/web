@@ -1,6 +1,7 @@
 import * as React from 'react';
 import pure from 'recompose/pure';
 import { Tabs, Tab } from 'material-ui/Tabs';
+import muiThemeable from 'material-ui/styles/muiThemeable';
 
 import Chat from '../../containers/Chat';
 import ChatInput from '../Chat/Input';
@@ -9,35 +10,35 @@ import WaitList from '../../containers/WaitList';
 
 import PanelTemplate from './PanelTemplate';
 
-const tabItemContainerStyle = {
+const tabItemContainerStyle = ({ palette }) => ({
   height: 56,
-  backgroundColor: '#151515'
-};
+  backgroundColor: palette.backgroundColor
+});
 
-const tabStyle = {
+const tabStyle = ({ palette }) => ({
   float: 'left',
-  color: '#fff',
+  color: palette.textColor,
   fontSize: '10pt',
   height: '100%',
-  backgroundColor: '#151515'
-};
+  backgroundColor: palette.backgroundColor
+});
 
-const activeTabStyle = {
-  ...tabStyle,
-  backgroundColor: 'rgba(48, 48, 48, 0.3)'
-};
+const activeTabStyle = theme => ({
+  ...tabStyle(theme),
+  backgroundColor: '#222'
+});
 
-const inkBarStyle = {
+const inkBarStyle = ({ palette }) => ({
   height: 3,
   marginTop: -3,
-  backgroundColor: '#fff'
-};
+  backgroundColor: palette.textColor
+});
 
-const contentStyle = {
+const contentStyle = () => ({
   // This ensures that the `position:absolute`s on divs _inside_ container
   // elements align correctly.
   position: 'static'
-};
+});
 
 const subHeaderStyle = {
   fontSize: '125%'
@@ -58,6 +59,7 @@ const getWaitlistLabel = (size, position) => {
 };
 
 const SidePanels = ({
+  muiTheme,
   selected,
   isLoggedIn,
   listenerCount,
@@ -69,9 +71,9 @@ const SidePanels = ({
   <Tabs
     value={selected}
     onChange={onChange}
-    tabItemContainerStyle={tabItemContainerStyle}
-    inkBarStyle={inkBarStyle}
-    contentContainerStyle={contentStyle}
+    tabItemContainerStyle={tabItemContainerStyle(muiTheme)}
+    inkBarStyle={inkBarStyle(muiTheme)}
+    contentContainerStyle={contentStyle(muiTheme)}
     tabTemplate={PanelTemplate}
   >
     {/* Disabled touch ripples on tabs because they're offset weirdly. Also,
@@ -88,7 +90,7 @@ const SidePanels = ({
       disableTouchRipple
       label="Chat"
       value="chat"
-      style={selected === 'chat' ? activeTabStyle : tabStyle}
+      style={selected === 'chat' ? activeTabStyle(muiTheme) : tabStyle(muiTheme)}
     >
       <div className="AppRow AppRow--middle">
         <Chat />
@@ -107,7 +109,7 @@ const SidePanels = ({
         </span>
       ]}
       value="room"
-      style={selected === 'room' ? activeTabStyle : tabStyle}
+      style={selected === 'room' ? activeTabStyle(muiTheme) : tabStyle(muiTheme)}
     >
       <div className="AppRow AppRow--middle">
         <RoomUserList />
@@ -118,7 +120,7 @@ const SidePanels = ({
       disableTouchRipple
       label={getWaitlistLabel(waitlistSize, waitlistPosition)}
       value="waitlist"
-      style={selected === 'waitlist' ? activeTabStyle : tabStyle}
+      style={selected === 'waitlist' ? activeTabStyle(muiTheme) : tabStyle(muiTheme)}
     >
       <div className="AppRow AppRow--middle">
         <WaitList />
@@ -128,6 +130,7 @@ const SidePanels = ({
 );
 
 SidePanels.propTypes = {
+  muiTheme: React.PropTypes.object.isRequired,
   selected: React.PropTypes.string.isRequired,
   isLoggedIn: React.PropTypes.bool.isRequired,
   listenerCount: React.PropTypes.number.isRequired,
@@ -137,4 +140,4 @@ SidePanels.propTypes = {
   sendChatMessage: React.PropTypes.func.isRequired
 };
 
-export default pure(SidePanels);
+export default muiThemeable()(pure(SidePanels));
