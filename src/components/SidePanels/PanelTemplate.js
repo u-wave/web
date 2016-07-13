@@ -1,7 +1,8 @@
+import cx from 'classnames';
 import * as React from 'react';
 
 const PanelTemplate = ({ selected, children }) => (
-  <div style={{ visibility: selected ? 'visible' : 'hidden' }}>
+  <div className={cx('SidePanel-panel', selected && 'is-visible')}>
     {children}
   </div>
 );

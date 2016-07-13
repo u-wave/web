@@ -15,4 +15,14 @@
       color: #777;
     }
   }
+
+  @descendent panel {
+    visibility: hidden;
+    opacity: 0;
+
+    @when visible {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
 }
