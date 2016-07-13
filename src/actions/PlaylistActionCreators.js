@@ -268,19 +268,16 @@ export function createPlaylist(name) {
   const description = '';
   const shared = false;
 
-  function onComplete(playlist) {
-    return (dispatch, getState) => {
+  return post('/playlists', { name, description, shared }, {
+    onStart: () => createPlaylistStart({ name, description, shared }, tempId),
+    onComplete: playlist => (dispatch, getState) => {
       const isFirstPlaylist = !activePlaylistIDSelector(getState());
       dispatch(createPlaylistComplete(playlist, tempId));
       if (isFirstPlaylist) {
         dispatch(activatePlaylistComplete(playlist._id));
       }
-    };
-  }
-
-  return post('/playlists', { name, description, shared }, {
-    onStart: () => createPlaylistStart({ name, description, shared }, tempId),
-    onComplete,
+      return playlist;
+    },
     onError: error => ({
       type: CREATE_PLAYLIST_COMPLETE,
       error: true,
