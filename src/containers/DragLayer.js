@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import * as React from 'react';
 import { DragLayer } from 'react-dnd';
 import { MEDIA, WAITLIST_USER } from '../constants/DDItemTypes';
 
@@ -10,11 +10,11 @@ import MediaDragPreview from '../components/MediaList/MediaDragPreview';
   currentOffset: monitor.getClientOffset(),
   isDragging: monitor.isDragging()
 }))
-export default class DragLayerContainer extends Component {
+export default class DragLayerContainer extends React.Component {
   static propTypes = {
-    type: PropTypes.oneOf([ MEDIA, WAITLIST_USER ]),
-    items: PropTypes.object,
-    isDragging: PropTypes.bool.isRequired
+    type: React.PropTypes.oneOf([ MEDIA, WAITLIST_USER ]),
+    items: React.PropTypes.object,
+    isDragging: React.PropTypes.bool.isRequired
   };
 
   renderPreview() {

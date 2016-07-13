@@ -1,5 +1,5 @@
 import cx from 'classnames';
-import React, { PropTypes } from 'react';
+import * as React from 'react';
 import pure from 'recompose/pure';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 
@@ -30,9 +30,9 @@ const Username = ({ className, muiTheme, user }) => {
 };
 
 Username.propTypes = {
-  className: PropTypes.string,
-  user: PropTypes.object.isRequired,
-  muiTheme: PropTypes.object.isRequired
+  className: React.PropTypes.string,
+  user: React.PropTypes.object.isRequired,
+  muiTheme: React.PropTypes.object.isRequired
 };
 
 export default muiThemeable()(pure(Username));

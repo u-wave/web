@@ -1,5 +1,5 @@
 import cx from 'classnames';
-import React from 'react';
+import * as React from 'react';
 import Slider from 'material-ui/Slider';
 import VolumeDownIcon from 'material-ui/svg-icons/av/volume-down';
 import VolumeMuteIcon from 'material-ui/svg-icons/av/volume-mute';

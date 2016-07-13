@@ -1,5 +1,5 @@
 import cx from 'classnames';
-import React, { Component, PropTypes } from 'react';
+import * as React from 'react';
 
 import { IDLE, LOADING, LOADED } from '../../constants/LoadingStates';
 import Overlay from '../Overlay';
@@ -11,46 +11,46 @@ import PlaylistPanelEmpty from './Panel/Empty';
 import PlaylistImport from '../../containers/PlaylistImportManager';
 import SearchResults from './Panel/SearchResults';
 
-export default class PlaylistManager extends Component {
+export default class PlaylistManager extends React.Component {
   static propTypes = {
-    className: PropTypes.string,
+    className: React.PropTypes.string,
 
-    playlists: PropTypes.array,
-    activePlaylist: PropTypes.object,
-    selectedPlaylist: PropTypes.object,
-    selectedMedia: PropTypes.array,
-    currentFilter: PropTypes.string,
+    playlists: React.PropTypes.array,
+    activePlaylist: React.PropTypes.object,
+    selectedPlaylist: React.PropTypes.object,
+    selectedMedia: React.PropTypes.array,
+    currentFilter: React.PropTypes.string,
 
-    showSearchResults: PropTypes.bool.isRequired,
-    showImportPanel: PropTypes.bool.isRequired,
+    showSearchResults: React.PropTypes.bool.isRequired,
+    showImportPanel: React.PropTypes.bool.isRequired,
 
-    searchSource: PropTypes.string,
-    searchQuery: PropTypes.string,
-    searchResults: PropTypes.array,
-    searchLoadingState: PropTypes.oneOf([ IDLE, LOADING, LOADED ]),
+    searchSource: React.PropTypes.string,
+    searchQuery: React.PropTypes.string,
+    searchResults: React.PropTypes.array,
+    searchLoadingState: React.PropTypes.oneOf([ IDLE, LOADING, LOADED ]),
 
-    onCloseOverlay: PropTypes.func,
-    onCreatePlaylist: PropTypes.func,
-    onRenamePlaylist: PropTypes.func,
-    onDeletePlaylist: PropTypes.func,
-    onNotDeletable: PropTypes.func,
-    onShufflePlaylist: PropTypes.func,
-    onActivatePlaylist: PropTypes.func,
-    onFilterPlaylistItems: PropTypes.func,
-    onSelectPlaylist: PropTypes.func,
-    onSelectSearchResults: PropTypes.func,
-    onSearchSubmit: PropTypes.func,
-    onSearchSourceChange: PropTypes.func,
-    onShowImportPanel: PropTypes.func,
-    onAddToPlaylist: PropTypes.func,
-    onOpenAddMediaMenu: PropTypes.func,
-    onMoveToFirst: PropTypes.func,
-    onEditMedia: PropTypes.func,
-    onMoveMedia: PropTypes.func,
-    onRemoveFromPlaylist: PropTypes.func,
-    onOpenPreviewMediaDialog: PropTypes.func,
-    onLoadPlaylistPage: PropTypes.func,
-    onLoadFilteredPlaylistPage: PropTypes.func
+    onCloseOverlay: React.PropTypes.func,
+    onCreatePlaylist: React.PropTypes.func,
+    onRenamePlaylist: React.PropTypes.func,
+    onDeletePlaylist: React.PropTypes.func,
+    onNotDeletable: React.PropTypes.func,
+    onShufflePlaylist: React.PropTypes.func,
+    onActivatePlaylist: React.PropTypes.func,
+    onFilterPlaylistItems: React.PropTypes.func,
+    onSelectPlaylist: React.PropTypes.func,
+    onSelectSearchResults: React.PropTypes.func,
+    onSearchSubmit: React.PropTypes.func,
+    onSearchSourceChange: React.PropTypes.func,
+    onShowImportPanel: React.PropTypes.func,
+    onAddToPlaylist: React.PropTypes.func,
+    onOpenAddMediaMenu: React.PropTypes.func,
+    onMoveToFirst: React.PropTypes.func,
+    onEditMedia: React.PropTypes.func,
+    onMoveMedia: React.PropTypes.func,
+    onRemoveFromPlaylist: React.PropTypes.func,
+    onOpenPreviewMediaDialog: React.PropTypes.func,
+    onLoadPlaylistPage: React.PropTypes.func,
+    onLoadFilteredPlaylistPage: React.PropTypes.func
   };
 
   withSelected(fn) {

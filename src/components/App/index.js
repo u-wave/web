@@ -1,5 +1,5 @@
 /* eslint-disable react/prefer-stateless-function */
-import React from 'react';
+import * as React from 'react';
 import { DragDropContext } from 'react-dnd';
 import compose from 'recompose/compose';
 import toClass from 'recompose/toClass';

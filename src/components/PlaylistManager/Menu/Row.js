@@ -1,5 +1,5 @@
 import cx from 'classnames';
-import React, { Component, PropTypes } from 'react';
+import * as React from 'react';
 import { DropTarget } from 'react-dnd';
 import ActiveIcon from 'material-ui/svg-icons/navigation/check';
 import { MEDIA } from '../../../constants/DDItemTypes';
@@ -18,18 +18,18 @@ const collect = (connect, monitor) => ({
 });
 
 @DropTarget(MEDIA, playlistTarget, collect)
-export default class PlaylistRow extends Component {
+export default class PlaylistRow extends React.Component {
   static propTypes = {
-    className: PropTypes.string,
-    playlist: PropTypes.object,
-    selected: PropTypes.bool,
-    isOver: PropTypes.bool.isRequired,
+    className: React.PropTypes.string,
+    playlist: React.PropTypes.object,
+    selected: React.PropTypes.bool,
+    isOver: React.PropTypes.bool.isRequired,
 
-    connectDropTarget: PropTypes.func.isRequired,
-    onClick: PropTypes.func,
+    connectDropTarget: React.PropTypes.func.isRequired,
+    onClick: React.PropTypes.func,
     // Used in the drop handler above 👆
     // eslint-disable-next-line react/no-unused-prop-types
-    onAddToPlaylist: PropTypes.func
+    onAddToPlaylist: React.PropTypes.func
   };
 
   render() {

@@ -1,16 +1,16 @@
-import React, { Component, PropTypes } from 'react';
+import * as React from 'react';
 
 import LogMessage from './LogMessage';
 import Message from './Message';
 import Motd from './Motd';
 
-export default class Chat extends Component {
+export default class Chat extends React.Component {
   static propTypes = {
-    messages: PropTypes.array,
-    motd: PropTypes.array,
-    compileOptions: PropTypes.shape({
-      availableEmoji: PropTypes.array,
-      emojiImages: PropTypes.object
+    messages: React.PropTypes.array,
+    motd: React.PropTypes.array,
+    compileOptions: React.PropTypes.shape({
+      availableEmoji: React.PropTypes.array,
+      emojiImages: React.PropTypes.object
     })
   };
 

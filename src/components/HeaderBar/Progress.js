@@ -1,5 +1,5 @@
 import cx from 'classnames';
-import React from 'react';
+import * as React from 'react';
 
 import transformStyle from '../../utils/transformStyle';
 import timed from '../../utils/timed';

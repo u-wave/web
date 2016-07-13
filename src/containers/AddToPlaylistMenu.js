@@ -77,7 +77,6 @@ AddToPlaylistMenuContainer.propTypes = {
     y: React.PropTypes.number.isRequired
   }),
   playlists: React.PropTypes.arrayOf(React.PropTypes.object),
-
   media: React.PropTypes.arrayOf(React.PropTypes.object),
   historyID: React.PropTypes.string,
 
