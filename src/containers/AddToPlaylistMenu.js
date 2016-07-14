@@ -3,7 +3,11 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { addMedia, closeAddMediaMenu } from '../actions/PlaylistActionCreators';
+import {
+  createPlaylist,
+  addMedia,
+  closeAddMediaMenu
+} from '../actions/PlaylistActionCreators';
 import { favoriteMedia } from '../actions/VoteActionCreators';
 
 import {
@@ -15,6 +19,7 @@ import AddToPlaylistMenu from '../components/AddToPlaylistMenu';
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   onClose: closeAddMediaMenu,
+  onCreatePlaylist: createPlaylist,
   onAddMedia: addMedia,
   onFavoriteMedia: favoriteMedia
 }, dispatch);
@@ -43,12 +48,18 @@ export default class AddToPlaylistMenuContainer extends Component {
     historyID: PropTypes.string,
 
     onClose: PropTypes.func.isRequired,
+    onCreatePlaylist: PropTypes.func.isRequired,
     onAddMedia: PropTypes.func.isRequired,
     onFavoriteMedia: PropTypes.func.isRequired
   };
 
   render() {
-    const { onAddMedia, onFavoriteMedia, onClose } = this.props;
+    const {
+      onCreatePlaylist,
+      onAddMedia,
+      onFavoriteMedia,
+      onClose
+    } = this.props;
     const { isOpen, position, isFavorite, playlists, media, historyID } = this.props;
     if (!isOpen) {
       return <span />;
@@ -68,6 +79,7 @@ export default class AddToPlaylistMenuContainer extends Component {
         position={position}
         playlists={playlists}
         onClose={onClose}
+        onCreatePlaylist={onCreatePlaylist}
         onSelect={onSelect}
       />
     );
