@@ -31,18 +31,21 @@ function mapDispatchToProps(dispatch) {
 @connect(mapStateToProps, mapDispatchToProps)
 export default class AppContainer extends Component {
   static propTypes = {
+    mediaSources: PropTypes.object.isRequired,
     muiTheme: PropTypes.object,
     createTimer: PropTypes.func.isRequired,
     stopTimer: PropTypes.func.isRequired
   };
 
   static childContextTypes = {
-    timerCallbacks: PropTypes.arrayOf(PropTypes.func)
+    timerCallbacks: PropTypes.arrayOf(PropTypes.func),
+    mediaSources: PropTypes.object
   };
 
   getChildContext() {
     return {
-      timerCallbacks: this.timerCallbacks
+      timerCallbacks: this.timerCallbacks,
+      mediaSources: this.props.mediaSources
     };
   }
 

@@ -12,6 +12,9 @@ import * as Socket from './utils/Socket';
 import { get as readSession } from './utils/Session';
 import { initState, setJWT } from './actions/LoginActionCreators';
 
+import * as youTubeSource from './sources/youtube';
+import * as soundCloudSource from './sources/soundcloud';
+
 import configureStore from './store/configureStore';
 
 // Register default chat commands.
@@ -25,11 +28,17 @@ function readApplicationConfig() {
   }
 }
 
+// Configure the Media sources to be used by this üWave client instance.
+const mediaSources = {
+  youtube: youTubeSource,
+  soundcloud: soundCloudSource
+};
+
 // The Store holds all of the application state. The @connect calls in the React
 // Container components use this store to access state.
 const store = configureStore({
   config: readApplicationConfig()
-});
+}, { mediaSources });
 
 // Check if we have a previous login session going.
 const jwt = readSession();
@@ -55,7 +64,7 @@ ReactDOM.render(
   // Container components work. This is how React Components find the
   // application state that they need to render.
   <Provider store={store}>
-    <AppContainer />
+    <AppContainer mediaSources={mediaSources} />
   </Provider>,
   document.getElementById('app')
 );
