@@ -14,7 +14,7 @@
     "ReconnectingWebSocket": "joewalnes/reconnecting-websocket#283894",
     "array-find": "^1.0.0",
     "array-findindex": "^0.1.0",
-    "cheerio": "^0.20.0",
+    "cheerio": "^0.21.0",
     "classnames": "^2.2.4",
     "debug": "^2.2.0",
     "es6-promise": "^3.0.2",
