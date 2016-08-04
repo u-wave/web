@@ -15,20 +15,24 @@ export default class TextField extends React.Component {
 
   componentDidMount() {
     if (this.props.autofocus) {
-      this.refs.input.focus();
+      this.input.focus();
     }
   }
 
   get value() {
-    return this.refs.input.value;
+    return this.input.value;
   }
+
+  refInput = input => {
+    this.input = input;
+  };
 
   render() {
     const { type, icon, className, ...props } = this.props;
     return (
       <div className={cx('TextField', className)}>
         <input
-          ref="input"
+          ref={this.refInput}
           className="TextField-input"
           type={type}
           {...props}

@@ -9,7 +9,7 @@ export default class ReCaptcha extends React.Component {
 
   componentDidMount() {
     this.props.grecaptcha.render(
-      this.refs.container,
+      this.container,
       { sitekey: this.props.sitekey, callback: this.handleResponse }
     );
   }
@@ -20,7 +20,11 @@ export default class ReCaptcha extends React.Component {
     }
   };
 
+  refContainer = container => {
+    this.container = container;
+  };
+
   render() {
-    return <div ref="container" />;
+    return <div ref={this.refContainer} />;
   }
 }

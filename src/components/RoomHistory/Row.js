@@ -112,7 +112,6 @@ export default class HistoryRow extends React.Component {
         </div>
         {showActions && (
           <Actions
-            ref="actions"
             className={cx('MediaListRow-actions', selectedClass)}
             selection={selection}
             media={media}

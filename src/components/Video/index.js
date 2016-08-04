@@ -1,20 +1,20 @@
 import cx from 'classnames';
 import isEqual from 'is-equal-shallow';
-import React, { Component, PropTypes } from 'react';
+import * as React from 'react';
 
 import injectMediaSources from '../../utils/injectMediaSources';
 
 @injectMediaSources()
-export default class Video extends Component {
+export default class Video extends React.Component {
   static propTypes = {
-    getAllMediaSources: PropTypes.func.isRequired,
-    enabled: PropTypes.bool,
-    size: PropTypes.string,
-    volume: PropTypes.number,
-    isMuted: PropTypes.bool,
-    historyID: PropTypes.string,
-    media: PropTypes.object,
-    seek: PropTypes.number
+    getAllMediaSources: React.PropTypes.func.isRequired,
+    enabled: React.PropTypes.bool,
+    size: React.PropTypes.string,
+    volume: React.PropTypes.number,
+    isMuted: React.PropTypes.bool,
+    historyID: React.PropTypes.string,
+    media: React.PropTypes.object,
+    seek: React.PropTypes.number
   };
 
   shouldComponentUpdate(nextProps) {
@@ -35,7 +35,8 @@ export default class Video extends Component {
 
     const props = {
       enabled,
-      media, seek,
+      media,
+      seek,
       mode: size,
       volume: isMuted ? 0 : volume
     };

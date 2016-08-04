@@ -38,6 +38,7 @@ const showSearchResultsSelector = createSelector(
   search => !!search.showResults
 );
 
+// eslint-disable-next-line import/prefer-default-export
 export const searchSelector = createStructuredSelector({
   showSearchResults: showSearchResultsSelector,
   searchSource: searchSourceTypeSelector,

@@ -6,7 +6,7 @@ const Link = ({ text, href, ...props }) => (
     href={href}
     title={href}
     target="_blank"
-    rel="noreferrer"
+    rel="noopener noreferrer"
     {...props}
   >
     {truncate(text, 60)}

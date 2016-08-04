@@ -24,8 +24,8 @@ const makeSvgString = url => {
         x="${blur * -3}"
         y="${blur * -3}"
         filter="url(#blur)"
-        width="${width + blur * 6}"
-        height="${height + blur * 6}"
+        width="${width + (blur * 6)}"
+        height="${height + (blur * 6)}"
       />
     </svg>
   `.replace(/\s+/g, ' ').trim();

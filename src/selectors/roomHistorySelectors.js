@@ -38,7 +38,9 @@ export const currentPlaySelector = createSelector(
     const entry = {
       _id: historyID,
       user: dj,
-      media, timestamp, stats
+      media,
+      timestamp,
+      stats
     };
     return user ? addOwnVoteProps(user._id)(entry) : entry;
   }

@@ -29,12 +29,12 @@ export default class Chat extends Component {
   }
 
   scrollToBottom() {
-    const el = this.refs.chat;
+    const el = this.container;
     el.scrollTop = el.scrollHeight;
   }
 
   isScrolledToBottom() {
-    const el = this.refs.chat;
+    const el = this.container;
     const lastMessage = el.lastElementChild;
     if (lastMessage) {
       const neededSize = el.scrollTop + el.offsetHeight + lastMessage.offsetHeight;
@@ -42,6 +42,10 @@ export default class Chat extends Component {
     }
     return true;
   }
+
+  refContainer = container => {
+    this.container = container;
+  };
 
   renderMotd() {
     if (!this.props.motd) {
@@ -69,7 +73,7 @@ export default class Chat extends Component {
 
   render() {
     return (
-      <div className="Chat" ref="chat">
+      <div className="Chat" ref={this.refContainer}>
         {this.renderMotd()}
         {this.props.messages.map(this.renderMessage, this)}
       </div>

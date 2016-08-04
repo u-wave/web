@@ -1,10 +1,9 @@
 import { expect } from 'chai';
 import proxyquire from 'proxyquire';
-
 import { LOGIN_COMPLETE } from '../../src/constants/actionTypes/auth';
-
 import createStore from '../../src/store/configureStore';
 import * as s from '../../src/selectors/userSelectors';
+
 const {
   loginComplete,
   setJWT

@@ -27,17 +27,25 @@ export default class YoutubeImportForm extends React.Component {
 
   handleImportChannel = e => {
     e.preventDefault();
-    const url = this.refs.channel.value;
+    const url = this.channel.value;
     this.dispatch(getChannelPlaylists(url));
     this.props.onShowImportPanel();
   };
 
   handleImportPlaylist = e => {
     e.preventDefault();
-    const url = this.refs.playlist.value;
+    const url = this.playlist.value;
 
     this.dispatch(getImportablePlaylist(url));
     this.props.onShowImportPanel();
+  };
+
+  refChannel = channel => {
+    this.channel = channel;
+  };
+
+  refPlaylist = playlist => {
+    this.playlist = playlist;
   };
 
   render() {
@@ -49,7 +57,7 @@ export default class YoutubeImportForm extends React.Component {
         <Form onSubmit={this.handleImportChannel}>
           <FormGroup>
             <TextField
-              ref="channel"
+              ref={this.refChannel}
               placeholder="Channel URL"
               icon={<PlaylistIcon color="#9f9d9e" />}
             />
@@ -61,7 +69,7 @@ export default class YoutubeImportForm extends React.Component {
         <Form onSubmit={this.handleImportPlaylist}>
           <FormGroup>
             <TextField
-              ref="playlist"
+              ref={this.refPlaylist}
               placeholder="Playlist URL"
               icon={<PlaylistIcon color="#9f9d9e" />}
             />
