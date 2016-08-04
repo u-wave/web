@@ -1,14 +1,14 @@
 import cx from 'classnames';
-import React, { Component, PropTypes } from 'react';
+import * as React from 'react';
 import SearchIcon from 'material-ui/svg-icons/action/search';
 import SourcePicker from './SourcePicker';
 
-export default class SearchBar extends Component {
+export default class SearchBar extends React.Component {
   static propTypes = {
-    className: PropTypes.string,
-    source: PropTypes.string,
-    onSubmit: PropTypes.func,
-    onSourceChange: PropTypes.func
+    className: React.PropTypes.string,
+    source: React.PropTypes.string,
+    onSubmit: React.PropTypes.func,
+    onSourceChange: React.PropTypes.func
   };
 
   state = { focused: false };
@@ -23,8 +23,12 @@ export default class SearchBar extends Component {
   handleKeyDown = e => {
     const { onSubmit } = this.props;
     if (e.key === 'Enter') {
-      onSubmit(this.refs.value.value);
+      onSubmit(this.input.value);
     }
+  };
+
+  refInput = input => {
+    this.input = input;
   };
 
   render() {
@@ -42,7 +46,7 @@ export default class SearchBar extends Component {
         />
         <div className="SearchBar-query">
           <input
-            ref="value"
+            ref={this.refInput}
             className="SearchBar-input"
             type="text"
             placeholder={focused ? '' : 'Search'}

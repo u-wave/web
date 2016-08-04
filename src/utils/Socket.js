@@ -173,6 +173,7 @@ export function reconnect() {
 }
 
 export function connect(store, url = defaultUrl()) {
+  // eslint-disable-next-line import/newline-after-import
   const WebSocket = require('ReconnectingWebSocket');
   socket = new WebSocket(url);
   socket.onmessage = pack => {

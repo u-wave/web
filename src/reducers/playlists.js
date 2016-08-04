@@ -126,7 +126,7 @@ function mergePlaylistPage(size, oldMedia, newMedia, { page, pageSize }) {
     media[i] = item;
   });
   newMedia.forEach((item, i) => {
-    media[i + page * pageSize] = item;
+    media[(page * pageSize) + i] = item;
   });
   return media;
 }

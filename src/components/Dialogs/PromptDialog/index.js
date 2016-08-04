@@ -38,7 +38,7 @@ export default class PromptDialog extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    const promise = this.props.onSubmit(this.refs.input.value);
+    const promise = this.props.onSubmit(this.input.value);
     if (promise && promise.then) {
       this.setState({ busy: true });
       const onDone = () => {
@@ -54,6 +54,10 @@ export default class PromptDialog extends React.Component {
 
   handleInputChange = event => {
     this.setState({ value: event.target.value });
+  };
+
+  refInput = input => {
+    this.input = input;
   };
 
   render() {
@@ -88,7 +92,7 @@ export default class PromptDialog extends React.Component {
           {children}
           <FormGroup>
             <TextField
-              ref="input"
+              ref={this.refInput}
               autofocus
               type={inputType}
               placeholder={placeholder}

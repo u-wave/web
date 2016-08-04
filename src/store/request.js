@@ -47,7 +47,12 @@ export default function middleware(middlewareOptions = {}) {
     };
 
     const token = tokenSelector(getState());
-    const { method, url, qs, data } = action.payload;
+    const {
+      method,
+      url,
+      qs,
+      data
+    } = action.payload;
     const {
       id,
       onStart,
@@ -57,7 +62,10 @@ export default function middleware(middlewareOptions = {}) {
 
     const completedMeta = {
       id,
-      method, url, qs, data
+      method,
+      url,
+      qs,
+      data
     };
 
     const requestUrl = makeUrl(opts.apiUrl + url, qs);

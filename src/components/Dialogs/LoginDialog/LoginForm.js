@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import EmailIcon from 'material-ui/svg-icons/communication/email';
 import PasswordIcon from 'material-ui/svg-icons/action/lock';
 import Loader from '../../Loader';
@@ -23,9 +23,17 @@ export default class LoginForm extends React.Component {
     event.preventDefault();
     this.setState({ busy: true });
     this.props.onLogin({
-      email: this.refs.email.value,
-      password: this.refs.password.value
+      email: this.email.value,
+      password: this.password.value
     });
+  };
+
+  refEmail = email => {
+    this.email = email;
+  };
+
+  refPassword = password => {
+    this.password = password;
   };
 
   render() {
@@ -37,7 +45,7 @@ export default class LoginForm extends React.Component {
         {error && <FormGroup>{error.message}</FormGroup>}
         <FormGroup>
           <TextField
-            ref="email"
+            ref={this.refEmail}
             className="LoginForm-field"
             type="email"
             placeholder="E-Mail"
@@ -47,7 +55,7 @@ export default class LoginForm extends React.Component {
         </FormGroup>
         <FormGroup>
           <TextField
-            ref="password"
+            ref={this.refPassword}
             className="LoginForm-field"
             type="password"
             placeholder="Password"

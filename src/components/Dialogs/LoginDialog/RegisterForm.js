@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import EmailIcon from 'material-ui/svg-icons/communication/email';
 import PasswordIcon from 'material-ui/svg-icons/action/lock';
 import UserIcon from 'material-ui/svg-icons/social/person';
@@ -33,9 +33,9 @@ export default class RegisterForm extends React.Component {
     event.preventDefault();
     this.setState({ busy: true });
     this.props.onRegister({
-      username: this.refs.username.value,
-      email: this.refs.email.value,
-      password: this.refs.password.value,
+      username: this.username.value,
+      email: this.email.value,
+      password: this.password.value,
       grecaptcha: this.state.captchaResponse
     });
   };
@@ -44,6 +44,18 @@ export default class RegisterForm extends React.Component {
     this.setState({
       captchaResponse: response
     });
+  };
+
+  refUsername = username => {
+    this.username = username;
+  };
+
+  refEmail = email => {
+    this.email = email;
+  };
+
+  refPassword = password => {
+    this.password = password;
   };
 
   renderCaptcha() {
@@ -69,7 +81,7 @@ export default class RegisterForm extends React.Component {
         {error && <FormGroup>{error.message}</FormGroup>}
         <FormGroup>
           <TextField
-            ref="username"
+            ref={this.refUsername}
             className="RegisterForm-field"
             placeholder="Username"
             icon={<UserIcon color="#9f9d9e" />}
@@ -78,7 +90,7 @@ export default class RegisterForm extends React.Component {
         </FormGroup>
         <FormGroup>
           <TextField
-            ref="email"
+            ref={this.refEmail}
             className="RegisterForm-field"
             type="email"
             placeholder="E-Mail"
@@ -87,7 +99,7 @@ export default class RegisterForm extends React.Component {
         </FormGroup>
         <FormGroup>
           <TextField
-            ref="password"
+            ref={this.refPassword}
             className="RegisterForm-field"
             type="password"
             placeholder="Password"

@@ -19,7 +19,7 @@ export const mediaDurationSelector = createSelector(
 export const endTimeSelector = createSelector(
   startTimeSelector,
   mediaDurationSelector,
-  (startTime, duration) => startTime + duration * 1000 || 0
+  (startTime, duration) => startTime + (duration * 1000) || 0
 );
 
 export const timeElapsedSelector = createSelector(

@@ -12,6 +12,7 @@ const SongInfo = ({ artist, title, artistUrl, trackUrl }) => (
     <a
       className="src-soundcloud-SongInfo-link src-soundcloud-SongInfo-link--artist"
       target="_blank"
+      rel="noopener noreferrer"
       href={artistUrl}
     >
       <ArtistIcon style={iconStyles} />
@@ -20,6 +21,7 @@ const SongInfo = ({ artist, title, artistUrl, trackUrl }) => (
     <a
       className="src-soundcloud-SongInfo-link src-soundcloud-SongInfo-link--track"
       target="_blank"
+      rel="noopener noreferrer"
       href={trackUrl}
     >
       <TitleIcon style={iconStyles} />

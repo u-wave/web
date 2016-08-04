@@ -32,7 +32,10 @@ export function advance(nextBooth) {
     dispatch({
       type: ADVANCE,
       payload: {
-        userID, historyID, playlistID, user,
+        userID,
+        historyID,
+        playlistID,
+        user,
         media: flattenPlaylistItem(media),
         timestamp: playedAt
       },

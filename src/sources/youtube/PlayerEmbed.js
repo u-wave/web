@@ -17,7 +17,7 @@ export default class YouTubePlayerEmbed extends React.Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    const { player } = this.refs;
+    const player = this.player;
     if (player) {
       // only set volume after the YT API is fully initialised.
       // if it fails here because the API isn't ready, the the volume will still
@@ -42,6 +42,10 @@ export default class YouTubePlayerEmbed extends React.Component {
     event.target.setPlaybackRate(1);
   };
 
+  refPlayer = player => {
+    this.player = player;
+  };
+
   render() {
     const { active, media, seek, showControls } = this.props;
 
@@ -62,7 +66,7 @@ export default class YouTubePlayerEmbed extends React.Component {
 
     return (
       <YouTube
-        ref="player"
+        ref={this.refPlayer}
         videoId={active ? media.sourceID : null}
         opts={opts}
         onReady={this.handleYTReady}

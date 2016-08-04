@@ -1,6 +1,7 @@
 import cx from 'classnames';
 import React, { Component, PropTypes } from 'react';
 import Dialog from 'material-ui/Dialog';
+import uniqueId from 'lodash/uniqueId';
 
 import ArtistIcon from 'material-ui/svg-icons/hardware/headset';
 import TitleIcon from 'material-ui/svg-icons/image/music-note';
@@ -17,7 +18,7 @@ import TextField from '../../Form/TextField';
 // naive HH:mm:ss → seconds
 const parseDuration = str => str.split(':')
   .map(part => parseInt(part.trim(), 10))
-  .reduce((duration, part) => duration * 60 + part, 0);
+  .reduce((duration, part) => (duration * 60) + part, 0);
 
 export default class EditMediaDialog extends Component {
   static propTypes = {
@@ -36,11 +37,14 @@ export default class EditMediaDialog extends Component {
     errors: null
   };
 
+  labelStart = uniqueId('editmedia');
+  labelEnd = uniqueId('editmedia');
+
   handleSubmit = e => {
     e.preventDefault();
 
     const { media, onEditedMedia, onCloseDialog } = this.props;
-    const { artist, title, start, end } = this.refs;
+    const { artist, title, start, end } = this;
 
     const startSeconds = parseDuration(start.value);
     const endSeconds = parseDuration(end.value);
@@ -71,6 +75,22 @@ export default class EditMediaDialog extends Component {
     onCloseDialog();
   };
 
+  refArtist = artist => {
+    this.artist = artist;
+  };
+
+  refTitle = title => {
+    this.title = title;
+  };
+
+  refStart = start => {
+    this.start = start;
+  };
+
+  refEnd = end => {
+    this.end = end;
+  };
+
   render() {
     const {
       open,
@@ -89,7 +109,7 @@ export default class EditMediaDialog extends Component {
     if (open) {
       const artistInput = (
         <TextField
-          ref="artist"
+          ref={this.refArtist}
           className="EditMediaDialogGroup-field"
           placeholder="Artist"
           defaultValue={media.artist}
@@ -99,11 +119,11 @@ export default class EditMediaDialog extends Component {
         />
       );
       const artistTitleLabel = (
-        <label className="EditMediaDialogGroup-label">–</label>
+        <div className="EditMediaDialogGroup-label">–</div>
       );
       const titleInput = (
         <TextField
-          ref="title"
+          ref={this.refTitle}
           className="EditMediaDialogGroup-field"
           placeholder="Title"
           defaultValue={media.title}
@@ -113,11 +133,12 @@ export default class EditMediaDialog extends Component {
       );
 
       const fromLabel = (
-        <label className="EditMediaDialogGroup-label">Play from:</label>
+        <label htmlFor={this.labelStart} className="EditMediaDialogGroup-label">Play from:</label>
       );
       const fromInput = (
         <TextField
-          ref="start"
+          ref={this.refStart}
+          id={this.labelStart}
           className="EditMediaDialogGroup-field"
           placeholder="0:00"
           defaultValue={formatDuration(media.start)}
@@ -126,11 +147,12 @@ export default class EditMediaDialog extends Component {
         />
       );
       const toLabel = (
-        <label className="EditMediaDialogGroup-label">to:</label>
+        <label htmlFor={this.labelEnd} className="EditMediaDialogGroup-label">to:</label>
       );
       const toInput = (
         <TextField
-          ref="end"
+          ref={this.refEnd}
+          id={this.labelEnd}
           className="EditMediaDialogGroup-field"
           placeholder={formatDuration(media.duration)}
           defaultValue={formatDuration(media.end)}

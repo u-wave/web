@@ -115,7 +115,6 @@ export default class Row extends React.Component {
         </div>
         {showActions && (
           <Actions
-            ref="actions"
             className={cx('MediaListRow-actions', selectedClass)}
             selection={selection}
             media={media}

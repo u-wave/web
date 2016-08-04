@@ -51,9 +51,12 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    joinWaitlist, leaveWaitlist,
-    openLoginDialog, openRegisterDialog,
-    togglePlaylistManager, toggleSettings,
+    joinWaitlist,
+    leaveWaitlist,
+    openLoginDialog,
+    openRegisterDialog,
+    togglePlaylistManager,
+    toggleSettings,
     onSkipTurn: skipSelf,
     onModSkip: modSkipCurrentDJ,
     onFavorite: openFavoriteMenu,

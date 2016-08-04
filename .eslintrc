@@ -9,20 +9,12 @@
     "new-cap": [ "error", {
       "capIsNewExceptions": [ "DragDropContext", "DragSource", "DropTarget", "DragLayer", "ThemeDecorator" ]
     } ],
-    // This rule is very heavy-handed and breaks a lot of places where we use
-    // parentheses for readability, particularly in React components where
-    // multiline JSX is surrounded by parens:
-    //
-    // return (
-    //   <Component>
-    //     stuff
-    //   </Component>
-    // )
-    "no-extra-parens": "off",
     // Conflicts with `_id` property names returned from the üWave HTTP API
     "no-underscore-dangle": "off",
     "global-require": "off",
-    // Temporarily disabled, see https://github.com/benmosher/eslint-plugin-import/issues/317
-    "import/no-mutable-exports": "off"
+    "react/jsx-filename-extension": "off",
+    // devDependencies are allowed in tests and build stuff. The eslintrc in
+    // src/ disallows using devDependencies in client app code.
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }]
   }
 }

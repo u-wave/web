@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import { findDOMNode } from 'react-dom';
 import AddIcon from 'material-ui/svg-icons/content/add';
 
 import Action from './Action';
@@ -10,18 +9,22 @@ export default class AddToPlaylist extends Component {
   };
 
   position() {
-    const pos = findDOMNode(this.refs.button).getBoundingClientRect();
+    const pos = this.button.getBoundingClientRect();
     return {
       x: pos.left,
       y: pos.top
     };
   }
 
+  refButton = button => {
+    this.button = button;
+  };
+
   render() {
     const { onAdd, ...props } = this.props;
     return (
       <Action
-        ref="button"
+        ref={this.refButton}
         {...props}
         onAction={media => onAdd(this.position(), media)}
       >

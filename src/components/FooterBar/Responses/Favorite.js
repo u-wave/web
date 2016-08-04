@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import { findDOMNode } from 'react-dom';
 import FavoritedIcon from 'material-ui/svg-icons/action/favorite';
 import FavoriteIcon from 'material-ui/svg-icons/action/favorite-border';
 
@@ -17,7 +16,7 @@ export default class Favorite extends Component {
   };
 
   position() {
-    const pos = findDOMNode(this.refs.button).getBoundingClientRect();
+    const pos = this.button.getBoundingClientRect();
     return {
       x: pos.left,
       y: pos.top
@@ -28,13 +27,17 @@ export default class Favorite extends Component {
     this.props.onFavorite(this.position());
   };
 
+  refButton = button => {
+    this.button = button;
+  };
+
   render() {
     const { muiTheme } = this.context;
     const { active, count } = this.props;
     const CurrentIcon = active ? FavoritedIcon : FavoriteIcon;
     return (
       <Button
-        ref="button"
+        ref={this.refButton}
         tooltip="Favorite"
         onClick={this.handleFavorite}
         count={count}

@@ -210,7 +210,9 @@ export function muteUser(userID, { moderatorID, expiresAt }) {
     dispatch({
       type: MUTE_USER,
       payload: {
-        userID, moderatorID, expiresAt,
+        userID,
+        moderatorID,
+        expiresAt,
         expirationTimer: expireIn > 0 ?
           setTimeout(() => dispatch(expireMute(userID)), expireIn) : null
       }

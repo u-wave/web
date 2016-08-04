@@ -102,6 +102,7 @@ export default class SoundCloudPlayer extends React.Component {
           <a
             href={sourceData.permalinkUrl}
             target="_blank"
+            rel="noopener noreferrer"
             className="src-soundcloud-Player-permalink"
           >
             View on

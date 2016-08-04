@@ -1,5 +1,5 @@
-import { loadSettings } from '../actions/SettingsActionCreators';
 import isEqual from 'is-equal-shallow';
+import { loadSettings } from '../actions/SettingsActionCreators';
 
 const SETTINGS_KEY = 'uwaveSettings';
 
