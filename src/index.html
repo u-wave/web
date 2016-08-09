@@ -15,5 +15,9 @@
     </div>
     <script id="u-wave-config" type="application/json">{}</script>
     <script src="out.js"></script>
+    <script>
+      uw.renderToDOM(document.querySelector('#app'));
+      document.querySelector('#app-loading').innerHTML = '';
+    </script>
   </body>
 </html>
