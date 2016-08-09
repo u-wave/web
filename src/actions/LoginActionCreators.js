@@ -1,5 +1,7 @@
 import {
   INIT_STATE,
+  SOCKET_CONNECT,
+  SOCKET_RECONNECT,
 
   REGISTER_START,
   REGISTER_COMPLETE,
@@ -11,7 +13,6 @@ import {
 } from '../constants/actionTypes/auth';
 import { LOAD_ALL_PLAYLISTS_START } from '../constants/actionTypes/playlists';
 import * as Session from '../utils/Session';
-import * as Socket from '../utils/Socket';
 import { get, post } from './RequestActionCreators';
 import { advance, loadHistory } from './BoothActionCreators';
 import { receiveMotd } from './ChatActionCreators';
@@ -27,8 +28,15 @@ import { currentUserSelector, tokenSelector } from '../selectors/userSelectors';
 
 const debug = require('debug')('uwave:actions:login');
 
+export function socketConnect() {
+  return { type: SOCKET_CONNECT };
+}
+
+export function socketReconnect() {
+  return { type: SOCKET_RECONNECT };
+}
+
 export function loginComplete({ jwt, user }) {
-  Socket.auth(jwt);
   return dispatch => {
     dispatch({
       type: LOGIN_COMPLETE,
@@ -149,7 +157,7 @@ export function logout() {
     Session.unset();
     if (me) {
       dispatch(logoutComplete());
-      Socket.reconnect();
+      dispatch(socketReconnect());
     } else {
       dispatch(logoutComplete());
     }

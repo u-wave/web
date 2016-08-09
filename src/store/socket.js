@@ -1,3 +1,16 @@
+import {
+  LOGIN_COMPLETE,
+  SOCKET_CONNECT,
+  SOCKET_RECONNECT
+} from '../constants/actionTypes/auth';
+import {
+  SEND_MESSAGE
+} from '../constants/actionTypes/chat';
+import {
+  DO_UPVOTE,
+  DO_DOWNVOTE
+} from '../constants/actionTypes/votes';
+
 import { advance } from '../actions/BoothActionCreators';
 import {
   receive as chatReceive,
@@ -27,33 +40,10 @@ import { favorited, receiveVote } from '../actions/VoteActionCreators';
 
 const debug = require('debug')('uwave:websocket');
 
-let socket = null;
-let sentJWT = false;
-let queue = [];
-
-function maybeAuthenticateOnConnect(state) {
-  const jwt = state.auth.jwt;
-  debug('open', jwt);
-  if (jwt) {
-    socket.send(jwt);
-    sentJWT = jwt;
-  } else {
-    sentJWT = false;
-  }
-}
-
-function send(command, data) {
-  if (socket.readyState === WebSocket.OPEN) {
-    socket.send(JSON.stringify({ command, data }));
-  } else {
-    queue.push({ command, data });
-  }
-}
-
-function drainQueuedMessages() {
-  const messages = queue;
-  queue = [];
-  messages.forEach(msg => send(msg.command, msg.data));
+function defaultUrl() {
+  const port = location.port || (location.protocol === 'https:' ? 443 : 80);
+  const protocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+  return `${protocol}//${location.hostname}:${port}`;
 }
 
 const actions = {
@@ -133,54 +123,99 @@ const actions = {
   guests: receiveGuestCount
 };
 
-function onMessage(dispatch, json) {
-  const { command, data } = JSON.parse(json);
-  debug(command, data);
-  if (typeof actions[command] === 'function') {
-    const action = actions[command](data);
-    if (action) {
-      dispatch(action);
-      return;
+export default function middleware({ url = defaultUrl() } = {}) {
+  return ({ dispatch, getState }) => {
+    // eslint-disable-next-line import/newline-after-import
+    const WebSocket = require('ReconnectingWebSocket');
+    let socket;
+    let queue = [];
+    let sentJWT = false;
+
+    function isOpen() {
+      return socket && socket.readyState === WebSocket.OPEN;
     }
-  }
-  debug('!unknown socket message type');
-}
 
-export function auth(jwt) {
-  if (!sentJWT && socket.readyState === WebSocket.OPEN) {
-    socket.send(jwt);
-  }
-}
+    function sendJWT(jwt) {
+      socket.send(jwt);
+      sentJWT = true;
+    }
 
-export function sendMessage(chatMessage) {
-  send('sendChat', chatMessage.payload.message);
-}
+    function maybeAuthenticateOnConnect(state) {
+      const jwt = state.auth.jwt;
+      debug('open', jwt);
+      if (jwt) {
+        sendJWT(jwt);
+      } else {
+        sentJWT = false;
+      }
+    }
 
-export function sendVote(vote) {
-  send('vote', vote);
-}
+    function send(command, data) {
+      if (isOpen()) {
+        socket.send(JSON.stringify({ command, data }));
+      } else {
+        queue.push({ command, data });
+      }
+    }
 
-function defaultUrl() {
-  const port = location.port || (location.protocol === 'https:' ? 443 : 80);
-  const protocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
-  return `${protocol}//${location.hostname}:${port}`;
-}
+    function drainQueuedMessages() {
+      const messages = queue;
+      queue = [];
+      messages.forEach(msg => {
+        send(msg.command, msg.data);
+      });
+    }
 
-export function reconnect() {
-  if (socket) {
-    socket.refresh();
-  }
-}
+    function onOpen() {
+      maybeAuthenticateOnConnect(getState());
+      drainQueuedMessages();
+    }
 
-export function connect(store, url = defaultUrl()) {
-  // eslint-disable-next-line import/newline-after-import
-  const WebSocket = require('ReconnectingWebSocket');
-  socket = new WebSocket(url);
-  socket.onmessage = pack => {
-    onMessage(store.dispatch, pack.data);
-  };
-  socket.onopen = () => {
-    maybeAuthenticateOnConnect(store.getState());
-    drainQueuedMessages();
+    function onMessage(pack) {
+      const { command, data } = JSON.parse(pack.data);
+      debug(command, data);
+      if (typeof actions[command] === 'function') {
+        const action = actions[command](data);
+        if (action) {
+          dispatch(action);
+          return;
+        }
+      }
+      debug('!unknown socket message type');
+    }
+
+    return next => action => {
+      const { type, payload } = action;
+      switch (type) {
+      case SOCKET_RECONNECT:
+        if (socket) {
+          socket.refresh();
+          break;
+        }
+        // fall through
+      case SOCKET_CONNECT:
+        socket = new WebSocket(url);
+        socket.onmessage = onMessage;
+        socket.onopen = onOpen;
+        break;
+      case SEND_MESSAGE:
+        send('sendChat', payload.message);
+        break;
+      case DO_UPVOTE:
+        send('vote', 1);
+        break;
+      case DO_DOWNVOTE:
+        send('vote', -1);
+        break;
+      case LOGIN_COMPLETE:
+        if (!sentJWT && isOpen()) {
+          sendJWT(payload.jwt);
+        }
+        break;
+      default:
+        break;
+      }
+      next(action);
+    };
   };
 }

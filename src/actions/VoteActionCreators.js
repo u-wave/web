@@ -1,7 +1,6 @@
 import { post } from './RequestActionCreators';
 import { historyIDSelector } from '../selectors/boothSelectors';
 import { playlistsSelector } from '../selectors/playlistSelectors';
-import { sendVote } from '../utils/Socket';
 
 import { OPEN_ADD_MEDIA_MENU } from '../constants/actionTypes/playlists';
 import {
@@ -36,12 +35,10 @@ export function receiveVote({ userID, vote }) {
 }
 
 export function doUpvote() {
-  sendVote(1);
   return { type: DO_UPVOTE };
 }
 
 export function doDownvote() {
-  sendVote(-1);
   return { type: DO_DOWNVOTE };
 }
 
