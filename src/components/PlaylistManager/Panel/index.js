@@ -12,13 +12,22 @@ import RemoveFromPlaylistAction from '../../MediaList/Actions/RemoveFromPlaylist
 import EditMediaAction from '../../MediaList/Actions/EditMedia';
 import MoveToFirstAction from '../../MediaList/Actions/MoveToFirst';
 
-const makeActions = ({ onOpenAddMediaMenu, onMoveToFirst, onEditMedia, onRemoveFromPlaylist }) =>
+const makeActions = ({
+  onOpenAddMediaMenu,
+  onMoveToFirst,
+  onEditMedia,
+  onRemoveFromPlaylist,
+  isFiltered
+}) =>
   (media, selection, index) => [
     <AddToPlaylistAction
       key="add"
       onAdd={position => onOpenAddMediaMenu(position, media, selection)}
     />,
-    index > 0 && (
+    // Don't show the "move to first" action on the first item in the playlist.
+    // If the playlist is filtered we don't know if the first item to show is
+    // also the first in the playlist, so just show it always in that case.
+    (index > 0 || isFiltered) && (
       <MoveToFirstAction
         key="first"
         onFirst={() => onMoveToFirst(media, selection)}
@@ -34,23 +43,24 @@ const makeActions = ({ onOpenAddMediaMenu, onMoveToFirst, onEditMedia, onRemoveF
     />
   ];
 
-const PlaylistPanel = ({
-  className,
-  playlist,
-  media,
-  loading,
-  isFiltered,
-  onShufflePlaylist,
-  onActivatePlaylist,
-  onRenamePlaylist,
-  onDeletePlaylist,
-  onNotDeletable,
-  onLoadPlaylistPage,
-  onFilterPlaylistItems,
-  onMoveMedia,
-  onOpenPreviewMediaDialog,
-  ...props
-}) => {
+const PlaylistPanel = props => {
+  const {
+    className,
+    playlist,
+    media,
+    loading,
+    isFiltered,
+    onShufflePlaylist,
+    onActivatePlaylist,
+    onRenamePlaylist,
+    onDeletePlaylist,
+    onNotDeletable,
+    onLoadPlaylistPage,
+    onFilterPlaylistItems,
+    onMoveMedia,
+    onOpenPreviewMediaDialog
+  } = props;
+
   let list;
   if (loading) {
     list = (
