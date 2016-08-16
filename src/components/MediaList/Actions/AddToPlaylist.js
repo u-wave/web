@@ -1,35 +1,27 @@
-import React, { Component, PropTypes } from 'react';
+import * as React from 'react';
 import AddIcon from 'material-ui/svg-icons/content/add';
 
 import Action from './Action';
 
-export default class AddToPlaylist extends Component {
-  static propTypes = {
-    onAdd: PropTypes.func
-  };
+const handleAdd = onAdd => event => {
+  const pos = event.target.getBoundingClientRect();
+  onAdd({
+    x: pos.left,
+    y: pos.top
+  });
+};
 
-  position() {
-    const pos = this.button.getBoundingClientRect();
-    return {
-      x: pos.left,
-      y: pos.top
-    };
-  }
+const AddToPlaylist = ({ onAdd, ...props }) => (
+  <Action
+    {...props}
+    onAction={handleAdd(onAdd)}
+  >
+    <AddIcon color="#fff" />
+  </Action>
+);
 
-  refButton = button => {
-    this.button = button;
-  };
+AddToPlaylist.propTypes = {
+  onAdd: React.PropTypes.func.isRequired
+};
 
-  render() {
-    const { onAdd, ...props } = this.props;
-    return (
-      <Action
-        ref={this.refButton}
-        {...props}
-        onAction={media => onAdd(this.position(), media)}
-      >
-        <AddIcon color="#fff" />
-      </Action>
-    );
-  }
-}
+export default AddToPlaylist;
