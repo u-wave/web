@@ -1,9 +1,18 @@
-import { src } from 'gulp';
-import eslint from 'gulp-eslint';
+import { exec } from 'child_process';
+import npmRunPath from 'npm-run-path';
 
 export default function lintJsTask() {
-  return src([ 'src/**/*.js', 'gulpfile.babel.js', 'tasks/**/*.js', 'test/**/*.js' ])
-    .pipe(eslint())
-    .pipe(eslint.format())
-    .pipe(eslint.failAfterError());
+  return new Promise((resolve, reject) => {
+    const env = {
+      PATH: npmRunPath()
+    };
+    exec('eslint --cache --color .', { env }, (error, stdout) => {
+      if (error) {
+        console.error(stdout);
+        reject(error);
+        return;
+      }
+      resolve();
+    });
+  });
 }
