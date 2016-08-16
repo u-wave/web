@@ -1,24 +1,19 @@
-/* eslint-disable react/prefer-stateless-function */
-import React, { Component, PropTypes } from 'react';
+import * as React from 'react';
 
-export default class Action extends Component {
-  static propTypes = {
-    children: PropTypes.element,
-    onAction: PropTypes.func
-  };
+const Action = ({ children, onAction, ...attrs }) => (
+  <div
+    role="button"
+    className="MediaActions-action"
+    onClick={onAction}
+    {...attrs}
+  >
+    {children}
+  </div>
+);
 
-  render() {
-    const { children, onAction, ...attrs } = this.props;
-    return (
-      <div
-        role="button"
-        className="MediaActions-action"
-        onClick={onAction}
-        {...attrs}
-      >
-        {children}
-      </div>
-    );
-  }
-}
-/* eslint-enable react/prefer-stateless-function */
+Action.propTypes = {
+  children: React.PropTypes.element,
+  onAction: React.PropTypes.func
+};
+
+export default Action;
