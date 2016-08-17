@@ -12,6 +12,20 @@ const initialiseStore = a.setPlaylists([
   { _id: 4, name: 'Playlist Four', size: 120 }
 ]);
 
+const initialisePlaylist = dispatch => {
+  const items = [
+    { _id: 5, artist: 'Taylor Swift', title: 'New Romantics' },
+    { _id: 6, artist: 'Swiimers', title: 'Polaris' },
+    { _id: 7, artist: 'of Montreal', title: 'Gronlandic Edit' },
+    { _id: 8, artist: 'Angel Haze', title: 'A Tribe Called Red' },
+    { _id: 9, artist: 'tricot', title: '99.974°C' }
+  ];
+  const playlistID = 1;
+  dispatch(a.loadPlaylistComplete(playlistID, items, { page: 0, pageSize: 5 }));
+  dispatch(a.selectPlaylist(playlistID));
+  return { items, playlistID };
+};
+
 describe('reducers/playlists', () => {
   beforeEach(() => {
     fetch.mock(/\/v1\/playlists\/\w+\/media/, []);
@@ -86,19 +100,67 @@ describe('reducers/playlists', () => {
     // Nothing yet
   });
 
+  describe('action: playlists/ADD_MEDIA', () => {
+    it('should insert playlist items in the correct place', () => {
+      const { dispatch, getState } = createStore();
+      dispatch(initialiseStore);
+      dispatch(initialisePlaylist);
+
+      expect(
+        s.selectedPlaylistSelector(getState()).media
+      ).to.have.length(5);
+
+      dispatch(a.addMediaComplete(1, 7, {
+        afterID: 8,
+        media: [
+          { _id: 347, artist: 'The Microphones', title: 'I Want Wind To Blow' },
+          { _id: 764, artist: 'Bikini Kill', title: 'Rebel Girl' }
+        ]
+      }));
+
+      const { media } = s.selectedPlaylistSelector(getState());
+      expect(media).to.have.length(7);
+      expect(
+        media.map(playlistItem => playlistItem._id)
+      ).to.eql([
+        5, 6, 7, 8, 347, 764, 9
+      ]);
+    });
+
+    it('should update the Next Media selector when songs are prepended', () => {
+      const { dispatch, getState } = createStore();
+      dispatch(initialiseStore);
+      const { playlistID } = dispatch(initialisePlaylist);
+      // Test an active, but not selected playlist.
+      dispatch(a.selectPlaylist(null));
+      dispatch(a.activatePlaylistComplete(playlistID));
+
+      expect(
+        s.activePlaylistSelector(getState()).media
+      ).to.have.length(5);
+
+      dispatch(a.addMediaComplete(1, 7, {
+        afterID: null,
+        media: [
+          { _id: 347, artist: 'The Microphones', title: 'I Want Wind To Blow' },
+          { _id: 764, artist: 'Bikini Kill', title: 'Rebel Girl' }
+        ]
+      }));
+
+      expect(
+        s.activePlaylistSelector(getState()).media
+      ).to.have.length(7);
+      expect(
+        s.nextMediaSelector(getState())._id
+      ).to.eql(347);
+    });
+  });
+
   describe('action: playlists/MOVE_MEDIA', () => {
     it('should move playlist items', () => {
       const { dispatch, getState } = createStore();
       dispatch(initialiseStore);
-      const items = [
-        { _id: 5, artist: 'Taylor Swift', title: 'New Romantics' },
-        { _id: 6, artist: 'Swiimers', title: 'Polaris' },
-        { _id: 7, artist: 'of Montreal', title: 'Gronlandic Edit' },
-        { _id: 8, artist: 'Angel Haze', title: 'A Tribe Called Red' },
-        { _id: 9, artist: 'tricot', title: '99.974°C' }
-      ];
-      dispatch(a.loadPlaylistComplete(1, items, { page: 0, pageSize: 5 }));
-      dispatch(a.selectPlaylist(1));
+      const { items } = dispatch(initialisePlaylist);
 
       expect(
         s.selectedPlaylistSelector(getState()).media

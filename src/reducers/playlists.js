@@ -49,17 +49,24 @@ function deselectAll(playlists) {
   ));
 }
 
+function processInsert(list, insert, afterID) {
+  const insertIdx = afterID === -1
+    ? 0
+    : findIndex(list, media => media !== null && media._id === afterID) + 1;
+  return [
+    ...list.slice(0, insertIdx),
+    ...insert,
+    ...list.slice(insertIdx)
+  ];
+}
+
 // Moves a list of media items to a given position in the playlist.
 function processMove(list, movedMedia, afterID) {
   // Take all moved media items out of the playlist…
   const wasMoved = indexBy(movedMedia, '_id');
   const newPlaylist = list.filter(media => media === null || !wasMoved[media._id]);
   // …and add them back in at the correct place.
-  const insertIdx = afterID === -1
-    ? 0
-    : findIndex(newPlaylist, media => media !== null && media._id === afterID) + 1;
-  newPlaylist.splice(insertIdx, 0, ...movedMedia);
-  return newPlaylist;
+  return processInsert(newPlaylist, movedMedia, afterID);
 }
 
 function updatePlaylist(state, playlistID, modify) {
@@ -339,7 +346,7 @@ export default function reduce(state = initialState, action = {}) {
         loading: false,
         size: payload.newSize
       }),
-      items => [ ...items, ...payload.appendedMedia ]
+      items => processInsert(items, payload.appendedMedia, payload.afterID)
     );
 
   case UPDATE_MEDIA_START:
