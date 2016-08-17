@@ -17,8 +17,16 @@
   justify-content: center;
   flex-grow: 0.334;
   padding: 0 15px;
+  position: relative;
+  cursor: pointer;
 
   &:hover {
     background-color: $background-hover-color;
+  }
+
+  @descendent icon {
+    height: 36px;
+    width: 36px;
+    padding: 6px 12px 6px 0px;
   }
 }
