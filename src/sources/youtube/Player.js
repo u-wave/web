@@ -1,44 +1,51 @@
-/* eslint-disable react/prefer-stateless-function */
 import cx from 'classnames';
 import * as React from 'react';
 
 import VideoBackdrop from '../../components/Video/VideoBackdrop';
 import YouTubePlayerEmbed from './PlayerEmbed';
 
-export default class YouTubePlayer extends React.Component {
-  static propTypes = {
-    className: React.PropTypes.string,
-    mode: React.PropTypes.oneOf([ 'small', 'large', 'preview' ]),
-    active: React.PropTypes.bool.isRequired,
-    enabled: React.PropTypes.bool,
-    media: React.PropTypes.object,
-    seek: React.PropTypes.number,
-    volume: React.PropTypes.number
-  };
+const YouTubePlayer = ({
+  active,
+  className,
+  enabled,
+  mode,
+  media,
+  seek,
+  volume
+}) => {
+  const modeClass = `src-youtube-Player--${mode}`;
 
-  render() {
-    const { active, className, enabled, mode, media } = this.props;
-    const modeClass = `src-youtube-Player--${mode}`;
-
-    let backdrop;
-    if (active && mode !== 'large') {
-      backdrop = <VideoBackdrop url={media.thumbnail} />;
-    }
-    // Wrapper span so the backdrop can be full-size…
-    return (
-      <span hidden={!active}>
-        {backdrop}
-        <div className={cx('src-youtube-Player', modeClass, className)}>
-          {enabled && <YouTubePlayerEmbed
+  let backdrop;
+  if (active && mode !== 'large') {
+    backdrop = <VideoBackdrop url={media.thumbnail} />;
+  }
+  // Wrapper span so the backdrop can be full-size…
+  return (
+    <span hidden={!active}>
+      {backdrop}
+      <div className={cx('src-youtube-Player', modeClass, className)}>
+        {enabled && (
+          <YouTubePlayerEmbed
             media={media}
             active={active}
-            seek={Math.round(this.props.seek)}
-            volume={this.props.volume}
+            seek={Math.round(seek)}
+            volume={volume}
             showControls={mode === 'preview'}
-          />}
-        </div>
-      </span>
-    );
-  }
-}
-/* eslint-enable react/prefer-stateless-function */
+          />
+        )}
+      </div>
+    </span>
+  );
+};
+
+YouTubePlayer.propTypes = {
+  className: React.PropTypes.string,
+  mode: React.PropTypes.oneOf([ 'small', 'large', 'preview' ]),
+  active: React.PropTypes.bool.isRequired,
+  enabled: React.PropTypes.bool,
+  media: React.PropTypes.object,
+  seek: React.PropTypes.number,
+  volume: React.PropTypes.number
+};
+
+export default YouTubePlayer;
