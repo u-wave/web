@@ -34,19 +34,17 @@ const insert = (selector, fn) =>
     el => el.html(fn())
   ));
 
-const enableMinifierOptions = arr => {
-  const object = {};
-  arr.forEach(key => {
-    object[key] = true;
-  });
-  return object;
+const minifierOptions = {
+  removeComments: true,
+  collapseWhitespace: true,
+  collapseBooleanAttributes: true,
+  removeTagWhitespace: true,
+  removeAttributeQuotes: true,
+  removeRedundantAttributes: true,
+  removeScriptTypeAttributes: true,
+  removeStyleLinkTypeAttributes: true,
+  removeOptionalTags: true
 };
-
-const minifierOptions = enableMinifierOptions([
-  'removeComments', 'collapseWhitespace', 'collapseBooleanAttributes',
-  'removeTagWhitespace', 'removeAttributeQuotes', 'removeRedundantAttributes',
-  'removeScriptTypeAttributes', 'removeStyleLinkTypeAttributes', 'removeOptionalTags'
-]);
 
 export default function copyHtmlTask({ minify = false, prerender = false }) {
   return src('src/index.html')

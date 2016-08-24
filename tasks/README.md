@@ -36,7 +36,7 @@ client on port 6041.
 To get the best possible build for production:
 
 ```
-gulp default --minify --prerender --no-source-maps
+gulp default --minify
 ```
 
 This will generate `lib/index.html` and `lib/app.js` with the smallest
@@ -49,9 +49,7 @@ the `lib/` directory to your web host.
    `lib/style.css`.
  * `gulp js:lint` checks your javascript code style.
  * `gulp js` builds a full javascript bundle at `lib/out.js`.
- * `gulp html` builds the main HTML file to `lib/index.html`. Pass the
-   `--prerender` flag to also render the React app into the generated file (with
-   empty state).
+ * `gulp html` builds the main HTML file to `lib/index.html`.
  * `gulp assets` copies the assets from `assets/` to `lib/assets/`. This way the
    entire app can be served from the `lib/` directory.
  * `gulp middleware` builds the default Express middleware used for serving the
@@ -62,5 +60,4 @@ the `lib/` directory to your web host.
  * `gulp watch` watches the source files for changes and recompiles on the fly.
    It'll also hot reload components in the browser using [browserify-hmr](https://github.com/AgentME/browserify-hmr).
 
-Pass the `--minify` flag to any task to generate uglified/minified files. Pass
-the `--no-source-maps` flag to remove source maps from the minified output.
+Pass the `--minify` flag to any task to generate uglified/minified files.

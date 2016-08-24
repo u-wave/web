@@ -3,8 +3,7 @@
   "plugins": [
     "transform-decorators-legacy",
     "transform-class-properties",
-    "transform-export-extensions",
-    "transform-function-bind"
+    "transform-export-extensions"
   ],
   "env": {
     "production": {

@@ -1,6 +1,5 @@
 import { src, dest } from 'gulp';
 import sourcemaps from 'gulp-sourcemaps';
-import when from 'gulp-if';
 import postcss from 'gulp-postcss';
 import autoprefix from 'autoprefixer';
 import bem from 'postcss-bem';
@@ -11,7 +10,7 @@ import nested from 'postcss-nested';
 import reduceCalc from 'postcss-calc';
 import variables from 'postcss-simple-vars';
 
-export default function compileCssTask({ minify = false, 'source-maps': useSourceMaps = true }) {
+export default function compileCssTask({ minify = false }) {
   const processors = [
     imports(),
     variables(),
@@ -30,8 +29,8 @@ export default function compileCssTask({ minify = false, 'source-maps': useSourc
   }
 
   return src('src/app.css')
-    .pipe(when(useSourceMaps, sourcemaps.init()))
+    .pipe(sourcemaps.init())
       .pipe(postcss(processors))
-    .pipe(when(useSourceMaps, sourcemaps.write('./')))
+    .pipe(sourcemaps.write('./'))
     .pipe(dest('lib/'));
 }
