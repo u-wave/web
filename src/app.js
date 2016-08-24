@@ -8,9 +8,8 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
 import AppContainer from './containers/App';
-import * as Socket from './utils/Socket';
 import { get as readSession } from './utils/Session';
-import { initState, setJWT } from './actions/LoginActionCreators';
+import { initState, socketConnect, setJWT } from './actions/LoginActionCreators';
 
 import * as youTubeSource from './sources/youtube';
 import * as soundCloudSource from './sources/soundcloud';
@@ -47,11 +46,8 @@ if (jwt) {
 }
 
 // Load application state like the current DJ, online users, etc.
+store.dispatch(socketConnect());
 store.dispatch(initState());
-
-// WebSocket connections! It uses the `store` object to dispatch actions
-// received from the üWave server.
-Socket.connect(store);
 
 // A Material-UI dependency, removes the delay from tap events on some mobile
 // devices. üWave currently isn't compatible with mobile yet, but material-ui

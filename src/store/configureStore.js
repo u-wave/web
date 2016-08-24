@@ -3,6 +3,7 @@ import thunk from 'redux-thunk';
 
 import persistSettings from './persistSettings';
 import webApiRequest from './request';
+import webApiSocket from './socket';
 import * as reducers from '../reducers';
 import createSourcesReducer from '../reducers/createSourcesReducer';
 
@@ -11,8 +12,8 @@ import createSourcesReducer from '../reducers/createSourcesReducer';
 // on in üWave, so it's kind of manageable.
 
 export default function createUwaveStore(initialState = {}, options = {}) {
-  const enableLogging = process.env.NODE_ENV !== 'production' &&
-    process.env.NODE_ENV !== 'testing';
+  const isTesting = process.env.NODE_ENV === 'testing';
+  const enableLogging = process.env.NODE_ENV !== 'production' && !isTesting;
 
   const middleware = [
     // Redux-Thunk allows dispatching a function to the store instead of an
@@ -24,6 +25,7 @@ export default function createUwaveStore(initialState = {}, options = {}) {
     // This allows dispatching REQUEST_START actions to the store, which will
     // then be executed and handled as HTTP requests by the middleware.
     webApiRequest(),
+    !isTesting && webApiSocket(),
     // Redux-Logger logs state changes to the console, including the
     // Before-state, the Action object, and the After-state. Invaluable for
     // debugging :)

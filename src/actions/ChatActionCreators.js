@@ -20,7 +20,6 @@ import {
   MUTE_USER,
   UNMUTE_USER
 } from '../constants/actionTypes/chat';
-import { sendMessage } from '../utils/Socket';
 import { put } from './RequestActionCreators';
 import { execute } from '../utils/ChatCommands';
 import {
@@ -99,7 +98,6 @@ export function sendChat(from, text) {
     const mentions = users.map(user => user.username);
     const message = prepareMessage(from, text, { mentions, users });
     dispatch(message);
-    sendMessage(message);
   };
 }
 
