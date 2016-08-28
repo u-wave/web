@@ -5,7 +5,7 @@ import browserify from 'browserify';
 import uglifyify from 'uglifyify';
 import buffer from 'gulp-buffer';
 import collapse from 'bundle-collapser/plugin';
-import envify from 'envify/custom';
+import envify from 'loose-envify/custom';
 import { transform as insert } from 'gulp-insert';
 import source from 'vinyl-source-stream';
 import sourcemaps from 'gulp-sourcemaps';
