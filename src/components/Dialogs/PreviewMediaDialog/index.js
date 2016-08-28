@@ -1,51 +1,41 @@
-/* eslint-disable react/prefer-stateless-function */
 import * as React from 'react';
 import Dialog from 'material-ui/Dialog';
 
 import PreviewPlayer from '../../Video/Player';
 
-export default class PreviewMediaDialog extends React.Component {
-  static propTypes = {
-    open: React.PropTypes.bool,
-    media: React.PropTypes.object,
-    volume: React.PropTypes.volume,
+const PreviewMediaDialog = ({
+  open,
+  media,
+  volume,
+  onCloseDialog
+}) => (
+  <Dialog
+    contentClassName="Dialog PreviewMediaDialog"
+    bodyClassName="Dialog-body"
+    titleClassName="Dialog-title"
+    title={open ? `${media.artist} – ${media.title}` : 'Preview Media'}
+    open={open}
+    onRequestClose={onCloseDialog}
+    autoScrollBodyContent
+  >
+    {open && (
+      <div className="PreviewMediaDialog-content">
+        <PreviewPlayer
+          mode="preview"
+          media={media}
+          volume={volume}
+        />
+      </div>
+    )}
+  </Dialog>
+);
 
-    onCloseDialog: React.PropTypes.func.isRequired
-  };
+PreviewMediaDialog.propTypes = {
+  open: React.PropTypes.bool,
+  media: React.PropTypes.object,
+  volume: React.PropTypes.volume,
 
-  render() {
-    const {
-      open,
-      media,
-      volume,
-      onCloseDialog
-    } = this.props;
+  onCloseDialog: React.PropTypes.func.isRequired
+};
 
-    let content = null;
-    if (open) {
-      content = (
-        <div className="PreviewMediaDialog-content">
-          <PreviewPlayer
-            mode="preview"
-            media={media}
-            volume={volume}
-          />
-        </div>
-      );
-    }
-    return (
-      <Dialog
-        contentClassName="Dialog PreviewMediaDialog"
-        bodyClassName="Dialog-body"
-        titleClassName="Dialog-title"
-        title={open ? `${media.artist} – ${media.title}` : 'Preview Media'}
-        open={open}
-        onRequestClose={onCloseDialog}
-        autoScrollBodyContent
-      >
-        {content}
-      </Dialog>
-    );
-  }
-}
-/* eslint-enable react/prefer-stateless-function */
+export default PreviewMediaDialog;

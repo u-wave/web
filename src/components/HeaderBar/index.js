@@ -1,76 +1,67 @@
-/* eslint-disable react/prefer-stateless-function */
 import cx from 'classnames';
-import React, { Component, PropTypes } from 'react';
+import * as React from 'react';
 
 import Progress from './Progress';
-import SongTitle from '../SongTitle';
+import CurrentMedia from './CurrentMedia';
 import Volume from './Volume';
 import HistoryButton from './HistoryButton';
+import CurrentDJ from './CurrentDJ';
 
-export default class HeaderBar extends Component {
-  static propTypes = {
-    className: PropTypes.string,
-    title: PropTypes.string,
+const HeaderBar = ({
+  className,
+  title,
+  dj,
+  media,
+  mediaStartTime,
+  volume,
+  muted,
+  onVolumeChange,
+  onVolumeMute,
+  onVolumeUnmute,
+  onToggleRoomHistory,
+  ...attrs
+}) => (
+  <div
+    className={cx('HeaderBar', className)}
+    {...attrs}
+  >
+    <h1 className="HeaderBar-title">{title}</h1>
+    <CurrentMedia className="HeaderBar-now-playing" media={media} />
+    {dj && <CurrentDJ className="HeaderBar-dj" dj={dj} />}
+    <Progress
+      className="HeaderBar-progress"
+      media={media}
+      startTime={mediaStartTime}
+    />
+    <div className="HeaderBar-volume">
+      <Volume
+        volume={volume}
+        muted={muted}
+        onVolumeChange={onVolumeChange}
+        onMute={onVolumeMute}
+        onUnmute={onVolumeUnmute}
+      />
+    </div>
+    <div className="HeaderBar-history">
+      <HistoryButton onClick={onToggleRoomHistory} />
+    </div>
+  </div>
+);
 
-    dj: PropTypes.object,
-    media: PropTypes.object,
-    mediaStartTime: PropTypes.number,
-    volume: PropTypes.number,
-    muted: PropTypes.bool,
+HeaderBar.propTypes = {
+  className: React.PropTypes.string,
+  title: React.PropTypes.string,
 
-    onVolumeChange: PropTypes.func,
-    onVolumeMute: PropTypes.func,
-    onVolumeUnmute: PropTypes.func,
-    onToggleRoomHistory: PropTypes.func
-  };
+  dj: React.PropTypes.object,
+  media: React.PropTypes.object,
+  mediaStartTime: React.PropTypes.number,
+  volume: React.PropTypes.number,
+  muted: React.PropTypes.bool,
 
-  render() {
-    const {
-      className, title,
-      dj, media, mediaStartTime,
-      volume, muted,
-      onVolumeChange, onVolumeMute, onVolumeUnmute,
-      onToggleRoomHistory,
-      ...props
-    } = this.props;
+  onVolumeChange: React.PropTypes.func,
+  onVolumeMute: React.PropTypes.func,
+  onVolumeUnmute: React.PropTypes.func,
+  onToggleRoomHistory: React.PropTypes.func
+};
 
-    const nowPlaying = media
-      ? <SongTitle artist={media.artist} title={media.title} />
-      : 'Nobody is playing!';
-
-    return (
-      <div
-        className={cx('HeaderBar', className)}
-        {...props}
-      >
-        <h1 className="HeaderBar-title">{title}</h1>
-        <div className="HeaderBar-now-playing">
-          {nowPlaying}
-        </div>
-        {dj && (
-          <div className="HeaderBar-dj">
-            played by: {dj.username}
-          </div>
-        )}
-        <Progress
-          className="HeaderBar-progress"
-          media={media}
-          startTime={mediaStartTime}
-        />
-        <div className="HeaderBar-volume">
-          <Volume
-            volume={volume}
-            muted={muted}
-            onVolumeChange={onVolumeChange}
-            onMute={onVolumeMute}
-            onUnmute={onVolumeUnmute}
-          />
-        </div>
-        <div className="HeaderBar-history">
-          <HistoryButton onClick={onToggleRoomHistory} />
-        </div>
-      </div>
-    );
-  }
-}
-/* eslint-enable react/prefer-stateless-function */
+export default HeaderBar;

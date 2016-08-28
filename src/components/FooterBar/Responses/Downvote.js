@@ -1,27 +1,26 @@
-/* eslint-disable react/prefer-stateless-function */
-import React, { Component, PropTypes } from 'react';
+import * as React from 'react';
 import DownvoteIcon from 'material-ui/svg-icons/action/thumb-down';
 
 import Button from './Button';
 
-export default class Downvote extends Component {
-  static propTypes = {
-    onDownvote: PropTypes.func.isRequired,
-    count: PropTypes.number.isRequired,
-    active: PropTypes.bool
-  };
+const Downvote = ({
+  active,
+  count,
+  onDownvote
+}) => (
+  <Button
+    tooltip="Downvote"
+    onClick={onDownvote}
+    count={count}
+  >
+    <DownvoteIcon color={active ? '#B64B4B' : 'white'} />
+  </Button>
+);
 
-  render() {
-    const { active, count, onDownvote } = this.props;
-    return (
-      <Button
-        tooltip="Downvote"
-        onClick={onDownvote}
-        count={count}
-      >
-        <DownvoteIcon color={active ? '#B64B4B' : 'white'} />
-      </Button>
-    );
-  }
-}
-/* eslint-enable react/prefer-stateless-function */
+Downvote.propTypes = {
+  onDownvote: React.PropTypes.func.isRequired,
+  count: React.PropTypes.number.isRequired,
+  active: React.PropTypes.bool
+};
+
+export default Downvote;

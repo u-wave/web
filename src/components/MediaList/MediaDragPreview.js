@@ -1,6 +1,6 @@
-/* eslint-disable react/prefer-stateless-function */
 import assign from 'object-assign';
-import React, { Component, PropTypes } from 'react';
+import * as React from 'react';
+import muiThemeable from 'material-ui/styles/muiThemeable';
 import ListIcon from 'material-ui/svg-icons/action/list';
 
 import transformStyle from '../../utils/transformStyle';
@@ -17,37 +17,35 @@ const dragIconStyle = {
   marginRight: 3
 };
 
-export default class MediaDragPreview extends Component {
-  static propTypes = {
-    items: PropTypes.object,
-    currentOffset: PropTypes.shape({
-      x: PropTypes.number.isRequired,
-      y: PropTypes.number.isRequired
-    })
-  };
-
-  static contextTypes = {
-    muiTheme: PropTypes.object
-  };
-
-  render() {
-    const { muiTheme } = this.context;
-    const { items, currentOffset } = this.props;
-    if (!items || !items.media) {
-      return null;
-    }
-    return (
-      <div
-        className="MediaDragPreview"
-        style={getItemStyles(currentOffset)}
-      >
-        <ListIcon
-          color={muiTheme.palette.textColor}
-          style={dragIconStyle}
-        />
-        {items.media.length}
-      </div>
-    );
+const MediaDragPreview = ({
+  muiTheme,
+  items,
+  currentOffset
+}) => {
+  if (!items || !items.media) {
+    return null;
   }
-}
-/* eslint-enable react/prefer-stateless-function */
+  return (
+    <div
+      className="MediaDragPreview"
+      style={getItemStyles(currentOffset)}
+    >
+      <ListIcon
+        color={muiTheme.palette.textColor}
+        style={dragIconStyle}
+      />
+      {items.media.length}
+    </div>
+  );
+};
+
+MediaDragPreview.propTypes = {
+  muiTheme: React.PropTypes.object.isRequired,
+  items: React.PropTypes.object,
+  currentOffset: React.PropTypes.shape({
+    x: React.PropTypes.number.isRequired,
+    y: React.PropTypes.number.isRequired
+  })
+};
+
+export default muiThemeable()(MediaDragPreview);

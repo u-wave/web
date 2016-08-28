@@ -1,5 +1,4 @@
-/* eslint-disable react/prefer-stateless-function */
-import React, { Component, PropTypes } from 'react';
+import * as React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -11,8 +10,11 @@ import {
 import { favoriteMedia } from '../actions/VoteActionCreators';
 
 import {
-  isFavoriteSelector, isOpenSelector, positionSelector,
-  mediaSelector, historyIDSelector
+  isFavoriteSelector,
+  isOpenSelector,
+  positionSelector,
+  mediaSelector,
+  historyIDSelector
 } from '../selectors/addToPlaylistMenuSelectors';
 import { playlistsSelector } from '../selectors/playlistSelectors';
 import AddToPlaylistMenu from '../components/AddToPlaylistMenu';
@@ -33,56 +35,56 @@ const mapStateToProps = createStructuredSelector({
   historyID: historyIDSelector
 });
 
-@connect(mapStateToProps, mapDispatchToProps)
-export default class AddToPlaylistMenuContainer extends Component {
-  static propTypes = {
-    isFavorite: PropTypes.bool,
-    isOpen: PropTypes.bool,
-    position: PropTypes.shape({
-      x: PropTypes.number.isRequired,
-      y: PropTypes.number.isRequired
-    }),
-    playlists: PropTypes.arrayOf(PropTypes.object),
-
-    media: PropTypes.arrayOf(PropTypes.object),
-    historyID: PropTypes.string,
-
-    onClose: PropTypes.func.isRequired,
-    onCreatePlaylist: PropTypes.func.isRequired,
-    onAddMedia: PropTypes.func.isRequired,
-    onFavoriteMedia: PropTypes.func.isRequired
-  };
-
-  render() {
-    const {
-      onCreatePlaylist,
-      onAddMedia,
-      onFavoriteMedia,
-      onClose
-    } = this.props;
-    const { isOpen, position, isFavorite, playlists, media, historyID } = this.props;
-    if (!isOpen) {
-      return <span />;
-    }
-
-    const onSelect = playlist => {
-      if (isFavorite) {
-        onFavoriteMedia(playlist, historyID);
-      } else {
-        onAddMedia(playlist, media);
-      }
-    };
-
-    return (
-      <AddToPlaylistMenu
-        open={isOpen}
-        position={position}
-        playlists={playlists}
-        onClose={onClose}
-        onCreatePlaylist={onCreatePlaylist}
-        onSelect={onSelect}
-      />
-    );
+const AddToPlaylistMenuContainer = ({
+  isOpen,
+  position,
+  isFavorite,
+  playlists,
+  media,
+  historyID,
+  onCreatePlaylist,
+  onAddMedia,
+  onFavoriteMedia,
+  onClose
+}) => {
+  if (!isOpen) {
+    return <span />;
   }
-}
-/* eslint-enable react/prefer-stateless-function */
+
+  const onSelect = playlist => (
+    isFavorite
+      ? onFavoriteMedia(playlist, historyID)
+      : onAddMedia(playlist, media)
+  );
+
+  return (
+    <AddToPlaylistMenu
+      open={isOpen}
+      position={position}
+      playlists={playlists}
+      onClose={onClose}
+      onCreatePlaylist={onCreatePlaylist}
+      onSelect={onSelect}
+    />
+  );
+};
+
+AddToPlaylistMenuContainer.propTypes = {
+  isFavorite: React.PropTypes.bool,
+  isOpen: React.PropTypes.bool,
+  position: React.PropTypes.shape({
+    x: React.PropTypes.number.isRequired,
+    y: React.PropTypes.number.isRequired
+  }),
+  playlists: React.PropTypes.arrayOf(React.PropTypes.object),
+
+  media: React.PropTypes.arrayOf(React.PropTypes.object),
+  historyID: React.PropTypes.string,
+
+  onClose: React.PropTypes.func.isRequired,
+  onCreatePlaylist: React.PropTypes.func.isRequired,
+  onAddMedia: React.PropTypes.func.isRequired,
+  onFavoriteMedia: React.PropTypes.func.isRequired
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddToPlaylistMenuContainer);

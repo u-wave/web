@@ -1,4 +1,3 @@
-/* eslint-disable react/no-multi-comp */
 import cx from 'classnames';
 import * as React from 'react';
 import List from 'react-list';

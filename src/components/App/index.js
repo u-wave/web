@@ -17,77 +17,68 @@ import Dialogs from '../Dialogs';
 import AddToPlaylistMenu from '../../containers/AddToPlaylistMenu';
 import DragLayer from '../../containers/DragLayer';
 
-@DragDropContext(HTML5Backend)
-export default class App extends React.Component {
-  static propTypes = {
-    activeOverlay: React.PropTypes.string,
-    settings: React.PropTypes.object,
-    user: React.PropTypes.object,
-
-    onCloseOverlay: React.PropTypes.func,
-    sendChatMessage: React.PropTypes.func
-  };
-
-  render() {
-    // state props
-    const {
-      activeOverlay, settings, user
-    } = this.props;
-    // dispatch handlers
-    const {
-      onCloseOverlay,
-      sendChatMessage
-    } = this.props;
-    const isLoggedIn = !!user;
-
-    return (
-      <div className="App">
-        <div className="AppColumn AppColumn--left">
-          <div className="AppRow AppRow--top">
-            <HeaderBar
-              className="App-header"
-              title="üWave"
-            />
-          </div>
-          <div className="AppRow AppRow--middle">
-            <Video
-              enabled={settings.videoEnabled}
-              size={settings.videoSize}
-              isMuted={settings.muted}
-              volume={settings.volume}
-            />
-            <ErrorArea />
-          </div>
-          <Overlays transitionName="Overlay" active={activeOverlay}>
-            <PlaylistManager
-              key="playlistManager"
-              onCloseOverlay={onCloseOverlay}
-            />
-            <RoomHistory
-              key="roomHistory"
-              onCloseOverlay={onCloseOverlay}
-            />
-            <SettingsManager
-              key="settings"
-              onCloseOverlay={onCloseOverlay}
-            />
-          </Overlays>
-          <FooterBar className="AppRow AppRow--bottom" />
-        </div>
-
-        <div className="AppColumn AppColumn--right">
-          <SidePanels
-            isLoggedIn={isLoggedIn}
-            sendChatMessage={sendChatMessage}
-          />
-        </div>
-
-        <Dialogs />
-
-        <AddToPlaylistMenu />
-        <DragLayer />
+const App = ({
+  activeOverlay,
+  settings,
+  user,
+  onCloseOverlay,
+  sendChatMessage
+}) => (
+  <div className="App">
+    <div className="AppColumn AppColumn--left">
+      <div className="AppRow AppRow--top">
+        <HeaderBar
+          className="App-header"
+          title="üWave"
+        />
       </div>
-    );
-  }
-}
-/* eslint-enable react/prefer-stateless-function */
+      <div className="AppRow AppRow--middle">
+        <Video
+          enabled={settings.videoEnabled}
+          size={settings.videoSize}
+          isMuted={settings.muted}
+          volume={settings.volume}
+        />
+        <ErrorArea />
+      </div>
+      <Overlays transitionName="Overlay" active={activeOverlay}>
+        <PlaylistManager
+          key="playlistManager"
+          onCloseOverlay={onCloseOverlay}
+        />
+        <RoomHistory
+          key="roomHistory"
+          onCloseOverlay={onCloseOverlay}
+        />
+        <SettingsManager
+          key="settings"
+          onCloseOverlay={onCloseOverlay}
+        />
+      </Overlays>
+      <FooterBar className="AppRow AppRow--bottom" />
+    </div>
+
+    <div className="AppColumn AppColumn--right">
+      <SidePanels
+        isLoggedIn={!!user}
+        sendChatMessage={sendChatMessage}
+      />
+    </div>
+
+    <Dialogs />
+
+    <AddToPlaylistMenu />
+    <DragLayer />
+  </div>
+);
+
+App.propTypes = {
+  activeOverlay: React.PropTypes.string,
+  settings: React.PropTypes.object.isRequired,
+  user: React.PropTypes.object,
+
+  onCloseOverlay: React.PropTypes.func.isRequired,
+  sendChatMessage: React.PropTypes.func.isRequired
+};
+
+export default DragDropContext(HTML5Backend)(App);
