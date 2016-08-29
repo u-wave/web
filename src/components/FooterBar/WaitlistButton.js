@@ -4,9 +4,13 @@ import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import compose from 'recompose/compose';
 import pure from 'recompose/pure';
+import withState from 'recompose/withState';
+import withProps from 'recompose/withProps';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 import FlatButton from 'material-ui/FlatButton';
 import LockedIcon from 'material-ui/svg-icons/action/lock';
+import ConfirmDialog from '../Dialogs/ConfirmDialog';
+import FormGroup from '../Form/Group';
 
 const inlineIconStyle = {
   width: '1em',
@@ -22,11 +26,25 @@ const buttonStyle = {
   lineHeight: '24px'
 };
 
+const enhance = compose(
+  muiThemeable(),
+  translate(),
+  pure,
+  withState('isLeaving', 'setIsLeaving', false),
+  withProps(props => ({
+    onShowDialog: () => props.setIsLeaving(true),
+    onHideDialog: () => props.setIsLeaving(false)
+  }))
+);
+
 const WaitlistButton = ({
   t,
   muiTheme,
   userInWaitlist,
   isLocked,
+  isLeaving,
+  onShowDialog,
+  onHideDialog,
   onClick
 }) => {
   let icon;
@@ -44,11 +62,16 @@ const WaitlistButton = ({
     );
   }
 
+  const onConfirmLeave = () => {
+    onClick();
+    onHideDialog();
+  };
+
   return (
     <FlatButton
       className={cx('FooterBar-join', isLocked && 'FooterBar-join--locked')}
       disabled={isLocked && !userInWaitlist}
-      onClick={onClick}
+      onClick={userInWaitlist ? onShowDialog : onClick}
       style={buttonStyle}
       backgroundColor={muiTheme.palette.primary1Color}
       hoverColor={muiTheme.palette.primary2Color}
@@ -57,6 +80,16 @@ const WaitlistButton = ({
       {icon}
       {isLocked && ' '}
       {userInWaitlist ? t('waitlist.leave') : t('waitlist.join')}
+      {isLeaving && (
+        <ConfirmDialog
+          cancelLabel="Cancel"
+          confirmLabel="Leave Waitlist"
+          onConfirm={onConfirmLeave}
+          onCancel={onHideDialog}
+        >
+          <FormGroup>Are you sure you want to leave the waitlist?</FormGroup>
+        </ConfirmDialog>
+      )}
     </FlatButton>
   );
 };
@@ -66,11 +99,10 @@ WaitlistButton.propTypes = {
   muiTheme: PropTypes.object.isRequired,
   userInWaitlist: PropTypes.bool,
   isLocked: PropTypes.bool,
+  isLeaving: PropTypes.bool.isRequired,
+  onShowDialog: PropTypes.func.isRequired,
+  onHideDialog: PropTypes.func.isRequired,
   onClick: PropTypes.func.isRequired
 };
 
-export default compose(
-  muiThemeable(),
-  translate(),
-  pure
-)(WaitlistButton);
+export default enhance(WaitlistButton);
