@@ -104,6 +104,7 @@ uwave:
     videoEnabled: Play Audio/Video
     videoSize: Full-size Video
     mentionSound: Chat Mention Sound
+    language: Language
     logout: Sign out
     profile:
       username:

@@ -102,6 +102,7 @@ uwave:
     videoEnabled: Audio/Video Afspelen
     videoSize: Fullscreen Video
     mentionSound: Chatnotificaties
+    language: Taal
     logout: Uitloggen
     profile:
       username:

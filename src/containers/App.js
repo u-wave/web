@@ -61,6 +61,12 @@ export default class AppContainer extends React.Component {
     this.locale = createLocale(this.props.language);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.language !== nextProps.language) {
+      this.locale.changeLanguage(nextProps.language);
+    }
+  }
+
   componentWillUnmount() {
     this.timerCallbacks = [];
     this.props.stopTimer();

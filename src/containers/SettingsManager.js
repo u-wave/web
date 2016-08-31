@@ -2,7 +2,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { set as setSetting } from '../actions/SettingsActionCreators';
+import {
+  set as setSetting,
+  setLanguage
+} from '../actions/SettingsActionCreators';
 import { doChangeUsername } from '../actions/UserActionCreators';
 import { logout } from '../actions/LoginActionCreators';
 
@@ -19,6 +22,7 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = dispatch => bindActionCreators({
   onSettingChange: setSetting,
   onChangeUsername: doChangeUsername,
+  onChangeLanguage: setLanguage,
   onLogout: logout
 }, dispatch);
 

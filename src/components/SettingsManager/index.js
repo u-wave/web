@@ -10,12 +10,7 @@ class SettingsManager extends React.Component {
   static propTypes = {
     t: React.PropTypes.func.isRequired,
     className: React.PropTypes.string,
-    settings: React.PropTypes.object.isRequired,
-    user: React.PropTypes.object,
-
     onCloseOverlay: React.PropTypes.func.isRequired,
-    onSettingChange: React.PropTypes.func.isRequired,
-    onChangeUsername: React.PropTypes.func.isRequired,
     onLogout: React.PropTypes.func.isRequired
   };
 
@@ -28,11 +23,8 @@ class SettingsManager extends React.Component {
     const {
       t,
       className,
-      settings,
-      user,
       onCloseOverlay,
-      onSettingChange,
-      onChangeUsername
+      ...props
     } = this.props;
 
     return (
@@ -43,10 +35,7 @@ class SettingsManager extends React.Component {
         />
         <div className="SettingsManager-body AppRow AppRow--middle">
           <SettingsPanel
-            user={user}
-            settings={settings}
-            onChangeUsername={onChangeUsername}
-            onSettingChange={onSettingChange}
+            {...props}
             onLogout={this.handleLogout}
           />
         </div>

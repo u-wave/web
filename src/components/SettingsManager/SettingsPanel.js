@@ -7,6 +7,8 @@ import LicenseIcon from 'material-ui/svg-icons/action/copyright';
 
 import GithubIcon from './GithubIcon';
 import Profile from './Profile';
+import LabeledControl from './LabeledControl';
+import LanguagePicker from './LanguagePicker';
 import LogoutButton from './LogoutButton';
 
 const linkStyle = {
@@ -37,6 +39,7 @@ class SettingsPanel extends React.Component {
     user: React.PropTypes.object,
     onSettingChange: React.PropTypes.func.isRequired,
     onChangeUsername: React.PropTypes.func.isRequired,
+    onChangeLanguage: React.PropTypes.func.isRequired,
     onLogout: React.PropTypes.func.isRequired
   };
 
@@ -50,6 +53,10 @@ class SettingsPanel extends React.Component {
 
   handleMentionSoundChange = (e, value) => {
     this.props.onSettingChange('mentionSound', value);
+  };
+
+  handleLanguageChange = (e, index, value) => {
+    this.props.onChangeLanguage(value);
   };
 
   render() {
@@ -74,22 +81,26 @@ class SettingsPanel extends React.Component {
     const toggles = [
       <Toggle
         label={t('settings.videoEnabled')}
-        labelPosition="right"
         defaultToggled={settings.videoEnabled}
         onToggle={this.handleVideoEnabledChange}
       />,
       <Toggle
         label={t('settings.videoSize')}
-        labelPosition="right"
         defaultToggled={settings.videoSize === 'large'}
         onToggle={this.handleVideoSizeChange}
       />,
       <Toggle
         label={t('settings.mentionSound')}
-        labelPosition="right"
         defaultToggled={settings.mentionSound}
         onToggle={this.handleMentionSoundChange}
-      />
+      />,
+      <LabeledControl id="uw-setting-language" label={t('settings.language')}>
+        <LanguagePicker
+          id="uw-setting-language"
+          value={settings.language}
+          onChange={this.handleLanguageChange}
+        />
+      </LabeledControl>
     ];
 
     return (
