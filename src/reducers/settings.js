@@ -1,6 +1,7 @@
 import { LOAD, SET } from '../constants/actionTypes/settings';
 
 const initialState = {
+  language: null,
   mentionSound: true,
   muted: false,
   videoEnabled: true,
@@ -13,8 +14,6 @@ export default function reduce(state = initialState, action = {}) {
   switch (type) {
   case LOAD:
     // Loading settings defaults to the initial state.
-    // It still needs merging, because we might've added setting properties
-    // since the last time this user joined, and we do need to add those in too.
     return { ...initialState, ...payload };
   case SET:
     return { ...state, ...payload };
