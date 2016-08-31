@@ -1,5 +1,6 @@
 import find from 'array-find';
 import * as React from 'react';
+import { translate } from 'react-i18next';
 import Paper from 'material-ui/Paper';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
@@ -36,8 +37,10 @@ const menuItemStyle = {
   WebkitAppearance: 'initial'
 };
 
+@translate()
 export default class PlaylistsMenu extends React.Component {
   static propTypes = {
+    t: React.PropTypes.func.isRequired,
     onClose: React.PropTypes.func.isRequired,
     onSelect: React.PropTypes.func.isRequired,
     onCreatePlaylist: React.PropTypes.func.isRequired,
@@ -61,7 +64,7 @@ export default class PlaylistsMenu extends React.Component {
   };
 
   renderLayer = () => {
-    const { playlists, position } = this.props;
+    const { playlists, position, t } = this.props;
     const fixedPosition = positionInsideWindow(position, (playlists.length + 1) * 48);
     return (
       <div
@@ -84,7 +87,7 @@ export default class PlaylistsMenu extends React.Component {
               isNewPlaylist
               style={menuItemStyle}
               leftIcon={<CreatePlaylistIcon color="#fff" />}
-              primaryText="New Playlist"
+              primaryText={t('playlists.new')}
             />
             {playlists.map(playlist => (
               <MenuItem

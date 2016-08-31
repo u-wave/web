@@ -1,5 +1,6 @@
 import cx from 'classnames';
 import * as React from 'react';
+import { translate } from 'react-i18next';
 import { IDLE, LOADING, LOADED } from '../../../constants/LoadingStates';
 import Loader from '../../Loader';
 import MediaList from '../../MediaList';
@@ -7,8 +8,11 @@ import MediaList from '../../MediaList';
 import AddToPlaylistAction from '../../MediaList/Actions/AddToPlaylist';
 
 const SearchResults = ({
+  t,
   className,
-  query, results, loadingState,
+  query,
+  results,
+  loadingState,
   onOpenAddMediaMenu,
   onOpenPreviewMediaDialog
 }) => {
@@ -38,7 +42,7 @@ const SearchResults = ({
   return (
     <div className={cx('PlaylistPanel', 'SearchResults', className)}>
       <div className="SearchResults-query">
-        Search: {query}
+        {t('playlists.search.results', { query })}
       </div>
       {list}
     </div>
@@ -46,6 +50,7 @@ const SearchResults = ({
 };
 
 SearchResults.propTypes = {
+  t: React.PropTypes.func.isRequired,
   className: React.PropTypes.string,
   query: React.PropTypes.string.isRequired,
   results: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
@@ -54,4 +59,4 @@ SearchResults.propTypes = {
   onOpenPreviewMediaDialog: React.PropTypes.func.isRequired
 };
 
-export default SearchResults;
+export default translate()(SearchResults);

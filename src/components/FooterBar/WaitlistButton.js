@@ -1,5 +1,7 @@
 import cx from 'classnames';
 import * as React from 'react';
+import { translate } from 'react-i18next';
+import compose from 'recompose/compose';
 import pure from 'recompose/pure';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 import FlatButton from 'material-ui/FlatButton';
@@ -17,8 +19,11 @@ const buttonStyle = {
 };
 
 const WaitlistButton = ({
+  t,
   muiTheme,
-  userInWaitlist, isLocked, onClick
+  userInWaitlist,
+  isLocked,
+  onClick
 }) => {
   let icon;
   if (isLocked) {
@@ -47,16 +52,21 @@ const WaitlistButton = ({
     >
       {icon}
       {isLocked && ' '}
-      {userInWaitlist ? 'Leave Waitlist' : 'Join Waitlist'}
+      {userInWaitlist ? t('waitlist.leave') : t('waitlist.join')}
     </FlatButton>
   );
 };
 
 WaitlistButton.propTypes = {
+  t: React.PropTypes.func.isRequired,
   muiTheme: React.PropTypes.object.isRequired,
   userInWaitlist: React.PropTypes.bool,
   isLocked: React.PropTypes.bool,
   onClick: React.PropTypes.func.isRequired
 };
 
-export default muiThemeable()(pure(WaitlistButton));
+export default compose(
+  muiThemeable(),
+  translate(),
+  pure
+)(WaitlistButton);

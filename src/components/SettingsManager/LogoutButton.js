@@ -1,12 +1,14 @@
 import * as React from 'react';
+import { translate } from 'react-i18next';
 import FlatButton from 'material-ui/FlatButton';
 import LogoutIcon from 'material-ui/svg-icons/action/power-settings-new';
 
 import ConfirmDialog from '../Dialogs/ConfirmDialog';
 import FormGroup from '../Form/Group';
 
-export default class LogoutButton extends React.Component {
+class LogoutButton extends React.Component {
   static propTypes = {
+    t: React.PropTypes.func.isRequired,
     onLogout: React.PropTypes.func.isRequired
   };
 
@@ -31,23 +33,27 @@ export default class LogoutButton extends React.Component {
       .then(this.closeDialog.bind(this));
 
   render() {
+    const { t } = this.props;
     return (
       <FlatButton
-        label="Sign out"
+        label={t('settings.logout')}
         labelPosition="after"
         icon={<LogoutIcon />}
         onClick={this.handleOpen}
       >
         {this.state.loggingOut && (
           <ConfirmDialog
-            confirmLabel="Sign Out"
+            title={t('dialogs.logout.title')}
+            confirmLabel={t('dialogs.logout.action')}
             onConfirm={this.handleConfirm}
             onCancel={this.handleClose}
           >
-            <FormGroup>Are you sure you want to sign out?</FormGroup>
+            <FormGroup>{t('dialogs.logout.confirm')}</FormGroup>
           </ConfirmDialog>
         )}
       </FlatButton>
     );
   }
 }
+
+export default translate()(LogoutButton);

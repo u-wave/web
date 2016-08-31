@@ -1,21 +1,22 @@
 import cx from 'classnames';
-import React, { Component, PropTypes } from 'react';
-
+import * as React from 'react';
+import { translate } from 'react-i18next';
 import Overlay from '../Overlay';
 import OverlayHeader from '../Overlay/Header';
 
 import SettingsPanel from './SettingsPanel';
 
-export default class SettingsManager extends Component {
+class SettingsManager extends React.Component {
   static propTypes = {
-    className: PropTypes.string,
-    settings: PropTypes.object.isRequired,
-    user: PropTypes.object,
+    t: React.PropTypes.func.isRequired,
+    className: React.PropTypes.string,
+    settings: React.PropTypes.object.isRequired,
+    user: React.PropTypes.object,
 
-    onCloseOverlay: PropTypes.func.isRequired,
-    onSettingChange: PropTypes.func.isRequired,
-    onChangeUsername: PropTypes.func.isRequired,
-    onLogout: PropTypes.func.isRequired
+    onCloseOverlay: React.PropTypes.func.isRequired,
+    onSettingChange: React.PropTypes.func.isRequired,
+    onChangeUsername: React.PropTypes.func.isRequired,
+    onLogout: React.PropTypes.func.isRequired
   };
 
   handleLogout = () => {
@@ -25,13 +26,19 @@ export default class SettingsManager extends Component {
 
   render() {
     const {
-      className, settings, user,
-      onCloseOverlay, onSettingChange, onChangeUsername
+      t,
+      className,
+      settings,
+      user,
+      onCloseOverlay,
+      onSettingChange,
+      onChangeUsername
     } = this.props;
+
     return (
       <Overlay className={cx('SettingsManager', 'AppColumn', 'AppColumn--full', className)}>
         <OverlayHeader
-          title="Settings"
+          title={t('settings.title')}
           onCloseOverlay={onCloseOverlay}
         />
         <div className="SettingsManager-body AppRow AppRow--middle">
@@ -47,3 +54,5 @@ export default class SettingsManager extends Component {
     );
   }
 }
+
+export default translate()(SettingsManager);

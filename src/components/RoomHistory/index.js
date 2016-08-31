@@ -1,5 +1,6 @@
 import cx from 'classnames';
 import * as React from 'react';
+import { translate } from 'react-i18next';
 
 import Overlay from '../Overlay';
 import OverlayHeader from '../Overlay/Header';
@@ -7,6 +8,7 @@ import OverlayHeader from '../Overlay/Header';
 import HistoryList from './HistoryList';
 
 const RoomHistory = ({
+  t,
   className,
   onCloseOverlay,
   onOpenAddMediaMenu,
@@ -20,7 +22,7 @@ const RoomHistory = ({
     <OverlayHeader
       direction="top"
       className="AppRow AppRow--top"
-      title="History"
+      title={t('history.title')}
       onCloseOverlay={onCloseOverlay}
     />
     <div className="RoomHistory-body AppRow AppRow--middle">
@@ -34,10 +36,11 @@ const RoomHistory = ({
 );
 
 RoomHistory.propTypes = {
+  t: React.PropTypes.func.isRequired,
   className: React.PropTypes.string,
   onCloseOverlay: React.PropTypes.func.isRequired,
   onOpenAddMediaMenu: React.PropTypes.func.isRequired,
   onOpenPreviewMediaDialog: React.PropTypes.func.isRequired
 };
 
-export default RoomHistory;
+export default translate()(RoomHistory);

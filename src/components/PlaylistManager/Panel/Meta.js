@@ -1,5 +1,6 @@
 import cx from 'classnames';
 import * as React from 'react';
+import { translate } from 'react-i18next';
 import Checkbox from 'material-ui/Checkbox';
 import IconButton from 'material-ui/IconButton';
 import ShuffleIcon from 'material-ui/svg-icons/av/shuffle';
@@ -13,6 +14,7 @@ import PlaylistFilter from './PlaylistFilter';
 const checkboxIconStyle = { fill: '#fff' };
 
 const PlaylistMeta = ({
+  t,
   className,
   active,
   id,
@@ -35,7 +37,7 @@ const PlaylistMeta = ({
         checkedIcon={<ActiveIcon color="#fff" />}
         uncheckedIcon={<ActivateIcon color="#fff" />}
         iconStyle={checkboxIconStyle}
-        label={active ? 'Active' : 'Activate'}
+        label={active ? t('playlists.active') : t('playlists.activate')}
       />
     </div>
     <PlaylistFilter
@@ -43,7 +45,7 @@ const PlaylistMeta = ({
     />
     <IconButton
       onClick={onShufflePlaylist}
-      tooltip="Shuffle"
+      tooltip={t('playlists.shuffle')}
       tooltipPosition="top-center"
     >
       <ShuffleIcon color="#555" hoverColor="#fff" />
@@ -61,6 +63,7 @@ const PlaylistMeta = ({
 );
 
 PlaylistMeta.propTypes = {
+  t: React.PropTypes.func.isRequired,
   className: React.PropTypes.string,
   active: React.PropTypes.bool.isRequired,
   id: React.PropTypes.string.isRequired,
@@ -73,4 +76,4 @@ PlaylistMeta.propTypes = {
   onFilter: React.PropTypes.func.isRequired
 };
 
-export default PlaylistMeta;
+export default translate()(PlaylistMeta);

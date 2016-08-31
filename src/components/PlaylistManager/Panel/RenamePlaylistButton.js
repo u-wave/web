@@ -1,11 +1,13 @@
 import * as React from 'react';
+import { translate } from 'react-i18next';
 import IconButton from 'material-ui/IconButton';
 import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 
 import PromptDialog from '../../Dialogs/PromptDialog';
 
-export default class RenamePlaylistButton extends React.Component {
+class RenamePlaylistButton extends React.Component {
   static propTypes = {
+    t: React.PropTypes.func.isRequired,
     onRename: React.PropTypes.func.isRequired,
     initialName: React.PropTypes.string
   };
@@ -31,17 +33,18 @@ export default class RenamePlaylistButton extends React.Component {
       .then(this.closeDialog.bind(this));
 
   render() {
+    const { t } = this.props;
     return (
       <IconButton
         onClick={this.handleOpen}
-        tooltip="Rename"
+        tooltip={t('playlists.rename')}
         tooltipPosition="top-center"
       >
         <EditIcon color="#555" hoverColor="#fff" />
         {this.state.renaming && (
           <PromptDialog
-            title="Playlist Name"
-            submitLabel="Rename"
+            title={t('dialogs.renamePlaylist.title')}
+            submitLabel={t('dialogs.renamePlaylist.action')}
             icon={<EditIcon color="#777" />}
             value={this.props.initialName}
             onSubmit={this.handleSubmit}
@@ -52,3 +55,5 @@ export default class RenamePlaylistButton extends React.Component {
     );
   }
 }
+
+export default translate()(RenamePlaylistButton);

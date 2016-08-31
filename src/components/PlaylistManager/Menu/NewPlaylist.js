@@ -1,12 +1,15 @@
 import cx from 'classnames';
 import * as React from 'react';
+import { translate } from 'react-i18next';
 import CreatePlaylistIcon from 'material-ui/svg-icons/content/add';
 
 import PromptDialog from '../../Dialogs/PromptDialog';
 
+@translate()
 export default class NewPlaylist extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
+    t: React.PropTypes.func.isRequired,
     onCreatePlaylist: React.PropTypes.func.isRequired
   };
 
@@ -31,7 +34,7 @@ export default class NewPlaylist extends React.Component {
       .then(this.closeDialog.bind(this));
 
   render() {
-    const { className } = this.props;
+    const { t, className } = this.props;
     return (
       <button
         role="menuitem"
@@ -43,13 +46,13 @@ export default class NewPlaylist extends React.Component {
             <div className="PlaylistMenuRow-active-icon">
               <CreatePlaylistIcon color="#fff" />
             </div>
-            Create Playlist
+            {t('playlists.new')}
           </div>
           {this.state.creating && (
             <PromptDialog
-              title="Playlist Name"
+              title={t('dialogs.createPlaylist.nameInputTitle')}
               icon={<CreatePlaylistIcon color="#777" />}
-              submitLabel="Create"
+              submitLabel={t('dialogs.createPlaylist.action')}
               onSubmit={this.handleSubmit}
               onCancel={this.handleClose}
             />

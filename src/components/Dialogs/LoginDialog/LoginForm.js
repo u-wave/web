@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { translate } from 'react-i18next';
 import EmailIcon from 'material-ui/svg-icons/communication/email';
 import PasswordIcon from 'material-ui/svg-icons/action/lock';
 import Loader from '../../Loader';
@@ -7,8 +8,10 @@ import FormGroup from '../../Form/Group';
 import TextField from '../../Form/TextField';
 import Button from '../../Form/Button';
 
+@translate()
 export default class LoginForm extends React.Component {
   static propTypes = {
+    t: React.PropTypes.func.isRequired,
     error: React.PropTypes.object,
     onLogin: React.PropTypes.func
   };
@@ -37,7 +40,7 @@ export default class LoginForm extends React.Component {
   };
 
   render() {
-    const { error } = this.props;
+    const { t, error } = this.props;
     const { busy } = this.state;
 
     return (
@@ -48,7 +51,7 @@ export default class LoginForm extends React.Component {
             ref={this.refEmail}
             className="LoginForm-field"
             type="email"
-            placeholder="E-Mail"
+            placeholder={t('login.email')}
             icon={<EmailIcon color="#9f9d9e" />}
             autofocus
           />
@@ -58,7 +61,7 @@ export default class LoginForm extends React.Component {
             ref={this.refPassword}
             className="LoginForm-field"
             type="password"
-            placeholder="Password"
+            placeholder={t('login.password')}
             icon={<PasswordIcon color="#9f9d9e" />}
           />
         </FormGroup>
@@ -68,12 +71,12 @@ export default class LoginForm extends React.Component {
             className="LoginForm-submit"
             disabled={busy}
           >
-            {busy ? <div className="Button-loading"><Loader size="tiny" /></div> : 'SIGN IN'}
+            {busy ? <div className="Button-loading"><Loader size="tiny" /></div> : t('login.login')}
           </Button>
         </FormGroup>
 
         <span className="LoginForm-forgot">
-          Forgot Password?
+          {t('login.forgotPassword')}
         </span>
       </Form>
     );

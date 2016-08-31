@@ -6,6 +6,8 @@ import 'whatwg-fetch';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import i18next from 'i18next';
+import { I18nextProvider } from 'react-i18next';
 
 import AppContainer from './containers/App';
 import { get as readSession } from './utils/Session';
@@ -54,13 +56,22 @@ store.dispatch(initState());
 // wants this!
 require('react-tap-event-plugin')();
 
+i18next.init({
+  lng: 'en',
+  resources: {
+    en: { translation: require('../locale/en.yaml') }
+  }
+});
+
 // Render üWave! 😱
 ReactDOM.render(
   // <Provider> does some magic to make all of the @connect calls in the React
   // Container components work. This is how React Components find the
   // application state that they need to render.
   <Provider store={store}>
-    <AppContainer mediaSources={mediaSources} />
+    <I18nextProvider i18n={i18next}>
+      <AppContainer mediaSources={mediaSources} />
+    </I18nextProvider>
   </Provider>,
   document.getElementById('app')
 );

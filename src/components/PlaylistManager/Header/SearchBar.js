@@ -1,13 +1,16 @@
 import cx from 'classnames';
 import * as React from 'react';
+import { translate } from 'react-i18next';
 import SearchIcon from 'material-ui/svg-icons/action/search';
 import SourcePicker from './SourcePicker';
 
+@translate()
 export default class SearchBar extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
     source: React.PropTypes.string,
     onSubmit: React.PropTypes.func,
+    t: React.PropTypes.func.isRequired,
     onSourceChange: React.PropTypes.func
   };
 
@@ -32,7 +35,7 @@ export default class SearchBar extends React.Component {
   };
 
   render() {
-    const { source, onSourceChange } = this.props;
+    const { t, source, onSourceChange } = this.props;
     const { focused } = this.state;
     return (
       <div className={cx('SearchBar', focused ? 'is-focused' : '', this.props.className)}>
@@ -49,7 +52,7 @@ export default class SearchBar extends React.Component {
             ref={this.refInput}
             className="SearchBar-input"
             type="text"
-            placeholder={focused ? '' : 'Search'}
+            placeholder={focused ? '' : t('playlists.search.action')}
             onFocus={this.handleFocus}
             onBlur={this.handleBlur}
             onKeyDown={this.handleKeyDown}

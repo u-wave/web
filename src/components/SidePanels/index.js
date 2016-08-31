@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { translate } from 'react-i18next';
+import compose from 'recompose/compose';
 import pure from 'recompose/pure';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
@@ -42,21 +44,22 @@ const subHeaderStyle = {
   fontSize: '125%'
 };
 
-const getWaitlistLabel = (size, position) => {
+const getWaitlistLabel = (t, size, position) => {
   if (size > 0) {
     const posText = position !== -1
       ? `${position + 1} / ${size}`
       : size;
 
     return [
-      'Waitlist',
+      t('waitlist.title'),
       <span key="sub" style={subHeaderStyle}>{posText}</span>
     ];
   }
-  return 'Waitlist';
+  return t('waitlist.title');
 };
 
 const SidePanels = ({
+  t,
   selected,
   listenerCount,
   waitlistSize,
@@ -83,7 +86,7 @@ const SidePanels = ({
     <Tab
       className="SidePanel-tab"
       disableTouchRipple
-      label="Chat"
+      label={t('chat.title')}
       value="chat"
       style={selected === 'chat' ? activeTabStyle : tabStyle}
     >
@@ -93,7 +96,7 @@ const SidePanels = ({
       className="SidePanel-tab"
       disableTouchRipple
       label={[
-        'Room',
+        t('users.title'),
         <span key="sub" style={subHeaderStyle}>
           {listenerCount}
         </span>
@@ -108,7 +111,7 @@ const SidePanels = ({
     <Tab
       className="SidePanel-tab"
       disableTouchRipple
-      label={getWaitlistLabel(waitlistSize, waitlistPosition)}
+      label={getWaitlistLabel(t, waitlistSize, waitlistPosition)}
       value="waitlist"
       style={selected === 'waitlist' ? activeTabStyle : tabStyle}
     >
@@ -120,6 +123,7 @@ const SidePanels = ({
 );
 
 SidePanels.propTypes = {
+  t: React.PropTypes.func.isRequired,
   selected: React.PropTypes.string.isRequired,
   listenerCount: React.PropTypes.number.isRequired,
   waitlistSize: React.PropTypes.number.isRequired,
@@ -127,4 +131,7 @@ SidePanels.propTypes = {
   onChange: React.PropTypes.func.isRequired
 };
 
-export default pure(SidePanels);
+export default compose(
+  translate(),
+  pure
+)(SidePanels);

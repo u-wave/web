@@ -1,0 +1,122 @@
+close: Close
+timeAgo: "{{time}} ago"
+
+chat:
+  title: Chat
+  placeholder: Click here to chat!
+
+dialogs:
+  confirm:
+    defaultConfirmLabel: OK
+    defaultCancelLabel: Cancel
+
+  prompt:
+    defaultSubmitLabel: OK
+
+  logout:
+    title: null
+    action: Sign Out
+    confirm: Are you sure you want to sign out?
+
+  createPlaylist:
+    action: Create
+    nameInputTitle: Playlist Name
+
+  deletePlaylist:
+    action: Delete
+    title: Delete Playlist
+    confirm: Are you sure you want to delete this playlist?
+
+  renamePlaylist:
+    action: Rename
+    nameInputTitle: Playlist Name
+
+  editMedia:
+    title: Edit Media
+    save: Save
+    artistLabel: Artist
+    titleLabel: Title
+    playFromLabel: "Play from:"
+    playToLabel: "to:"
+    errors:
+      invalidStartTime: That start time is invalid.
+      invalidEndTime: That end time is invalid.
+      endTimeBeforeStart: The end time should be after the start time.
+      endTimeAfterSongEnd: The end time cannot be past the total duration of the song.
+
+media:
+  artist: Artist
+  title: Title
+
+playlists:
+  title: Playlists
+  new: Create Playlist
+  delete: Delete Playlist
+  noPlaylists: You don't have a playlist yet!
+  noPlaylistsCreate: You don't have a playlist yet! Click here to create one.
+  empty: "This playlist is empty :("
+  active: Active
+  activate: Activate
+  shuffle: Shuffle
+  filter: Filter
+  rename: Rename
+  import:
+    title: Import
+  search:
+    action: Search
+    results: "Search: {{query}}"
+
+eta:
+  playingNow: "from {{playlist}} playing now"
+  eta: "from {{playlist}} playing in {{eta}}"
+
+waitlist:
+  title: Waitlist
+  join: Join Waitlist
+  leave: Leave Waitlist
+
+votes:
+  upvote: Upvote
+  downvote: Downvote
+  favorite: Favorite
+
+booth:
+  empty: Nobody is playing!
+  currentDJ: "played by: {{user}}"
+  skip:
+    self: Skip your turn
+    other: "Skip {{user}}'s turn"
+
+history:
+  title: Play History
+
+users:
+  title: Room
+  guests: "and {{count}} guest"
+  guests_plural: "and {{count}} guest(s)"
+
+settings:
+  title: Settings
+  videoEnabled: Play Audio/Video
+  videoSize: Full-size Video
+  mentionSound: Chat Mention Sound
+  logout: Sign out
+  profile:
+    username:
+      change: Change Username
+      save: Save
+  links:
+    website: üWave
+    source: üWave Web Client Source Code
+    license: License
+
+loading:
+  jsRequired: üWave requires JavaScript to run.
+
+login:
+  login: Sign in
+  register: Register
+  username: Username
+  email: E-mail
+  password: Password
+  forgotPassword: Forgot Password?

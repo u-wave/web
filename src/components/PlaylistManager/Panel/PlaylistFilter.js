@@ -1,11 +1,13 @@
 import cx from 'classnames';
 import * as React from 'react';
+import { translate } from 'react-i18next';
 import debounce from 'lodash/debounce';
 import IconButton from 'material-ui/IconButton';
 import FilterIcon from 'material-ui/svg-icons/action/search';
 
-export default class PlaylistFilter extends React.Component {
+class PlaylistFilter extends React.Component {
   static propTypes = {
+    t: React.PropTypes.func.isRequired,
     onFilter: React.PropTypes.func.isRequired
   };
 
@@ -51,12 +53,13 @@ export default class PlaylistFilter extends React.Component {
   };
 
   render() {
+    const { t } = this.props;
     const isOpen = this.state.open;
     return (
       <div className="PlaylistMediaFilter">
         <IconButton
           onClick={this.handleClick}
-          tooltip="Filter"
+          tooltip={t('playlists.filter')}
           tooltipPosition="top-center"
         >
           <FilterIcon color={isOpen ? '#fff' : '#555'} hoverColor="#fff" />
@@ -72,3 +75,5 @@ export default class PlaylistFilter extends React.Component {
     );
   }
 }
+
+export default translate()(PlaylistFilter);
