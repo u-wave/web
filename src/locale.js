@@ -1,23 +1,24 @@
 import i18next from 'i18next';
 
-import * as en from '../locale/en.yaml';
-import * as nl from '../locale/nl.yaml';
+import en from '../locale/en.yaml';
+import nl from '../locale/nl.yaml';
+
+const resources = { en, nl };
+
+i18next.init({
+  fallbackLng: 'en',
+  defaultNS: 'uwave',
+  resources,
+  interpolation: {
+    // Prevent double-escapes: React already escapes things for us
+    escapeValue: false
+  }
+});
 
 export default function createLocale(language) {
-  const resources = { en, nl };
+  const locale = i18next.cloneInstance({ lng: language });
 
-  i18next.init({
-    lng: language,
-    fallbackLng: 'en',
-    defaultNS: 'uwave',
-    resources,
-    interpolation: {
-      // Prevent double-escapes: React already escapes things for us
-      escapeValue: false
-    }
-  });
+  locale.availableLanguages = Object.keys(resources);
 
-  i18next.availableLanguages = Object.keys(resources);
-
-  return i18next;
+  return locale;
 }
