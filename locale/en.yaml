@@ -67,6 +67,7 @@ playlists:
     results: "Search: {{query}}"
 
 eta:
+  empty: "from {{playlist}}"
   playingNow: "from {{playlist}} playing now"
   eta: "from {{playlist}} playing in {{eta}}"
 

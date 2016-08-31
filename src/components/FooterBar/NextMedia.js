@@ -24,6 +24,13 @@ const NextMedia = ({
     );
   }
 
+  let key = 'eta.eta';
+  if (userIsDJ) {
+    key = 'eta.playingNow';
+  } else if (baseEta === 0) {
+    key = 'eta.empty';
+  }
+
   const mediaEl = nextMedia
     ? <SongTitle {...nextMedia} />
     : <div className="SongTitle">{t('playlists.empty')}</div>;
@@ -31,16 +38,16 @@ const NextMedia = ({
     <span className="NextMedia-playlist">{playlist.name}</span>
   );
   const etaEl = (
-    <Eta
-      className="NextMedia-eta"
-      base={baseEta}
-      endTime={mediaEndTime}
-      nowPlaying={userIsDJ}
-    />
+    <Eta className="NextMedia-eta" base={baseEta} endTime={mediaEndTime} />
   );
   return (
     <div className={cx('NextMedia', className)} {...attrs}>
-      {mediaEl} from {playlistEl} {etaEl}
+      {mediaEl}
+      <Interpolate
+        i18nKey={key}
+        playlist={playlistEl}
+        eta={etaEl}
+      />
     </div>
   );
 };
