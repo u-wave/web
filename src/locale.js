@@ -8,10 +8,7 @@ export default function createLocale(language) {
     lng: language,
     fallbackLng: 'en',
     defaultNS: 'uwave',
-    resources: {
-      en: { uwave: en },
-      nl: { uwave: nl }
-    },
+    resources: { en, nl },
     interpolation: {
       // Prevent double-escapes: React already escapes things for us
       escapeValue: false

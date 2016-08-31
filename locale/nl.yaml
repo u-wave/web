@@ -1,121 +1,124 @@
-close: Sluiten
-timeAgo: "{{time}} geleden"
+name: Nederlands (Dutch)
 
-chat:
-  title: Chat
-  placeholder: Klik hier om te chatten!
+uwave:
+  close: Sluiten
+  timeAgo: "{{time}} geleden"
 
-dialogs:
-  confirm:
-    defaultConfirmLabel: OK
-    defaultCancelLabel: Annuleren
+  chat:
+    title: Chat
+    placeholder: Klik hier om te chatten!
 
-  prompt:
-    defaultSubmitLabel: OK
+  dialogs:
+    confirm:
+      defaultConfirmLabel: OK
+      defaultCancelLabel: Annuleren
 
-  logout:
-    title: null
-    action: Uitloggen
-    confirm: Weet je zeker dat je uit wilt loggen?
+    prompt:
+      defaultSubmitLabel: OK
 
-  createPlaylist:
-    action: Aanmaken
-    nameInputTitle: Naam
+    logout:
+      title: null
+      action: Uitloggen
+      confirm: Weet je zeker dat je uit wilt loggen?
 
-  deletePlaylist:
-    action: Verwijder
+    createPlaylist:
+      action: Aanmaken
+      nameInputTitle: Naam
 
-  renamePlaylist:
-    action: Wijzig Naam
-    nameInputTitle: Naam
+    deletePlaylist:
+      action: Verwijder
 
-  editMedia:
-    title: Media Bewerken
-    save: Opslaan
-    artistLabel: Artiest
-    titleLabel: Titel
-    playFromLabel: "Speel van:"
-    playToLabel: "tot:"
-    errors:
-      invalidStartTime: Die begintijd klopt niet.
-      invalidEndTime: Die eindtijd klopt niet.
-      endTimeBeforeStart: De eindtijd moet ná de starttijd zijn.
-      endTimeAfterSongEnd: De eindtijd moet vóór het eind van het media-item zijn.
+    renamePlaylist:
+      action: Wijzig Naam
+      nameInputTitle: Naam
 
-media:
-  artist: Artiest
-  title: Titel
+    editMedia:
+      title: Media Bewerken
+      save: Opslaan
+      artistLabel: Artiest
+      titleLabel: Titel
+      playFromLabel: "Speel van:"
+      playToLabel: "tot:"
+      errors:
+        invalidStartTime: Die begintijd klopt niet.
+        invalidEndTime: Die eindtijd klopt niet.
+        endTimeBeforeStart: De eindtijd moet ná de starttijd zijn.
+        endTimeAfterSongEnd: De eindtijd moet vóór het eind van het media-item zijn.
 
-playlists:
-  title: Afspeellijsten
-  new: Maak Afspeellijst
-  delete: Verwijder Afspeellijst
-  noPlaylists: Je hebt nog geen afspeellijsten!
-  noPlaylistsCreate: Je hebt nog geen afspeellijsten! Klik hier om er een aan te maken.
-  empty: "Deze afspeellijst is leeg :("
-  active: Actief
-  activate: Activeren
-  shuffle: Shuffle
-  filter: Filteren
-  rename: Naam Wijzigen
-  import:
-    title: Importeren
-  search:
-    action: Zoeken
-    results: "Zoekopdracht: {{query}}"
+  media:
+    artist: Artiest
+    title: Titel
 
-eta:
-  empty: "uit {{playlist}}"
-  playingNow: "nu spelend uit {{playlist}}"
-  eta: "spelend over {{eta}} uit {{playlist}}"
+  playlists:
+    title: Afspeellijsten
+    new: Maak Afspeellijst
+    delete: Verwijder Afspeellijst
+    noPlaylists: Je hebt nog geen afspeellijsten!
+    noPlaylistsCreate: Je hebt nog geen afspeellijsten! Klik hier om er een aan te maken.
+    empty: "Deze afspeellijst is leeg :("
+    active: Actief
+    activate: Activeren
+    shuffle: Shuffle
+    filter: Filteren
+    rename: Naam Wijzigen
+    import:
+      title: Importeren
+    search:
+      action: Zoeken
+      results: "Zoekopdracht: {{query}}"
 
-waitlist:
-  title: Wachtlijst
-  join: Join Wachtlijst
-  leave: Verlaat Wachtlijst
+  eta:
+    empty: "uit {{playlist}}"
+    playingNow: "nu spelend uit {{playlist}}"
+    eta: "spelend over {{eta}} uit {{playlist}}"
 
-votes:
-  upvote: Upvoten
-  downvote: Downvoten
-  favorite: Favorieten
+  waitlist:
+    title: Wachtlijst
+    join: Join Wachtlijst
+    leave: Verlaat Wachtlijst
 
-booth:
-  empty: Niemand is momenteel iets aan het spelen!
-  currentDJ: "gespeeld door: {{user}}"
-  skip:
-    self: Beurt overslaan
-    other: "{{user}}s beurt overslaan"
+  votes:
+    upvote: Upvoten
+    downvote: Downvoten
+    favorite: Favorieten
 
-history:
-  title: Geschiedenis
+  booth:
+    empty: Niemand is momenteel iets aan het spelen!
+    currentDJ: "gespeeld door: {{user}}"
+    skip:
+      self: Beurt overslaan
+      other: "{{user}}s beurt overslaan"
 
-users:
-  title: Room
-  guests: "en {{count}} gast"
-  guests_plural: "en {{count}} gasten"
+  history:
+    title: Geschiedenis
 
-settings:
-  title: Instellingen
-  videoEnabled: Audio/Video Afspelen
-  videoSize: Fullscreen Video
-  mentionSound: Chatnotificaties
-  logout: Uitloggen
-  profile:
-    username:
-      change: Gebruikersnaam wijzigen
-      save: Wijzigen
-  links:
-    website: üWave
-    source: üWave Web Client Source Code
-    license: License
+  users:
+    title: Room
+    guests: "en {{count}} gast"
+    guests_plural: "en {{count}} gasten"
 
-loading:
-  jsRequired: üWave heeft JavaScript nodig.
+  settings:
+    title: Instellingen
+    videoEnabled: Audio/Video Afspelen
+    videoSize: Fullscreen Video
+    mentionSound: Chatnotificaties
+    logout: Uitloggen
+    profile:
+      username:
+        change: Gebruikersnaam wijzigen
+        save: Wijzigen
+    links:
+      website: üWave
+      source: üWave Web Client Source Code
+      license: License
 
-login:
-  login: Inloggen
-  register: Registreren
-  username: Gebruikersnaam
-  email: E-mailadres
-  password: Wachtwoord
-  forgotPassword: Wachtwoord vergeten?
+  loading:
+    jsRequired: üWave heeft JavaScript nodig.
+
+  login:
+    login: Inloggen
+    register: Registreren
+    username: Gebruikersnaam
+    email: E-mailadres
+    password: Wachtwoord
+    forgotPassword: Wachtwoord vergeten?
