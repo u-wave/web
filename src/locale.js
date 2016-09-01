@@ -3,8 +3,14 @@ import i18next from 'i18next';
 import cs from '../locale/cs.yaml';
 import en from '../locale/en.yaml';
 import nl from '../locale/nl.yaml';
+import zh from '../locale/zh.yaml';
 
-const resources = { cs, en, nl };
+const resources = {
+  cs,
+  en,
+  nl,
+  zh
+};
 
 i18next.init({
   fallbackLng: 'en',
