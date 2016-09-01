@@ -1,0 +1,126 @@
+name: Português (Portuguese)
+
+uwave:
+  close: Fechar
+  timeAgo: "{{time}} atrás"
+
+  chat:
+    title: Chat
+    placeholder: Clique aqui para conversar!
+
+  dialogs:
+    confirm:
+      defaultConfirmLabel: OK
+      defaultCancelLabel: Cancelar
+
+    prompt:
+      defaultSubmitLabel: OK
+
+    logout:
+      title: null
+      action: Deslogar
+      confirm: Você tem certeza de que quer deslogar?
+
+    createPlaylist:
+      action: Criar
+      nameInputTitle: Nome da Playlist
+
+    deletePlaylist:
+      action: Deletar
+      title: Deletar Playlist
+      confirm: Você tem certeza de que quer deletar essa playlist?
+
+    renamePlaylist:
+      action: Renomear
+      nameInputTitle: Nome da Playlist
+
+    editMedia:
+      title: Editar Mídia
+      save: Salvar
+      artistLabel: Artista
+      titleLabel: Título
+      playFromLabel: "Tocar de:"
+      playToLabel: "para:"
+      errors:
+        invalidStartTime: Esse tempo de início é inválido.
+        invalidEndTime: Esse tempo de fim é inválido.
+        endTimeBeforeStart: O tempo de fim deve ser depois do tempo de início.
+        endTimeAfterSongEnd: O tempo de fim não pode passar da duração total da música.
+
+  media:
+    artist: Artista
+    title: Títutlo
+
+  playlists:
+    title: Playlists
+    new: Criar Playlist
+    delete: Deletar Playlist
+    noPlaylists: Você ainda não tem nenhuma playlist!
+    noPlaylistsCreate: Você ainda não tem nenhuma playlist! Clique aqui para criar uma.
+    empty: "Essa playlist está vazia :("
+    active: Ativa
+    activate: Ativar
+    shuffle: Misturar
+    filter: Filtrar
+    rename: Renomear
+    import:
+      title: Importar
+    search:
+      action: Buscar
+      results: "Buscar: {{query}}"
+
+  eta:
+    empty: "de {{playlist}}"
+    playingNow: "tocando agora de {{playlist}}"
+    eta: "de {{playlist}} tocando em {{eta}}"
+
+  waitlist:
+    title: Lista de Espera
+    join: Entrar na Lista de Espera
+    leave: Sair da Lista de Espera
+
+  votes:
+    upvote: Legal
+    downvote: Chato
+    favorite: Favoritar
+
+  booth:
+    empty: Ninguém está tocando!
+    currentDJ: "tocada por: {{user}}"
+    skip:
+      self: Pular sua vez
+      other: "Pular a vez de {{user}}"
+
+  history:
+    title: Tocar Histórico
+
+  users:
+    title: Sala
+    guests: "e {{count}} visitante(s)"
+
+  settings:
+    title: Configurações
+    videoEnabled: Habilitar Áudio/Vídeo
+    videoSize: Vídeo em Tela-Cheia
+    mentionSound: Som de Menção em Chat
+    language: Idioma
+    logout: Deslogar
+    profile:
+      username:
+        change: Alterar Nome de Usuário
+        save: Salvar
+    links:
+      website: üWave
+      source: Código Fonte de Cliente Web do üWave
+      license: Licensa
+
+  loading:
+    jsRequired: üWave requer JavaScript para prosseguir.
+
+  login:
+    login: Entrar
+    register: Registrar
+    username: Nome de Usuário
+    email: E-mail
+    password: Senha
+    forgotPassword: Esqueceu sua Senha?
