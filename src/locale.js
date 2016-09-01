@@ -16,10 +16,13 @@ i18next.init({
   }
 });
 
-export default function createLocale(language) {
-  const locale = i18next.cloneInstance({ lng: language });
+export const availableLanguages = Object.keys(resources);
 
-  locale.availableLanguages = Object.keys(resources);
+export default function createLocale(language) {
+  const locale = i18next.cloneInstance();
+  locale.changeLanguage(language);
+
+  locale.availableLanguages = availableLanguages;
 
   return locale;
 }
