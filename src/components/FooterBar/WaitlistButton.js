@@ -15,7 +15,10 @@ const inlineIconStyle = {
 const buttonStyle = {
   height: '100%',
   fontSize: '11pt',
-  textTransform: 'uppercase'
+  textTransform: 'uppercase',
+  // Align multiline button text nicely. Good for languages where "Join Waitlist"
+  // becomes a longer phrase, especially.
+  lineHeight: '24px'
 };
 
 const WaitlistButton = ({
