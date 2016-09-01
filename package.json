@@ -128,7 +128,7 @@
   },
   "scripts": {
     "lint": "eslint --cache .",
-    "mocha": "NODE_ENV=testing mocha --compilers js:babel-register --recursive test",
+    "mocha": "NODE_ENV=testing mocha",
     "test": "npm run mocha && npm run lint",
     "build": "gulp",
     "watch": "gulp watch",
