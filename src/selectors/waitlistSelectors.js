@@ -21,7 +21,7 @@ export const waitlistUsersSelector = createSelector(
 export const djAndWaitlistUsersSelector = createSelector(
   djSelector,
   waitlistUsersSelector,
-  (dj, waitlist) => [ dj, ...waitlist ]
+  (dj, waitlist) => (dj ? [ dj, ...waitlist ] : waitlist)
 );
 
 export const positionSelector = createSelector(
