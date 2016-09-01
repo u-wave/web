@@ -2,12 +2,14 @@ import i18next from 'i18next';
 
 import cs from '../locale/cs.yaml';
 import en from '../locale/en.yaml';
+import fr from '../locale/fr.yaml';
 import nl from '../locale/nl.yaml';
 import zh from '../locale/zh.yaml';
 
 const resources = {
   cs,
   en,
+  fr,
   nl,
   zh
 };
