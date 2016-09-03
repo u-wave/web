@@ -1,6 +1,7 @@
 import i18next from 'i18next';
 
 import cs from '../locale/cs.yaml';
+import cy from '../locale/cy.yaml';
 import de from '../locale/de.yaml';
 import en from '../locale/en.yaml';
 import fr from '../locale/fr.yaml';
@@ -11,6 +12,7 @@ import zh from '../locale/zh.yaml';
 
 const resources = {
   cs,
+  cy,
   de,
   en,
   fr,
