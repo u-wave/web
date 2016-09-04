@@ -2,7 +2,6 @@
 
 @component Overlay {
   position: absolute;
-  height: 100vh;
   height: 100%;
   width: 100%;
   z-index: 6;
@@ -15,6 +14,11 @@
   @modifier from-top {
     top: 0;
     bottom: auto;
+  }
+
+  @descendent body {
+    height: 100%;
+    height: 100vh;
   }
 
   /* Animations!.. */
