@@ -5,6 +5,7 @@ import Code from './Code';
 import Italic from './Italic';
 import StrikeThrough from './StrikeThrough';
 import Mention from './Mention';
+import GroupMention from './GroupMention';
 import Link from './Link';
 import Emoji from './Emoji';
 
@@ -21,7 +22,9 @@ export default function compile(tree, opts = {}) {
 
     switch (node.type) {
     case 'mention':
-      return <Mention key={i} user={node.user} />;
+      return node.user
+        ? <Mention key={i} user={node.user} />
+        : <GroupMention key={i} group={node.mention} users={node.group} />;
     case 'link':
       return <Link key={i} text={node.text} href={node.href} />;
     case 'emoji':
