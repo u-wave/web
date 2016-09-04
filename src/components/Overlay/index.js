@@ -1,14 +1,14 @@
 import cx from 'classnames';
 import * as React from 'react';
 
-const Overlay = ({ direction = 'bottom', children, ...props }) => (
+const Overlay = ({ direction = 'bottom', children, className, ...props }) => (
   <div
     className={cx(
       'Overlay',
       `Overlay--from-${direction}`
     )}
   >
-    <div {...props}>
+    <div className={cx('Overlay-body', className)} {...props}>
       {children}
     </div>
   </div>
@@ -16,6 +16,7 @@ const Overlay = ({ direction = 'bottom', children, ...props }) => (
 
 Overlay.propTypes = {
   children: React.PropTypes.node.isRequired,
+  className: React.PropTypes.string,
   direction: React.PropTypes.string
 };
 
