@@ -11,6 +11,7 @@ const NextMedia = ({
   className,
   playlist,
   nextMedia,
+  userInWaitlist,
   userIsDJ,
   baseEta,
   mediaEndTime,
@@ -24,11 +25,11 @@ const NextMedia = ({
     );
   }
 
-  let key = 'eta.eta';
+  let key = 'eta.empty';
   if (userIsDJ) {
     key = 'eta.playingNow';
-  } else if (baseEta === 0) {
-    key = 'eta.empty';
+  } else if (userInWaitlist) {
+    key = 'eta.eta';
   }
 
   const mediaEl = nextMedia
@@ -57,7 +58,8 @@ NextMedia.propTypes = {
   className: React.PropTypes.string,
   playlist: React.PropTypes.object,
   nextMedia: React.PropTypes.object,
-  userIsDJ: React.PropTypes.bool,
+  userInWaitlist: React.PropTypes.bool.isRequired,
+  userIsDJ: React.PropTypes.bool.isRequired,
   baseEta: React.PropTypes.number,
   mediaEndTime: React.PropTypes.number
 };

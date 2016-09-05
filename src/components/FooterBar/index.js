@@ -104,6 +104,7 @@ export default class FooterBar extends React.Component {
             <NextMedia
               playlist={playlist}
               nextMedia={nextMedia}
+              userInWaitlist={userInWaitlist}
               userIsDJ={userIsDJ}
               baseEta={baseEta}
               mediaEndTime={mediaEndTime}
