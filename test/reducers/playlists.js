@@ -3,6 +3,7 @@ import fetch from 'fetch-mock';
 
 import createStore from '../../src/store/configureStore';
 import * as a from '../../src/actions/PlaylistActionCreators';
+import { favoriteMediaComplete } from '../../src/actions/VoteActionCreators';
 import * as s from '../../src/selectors/playlistSelectors';
 
 const initialiseStore = a.setPlaylists([
@@ -153,6 +154,28 @@ describe('reducers/playlists', () => {
       expect(
         s.nextMediaSelector(getState())._id
       ).to.eql(347);
+    });
+
+    it('appends favourited items to the end of the playlist', () => {
+      const { dispatch, getState } = createStore();
+      dispatch(initialiseStore);
+      const { playlistID } = dispatch(initialisePlaylist);
+
+      expect(
+        s.selectedPlaylistSelector(getState()).media
+      ).to.have.length(5);
+
+      dispatch(favoriteMediaComplete(playlistID, 36425, {
+        playlistSize: 6,
+        added: [
+          { _id: 1338, artist: 'SHINee', title: 'Odd Eye' }
+        ]
+      }));
+
+      const { size, media } = s.selectedPlaylistSelector(getState());
+      expect(size).to.eql(6);
+      expect(media).to.have.length(6);
+      expect(media[5]._id).to.eql(1338);
     });
   });
 

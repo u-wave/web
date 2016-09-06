@@ -31,7 +31,12 @@ import {
   FILTER_PLAYLIST_ITEMS,
   FILTER_PLAYLIST_ITEMS_COMPLETE
 } from '../constants/actionTypes/playlists';
-import { SEARCH_START } from '../constants/actionTypes/search';
+import {
+  DO_FAVORITE_COMPLETE
+} from '../constants/actionTypes/votes';
+import {
+  SEARCH_START
+} from '../constants/actionTypes/search';
 
 const initialState = {
   playlists: {},
@@ -49,10 +54,15 @@ function deselectAll(playlists) {
   ));
 }
 
-function processInsert(list, insert, afterID) {
-  const insertIdx = afterID === -1
-    ? 0
-    : findIndex(list, media => media !== null && media._id === afterID) + 1;
+function processInsert(list, insert, position) {
+  let insertIdx = 0;
+  if (position.at === 'end') {
+    insertIdx = list.length;
+  } else if (position.at === 'start') {
+    insertIdx = 0;
+  } else if (position.after != null && position.after !== -1) {
+    insertIdx = findIndex(list, media => media !== null && media._id === position.after) + 1;
+  }
   return [
     ...list.slice(0, insertIdx),
     ...insert,
@@ -66,7 +76,7 @@ function processMove(list, movedMedia, afterID) {
   const wasMoved = indexBy(movedMedia, '_id');
   const newPlaylist = list.filter(media => media === null || !wasMoved[media._id]);
   // …and add them back in at the correct place.
-  return processInsert(newPlaylist, movedMedia, afterID);
+  return processInsert(newPlaylist, movedMedia, { after: afterID });
 }
 
 function updatePlaylist(state, playlistID, modify) {
@@ -346,7 +356,17 @@ export default function reduce(state = initialState, action = {}) {
         loading: false,
         size: payload.newSize
       }),
-      items => processInsert(items, payload.appendedMedia, payload.afterID)
+      items => processInsert(items, payload.appendedMedia, { after: payload.afterID })
+    );
+  case DO_FAVORITE_COMPLETE:
+    return updatePlaylistAndItems(
+      state,
+      payload.playlistID,
+      playlist => ({
+        ...playlist,
+        size: payload.newSize
+      }),
+      items => processInsert(items, payload.added, { at: 'end' })
     );
 
   case UPDATE_MEDIA_START:
