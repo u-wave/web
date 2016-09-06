@@ -11,7 +11,7 @@ import {
   DO_UPVOTE, DO_DOWNVOTE
 } from '../constants/actionTypes/votes';
 
-import { addMediaStart, addMediaComplete, flattenPlaylistItem } from './PlaylistActionCreators';
+import { flattenPlaylistItem } from './PlaylistActionCreators';
 
 export function setVoteStats(voteStats) {
   return {
@@ -71,25 +71,20 @@ export function favoriteMediaStart(playlistID, historyID) {
 export function favoriteMediaComplete(playlistID, historyID, changes) {
   return {
     type: DO_FAVORITE_COMPLETE,
-    payload: changes,
-    meta: { historyID, playlistID }
+    payload: {
+      historyID,
+      playlistID,
+      added: changes.added.map(flattenPlaylistItem),
+      newSize: changes.playlistSize
+    }
   };
 }
 
 export function favoriteMedia(playlist, historyID) {
   const playlistID = playlist._id;
   return post('/booth/favorite', { historyID, playlistID }, {
-    onStart: () => dispatch => {
-      dispatch(favoriteMediaStart(playlistID, historyID));
-      dispatch(addMediaStart(playlistID, []));
-    },
-    onComplete: changes => dispatch => {
-      dispatch(favoriteMediaComplete(playlistID, historyID, changes));
-      dispatch(addMediaComplete(playlistID, changes.playlistSize, {
-        afterID: null,
-        media: changes.added.map(flattenPlaylistItem)
-      }));
-    },
+    onStart: () => favoriteMediaStart(playlistID, historyID),
+    onComplete: changes => favoriteMediaComplete(playlistID, historyID, changes),
     onError: error => ({
       type: DO_FAVORITE_COMPLETE,
       error: true,
