@@ -7,7 +7,7 @@
   min-height: 32px;
   position: relative;
 
-  &:nth-child(2n + 1) {
+  @modifier odd {
     background: $chat-background-color2;
     .ChatMessage-timestamp {
       background: $chat-background-color2;
@@ -54,6 +54,7 @@
   @descendent username {
     color: #9ba0a0;
     font-weight: 600;
+    text-decoration: none;
   }
 
   @descendent text {

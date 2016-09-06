@@ -1,11 +1,14 @@
 import cx from 'classnames';
 import * as React from 'react';
+import compose from 'recompose/compose';
+import withProps from 'recompose/withProps';
 import { DragSource } from 'react-dnd';
 import DragIcon from 'material-ui/svg-icons/editor/drag-handle';
 import RemoveIcon from 'material-ui/svg-icons/navigation/close';
 
 import { WAITLIST_USER } from '../../constants/DDItemTypes';
 
+import userCardable from '../../utils/userCardable';
 import Avatar from '../Avatar';
 import Username from '../Username';
 import Position from './Position';
@@ -37,9 +40,14 @@ const ModRowBase = ({
   user,
   connectDragPreview,
   connectDragSource,
+  onOpenCard,
   onRemoveUser
 }) => connectDragPreview(
-  <div className={cx('UserRow', 'UserRow--queue', className)}>
+  <a
+    className={cx('UserRow', 'UserRow--queue', className)}
+    href={`#user/${user.slug}`}
+    onClick={onOpenCard}
+  >
     <Position position={position + 1} />
     <Avatar
       className="UserRow-avatar"
@@ -59,7 +67,7 @@ const ModRowBase = ({
         <RemoveIcon />
       </button>
     </div>
-  </div>
+  </a>
 );
 
 ModRowBase.propTypes = {
@@ -72,4 +80,13 @@ ModRowBase.propTypes = {
   onRemoveUser: React.PropTypes.func.isRequired
 };
 
-export default DragSource(WAITLIST_USER, userSource, collect)(ModRowBase);
+export default compose(
+  DragSource(WAITLIST_USER, userSource, collect),
+  userCardable(),
+  withProps(props => ({
+    onOpenCard(event) {
+      event.preventDefault();
+      props.openUserCard(props.user);
+    }
+  }))
+)(ModRowBase);

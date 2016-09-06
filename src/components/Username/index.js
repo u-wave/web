@@ -1,5 +1,6 @@
 import cx from 'classnames';
-import React, { PropTypes } from 'react';
+import * as React from 'react';
+import compose from 'recompose/compose';
 import pure from 'recompose/pure';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 
@@ -12,13 +13,18 @@ const tempRoleIDToRoleName = {
   4: 'admin'
 };
 
-const Username = ({ className, muiTheme, user }) => {
+const Username = ({
+  muiTheme,
+  className,
+  user
+}) => {
   const rankColors = muiTheme.rankColors;
   const roleName = tempRoleIDToRoleName[Math.min(user.role, 4)];
   let styles;
   if (rankColors[roleName]) {
     styles = { color: rankColors[roleName] };
   }
+
   return (
     <span
       className={cx('Username', `Username--${roleName}`, className)}
@@ -30,9 +36,12 @@ const Username = ({ className, muiTheme, user }) => {
 };
 
 Username.propTypes = {
-  className: PropTypes.string,
-  user: PropTypes.object.isRequired,
-  muiTheme: PropTypes.object.isRequired
+  muiTheme: React.PropTypes.object.isRequired,
+  className: React.PropTypes.string,
+  user: React.PropTypes.object.isRequired
 };
 
-export default muiThemeable()(pure(Username));
+export default compose(
+  muiThemeable(),
+  pure
+)(Username);
