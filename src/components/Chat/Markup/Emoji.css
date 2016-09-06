@@ -6,6 +6,7 @@
   background-position: center center;
   background-repeat: no-repeat;
   display: inline-block;
+  position: relative;
   /* Hide text */
   text-indent: -9999px;
 }
