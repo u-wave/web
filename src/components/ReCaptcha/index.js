@@ -16,11 +16,6 @@ if (typeof window !== 'undefined') {
 }
 
 export default class ReCaptcha extends React.Component {
-  static propTypes = {
-    sitekey: React.PropTypes.string.isRequired,
-    onResponse: React.PropTypes.func.isRequired
-  };
-
   state = { grecaptcha: window.grecaptcha };
 
   componentWillMount() {
@@ -30,18 +25,9 @@ export default class ReCaptcha extends React.Component {
     }
   }
 
-  loading() {
-    return (
-      <Loader
-        className="ReCaptcha-spinner"
-        size="tiny"
-      />
-    );
-  }
-
   render() {
     if (!this.state.grecaptcha) {
-      return this.loading();
+      return <Loader className="ReCaptcha-spinner" size="tiny" />;
     }
     return (
       <InternalCaptcha

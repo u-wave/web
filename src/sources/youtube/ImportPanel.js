@@ -31,10 +31,7 @@ const YouTubeImportPanel = ({ type, importingState, ...props }) => {
 
 YouTubeImportPanel.propTypes = {
   type: React.PropTypes.oneOf([ PLAYLIST, CHANNEL ]).isRequired,
-  importingState: React.PropTypes.oneOf([ IDLE, LOADING, LOADED ]),
-
-  onClosePanel: React.PropTypes.func.isRequired,
-  onImportPlaylist: React.PropTypes.func.isRequired
+  importingState: React.PropTypes.oneOf([ IDLE, LOADING, LOADED ])
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(YouTubeImportPanel);

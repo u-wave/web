@@ -131,7 +131,7 @@ function setPlaylistLoading(state, id, loading = true) {
 }
 
 function fill(array, value) {
-  for (let i = 0, l = array.length; i < l; i++) {
+  for (let i = 0, l = array.length; i < l; i += 1) {
     array[i] = value; // eslint-disable-line no-param-reassign
   }
   return array;

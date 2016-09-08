@@ -14,31 +14,27 @@ export default class DragLayerContainer extends Component {
   static propTypes = {
     type: PropTypes.oneOf([ MEDIA, WAITLIST_USER ]),
     items: PropTypes.object,
-    currentOffset: PropTypes.shape({
-      x: PropTypes.number.isRequired,
-      y: PropTypes.number.isRequired
-    }),
     isDragging: PropTypes.bool.isRequired
   };
 
-  renderPreview(type, props) {
-    switch (type) {
+  renderPreview() {
+    switch (this.props.type) {
     case MEDIA:
-      return <MediaDragPreview {...props} />;
+      return <MediaDragPreview {...this.props} />;
     default:
       return null;
     }
   }
 
   render() {
-    const { isDragging, items, type } = this.props;
+    const { isDragging, items } = this.props;
     if (!isDragging || !items) {
       return null;
     }
 
     return (
       <div className="DragLayerContainer">
-        {this.renderPreview(type, this.props)}
+        {this.renderPreview()}
       </div>
     );
   }

@@ -52,12 +52,12 @@ const ModRowBase = ({
           <DragIcon />
         </div>
       )}
-      <div
+      <button
         className="UserRow-tool UserRow-remove"
         onClick={onRemoveUser}
       >
         <RemoveIcon />
-      </div>
+      </button>
     </div>
   </div>
 );

@@ -8,7 +8,6 @@ import Loader from '../../Loader';
 
 export default class ConfirmDialog extends React.Component {
   static propTypes = {
-    title: React.PropTypes.node.isRequired,
     children: React.PropTypes.node,
     confirmLabel: React.PropTypes.string,
     cancelLabel: React.PropTypes.string,

@@ -18,8 +18,7 @@ export default class EditMediaDialogContainer extends Component {
   static propTypes = {
     playlistID: PropTypes.string.isRequired,
     media: PropTypes.object.isRequired,
-    onUpdateMedia: PropTypes.func.isRequired,
-    onCloseDialog: PropTypes.func.isRequired
+    onUpdateMedia: PropTypes.func.isRequired
   };
 
   render() {

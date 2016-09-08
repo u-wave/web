@@ -143,7 +143,7 @@ describe('reducers/chat', () => {
     it('logging many messages simultaneously should not drop messages', () => {
       const MESSAGES = 100;
       const { dispatch, getState } = createStore();
-      for (let i = 0; i < MESSAGES; i++) {
+      for (let i = 0; i < MESSAGES; i += 1) {
         dispatch(a.log(`Test message ${i}`));
       }
       expect(

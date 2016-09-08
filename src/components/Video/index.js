@@ -12,7 +12,6 @@ export default class Video extends React.Component {
     size: React.PropTypes.string,
     volume: React.PropTypes.number,
     isMuted: React.PropTypes.bool,
-    historyID: React.PropTypes.string,
     media: React.PropTypes.object,
     seek: React.PropTypes.number
   };

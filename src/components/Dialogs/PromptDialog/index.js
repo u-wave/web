@@ -10,7 +10,6 @@ import Loader from '../../Loader';
 
 export default class PromptDialog extends React.Component {
   static propTypes = {
-    title: React.PropTypes.node.isRequired,
     children: React.PropTypes.node,
     placeholder: React.PropTypes.string,
     submitLabel: React.PropTypes.string,

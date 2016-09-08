@@ -16,10 +16,7 @@ export default class LoginDialog extends Component {
   static propTypes = {
     open: PropTypes.bool,
     show: PropTypes.string,
-    error: PropTypes.string,
 
-    onLogin: PropTypes.func,
-    onRegister: PropTypes.func,
     onCloseDialog: PropTypes.func
   };
 

@@ -49,10 +49,11 @@ export function receiveMotd(text) {
 
 let logIdx = Date.now();
 export function log(text) {
+  logIdx += 1;
   return {
     type: LOG,
     payload: {
-      _id: logIdx++,
+      _id: logIdx,
       text
     }
   };

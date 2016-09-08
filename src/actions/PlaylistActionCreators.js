@@ -533,7 +533,7 @@ function resolveMoveOptions(playlist = [], opts = {}) {
     return opts.after;
   }
   if (opts.before) {
-    for (let i = 0, l = playlist.length; i < l; i++) {
+    for (let i = 0, l = playlist.length; i < l; i += 1) {
       if (playlist[i] && playlist[i]._id === opts.before) {
         if (i === 0) {
           return -1;
