@@ -3,6 +3,7 @@ import * as React from 'react';
 
 const dontBubble = event => event.stopPropagation();
 
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 const Actions = ({
   className,
   makeActions,
@@ -15,11 +16,11 @@ const Actions = ({
     {makeActions(media)}
   </div>
 );
+/* eslint-enable jsx-a11y/no-static-element-interactions */
 
 Actions.propTypes = {
   className: React.PropTypes.string,
   media: React.PropTypes.object,
-  selection: React.PropTypes.array,
   makeActions: React.PropTypes.func
 };
 

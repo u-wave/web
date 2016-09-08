@@ -27,6 +27,8 @@ export default class PlaylistRow extends Component {
 
     connectDropTarget: PropTypes.func.isRequired,
     onClick: PropTypes.func,
+    // Used in the drop handler above 👆
+    // eslint-disable-next-line react/no-unused-prop-types
     onAddToPlaylist: PropTypes.func
   };
 
@@ -61,7 +63,7 @@ export default class PlaylistRow extends Component {
     }
 
     return connectDropTarget(
-      <div
+      <button
         role="menuitem"
         className={cx('PlaylistMenuRow', activeClass, selectedClass, droppableClass, className)}
         onClick={onClick}
@@ -71,7 +73,7 @@ export default class PlaylistRow extends Component {
           {playlist.name}
         </div>
         <div className="PlaylistMenuRow-count">{playlist.size}</div>
-      </div>
+      </button>
     );
   }
 }

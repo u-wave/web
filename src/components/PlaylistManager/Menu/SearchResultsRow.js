@@ -8,7 +8,7 @@ const SearchResultsRow = ({
   size,
   onClick
 }) => (
-  <div
+  <button
     role="menuitem"
     className={cx('PlaylistMenuRow', 'PlaylistMenuRow--search', className)}
     onClick={onClick}
@@ -20,7 +20,7 @@ const SearchResultsRow = ({
       "{query}"
     </div>
     <div className="PlaylistMenuRow-count">{size}</div>
-  </div>
+  </button>
 );
 
 SearchResultsRow.propTypes = {

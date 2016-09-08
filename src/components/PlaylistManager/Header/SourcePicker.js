@@ -63,7 +63,7 @@ class SourcePicker extends React.Component {
       .map(name => this.createElement(name));
 
     return (
-      <div
+      <button
         ref={this.refContainer}
         className={cx('SourcePicker', className)}
         onClick={this.handleOpen}
@@ -84,7 +84,7 @@ class SourcePicker extends React.Component {
         >
           {sources}
         </Popover>
-      </div>
+      </button>
     );
   }
 }

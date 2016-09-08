@@ -17,7 +17,6 @@ export default class PlaylistManager extends Component {
 
     playlists: PropTypes.array,
     activePlaylist: PropTypes.object,
-    activeMedia: PropTypes.array,
     selectedPlaylist: PropTypes.object,
     selectedMedia: PropTypes.array,
     currentFilter: PropTypes.string,

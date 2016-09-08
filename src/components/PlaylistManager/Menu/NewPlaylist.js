@@ -33,7 +33,7 @@ export default class NewPlaylist extends React.Component {
   render() {
     const { className } = this.props;
     return (
-      <div
+      <button
         role="menuitem"
         className={cx('PlaylistMenuRow', 'PlaylistMenuRow--create', className)}
         onClick={this.handleOpen}
@@ -53,7 +53,7 @@ export default class NewPlaylist extends React.Component {
             onCancel={this.handleClose}
           />
         )}
-      </div>
+      </button>
     );
   }
 }

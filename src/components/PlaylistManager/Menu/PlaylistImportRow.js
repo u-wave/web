@@ -24,7 +24,7 @@ const PlaylistImportRow = ({
     );
   }
   return (
-    <div
+    <button
       role="menuitem"
       className={cx('PlaylistMenuRow', 'PlaylistMenuRow--import', className)}
       onClick={onClick}
@@ -33,7 +33,7 @@ const PlaylistImportRow = ({
         {icon}
         Import
       </div>
-    </div>
+    </button>
   );
 };
 

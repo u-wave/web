@@ -7,7 +7,7 @@ const SourcePickerElement = ({
   active,
   onSelect
 }) => (
-  <div
+  <button
     className={cx(
       'SourcePickerElement',
       `SourcePickerElement--${name}`,

@@ -41,6 +41,8 @@ export default class ErrorArea extends React.Component {
   static propTypes = {
     error: React.PropTypes.string,
     onDismiss: React.PropTypes.func.isRequired,
+    // Used in the theme selector above 👆
+    // eslint-disable-next-line react/no-unused-prop-types
     muiTheme: React.PropTypes.object.isRequired
   };
 

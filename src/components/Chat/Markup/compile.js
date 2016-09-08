@@ -26,6 +26,8 @@ export default function compile(tree, opts = {}) {
         ? <Mention key={i} user={node.user} />
         : <GroupMention key={i} group={node.mention} users={node.group} />;
     case 'link':
+      // the "text" property is content
+      // eslint-disable-next-line jsx-a11y/anchor-has-content
       return <Link key={i} text={node.text} href={node.href} />;
     case 'emoji':
       if (availableEmoji.indexOf(node.name) !== -1 && node.name in emojiImages) {

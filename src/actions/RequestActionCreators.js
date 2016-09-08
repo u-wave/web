@@ -12,6 +12,8 @@ function request(method, url, opts = {}) {
     ...requestOpts
   } = opts;
 
+  requestID += 1;
+
   return {
     type: REQUEST_START,
     payload: {
@@ -23,7 +25,7 @@ function request(method, url, opts = {}) {
       onStart,
       onComplete,
       onError,
-      id: requestID++
+      id: requestID
     }
   };
 }

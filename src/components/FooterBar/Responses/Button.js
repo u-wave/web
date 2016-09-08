@@ -28,9 +28,8 @@ export default class Button extends React.Component {
   render() {
     const { onClick, count, children, tooltip } = this.props;
     return (
-      <div
+      <button
         className="ResponseButton"
-        role="button"
         onClick={onClick}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
@@ -44,7 +43,7 @@ export default class Button extends React.Component {
         />
         <div className="ResponseButton-icon">{children}</div>
         <span className="ResponseButton-count">{count}</span>
-      </div>
+      </button>
     );
   }
 }

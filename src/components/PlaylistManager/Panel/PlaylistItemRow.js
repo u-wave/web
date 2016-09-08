@@ -39,6 +39,8 @@ const collect = (connect, monitor) => ({
 class PlaylistItemRow extends React.Component {
   static propTypes = {
     connectDropTarget: React.PropTypes.func.isRequired,
+    // Used in the drop handler above 👆
+    // eslint-disable-next-line react/no-unused-prop-types
     onMoveMedia: React.PropTypes.func.isRequired,
     isOver: React.PropTypes.bool.isRequired
   };

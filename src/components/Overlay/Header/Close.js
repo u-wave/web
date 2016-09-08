@@ -16,8 +16,7 @@ const fullSizeStyle = {
 const Close = ({ className, onClose, direction }) => {
   const CloseIcon = icons[direction];
   return (
-    <div
-      role="button"
+    <button
       className={cx('OverlayHeaderClose', className)}
       onClick={onClose}
     >
@@ -26,7 +25,7 @@ const Close = ({ className, onClose, direction }) => {
         style={fullSizeStyle}
         className="OverlayHeaderClose-icon"
       />
-    </div>
+    </button>
   );
 };
 
