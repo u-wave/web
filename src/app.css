@@ -5,3 +5,10 @@
 @import "./components";
 @import "./sources";
 @import "./containers/DragLayer.css";
+
+/* None of our buttons have a use for browser defaults! */
+button {
+  color: inherit;
+  background: initial;
+  border: initial;
+}
