@@ -114,7 +114,7 @@
     "run-sequence": "^1.2.0",
     "through2": "^2.0.1",
     "u-wave-source-soundcloud": "^1.0.0",
-    "u-wave-source-youtube": "^1.0.0",
+    "u-wave-source-youtube": "^1.0.1",
     "uglifyify": "^3.0.1",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.4.0"
