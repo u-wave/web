@@ -32,4 +32,8 @@ gulp.task('watch', exec('watch'));
 gulp.task('middleware', exec('babel')); // compatibility
 gulp.task('serve', exec('serve'));
 
+gulp.task('start', [ 'watch' ], () => {
+  gulp.start('serve');
+});
+
 gulp.task('default', sequence('clean', 'assets', 'js', 'css', 'html'));

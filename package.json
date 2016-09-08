@@ -126,6 +126,6 @@
     "test": "npm run mocha && npm run lint",
     "build": "gulp",
     "watch": "gulp watch",
-    "start": "gulp serve"
+    "start": "gulp start"
   }
 }
