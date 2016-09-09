@@ -1,12 +1,14 @@
 import cx from 'classnames';
-import React, { Component, PropTypes } from 'react';
+import * as React from 'react';
 
-export default class Input extends Component {
+export default class Input extends React.Component {
   static propTypes = {
-    send: PropTypes.func
+    onSend: React.PropTypes.func.isRequired
   };
 
-  state = { focused: false };
+  state = {
+    focused: false
+  };
 
   handleFocus = () => {
     this.setState({ focused: true });
@@ -20,14 +22,16 @@ export default class Input extends Component {
     if (e.key === 'Enter') {
       const value = e.target.value.trim();
       if (value.length > 0) {
-        this.props.send(value);
+        this.props.onSend(value);
       }
       e.target.value = ''; // eslint-disable-line no-param-reassign
     }
   };
 
   render() {
-    const { focused } = this.state;
+    const {
+      focused
+    } = this.state;
     const focusClass = focused ? 'is-focused' : '';
     return (
       <div className={cx('ChatInput', focusClass)}>
