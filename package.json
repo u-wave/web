@@ -113,6 +113,8 @@
     "react-transform-hmr": "^1.0.1",
     "redbox-react": "^1.1.1",
     "run-sequence": "^1.2.0",
+    "sinon": "^1.17.5",
+    "sinon-chai": "^2.8.0",
     "through2": "^2.0.1",
     "u-wave-source-soundcloud": "^1.0.0",
     "u-wave-source-youtube": "^1.0.0",
