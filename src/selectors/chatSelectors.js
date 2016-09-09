@@ -2,10 +2,16 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import objMap from 'object.map';
 
 import {
+  getAvailableGroupMentions
+} from '../utils/chatMentions';
+import {
   availableEmojiNamesSelector,
   availableEmojiImagesSelector
 } from './configSelectors';
-import { usersSelector, currentUserSelector } from './userSelectors';
+import {
+  usersSelector,
+  currentUserSelector
+} from './userSelectors';
 
 const baseSelector = state => state.chat;
 
@@ -40,4 +46,17 @@ export const currentUserMuteSelector = createSelector(
   currentUserSelector,
   mutesSelector,
   (user, mutes) => (user ? mutes[user._id] : null)
+);
+
+export const availableGroupMentionsSelector = createSelector(
+  currentUserSelector,
+  user => getAvailableGroupMentions(user)
+);
+
+export const emojiCompletionsSelector = createSelector(
+  availableEmojiImagesSelector,
+  images => Object.keys(images).map(name => ({
+    shortcode: name,
+    image: images[name]
+  }))
 );

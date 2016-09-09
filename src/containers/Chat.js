@@ -9,9 +9,12 @@ import {
 import {
   motdSelector,
   messagesSelector,
-  markupCompilerOptionsSelector
+  markupCompilerOptionsSelector,
+  availableGroupMentionsSelector,
+  emojiCompletionsSelector
 } from '../selectors/chatSelectors';
 import {
+  userListSelector,
   currentUserSelector
 } from '../selectors/userSelectors';
 
@@ -22,7 +25,10 @@ const mapStateToProps = createStructuredSelector({
   motd: motdSelector,
   messages: messagesSelector,
   compileOptions: markupCompilerOptionsSelector,
-  currentUser: currentUserSelector
+  currentUser: currentUserSelector,
+  mentionableUsers: userListSelector,
+  mentionableGroups: availableGroupMentionsSelector,
+  availableEmoji: emojiCompletionsSelector
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -30,6 +36,9 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 }, dispatch);
 
 const ChatContainer = ({
+  mentionableUsers,
+  mentionableGroups,
+  availableEmoji,
   currentUser,
   onSend,
   ...props
@@ -40,13 +49,21 @@ const ChatContainer = ({
     </div>
     <div className="AppRow AppRow--bottom ChatInputWrapper">
       {!!currentUser && (
-        <ChatInput onSend={onSend} />
+        <ChatInput
+          onSend={onSend}
+          mentionableUsers={mentionableUsers}
+          mentionableGroups={mentionableGroups}
+          availableEmoji={availableEmoji}
+        />
       )}
     </div>
   </div>
 );
 
 ChatContainer.propTypes = {
+  mentionableUsers: React.PropTypes.array.isRequired,
+  mentionableGroups: React.PropTypes.array.isRequired,
+  availableEmoji: React.PropTypes.array.isRequired,
   currentUser: React.PropTypes.object.isRequired,
   onSend: React.PropTypes.func.isRequired
 };
