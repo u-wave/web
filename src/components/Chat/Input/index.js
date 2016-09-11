@@ -1,4 +1,5 @@
 import cx from 'classnames';
+import uniqBy from 'lodash/uniqBy';
 import * as React from 'react';
 import AutoComplete, { Completion } from 'react-abstract-autocomplete';
 import SuggestionsList from './SuggestionsList';
@@ -26,9 +27,10 @@ const renderGroup = props => <GroupSuggestion {...props} />;
 // Emoji suggestions:
 const getEmojiCompletions = (value, { trigger, completions }) => {
   const compare = value.substr(trigger.length).toLowerCase();
-  return completions.filter(emoji => (
+  const results = completions.filter(emoji => (
     emoji.shortcode.substr(0, compare.length).toLowerCase() === compare
   ));
+  return uniqBy(results, 'image');
 };
 const getEmojiText = value => `:${value.shortcode}: `;
 const renderEmoji = props => <EmojiSuggestion {...props} />;
