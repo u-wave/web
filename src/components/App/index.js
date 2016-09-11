@@ -1,6 +1,8 @@
 /* eslint-disable react/prefer-stateless-function */
 import React from 'react';
 import { DragDropContext } from 'react-dnd';
+import compose from 'recompose/compose';
+import toClass from 'recompose/toClass';
 import HTML5Backend from 'react-dnd-html5-backend';
 
 import FooterBar from '../../containers/FooterBar';
@@ -81,4 +83,9 @@ App.propTypes = {
   sendChatMessage: React.PropTypes.func.isRequired
 };
 
-export default DragDropContext(HTML5Backend)(App);
+export default compose(
+  DragDropContext(HTML5Backend),
+  // DragDropContext needs to be able to set a ref on the component, so we can't
+  // use a stateless function directly.
+  toClass
+)(App);
