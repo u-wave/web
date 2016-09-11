@@ -1,5 +1,6 @@
-import gulp, { dest } from 'gulp';
+import gulp from 'gulp';
 import { log } from 'gulp-util';
+import watch from 'gulp-watch';
 import babelify from 'babelify';
 import browserify from 'browserify';
 import hmr from 'browserify-hmr';
@@ -42,7 +43,7 @@ function bundle() {
   return stream
     // Assign a name and save in lib/out.js.
     .pipe(source('out.js'))
-    .pipe(dest('lib/'));
+    .pipe(gulp.dest('lib/'));
 }
 
 // Define a separate Gulp task for the Browserify bundling. This will be run
@@ -106,9 +107,9 @@ export default function watchTask() {
     gulp.start('watch:bundle');
   });
 
-  gulp.watch(JS_PATHS, JS_TASKS);
-  gulp.watch(CSS_PATHS, CSS_TASKS);
-  gulp.watch(HTML_PATHS, HTML_TASKS);
+  watch(JS_PATHS, () => gulp.start(JS_TASKS));
+  watch(CSS_PATHS, () => gulp.start(CSS_TASKS));
+  watch(HTML_PATHS, () => gulp.start(HTML_TASKS));
 
   return new Promise((resolve, reject) => {
     // Run a bunch of other tasks to make sure we have everything to run the üWave

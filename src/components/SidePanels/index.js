@@ -3,7 +3,6 @@ import pure from 'recompose/pure';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
 import Chat from '../../containers/Chat';
-import ChatInput from '../Chat/Input';
 import RoomUserList from '../../containers/RoomUserList';
 import WaitList from '../../containers/WaitList';
 
@@ -59,12 +58,10 @@ const getWaitlistLabel = (size, position) => {
 
 const SidePanels = ({
   selected,
-  isLoggedIn,
   listenerCount,
   waitlistSize,
   waitlistPosition,
-  onChange,
-  sendChatMessage
+  onChange
 }) => (
   <Tabs
     value={selected}
@@ -90,12 +87,7 @@ const SidePanels = ({
       value="chat"
       style={selected === 'chat' ? activeTabStyle : tabStyle}
     >
-      <div className="AppRow AppRow--middle">
-        <Chat />
-      </div>
-      <div className="AppRow AppRow--bottom ChatInputWrapper">
-        {isLoggedIn && <ChatInput send={sendChatMessage} />}
-      </div>
+      <Chat />
     </Tab>
     <Tab
       className="SidePanel-tab"
@@ -129,12 +121,10 @@ const SidePanels = ({
 
 SidePanels.propTypes = {
   selected: React.PropTypes.string.isRequired,
-  isLoggedIn: React.PropTypes.bool.isRequired,
   listenerCount: React.PropTypes.number.isRequired,
   waitlistSize: React.PropTypes.number.isRequired,
   waitlistPosition: React.PropTypes.number.isRequired,
-  onChange: React.PropTypes.func.isRequired,
-  sendChatMessage: React.PropTypes.func.isRequired
+  onChange: React.PropTypes.func.isRequired
 };
 
 export default pure(SidePanels);

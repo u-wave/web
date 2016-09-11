@@ -4,18 +4,15 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-import { inputMessage } from '../actions/ChatActionCreators';
 import { closeAll } from '../actions/OverlayActionCreators';
 import { createTimer, stopTimer } from '../actions/TickerActionCreators';
 
-import { currentUserSelector } from '../selectors/userSelectors';
 import { settingsSelector, muiThemeSelector } from '../selectors/settingSelectors';
 import App from '../components/App';
 
 const mapStateToProps = createStructuredSelector({
   activeOverlay: state => state.activeOverlay,
   settings: settingsSelector,
-  user: currentUserSelector,
   muiTheme: muiThemeSelector
 });
 
@@ -23,7 +20,6 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     createTimer,
     stopTimer,
-    sendChatMessage: inputMessage,
     onCloseOverlay: closeAll
   }, dispatch);
 }

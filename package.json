@@ -33,6 +33,7 @@
     "object-values": "^1.0.0",
     "object.map": "^0.2.0",
     "react": "^15.0.2",
+    "react-abstract-autocomplete": "^1.0.0",
     "react-addons-css-transition-group": "^15.0.2",
     "react-dnd": "^2.0.2",
     "react-dnd-html5-backend": "^2.0.0",
@@ -97,6 +98,7 @@
     "gulp-sourcemaps": "^1.6.0",
     "gulp-uglify": "^2.0.0",
     "gulp-util": "^3.0.7",
+    "gulp-watch": "^4.3.9",
     "loose-envify": "^1.2.0",
     "loud-rejection": "^1.3.0",
     "mocha": "^3.0.0",
@@ -112,6 +114,8 @@
     "react-transform-hmr": "^1.0.1",
     "redbox-react": "^1.1.1",
     "run-sequence": "^1.2.0",
+    "sinon": "^1.17.5",
+    "sinon-chai": "^2.8.0",
     "through2": "^2.0.1",
     "u-wave-source-soundcloud": "^1.0.0",
     "u-wave-source-youtube": "^1.0.0",
@@ -125,6 +129,6 @@
     "test": "npm run mocha && npm run lint",
     "build": "gulp",
     "watch": "gulp watch",
-    "start": "gulp serve"
+    "start": "gulp start"
   }
 }

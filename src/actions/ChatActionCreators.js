@@ -72,9 +72,11 @@ export function prepareMessage(state, user, text, parseOpts = {}) {
   };
 }
 
-export function sendChat(sender, text) {
+export function sendChat(text) {
   return (dispatch, getState) => {
-    const mute = currentUserMuteSelector(getState());
+    const state = getState();
+    const sender = currentUserSelector(state);
+    const mute = currentUserMuteSelector(state);
     if (mute) {
       const timeLeft = ms(mute.expiresAt - Date.now(), { long: true });
       dispatch(log(
@@ -83,8 +85,8 @@ export function sendChat(sender, text) {
       return;
     }
 
-    const users = userListSelector(getState());
-    const message = prepareMessage(getState(), sender, text, {
+    const users = userListSelector(state);
+    const message = prepareMessage(state, sender, text, {
       mentions: [
         ...users.map(user => user.username),
         ...getAvailableGroupMentions(sender)
@@ -106,8 +108,7 @@ export function inputMessage(text) {
         return;
       }
     }
-    const user = currentUserSelector(getState());
-    dispatch(sendChat(user, text));
+    dispatch(sendChat(text));
   };
 }
 

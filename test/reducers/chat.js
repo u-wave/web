@@ -1,9 +1,11 @@
 import { expect } from 'chai';
+import sinon from 'sinon';
 import proxyquire from 'proxyquire';
 
 import createStore from '../../src/store/configureStore';
 import { setUsers } from '../../src/actions/UserActionCreators';
 import * as s from '../../src/selectors/chatSelectors';
+import * as userSelectors from '../../src/selectors/userSelectors';
 
 const a = proxyquire('../../src/actions/ChatActionCreators', {
   '../utils/Socket': {
@@ -71,6 +73,8 @@ describe('reducers/chat', () => {
         username: 'SendingUser'
       };
 
+      sinon.stub(userSelectors, 'currentUserSelector', () => inFlightUser);
+
       const { dispatch, getState } = createStore();
       dispatch(setUsers([ testUser, inFlightUser ]));
 
@@ -79,7 +83,7 @@ describe('reducers/chat', () => {
       dispatch(a.receive(testMessage));
 
       const messageText = 'test message 🐼';
-      dispatch(a.sendChat(inFlightUser, messageText));
+      dispatch(a.sendChat(messageText));
       expect(
         s.messagesSelector(getState())
       ).to.have.length(2);
@@ -102,6 +106,8 @@ describe('reducers/chat', () => {
       expect(
         s.messagesSelector(getState())[1]
       ).to.have.property('inFlight', false);
+
+      userSelectors.currentUserSelector.restore();
     });
   });
 
@@ -123,7 +129,9 @@ describe('reducers/chat', () => {
 
     it('should add an in-flight message to the messages list immediately', () => {
       const { dispatch, getState } = createStore();
-      dispatch(a.sendChat(testMessage.user, testMessage.message));
+      sinon.stub(userSelectors, 'currentUserSelector', () => testMessage.user);
+
+      dispatch(a.sendChat(testMessage.message));
       expect(
         s.messagesSelector(getState())
       ).to.have.length(1);
@@ -136,6 +144,8 @@ describe('reducers/chat', () => {
       expect(message.parsedText).to.eql(testMessage.parsed);
       expect(message.timestamp).to.equal(Date.now());
       expect(message.inFlight).to.be.true;
+
+      userSelectors.currentUserSelector.restore();
     });
   });
 

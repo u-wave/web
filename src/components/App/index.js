@@ -22,9 +22,7 @@ import DragLayer from '../../containers/DragLayer';
 const App = ({
   activeOverlay,
   settings,
-  user,
-  onCloseOverlay,
-  sendChatMessage
+  onCloseOverlay
 }) => (
   <div className="App">
     <div className="AppColumn AppColumn--left">
@@ -61,10 +59,7 @@ const App = ({
     </div>
 
     <div className="AppColumn AppColumn--right">
-      <SidePanels
-        isLoggedIn={!!user}
-        sendChatMessage={sendChatMessage}
-      />
+      <SidePanels />
     </div>
 
     <Dialogs />
@@ -77,10 +72,8 @@ const App = ({
 App.propTypes = {
   activeOverlay: React.PropTypes.string,
   settings: React.PropTypes.object.isRequired,
-  user: React.PropTypes.object,
 
-  onCloseOverlay: React.PropTypes.func.isRequired,
-  sendChatMessage: React.PropTypes.func.isRequired
+  onCloseOverlay: React.PropTypes.func.isRequired
 };
 
 export default compose(
