@@ -24,14 +24,12 @@ const PlaylistImportRow = ({
     );
   }
   return (
-    <button
-      role="menuitem"
-      className={cx('PlaylistMenuRow', 'PlaylistMenuRow--import', className)}
-      onClick={onClick}
-    >
-      <div className="PlaylistMenuRow-title">
-        {icon}
-        Import
+    <button role="menuitem" onClick={onClick}>
+      <div className={cx('PlaylistMenuRow', 'PlaylistMenuRow--import', className)}>
+        <div className="PlaylistMenuRow-title">
+          {icon}
+          Import
+        </div>
       </div>
     </button>
   );

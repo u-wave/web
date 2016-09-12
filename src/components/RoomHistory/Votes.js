@@ -17,25 +17,31 @@ const Votes = ({ upvotes, downvotes, favorites, isUpvote, isDownvote, isFavorite
   return (
     <div className="HistoryVotes AudienceResponse">
       <div className="ResponseButton">
-        <UpvoteIcon
-          style={iconStyles}
-          color={isUpvote ? '#4BB64B' : 'white'}
-        />
-        <span className="ResponseButton-count">{upvotes.length}</span>
+        <div className="ResponseButton-content">
+          <UpvoteIcon
+            style={iconStyles}
+            color={isUpvote ? '#4BB64B' : 'white'}
+          />
+          <span className="ResponseButton-count">{upvotes.length}</span>
+        </div>
       </div>
       <div className="ResponseButton">
-        <CurrentFavoriteIcon
-          style={iconStyles}
-          color={theme.palette.primary1Color}
-        />
-        <span className="ResponseButton-count">{favorites.length}</span>
+        <div className="ResponseButton-content">
+          <CurrentFavoriteIcon
+            style={iconStyles}
+            color={theme.palette.primary1Color}
+          />
+          <span className="ResponseButton-count">{favorites.length}</span>
+        </div>
       </div>
       <div className="ResponseButton">
-        <DownvoteIcon
-          style={iconStyles}
-          color={isDownvote ? '#B64B4B' : 'white'}
-        />
-        <span className="ResponseButton-count">{downvotes.length}</span>
+        <div className="ResponseButton-content">
+          <DownvoteIcon
+            style={iconStyles}
+            color={isDownvote ? '#B64B4B' : 'white'}
+          />
+          <span className="ResponseButton-count">{downvotes.length}</span>
+        </div>
       </div>
     </div>
   );

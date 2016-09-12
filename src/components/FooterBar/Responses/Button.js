@@ -34,15 +34,17 @@ export default class Button extends React.Component {
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
       >
-        <Tooltip
-          label={tooltip}
-          verticalPosition="top"
-          horizontalPosition="center"
-          show={this.state.showTooltip}
-          style={tooltipStyle}
-        />
-        <div className="ResponseButton-icon">{children}</div>
-        <span className="ResponseButton-count">{count}</span>
+        <div className="ResponseButton-content">
+          <Tooltip
+            label={tooltip}
+            verticalPosition="top"
+            horizontalPosition="center"
+            show={this.state.showTooltip}
+            style={tooltipStyle}
+          />
+          <div className="ResponseButton-icon">{children}</div>
+          <span className="ResponseButton-count">{count}</span>
+        </div>
       </button>
     );
   }

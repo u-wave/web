@@ -12,13 +12,16 @@
   height: 100%;
   border: 0;
   background: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-grow: 0.334;
-  padding: 0 15px;
-  position: relative;
   cursor: pointer;
+
+  @descendent content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 0.334;
+    padding: 0 15px;
+    position: relative;
+  }
 
   &:hover {
     background-color: $background-hover-color;

@@ -38,21 +38,23 @@ export default class NewPlaylist extends React.Component {
         className={cx('PlaylistMenuRow', 'PlaylistMenuRow--create', className)}
         onClick={this.handleOpen}
       >
-        <div className="PlaylistMenuRow-title">
-          <div className="PlaylistMenuRow-active-icon">
-            <CreatePlaylistIcon color="#fff" />
+        <div className="PlaylistMenuRow-content">
+          <div className="PlaylistMenuRow-title">
+            <div className="PlaylistMenuRow-active-icon">
+              <CreatePlaylistIcon color="#fff" />
+            </div>
+            Create Playlist
           </div>
-          Create Playlist
+          {this.state.creating && (
+            <PromptDialog
+              title="Playlist Name"
+              icon={<CreatePlaylistIcon color="#777" />}
+              submitLabel="Create"
+              onSubmit={this.handleSubmit}
+              onCancel={this.handleClose}
+            />
+          )}
         </div>
-        {this.state.creating && (
-          <PromptDialog
-            title="Playlist Name"
-            icon={<CreatePlaylistIcon color="#777" />}
-            submitLabel="Create"
-            onSubmit={this.handleSubmit}
-            onCancel={this.handleClose}
-          />
-        )}
       </button>
     );
   }
