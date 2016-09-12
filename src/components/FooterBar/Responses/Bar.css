@@ -13,12 +13,13 @@
   border: 0;
   background: none;
   cursor: pointer;
+  flex-grow: 0.334;
+  padding: 0;
 
   @descendent content {
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-grow: 0.334;
     padding: 0 15px;
     position: relative;
   }

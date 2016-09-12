@@ -3,6 +3,7 @@ import Tooltip from 'material-ui/internal/Tooltip';
 import transformStyle from '../../../utils/transformStyle';
 
 const tooltipStyle = {
+  top: -36,
   left: '50%',
   ...transformStyle('translateX(-50%)')
 };
