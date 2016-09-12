@@ -40,7 +40,7 @@ export default class EditMediaDialog extends Component {
   labelStart = uniqueId('editmedia');
   labelEnd = uniqueId('editmedia');
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
 
     const { media, onEditedMedia, onCloseDialog } = this.props;
@@ -75,19 +75,19 @@ export default class EditMediaDialog extends Component {
     onCloseDialog();
   };
 
-  refArtist = artist => {
+  refArtist = (artist) => {
     this.artist = artist;
   };
 
-  refTitle = title => {
+  refTitle = (title) => {
     this.title = title;
   };
 
-  refStart = start => {
+  refStart = (start) => {
     this.start = start;
   };
 
-  refEnd = end => {
+  refEnd = (end) => {
     this.end = end;
   };
 

@@ -5,7 +5,7 @@ register('help', 'List available commands.', {
   action: () => (dispatch, getState) => {
     const available = getCommands();
     dispatch(log('Available commands:'));
-    Object.keys(available).sort().forEach(name => {
+    Object.keys(available).sort().forEach((name) => {
       const command = available[name];
       if (canExecute(getState(), command)) {
         dispatch(log(`/${name} - ${command.description}`));

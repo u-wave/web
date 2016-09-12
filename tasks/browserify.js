@@ -83,7 +83,7 @@ export default function browserifyTask({ minify = false }) {
       // module. The event data includes an array of the helpers that were used
       // by the module.
       tr.once('babelify', ({ metadata }) => {
-        metadata.usedHelpers.forEach(helper => {
+        metadata.usedHelpers.forEach((helper) => {
           helpers[helper] = true;
         });
       });

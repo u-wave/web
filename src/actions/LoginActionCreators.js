@@ -37,7 +37,7 @@ export function socketReconnect() {
 }
 
 export function loginComplete({ jwt, user }) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: LOGIN_COMPLETE,
       payload: { jwt, user }
@@ -85,7 +85,7 @@ export function initState() {
 
   return get('/now', {
     onStart: () => ({ type: LOAD_ALL_PLAYLISTS_START }),
-    onComplete: state => dispatch => {
+    onComplete: state => (dispatch) => {
       dispatch(syncTimestamps(beforeTime, state.time));
       dispatch(loadedState(state));
       dispatch(loadHistory());
@@ -107,7 +107,7 @@ function loginStart() {
 export function login({ email, password }) {
   return post('/auth/login', { email, password }, {
     onStart: loginStart,
-    onComplete: res => dispatch => {
+    onComplete: res => (dispatch) => {
       Session.set(res.jwt);
       dispatch(setJWT(res.jwt));
       dispatch(initState());
@@ -123,7 +123,7 @@ export function login({ email, password }) {
 export function register({ email, username, password, grecaptcha }) {
   return post('/auth/register', { email, username, password, grecaptcha }, {
     onStart: () => ({ type: REGISTER_START }),
-    onComplete: user => dispatch => {
+    onComplete: user => (dispatch) => {
       debug('registered', user);
       dispatch({
         type: REGISTER_COMPLETE,
@@ -144,7 +144,7 @@ function logoutStart() {
 }
 
 function logoutComplete() {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({ type: LOGOUT_COMPLETE });
     dispatch(setPlaylists([]));
   };

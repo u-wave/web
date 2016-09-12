@@ -21,7 +21,7 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    onChange: panelName => {
+    onChange: (panelName) => {
       // Ensure that we're actually switching panels--otherwise change events
       // from eg. the chat box bubble up and trigger a panel rerender on every
       // keypress.

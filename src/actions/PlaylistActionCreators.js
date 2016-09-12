@@ -127,7 +127,7 @@ export function loadFilteredPlaylistItems(playlistID, page = 0) {
 }
 
 export function filterPlaylistItems(playlistID, filter) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: FILTER_PLAYLIST_ITEMS,
       payload: { playlistID, filter }
@@ -140,7 +140,7 @@ export function filterPlaylistItems(playlistID, filter) {
 }
 
 export function selectPlaylist(playlistID) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: SELECT_PLAYLIST,
       payload: { playlistID }
@@ -576,7 +576,7 @@ export function shufflePlaylistStart(playlistID) {
 }
 
 export function shufflePlaylistComplete(playlistID) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: SHUFFLE_PLAYLIST_COMPLETE,
       payload: { playlistID }

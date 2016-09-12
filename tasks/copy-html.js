@@ -19,7 +19,7 @@ const COMPILED_CSS_PATH = joinPath(__dirname, '../lib/app.css');
 
 // Used to apply a function to a DOM element identified by `selector`.
 const apply = (selector, fn) =>
-  contents => {
+  (contents) => {
     // cheerio is like a lightweight jQuery on the server. It parses HTML into
     // cheerio objects (and not a full DOM tree!) so we can change it easily.
     const $ = cheerio.load(contents);

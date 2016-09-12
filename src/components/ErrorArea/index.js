@@ -21,7 +21,7 @@ const snackbarStyle = {
 // Using a selector for memoization.
 const errorThemeSelector = createSelector(
   props => props.muiTheme,
-  muiTheme => {
+  (muiTheme) => {
     const notifyTheme = muiTheme.palette.notifications;
     return {
       muiTheme: {

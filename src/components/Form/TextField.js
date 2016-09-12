@@ -23,7 +23,7 @@ export default class TextField extends React.Component {
     return this.input.value;
   }
 
-  refInput = input => {
+  refInput = (input) => {
     this.input = input;
   };
 

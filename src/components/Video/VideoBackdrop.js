@@ -3,7 +3,7 @@ import * as React from 'react';
 const supportsBlur = typeof window !== 'undefined' && window.CSS &&
   (CSS.supports('filter', 'blur(1em)') || CSS.supports('-webkit-filter', 'blur(1em)'));
 
-const makeSvgString = url => {
+const makeSvgString = (url) => {
   const width = 800;
   const height = 480;
   const blur = 20;

@@ -45,7 +45,7 @@ class SourcePicker extends React.Component {
     this.setState({ open: false });
   };
 
-  refContainer = container => {
+  refContainer = (container) => {
     this.container = container;
   };
 

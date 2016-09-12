@@ -27,7 +27,7 @@ function searchStart(query) {
 export function search(query) {
   return get('/search', {
     qs: { query },
-    onStart: () => dispatch => {
+    onStart: () => (dispatch) => {
       dispatch(searchStart(query));
       dispatch(showSearchResults());
     },

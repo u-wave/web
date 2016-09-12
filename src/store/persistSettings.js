@@ -3,7 +3,7 @@ import { loadSettings } from '../actions/SettingsActionCreators';
 
 const SETTINGS_KEY = 'uwaveSettings';
 
-const attempt = fn => {
+const attempt = (fn) => {
   try {
     return fn() || undefined;
   } catch (e) {

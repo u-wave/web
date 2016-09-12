@@ -25,11 +25,11 @@ export default class ConfirmDialog extends React.Component {
     busy: false
   };
 
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     event.preventDefault();
   };
 
-  handleConfirm = event => {
+  handleConfirm = (event) => {
     event.preventDefault();
     const promise = this.props.onConfirm();
     if (promise && promise.then) {
@@ -41,7 +41,7 @@ export default class ConfirmDialog extends React.Component {
     }
   };
 
-  handleClose = event => {
+  handleClose = (event) => {
     if (event && event.preventDefault) {
       event.preventDefault();
     }

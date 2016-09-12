@@ -41,7 +41,7 @@ export default class Video extends React.Component {
     };
 
     const sources = getAllMediaSources();
-    const players = Object.keys(sources).map(sourceType => {
+    const players = Object.keys(sources).map((sourceType) => {
       if (sources[sourceType].Player) {
         const { Player } = sources[sourceType];
         return (

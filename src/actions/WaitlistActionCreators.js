@@ -40,7 +40,7 @@ export function updatedWaitlist(waitlist) {
 }
 
 export function joinWaitlist(user) {
-  return dispatch => {
+  return (dispatch) => {
     if (!user) {
       return null;
     }
@@ -68,7 +68,7 @@ export function joinedWaitlist({ userID, waitlist }) {
 }
 
 export function leaveWaitlist(user) {
-  return dispatch => {
+  return (dispatch) => {
     if (!user) {
       return null;
     }
@@ -95,7 +95,7 @@ export function leftWaitlist({ userID, waitlist }) {
 }
 
 export function movedInWaitlist({ userID, moderatorID, position, waitlist }) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: MOVE,
       payload: { userID, position },

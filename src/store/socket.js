@@ -161,7 +161,7 @@ export default function middleware({ url = defaultUrl() } = {}) {
     function drainQueuedMessages() {
       const messages = queue;
       queue = [];
-      messages.forEach(msg => {
+      messages.forEach((msg) => {
         send(msg.command, msg.data);
       });
     }
@@ -184,7 +184,7 @@ export default function middleware({ url = defaultUrl() } = {}) {
       debug('!unknown socket message type');
     }
 
-    return next => action => {
+    return next => (action) => {
       const { type, payload } = action;
       switch (type) {
       case SOCKET_RECONNECT:

@@ -14,13 +14,13 @@ export default class ReCaptcha extends React.Component {
     );
   }
 
-  handleResponse = res => {
+  handleResponse = (res) => {
     if (this.props.onResponse) {
       this.props.onResponse(res);
     }
   };
 
-  refContainer = container => {
+  refContainer = (container) => {
     this.container = container;
   };
 

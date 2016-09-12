@@ -37,7 +37,7 @@ function bundle() {
   const stream = watcher.bundle();
   // TODO recover from errors… particularly parse errors are nasty because they
   // are quite common when saving files regularly while you're editing them.
-  stream.on('error', e => {
+  stream.on('error', (e) => {
     log('watchify error:', e.stack || e.message);
   });
   return stream

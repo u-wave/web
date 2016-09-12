@@ -25,7 +25,7 @@ export function getAvailableGroupMentions(user) {
  */
 export function resolveMentions(tree, state) {
   const users = userListSelector(state);
-  tree.forEach(node => {
+  tree.forEach((node) => {
     if (node.type === 'mention') {
       const group = groupMentions[node.mention];
       /* eslint-disable no-param-reassign */
@@ -49,7 +49,7 @@ export function resolveMentions(tree, state) {
  * @param {String} id User ID.
  */
 export function hasMention(tree, id) {
-  return tree.some(node => {
+  return tree.some((node) => {
     if (node.type === 'mention') {
       if (node.user) {
         return node.user._id === id;

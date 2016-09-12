@@ -43,7 +43,7 @@ const makeActions = ({
     />
   ];
 
-const PlaylistPanel = props => {
+const PlaylistPanel = (props) => {
   const {
     className,
     playlist,
