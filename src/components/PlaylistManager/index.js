@@ -72,7 +72,7 @@ export default class PlaylistManager extends Component {
     );
   };
 
-  handleEditMedia = media => {
+  handleEditMedia = (media) => {
     this.withSelected(selectedPlaylist =>
       this.props.onEditMedia(selectedPlaylist._id, media)
     );
@@ -90,7 +90,7 @@ export default class PlaylistManager extends Component {
     );
   };
 
-  handleLoadPlaylistPage = page => {
+  handleLoadPlaylistPage = (page) => {
     const loadPlaylistPage = this.props.currentFilter ?
       this.props.onLoadFilteredPlaylistPage : this.props.onLoadPlaylistPage;
     this.withSelected(selectedPlaylist =>
@@ -98,13 +98,13 @@ export default class PlaylistManager extends Component {
     );
   };
 
-  handleFilterPlaylistItems = filter => {
+  handleFilterPlaylistItems = (filter) => {
     this.withSelected(selectedPlaylist =>
       this.props.onFilterPlaylistItems(selectedPlaylist._id, filter)
     );
   };
 
-  handleSelectPlaylist = playlist => {
+  handleSelectPlaylist = (playlist) => {
     this.props.onSelectPlaylist(playlist._id);
   };
 

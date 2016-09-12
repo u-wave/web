@@ -44,7 +44,7 @@ export function getImportablePlaylist(url) {
 }
 
 function importPlaylistStart(id, name) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(createPlaylistStart({ name }, `yt:${id}`));
     dispatch({
       type: IMPORT_PLAYLIST_START,
@@ -54,7 +54,7 @@ function importPlaylistStart(id, name) {
 }
 
 function importPlaylistComplete(id, playlist) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: IMPORT_PLAYLIST_COMPLETE,
       payload: { playlist },

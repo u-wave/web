@@ -43,7 +43,7 @@ export default class Chat extends Component {
     return true;
   }
 
-  refContainer = container => {
+  refContainer = (container) => {
     this.container = container;
   };
 

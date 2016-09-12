@@ -14,7 +14,7 @@ export default class PlaylistFilter extends React.Component {
     value: ''
   };
 
-  onFilter = debounce(value => {
+  onFilter = debounce((value) => {
     this.props.onFilter(value);
   }, 200);
 
@@ -41,12 +41,12 @@ export default class PlaylistFilter extends React.Component {
     });
   };
 
-  handleChange = event => {
+  handleChange = (event) => {
     this.setState({ value: event.target.value });
     this.onFilter(event.target.value);
   };
 
-  refInput = input => {
+  refInput = (input) => {
     this.input = input;
   };
 

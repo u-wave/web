@@ -37,12 +37,12 @@ export default class YouTubePlayerEmbed extends React.Component {
       this.props.active !== nextProps.active;
   }
 
-  handleYTReady = event => {
+  handleYTReady = (event) => {
     event.target.setVolume(this.props.volume);
     event.target.setPlaybackRate(1);
   };
 
-  refPlayer = player => {
+  refPlayer = (player) => {
     this.player = player;
   };
 

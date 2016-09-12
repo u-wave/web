@@ -25,14 +25,14 @@ export default class YoutubeImportForm extends React.Component {
     this.context.store.dispatch(action);
   }
 
-  handleImportChannel = e => {
+  handleImportChannel = (e) => {
     e.preventDefault();
     const url = this.channel.value;
     this.dispatch(getChannelPlaylists(url));
     this.props.onShowImportPanel();
   };
 
-  handleImportPlaylist = e => {
+  handleImportPlaylist = (e) => {
     e.preventDefault();
     const url = this.playlist.value;
 
@@ -40,11 +40,11 @@ export default class YoutubeImportForm extends React.Component {
     this.props.onShowImportPanel();
   };
 
-  refChannel = channel => {
+  refChannel = (channel) => {
     this.channel = channel;
   };
 
-  refPlaylist = playlist => {
+  refPlaylist = (playlist) => {
     this.playlist = playlist;
   };
 

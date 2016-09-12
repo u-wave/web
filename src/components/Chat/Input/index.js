@@ -58,7 +58,7 @@ export default class Input extends React.Component {
     this.setState({ focused: false });
   };
 
-  handleKeyDown = e => {
+  handleKeyDown = (e) => {
     e.stopPropagation();
     if (e.key === 'Enter') {
       const value = e.target.value.trim();
@@ -69,7 +69,7 @@ export default class Input extends React.Component {
     }
   };
 
-  handleUpdate = newValue => {
+  handleUpdate = (newValue) => {
     this.setState({ value: newValue });
   };
 

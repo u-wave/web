@@ -23,7 +23,7 @@ const PlaylistImport = ({
 
   const forms = [];
   const sources = getAllMediaSources();
-  Object.keys(sources).forEach(sourceType => {
+  Object.keys(sources).forEach((sourceType) => {
     const ImportForm = sources[sourceType].ImportForm;
     if (ImportForm) {
       forms.push(

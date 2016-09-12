@@ -29,7 +29,7 @@ export default class RegisterForm extends React.Component {
     this.setState({ busy: false });
   }
 
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     event.preventDefault();
     this.setState({ busy: true });
     this.props.onRegister({
@@ -40,21 +40,21 @@ export default class RegisterForm extends React.Component {
     });
   };
 
-  handleCaptchaResponse = response => {
+  handleCaptchaResponse = (response) => {
     this.setState({
       captchaResponse: response
     });
   };
 
-  refUsername = username => {
+  refUsername = (username) => {
     this.username = username;
   };
 
-  refEmail = email => {
+  refEmail = (email) => {
     this.email = email;
   };
 
-  refPassword = password => {
+  refPassword = (password) => {
     this.password = password;
   };
 

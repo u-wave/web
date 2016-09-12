@@ -19,7 +19,7 @@ export function sync() {
 }
 
 export function createTimer() {
-  return dispatch => {
+  return (dispatch) => {
     const callbacks = [];
     const intv = setInterval(() => {
       callbacks.forEach(cb => cb());

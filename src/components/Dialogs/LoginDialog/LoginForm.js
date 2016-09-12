@@ -19,7 +19,7 @@ export default class LoginForm extends React.Component {
     this.setState({ busy: false });
   }
 
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     event.preventDefault();
     this.setState({ busy: true });
     this.props.onLogin({
@@ -28,11 +28,11 @@ export default class LoginForm extends React.Component {
     });
   };
 
-  refEmail = email => {
+  refEmail = (email) => {
     this.email = email;
   };
 
-  refPassword = password => {
+  refPassword = (password) => {
     this.password = password;
   };
 

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { currentTimeSelector } from '../selectors/timeSelectors';
 
 export default function () {
-  return Component => {
+  return (Component) => {
     class Timed extends React.Component {
       static contextTypes = {
         store: React.PropTypes.object.isRequired,

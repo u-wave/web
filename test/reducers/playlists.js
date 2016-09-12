@@ -13,7 +13,7 @@ const initialiseStore = a.setPlaylists([
   { _id: 4, name: 'Playlist Four', size: 120 }
 ]);
 
-const initialisePlaylist = dispatch => {
+const initialisePlaylist = (dispatch) => {
   const items = [
     { _id: 5, artist: 'Taylor Swift', title: 'New Romantics' },
     { _id: 6, artist: 'Swiimers', title: 'Polaris' },

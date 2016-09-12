@@ -5,7 +5,7 @@ import muiThemeable from 'material-ui/styles/muiThemeable';
 
 import Button from './Button';
 
-const handleFavorite = onFavorite => event => {
+const handleFavorite = onFavorite => (event) => {
   const pos = event.target.getBoundingClientRect();
   onFavorite({
     x: pos.left,

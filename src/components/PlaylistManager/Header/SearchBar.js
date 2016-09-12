@@ -20,14 +20,14 @@ export default class SearchBar extends React.Component {
     this.setState({ focused: false });
   };
 
-  handleKeyDown = e => {
+  handleKeyDown = (e) => {
     const { onSubmit } = this.props;
     if (e.key === 'Enter') {
       onSubmit(this.input.value);
     }
   };
 
-  refInput = input => {
+  refInput = (input) => {
     this.input = input;
   };
 

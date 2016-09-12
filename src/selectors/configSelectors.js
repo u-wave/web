@@ -4,7 +4,7 @@ export const configSelector = state => state.config;
 
 export const requestOptionsSelector = createSelector(
   configSelector,
-  config => {
+  (config) => {
     const options = {};
     if (config.apiUrl) {
       options.apiUrl = config.apiUrl;

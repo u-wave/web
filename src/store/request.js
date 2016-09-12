@@ -22,7 +22,7 @@ function makeUrl(path, params = {}) {
 
 function rejectNonOK(response) {
   if (response.status !== 200) {
-    return response.json().then(message => {
+    return response.json().then((message) => {
       const error = assign(new Error(message), { response });
       return Promise.reject(error);
     });
@@ -35,7 +35,7 @@ const defaultOptions = {
 };
 
 export default function middleware(middlewareOptions = {}) {
-  return ({ dispatch, getState }) => next => action => {
+  return ({ dispatch, getState }) => next => (action) => {
     if (action.type !== REQUEST_START) {
       return next(action);
     }
@@ -94,14 +94,14 @@ export default function middleware(middlewareOptions = {}) {
     return fetch(requestUrl, requestOptions)
       .then(rejectNonOK)
       .then(res => res.json())
-      .then(res => {
+      .then((res) => {
         if (onComplete) {
           dispatch(onComplete(res));
         }
         dispatch(requestComplete(res, completedMeta));
         return res;
       })
-      .catch(error => {
+      .catch((error) => {
         if (onError) {
           dispatch(onError(error));
         }

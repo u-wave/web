@@ -35,7 +35,7 @@ export default class PromptDialog extends React.Component {
     value: this.props.value || ''
   };
 
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     event.preventDefault();
     const promise = this.props.onSubmit(this.input.value);
     if (promise && promise.then) {
@@ -51,11 +51,11 @@ export default class PromptDialog extends React.Component {
     this.props.onCancel();
   };
 
-  handleInputChange = event => {
+  handleInputChange = (event) => {
     this.setState({ value: event.target.value });
   };
 
-  refInput = input => {
+  refInput = (input) => {
     this.input = input;
   };
 
