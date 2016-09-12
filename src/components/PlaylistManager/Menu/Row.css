@@ -5,9 +5,12 @@
   line-height: 44px;
   padding: 0 10px;
   cursor: pointer;
-  display: flex;
-  justify-content: space-between;
   width: 100%;
+
+  @descendent content {
+    display: flex;
+    justify-content: space-between;
+  }
 
   @descendent active-icon {
     display: block;

@@ -13,13 +13,15 @@ const SearchResultsRow = ({
     className={cx('PlaylistMenuRow', 'PlaylistMenuRow--search', className)}
     onClick={onClick}
   >
-    <div className="PlaylistMenuRow-title">
-      <div className="PlaylistMenuRow-active-icon">
-        <SearchIcon color="#fff" />
+    <div className="PlaylistMenuRow-content">
+      <div className="PlaylistMenuRow-title">
+        <div className="PlaylistMenuRow-active-icon">
+          <SearchIcon color="#fff" />
+        </div>
+        "{query}"
       </div>
-      "{query}"
+      <div className="PlaylistMenuRow-count">{size}</div>
     </div>
-    <div className="PlaylistMenuRow-count">{size}</div>
   </button>
 );
 
