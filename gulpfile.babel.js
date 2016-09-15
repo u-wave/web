@@ -38,4 +38,4 @@ gulp.task('start', [ 'watch' ], () => {
 
 gulp.task('build', sequence('assets', 'js', 'css', 'html'));
 
-gulp.task('default', ['build']);
+gulp.task('default', [ 'build' ]);
