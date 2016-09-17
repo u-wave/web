@@ -36,4 +36,6 @@ gulp.task('start', [ 'watch' ], () => {
   gulp.start('serve');
 });
 
-gulp.task('default', sequence('clean', 'assets', 'js', 'css', 'html'));
+gulp.task('build', sequence('assets', 'js', 'css', 'html'));
+
+gulp.task('default', [ 'build' ]);
