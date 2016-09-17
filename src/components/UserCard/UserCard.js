@@ -6,6 +6,14 @@ import CardText from 'material-ui/Card/CardText';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 import Avatar from '../Avatar';
 
+const formatJoinDate = date => new Date(date).toLocaleString([], {
+  year: 'numeric',
+  month: 'numeric',
+  day: 'numeric',
+  hour: 'numeric',
+  minute: 'numeric'
+});
+
 const tempRoleIDToReadableName = [
   'User',
   'Special',
@@ -30,6 +38,9 @@ const UserCard = ({ muiTheme, user }) => (
       subtitleColor={muiTheme.rankColors[tempRoleIDToRoleName[user.role]]}
       avatar={<Avatar className="UserCard-avatar" user={user} />}
     />
+    <CardText>
+      Joined: {formatJoinDate(user.createdAt)}
+    </CardText>
     <CardActions>
       {/* Currently empty */}
     </CardActions>
