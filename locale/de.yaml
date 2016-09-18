@@ -2,7 +2,8 @@ name: Deutsch (German)
 
 uwave:
   close: Schließen
-  timeAgo: "vor {{time}}"
+  timeAgo:
+    format: "vor {{time}}"
 
   chat:
     title: Chat

@@ -2,7 +2,16 @@ name: English
 
 uwave:
   close: Close
-  timeAgo: "{{time}} ago"
+  timeAgo:
+    format: "{{time}} ago"
+    seconds: "{{count}} second"
+    seconds_plural: "{{count}} seconds"
+    minutes: "{{count}} minute"
+    minutes_plural: "{{count}} minutes"
+    hours: "{{count}} hour"
+    hours_plural: "{{count}} hours"
+    days: "{{count}} day"
+    days_plural: "{{count}} days"
 
   chat:
     title: Chat
@@ -97,7 +106,7 @@ uwave:
   users:
     title: Room
     guests: "and {{count}} guest"
-    guests_plural: "and {{count}} guest(s)"
+    guests_plural: "and {{count}} guests"
 
   settings:
     title: Settings

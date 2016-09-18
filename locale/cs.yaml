@@ -2,7 +2,22 @@ name: Česky (Czech)
 
 uwave:
   close: Zavřít
-  timeAgo: "před {{time}}"
+  timeAgo:
+    format: "před {{time}}"
+    # normal keys are for "1 minute", keys ending in _1 are for "2-4 minutes",
+    # keys ending in _2 are for "5+ minutes".
+    seconds: "{{count}} vteřinou"
+    seconds_1: "{{count}} vteřinami"
+    seconds_2: "{{count}} vteřinami"
+    minutes: "{{count}} minutou"
+    minutes_1: "{{count}} minutami"
+    minutes_2: "{{count}} minutami"
+    hours: "{{count}} hodinou"
+    hours_1: "{{count}} hodinami"
+    hours_2: "{{count}} hodinami"
+    days: "{{count}} dnem"
+    days_1: "{{count}} dny"
+    days_2: "{{count}} dny"
 
   chat:
     title: Chat

@@ -2,7 +2,8 @@ name: 繁體中文 (Traditional Mandarin)
 
 uwave:
   close: 關閉
-  timeAgo: "{{time}} 之前"
+  timeAgo:
+    format: "{{time}} 之前"
 
   chat:
     title: 聊天室

@@ -2,7 +2,8 @@ name: Français (French)
 
 uwave:
   close: Fermer
-  timeAgo: "il y a {{time}}"
+  timeAgo:
+    format: "il y a {{time}}"
 
   chat:
     title: Chat

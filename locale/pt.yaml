@@ -2,7 +2,8 @@ name: Português (Portuguese)
 
 uwave:
   close: Fechar
-  timeAgo: "{{time}} atrás"
+  timeAgo:
+    format: "{{time}} atrás"
 
   chat:
     title: Chat

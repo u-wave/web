@@ -2,7 +2,8 @@ name: 한국어 (Korean)
 
 uwave:
   close: 종료
-  timeAgo: "{{time}}전"
+  timeAgo:
+    format: "{{time}}전"
 
   chat:
     title: 챗

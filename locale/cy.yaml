@@ -2,7 +2,8 @@ name: Cymraeg (Welsh)
 
 uwave:
   close: Cau
-  timeAgo: "{{time}} yn ôl"
+  timeAgo:
+    format: "{{time}} yn ôl"
 
   chat:
     title: Sgwrsio

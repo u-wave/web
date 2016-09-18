@@ -2,7 +2,15 @@ name: Nederlands (Dutch)
 
 uwave:
   close: Sluiten
-  timeAgo: "{{time}} geleden"
+  timeAgo:
+    format: "{{time}} geleden"
+    seconds: "{{count}} seconde"
+    seconds_plural: "{{count}} seconden"
+    minutes: "{{count}} minuut"
+    minutes_plural: "{{count}} minuten"
+    hours: "{{count}} uur"
+    days: "{{count}} dag"
+    days_plural: "{{count}} dagen"
 
   chat:
     title: Chat
