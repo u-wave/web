@@ -3,6 +3,13 @@ import Dialog from 'material-ui/Dialog';
 
 import PreviewPlayer from '../../Video/Player';
 
+const useClassNameWidthStyle = {
+  width: null
+};
+const inheritWidthStyle = {
+  width: 'inherit'
+};
+
 const PreviewMediaDialog = ({
   open,
   media,
@@ -10,6 +17,9 @@ const PreviewMediaDialog = ({
   onCloseDialog
 }) => (
   <Dialog
+    className="AppColumn AppColumn--left"
+    style={useClassNameWidthStyle}
+    overlayStyle={inheritWidthStyle}
     contentClassName="Dialog PreviewMediaDialog"
     bodyClassName="Dialog-body"
     titleClassName="Dialog-title"
