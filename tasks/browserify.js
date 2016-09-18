@@ -29,7 +29,8 @@ export const exposeModules = {
   // Really we should pick a few components to expose here and leave plugins
   // to include the rest.
   'material-ui': /^(styles\/)?([^\/]+)(\/index)?\.js$/,
-  recompose: EXPORT_SUBMODULES
+  recompose: EXPORT_SUBMODULES,
+  'u-wave-web': /^lib\/constants(\/([^\/]+)\.js)?$/
 };
 
 // The browserify task compiles all the necessary modules into a single file,

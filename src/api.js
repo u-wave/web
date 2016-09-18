@@ -1,6 +1,5 @@
 import * as PlaylistActionCreators from './actions/PlaylistActionCreators';
 import * as RequestActionCreators from './actions/RequestActionCreators';
-import * as LoadingStates from './constants/LoadingStates';
 import Loader from './components/Loader';
 import MediaList from './components/MediaList';
 import VideoBackdrop from './components/Video/VideoBackdrop';
@@ -10,6 +9,8 @@ import Form from './components/Form';
 import FormGroup from './components/Form/Group';
 import TextField from './components/Form/TextField';
 import FormButton from './components/Form/Button';
+
+export * as constants from './constants';
 
 export const components = {
   Loader,
@@ -26,8 +27,4 @@ export const components = {
 export const actions = {
   playlists: PlaylistActionCreators,
   request: RequestActionCreators
-};
-
-export const constants = {
-  LoadingStates
 };

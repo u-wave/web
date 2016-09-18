@@ -15,6 +15,7 @@ export default class Uwave {
     this.options = options;
     this.jwt = session;
 
+    Object.assign(this, api.constants);
     Object.assign(this, api.components);
     Object.assign(this, api.actions);
   }
