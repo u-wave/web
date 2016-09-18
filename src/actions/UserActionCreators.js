@@ -1,7 +1,7 @@
 import {
-  LOAD,
-  JOIN,
-  LEAVE,
+  LOAD_ONLINE_USERS,
+  USER_JOIN,
+  USER_LEAVE,
   CHANGE_USERNAME,
   CHANGE_ROLE,
 
@@ -15,7 +15,7 @@ import { put } from './RequestActionCreators';
 
 export function setUsers(users) {
   return {
-    type: LOAD,
+    type: LOAD_ONLINE_USERS,
     payload: { users }
   };
 }
@@ -29,14 +29,14 @@ export function receiveGuestCount(guests) {
 
 export function join(user) {
   return {
-    type: JOIN,
+    type: USER_JOIN,
     payload: { user }
   };
 }
 
 export function leave(id) {
   return {
-    type: LEAVE,
+    type: USER_LEAVE,
     payload: {
       userID: id
     }

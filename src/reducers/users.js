@@ -6,9 +6,9 @@ import {
   INIT_STATE
 } from '../constants/actionTypes/auth';
 import {
-  LOAD,
-  JOIN,
-  LEAVE,
+  LOAD_ONLINE_USERS,
+  USER_JOIN,
+  USER_LEAVE,
   CHANGE_USERNAME,
   CHANGE_ROLE,
 
@@ -28,7 +28,7 @@ function guestsReducer(state = 0, action = {}) {
 function usersReducer(state = {}, action = {}) {
   const { type, payload } = action;
   switch (type) {
-  case LOAD:
+  case LOAD_ONLINE_USERS:
     // this is merged in instead of replacing the state, because sometimes the
     // JOIN event from the current user comes in before the LOAD event, and then
     // the current user is sometimes excluded from the state. it looks like this
@@ -38,12 +38,12 @@ function usersReducer(state = {}, action = {}) {
       ...state,
       ...indexBy(payload.users, '_id')
     };
-  case JOIN:
+  case USER_JOIN:
     return {
       ...state,
       [payload.user._id]: payload.user
     };
-  case LEAVE:
+  case USER_LEAVE:
     return except(state, payload.userID);
   case CHANGE_USERNAME:
     if (state[payload.userID]) {

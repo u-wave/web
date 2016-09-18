@@ -1,7 +1,11 @@
 import {
-  LOAD,
-  LOCK, CLEAR,
-  UPDATE, JOIN, LEAVE, MOVE,
+  WAITLIST_LOAD,
+  WAITLIST_LOCK,
+  WAITLIST_CLEAR,
+  WAITLIST_UPDATE,
+  WAITLIST_JOIN,
+  WAITLIST_LEAVE,
+  WAITLIST_MOVE,
   DO_JOIN_START, DO_JOIN_COMPLETE,
   DO_LEAVE_START, DO_LEAVE_COMPLETE,
   DO_LOCK_START, DO_LOCK_COMPLETE,
@@ -11,7 +15,7 @@ import { del, post, put } from './RequestActionCreators';
 
 export function setWaitList(data) {
   return {
-    type: LOAD,
+    type: WAITLIST_LOAD,
     payload: {
       waitlist: data.waitlist,
       locked: data.locked
@@ -21,7 +25,7 @@ export function setWaitList(data) {
 
 export function setLocked(lock) {
   return {
-    type: LOCK,
+    type: WAITLIST_LOCK,
     payload: {
       locked: lock
     }
@@ -29,12 +33,12 @@ export function setLocked(lock) {
 }
 
 export function clearWaitlist() {
-  return { type: CLEAR };
+  return { type: WAITLIST_CLEAR };
 }
 
 export function updatedWaitlist(waitlist) {
   return {
-    type: UPDATE,
+    type: WAITLIST_UPDATE,
     payload: { waitlist }
   };
 }
@@ -62,7 +66,7 @@ export function joinWaitlist(user) {
 
 export function joinedWaitlist({ userID, waitlist }) {
   return {
-    type: JOIN,
+    type: WAITLIST_JOIN,
     payload: { userID, waitlist }
   };
 }
@@ -89,7 +93,7 @@ export function leaveWaitlist(user) {
 
 export function leftWaitlist({ userID, waitlist }) {
   return {
-    type: LEAVE,
+    type: WAITLIST_LEAVE,
     payload: { userID, waitlist }
   };
 }
@@ -97,7 +101,7 @@ export function leftWaitlist({ userID, waitlist }) {
 export function movedInWaitlist({ userID, moderatorID, position, waitlist }) {
   return (dispatch) => {
     dispatch({
-      type: MOVE,
+      type: WAITLIST_MOVE,
       payload: { userID, position },
       meta: { moderatorID }
     });
