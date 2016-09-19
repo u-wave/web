@@ -11,4 +11,8 @@ button {
   color: inherit;
   background: initial;
   border: initial;
+  text-align: initial;
+  &:focus {
+    outline: initial;
+  }
 }

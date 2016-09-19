@@ -67,6 +67,7 @@
   border-right: 1px solid $chat-border-color;
   display: block;
   float: left;
+  text-align: center;
   cursor: pointer;
   color: #fff;
   font-size: 12pt;
