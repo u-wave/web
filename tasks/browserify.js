@@ -3,6 +3,7 @@ import { buildExternalHelpers } from 'babel-core';
 import babelify from 'babelify';
 import browserify from 'browserify';
 import uglifyify from 'uglifyify';
+import yamlify from 'yamlify';
 import buffer from 'gulp-buffer';
 import collapse from 'bundle-collapser/plugin';
 import envify from 'loose-envify/custom';
@@ -34,6 +35,8 @@ export default function browserifyTask({ minify = false }) {
   // already use elsewhere. This shaves some 20kb off the final minified+gzipped
   // bundle (that's > 15%).
   b.require('./src/utils/Promise', { expose: 'bluebird' });
+
+  b.transform(yamlify);
 
   // Babelify transforms the üWave source code, which is written in JavaScript
   // of the future and JSX, to JavaScript of today.

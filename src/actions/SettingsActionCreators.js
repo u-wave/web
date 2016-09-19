@@ -13,3 +13,7 @@ export function set(name, value) {
     payload: { [name]: value }
   };
 }
+
+export function setLanguage(lang) {
+  return set('language', lang);
+}

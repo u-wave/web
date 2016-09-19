@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { translate } from 'react-i18next';
+import compose from 'recompose/compose';
 import FavoritedIcon from 'material-ui/svg-icons/action/favorite';
 import FavoriteIcon from 'material-ui/svg-icons/action/favorite-border';
 import muiThemeable from 'material-ui/styles/muiThemeable';
@@ -14,6 +16,7 @@ const handleFavorite = onFavorite => (event) => {
 };
 
 const Favorite = ({
+  t,
   muiTheme,
   onFavorite,
   count,
@@ -23,7 +26,7 @@ const Favorite = ({
 
   return (
     <Button
-      tooltip="Favorite"
+      tooltip={t('votes.favorite')}
       onClick={handleFavorite(onFavorite)}
       count={count}
     >
@@ -33,10 +36,14 @@ const Favorite = ({
 };
 
 Favorite.propTypes = {
+  t: React.PropTypes.func.isRequired,
   muiTheme: React.PropTypes.object.isRequired,
   onFavorite: React.PropTypes.func.isRequired,
   count: React.PropTypes.number.isRequired,
   active: React.PropTypes.bool
 };
 
-export default muiThemeable()(Favorite);
+export default compose(
+  translate(),
+  muiThemeable()
+)(Favorite);

@@ -1,6 +1,7 @@
 import cx from 'classnames';
 import uniqBy from 'lodash/uniqBy';
 import * as React from 'react';
+import { translate } from 'react-i18next';
 import AutoComplete, { Completion } from 'react-abstract-autocomplete';
 import SuggestionsList from './SuggestionsList';
 import EmojiSuggestion from './EmojiSuggestion';
@@ -35,8 +36,10 @@ const getEmojiCompletions = (value, { trigger, completions }) => {
 const getEmojiText = value => `:${value.shortcode}: `;
 const renderEmoji = props => <EmojiSuggestion {...props} />;
 
+@translate()
 export default class Input extends React.Component {
   static propTypes = {
+    t: React.PropTypes.func.isRequired,
     onSend: React.PropTypes.func.isRequired,
     mentionableUsers: React.PropTypes.array.isRequired,
     mentionableGroups: React.PropTypes.array.isRequired,
@@ -79,6 +82,7 @@ export default class Input extends React.Component {
       value
     } = this.state;
     const {
+      t,
       mentionableUsers,
       mentionableGroups,
       availableEmoji
@@ -89,7 +93,7 @@ export default class Input extends React.Component {
         <AutoComplete
           inputProps={{
             className: cx('ChatInput-input', focusClass),
-            placeholder: focused ? '' : 'Click here to chat!',
+            placeholder: focused ? '' : t('chat.placeholder'),
             onFocus: this.handleFocus,
             onBlur: this.handleBlur,
             onKeyDown: this.handleKeyDown

@@ -1,5 +1,6 @@
 import cx from 'classnames';
-import React, { Component, PropTypes } from 'react';
+import * as React from 'react';
+import { translate } from 'react-i18next';
 import Dialog from 'material-ui/Dialog';
 import uniqueId from 'lodash/uniqueId';
 
@@ -20,17 +21,19 @@ const parseDuration = str => str.split(':')
   .map(part => parseInt(part.trim(), 10))
   .reduce((duration, part) => (duration * 60) + part, 0);
 
-export default class EditMediaDialog extends Component {
+@translate()
+export default class EditMediaDialog extends React.Component {
   static propTypes = {
-    open: PropTypes.bool,
-    media: PropTypes.object,
+    t: React.PropTypes.func.isRequired,
+    open: React.PropTypes.bool,
+    media: React.PropTypes.object,
 
-    bodyClassName: PropTypes.string,
-    contentClassName: PropTypes.string,
-    titleClassName: PropTypes.string,
+    bodyClassName: React.PropTypes.string,
+    contentClassName: React.PropTypes.string,
+    titleClassName: React.PropTypes.string,
 
-    onEditedMedia: PropTypes.func.isRequired,
-    onCloseDialog: PropTypes.func.isRequired
+    onEditedMedia: React.PropTypes.func.isRequired,
+    onCloseDialog: React.PropTypes.func.isRequired
   };
 
   state = {
@@ -51,14 +54,14 @@ export default class EditMediaDialog extends Component {
 
     const errors = [];
     if (isNaN(startSeconds) || startSeconds < 0) {
-      errors.push('That start time is invalid.');
+      errors.push('invalidStartTime');
     }
     if (isNaN(endSeconds) || endSeconds < 0) {
-      errors.push('That end time is invalid.');
+      errors.push('invalidEndTime');
     } else if (endSeconds < startSeconds) {
-      errors.push('The end time should be after the start time.');
+      errors.push('endTimeBeforeStart');
     } else if (endSeconds > media.duration) {
-      errors.push('The end time cannot be past the total duration of the song.');
+      errors.push('endTimeAfterSongEnd');
     }
 
     if (errors.length > 0) {
@@ -93,6 +96,7 @@ export default class EditMediaDialog extends Component {
 
   render() {
     const {
+      t,
       open,
       media,
       onCloseDialog,
@@ -111,7 +115,7 @@ export default class EditMediaDialog extends Component {
         <TextField
           ref={this.refArtist}
           className="EditMediaDialogGroup-field"
-          placeholder="Artist"
+          placeholder={t([ 'dialogs.editMedia.artistLabel', 'media.artist' ])}
           defaultValue={media.artist}
           icon={<ArtistIcon color="#9f9d9e" />}
           tabIndex={baseTabIndex}
@@ -125,7 +129,7 @@ export default class EditMediaDialog extends Component {
         <TextField
           ref={this.refTitle}
           className="EditMediaDialogGroup-field"
-          placeholder="Title"
+          placeholder={t([ 'dialogs.editMedia.titleLabel', 'media.title' ])}
           defaultValue={media.title}
           icon={<TitleIcon color="#9f9d9e" />}
           tabIndex={baseTabIndex + 1}
@@ -133,7 +137,9 @@ export default class EditMediaDialog extends Component {
       );
 
       const fromLabel = (
-        <label htmlFor={this.labelStart} className="EditMediaDialogGroup-label">Play from:</label>
+        <label htmlFor={this.labelStart} className="EditMediaDialogGroup-label">
+          {t('dialogs.editMedia.playFromLabel')}
+        </label>
       );
       const fromInput = (
         <TextField
@@ -147,7 +153,9 @@ export default class EditMediaDialog extends Component {
         />
       );
       const toLabel = (
-        <label htmlFor={this.labelEnd} className="EditMediaDialogGroup-label">to:</label>
+        <label htmlFor={this.labelEnd} className="EditMediaDialogGroup-label">
+          {t('dialogs.editMedia.playToLabel')}
+        </label>
       );
       const toInput = (
         <TextField
@@ -165,7 +173,7 @@ export default class EditMediaDialog extends Component {
         <Form className="EditMediaDialog" onSubmit={this.handleSubmit}>
           {errors && errors.length > 0 && (
             <FormGroup>
-              {errors.map(error => <div>{error}</div>)}
+              {errors.map(error => <div>{t(`dialogs.editMedia.errors.${error}`)}</div>)}
             </FormGroup>
           )}
 
@@ -199,7 +207,7 @@ export default class EditMediaDialog extends Component {
 
           <FormGroup className="FormGroup--noSpacing">
             <Button className="EditMediaDialog-submit">
-              Save
+              {t('dialogs.editMedia.save')}
             </Button>
           </FormGroup>
         </Form>
@@ -211,7 +219,7 @@ export default class EditMediaDialog extends Component {
         contentClassName={cx('Dialog', contentClassName)}
         bodyClassName={cx('Dialog-body', bodyClassName)}
         titleClassName={cx('Dialog-title', titleClassName)}
-        title="Edit Media"
+        title={t('dialogs.editMedia.title')}
         open={open}
         onRequestClose={onCloseDialog}
       >

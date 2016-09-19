@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { translate } from 'react-i18next';
 import IconButton from 'material-ui/IconButton';
 import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 
@@ -18,8 +19,9 @@ const changeNameIconStyle = {
   padding: 2
 };
 
-export default class ChangeUsernameButton extends React.Component {
+class ChangeUsernameButton extends React.Component {
   static propTypes = {
+    t: React.PropTypes.func.isRequired,
     onChangeUsername: React.PropTypes.func.isRequired,
     initialUsername: React.PropTypes.string
   };
@@ -45,6 +47,7 @@ export default class ChangeUsernameButton extends React.Component {
       .then(this.closeDialog.bind(this));
 
   render() {
+    const { t, initialUsername } = this.props;
     return (
       <IconButton
         style={changeNameButtonStyle}
@@ -57,10 +60,10 @@ export default class ChangeUsernameButton extends React.Component {
         />
         {this.state.changingUsername && (
           <PromptDialog
-            title="Change Username"
-            submitLabel="Save"
+            title={t('settings.profile.username.change')}
+            submitLabel={t('settings.profile.username.save')}
             icon={<EditIcon color="#777" />}
-            value={this.props.initialUsername}
+            value={initialUsername}
             onSubmit={this.handleSubmit}
             onCancel={this.handleClose}
           />
@@ -69,3 +72,5 @@ export default class ChangeUsernameButton extends React.Component {
     );
   }
 }
+
+export default translate()(ChangeUsernameButton);

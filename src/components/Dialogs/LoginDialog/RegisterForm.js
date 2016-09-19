@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { translate } from 'react-i18next';
 import EmailIcon from 'material-ui/svg-icons/communication/email';
 import PasswordIcon from 'material-ui/svg-icons/action/lock';
 import UserIcon from 'material-ui/svg-icons/social/person';
@@ -11,8 +12,10 @@ import Button from '../../Form/Button';
 
 import ReCaptcha from '../../ReCaptcha';
 
+@translate()
 export default class RegisterForm extends React.Component {
   static propTypes = {
+    t: React.PropTypes.func.isRequired,
     useReCaptcha: React.PropTypes.bool,
     reCaptchaSiteKey: React.PropTypes.string,
     error: React.PropTypes.object,
@@ -73,7 +76,7 @@ export default class RegisterForm extends React.Component {
   }
 
   render() {
-    const { error } = this.props;
+    const { t, error } = this.props;
     const { busy } = this.state;
 
     return (
@@ -83,7 +86,7 @@ export default class RegisterForm extends React.Component {
           <TextField
             ref={this.refUsername}
             className="RegisterForm-field"
-            placeholder="Username"
+            placeholder={t('login.username')}
             icon={<UserIcon color="#9f9d9e" />}
             autofocus
           />
@@ -93,7 +96,7 @@ export default class RegisterForm extends React.Component {
             ref={this.refEmail}
             className="RegisterForm-field"
             type="email"
-            placeholder="E-Mail"
+            placeholder={t('login.email')}
             icon={<EmailIcon color="#9f9d9e" />}
           />
         </FormGroup>
@@ -102,7 +105,7 @@ export default class RegisterForm extends React.Component {
             ref={this.refPassword}
             className="RegisterForm-field"
             type="password"
-            placeholder="Password"
+            placeholder={t('login.password')}
             icon={<PasswordIcon color="#9f9d9e" />}
           />
         </FormGroup>
@@ -114,7 +117,10 @@ export default class RegisterForm extends React.Component {
             className="RegisterForm-submit"
             disabled={busy}
           >
-            {busy ? <div className="Button-loading"><Loader size="tiny" /></div> : 'REGISTER'}
+            {busy
+              ? <div className="Button-loading"><Loader size="tiny" /></div>
+              : t('login.register')
+            }
           </Button>
         </FormGroup>
       </Form>

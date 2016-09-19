@@ -1,0 +1,143 @@
+name: Česky (Czech)
+
+uwave:
+  close: Zavřít
+  timeAgo:
+    format: "před {{time}}"
+    # normal keys are for "1 minute", keys ending in _1 are for "2-4 minutes",
+    # keys ending in _2 are for "5+ minutes".
+    seconds: "{{count}} vteřinou"
+    seconds_1: "{{count}} vteřinami"
+    seconds_2: "{{count}} vteřinami"
+    minutes: "{{count}} minutou"
+    minutes_1: "{{count}} minutami"
+    minutes_2: "{{count}} minutami"
+    hours: "{{count}} hodinou"
+    hours_1: "{{count}} hodinami"
+    hours_2: "{{count}} hodinami"
+    days: "{{count}} dnem"
+    days_1: "{{count}} dny"
+    days_2: "{{count}} dny"
+
+  chat:
+    title: Chat
+    placeholder: K zahájení chatu klikněte sem!
+
+  dialogs:
+    confirm:
+      defaultConfirmLabel: OK
+      defaultCancelLabel: Zrušit
+
+    prompt:
+      defaultSubmitLabel: OK
+
+    logout:
+      title: null
+      action: Odhlásit se
+      confirm: Určitě se chcete odhlásit?
+
+    createPlaylist:
+      action: Vytvořit
+      nameInputTitle: Název playlistu
+
+    deletePlaylist:
+      action: Smazat
+      title: Smazat playlist
+      confirm: Určitě chcete tento playlist smazat?
+
+    renamePlaylist:
+      action: Přejmenovat
+      nameInputTitle: Název playlistu
+
+    editMedia:
+      title: Upravit médium
+      save: Uložit
+      artistLabel: Umělec
+      titleLabel: Název
+      playFromLabel: "Začít od:"
+      playToLabel: "do:"
+      errors:
+        invalidStartTime: Tento počáteční čas je neplatný.
+        invalidEndTime: Tento konečný čas je neplatný.
+        endTimeBeforeStart: Čas konce musí být po času začátku.
+        endTimeAfterSongEnd: Konečný čas nemůže být více než čas celé písničky.
+
+  media:
+    artist: Umělec
+    title: Název
+
+  playlists:
+    title: Playlisty
+    new: Vytvořit playlist
+    delete: Smazat playlist
+    noPlaylists: Zatím nemáš žádný playlist!
+    noPlaylistsCreate:  Zatím nemáš žádný playlist! Klikni sem a vytvoř si ho.
+    empty: "Tento playlist je prázdný. :("
+    active: Aktivní
+    activate: Aktivovat
+    shuffle: Zamíchat
+    filter: Filtrovat
+    rename: Přejmenovat
+    import:
+      title: Importovat
+    search:
+      action: Hledat
+      results: "Hledat: {{query}}"
+
+  eta:
+    empty: "z {{playlist}}"
+    playingNow: "právě hraje z {{playlist}}"
+    eta: "z {{playlist}} bude hrát za {{eta}}"
+
+  waitlist:
+    title: Fronta
+    join: Přidat se do fronty
+    leave: Opustit frontu
+
+  votes:
+    upvote: Dát hlas
+    downvote: Palec dolů
+    favorite: Oblíbit
+
+  booth:
+    empty: Nikdo nehraje!
+    currentDJ: "právě hraje: {{user}}"
+    skip:
+      self: Přeskočit svůj tah
+      other: "Přeskočit tah {{user}}"
+
+  history:
+    title: Historie hraného
+
+  users:
+    title: Místnost
+    guests: "a {{count}} návštěvník"
+    guests_1: "a {{count}} návštěvníci"
+    guests_2: "a {{count}} návštěvníků"
+
+  settings:
+    title: Nastavení
+    videoEnabled: Přehrávat Audio/Video
+    videoSize: Na celou obrazovku
+    mentionSound: Zvuky chatu
+    language: Jazyk
+    logout: Odhlásit se
+    profile:
+      username:
+        change: Změnit přezdívku
+        save: Uložit
+    links:
+      website: üWave
+      source: üWave Web Client Source Code
+      license: License
+
+  loading:
+    jsRequired: üWave vyžaduje JavaScript, aby mohl fungovat.
+
+  login:
+    login: Přihlásit se
+    register: Registrovat se
+    username: Přihlašovací jméno
+    email: E-mail
+    password: Heslo
+    forgotPassword: Zapomenuté heslo?

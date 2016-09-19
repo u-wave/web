@@ -1,0 +1,133 @@
+name: Nederlands (Dutch)
+
+uwave:
+  close: Sluiten
+  timeAgo:
+    format: "{{time}} geleden"
+    seconds: "{{count}} seconde"
+    seconds_plural: "{{count}} seconden"
+    minutes: "{{count}} minuut"
+    minutes_plural: "{{count}} minuten"
+    hours: "{{count}} uur"
+    days: "{{count}} dag"
+    days_plural: "{{count}} dagen"
+
+  chat:
+    title: Chat
+    placeholder: Klik hier om te chatten!
+
+  dialogs:
+    confirm:
+      defaultConfirmLabel: OK
+      defaultCancelLabel: Annuleren
+
+    prompt:
+      defaultSubmitLabel: OK
+
+    logout:
+      title: null
+      action: Uitloggen
+      confirm: Weet je zeker dat je uit wilt loggen?
+
+    createPlaylist:
+      action: Aanmaken
+      nameInputTitle: Naam
+
+    deletePlaylist:
+      action: Verwijder
+
+    renamePlaylist:
+      action: Wijzig Naam
+      nameInputTitle: Naam
+
+    editMedia:
+      title: Media Bewerken
+      save: Opslaan
+      artistLabel: Artiest
+      titleLabel: Titel
+      playFromLabel: "Speel van:"
+      playToLabel: "tot:"
+      errors:
+        invalidStartTime: Die begintijd klopt niet.
+        invalidEndTime: Die eindtijd klopt niet.
+        endTimeBeforeStart: De eindtijd moet ná de starttijd zijn.
+        endTimeAfterSongEnd: De eindtijd moet vóór het eind van het media-item zijn.
+
+  media:
+    artist: Artiest
+    title: Titel
+
+  playlists:
+    title: Afspeellijsten
+    new: Maak Afspeellijst
+    delete: Verwijder Afspeellijst
+    noPlaylists: Je hebt nog geen afspeellijsten!
+    noPlaylistsCreate: Je hebt nog geen afspeellijsten! Klik hier om er een aan te maken.
+    empty: "Deze afspeellijst is leeg :("
+    active: Actief
+    activate: Activeren
+    shuffle: Shuffle
+    filter: Filteren
+    rename: Naam Wijzigen
+    import:
+      title: Importeren
+    search:
+      action: Zoeken
+      results: "Zoekopdracht: {{query}}"
+
+  eta:
+    empty: "uit {{playlist}}"
+    playingNow: "nu spelend uit {{playlist}}"
+    eta: "spelend over {{eta}} uit {{playlist}}"
+
+  waitlist:
+    title: Wachtlijst
+    join: Join Wachtlijst
+    leave: Verlaat Wachtlijst
+
+  votes:
+    upvote: Upvoten
+    downvote: Downvoten
+    favorite: Favorieten
+
+  booth:
+    empty: Niemand is momenteel iets aan het spelen!
+    currentDJ: "gespeeld door: {{user}}"
+    skip:
+      self: Beurt overslaan
+      other: "{{user}}s beurt overslaan"
+
+  history:
+    title: Geschiedenis
+
+  users:
+    title: Room
+    guests: "en {{count}} gast"
+    guests_plural: "en {{count}} gasten"
+
+  settings:
+    title: Instellingen
+    videoEnabled: Audio/Video Afspelen
+    videoSize: Fullscreen Video
+    mentionSound: Chatnotificaties
+    language: Taal
+    logout: Uitloggen
+    profile:
+      username:
+        change: Gebruikersnaam wijzigen
+        save: Wijzigen
+    links:
+      website: üWave
+      source: üWave Web Client Source Code
+      license: License
+
+  loading:
+    jsRequired: üWave heeft JavaScript nodig.
+
+  login:
+    login: Inloggen
+    register: Registreren
+    username: Gebruikersnaam
+    email: E-mailadres
+    password: Wachtwoord
+    forgotPassword: Wachtwoord vergeten?

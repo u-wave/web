@@ -1,17 +1,17 @@
 import cx from 'classnames';
 import * as React from 'react';
+import { translate } from 'react-i18next';
 
-const inflect = n => (n !== 1 ? 's' : '');
-
-const GuestsRow = ({ className, guests }) => (
+const GuestsRow = ({ t, className, guests }) => (
   <div className={cx('UserRow', 'UserRow--guests', className)}>
-    and {guests} guest{inflect(guests)}
+    {t('users.guests', { count: guests })}
   </div>
 );
 
 GuestsRow.propTypes = {
+  t: React.PropTypes.func.isRequired,
   className: React.PropTypes.string,
   guests: React.PropTypes.number.isRequired
 };
 
-export default GuestsRow;
+export default translate()(GuestsRow);

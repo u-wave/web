@@ -1,5 +1,6 @@
 import cx from 'classnames';
-import React, { Component, PropTypes } from 'react';
+import * as React from 'react';
+import { translate } from 'react-i18next';
 
 import NextMedia from './NextMedia';
 import UserInfo from './UserInfo';
@@ -7,36 +8,38 @@ import SkipButton from './SkipButton';
 import WaitlistButton from './WaitlistButton';
 import ResponseBar from './Responses/Bar';
 
-export default class FooterBar extends Component {
+@translate()
+export default class FooterBar extends React.Component {
   static propTypes = {
-    className: PropTypes.string,
-    baseEta: PropTypes.number,
-    mediaEndTime: PropTypes.number,
-    nextMedia: PropTypes.object,
-    playlist: PropTypes.object,
-    user: PropTypes.object,
-    userInWaitlist: PropTypes.bool,
-    userIsDJ: PropTypes.bool,
-    currentDJ: PropTypes.object,
-    showSkip: PropTypes.bool,
-    waitlistIsLocked: PropTypes.bool,
-    voteStats: PropTypes.object,
+    t: React.PropTypes.func.isRequired,
+    className: React.PropTypes.string,
+    baseEta: React.PropTypes.number,
+    mediaEndTime: React.PropTypes.number,
+    nextMedia: React.PropTypes.object,
+    playlist: React.PropTypes.object,
+    user: React.PropTypes.object,
+    userInWaitlist: React.PropTypes.bool,
+    userIsDJ: React.PropTypes.bool,
+    currentDJ: React.PropTypes.object,
+    showSkip: React.PropTypes.bool,
+    waitlistIsLocked: React.PropTypes.bool,
+    voteStats: React.PropTypes.object,
 
-    openLoginDialog: PropTypes.func,
-    openRegisterDialog: PropTypes.func,
-    togglePlaylistManager: PropTypes.func,
-    toggleSettings: PropTypes.func,
-    joinWaitlist: PropTypes.func,
-    leaveWaitlist: PropTypes.func,
-    onSkipTurn: PropTypes.func.isRequired,
-    onModSkip: PropTypes.func.isRequired,
-    onFavorite: PropTypes.func,
-    onUpvote: PropTypes.func,
-    onDownvote: PropTypes.func
+    openLoginDialog: React.PropTypes.func,
+    openRegisterDialog: React.PropTypes.func,
+    togglePlaylistManager: React.PropTypes.func,
+    toggleSettings: React.PropTypes.func,
+    joinWaitlist: React.PropTypes.func,
+    leaveWaitlist: React.PropTypes.func,
+    onSkipTurn: React.PropTypes.func.isRequired,
+    onModSkip: React.PropTypes.func.isRequired,
+    onFavorite: React.PropTypes.func,
+    onUpvote: React.PropTypes.func,
+    onDownvote: React.PropTypes.func
   };
 
   static contextTypes = {
-    muiTheme: PropTypes.object
+    muiTheme: React.PropTypes.object
   };
 
   constructor(props) {
@@ -75,6 +78,7 @@ export default class FooterBar extends Component {
 
   render() {
     const {
+      t,
       openLoginDialog, openRegisterDialog,
       togglePlaylistManager, toggleSettings,
       onFavorite, onUpvote, onDownvote
@@ -100,6 +104,7 @@ export default class FooterBar extends Component {
             <NextMedia
               playlist={playlist}
               nextMedia={nextMedia}
+              userInWaitlist={userInWaitlist}
               userIsDJ={userIsDJ}
               baseEta={baseEta}
               mediaEndTime={mediaEndTime}
@@ -142,13 +147,13 @@ export default class FooterBar extends Component {
           className="FooterAuthButton FooterAuthButton--login"
           onClick={openLoginDialog}
         >
-          SIGN IN
+          {t('login.login').toUpperCase()}
         </button>
         <button
           className="FooterAuthButton FooterAuthButton--register"
           onClick={openRegisterDialog}
         >
-          REGISTER
+          {t('login.register').toUpperCase()}
         </button>
         <div className="FooterBar-guest">
           You have to log in if you want to play!

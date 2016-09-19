@@ -5,7 +5,6 @@
   height: 100%;
   width: 100%;
   z-index: 6;
-  overflow: hidden;
 
   @modifier from-bottom {
     top: auto;
@@ -23,6 +22,7 @@
 
   /* Animations!.. */
   @descendent enter {
+    overflow-y: hidden;
     height: 0%;
     &-active {
       transition: height 180ms ease-out;
@@ -30,6 +30,7 @@
     }
   }
   @descendent leave {
+    overflow-y: hidden;
     height: 100%;
     &-active {
       transition: height 180ms ease-in;

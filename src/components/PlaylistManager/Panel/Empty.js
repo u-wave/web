@@ -1,14 +1,16 @@
 import cx from 'classnames';
 import * as React from 'react';
+import { translate } from 'react-i18next';
 
-const EmptyPanel = ({ className }) => (
+const EmptyPanel = ({ t, className }) => (
   <div className={cx('PlaylistPanel', 'PlaylistPanel--empty', className)}>
-    You don't have a playlist yet!
+    {t('playlists.noPlaylists')}
   </div>
 );
 
 EmptyPanel.propTypes = {
+  t: React.PropTypes.func.isRequired,
   className: React.PropTypes.string
 };
 
-export default EmptyPanel;
+export default translate()(EmptyPanel);

@@ -1,10 +1,12 @@
 import cx from 'classnames';
 import * as React from 'react';
+import { translate } from 'react-i18next';
 import ImportIcon from 'material-ui/svg-icons/action/input';
 
 import Loader from '../../Loader';
 
 const PlaylistImportRow = ({
+  t,
   className,
   importing,
   onClick
@@ -28,7 +30,7 @@ const PlaylistImportRow = ({
       <div className={cx('PlaylistMenuRow', 'PlaylistMenuRow--import', className)}>
         <div className="PlaylistMenuRow-title">
           {icon}
-          Import
+          {t('playlists.import.title')}
         </div>
       </div>
     </button>
@@ -36,9 +38,10 @@ const PlaylistImportRow = ({
 };
 
 PlaylistImportRow.propTypes = {
+  t: React.PropTypes.func.isRequired,
   className: React.PropTypes.string,
   importing: React.PropTypes.bool,
   onClick: React.PropTypes.func.isRequired
 };
 
-export default PlaylistImportRow;
+export default translate()(PlaylistImportRow);

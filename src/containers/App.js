@@ -1,18 +1,26 @@
-import React, { Component, PropTypes } from 'react';
+import * as React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { I18nextProvider } from 'react-i18next';
+
+import createLocale from '../locale';
 
 import { closeAll } from '../actions/OverlayActionCreators';
 import { createTimer, stopTimer } from '../actions/TickerActionCreators';
 
-import { settingsSelector, muiThemeSelector } from '../selectors/settingSelectors';
+import {
+  settingsSelector,
+  languageSelector,
+  muiThemeSelector
+} from '../selectors/settingSelectors';
 import App from '../components/App';
 
 const mapStateToProps = createStructuredSelector({
   activeOverlay: state => state.activeOverlay,
   settings: settingsSelector,
+  language: languageSelector,
   muiTheme: muiThemeSelector
 });
 
@@ -25,17 +33,18 @@ function mapDispatchToProps(dispatch) {
 }
 
 @connect(mapStateToProps, mapDispatchToProps)
-export default class AppContainer extends Component {
+export default class AppContainer extends React.Component {
   static propTypes = {
-    mediaSources: PropTypes.object.isRequired,
-    muiTheme: PropTypes.object,
-    createTimer: PropTypes.func.isRequired,
-    stopTimer: PropTypes.func.isRequired
+    mediaSources: React.PropTypes.object.isRequired,
+    language: React.PropTypes.string,
+    muiTheme: React.PropTypes.object,
+    createTimer: React.PropTypes.func.isRequired,
+    stopTimer: React.PropTypes.func.isRequired
   };
 
   static childContextTypes = {
-    timerCallbacks: PropTypes.arrayOf(PropTypes.func),
-    mediaSources: PropTypes.object
+    timerCallbacks: React.PropTypes.arrayOf(React.PropTypes.func),
+    mediaSources: React.PropTypes.object
   };
 
   getChildContext() {
@@ -49,6 +58,13 @@ export default class AppContainer extends Component {
     // Start the clock! üWave stores the current time in the application state
     // primarily to make sure that different timers in the UI update simultaneously.
     this.timerCallbacks = this.props.createTimer();
+    this.locale = createLocale(this.props.language);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.language !== nextProps.language) {
+      this.locale.changeLanguage(nextProps.language);
+    }
   }
 
   componentWillUnmount() {
@@ -59,7 +75,9 @@ export default class AppContainer extends Component {
   render() {
     return (
       <MuiThemeProvider muiTheme={this.props.muiTheme}>
-        <App {...this.props} />
+        <I18nextProvider i18n={this.locale}>
+          <App {...this.props} />
+        </I18nextProvider>
       </MuiThemeProvider>
     );
   }

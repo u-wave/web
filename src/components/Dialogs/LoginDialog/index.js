@@ -1,5 +1,6 @@
 /* eslint-disable react/prefer-stateless-function */
-import React, { Component, PropTypes } from 'react';
+import * as React from 'react';
+import { translate } from 'react-i18next';
 import Dialog from 'material-ui/Dialog';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
@@ -12,23 +13,24 @@ const bodyStyle = {
   padding: 24
 };
 
-export default class LoginDialog extends Component {
+@translate()
+export default class LoginDialog extends React.Component {
   static propTypes = {
-    open: PropTypes.bool,
-    show: PropTypes.string,
-
-    onCloseDialog: PropTypes.func
+    t: React.PropTypes.func.isRequired,
+    open: React.PropTypes.bool,
+    show: React.PropTypes.string,
+    onCloseDialog: React.PropTypes.func
   };
 
   render() {
-    const { open, show, onCloseDialog } = this.props;
+    const { t, open, show, onCloseDialog } = this.props;
     let form;
     let title;
     if (show === 'register') {
-      title = 'Register';
+      title = t('login.register');
       form = <RegisterForm {...this.props} />;
     } else {
-      title = 'Sign in';
+      title = t('login.login');
       form = <LoginForm {...this.props} />;
     }
     return (

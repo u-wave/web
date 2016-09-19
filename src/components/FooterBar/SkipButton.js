@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { translate } from 'react-i18next';
+import compose from 'recompose/compose';
 import pure from 'recompose/pure';
 import IconButton from 'material-ui/IconButton';
 import SkipIcon from 'material-ui/svg-icons/av/skip-next';
@@ -8,10 +10,10 @@ const fullSizeStyle = {
   width: '100%'
 };
 
-const SkipButton = ({ userIsDJ, currentDJ, onClick }) => {
-  let message = 'Skip your turn';
+const SkipButton = ({ t, userIsDJ, currentDJ, onClick }) => {
+  let message = t('booth.skip.self');
   if (!userIsDJ) {
-    message = `Skip ${currentDJ.username}'s turn`;
+    message = t('booth.skip.other', { user: currentDJ.username });
   }
 
   return (
@@ -27,9 +29,13 @@ const SkipButton = ({ userIsDJ, currentDJ, onClick }) => {
 };
 
 SkipButton.propTypes = {
+  t: React.PropTypes.func.isRequired,
   userIsDJ: React.PropTypes.bool.isRequired,
   currentDJ: React.PropTypes.object.isRequired,
   onClick: React.PropTypes.func.isRequired
 };
 
-export default pure(SkipButton);
+export default compose(
+  translate(),
+  pure
+)(SkipButton);

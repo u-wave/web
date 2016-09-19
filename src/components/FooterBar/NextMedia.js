@@ -1,47 +1,70 @@
 import cx from 'classnames';
 import * as React from 'react';
+import { translate, Interpolate } from 'react-i18next';
+import compose from 'recompose/compose';
 import pure from 'recompose/pure';
 import SongTitle from '../SongTitle';
 import Eta from './Eta';
 
 const NextMedia = ({
-  className, playlist, nextMedia, userIsDJ,
-  baseEta, mediaEndTime,
+  t,
+  className,
+  playlist,
+  nextMedia,
+  userInWaitlist,
+  userIsDJ,
+  baseEta,
+  mediaEndTime,
   ...attrs
 }) => {
   if (!playlist) {
     return (
       <div className={cx('NextMedia', className)} {...attrs}>
-        You don't have a playlist yet! Click here to create one.
+        {t('playlists.noPlaylistsCreate')}
       </div>
     );
   }
 
-  const mediaEl = nextMedia ? <SongTitle {...nextMedia} />
-    : <div className="SongTitle">This playlist is empty :(</div>;
-  const playlistEl = <span className="NextMedia-playlist">{playlist.name}</span>;
+  let key = 'eta.empty';
+  if (userIsDJ) {
+    key = 'eta.playingNow';
+  } else if (userInWaitlist) {
+    key = 'eta.eta';
+  }
+
+  const mediaEl = nextMedia
+    ? <SongTitle {...nextMedia} />
+    : <div className="SongTitle">{t('playlists.empty')}</div>;
+  const playlistEl = (
+    <span className="NextMedia-playlist">{playlist.name}</span>
+  );
   const etaEl = (
-    <Eta
-      className="NextMedia-eta"
-      base={baseEta}
-      endTime={mediaEndTime}
-      nowPlaying={userIsDJ}
-    />
+    <Eta className="NextMedia-eta" base={baseEta} endTime={mediaEndTime} />
   );
   return (
     <div className={cx('NextMedia', className)} {...attrs}>
-      {mediaEl} from {playlistEl} {etaEl}
+      {mediaEl}
+      <Interpolate
+        i18nKey={key}
+        playlist={playlistEl}
+        eta={etaEl}
+      />
     </div>
   );
 };
 
 NextMedia.propTypes = {
+  t: React.PropTypes.func.isRequired,
   className: React.PropTypes.string,
   playlist: React.PropTypes.object,
   nextMedia: React.PropTypes.object,
-  userIsDJ: React.PropTypes.bool,
+  userInWaitlist: React.PropTypes.bool.isRequired,
+  userIsDJ: React.PropTypes.bool.isRequired,
   baseEta: React.PropTypes.number,
   mediaEndTime: React.PropTypes.number
 };
 
-export default pure(NextMedia);
+export default compose(
+  translate(),
+  pure
+)(NextMedia);

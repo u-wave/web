@@ -1,16 +1,15 @@
 import cx from 'classnames';
 import * as React from 'react';
+import compose from 'recompose/compose';
 import pure from 'recompose/pure';
 import formatDuration from '../../utils/formatDuration';
 import timed from '../../utils/timed';
 
-const getEtaText = eta => (eta > 0 ? `in ${formatDuration(eta)}` : '');
-
-const Eta = ({ className, base, currentTime, endTime, nowPlaying }) => {
+const Eta = ({ className, base, currentTime, endTime }) => {
   const currentRemaining = Math.floor((endTime - currentTime) / 1000);
   return (
     <span className={cx('Eta', className)}>
-      {nowPlaying ? 'playing now' : getEtaText(base + currentRemaining)}
+      {formatDuration(base + currentRemaining)}
     </span>
   );
 };
@@ -19,8 +18,10 @@ Eta.propTypes = {
   className: React.PropTypes.string,
   currentTime: React.PropTypes.number.isRequired,
   endTime: React.PropTypes.number,
-  base: React.PropTypes.number,
-  nowPlaying: React.PropTypes.bool
+  base: React.PropTypes.number
 };
 
-export default timed()(pure(Eta));
+export default compose(
+  timed(),
+  pure
+)(Eta);

@@ -2,6 +2,7 @@ import gulp from 'gulp';
 import { log } from 'gulp-util';
 import watch from 'gulp-watch';
 import babelify from 'babelify';
+import yamlify from 'yamlify';
 import browserify from 'browserify';
 import hmr from 'browserify-hmr';
 import watchify from 'watchify';
@@ -86,6 +87,7 @@ export default function watchTask() {
     cache: {},
     packageCache: {}
   });
+  watcher.transform(yamlify);
   watcher.transform(babelify, babelOptions);
   watcher.require('./src/utils/Promise', { expose: 'bluebird' });
   // So this is where Part 1 of the magic happens. Watchify watches our
