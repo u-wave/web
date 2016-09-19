@@ -14,6 +14,8 @@ const MENU_WIDTH = 280;
 const RANDOM_MUI_PADDING = 8;
 const SCROLLBAR_WIDTH = 7;
 
+const NEW_PLAYLIST = {};
+
 const positionInsideWindow = (position, expectedHeight) => {
   const constrained = { x: position.x, y: position.y };
   const h = Math.min(expectedHeight, MENU_HEIGHT);
@@ -52,11 +54,11 @@ export default class PlaylistsMenu extends React.Component {
   };
 
   handleSelect = (e, item) => {
-    if (item.props.isNewPlaylist) {
+    const playlistID = item.props.value;
+    if (playlistID === NEW_PLAYLIST) {
       this.props.onCreatePlaylist();
       return;
     }
-    const playlistID = item.props.value;
     this.props.onClose();
     this.props.onSelect(
       find(this.props.playlists, pl => pl._id === playlistID)
@@ -84,8 +86,8 @@ export default class PlaylistsMenu extends React.Component {
             onItemTouchTap={this.handleSelect}
           >
             <MenuItem
-              isNewPlaylist
               style={menuItemStyle}
+              value={NEW_PLAYLIST}
               leftIcon={<CreatePlaylistIcon color="#fff" />}
               primaryText={t('playlists.new')}
             />

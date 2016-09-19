@@ -23,9 +23,8 @@ class SourcePicker extends React.Component {
   createElement(sourceName) {
     const { selected, onChange } = this.props;
     return (
-      <div className="SourcePicker-item">
+      <div className="SourcePicker-item" key={sourceName}>
         <SourcePickerElement
-          key={sourceName}
           name={sourceName}
           active={selected === sourceName}
           onSelect={() => onChange(sourceName)}

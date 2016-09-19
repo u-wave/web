@@ -119,7 +119,7 @@ export default class EditMediaDialog extends React.Component {
           defaultValue={media.artist}
           icon={<ArtistIcon color="#9f9d9e" />}
           tabIndex={baseTabIndex}
-          autofocus
+          autoFocus
         />
       );
       const artistTitleLabel = (

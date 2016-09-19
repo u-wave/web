@@ -2,7 +2,13 @@ import cx from 'classnames';
 import * as React from 'react';
 import CloseButton from './Close';
 
-const Header = ({ className, title, children, onCloseOverlay, direction = 'bottom' }) => (
+const Header = ({
+  className,
+  title,
+  children,
+  onCloseOverlay,
+  direction = 'bottom'
+}) => (
   <div className={cx('OverlayHeader', className)}>
     <div className="OverlayHeader-title">
       {title.toUpperCase()}
@@ -21,8 +27,8 @@ const Header = ({ className, title, children, onCloseOverlay, direction = 'botto
 Header.propTypes = {
   className: React.PropTypes.string,
   title: React.PropTypes.string.isRequired,
-  children: React.PropTypes.node.isRequired,
-  direction: React.PropTypes.string.isRequired,
+  children: React.PropTypes.node,
+  direction: React.PropTypes.string,
   onCloseOverlay: React.PropTypes.func.isRequired
 };
 

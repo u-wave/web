@@ -20,6 +20,7 @@ const LanguagePicker = (props, { i18n }) => (
   >
     {i18n.availableLanguages.map(lang => (
       <MenuItem
+        key={lang}
         style={itemStyle}
         value={lang}
         primaryText={getResourceName(i18n, lang)}

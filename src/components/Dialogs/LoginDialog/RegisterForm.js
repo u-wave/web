@@ -88,7 +88,7 @@ export default class RegisterForm extends React.Component {
             className="RegisterForm-field"
             placeholder={t('login.username')}
             icon={<UserIcon color="#9f9d9e" />}
-            autofocus
+            autoFocus
           />
         </FormGroup>
         <FormGroup>

@@ -18,11 +18,11 @@ export default class FooterBar extends React.Component {
     nextMedia: React.PropTypes.object,
     playlist: React.PropTypes.object,
     user: React.PropTypes.object,
-    userInWaitlist: React.PropTypes.bool,
-    userIsDJ: React.PropTypes.bool,
+    userInWaitlist: React.PropTypes.bool.isRequired,
+    userIsDJ: React.PropTypes.bool.isRequired,
     currentDJ: React.PropTypes.object,
     showSkip: React.PropTypes.bool,
-    waitlistIsLocked: React.PropTypes.bool,
+    waitlistIsLocked: React.PropTypes.bool.isRequired,
     voteStats: React.PropTypes.object,
 
     openLoginDialog: React.PropTypes.func,
@@ -100,7 +100,10 @@ export default class FooterBar extends React.Component {
               onClick={toggleSettings}
             />
           </div>
-          <div className="FooterBar-next">
+          <button
+            className="FooterBar-next"
+            onClick={togglePlaylistManager}
+          >
             <NextMedia
               playlist={playlist}
               nextMedia={nextMedia}
@@ -108,9 +111,8 @@ export default class FooterBar extends React.Component {
               userIsDJ={userIsDJ}
               baseEta={baseEta}
               mediaEndTime={mediaEndTime}
-              onClick={togglePlaylistManager}
             />
-          </div>
+          </button>
           <div
             className={cx(
               'FooterBar-responses',

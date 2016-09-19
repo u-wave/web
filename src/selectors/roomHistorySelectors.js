@@ -18,9 +18,10 @@ const addOwnVoteProps = id => entry => ({
   ...entry,
   stats: {
     ...entry.stats,
-    isDownvote: entry.stats.downvotes.indexOf(id) > -1,
-    isFavorite: entry.stats.favorites.indexOf(id) > -1,
-    isUpvote: entry.stats.upvotes.indexOf(id) > -1
+    // No ID is provided for guest users.
+    isDownvote: !!id && entry.stats.downvotes.indexOf(id) > -1,
+    isFavorite: !!id && entry.stats.favorites.indexOf(id) > -1,
+    isUpvote: !!id && entry.stats.upvotes.indexOf(id) > -1
   }
 });
 
@@ -42,7 +43,7 @@ export const currentPlaySelector = createSelector(
       timestamp,
       stats
     };
-    return user ? addOwnVoteProps(user._id)(entry) : entry;
+    return addOwnVoteProps(user ? user._id : null)(entry);
   }
 );
 
@@ -51,7 +52,7 @@ export const roomHistoryWithVotesSelector = createSelector(
   currentUserSelector,
   currentPlaySelector,
   (history, user, current) => {
-    const roomHistory = user ? history.map(addOwnVoteProps(user._id)) : history;
+    const roomHistory = history.map(addOwnVoteProps(user ? user._id : null));
     if (current) {
       roomHistory.unshift(current);
     }

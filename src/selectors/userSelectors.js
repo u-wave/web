@@ -9,6 +9,7 @@ export const usersSelector = createSelector(usersBaseSelector, base => base.user
 
 export const authErrorSelector = createSelector(authSelector, auth => auth.error);
 export const currentUserSelector = createSelector(authSelector, auth => auth.user);
+export const isLoggedInSelector = createSelector(currentUserSelector, Boolean);
 export const tokenSelector = createSelector(authSelector, auth => auth.jwt);
 
 const currentRoleSelector = createSelector(

@@ -55,7 +55,9 @@ export const djSelector = createSelector(
 export const isCurrentDJSelector = createSelector(
   djSelector,
   currentUserSelector,
-  (dj, me) => dj && me && dj._id === me._id
+  (dj, me) => (
+    dj && me ? dj._id === me._id : false
+  )
 );
 
 // TODO use a permissions-based system instead of role IDs:

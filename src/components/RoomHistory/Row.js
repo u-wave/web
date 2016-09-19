@@ -37,6 +37,7 @@ export default class HistoryRow extends React.Component {
     selection: React.PropTypes.array,
 
     onOpenPreviewMediaDialog: React.PropTypes.func,
+    onClick: React.PropTypes.func,
     makeActions: React.PropTypes.func
   };
 
@@ -67,12 +68,14 @@ export default class HistoryRow extends React.Component {
   render() {
     const {
       media: historyEntry,
-      className, selection, selected,
+      className,
+      selection,
+      selected,
       connectDragSource,
       // actions
       makeActions,
       // etc
-      ...attrs
+      onClick
     } = this.props;
     const { media, timestamp, user, stats } = historyEntry;
     const { showActions } = this.state;
@@ -87,12 +90,14 @@ export default class HistoryRow extends React.Component {
       </div>
     );
     return connectDragSource(
+      // See PlaylistManager/Panel/Row.js
+      // eslint-disable-next-line jsx-a11y/no-static-element-interactions
       <div
         className={cx('MediaListRow', 'HistoryRow', className, selectedClass)}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
         onDoubleClick={this.handleDoubleClick}
-        {...attrs}
+        onClick={onClick}
       >
         {thumbnail}
         <SongTitle

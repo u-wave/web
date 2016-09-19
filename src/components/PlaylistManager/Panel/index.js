@@ -105,7 +105,7 @@ const PlaylistPanel = (props) => {
 PlaylistPanel.propTypes = {
   className: React.PropTypes.string,
   playlist: React.PropTypes.object.isRequired,
-  media: React.PropTypes.object.isRequired,
+  media: React.PropTypes.array.isRequired,
   loading: React.PropTypes.bool.isRequired,
   isFiltered: React.PropTypes.bool.isRequired,
   onShufflePlaylist: React.PropTypes.func.isRequired,

@@ -53,7 +53,7 @@ SearchResults.propTypes = {
   t: React.PropTypes.func.isRequired,
   className: React.PropTypes.string,
   query: React.PropTypes.string.isRequired,
-  results: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
+  results: React.PropTypes.arrayOf(React.PropTypes.object),
   loadingState: React.PropTypes.oneOf([ IDLE, LOADING, LOADED ]).isRequired,
   onOpenAddMediaMenu: React.PropTypes.func.isRequired,
   onOpenPreviewMediaDialog: React.PropTypes.func.isRequired

@@ -34,6 +34,7 @@ export default class Row extends React.Component {
     selection: React.PropTypes.array,
 
     onOpenPreviewMediaDialog: React.PropTypes.func,
+    onClick: React.PropTypes.func,
     makeActions: React.PropTypes.func
   };
 
@@ -80,12 +81,15 @@ export default class Row extends React.Component {
 
   render() {
     const {
-      className, media, selection, selected,
+      className,
+      media,
+      selection,
+      selected,
       connectDragSource,
       // actions
       makeActions,
       // etc
-      ...attrs
+      onClick
     } = this.props;
     const { showActions } = this.state;
     const selectedClass = selected ? 'is-selected' : '';
@@ -95,13 +99,18 @@ export default class Row extends React.Component {
       ? media.end - media.start
       // search result
       : media.duration;
+
     return connectDragSource(
+      // Bit uneasy about this, but turning the entire row into a button seems
+      // wrong as well! Since we nest media action <button>s inside it, too.
+      //
+      // eslint-disable-next-line jsx-a11y/no-static-element-interactions
       <div
         className={cx('MediaListRow', className, selectedClass, loadingClass)}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
         onDoubleClick={this.handleDoubleClick}
-        {...attrs}
+        onClick={onClick}
       >
         {this.renderThumbnail()}
         <div className="MediaListRow-artist" title={media.artist}>

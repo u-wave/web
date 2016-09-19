@@ -15,7 +15,7 @@ import {
 } from '../selectors/chatSelectors';
 import {
   userListSelector,
-  currentUserSelector
+  isLoggedInSelector
 } from '../selectors/userSelectors';
 
 import Chat from '../components/Chat';
@@ -25,7 +25,7 @@ const mapStateToProps = createStructuredSelector({
   motd: motdSelector,
   messages: messagesSelector,
   compileOptions: markupCompilerOptionsSelector,
-  currentUser: currentUserSelector,
+  isLoggedIn: isLoggedInSelector,
   mentionableUsers: userListSelector,
   mentionableGroups: availableGroupMentionsSelector,
   availableEmoji: emojiCompletionsSelector
@@ -39,7 +39,7 @@ const ChatContainer = ({
   mentionableUsers,
   mentionableGroups,
   availableEmoji,
-  currentUser,
+  isLoggedIn,
   onSend,
   ...props
 }) => (
@@ -48,7 +48,7 @@ const ChatContainer = ({
       <Chat {...props} />
     </div>
     <div className="AppRow AppRow--bottom ChatInputWrapper">
-      {!!currentUser && (
+      {isLoggedIn && (
         <ChatInput
           onSend={onSend}
           mentionableUsers={mentionableUsers}
@@ -64,7 +64,7 @@ ChatContainer.propTypes = {
   mentionableUsers: React.PropTypes.array.isRequired,
   mentionableGroups: React.PropTypes.array.isRequired,
   availableEmoji: React.PropTypes.array.isRequired,
-  currentUser: React.PropTypes.object.isRequired,
+  isLoggedIn: React.PropTypes.bool.isRequired,
   onSend: React.PropTypes.func.isRequired
 };
 
