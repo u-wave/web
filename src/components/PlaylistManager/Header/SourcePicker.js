@@ -23,13 +23,16 @@ class SourcePicker extends React.Component {
   createElement(sourceName) {
     const { selected, onChange } = this.props;
     return (
-      <div className="SourcePicker-item" key={sourceName}>
+      <button
+        className="SourcePicker-item"
+        key={sourceName}
+        onClick={() => onChange(sourceName)}
+      >
         <SourcePickerElement
           name={sourceName}
           active={selected === sourceName}
-          onSelect={() => onChange(sourceName)}
         />
-      </div>
+      </button>
     );
   }
 
@@ -62,19 +65,23 @@ class SourcePicker extends React.Component {
       .map(name => this.createElement(name));
 
     return (
-      <button
-        ref={this.refContainer}
+      <div
         className={cx('SourcePicker', className)}
-        onClick={this.handleOpen}
+        ref={this.refContainer}
       >
-        <SourcePickerElement
-          name={selected}
-          active
-        />
-        <ArrowIcon
-          color={muiTheme.palette.textColor}
-          style={{ height: '100%' }}
-        />
+        <button
+          className="SourcePicker-active"
+          onClick={this.handleOpen}
+        >
+          <SourcePickerElement
+            name={selected}
+            active
+          />
+          <ArrowIcon
+            color={muiTheme.palette.textColor}
+            style={{ height: '100%' }}
+          />
+        </button>
         <Popover
           className="SourcePicker-list"
           open={this.state.open}
@@ -83,7 +90,7 @@ class SourcePicker extends React.Component {
         >
           {sources}
         </Popover>
-      </button>
+      </div>
     );
   }
 }
