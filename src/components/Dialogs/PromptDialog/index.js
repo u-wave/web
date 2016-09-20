@@ -92,7 +92,7 @@ export default class PromptDialog extends React.Component {
           <FormGroup>
             <TextField
               ref={this.refInput}
-              autofocus
+              autoFocus
               type={inputType}
               placeholder={placeholder}
               icon={icon}

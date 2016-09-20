@@ -43,7 +43,7 @@ const PreviewMediaDialog = ({
 PreviewMediaDialog.propTypes = {
   open: React.PropTypes.bool,
   media: React.PropTypes.object,
-  volume: React.PropTypes.volume,
+  volume: React.PropTypes.number,
 
   onCloseDialog: React.PropTypes.func.isRequired
 };

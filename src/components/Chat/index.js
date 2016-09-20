@@ -7,7 +7,7 @@ import Motd from './Motd';
 export default class Chat extends Component {
   static propTypes = {
     messages: PropTypes.array,
-    motd: PropTypes.node,
+    motd: PropTypes.array,
     compileOptions: PropTypes.shape({
       availableEmoji: PropTypes.array,
       emojiImages: PropTypes.object

@@ -23,12 +23,10 @@ const iconStyle = { verticalAlign: 'top' };
 
 const linkProps = {
   style: linkStyle,
-  linkButton: true,
   target: '_blank',
   labelPosition: 'after',
   backgroundColor: 'transparent',
-  hoverColor: 'transparent',
-  textTransform: 'none'
+  hoverColor: 'transparent'
 };
 
 class SettingsPanel extends React.Component {

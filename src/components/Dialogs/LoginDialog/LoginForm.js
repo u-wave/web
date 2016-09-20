@@ -53,7 +53,7 @@ export default class LoginForm extends React.Component {
             type="email"
             placeholder={t('login.email')}
             icon={<EmailIcon color="#9f9d9e" />}
-            autofocus
+            autoFocus
           />
         </FormGroup>
         <FormGroup>

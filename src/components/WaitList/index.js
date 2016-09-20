@@ -43,7 +43,7 @@ const WaitList = ({
 WaitList.propTypes = {
   className: React.PropTypes.string,
   users: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
-  canMoveUsers: React.PropTypes.boolean,
+  canMoveUsers: React.PropTypes.bool.isRequired,
   onMoveUser: React.PropTypes.func.isRequired,
   onRemoveUser: React.PropTypes.func.isRequired
 };

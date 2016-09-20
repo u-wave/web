@@ -10,7 +10,7 @@ const Motd = ({ children, compileOptions }) => (
 );
 
 Motd.propTypes = {
-  children: React.PropTypes.node.isRequired,
+  children: React.PropTypes.array.isRequired,
   compileOptions: React.PropTypes.shape({
     availableEmoji: React.PropTypes.array,
     emojiImages: React.PropTypes.object

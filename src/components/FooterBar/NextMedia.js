@@ -14,12 +14,11 @@ const NextMedia = ({
   userInWaitlist,
   userIsDJ,
   baseEta,
-  mediaEndTime,
-  ...attrs
+  mediaEndTime
 }) => {
   if (!playlist) {
     return (
-      <div className={cx('NextMedia', className)} {...attrs}>
+      <div className={cx('NextMedia', className)}>
         {t('playlists.noPlaylistsCreate')}
       </div>
     );
@@ -42,7 +41,7 @@ const NextMedia = ({
     <Eta className="NextMedia-eta" base={baseEta} endTime={mediaEndTime} />
   );
   return (
-    <div className={cx('NextMedia', className)} {...attrs}>
+    <div className={cx('NextMedia', className)}>
       {mediaEl}
       <Interpolate
         i18nKey={key}

@@ -6,9 +6,17 @@ import SearchResultsRow from './SearchResultsRow';
 import PlaylistImportRow from './PlaylistImportRow';
 
 const Menu = ({
-  className, playlists, searchQuery, searchResults,
-  selected, showSearchResults, showImportPanel,
-  onCreatePlaylist, onSelectPlaylist, onSelectSearchResults, onAddToPlaylist,
+  className,
+  playlists,
+  selected,
+  searchQuery,
+  showSearchResults,
+  searchResults,
+  onCreatePlaylist,
+  onSelectPlaylist,
+  onSelectSearchResults,
+  onAddToPlaylist,
+  showImportPanel,
   onShowImportPanel
 }) => {
   const searchIsSelected = showSearchResults ? 'is-selected' : '';
@@ -55,8 +63,8 @@ Menu.propTypes = {
   selected: React.PropTypes.object.isRequired,
   showSearchResults: React.PropTypes.bool.isRequired,
   showImportPanel: React.PropTypes.bool.isRequired,
-  searchQuery: React.PropTypes.string.isRequired,
-  searchResults: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
+  searchQuery: React.PropTypes.string,
+  searchResults: React.PropTypes.number,
   onCreatePlaylist: React.PropTypes.func.isRequired,
   onSelectPlaylist: React.PropTypes.func.isRequired,
   onSelectSearchResults: React.PropTypes.func.isRequired,

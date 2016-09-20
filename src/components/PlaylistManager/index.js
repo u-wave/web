@@ -26,7 +26,7 @@ export default class PlaylistManager extends Component {
 
     searchSource: PropTypes.string,
     searchQuery: PropTypes.string,
-    searchResults: PropTypes.object,
+    searchResults: PropTypes.array,
     searchLoadingState: PropTypes.oneOf([ IDLE, LOADING, LOADED ]),
 
     onCloseOverlay: PropTypes.func,
