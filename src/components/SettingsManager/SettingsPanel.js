@@ -125,14 +125,14 @@ class SettingsPanel extends React.Component {
             <GithubIcon style={iconStyle} />
           </FlatButton>
           <FlatButton
-            href="https://github.com/u-wave/u-wave-web"
+            href="https://github.com/u-wave/web"
             label={t('settings.links.source')}
             {...linkProps}
           >
             <GithubIcon style={iconStyle} />
           </FlatButton>
           <FlatButton
-            href="https://github.com/u-wave/u-wave-web/tree/master/LICENSE"
+            href="https://github.com/u-wave/web/tree/master/LICENSE"
             label={t('settings.links.license')}
             {...linkProps}
           >
