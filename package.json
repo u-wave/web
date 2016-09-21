@@ -80,7 +80,6 @@
     "chai": "^3.4.1",
     "cssnano": "^3.3.1",
     "del": "^2.0.2",
-    "emojione": "^2.1.3",
     "eslint": "^3.3.1",
     "eslint-config-airbnb": "^11.0.0",
     "eslint-config-airbnb-base": "^7.0.0",
@@ -122,6 +121,7 @@
     "through2": "^2.0.1",
     "u-wave-source-soundcloud": "^1.0.0",
     "u-wave-source-youtube": "^1.0.0",
+    "u-wave-web-emojione": "^1.0.0",
     "uglifyify": "^3.0.1",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.4.0"

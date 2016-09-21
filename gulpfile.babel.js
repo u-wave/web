@@ -24,7 +24,6 @@ gulp.task('html', exec('copy-html'));
 
 gulp.task('clean', exec('clean-all'));
 
-gulp.task('assets:emoji', exec('make-emoji'));
 gulp.task('assets', exec('copy-assets'));
 
 gulp.task('watch', exec('watch'));
