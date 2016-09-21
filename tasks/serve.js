@@ -1,4 +1,5 @@
 import 'loud-rejection/register';
+import emojione from 'u-wave-web-emojione';
 import express from 'express';
 import { Buffer } from 'buffer';
 
@@ -25,14 +26,6 @@ export default function serveTask({ port = config.port }) {
     'Could not find the client middleware. Did you run `npm run build`?'
   );
 
-  let emoji = {};
-  try {
-    emoji = require('../lib/emoji.json');
-  } catch (e) {
-    console.warn('No precompiled Emoji set found: emoji disabled.');
-    console.warn('To enable emoji on the dev server, run `gulp assets`.');
-  }
-
   const ytSource = require('u-wave-source-youtube');
   const scSource = require('u-wave-source-soundcloud');
 
@@ -52,9 +45,10 @@ export default function serveTask({ port = config.port }) {
       server,
       secret: new Buffer('none', 'utf8')
     }))
+    .use('/assets/emoji/', emojione.middleware())
     .use(createWebClient(uw, {
       apiUrl,
-      emoji
+      emoji: emojione.emoji
     }));
 
   uw.on('stopped', () => {
