@@ -57,7 +57,7 @@ export default function exposePluginDependencies(b, exposeModules) {
     // Expose (local) web client modules.
     // FIXME Should add an option to exposePluginDependencies to do this in a less
     // hacky manner.
-    const uwMatch = modulePath.match(/^src\/(.*?)$/);
+    const uwMatch = modulePath.match(/^(?:lib|src)\/(.*?)$/);
     if (uwMatch) {
       if (shouldIncludeSubModule(exposeModules, 'u-wave-web', `lib/${uwMatch[1]}`)) {
         this.push(expose(row.id, `u-wave-web/lib/${uwMatch[1].replace(/(\/index)?\.js$/, '')}`));
