@@ -42,6 +42,10 @@ export default class YouTubePlayerEmbed extends React.Component {
     event.target.setPlaybackRate(1);
   };
 
+  handleYTPause = (event) => {
+    event.target.playVideo();
+  };
+
   refPlayer = (player) => {
     this.player = player;
   };
@@ -70,6 +74,7 @@ export default class YouTubePlayerEmbed extends React.Component {
         videoId={active ? media.sourceID : null}
         opts={opts}
         onReady={this.handleYTReady}
+        onPause={this.handleYTPause}
       />
     );
   }
