@@ -47,9 +47,9 @@ export function joinWaitlist(user) {
     // TODO don't post an object at all once the API server supports it
     return dispatch(post('/waitlist', { userID: user._id }, {
       onStart: () => ({ type: DO_JOIN_START }),
-      onComplete: waitlist => ({
+      onComplete: ({ data }) => ({
         type: DO_JOIN_COMPLETE,
-        payload: { waitlist }
+        payload: { waitlist: data }
       }),
       onError: error => ({
         type: DO_JOIN_COMPLETE,
@@ -74,9 +74,9 @@ export function leaveWaitlist(user) {
     }
     return dispatch(del(`/waitlist/${user._id}`, {}, {
       onStart: () => ({ type: DO_LEAVE_START }),
-      onComplete: waitlist => ({
+      onComplete: ({ data }) => ({
         type: DO_LEAVE_COMPLETE,
-        payload: { waitlist }
+        payload: { waitlist: data }
       }),
       onError: error => ({
         type: DO_LEAVE_COMPLETE,
@@ -111,9 +111,9 @@ function putLock(status) {
       type: DO_LOCK_START,
       payload: { locked: status }
     }),
-    onComplete: res => ({
+    onComplete: ({ data }) => ({
       type: DO_LOCK_COMPLETE,
-      payload: { locked: res.locked }
+      payload: { locked: data.locked }
     }),
     onError: error => ({
       type: DO_LOCK_COMPLETE,

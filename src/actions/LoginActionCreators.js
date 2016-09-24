@@ -108,8 +108,8 @@ export function login({ email, password }) {
   return post('/auth/login', { email, password }, {
     onStart: loginStart,
     onComplete: res => (dispatch) => {
-      Session.set(res.jwt);
-      dispatch(setJWT(res.jwt));
+      Session.set(res.meta.jwt);
+      dispatch(setJWT(res.meta.jwt));
       dispatch(initState());
     },
     onError: error => ({
@@ -123,7 +123,8 @@ export function login({ email, password }) {
 export function register({ email, username, password, grecaptcha }) {
   return post('/auth/register', { email, username, password, grecaptcha }, {
     onStart: () => ({ type: REGISTER_START }),
-    onComplete: user => (dispatch) => {
+    onComplete: res => (dispatch) => {
+      const user = res.data;
       debug('registered', user);
       dispatch({
         type: REGISTER_COMPLETE,

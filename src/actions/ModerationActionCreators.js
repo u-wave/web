@@ -249,7 +249,7 @@ export function banUser(user, { duration = 24 * 60 * 60 * 1000, permanent = fals
   const userID = typeof user === 'object' ? user._id : user;
   return post('/bans', { userID, duration, permanent }, {
     onStart: () => banUserStart(userID, duration, permanent),
-    onComplete: banUserComplete,
+    onComplete: ({ data }) => banUserComplete(data),
     onError: error => ({
       type: BAN_USER_COMPLETE,
       error: true,

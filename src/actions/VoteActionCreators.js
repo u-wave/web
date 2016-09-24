@@ -9,6 +9,7 @@ import {
   DO_FAVORITE_START, DO_FAVORITE_COMPLETE,
   DO_UPVOTE, DO_DOWNVOTE
 } from '../constants/actionTypes/votes';
+import mergeIncludedModels from '../utils/mergeIncludedModels';
 
 import { flattenPlaylistItem } from './PlaylistActionCreators';
 
@@ -81,7 +82,11 @@ export function favoriteMedia(playlist, historyID) {
   const playlistID = playlist._id;
   return post('/booth/favorite', { historyID, playlistID }, {
     onStart: () => favoriteMediaStart(playlistID, historyID),
-    onComplete: changes => favoriteMediaComplete(playlistID, historyID, changes),
+    onComplete: res =>
+      favoriteMediaComplete(playlistID, historyID, {
+        added: mergeIncludedModels(res),
+        playlistSize: res.meta.playlistSize
+      }),
     onError: error => ({
       type: DO_FAVORITE_COMPLETE,
       error: true,

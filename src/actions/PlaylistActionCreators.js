@@ -29,6 +29,7 @@ import {
   activePlaylistSelector,
   selectedPlaylistSelector
 } from '../selectors/playlistSelectors';
+import mergeIncludedModels from '../utils/mergeIncludedModels';
 
 const MEDIA_PAGE_SIZE = 50;
 
@@ -68,7 +69,7 @@ export function loadPlaylist(playlistID, page = 0) {
     onStart: () => loadPlaylistStart(playlistID, page),
     onComplete: res => loadPlaylistComplete(
       playlistID,
-      res.data.map(flattenPlaylistItem),
+      mergeIncludedModels(res).map(flattenPlaylistItem),
       {
         page: res.meta.offset / res.meta.pageSize,
         pageSize: res.meta.pageSize,
@@ -108,7 +109,7 @@ export function loadFilteredPlaylistItems(playlistID, page = 0) {
       onStart: () => filterPlaylistItemsStart(playlistID, page, filter),
       onComplete: res => filterPlaylistItemsComplete(
         playlistID,
-        res.data.map(flattenPlaylistItem),
+        mergeIncludedModels(res).map(flattenPlaylistItem),
         {
           page: res.meta.offset / res.meta.pageSize,
           pageSize: res.meta.pageSize,
@@ -238,7 +239,7 @@ export function loadPlaylistsComplete(playlists) {
 export function loadPlaylists() {
   return get('/playlists', {
     onStart: loadPlaylistsStart,
-    onComplete: loadPlaylistsComplete,
+    onComplete: res => loadPlaylistsComplete(res.data),
     onError: error => ({
       type: LOAD_ALL_PLAYLISTS_COMPLETE,
       error: true,
@@ -270,7 +271,8 @@ export function createPlaylist(name) {
 
   return post('/playlists', { name, description, shared }, {
     onStart: () => createPlaylistStart({ name, description, shared }, tempId),
-    onComplete: playlist => (dispatch, getState) => {
+    onComplete: res => (dispatch, getState) => {
+      const playlist = res.data;
       const isFirstPlaylist = !activePlaylistIDSelector(getState());
       dispatch(createPlaylistComplete(playlist, tempId));
       if (isFirstPlaylist) {
@@ -293,9 +295,9 @@ export function renamePlaylist(playlistID, name) {
       type: RENAME_PLAYLIST_START,
       payload: { playlistID, name }
     }),
-    onComplete: playlist => ({
+    onComplete: ({ data }) => ({
       type: RENAME_PLAYLIST_COMPLETE,
-      payload: { playlistID, name: playlist.name }
+      payload: { playlistID, name: data.name }
     }),
     onError: error => ({
       type: RENAME_PLAYLIST_COMPLETE,
@@ -435,10 +437,10 @@ export function addMedia(playlist, items, afterID = null) {
 
   return post(`/playlists/${playlist._id}/media`, payload, {
     onStart: () => addMediaStart(playlist._id, items, afterID),
-    onComplete: ({ added, playlistSize }) => addMediaComplete(
+    onComplete: res => addMediaComplete(
       playlist._id,
-      playlistSize,
-      { afterID, media: added.map(flattenPlaylistItem) }
+      res.meta.playlistSize,
+      { afterID, media: mergeIncludedModels(res).map(flattenPlaylistItem) }
     ),
     onError: error => ({
       type: ADD_MEDIA_COMPLETE,
@@ -469,7 +471,7 @@ export function updateMediaComplete(playlistID, mediaID, media) {
 export function updateMedia(playlistID, mediaID, props) {
   return put(`/playlists/${playlistID}/media/${mediaID}`, props, {
     onStart: () => updateMediaStart(playlistID, mediaID, props),
-    onComplete: media => updateMediaComplete(playlistID, mediaID, media),
+    onComplete: res => updateMediaComplete(playlistID, mediaID, res.data),
     onError: error => ({
       type: UPDATE_MEDIA_COMPLETE,
       payload: error,
@@ -501,9 +503,9 @@ export function removeMedia(playlistID, items) {
   const itemIDs = items.map(media => media._id);
   return del(`/playlists/${playlistID}/media`, { items: itemIDs }, {
     onStart: () => removeMediaStart(playlistID, items),
-    onComplete: ({ playlistSize }) => removeMediaComplete(
+    onComplete: ({ meta }) => removeMediaComplete(
       playlistID,
-      playlistSize,
+      meta.playlistSize,
       items
     ),
     onError: error => ({
