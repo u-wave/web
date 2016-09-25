@@ -13,24 +13,28 @@ describe('reducers/roomHistory', () => {
     );
   });
 
+  const userModel = {
+    _id: '563ba1e3f059363574f4d0d9',
+    slug: 'narahye',
+    username: 'Narahye'
+  };
+
+  const mediaModel = {
+    _id: '56b11d3ad6bfe93733bece64',
+    sourceType: 'youtube',
+    sourceID: 'B7TlT1O7kjs',
+    artist: '[ 타블로 디스 ] Superbee (슈퍼비)',
+    title: '앰뷸런스 Ambulance',
+    thumbnail: 'https://i.ytimg.com/vi/B7TlT1O7kjs/hqdefault.jpg',
+    duration: 201
+  };
+
   const serverHistoryEntry = {
     _id: '56b12b90d6bfe93733bece96',
-    user: {
-      _id: '563ba1e3f059363574f4d0d9',
-      slug: 'narahye',
-      username: 'Narahye'
-    },
+    user: userModel._id,
     media: {
       _id: '56b11d3ad6bfe93733bece65',
-      media: {
-        _id: '56b11d3ad6bfe93733bece64',
-        sourceType: 'youtube',
-        sourceID: 'B7TlT1O7kjs',
-        artist: '[ 타블로 디스 ] Superbee (슈퍼비)',
-        title: '앰뷸런스 Ambulance',
-        thumbnail: 'https://i.ytimg.com/vi/B7TlT1O7kjs/hqdefault.jpg',
-        duration: 201
-      },
+      media: mediaModel._id,
       artist: 'Superbee (슈퍼비)',
       title: '앰뷸런스 Ambulance',
       end: 201,
@@ -47,9 +51,19 @@ describe('reducers/roomHistory', () => {
     it('should normalize the loaded history entries', () => {
       const { dispatch, getState } = createStore();
       dispatch(loadHistoryComplete({
-        result: [ serverHistoryEntry ],
-        page: 0,
-        size: 1
+        data: [ serverHistoryEntry ],
+        included: {
+          user: [ userModel ],
+          media: [ mediaModel ]
+        },
+        meta: {
+          included: {
+            media: [ 'media.media' ],
+            user: [ 'user' ]
+          },
+          offset: 0,
+          total: 1
+        }
       }));
       expect(s.roomHistorySelector(getState())).to.eql([ {
         _id: '56b12b90d6bfe93733bece96',
@@ -101,9 +115,19 @@ describe('reducers/roomHistory', () => {
       }));
 
       dispatch(loadHistoryComplete({
-        result: [ serverHistoryEntry ],
-        page: 0,
-        size: 1
+        data: [ serverHistoryEntry ],
+        included: {
+          user: [ userModel ],
+          media: [ mediaModel ]
+        },
+        meta: {
+          included: {
+            media: [ 'media.media' ],
+            user: [ 'user' ]
+          },
+          offset: 0,
+          total: 1
+        }
       }));
       expect(s.roomHistorySelector(getState())).to.have.length(1);
       expect(s.roomHistorySelector(getState())[0]._id).to.equal('56b12b90d6bfe93733bece96');
@@ -143,9 +167,19 @@ describe('reducers/roomHistory', () => {
     it('works with NULL advances', () => {
       const { dispatch, getState } = createStore();
       dispatch(loadHistoryComplete({
-        result: [ serverHistoryEntry ],
-        page: 0,
-        size: 1
+        data: [ serverHistoryEntry ],
+        included: {
+          user: [ userModel ],
+          media: [ mediaModel ]
+        },
+        meta: {
+          included: {
+            media: [ 'media.media' ],
+            user: [ 'user' ]
+          },
+          offset: 0,
+          total: 1
+        }
       }));
       expect(s.roomHistorySelector(getState())).to.have.length(1);
 

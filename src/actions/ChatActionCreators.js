@@ -239,9 +239,9 @@ export function setMotdComplete(motd) {
 export function setMotd(text) {
   return put('/motd', { motd: text }, {
     onStart: () => setMotdStart(text),
-    onComplete: ({ motd }) => (dispatch) => {
-      dispatch(setMotdComplete(motd));
-      dispatch(log(`Message of the Day is now: ${motd}`));
+    onComplete: ({ data }) => (dispatch) => {
+      dispatch(setMotdComplete(data.motd));
+      dispatch(log(`Message of the Day is now: ${data.motd}`));
     },
     onError: error => ({
       type: SET_MOTD_COMPLETE,

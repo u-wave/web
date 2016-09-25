@@ -47,10 +47,10 @@ function defaultUrl() {
 }
 
 const actions = {
-  chatMessage({ _id, message, timestamp }) {
+  chatMessage({ id, userID, message, timestamp }) {
     return chatReceive({
-      _id: `${_id}-${timestamp}`,
-      userID: _id,
+      _id: id,
+      userID,
       text: message,
       timestamp
     });

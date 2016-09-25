@@ -59,9 +59,9 @@ export function doChangeUsername(username) {
         type: DO_CHANGE_USERNAME_START,
         payload: { username }
       }),
-      onComplete: updated => ({
+      onComplete: ({ data }) => ({
         type: DO_CHANGE_USERNAME_COMPLETE,
-        payload: { username: updated.username }
+        payload: { username: data.username }
       }),
       onError: error => ({
         type: DO_CHANGE_USERNAME_COMPLETE,

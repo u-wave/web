@@ -22,9 +22,18 @@ function makeUrl(path, params = {}) {
 
 function rejectNonOK(response) {
   if (response.status !== 200) {
-    return response.json().then((message) => {
-      const error = assign(new Error(message), { response });
-      return Promise.reject(error);
+    return response.json().then((res) => {
+      if (!('errors' in res)) {
+        throw new Error('An unknown error occurred.');
+      }
+      const { errors } = res;
+      const error = assign(new Error(
+        errors.map(err => err.title).join(', ')
+      ), {
+        response,
+        errors
+      });
+      throw error;
     });
   }
   return response;
