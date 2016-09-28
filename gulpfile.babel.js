@@ -17,8 +17,10 @@ gulp.task('css', sequence('css:clean', 'css:compile'));
 gulp.task('js:lint', exec('lint-js'));
 gulp.task('js:clean', exec('clean-js'));
 gulp.task('js:babel', exec('babel'));
+gulp.task('js:rollup', exec('rollup'));
 gulp.task('js:browserify', exec('browserify'));
-gulp.task('js', sequence([ 'js:babel', 'js:browserify' ]));
+gulp.task('js:bundle', sequence('js:rollup', 'js:browserify'));
+gulp.task('js', sequence([ 'js:babel', 'js:bundle' ]));
 
 gulp.task('html', exec('copy-html'));
 

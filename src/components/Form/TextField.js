@@ -1,5 +1,5 @@
 import cx from 'classnames';
-import React from 'react';
+import * as React from 'react';
 
 export default class TextField extends React.Component {
   static propTypes = {

@@ -1,17 +1,34 @@
-import { dest } from 'gulp';
-import { buildExternalHelpers } from 'babel-core';
-import babelify from 'babelify';
+import gulp from 'gulp';
 import browserify from 'browserify';
 import uglifyify from 'uglifyify';
 import yamlify from 'yamlify';
 import buffer from 'gulp-buffer';
 import collapse from 'bundle-collapser/plugin';
 import envify from 'loose-envify/custom';
-import { transform as insert } from 'gulp-insert';
 import source from 'vinyl-source-stream';
 import sourcemaps from 'gulp-sourcemaps';
 import uglify from 'gulp-uglify';
 import when from 'gulp-if';
+
+import exposePluginDependencies, {
+  EXPORT_MAIN,
+  EXPORT_SUBMODULES
+} from './utils/exposePluginDependencies';
+
+export const exposeModules = {
+  classnames: EXPORT_MAIN,
+  react: EXPORT_MAIN,
+  'react-dom': EXPORT_MAIN,
+  redux: EXPORT_MAIN,
+  'react-redux': EXPORT_MAIN,
+  'react-dnd': EXPORT_MAIN,
+  // Not exposing SVG icons because their use is a bit all over the place.
+  // Really we should pick a few components to expose here and leave plugins
+  // to include the rest.
+  'material-ui': /^(styles\/)?([^\/]+)(\/index)?\.js$/,
+  recompose: EXPORT_SUBMODULES,
+  'u-wave-web': /^lib\/constants(\/([^\/]+)\.js)?$/
+};
 
 // The browserify task compiles all the necessary modules into a single file,
 // called a "bundle". It includes both üWave's own modules, like the React
@@ -26,7 +43,7 @@ export default function browserifyTask({ minify = false }) {
   const b = browserify({
     debug: true,
     // The main üWave application file.
-    entries: './src/app.js'
+    entries: './lib/rollup.js'
   });
 
   // Replace Bluebird with es6-promise.
@@ -37,19 +54,6 @@ export default function browserifyTask({ minify = false }) {
   b.require('./src/utils/Promise', { expose: 'bluebird' });
 
   b.transform(yamlify);
-
-  // Babelify transforms the üWave source code, which is written in JavaScript
-  // of the future and JSX, to JavaScript of today.
-  b.transform(babelify, {
-    plugins: [
-      // Babel uses helpers for some common tasks like merging objects or creating
-      // classes. Normally it'd add them right at the top of every file, but we'll
-      // generate our own helper file later, so we can use its External Helpers
-      // feature.
-      // https://developit.github.io/babel-legacy-docs/docs/advanced/external-helpers/
-      'external-helpers'
-    ]
-  });
 
   // Envify replaces `process.env.*` occurrences with constant values. This is
   // mostly used to disable development tools for deployed code, because those
@@ -77,28 +81,9 @@ export default function browserifyTask({ minify = false }) {
     b.plugin(collapse);
   }
 
-  // This will store the Babel helpers that were used by the üWave code.
-  const helpers = {};
-  function maybeAddExternalHelpersHandler(tr) {
-    if (tr instanceof babelify) {
-      // Attaches an event listener to the Babelify transform only.
-      // Babelify emits a "babelify" event when it's done transforming a single
-      // module. The event data includes an array of the helpers that were used
-      // by the module.
-      tr.once('babelify', ({ metadata }) => {
-        metadata.usedHelpers.forEach((helper) => {
-          helpers[helper] = true;
-        });
-      });
-    }
-  }
-
-  function getHelpers() {
-    return `${buildExternalHelpers(Object.keys(helpers), 'var')}`;
-  }
+  b.plugin(exposePluginDependencies, exposeModules);
 
   return b
-    .on('transform', maybeAddExternalHelpersHandler)
     .bundle()
     // Assign a file name to the generated bundle.
     .pipe(source('out.js'))
@@ -106,7 +91,6 @@ export default function browserifyTask({ minify = false }) {
     // so we convert it to a Buffer instead.
     .pipe(buffer())
     .pipe(sourcemaps.init({ loadMaps: true }))
-      .pipe(insert(contents => `${getHelpers()}; \n ${contents}`))
       .pipe(when(minify, uglify({
         // Yeah… Enables some riskier minification that doesn't work in IE8.
         // But üWave doesn't work in IE8 _anyway_, so we don't care.
@@ -123,5 +107,5 @@ export default function browserifyTask({ minify = false }) {
       })))
     .pipe(sourcemaps.write('./'))
     // Output to lib/out.js!
-    .pipe(dest('lib/'));
+    .pipe(gulp.dest('lib/'));
 }

@@ -51,16 +51,5 @@ export default function createUwaveStore(initialState = {}, options = {}) {
     )
   );
 
-  if (process.env.NODE_ENV === 'development' && module.hot) {
-    // Update the store's reducer function when the reducer source code has
-    // changed. See /tasks/watch.js for more on Hot Reloading!
-    // This is only used when debugging, not in a deployed app.
-    module.hot.accept('../reducers', () => {
-      store.replaceReducer(combineReducers(
-        require('../reducers')
-      ));
-    });
-  }
-
   return store;
 }

@@ -1,2 +1,2 @@
-export const LOAD = 'settings/LOAD';
-export const SET = 'settings/SET';
+export const LOAD_SETTINGS = 'settings/LOAD_SETTINGS';
+export const CHANGE_SETTING = 'settings/CHANGE_SETTING';

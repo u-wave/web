@@ -7,10 +7,10 @@ import SourcePicker from './SourcePicker';
 @translate()
 export default class SearchBar extends React.Component {
   static propTypes = {
+    t: React.PropTypes.func.isRequired,
     className: React.PropTypes.string,
     source: React.PropTypes.string,
     onSubmit: React.PropTypes.func,
-    t: React.PropTypes.func.isRequired,
     onSourceChange: React.PropTypes.func
   };
 

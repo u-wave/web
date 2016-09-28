@@ -9,6 +9,9 @@ import watchify from 'watchify';
 import seq from 'run-sequence';
 import source from 'vinyl-source-stream';
 
+import exposePluginDependencies from './utils/exposePluginDependencies';
+import { exposeModules } from './browserify';
+
 // The watch task is a bit like a "live" version of the JS and CSS tasks.
 // It recompiles both CSS and JS on change. If you combine this task with the
 // Serve task, you'll also get real live updates in the browser, as well, which
@@ -90,6 +93,7 @@ export default function watchTask() {
   watcher.transform(yamlify);
   watcher.transform(babelify, babelOptions);
   watcher.require('./src/utils/Promise', { expose: 'bluebird' });
+
   // So this is where Part 1 of the magic happens. Watchify watches our
   // JavaScript files for changes, and if the files change, it emits an "update"
   // event. We can then re-run the browserify.bundle() call to get a new
@@ -108,6 +112,8 @@ export default function watchTask() {
   watcher.on('update', () => {
     gulp.start('watch:bundle');
   });
+
+  watcher.plugin(exposePluginDependencies, exposeModules);
 
   watch(JS_PATHS, () => gulp.start(JS_TASKS));
   watch(CSS_PATHS, () => gulp.start(CSS_TASKS));

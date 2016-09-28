@@ -1,5 +1,5 @@
 /* eslint-disable react/prefer-stateless-function */
-import React, { Component, PropTypes } from 'react';
+import * as React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import TransitionGroup from 'react-addons-css-transition-group';
@@ -17,11 +17,11 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 const DIALOG_ANIMATION_DURATION = 450; // ms
 
 @connect(editMediaDialogSelector, mapDispatchToProps)
-export default class EditMediaDialogContainer extends Component {
+export default class EditMediaDialogContainer extends React.Component {
   static propTypes = {
-    playlistID: PropTypes.string,
-    media: PropTypes.object,
-    onUpdateMedia: PropTypes.func.isRequired
+    playlistID: React.PropTypes.string,
+    media: React.PropTypes.object,
+    onUpdateMedia: React.PropTypes.func.isRequired
   };
 
   render() {

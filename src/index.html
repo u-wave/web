@@ -5,6 +5,7 @@
     <title>üWave</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,600italic,400italic">
     <link rel="stylesheet" href="app.css">
+    <link rel="stylesheet" id="u-wave-plugins-style">
   </head>
   <body>
     <div id="app">
@@ -15,5 +16,10 @@
     </div>
     <script id="u-wave-config" type="application/json">{}</script>
     <script src="out.js"></script>
+    <script id="u-wave-plugins"></script>
+    <script>
+      uw.renderToDOM(document.querySelector('#app'));
+      document.querySelector('#app-loading').innerHTML = '';
+    </script>
   </body>
 </html>
