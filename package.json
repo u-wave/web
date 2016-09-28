@@ -14,7 +14,6 @@
     "ReconnectingWebSocket": "joewalnes/reconnecting-websocket#283894",
     "array-find": "^1.0.0",
     "array-findindex": "^0.1.0",
-    "cheerio": "^0.22.0",
     "classnames": "^2.2.4",
     "debug": "^2.2.0",
     "es6-promise": "^3.0.2",
@@ -53,6 +52,7 @@
     "router": "^1.1.4",
     "serve-static": "^1.10.2",
     "splitargs": "0.0.7",
+    "trumpet": "^1.7.2",
     "truncate-url": "^0.1.2",
     "u-wave-parse-chat-markup": "^2.0.0",
     "whatwg-fetch": "^1.0.0",
@@ -61,6 +61,7 @@
   "devDependencies": {
     "autoprefixer": "^6.0.3",
     "babel-core": "^6.4.0",
+    "cheerio": "^0.22.0",
     "babel-eslint": "6.1.2",
     "babel-plugin-external-helpers": "^6.4.0",
     "babel-plugin-react-transform": "^2.0.0",

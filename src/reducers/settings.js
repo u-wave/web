@@ -1,4 +1,7 @@
-import { LOAD, SET } from '../constants/actionTypes/settings';
+import {
+  LOAD_SETTINGS,
+  CHANGE_SETTING
+} from '../constants/actionTypes/settings';
 
 const initialState = {
   language: null,
@@ -12,10 +15,10 @@ const initialState = {
 export default function reduce(state = initialState, action = {}) {
   const { type, payload } = action;
   switch (type) {
-  case LOAD:
+  case LOAD_SETTINGS:
     // Loading settings defaults to the initial state.
     return { ...initialState, ...payload };
-  case SET:
+  case CHANGE_SETTING:
     return { ...state, ...payload };
   default:
     return state;

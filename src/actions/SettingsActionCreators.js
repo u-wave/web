@@ -1,15 +1,18 @@
-import { LOAD, SET } from '../constants/actionTypes/settings';
+import {
+  LOAD_SETTINGS,
+  CHANGE_SETTING
+} from '../constants/actionTypes/settings';
 
 export function loadSettings(obj) {
   return {
-    type: LOAD,
+    type: LOAD_SETTINGS,
     payload: obj
   };
 }
 
 export function set(name, value) {
   return {
-    type: SET,
+    type: CHANGE_SETTING,
     payload: { [name]: value }
   };
 }

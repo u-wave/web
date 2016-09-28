@@ -1,4 +1,4 @@
-import { dest } from 'gulp';
+import gulp from 'gulp';
 import { buildExternalHelpers } from 'babel-core';
 import babelify from 'babelify';
 import browserify from 'browserify';
@@ -12,6 +12,20 @@ import source from 'vinyl-source-stream';
 import sourcemaps from 'gulp-sourcemaps';
 import uglify from 'gulp-uglify';
 import when from 'gulp-if';
+
+import exposePluginDependencies, { EXPORT_MAIN } from './utils/exposePluginDependencies';
+
+export const exposeModules = {
+  react: EXPORT_MAIN,
+  'react-dom': EXPORT_MAIN,
+  'react-redux': EXPORT_MAIN,
+  'react-dnd': EXPORT_MAIN,
+  // Not exposing SVG icons because their use is a bit all over the place.
+  // Really we should pick a few components to expose here and leave plugins
+  // to include the rest.
+  'material-ui': /^(styles\/)?([^\/]+)(\/index)?\.js$/,
+  'u-wave-web': /^lib\/constants(\/([^\/]+)\.js)?$/
+};
 
 // The browserify task compiles all the necessary modules into a single file,
 // called a "bundle". It includes both üWave's own modules, like the React
@@ -77,6 +91,8 @@ export default function browserifyTask({ minify = false }) {
     b.plugin(collapse);
   }
 
+  b.plugin(exposePluginDependencies, exposeModules);
+
   // This will store the Babel helpers that were used by the üWave code.
   const helpers = {};
   function maybeAddExternalHelpersHandler(tr) {
@@ -123,5 +139,5 @@ export default function browserifyTask({ minify = false }) {
       })))
     .pipe(sourcemaps.write('./'))
     // Output to lib/out.js!
-    .pipe(dest('lib/'));
+    .pipe(gulp.dest('lib/'));
 }
