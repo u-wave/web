@@ -1,23 +1,21 @@
-import { load as loadHtml } from 'cheerio';
 import * as path from 'path';
 import * as fs from 'fs';
+import trumpet from 'trumpet';
 import router from 'router';
 import serveStatic from 'serve-static';
 
-function injectConfig(html, config, { pluginsScript, pluginsStyle } = {}) {
-  const $ = loadHtml(html);
-  $('#u-wave-config').text(JSON.stringify(config));
+function injectConfig(config, { pluginsScript, pluginsStyle } = {}) {
+  const transform = trumpet();
+  transform.select('#u-wave-config')
+    .createWriteStream()
+    .end(JSON.stringify(config));
   if (pluginsScript) {
-    $('#u-wave-plugins').attr('src', pluginsScript);
-  } else {
-    $('#u-wave-plugins').remove();
+    transform.select('#u-wave-plugins').setAttribute('src', pluginsScript);
   }
   if (pluginsStyle) {
-    $('#u-wave-plugins-style').attr('href', pluginsStyle);
-  } else {
-    $('#u-wave-plugins-style').remove();
+    transform.select('#u-wave-plugins-style').setAttribute('href', pluginsStyle);
   }
-  return $.html();
+  return transform;
 }
 
 export default function uwaveWebClient(uw, options = {}) {
@@ -59,21 +57,16 @@ export default function uwaveWebClient(uw, options = {}) {
   }
 
   return clientRouter
-    .get('/', (req, res, next) => {
-      fs.readFile(path.join(basePath, 'index.html'), 'utf8', (err, content) => {
-        if (err) {
-          next();
-          return;
-        }
-        res.end(injectConfig(
-          content,
+    .get('/', (req, res) => {
+      fs.createReadStream(path.join(basePath, 'index.html'), 'utf8')
+        .pipe(injectConfig(
           clientOptions,
           {
             pluginsScript: (pluginsScriptFile || pluginsScript) ? pluginsScriptName : null,
             pluginsStyle: (pluginsStyleFile || pluginsStyle) ? pluginsStyleName : null
           }
-        ));
-      });
+        ))
+        .pipe(res);
     })
     .use(serveStatic(basePath));
 }
