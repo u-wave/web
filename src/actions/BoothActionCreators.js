@@ -24,7 +24,7 @@ export function advanceToEmpty() {
  * Set the current song and DJ.
  */
 export function advance(nextBooth) {
-  if (!nextBooth) {
+  if (!nextBooth || !nextBooth.historyID) {
     return advanceToEmpty();
   }
   const { media, userID, historyID, playlistID, playedAt } = nextBooth;

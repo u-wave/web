@@ -61,7 +61,7 @@ export function loadedState(state) {
       waitlist: state.waitlist,
       locked: state.waitlistLocked
     }));
-    if (state.booth) {
+    if (state.booth && state.booth.historyID) {
       // TODO don't set this when logging in _after_ entering the page?
       dispatch(advance(state.booth));
       dispatch(setVoteStats(state.booth.stats));
