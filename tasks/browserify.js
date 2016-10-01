@@ -117,7 +117,7 @@ export default function browserifyTask({ minify = false }) {
     .on('transform', maybeAddExternalHelpersHandler)
     .bundle()
     // Assign a file name to the generated bundle.
-    .pipe(source('out.js'))
+    .pipe(source('app.js'))
     // The generated bundle is a stream, but Uglify.js doesn't work on streams,
     // so we convert it to a Buffer instead.
     .pipe(buffer())
@@ -138,6 +138,6 @@ export default function browserifyTask({ minify = false }) {
         mangle: { toplevel: true }
       })))
     .pipe(sourcemaps.write('./'))
-    // Output to lib/out.js!
-    .pipe(gulp.dest('lib/'));
+    // Output to public/app.js!
+    .pipe(gulp.dest('public/'));
 }

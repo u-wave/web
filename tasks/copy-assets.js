@@ -3,12 +3,12 @@ import seq from 'run-sequence';
 
 gulp.task('assets:favicon', () =>
   gulp.src('assets/favicon.ico')
-    .pipe(gulp.dest('lib/'))
+    .pipe(gulp.dest('public/'))
 );
 
 gulp.task('assets:copy', () =>
   gulp.src('assets/**/*')
-    .pipe(gulp.dest('lib/assets/'))
+    .pipe(gulp.dest('public/assets/'))
 );
 
 export default function copyAssetsTask() {

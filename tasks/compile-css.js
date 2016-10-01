@@ -32,5 +32,5 @@ export default function compileCssTask({ minify = false }) {
     .pipe(sourcemaps.init())
       .pipe(postcss(processors))
     .pipe(sourcemaps.write('./'))
-    .pipe(dest('lib/'));
+    .pipe(dest('public/'));
 }
