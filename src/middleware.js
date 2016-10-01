@@ -20,7 +20,7 @@ function injectConfig(config, { pluginsScript, pluginsStyle } = {}) {
 
 export default function uwaveWebClient(uw, options = {}) {
   const {
-    basePath = __dirname,
+    basePath = path.join(__dirname, '../public'),
     pluginsScript = null,
     pluginsScriptFile = null,
     pluginsStyle = null,

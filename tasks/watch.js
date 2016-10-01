@@ -45,9 +45,9 @@ function bundle() {
     log('watchify error:', e.stack || e.message);
   });
   return stream
-    // Assign a name and save in lib/out.js.
-    .pipe(source('out.js'))
-    .pipe(gulp.dest('lib/'));
+    // Assign a name and save in public/app.js.
+    .pipe(source('app.js'))
+    .pipe(gulp.dest('public/'));
 }
 
 // Define a separate Gulp task for the Browserify bundling. This will be run

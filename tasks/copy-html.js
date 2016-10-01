@@ -15,7 +15,7 @@ import renderApp from './utils/renderApp';
 // time. Both of those will make it feel like üWave loads incredibly fast, even
 // though it won't do much until the JavaScript is loaded as well.
 
-const COMPILED_CSS_PATH = joinPath(__dirname, '../lib/app.css');
+const COMPILED_CSS_PATH = joinPath(__dirname, '../public/app.css');
 
 // Used to apply a function to a DOM element identified by `selector`.
 const apply = (selector, fn) =>
@@ -57,5 +57,5 @@ export default function copyHtmlTask({ minify = false, prerender = false }) {
     ))))
     // minifyHtml makes HTML really, really compact.
     .pipe(when(minify, minifyHtml(minifierOptions)))
-    .pipe(dest('lib/'));
+    .pipe(dest('public/'));
 }
