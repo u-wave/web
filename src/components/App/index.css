@@ -8,18 +8,18 @@
   width: 7px;
 }
 ::-webkit-scrollbar-thumb {
-  background: $scrollbar-color;
+  background: var(--scrollbar-color);
 }
 
 :focus {
-  outline-color: $highlight-color;
+  outline-color: var(--highlight-color);
 }
 
 a {
-  color: $link-color;
-}
-a:visited {
-  color: $link-visited-color;
+  color: var(--link-color);
+  &:visited {
+    color: var(--link-visited-color);
+  }
 }
 
 /* make sure interactive elements also use our usual fonts */
@@ -36,13 +36,13 @@ button, input, optgroup, select, textarea {
   left: 0;
   right: 0;
 
-  background: $background-color;
-  color: $text-color;
+  background: var(--background-color);
+  color: var(--text-color);
 
   @descendent middle {
     position: absolute;
-    top: $header-height;
-    bottom: $footer-height;
+    top: var(--header-height);
+    bottom: var(--footer-height);
     left: 0;
     right: 0;
   }
@@ -72,15 +72,15 @@ button, input, optgroup, select, textarea {
   clear: both;
 
   @modifier top {
-    height: $header-height;
+    height: var(--header-height);
     top: 0;
   }
   @modifier middle {
-    top: $header-height;
-    bottom: $footer-height;
+    top: var(--header-height);
+    bottom: var(--footer-height);
   }
   @modifier bottom {
-    height: $footer-height;
+    height: var(--footer-height);
     bottom: 0;
   }
 }

@@ -1,8 +1,8 @@
 @import "../../../vars.css";
 
 @component ChatInputWrapper {
-  background: $chat-background-color;
-  border-top: 1px solid $chat-border-color;
+  background: var(--chat-background-color);
+  border-top: 1px solid var(--chat-border-color);
 }
 
 @component ChatInput {
@@ -20,13 +20,13 @@
     height: 28px;
     width: calc(100% - 32px);
     padding: 0 6px;
-    border: 1px solid $chat-border-color;
+    border: 1px solid var(--chat-border-color);
     background: #222222;
-    color: #fff;
+    color: var(--text-color);
     font-size: 10pt;
 
     @when focused {
-      border-color: #9d2053;
+      border-color: var(--highlight-color);
       outline: none;
     }
   }

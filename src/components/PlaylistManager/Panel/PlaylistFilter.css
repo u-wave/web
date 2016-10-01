@@ -1,6 +1,8 @@
 @import "../../../vars.css";
 
-$playlist-filter-input-height: 36px;
+:root {
+  --playlist-filter-input-height: 36px;
+}
 
 @component PlaylistMediaFilter {
   display: flex;
@@ -10,16 +12,16 @@ $playlist-filter-input-height: 36px;
     border-radius: 2px;
     background: #252727;
     border: 1px solid #252727;
-    color: $text-color;
+    color: var(--text-color);
     font-size: 12pt;
     padding: 0 8px;
-    height: $playlist-filter-input-height;
+    height: var(--playlist-filter-input-height);
     display: none;
-    margin-top: calc((54px - $playlist-filter-input-height) / 2);
+    margin-top: calc((54px - var(--playlist-filter-input-height)) / 2);
 
     &:focus {
       outline: none;
-      border: 1px solid $highlight-color;
+      border: 1px solid var(--highlight-color);
     }
 
     @when open {

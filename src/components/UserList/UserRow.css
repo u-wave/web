@@ -1,5 +1,3 @@
-@import "../../vars.css";
-
 @component UserRow {
   height: 40px;
   width: 100%;

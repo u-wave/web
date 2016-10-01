@@ -1,7 +1,7 @@
 @component ChatMessage {
   @modifier log {
     /* TODO add support for @descendent inside @modifier to postcss-bem */
-    .ChatMessage-content {
+    & .ChatMessage-content {
       padding-left: 10px;
       color: #aaaaaa;
     }

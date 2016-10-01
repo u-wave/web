@@ -6,7 +6,7 @@
   @descendent divider {
     height: 1px;
     border: none;
-    background: $muted-text-color;
+    background: var(--muted-text-color);
     margin: 20px 0;
   }
 

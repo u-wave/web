@@ -5,7 +5,7 @@
 @import "./PlaylistItemRow.css";
 
 @component PlaylistPanel {
-  background: color($background-color alpha(* 96%));
+  background: color(var(--background-color) alpha(* 96%));
   height: 100%;
 
   @descendent loading {

@@ -3,7 +3,7 @@
 @import "./TextField.css";
 
 @component FormGroup {
-  margin: $forms-element-margin 0;
+  margin: var(--forms-element-margin) 0;
   width: 100%;
   clear: both;
 

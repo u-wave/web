@@ -1,8 +1,8 @@
 @import "../../vars.css";
 
 @component MediaDragPreview {
-  background: $highbright-color;
-  color: $text-color;
+  background: var(--highbright-color);
+  color: var(--text-color);
   font-weight: bold;
   padding: 7px 15px 7px 20px;
   display: block;

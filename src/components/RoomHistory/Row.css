@@ -1,22 +1,31 @@
 @import "../../vars.css";
 
-$history-list-thumb-width: 85px;
-$history-list-user-width: 130px;
-$history-list-time-width: 170px;
-$history-list-votes-width: 250px;
+:root {
+  --history-list-thumb-width: 85px;
+  --history-list-user-width: 130px;
+  --history-list-time-width: 170px;
+  --history-list-votes-width: 250px;
+
+  --history-list-not-song-width: (
+    var(--history-list-thumb-width) +
+    var(--history-list-time-width) +
+    var(--history-list-user-width) +
+    var(--history-list-votes-width)
+  );
+}
 
 @component HistoryRow {
   height: 54px;
   line-height: 54px;
   position: relative;
-  background: $media-list-color;
+  background: var(--media-list-color);
 
   &:nth-child(2n+1) {
-    background: $media-list-alternate-color;
+    background: var(--media-list-alternate-color);
   }
 
   @when selected {
-    background: color($highlight-color alpha(* 70%));
+    background: color(var(--highlight-color) alpha(* 70%));
   }
 
   @descendent thumb {
@@ -36,8 +45,8 @@ $history-list-votes-width: 250px;
     font-size: 1em;
     height: 100%;
     float: left;
-    width: calc(100% - $media-list-spacing - $history-list-thumb-width - $history-list-time-width - $history-list-user-width - $history-list-votes-width);
-    margin-right: $media-list-spacing;
+    width: calc(100% - var(--media-list-spacing) - var(--history-list-not-song-width));
+    margin-right: var(--media-list-spacing);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -46,13 +55,13 @@ $history-list-votes-width: 250px;
   @descendent votes {
     height: 100%;
     float: left;
-    width: $history-list-votes-width;
+    width: var(--history-list-votes-width);
   }
 
   @descendent user {
     height: 100%;
     float: left;
-    width: $history-list-user-width;
+    width: var(--history-list-user-width);
     text-align: right;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -64,8 +73,8 @@ $history-list-votes-width: 250px;
     float: left;
     text-align: right;
     padding-right: 20px;
-    color: $muted-text-color;
-    width: $history-list-time-width;
+    color: var(--muted-text-color);
+    width: var(--history-list-time-width);
   }
 
   @descendent actions {

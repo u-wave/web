@@ -5,7 +5,7 @@
   z-index: 10;
 
   &-body {
-    background: color($background-color alpha(* 96%));
+    background: color(var(--background-color) alpha(* 96%));
   }
   &-list {
     max-height: 100%;

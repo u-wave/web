@@ -1,7 +1,7 @@
 @import "../../vars.css";
 
 @component SongTitle {
-  color: $text-color;
+  color: var(--text-color);
 
   white-space: nowrap;
   overflow: hidden;

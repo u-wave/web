@@ -6,9 +6,9 @@
   overflow-y: scroll;
 
   @descendent row {
-    background: $user-list-color;
+    background: var(--user-list-color);
     @modifier alternate {
-      background: $user-list-alternate-color;
+      background: var(--user-list-alternate-color);
     }
   }
 }

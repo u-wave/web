@@ -10,7 +10,7 @@
   margin: 8px 0;
 
   @when focused {
-    border-color: $highlight-color;
+    border-color: var(--highlight-color);
   }
 
   @descendent icon {
@@ -34,7 +34,7 @@
     height: 100%;
     border: none;
     padding: 0;
-    color: $text-color;
+    color: var(--text-color);
     font-size: 14pt;
 
     &:focus {

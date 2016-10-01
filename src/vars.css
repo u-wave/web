@@ -1,42 +1,44 @@
-/* Global colours */
-$text-color: #fff;
-$muted-text-color: #777;
-$background-color: #151515;
-$background-hover-color: #111;
-$highlight-color: #9d2053;
-$highbright-color: #b20062;
-$scrollbar-color: #5f5f5f;
+:root {
+  /* Global colours */
+  --text-color: #fff;
+  --muted-text-color: #777;
+  --background-color: #151515;
+  --background-hover-color: #111;
+  --highlight-color: #9d2053;
+  --highbright-color: #b20062;
+  --scrollbar-color: #5f5f5f;
 
-/* Link colors */
-$link-color: #c72e6c;
-$link-visited-color: $link-color;
+  /* Link colors */
+  --link-color: #c72e6c;
+  --link-visited-color: var(--link-color);
 
-/* Sizes */
-$header-height: 56px;
-$footer-height: 60px;
+  /* Sizes */
+  --header-height: 56px;
+  --footer-height: 60px;
 
-/* Footer colours */
-$footer-border-color: #303036;
+  /* Footer colours */
+  --footer-border-color: #303036;
 
-/* Overlay colours & sizes */
-$overlay-header-close-size: $header-height;
+  /* Overlay colours & sizes */
+  --overlay-header-close-size: var(--header-height);
 
-/* Chat colours */
-$chat-background-color: #1b1b1b;
-$chat-background-color2: #222222;
-$chat-border-color: $footer-border-color;
+  /* Chat colours */
+  --chat-background-color: #1b1b1b;
+  --chat-background-color2: #222222;
+  --chat-border-color: var(--footer-border-color);
 
-/* User related colours */
-$user-list-color: #1b1b1b;
-$user-list-alternate-color: #222222;
+  /* User related colours */
+  --user-list-color: #1b1b1b;
+  --user-list-alternate-color: #222222;
 
-/* Playlist colours & sizing */
-$media-list-spacing: 3%;
-$media-list-thumb-width: 85px;
-$media-list-duration-width: 70px;
-$media-list-color: transparent;
-$media-list-alternate-color: color(#303036 alpha(* 30%));
+  /* Playlist colours & sizing */
+  --media-list-spacing: 3%;
+  --media-list-thumb-width: 85px;
+  --media-list-duration-width: 70px;
+  --media-list-color: transparent;
+  --media-list-alternate-color: color(#303036 alpha(* 30%));
 
-/* Form colours & sizes */
-$forms-element-margin: 16px;
-$forms-textfield-size: 50px;
+  /* Form colours & sizes */
+  --forms-element-margin: 16px;
+  --forms-textfield-size: 50px;
+}

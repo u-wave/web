@@ -15,8 +15,8 @@
     left: 0;
     width: 210px;
     margin: 0;
-    line-height: $header-height;
-    height: $header-height;
+    line-height: var(--header-height);
+    height: var(--header-height);
     background-image: url(assets/img/logo-white.png);
     background-repeat: no-repeat;
     background-position: 10px center;
@@ -26,7 +26,7 @@
 
   @descendent volume {
     position: absolute;
-    right: $header-height;
+    right: var(--header-height);
     top: 0;
     width: 200px;
     padding: 15px;
@@ -37,7 +37,7 @@
     top: 0;
     right: 0;
     bottom: 0;
-    width: $header-height;
+    width: var(--header-height);
     background: #111;
   }
 
@@ -45,7 +45,7 @@
     position: absolute;
     top: 5px;
     left: 250px;
-    right: calc(200px + $header-height);
+    right: calc(200px + var(--header-height));
     line-height: 25px;
   }
 
@@ -55,7 +55,7 @@
     left: 250px;
     right: 200px;
     font-size: 80%;
-    color: $muted-text-color;
+    color: var(--muted-text-color);
   }
 
   @descendent progress {
