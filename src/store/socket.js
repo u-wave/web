@@ -58,8 +58,8 @@ const actions = {
   chatDelete() {
     return removeAllMessages();
   },
-  chatDeleteByID({ chatID }) {
-    return removeMessage(chatID);
+  chatDeleteByID({ _id }) {
+    return removeMessage(_id);
   },
   chatDeleteByUser({ userID }) {
     return removeMessagesByUser(userID);
