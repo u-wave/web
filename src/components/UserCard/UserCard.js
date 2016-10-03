@@ -30,6 +30,12 @@ const tempRoleIDToRoleName = {
   4: 'admin'
 };
 
+// Our cards are much smaller than usual so we remove some padding to make it
+// look less strange.
+const smallPaddingStyle = {
+  paddingTop: 0
+};
+
 const UserCard = ({ muiTheme, user }) => (
   <Card className="UserCard">
     <CardHeader
@@ -38,10 +44,10 @@ const UserCard = ({ muiTheme, user }) => (
       subtitleColor={muiTheme.rankColors[tempRoleIDToRoleName[user.role]]}
       avatar={<Avatar className="UserCard-avatar" user={user} />}
     />
-    <CardText>
+    <CardText style={smallPaddingStyle}>
       Joined: {formatJoinDate(user.createdAt)}
     </CardText>
-    <CardActions>
+    <CardActions style={smallPaddingStyle}>
       {/* Currently empty */}
     </CardActions>
   </Card>
