@@ -7,12 +7,12 @@ import {
   removeWaitlistUser
 } from '../actions/ModerationActionCreators';
 import { waitlistUsersSelector } from '../selectors/waitlistSelectors';
-import { isModeratorSelector } from '../selectors/userSelectors';
+import { createRoleCheckSelector } from '../selectors/userSelectors';
 import WaitList from '../components/WaitList';
 
 const mapStateToProps = createStructuredSelector({
   users: waitlistUsersSelector,
-  canMoveUsers: isModeratorSelector
+  canMoveUsers: createRoleCheckSelector('waitlist.move')
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

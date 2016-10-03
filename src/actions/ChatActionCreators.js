@@ -31,7 +31,9 @@ import {
 import { settingsSelector } from '../selectors/settingSelectors';
 import {
   currentUserSelector,
-  userListSelector
+  userListSelector,
+  userHasRoleSelector,
+  currentUserHasRoleSelector
 } from '../selectors/userSelectors';
 import { currentTimeSelector } from '../selectors/timeSelectors';
 
@@ -77,6 +79,7 @@ export function sendChat(text) {
   return (dispatch, getState) => {
     const state = getState();
     const sender = currentUserSelector(state);
+    const hasRole = currentUserHasRoleSelector(state);
     const mute = currentUserMuteSelector(state);
     if (mute) {
       const timeLeft = ms(mute.expiresAt - Date.now(), { long: true });
@@ -88,7 +91,7 @@ export function sendChat(text) {
     const message = prepareMessage(state, sender, text, {
       mentions: [
         ...users.map(user => user.username),
-        ...getAvailableGroupMentions(sender)
+        ...getAvailableGroupMentions(hasRole)
       ]
     });
     dispatch(message);
@@ -117,21 +120,23 @@ function isMuted(state, userID) {
 
 export function receive(message) {
   return (dispatch, getState) => {
-    const settings = settingsSelector(getState());
-    const currentUser = currentUserSelector(getState());
-    const users = userListSelector(getState());
+    const state = getState();
+    const settings = settingsSelector(state);
+    const currentUser = currentUserSelector(state);
+    const users = userListSelector(state);
     const sender = find(users, user => user._id === message.userID);
+    const senderHasRole = userHasRoleSelector(state)(sender);
     const mentions = [
       ...users.map(user => user.username),
-      ...getAvailableGroupMentions(sender)
+      ...getAvailableGroupMentions(mention => senderHasRole(`chat.mention.${mention}`))
     ];
 
-    if (isMuted(getState(), message.userID)) {
+    if (isMuted(state, message.userID)) {
       return;
     }
 
     const parsed = parseChatMarkup(message.text, { mentions });
-    resolveMentions(parsed, getState());
+    resolveMentions(parsed, state);
 
     const isMention = currentUser ? hasMention(parsed, currentUser._id) : false;
 
