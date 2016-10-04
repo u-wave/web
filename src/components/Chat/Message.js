@@ -23,7 +23,7 @@ const enhance = compose(
 );
 
 const Message = ({
-  odd,
+  alternate,
   user,
   text,
   parsedText,
@@ -57,7 +57,7 @@ const Message = ({
     'ChatMessage',
     inFlight && 'ChatMessage--loading',
     isMention && 'ChatMessage--mention',
-    odd && 'ChatMessage--odd'
+    alternate && 'ChatMessage--alternate'
   );
   return (
     <div className={className}>
@@ -69,13 +69,12 @@ const Message = ({
         >
           {date.toLocaleTimeString([], timeFormatOptions)}
         </time>
-        <a
-          className="ChatMessage-username"
-          href={`#user/${user.slug}`}
+        <button
+          className="ChatMessage-username ChatMessage-cardable"
           onClick={onUsernameClick}
         >
           <Username user={user} />
-        </a>
+        </button>
         <span className="ChatMessage-text">{children}</span>
       </div>
     </div>
@@ -83,7 +82,7 @@ const Message = ({
 };
 
 Message.propTypes = {
-  odd: React.PropTypes.bool,
+  alternate: React.PropTypes.bool,
   user: React.PropTypes.object.isRequired,
   text: React.PropTypes.string.isRequired,
   parsedText: React.PropTypes.array.isRequired,

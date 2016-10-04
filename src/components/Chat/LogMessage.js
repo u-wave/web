@@ -1,8 +1,14 @@
 import cx from 'classnames';
 import * as React from 'react';
 
-const LogMessage = ({ odd, text }) => (
-  <div className={cx('ChatMessage', 'ChatMessage--log', odd && 'ChatMessage--odd')}>
+const LogMessage = ({ alternate, text }) => (
+  <div
+    className={cx(
+      'ChatMessage',
+      'ChatMessage--log',
+      alternate && 'ChatMessage--alternate'
+    )}
+  >
     <div className="ChatMessage-content">
       <span className="ChatMessage-text">{text}</span>
     </div>
@@ -10,7 +16,7 @@ const LogMessage = ({ odd, text }) => (
 );
 
 LogMessage.propTypes = {
-  odd: React.PropTypes.bool,
+  alternate: React.PropTypes.bool,
   text: React.PropTypes.string.isRequired
 };
 

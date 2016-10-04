@@ -43,31 +43,39 @@ const ModRowBase = ({
   onOpenCard,
   onRemoveUser
 }) => connectDragPreview(
-  <a
-    className={cx('UserRow', 'UserRow--queue', className)}
-    href={`#user/${user.slug}`}
-    onClick={onOpenCard}
+  <div
+    className={cx(
+      'UserRow',
+      'WaitlistRow',
+      'WaitlistRow--moderate',
+      className
+    )}
   >
     <Position position={position + 1} />
-    <Avatar
-      className="UserRow-avatar"
-      user={user}
-    />
-    <Username className="UserRow-username" user={user} />
-    <div className="UserRow-tools">
+    <button
+      className="WaitlistRow-card"
+      onClick={onOpenCard}
+    >
+      <Avatar
+        className="UserRow-avatar"
+        user={user}
+      />
+      <Username className="UserRow-username" user={user} />
+    </button>
+    <div className="WaitlistRow-tools">
       {connectDragSource(
-        <div className="UserRow-tool UserRow-handle">
+        <div className="WaitlistRow-tool WaitlistRow-handle">
           <DragIcon />
         </div>
       )}
       <button
-        className="UserRow-tool UserRow-remove"
+        className="WaitlistRow-tool WaitlistRow-remove"
         onClick={onRemoveUser}
       >
         <RemoveIcon />
       </button>
     </div>
-  </a>
+  </div>
 );
 
 ModRowBase.propTypes = {

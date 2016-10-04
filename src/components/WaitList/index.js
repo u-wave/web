@@ -26,7 +26,7 @@ const WaitList = ({
         itemRenderer={(index, key) => (
           <Row
             key={key}
-            className="UserList-row"
+            className={cx('UserList-row', index % 2 === 0 && 'UserList-row--alternate')}
             position={index}
             user={users[index]}
             onMoveUser={position => onMoveUser(users[index], position)}

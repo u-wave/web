@@ -23,18 +23,19 @@ const RoomUserRow = ({
   user,
   onOpenCard
 }) => (
-  <a
-    className={cx('UserRow', className)}
-    href={`#user/${user.slug}`}
+  <button
+    className={cx('UserRow', 'UserRow--cardable', className)}
     onClick={onOpenCard}
   >
-    <Avatar
-      className="UserRow-avatar"
-      user={user}
-    />
-    <Username className="UserRow-username" user={user} />
-    <Votes className="UserRow-votes" {...user.votes} />
-  </a>
+    <div>
+      <Avatar
+        className="UserRow-avatar"
+        user={user}
+      />
+      <Username className="UserRow-username" user={user} />
+      <Votes className="UserRow-votes" {...user.votes} />
+    </div>
+  </button>
 );
 
 RoomUserRow.propTypes = {

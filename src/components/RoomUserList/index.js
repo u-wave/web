@@ -16,12 +16,16 @@ const RoomUserList = ({ className, users, guests }) => {
     <div className={cx('UserList', 'UserList--online', className)}>
       <List
         itemRenderer={(index, key) => {
+          const rowClass = cx(
+            'UserList-row',
+            (index % 2 === 0) && 'UserList-row--alternate'
+          );
           // The very last row is the guests row
           if (index === users.length) {
             return (
               <GuestsRow
                 key={key}
-                className="UserList-row"
+                className={rowClass}
                 guests={guests}
               />
             );
@@ -29,7 +33,7 @@ const RoomUserList = ({ className, users, guests }) => {
           return (
             <RoomUserRow
               key={key}
-              className="UserList-row"
+              className={rowClass}
               user={users[index]}
             />
           );

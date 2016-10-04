@@ -7,7 +7,7 @@
   min-height: 32px;
   position: relative;
 
-  @modifier odd {
+  @modifier alternate {
     background: $chat-background-color2;
     .ChatMessage-timestamp {
       background: $chat-background-color2;
@@ -51,10 +51,14 @@
     word-wrap: break-word;
   }
 
+  @descendent cardable {
+    cursor: pointer;
+    padding: 0;
+  }
+
   @descendent username {
     color: #9ba0a0;
     font-weight: 600;
-    text-decoration: none;
   }
 
   @descendent text {

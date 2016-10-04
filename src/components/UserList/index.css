@@ -4,4 +4,11 @@
   width: 100%;
   height: 100%;
   overflow-y: scroll;
+
+  @descendent row {
+    background: $user-list-color;
+    @modifier alternate {
+      background: $user-list-alternate-color;
+    }
+  }
 }

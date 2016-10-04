@@ -15,21 +15,27 @@ const SimpleRow = ({
   user,
   onOpenCard
 }) => (
-  <a
-    href={`#user/${user.slug}`}
-    className={cx('UserRow', 'UserRow--queue', className)}
+  <button
+    className={cx(
+      'UserRow',
+      'WaitlistRow',
+      'UserRow--cardable',
+      className
+    )}
     onClick={onOpenCard}
   >
-    <Position position={position + 1} />
-    <Avatar
-      className="UserRow-avatar"
-      user={user}
-    />
-    <Username
-      className="UserRow-username"
-      user={user}
-    />
-  </a>
+    <div>
+      <Position position={position + 1} />
+      <Avatar
+        className="UserRow-avatar"
+        user={user}
+      />
+      <Username
+        className="UserRow-username"
+        user={user}
+      />
+    </div>
+  </button>
 );
 
 SimpleRow.propTypes = {

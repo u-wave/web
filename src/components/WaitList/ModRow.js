@@ -46,7 +46,7 @@ class ModRow extends React.Component {
     } = this.props;
     const { insertAbove } = this.state;
 
-    const dropIndicator = <div className="UserRow-drop-indicator" />;
+    const dropIndicator = <div className="WaitlistRow-drop-indicator" />;
 
     return connectDropTarget(
       <div>

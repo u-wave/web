@@ -8,7 +8,7 @@ const Position = ({
   position
 }) => (
   <MuiAvatar
-    className="UserRow-position"
+    className="WaitlistRow-position"
     backgroundColor="transparent"
     size={30}
     color={muiTheme.palette.textColor}

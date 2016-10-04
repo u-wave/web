@@ -59,12 +59,12 @@ export default class Chat extends Component {
   }
 
   renderMessage(msg, index) {
-    const odd = index % 2 === 0;
+    const alternate = index % 2 === 0;
     if (msg.type === 'log') {
       return (
         <LogMessage
           key={msg._id}
-          odd={odd}
+          alternate={alternate}
           {...msg}
         />
       );
@@ -72,7 +72,7 @@ export default class Chat extends Component {
     return (
       <Message
         key={msg._id}
-        odd={odd}
+        alternate={alternate}
         compileOptions={this.props.compileOptions}
         {...msg}
       />
