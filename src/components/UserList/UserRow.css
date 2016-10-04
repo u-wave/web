@@ -2,10 +2,15 @@
 
 @component UserRow {
   height: 40px;
+  width: 100%;
   line-height: 30px;
   padding: 5px 0;
-  background: $user-list-color;
-  &:nth-child(2n + 1) { background: $user-list-alternate-color; }
+  display: block;
+  text-decoration: none;
+
+  @modifier cardable {
+    cursor: pointer;
+  }
 
   @descendent avatar {
     float: left;

@@ -58,13 +58,21 @@ export default class Chat extends Component {
     );
   }
 
-  renderMessage(msg) {
+  renderMessage(msg, index) {
+    const alternate = index % 2 === 0;
     if (msg.type === 'log') {
-      return <LogMessage key={msg._id} {...msg} />;
+      return (
+        <LogMessage
+          key={msg._id}
+          alternate={alternate}
+          {...msg}
+        />
+      );
     }
     return (
       <Message
         key={msg._id}
+        alternate={alternate}
         compileOptions={this.props.compileOptions}
         {...msg}
       />

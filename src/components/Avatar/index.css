@@ -4,6 +4,7 @@
   width: 24px;
   border-radius: 50%;
   overflow: hidden;
+  display: inline-block;
 
   @descendent image {
     width: 100%;

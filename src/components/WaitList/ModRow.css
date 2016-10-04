@@ -1,8 +1,11 @@
-@component UserRow {
-  @descendent drop-indicator {
-    background: white;
-    height: 3px;
-    width: 100%;
+@component WaitlistRow {
+  @modifier moderate {
+    display: flex;
+  }
+
+  @descendent card {
+    flex-grow: 2;
+    cursor: pointer;
   }
 
   @descendent tools {

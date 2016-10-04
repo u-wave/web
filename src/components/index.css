@@ -15,6 +15,7 @@
 @import "./SettingsManager";
 @import "./SidePanels";
 @import "./SongTitle";
+@import "./UserCard";
 @import "./Video";
 @import "./UserList";
 @import "./RoomUserList";
