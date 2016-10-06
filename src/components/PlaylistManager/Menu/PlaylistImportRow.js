@@ -26,8 +26,12 @@ const PlaylistImportRow = ({
     );
   }
   return (
-    <button role="menuitem" onClick={onClick}>
-      <div className={cx('PlaylistMenuRow', 'PlaylistMenuRow--import', className)}>
+    <button
+      role="menuitem"
+      className={cx('PlaylistMenuRow', 'PlaylistMenuRow--import', className)}
+      onClick={onClick}
+    >
+      <div className="PlaylistMenuRow-content">
         <div className="PlaylistMenuRow-title">
           {icon}
           {t('playlists.import.title')}
