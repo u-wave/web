@@ -6,22 +6,26 @@ import Upvote from './Upvote';
 import Downvote from './Downvote';
 
 const ResponseBar = ({
+  disabled = false,
   isUpvote, upvotesCount, onUpvote,
   isDownvote, downvotesCount, onDownvote,
   isFavorite, favoritesCount, onFavorite
 }) => (
   <div className="AudienceResponse">
     <Upvote
+      disabled={disabled}
       onUpvote={onUpvote}
       count={upvotesCount}
       active={isUpvote}
     />
     <Favorite
+      disabled={disabled}
       onFavorite={onFavorite}
       count={favoritesCount}
       active={isFavorite}
     />
     <Downvote
+      disabled={disabled}
       onDownvote={onDownvote}
       count={downvotesCount}
       active={isDownvote}
@@ -30,6 +34,7 @@ const ResponseBar = ({
 );
 
 ResponseBar.propTypes = {
+  disabled: React.PropTypes.bool,
   isUpvote: React.PropTypes.bool,
   isFavorite: React.PropTypes.bool,
   isDownvote: React.PropTypes.bool,

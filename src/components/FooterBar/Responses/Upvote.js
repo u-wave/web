@@ -6,11 +6,13 @@ import Button from './Button';
 
 const Upvote = ({
   t,
+  disabled,
   active,
   count,
   onUpvote
 }) => (
   <Button
+    disabled={disabled}
     tooltip={t('votes.upvote')}
     onClick={onUpvote}
     count={count}
@@ -23,6 +25,7 @@ Upvote.propTypes = {
   t: React.PropTypes.func.isRequired,
   onUpvote: React.PropTypes.func.isRequired,
   count: React.PropTypes.number.isRequired,
+  disabled: React.PropTypes.bool,
   active: React.PropTypes.bool
 };
 

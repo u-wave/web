@@ -20,12 +20,14 @@ const Favorite = ({
   muiTheme,
   onFavorite,
   count,
+  disabled,
   active
 }) => {
   const CurrentIcon = active ? FavoritedIcon : FavoriteIcon;
 
   return (
     <Button
+      disabled={disabled}
       tooltip={t('votes.favorite')}
       onClick={handleFavorite(onFavorite)}
       count={count}
@@ -40,6 +42,7 @@ Favorite.propTypes = {
   muiTheme: React.PropTypes.object.isRequired,
   onFavorite: React.PropTypes.func.isRequired,
   count: React.PropTypes.number.isRequired,
+  disabled: React.PropTypes.bool,
   active: React.PropTypes.bool
 };
 

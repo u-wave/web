@@ -92,6 +92,7 @@ export default class FooterBar extends React.Component {
     const className = cx('FooterBar', this.props.className);
 
     if (user && !user.isGuest) {
+      const canVote = !userIsDJ && !!this.props.currentDJ;
       return (
         <div className={className}>
           <div className="FooterBar-user">
@@ -120,6 +121,7 @@ export default class FooterBar extends React.Component {
             )}
           >
             <ResponseBar
+              disabled={!canVote}
               onFavorite={onFavorite}
               onUpvote={onUpvote}
               onDownvote={onDownvote}
