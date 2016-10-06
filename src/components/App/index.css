@@ -22,6 +22,11 @@ a:visited {
   color: $link-visited-color;
 }
 
+/* make sure interactive elements also use our usual fonts */
+button, input, optgroup, select, textarea {
+  font: inherit;
+}
+
 @component App {
   font-family: Open Sans, sans-serif;
 
