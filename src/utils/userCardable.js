@@ -33,7 +33,7 @@ export default function userCardable() {
       render() {
         const { open, position, user } = this.state;
         return (
-          <span ref={this.refContainer}>
+          <div ref={this.refContainer}>
             {open && (
               <UserCard
                 user={user}
@@ -46,7 +46,7 @@ export default function userCardable() {
               openUserCard={this.handleOpen}
               closeUserCard={this.handleClose}
             />
-          </span>
+          </div>
         );
       }
     }
