@@ -5,15 +5,10 @@
     position: relative;
     z-index: 3;
 
-    @modifier large {
-      pointer-events: none;
-    }
-
     @modifier small {
       margin: auto;
       width: 640px;
       height: 360px;
-      pointer-events: none;
     }
 
     @modifier preview {
