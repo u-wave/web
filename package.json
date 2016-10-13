@@ -98,7 +98,7 @@
     "gulp-newer": "^1.1.0",
     "gulp-plumber": "^1.1.0",
     "gulp-postcss": "^6.0.0",
-    "gulp-sourcemaps": "^2.0.0",
+    "gulp-sourcemaps": "^2.1.0",
     "gulp-uglify": "^2.0.0",
     "gulp-util": "^3.0.7",
     "gulp-watch": "^4.3.9",
