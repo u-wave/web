@@ -2,7 +2,7 @@
 @import "./Row.css";
 
 @component PlaylistMenu {
-  background: color($background-color alpha(* 96%));
+  background: color(var(--background-color) alpha(* 96%));
   height: 100%;
   overflow-y: auto;
 }

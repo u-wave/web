@@ -4,10 +4,10 @@
   height: 54px;
   line-height: 54px;
   position: relative;
-  background: $media-list-color;
+  background: var(--media-list-color);
 
   @modifier alternate {
-    background: $media-list-alternate-color;
+    background: var(--media-list-alternate-color);
   }
 
   @when loading {
@@ -15,7 +15,7 @@
   }
 
   @when selected {
-    background: color($highlight-color alpha(* 70%));
+    background: color(var(--highlight-color) alpha(* 70%));
   }
 
   @descendent loader {
@@ -38,8 +38,8 @@
   @descendent artist {
     height: 100%;
     float: left;
-    width: calc(50% - $media-list-spacing - $media-list-thumb-width - $media-list-duration-width);
-    margin-right: $media-list-spacing;
+    width: calc(50% - var(--media-list-spacing) - var(--media-list-thumb-width) - var(--media-list-duration-width));
+    margin-right: var(--media-list-spacing);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -48,8 +48,8 @@
   @descendent title {
     height: 100%;
     float: left;
-    width: calc(50% - $media-list-spacing);
-    margin-right: $media-list-spacing;
+    width: calc(50% - var(--media-list-spacing));
+    margin-right: var(--media-list-spacing);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -58,7 +58,7 @@
   @descendent duration {
     height: 100%;
     float: left;
-    width: $media-list-duration-width;
+    width: var(--media-list-duration-width);
   }
 
   @descendent actions {

@@ -1,11 +1,13 @@
+@import "../../vars.css";
+
 @component Loader {
   position: relative;
 }
 
 @component Spinner {
   border-style: solid;
-  border-color: rgba(255, 255, 255, 0.2);
-  border-left-color: #ffffff;
+  border-color: color(var(--text-color) alpha(0.2));
+  border-left-color: var(--text-color);
   animation: anim-loader-spin 1.1s infinite linear;
 
   border-radius: 50%;

@@ -4,7 +4,7 @@
   @component SongInfo {
     @descendent link {
       font: 14pt;
-      color: $text-color;
+      color: var(--text-color);
       display: block;
       height: 25px;
       @modifier track {
@@ -12,7 +12,7 @@
       }
 
       &:visited {
-        color: $text-color;
+        color: var(--text-color);
       }
     }
   }

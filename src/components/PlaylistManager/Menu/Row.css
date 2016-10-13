@@ -37,18 +37,18 @@
 
   @descendent count {
     align-self: flex-end;
-    color: $highlight-color;
+    color: var(--highlight-color);
     margin-right: 5px;
   }
 
   @modifier create {
-    background-color: $highlight-color;
+    background-color: var(--highlight-color);
   }
 
   @when selected {
-    background: $media-list-alternate-color;
+    background: var(--media-list-alternate-color);
   }
   @when droppable {
-    background: $media-list-alternate-color;
+    background: var(--media-list-alternate-color);
   }
 }

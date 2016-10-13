@@ -4,15 +4,15 @@
   height: 100%;
   width: 100%;
   cursor: pointer;
-  color: $muted-text-color;
+  color: var(--muted-text-color);
   font-size: 11pt;
   padding: 7px;
 
   &:hover {
-    background-color: $background-hover-color;
+    background-color: var(--background-hover-color);
   }
 
   @descendent playlist {
-    color: $text-color;
+    color: var(--text-color);
   }
 }

@@ -1,9 +1,11 @@
 @import "./SourcePickerElement.css";
 
-$source-picker-width: calc(48px + 24px);
+:root {
+  --source-picker-width: calc(48px + 24px);
+}
 
 @component SourcePicker {
-  width: $source-picker-width;
+  width: var(--source-picker-width);
 
   @descendent active {
     cursor: pointer;
@@ -13,7 +15,7 @@ $source-picker-width: calc(48px + 24px);
   }
 
   @descendent list {
-    width: $source-picker-width;
+    width: var(--source-picker-width);
   }
 
   @descendent item {

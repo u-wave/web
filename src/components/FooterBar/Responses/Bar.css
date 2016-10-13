@@ -25,7 +25,7 @@
   }
 
   &:hover {
-    background-color: $background-hover-color;
+    background-color: var(--background-hover-color);
   }
 
   @descendent icon {

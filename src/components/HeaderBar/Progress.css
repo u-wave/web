@@ -2,7 +2,7 @@
 
 @component Progress {
   @descendent fill {
-    background: $highlight-color;
+    background: var(--highlight-color);
     height: 100%;
     width: 100%;
     transform: scaleX(0);

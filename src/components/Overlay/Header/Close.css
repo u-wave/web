@@ -3,12 +3,12 @@
 @component OverlayHeaderClose {
   cursor: pointer;
   text-align: center;
-  width: $overlay-header-close-size;
-  height: $overlay-header-close-size;
+  width: var(--overlay-header-close-size);
+  height: var(--overlay-header-close-size);
   padding: 12px;
 
   @descendent icon {
     font-size: 32px;
-    line-height: $overlay-header-close-size;
+    line-height: var(--overlay-header-close-size);
   }
 }

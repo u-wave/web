@@ -3,10 +3,10 @@
 @component MediaActions {
   height: 54px;
   text-align: right;
-  background: $background-color;
+  background: var(--background-color);
 
   @when selected {
-    background: $highlight-color;
+    background: var(--highlight-color);
   }
 
   @descendent action {

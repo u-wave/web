@@ -7,8 +7,8 @@
   display: flex;
   justify-content: space-between;
   z-index: 20; /* on top of overlays */
-  border-top: 1px solid $chat-border-color;
-  background: $background-color;
+  border-top: 1px solid var(--chat-border-color);
+  background: var(--background-color);
 
   @descendent guest {
     font-size: 12pt;
@@ -51,7 +51,7 @@
     justify-content: center;
     height: 100%;
     width: 125px;
-    background: $highlight-color;
+    background: var(--highlight-color);
     cursor: pointer;
 
     @modifier locked {
@@ -64,25 +64,25 @@
   width: 125px;
   height: 100%;
   border: 0;
-  border-right: 1px solid $chat-border-color;
+  border-right: 1px solid var(--chat-border-color);
   display: block;
   float: left;
   text-align: center;
   cursor: pointer;
-  color: #fff;
+  color: var(--text-color);
   font-size: 12pt;
 
   @modifier login {
-    background: $background-color;
+    background: var(--background-color);
     &:hover {
-      background: $background-hover-color;
+      background: var(--background-hover-color);
     }
   }
 
   @modifier register {
-    background: $highlight-color;
+    background: var(--highlight-color);
     &:hover {
-      background: $highbright-color;
+      background: var(--highbright-color);
     }
   }
 }

@@ -3,30 +3,30 @@
 /* Message styles are still super hacky...
  * One day! */
 @component ChatMessage {
-  background: $chat-background-color;
+  background: var(--chat-background-color);
   min-height: 32px;
   position: relative;
 
   @modifier alternate {
-    background: $chat-background-color2;
-    .ChatMessage-timestamp {
-      background: $chat-background-color2;
+    background: var(--chat-background-color2);
+    & .ChatMessage-timestamp {
+      background: var(--chat-background-color2);
     }
   }
 
   @modifier mention {
-    box-shadow: 5px 0px 0px $highlight-color inset;
+    box-shadow: 5px 0px 0px var(--highlight-color) inset;
   }
 
   @descendent timestamp {
-    background: $chat-background-color;
+    background: var(--chat-background-color);
     position: absolute;
     top: 0;
     right: 0;
     padding: 0 6px;
     display: none;
     font-size: 80%;
-    color: color($text-color blend(#777777 33%));
+    color: color(var(--text-color) blend(#777777 33%));
   }
   &:hover .ChatMessage-timestamp {
     display: block;
@@ -71,5 +71,5 @@
 }
 
 @component ChatMention {
-  color: $highlight-color;
+  color: var(--highlight-color);
 }

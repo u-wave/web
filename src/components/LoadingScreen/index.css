@@ -1,7 +1,7 @@
 @import "../../vars.css";
 
 @component LoadingScreen {
-  background: $background-color;
+  background: var(--background-color);
   position: fixed;
   left: 0;
   right: 0;
@@ -21,6 +21,6 @@
   }
 
   @descendent notice {
-    color: $text-color;
+    color: var(--text-color);
   }
 }

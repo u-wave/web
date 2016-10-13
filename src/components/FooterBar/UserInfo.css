@@ -8,7 +8,7 @@
   position: relative;
 
   &:hover {
-    background-color: $background-hover-color;
+    background-color: var(--background-hover-color);
   }
 
   @descendent avatar {
@@ -25,7 +25,7 @@
     height: 23px;
     width: 23px;
     border-radius: 50%;
-    border: 2px solid $background-color;
-    background: $background-color;
+    border: 2px solid var(--background-color);
+    background: var(--background-color);
   }
 }

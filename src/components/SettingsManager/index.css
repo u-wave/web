@@ -7,6 +7,6 @@
 
   @descendent body {
     overflow-y: scroll;
-    background: color($background-color alpha(* 96%));
+    background: color(var(--background-color) alpha(* 96%));
   }
 }

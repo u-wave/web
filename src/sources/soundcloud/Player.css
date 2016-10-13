@@ -1,37 +1,39 @@
 @import "../../vars.css";
 
-$sc-margins: 20px;
+:root {
+  --sc-margins: 20px;
+}
 
 @component-namespace src-soundcloud {
   @component Player {
     width: 400px;
     margin: auto;
     height: 300px;
-    background: $background-color;
+    background: var(--background-color);
 
     @descendent meta {
-      background: color($background-color alpha(* 20%));
+      background: color(var(--background-color) alpha(* 20%));
       position: relative;
-      padding: $sc-margins;
+      padding: var(--sc-margins);
       z-index: 3;
     }
 
     @descendent info {
-      margin-bottom: $sc-margins;
+      margin-bottom: var(--sc-margins);
     }
 
     @descendent art {
       display: block;
       width: 100px;
       height: 100px;
-      margin-right: $sc-margins;
+      margin-right: var(--sc-margins);
       float: left;
     }
 
     @descendent permalink {
       display: block;
       font: 14pt;
-      color: $text-color;
+      color: var(--text-color);
       text-align: right;
       text-decoration: none;
     }
