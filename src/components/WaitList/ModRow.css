@@ -6,12 +6,16 @@
   @descendent card {
     flex-grow: 2;
     cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   @descendent tools {
     float: right;
     height: 100%;
     padding: 5px;
+    white-space: nowrap;
   }
 
   /* TODO use `@descendent handle, remove` here when supported by postcss-bem */
