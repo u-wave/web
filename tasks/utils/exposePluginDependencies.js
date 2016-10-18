@@ -33,6 +33,7 @@ export default function exposePluginDependencies(b, exposeModules) {
   const dependencyMains = {};
   for (const name of dependencyNames) {
     try {
+      // eslint-disable-next-line import/no-dynamic-require
       dependencyMains[name] = require(`${name}/package.json`).main
         .replace(/^[./]+/, ''); // Strip preceding "./"
     } catch (e) {
