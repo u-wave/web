@@ -6,4 +6,19 @@
   height: 100%;
   overflow: hidden;
   background: black;
+
+  @descendent progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 5;
+  }
+
+  @descendent fullscreen {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 5;
+  }
 }

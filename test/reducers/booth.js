@@ -17,7 +17,8 @@ describe('reducers/booth', () => {
       historyID: null,
       djID: null,
       media: null,
-      startTime: null
+      startTime: null,
+      isFullscreen: false
     });
   });
 
@@ -39,7 +40,8 @@ describe('reducers/booth', () => {
         historyID: 'someRandomID',
         djID: 'seventeen',
         media: { artist: 'about tess', title: 'Imaginedit' },
-        startTime: 1449767164107
+        startTime: 1449767164107,
+        isFullscreen: false
       });
     });
 
@@ -49,7 +51,8 @@ describe('reducers/booth', () => {
         historyID: null,
         djID: null,
         media: null,
-        startTime: null
+        startTime: null,
+        isFullscreen: false
       });
     });
   });

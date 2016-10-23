@@ -4,9 +4,14 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { I18nextProvider } from 'react-i18next';
+import fullscreen from 'fullscreen';
 
 import createLocale from '../locale';
 
+import {
+  enterFullscreen as onEnterFullscreen,
+  exitFullscreen as onExitFullscreen
+} from '../actions/PlaybackActionCreators';
 import { closeAll } from '../actions/OverlayActionCreators';
 import { createTimer, stopTimer } from '../actions/TickerActionCreators';
 
@@ -28,6 +33,8 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
+  onEnterFullscreen,
+  onExitFullscreen,
   createTimer,
   stopTimer,
   onCloseOverlay: closeAll
@@ -40,6 +47,8 @@ export default class AppContainer extends React.Component {
     uwave: React.PropTypes.object,
     language: React.PropTypes.string,
     muiTheme: React.PropTypes.object,
+    onEnterFullscreen: React.PropTypes.func.isRequired,
+    onExitFullscreen: React.PropTypes.func.isRequired,
     createTimer: React.PropTypes.func.isRequired,
     stopTimer: React.PropTypes.func.isRequired
   };
@@ -65,6 +74,12 @@ export default class AppContainer extends React.Component {
     this.locale = createLocale(this.props.language);
   }
 
+  componentDidMount() {
+    this.fullscreen = fullscreen(document.querySelector('.Video'))
+      .on('attain', this.props.onEnterFullscreen)
+      .on('release', this.props.onExitFullscreen);
+  }
+
   componentWillReceiveProps(nextProps) {
     if (this.props.language !== nextProps.language) {
       this.locale.changeLanguage(nextProps.language);
@@ -76,11 +91,18 @@ export default class AppContainer extends React.Component {
     this.props.stopTimer();
   }
 
+  handleEnterFullscreen = () => {
+    this.fullscreen.request();
+  };
+
   render() {
     return (
       <MuiThemeProvider muiTheme={this.props.muiTheme}>
         <I18nextProvider i18n={this.locale}>
-          <App {...this.props} />
+          <App
+            {...this.props}
+            onFullscreen={this.handleEnterFullscreen}
+          />
         </I18nextProvider>
       </MuiThemeProvider>
     );

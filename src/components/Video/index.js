@@ -1,19 +1,27 @@
 import cx from 'classnames';
 import isEqual from 'is-equal-shallow';
+import LinearProgress from 'material-ui/LinearProgress';
+import IconButton from 'material-ui/IconButton';
+import FullscreenIcon from 'material-ui/svg-icons/navigation/fullscreen';
+import muiThemeable from 'material-ui/styles/muiThemeable';
 import * as React from 'react';
 
 import injectMediaSources from '../../utils/injectMediaSources';
 
+@muiThemeable()
 @injectMediaSources()
 export default class Video extends React.Component {
   static propTypes = {
+    muiTheme: React.PropTypes.object.isRequired,
     getAllMediaSources: React.PropTypes.func.isRequired,
+    isFullscreen: React.PropTypes.bool,
     enabled: React.PropTypes.bool,
     size: React.PropTypes.string,
     volume: React.PropTypes.number,
     isMuted: React.PropTypes.bool,
     media: React.PropTypes.object,
-    seek: React.PropTypes.number
+    seek: React.PropTypes.number,
+    onFullscreen: React.PropTypes.func.isRequired
   };
 
   shouldComponentUpdate(nextProps) {
@@ -22,10 +30,16 @@ export default class Video extends React.Component {
 
   render() {
     const {
+      muiTheme,
       getAllMediaSources,
-      enabled, size,
-      volume, isMuted,
-      media, seek
+      isFullscreen,
+      enabled,
+      size,
+      volume,
+      isMuted,
+      media,
+      seek,
+      onFullscreen
     } = this.props;
 
     if (!media) {
@@ -57,6 +71,22 @@ export default class Video extends React.Component {
 
     return (
       <div className={cx('Video', `Video--${media.sourceType}`, `Video--${size}`)}>
+        {isFullscreen ? (
+          <div className="Video-progress">
+            <LinearProgress
+              mode="determinate"
+              color={muiTheme.palette.primary1Color}
+              max={media.end - media.start}
+              value={seek}
+            />
+          </div>
+        ) : (
+          <div className="Video-fullscreen">
+            <IconButton onClick={onFullscreen}>
+              <FullscreenIcon />
+            </IconButton>
+          </div>
+        )}
         {players}
       </div>
     );
