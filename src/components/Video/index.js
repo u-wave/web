@@ -1,6 +1,7 @@
 import cx from 'classnames';
 import isEqual from 'is-equal-shallow';
 import * as React from 'react';
+import screenfull from 'screenfull';
 
 import injectMediaSources from '../../utils/injectMediaSources';
 
@@ -18,12 +19,44 @@ export default class Video extends React.Component {
     isMuted: React.PropTypes.bool,
     media: React.PropTypes.object,
     seek: React.PropTypes.number,
-    onFullscreen: React.PropTypes.func.isRequired
+    onFullscreenEnter: React.PropTypes.func.isRequired,
+    onFullscreenExit: React.PropTypes.func.isRequired
   };
+
+  componentDidMount() {
+    document.documentElement.addEventListener(
+      screenfull.raw.fullscreenchange,
+      this.handleFullscreenChange
+    );
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!this.props.isFullscreen && nextProps.isFullscreen) {
+      screenfull.request(this.element);
+    }
+    if (this.props.isFullscreen && !nextProps.isFullscreen) {
+      // Checking for `enabled` here, because our props have probably changed
+      // _after_ exiting fullscreen mode (see `this.handleFullscreenChange`).
+      // This way we don't double-exit.
+      if (screenfull.enabled) {
+        screenfull.exit();
+      }
+    }
+  }
 
   shouldComponentUpdate(nextProps) {
     return !isEqual(nextProps, this.props);
   }
+
+  handleFullscreenChange = () => {
+    if (!screenfull.isFullscreen) {
+      this.props.onFullscreenExit();
+    }
+  };
+
+  refElement = (element) => {
+    this.element = element;
+  };
 
   render() {
     const {
@@ -35,7 +68,7 @@ export default class Video extends React.Component {
       isMuted,
       media,
       seek,
-      onFullscreen
+      onFullscreenEnter
     } = this.props;
 
     if (!media) {
@@ -66,7 +99,10 @@ export default class Video extends React.Component {
     }).filter(Boolean);
 
     return (
-      <div className={cx('Video', `Video--${media.sourceType}`, `Video--${size}`)}>
+      <div
+        ref={this.refElement}
+        className={cx('Video', `Video--${media.sourceType}`, `Video--${size}`)}
+      >
         {isFullscreen && (
           <VideoProgressBar
             media={media}
@@ -75,7 +111,7 @@ export default class Video extends React.Component {
         )}
         {!isFullscreen && (
           <VideoToolbar
-            onFullscreen={onFullscreen}
+            onFullscreen={onFullscreenEnter}
           />
         )}
         {players}

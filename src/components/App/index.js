@@ -25,7 +25,6 @@ const App = ({
   settings,
   hasAboutPage,
   onCloseOverlay
-  onFullscreen
 }) => (
   <div className="App">
     <div className="AppColumn AppColumn--left">
@@ -41,7 +40,6 @@ const App = ({
           size={settings.videoSize}
           isMuted={settings.muted}
           volume={settings.volume}
-          onFullscreen={onFullscreen}
         />
         <ErrorArea />
       </div>
@@ -82,8 +80,7 @@ App.propTypes = {
   settings: React.PropTypes.object.isRequired,
   hasAboutPage: React.PropTypes.bool,
 
-  onCloseOverlay: React.PropTypes.func.isRequired,
-  onFullscreen: React.PropTypes.func.isRequired
+  onCloseOverlay: React.PropTypes.func.isRequired
 };
 
 export default compose(
