@@ -7,13 +7,10 @@ import minifyHtml from 'gulp-htmlmin';
 import when from 'gulp-if';
 
 import renderLoadingScreen from './utils/renderLoadingScreen';
-import renderApp from './utils/renderApp';
 
 // The core function of the HTML task is to copy the index.html file from the
-// source directory to the compiled directory. However, it can also do a few
-// more things, like minification and prerendering the üWave React app ahead of
-// time. Both of those will make it feel like üWave loads incredibly fast, even
-// though it won't do much until the JavaScript is loaded as well.
+// source directory to the compiled directory. It also adds a loading screen to
+// the page, and inlines the CSS stylesheet if minification is enabled.
 
 const COMPILED_CSS_PATH = joinPath(__dirname, '../public/app.css');
 
@@ -46,10 +43,9 @@ const minifierOptions = {
   removeOptionalTags: true
 };
 
-export default function copyHtmlTask({ minify = false, prerender = false }) {
+export default function copyHtmlTask({ minify = false }) {
   return src('src/index.html')
     .pipe(insert('#app-loading', renderLoadingScreen))
-    .pipe(when(prerender, insert('#app', renderApp)))
     // When minifying, we inline the app CSS in a <style> tag. This saves an
     // HTTP request when loading the page.
     .pipe(when(minify, transform(apply('link[href="app.css"]', el =>
