@@ -1,18 +1,15 @@
 import cx from 'classnames';
 import isEqual from 'is-equal-shallow';
-import LinearProgress from 'material-ui/LinearProgress';
-import IconButton from 'material-ui/IconButton';
-import FullscreenIcon from 'material-ui/svg-icons/navigation/fullscreen';
-import muiThemeable from 'material-ui/styles/muiThemeable';
 import * as React from 'react';
 
 import injectMediaSources from '../../utils/injectMediaSources';
 
-@muiThemeable()
+import VideoProgressBar from './VideoProgressBar';
+import VideoToolbar from './VideoToolbar';
+
 @injectMediaSources()
 export default class Video extends React.Component {
   static propTypes = {
-    muiTheme: React.PropTypes.object.isRequired,
     getAllMediaSources: React.PropTypes.func.isRequired,
     isFullscreen: React.PropTypes.bool,
     enabled: React.PropTypes.bool,
@@ -30,7 +27,6 @@ export default class Video extends React.Component {
 
   render() {
     const {
-      muiTheme,
       getAllMediaSources,
       isFullscreen,
       enabled,
@@ -71,21 +67,16 @@ export default class Video extends React.Component {
 
     return (
       <div className={cx('Video', `Video--${media.sourceType}`, `Video--${size}`)}>
-        {isFullscreen ? (
-          <div className="Video-progress">
-            <LinearProgress
-              mode="determinate"
-              color={muiTheme.palette.primary1Color}
-              max={media.end - media.start}
-              value={seek}
-            />
-          </div>
-        ) : (
-          <div className="Video-fullscreen">
-            <IconButton onClick={onFullscreen}>
-              <FullscreenIcon />
-            </IconButton>
-          </div>
+        {isFullscreen && (
+          <VideoProgressBar
+            media={media}
+            seek={seek}
+          />
+        )}
+        {!isFullscreen && (
+          <VideoToolbar
+            onFullscreen={onFullscreen}
+          />
         )}
         {players}
       </div>

@@ -1,5 +1,10 @@
 @import "./VideoBackdrop.css";
 
+:root {
+  /* Z-index for stuff that should show on top of the player embeds. */
+  --video-overlays-zindex: 5;
+}
+
 .Video {
   position: relative;
   width: 100%;
@@ -7,18 +12,26 @@
   overflow: hidden;
   background: black;
 
-  @descendent progress {
+  &-progress {
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: 5;
+    z-index: var(--video-overlays-zindex);
   }
 
-  @descendent fullscreen {
+  &-toolbar {
+    background-color: var(--background-color);
     position: absolute;
     top: 0;
     right: 0;
-    z-index: 5;
+    z-index: var(--video-overlays-zindex);
+
+    display: none;
+  }
+
+  /* Only show the toolbar on hover. */
+  &:hover .Video-toolbar {
+    display: block;
   }
 }
