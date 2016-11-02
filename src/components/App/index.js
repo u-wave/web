@@ -13,6 +13,7 @@ import Overlays from './Overlays';
 import PlaylistManager from '../../containers/PlaylistManager';
 import RoomHistory from '../../containers/RoomHistory';
 import SettingsManager from '../../containers/SettingsManager';
+import About from '../../containers/About';
 
 import SidePanels from '../../containers/SidePanels';
 import Dialogs from '../Dialogs';
@@ -22,6 +23,7 @@ import DragLayer from '../../containers/DragLayer';
 const App = ({
   activeOverlay,
   settings,
+  hasAboutPage,
   onCloseOverlay
 }) => (
   <div className="App">
@@ -42,6 +44,10 @@ const App = ({
         <ErrorArea />
       </div>
       <Overlays transitionName="Overlay" active={activeOverlay}>
+        {hasAboutPage && <About
+          key="about"
+          onCloseOverlay={onCloseOverlay}
+        />}
         <PlaylistManager
           key="playlistManager"
           onCloseOverlay={onCloseOverlay}
@@ -72,6 +78,7 @@ const App = ({
 App.propTypes = {
   activeOverlay: React.PropTypes.string,
   settings: React.PropTypes.object.isRequired,
+  hasAboutPage: React.PropTypes.bool,
 
   onCloseOverlay: React.PropTypes.func.isRequired
 };

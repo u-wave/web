@@ -2,7 +2,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { setVolume, mute, unmute } from '../actions/PlaybackActionCreators';
-import { toggleRoomHistory } from '../actions/OverlayActionCreators';
+import { toggleRoomHistory, toggleAbout } from '../actions/OverlayActionCreators';
 
 import { djSelector, mediaSelector, startTimeSelector } from '../selectors/boothSelectors';
 import { volumeSelector, isMutedSelector } from '../selectors/settingSelectors';
@@ -20,7 +20,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onVolumeChange: setVolume,
   onVolumeMute: mute,
   onVolumeUnmute: unmute,
-  onToggleRoomHistory: toggleRoomHistory
+  onToggleRoomHistory: toggleRoomHistory,
+  onToggleAboutOverlay: toggleAbout
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeaderBar);
