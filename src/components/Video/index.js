@@ -7,6 +7,9 @@ import injectMediaSources from '../../utils/injectMediaSources';
 
 import VideoProgressBar from './VideoProgressBar';
 import VideoToolbar from './VideoToolbar';
+import MouseMoveCapture from './VideoMouseMoveCapture';
+
+const defaultSourceTools = () => null;
 
 @injectMediaSources()
 export default class Video extends React.Component {
@@ -21,6 +24,10 @@ export default class Video extends React.Component {
     seek: React.PropTypes.number,
     onFullscreenEnter: React.PropTypes.func.isRequired,
     onFullscreenExit: React.PropTypes.func.isRequired
+  };
+
+  state = {
+    shouldShowToolbar: false
   };
 
   componentDidMount() {
@@ -54,6 +61,21 @@ export default class Video extends React.Component {
     }
   };
 
+  handleMouseMove = () => {
+    if (this.timer) {
+      clearTimeout(this.timer);
+    } else {
+      this.setState({ shouldShowToolbar: true });
+    }
+    this.timer = setTimeout(this.handleMouseMoveEnd, 5000);
+  };
+
+  handleMouseMoveEnd = () => {
+    clearTimeout(this.timer);
+    this.timer = null;
+    this.setState({ shouldShowToolbar: false });
+  };
+
   refElement = (element) => {
     this.element = element;
   };
@@ -74,6 +96,10 @@ export default class Video extends React.Component {
     if (!media) {
       return <div className="Video" />;
     }
+
+    const {
+      shouldShowToolbar
+    } = this.state;
 
     const props = {
       enabled,
@@ -98,23 +124,37 @@ export default class Video extends React.Component {
       return null;
     }).filter(Boolean);
 
+    const currentSource = sources[media.sourceType];
+    const MediaSourceTools = (currentSource && currentSource.VideoTools)
+      ? currentSource.VideoTools
+      : defaultSourceTools;
+
     return (
       <div
         ref={this.refElement}
         className={cx('Video', `Video--${media.sourceType}`, `Video--${size}`)}
       >
+        {players}
+
+        {isFullscreen && (
+          <MouseMoveCapture
+            active={shouldShowToolbar}
+            onMouseMove={this.handleMouseMove}
+          />
+        )}
         {isFullscreen && (
           <VideoProgressBar
             media={media}
             seek={seek}
           />
         )}
-        {!isFullscreen && (
+        {(!isFullscreen || shouldShowToolbar) && (
           <VideoToolbar
             onFullscreen={onFullscreenEnter}
-          />
+          >
+            <MediaSourceTools media={media} />
+          </VideoToolbar>
         )}
-        {players}
       </div>
     );
   }

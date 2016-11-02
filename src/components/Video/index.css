@@ -1,8 +1,10 @@
 @import "./VideoBackdrop.css";
 
 :root {
-  /* Z-index for stuff that should show on top of the player embeds. */
-  --video-overlays-zindex: 5;
+  --video-overlay: {
+    z-index: 50;
+    position: absolute;
+  };
 }
 
 .Video {
@@ -12,20 +14,26 @@
   overflow: hidden;
   background: black;
 
+  &-capture {
+    @apply --video-overlay;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+  }
+
   &-progress {
-    position: absolute;
+    @apply --video-overlay;
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: var(--video-overlays-zindex);
   }
 
   &-toolbar {
+    @apply --video-overlay;
     background-color: var(--background-color);
-    position: absolute;
     top: 0;
     right: 0;
-    z-index: var(--video-overlays-zindex);
 
     display: none;
   }

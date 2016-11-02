@@ -1,5 +1,8 @@
 import { set } from './SettingsActionCreators';
 import {
+  settingsSelector
+} from '../selectors/settingSelectors';
+import {
   ENTER_FULLSCREEN,
   EXIT_FULLSCREEN
 } from '../constants/actionTypes/booth';
@@ -14,6 +17,22 @@ export function mute() {
 
 export function unmute() {
   return set('muted', false);
+}
+
+export function setVideoSize(size) {
+  return set('videoSize', size);
+}
+
+const nextVideoSize = {
+  large: 'small',
+  small: 'large'
+};
+export function toggleVideoSize() {
+  return (dispatch, getState) => {
+    const current = settingsSelector(getState()).videoSize;
+    const other = nextVideoSize[current];
+    dispatch(setVideoSize(other));
+  };
 }
 
 export function enterFullscreen() {
