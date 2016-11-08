@@ -3,7 +3,8 @@
   "plugins": [
     "transform-decorators-legacy",
     "transform-class-properties",
-    "transform-export-extensions"
+    "transform-export-extensions",
+    ["transform-runtime", { "polyfill": false }]
   ],
   "env": {
     "production": {
