@@ -31,7 +31,7 @@ export default function exposePluginDependencies(b, exposeModules) {
   const webBasePath = path.join(__dirname, '../../');
   const dependencyNames = Object.keys(exposeModules);
   const dependencyMains = {};
-  for (const name of dependencyNames) {
+  dependencyNames.forEach((name) => {
     try {
       // eslint-disable-next-line import/no-dynamic-require
       dependencyMains[name] = require(`${name}/package.json`).main
@@ -39,7 +39,7 @@ export default function exposePluginDependencies(b, exposeModules) {
     } catch (e) {
       // Ignore
     }
-  }
+  });
 
   function expose(id, name) {
     return {

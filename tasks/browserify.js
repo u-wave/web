@@ -23,8 +23,8 @@ export const exposeModules = {
   // Not exposing SVG icons because their use is a bit all over the place.
   // Really we should pick a few components to expose here and leave plugins
   // to include the rest.
-  'material-ui': /^(styles\/)?([^\/]+)(\/index)?\.js$/,
-  'u-wave-web': /^lib\/constants(\/([^\/]+)\.js)?$/
+  'material-ui': /^(styles\/)?([^/]+)(\/index)?\.js$/,
+  'u-wave-web': /^lib\/constants(\/([^/]+)\.js)?$/
 };
 
 // The browserify task compiles all the necessary modules into a single file,
