@@ -18,7 +18,7 @@ const SearchResultsRow = ({
         <div className="PlaylistMenuRow-active-icon">
           <SearchIcon color="#fff" />
         </div>
-        "{query}"
+        &quot;{query}&quot;
       </div>
       <div className="PlaylistMenuRow-count">{size}</div>
     </div>

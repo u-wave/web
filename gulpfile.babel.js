@@ -7,6 +7,7 @@ function sequence(...tasks) {
 }
 
 function exec(taskName) {
+  // eslint-disable-next-line import/no-dynamic-require
   return () => require(`./tasks/${taskName}`).default(env);
 }
 
