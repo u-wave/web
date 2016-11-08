@@ -1,6 +1,6 @@
 {
   "name": "u-wave-web",
-  "version": "0.0.0",
+  "version": "1.0.0-beta.1",
   "description": "Web client for [üµ]wave servers.",
   "author": "René Kooi <rene@kooi.me>",
   "license": "MIT",
@@ -84,7 +84,7 @@
     "eslint": "^3.8.1",
     "eslint-config-airbnb": "^12.0.0",
     "eslint-config-airbnb-base": "^9.0.0",
-    "eslint-plugin-import": "^2.0.1",
+    "eslint-plugin-import": "^2.2.1",
     "eslint-plugin-jsx-a11y": "^2.0.0",
     "eslint-plugin-react": "^6.0.0",
     "express": "^4.13.3",
