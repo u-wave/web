@@ -41,13 +41,6 @@ export default function browserifyTask({ minify = false }) {
     entries: './src/app.js'
   });
 
-  // Replace Bluebird with es6-promise.
-  // Bluebird is only used by dependencies for its most basic Promises
-  // functionality, so we can just use the es6-promise olyfill module that we
-  // already use elsewhere. This shaves some 20kb off the final minified+gzipped
-  // bundle (that's > 15%).
-  b.require('./src/utils/Promise', { expose: 'bluebird' });
-
   b.transform(yamlify);
 
   // Babelify transforms the üWave source code, which is written in JavaScript

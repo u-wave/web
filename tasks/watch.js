@@ -92,7 +92,6 @@ export default function watchTask() {
   });
   watcher.transform(yamlify);
   watcher.transform(babelify, babelOptions);
-  watcher.require('./src/utils/Promise', { expose: 'bluebird' });
 
   // So this is where Part 1 of the magic happens. Watchify watches our
   // JavaScript files for changes, and if the files change, it emits an "update"
