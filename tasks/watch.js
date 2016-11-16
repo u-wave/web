@@ -1,16 +1,13 @@
-import gulp from 'gulp';
-import { log } from 'gulp-util';
-import watch from 'gulp-watch';
-import babelify from 'babelify';
-import yamlify from 'yamlify';
-import browserify from 'browserify';
-import hmr from 'browserify-hmr';
-import watchify from 'watchify';
-import seq from 'run-sequence';
-import source from 'vinyl-source-stream';
-
-import exposePluginDependencies from './utils/exposePluginDependencies';
-import { exposeModules } from './browserify';
+const gulp = require('gulp');
+const log = require('gulp-util').log;
+const watch = require('gulp-watch');
+const babelify = require('babelify');
+const yamlify = require('yamlify');
+const browserify = require('browserify');
+const hmr = require('browserify-hmr');
+const watchify = require('watchify');
+const seq = require('run-sequence');
+const source = require('vinyl-source-stream');
 
 // The watch task is a bit like a "live" version of the JS and CSS tasks.
 // It recompiles both CSS and JS on change. If you combine this task with the
@@ -55,7 +52,7 @@ function bundle() {
 // tell Gulp to log a few lines so you can see that it's recompiling.
 gulp.task('watch:bundle', bundle);
 
-export default function watchTask() {
+module.exports = function watchTask() {
   // We have a lot more options to hand to Babel now, because we want our React
   // components to rerender when the files are updated.
   const babelOptions = {
@@ -112,8 +109,6 @@ export default function watchTask() {
     gulp.start('watch:bundle');
   });
 
-  watcher.plugin(exposePluginDependencies, exposeModules);
-
   watch(JS_PATHS, () => gulp.start(JS_TASKS));
   watch(CSS_PATHS, () => gulp.start(CSS_TASKS));
   watch(HTML_PATHS, () => gulp.start(HTML_TASKS));
@@ -135,4 +130,4 @@ export default function watchTask() {
       }
     });
   });
-}
+};
