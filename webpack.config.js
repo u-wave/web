@@ -1,7 +1,6 @@
 const path = require('path');
 const DefinePlugin = require('webpack').DefinePlugin;
 const ProgressPlugin = require('webpack').ProgressPlugin;
-const HotModuleReplacementPlugin = require('webpack').HotModuleReplacementPlugin;
 
 const nodeEnv = process.env.NODE_ENV || 'development';
 
@@ -48,7 +47,7 @@ module.exports = {
     app: './app.js'
   },
   output: {
-    publicPath: path.join(__dirname, 'public'),
+    publicPath: '/',
     path: path.join(__dirname, 'public'),
     filename: '[name].js'
   },
@@ -68,13 +67,6 @@ module.exports = {
         exclude: /node_modules/,
         use: [ 'babel-loader' ]
       }
-    ]
-  },
-  devServer: {
-    contentBase: path.join(__dirname, 'public'),
-    hot: true,
-    plugins: [
-      new HotModuleReplacementPlugin()
     ]
   }
 };

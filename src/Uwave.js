@@ -24,6 +24,7 @@ export default class Uwave {
   options = {};
   sources = {};
   jwt = null;
+  renderTarget = null;
 
   constructor(options = {}, session = readSession()) {
     this.options = options;
@@ -32,6 +33,19 @@ export default class Uwave {
     Object.assign(this, api.constants);
     Object.assign(this, api.components);
     Object.assign(this, api.actions);
+
+    if (module.hot) {
+      const HotContainer = require('react-hot-loader').AppContainer;
+      this._getComponent = this.getComponent;
+      this.getComponent = () => (
+        <HotContainer>{this._getComponent()}</HotContainer>
+      );
+      module.hot.accept('./containers/App', () => {
+        if (this.renderTarget) {
+          this.renderToDOM(this.renderTarget);
+        }
+      });
+    }
   }
 
   use(plugin) {
@@ -84,6 +98,7 @@ export default class Uwave {
       this.build();
     }
 
+    this.renderTarget = target;
     ReactDOM.render(this.getComponent(), target);
   }
 }

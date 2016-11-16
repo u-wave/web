@@ -12,7 +12,11 @@ const destEs = 'es/';
 const destCommonjs = 'lib/';
 
 module.exports = function babelTask() {
-  process.env.NODE_ENV = 'production';
+  // We'll always compile this in production mode so other people using the
+  // client as a library get the optimised versions of components.
+  // Save the environment value so we can restore it later.
+  const oldEnv = process.env.BABEL_ENV;
+  process.env.BABEL_ENV = 'production';
 
   return gulp.src(src)
     .pipe(plumber())
@@ -28,5 +32,8 @@ module.exports = function babelTask() {
       babelrc: false,
       plugins: [ 'transform-es2015-modules-commonjs' ]
     }))
-    .pipe(gulp.dest(destCommonjs));
+    .pipe(gulp.dest(destCommonjs))
+    .on('end', () => {
+      process.env.BABEL_ENV = oldEnv;
+    });
 };
