@@ -1,5 +1,5 @@
-import gulp from 'gulp';
-import seq from 'run-sequence';
+const gulp = require('gulp');
+const seq = require('run-sequence');
 
 gulp.task('assets:favicon', () =>
   gulp.src('assets/favicon.ico')
@@ -11,7 +11,7 @@ gulp.task('assets:copy', () =>
     .pipe(gulp.dest('public/assets/'))
 );
 
-export default function copyAssetsTask() {
+module.exports = function copyAssetsTask() {
   return new Promise((resolve, reject) =>
     seq([ 'assets:copy', 'assets:favicon' ], (err) => {
       if (err) {
@@ -21,4 +21,4 @@ export default function copyAssetsTask() {
       }
     })
   );
-}
+};

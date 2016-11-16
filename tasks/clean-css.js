@@ -1,5 +1,5 @@
-import del from 'del';
+const del = require('del');
 
-export default function cleanCssTask() {
+module.exports = function cleanCssTask() {
   return del([ 'public/app.css' ]);
-}
+};

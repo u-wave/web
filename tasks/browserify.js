@@ -1,19 +1,20 @@
-import gulp from 'gulp';
-import babelify from 'babelify';
-import browserify from 'browserify';
-import uglifyify from 'uglifyify';
-import yamlify from 'yamlify';
-import buffer from 'gulp-buffer';
-import collapse from 'bundle-collapser/plugin';
-import envify from 'loose-envify/custom';
-import source from 'vinyl-source-stream';
-import sourcemaps from 'gulp-sourcemaps';
-import uglify from 'gulp-uglify';
-import when from 'gulp-if';
+const gulp = require('gulp');
+const babelify = require('babelify');
+const browserify = require('browserify');
+const uglifyify = require('uglifyify');
+const yamlify = require('yamlify');
+const buffer = require('gulp-buffer');
+const collapse = require('bundle-collapser/plugin');
+const envify = require('loose-envify/custom');
+const source = require('vinyl-source-stream');
+const sourcemaps = require('gulp-sourcemaps');
+const uglify = require('gulp-uglify');
+const when = require('gulp-if');
+const exposePluginDependencies = require('./utils/exposePluginDependencies');
 
-import exposePluginDependencies, { EXPORT_MAIN } from './utils/exposePluginDependencies';
+const EXPORT_MAIN = exposePluginDependencies.EXPORT_MAIN;
 
-export const exposeModules = {
+const exposeModules = {
   react: EXPORT_MAIN,
   'react-dom': EXPORT_MAIN,
   'react-redux': EXPORT_MAIN,
@@ -29,7 +30,7 @@ export const exposeModules = {
 // called a "bundle". It includes both üWave's own modules, like the React
 // components and Redux reducers, and dependency files like React itself.
 
-export default function browserifyTask({ minify = false }) {
+module.exports = function browserifyTask({ minify = false }) {
   process.env.NODE_ENV = minify ? 'production' : 'development';
 
   // Browserify works by passing a single entry point file, which contains the
@@ -99,4 +100,6 @@ export default function browserifyTask({ minify = false }) {
     .pipe(sourcemaps.write('./'))
     // Output to public/app.js!
     .pipe(gulp.dest('public/'));
-}
+};
+
+module.exports.exposeModules = exposeModules;

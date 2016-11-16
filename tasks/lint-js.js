@@ -1,7 +1,7 @@
-import { exec } from 'child_process';
-import npmRunPath from 'npm-run-path';
+const exec = require('child_process').exec;
+const npmRunPath = require('npm-run-path');
 
-export default function lintJsTask() {
+module.exports = function lintJsTask() {
   return new Promise((resolve, reject) => {
     const env = npmRunPath.env();
     exec('eslint --cache --color .', { env }, (error, stdout) => {
@@ -13,4 +13,4 @@ export default function lintJsTask() {
       resolve();
     });
   });
-}
+};

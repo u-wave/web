@@ -1,6 +1,6 @@
-import gulp from 'gulp';
-import { env } from 'gulp-util';
-import runSeq from 'run-sequence';
+const gulp = require('gulp');
+const env = require('gulp-util').env;
+const runSeq = require('run-sequence');
 
 function sequence(...tasks) {
   return cb => runSeq(...tasks, cb);
@@ -8,7 +8,7 @@ function sequence(...tasks) {
 
 function exec(taskName) {
   // eslint-disable-next-line import/no-dynamic-require
-  return () => require(`./tasks/${taskName}`).default(env);
+  return () => require(`./tasks/${taskName}`)(env);
 }
 
 gulp.task('css:clean', exec('clean-css'));

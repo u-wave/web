@@ -1,12 +1,12 @@
-import { src, dest } from 'gulp';
-import sourcemaps from 'gulp-sourcemaps';
-import postcss from 'gulp-postcss';
-import cssnext from 'postcss-cssnext';
-import bem from 'postcss-bem';
-import cssnano from 'cssnano';
-import imports from 'postcss-import';
+const gulp = require('gulp');
+const sourcemaps = require('gulp-sourcemaps');
+const postcss = require('gulp-postcss');
+const cssnext = require('postcss-cssnext');
+const bem = require('postcss-bem');
+const cssnano = require('cssnano');
+const imports = require('postcss-import');
 
-export default function compileCssTask({ minify = false }) {
+module.exports = function compileCssTask({ minify = false }) {
   const processors = [
     imports(),
     bem(),
@@ -17,9 +17,9 @@ export default function compileCssTask({ minify = false }) {
     processors.push(cssnano());
   }
 
-  return src('src/app.css')
+  return gulp.src('src/app.css')
     .pipe(sourcemaps.init())
       .pipe(postcss(processors))
     .pipe(sourcemaps.write('./'))
-    .pipe(dest('public/'));
-}
+    .pipe(gulp.dest('public/'));
+};

@@ -1,7 +1,7 @@
-import del from 'del';
+const del = require('del');
 
 // Remove all of the compiled things!
 
-export default function cleanTask() {
+module.exports = function cleanTask() {
   return del('lib');
-}
+};

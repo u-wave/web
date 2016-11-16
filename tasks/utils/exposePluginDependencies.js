@@ -1,9 +1,9 @@
-import * as path from 'path';
-import through from 'through2';
+const path = require('path');
+const through = require('through2');
 
 // Likely peerDependencies for plugins.
-export const EXPORT_MAIN = 0;
-export const EXPORT_SUBMODULES = 1;
+const EXPORT_MAIN = 0;
+const EXPORT_SUBMODULES = 1;
 
 function shouldIncludeMainModule(expose, name) {
   return expose[name] === EXPORT_MAIN;
@@ -27,7 +27,7 @@ function shouldIncludeSubModule(expose, name, subPath) {
  *
  * FIXME probably doesn't work so well with symlinked dependencies…
  */
-export default function exposePluginDependencies(b, exposeModules) {
+module.exports = function exposePluginDependencies(b, exposeModules) {
   const webBasePath = path.join(__dirname, '../../');
   const dependencyNames = Object.keys(exposeModules);
   const dependencyMains = {};
@@ -89,4 +89,7 @@ export default function exposePluginDependencies(b, exposeModules) {
     }
     next();
   }));
-}
+};
+
+module.exports.EXPORT_MAIN = EXPORT_MAIN;
+module.exports.EXPORT_SUBMODULES = EXPORT_SUBMODULES;
