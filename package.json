@@ -121,8 +121,11 @@
     "lint": "eslint --cache .",
     "mocha": "NODE_ENV=testing mocha",
     "test": "npm run mocha && npm run lint",
+    "prod": "gulp --minify",
+    "dev": "gulp start",
+    "clean": "gulp clean",
     "build": "gulp",
-    "watch": "gulp watch",
+    "serve": "gulp serve",
     "start": "gulp start"
   }
 }
