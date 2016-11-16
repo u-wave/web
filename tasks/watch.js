@@ -1,7 +1,7 @@
 const gulp = require('gulp');
 const watch = require('gulp-watch');
 
-module.exports = function watchTask() {
+gulp.task('watch', () => {
   watch('src/**/*.css', () => {
     gulp.start('css');
   });
@@ -17,4 +17,4 @@ module.exports = function watchTask() {
 
   // Endless.
   return new Promise(() => {});
-};
+});

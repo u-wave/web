@@ -11,14 +11,14 @@ gulp.task('assets:copy', () =>
     .pipe(gulp.dest('public/assets/'))
 );
 
-module.exports = function copyAssetsTask() {
-  return new Promise((resolve, reject) =>
+gulp.task('assets', () => (
+  new Promise((resolve, reject) => {
     seq([ 'assets:copy', 'assets:favicon' ], (err) => {
       if (err) {
         reject(err);
       } else {
         resolve();
       }
-    })
-  );
-};
+    });
+  })
+));

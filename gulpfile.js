@@ -1,46 +1,42 @@
 const gulp = require('gulp');
 const env = require('gulp-util').env;
+const del = require('del');
 const runSeq = require('run-sequence');
 
-function sequence(...tasks) {
-  return cb => runSeq(...tasks, cb);
+if (env.minify) {
+  process.env.NODE_ENV = 'production';
 }
 
-function exec(taskName) {
-  // eslint-disable-next-line import/no-dynamic-require
-  return () => require(`./tasks/${taskName}`)(env);
-}
-
-// TODO move CSS into webpack.
-gulp.task('css:clean', exec('clean-css'));
-gulp.task('css:compile', exec('compile-css'));
-gulp.task('css:watch', exec('watch-css'));
-gulp.task('css', sequence('css:clean', 'css:compile'));
-
-gulp.task('js:lint', exec('lint-js'));
-gulp.task('js:clean', exec('clean-js'));
-gulp.task('js:babel', exec('babel'));
-gulp.task('js', [ 'js:babel', 'webpack' ]);
-
-// TODO move html into webpack?
-gulp.task('html', exec('copy-html'));
-
-gulp.task('clean', exec('clean-all'));
-
-gulp.task('assets', exec('copy-assets'));
-
-gulp.task('webpack', [ 'assets' ], exec('webpack'));
-gulp.task('watch', [ 'assets', 'css', 'html' ], exec('watch'));
-
-gulp.task('middleware', [ 'js:babel' ]); // compatibility
-gulp.task('serve', exec('serve'));
+require('./tasks/css');
+require('./tasks/js');
+require('./tasks/assets');
+require('./tasks/html');
+require('./tasks/serve');
+require('./tasks/watch');
 
 gulp.task('set-watching', () => {
   env.watch = true;
 });
 
-gulp.task('start', sequence('set-watching', 'js:babel', [ 'watch', 'serve' ]));
+gulp.task('clean',
+  [ 'js:clean', 'css:clean' ],
+  () => del('public/', 'es/', 'lib/')
+);
 
-gulp.task('build', sequence('assets', 'js', 'css', 'html'));
+gulp.task('start', (cb) => {
+  runSeq(
+    'set-watching',
+    [ 'assets', 'js:babel', 'css' ],
+    'html',
+    [ 'watch', 'serve' ],
+    cb
+  );
+});
+
+gulp.task('js', [ 'js:babel', 'webpack' ]);
+
+gulp.task('build', (cb) => {
+  runSeq('assets', 'js', 'css', 'html', cb);
+});
 
 gulp.task('default', [ 'build' ]);

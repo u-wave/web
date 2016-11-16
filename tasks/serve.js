@@ -1,4 +1,6 @@
 require('loud-rejection/register');
+const gulp = require('gulp');
+const env = require('gulp-util').env;
 const emojione = require('u-wave-web-emojione');
 const ytSource = require('u-wave-source-youtube');
 const scSource = require('u-wave-source-soundcloud');
@@ -21,7 +23,8 @@ function tryRequire(file, message) {
   }
 }
 
-module.exports = function serveTask({ port = config.port, watch = false }) {
+gulp.task('serve', () => {
+  const { port = config.port, watch = false } = env;
   const uwave = tryRequire('u-wave-core',
     'Could not find the u-wave core module. Did you run `npm install u-wave-core`?'
   );
@@ -78,4 +81,4 @@ module.exports = function serveTask({ port = config.port, watch = false }) {
   uw.on('stopped', () => {
     process.exit(0);
   });
-};
+});

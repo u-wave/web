@@ -1,4 +1,5 @@
 const gulp = require('gulp');
+const env = require('gulp-util').env;
 const transform = require('gulp-insert').transform;
 const readFileSync = require('fs').readFileSync;
 const path = require('path');
@@ -43,15 +44,15 @@ const minifierOptions = {
   removeOptionalTags: true
 };
 
-module.exports = function copyHtmlTask({ minify = false }) {
-  return gulp.src('src/index.html')
+gulp.task('html', () => (
+  gulp.src('src/index.html')
     .pipe(insert('#app-loading', renderLoadingScreen))
     // When minifying, we inline the app CSS in a <style> tag. This saves an
     // HTTP request when loading the page.
-    .pipe(when(minify, transform(apply('link[href="app.css"]', el =>
+    .pipe(when(env.minify, transform(apply('link[href="app.css"]', el =>
       el.replaceWith(`<style>${readFileSync(COMPILED_CSS_PATH, 'utf8')}</style>`)
     ))))
     // minifyHtml makes HTML really, really compact.
-    .pipe(when(minify, minifyHtml(minifierOptions)))
-    .pipe(gulp.dest('public/'));
-};
+    .pipe(when(env.minify, minifyHtml(minifierOptions)))
+    .pipe(gulp.dest('public/'))
+));

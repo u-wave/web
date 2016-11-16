@@ -1,17 +1,28 @@
 const gulp = require('gulp');
+const exec = require('child_process').exec;
+const relative = require('path').relative;
 const colors = require('gulp-util').colors;
 const log = require('gulp-util').log;
 const babel = require('gulp-babel');
 const newer = require('gulp-newer');
 const plumber = require('gulp-plumber');
 const through = require('through2');
-const relative = require('path').relative;
+const npmRunPath = require('npm-run-path');
+const webpack = require('webpack');
+const del = require('del');
 
 const src = 'src/**/*.js';
 const destEs = 'es/';
 const destCommonjs = 'lib/';
 
-module.exports = function babelTask() {
+gulp.task('js:clean', () => del([
+  'public/app.js',
+  'public/app.js.map',
+  'lib/**/*.js',
+  'es/**/*.js'
+]));
+
+gulp.task('js:babel', () => {
   // We'll always compile this in production mode so other people using the
   // client as a library get the optimised versions of components.
   // Save the environment value so we can restore it later.
@@ -36,4 +47,32 @@ module.exports = function babelTask() {
     .on('end', () => {
       process.env.BABEL_ENV = oldEnv;
     });
-};
+});
+
+gulp.task('webpack', () => {
+  const config = require('../webpack.config');
+
+  return new Promise((resolve, reject) => {
+    webpack(config, (err) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve();
+      }
+    });
+  });
+});
+
+gulp.task('js:lint', () => (
+  new Promise((resolve, reject) => {
+    const env = npmRunPath.env();
+    exec('eslint --cache --color .', { env }, (error, stdout) => {
+      if (error) {
+        console.error(stdout);
+        reject(error);
+        return;
+      }
+      resolve();
+    });
+  })
+));
