@@ -126,7 +126,7 @@ const actions = {
 export default function middleware({ url = defaultUrl() } = {}) {
   return ({ dispatch, getState }) => {
     // eslint-disable-next-line import/newline-after-import
-    const WebSocket = require('ReconnectingWebSocket');
+    const WebSocket = require('../utils/ReconnectingWebSocket');
     let socket;
     let queue = [];
     let sentJWT = false;
