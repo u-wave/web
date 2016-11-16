@@ -103,7 +103,7 @@
     "npm-run-path": "^2.0.1",
     "postcss-bem": "^0.4.0",
     "postcss-cssnext": "^2.8.0",
-    "postcss-import": "^8.0.2",
+    "postcss-import": "8.0.2",
     "proxyquire": "^1.7.4",
     "run-sequence": "^1.2.0",
     "sinon": "^1.17.5",
