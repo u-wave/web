@@ -7,7 +7,6 @@ if (env.minify) {
   process.env.NODE_ENV = 'production';
 }
 
-require('./tasks/css');
 require('./tasks/js');
 require('./tasks/assets');
 require('./tasks/html');
@@ -18,6 +17,10 @@ gulp.task('set-watching', () => {
   env.watch = true;
 });
 
+gulp.task('css:clean', () =>
+  del([ 'public/app.css' ])
+);
+
 gulp.task('clean',
   [ 'js:clean', 'css:clean' ],
   () => del('public/', 'es/', 'lib/')
@@ -26,8 +29,7 @@ gulp.task('clean',
 gulp.task('start', (cb) => {
   runSeq(
     'set-watching',
-    [ 'assets', 'js:babel', 'css' ],
-    'html',
+    [ 'assets', 'js:babel' ],
     [ 'watch', 'serve' ],
     cb
   );
@@ -36,7 +38,7 @@ gulp.task('start', (cb) => {
 gulp.task('js', [ 'js:babel', 'webpack' ]);
 
 gulp.task('build', (cb) => {
-  runSeq('assets', 'js', 'css', 'html', cb);
+  runSeq('assets', 'js', cb);
 });
 
 gulp.task('default', [ 'build' ]);

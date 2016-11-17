@@ -57,7 +57,7 @@ gulp.task('serve', () => {
     wpConfig.entry.app = [
       'react-hot-loader/patch',
       'webpack-hot-middleware/client',
-      wpConfig.entry.app
+      ...wpConfig.entry.app
     ];
     wpConfig.plugins.push(
       new webpack.HotModuleReplacementPlugin()

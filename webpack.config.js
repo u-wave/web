@@ -1,6 +1,7 @@
 const path = require('path');
 const DefinePlugin = require('webpack').DefinePlugin;
 const ProgressPlugin = require('webpack').ProgressPlugin;
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlPlugin = require('html-webpack-plugin');
 
 const nodeEnv = process.env.NODE_ENV || 'development';
@@ -18,6 +19,12 @@ const htmlMinifierOptions = {
   removeOptionalTags: true
 };
 
+const extractAppCss = new ExtractTextPlugin({
+  filename: 'app.css',
+  // Disable in development mode, so we can use CSS hot reloading.
+  disable: nodeEnv === 'development'
+});
+
 const plugins = [
   new DefinePlugin({
     'process.env': { NODE_ENV: JSON.stringify(nodeEnv) }
@@ -29,6 +36,7 @@ const plugins = [
     minify: nodeEnv === 'production' ? htmlMinifierOptions : false,
     loadingScreen: () => require('./tasks/utils/renderLoadingScreen')()
   }),
+  extractAppCss,
   new ProgressPlugin()
 ];
 
@@ -63,7 +71,7 @@ if (nodeEnv === 'production') {
 module.exports = {
   context: path.join(__dirname, 'src'),
   entry: {
-    app: './app.js'
+    app: [ './app.js', './app.css' ]
   },
   output: {
     publicPath: '/',
@@ -73,6 +81,13 @@ module.exports = {
   plugins,
   module: {
     rules: [
+      {
+        test: /\.css$/,
+        loader: extractAppCss.extract({
+          fallbackLoader: 'style-loader',
+          loader: [ 'css-loader', 'postcss-loader' ]
+        })
+      },
       {
         test: /\.yaml$/,
         use: [ 'json-loader', 'yaml-loader' ]
