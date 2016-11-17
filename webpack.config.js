@@ -1,12 +1,33 @@
 const path = require('path');
 const DefinePlugin = require('webpack').DefinePlugin;
 const ProgressPlugin = require('webpack').ProgressPlugin;
+const HtmlPlugin = require('html-webpack-plugin');
 
 const nodeEnv = process.env.NODE_ENV || 'development';
+
+// Minification options used in production mode.
+const htmlMinifierOptions = {
+  removeComments: true,
+  collapseWhitespace: true,
+  collapseBooleanAttributes: true,
+  removeTagWhitespace: true,
+  removeAttributeQuotes: true,
+  removeRedundantAttributes: true,
+  removeScriptTypeAttributes: true,
+  removeStyleLinkTypeAttributes: true,
+  removeOptionalTags: true
+};
 
 const plugins = [
   new DefinePlugin({
     'process.env': { NODE_ENV: JSON.stringify(nodeEnv) }
+  }),
+  new HtmlPlugin({
+    chunks: [ 'app' ],
+    inject: false,
+    template: './index.html',
+    minify: nodeEnv === 'production' ? htmlMinifierOptions : false,
+    loadingScreen: () => require('./tasks/utils/renderLoadingScreen')()
   }),
   new ProgressPlugin()
 ];
