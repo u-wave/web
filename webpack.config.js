@@ -34,13 +34,11 @@ const plugins = [
 
 if (nodeEnv === 'production') {
   const LoaderOptionsPlugin = require('webpack').LoaderOptionsPlugin;
-  const DedupePlugin = require('webpack').optimize.DedupePlugin;
   const OccurrenceOrderPlugin = require('webpack').optimize.OccurrenceOrderPlugin;
   const UglifyJsPlugin = require('webpack').optimize.UglifyJsPlugin;
 
   plugins.push(
     new OccurrenceOrderPlugin(),
-    new DedupePlugin(),
     new LoaderOptionsPlugin({
       minimize: true,
       debug: false
