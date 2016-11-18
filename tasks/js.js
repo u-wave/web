@@ -49,7 +49,9 @@ gulp.task('js:babel', () => {
     });
 });
 
-gulp.task('webpack', () => {
+// This depends on js:babel because the HTML template depends on the
+// LoadingScreen component being compiled & ready.
+gulp.task('webpack', [ 'js:babel' ], () => {
   const config = require('../webpack.config');
 
   return new Promise((resolve, reject) => {
