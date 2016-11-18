@@ -43,11 +43,11 @@ const ChatContainer = ({
   onSend,
   ...props
 }) => (
-  <div>
-    <div className="AppRow AppRow--middle">
+  <div className="ChatContainer">
+    <div className="ChatContainer-messages">
       <Chat {...props} />
     </div>
-    <div className="AppRow AppRow--bottom ChatInputWrapper">
+    <div className="ChatContainer-input ChatInputWrapper">
       {isLoggedIn && (
         <ChatInput
           onSend={onSend}
