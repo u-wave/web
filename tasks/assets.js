@@ -1,4 +1,7 @@
 const gulp = require('gulp');
+const gulpif = require('gulp-if');
+const env = require('gulp-util').env;
+const optimizeImage = require('gulp-image');
 const seq = require('run-sequence');
 
 gulp.task('assets:favicon', () =>
@@ -7,7 +10,8 @@ gulp.task('assets:favicon', () =>
 );
 
 gulp.task('assets:copy', () =>
-  gulp.src('assets/**/*')
+  gulp.src([ 'assets/**/*', '!assets/screenshot.png' ])
+    .pipe(gulpif(env.minify, optimizeImage()))
     .pipe(gulp.dest('public/assets/'))
 );
 

@@ -91,6 +91,7 @@
     "gulp-babel": "^6.1.1",
     "gulp-htmlmin": "^2.0.0",
     "gulp-if": "^2.0.0",
+    "gulp-image": "^2.7.2",
     "gulp-insert": "^0.5.0",
     "gulp-newer": "^1.1.0",
     "gulp-plumber": "^1.1.0",
