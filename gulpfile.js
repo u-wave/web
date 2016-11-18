@@ -9,7 +9,6 @@ if (env.minify) {
 
 require('./tasks/js');
 require('./tasks/assets');
-require('./tasks/html');
 require('./tasks/serve');
 require('./tasks/watch');
 
