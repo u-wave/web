@@ -104,9 +104,7 @@ const SidePanels = ({
       value="room"
       style={selected === 'room' ? activeTabStyle : tabStyle}
     >
-      <div className="AppRow AppRow--middle">
-        <RoomUserList />
-      </div>
+      <RoomUserList />
     </Tab>
     <Tab
       className="SidePanel-tab"
@@ -115,9 +113,7 @@ const SidePanels = ({
       value="waitlist"
       style={selected === 'waitlist' ? activeTabStyle : tabStyle}
     >
-      <div className="AppRow AppRow--middle">
-        <WaitList />
-      </div>
+      <WaitList />
     </Tab>
   </Tabs>
 );

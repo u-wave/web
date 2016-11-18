@@ -9,3 +9,18 @@
   overflow-y: scroll;
   font-size: 10pt;
 }
+
+@component ChatContainer {
+  @descendent messages {
+    position: absolute;
+    top: 0;
+    bottom: var(--footer-height);
+    width: 100%;
+  }
+  @descendent input {
+    position: absolute;
+    bottom: 0;
+    height: var(--footer-height);
+    width: 100%;
+  }
+}
