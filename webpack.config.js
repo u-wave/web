@@ -57,7 +57,8 @@ if (nodeEnv === 'production') {
       compress: {
         screw_ie8: true,
         pure_getters: true,
-        unsafe: true
+        unsafe: true,
+        warnings: false
       },
       output: { screw_ie8: true },
       // Rename top-level (global scope) variables to shorter names too.
