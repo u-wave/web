@@ -18,7 +18,7 @@ gulp.task('set-watching', () => {
 });
 
 gulp.task('css:clean', () =>
-  del([ 'public/app.css' ])
+  del([ 'public/app_*.css' ])
 );
 
 gulp.task('clean',

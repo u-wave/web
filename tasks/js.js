@@ -16,8 +16,8 @@ const destEs = 'es/';
 const destCommonjs = 'lib/';
 
 gulp.task('js:clean', () => del([
-  'public/app.js',
-  'public/app.js.map',
+  'public/app_*.js',
+  'public/app_*.js.map',
   'lib/**/*.js',
   'es/**/*.js'
 ]));

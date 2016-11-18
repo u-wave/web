@@ -20,7 +20,7 @@ const htmlMinifierOptions = {
 };
 
 const extractAppCss = new ExtractTextPlugin({
-  filename: 'app.css',
+  filename: '[name]_[hash].css',
   // Disable in development mode, so we can use CSS hot reloading.
   disable: nodeEnv === 'development'
 });
@@ -76,7 +76,7 @@ module.exports = {
   output: {
     publicPath: '/',
     path: path.join(__dirname, 'public'),
-    filename: '[name].js'
+    filename: '[name]_[hash].js'
   },
   plugins,
   module: {
