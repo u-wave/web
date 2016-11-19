@@ -90,7 +90,8 @@ export default class Video extends React.Component {
       isMuted,
       media,
       seek,
-      onFullscreenEnter
+      onFullscreenEnter,
+      onFullscreenExit
     } = this.props;
 
     if (!media) {
@@ -150,7 +151,9 @@ export default class Video extends React.Component {
         )}
         {(!isFullscreen || shouldShowToolbar) && (
           <VideoToolbar
-            onFullscreen={onFullscreenEnter}
+            isFullscreen={isFullscreen}
+            onFullscreenEnter={onFullscreenEnter}
+            onFullscreenExit={onFullscreenExit}
           >
             <MediaSourceTools media={media} />
           </VideoToolbar>
