@@ -24,7 +24,9 @@ function tryRequire(file, message) {
 }
 
 gulp.task('serve', () => {
-  const { port = config.port, watch = false } = env;
+  const port = env.port || config.port;
+  const watch = env.watch || false;
+
   const uwave = tryRequire('u-wave-core',
     'Could not find the u-wave core module. Did you run `npm install u-wave-core`?'
   );
@@ -56,9 +58,8 @@ gulp.task('serve', () => {
   if (watch) {
     wpConfig.entry.app = [
       'react-hot-loader/patch',
-      'webpack-hot-middleware/client',
-      ...wpConfig.entry.app
-    ];
+      'webpack-hot-middleware/client'
+    ].concat(wpConfig.entry.app);
     wpConfig.plugins.push(
       new webpack.HotModuleReplacementPlugin()
     );
