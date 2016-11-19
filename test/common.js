@@ -1,1 +1,4 @@
-import 'yamlify/register';
+require('babel-register')({
+  plugins: [ 'transform-es2015-modules-commonjs' ]
+});
+require('yamlify/register');

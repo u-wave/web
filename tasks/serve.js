@@ -1,22 +1,32 @@
-import 'loud-rejection/register';
-import emojione from 'u-wave-web-emojione';
-import express from 'express';
-import { Buffer } from 'buffer';
+require('loud-rejection/register');
+const gulp = require('gulp');
+const env = require('gulp-util').env;
+const emojione = require('u-wave-web-emojione');
+const ytSource = require('u-wave-source-youtube');
+const scSource = require('u-wave-source-soundcloud');
+const express = require('express');
+const Buffer = require('buffer').Buffer;
+const webpack = require('webpack');
+const webpackDevMiddleware = require('webpack-dev-middleware');
+const webpackHotMiddleware = require('webpack-hot-middleware');
+const wpConfig = require('../webpack.config');
+const config = require('./dev-server-config.json');
 
-import config from './dev-server-config.json';
-
-function tryRequire(path, message) {
+function tryRequire(file, message) {
   try {
     // eslint-disable-next-line import/no-dynamic-require
-    const mod = require(path);
+    const mod = require(file);
     return mod.default || mod;
   } catch (e) {
-    e.message = `${message}\n"${path}" threw: ${e.message}`;
+    e.message = `${message}\n"${file}" threw: ${e.message}`;
     throw e;
   }
 }
 
-export default function serveTask({ port = config.port }) {
+gulp.task('serve', () => {
+  const port = env.port || config.port;
+  const watch = env.watch || false;
+
   const uwave = tryRequire('u-wave-core',
     'Could not find the u-wave core module. Did you run `npm install u-wave-core`?'
   );
@@ -26,9 +36,6 @@ export default function serveTask({ port = config.port }) {
   const createWebClient = tryRequire('../lib/middleware',
     'Could not find the client middleware. Did you run `npm run build`?'
   );
-
-  const ytSource = require('u-wave-source-youtube');
-  const scSource = require('u-wave-source-soundcloud');
 
   const uw = uwave(config);
 
@@ -46,13 +53,33 @@ export default function serveTask({ port = config.port }) {
       server,
       secret: new Buffer('none', 'utf8')
     }))
-    .use('/assets/emoji/', emojione.middleware())
-    .use(createWebClient(uw, {
-      apiUrl,
-      emoji: emojione.emoji
+    .use('/assets/emoji/', emojione.middleware());
+
+  if (watch) {
+    wpConfig.entry.app = [
+      'react-hot-loader/patch',
+      'webpack-hot-middleware/client'
+    ].concat(wpConfig.entry.app);
+    wpConfig.plugins.push(
+      new webpack.HotModuleReplacementPlugin()
+    );
+    const compiler = webpack(wpConfig);
+    app.use(webpackDevMiddleware(compiler, {
+      noInfo: true,
+      publicPath: '/'
     }));
+    app.use(webpackHotMiddleware(compiler, {
+      log: require('gulp-util').log,
+      path: '/__webpack_hmr'
+    }));
+  }
+
+  app.use(createWebClient(uw, {
+    apiUrl,
+    emoji: emojione.emoji
+  }));
 
   uw.on('stopped', () => {
     process.exit(0);
   });
-}
+});

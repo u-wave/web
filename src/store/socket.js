@@ -1,3 +1,5 @@
+import WebSocket from '../utils/ReconnectingWebSocket';
+
 import {
   LOGIN_COMPLETE,
   SOCKET_CONNECT,
@@ -125,8 +127,6 @@ const actions = {
 
 export default function middleware({ url = defaultUrl() } = {}) {
   return ({ dispatch, getState }) => {
-    // eslint-disable-next-line import/newline-after-import
-    const WebSocket = require('ReconnectingWebSocket');
     let socket;
     let queue = [];
     let sentJWT = false;

@@ -1,23 +1,51 @@
+// Polyfills for browsers that might not yet support Promises or the Fetch API
+// (newer & better XMLHttpRequest).
+import 'es6-promise';
+import 'whatwg-fetch';
+
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import AppContainer from './containers/App';
+import { get as readSession } from './utils/Session';
 import configureStore from './store/configureStore';
 import { initState, socketConnect, setJWT } from './actions/LoginActionCreators';
 import * as api from './api';
+
+// Register default chat commands.
+import './utils/commands';
+
+// A Material-UI dependency, removes the delay from tap events on some mobile
+// devices. üWave currently isn't compatible with mobile yet, but material-ui
+// wants this!
+require('react-tap-event-plugin')();
 
 export default class Uwave {
   options = {};
   sources = {};
   jwt = null;
+  renderTarget = null;
 
-  constructor(options = {}, session = null) {
+  constructor(options = {}, session = readSession()) {
     this.options = options;
     this.jwt = session;
 
     Object.assign(this, api.constants);
     Object.assign(this, api.components);
     Object.assign(this, api.actions);
+
+    if (module.hot) {
+      const HotContainer = require('react-hot-loader').AppContainer;
+      this._getComponent = this.getComponent;
+      this.getComponent = () => (
+        <HotContainer>{this._getComponent()}</HotContainer>
+      );
+      module.hot.accept('./containers/App', () => {
+        if (this.renderTarget) {
+          this.renderToDOM(this.renderTarget);
+        }
+      });
+    }
   }
 
   use(plugin) {
@@ -70,6 +98,7 @@ export default class Uwave {
       this.build();
     }
 
+    this.renderTarget = target;
     ReactDOM.render(this.getComponent(), target);
   }
 }

@@ -11,9 +11,9 @@
   }
 
   @modifier soundcloud {
-    background-image: url(assets/img/soundcloud.png);
+    background-image: url(/assets/img/soundcloud.png);
   }
   @modifier youtube {
-    background-image: url(assets/img/youtube.png);
+    background-image: url(/assets/img/youtube.png);
   }
 }

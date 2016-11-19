@@ -1,15 +1,20 @@
-import React from 'react';
-import { renderToStaticMarkup } from 'react-dom/server';
+const React = require('react');
+const renderToStaticMarkup = require('react-dom/server').renderToStaticMarkup;
 
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import LoadingScreen from '../../src/components/LoadingScreen';
-import muiTheme from '../../src/MuiTheme';
+const MuiThemeProvider = require('material-ui/styles/MuiThemeProvider').default;
+const getMuiTheme = require('material-ui/styles/getMuiTheme').default;
 
-export default function renderLoadingScreen() {
+module.exports = function renderLoadingScreen() {
+  /* eslint-disable import/no-unresolved */
+  const LoadingScreen = require('../../lib/components/LoadingScreen').default;
+  const muiTheme = require('../../lib/MuiTheme').default;
+  /* eslint-enable import/no-unresolved */
+
   return renderToStaticMarkup(
-    <MuiThemeProvider muiTheme={getMuiTheme(muiTheme)}>
-      <LoadingScreen />
-    </MuiThemeProvider>
+    React.createElement(
+      MuiThemeProvider,
+      { muiTheme: getMuiTheme(muiTheme) },
+      React.createElement(LoadingScreen)
+    )
   );
-}
+};
