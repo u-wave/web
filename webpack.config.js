@@ -1,3 +1,4 @@
+const readFile = require('fs').readFileSync;
 const path = require('path');
 const DefinePlugin = require('webpack').DefinePlugin;
 const ProgressPlugin = require('webpack').ProgressPlugin;
@@ -69,6 +70,16 @@ if (nodeEnv === 'production') {
   );
 }
 
+// Workaround: Seems like babel-loader doesn't pick up on the environment type
+// correctly, so we manually load the .babelrc and add the production plugins
+// if necessary.
+const babelrc = JSON.parse(
+  readFile(path.join(__dirname, '.babelrc'), 'utf8')
+);
+if (nodeEnv === 'production') {
+  babelrc.plugins = babelrc.plugins.concat(babelrc.env.production.plugins);
+}
+
 module.exports = {
   context: path.join(__dirname, 'src'),
   entry: {
@@ -100,7 +111,9 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: [ 'babel-loader' ]
+        use: [
+          { loader: 'babel-loader', query: babelrc }
+        ]
       }
     ]
   }
