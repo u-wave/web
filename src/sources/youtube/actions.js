@@ -11,7 +11,10 @@ import {
   GET_CHANNEL_PLAYLISTS_START,
   GET_CHANNEL_PLAYLISTS_COMPLETE,
   IMPORT_PLAYLIST_START,
-  IMPORT_PLAYLIST_COMPLETE
+  IMPORT_PLAYLIST_COMPLETE,
+  SET_AVAILABLE_QUALITY_LEVELS,
+  SET_CURRENT_QUALITY_LEVEL,
+  SET_PREFERRED_QUALITY_LEVEL
 } from './constants';
 
 function getImportablePlaylistStart(url) {
@@ -107,4 +110,25 @@ export function getChannelPlaylists(url) {
       meta: { url }
     })
   });
+}
+
+export function setAvailableQualityLevels(levels) {
+  return {
+    type: SET_AVAILABLE_QUALITY_LEVELS,
+    payload: levels
+  };
+}
+
+export function setCurrentQualityLevel(level) {
+  return {
+    type: SET_CURRENT_QUALITY_LEVEL,
+    payload: level
+  };
+}
+
+export function setPreferredQualityLevel(level) {
+  return {
+    type: SET_PREFERRED_QUALITY_LEVEL,
+    payload: level
+  };
 }

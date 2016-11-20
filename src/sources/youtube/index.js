@@ -1,4 +1,5 @@
 export Player from './Player';
+export VideoTools from './VideoTools';
 
 export logo from '../../../assets/img/youtube.png';
 

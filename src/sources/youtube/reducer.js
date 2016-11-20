@@ -6,7 +6,10 @@ import {
   GET_IMPORTABLE_PLAYLIST_START,
   GET_IMPORTABLE_PLAYLIST_COMPLETE,
   GET_CHANNEL_PLAYLISTS_START,
-  GET_CHANNEL_PLAYLISTS_COMPLETE
+  GET_CHANNEL_PLAYLISTS_COMPLETE,
+  SET_AVAILABLE_QUALITY_LEVELS,
+  SET_CURRENT_QUALITY_LEVEL,
+  SET_PREFERRED_QUALITY_LEVEL
 } from './constants';
 
 const initialState = {
@@ -15,7 +18,18 @@ const initialState = {
   importingPlaylistName: '',
   importingPlaylistItems: [],
   importingChannelTitle: '',
-  importablePlaylists: []
+  importablePlaylists: [],
+  availableQualityLevels: [
+    'default',
+    'small',
+    'medium',
+    'large',
+    'hd720',
+    'hd1080',
+    'highres'
+  ],
+  currentQualityLevel: 'default',
+  preferredQualityLevel: 'default'
 };
 
 export default function reduce(state = initialState, action = {}) {
@@ -62,6 +76,21 @@ export default function reduce(state = initialState, action = {}) {
       importingState: LOADED,
       importingChannelTitle: payload.channel.title,
       importablePlaylists: payload.playlists
+    };
+  case SET_AVAILABLE_QUALITY_LEVELS:
+    return {
+      ...state,
+      availableQualityLevels: payload
+    };
+  case SET_CURRENT_QUALITY_LEVEL:
+    return {
+      ...state,
+      currentQualityLevel: payload
+    };
+  case SET_PREFERRED_QUALITY_LEVEL:
+    return {
+      ...state,
+      preferredQualityLevel: payload
     };
   default:
     return state;
