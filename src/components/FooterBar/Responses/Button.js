@@ -1,3 +1,4 @@
+import cx from 'classnames';
 import * as React from 'react';
 import Tooltip from 'material-ui/internal/Tooltip';
 import transformStyle from '../../../utils/transformStyle';
@@ -12,6 +13,7 @@ export default class Button extends React.Component {
   static propTypes = {
     onClick: React.PropTypes.func.isRequired,
     children: React.PropTypes.element.isRequired,
+    disabled: React.PropTypes.bool,
     count: React.PropTypes.number,
     tooltip: React.PropTypes.string
   };
@@ -27,11 +29,22 @@ export default class Button extends React.Component {
   };
 
   render() {
-    const { onClick, count, children, tooltip } = this.props;
+    const {
+      onClick,
+      disabled,
+      count,
+      children,
+      tooltip
+    } = this.props;
+    // Buttons are fake-disabled because mouseleave acts inconsistently with
+    // tooltips and actually-disabled buttons, sometimes leaving the tooltip
+    // lingering. The cursor and hover effects are removed by the
+    // ResponseButton--disabled classname, and the click handler is simply not
+    // added.
     return (
       <button
-        className="ResponseButton"
-        onClick={onClick}
+        className={cx('ResponseButton', disabled && 'ResponseButton--disabled')}
+        onClick={disabled ? null : onClick}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
       >

@@ -12,9 +12,20 @@
   height: 100%;
   border: 0;
   background: none;
-  cursor: pointer;
   flex-grow: 0.334;
   padding: 0;
+
+  cursor: pointer;
+  &:hover {
+    background-color: var(--background-hover-color);
+  }
+
+  &--disabled {
+    cursor: default;
+    &:hover {
+      background-color: transparent;
+    }
+  }
 
   &-content {
     display: flex;
@@ -22,10 +33,6 @@
     justify-content: center;
     padding: 0 15px;
     position: relative;
-  }
-
-  &:hover {
-    background-color: var(--background-hover-color);
   }
 
   &-icon {
