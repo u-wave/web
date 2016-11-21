@@ -3,6 +3,7 @@
 .AppTitle {
   display: flex;
   align-items: center;
+  padding-right: 20px;
 
   &-logo {
     line-height: var(--header-height);
@@ -17,4 +18,8 @@
   }
 
   &-button {}
+
+  &--hasAboutPage {
+    padding-right: 0;
+  }
 }

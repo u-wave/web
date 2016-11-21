@@ -1,5 +1,8 @@
+import * as React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import compose from 'recompose/compose';
+import getContext from 'recompose/getContext';
 import { createStructuredSelector } from 'reselect';
 import { setVolume, mute, unmute } from '../actions/PlaybackActionCreators';
 import { toggleRoomHistory, toggleAbout } from '../actions/OverlayActionCreators';
@@ -13,7 +16,10 @@ const mapStateToProps = createStructuredSelector({
   media: mediaSelector,
   dj: djSelector,
   volume: volumeSelector,
-  muted: isMutedSelector
+  muted: isMutedSelector,
+  hasAboutPage: (state, props) => (
+    props.uwave.getAboutPageComponent() !== null
+  )
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -24,4 +30,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onToggleAboutOverlay: toggleAbout
 }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(HeaderBar);
+export default compose(
+  getContext({ uwave: React.PropTypes.object }),
+  connect(mapStateToProps, mapDispatchToProps)
+)(HeaderBar);

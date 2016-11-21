@@ -16,6 +16,7 @@ const HeaderBar = ({
   mediaStartTime,
   volume,
   muted,
+  hasAboutPage,
   onVolumeChange,
   onVolumeMute,
   onVolumeUnmute,
@@ -27,7 +28,13 @@ const HeaderBar = ({
     className={cx('HeaderBar', className)}
     {...attrs}
   >
-    <AppTitle className="HeaderBar-title" onClick={onToggleAboutOverlay}>{title}</AppTitle>
+    <AppTitle
+      className="HeaderBar-title"
+      hasAboutPage={hasAboutPage}
+      onClick={onToggleAboutOverlay}
+    >
+      {title}
+    </AppTitle>
     <CurrentMedia className="HeaderBar-now-playing" media={media} />
     {dj && <CurrentDJ className="HeaderBar-dj" dj={dj} />}
     <Progress
@@ -59,6 +66,7 @@ HeaderBar.propTypes = {
   mediaStartTime: React.PropTypes.number,
   volume: React.PropTypes.number,
   muted: React.PropTypes.bool,
+  hasAboutPage: React.PropTypes.bool.isRequired,
 
   onVolumeChange: React.PropTypes.func,
   onVolumeMute: React.PropTypes.func,

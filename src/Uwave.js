@@ -25,7 +25,7 @@ export default class Uwave {
   sources = {};
   jwt = null;
   renderTarget = null;
-  aboutPageComponent = () => null;
+  aboutPageComponent = null;
 
   constructor(options = {}, session = readSession()) {
     this.options = options;
