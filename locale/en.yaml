@@ -112,6 +112,10 @@ uwave:
     title: Settings
     videoEnabled: Play Audio/Video
     videoSize: Full-size Video
+    enableLargeVideo: Enlarge Video
+    disableLargeVideo: Shrink Video
+    enableFullscreen: Enter Fullscreen Mode
+    disableFullscreen: Exit Fullscreen Mode
     mentionSound: Chat Mention Sound
     language: Language
     logout: Sign out

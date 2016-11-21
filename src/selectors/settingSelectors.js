@@ -45,17 +45,24 @@ export const languageSelector = createSelector(
   (settings, defaultLanguage) => settings.language || defaultLanguage
 );
 
+export const videoSizeSelector = createSelector(
+  settingsBaseSelector,
+  settings => settings.videoSize
+);
+
 // Settings with selected values (from selectors above) rather than "saved"
 // values (from localStorage).
 export const settingsSelector = createSelector(
   settingsBaseSelector,
   volumeSelector,
   isMutedSelector,
+  videoSizeSelector,
   languageSelector,
-  (base, volume, muted, language) => ({
+  (base, volume, muted, videoSize, language) => ({
     ...base,
     volume,
     muted,
+    videoSize,
     language
   })
 );

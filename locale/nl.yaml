@@ -109,6 +109,8 @@ uwave:
     title: Instellingen
     videoEnabled: Audio/Video Afspelen
     videoSize: Fullscreen Video
+    enableLargeVideo: Video Vergroten
+    disableLargeVideo: Video Verkleinen
     mentionSound: Chatnotificaties
     language: Taal
     logout: Uitloggen

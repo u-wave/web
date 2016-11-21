@@ -1,10 +1,15 @@
-import { ADVANCE } from '../constants/actionTypes/booth';
+import {
+  ADVANCE,
+  ENTER_FULLSCREEN,
+  EXIT_FULLSCREEN
+} from '../constants/actionTypes/booth';
 
 const initialState = {
   historyID: null,
   media: null,
   djID: null,
-  startTime: null
+  startTime: null,
+  isFullscreen: false
 };
 
 export default function reduce(state = initialState, action = {}) {
@@ -26,6 +31,16 @@ export default function reduce(state = initialState, action = {}) {
       media: null,
       djID: null,
       startTime: null
+    };
+  case ENTER_FULLSCREEN:
+    return {
+      ...state,
+      isFullscreen: true
+    };
+  case EXIT_FULLSCREEN:
+    return {
+      ...state,
+      isFullscreen: false
     };
   default:
     return state;
