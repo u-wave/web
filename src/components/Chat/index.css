@@ -4,20 +4,20 @@
 @import "./Message.css";
 @import "./Motd.css";
 
-@component Chat {
+.Chat {
   height: 100%;
   overflow-y: scroll;
   font-size: 10pt;
 }
 
-@component ChatContainer {
-  @descendent messages {
+.ChatContainer {
+  &-messages {
     position: absolute;
     top: 0;
     bottom: var(--footer-height);
     width: 100%;
   }
-  @descendent input {
+  &-input {
     position: absolute;
     bottom: 0;
     height: var(--footer-height);

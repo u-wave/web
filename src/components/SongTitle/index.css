@@ -1,16 +1,16 @@
 @import "../../vars.css";
 
-@component SongTitle {
+.SongTitle {
   color: var(--text-color);
 
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 
-  @modifier large {
+  &--large {
     font-size: 14pt;
   }
-  @modifier mediaRow {
+  &--mediaRow {
     font-size: 1em;
   }
 }

@@ -14,7 +14,7 @@
   );
 }
 
-@component HistoryRow {
+.HistoryRow {
   height: 54px;
   line-height: 54px;
   position: relative;
@@ -24,11 +24,11 @@
     background: var(--media-list-alternate-color);
   }
 
-  @when selected {
+  &.is-selected {
     background: color(var(--highlight-color) alpha(* 70%));
   }
 
-  @descendent thumb {
+  &-thumb {
     height: 100%;
     width: 55px;
     margin: 0 15px;
@@ -36,12 +36,12 @@
     float: left;
   }
 
-  @descendent image {
+  &-image {
     max-width: 100%;
     max-height: 100%;
   }
 
-  @descendent song {
+  &-song {
     font-size: 1em;
     height: 100%;
     float: left;
@@ -52,13 +52,13 @@
     white-space: nowrap;
   }
 
-  @descendent votes {
+  &-votes {
     height: 100%;
     float: left;
     width: var(--history-list-votes-width);
   }
 
-  @descendent user {
+  &-user {
     height: 100%;
     float: left;
     width: var(--history-list-user-width);
@@ -68,7 +68,7 @@
     white-space: nowrap;
   }
 
-  @descendent time {
+  &-time {
     height: 100%;
     float: left;
     text-align: right;
@@ -77,7 +77,7 @@
     width: var(--history-list-time-width);
   }
 
-  @descendent actions {
+  &-actions {
     height: 100%;
     position: absolute;
     right: 0;

@@ -1,11 +1,11 @@
 @import "../../../vars.css";
 @import "./Close.css";
 
-@component OverlayHeader {
+.OverlayHeader {
   background: var(--background-color);
   height: var(--header-height);
 
-  @descendent title {
+  &-title {
     float: left;
     height: 100%;
     padding-top: 17px;
@@ -19,7 +19,7 @@
     }
   }
 
-  @descendent content {
+  &-content {
     float: left;
     height: 100%;
     width: calc(100% - 33% - var(--overlay-header-close-size));
@@ -28,7 +28,7 @@
     }
   }
 
-  @descendent close {
+  &-close {
     float: left;
   }
 }

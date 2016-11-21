@@ -1,6 +1,6 @@
 @import "../../vars.css";
 
-@component TextField {
+.TextField {
   background: #383838;
   border: 1px solid #2c2c2c;
   border-top-color: #3e3e3e;
@@ -8,7 +8,7 @@
   height: var(--forms-textfield-size);
   font-size: 12pt;
 
-  @descendent input {
+  &-input {
     width: 100%;
     border: 0;
     height: 100%;
@@ -26,7 +26,7 @@
     }
   }
 
-  @descendent icon {
+  &-icon {
     width: var(--forms-textfield-size);
     height: var(--forms-textfield-size);
     margin-left: -var(--forms-textfield-size);

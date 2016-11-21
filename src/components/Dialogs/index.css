@@ -4,7 +4,7 @@
 @import "./LoginDialog";
 @import "./PreviewMediaDialog";
 
-@component Dialogs {
+.Dialogs {
   z-index: 100;
   position: absolute;
   width: 0;

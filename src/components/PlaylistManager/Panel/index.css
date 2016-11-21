@@ -4,20 +4,20 @@
 @import "./SearchResults.css";
 @import "./PlaylistItemRow.css";
 
-@component PlaylistPanel {
+.PlaylistPanel {
   background: color(var(--background-color) alpha(* 96%));
   height: 100%;
 
-  @descendent loading {
+  &-loading {
     margin: auto;
     width: 25%;
   }
 
-  @descendent media {
+  &-media {
     height: calc(100% - 54px);
   }
 
-  @modifier empty {
+  &--empty {
     padding: 16px;
   }
 }

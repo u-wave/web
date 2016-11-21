@@ -1,5 +1,5 @@
-@component VolumeSlider {
-  @descendent slider {
+.VolumeSlider {
+  &-slider {
     height: 24px;
     display: inline-block;
     width: calc(100% - 30px);

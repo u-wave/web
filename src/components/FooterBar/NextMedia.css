@@ -1,6 +1,6 @@
 @import "../../vars.css";
 
-@component NextMedia {
+.NextMedia {
   height: 100%;
   width: 100%;
   cursor: pointer;
@@ -12,7 +12,7 @@
     background-color: var(--background-hover-color);
   }
 
-  @descendent playlist {
+  &-playlist {
     color: var(--text-color);
   }
 }

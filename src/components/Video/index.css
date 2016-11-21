@@ -1,6 +1,6 @@
 @import "./VideoBackdrop.css";
 
-@component Video {
+.Video {
   position: relative;
   width: 100%;
   height: 100%;

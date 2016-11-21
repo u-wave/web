@@ -1,13 +1,13 @@
 @import "./UserRow.css";
 
-@component UserList {
+.UserList {
   width: 100%;
   height: 100%;
   overflow-y: scroll;
 
-  @descendent row {
+  &-row {
     background: var(--user-list-color);
-    @modifier alternate {
+    &--alternate {
       background: var(--user-list-alternate-color);
     }
   }

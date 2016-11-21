@@ -1,5 +1,5 @@
 @import "../../vars.css";
 
-@component Dialog {
+.Dialog {
   color: var(--text-color);
 }

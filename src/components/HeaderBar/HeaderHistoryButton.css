@@ -1,4 +1,4 @@
-@component HeaderHistoryButton {
+.HeaderHistoryButton {
   /* above the progress bar, video backdrop, etc. */
   z-index: 7;
 }

@@ -1,4 +1,4 @@
-@component MediaLoadingIndicator {
+.MediaLoadingIndicator {
   height: 100%;
   width: 55px;
   float: left;
@@ -6,7 +6,7 @@
   align-items: center;
   justify-content: center;
 
-  @descendent spinner {
+  &-spinner {
     width: 32px;
     height: 32px;
   }

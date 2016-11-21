@@ -1,9 +1,9 @@
-@component WaitlistRow {
-  @modifier moderate {
+.WaitlistRow {
+  &--moderate {
     display: flex;
   }
 
-  @descendent card {
+  &-card {
     flex-grow: 2;
     cursor: pointer;
     white-space: nowrap;
@@ -11,25 +11,25 @@
     text-overflow: ellipsis;
   }
 
-  @descendent tools {
+  &-tools {
     float: right;
     height: 100%;
     padding: 5px;
     white-space: nowrap;
   }
 
-  /* TODO use `@descendent handle, remove` here when supported by postcss-bem */
-  @descendent tool {
+  /* TODO use `&-handle, &-remove` here? */
+  &-tool {
     display: inline-flex;
     align-items: center;
     height: 100%;
     padding: 0 4px;
   }
 
-  @descendent handle {
+  &-handle {
     cursor: move;
   }
-  @descendent remove {
+  &-remove {
     cursor: pointer;
   }
 }

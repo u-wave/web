@@ -3,6 +3,6 @@
 @import "./MediaLoadingIndicator.css";
 @import "./Row.css";
 
-@component MediaList {
+.MediaList {
   overflow-y: auto;
 }

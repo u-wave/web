@@ -1,12 +1,12 @@
-@component ImportPanel {
+.ImportPanel {
   height: 100%;
 
-  @descendent loading {
+  &-loading {
     margin: auto;
     width: 25%;
   }
 
-  @descendent body {
+  &-body {
     height: calc(100% - 54px);
   }
 }

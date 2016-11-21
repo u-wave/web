@@ -2,8 +2,8 @@
   --recaptcha-iframe-height: 78px;
 }
 
-@component ReCaptcha {
-  @descendent spinner {
+.ReCaptcha {
+  &-spinner {
     width: var(--recaptcha-iframe-height);
     height: var(--recaptcha-iframe-height);
     margin: auto;

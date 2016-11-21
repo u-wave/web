@@ -1,28 +1,28 @@
 @import "../../vars.css";
 
-@component MediaListRow {
+.MediaListRow {
   height: 54px;
   line-height: 54px;
   position: relative;
   background: var(--media-list-color);
 
-  @modifier alternate {
+  &--alternate {
     background: var(--media-list-alternate-color);
   }
 
-  @when loading {
+  &.is-loading {
     opacity: 0.75;
   }
 
-  @when selected {
+  &.is-selected {
     background: color(var(--highlight-color) alpha(* 70%));
   }
 
-  @descendent loader {
+  &-loader {
     margin: 0 15px;
   }
 
-  @descendent thumb {
+  &-thumb {
     height: 100%;
     width: 55px;
     margin: 0 15px;
@@ -30,12 +30,12 @@
     float: left;
   }
 
-  @descendent image {
+  &-image {
     max-width: 100%;
     max-height: 100%;
   }
 
-  @descendent artist {
+  &-artist {
     height: 100%;
     float: left;
     width: calc(50% - var(--media-list-spacing) - var(--media-list-thumb-width) - var(--media-list-duration-width));
@@ -45,7 +45,7 @@
     white-space: nowrap;
   }
 
-  @descendent title {
+  &-title {
     height: 100%;
     float: left;
     width: calc(50% - var(--media-list-spacing));
@@ -55,13 +55,13 @@
     white-space: nowrap;
   }
 
-  @descendent duration {
+  &-duration {
     height: 100%;
     float: left;
     width: var(--media-list-duration-width);
   }
 
-  @descendent actions {
+  &-actions {
     height: 100%;
     position: absolute;
     right: 0;

@@ -1,6 +1,6 @@
 @import "../../vars.css";
 
-@component Button {
+.Button {
   width: 100%;
   height: var(--forms-textfield-size);
   cursor: pointer;
@@ -15,7 +15,7 @@
   text-transform: uppercase;
   font-size: 12pt;
 
-  @descendent loading {
+  &-loading {
     width: calc(var(--forms-textfield-size) * 0.8);
     height: calc(var(--forms-textfield-size) * 0.8);
     margin: auto;

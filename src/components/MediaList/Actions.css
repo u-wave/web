@@ -1,15 +1,15 @@
 @import "../../vars.css";
 
-@component MediaActions {
+.MediaActions {
   height: 54px;
   text-align: right;
   background: var(--background-color);
 
-  @when selected {
+  &.is-selected {
     background: var(--highlight-color);
   }
 
-  @descendent action {
+  &-action {
     height: 100%;
     cursor: pointer;
     display: inline-block;

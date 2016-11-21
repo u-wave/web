@@ -1,8 +1,8 @@
-@component UserCard {
+.UserCard {
   position: absolute;
   transform: translateX(-100%);
 
-  @descendent avatar {
+  &-avatar {
     width: 40px;
     height: 40px;
     margin-right: 16px;

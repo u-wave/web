@@ -1,6 +1,6 @@
 @import "../../vars.css";
 
-@component MediaDragPreview {
+.MediaDragPreview {
   background: var(--highbright-color);
   color: var(--text-color);
   font-weight: bold;

@@ -1,28 +1,28 @@
 @import "../../../vars.css";
 
-@component EditMediaDialog {
+.EditMediaDialog {
 }
 
-@component EditMediaDialogForm {
+.EditMediaDialogForm {
   display: flex;
   justify-content: space-between;
-  @descendent column {
+  &-column {
     width: 50%;
   }
-  @descendent separator {
+  &-separator {
     /* Pushes columns to the side! */
   }
 }
 
-@component EditMediaDialogGroup {
+.EditMediaDialogGroup {
   display: flex;
   justify-content: center;
 
-  @descendent field {
+  &-field {
     flex-grow: 1;
   }
 
-  @descendent label {
+  &-label {
     line-height: 50px;
     white-space: nowrap;
     padding: 0 20px;

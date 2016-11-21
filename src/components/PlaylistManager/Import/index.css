@@ -4,11 +4,11 @@
 @import "./ImportPanelHeader.css";
 @import "./ImportSourceBlock.css";
 
-@component PlaylistImport {
+.PlaylistImport {
   height: 100%;
   background: var(--background-color);
 
-  @descendent source {
+  &-source {
     padding: 16px;
     width: 50%;
   }

@@ -2,7 +2,7 @@
 @import "./Button.css";
 @import "./TextField.css";
 
-@component FormGroup {
+.FormGroup {
   margin: var(--forms-element-margin) 0;
   width: 100%;
   clear: both;
@@ -11,7 +11,7 @@
     margin-top: 0;
   }
 
-  @modifier noSpacing {
+  &--noSpacing {
     margin: 0;
   }
 }

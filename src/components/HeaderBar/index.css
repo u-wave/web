@@ -3,13 +3,13 @@
 @import "./Progress.css";
 @import "./Volume.css";
 
-@component HeaderBar {
+.HeaderBar {
   position: relative;
   height: 100%;
   width: 100%;
   z-index: 4; /* below overlays, above video */
 
-  @descendent title {
+  &-title {
     position: absolute;
     top: 0;
     left: 0;
@@ -24,7 +24,7 @@
     font-size: 0;
   }
 
-  @descendent volume {
+  &-volume {
     position: absolute;
     right: var(--header-height);
     top: 0;
@@ -32,7 +32,7 @@
     padding: 15px;
   }
 
-  @descendent history {
+  &-history {
     position: absolute;
     top: 0;
     right: 0;
@@ -41,7 +41,7 @@
     background: #111;
   }
 
-  @descendent now-playing {
+  &-now-playing {
     position: absolute;
     top: 5px;
     left: 250px;
@@ -49,7 +49,7 @@
     line-height: 25px;
   }
 
-  @descendent dj {
+  &-dj {
     position: absolute;
     top: 30px;
     left: 250px;
@@ -58,7 +58,7 @@
     color: var(--muted-text-color);
   }
 
-  @descendent progress {
+  &-progress {
     position: absolute;
     bottom: 1px;
     height: 2px;

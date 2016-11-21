@@ -4,38 +4,36 @@
   --sc-margins: 20px;
 }
 
-@component-namespace src-soundcloud {
-  @component Player {
-    width: 400px;
-    margin: auto;
-    height: 300px;
-    background: var(--background-color);
+.src-soundcloud-Player {
+  width: 400px;
+  margin: auto;
+  height: 300px;
+  background: var(--background-color);
 
-    @descendent meta {
-      background: color(var(--background-color) alpha(* 20%));
-      position: relative;
-      padding: var(--sc-margins);
-      z-index: 3;
-    }
+  &-meta {
+    background: color(var(--background-color) alpha(* 20%));
+    position: relative;
+    padding: var(--sc-margins);
+    z-index: 3;
+  }
 
-    @descendent info {
-      margin-bottom: var(--sc-margins);
-    }
+  &-info {
+    margin-bottom: var(--sc-margins);
+  }
 
-    @descendent art {
-      display: block;
-      width: 100px;
-      height: 100px;
-      margin-right: var(--sc-margins);
-      float: left;
-    }
+  &-art {
+    display: block;
+    width: 100px;
+    height: 100px;
+    margin-right: var(--sc-margins);
+    float: left;
+  }
 
-    @descendent permalink {
-      display: block;
-      font: 14pt;
-      color: var(--text-color);
-      text-align: right;
-      text-decoration: none;
-    }
+  &-permalink {
+    display: block;
+    font: 14pt;
+    color: var(--text-color);
+    text-align: right;
+    text-decoration: none;
   }
 }
