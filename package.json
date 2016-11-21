@@ -5,7 +5,9 @@
   "author": "René Kooi <rene@kooi.me>",
   "license": "MIT",
   "repository": "u-wave/u-wave-web",
-  "main": "lib/middleware.js",
+  "main": "lib/Uwave.js",
+  "jsnext:main": "es/Uwave.js",
+  "module": "es/Uwave.js",
   "engines": {
     "node": ">= 4",
     "npm": ">= 3"
