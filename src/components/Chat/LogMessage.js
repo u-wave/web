@@ -1,5 +1,6 @@
 import cx from 'classnames';
 import * as React from 'react';
+import pure from 'recompose/pure';
 
 const LogMessage = ({ alternate, text }) => (
   <div
@@ -20,4 +21,4 @@ LogMessage.propTypes = {
   text: React.PropTypes.string.isRequired
 };
 
-export default LogMessage;
+export default pure(LogMessage);

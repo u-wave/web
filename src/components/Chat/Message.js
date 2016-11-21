@@ -1,6 +1,7 @@
 import cx from 'classnames';
 import * as React from 'react';
 import compose from 'recompose/compose';
+import pure from 'recompose/pure';
 import withProps from 'recompose/withProps';
 
 import userCardable from '../../utils/userCardable';
@@ -13,6 +14,7 @@ import compile from './Markup/compile';
 const timeFormatOptions = { hour: 'numeric', minute: 'numeric' };
 
 const enhance = compose(
+  pure,
   userCardable(),
   withProps(props => ({
     onUsernameClick(event) {

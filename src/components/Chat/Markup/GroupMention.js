@@ -1,8 +1,8 @@
 import cx from 'classnames';
 import * as React from 'react';
 
-const GroupMention = ({ className, group, ...props }) => (
-  <span className={cx('ChatMention', `ChatMention--${group}`, className)} {...props}>
+const GroupMention = ({ className, group }) => (
+  <span className={cx('ChatMention', `ChatMention--${group}`, className)}>
     @{group}
   </span>
 );
