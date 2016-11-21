@@ -1,4 +1,4 @@
-@component UserRow {
+.UserRow {
   height: 40px;
   width: 100%;
   line-height: 30px;
@@ -6,11 +6,11 @@
   display: block;
   text-decoration: none;
 
-  @modifier cardable {
+  &--cardable {
     cursor: pointer;
   }
 
-  @descendent avatar {
+  &-avatar {
     float: left;
     margin: 3px 10px;
   }

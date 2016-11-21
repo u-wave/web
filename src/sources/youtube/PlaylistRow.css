@@ -4,34 +4,32 @@
   --yt-import-button-width: 54px;
 }
 
-@component-namespace src-youtube {
-  @component PlaylistRow {
-    @descendent info {
-      height: 100%;
-      line-height: 1.4;
-      float: left;
-      width: calc(100% - var(--media-list-thumb-width) - var(--media-list-spacing) - var(--yt-import-button-width));
-      margin-right: var(--media-list-spacing);
-    }
+.src-youtube-PlaylistRow {
+  &-info {
+    height: 100%;
+    line-height: 1.4;
+    float: left;
+    width: calc(100% - var(--media-list-thumb-width) - var(--media-list-spacing) - var(--yt-import-button-width));
+    margin-right: var(--media-list-spacing);
+  }
 
-    @descendent name {
-      margin: 5px 0 3px 0;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
+  &-name {
+    margin: 5px 0 3px 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 
-    @descendent size {
-      font-size: 85%;
-      color: #777;
-      float: left;
-    }
+  &-size {
+    font-size: 85%;
+    color: #777;
+    float: left;
+  }
 
-    @descendent import {
-      height: 100%;
-      line-height: 1; /* .MediaListRow sets this to 54px but we don't need that */
-      float: left;
-      width: var(--yt-import-button-width);
-    }
+  &-import {
+    height: 100%;
+    line-height: 1; /* .MediaListRow sets this to 54px but we don't need that */
+    float: left;
+    width: var(--yt-import-button-width);
   }
 }

@@ -1,4 +1,4 @@
-@component Avatar {
+.Avatar {
   text-align: center;
   height: 24px;
   width: 24px;
@@ -6,7 +6,7 @@
   overflow: hidden;
   display: inline-block;
 
-  @descendent image {
+  &-image {
     width: 100%;
     height: 100%;
   }

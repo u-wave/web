@@ -1,6 +1,6 @@
 @import "../../../vars.css";
 
-@component SearchBar {
+.SearchBar {
   cursor: text;
   background: #252727;
   border: 1px solid #252727;
@@ -9,11 +9,11 @@
   height: 38px;
   margin: 8px 0;
 
-  @when focused {
+  &.is-focused {
     border-color: var(--highlight-color);
   }
 
-  @descendent icon {
+  &-icon {
     width: 80px;
     height: 100%;
     float: left;
@@ -22,13 +22,13 @@
     line-height: 38px;
   }
 
-  @descendent query {
+  &-query {
     height: 100%;
     margin-left: 80px;
     margin-right: 100px;
   }
 
-  @descendent input {
+  &-input {
     background: transparent;
     width: 100%;
     height: 100%;
@@ -42,7 +42,7 @@
     }
   }
 
-  @descendent source {
+  &-source {
     float: right;
     margin: 0 5px;
     height: 100%;

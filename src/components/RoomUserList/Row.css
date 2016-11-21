@@ -1,5 +1,5 @@
-@component UserRow {
-  @descendent votes {
+.UserRow {
+  &-votes {
     float: right;
     display: flex;
     align-items: center;
@@ -7,7 +7,7 @@
     margin-right: 4px;
   }
 
-  @descendent voteIcon {
+  &-voteIcon {
     margin: 0 4px;
   }
 }

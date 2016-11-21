@@ -1,5 +1,5 @@
-@component SearchResults {
-  @descendent query {
+.SearchResults {
+  &-query {
     height: 54px;
     line-height: 54px;
     font-size: 14pt;

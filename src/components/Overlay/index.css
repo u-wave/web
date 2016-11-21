@@ -1,27 +1,27 @@
 @import "./Header";
 
-@component Overlay {
+.Overlay {
   position: absolute;
   height: 100%;
   width: 100%;
   z-index: 6;
 
-  @modifier from-bottom {
+  &--from-bottom {
     top: auto;
     bottom: 0;
   }
-  @modifier from-top {
+  &--from-top {
     top: 0;
     bottom: auto;
   }
 
-  @descendent body {
+  &-body {
     height: 100%;
     height: 100vh;
   }
 
   /* Animations!.. */
-  @descendent enter {
+  &-enter {
     overflow-y: hidden;
     height: 0%;
     &-active {
@@ -29,7 +29,7 @@
       height: 100%;
     }
   }
-  @descendent leave {
+  &-leave {
     overflow-y: hidden;
     height: 100%;
     &-active {

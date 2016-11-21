@@ -1,10 +1,10 @@
 @import "../../vars.css";
 
-@component Loader {
+.Loader {
   position: relative;
 }
 
-@component Spinner {
+.Spinner {
   border-style: solid;
   border-color: color(var(--text-color) alpha(0.2));
   border-left-color: var(--text-color);
@@ -13,13 +13,13 @@
   border-radius: 50%;
   width: 100%;
 
-  @modifier tiny {
+  &--tiny {
     border-width: 3px;
     /* Hack for squares! padding-bottom is computed according to
      * parent element width. */
     padding-bottom: calc(100% - 6px);
   }
-  @modifier large {
+  &--large {
     border-width: 1.1em;
     padding-bottom: calc(100% - 2.2em);
   }

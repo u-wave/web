@@ -1,32 +1,32 @@
 @import "../../vars.css";
 
-@component SettingsPanel {
+.SettingsPanel {
   padding: 20px 50px;
 
-  @descendent divider {
+  &-divider {
     height: 1px;
     border: none;
     background: var(--muted-text-color);
     margin: 20px 0;
   }
 
-  @descendent header {
+  &-header {
     margin: 0 0 20px 0;
     font-weight: 400;
   }
 
-  @descendent toggle {
+  &-toggle {
     margin: 0 0 20px 0;
   }
 
-  @descendent column {
+  &-column {
     width: 50%;
     float: left;
 
-    @modifier left {
+    &--left {
       padding-right: 50px;
     }
-    @modifier right {
+    &--right {
       padding-left: 50px;
     }
   }

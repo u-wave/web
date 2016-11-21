@@ -3,14 +3,14 @@
 @import "./UserInfo.css";
 @import "./Responses";
 
-@component FooterBar {
+.FooterBar {
   display: flex;
   justify-content: space-between;
   z-index: 20; /* on top of overlays */
   border-top: 1px solid var(--chat-border-color);
   background: var(--background-color);
 
-  @descendent guest {
+  &-guest {
     font-size: 12pt;
     padding: 0 25px;
     display: flex;
@@ -20,30 +20,30 @@
     flex-grow: 1;
   }
 
-  @descendent user {
+  &-user {
     height: 100%;
     width: 75px;
   }
 
-  @descendent next {
+  &-next {
     flex-grow: 1;
     height: 100%;
     overflow: hidden;
   }
 
-  @descendent responses {
+  &-responses {
     height: 100%;
-    @modifier spaced {
+    &--spaced {
       padding-right: 1rem;
     }
   }
 
-  @descendent skip {
+  &-skip {
     height: 100%;
     padding-right: 0.5rem;
   }
 
-  @descendent join {
+  &-join {
     font-size: 12pt;
     float: right;
     display: flex;
@@ -54,13 +54,13 @@
     background: var(--highlight-color);
     cursor: pointer;
 
-    @modifier locked {
+    &--locked {
       width: 140px;
     }
   }
 }
 
-@component FooterAuthButton {
+.FooterAuthButton {
   width: 125px;
   height: 100%;
   border: 0;
@@ -72,14 +72,14 @@
   color: var(--text-color);
   font-size: 12pt;
 
-  @modifier login {
+  &--login {
     background: var(--background-color);
     &:hover {
       background: var(--background-hover-color);
     }
   }
 
-  @modifier register {
+  &--register {
     background: var(--highlight-color);
     &:hover {
       background: var(--highbright-color);

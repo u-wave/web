@@ -1,20 +1,12 @@
-@component-namespace src-youtube {
-  @component Player {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    z-index: 3;
+.src-youtube-Player {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 3;
 
-    @modifier small {
-      margin: auto;
-      width: 640px;
-      height: 360px;
-    }
-
-    @modifier preview {
-      margin: auto;
-      width: 640px;
-      height: 360px;
-    }
+  &--small, &--preview {
+    margin: auto;
+    width: 640px;
+    height: 360px;
   }
 }

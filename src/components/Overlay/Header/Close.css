@@ -1,13 +1,13 @@
 @import "../../../vars.css";
 
-@component OverlayHeaderClose {
+.OverlayHeaderClose {
   cursor: pointer;
   text-align: center;
   width: var(--overlay-header-close-size);
   height: var(--overlay-header-close-size);
   padding: 12px;
 
-  @descendent icon {
+  &-icon {
     font-size: 32px;
     line-height: var(--overlay-header-close-size);
   }

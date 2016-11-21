@@ -1,18 +1,18 @@
 @import "../../../vars.css";
 
-@component PlaylistMenuRow {
+.PlaylistMenuRow {
   height: 44px;
   line-height: 44px;
   padding: 0 10px;
   cursor: pointer;
   width: 100%;
 
-  @descendent content {
+  &-content {
     display: flex;
     justify-content: space-between;
   }
 
-  @descendent active-icon {
+  &-active-icon {
     display: block;
     float: left;
     height: 44px;
@@ -20,14 +20,14 @@
     padding-top: 5px;
   }
 
-  @descendent loading {
+  &-loading {
     width: 24px;
     height: 24px;
     float: left;
     margin: 10px 7px 10px 0;
   }
 
-  @descendent title {
+  &-title {
     align-self: flex-start;
     /* dot dot dot */
     overflow: hidden;
@@ -35,20 +35,20 @@
     white-space: nowrap;
   }
 
-  @descendent count {
+  &-count {
     align-self: flex-end;
     color: var(--highlight-color);
     margin-right: 5px;
   }
 
-  @modifier create {
+  &--create {
     background-color: var(--highlight-color);
   }
 
-  @when selected {
+  &.is-selected {
     background: var(--media-list-alternate-color);
   }
-  @when droppable {
+  &.is-droppable {
     background: var(--media-list-alternate-color);
   }
 }

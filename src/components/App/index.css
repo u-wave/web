@@ -27,7 +27,7 @@ button, input, optgroup, select, textarea {
   font: inherit;
 }
 
-@component App {
+.App {
   font-family: Open Sans, sans-serif;
 
   position: absolute;
@@ -39,7 +39,7 @@ button, input, optgroup, select, textarea {
   background: var(--background-color);
   color: var(--text-color);
 
-  @descendent middle {
+  &-middle {
     position: absolute;
     top: var(--header-height);
     bottom: var(--footer-height);
@@ -48,38 +48,38 @@ button, input, optgroup, select, textarea {
   }
 }
 
-@component AppColumn {
+.AppColumn {
   position: absolute;
   height: 100%;
 
-  @modifier full {
+  &--full {
     width: 100%;
   }
-  @modifier left {
+  &--left {
     width: 75%;
     left: 0;
   }
-  @modifier right {
+  &--right {
     width: 25%;
     right: 0;
   }
 }
 
-@component AppRow {
+.AppRow {
   position: absolute;
   left: 0;
   right: 0;
   clear: both;
 
-  @modifier top {
+  &--top {
     height: var(--header-height);
     top: 0;
   }
-  @modifier middle {
+  &--middle {
     top: var(--header-height);
     bottom: var(--footer-height);
   }
-  @modifier bottom {
+  &--bottom {
     height: var(--footer-height);
     bottom: 0;
   }

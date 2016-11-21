@@ -4,10 +4,10 @@
   --playlist-filter-input-height: 36px;
 }
 
-@component PlaylistMediaFilter {
+.PlaylistMediaFilter {
   display: flex;
 
-  @descendent input {
+  &-input {
     width: 180px;
     border-radius: 2px;
     background: #252727;
@@ -24,7 +24,7 @@
       border: 1px solid var(--highlight-color);
     }
 
-    @when open {
+    &.is-open {
       display: block;
     }
   }

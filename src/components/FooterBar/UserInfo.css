@@ -1,6 +1,6 @@
 @import "../../vars.css";
 
-@component UserInfo {
+.UserInfo {
   width: 100%;
   height: 100%;
   padding: 4px;
@@ -11,14 +11,14 @@
     background-color: var(--background-hover-color);
   }
 
-  @descendent avatar {
+  &-avatar {
     width: 50px;
     height: 50px;
     margin: auto;
     display: block;
   }
 
-  @descendent settings {
+  &-settings {
     position: absolute;
     bottom: 4px;
     right: 3px;

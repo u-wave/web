@@ -1,7 +1,7 @@
 @import "../../vars.css";
 
-@component SidePanel {
-  @descendent tab {
+.SidePanel {
+  &-tab {
     /* material-ui needs box-sizing: content-box on an element that is not
      * inline-styleable :( */
     > div {
@@ -11,14 +11,14 @@
       padding: 0 !important;
     }
 
-    @descendent guests {
+    &-guests {
       margin-left: 5px;
       font-size: 80%;
       color: #777;
     }
   }
 
-  @descendent panel {
+  &-panel {
     position: absolute;
     top: var(--header-height);
     bottom: 0;
@@ -28,7 +28,7 @@
     visibility: hidden;
     opacity: 0;
 
-    @when visible {
+    &.is-visible {
       visibility: visible;
       opacity: 1;
     }

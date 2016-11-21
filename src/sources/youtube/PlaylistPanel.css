@@ -1,11 +1,9 @@
-@component-namespace src-youtube {
-  @component PlaylistPanel {
-    @descendent header {
-      display: flex;
-    }
+.src-youtube-PlaylistPanel {
+  &-header {
+    display: flex;
+  }
 
-    @descendent name {
-      flex-grow: 1;
-    }
+  &-name {
+    flex-grow: 1;
   }
 }

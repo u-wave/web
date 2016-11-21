@@ -1,6 +1,6 @@
 @import "../../vars.css";
 
-@component LoadingScreen {
+.LoadingScreen {
   background: var(--background-color);
   position: fixed;
   left: 0;
@@ -13,14 +13,14 @@
   justify-content: center;
   align-items: center;
 
-  @descendent loader {
+  &-loader {
     height: 250px;
     width: 250px;
     height: 50vmin;
     width: 50vmin;
   }
 
-  @descendent notice {
+  &-notice {
     color: var(--text-color);
   }
 }

@@ -1,21 +1,21 @@
 @import "../../../vars.css";
 
-@component ChatInputWrapper {
+.ChatInputWrapper {
   background: var(--chat-background-color);
   border-top: 1px solid var(--chat-border-color);
 }
 
-@component ChatInput {
+.ChatInput {
   height: 100%;
   width: 100%;
 
-  @descendent suggestions {
+  &-suggestions {
     position: absolute;
     bottom: 100%;
     width: 100%;
   }
 
-  @descendent input {
+  &-input {
     margin: 15px 15px 16px 15px;
     height: 28px;
     width: calc(100% - 32px);
@@ -25,7 +25,7 @@
     color: var(--text-color);
     font-size: 10pt;
 
-    @when focused {
+    &.is-focused {
       border-color: var(--highlight-color);
       outline: none;
     }

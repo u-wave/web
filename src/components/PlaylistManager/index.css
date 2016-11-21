@@ -3,10 +3,10 @@
 @import "./Menu";
 @import "./Panel";
 
-@component PlaylistManager {
+.PlaylistManager {
   z-index: 10;
 
-  @descendent menu {
+  &-menu {
     width: 33%; /* 25% of total screen width */
     float: left;
 
@@ -15,7 +15,7 @@
       width: 300px;
     }
   }
-  @descendent panel {
+  &-panel {
     position: absolute;
     left: 33%;
     right: 0;

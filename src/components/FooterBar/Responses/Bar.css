@@ -1,6 +1,6 @@
 @import "../../../vars.css";
 
-@component AudienceResponse {
+.AudienceResponse {
   height: 100%;
   width: 100%;
   display: flex;
@@ -8,7 +8,7 @@
   align-items: center;
 }
 
-@component ResponseButton {
+.ResponseButton {
   height: 100%;
   border: 0;
   background: none;
@@ -16,7 +16,7 @@
   flex-grow: 0.334;
   padding: 0;
 
-  @descendent content {
+  &-content {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -28,7 +28,7 @@
     background-color: var(--background-hover-color);
   }
 
-  @descendent icon {
+  &-icon {
     height: 36px;
     width: 36px;
     padding: 6px 12px 6px 0px;

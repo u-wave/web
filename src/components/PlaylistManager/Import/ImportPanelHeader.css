@@ -1,11 +1,11 @@
-@component ImportPanelHeader {
+.ImportPanelHeader {
   height: 54px;
   line-height: 54px;
   font-size: 14pt;
   display: flex;
   justify-content: space-between;
 
-  @descendent content {
+  &-content {
     flex-grow: 1;
     padding-left: 15px;
   }

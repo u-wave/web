@@ -12,6 +12,7 @@ button {
   background: initial;
   border: initial;
   text-align: initial;
+  -webkit-appearance: initial;
   &:focus {
     outline: initial;
   }

@@ -1,5 +1,5 @@
-@component PreviewMediaDialog {
-  @descendent content {
+.PreviewMediaDialog {
+  &-content {
     overflow: hidden;
     position: relative;
   }

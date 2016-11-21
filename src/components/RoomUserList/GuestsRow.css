@@ -1,8 +1,6 @@
-@component UserRow {
-  @modifier guests {
-    padding-left: 44px;
-    font-style: italic;
-    color: #aaaaaa;
-    background: transparent;
-  }
+.UserRow--guests {
+  padding-left: 44px;
+  font-style: italic;
+  color: #aaaaaa;
+  background: transparent;
 }

@@ -1,11 +1,11 @@
-@component PlaylistMeta {
+.PlaylistMeta {
   height: 54px;
   line-height: 54px;
   font-size: 14pt;
   display: flex;
   justify-content: space-between;
 
-  @descendent name {
+  &-name {
     flex-grow: 1;
     padding-left: 15px;
     overflow: hidden;
@@ -13,7 +13,7 @@
     white-space: nowrap;
   }
 
-  @descendent active {
+  &-active {
     display: flex;
     justify-content: center;
     align-items: center;

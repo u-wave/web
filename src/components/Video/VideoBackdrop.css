@@ -1,4 +1,4 @@
-@component VideoBackdrop {
+.VideoBackdrop {
   position: absolute;
   z-index: 3;
   /* sorta hacky center positioning */
@@ -8,7 +8,7 @@
   min-width: 100%;
   min-height: 100%;
 
-  @modifier blurry {
+  &--blurry {
     filter: blur(1em);
   }
 }

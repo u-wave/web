@@ -2,10 +2,10 @@
 @import "./Profile.css";
 @import "./SettingsPanel.css";
 
-@component SettingsManager {
+.SettingsManager {
   z-index: 10;
 
-  @descendent body {
+  &-body {
     overflow-y: scroll;
     background: color(var(--background-color) alpha(* 96%));
   }
