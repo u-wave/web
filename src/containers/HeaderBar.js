@@ -1,8 +1,11 @@
+import * as React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import compose from 'recompose/compose';
+import getContext from 'recompose/getContext';
 import { createStructuredSelector } from 'reselect';
 import { setVolume, mute, unmute } from '../actions/PlaybackActionCreators';
-import { toggleRoomHistory } from '../actions/OverlayActionCreators';
+import { toggleRoomHistory, toggleAbout } from '../actions/OverlayActionCreators';
 
 import { djSelector, mediaSelector, startTimeSelector } from '../selectors/boothSelectors';
 import { volumeSelector, isMutedSelector } from '../selectors/settingSelectors';
@@ -13,14 +16,21 @@ const mapStateToProps = createStructuredSelector({
   media: mediaSelector,
   dj: djSelector,
   volume: volumeSelector,
-  muted: isMutedSelector
+  muted: isMutedSelector,
+  hasAboutPage: (state, props) => (
+    props.uwave.getAboutPageComponent() !== null
+  )
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   onVolumeChange: setVolume,
   onVolumeMute: mute,
   onVolumeUnmute: unmute,
-  onToggleRoomHistory: toggleRoomHistory
+  onToggleRoomHistory: toggleRoomHistory,
+  onToggleAboutOverlay: toggleAbout
 }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(HeaderBar);
+export default compose(
+  getContext({ uwave: React.PropTypes.object }),
+  connect(mapStateToProps, mapDispatchToProps)
+)(HeaderBar);

@@ -1,0 +1,6 @@
+@import "../../vars.css";
+
+.AboutPanel {
+  background-color: var(--background-color);
+  overflow-y: auto;
+}

@@ -25,6 +25,7 @@ export default class Uwave {
   sources = {};
   jwt = null;
   renderTarget = null;
+  aboutPageComponent = null;
 
   constructor(options = {}, session = readSession()) {
     this.options = options;
@@ -70,6 +71,13 @@ export default class Uwave {
     return source;
   }
 
+  setAboutPageComponent(AboutPageComponent) {
+    this.aboutPageComponent = AboutPageComponent;
+  }
+  getAboutPageComponent() {
+    return this.aboutPageComponent;
+  }
+
   build() {
     this.store = configureStore(
       { config: this.options },
@@ -88,7 +96,10 @@ export default class Uwave {
   getComponent() {
     return (
       <Provider store={this.store}>
-        <AppContainer mediaSources={this.sources} />
+        <AppContainer
+          mediaSources={this.sources}
+          uwave={this}
+        />
       </Provider>
     );
   }

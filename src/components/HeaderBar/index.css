@@ -1,4 +1,5 @@
 @import "../../vars.css";
+@import "./AppTitle.css";
 @import "./HeaderHistoryButton.css";
 @import "./Progress.css";
 @import "./Volume.css";
@@ -13,15 +14,8 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 210px;
+    width: 240px;
     margin: 0;
-    line-height: var(--header-height);
-    height: var(--header-height);
-    background-image: url(/assets/img/logo-white.png);
-    background-repeat: no-repeat;
-    background-position: 10px center;
-    background-size: auto 36px;
-    font-size: 0;
   }
 
   &-volume {

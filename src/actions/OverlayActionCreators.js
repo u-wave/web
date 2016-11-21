@@ -26,6 +26,10 @@ export function toggleSettings() {
   return toggleOverlay('settings');
 }
 
+export function toggleAbout() {
+  return toggleOverlay('about');
+}
+
 export function closeAll() {
   return { type: CLOSE_OVERLAY };
 }

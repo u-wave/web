@@ -1,6 +1,7 @@
 import cx from 'classnames';
 import * as React from 'react';
 
+import AppTitle from './AppTitle';
 import Progress from './Progress';
 import CurrentMedia from './CurrentMedia';
 import Volume from './Volume';
@@ -15,17 +16,25 @@ const HeaderBar = ({
   mediaStartTime,
   volume,
   muted,
+  hasAboutPage,
   onVolumeChange,
   onVolumeMute,
   onVolumeUnmute,
   onToggleRoomHistory,
+  onToggleAboutOverlay,
   ...attrs
 }) => (
   <div
     className={cx('HeaderBar', className)}
     {...attrs}
   >
-    <h1 className="HeaderBar-title">{title}</h1>
+    <AppTitle
+      className="HeaderBar-title"
+      hasAboutPage={hasAboutPage}
+      onClick={onToggleAboutOverlay}
+    >
+      {title}
+    </AppTitle>
     <CurrentMedia className="HeaderBar-now-playing" media={media} />
     {dj && <CurrentDJ className="HeaderBar-dj" dj={dj} />}
     <Progress
@@ -57,11 +66,13 @@ HeaderBar.propTypes = {
   mediaStartTime: React.PropTypes.number,
   volume: React.PropTypes.number,
   muted: React.PropTypes.bool,
+  hasAboutPage: React.PropTypes.bool.isRequired,
 
   onVolumeChange: React.PropTypes.func,
   onVolumeMute: React.PropTypes.func,
   onVolumeUnmute: React.PropTypes.func,
-  onToggleRoomHistory: React.PropTypes.func
+  onToggleRoomHistory: React.PropTypes.func,
+  onToggleAboutOverlay: React.PropTypes.func
 };
 
 export default HeaderBar;
