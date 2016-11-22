@@ -50,12 +50,12 @@ export default class FooterBar extends React.Component {
     this.handleLeaveWaitlist = this.handleLeaveWaitlist.bind(this);
   }
 
-  handleSkipTurn() {
+  handleSkipTurn(reason) {
     if (!this.props.showSkip) {
       return null;
     }
     if (!this.props.userIsDJ) {
-      return this.props.onModSkip();
+      return this.props.onModSkip(reason);
     }
     return this.props.onSkipTurn({ remove: false });
   }
@@ -133,7 +133,7 @@ export default class FooterBar extends React.Component {
               <SkipButton
                 userIsDJ={userIsDJ}
                 currentDJ={this.props.currentDJ}
-                onClick={this.handleSkipTurn}
+                onSkip={this.handleSkipTurn}
               />
             </div>
           )}
