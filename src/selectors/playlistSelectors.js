@@ -103,8 +103,6 @@ export const nextMediaSelector = createSelector(
 );
 
 export const playlistsIndexSelector = createStructuredSelector({
-  playlists: playlistsSelector,
-  activePlaylist: activePlaylistSelector,
   selectedPlaylist: selectedPlaylistSelector,
   activeMedia: activeMediaSelector,
   selectedMedia: filteredSelectedPlaylistItemsSelector,

@@ -6,10 +6,6 @@ import {
   openPreviewMediaDialog
 } from '../actions/DialogActionCreators';
 import {
-  showImportPanel
-} from '../actions/ImportActionCreators';
-import {
-  addMedia,
   addMediaMenu,
   editMedia,
   moveMedia,
@@ -21,13 +17,11 @@ import {
   cannotDeleteActivePlaylist,
   shufflePlaylist,
   activatePlaylist,
-  selectPlaylist,
   loadPlaylist,
   loadFilteredPlaylistItems
 } from '../actions/PlaylistActionCreators';
 import {
   search,
-  showSearchResults,
   setSource as setSearchSource
 } from '../actions/SearchActionCreators';
 
@@ -73,7 +67,6 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onMoveMedia,
   onRemoveFromPlaylist,
   onOpenPreviewMediaDialog: openPreviewMediaDialog,
-  onAddToPlaylist: addMedia,
   onCreatePlaylist: createPlaylist,
   onRenamePlaylist: renamePlaylist,
   onDeletePlaylist: deletePlaylist,
@@ -81,13 +74,10 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onShufflePlaylist: shufflePlaylist,
   onActivatePlaylist: activatePlaylist,
   onFilterPlaylistItems: filterPlaylistItems,
-  onSelectPlaylist: selectPlaylist,
-  onSelectSearchResults: showSearchResults,
   onLoadPlaylistPage: loadPlaylist,
   onLoadFilteredPlaylistPage: loadFilteredPlaylistItems,
   onSearchSubmit: search,
-  onSearchSourceChange: setSearchSource,
-  onShowImportPanel: showImportPanel
+  onSearchSourceChange: setSearchSource
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(PlaylistManager);

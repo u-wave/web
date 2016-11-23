@@ -45,7 +45,7 @@ const Menu = ({
           className="PlaylistMenu-row"
           playlist={pl}
           selected={isSelectingPlaylist && selected._id === pl._id}
-          onClick={() => onSelectPlaylist(pl)}
+          onClick={() => onSelectPlaylist(pl._id)}
           onAddToPlaylist={onAddToPlaylist}
         />
       ))}

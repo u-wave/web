@@ -7,7 +7,7 @@ const searchSourceTypeSelector = createSelector(
   search => search.sourceType
 );
 
-const searchQuerySelector = createSelector(
+export const searchQuerySelector = createSelector(
   baseSearchSelector,
   search => search.query
 );
@@ -22,18 +22,18 @@ const searchResultsCombinedSelector = createSelector(
   search => search.results
 );
 
-const searchResultsSelector = createSelector(
+export const searchResultsSelector = createSelector(
   searchResultsCombinedSelector,
   searchSourceTypeSelector,
   (results, sourceType) => results[sourceType]
 );
 
-const searchResultsCountSelector = createSelector(
+export const searchResultsCountSelector = createSelector(
   searchResultsSelector,
   results => (results ? results.length : 0)
 );
 
-const showSearchResultsSelector = createSelector(
+export const showSearchResultsSelector = createSelector(
   baseSearchSelector,
   search => !!search.showResults
 );

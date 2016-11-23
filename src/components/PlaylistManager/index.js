@@ -4,7 +4,7 @@ import React, { Component, PropTypes } from 'react';
 import { IDLE, LOADING, LOADED } from '../../constants/LoadingStates';
 import Overlay from '../Overlay';
 
-import PlaylistMenu from './Menu';
+import PlaylistMenu from '../../containers/PlaylistManagerMenu';
 import PlaylistHeader from './Header';
 import PlaylistPanel from './Panel';
 import PlaylistPanelEmpty from './Panel/Empty';
@@ -15,8 +15,6 @@ export default class PlaylistManager extends Component {
   static propTypes = {
     className: PropTypes.string,
 
-    playlists: PropTypes.array,
-    activePlaylist: PropTypes.object,
     selectedPlaylist: PropTypes.object,
     selectedMedia: PropTypes.array,
     currentFilter: PropTypes.string,
@@ -30,19 +28,14 @@ export default class PlaylistManager extends Component {
     searchLoadingState: PropTypes.oneOf([ IDLE, LOADING, LOADED ]),
 
     onCloseOverlay: PropTypes.func,
-    onCreatePlaylist: PropTypes.func,
     onRenamePlaylist: PropTypes.func,
     onDeletePlaylist: PropTypes.func,
     onNotDeletable: PropTypes.func,
     onShufflePlaylist: PropTypes.func,
     onActivatePlaylist: PropTypes.func,
     onFilterPlaylistItems: PropTypes.func,
-    onSelectPlaylist: PropTypes.func,
-    onSelectSearchResults: PropTypes.func,
     onSearchSubmit: PropTypes.func,
     onSearchSourceChange: PropTypes.func,
-    onShowImportPanel: PropTypes.func,
-    onAddToPlaylist: PropTypes.func,
     onOpenAddMediaMenu: PropTypes.func,
     onMoveToFirst: PropTypes.func,
     onEditMedia: PropTypes.func,
@@ -104,14 +97,8 @@ export default class PlaylistManager extends Component {
     );
   };
 
-  handleSelectPlaylist = (playlist) => {
-    this.props.onSelectPlaylist(playlist._id);
-  };
-
   render() {
     const {
-      playlists,
-      activePlaylist,
       selectedPlaylist,
       selectedMedia,
       currentFilter,
@@ -125,16 +112,12 @@ export default class PlaylistManager extends Component {
       searchLoadingState,
 
       onCloseOverlay,
-      onCreatePlaylist,
       onDeletePlaylist,
       onNotDeletable,
-      onAddToPlaylist,
       onActivatePlaylist,
       onRenamePlaylist,
-      onSelectSearchResults,
       onSearchSubmit,
       onSearchSourceChange,
-      onShowImportPanel,
 
       onOpenPreviewMediaDialog,
       onOpenAddMediaMenu
@@ -204,21 +187,7 @@ export default class PlaylistManager extends Component {
         />
 
         <div className="AppRow AppRow--middle">
-          <PlaylistMenu
-            className="PlaylistManager-menu"
-            playlists={playlists}
-            active={activePlaylist}
-            selected={selectedPlaylist}
-            showSearchResults={showSearchResults}
-            showImportPanel={showImportPanel}
-            searchQuery={searchQuery}
-            searchResults={searchResults ? searchResults.length : 0}
-            onCreatePlaylist={onCreatePlaylist}
-            onAddToPlaylist={onAddToPlaylist}
-            onSelectPlaylist={this.handleSelectPlaylist}
-            onSelectSearchResults={onSelectSearchResults}
-            onShowImportPanel={onShowImportPanel}
-          />
+          <PlaylistMenu className="PlaylistManager-menu" />
 
           {panel}
         </div>
