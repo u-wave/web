@@ -55,6 +55,9 @@ gulp.task('serve', () => {
     }))
     .use('/assets/emoji/', emojione.middleware());
 
+  let fs = require('fs');
+  let publicPath;
+
   if (watch) {
     wpConfig.entry.app = [
       'react-hot-loader/patch',
@@ -64,19 +67,30 @@ gulp.task('serve', () => {
       new webpack.HotModuleReplacementPlugin()
     );
     const compiler = webpack(wpConfig);
-    app.use(webpackDevMiddleware(compiler, {
+    const dev = webpackDevMiddleware(compiler, {
       noInfo: true,
-      publicPath: '/'
-    }));
+      publicPath: '/',
+      serverSideRender: true,
+      // Specify a nonexistent file so webpack-dev-middleware doesn't attempt to
+      // serve it. It'll be served by the u-wave-web middleware instead below.
+      index: '-dummy-'
+    });
+    app.use(dev);
     app.use(webpackHotMiddleware(compiler, {
       log: require('gulp-util').log,
       path: '/__webpack_hmr'
     }));
+
+    // Point u-wave-web middleware to the virtual webpack filesystem.
+    fs = dev.fileSystem;
+    publicPath = '/';
   }
 
   app.use(createWebClient(uw, {
     apiUrl,
-    emoji: emojione.emoji
+    emoji: emojione.emoji,
+    publicPath,
+    fs
   }));
 
   uw.on('stopped', () => {
