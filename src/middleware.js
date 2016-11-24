@@ -1,5 +1,5 @@
 import * as path from 'path';
-import * as fs from 'fs';
+import * as defaultFs from 'fs';
 import trumpet from 'trumpet';
 import router from 'router';
 import serveStatic from 'serve-static';
@@ -25,6 +25,7 @@ export default function uwaveWebClient(uw, options = {}) {
     pluginsScriptFile = null,
     pluginsStyle = null,
     pluginsStyleFile = null,
+    fs = defaultFs, // Should only be used by the dev server.
     ...clientOptions
   } = options;
 
