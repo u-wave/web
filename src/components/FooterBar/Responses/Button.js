@@ -1,13 +1,6 @@
 import cx from 'classnames';
 import * as React from 'react';
-import Tooltip from 'material-ui/internal/Tooltip';
-import transformStyle from '../../../utils/transformStyle';
-
-const tooltipStyle = {
-  top: -36,
-  left: '50%',
-  ...transformStyle('translateX(-50%)')
-};
+import Tooltip from '../../Tooltip';
 
 export default class Button extends React.Component {
   static propTypes = {
@@ -54,7 +47,7 @@ export default class Button extends React.Component {
             verticalPosition="top"
             horizontalPosition="center"
             show={this.state.showTooltip}
-            style={tooltipStyle}
+            style={{ top: -22 }}
           />
           <div className="ResponseButton-icon">{children}</div>
           <span className="ResponseButton-count">{count}</span>
