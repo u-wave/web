@@ -1,3 +1,5 @@
+'use strict'; // eslint-disable-line strict, lines-around-directive
+
 require('loud-rejection/register');
 const gulp = require('gulp');
 const env = require('gulp-util').env;
