@@ -1,4 +1,12 @@
-# 1.0.0-beta.2
+# 1.0.0-beta.3 / 26 Nov 2016
+
+Bugfixes:
+
+  * Auto-position emoji tooltips to prevent overflow in chat messages (eb183f)
+  * Fix emoji in development watch mode (85d2b2)
+  * Fix username dialog sizing (717d43)
+
+# 1.0.0-beta.2 / 22 Nov 2016
 
 Features:
 
@@ -33,6 +41,6 @@ Internal:
   * Remove postcss-bem plugin, instead only using cssnext for CSS features.
     The postcss-bem project is abandoned.
 
-# 1.0.0-beta.1
+# 1.0.0-beta.1 / 02 Nov 2016
 
 Start tracking changes.
