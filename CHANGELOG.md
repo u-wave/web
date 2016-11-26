@@ -2,9 +2,9 @@
 
 Bugfixes:
 
-  * Auto-position emoji tooltips to prevent overflow in chat messages (eb183f)
-  * Fix emoji in development watch mode (85d2b2)
-  * Fix username dialog sizing (717d43)
+  * Auto-position emoji tooltips to prevent overflow in chat messages (#495)
+  * Fix emoji in development watch mode (#496)
+  * Fix username dialog sizing (#498)
 
 # 1.0.0-beta.2 / 22 Nov 2016
 
