@@ -49,15 +49,17 @@ class ChangeUsernameButton extends React.Component {
   render() {
     const { t, initialUsername } = this.props;
     return (
-      <IconButton
-        style={changeNameButtonStyle}
-        iconStyle={changeNameIconStyle}
-        onClick={this.handleOpen}
-      >
-        <EditIcon
-          color="#777"
-          hoverColor="#fff"
-        />
+      <span>
+        <IconButton
+          style={changeNameButtonStyle}
+          iconStyle={changeNameIconStyle}
+          onClick={this.handleOpen}
+        >
+          <EditIcon
+            color="#777"
+            hoverColor="#fff"
+          />
+        </IconButton>
         {this.state.changingUsername && (
           <PromptDialog
             title={t('settings.profile.username.change')}
@@ -68,7 +70,7 @@ class ChangeUsernameButton extends React.Component {
             onCancel={this.handleClose}
           />
         )}
-      </IconButton>
+      </span>
     );
   }
 }
