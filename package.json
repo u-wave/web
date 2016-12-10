@@ -107,7 +107,7 @@
     "mocha": "^3.0.0",
     "npm-run-path": "^2.0.1",
     "postcss-cssnext": "^2.8.0",
-    "postcss-import": "8.2.0",
+    "postcss-import": "^9.0.0",
     "postcss-loader": "^1.1.1",
     "proxyquire": "^1.7.4",
     "run-sequence": "^1.2.0",

@@ -1,6 +1,6 @@
-module.exports = ({ env, webpack }) => ({
+module.exports = ({ env }) => ({
   plugins: {
-    'postcss-import': { addDependencyTo: webpack },
+    'postcss-import': {},
     'postcss-cssnext': {},
     cssnano: env === 'production' && {
       autoprefixer: false
