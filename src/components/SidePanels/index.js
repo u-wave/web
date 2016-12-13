@@ -11,9 +11,22 @@ import Tabs from '../Tabs';
 import Tab from '../Tabs/Tab';
 import PanelTemplate from './PanelTemplate';
 
+const contentContainerStyle = {
+  // This ensures that the `position:absolute`s on divs _inside_ container
+  // elements align correctly.
+  position: 'static'
+};
+
 const subHeaderStyle = {
   fontSize: '125%'
 };
+
+const getUsersLabel = (t, listenerCount) => [
+  t('users.title'),
+  <span key="sub" style={subHeaderStyle}>
+    {listenerCount}
+  </span>
+];
 
 const getWaitlistLabel = (t, size, position) => {
   if (size > 0) {
@@ -40,20 +53,16 @@ const SidePanels = ({
   <Tabs
     value={selected}
     onChange={onChange}
+    contentContainerStyle={contentContainerStyle}
     tabTemplate={PanelTemplate}
   >
-    {/* Disabled touch ripples on tabs because they're offset weirdly. Also,
-      * they interfere with the flexbox column layout for the Waitlist
-      * position, because they add a wrapper <div />.
-      *
-      * NB: SidePanel-tab includes some !important styles because material-ui
+    {/* NB: SidePanel-tab includes some !important styles because material-ui
       * has an otherwise unstyleable element inside its tab bar that breaks our
       * user and waitlist position counter elements. material-ui uses it to
       * properly position tab labels. The overrides remove the height and
       * padding constraints from that in-between element. */}
     <Tab
       className="SidePanel-tab"
-      disableTouchRipple
       label={t('chat.title')}
       value="chat"
     >
@@ -61,20 +70,13 @@ const SidePanels = ({
     </Tab>
     <Tab
       className="SidePanel-tab"
-      disableTouchRipple
-      label={[
-        t('users.title'),
-        <span key="sub" style={subHeaderStyle}>
-          {listenerCount}
-        </span>
-      ]}
+      label={getUsersLabel(t, listenerCount)}
       value="room"
     >
       <RoomUserList />
     </Tab>
     <Tab
       className="SidePanel-tab"
-      disableTouchRipple
       label={getWaitlistLabel(t, waitlistSize, waitlistPosition)}
       value="waitlist"
     >

@@ -27,9 +27,7 @@ const baseInkBarStyle = {
 };
 
 const baseContentStyle = {
-  // This ensures that the `position:absolute`s on divs _inside_ container
-  // elements align correctly.
-  position: 'static'
+  position: 'relative'
 };
 
 // This component just wraps the Material-UI tabs with some default styling.
