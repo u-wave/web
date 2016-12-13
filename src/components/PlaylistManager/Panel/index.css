@@ -7,6 +7,7 @@
 .PlaylistPanel {
   background: color(var(--background-color) alpha(* 96%));
   height: 100%;
+  width: 100%;
 
   &-loading {
     margin: auto;

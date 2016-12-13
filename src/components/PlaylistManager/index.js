@@ -6,18 +6,17 @@ import Overlay from '../Overlay';
 
 import PlaylistMenu from '../../containers/PlaylistManagerMenu';
 import PlaylistHeader from './Header';
-import PlaylistPanel from './Panel';
+import PlaylistPanel from '../../containers/PlaylistManagerPanel';
 import PlaylistPanelEmpty from './Panel/Empty';
 import PlaylistImport from '../../containers/PlaylistImportManager';
 import SearchResults from './Panel/SearchResults';
 
+// eslint-disable-next-line react/prefer-stateless-function
 export default class PlaylistManager extends Component {
   static propTypes = {
     className: PropTypes.string,
 
     selectedPlaylist: PropTypes.object,
-    selectedMedia: PropTypes.array,
-    currentFilter: PropTypes.string,
 
     showSearchResults: PropTypes.bool.isRequired,
     showImportPanel: PropTypes.bool.isRequired,
@@ -28,80 +27,15 @@ export default class PlaylistManager extends Component {
     searchLoadingState: PropTypes.oneOf([ IDLE, LOADING, LOADED ]),
 
     onCloseOverlay: PropTypes.func,
-    onRenamePlaylist: PropTypes.func,
-    onDeletePlaylist: PropTypes.func,
-    onNotDeletable: PropTypes.func,
-    onShufflePlaylist: PropTypes.func,
-    onActivatePlaylist: PropTypes.func,
-    onFilterPlaylistItems: PropTypes.func,
     onSearchSubmit: PropTypes.func,
     onSearchSourceChange: PropTypes.func,
     onOpenAddMediaMenu: PropTypes.func,
-    onMoveToFirst: PropTypes.func,
-    onEditMedia: PropTypes.func,
-    onMoveMedia: PropTypes.func,
-    onRemoveFromPlaylist: PropTypes.func,
-    onOpenPreviewMediaDialog: PropTypes.func,
-    onLoadPlaylistPage: PropTypes.func,
-    onLoadFilteredPlaylistPage: PropTypes.func
-  };
-
-  withSelected(fn) {
-    const selectedPlaylist = this.props.selectedPlaylist;
-    if (selectedPlaylist) {
-      fn(selectedPlaylist);
-    }
-  }
-
-  handleShufflePlaylist = () => {
-    this.withSelected(selectedPlaylist =>
-      this.props.onShufflePlaylist(selectedPlaylist._id)
-    );
-  };
-
-  handleMoveToFirst = (media, selection) => {
-    this.withSelected(selectedPlaylist =>
-      this.props.onMoveToFirst(selectedPlaylist._id, media, selection)
-    );
-  };
-
-  handleEditMedia = (media) => {
-    this.withSelected(selectedPlaylist =>
-      this.props.onEditMedia(selectedPlaylist._id, media)
-    );
-  };
-
-  handleMoveMedia = (media, opts) => {
-    this.withSelected(selectedPlaylist =>
-      this.props.onMoveMedia(selectedPlaylist._id, media, opts)
-    );
-  };
-
-  handleRemoveFromPlaylist = (media, selection) => {
-    this.withSelected(selectedPlaylist =>
-      this.props.onRemoveFromPlaylist(selectedPlaylist._id, media, selection)
-    );
-  };
-
-  handleLoadPlaylistPage = (page) => {
-    const loadPlaylistPage = this.props.currentFilter ?
-      this.props.onLoadFilteredPlaylistPage : this.props.onLoadPlaylistPage;
-    this.withSelected(selectedPlaylist =>
-      loadPlaylistPage(selectedPlaylist._id, page)
-    );
-  };
-
-  handleFilterPlaylistItems = (filter) => {
-    this.withSelected(selectedPlaylist =>
-      this.props.onFilterPlaylistItems(selectedPlaylist._id, filter)
-    );
+    onOpenPreviewMediaDialog: PropTypes.func
   };
 
   render() {
     const {
       selectedPlaylist,
-      selectedMedia,
-      currentFilter,
 
       showSearchResults,
       showImportPanel,
@@ -112,10 +46,6 @@ export default class PlaylistManager extends Component {
       searchLoadingState,
 
       onCloseOverlay,
-      onDeletePlaylist,
-      onNotDeletable,
-      onActivatePlaylist,
-      onRenamePlaylist,
       onSearchSubmit,
       onSearchSourceChange,
 
@@ -143,26 +73,9 @@ export default class PlaylistManager extends Component {
       );
     } else if (selectedPlaylist) {
       panel = (
-        <PlaylistPanel
-          className="PlaylistManager-panel"
-          playlist={selectedPlaylist}
-          media={selectedMedia}
-          loading={!!selectedPlaylist.loading}
-          isFiltered={!!currentFilter}
-          onShufflePlaylist={this.handleShufflePlaylist}
-          onActivatePlaylist={onActivatePlaylist}
-          onRenamePlaylist={onRenamePlaylist}
-          onDeletePlaylist={onDeletePlaylist}
-          onNotDeletable={onNotDeletable}
-          onOpenPreviewMediaDialog={onOpenPreviewMediaDialog}
-          onOpenAddMediaMenu={onOpenAddMediaMenu}
-          onMoveToFirst={this.handleMoveToFirst}
-          onMoveMedia={this.handleMoveMedia}
-          onEditMedia={this.handleEditMedia}
-          onRemoveFromPlaylist={this.handleRemoveFromPlaylist}
-          onLoadPlaylistPage={this.handleLoadPlaylistPage}
-          onFilterPlaylistItems={this.handleFilterPlaylistItems}
-        />
+        <div className="PlaylistManager-panel">
+          <PlaylistPanel />
+        </div>
       );
     } else {
       panel = <PlaylistPanelEmpty className="PlaylistManager-panel" />;

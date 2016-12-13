@@ -102,6 +102,16 @@ export const nextMediaSelector = createSelector(
   media => (media ? media[0] : null)
 );
 
+export const isSelectedPlaylistLoadingSelector = createSelector(
+  selectedPlaylistSelector,
+  selectedPlaylist => Boolean(selectedPlaylist.loading)
+);
+
+export const isFilteredSelector = createSelector(
+  playlistItemFilterSelector,
+  filter => Boolean(filter)
+);
+
 export const playlistsIndexSelector = createStructuredSelector({
   selectedPlaylist: selectedPlaylistSelector,
   activeMedia: activeMediaSelector,
