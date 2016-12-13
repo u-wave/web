@@ -61,6 +61,7 @@ const plugins = [
   ]),
   new HtmlPlugin({
     chunks: ['app'],
+    mobile: true,
     template: './index.html',
     title: 'üWave',
     minify: nodeEnv === 'production' ? htmlMinifierOptions : false,

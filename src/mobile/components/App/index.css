@@ -1,0 +1,11 @@
+.MobileApp {
+  &-video {
+    height: 40%;
+    position: relative;
+  }
+
+  &-chat {
+    height: 60%;
+    position: relative;
+  }
+}
