@@ -1,10 +1,10 @@
-import cx from 'classnames';
 import * as React from 'react';
+import TabTemplate from '../Tabs/TabTemplate';
 
 const PanelTemplate = ({ selected, children }) => (
-  <div className={cx('SidePanel-panel', selected && 'is-visible')}>
+  <TabTemplate selected={selected} className="SidePanel-panel">
     {children}
-  </div>
+  </TabTemplate>
 );
 
 PanelTemplate.propTypes = {
