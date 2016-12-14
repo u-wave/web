@@ -56,14 +56,13 @@ export default class PlaylistManager extends React.Component {
     let panel;
     if (showImportPanel) {
       panel = (
-        <div className="PlaylistPanel PlaylistManager-panel">
+        <div className="PlaylistPanel">
           <PlaylistImport />
         </div>
       );
     } else if (showSearchResults) {
       panel = (
         <SearchResults
-          className="PlaylistManager-panel"
           query={searchQuery}
           results={searchResults}
           loadingState={searchLoadingState}
@@ -72,13 +71,9 @@ export default class PlaylistManager extends React.Component {
         />
       );
     } else if (selectedPlaylist) {
-      panel = (
-        <div className="PlaylistManager-panel">
-          <PlaylistPanel />
-        </div>
-      );
+      panel = <PlaylistPanel />;
     } else {
-      panel = <PlaylistPanelEmpty className="PlaylistManager-panel" />;
+      panel = <PlaylistPanelEmpty />;
     }
 
     return (
@@ -102,7 +97,9 @@ export default class PlaylistManager extends React.Component {
         <div className="AppRow AppRow--middle">
           <PlaylistMenu className="PlaylistManager-menu" />
 
-          {panel}
+          <div className="PlaylistManager-panel">
+            {panel}
+          </div>
         </div>
       </Overlay>
     );
