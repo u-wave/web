@@ -43,7 +43,7 @@
     "react-i18next": "^1.8.0",
     "react-list": "^0.8.0",
     "react-list-lazy-load": "^1.0.3",
-    "react-redux": "^4.0.0",
+    "react-redux": "^5.0.0",
     "react-tap-event-plugin": "^2.0.0",
     "react-youtube": "^7.2.0",
     "recompose": "^0.21.0",
