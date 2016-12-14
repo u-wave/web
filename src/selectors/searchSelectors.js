@@ -1,8 +1,8 @@
-import { createSelector, createStructuredSelector } from 'reselect';
+import { createSelector } from 'reselect';
 
 const baseSearchSelector = state => state.mediaSearch;
 
-const searchSourceTypeSelector = createSelector(
+export const searchSourceTypeSelector = createSelector(
   baseSearchSelector,
   search => search.sourceType
 );
@@ -12,7 +12,7 @@ export const searchQuerySelector = createSelector(
   search => search.query
 );
 
-const searchLoadingStateSelector = createSelector(
+export const searchLoadingStateSelector = createSelector(
   baseSearchSelector,
   search => search.loadingState
 );
@@ -37,13 +37,3 @@ export const showSearchResultsSelector = createSelector(
   baseSearchSelector,
   search => !!search.showResults
 );
-
-// eslint-disable-next-line import/prefer-default-export
-export const searchSelector = createStructuredSelector({
-  showSearchResults: showSearchResultsSelector,
-  searchSource: searchSourceTypeSelector,
-  searchQuery: searchQuerySelector,
-  searchResults: searchResultsSelector,
-  searchResultsCount: searchResultsCountSelector,
-  searchLoadingState: searchLoadingStateSelector
-});

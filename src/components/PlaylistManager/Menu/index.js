@@ -60,7 +60,7 @@ const Menu = ({
 Menu.propTypes = {
   className: React.PropTypes.string,
   playlists: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
-  selected: React.PropTypes.object.isRequired,
+  selected: React.PropTypes.object,
   showSearchResults: React.PropTypes.bool.isRequired,
   showImportPanel: React.PropTypes.bool.isRequired,
   searchQuery: React.PropTypes.string,

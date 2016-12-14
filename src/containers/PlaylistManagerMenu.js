@@ -17,7 +17,7 @@ import {
 import {
   searchQuerySelector,
   showSearchResultsSelector,
-  searchResultsSelector
+  searchResultsCountSelector
 } from '../selectors/searchSelectors';
 import { showImportPanelSelector } from '../selectors/importSelectors';
 import PlaylistsMenu from '../components/PlaylistManager/Menu';
@@ -27,7 +27,7 @@ const mapStateToProps = createStructuredSelector({
   selected: selectedPlaylistSelector,
   searchQuery: searchQuerySelector,
   showSearchResults: showSearchResultsSelector,
-  searchResults: searchResultsSelector,
+  searchResults: searchResultsCountSelector,
   showImportPanel: showImportPanelSelector
 });
 

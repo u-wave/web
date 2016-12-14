@@ -1,15 +1,14 @@
 import cx from 'classnames';
 import * as React from 'react';
 
-import { IDLE, LOADING, LOADED } from '../../constants/LoadingStates';
 import Overlay from '../Overlay';
 
 import PlaylistMenu from '../../containers/PlaylistManagerMenu';
-import PlaylistHeader from './Header';
 import PlaylistPanel from '../../containers/PlaylistManagerPanel';
-import PlaylistPanelEmpty from './Panel/Empty';
 import PlaylistImport from '../../containers/PlaylistImportManager';
-import SearchResults from './Panel/SearchResults';
+import SearchResults from '../../containers/SearchResultsPanel';
+import PlaylistHeader from './Header';
+import PlaylistPanelEmpty from './Panel/Empty';
 
 // eslint-disable-next-line react/prefer-stateless-function
 export default class PlaylistManager extends React.Component {
@@ -22,15 +21,10 @@ export default class PlaylistManager extends React.Component {
     showImportPanel: React.PropTypes.bool.isRequired,
 
     searchSource: React.PropTypes.string,
-    searchQuery: React.PropTypes.string,
-    searchResults: React.PropTypes.array,
-    searchLoadingState: React.PropTypes.oneOf([ IDLE, LOADING, LOADED ]),
 
     onCloseOverlay: React.PropTypes.func,
     onSearchSubmit: React.PropTypes.func,
-    onSearchSourceChange: React.PropTypes.func,
-    onOpenAddMediaMenu: React.PropTypes.func,
-    onOpenPreviewMediaDialog: React.PropTypes.func
+    onSearchSourceChange: React.PropTypes.func
   };
 
   render() {
@@ -41,16 +35,10 @@ export default class PlaylistManager extends React.Component {
       showImportPanel,
 
       searchSource,
-      searchQuery,
-      searchResults,
-      searchLoadingState,
 
       onCloseOverlay,
       onSearchSubmit,
-      onSearchSourceChange,
-
-      onOpenPreviewMediaDialog,
-      onOpenAddMediaMenu
+      onSearchSourceChange
     } = this.props;
 
     let panel;
@@ -61,15 +49,7 @@ export default class PlaylistManager extends React.Component {
         </div>
       );
     } else if (showSearchResults) {
-      panel = (
-        <SearchResults
-          query={searchQuery}
-          results={searchResults}
-          loadingState={searchLoadingState}
-          onOpenPreviewMediaDialog={onOpenPreviewMediaDialog}
-          onOpenAddMediaMenu={onOpenAddMediaMenu}
-        />
-      );
+      panel = <SearchResults />;
     } else if (selectedPlaylist) {
       panel = <PlaylistPanel />;
     } else {
