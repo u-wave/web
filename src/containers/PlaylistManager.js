@@ -6,38 +6,26 @@ import {
   openPreviewMediaDialog
 } from '../actions/DialogActionCreators';
 import {
-  addMediaMenu,
-  editMedia,
-  moveMedia,
-  removeMedia,
-  filterPlaylistItems,
-  createPlaylist,
-  renamePlaylist,
-  deletePlaylist,
-  cannotDeleteActivePlaylist,
-  shufflePlaylist,
-  activatePlaylist,
-  loadPlaylist,
-  loadFilteredPlaylistItems
+  addMediaMenu
 } from '../actions/PlaylistActionCreators';
 import {
   search,
   setSource as setSearchSource
 } from '../actions/SearchActionCreators';
 
-import { playlistsIndexSelector } from '../selectors/playlistSelectors';
+import { selectedPlaylistSelector } from '../selectors/playlistSelectors';
 import { searchSelector } from '../selectors/searchSelectors';
 import { showImportPanelSelector } from '../selectors/importSelectors';
 import PlaylistManager from '../components/PlaylistManager';
 
 const mapStateToProps = createSelector(
-  playlistsIndexSelector,
+  selectedPlaylistSelector,
   searchSelector,
   showImportPanelSelector,
-  (playlists, mediaSearch, showingImportPanel) => ({
-    ...playlists,
+  (selectedPlaylist, mediaSearch, showImportPanel) => ({
     ...mediaSearch,
-    showImportPanel: showingImportPanel
+    selectedPlaylist,
+    showImportPanel
   })
 );
 
@@ -50,32 +38,10 @@ const selectionOrOne = (media, selection) => {
 
 const onOpenAddMediaMenu = (position, media, selection) =>
   addMediaMenu(selectionOrOne(media, selection), position);
-const onRemoveFromPlaylist = (playlist, media, selection) =>
-  removeMedia(playlist, selectionOrOne(media, selection));
-const onMoveToFirst = (playlist, media, selection) =>
-  moveMedia(playlist, selectionOrOne(media, selection), { at: 'start' });
-const onEditMedia = (playlist, media) =>
-  editMedia(playlist, media);
-
-const onMoveMedia = (playlist, media, opts) =>
-  moveMedia(playlist, media, opts);
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   onOpenAddMediaMenu,
-  onMoveToFirst,
-  onEditMedia,
-  onMoveMedia,
-  onRemoveFromPlaylist,
   onOpenPreviewMediaDialog: openPreviewMediaDialog,
-  onCreatePlaylist: createPlaylist,
-  onRenamePlaylist: renamePlaylist,
-  onDeletePlaylist: deletePlaylist,
-  onNotDeletable: cannotDeleteActivePlaylist,
-  onShufflePlaylist: shufflePlaylist,
-  onActivatePlaylist: activatePlaylist,
-  onFilterPlaylistItems: filterPlaylistItems,
-  onLoadPlaylistPage: loadPlaylist,
-  onLoadFilteredPlaylistPage: loadFilteredPlaylistItems,
   onSearchSubmit: search,
   onSearchSourceChange: setSearchSource
 }, dispatch);

@@ -1,4 +1,4 @@
-import { createSelector, createStructuredSelector } from 'reselect';
+import { createSelector } from 'reselect';
 import naturalCmp from 'natural-compare';
 import values from 'object-values';
 
@@ -111,10 +111,3 @@ export const isFilteredSelector = createSelector(
   playlistItemFilterSelector,
   filter => Boolean(filter)
 );
-
-export const playlistsIndexSelector = createStructuredSelector({
-  selectedPlaylist: selectedPlaylistSelector,
-  activeMedia: activeMediaSelector,
-  selectedMedia: filteredSelectedPlaylistItemsSelector,
-  currentFilter: playlistItemFilterSelector
-});

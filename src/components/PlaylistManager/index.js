@@ -1,5 +1,5 @@
 import cx from 'classnames';
-import React, { Component, PropTypes } from 'react';
+import * as React from 'react';
 
 import { IDLE, LOADING, LOADED } from '../../constants/LoadingStates';
 import Overlay from '../Overlay';
@@ -12,25 +12,25 @@ import PlaylistImport from '../../containers/PlaylistImportManager';
 import SearchResults from './Panel/SearchResults';
 
 // eslint-disable-next-line react/prefer-stateless-function
-export default class PlaylistManager extends Component {
+export default class PlaylistManager extends React.Component {
   static propTypes = {
-    className: PropTypes.string,
+    className: React.PropTypes.string,
 
-    selectedPlaylist: PropTypes.object,
+    selectedPlaylist: React.PropTypes.object,
 
-    showSearchResults: PropTypes.bool.isRequired,
-    showImportPanel: PropTypes.bool.isRequired,
+    showSearchResults: React.PropTypes.bool.isRequired,
+    showImportPanel: React.PropTypes.bool.isRequired,
 
-    searchSource: PropTypes.string,
-    searchQuery: PropTypes.string,
-    searchResults: PropTypes.array,
-    searchLoadingState: PropTypes.oneOf([ IDLE, LOADING, LOADED ]),
+    searchSource: React.PropTypes.string,
+    searchQuery: React.PropTypes.string,
+    searchResults: React.PropTypes.array,
+    searchLoadingState: React.PropTypes.oneOf([ IDLE, LOADING, LOADED ]),
 
-    onCloseOverlay: PropTypes.func,
-    onSearchSubmit: PropTypes.func,
-    onSearchSourceChange: PropTypes.func,
-    onOpenAddMediaMenu: PropTypes.func,
-    onOpenPreviewMediaDialog: PropTypes.func
+    onCloseOverlay: React.PropTypes.func,
+    onSearchSubmit: React.PropTypes.func,
+    onSearchSourceChange: React.PropTypes.func,
+    onOpenAddMediaMenu: React.PropTypes.func,
+    onOpenPreviewMediaDialog: React.PropTypes.func
   };
 
   render() {
