@@ -16,7 +16,7 @@
     "array-find": "^1.0.0",
     "array-findindex": "^0.1.0",
     "classnames": "^2.2.4",
-    "debug": "^2.4.1",
+    "debug": "^2.5.1",
     "es6-promise": "^4.0.4",
     "escape-string-regexp": "^1.0.3",
     "except": "^0.1.3",
