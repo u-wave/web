@@ -1,24 +1,50 @@
 import * as React from 'react';
-import Tabs from '../../../components/Tabs';
-import Tab from '../../../components/Tabs/Tab';
+import AppBar from 'material-ui/AppBar';
+import FlatButton from 'material-ui/FlatButton';
+import SongTitle from '../../../components/SongTitle';
 import Video from '../../../containers/Video';
 import Chat from '../../containers/Chat';
-import RoomUserList from '../../../containers/RoomUserList';
-import WaitList from '../../../containers/WaitList';
-import ViewTemplate from './ViewTemplate';
+import DrawerMenu from '../../containers/DrawerMenu';
+
+const appBarStyle = {
+  zIndex: 5 // Below overlays.
+};
+const appTitleStyle = {
+  height: 56,
+  lineHeight: '56px'
+};
+const appBarIconStyle = {
+  marginTop: 4
+};
 
 const MainView = ({
-  selected,
-  onTabChange
+  media,
+  waitlistPosition,
+  waitlistSize,
+  onOpenRoomHistory,
+  onOpenDrawer
 }) => (
-  <Tabs
-    className="MainView"
-    contentContainerClassName="MainView-content"
-    value={selected}
-    onChange={onTabChange}
-    tabTemplate={ViewTemplate}
-  >
-    <Tab value="chat" label="Video">
+  <div className="MainView">
+    <AppBar
+      style={appBarStyle}
+      titleStyle={appTitleStyle}
+      iconStyleLeft={appBarIconStyle}
+      title={media ? (
+        <SongTitle artist={media.artist} title={media.title} />
+      ) : 'Nobody is DJing!'}
+      iconElementRight={
+        <FlatButton
+          style={appBarIconStyle}
+          label={`${waitlistPosition}/${waitlistSize}`}
+          onTouchTap={() => alert('Open waitlist')}
+        />
+      }
+
+      onTitleTouchTap={onOpenRoomHistory}
+      onLeftIconButtonTouchTap={onOpenDrawer}
+    />
+
+    <div className="MainView-content">
       <div className="MobileApp-video">
         <Video
           enabled
@@ -28,19 +54,18 @@ const MainView = ({
       <div className="MobileApp-chat">
         <Chat />
       </div>
-    </Tab>
-    <Tab value="users" label="Users">
-      <RoomUserList />
-    </Tab>
-    <Tab value="waitlist" label="Waitlist">
-      <WaitList />
-    </Tab>
-  </Tabs>
+    </div>
+
+    <DrawerMenu />
+  </div>
 );
 
 MainView.propTypes = {
-  selected: React.PropTypes.string.isRequired,
-  onTabChange: React.PropTypes.func.isRequired
+  media: React.PropTypes.object,
+  waitlistPosition: React.PropTypes.number.isRequired,
+  waitlistSize: React.PropTypes.number.isRequired,
+  onOpenRoomHistory: React.PropTypes.func.isRequired,
+  onOpenDrawer: React.PropTypes.func.isRequired
 };
 
 export default MainView;
