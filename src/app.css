@@ -1,7 +1,5 @@
 @import "normalize.css";
 
-@import "./vars.css";
-
 @import "./components";
 @import "./sources";
 @import "./containers/DragLayer.css";
