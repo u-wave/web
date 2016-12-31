@@ -14,7 +14,7 @@ import {
 } from '../../selectors/waitlistSelectors';
 import { playlistsSelector } from '../../selectors/playlistSelectors';
 
-import { openDrawer } from '../actions/DrawerActionCreators';
+import { openDrawer, openUsersDrawer } from '../actions/DrawerActionCreators';
 import MainView from '../components/MainView';
 
 const mapStateToProps = createStructuredSelector({
@@ -29,7 +29,8 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = dispatch => bindActionCreators({
   onTabChange: selectPanel,
   onOpenRoomHistory: toggleRoomHistory,
-  onOpenDrawer: openDrawer
+  onOpenDrawer: openDrawer,
+  onOpenWaitlist: openUsersDrawer
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainView);

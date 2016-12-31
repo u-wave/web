@@ -1,10 +1,11 @@
 import * as React from 'react';
 import AppBar from 'material-ui/AppBar';
-import FlatButton from 'material-ui/FlatButton';
+import IconButton from 'material-ui/IconButton';
 import SongTitle from '../../../components/SongTitle';
 import Video from '../../../containers/Video';
 import Chat from '../../containers/Chat';
 import DrawerMenu from '../../containers/DrawerMenu';
+import UsersDrawer from '../../containers/UsersDrawer';
 
 const appBarStyle = {
   zIndex: 5 // Below overlays.
@@ -17,12 +18,29 @@ const appBarIconStyle = {
   marginTop: 4
 };
 
+const waitlistIconStyle = {
+  fontSize: '125%',
+  textAlign: 'center'
+};
+
+const getWaitlistLabel = (size, position) => {
+  if (size > 0) {
+    const posText = position !== -1
+      ? `${position + 1}/${size}`
+      : size;
+
+    return posText;
+  }
+  return '0';
+};
+
 const MainView = ({
   media,
   waitlistPosition,
   waitlistSize,
   onOpenRoomHistory,
-  onOpenDrawer
+  onOpenDrawer,
+  onOpenWaitlist
 }) => (
   <div className="MainView">
     <AppBar
@@ -31,17 +49,19 @@ const MainView = ({
       iconStyleLeft={appBarIconStyle}
       title={media ? (
         <SongTitle artist={media.artist} title={media.title} />
-      ) : 'Nobody is DJing!'}
+      ) : (
+        'Nobody is DJing!'
+      )}
+      iconStyleRight={appBarIconStyle}
       iconElementRight={
-        <FlatButton
-          style={appBarIconStyle}
-          label={`${waitlistPosition}/${waitlistSize}`}
-          onTouchTap={() => alert('Open waitlist')}
-        />
+        <IconButton style={waitlistIconStyle}>
+          {getWaitlistLabel(waitlistSize, waitlistPosition)}
+        </IconButton>
       }
 
       onTitleTouchTap={onOpenRoomHistory}
       onLeftIconButtonTouchTap={onOpenDrawer}
+      onRightIconButtonTouchTap={onOpenWaitlist}
     />
 
     <div className="MainView-content">
@@ -57,6 +77,7 @@ const MainView = ({
     </div>
 
     <DrawerMenu />
+    <UsersDrawer />
   </div>
 );
 
@@ -65,6 +86,7 @@ MainView.propTypes = {
   waitlistPosition: React.PropTypes.number.isRequired,
   waitlistSize: React.PropTypes.number.isRequired,
   onOpenRoomHistory: React.PropTypes.func.isRequired,
+  onOpenWaitlist: React.PropTypes.func.isRequired,
   onOpenDrawer: React.PropTypes.func.isRequired
 };
 
