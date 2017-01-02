@@ -11,7 +11,7 @@ function getAvailableLanguage(languages) {
 }
 
 function getDefaultLanguage() {
-  if (typeof window === 'object' && window.navigator) {
+  if (typeof window === 'object' && window.navigator && window.navigator.languages) {
     const browserLanguage = getAvailableLanguage(window.navigator.languages);
     if (browserLanguage) {
       return browserLanguage;
