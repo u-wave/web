@@ -31,21 +31,23 @@ export default class Video extends React.Component {
   };
 
   componentDidMount() {
-    document.documentElement.addEventListener(
-      screenfull.raw.fullscreenchange,
-      this.handleFullscreenChange
-    );
+    if (screenfull.enabled) {
+      document.documentElement.addEventListener(
+        screenfull.raw.fullscreenchange,
+        this.handleFullscreenChange
+      );
+    }
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!this.props.isFullscreen && nextProps.isFullscreen) {
+    if (!this.props.isFullscreen && nextProps.isFullscreen && screenfull.enabled) {
       screenfull.request(this.element);
     }
-    if (this.props.isFullscreen && !nextProps.isFullscreen) {
+    if (this.props.isFullscreen && !nextProps.isFullscreen && screenfull.enabled) {
       // Checking for `enabled` here, because our props have probably changed
       // _after_ exiting fullscreen mode (see `this.handleFullscreenChange`).
       // This way we don't double-exit.
-      if (screenfull.enabled) {
+      if (screenfull.isFullscreen) {
         screenfull.exit();
       }
     }
