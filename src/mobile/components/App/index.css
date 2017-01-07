@@ -1,3 +1,5 @@
+@import "./Overlays.css";
+
 .MobileApp {
   &-video {
     height: 40%;
