@@ -1,71 +1,34 @@
 import * as React from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import {
-  inputMessage
-} from '../actions/ChatActionCreators';
-import {
   motdSelector,
   messagesSelector,
-  markupCompilerOptionsSelector,
-  availableGroupMentionsSelector,
-  emojiCompletionsSelector
+  markupCompilerOptionsSelector
 } from '../selectors/chatSelectors';
-import {
-  userListSelector,
-  isLoggedInSelector
-} from '../selectors/userSelectors';
 
 import Chat from '../components/Chat';
-import ChatInput from '../components/Chat/Input';
+import ChatInput from './ChatInput';
 
 const mapStateToProps = createStructuredSelector({
   motd: motdSelector,
   messages: messagesSelector,
-  compileOptions: markupCompilerOptionsSelector,
-  isLoggedIn: isLoggedInSelector,
-  mentionableUsers: userListSelector,
-  mentionableGroups: availableGroupMentionsSelector,
-  availableEmoji: emojiCompletionsSelector
+  compileOptions: markupCompilerOptionsSelector
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  onSend: inputMessage
-}, dispatch);
-
-const ChatContainer = ({
-  mentionableUsers,
-  mentionableGroups,
-  availableEmoji,
-  isLoggedIn,
-  onSend,
-  ...props
-}) => (
+const ChatContainer = props => (
   <div className="ChatContainer">
     <div className="ChatContainer-messages">
       <Chat {...props} />
     </div>
     <div className="ChatContainer-input ChatInputWrapper">
-      {isLoggedIn && (
-        <ChatInput
-          onSend={onSend}
-          mentionableUsers={mentionableUsers}
-          mentionableGroups={mentionableGroups}
-          availableEmoji={availableEmoji}
-        />
-      )}
+      <ChatInput />
     </div>
   </div>
 );
 
-ChatContainer.propTypes = {
-  mentionableUsers: React.PropTypes.array.isRequired,
-  mentionableGroups: React.PropTypes.array.isRequired,
-  availableEmoji: React.PropTypes.array.isRequired,
-  isLoggedIn: React.PropTypes.bool.isRequired,
-  onSend: React.PropTypes.func.isRequired
-};
+// Copy propTypes, since all props are passed through.
+ChatContainer.propTypes = Chat.propTypes;
 
-export default connect(mapStateToProps, mapDispatchToProps)(ChatContainer);
+export default connect(mapStateToProps)(ChatContainer);
