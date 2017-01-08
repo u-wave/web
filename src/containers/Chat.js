@@ -17,10 +17,13 @@ const mapStateToProps = createStructuredSelector({
   compileOptions: markupCompilerOptionsSelector
 });
 
-const ChatContainer = props => (
+const ChatMessages = connect(mapStateToProps)(Chat);
+
+// TODO This is UI, so it should probably be moved elsewhere.
+const ChatContainer = () => (
   <div className="ChatContainer">
     <div className="ChatContainer-messages">
-      <Chat {...props} />
+      <ChatMessages />
     </div>
     <div className="ChatContainer-input ChatInputWrapper">
       <ChatInput />
@@ -28,7 +31,4 @@ const ChatContainer = props => (
   </div>
 );
 
-// Copy propTypes, since all props are passed through.
-ChatContainer.propTypes = Chat.propTypes;
-
-export default connect(mapStateToProps)(ChatContainer);
+export default ChatContainer;
