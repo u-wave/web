@@ -13,6 +13,7 @@ import Overlays from './Overlays';
 import PlaylistManager from '../../containers/PlaylistManager';
 import RoomHistory from '../../containers/RoomHistory';
 import SettingsManager from '../../containers/SettingsManager';
+import AdminProxy from '../AdminProxy';
 import About from '../../containers/About';
 import ConnectionIndicator from '../ConnectionIndicator';
 
@@ -51,6 +52,10 @@ const App = ({
           key="about"
           onCloseOverlay={onCloseOverlay}
         />}
+        <AdminProxy
+          key="admin"
+          onCloseOverlay={onCloseOverlay}
+        />
         <PlaylistManager
           key="playlistManager"
           onCloseOverlay={onCloseOverlay}
