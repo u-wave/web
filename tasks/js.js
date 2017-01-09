@@ -63,7 +63,7 @@ gulp.task('js:babel', [ 'js:locales' ], () => {
 
   return gulp.src(src)
     .pipe(plumber())
-    .pipe(newer(destEs))
+    .pipe(newer(destCommonjs))
     .pipe(through.obj((file, enc, cb) => {
       const path = relative(`${__dirname}/../`, file.path);
       log(`Compiling '${colors.cyan(path)}'...`);
