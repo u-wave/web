@@ -11,7 +11,7 @@ const EmojiSuggestion = ({
     primaryText={`:${emoji.shortcode}:`}
     leftAvatar={
       <img
-        role="presentation"
+        alt=""
         className="Emoji"
         src={`/assets/emoji/${emoji.image}`}
         width={24}

@@ -20,15 +20,14 @@ export default function compile(tree, opts = {}) {
       return node;
     }
 
+    /* eslint-disable react/no-array-index-key */
     switch (node.type) {
     case 'mention':
       return node.user
         ? <Mention key={i} user={node.user} />
         : <GroupMention key={i} group={node.mention} users={node.group} />;
     case 'link':
-      // the "text" property is content
-      // eslint-disable-next-line jsx-a11y/anchor-has-content
-      return <Link key={i} text={node.text} href={node.href} />;
+      return <Link key={i} href={node.href}>{node.text}</Link>;
     case 'emoji':
       if (availableEmoji.indexOf(node.name) !== -1 && node.name in emojiImages) {
         return (
@@ -51,5 +50,6 @@ export default function compile(tree, opts = {}) {
     default:
       return compile(node.content, opts);
     }
+    /* eslint-enable react/no-array-index-key */
   });
 }

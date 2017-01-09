@@ -107,12 +107,17 @@ class SettingsPanel extends React.Component {
         <h2 className="SettingsPanel-header">{t('settings.title')}</h2>
         <div className="SettingsPanel-column SettingsPanel-column--left">
           {toggles.map((toggle, i) =>
+            // TODO Should move the two columns into separate pure components,
+            // and use them here. That way the toggles can just be placed
+            // directly in the JSX while still being readable. 🙈
+            /* eslint-disable react/no-array-index-key */
             <div
               key={i}
               className="SettingsPanel-toggle"
             >
               {toggle}
             </div>
+            /* eslint-enable react/no-array-index-key */
           )}
           <LogoutButton onLogout={onLogout} />
         </div>
