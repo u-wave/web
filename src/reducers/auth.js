@@ -59,6 +59,3 @@ export default function reduce(state = initialState, action = {}) {
     return state;
   }
 }
-
-export const getToken = state => state.auth.jwt;
-export const getUser = state => state.auth.user;
