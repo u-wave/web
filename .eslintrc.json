@@ -17,6 +17,7 @@
     // src/ disallows using devDependencies in client app code.
     "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
     "react/no-unused-prop-types": ["error", { "skipShapeProps": true }],
-    "react/forbid-prop-types": "off"
+    "react/forbid-prop-types": "off",
+    "react/require-default-props": "off"
   }
 }

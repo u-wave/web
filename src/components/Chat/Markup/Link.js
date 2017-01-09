@@ -1,7 +1,7 @@
 import * as React from 'react';
 import truncate from 'truncate-url';
 
-const Link = ({ text, href, ...props }) => (
+const Link = ({ children, href, ...props }) => (
   <a
     href={href}
     title={href}
@@ -9,12 +9,12 @@ const Link = ({ text, href, ...props }) => (
     rel="noopener noreferrer"
     {...props}
   >
-    {truncate(text, 60)}
+    {truncate(children, 60)}
   </a>
 );
 
 Link.propTypes = {
-  text: React.PropTypes.string.isRequired,
+  children: React.PropTypes.string.isRequired,
   href: React.PropTypes.string.isRequired
 };
 
