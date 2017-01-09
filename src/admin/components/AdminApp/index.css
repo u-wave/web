@@ -1,0 +1,34 @@
+@import "../../../vars.css";
+
+.AdminApp {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: var(--background-color);
+
+  &-menu {
+    position: absolute;
+    width: 250px;
+    top: 0;
+    bottom: 0;
+  }
+
+  &-menuItem {
+    &.is-selected {
+      /* HACK: Apply selected colour to an internal material-ui element.
+       * Can likely replace this when material-ui 0.16.0 comes out. */
+      & > div {
+        background-color: var(--media-list-alternate-color);
+      }
+    }
+  }
+
+  &-page {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    left: 250px;
+    padding: 20px;
+  }
+}

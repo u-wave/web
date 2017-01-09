@@ -39,13 +39,15 @@ export default function createUwaveStore(initialState = {}, options = {}) {
     enableLogging && logger
   ].filter(Boolean);
 
+  let currentReducers = {
+    ...reducers,
+    sources: createSourcesReducer(options)
+  };
+
   const store = createStore(
     // Finish up the reducer function by combining all the different reducers
     // into one big reducer that works on one big state object.
-    combineReducers({
-      ...reducers,
-      sources: createSourcesReducer(options)
-    }),
+    combineReducers(currentReducers),
     initialState,
     compose(
       // Adds all of the above ☝ middleware features to the store.
@@ -70,6 +72,14 @@ export default function createUwaveStore(initialState = {}, options = {}) {
       }));
     });
   }
+
+  store.mount = (name, reducer) => {
+    currentReducers = {
+      ...currentReducers,
+      [name]: reducer
+    };
+    store.replaceReducer(combineReducers(currentReducers));
+  };
 
   return store;
 }

@@ -13,7 +13,7 @@ export default class AdminProxy extends React.Component {
   };
 
   componentDidMount() {
-    import('../../containers/Admin').then((Admin) => {
+    import('../../admin/containers/AdminApp').then((Admin) => {
       this.setState({ AdminComponent: Admin.default });
     }).catch((e) => {
       alert(`Could not load administration module: ${e.message}`);
