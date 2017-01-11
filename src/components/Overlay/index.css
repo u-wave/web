@@ -21,6 +21,18 @@
   height: 100vh;
 }
 
+.Overlay-content {
+  position: absolute;
+  top: var(--header-height);
+  bottom: var(--footer-height);
+  left: 0;
+  right: 0;
+
+  @media (max-width: 768px) {
+    bottom: 0;
+  }
+}
+
 /* Animations!.. */
 .Overlay-enter {
   overflow-y: hidden;

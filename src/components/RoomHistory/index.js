@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import OverlayHeader from '../Overlay/Header';
+import OverlayContent from '../Overlay/Content';
 import HistoryList from './HistoryList';
 
 const enhance = translate();
@@ -22,13 +23,13 @@ const RoomHistory = ({
       title={t('history.title')}
       onCloseOverlay={onCloseOverlay}
     />
-    <div className="RoomHistory-body AppRow AppRow--middle">
+    <OverlayContent className="RoomHistory-body">
       <HistoryList
         onOpenAddMediaMenu={onOpenAddMediaMenu}
         onOpenPreviewMediaDialog={onOpenPreviewMediaDialog}
         {...props}
       />
-    </div>
+    </OverlayContent>
   </div>
 );
 
