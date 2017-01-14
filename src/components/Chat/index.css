@@ -1,20 +1,9 @@
+@import "./ChatMessages.css";
 @import "./Input";
 @import "./Markup";
 @import "./LogMessage.css";
 @import "./Message.css";
 @import "./Motd.css";
-
-.Chat {
-  height: 100%;
-  overflow-y: scroll;
-  font-size: 10pt;
-  /* Fix for tooltips close to the edge. The tooltips themselves work fine,
-   * but the element that's used to position the tooltips correctly can overflow
-   * by a few pixels.
-   * TODO fix that^ in src/components/Tooltip. Should resize(?) the positioning
-   * wrapper if it's close to the edge of the screen. */
-  overflow-x: hidden;
-}
 
 .ChatContainer {
   &-messages {
