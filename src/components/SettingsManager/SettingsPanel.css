@@ -37,4 +37,12 @@
   .SettingsPanel-column--right {
     padding-left: 50px;
   }
+
+  @media (max-width: 768px) {
+    &-column {
+      &--left {
+        margin-bottom: 25px;
+      }
+    }
+  }
 }

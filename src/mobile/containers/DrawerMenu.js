@@ -8,6 +8,7 @@ import { toggleSettings, toggleAbout } from '../../actions/OverlayActionCreators
 
 import { drawerIsOpenSelector } from '../selectors/drawerSelectors';
 import { setDrawer, closeDrawer } from '../actions/DrawerActionCreators';
+import { openPlaylist } from '../actions/OverlayActionCreators';
 import DrawerMenu from '../components/DrawerMenu';
 
 const mapStateToProps = createStructuredSelector({
@@ -26,7 +27,7 @@ const andClose = createAction => (...args) => (dispatch) => {
 const mapDispatchToProps = dispatch => bindActionCreators({
   onShowAbout: andClose(toggleAbout),
   onShowSettings: andClose(toggleSettings),
-  onShowPlaylist: closeDrawer, // Don't do anything for now
+  onShowPlaylist: andClose(openPlaylist),
   onChangeDrawerOpen: setDrawer
 }, dispatch);
 

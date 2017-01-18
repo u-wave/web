@@ -22,7 +22,7 @@ const DrawerMenu = ({
     open={open}
     onRequestChange={onChangeDrawerOpen}
   >
-    {user ? <UserCard user={user} /> : null}
+    {user && <UserCard user={user} />}
     <List>
       <MenuItem onTouchTap={onShowAbout}>About</MenuItem>
       <MenuItem onTouchTap={onShowSettings}>Settings</MenuItem>
@@ -33,7 +33,7 @@ const DrawerMenu = ({
       {playlists.map(playlist => (
         <MenuItem
           key={playlist._id}
-          onTouchTap={() => onShowPlaylist(playlist)}
+          onTouchTap={() => onShowPlaylist(playlist._id)}
         >
           {playlist.name}
         </MenuItem>
