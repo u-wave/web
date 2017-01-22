@@ -4,8 +4,9 @@ import { translate } from 'react-i18next';
 import SearchIcon from 'material-ui/svg-icons/action/search';
 import SourcePicker from './SourcePicker';
 
-@translate()
-export default class SearchBar extends React.Component {
+const enhance = translate();
+
+class SearchBar extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
     source: React.PropTypes.string,
@@ -62,3 +63,5 @@ export default class SearchBar extends React.Component {
     );
   }
 }
+
+export default enhance(SearchBar);

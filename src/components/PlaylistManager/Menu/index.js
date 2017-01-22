@@ -45,7 +45,7 @@ const Menu = ({
           className="PlaylistMenu-row"
           playlist={pl}
           selected={isSelectingPlaylist && selected._id === pl._id}
-          onClick={() => onSelectPlaylist(pl)}
+          onClick={() => onSelectPlaylist(pl._id)}
           onAddToPlaylist={onAddToPlaylist}
         />
       ))}
@@ -60,7 +60,7 @@ const Menu = ({
 Menu.propTypes = {
   className: React.PropTypes.string,
   playlists: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
-  selected: React.PropTypes.object.isRequired,
+  selected: React.PropTypes.object,
   showSearchResults: React.PropTypes.bool.isRequired,
   showImportPanel: React.PropTypes.bool.isRequired,
   searchQuery: React.PropTypes.string,
