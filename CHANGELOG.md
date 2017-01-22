@@ -1,3 +1,23 @@
+# 1.0.0-beta.4 / 22 Jan 2017
+
+Features:
+
+  * Add a Delete button to individual chat messages for moderators (#489)
+  * Add Material-UI touch ripple when switching tabs (#508)
+
+Bugfixes:
+
+  * Use cross-env for npm build script environment variables on Windows (#511)
+  * Remove Forgot Password link pending the related PR #264 (#531)
+
+Internal:
+
+  * Add react-inline-elements transform in production build. (#503)
+  * Split up playlist manager into several separate Redux containers (#504)
+  * Clean up some dead code (#516, #523)
+  * Update Babel preset to use `babel-preset-latest` (#520)
+  * Split up chat messages list and input into separate Redux containers (#521)
+
 # 1.0.0-beta.3 / 26 Nov 2016
 
 Bugfixes:
