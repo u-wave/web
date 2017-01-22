@@ -2,37 +2,28 @@ import cx from 'classnames';
 import * as React from 'react';
 import { translate } from 'react-i18next';
 import OverlayHeader from '../../Overlay/Header';
-import SearchBar from './SearchBar';
+import SearchBar from '../../../containers/MediaSearchBar';
+
+const enhance = translate();
 
 const PlaylistManagerHeader = ({
   t,
   className,
-  searchSource,
-  onCloseOverlay,
-  onSearchSubmit,
-  onSearchSourceChange
+  onCloseOverlay
 }) => (
   <OverlayHeader
     className={cx('PlaylistHeader', className)}
     title={t('playlists.title')}
     onCloseOverlay={onCloseOverlay}
   >
-    <SearchBar
-      className="PlaylistHeader-search"
-      source={searchSource}
-      onSubmit={onSearchSubmit}
-      onSourceChange={onSearchSourceChange}
-    />
+    <SearchBar className="PlaylistHeader-search" />
   </OverlayHeader>
 );
 
 PlaylistManagerHeader.propTypes = {
   className: React.PropTypes.string,
-  searchSource: React.PropTypes.string.isRequired,
   t: React.PropTypes.func.isRequired,
-  onCloseOverlay: React.PropTypes.func.isRequired,
-  onSearchSubmit: React.PropTypes.func.isRequired,
-  onSearchSourceChange: React.PropTypes.func.isRequired
+  onCloseOverlay: React.PropTypes.func.isRequired
 };
 
-export default translate()(PlaylistManagerHeader);
+export default enhance(PlaylistManagerHeader);

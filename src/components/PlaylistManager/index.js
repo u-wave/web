@@ -14,17 +14,10 @@ import PlaylistPanelEmpty from './Panel/Empty';
 export default class PlaylistManager extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
-
     selectedPlaylist: React.PropTypes.object,
-
     showSearchResults: React.PropTypes.bool.isRequired,
     showImportPanel: React.PropTypes.bool.isRequired,
-
-    searchSource: React.PropTypes.string,
-
-    onCloseOverlay: React.PropTypes.func,
-    onSearchSubmit: React.PropTypes.func,
-    onSearchSourceChange: React.PropTypes.func
+    onCloseOverlay: React.PropTypes.func
   };
 
   render() {
@@ -34,11 +27,7 @@ export default class PlaylistManager extends React.Component {
       showSearchResults,
       showImportPanel,
 
-      searchSource,
-
-      onCloseOverlay,
-      onSearchSubmit,
-      onSearchSourceChange
+      onCloseOverlay
     } = this.props;
 
     let panel;
@@ -67,10 +56,6 @@ export default class PlaylistManager extends React.Component {
       >
         <PlaylistHeader
           className="PlaylistManager-header AppRow AppRow--top"
-          selectedPlaylist={selectedPlaylist}
-          searchSource={searchSource}
-          onSearchSubmit={onSearchSubmit}
-          onSearchSourceChange={onSearchSourceChange}
           onCloseOverlay={onCloseOverlay}
         />
 
