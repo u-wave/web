@@ -60,3 +60,5 @@ export const emojiCompletionsSelector = createSelector(
     image: images[name]
   }))
 );
+
+export { isModeratorSelector as canDeleteMessagesSelector } from './userSelectors';

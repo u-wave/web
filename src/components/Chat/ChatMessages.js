@@ -8,6 +8,7 @@ export default class ChatMessages extends React.Component {
   static propTypes = {
     messages: React.PropTypes.array,
     motd: React.PropTypes.array,
+    canDeleteMessages: React.PropTypes.bool,
     onDeleteMessage: React.PropTypes.func,
     compileOptions: React.PropTypes.shape({
       availableEmoji: React.PropTypes.array,
@@ -27,6 +28,15 @@ export default class ChatMessages extends React.Component {
     if (this._isScrolledToBottom) {
       this.scrollToBottom();
     }
+  }
+
+  makeDeleteHandler(msg) {
+    if (this.props.canDeleteMessages) {
+      return () => {
+        this.props.onDeleteMessage(msg._id);
+      };
+    }
+    return null;
   }
 
   scrollToBottom() {
@@ -71,15 +81,12 @@ export default class ChatMessages extends React.Component {
       );
     }
 
-    const onDelete = () => {
-      this.props.onDeleteMessage(msg._id);
-    };
     return (
       <Message
         key={msg._id}
         alternate={alternate}
         compileOptions={this.props.compileOptions}
-        onDelete={onDelete}
+        onDelete={this.makeDeleteHandler(msg)}
         {...msg}
       />
     );

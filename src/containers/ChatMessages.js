@@ -4,7 +4,8 @@ import { createStructuredSelector } from 'reselect';
 import {
   motdSelector,
   messagesSelector,
-  markupCompilerOptionsSelector
+  markupCompilerOptionsSelector,
+  canDeleteMessagesSelector
 } from '../selectors/chatSelectors';
 import {
   deleteChatMessage
@@ -15,7 +16,8 @@ import ChatMessages from '../components/Chat/ChatMessages';
 const mapStateToProps = createStructuredSelector({
   motd: motdSelector,
   messages: messagesSelector,
-  compileOptions: markupCompilerOptionsSelector
+  compileOptions: markupCompilerOptionsSelector,
+  canDeleteMessages: canDeleteMessagesSelector
 });
 
 const mapDispatchToProps = {
