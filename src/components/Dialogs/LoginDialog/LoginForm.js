@@ -74,10 +74,6 @@ export default class LoginForm extends React.Component {
             {busy ? <div className="Button-loading"><Loader size="tiny" /></div> : t('login.login')}
           </Button>
         </FormGroup>
-
-        <span className="LoginForm-forgot">
-          {t('login.forgotPassword')}
-        </span>
       </Form>
     );
   }
