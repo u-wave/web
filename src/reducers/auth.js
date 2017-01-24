@@ -20,14 +20,14 @@ export default function reduce(state = initialState, action = {}) {
   case RESET_PASSWORD_COMPLETE:
     return isError ? {
       ...state,
-        jwt: payload.jwt,
-        user: null,
-        error: payload
+      jwt: payload.jwt,
+      user: null,
+      error: payload
     } : {
       ...state,
-        jwt: payload.jwt,
-        user: null,
-        error: null
+      jwt: payload.jwt,
+      user: null,
+      error: null
     };
   case SET_TOKEN:
     return {
