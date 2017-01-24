@@ -171,9 +171,9 @@ export function resetPassword(email) {
   return post('/auth/password/reset', email, {
     onStart: () => ({
       type: RESET_PASSWORD_COMPLETE,
-      payload: "Successfully sent password reset email"
+      payload: 'Successfully sent password reset email'
     }),
-    onComplete: token => dispatch => {
+    onComplete: token => (dispatch) => {
       debug('reset token: ', token);
       dispatch(closeLoginDialog());
     },
