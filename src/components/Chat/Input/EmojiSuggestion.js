@@ -10,12 +10,9 @@ const EmojiSuggestion = ({
     value={emoji.shortcode}
     primaryText={`:${emoji.shortcode}:`}
     leftAvatar={
-      <img
-        alt=""
-        className="Emoji"
-        src={`/assets/emoji/${emoji.image}`}
-        width={24}
-        height={24}
+      <span
+        className="EmojiSuggestion-image"
+        style={{ backgroundImage: `url(/assets/emoji/${emoji.image})` }}
       />
     }
   />
