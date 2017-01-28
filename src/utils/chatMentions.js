@@ -1,3 +1,4 @@
+import find from 'lodash/find';
 import { userListSelector } from '../selectors/userSelectors';
 import * as groupMentions from './groupMentions';
 
@@ -32,7 +33,7 @@ export function resolveMentions(tree, state) {
       if (group) {
         node.group = group.users(state);
       } else {
-        node.user = users.find(user => user.username.toLowerCase() === node.mention);
+        node.user = find(users, user => user.username.toLowerCase() === node.mention);
       }
       /* eslint-enable no-param-reassign */
     } else if (node.content) {
