@@ -17,7 +17,6 @@ const PlaylistMeta = ({
   t,
   className,
   active,
-  id,
   name,
   onShufflePlaylist,
   onActivatePlaylist,
@@ -33,7 +32,7 @@ const PlaylistMeta = ({
     <div className="PlaylistMeta-active">
       <Checkbox
         checked={active}
-        onCheck={() => !active && onActivatePlaylist(id)}
+        onCheck={!active && onActivatePlaylist}
         checkedIcon={<ActiveIcon color="#fff" />}
         uncheckedIcon={<ActivateIcon color="#fff" />}
         iconStyle={checkboxIconStyle}
@@ -52,12 +51,12 @@ const PlaylistMeta = ({
     </IconButton>
     <RenamePlaylistButton
       initialName={name}
-      onRename={newName => onRenamePlaylist(id, newName)}
+      onRename={onRenamePlaylist}
     />
     <DeletePlaylistButton
       active={active}
       onNotDeletable={onNotDeletable}
-      onDelete={() => onDeletePlaylist(id)}
+      onDelete={onDeletePlaylist}
     />
   </div>
 );
@@ -66,7 +65,6 @@ PlaylistMeta.propTypes = {
   t: React.PropTypes.func.isRequired,
   className: React.PropTypes.string,
   active: React.PropTypes.bool.isRequired,
-  id: React.PropTypes.string.isRequired,
   name: React.PropTypes.string.isRequired,
   onShufflePlaylist: React.PropTypes.func.isRequired,
   onActivatePlaylist: React.PropTypes.func.isRequired,
