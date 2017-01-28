@@ -1,4 +1,5 @@
 @import "../../../vars.css";
+@import "./EmojiSuggestion.css";
 
 .ChatInputWrapper {
   background: var(--chat-background-color);
