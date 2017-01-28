@@ -31,7 +31,7 @@ export default class ResetPasswordForm extends React.Component {
     const { busy } = this.state;
 
     return (
-      <Form className="ResetPasswordForm" onSubmit={::this.onSubmit}>
+      <Form className="ResetPasswordForm" onSubmit={this.onSubmit.bind(this)}>
         {error && <FormGroup>{error.message}</FormGroup>}
         <FormGroup>
           <TextField
