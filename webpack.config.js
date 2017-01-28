@@ -72,6 +72,7 @@ if (nodeEnv === 'production') {
       debug: false
     }),
     new UglifyJsPlugin({
+      sourceMap: true,
       // Yeah… Enables some riskier minification that doesn't work in IE8.
       // But üWave doesn't work in IE8 _anyway_, so we don't care.
       compress: {
@@ -138,6 +139,7 @@ Object.keys(staticPages).forEach((name) => {
 module.exports = {
   context,
   entry: entries,
+  devtool: nodeEnv === 'production' ? 'source-map' : 'inline-source-map',
   output: {
     publicPath: '/',
     path: path.join(__dirname, 'public'),
