@@ -32,6 +32,11 @@ export default class LoginForm extends React.Component {
     });
   };
 
+  handleResetPassword = (event) => {
+    event.preventDefault();
+    this.props.onOpenResetPasswordDialog();
+  };
+
   refEmail = (email) => {
     this.email = email;
   };
@@ -78,7 +83,7 @@ export default class LoginForm extends React.Component {
         </FormGroup>
 
         <FormGroup>
-          <a onClick={this.props.openResetPasswordDialog} className="LoginForm-forgot">
+          <a href onClick={this.handleResetPassword} className="LoginForm-forgot">
             Forgot Password?
           </a>
         </FormGroup>
