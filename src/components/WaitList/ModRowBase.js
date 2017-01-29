@@ -25,7 +25,8 @@ const userSource = {
   }
 };
 
-const collect = connect => ({
+const collect = (connect, monitor) => ({
+  isDragging: monitor.isDragging(),
   connectDragSource: connect.dragSource(),
   connectDragPreview: connect.dragPreview()
 });
@@ -37,6 +38,7 @@ const ModRowBase = ({
   className,
   position,
   user,
+  isDragging,
   connectDragPreview,
   connectDragSource,
   onOpenCard,
@@ -47,6 +49,7 @@ const ModRowBase = ({
       'UserRow',
       'WaitlistRow',
       'WaitlistRow--moderate',
+      isDragging && 'is-dragging',
       className
     )}
   >

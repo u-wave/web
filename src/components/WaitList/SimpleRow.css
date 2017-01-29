@@ -6,8 +6,13 @@
   }
 
   &-drop-indicator {
-    background: white;
-    height: 3px;
+    border-top: 3px solid #fff;
+    background: transparent;
+    height: 37px;
     width: 100%;
+  }
+
+  &.is-dragging {
+    display: none;
   }
 }
