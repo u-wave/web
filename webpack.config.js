@@ -42,11 +42,13 @@ const plugins = [
 ];
 
 if (nodeEnv === 'production') {
+  const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
   const LoaderOptionsPlugin = require('webpack').LoaderOptionsPlugin;
   const OccurrenceOrderPlugin = require('webpack').optimize.OccurrenceOrderPlugin;
   const UglifyJsPlugin = require('webpack').optimize.UglifyJsPlugin;
 
   plugins.push(
+    new LodashModuleReplacementPlugin(),
     new OccurrenceOrderPlugin(),
     new LoaderOptionsPlugin({
       minimize: true,
