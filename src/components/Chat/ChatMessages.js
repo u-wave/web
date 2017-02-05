@@ -30,15 +30,6 @@ export default class ChatMessages extends React.Component {
     }
   }
 
-  makeDeleteHandler(msg) {
-    if (this.props.canDeleteMessages) {
-      return () => {
-        this.props.onDeleteMessage(msg._id);
-      };
-    }
-    return null;
-  }
-
   scrollToBottom() {
     const el = this.container;
     el.scrollTop = el.scrollHeight;
@@ -86,7 +77,7 @@ export default class ChatMessages extends React.Component {
         key={msg._id}
         alternate={alternate}
         compileOptions={this.props.compileOptions}
-        onDelete={this.makeDeleteHandler(msg)}
+        onDelete={this.props.canDeleteMessages ? this.props.onDeleteMessage : null}
         {...msg}
       />
     );
