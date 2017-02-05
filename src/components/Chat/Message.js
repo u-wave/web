@@ -2,7 +2,7 @@ import cx from 'classnames';
 import * as React from 'react';
 import compose from 'recompose/compose';
 import pure from 'recompose/pure';
-import withProps from 'recompose/withProps';
+import withHandlers from 'recompose/withHandlers';
 
 import userCardable from '../../utils/userCardable';
 import Avatar from '../Avatar';
@@ -16,16 +16,17 @@ import MessageTimestamp from './MessageTimestamp';
 const enhance = compose(
   pure,
   userCardable(),
-  withProps(props => ({
-    onUsernameClick(event) {
+  withHandlers({
+    onDeleteClick: props => () =>
+      props.onDeleteMessage(props._id),
+    onUsernameClick: props => (event) => {
       event.preventDefault();
       props.openUserCard(props.user);
     }
-  }))
+  })
 );
 
 const Message = ({
-  alternate,
   user,
   text,
   parsedText,
@@ -33,7 +34,7 @@ const Message = ({
   isMention,
   timestamp,
   compileOptions,
-  onDelete,
+  onDeleteClick,
   onUsernameClick
 }) => {
   let avatar;
@@ -60,14 +61,13 @@ const Message = ({
     'ChatMessage',
     inFlight && 'ChatMessage--loading',
     isMention && 'ChatMessage--mention',
-    alternate && 'ChatMessage--alternate'
   );
   return (
     <div className={className}>
       {avatar}
       <div className="ChatMessage-content">
         <div className="ChatMessage-hover">
-          {onDelete && <DeleteButton onDelete={onDelete} />}
+          {onDeleteClick && <DeleteButton onDelete={onDeleteClick} />}
           <MessageTimestamp date={date} />
         </div>
         <button
@@ -83,14 +83,13 @@ const Message = ({
 };
 
 Message.propTypes = {
-  alternate: React.PropTypes.bool,
   user: React.PropTypes.object.isRequired,
   text: React.PropTypes.string.isRequired,
   parsedText: React.PropTypes.array.isRequired,
   inFlight: React.PropTypes.bool,
   timestamp: React.PropTypes.number.isRequired,
   isMention: React.PropTypes.bool.isRequired,
-  onDelete: React.PropTypes.func,
+  onDeleteClick: React.PropTypes.func,
   compileOptions: React.PropTypes.shape({
     availableEmoji: React.PropTypes.array,
     emojiImages: React.PropTypes.object
