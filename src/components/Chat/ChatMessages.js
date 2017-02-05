@@ -60,13 +60,11 @@ export default class ChatMessages extends React.Component {
     );
   }
 
-  renderMessage(msg, index) {
-    const alternate = index % 2 === 0;
+  renderMessage(msg) {
     if (msg.type === 'log') {
       return (
         <LogMessage
           key={msg._id}
-          alternate={alternate}
           {...msg}
         />
       );
@@ -75,7 +73,6 @@ export default class ChatMessages extends React.Component {
     return (
       <Message
         key={msg._id}
-        alternate={alternate}
         compileOptions={this.props.compileOptions}
         onDelete={this.props.canDeleteMessages ? this.props.onDeleteMessage : null}
         {...msg}

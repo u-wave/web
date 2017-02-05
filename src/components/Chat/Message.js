@@ -27,7 +27,6 @@ const enhance = compose(
 );
 
 const Message = ({
-  alternate,
   user,
   text,
   parsedText,
@@ -62,7 +61,6 @@ const Message = ({
     'ChatMessage',
     inFlight && 'ChatMessage--loading',
     isMention && 'ChatMessage--mention',
-    alternate && 'ChatMessage--alternate'
   );
   return (
     <div className={className}>
@@ -85,7 +83,6 @@ const Message = ({
 };
 
 Message.propTypes = {
-  alternate: React.PropTypes.bool,
   user: React.PropTypes.object.isRequired,
   text: React.PropTypes.string.isRequired,
   parsedText: React.PropTypes.array.isRequired,

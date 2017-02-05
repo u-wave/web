@@ -7,13 +7,6 @@
   min-height: 32px;
   position: relative;
 
-  &--alternate {
-    background: var(--chat-background-color2);
-  }
-  @nest &--alternate &-hover {
-    background: var(--chat-background-color2);
-  }
-
   &--mention {
     box-shadow: 5px 0px 0px var(--highlight-color) inset;
   }
