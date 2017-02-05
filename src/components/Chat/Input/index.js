@@ -1,4 +1,5 @@
 import cx from 'classnames';
+import sortBy from 'lodash/sortBy';
 import uniqBy from 'lodash/uniqBy';
 import * as React from 'react';
 import { translate } from 'react-i18next';
@@ -31,7 +32,10 @@ const getEmojiCompletions = (value, { trigger, completions }) => {
   const results = completions.filter(emoji => (
     emoji.shortcode.substr(0, compare.length).toLowerCase() === compare
   ));
-  return uniqBy(results, 'image');
+  return sortBy(
+    uniqBy(results, emoji => emoji.image),
+    emoji => emoji.shortcode.length
+  );
 };
 const getEmojiText = value => `:${value.shortcode}: `;
 const renderEmoji = props => <EmojiSuggestion {...props} />;
