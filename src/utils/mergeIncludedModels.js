@@ -7,7 +7,7 @@ export default function mergeIncludedModels({ data, meta, included }) {
     meta.included[type].forEach((path) => {
       data.forEach((item) => {
         const id = getPath(item, path);
-        const model = find(included[type], { _id: id });
+        const model = find(included[type], m => m._id === id);
         setPath(item, path, model);
       });
     });
