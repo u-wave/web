@@ -5,6 +5,7 @@ import screenfull from 'screenfull';
 
 import injectMediaSources from '../../utils/injectMediaSources';
 
+import VideoBackdrop from './VideoBackdrop';
 import VideoProgressBar from './VideoProgressBar';
 import VideoToolbar from './VideoToolbar';
 import MouseMoveCapture from './VideoMouseMoveCapture';
@@ -137,6 +138,7 @@ export default class Video extends React.Component {
         ref={this.refElement}
         className={cx('Video', `Video--${media.sourceType}`, `Video--${size}`)}
       >
+        <VideoBackdrop url={media.thumbnail} />
         {players}
 
         {isFullscreen && (

@@ -1,6 +1,5 @@
 import cx from 'classnames';
 import * as React from 'react';
-import VideoBackdrop from '../../components/Video/VideoBackdrop';
 
 import SongInfo from './SongInfo';
 
@@ -83,7 +82,6 @@ export default class SoundCloudPlayer extends React.Component {
 
     return (
       <div className={cx('src-soundcloud-Player', this.props.className)}>
-        <VideoBackdrop url={media.thumbnail} />
         <div className="src-soundcloud-Player-meta">
           <div className="src-soundcloud-Player-info">
             <img
