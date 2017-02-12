@@ -1,7 +1,6 @@
 import cx from 'classnames';
 import * as React from 'react';
 
-import VideoBackdrop from '../../components/Video/VideoBackdrop';
 import YouTubePlayerEmbed from './PlayerEmbed';
 
 const YouTubePlayer = ({
@@ -15,14 +14,9 @@ const YouTubePlayer = ({
 }) => {
   const modeClass = `src-youtube-Player--${mode}`;
 
-  let backdrop;
-  if (active && mode !== 'large') {
-    backdrop = <VideoBackdrop url={media.thumbnail} />;
-  }
   // Wrapper span so the backdrop can be full-size…
   return (
     <span hidden={!active}>
-      {backdrop}
       <div className={cx('src-youtube-Player', modeClass, className)}>
         {enabled && (
           <YouTubePlayerEmbed
