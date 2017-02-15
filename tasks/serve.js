@@ -51,7 +51,11 @@ gulp.task('serve', () => {
 
   app
     .use(apiUrl, createWebApi(uw, {
-      recaptcha: false,
+      recaptcha: {
+        // Test keys from
+        // https://developers.google.com/recaptcha/docs/faq#id-like-to-run-automated-tests-with-recaptcha-v2-what-should-i-do
+        secret: '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe'
+      },
       server,
       secret: new Buffer('none', 'utf8')
     }))
@@ -92,7 +96,12 @@ gulp.task('serve', () => {
     apiUrl,
     emoji: emojione.emoji,
     publicPath,
-    fs
+    fs,
+    recaptcha: {
+      // Test keys from
+      // https://developers.google.com/recaptcha/docs/faq#id-like-to-run-automated-tests-with-recaptcha-v2-what-should-i-do
+      key: '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'
+    }
   }));
 
   uw.on('stopped', () => {
