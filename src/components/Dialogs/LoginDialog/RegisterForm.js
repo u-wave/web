@@ -70,6 +70,7 @@ export default class RegisterForm extends React.Component {
         <ReCaptcha
           sitekey={this.props.reCaptchaSiteKey}
           onResponse={this.handleCaptchaResponse}
+          theme="dark"
         />
       </FormGroup>
     );
