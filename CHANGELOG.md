@@ -1,3 +1,34 @@
+# 1.0.0-beta.6 / 17 Feb 2017
+
+Features:
+
+  * Sort emoji autocomplete suggestions by length. (#544)
+  * Use ReCaptcha's Dark theme. (#552)
+  * Add button to swap artist/title in EditMediaDialog. (#553)
+
+Bugfixes:
+
+  * Chat performance fixes. (#543)
+
+Internal:
+
+  * Add Lodash Webpack plugin. (#512, #549)
+  * Always render VideoBackdrop regardless of current media source. (#550)
+
+# 1.0.0-beta.5 / 28 Jan 2017
+
+This release contains an important fix for renaming playlists, and some minor fixes.
+
+Bugfixes:
+
+ * Fix chat timestamps appearing behind emoji. (#533)
+ * Fix squeezed display of non-square emoji in suggestions list. (#535)
+ * Fix playlist meta actions. (#538)
+
+Internal:
+
+ * Deal a bit better with missing browser features. (#518)
+
 # 1.0.0-beta.4 / 22 Jan 2017
 
 Features:
