@@ -2,12 +2,14 @@ import cx from 'classnames';
 import * as React from 'react';
 import { translate } from 'react-i18next';
 import Dialog from 'material-ui/Dialog';
+import IconButton from 'material-ui/IconButton';
 import uniqueId from 'lodash/uniqueId';
 
 import ArtistIcon from 'material-ui/svg-icons/hardware/headset';
 import TitleIcon from 'material-ui/svg-icons/image/music-note';
 import StartIcon from 'material-ui/svg-icons/av/play-arrow';
 import EndIcon from 'material-ui/svg-icons/av/stop';
+import SwapArtistTitleIcon from 'material-ui/svg-icons/action/swap-horiz';
 
 import formatDuration from '../../../utils/formatDuration';
 
@@ -98,6 +100,13 @@ export default class EditMediaDialog extends React.Component {
     this.setState({ end: event.target.value });
   };
 
+  handleSwapArtistTitle = () => {
+    this.setState({
+      artist: this.state.title,
+      title: this.state.artist
+    });
+  };
+
   render() {
     const {
       t,
@@ -133,7 +142,11 @@ export default class EditMediaDialog extends React.Component {
         />
       );
       const artistTitleLabel = (
-        <div className="EditMediaDialogGroup-label">–</div>
+        <div className="EditMediaDialogGroup-label">
+          <IconButton onClick={this.handleSwapArtistTitle}>
+            <SwapArtistTitleIcon color="#9f9d9e" />
+          </IconButton>
+        </div>
       );
       const titleInput = (
         <TextField
