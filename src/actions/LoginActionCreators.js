@@ -22,7 +22,7 @@ import {
   setPlaylists, selectPlaylist, activatePlaylistComplete
 } from './PlaylistActionCreators';
 import { syncTimestamps } from './TickerActionCreators';
-import { openResetPasswordDialog, closeLoginDialog } from './DialogActionCreators';
+import { closeLoginDialog } from './DialogActionCreators';
 import { setUsers } from './UserActionCreators';
 import { setVoteStats } from './VoteActionCreators';
 import { setWaitList } from './WaitlistActionCreators';

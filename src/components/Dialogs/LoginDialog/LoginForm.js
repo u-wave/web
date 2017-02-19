@@ -14,7 +14,7 @@ export default class LoginForm extends React.Component {
     t: React.PropTypes.func.isRequired,
     error: React.PropTypes.object,
     onLogin: React.PropTypes.func,
-    openResetPasswordDialog: React.PropTypes.func
+    onOpenResetPasswordDialog: React.PropTypes.func
   };
 
   state = { busy: false };

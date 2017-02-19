@@ -18,24 +18,28 @@ export default class ResetPasswordForm extends React.Component {
     this.setState({ busy: false });
   }
 
-  onSubmit(event) {
+  handleSubmit = (event) => {
     event.preventDefault();
     this.setState({ busy: true });
     this.props.onResetPassword({
-      email: this.refs.email.value
+      email: this.email.value
     });
-  }
+  };
+
+  refEmail = (email) => {
+    this.email = email;
+  };
 
   render() {
     const { error } = this.props;
     const { busy } = this.state;
 
     return (
-      <Form className="ResetPasswordForm" onSubmit={this.onSubmit.bind(this)}>
+      <Form className="ResetPasswordForm" onSubmit={this.handleSubmit}>
         {error && <FormGroup>{error.message}</FormGroup>}
         <FormGroup>
           <TextField
-            ref="email"
+            ref={this.refEmail}
             className="ResetPasswordForm-field"
             type="email"
             placeholder="E-Mail"

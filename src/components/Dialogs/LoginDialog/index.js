@@ -20,10 +20,6 @@ export default class LoginDialog extends React.Component {
     t: React.PropTypes.func.isRequired,
     open: React.PropTypes.bool,
     show: React.PropTypes.string,
-    onCloseDialog: React.PropTypes.func,
-    onLogin: React.PropTypes.func,
-    onRegister: React.PropTypes.func,
-    onResetPassword: React.PropTypes.func,
     onCloseDialog: React.PropTypes.func
   };
 
