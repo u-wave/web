@@ -1,4 +1,5 @@
 import {
+  RESET_PASSWORD_COMPLETE,
   REGISTER_COMPLETE,
   LOGIN_COMPLETE, SET_TOKEN,
   LOGOUT_COMPLETE
@@ -16,6 +17,18 @@ const initialState = {
 export default function reduce(state = initialState, action = {}) {
   const { type, payload, error: isError } = action;
   switch (type) {
+  case RESET_PASSWORD_COMPLETE:
+    return isError ? {
+      ...state,
+      jwt: payload.jwt,
+      user: null,
+      error: payload
+    } : {
+      ...state,
+      jwt: payload.jwt,
+      user: null,
+      error: null
+    };
   case SET_TOKEN:
     return {
       ...state,

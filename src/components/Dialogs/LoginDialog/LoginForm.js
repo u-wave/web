@@ -13,7 +13,8 @@ export default class LoginForm extends React.Component {
   static propTypes = {
     t: React.PropTypes.func.isRequired,
     error: React.PropTypes.object,
-    onLogin: React.PropTypes.func
+    onLogin: React.PropTypes.func,
+    openResetPasswordDialog: React.PropTypes.func
   };
 
   state = { busy: false };
@@ -29,6 +30,11 @@ export default class LoginForm extends React.Component {
       email: this.email.value,
       password: this.password.value
     });
+  };
+
+  handleResetPassword = (event) => {
+    event.preventDefault();
+    this.props.onOpenResetPasswordDialog();
   };
 
   refEmail = (email) => {
@@ -56,6 +62,7 @@ export default class LoginForm extends React.Component {
             autoFocus
           />
         </FormGroup>
+
         <FormGroup>
           <TextField
             ref={this.refPassword}
@@ -73,6 +80,12 @@ export default class LoginForm extends React.Component {
           >
             {busy ? <div className="Button-loading"><Loader size="tiny" /></div> : t('login.login')}
           </Button>
+        </FormGroup>
+
+        <FormGroup>
+          <a href onClick={this.handleResetPassword} className="LoginForm-forgot">
+            Forgot Password?
+          </a>
         </FormGroup>
       </Form>
     );

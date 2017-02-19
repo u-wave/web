@@ -12,3 +12,5 @@ export const LOGIN_COMPLETE = 'auth/LOGIN_COMPLETE';
 
 export const LOGOUT_START = 'auth/LOGOUT_START';
 export const LOGOUT_COMPLETE = 'auth/LOGOUT_COMPLETE';
+
+export const RESET_PASSWORD_COMPLETE = 'auth/RESET_PASSWORD_COMPLETE';

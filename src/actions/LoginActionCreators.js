@@ -9,7 +9,9 @@ import {
   LOGIN_COMPLETE,
   SET_TOKEN,
   LOGOUT_START,
-  LOGOUT_COMPLETE
+  LOGOUT_COMPLETE,
+
+  RESET_PASSWORD_COMPLETE
 } from '../constants/actionTypes/auth';
 import { LOAD_ALL_PLAYLISTS_START } from '../constants/actionTypes/playlists';
 import * as Session from '../utils/Session';
@@ -19,8 +21,8 @@ import { receiveMotd } from './ChatActionCreators';
 import {
   setPlaylists, selectPlaylist, activatePlaylistComplete
 } from './PlaylistActionCreators';
-import { closeLoginDialog } from './DialogActionCreators';
 import { syncTimestamps } from './TickerActionCreators';
+import { openResetPasswordDialog, closeLoginDialog } from './DialogActionCreators';
 import { setUsers } from './UserActionCreators';
 import { setVoteStats } from './VoteActionCreators';
 import { setWaitList } from './WaitlistActionCreators';
@@ -163,4 +165,22 @@ export function logout() {
       dispatch(logoutComplete());
     }
   };
+}
+
+export function resetPassword(email) {
+  return post('/auth/password/reset', email, {
+    onStart: () => ({
+      type: RESET_PASSWORD_COMPLETE,
+      payload: 'Successfully sent password reset email'
+    }),
+    onComplete: token => (dispatch) => {
+      debug('reset token: ', token);
+      dispatch(closeLoginDialog());
+    },
+    onError: error => ({
+      type: RESET_PASSWORD_COMPLETE,
+      error: true,
+      payload: error
+    })
+  });
 }
