@@ -114,7 +114,8 @@ export function inputMessage(text) {
 
 let mentionSound;
 if (typeof window !== 'undefined' && window.Audio) {
-  mentionSound = new window.Audio('assets/audio/mention.mp3');
+  const mentionSoundUrl = require('../../assets/audio/mention.mp3');
+  mentionSound = new window.Audio(mentionSoundUrl);
 }
 function playMentionSound() {
   if (mentionSound) {

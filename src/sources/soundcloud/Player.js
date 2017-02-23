@@ -2,6 +2,7 @@ import cx from 'classnames';
 import * as React from 'react';
 
 import SongInfo from './SongInfo';
+import soundcloudLogo from '../../../assets/img/soundcloud-inline.png';
 
 const debug = require('debug')('uwave:component:video:soundcloud');
 
@@ -105,7 +106,7 @@ export default class SoundCloudPlayer extends React.Component {
           >
             View on
             <img
-              src="assets/img/soundcloud-inline.png"
+              src={soundcloudLogo}
               alt="SoundCloud"
             />
           </a>

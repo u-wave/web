@@ -9,11 +9,4 @@
     width: 48px;
     float: left;
   }
-
-  &--soundcloud {
-    background-image: url(/assets/img/soundcloud.png);
-  }
-  &--youtube {
-    background-image: url(/assets/img/youtube.png);
-  }
 }

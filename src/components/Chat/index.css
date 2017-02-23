@@ -1,6 +1,6 @@
 @import "./ChatMessages.css";
-@import "./Input";
-@import "./Markup";
+@import "./Input/index.css";
+@import "./Markup/index.css";
 @import "./LogMessage.css";
 @import "./Message.css";
 @import "./Motd.css";

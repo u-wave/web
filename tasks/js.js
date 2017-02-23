@@ -1,5 +1,4 @@
 const gulp = require('gulp');
-const exec = require('child_process').exec;
 const relative = require('path').relative;
 const colors = require('gulp-util').colors;
 const log = require('gulp-util').log;
@@ -8,7 +7,6 @@ const yaml = require('gulp-yaml');
 const newer = require('gulp-newer');
 const plumber = require('gulp-plumber');
 const through = require('through2');
-const npmRunPath = require('npm-run-path');
 const webpack = require('webpack');
 const del = require('del');
 
@@ -83,9 +81,7 @@ gulp.task('js:babel', [ 'js:locales' ], () => {
     });
 });
 
-// This depends on js:babel because the HTML template depends on the
-// LoadingScreen component being compiled & ready.
-gulp.task('webpack', [ 'js:babel' ], () => {
+gulp.task('webpack', () => {
   const config = require('../webpack.config');
 
   return new Promise((resolve, reject) => {
@@ -98,17 +94,3 @@ gulp.task('webpack', [ 'js:babel' ], () => {
     });
   });
 });
-
-gulp.task('js:lint', () => (
-  new Promise((resolve, reject) => {
-    const env = npmRunPath.env();
-    exec('eslint --cache --color .', { env }, (error, stdout) => {
-      if (error) {
-        console.error(stdout);
-        reject(error);
-        return;
-      }
-      resolve();
-    });
-  })
-));

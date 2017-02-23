@@ -8,7 +8,7 @@
   &-logo {
     line-height: var(--header-height);
     height: var(--header-height);
-    background-image: url(/assets/img/logo-white.png);
+    background-image: url(../../../assets/img/logo-white.png);
     background-repeat: no-repeat;
     background-position: center center;
     background-size: contain;

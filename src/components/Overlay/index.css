@@ -1,4 +1,4 @@
-@import "./Header";
+@import "./Header/index.css";
 
 .Overlay {
   position: absolute;

@@ -1,7 +1,10 @@
 import * as React from 'react';
+import injectMediaSources from '../../../utils/injectMediaSources';
 
 const ImportSourceBlock = ({
-  sourceType, title,
+  getMediaSource,
+  sourceType,
+  title,
   children
 }) => (
   <div className="ImportSourceBlock PlaylistImport-source">
@@ -9,16 +12,17 @@ const ImportSourceBlock = ({
       className="ImportSourceBlock-image"
       alt={title}
       title={title}
-      src={`assets/img/${sourceType}.png`}
+      src={getMediaSource(sourceType).logo}
     />
     {children}
   </div>
 );
 
 ImportSourceBlock.propTypes = {
+  getMediaSource: React.PropTypes.func.isRequired,
   sourceType: React.PropTypes.string.isRequired,
   title: React.PropTypes.string.isRequired,
   children: React.PropTypes.node.isRequired
 };
 
-export default ImportSourceBlock;
+export default injectMediaSources()(ImportSourceBlock);

@@ -6,6 +6,7 @@ const env = require('gulp-util').env;
 const emojione = require('u-wave-web-emojione');
 const ytSource = require('u-wave-source-youtube');
 const scSource = require('u-wave-source-soundcloud');
+const recaptchaTestKeys = require('recaptcha-test-keys');
 const express = require('express');
 const Buffer = require('buffer').Buffer;
 const webpack = require('webpack');
@@ -35,9 +36,8 @@ gulp.task('serve', () => {
   const createWebApi = tryRequire('u-wave-api-v1',
     'Could not find the u-wave API module. Did you run `npm install u-wave-api-v1`?'
   );
-  const createWebClient = tryRequire('../lib/middleware',
-    'Could not find the client middleware. Did you run `npm run build`?'
-  );
+
+  const createWebClient = require('../src/middleware').default;
 
   const uw = uwave(config);
 
@@ -51,11 +51,7 @@ gulp.task('serve', () => {
 
   app
     .use(apiUrl, createWebApi(uw, {
-      recaptcha: {
-        // Test keys from
-        // https://developers.google.com/recaptcha/docs/faq#id-like-to-run-automated-tests-with-recaptcha-v2-what-should-i-do
-        secret: '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe'
-      },
+      recaptcha: { secret: recaptchaTestKeys.secret },
       server,
       secret: new Buffer('none', 'utf8')
     }))
@@ -97,11 +93,7 @@ gulp.task('serve', () => {
     emoji: emojione.emoji,
     publicPath,
     fs,
-    recaptcha: {
-      // Test keys from
-      // https://developers.google.com/recaptcha/docs/faq#id-like-to-run-automated-tests-with-recaptcha-v2-what-should-i-do
-      key: '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'
-    }
+    recaptcha: { key: recaptchaTestKeys.sitekey }
   }));
 
   uw.on('stopped', () => {

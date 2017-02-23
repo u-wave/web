@@ -1,12 +1,20 @@
 const readFile = require('fs').readFileSync;
 const path = require('path');
+const escapeStringRegExp = require('escape-string-regexp');
 const DefinePlugin = require('webpack').DefinePlugin;
 const ProgressPlugin = require('webpack').ProgressPlugin;
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlPlugin = require('html-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 const nodeEnv = process.env.NODE_ENV || 'development';
+
+// Compile src/ on the fly so we can use components etc. during build time.
+require('babel-register')({
+  only: new RegExp(escapeStringRegExp(path.join(__dirname, 'src'))),
+  plugins: [ 'transform-es2015-modules-commonjs' ]
+});
 
 // Minification options used in production mode.
 const htmlMinifierOptions = {
@@ -22,7 +30,7 @@ const htmlMinifierOptions = {
 };
 
 const extractAppCss = new ExtractTextPlugin({
-  filename: '[name]_[hash].css',
+  filename: '[name]_[contenthash:7].css',
   // Disable in development mode, so we can use CSS hot reloading.
   disable: nodeEnv === 'development'
 });
@@ -31,6 +39,9 @@ const plugins = [
   new DefinePlugin({
     'process.env': { NODE_ENV: JSON.stringify(nodeEnv) }
   }),
+  new CopyPlugin([
+    { from: '../assets/favicon.ico', to: 'favicon.ico' }
+  ]),
   new HtmlPlugin({
     chunks: [ 'app' ],
     inject: false,
@@ -92,11 +103,25 @@ module.exports = {
   output: {
     publicPath: '/',
     path: path.join(__dirname, 'public'),
-    filename: '[name]_[hash].js'
+    filename: '[name]_[hash].js',
+    hashDigestLength: 7
   },
   plugins,
   module: {
     rules: [
+      {
+        test: /\.mp3$/,
+        use: [
+          { loader: 'file-loader', query: { name: '[name]_[hash:7].[ext]' } }
+        ]
+      },
+      {
+        test: /\.(gif|jpe?g|png|svg)$/,
+        use: [
+          { loader: 'file-loader', query: { name: '[name]_[hash:7].[ext]' } },
+          { loader: 'image-webpack-loader', query: { bypassOnDebug: true } }
+        ]
+      },
       {
         test: /\.css$/,
         use: extractAppCss.extract({
@@ -116,8 +141,12 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: [
-          { loader: 'babel-loader', query: babelrc }
-        ]
+          { loader: 'babel-loader', query: babelrc },
+          nodeEnv !== 'production' && {
+            loader: 'eslint-loader',
+            query: { cache: true }
+          }
+        ].filter(Boolean)
       }
     ]
   }

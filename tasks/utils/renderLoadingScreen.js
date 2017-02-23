@@ -6,8 +6,8 @@ const getMuiTheme = require('material-ui/styles/getMuiTheme').default;
 
 module.exports = function renderLoadingScreen() {
   /* eslint-disable import/no-unresolved */
-  const LoadingScreen = require('../../lib/components/LoadingScreen').default;
-  const muiTheme = require('../../lib/MuiTheme').default;
+  const LoadingScreen = require('../../src/components/LoadingScreen').default;
+  const muiTheme = require('../../src/MuiTheme').default;
   /* eslint-enable import/no-unresolved */
 
   return renderToStaticMarkup(
