@@ -141,8 +141,12 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: [
-          { loader: 'babel-loader', query: babelrc }
-        ]
+          { loader: 'babel-loader', query: babelrc },
+          nodeEnv !== 'production' && {
+            loader: 'eslint-loader',
+            query: { cache: true }
+          }
+        ].filter(Boolean)
       }
     ]
   }
