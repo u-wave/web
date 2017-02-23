@@ -99,9 +99,9 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        loader: extractAppCss.extract({
-          fallbackLoader: 'style-loader',
-          loader: [ 'css-loader', 'postcss-loader' ]
+        use: extractAppCss.extract({
+          fallback: 'style-loader',
+          use: [ 'css-loader', 'postcss-loader' ]
         })
       },
       {
