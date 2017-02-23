@@ -8,7 +8,6 @@ if (env.minify) {
 }
 
 require('./tasks/js');
-require('./tasks/assets');
 require('./tasks/serve');
 require('./tasks/watch');
 
@@ -28,16 +27,12 @@ gulp.task('clean',
 gulp.task('start', (cb) => {
   runSeq(
     'set-watching',
-    [ 'assets', 'js:babel' ],
+    [ 'js:babel' ],
     [ 'watch', 'serve' ],
     cb
   );
 });
 
-gulp.task('js', [ 'js:babel', 'webpack' ]);
-
-gulp.task('build', (cb) => {
-  runSeq('assets', 'js', cb);
-});
+gulp.task('build', [ 'js:babel', 'webpack' ]);
 
 gulp.task('default', [ 'build' ]);

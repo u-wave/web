@@ -5,6 +5,7 @@ const ProgressPlugin = require('webpack').ProgressPlugin;
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlPlugin = require('html-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 const nodeEnv = process.env.NODE_ENV || 'development';
 
@@ -31,6 +32,9 @@ const plugins = [
   new DefinePlugin({
     'process.env': { NODE_ENV: JSON.stringify(nodeEnv) }
   }),
+  new CopyPlugin([
+    { from: '../assets/favicon.ico', to: 'favicon.ico' }
+  ]),
   new HtmlPlugin({
     chunks: [ 'app' ],
     inject: false,
