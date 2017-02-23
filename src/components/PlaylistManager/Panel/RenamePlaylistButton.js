@@ -43,7 +43,7 @@ class RenamePlaylistButton extends React.Component {
         <EditIcon color="#555" hoverColor="#fff" />
         {this.state.renaming && (
           <PromptDialog
-            title={t('dialogs.renamePlaylist.title')}
+            title={t('dialogs.renamePlaylist.nameInputTitle')}
             submitLabel={t('dialogs.renamePlaylist.action')}
             icon={<EditIcon color="#777" />}
             value={this.props.initialName}
