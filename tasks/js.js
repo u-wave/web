@@ -83,9 +83,7 @@ gulp.task('js:babel', [ 'js:locales' ], () => {
     });
 });
 
-// This depends on js:babel because the HTML template depends on the
-// LoadingScreen component being compiled & ready.
-gulp.task('webpack', [ 'js:babel' ], () => {
+gulp.task('webpack', () => {
   const config = require('../webpack.config');
 
   return new Promise((resolve, reject) => {
