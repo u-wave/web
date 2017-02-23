@@ -22,7 +22,7 @@ const htmlMinifierOptions = {
 };
 
 const extractAppCss = new ExtractTextPlugin({
-  filename: '[name]_[hash].css',
+  filename: '[name]_[contenthash:7].css',
   // Disable in development mode, so we can use CSS hot reloading.
   disable: nodeEnv === 'development'
 });
@@ -92,7 +92,8 @@ module.exports = {
   output: {
     publicPath: '/',
     path: path.join(__dirname, 'public'),
-    filename: '[name]_[hash].js'
+    filename: '[name]_[hash].js',
+    hashDigestLength: 7
   },
   plugins,
   module: {
@@ -100,7 +101,7 @@ module.exports = {
       {
         test: /\.(gif|jpe?g|png|svg)$/,
         use: [
-          { loader: 'file-loader', query: { name: '[name]_[hash].[ext]' } },
+          { loader: 'file-loader', query: { name: '[name]_[hash:7].[ext]' } },
           { loader: 'image-webpack-loader', query: { bypassOnDebug: true } }
         ]
       },
