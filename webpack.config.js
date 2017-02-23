@@ -103,6 +103,12 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.mp3$/,
+        use: [
+          { loader: 'file-loader', query: { name: '[name]_[hash:7].[ext]' } }
+        ]
+      },
+      {
         test: /\.(gif|jpe?g|png|svg)$/,
         use: [
           { loader: 'file-loader', query: { name: '[name]_[hash:7].[ext]' } },
