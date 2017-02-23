@@ -15,13 +15,14 @@ class SourcePicker extends React.Component {
     onChange: React.PropTypes.func,
 
     muiTheme: React.PropTypes.object.isRequired,
+    getMediaSource: React.PropTypes.func.isRequired,
     getAllMediaSources: React.PropTypes.func.isRequired
   };
 
   state = { open: false };
 
   createElement(sourceName) {
-    const { selected, onChange } = this.props;
+    const { selected, getMediaSource, onChange } = this.props;
     return (
       <button
         className="SourcePicker-item"
@@ -30,6 +31,7 @@ class SourcePicker extends React.Component {
       >
         <SourcePickerElement
           name={sourceName}
+          source={getMediaSource(sourceName)}
           active={selected === sourceName}
         />
       </button>
@@ -56,6 +58,7 @@ class SourcePicker extends React.Component {
       className,
       selected,
       muiTheme,
+      getMediaSource,
       getAllMediaSources
     } = this.props;
 
@@ -75,6 +78,7 @@ class SourcePicker extends React.Component {
         >
           <SourcePickerElement
             name={selected}
+            source={getMediaSource(selected)}
             active
           />
           <ArrowIcon
