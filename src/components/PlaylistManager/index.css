@@ -1,7 +1,7 @@
-@import "./Header";
-@import "./Import";
-@import "./Menu";
-@import "./Panel";
+@import "./Header/index.css";
+@import "./Import/index.css";
+@import "./Menu/index.css";
+@import "./Panel/index.css";
 
 .PlaylistManager {
   z-index: 10;

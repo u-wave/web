@@ -1,7 +1,7 @@
 @import "../../vars.css";
 @import "./NextMedia.css";
 @import "./UserInfo.css";
-@import "./Responses";
+@import "./Responses/index.css";
 
 .FooterBar {
   display: flex;

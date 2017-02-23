@@ -1,7 +1,7 @@
 @import "normalize.css";
 
-@import "./components";
-@import "./sources";
+@import "./components/index.css";
+@import "./sources/index.css";
 @import "./containers/DragLayer.css";
 
 /* None of our buttons have a use for browser defaults! */
