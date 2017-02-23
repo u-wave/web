@@ -3,10 +3,6 @@ const env = require('gulp-util').env;
 const del = require('del');
 const runSeq = require('run-sequence');
 
-if (env.minify) {
-  process.env.NODE_ENV = 'production';
-}
-
 require('./tasks/js');
 require('./tasks/serve');
 require('./tasks/watch');
@@ -27,12 +23,11 @@ gulp.task('clean',
 gulp.task('start', (cb) => {
   runSeq(
     'set-watching',
-    [ 'js:babel' ],
     [ 'watch', 'serve' ],
     cb
   );
 });
 
-gulp.task('build', [ 'js:babel', 'webpack' ]);
+gulp.task('build', [ 'js:babel' ]);
 
 gulp.task('default', [ 'build' ]);

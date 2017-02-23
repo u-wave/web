@@ -1,5 +1,6 @@
 const readFile = require('fs').readFileSync;
 const path = require('path');
+const escapeStringRegExp = require('escape-string-regexp');
 const DefinePlugin = require('webpack').DefinePlugin;
 const ProgressPlugin = require('webpack').ProgressPlugin;
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
@@ -8,6 +9,12 @@ const HtmlPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
 const nodeEnv = process.env.NODE_ENV || 'development';
+
+// Compile src/ on the fly so we can use components etc. during build time.
+require('babel-register')({
+  only: new RegExp(escapeStringRegExp(path.join(__dirname, 'src'))),
+  plugins: [ 'transform-es2015-modules-commonjs' ]
+});
 
 // Minification options used in production mode.
 const htmlMinifierOptions = {

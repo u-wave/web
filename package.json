@@ -128,7 +128,7 @@
     "lint": "eslint --cache .",
     "mocha": "cross-env NODE_ENV=testing mocha",
     "test": "npm run mocha && npm run lint",
-    "prod": "cross-env NODE_ENV=production gulp --minify",
+    "prod": "npm run build && cross-env NODE_ENV=production webpack",
     "dev": "gulp start",
     "clean": "gulp clean",
     "build": "gulp",
