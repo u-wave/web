@@ -15,9 +15,8 @@ gulp.task('css:clean', () =>
   del([ 'public/app_*.css' ])
 );
 
-gulp.task('clean',
-  [ 'js:clean', 'css:clean' ],
-  () => del('public/', 'es/', 'lib/')
+gulp.task('clean', () =>
+  del([ 'public/', 'es/', 'lib/' ])
 );
 
 gulp.task('start', (cb) => {
