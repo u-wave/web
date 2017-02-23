@@ -23,6 +23,13 @@ uwave:
     days: "{{count}} day"
     days_plural: "{{count}} days"
 
+  roles:
+    user: User
+    special: Special
+    moderator: Moderator
+    manager: Manager
+    admin: Admin
+
   chat:
     title: Chat
     placeholder: Click here to chat!
