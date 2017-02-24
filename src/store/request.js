@@ -104,11 +104,12 @@ export default function middleware(middlewareOptions = {}) {
       .then(rejectNonOK)
       .then(res => res.json())
       .then((res) => {
+        let responseValue = res;
         if (onComplete) {
-          dispatch(onComplete(res));
+          responseValue = dispatch(onComplete(responseValue));
         }
         dispatch(requestComplete(res, completedMeta));
-        return res;
+        return responseValue;
       })
       .catch((error) => {
         if (onError) {
