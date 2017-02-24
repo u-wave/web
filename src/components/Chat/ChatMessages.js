@@ -74,7 +74,8 @@ export default class ChatMessages extends React.Component {
       <Message
         key={msg._id}
         compileOptions={this.props.compileOptions}
-        onDelete={this.props.canDeleteMessages ? this.props.onDeleteMessage : null}
+        deletable={this.props.canDeleteMessages}
+        onDelete={this.props.onDeleteMessage}
         {...msg}
       />
     );

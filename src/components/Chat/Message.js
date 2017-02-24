@@ -18,7 +18,7 @@ const enhance = compose(
   userCardable(),
   withHandlers({
     onDeleteClick: props => () =>
-      props.onDeleteMessage(props._id),
+      props.onDelete(props._id),
     onUsernameClick: props => (event) => {
       event.preventDefault();
       props.openUserCard(props.user);
@@ -34,6 +34,7 @@ const Message = ({
   isMention,
   timestamp,
   compileOptions,
+  deletable,
   onDeleteClick,
   onUsernameClick
 }) => {
@@ -67,7 +68,7 @@ const Message = ({
       {avatar}
       <div className="ChatMessage-content">
         <div className="ChatMessage-hover">
-          {onDeleteClick && <DeleteButton onDelete={onDeleteClick} />}
+          {deletable && <DeleteButton onDelete={onDeleteClick} />}
           <MessageTimestamp date={date} />
         </div>
         <button
@@ -89,6 +90,7 @@ Message.propTypes = {
   inFlight: React.PropTypes.bool,
   timestamp: React.PropTypes.number.isRequired,
   isMention: React.PropTypes.bool.isRequired,
+  deletable: React.PropTypes.bool.isRequired,
   onDeleteClick: React.PropTypes.func,
   compileOptions: React.PropTypes.shape({
     availableEmoji: React.PropTypes.array,
