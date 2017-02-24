@@ -11,7 +11,8 @@ import {
 import {
   usersSelector,
   currentUserSelector,
-  currentUserHasRoleSelector
+  currentUserHasRoleSelector,
+  createRoleCheckSelector
 } from './userSelectors';
 import {
   notificationSettingsSelector
@@ -81,4 +82,4 @@ export const emojiCompletionsSelector = createSelector(
   }))
 );
 
-export { isModeratorSelector as canDeleteMessagesSelector } from './userSelectors';
+export const canDeleteMessagesSelector = createRoleCheckSelector('chat.delete');
