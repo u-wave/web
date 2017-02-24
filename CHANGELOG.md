@@ -1,3 +1,21 @@
+# 1.0.0-beta.7 / 24 Feb 2017
+
+Features:
+
+  * Add the Password Reset Request form. (#264)
+
+Bugfixes:
+
+  * Fix playlist rename dialog title. (#556)
+  * Fix deleting chat messages. (#559)
+  * Resolve HTTP requests with return value from onComplete, fixes favoriting
+    media into a new playlist. (#560)
+  * Fix user cards overflowing window boundary. (#561)
+
+Internal:
+
+  * Pull more build things from Gulp tasks into Webpack config. (#558)
+
 # 1.0.0-beta.6 / 17 Feb 2017
 
 Features:
