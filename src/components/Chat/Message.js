@@ -18,7 +18,7 @@ const enhance = compose(
   userCardable(),
   withHandlers({
     onDeleteClick: props => () =>
-      props.onDeleteMessage(props._id),
+      props.onDelete(props._id),
     onUsernameClick: props => (event) => {
       event.preventDefault();
       props.openUserCard(props.user);
