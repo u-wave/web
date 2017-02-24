@@ -6,27 +6,23 @@ import compose from 'recompose/compose';
 import pure from 'recompose/pure';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 
+function getUserColor(rankColors, user) {
+  const roleName = find(user.roles, name => rankColors[name]) || 'default';
+  return rankColors[roleName];
+}
+
 const Username = ({
   muiTheme,
   className,
   user
-}) => {
-  const rankColors = muiTheme.rankColors;
-  const roleName = find(user.roles, name => rankColors[name]) || 'default';
-  let styles;
-  if (rankColors[roleName]) {
-    styles = { color: rankColors[roleName] };
-  }
-
-  return (
-    <span
-      className={cx('Username', `Username--${roleName}`, className)}
-      style={styles}
-    >
-      {user.username}
-    </span>
-  );
-};
+}) => (
+  <span
+    className={cx('Username', className)}
+    style={{ color: getUserColor(muiTheme.rankColors, user) }}
+  >
+    {user.username}
+  </span>
+);
 
 Username.propTypes = {
   muiTheme: PropTypes.object.isRequired,
