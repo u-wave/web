@@ -207,7 +207,7 @@ export default function reduce(state = initialState, action = {}) {
     };
 
   case LOAD_PLAYLIST_START:
-    if (meta.page !== 0) {
+    if (meta.page !== 0 || state.playlistItems[payload.playlistID]) {
       return state;
     }
     return setPlaylistLoading(state, payload.playlistID);
