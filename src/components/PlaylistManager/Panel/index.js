@@ -69,9 +69,12 @@ const PlaylistPanel = (props) => {
       </div>
     );
   } else {
+    // This has a `key` to force the media list to remount when the user
+    // switches between playlists, so eg. the scroll position resets properly.
     list = (
       <MediaList
         className="PlaylistPanel-media"
+        key={playlist._id}
         size={media.length}
         media={media}
         rowComponent={isFiltered ? PlainItemRow : PlaylistItemRow}
