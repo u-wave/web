@@ -22,4 +22,26 @@
       background: var(--chat-background-color2);
     }
   }
+
+  &-scrollDown {
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    width: 100%;
+    height: 55px;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  &-scrollDownButton {
+    pointer-events: all;
+    transition: margin-top 140ms ease-in;
+    margin: auto;
+    margin-top: 55px;
+  }
+
+  &-scrollDown.is-visible &-scrollDownButton {
+    transition: margin-top 140ms ease-out;
+    margin-top: 0;
+  }
 }
