@@ -65,9 +65,9 @@ export default class ChatMessages extends React.Component {
   }
 
   handleResize = () => {
-    this.setState({
-      isScrolledToBottom: this.isScrolledToBottom()
-    });
+    if (this.state.isScrolledToBottom) {
+      this.scrollToBottom();
+    }
   };
 
   handleScroll = () => {
