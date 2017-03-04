@@ -1,4 +1,6 @@
-module.exports = {
+const env = process.env.BABEL_ENV || process.env.NODE_ENV || 'development';
+
+const preset = {
   presets: [
     ['env', {
       modules: false
@@ -10,19 +12,19 @@ module.exports = {
     'transform-decorators-legacy',
     'transform-export-extensions',
     ['transform-runtime', { polyfill: false }]
-  ],
-  env: {
-    development: {
-      plugins: [
-        'react-hot-loader/babel'
-      ]
-    },
-    production: {
-      plugins: [
-        'transform-react-constant-elements',
-        'transform-react-inline-elements',
-        ['transform-react-remove-prop-types', { mode: 'wrap' }]
-      ]
-    }
-  }
+  ]
 };
+
+if (env === 'development') {
+  preset.plugins.push('react-hot-loader/babel');
+}
+
+if (env === 'production') {
+  preset.plugins.push(
+    'transform-react-constant-elements',
+    'transform-react-inline-elements',
+    ['transform-react-remove-prop-types', { mode: 'wrap' }]
+  );
+}
+
+module.exports = preset;
