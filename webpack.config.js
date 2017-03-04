@@ -197,7 +197,11 @@ module.exports = {
           query: {
             babelrc: false,
             presets: [
-              [ 'latest', { es2015: { modules: false } } ]
+              [ 'env', {
+                modules: false,
+                loose: true,
+                targets: { uglify: true }
+              } ]
             ]
           }
         }
