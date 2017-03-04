@@ -1,0 +1,28 @@
+module.exports = {
+  presets: [
+    ['env', {
+      modules: false
+    }],
+    'stage-2',
+    'react'
+  ],
+  plugins: [
+    'transform-decorators-legacy',
+    'transform-export-extensions',
+    ['transform-runtime', { polyfill: false }]
+  ],
+  env: {
+    development: {
+      plugins: [
+        'react-hot-loader/babel'
+      ]
+    },
+    production: {
+      plugins: [
+        'transform-react-constant-elements',
+        'transform-react-inline-elements',
+        ['transform-react-remove-prop-types', { mode: 'wrap' }]
+      ]
+    }
+  }
+};
