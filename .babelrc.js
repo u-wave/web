@@ -1,9 +1,19 @@
 const env = process.env.BABEL_ENV || process.env.NODE_ENV || 'development';
+const browsers = process.env.BROWSERSLIST;
+
+const targets = {};
+if (browsers) {
+  targets.browsers = browsers;
+}
+if (env === 'production') {
+  targets.uglify = true;
+}
 
 const preset = {
   presets: [
     ['env', {
-      modules: false
+      modules: false,
+      targets
     }],
     'stage-2',
     'react'
