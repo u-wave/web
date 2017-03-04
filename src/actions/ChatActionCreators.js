@@ -46,7 +46,7 @@ import {
 export function receiveMotd(text) {
   return {
     type: RECEIVE_MOTD,
-    payload: parseChatMarkup(text, {})
+    payload: text
   };
 }
 
