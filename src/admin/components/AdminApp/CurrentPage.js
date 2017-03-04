@@ -1,11 +1,11 @@
-import * as React from 'react';
 import mapProps from 'recompose/mapProps';
 import componentFromProp from 'recompose/componentFromProp';
+import Main from '../Main';
 import UsersList from '../../containers/UsersList';
 import BansList from '../../containers/BansList';
 
 const pages = {
-  main: () => <h1>Admin</h1>,
+  main: Main,
   users: UsersList,
   bans: BansList
 };
