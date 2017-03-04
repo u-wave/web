@@ -3,6 +3,7 @@ import * as React from 'react';
 import LogMessage from './LogMessage';
 import Message from './Message';
 import Motd from './Motd';
+import ScrollDownNotice from './ScrollDownNotice';
 
 export default class ChatMessages extends React.Component {
   static propTypes = {
@@ -16,17 +17,35 @@ export default class ChatMessages extends React.Component {
     })
   };
 
+  state = {
+    isScrolledToBottom: true
+  };
+
   componentDidMount() {
     this.scrollToBottom();
+    this.shouldScrollToBottom = false;
+
+    // A window resize may affect the available space.
+    if (typeof window !== 'undefined') {
+      window.addEventListener('resize', this.handleResize);
+    }
   }
 
-  componentWillUpdate() {
-    this._isScrolledToBottom = this.isScrolledToBottom();
+  componentWillReceiveProps() {
+    this.shouldScrollToBottom = this.isScrolledToBottom();
   }
 
   componentDidUpdate() {
-    if (this._isScrolledToBottom) {
+    // Keep the chat scrolled to the bottom after a new message is addded.
+    if (this.shouldScrollToBottom) {
       this.scrollToBottom();
+      this.shouldScrollToBottom = false;
+    }
+  }
+
+  componentWillUnmount() {
+    if (typeof window !== 'undefined') {
+      window.removeEventListener('resize', this.handleResize);
     }
   }
 
@@ -44,6 +63,23 @@ export default class ChatMessages extends React.Component {
     }
     return true;
   }
+
+  handleResize = () => {
+    if (this.state.isScrolledToBottom) {
+      this.scrollToBottom();
+    }
+  };
+
+  handleScroll = () => {
+    this.setState({
+      isScrolledToBottom: this.isScrolledToBottom()
+    });
+  };
+
+  handleScrollToBottom = (event) => {
+    event.preventDefault();
+    this.scrollToBottom();
+  };
 
   refContainer = (container) => {
     this.container = container;
@@ -82,8 +118,18 @@ export default class ChatMessages extends React.Component {
   }
 
   render() {
+    const { isScrolledToBottom } = this.state;
+
     return (
-      <div className="ChatMessages" ref={this.refContainer}>
+      <div
+        ref={this.refContainer}
+        className="ChatMessages"
+        onScroll={this.handleScroll}
+      >
+        <ScrollDownNotice
+          show={!isScrolledToBottom}
+          onClick={this.handleScrollToBottom}
+        />
         {this.renderMotd()}
         {this.props.messages.map(this.renderMessage, this)}
       </div>
