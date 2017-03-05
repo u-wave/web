@@ -64,7 +64,9 @@ export default function reduce(state = initialState, action = {}) {
       text: payload.message,
       parsedText: payload.parsed,
       timestamp: Date.now(),
-      inFlight: true
+      inFlight: true,
+      // Will be resolved when the message is received instead.
+      isMention: false
     };
     return {
       ...state,
