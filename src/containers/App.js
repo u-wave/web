@@ -58,6 +58,7 @@ export default class AppContainer extends React.Component {
     };
   }
 
+  // TODO move this to constructor?
   componentWillMount() {
     // Start the clock! üWave stores the current time in the application state
     // primarily to make sure that different timers in the UI update simultaneously.
