@@ -40,7 +40,15 @@ export default class PlaylistManager extends React.Component {
     } else if (showSearchResults) {
       panel = <SearchResults />;
     } else if (selectedPlaylist) {
-      panel = <PlaylistPanel />;
+      // HACK Give this a key so it's remounted when you switch playlists.
+      // This is because there is some statefulness down the tree, especially
+      // in playlist filters and scroll position.
+      // By forcing a remount using a key we throw away all state and keep it
+      // consistent.
+      // TODO To *actually* fix playlist filters bleeding across playlist lines,
+      // we should reset the playlist filter state alone somehow when the
+      // selected playlist changes.
+      panel = <PlaylistPanel key={selectedPlaylist._id} />;
     } else {
       panel = <PlaylistPanelEmpty />;
     }
