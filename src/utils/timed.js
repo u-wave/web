@@ -1,19 +1,23 @@
 import * as React from 'react';
+import wrapDisplayName from 'recompose/wrapDisplayName';
 import { currentTimeSelector } from '../selectors/timeSelectors';
 
 export default function () {
   return (Component) => {
     class Timed extends React.Component {
+      static displayName = wrapDisplayName(Component, 'Timed');
+
       static contextTypes = {
         store: React.PropTypes.object.isRequired,
         timerCallbacks: React.PropTypes.arrayOf(React.PropTypes.func).isRequired
       };
 
-      state = {};
+      state = {
+        currentTime: this.getCurrentTime()
+      };
 
-      componentWillMount() {
+      componentDidMount() {
         this.context.timerCallbacks.push(this.tick);
-        this.tick();
       }
 
       componentWillUnmount() {
@@ -24,9 +28,13 @@ export default function () {
         }
       }
 
+      getCurrentTime() {
+        return currentTimeSelector(this.context.store.getState());
+      }
+
       tick = () => {
         this.setState({
-          currentTime: currentTimeSelector(this.context.store.getState())
+          currentTime: this.getCurrentTime()
         });
       };
 

@@ -15,13 +15,21 @@ if (typeof window !== 'undefined') {
   };
 }
 
-export default class ReCaptcha extends React.Component {
-  state = { grecaptcha: window.grecaptcha };
+function loadReCaptcha(cb) {
+  loadScript(`${GRECAPTCHA_API}?onload=${onloadCallbackName}&render=explicit`);
+  onloadCallbacks.push(cb);
+}
 
-  componentWillMount() {
+export default class ReCaptcha extends React.Component {
+  state = {
+    grecaptcha: window.grecaptcha
+  };
+
+  componentDidMount() {
     if (!this.state.grecaptcha) {
-      loadScript(`${GRECAPTCHA_API}?onload=${onloadCallbackName}&render=explicit`);
-      onloadCallbacks.push(grecaptcha => this.setState({ grecaptcha }));
+      loadReCaptcha((grecaptcha) => {
+        this.setState({ grecaptcha });
+      });
     }
   }
 
