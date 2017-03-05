@@ -61,10 +61,19 @@ gulp.task('serve', () => {
   let publicPath;
 
   if (watch) {
-    wpConfig.entry.app = [
-      'react-hot-loader/patch',
-      'webpack-hot-middleware/client'
-    ].concat(wpConfig.entry.app);
+    Object.keys(wpConfig.entry).forEach((chunk) => {
+      const entry = wpConfig.entry[chunk];
+      if (Array.isArray(entry)) {
+        wpConfig.entry[chunk].unshift('webpack-hot-middleware/client');
+      } else {
+        wpConfig.entry[chunk] = [
+          'webpack-hot-middleware/client',
+          wpConfig.entry[chunk]
+        ];
+      }
+    });
+
+    wpConfig.entry.app.unshift('react-hot-loader/patch');
     wpConfig.plugins.push(
       new webpack.HotModuleReplacementPlugin()
     );
