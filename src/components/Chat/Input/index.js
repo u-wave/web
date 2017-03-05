@@ -51,7 +51,8 @@ export default class Input extends React.Component {
   };
 
   state = {
-    focused: false
+    focused: false,
+    value: ''
   };
 
   clear() {
@@ -96,6 +97,7 @@ export default class Input extends React.Component {
       <div className={cx('ChatInput', focusClass)}>
         <AutoComplete
           inputProps={{
+            type: 'text',
             className: cx('ChatInput-input', focusClass),
             placeholder: focused ? '' : t('chat.placeholder'),
             onFocus: this.handleFocus,
