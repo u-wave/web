@@ -32,7 +32,7 @@ const PlaylistMeta = ({
     <div className="PlaylistMeta-active">
       <Checkbox
         checked={active}
-        onCheck={!active && onActivatePlaylist}
+        onCheck={active ? null : onActivatePlaylist}
         checkedIcon={<ActiveIcon color="#fff" />}
         uncheckedIcon={<ActivateIcon color="#fff" />}
         iconStyle={checkboxIconStyle}
