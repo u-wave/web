@@ -206,11 +206,19 @@ export default function reduce(state = initialState, action = {}) {
       selectedPlaylistID: null
     };
 
-  case LOAD_PLAYLIST_START:
-    if (meta.page !== 0) {
+  case LOAD_PLAYLIST_START: {
+    if (meta.page !== 0 || state.playlistItems[payload.playlistID]) {
       return state;
     }
-    return setPlaylistLoading(state, payload.playlistID);
+
+    // Reserve space in the playlistItems array.
+    return updatePlaylistItems(
+      state,
+      payload.playlistID,
+      (items, playlist) => fill(Array(playlist.size), null)
+        .map((item, i) => items[i] || item)
+    );
+  }
   case LOAD_PLAYLIST_COMPLETE:
     if (error) {
       return setPlaylistLoading(state, meta.playlistID, false);
