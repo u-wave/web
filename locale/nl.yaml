@@ -96,6 +96,14 @@ uwave:
     skip:
       self: Beurt overslaan
       other: "{{user}}s beurt overslaan"
+      reasons:
+        genre: Off-genre
+        history: Recent gespeeld
+        unavailable: Niet beschikbaar of geblokkeerd
+        nsfw: NSFW
+        duration: Te lang
+        downvotes: Teveel downvotes
+        other: Anders
 
   history:
     title: Geschiedenis

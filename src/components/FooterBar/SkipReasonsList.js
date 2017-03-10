@@ -10,25 +10,23 @@ const SkipReasonsList = ({
   reasons,
   onSelect
 }) => (
-  <Menu onItemTouchTap={(event, item) => onSelect(item.props.primaryText)}>
-    {reasons.map((reason, i) => (
+  <Menu onItemTouchTap={(event, item) => onSelect(item.props.value)}>
+    {reasons.map(reason => (
       <MenuItem
-        key={i}
-        value={i}
+        key={reason.name}
+        value={reason.name}
         style={menuItemStyle}
-        primaryText={reason}
+        primaryText={reason.label}
       />
     ))}
-    <MenuItem
-      value={-1}
-      style={menuItemStyle}
-      primaryText="Other"
-    />
   </Menu>
 );
 
 SkipReasonsList.propTypes = {
-  reasons: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+  reasons: React.PropTypes.arrayOf(React.PropTypes.shape({
+    name: React.PropTypes.string,
+    label: React.PropTypes.string
+  })).isRequired,
   onSelect: React.PropTypes.func.isRequired
 };
 

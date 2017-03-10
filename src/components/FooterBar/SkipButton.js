@@ -18,13 +18,15 @@ const popoverProps = {
   targetOrigin: { horizontal: 'middle', vertical: 'bottom' }
 };
 
+// TODO not hardcode these maybe?
 const reasons = [
-  'Not K-Pop',
-  'In the history',
-  'Unavailable or Blocked',
-  'NSFW',
-  'Too long',
-  'Too many downvotes'
+  'genre',
+  'history',
+  'unavailable',
+  'nsfw',
+  'duration',
+  'downvotes',
+  'other'
 ];
 
 class SkipButton extends React.Component {
@@ -88,7 +90,10 @@ class SkipButton extends React.Component {
           {...popoverProps}
         >
           <SkipReasonsList
-            reasons={reasons}
+            reasons={reasons.map(name => ({
+              name,
+              label: t(`booth.skip.reasons.${name}`)
+            }))}
             onSelect={this.handleSkip}
           />
         </Popover>

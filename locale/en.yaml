@@ -99,6 +99,14 @@ uwave:
     skip:
       self: Skip your turn
       other: "Skip {{user}}'s turn"
+      reasons:
+        genre: Off-genre
+        history: In the history
+        unavailable: Unavailable or blocked
+        nsfw: NSFW
+        duration: Too long
+        downvotes: Too many downvotes
+        other: Other
 
   history:
     title: Play History
