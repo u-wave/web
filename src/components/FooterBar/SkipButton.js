@@ -2,38 +2,105 @@ import * as React from 'react';
 import { translate } from 'react-i18next';
 import compose from 'recompose/compose';
 import pure from 'recompose/pure';
+import Popover from 'material-ui/Popover';
 import IconButton from 'material-ui/IconButton';
 import SkipIcon from 'material-ui/svg-icons/av/skip-next';
+
+import SkipReasonsList from './SkipReasonsList';
 
 const fullSizeStyle = {
   height: '100%',
   width: '100%'
 };
 
-const SkipButton = ({ t, userIsDJ, currentDJ, onClick }) => {
-  let message = t('booth.skip.self');
-  if (!userIsDJ) {
-    message = t('booth.skip.other', { user: currentDJ.username });
+const popoverProps = {
+  anchorOrigin: { horizontal: 'middle', vertical: 'bottom' },
+  targetOrigin: { horizontal: 'middle', vertical: 'bottom' }
+};
+
+// TODO not hardcode these maybe?
+const reasons = [
+  'genre',
+  'history',
+  'unavailable',
+  'nsfw',
+  'duration',
+  'downvotes',
+  'other'
+];
+
+class SkipButton extends React.Component {
+  static propTypes = {
+    t: React.PropTypes.func.isRequired,
+    userIsDJ: React.PropTypes.bool.isRequired,
+    currentDJ: React.PropTypes.object.isRequired,
+    onSkip: React.PropTypes.func.isRequired
+  };
+
+  state = {
+    isOpen: false,
+    anchor: null
+  };
+
+  handleOpen = (event) => {
+    if (this.props.userIsDJ) {
+      this.handleSkip('');
+      return;
+    }
+
+    this.setState({
+      isOpen: true,
+      anchor: event.currentTarget
+    });
+  };
+
+  handleClose = () => {
+    this.setState({
+      isOpen: false
+    });
+  };
+
+  handleSkip = (reason) => {
+    this.props.onSkip(reason);
+    this.handleClose();
+  };
+
+  render() {
+    const { t } = this.props;
+
+    let message = t('booth.skip.self');
+    if (!this.props.userIsDJ) {
+      message = t('booth.skip.other', { user: this.props.currentDJ.username });
+    }
+
+    return (
+      <span>
+        <IconButton
+          tooltip={message}
+          tooltipPosition="top-center"
+          style={fullSizeStyle}
+          onClick={this.handleOpen}
+        >
+          <SkipIcon />
+        </IconButton>
+        <Popover
+          open={this.state.isOpen}
+          anchorEl={this.state.anchor}
+          onRequestClose={this.handleClose}
+          {...popoverProps}
+        >
+          <SkipReasonsList
+            reasons={reasons.map(name => ({
+              name,
+              label: t(`booth.skip.reasons.${name}`)
+            }))}
+            onSelect={this.handleSkip}
+          />
+        </Popover>
+      </span>
+    );
   }
-
-  return (
-    <IconButton
-      tooltip={message}
-      tooltipPosition="top-center"
-      style={fullSizeStyle}
-      onClick={onClick}
-    >
-      <SkipIcon />
-    </IconButton>
-  );
-};
-
-SkipButton.propTypes = {
-  t: React.PropTypes.func.isRequired,
-  userIsDJ: React.PropTypes.bool.isRequired,
-  currentDJ: React.PropTypes.object.isRequired,
-  onClick: React.PropTypes.func.isRequired
-};
+}
 
 export default compose(
   translate(),
