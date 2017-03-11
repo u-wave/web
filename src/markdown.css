@@ -1,0 +1,13 @@
+@import "./vars.css";
+
+body {
+  font-family: Open Sans, sans-serif;
+
+  background: var(--background-color);
+  color: var(--text-color);
+}
+
+#app {
+  width: 1024px;
+  margin: auto;
+}
