@@ -40,6 +40,8 @@ import {
   hasMention
 } from '../utils/chatMentions';
 
+import mentionSoundUrl from '../../assets/audio/mention.mp3';
+
 export function receiveMotd(text) {
   return {
     type: RECEIVE_MOTD,
@@ -114,7 +116,6 @@ export function inputMessage(text) {
 
 let mentionSound;
 if (typeof window !== 'undefined' && window.Audio) {
-  const mentionSoundUrl = require('../../assets/audio/mention.mp3');
   mentionSound = new window.Audio(mentionSoundUrl);
 }
 function playMentionSound() {

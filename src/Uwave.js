@@ -6,6 +6,8 @@ import 'whatwg-fetch';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import { AppContainer as HotContainer } from 'react-hot-loader';
+import injectTapEventPlugin from 'react-tap-event-plugin';
 import AppContainer from './containers/App';
 import { get as readSession } from './utils/Session';
 import configureStore from './store/configureStore';
@@ -18,7 +20,7 @@ import './utils/commands';
 // A Material-UI dependency, removes the delay from tap events on some mobile
 // devices. üWave currently isn't compatible with mobile yet, but material-ui
 // wants this!
-require('react-tap-event-plugin')();
+injectTapEventPlugin();
 
 export default class Uwave {
   options = {};
@@ -36,7 +38,6 @@ export default class Uwave {
     Object.assign(this, api.actions);
 
     if (module.hot) {
-      const HotContainer = require('react-hot-loader').AppContainer;
       this._getComponent = this.getComponent;
       this.getComponent = () => (
         <HotContainer>{this._getComponent()}</HotContainer>

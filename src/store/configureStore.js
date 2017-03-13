@@ -1,6 +1,6 @@
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
-
+import createLogger from 'redux-logger';
 import persistSettings from './persistSettings';
 import webApiRequest from './request';
 import webApiSocket from './socket';
@@ -29,7 +29,7 @@ export default function createUwaveStore(initialState = {}, options = {}) {
     // Redux-Logger logs state changes to the console, including the
     // Before-state, the Action object, and the After-state. Invaluable for
     // debugging :)
-    enableLogging && require('redux-logger')()
+    enableLogging && createLogger()
   ].filter(Boolean);
 
   const store = createStore(
@@ -56,9 +56,10 @@ export default function createUwaveStore(initialState = {}, options = {}) {
     // changed. See /tasks/watch.js for more on Hot Reloading!
     // This is only used when debugging, not in a deployed app.
     module.hot.accept('../reducers', () => {
-      store.replaceReducer(combineReducers(
-        require('../reducers')
-      ));
+      store.replaceReducer(combineReducers({
+        ...reducers,
+        sources: createSourcesReducer(options)
+      }));
     });
   }
 

@@ -1,6 +1,7 @@
 import find from 'array-find';
+import createDebug from 'debug';
 
-const debug = require('debug')('uwave:chat-commands');
+const debug = createDebug('uwave:chat-commands');
 
 const commands = {};
 
