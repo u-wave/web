@@ -1,6 +1,6 @@
 import * as Colors from 'material-ui/styles/colors';
 import * as ColorManipulator from 'material-ui/utils/colorManipulator';
-import * as Spacing from 'material-ui/styles/spacing';
+import Spacing from 'material-ui/styles/spacing';
 
 export default {
   spacing: Spacing,
