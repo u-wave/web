@@ -1,10 +1,10 @@
 import cx from 'classnames';
 import * as React from 'react';
-
+import createDebug from 'debug';
 import SongInfo from './SongInfo';
 import soundcloudLogo from '../../../assets/img/soundcloud-inline.png';
 
-const debug = require('debug')('uwave:component:video:soundcloud');
+const debug = createDebug('uwave:component:video:soundcloud');
 
 const CLIENT_ID = '9d883cdd4c3c54c6dddda2a5b3a11200';
 

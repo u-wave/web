@@ -1,3 +1,4 @@
+import createDebug from 'debug';
 import WebSocket from '../utils/ReconnectingWebSocket';
 
 import {
@@ -40,7 +41,7 @@ import {
 } from '../actions/WaitlistActionCreators';
 import { favorited, receiveVote } from '../actions/VoteActionCreators';
 
-const debug = require('debug')('uwave:websocket');
+const debug = createDebug('uwave:websocket');
 
 function defaultUrl() {
   const port = location.port || (location.protocol === 'https:' ? 443 : 80);

@@ -1,7 +1,8 @@
 import * as React from 'react';
 import YouTube from 'react-youtube';
+import createDebug from 'debug';
 
-const debug = require('debug')('uwave:component:video:youtube');
+const debug = createDebug('uwave:component:video:youtube');
 
 export default class YouTubePlayerEmbed extends React.Component {
   static propTypes = {

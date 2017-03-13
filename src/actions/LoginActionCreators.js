@@ -1,3 +1,4 @@
+import createDebug from 'debug';
 import {
   INIT_STATE,
   SOCKET_CONNECT,
@@ -28,7 +29,7 @@ import { setVoteStats } from './VoteActionCreators';
 import { setWaitList } from './WaitlistActionCreators';
 import { currentUserSelector, tokenSelector } from '../selectors/userSelectors';
 
-const debug = require('debug')('uwave:actions:login');
+const debug = createDebug('uwave:actions:login');
 
 export function socketConnect() {
   return { type: SOCKET_CONNECT };
