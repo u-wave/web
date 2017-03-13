@@ -10,10 +10,10 @@ const fullSizeStyle = {
   height: '100%'
 };
 
-const UserInfo = ({ className, user, ...attrs }) => (
-  <div
+const UserInfo = ({ className, user, onClick }) => (
+  <button
     className={cx('UserInfo', className)}
-    {...attrs}
+    onClick={onClick}
   >
     <Avatar
       className="UserInfo-avatar"
@@ -25,12 +25,13 @@ const UserInfo = ({ className, user, ...attrs }) => (
         style={fullSizeStyle}
       />
     </div>
-  </div>
+  </button>
 );
 
 UserInfo.propTypes = {
   className: React.PropTypes.string,
-  user: React.PropTypes.object.isRequired
+  user: React.PropTypes.object.isRequired,
+  onClick: React.PropTypes.func
 };
 
 export default pure(UserInfo);
