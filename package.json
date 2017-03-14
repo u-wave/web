@@ -79,7 +79,7 @@
     "chai": "^3.5.0",
     "cheerio": "^0.22.0",
     "copy-webpack-plugin": "^4.0.1",
-    "cross-env": "^3.2.3",
+    "cross-env": "^3.2.4",
     "css-loader": "^0.27.0",
     "cssnano": "^3.10.0",
     "del": "^2.2.2",
