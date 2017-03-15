@@ -115,7 +115,7 @@
     "proxyquire": "^1.7.11",
     "recaptcha-test-keys": "^1.0.0",
     "run-sequence": "^1.2.2",
-    "sinon": "^1.17.7",
+    "sinon": "^2.0.0",
     "sinon-chai": "^2.8.0",
     "style-loader": "^0.14.0",
     "through2": "^2.0.3",
