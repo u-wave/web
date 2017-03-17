@@ -1,3 +1,24 @@
+# 1.0.0-beta.8 / 17 Mar 2017
+
+Features:
+
+ * Use React to generate SVG video backdrop. (#562)
+ * Show "Back To Recent Messages" button when scrolled up in chat. (#564)
+ * Add static page compilation and a Privacy Policy page. (#570)
+ * Show cached playlist items when switching playlists, instead of waiting
+   for the playlist to reload. (#571)
+ * Add Skip reason selector. (#573)
+
+Bugfixes:
+
+ * Fix chat scrolling up by itself after resizing the window. (#564)
+
+Internal:
+
+ * Change user settings button to an actual `<button />`. (#575)
+ * Use `import` everywhere. (#576)
+ * Upgrade dependencies.
+
 # 1.0.0-beta.7 / 24 Feb 2017
 
 Features:
