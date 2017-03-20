@@ -10,6 +10,8 @@ module.exports = function renderLoadingScreen() {
   const muiTheme = require('../../src/MuiTheme').default;
   /* eslint-enable import/no-unresolved */
 
+  muiTheme.userAgent = 'all';
+
   return renderToStaticMarkup(
     React.createElement(
       MuiThemeProvider,
