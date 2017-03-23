@@ -19,7 +19,7 @@ const snackbarStyle = {
 
 // Create a material-ui theme with the error notification theme applied.
 // Using a selector for memoization.
-const errorThemeSelector = createSelector(
+export const errorThemeSelector = createSelector(
   props => props.muiTheme,
   (muiTheme) => {
     const notifyTheme = muiTheme.palette.notifications;
