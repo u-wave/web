@@ -1,7 +1,5 @@
 /* eslint-env mocha */
-/* eslint-disable import/no-extraneous-dependencies */
 /* global testUtils */
-// TODO figure out how to make the above apply automatically in test files.
 import * as React from 'react';
 import sinon from 'sinon';
 import { expect } from 'chai';
