@@ -7,6 +7,7 @@ const getMuiTheme = require('material-ui/styles/getMuiTheme').default;
 module.exports = function renderMarkdown(source) {
   const Markdown = require('../../src/components/Markdown').default;
   const muiTheme = require('../../src/MuiTheme').default;
+  muiTheme.userAgent = 'all';
 
   return renderToStaticMarkup(
     React.createElement(
