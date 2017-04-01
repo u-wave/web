@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -27,4 +28,14 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onSend: inputMessage
 }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(ChatInput);
+const ChatInputContainer = ({ isLoggedIn, ...props }) => (
+  isLoggedIn
+    ? <ChatInput {...props} />
+    : <span />
+);
+
+ChatInputContainer.propTypes = {
+  isLoggedIn: React.PropTypes.bool.isRequired
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChatInputContainer);
