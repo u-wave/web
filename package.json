@@ -113,7 +113,7 @@
     "postcss-cssnext": "^2.9.0",
     "postcss-import": "^9.1.0",
     "postcss-loader": "^1.2.2",
-    "postcss-url": "^5.1.2",
+    "postcss-url": "^6.0.0",
     "proxyquire": "^1.7.11",
     "react-addons-test-utils": "^15.4.2",
     "recaptcha-test-keys": "^1.0.0",
