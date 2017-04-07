@@ -1,5 +1,4 @@
-import * as React from 'react';
-
+import React from 'react';
 import Bold from './Bold';
 import Code from './Code';
 import Italic from './Italic';

@@ -1,5 +1,5 @@
 /* eslint-disable react/prefer-stateless-function */
-import * as React from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import Dialog from 'material-ui/Dialog';

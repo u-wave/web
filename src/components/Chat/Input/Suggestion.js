@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { ListItem } from 'material-ui/List';
 import { fade } from 'material-ui/utils/colorManipulator';

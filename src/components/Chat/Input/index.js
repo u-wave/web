@@ -1,7 +1,7 @@
 import cx from 'classnames';
 import sortBy from 'lodash/sortBy';
 import uniqBy from 'lodash/uniqBy';
-import * as React from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import AutoComplete, { Completion } from 'react-abstract-autocomplete';

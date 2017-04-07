@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import find from 'array-find';
 import TransitionGroup from 'react-addons-css-transition-group';

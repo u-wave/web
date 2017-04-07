@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 const StrikeThrough = ({ children, ...props }) => <s {...props}>{children}</s>;

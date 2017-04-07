@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import ArtistIcon from 'material-ui/svg-icons/hardware/headset';
 import TitleIcon from 'material-ui/svg-icons/image/music-note';

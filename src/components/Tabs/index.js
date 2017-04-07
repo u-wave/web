@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Tabs as MuiTabs } from 'material-ui/Tabs';
 import TabTemplate from './TabTemplate';

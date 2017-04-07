@@ -1,6 +1,6 @@
 import cx from 'classnames';
 import isEqual from 'is-equal-shallow';
-import * as React from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import screenfull from 'screenfull';
 import injectMediaSources from '../../utils/injectMediaSources';

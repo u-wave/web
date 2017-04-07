@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import DownvoteIcon from 'material-ui/svg-icons/action/thumb-down';
 import UpvoteIcon from 'material-ui/svg-icons/action/thumb-up';

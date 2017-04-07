@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import RenderToLayer from 'material-ui/internal/RenderToLayer';
 import UserCard from './UserCard';

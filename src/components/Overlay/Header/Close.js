@@ -1,5 +1,5 @@
 import cx from 'classnames';
-import * as React from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import CloseBottomIcon from 'material-ui/svg-icons/hardware/keyboard-arrow-down';
 import CloseTopIcon from 'material-ui/svg-icons/hardware/keyboard-arrow-up';

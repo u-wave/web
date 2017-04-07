@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 /* global testUtils */
-import * as React from 'react';
+import React from 'react';
 import sinon from 'sinon';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';

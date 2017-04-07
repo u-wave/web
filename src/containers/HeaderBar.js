@@ -1,4 +1,4 @@
-import * as React from 'react';
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import compose from 'recompose/compose';
@@ -33,7 +33,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 }, dispatch);
 
 export default compose(
-  getContext({ uwave: React.PropTypes.object }),
+  getContext({ uwave: PropTypes.object }),
   connect(mapStateToProps, mapDispatchToProps),
   // Remove the "uwave" prop—it was only necessary for the selector.
   mapProps(props => except(props, 'uwave'))

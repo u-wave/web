@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Loader from '../../components/Loader';
 import ImportPanelHeader from '../../components/PlaylistManager/Import/ImportPanelHeader';

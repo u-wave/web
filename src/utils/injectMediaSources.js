@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 function getComponentName(Component) {
   return Component.name || Component.displayName || 'Component';
@@ -9,7 +10,7 @@ export default function injectMediaSources() {
     static displayName = `InjectMediaSources(${getComponentName(Component)})`;
 
     static contextTypes = {
-      mediaSources: React.PropTypes.object
+      mediaSources: PropTypes.object
     };
 
     getMediaSource = name => this.context.mediaSources[name];

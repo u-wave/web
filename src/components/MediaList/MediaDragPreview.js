@@ -1,5 +1,5 @@
 import assign from 'object-assign';
-import * as React from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 import ListIcon from 'material-ui/svg-icons/action/list';

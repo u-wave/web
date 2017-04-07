@@ -1,5 +1,5 @@
 import cx from 'classnames';
-import * as React from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import pure from 'recompose/pure';
 
