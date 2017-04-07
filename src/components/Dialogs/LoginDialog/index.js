@@ -1,5 +1,6 @@
 /* eslint-disable react/prefer-stateless-function */
 import * as React from 'react';
+import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import Dialog from 'material-ui/Dialog';
 import LoginForm from './LoginForm';
@@ -17,10 +18,10 @@ const bodyStyle = {
 @translate()
 export default class LoginDialog extends React.Component {
   static propTypes = {
-    t: React.PropTypes.func.isRequired,
-    open: React.PropTypes.bool,
-    show: React.PropTypes.string,
-    onCloseDialog: React.PropTypes.func
+    t: PropTypes.func.isRequired,
+    open: PropTypes.bool,
+    show: PropTypes.string,
+    onCloseDialog: PropTypes.func
   };
 
   render() {

@@ -1,5 +1,6 @@
 import cx from 'classnames';
 import * as React from 'react';
+import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import SearchIcon from 'material-ui/svg-icons/action/search';
 import SourcePicker from './SourcePicker';
@@ -8,11 +9,11 @@ const enhance = translate();
 
 class SearchBar extends React.Component {
   static propTypes = {
-    className: React.PropTypes.string,
-    source: React.PropTypes.string,
-    onSubmit: React.PropTypes.func,
-    t: React.PropTypes.func.isRequired,
-    onSourceChange: React.PropTypes.func
+    className: PropTypes.string,
+    source: PropTypes.string,
+    onSubmit: PropTypes.func,
+    t: PropTypes.func.isRequired,
+    onSourceChange: PropTypes.func
   };
 
   state = { focused: false };

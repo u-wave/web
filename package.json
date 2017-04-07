@@ -33,6 +33,7 @@
     "object-assign": "^4.0.1",
     "object-values": "^1.0.0",
     "object.map": "^1.0.0",
+    "prop-types": "^15.5.1",
     "react": "^15.4.0",
     "react-abstract-autocomplete": "^1.0.0",
     "react-addons-css-transition-group": "^15.0.2",

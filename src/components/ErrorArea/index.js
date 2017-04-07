@@ -1,4 +1,5 @@
 import * as React from 'react';
+import PropTypes from 'prop-types';
 import Snackbar from 'material-ui/Snackbar';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 import { createSelector } from 'reselect';
@@ -39,15 +40,15 @@ export const errorThemeSelector = createSelector(
 @muiThemeable()
 export default class ErrorArea extends React.Component {
   static propTypes = {
-    error: React.PropTypes.string,
-    onDismiss: React.PropTypes.func.isRequired,
+    error: PropTypes.string,
+    onDismiss: PropTypes.func.isRequired,
     // Used in the theme selector above 👆
     // eslint-disable-next-line react/no-unused-prop-types
-    muiTheme: React.PropTypes.object.isRequired
+    muiTheme: PropTypes.object.isRequired
   };
 
   static childContextTypes = {
-    muiTheme: React.PropTypes.object
+    muiTheme: PropTypes.object
   };
 
   getChildContext() {

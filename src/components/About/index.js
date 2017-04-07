@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Overlay from '../Overlay';
 import OverlayHeader from '../Overlay/Header';
 
@@ -19,8 +20,8 @@ const About = ({
 );
 
 About.propTypes = {
-  onCloseOverlay: React.PropTypes.func.isRequired,
-  render: React.PropTypes.func.isRequired
+  onCloseOverlay: PropTypes.func.isRequired,
+  render: PropTypes.func.isRequired
 };
 
 export default About;

@@ -1,8 +1,9 @@
 import cx from 'classnames';
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import MediaLoadingIndicator from './MediaLoadingIndicator';
 
-export default class LoadingRow extends Component {
+export default class LoadingRow extends React.Component {
   static propTypes = {
     className: PropTypes.string,
     selected: PropTypes.bool

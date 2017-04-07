@@ -1,8 +1,7 @@
 import cx from 'classnames';
 import * as React from 'react';
-
+import PropTypes from 'prop-types';
 import Overlay from '../Overlay';
-
 import PlaylistMenu from '../../containers/PlaylistManagerMenu';
 import PlaylistPanel from '../../containers/PlaylistManagerPanel';
 import PlaylistImport from '../../containers/PlaylistImportManager';
@@ -13,11 +12,11 @@ import PlaylistPanelEmpty from './Panel/Empty';
 // eslint-disable-next-line react/prefer-stateless-function
 export default class PlaylistManager extends React.Component {
   static propTypes = {
-    className: React.PropTypes.string,
-    selectedPlaylist: React.PropTypes.object,
-    showSearchResults: React.PropTypes.bool.isRequired,
-    showImportPanel: React.PropTypes.bool.isRequired,
-    onCloseOverlay: React.PropTypes.func
+    className: PropTypes.string,
+    selectedPlaylist: PropTypes.object,
+    showSearchResults: PropTypes.bool.isRequired,
+    showImportPanel: PropTypes.bool.isRequired,
+    onCloseOverlay: PropTypes.func
   };
 
   render() {
