@@ -1,4 +1,3 @@
-/* eslint-disable react/prefer-stateless-function */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
@@ -17,31 +16,33 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 
 const DIALOG_ANIMATION_DURATION = 450; // ms
 
-@connect(editMediaDialogSelector, mapDispatchToProps)
-export default class EditMediaDialogContainer extends React.Component {
-  static propTypes = {
-    playlistID: PropTypes.string,
-    media: PropTypes.object,
-    onUpdateMedia: PropTypes.func.isRequired
-  };
+const enhance = connect(editMediaDialogSelector, mapDispatchToProps);
 
-  render() {
-    const { onUpdateMedia, playlistID, media, ...props } = this.props;
-    return (
-      <TransitionGroup
-        transitionName="Dialog"
-        transitionEnterTimeout={DIALOG_ANIMATION_DURATION}
-        transitionLeaveTimeout={DIALOG_ANIMATION_DURATION}
-      >
-        {media && (
-          <EditMediaDialog
-            {...props}
-            media={media}
-            onEditedMedia={update => onUpdateMedia(playlistID, media._id, update)}
-          />
-        )}
-      </TransitionGroup>
-    );
-  }
-}
-/* eslint-enable react/prefer-stateless-function */
+const EditMediaDialogContainer = ({
+  onUpdateMedia,
+  playlistID,
+  media,
+  ...props
+}) => (
+  <TransitionGroup
+    transitionName="Dialog"
+    transitionEnterTimeout={DIALOG_ANIMATION_DURATION}
+    transitionLeaveTimeout={DIALOG_ANIMATION_DURATION}
+  >
+    {media && (
+      <EditMediaDialog
+        {...props}
+        media={media}
+        onEditedMedia={update => onUpdateMedia(playlistID, media._id, update)}
+      />
+    )}
+  </TransitionGroup>
+);
+
+EditMediaDialogContainer.propTypes = {
+  playlistID: PropTypes.string,
+  media: PropTypes.object,
+  onUpdateMedia: PropTypes.func.isRequired
+};
+
+export default enhance(EditMediaDialogContainer);
