@@ -6,13 +6,17 @@ const waitlistPositionStyle = {
 };
 
 const WaitlistPosition = ({
-  position
+  position,
+  style
 }) => (
-  <span style={waitlistPositionStyle}>{position}</span>
+  <span style={{ ...style, ...waitlistPositionStyle }}>
+    {position}
+  </span>
 );
 
 WaitlistPosition.propTypes = {
-  position: PropTypes.number.isRequired
+  position: PropTypes.number.isRequired,
+  style: PropTypes.object
 };
 
 export default WaitlistPosition;
