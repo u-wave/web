@@ -33,6 +33,7 @@ const DrawerMenu = ({
       {playlists.map(playlist => (
         <MenuItem
           key={playlist._id}
+          checked={playlist.active}
           onTouchTap={() => onShowPlaylist(playlist._id)}
         >
           {playlist.name}
