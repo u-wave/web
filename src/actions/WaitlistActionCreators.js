@@ -12,6 +12,7 @@ import {
   DO_CLEAR_START, DO_CLEAR_COMPLETE,
 } from '../constants/actionTypes/waitlist';
 import { del, post, put } from './RequestActionCreators';
+import { currentUserSelector } from '../selectors/userSelectors';
 
 export function setWaitList(data) {
   return {
@@ -43,12 +44,12 @@ export function updatedWaitlist(waitlist) {
   };
 }
 
-export function joinWaitlist(user) {
-  return (dispatch) => {
-    if (!user) {
-      return null;
-    }
-    // TODO don't post an object at all once the API server supports it
+// TODO split joining the waitlist and adding another user to the waitlist
+// into two different actions.
+export function joinWaitlist(otherUser) {
+  return (dispatch, getState) => {
+    const user = otherUser || currentUserSelector(getState());
+
     return dispatch(post('/waitlist', { userID: user._id }, {
       onStart: () => ({ type: DO_JOIN_START }),
       onComplete: ({ data }) => ({
@@ -71,11 +72,10 @@ export function joinedWaitlist({ userID, waitlist }) {
   };
 }
 
-export function leaveWaitlist(user) {
-  return (dispatch) => {
-    if (!user) {
-      return null;
-    }
+export function leaveWaitlist(otherUser) {
+  return (dispatch, getState) => {
+    const user = otherUser || currentUserSelector(getState());
+
     return dispatch(del(`/waitlist/${user._id}`, {}, {
       onStart: () => ({ type: DO_LEAVE_START }),
       onComplete: ({ data }) => ({
