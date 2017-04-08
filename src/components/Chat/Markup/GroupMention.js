@@ -1,5 +1,6 @@
 import cx from 'classnames';
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const GroupMention = ({ className, group }) => (
   <span className={cx('ChatMention', `ChatMention--${group}`, className)}>
@@ -8,8 +9,8 @@ const GroupMention = ({ className, group }) => (
 );
 
 GroupMention.propTypes = {
-  className: React.PropTypes.string,
-  group: React.PropTypes.string.isRequired
+  className: PropTypes.string,
+  group: PropTypes.string.isRequired
 };
 
 export default GroupMention;

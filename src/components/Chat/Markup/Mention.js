@@ -1,5 +1,6 @@
 import cx from 'classnames';
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const Mention = ({ className, user, ...props }) => (
   <span className={cx('ChatMention', className)} {...props}>
@@ -8,9 +9,9 @@ const Mention = ({ className, user, ...props }) => (
 );
 
 Mention.propTypes = {
-  className: React.PropTypes.string,
-  user: React.PropTypes.shape({
-    username: React.PropTypes.string.isRequired
+  className: PropTypes.string,
+  user: PropTypes.shape({
+    username: PropTypes.string.isRequired
   }).isRequired
 };
 

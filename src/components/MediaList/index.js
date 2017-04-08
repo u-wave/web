@@ -1,12 +1,13 @@
 import cx from 'classnames';
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import BaseList from 'react-list';
 import LazyList from 'react-list-lazy-load';
 import itemSelection from 'item-selection/immutable';
 import Row from './Row';
 import LoadingRow from './LoadingRow';
 
-export default class MediaList extends Component {
+export default class MediaList extends React.Component {
   static propTypes = {
     className: PropTypes.string,
     media: PropTypes.array,

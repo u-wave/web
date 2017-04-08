@@ -1,8 +1,8 @@
 import cx from 'classnames';
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import compose from 'recompose/compose';
 import withProps from 'recompose/withProps';
-
 import userCardable from '../../utils/userCardable';
 import Avatar from '../Avatar';
 import Username from '../Username';
@@ -39,9 +39,9 @@ const RoomUserRow = ({
 );
 
 RoomUserRow.propTypes = {
-  className: React.PropTypes.string,
-  user: React.PropTypes.object.isRequired,
-  onOpenCard: React.PropTypes.func.isRequired
+  className: PropTypes.string,
+  user: PropTypes.object.isRequired,
+  onOpenCard: PropTypes.func.isRequired
 };
 
 export default enhance(RoomUserRow);

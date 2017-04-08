@@ -1,6 +1,6 @@
 import cx from 'classnames';
-import * as React from 'react';
-
+import React from 'react';
+import PropTypes from 'prop-types';
 import YouTubePlayerEmbed from './PlayerEmbed';
 
 const YouTubePlayer = ({
@@ -33,13 +33,13 @@ const YouTubePlayer = ({
 };
 
 YouTubePlayer.propTypes = {
-  className: React.PropTypes.string,
-  mode: React.PropTypes.oneOf([ 'small', 'large', 'preview' ]),
-  active: React.PropTypes.bool.isRequired,
-  enabled: React.PropTypes.bool,
-  media: React.PropTypes.object,
-  seek: React.PropTypes.number,
-  volume: React.PropTypes.number
+  className: PropTypes.string,
+  mode: PropTypes.oneOf([ 'small', 'large', 'preview' ]),
+  active: PropTypes.bool.isRequired,
+  enabled: PropTypes.bool,
+  media: PropTypes.object,
+  seek: PropTypes.number,
+  volume: PropTypes.number
 };
 
 export default YouTubePlayer;

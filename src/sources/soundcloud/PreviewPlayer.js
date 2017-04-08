@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const createEmbedUrl = sourceID => `
   https://w.soundcloud.com/player/
@@ -25,7 +26,7 @@ const PreviewPlayer = ({ media }) => (
 );
 
 PreviewPlayer.propTypes = {
-  media: React.PropTypes.object.isRequired
+  media: PropTypes.object.isRequired
 };
 
 export default PreviewPlayer;

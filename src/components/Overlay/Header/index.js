@@ -1,5 +1,6 @@
 import cx from 'classnames';
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import CloseButton from './Close';
 
 const Header = ({
@@ -25,11 +26,11 @@ const Header = ({
 );
 
 Header.propTypes = {
-  className: React.PropTypes.string,
-  title: React.PropTypes.string.isRequired,
-  children: React.PropTypes.node,
-  direction: React.PropTypes.string,
-  onCloseOverlay: React.PropTypes.func.isRequired
+  className: PropTypes.string,
+  title: PropTypes.string.isRequired,
+  children: PropTypes.node,
+  direction: PropTypes.string,
+  onCloseOverlay: PropTypes.func.isRequired
 };
 
 export default Header;

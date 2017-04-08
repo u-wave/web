@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import IconButton from 'material-ui/IconButton';
 import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
@@ -7,9 +8,9 @@ import PromptDialog from '../../Dialogs/PromptDialog';
 
 class RenamePlaylistButton extends React.Component {
   static propTypes = {
-    t: React.PropTypes.func.isRequired,
-    onRename: React.PropTypes.func.isRequired,
-    initialName: React.PropTypes.string
+    t: PropTypes.func.isRequired,
+    onRename: PropTypes.func.isRequired,
+    initialName: PropTypes.string
   };
 
   state = {

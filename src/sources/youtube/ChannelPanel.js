@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import List from 'react-list';
 
 import ImportPanelHeader from '../../components/PlaylistManager/Import/ImportPanelHeader';
@@ -7,11 +8,11 @@ import PlaylistRow from './PlaylistRow';
 
 export default class ChannelPanel extends React.Component {
   static propTypes = {
-    importingChannelTitle: React.PropTypes.string.isRequired,
-    importablePlaylists: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
+    importingChannelTitle: PropTypes.string.isRequired,
+    importablePlaylists: PropTypes.arrayOf(PropTypes.object).isRequired,
 
-    onImportPlaylist: React.PropTypes.func.isRequired,
-    onClosePanel: React.PropTypes.func.isRequired
+    onImportPlaylist: PropTypes.func.isRequired,
+    onClosePanel: PropTypes.func.isRequired
   };
 
   renderRow = (index, key) => {

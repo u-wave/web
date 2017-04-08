@@ -1,5 +1,6 @@
 import cx from 'classnames';
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Dialog from 'material-ui/Dialog';
 
 import Form from '../../Form';
@@ -10,19 +11,19 @@ import Loader from '../../Loader';
 
 export default class PromptDialog extends React.Component {
   static propTypes = {
-    children: React.PropTypes.node,
-    placeholder: React.PropTypes.string,
-    submitLabel: React.PropTypes.string,
-    inputType: React.PropTypes.string,
-    icon: React.PropTypes.node,
-    value: React.PropTypes.string,
+    children: PropTypes.node,
+    placeholder: PropTypes.string,
+    submitLabel: PropTypes.string,
+    inputType: PropTypes.string,
+    icon: PropTypes.node,
+    value: PropTypes.string,
 
-    bodyClassName: React.PropTypes.string,
-    contentClassName: React.PropTypes.string,
-    titleClassName: React.PropTypes.string,
+    bodyClassName: PropTypes.string,
+    contentClassName: PropTypes.string,
+    titleClassName: PropTypes.string,
 
-    onSubmit: React.PropTypes.func.isRequired,
-    onCancel: React.PropTypes.func.isRequired
+    onSubmit: PropTypes.func.isRequired,
+    onCancel: PropTypes.func.isRequired
   };
 
   static defaultProps = {

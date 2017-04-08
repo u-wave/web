@@ -1,5 +1,6 @@
 import cx from 'classnames';
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import IconButton from 'material-ui/IconButton';
 import AboutIcon from 'material-ui/svg-icons/navigation/arrow-drop-down';
 
@@ -20,10 +21,10 @@ const AppTitle = ({
 );
 
 AppTitle.propTypes = {
-  className: React.PropTypes.string,
-  hasAboutPage: React.PropTypes.bool.isRequired,
-  children: React.PropTypes.string.isRequired,
-  onClick: React.PropTypes.func.isRequired
+  className: PropTypes.string,
+  hasAboutPage: PropTypes.bool.isRequired,
+  children: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired
 };
 
 export default AppTitle;

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import ChatMessages from '../../containers/ChatMessages';
 import ChatInput from '../../containers/ChatInput';
 

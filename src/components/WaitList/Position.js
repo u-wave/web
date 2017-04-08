@@ -1,5 +1,5 @@
-import * as React from 'react';
-
+import React from 'react';
+import PropTypes from 'prop-types';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 import MuiAvatar from 'material-ui/Avatar';
 
@@ -18,8 +18,8 @@ const Position = ({
 );
 
 Position.propTypes = {
-  position: React.PropTypes.number.isRequired,
-  muiTheme: React.PropTypes.object.isRequired
+  position: PropTypes.number.isRequired,
+  muiTheme: PropTypes.object.isRequired
 };
 
 export default muiThemeable()(Position);

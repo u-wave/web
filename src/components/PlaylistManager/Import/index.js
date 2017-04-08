@@ -1,5 +1,5 @@
-import * as React from 'react';
-
+import React from 'react';
+import PropTypes from 'prop-types';
 import injectMediaSources from '../../../utils/injectMediaSources';
 
 const PlaylistImport = ({
@@ -43,13 +43,13 @@ const PlaylistImport = ({
 };
 
 PlaylistImport.propTypes = {
-  selectedSourceType: React.PropTypes.string,
-  sourceStates: React.PropTypes.object,
+  selectedSourceType: PropTypes.string,
+  sourceStates: PropTypes.object,
 
-  getMediaSource: React.PropTypes.func.isRequired,
-  getAllMediaSources: React.PropTypes.func.isRequired,
-  onShowImportPanel: React.PropTypes.func.isRequired,
-  onHideImportPanel: React.PropTypes.func.isRequired
+  getMediaSource: PropTypes.func.isRequired,
+  getAllMediaSources: PropTypes.func.isRequired,
+  onShowImportPanel: PropTypes.func.isRequired,
+  onHideImportPanel: PropTypes.func.isRequired
 };
 
 export default injectMediaSources()(PlaylistImport);

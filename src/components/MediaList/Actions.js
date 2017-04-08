@@ -1,5 +1,6 @@
 import cx from 'classnames';
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const dontBubble = event => event.stopPropagation();
 
@@ -19,9 +20,9 @@ const Actions = ({
 /* eslint-enable jsx-a11y/no-static-element-interactions */
 
 Actions.propTypes = {
-  className: React.PropTypes.string,
-  media: React.PropTypes.object,
-  makeActions: React.PropTypes.func
+  className: PropTypes.string,
+  media: PropTypes.object,
+  makeActions: PropTypes.func
 };
 
 export default Actions;

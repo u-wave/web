@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import ArtistIcon from 'material-ui/svg-icons/hardware/headset';
 import TitleIcon from 'material-ui/svg-icons/image/music-note';
 
@@ -31,10 +32,10 @@ const SongInfo = ({ artist, title, artistUrl, trackUrl }) => (
 );
 
 SongInfo.propTypes = {
-  artist: React.PropTypes.string.isRequired,
-  title: React.PropTypes.string.isRequired,
-  artistUrl: React.PropTypes.string.isRequired,
-  trackUrl: React.PropTypes.string.isRequired
+  artist: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  artistUrl: PropTypes.string.isRequired,
+  trackUrl: PropTypes.string.isRequired
 };
 
 export default SongInfo;

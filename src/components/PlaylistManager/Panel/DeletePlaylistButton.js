@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import IconButton from 'material-ui/IconButton';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
@@ -8,10 +9,10 @@ import FormGroup from '../../Form/Group';
 
 class DeletePlaylistButton extends React.Component {
   static propTypes = {
-    t: React.PropTypes.func.isRequired,
-    onDelete: React.PropTypes.func.isRequired,
-    onNotDeletable: React.PropTypes.func.isRequired,
-    active: React.PropTypes.bool
+    t: PropTypes.func.isRequired,
+    onDelete: PropTypes.func.isRequired,
+    onNotDeletable: PropTypes.func.isRequired,
+    active: PropTypes.bool
   };
 
   state = {

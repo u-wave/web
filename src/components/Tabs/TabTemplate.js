@@ -1,5 +1,6 @@
 import cx from 'classnames';
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const TabTemplate = ({ className, selected, children }) => (
   <div className={cx('Tabs-panel', className, selected && 'is-visible')}>
@@ -8,9 +9,9 @@ const TabTemplate = ({ className, selected, children }) => (
 );
 
 TabTemplate.propTypes = {
-  children: React.PropTypes.node.isRequired,
-  selected: React.PropTypes.bool.isRequired,
-  className: React.PropTypes.string
+  children: PropTypes.node.isRequired,
+  selected: PropTypes.bool.isRequired,
+  className: PropTypes.string
 };
 
 export default TabTemplate;

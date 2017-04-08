@@ -1,5 +1,6 @@
 import cx from 'classnames';
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import compose from 'recompose/compose';
 import pure from 'recompose/pure';
 import withHandlers from 'recompose/withHandlers';
@@ -84,19 +85,19 @@ const Message = ({
 };
 
 Message.propTypes = {
-  user: React.PropTypes.object.isRequired,
-  text: React.PropTypes.string.isRequired,
-  parsedText: React.PropTypes.array.isRequired,
-  inFlight: React.PropTypes.bool,
-  timestamp: React.PropTypes.number.isRequired,
-  isMention: React.PropTypes.bool.isRequired,
-  deletable: React.PropTypes.bool.isRequired,
-  onDeleteClick: React.PropTypes.func,
-  compileOptions: React.PropTypes.shape({
-    availableEmoji: React.PropTypes.array,
-    emojiImages: React.PropTypes.object
+  user: PropTypes.object.isRequired,
+  text: PropTypes.string.isRequired,
+  parsedText: PropTypes.array.isRequired,
+  inFlight: PropTypes.bool,
+  timestamp: PropTypes.number.isRequired,
+  isMention: PropTypes.bool.isRequired,
+  deletable: PropTypes.bool.isRequired,
+  onDeleteClick: PropTypes.func,
+  compileOptions: PropTypes.shape({
+    availableEmoji: PropTypes.array,
+    emojiImages: PropTypes.object
   }),
-  onUsernameClick: React.PropTypes.func.isRequired
+  onUsernameClick: PropTypes.func.isRequired
 };
 
 export default enhance(Message);

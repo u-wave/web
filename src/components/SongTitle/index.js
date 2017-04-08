@@ -1,5 +1,6 @@
 import cx from 'classnames';
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import pure from 'recompose/pure';
 
 const SongTitle = ({ className, artist, title, size = 'large' }) => (
@@ -14,10 +15,10 @@ const SongTitle = ({ className, artist, title, size = 'large' }) => (
 );
 
 SongTitle.propTypes = {
-  className: React.PropTypes.string,
-  artist: React.PropTypes.string.isRequired,
-  title: React.PropTypes.string.isRequired,
-  size: React.PropTypes.string
+  className: PropTypes.string,
+  artist: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  size: PropTypes.string
 };
 
 export default pure(SongTitle);

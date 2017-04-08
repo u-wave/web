@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import BaseMarkdown from 'react-markdown';
 
 const Markdown = ({ source }) => (
@@ -6,7 +7,7 @@ const Markdown = ({ source }) => (
 );
 
 Markdown.propTypes = {
-  source: React.PropTypes.string.isRequired
+  source: PropTypes.string.isRequired
 };
 
 export default Markdown;

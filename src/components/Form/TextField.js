@@ -1,11 +1,12 @@
 import cx from 'classnames';
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default class TextField extends React.Component {
   static propTypes = {
-    className: React.PropTypes.string,
-    type: React.PropTypes.string,
-    icon: React.PropTypes.element
+    className: PropTypes.string,
+    type: PropTypes.string,
+    icon: PropTypes.element
   };
 
   static defaultProps = {

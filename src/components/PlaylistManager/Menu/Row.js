@@ -1,5 +1,6 @@
 import cx from 'classnames';
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { DropTarget } from 'react-dnd';
 import ActiveIcon from 'material-ui/svg-icons/navigation/check';
 import { MEDIA } from '../../../constants/DDItemTypes';
@@ -18,7 +19,7 @@ const collect = (connect, monitor) => ({
 });
 
 @DropTarget(MEDIA, playlistTarget, collect)
-export default class PlaylistRow extends Component {
+export default class PlaylistRow extends React.Component {
   static propTypes = {
     className: PropTypes.string,
     playlist: PropTypes.object,

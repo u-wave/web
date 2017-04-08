@@ -1,7 +1,7 @@
 import cx from 'classnames';
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import List from 'react-list';
-
 import ModRow from './ModRow';
 import SimpleRow from './SimpleRow';
 
@@ -41,11 +41,11 @@ const WaitList = ({
 };
 
 WaitList.propTypes = {
-  className: React.PropTypes.string,
-  users: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
-  canMoveUsers: React.PropTypes.bool.isRequired,
-  onMoveUser: React.PropTypes.func.isRequired,
-  onRemoveUser: React.PropTypes.func.isRequired
+  className: PropTypes.string,
+  users: PropTypes.arrayOf(PropTypes.object).isRequired,
+  canMoveUsers: PropTypes.bool.isRequired,
+  onMoveUser: PropTypes.func.isRequired,
+  onRemoveUser: PropTypes.func.isRequired
 };
 
 export default WaitList;

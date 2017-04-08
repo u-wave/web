@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import EmailIcon from 'material-ui/svg-icons/communication/email';
 import Loader from '../../Loader';
 import Form from '../../Form';
@@ -8,8 +9,8 @@ import Button from '../../Form/Button';
 
 export default class ResetPasswordForm extends React.Component {
   static propTypes = {
-    error: React.PropTypes.object,
-    onResetPassword: React.PropTypes.func
+    error: PropTypes.object,
+    onResetPassword: PropTypes.func
   };
 
   state = { busy: false };

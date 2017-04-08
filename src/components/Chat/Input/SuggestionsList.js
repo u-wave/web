@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
 import { List } from 'material-ui/List';
 
@@ -15,7 +16,7 @@ const SuggestionsList = ({
 );
 
 SuggestionsList.propTypes = {
-  children: React.PropTypes.node.isRequired
+  children: PropTypes.node.isRequired
 };
 
 export default SuggestionsList;

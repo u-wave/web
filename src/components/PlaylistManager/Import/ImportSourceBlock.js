@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import injectMediaSources from '../../../utils/injectMediaSources';
 
 const ImportSourceBlock = ({
@@ -19,10 +20,10 @@ const ImportSourceBlock = ({
 );
 
 ImportSourceBlock.propTypes = {
-  getMediaSource: React.PropTypes.func.isRequired,
-  sourceType: React.PropTypes.string.isRequired,
-  title: React.PropTypes.string.isRequired,
-  children: React.PropTypes.node.isRequired
+  getMediaSource: PropTypes.func.isRequired,
+  sourceType: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired
 };
 
 export default injectMediaSources()(ImportSourceBlock);

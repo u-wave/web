@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import compose from 'recompose/compose';
 import { translate } from 'react-i18next';
 import IconButton from 'material-ui/IconButton';
@@ -37,9 +38,9 @@ const VideoSizeButton = ({
 );
 
 VideoSizeButton.propTypes = {
-  t: React.PropTypes.func.isRequired,
-  videoSize: React.PropTypes.oneOf([ 'small', 'large' ]).isRequired,
-  onToggleVideoSize: React.PropTypes.func.isRequired
+  t: PropTypes.func.isRequired,
+  videoSize: PropTypes.oneOf([ 'small', 'large' ]).isRequired,
+  onToggleVideoSize: PropTypes.func.isRequired
 };
 
 const mapStateToProps = createStructuredSelector({

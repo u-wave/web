@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -30,8 +31,8 @@ const YouTubeImportPanel = ({ type, importingState, ...props }) => {
 };
 
 YouTubeImportPanel.propTypes = {
-  type: React.PropTypes.oneOf([ PLAYLIST, CHANNEL ]).isRequired,
-  importingState: React.PropTypes.oneOf([ IDLE, LOADING, LOADED ])
+  type: PropTypes.oneOf([ PLAYLIST, CHANNEL ]).isRequired,
+  importingState: PropTypes.oneOf([ IDLE, LOADING, LOADED ])
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(YouTubeImportPanel);

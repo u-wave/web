@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
 
 import Action from './Action';
@@ -10,7 +11,7 @@ const RemoveFromPlaylist = ({ onRemove, ...props }) => (
 );
 
 RemoveFromPlaylist.propTypes = {
-  onRemove: React.PropTypes.func.isRequired
+  onRemove: PropTypes.func.isRequired
 };
 
 export default RemoveFromPlaylist;

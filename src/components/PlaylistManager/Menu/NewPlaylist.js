@@ -1,5 +1,6 @@
 import cx from 'classnames';
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import CreatePlaylistIcon from 'material-ui/svg-icons/content/add';
 
@@ -8,9 +9,9 @@ import PromptDialog from '../../Dialogs/PromptDialog';
 @translate()
 export default class NewPlaylist extends React.Component {
   static propTypes = {
-    className: React.PropTypes.string,
-    t: React.PropTypes.func.isRequired,
-    onCreatePlaylist: React.PropTypes.func.isRequired
+    className: PropTypes.string,
+    t: PropTypes.func.isRequired,
+    onCreatePlaylist: PropTypes.func.isRequired
   };
 
   state = {

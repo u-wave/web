@@ -1,5 +1,6 @@
 import cx from 'classnames';
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Loader from '../Loader';
 
 const MediaLoadingIndicator = ({ className }) => (
@@ -9,7 +10,7 @@ const MediaLoadingIndicator = ({ className }) => (
 );
 
 MediaLoadingIndicator.propTypes = {
-  className: React.PropTypes.string
+  className: PropTypes.string
 };
 
 export default MediaLoadingIndicator;

@@ -1,5 +1,6 @@
 import cx from 'classnames';
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import compose from 'recompose/compose';
 import pure from 'recompose/pure';
@@ -61,11 +62,11 @@ const WaitlistButton = ({
 };
 
 WaitlistButton.propTypes = {
-  t: React.PropTypes.func.isRequired,
-  muiTheme: React.PropTypes.object.isRequired,
-  userInWaitlist: React.PropTypes.bool,
-  isLocked: React.PropTypes.bool,
-  onClick: React.PropTypes.func.isRequired
+  t: PropTypes.func.isRequired,
+  muiTheme: PropTypes.object.isRequired,
+  userInWaitlist: PropTypes.bool,
+  isLocked: PropTypes.bool,
+  onClick: PropTypes.func.isRequired
 };
 
 export default compose(

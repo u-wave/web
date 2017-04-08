@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
 import MuiTooltip from 'material-ui/internal/Tooltip';
 
@@ -10,12 +11,12 @@ import MuiTooltip from 'material-ui/internal/Tooltip';
 
 class Tooltip extends React.Component {
   static propTypes = {
-    style: React.PropTypes.object,
-    show: React.PropTypes.bool,
+    style: PropTypes.object,
+    show: PropTypes.bool,
     /**
      * Desired horizontal position of the tooltip.
      */
-    horizontalPosition: React.PropTypes.oneOf([ 'left', 'center', 'right' ])
+    horizontalPosition: PropTypes.oneOf([ 'left', 'center', 'right' ])
   };
 
   state = {

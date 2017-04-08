@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import pure from 'recompose/pure';
 
 import Favorite from './Favorite';
@@ -34,18 +35,18 @@ const ResponseBar = ({
 );
 
 ResponseBar.propTypes = {
-  disabled: React.PropTypes.bool,
-  isUpvote: React.PropTypes.bool,
-  isFavorite: React.PropTypes.bool,
-  isDownvote: React.PropTypes.bool,
+  disabled: PropTypes.bool,
+  isUpvote: PropTypes.bool,
+  isFavorite: PropTypes.bool,
+  isDownvote: PropTypes.bool,
 
-  upvotesCount: React.PropTypes.number.isRequired,
-  favoritesCount: React.PropTypes.number.isRequired,
-  downvotesCount: React.PropTypes.number.isRequired,
+  upvotesCount: PropTypes.number.isRequired,
+  favoritesCount: PropTypes.number.isRequired,
+  downvotesCount: PropTypes.number.isRequired,
 
-  onUpvote: React.PropTypes.func.isRequired,
-  onFavorite: React.PropTypes.func.isRequired,
-  onDownvote: React.PropTypes.func.isRequired
+  onUpvote: PropTypes.func.isRequired,
+  onFavorite: PropTypes.func.isRequired,
+  onDownvote: PropTypes.func.isRequired
 };
 
 export default pure(ResponseBar);

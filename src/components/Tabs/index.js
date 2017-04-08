@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Tabs as MuiTabs } from 'material-ui/Tabs';
 import TabTemplate from './TabTemplate';
 
@@ -70,11 +71,11 @@ const StyledTabs = ({
 );
 
 StyledTabs.propTypes = {
-  tabItemContainerStyle: React.PropTypes.object,
-  inkBarStyle: React.PropTypes.object,
-  contentContainerStyle: React.PropTypes.object,
-  children: React.PropTypes.arrayOf(React.PropTypes.node).isRequired,
-  value: React.PropTypes.string
+  tabItemContainerStyle: PropTypes.object,
+  inkBarStyle: PropTypes.object,
+  contentContainerStyle: PropTypes.object,
+  children: PropTypes.arrayOf(PropTypes.node).isRequired,
+  value: PropTypes.string
 };
 
 export default StyledTabs;

@@ -1,5 +1,6 @@
 import cx from 'classnames';
 import React from 'react';
+import PropTypes from 'prop-types';
 import { DragSource } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import { MEDIA } from '../../constants/DDItemTypes';
@@ -26,16 +27,16 @@ const collect = connect => ({
 @DragSource(MEDIA, mediaSource, collect)
 export default class Row extends React.Component {
   static propTypes = {
-    className: React.PropTypes.string,
-    connectDragSource: React.PropTypes.func.isRequired,
-    connectDragPreview: React.PropTypes.func.isRequired,
-    media: React.PropTypes.object,
-    selected: React.PropTypes.bool,
-    selection: React.PropTypes.array,
+    className: PropTypes.string,
+    connectDragSource: PropTypes.func.isRequired,
+    connectDragPreview: PropTypes.func.isRequired,
+    media: PropTypes.object,
+    selected: PropTypes.bool,
+    selection: PropTypes.array,
 
-    onOpenPreviewMediaDialog: React.PropTypes.func,
-    onClick: React.PropTypes.func,
-    makeActions: React.PropTypes.func
+    onOpenPreviewMediaDialog: PropTypes.func,
+    onClick: PropTypes.func,
+    makeActions: PropTypes.func
   };
 
   static defaultProps = {

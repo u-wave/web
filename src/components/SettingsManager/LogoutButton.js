@@ -1,15 +1,15 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import FlatButton from 'material-ui/FlatButton';
 import LogoutIcon from 'material-ui/svg-icons/action/power-settings-new';
-
 import ConfirmDialog from '../Dialogs/ConfirmDialog';
 import FormGroup from '../Form/Group';
 
 class LogoutButton extends React.Component {
   static propTypes = {
-    t: React.PropTypes.func.isRequired,
-    onLogout: React.PropTypes.func.isRequired
+    t: PropTypes.func.isRequired,
+    onLogout: PropTypes.func.isRequired
   };
 
   state = {

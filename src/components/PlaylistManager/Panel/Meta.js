@@ -1,5 +1,6 @@
 import cx from 'classnames';
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import Checkbox from 'material-ui/Checkbox';
 import IconButton from 'material-ui/IconButton';
@@ -62,16 +63,16 @@ const PlaylistMeta = ({
 );
 
 PlaylistMeta.propTypes = {
-  t: React.PropTypes.func.isRequired,
-  className: React.PropTypes.string,
-  active: React.PropTypes.bool.isRequired,
-  name: React.PropTypes.string.isRequired,
-  onShufflePlaylist: React.PropTypes.func.isRequired,
-  onActivatePlaylist: React.PropTypes.func.isRequired,
-  onRenamePlaylist: React.PropTypes.func.isRequired,
-  onDeletePlaylist: React.PropTypes.func.isRequired,
-  onNotDeletable: React.PropTypes.func.isRequired,
-  onFilter: React.PropTypes.func.isRequired
+  t: PropTypes.func.isRequired,
+  className: PropTypes.string,
+  active: PropTypes.bool.isRequired,
+  name: PropTypes.string.isRequired,
+  onShufflePlaylist: PropTypes.func.isRequired,
+  onActivatePlaylist: PropTypes.func.isRequired,
+  onRenamePlaylist: PropTypes.func.isRequired,
+  onDeletePlaylist: PropTypes.func.isRequired,
+  onNotDeletable: PropTypes.func.isRequired,
+  onFilter: PropTypes.func.isRequired
 };
 
 export default translate()(PlaylistMeta);

@@ -1,5 +1,6 @@
 import cx from 'classnames';
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import List from 'react-list';
 import UserRow from './UserRow';
 
@@ -20,8 +21,8 @@ const UserList = ({ className, users }) => (
 );
 
 UserList.propTypes = {
-  className: React.PropTypes.string,
-  users: React.PropTypes.arrayOf(React.PropTypes.object).isRequired
+  className: PropTypes.string,
+  users: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 export default UserList;

@@ -1,5 +1,5 @@
-import * as React from 'react';
-
+import React from 'react';
+import PropTypes from 'prop-types';
 import LogMessage from './LogMessage';
 import Message from './Message';
 import Motd from './Motd';
@@ -7,13 +7,13 @@ import ScrollDownNotice from './ScrollDownNotice';
 
 export default class ChatMessages extends React.Component {
   static propTypes = {
-    messages: React.PropTypes.array,
-    motd: React.PropTypes.array,
-    canDeleteMessages: React.PropTypes.bool,
-    onDeleteMessage: React.PropTypes.func,
-    compileOptions: React.PropTypes.shape({
-      availableEmoji: React.PropTypes.array,
-      emojiImages: React.PropTypes.object
+    messages: PropTypes.array,
+    motd: PropTypes.array,
+    canDeleteMessages: PropTypes.bool,
+    onDeleteMessage: PropTypes.func,
+    compileOptions: PropTypes.shape({
+      availableEmoji: PropTypes.array,
+      emojiImages: PropTypes.object
     })
   };
 

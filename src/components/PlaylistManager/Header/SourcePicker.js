@@ -1,5 +1,6 @@
 import cx from 'classnames';
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import Popover from 'material-ui/Popover';
 import ArrowIcon from 'material-ui/svg-icons/navigation/arrow-drop-down';
@@ -10,13 +11,13 @@ import SourcePickerElement from './SourcePickerElement';
 
 class SourcePicker extends React.Component {
   static propTypes = {
-    className: React.PropTypes.string,
-    selected: React.PropTypes.string,
-    onChange: React.PropTypes.func,
+    className: PropTypes.string,
+    selected: PropTypes.string,
+    onChange: PropTypes.func,
 
-    muiTheme: React.PropTypes.object.isRequired,
-    getMediaSource: React.PropTypes.func.isRequired,
-    getAllMediaSources: React.PropTypes.func.isRequired
+    muiTheme: PropTypes.object.isRequired,
+    getMediaSource: PropTypes.func.isRequired,
+    getAllMediaSources: PropTypes.func.isRequired
   };
 
   state = { open: false };

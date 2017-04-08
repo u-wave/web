@@ -1,5 +1,6 @@
 import cx from 'classnames';
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import debounce from 'lodash/debounce';
 import IconButton from 'material-ui/IconButton';
@@ -7,8 +8,8 @@ import FilterIcon from 'material-ui/svg-icons/action/search';
 
 class PlaylistFilter extends React.Component {
   static propTypes = {
-    t: React.PropTypes.func.isRequired,
-    onFilter: React.PropTypes.func.isRequired
+    t: PropTypes.func.isRequired,
+    onFilter: PropTypes.func.isRequired
   };
 
   state = {

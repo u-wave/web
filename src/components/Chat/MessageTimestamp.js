@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const timeFormatOptions = { hour: 'numeric', minute: 'numeric' };
 
@@ -12,7 +13,7 @@ const MessageTimestamp = ({ date }) => (
 );
 
 MessageTimestamp.propTypes = {
-  date: React.PropTypes.instanceOf(Date).isRequired
+  date: PropTypes.instanceOf(Date).isRequired
 };
 
 export default MessageTimestamp;

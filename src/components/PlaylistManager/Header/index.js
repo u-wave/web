@@ -1,5 +1,6 @@
 import cx from 'classnames';
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import OverlayHeader from '../../Overlay/Header';
 import SearchBar from '../../../containers/MediaSearchBar';
@@ -21,9 +22,9 @@ const PlaylistManagerHeader = ({
 );
 
 PlaylistManagerHeader.propTypes = {
-  className: React.PropTypes.string,
-  t: React.PropTypes.func.isRequired,
-  onCloseOverlay: React.PropTypes.func.isRequired
+  className: PropTypes.string,
+  t: PropTypes.func.isRequired,
+  onCloseOverlay: PropTypes.func.isRequired
 };
 
 export default enhance(PlaylistManagerHeader);

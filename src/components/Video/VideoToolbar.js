@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import IconButton from 'material-ui/IconButton';
 import EnterFullscreenIcon from 'material-ui/svg-icons/navigation/fullscreen';
@@ -34,14 +35,14 @@ const VideoToolbar = ({
 );
 
 VideoToolbar.propTypes = {
-  t: React.PropTypes.func.isRequired,
-  onFullscreenEnter: React.PropTypes.func.isRequired,
-  onFullscreenExit: React.PropTypes.func.isRequired,
-  isFullscreen: React.PropTypes.bool,
+  t: PropTypes.func.isRequired,
+  onFullscreenEnter: PropTypes.func.isRequired,
+  onFullscreenExit: PropTypes.func.isRequired,
+  isFullscreen: PropTypes.bool,
   /**
    * Optional further video tools.
    */
-  children: React.PropTypes.node
+  children: PropTypes.node
 };
 
 export default translate()(VideoToolbar);

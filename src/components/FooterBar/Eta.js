@@ -1,5 +1,6 @@
 import cx from 'classnames';
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import compose from 'recompose/compose';
 import pure from 'recompose/pure';
 import formatDuration from '../../utils/formatDuration';
@@ -15,10 +16,10 @@ const Eta = ({ className, base, currentTime, endTime }) => {
 };
 
 Eta.propTypes = {
-  className: React.PropTypes.string,
-  currentTime: React.PropTypes.number.isRequired,
-  endTime: React.PropTypes.number,
-  base: React.PropTypes.number
+  className: PropTypes.string,
+  currentTime: PropTypes.number.isRequired,
+  endTime: PropTypes.number,
+  base: PropTypes.number
 };
 
 export default compose(

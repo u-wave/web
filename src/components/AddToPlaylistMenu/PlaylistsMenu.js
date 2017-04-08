@@ -1,5 +1,6 @@
 import find from 'array-find';
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import Paper from 'material-ui/Paper';
 import Menu from 'material-ui/Menu';
@@ -39,17 +40,18 @@ const menuItemStyle = {
   WebkitAppearance: 'initial'
 };
 
-@translate()
-export default class PlaylistsMenu extends React.Component {
+const enhance = translate();
+
+class PlaylistsMenu extends React.Component {
   static propTypes = {
-    t: React.PropTypes.func.isRequired,
-    onClose: React.PropTypes.func.isRequired,
-    onSelect: React.PropTypes.func.isRequired,
-    onCreatePlaylist: React.PropTypes.func.isRequired,
-    playlists: React.PropTypes.arrayOf(React.PropTypes.object),
-    position: React.PropTypes.shape({
-      x: React.PropTypes.number,
-      y: React.PropTypes.number
+    t: PropTypes.func.isRequired,
+    onClose: PropTypes.func.isRequired,
+    onSelect: PropTypes.func.isRequired,
+    onCreatePlaylist: PropTypes.func.isRequired,
+    playlists: PropTypes.arrayOf(PropTypes.object),
+    position: PropTypes.shape({
+      x: PropTypes.number,
+      y: PropTypes.number
     })
   };
 
@@ -118,3 +120,5 @@ export default class PlaylistsMenu extends React.Component {
     );
   }
 }
+
+export default enhance(PlaylistsMenu);

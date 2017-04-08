@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 
 import Action from './Action';
@@ -10,7 +11,7 @@ const EditMedia = ({ onEdit, ...props }) => (
 );
 
 EditMedia.propTypes = {
-  onEdit: React.PropTypes.func.isRequired
+  onEdit: PropTypes.func.isRequired
 };
 
 export default EditMedia;

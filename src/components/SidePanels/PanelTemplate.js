@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import TabTemplate from '../Tabs/TabTemplate';
 
 const PanelTemplate = ({ selected, children }) => (
@@ -8,8 +9,8 @@ const PanelTemplate = ({ selected, children }) => (
 );
 
 PanelTemplate.propTypes = {
-  children: React.PropTypes.node.isRequired,
-  selected: React.PropTypes.bool.isRequired
+  children: PropTypes.node.isRequired,
+  selected: PropTypes.bool.isRequired
 };
 
 export default PanelTemplate;

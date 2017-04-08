@@ -1,5 +1,5 @@
-import * as React from 'react';
-
+import React from 'react';
+import PropTypes from 'prop-types';
 import Player from './Player';
 import PreviewPlayer from './PreviewPlayer';
 
@@ -11,7 +11,7 @@ const PlayerWrapper = (props) => {
 };
 
 PlayerWrapper.propTypes = {
-  mode: React.PropTypes.string.isRequired
+  mode: PropTypes.string.isRequired
 };
 
 export default PlayerWrapper;

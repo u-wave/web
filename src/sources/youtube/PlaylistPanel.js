@@ -1,8 +1,7 @@
-import * as React from 'react';
-
+import React from 'react';
+import PropTypes from 'prop-types';
 import IconButton from 'material-ui/IconButton';
 import ImportIcon from 'material-ui/svg-icons/av/playlist-add';
-
 import MediaList from '../../components/MediaList';
 import AddToPlaylistAction from '../../components/MediaList/Actions/AddToPlaylist';
 import ImportPanelHeader from '../../components/PlaylistManager/Import/ImportPanelHeader';
@@ -16,15 +15,15 @@ const selectionOrOne = (media, selection) => {
 
 export default class YouTubeImportPlaylistPanel extends React.Component {
   static propTypes = {
-    importingPlaylist: React.PropTypes.shape({
-      sourceID: React.PropTypes.string,
-      name: React.PropTypes.string
+    importingPlaylist: PropTypes.shape({
+      sourceID: PropTypes.string,
+      name: PropTypes.string
     }).isRequired,
-    importingPlaylistItems: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
+    importingPlaylistItems: PropTypes.arrayOf(PropTypes.object).isRequired,
 
-    onImportPlaylist: React.PropTypes.func.isRequired,
-    onOpenAddMediaMenu: React.PropTypes.func.isRequired,
-    onClosePanel: React.PropTypes.func.isRequired
+    onImportPlaylist: PropTypes.func.isRequired,
+    onOpenAddMediaMenu: PropTypes.func.isRequired,
+    onClosePanel: PropTypes.func.isRequired
   };
 
   handleImportFull = () => {

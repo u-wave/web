@@ -1,5 +1,6 @@
 import cx from 'classnames';
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import pure from 'recompose/pure';
 import SettingsIcon from 'material-ui/svg-icons/action/settings';
 
@@ -29,9 +30,9 @@ const UserInfo = ({ className, user, onClick }) => (
 );
 
 UserInfo.propTypes = {
-  className: React.PropTypes.string,
-  user: React.PropTypes.object.isRequired,
-  onClick: React.PropTypes.func
+  className: PropTypes.string,
+  user: PropTypes.object.isRequired,
+  onClick: PropTypes.func
 };
 
 export default pure(UserInfo);

@@ -1,6 +1,6 @@
 import cx from 'classnames';
-import * as React from 'react';
-
+import React from 'react';
+import PropTypes from 'prop-types';
 import Avatar from '../Avatar';
 import Username from '../Username';
 
@@ -15,8 +15,8 @@ const UserRow = ({ className, user }) => (
 );
 
 UserRow.propTypes = {
-  className: React.PropTypes.string,
-  user: React.PropTypes.object.isRequired
+  className: PropTypes.string,
+  user: PropTypes.object.isRequired
 };
 
 export default UserRow;

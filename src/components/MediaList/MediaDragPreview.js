@@ -1,5 +1,6 @@
 import assign from 'object-assign';
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 import ListIcon from 'material-ui/svg-icons/action/list';
 
@@ -40,11 +41,11 @@ const MediaDragPreview = ({
 };
 
 MediaDragPreview.propTypes = {
-  muiTheme: React.PropTypes.object.isRequired,
-  items: React.PropTypes.object,
-  currentOffset: React.PropTypes.shape({
-    x: React.PropTypes.number.isRequired,
-    y: React.PropTypes.number.isRequired
+  muiTheme: PropTypes.object.isRequired,
+  items: PropTypes.object,
+  currentOffset: PropTypes.shape({
+    x: PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired
   })
 };
 

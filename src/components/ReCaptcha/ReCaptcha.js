@@ -1,11 +1,12 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 export default class ReCaptcha extends React.Component {
   static propTypes = {
-    grecaptcha: React.PropTypes.object.isRequired,
-    sitekey: React.PropTypes.string.isRequired,
-    theme: React.PropTypes.string,
-    onResponse: React.PropTypes.func.isRequired
+    grecaptcha: PropTypes.object.isRequired,
+    sitekey: PropTypes.string.isRequired,
+    theme: PropTypes.string,
+    onResponse: PropTypes.func.isRequired
   };
 
   static defaultProps = {

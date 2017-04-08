@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 
@@ -31,7 +32,7 @@ const LanguagePicker = (props, { i18n }) => (
 
 // ALSO A HACK.
 LanguagePicker.contextTypes = {
-  i18n: React.PropTypes.object.isRequired
+  i18n: PropTypes.object.isRequired
 };
 
 export default LanguagePicker;

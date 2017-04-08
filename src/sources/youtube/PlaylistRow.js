@@ -1,15 +1,15 @@
 import cx from 'classnames';
-import * as React from 'react';
-
+import React from 'react';
+import PropTypes from 'prop-types';
 import IconButton from 'material-ui/IconButton';
 import ImportIcon from 'material-ui/svg-icons/av/playlist-add';
 
 export default class PlaylistRow extends React.Component {
   static propTypes = {
-    className: React.PropTypes.string,
-    playlist: React.PropTypes.object.isRequired,
+    className: PropTypes.string,
+    playlist: PropTypes.object.isRequired,
 
-    onImport: React.PropTypes.func.isRequired
+    onImport: PropTypes.func.isRequired
   };
 
   handleImportPlaylist = () => {

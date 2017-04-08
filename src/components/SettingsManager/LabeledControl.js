@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const LabeledControl = ({ id, label, children }) => (
   <div>
@@ -8,9 +9,9 @@ const LabeledControl = ({ id, label, children }) => (
 );
 
 LabeledControl.propTypes = {
-  id: React.PropTypes.string.isRequired,
-  label: React.PropTypes.string.isRequired,
-  children: React.PropTypes.node.isRequired
+  id: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired
 };
 
 export default LabeledControl;

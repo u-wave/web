@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import compose from 'recompose/compose';
 import ms from 'ms';
@@ -33,9 +34,9 @@ const TimeAgo = ({ t, currentTime, timestamp }) => {
 };
 
 TimeAgo.propTypes = {
-  t: React.PropTypes.func.isRequired,
-  currentTime: React.PropTypes.number.isRequired,
-  timestamp: React.PropTypes.number.isRequired
+  t: PropTypes.func.isRequired,
+  currentTime: PropTypes.number.isRequired,
+  timestamp: PropTypes.number.isRequired
 };
 
 export default compose(

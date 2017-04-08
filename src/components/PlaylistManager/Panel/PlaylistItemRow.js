@@ -1,9 +1,8 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { DropTarget } from 'react-dnd';
-
 import { MEDIA } from '../../../constants/DDItemTypes';
 import isDraggingNearTopOfRow from '../../../utils/isDraggingNearTopOfRow';
-
 import MediaRow from '../../MediaList/Row';
 
 const mediaTarget = {
@@ -38,11 +37,11 @@ const collect = (connect, monitor) => ({
 
 class PlaylistItemRow extends React.Component {
   static propTypes = {
-    connectDropTarget: React.PropTypes.func.isRequired,
+    connectDropTarget: PropTypes.func.isRequired,
     // Used in the drop handler above 👆
     // eslint-disable-next-line react/no-unused-prop-types
-    onMoveMedia: React.PropTypes.func.isRequired,
-    isOver: React.PropTypes.bool.isRequired
+    onMoveMedia: PropTypes.func.isRequired,
+    isOver: PropTypes.bool.isRequired
   };
 
   state = {

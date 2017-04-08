@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import LinearProgress from 'material-ui/LinearProgress';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 
@@ -19,12 +20,12 @@ const VideoProgressBar = ({
 );
 
 VideoProgressBar.propTypes = {
-  muiTheme: React.PropTypes.object.isRequired,
-  media: React.PropTypes.shape({
-    start: React.PropTypes.number.isRequired,
-    end: React.PropTypes.number.isRequired
+  muiTheme: PropTypes.object.isRequired,
+  media: PropTypes.shape({
+    start: PropTypes.number.isRequired,
+    end: PropTypes.number.isRequired
   }).isRequired,
-  seek: React.PropTypes.number.isRequired
+  seek: PropTypes.number.isRequired
 };
 
 export default muiThemeable()(VideoProgressBar);

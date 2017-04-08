@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import compose from 'recompose/compose';
 import pure from 'recompose/pure';
@@ -86,12 +87,12 @@ const SidePanels = ({
 );
 
 SidePanels.propTypes = {
-  t: React.PropTypes.func.isRequired,
-  selected: React.PropTypes.string.isRequired,
-  listenerCount: React.PropTypes.number.isRequired,
-  waitlistSize: React.PropTypes.number.isRequired,
-  waitlistPosition: React.PropTypes.number.isRequired,
-  onChange: React.PropTypes.func.isRequired
+  t: PropTypes.func.isRequired,
+  selected: PropTypes.string.isRequired,
+  listenerCount: PropTypes.number.isRequired,
+  waitlistSize: PropTypes.number.isRequired,
+  waitlistPosition: PropTypes.number.isRequired,
+  onChange: PropTypes.func.isRequired
 };
 
 export default compose(

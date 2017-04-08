@@ -1,6 +1,6 @@
 import cx from 'classnames';
-import * as React from 'react';
-
+import React from 'react';
+import PropTypes from 'prop-types';
 import AppTitle from './AppTitle';
 import Progress from './Progress';
 import CurrentMedia from './CurrentMedia';
@@ -58,21 +58,21 @@ const HeaderBar = ({
 );
 
 HeaderBar.propTypes = {
-  className: React.PropTypes.string,
-  title: React.PropTypes.string,
+  className: PropTypes.string,
+  title: PropTypes.string,
 
-  dj: React.PropTypes.object,
-  media: React.PropTypes.object,
-  mediaStartTime: React.PropTypes.number,
-  volume: React.PropTypes.number,
-  muted: React.PropTypes.bool,
-  hasAboutPage: React.PropTypes.bool.isRequired,
+  dj: PropTypes.object,
+  media: PropTypes.object,
+  mediaStartTime: PropTypes.number,
+  volume: PropTypes.number,
+  muted: PropTypes.bool,
+  hasAboutPage: PropTypes.bool.isRequired,
 
-  onVolumeChange: React.PropTypes.func,
-  onVolumeMute: React.PropTypes.func,
-  onVolumeUnmute: React.PropTypes.func,
-  onToggleRoomHistory: React.PropTypes.func,
-  onToggleAboutOverlay: React.PropTypes.func
+  onVolumeChange: PropTypes.func,
+  onVolumeMute: PropTypes.func,
+  onVolumeUnmute: PropTypes.func,
+  onToggleRoomHistory: PropTypes.func,
+  onToggleAboutOverlay: PropTypes.func
 };
 
 export default HeaderBar;

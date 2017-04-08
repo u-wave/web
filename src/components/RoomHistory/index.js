@@ -1,10 +1,9 @@
 import cx from 'classnames';
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
-
 import Overlay from '../Overlay';
 import OverlayHeader from '../Overlay/Header';
-
 import HistoryList from './HistoryList';
 
 const RoomHistory = ({
@@ -36,11 +35,11 @@ const RoomHistory = ({
 );
 
 RoomHistory.propTypes = {
-  t: React.PropTypes.func.isRequired,
-  className: React.PropTypes.string,
-  onCloseOverlay: React.PropTypes.func.isRequired,
-  onOpenAddMediaMenu: React.PropTypes.func.isRequired,
-  onOpenPreviewMediaDialog: React.PropTypes.func.isRequired
+  t: PropTypes.func.isRequired,
+  className: PropTypes.string,
+  onCloseOverlay: PropTypes.func.isRequired,
+  onOpenAddMediaMenu: PropTypes.func.isRequired,
+  onOpenPreviewMediaDialog: PropTypes.func.isRequired
 };
 
 export default translate()(RoomHistory);

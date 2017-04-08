@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import wrapDisplayName from 'recompose/wrapDisplayName';
 import { currentTimeSelector } from '../selectors/timeSelectors';
 
@@ -8,8 +9,8 @@ export default function () {
       static displayName = wrapDisplayName(Component, 'Timed');
 
       static contextTypes = {
-        store: React.PropTypes.object.isRequired,
-        timerCallbacks: React.PropTypes.arrayOf(React.PropTypes.func).isRequired
+        store: PropTypes.object.isRequired,
+        timerCallbacks: PropTypes.arrayOf(PropTypes.func).isRequired
       };
 
       state = {

@@ -1,5 +1,6 @@
 import cx from 'classnames';
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 
 import IconButton from 'material-ui/IconButton';
@@ -26,10 +27,10 @@ const ImportPanelHeader = ({
 );
 
 ImportPanelHeader.propTypes = {
-  className: React.PropTypes.string,
-  children: React.PropTypes.node,
-  t: React.PropTypes.func.isRequired,
-  onClosePanel: React.PropTypes.func.isRequired
+  className: PropTypes.string,
+  children: PropTypes.node,
+  t: PropTypes.func.isRequired,
+  onClosePanel: PropTypes.func.isRequired
 };
 
 export default translate()(ImportPanelHeader);

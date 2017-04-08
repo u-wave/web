@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import compose from 'recompose/compose';
 import withState from 'recompose/withState';
 import withProps from 'recompose/withProps';
@@ -42,11 +43,11 @@ const Emoji = ({
 );
 
 Emoji.propTypes = {
-  showTooltip: React.PropTypes.bool.isRequired,
-  onShowTooltip: React.PropTypes.func.isRequired,
-  onHideTooltip: React.PropTypes.func.isRequired,
-  name: React.PropTypes.string.isRequired,
-  image: React.PropTypes.string.isRequired
+  showTooltip: PropTypes.bool.isRequired,
+  onShowTooltip: PropTypes.func.isRequired,
+  onHideTooltip: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired
 };
 
 export default enhance(Emoji);

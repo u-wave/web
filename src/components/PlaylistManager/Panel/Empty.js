@@ -1,5 +1,6 @@
 import cx from 'classnames';
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 
 const EmptyPanel = ({ t, className }) => (
@@ -9,8 +10,8 @@ const EmptyPanel = ({ t, className }) => (
 );
 
 EmptyPanel.propTypes = {
-  t: React.PropTypes.func.isRequired,
-  className: React.PropTypes.string
+  t: PropTypes.func.isRequired,
+  className: PropTypes.string
 };
 
 export default translate()(EmptyPanel);

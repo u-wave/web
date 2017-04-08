@@ -1,17 +1,17 @@
 import cx from 'classnames';
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import Overlay from '../Overlay';
 import OverlayHeader from '../Overlay/Header';
-
 import SettingsPanel from './SettingsPanel';
 
 class SettingsManager extends React.Component {
   static propTypes = {
-    t: React.PropTypes.func.isRequired,
-    className: React.PropTypes.string,
-    onCloseOverlay: React.PropTypes.func.isRequired,
-    onLogout: React.PropTypes.func.isRequired
+    t: PropTypes.func.isRequired,
+    className: PropTypes.string,
+    onCloseOverlay: PropTypes.func.isRequired,
+    onLogout: PropTypes.func.isRequired
   };
 
   handleLogout = () => {

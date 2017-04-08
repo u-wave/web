@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import truncate from 'truncate-url';
 
 const Link = ({ children, href, ...props }) => (
@@ -14,8 +15,8 @@ const Link = ({ children, href, ...props }) => (
 );
 
 Link.propTypes = {
-  children: React.PropTypes.string.isRequired,
-  href: React.PropTypes.string.isRequired
+  children: PropTypes.string.isRequired,
+  href: PropTypes.string.isRequired
 };
 
 export default Link;

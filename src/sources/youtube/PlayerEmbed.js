@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import YouTube from 'react-youtube';
 import createDebug from 'debug';
 
@@ -6,11 +7,11 @@ const debug = createDebug('uwave:component:video:youtube');
 
 export default class YouTubePlayerEmbed extends React.Component {
   static propTypes = {
-    active: React.PropTypes.bool.isRequired,
-    media: React.PropTypes.object,
-    seek: React.PropTypes.number,
-    volume: React.PropTypes.number,
-    showControls: React.PropTypes.bool
+    active: PropTypes.bool.isRequired,
+    media: PropTypes.object,
+    seek: PropTypes.number,
+    volume: PropTypes.number,
+    showControls: PropTypes.bool
   };
 
   static defaultProps = {

@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import pure from 'recompose/pure';
 
 const LogMessage = ({ text }) => (
@@ -10,7 +11,7 @@ const LogMessage = ({ text }) => (
 );
 
 LogMessage.propTypes = {
-  text: React.PropTypes.string.isRequired
+  text: PropTypes.string.isRequired
 };
 
 export default pure(LogMessage);

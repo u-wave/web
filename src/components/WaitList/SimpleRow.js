@@ -1,12 +1,11 @@
 import cx from 'classnames';
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import compose from 'recompose/compose';
 import withProps from 'recompose/withProps';
-
 import userCardable from '../../utils/userCardable';
 import Avatar from '../Avatar';
 import Username from '../Username';
-
 import Position from './Position';
 
 const SimpleRow = ({
@@ -39,10 +38,10 @@ const SimpleRow = ({
 );
 
 SimpleRow.propTypes = {
-  className: React.PropTypes.string,
-  position: React.PropTypes.number.isRequired,
-  user: React.PropTypes.object.isRequired,
-  onOpenCard: React.PropTypes.func.isRequired
+  className: PropTypes.string,
+  position: PropTypes.number.isRequired,
+  user: PropTypes.object.isRequired,
+  onOpenCard: PropTypes.func.isRequired
 };
 
 export default compose(

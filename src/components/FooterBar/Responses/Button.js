@@ -1,14 +1,15 @@
 import cx from 'classnames';
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Tooltip from '../../Tooltip';
 
 export default class Button extends React.Component {
   static propTypes = {
-    onClick: React.PropTypes.func.isRequired,
-    children: React.PropTypes.element.isRequired,
-    disabled: React.PropTypes.bool,
-    count: React.PropTypes.number,
-    tooltip: React.PropTypes.string
+    onClick: PropTypes.func.isRequired,
+    children: PropTypes.element.isRequired,
+    disabled: PropTypes.bool,
+    count: PropTypes.number,
+    tooltip: PropTypes.string
   };
 
   state = { showTooltip: false };

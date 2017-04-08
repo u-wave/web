@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 
@@ -23,11 +24,11 @@ const SkipReasonsList = ({
 );
 
 SkipReasonsList.propTypes = {
-  reasons: React.PropTypes.arrayOf(React.PropTypes.shape({
-    name: React.PropTypes.string,
-    label: React.PropTypes.string
+  reasons: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string,
+    label: PropTypes.string
   })).isRequired,
-  onSelect: React.PropTypes.func.isRequired
+  onSelect: PropTypes.func.isRequired
 };
 
 export default SkipReasonsList;

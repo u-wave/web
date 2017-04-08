@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Dialog from 'material-ui/Dialog';
 
 import PreviewPlayer from '../../Video/Player';
@@ -41,11 +42,11 @@ const PreviewMediaDialog = ({
 );
 
 PreviewMediaDialog.propTypes = {
-  open: React.PropTypes.bool,
-  media: React.PropTypes.object,
-  volume: React.PropTypes.number,
+  open: PropTypes.bool,
+  media: PropTypes.object,
+  volume: PropTypes.number,
 
-  onCloseDialog: React.PropTypes.func.isRequired
+  onCloseDialog: PropTypes.func.isRequired
 };
 
 export default PreviewMediaDialog;

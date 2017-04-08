@@ -1,5 +1,6 @@
 import cx from 'classnames';
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import MediaList from '../../MediaList';
 import Loader from '../../Loader';
 
@@ -103,20 +104,20 @@ const PlaylistPanel = (props) => {
 };
 
 PlaylistPanel.propTypes = {
-  className: React.PropTypes.string,
-  playlist: React.PropTypes.object.isRequired,
-  media: React.PropTypes.array.isRequired,
-  loading: React.PropTypes.bool.isRequired,
-  isFiltered: React.PropTypes.bool.isRequired,
-  onShufflePlaylist: React.PropTypes.func.isRequired,
-  onActivatePlaylist: React.PropTypes.func.isRequired,
-  onRenamePlaylist: React.PropTypes.func.isRequired,
-  onDeletePlaylist: React.PropTypes.func.isRequired,
-  onLoadPlaylistPage: React.PropTypes.func.isRequired,
-  onFilterPlaylistItems: React.PropTypes.func.isRequired,
-  onNotDeletable: React.PropTypes.func.isRequired,
-  onMoveMedia: React.PropTypes.func.isRequired,
-  onOpenPreviewMediaDialog: React.PropTypes.func.isRequired
+  className: PropTypes.string,
+  playlist: PropTypes.object.isRequired,
+  media: PropTypes.array.isRequired,
+  loading: PropTypes.bool.isRequired,
+  isFiltered: PropTypes.bool.isRequired,
+  onShufflePlaylist: PropTypes.func.isRequired,
+  onActivatePlaylist: PropTypes.func.isRequired,
+  onRenamePlaylist: PropTypes.func.isRequired,
+  onDeletePlaylist: PropTypes.func.isRequired,
+  onLoadPlaylistPage: PropTypes.func.isRequired,
+  onFilterPlaylistItems: PropTypes.func.isRequired,
+  onNotDeletable: PropTypes.func.isRequired,
+  onMoveMedia: PropTypes.func.isRequired,
+  onOpenPreviewMediaDialog: PropTypes.func.isRequired
 };
 
 export default PlaylistPanel;

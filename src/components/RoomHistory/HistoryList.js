@@ -1,8 +1,7 @@
-import * as React from 'react';
-
+import React from 'react';
+import PropTypes from 'prop-types';
 import MediaList from '../MediaList';
 import AddToPlaylistAction from '../MediaList/Actions/AddToPlaylist';
-
 import HistoryRow from './Row';
 
 const addMediaActions = onOpenAddMediaMenu =>
@@ -25,7 +24,7 @@ const HistoryList = ({ onOpenAddMediaMenu, ...props }) => (
 );
 
 HistoryList.propTypes = {
-  onOpenAddMediaMenu: React.PropTypes.func.isRequired
+  onOpenAddMediaMenu: PropTypes.func.isRequired
 };
 
 export default HistoryList;

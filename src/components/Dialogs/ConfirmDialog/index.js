@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Dialog from 'material-ui/Dialog';
 
 import Form from '../../Form';
@@ -8,12 +9,12 @@ import Loader from '../../Loader';
 
 export default class ConfirmDialog extends React.Component {
   static propTypes = {
-    children: React.PropTypes.node,
-    confirmLabel: React.PropTypes.string,
-    cancelLabel: React.PropTypes.string,
+    children: PropTypes.node,
+    confirmLabel: PropTypes.string,
+    cancelLabel: PropTypes.string,
 
-    onConfirm: React.PropTypes.func.isRequired,
-    onCancel: React.PropTypes.func.isRequired
+    onConfirm: PropTypes.func.isRequired,
+    onCancel: PropTypes.func.isRequired
   };
 
   static defaultProps = {

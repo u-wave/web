@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import compose from 'recompose/compose';
 import FavoritedIcon from 'material-ui/svg-icons/action/favorite';
@@ -38,12 +39,12 @@ const Favorite = ({
 };
 
 Favorite.propTypes = {
-  t: React.PropTypes.func.isRequired,
-  muiTheme: React.PropTypes.object.isRequired,
-  onFavorite: React.PropTypes.func.isRequired,
-  count: React.PropTypes.number.isRequired,
-  disabled: React.PropTypes.bool,
-  active: React.PropTypes.bool
+  t: PropTypes.func.isRequired,
+  muiTheme: PropTypes.object.isRequired,
+  onFavorite: PropTypes.func.isRequired,
+  count: PropTypes.number.isRequired,
+  disabled: PropTypes.bool,
+  active: PropTypes.bool
 };
 
 export default compose(

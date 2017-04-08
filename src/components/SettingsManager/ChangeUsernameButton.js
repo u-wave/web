@@ -1,8 +1,8 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import IconButton from 'material-ui/IconButton';
 import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
-
 import PromptDialog from '../Dialogs/PromptDialog';
 
 const changeNameButtonStyle = {
@@ -21,9 +21,9 @@ const changeNameIconStyle = {
 
 class ChangeUsernameButton extends React.Component {
   static propTypes = {
-    t: React.PropTypes.func.isRequired,
-    onChangeUsername: React.PropTypes.func.isRequired,
-    initialUsername: React.PropTypes.string
+    t: PropTypes.func.isRequired,
+    onChangeUsername: PropTypes.func.isRequired,
+    initialUsername: PropTypes.string
   };
 
   state = {

@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import DownvoteIcon from 'material-ui/svg-icons/action/thumb-down';
 import UpvoteIcon from 'material-ui/svg-icons/action/thumb-up';
 import FavoritedIcon from 'material-ui/svg-icons/action/favorite';
@@ -48,12 +49,12 @@ const Votes = ({ upvotes, downvotes, favorites, isUpvote, isDownvote, isFavorite
 };
 
 Votes.propTypes = {
-  upvotes: React.PropTypes.array.isRequired,
-  favorites: React.PropTypes.array.isRequired,
-  downvotes: React.PropTypes.array.isRequired,
-  isUpvote: React.PropTypes.bool.isRequired,
-  isFavorite: React.PropTypes.bool.isRequired,
-  isDownvote: React.PropTypes.bool.isRequired
+  upvotes: PropTypes.array.isRequired,
+  favorites: PropTypes.array.isRequired,
+  downvotes: PropTypes.array.isRequired,
+  isUpvote: PropTypes.bool.isRequired,
+  isFavorite: PropTypes.bool.isRequired,
+  isDownvote: PropTypes.bool.isRequired
 };
 
 export default Votes;

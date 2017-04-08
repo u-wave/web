@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Avatar from '../../Avatar';
 import Suggestion from './Suggestion';
 
@@ -15,10 +16,10 @@ const UserSuggestion = ({
 );
 
 UserSuggestion.propTypes = {
-  value: React.PropTypes.shape({
-    _id: React.PropTypes.string.isRequired,
-    username: React.PropTypes.string.isRequired,
-    avatar: React.PropTypes.string
+  value: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    username: PropTypes.string.isRequired,
+    avatar: PropTypes.string
   }).isRequired
 };
 

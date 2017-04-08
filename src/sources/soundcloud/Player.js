@@ -1,5 +1,6 @@
 import cx from 'classnames';
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import createDebug from 'debug';
 import SongInfo from './SongInfo';
 import soundcloudLogo from '../../../assets/img/soundcloud-inline.png';
@@ -12,12 +13,12 @@ const clearStyle = { clear: 'both' };
 
 export default class SoundCloudPlayer extends React.Component {
   static propTypes = {
-    className: React.PropTypes.string,
-    active: React.PropTypes.bool.isRequired,
-    enabled: React.PropTypes.bool,
-    media: React.PropTypes.object,
-    seek: React.PropTypes.number,
-    volume: React.PropTypes.number
+    className: PropTypes.string,
+    active: PropTypes.bool.isRequired,
+    enabled: PropTypes.bool,
+    media: PropTypes.object,
+    seek: PropTypes.number,
+    volume: PropTypes.number
   };
 
   componentDidMount() {

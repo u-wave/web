@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import compose from 'recompose/compose';
 import pure from 'recompose/pure';
@@ -24,8 +25,8 @@ const HistoryButton = ({ t, onClick }) => (
 );
 
 HistoryButton.propTypes = {
-  t: React.PropTypes.func.isRequired,
-  onClick: React.PropTypes.func.isRequired
+  t: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired
 };
 
 export default compose(

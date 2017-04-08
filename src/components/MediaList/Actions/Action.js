@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const Action = ({ children, onAction, ...attrs }) => (
   <button
@@ -11,8 +12,8 @@ const Action = ({ children, onAction, ...attrs }) => (
 );
 
 Action.propTypes = {
-  children: React.PropTypes.element,
-  onAction: React.PropTypes.func
+  children: PropTypes.element,
+  onAction: PropTypes.func
 };
 
 export default Action;

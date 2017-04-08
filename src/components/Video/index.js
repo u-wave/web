@@ -1,10 +1,9 @@
 import cx from 'classnames';
 import isEqual from 'is-equal-shallow';
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import screenfull from 'screenfull';
-
 import injectMediaSources from '../../utils/injectMediaSources';
-
 import VideoBackdrop from './VideoBackdrop';
 import VideoProgressBar from './VideoProgressBar';
 import VideoToolbar from './VideoToolbar';
@@ -15,16 +14,16 @@ const defaultSourceTools = () => null;
 @injectMediaSources()
 export default class Video extends React.Component {
   static propTypes = {
-    getAllMediaSources: React.PropTypes.func.isRequired,
-    isFullscreen: React.PropTypes.bool,
-    enabled: React.PropTypes.bool,
-    size: React.PropTypes.string,
-    volume: React.PropTypes.number,
-    isMuted: React.PropTypes.bool,
-    media: React.PropTypes.object,
-    seek: React.PropTypes.number,
-    onFullscreenEnter: React.PropTypes.func.isRequired,
-    onFullscreenExit: React.PropTypes.func.isRequired
+    getAllMediaSources: PropTypes.func.isRequired,
+    isFullscreen: PropTypes.bool,
+    enabled: PropTypes.bool,
+    size: PropTypes.string,
+    volume: PropTypes.number,
+    isMuted: PropTypes.bool,
+    media: PropTypes.object,
+    seek: PropTypes.number,
+    onFullscreenEnter: PropTypes.func.isRequired,
+    onFullscreenExit: PropTypes.func.isRequired
   };
 
   state = {

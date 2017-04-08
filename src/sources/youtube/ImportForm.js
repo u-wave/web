@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import PlaylistIcon from 'material-ui/svg-icons/av/playlist-play';
 
 import ImportSourceBlock from '../../components/PlaylistManager/Import/ImportSourceBlock';
@@ -14,11 +15,11 @@ import {
 
 export default class YoutubeImportForm extends React.Component {
   static propTypes = {
-    onShowImportPanel: React.PropTypes.func.isRequired
+    onShowImportPanel: PropTypes.func.isRequired
   };
 
   static contextTypes = {
-    store: React.PropTypes.object
+    store: PropTypes.object
   };
 
   dispatch(action) {

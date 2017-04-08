@@ -1,5 +1,5 @@
-/* eslint-disable react/prefer-stateless-function */
 import React from 'react';
+import PropTypes from 'prop-types';
 import { DragDropContext } from 'react-dnd';
 import compose from 'recompose/compose';
 import toClass from 'recompose/toClass';
@@ -76,11 +76,11 @@ const App = ({
 );
 
 App.propTypes = {
-  activeOverlay: React.PropTypes.string,
-  settings: React.PropTypes.object.isRequired,
-  hasAboutPage: React.PropTypes.bool,
+  activeOverlay: PropTypes.string,
+  settings: PropTypes.object.isRequired,
+  hasAboutPage: PropTypes.bool,
 
-  onCloseOverlay: React.PropTypes.func.isRequired
+  onCloseOverlay: PropTypes.func.isRequired
 };
 
 export default compose(

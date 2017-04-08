@@ -1,7 +1,7 @@
 import cx from 'classnames';
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import List from 'react-list';
-
 import RoomUserRow from './Row';
 import GuestsRow from './GuestsRow';
 
@@ -46,9 +46,9 @@ const RoomUserList = ({ className, users, guests }) => {
 };
 
 RoomUserList.propTypes = {
-  className: React.PropTypes.string,
-  users: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
-  guests: React.PropTypes.number.isRequired
+  className: PropTypes.string,
+  users: PropTypes.arrayOf(PropTypes.object).isRequired,
+  guests: PropTypes.number.isRequired
 };
 
 export default RoomUserList;

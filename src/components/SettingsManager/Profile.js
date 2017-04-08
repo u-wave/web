@@ -1,6 +1,6 @@
 import cx from 'classnames';
-import * as React from 'react';
-
+import React from 'react';
+import PropTypes from 'prop-types';
 import Avatar from '../Avatar';
 import ChangeUsernameButton from './ChangeUsernameButton';
 
@@ -21,10 +21,10 @@ const Profile = ({ className, user, onChangeUsername }) => (
 );
 
 Profile.propTypes = {
-  className: React.PropTypes.string,
-  user: React.PropTypes.object.isRequired,
+  className: PropTypes.string,
+  user: PropTypes.object.isRequired,
 
-  onChangeUsername: React.PropTypes.func.isRequired
+  onChangeUsername: PropTypes.func.isRequired
 };
 
 export default Profile;

@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import AddIcon from 'material-ui/svg-icons/content/add';
 
 import Action from './Action';
@@ -21,7 +22,7 @@ const AddToPlaylist = ({ onAdd, ...props }) => (
 );
 
 AddToPlaylist.propTypes = {
-  onAdd: React.PropTypes.func.isRequired
+  onAdd: PropTypes.func.isRequired
 };
 
 export default AddToPlaylist;

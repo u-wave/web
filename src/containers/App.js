@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -36,18 +37,18 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 @connect(mapStateToProps, mapDispatchToProps)
 export default class AppContainer extends React.Component {
   static propTypes = {
-    mediaSources: React.PropTypes.object.isRequired,
-    uwave: React.PropTypes.object,
-    language: React.PropTypes.string,
-    muiTheme: React.PropTypes.object,
-    createTimer: React.PropTypes.func.isRequired,
-    stopTimer: React.PropTypes.func.isRequired
+    mediaSources: PropTypes.object.isRequired,
+    uwave: PropTypes.object,
+    language: PropTypes.string,
+    muiTheme: PropTypes.object,
+    createTimer: PropTypes.func.isRequired,
+    stopTimer: PropTypes.func.isRequired
   };
 
   static childContextTypes = {
-    timerCallbacks: React.PropTypes.arrayOf(React.PropTypes.func),
-    mediaSources: React.PropTypes.object,
-    uwave: React.PropTypes.object
+    timerCallbacks: PropTypes.arrayOf(PropTypes.func),
+    mediaSources: PropTypes.object,
+    uwave: PropTypes.object
   };
 
   getChildContext() {

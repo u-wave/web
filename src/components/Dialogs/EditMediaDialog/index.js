@@ -1,5 +1,6 @@
 import cx from 'classnames';
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import Dialog from 'material-ui/Dialog';
 import IconButton from 'material-ui/IconButton';
@@ -26,16 +27,16 @@ const parseDuration = str => str.split(':')
 @translate()
 export default class EditMediaDialog extends React.Component {
   static propTypes = {
-    t: React.PropTypes.func.isRequired,
-    open: React.PropTypes.bool,
-    media: React.PropTypes.object,
+    t: PropTypes.func.isRequired,
+    open: PropTypes.bool,
+    media: PropTypes.object,
 
-    bodyClassName: React.PropTypes.string,
-    contentClassName: React.PropTypes.string,
-    titleClassName: React.PropTypes.string,
+    bodyClassName: PropTypes.string,
+    contentClassName: PropTypes.string,
+    titleClassName: PropTypes.string,
 
-    onEditedMedia: React.PropTypes.func.isRequired,
-    onCloseDialog: React.PropTypes.func.isRequired
+    onEditedMedia: PropTypes.func.isRequired,
+    onCloseDialog: PropTypes.func.isRequired
   };
 
   state = {

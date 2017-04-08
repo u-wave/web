@@ -1,5 +1,6 @@
 import cx from 'classnames';
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const SourcePickerElement = ({
   className,
@@ -19,12 +20,12 @@ const SourcePickerElement = ({
 );
 
 SourcePickerElement.propTypes = {
-  className: React.PropTypes.string,
-  name: React.PropTypes.string.isRequired,
-  source: React.PropTypes.shape({
-    logo: React.PropTypes.string.isRequired
+  className: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  source: PropTypes.shape({
+    logo: PropTypes.string.isRequired
   }).isRequired,
-  active: React.PropTypes.bool
+  active: PropTypes.bool
 };
 
 export default SourcePickerElement;

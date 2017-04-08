@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import EmailIcon from 'material-ui/svg-icons/communication/email';
 import PasswordIcon from 'material-ui/svg-icons/action/lock';
@@ -11,10 +12,10 @@ import Button from '../../Form/Button';
 @translate()
 export default class LoginForm extends React.Component {
   static propTypes = {
-    t: React.PropTypes.func.isRequired,
-    error: React.PropTypes.object,
-    onLogin: React.PropTypes.func,
-    onOpenResetPasswordDialog: React.PropTypes.func
+    t: PropTypes.func.isRequired,
+    error: PropTypes.object,
+    onLogin: PropTypes.func,
+    onOpenResetPasswordDialog: PropTypes.func
   };
 
   state = { busy: false };

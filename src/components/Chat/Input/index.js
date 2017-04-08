@@ -1,7 +1,8 @@
 import cx from 'classnames';
 import sortBy from 'lodash/sortBy';
 import uniqBy from 'lodash/uniqBy';
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import AutoComplete, { Completion } from 'react-abstract-autocomplete';
 import SuggestionsList from './SuggestionsList';
@@ -43,11 +44,11 @@ const renderEmoji = props => <EmojiSuggestion {...props} />;
 @translate()
 export default class Input extends React.Component {
   static propTypes = {
-    t: React.PropTypes.func.isRequired,
-    onSend: React.PropTypes.func.isRequired,
-    mentionableUsers: React.PropTypes.array.isRequired,
-    mentionableGroups: React.PropTypes.array.isRequired,
-    availableEmoji: React.PropTypes.array.isRequired
+    t: PropTypes.func.isRequired,
+    onSend: PropTypes.func.isRequired,
+    mentionableUsers: PropTypes.array.isRequired,
+    mentionableGroups: PropTypes.array.isRequired,
+    availableEmoji: PropTypes.array.isRequired
   };
 
   state = {

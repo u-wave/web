@@ -1,5 +1,6 @@
 import cx from 'classnames';
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import { IDLE, LOADING, LOADED } from '../../../constants/LoadingStates';
 import Loader from '../../Loader';
@@ -50,13 +51,13 @@ const SearchResults = ({
 };
 
 SearchResults.propTypes = {
-  t: React.PropTypes.func.isRequired,
-  className: React.PropTypes.string,
-  query: React.PropTypes.string.isRequired,
-  results: React.PropTypes.arrayOf(React.PropTypes.object),
-  loadingState: React.PropTypes.oneOf([ IDLE, LOADING, LOADED ]).isRequired,
-  onOpenAddMediaMenu: React.PropTypes.func.isRequired,
-  onOpenPreviewMediaDialog: React.PropTypes.func.isRequired
+  t: PropTypes.func.isRequired,
+  className: PropTypes.string,
+  query: PropTypes.string.isRequired,
+  results: PropTypes.arrayOf(PropTypes.object),
+  loadingState: PropTypes.oneOf([ IDLE, LOADING, LOADED ]).isRequired,
+  onOpenAddMediaMenu: PropTypes.func.isRequired,
+  onOpenPreviewMediaDialog: PropTypes.func.isRequired
 };
 
 export default translate()(SearchResults);

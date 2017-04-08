@@ -1,6 +1,6 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { DropTarget } from 'react-dnd';
-
 import { WAITLIST_USER } from '../../constants/DDItemTypes';
 import isDraggingNearTopOfRow from '../../utils/isDraggingNearTopOfRow';
 
@@ -30,8 +30,8 @@ const collect = (connect, monitor) => ({
  */
 class ModRow extends React.Component {
   static propTypes = {
-    connectDropTarget: React.PropTypes.func.isRequired,
-    isOver: React.PropTypes.bool.isRequired
+    connectDropTarget: PropTypes.func.isRequired,
+    isOver: PropTypes.bool.isRequired
   };
 
   state = {

@@ -1,5 +1,6 @@
 import cx from 'classnames';
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const Avatar = ({ className, user }) => (
   <div className={cx('Avatar', className)}>
@@ -12,8 +13,8 @@ const Avatar = ({ className, user }) => (
 );
 
 Avatar.propTypes = {
-  className: React.PropTypes.string,
-  user: React.PropTypes.object.isRequired
+  className: PropTypes.string,
+  user: PropTypes.object.isRequired
 };
 
 export default Avatar;

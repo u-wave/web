@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import DownvoteIcon from 'material-ui/svg-icons/action/thumb-down';
 
@@ -22,11 +23,11 @@ const Downvote = ({
 );
 
 Downvote.propTypes = {
-  t: React.PropTypes.func.isRequired,
-  onDownvote: React.PropTypes.func.isRequired,
-  count: React.PropTypes.number.isRequired,
-  disabled: React.PropTypes.bool,
-  active: React.PropTypes.bool
+  t: PropTypes.func.isRequired,
+  onDownvote: PropTypes.func.isRequired,
+  count: PropTypes.number.isRequired,
+  disabled: PropTypes.bool,
+  active: PropTypes.bool
 };
 
 export default translate()(Downvote);

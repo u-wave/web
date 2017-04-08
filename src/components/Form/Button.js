@@ -1,5 +1,6 @@
 import cx from 'classnames';
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const Button = ({ children, className, text, ...props }) => (
   <button className={cx('Button', className)} {...props}>
@@ -8,9 +9,9 @@ const Button = ({ children, className, text, ...props }) => (
 );
 
 Button.propTypes = {
-  className: React.PropTypes.string,
-  text: React.PropTypes.string,
-  children: React.PropTypes.node
+  className: PropTypes.string,
+  text: PropTypes.string,
+  children: PropTypes.node
 };
 
 export default Button;

@@ -1,5 +1,5 @@
-import * as React from 'react';
-
+import React from 'react';
+import PropTypes from 'prop-types';
 import injectMediaSources from '../../utils/injectMediaSources';
 
 const PreviewPlayer = ({
@@ -21,9 +21,9 @@ const PreviewPlayer = ({
 };
 
 PreviewPlayer.propTypes = {
-  media: React.PropTypes.object.isRequired,
-  seek: React.PropTypes.number,
-  getMediaSource: React.PropTypes.func.isRequired
+  media: PropTypes.object.isRequired,
+  seek: PropTypes.number,
+  getMediaSource: PropTypes.func.isRequired
 };
 
 export default injectMediaSources()(PreviewPlayer);

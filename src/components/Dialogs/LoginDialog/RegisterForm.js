@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import EmailIcon from 'material-ui/svg-icons/communication/email';
 import PasswordIcon from 'material-ui/svg-icons/action/lock';
@@ -15,12 +16,12 @@ import ReCaptcha from '../../ReCaptcha';
 @translate()
 export default class RegisterForm extends React.Component {
   static propTypes = {
-    t: React.PropTypes.func.isRequired,
-    useReCaptcha: React.PropTypes.bool,
-    reCaptchaSiteKey: React.PropTypes.string,
-    error: React.PropTypes.object,
+    t: PropTypes.func.isRequired,
+    useReCaptcha: PropTypes.bool,
+    reCaptchaSiteKey: PropTypes.string,
+    error: PropTypes.object,
 
-    onRegister: React.PropTypes.func
+    onRegister: PropTypes.func
   };
 
   state = {

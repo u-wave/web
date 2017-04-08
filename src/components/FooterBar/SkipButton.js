@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import compose from 'recompose/compose';
 import pure from 'recompose/pure';
@@ -31,10 +32,10 @@ const reasons = [
 
 class SkipButton extends React.Component {
   static propTypes = {
-    t: React.PropTypes.func.isRequired,
-    userIsDJ: React.PropTypes.bool.isRequired,
-    currentDJ: React.PropTypes.object.isRequired,
-    onSkip: React.PropTypes.func.isRequired
+    t: PropTypes.func.isRequired,
+    userIsDJ: PropTypes.bool.isRequired,
+    currentDJ: PropTypes.object.isRequired,
+    onSkip: PropTypes.func.isRequired
   };
 
   state = {

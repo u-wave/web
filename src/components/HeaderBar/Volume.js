@@ -1,5 +1,6 @@
 import cx from 'classnames';
 import React from 'react';
+import PropTypes from 'prop-types';
 import Slider from 'material-ui/Slider';
 import VolumeDownIcon from 'material-ui/svg-icons/av/volume-down';
 import VolumeMuteIcon from 'material-ui/svg-icons/av/volume-mute';
@@ -16,13 +17,13 @@ const sliderStyle = {
 
 export default class Volume extends React.Component {
   static propTypes = {
-    className: React.PropTypes.string,
-    volume: React.PropTypes.number,
-    muted: React.PropTypes.bool,
+    className: PropTypes.string,
+    volume: PropTypes.number,
+    muted: PropTypes.bool,
 
-    onVolumeChange: React.PropTypes.func,
-    onMute: React.PropTypes.func,
-    onUnmute: React.PropTypes.func
+    onVolumeChange: PropTypes.func,
+    onMute: PropTypes.func,
+    onUnmute: PropTypes.func
   };
 
   shouldComponentUpdate(nextProps) {

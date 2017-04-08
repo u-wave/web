@@ -1,5 +1,6 @@
 import cx from 'classnames';
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 
 const GuestsRow = ({ t, className, guests }) => (
@@ -9,9 +10,9 @@ const GuestsRow = ({ t, className, guests }) => (
 );
 
 GuestsRow.propTypes = {
-  t: React.PropTypes.func.isRequired,
-  className: React.PropTypes.string,
-  guests: React.PropTypes.number.isRequired
+  t: PropTypes.func.isRequired,
+  className: PropTypes.string,
+  guests: PropTypes.number.isRequired
 };
 
 export default translate()(GuestsRow);

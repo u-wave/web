@@ -1,5 +1,6 @@
 import cx from 'classnames';
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const FormGroup = ({ children, className, ...props }) => (
   <div
@@ -11,8 +12,8 @@ const FormGroup = ({ children, className, ...props }) => (
 );
 
 FormGroup.propTypes = {
-  className: React.PropTypes.string,
-  children: React.PropTypes.node.isRequired
+  className: PropTypes.string,
+  children: PropTypes.node.isRequired
 };
 
 export default FormGroup;

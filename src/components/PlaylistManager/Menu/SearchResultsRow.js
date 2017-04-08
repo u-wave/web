@@ -1,5 +1,6 @@
 import cx from 'classnames';
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import SearchIcon from 'material-ui/svg-icons/action/search';
 
 const SearchResultsRow = ({
@@ -26,10 +27,10 @@ const SearchResultsRow = ({
 );
 
 SearchResultsRow.propTypes = {
-  className: React.PropTypes.string,
-  query: React.PropTypes.string,
-  size: React.PropTypes.number,
-  onClick: React.PropTypes.func
+  className: PropTypes.string,
+  query: PropTypes.string,
+  size: PropTypes.number,
+  onClick: PropTypes.func
 };
 
 export default SearchResultsRow;

@@ -1,8 +1,8 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-
 import {
   inputMessage
 } from '../actions/ChatActionCreators';
@@ -35,7 +35,7 @@ const ChatInputContainer = ({ isLoggedIn, ...props }) => (
 );
 
 ChatInputContainer.propTypes = {
-  isLoggedIn: React.PropTypes.bool.isRequired
+  isLoggedIn: PropTypes.bool.isRequired
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatInputContainer);

@@ -3,8 +3,8 @@
 import 'es6-promise';
 import 'whatwg-fetch';
 
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import React from 'react';
+import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { AppContainer as HotContainer } from 'react-hot-loader';
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -111,6 +111,6 @@ export default class Uwave {
     }
 
     this.renderTarget = target;
-    ReactDOM.render(this.getComponent(), target);
+    render(this.getComponent(), target);
   }
 }

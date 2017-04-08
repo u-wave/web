@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import pure from 'recompose/pure';
 
 import compile from './Markup/compile';
@@ -12,10 +13,10 @@ const Motd = ({ children, compileOptions }) => (
 );
 
 Motd.propTypes = {
-  children: React.PropTypes.array.isRequired,
-  compileOptions: React.PropTypes.shape({
-    availableEmoji: React.PropTypes.array,
-    emojiImages: React.PropTypes.object
+  children: PropTypes.array.isRequired,
+  compileOptions: PropTypes.shape({
+    availableEmoji: PropTypes.array,
+    emojiImages: PropTypes.object
   })
 };
 

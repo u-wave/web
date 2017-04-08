@@ -1,5 +1,6 @@
 import cx from 'classnames';
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import PlaylistRow from './Row';
 import PlaylistCreateRow from './NewPlaylist';
 import SearchResultsRow from './SearchResultsRow';
@@ -58,18 +59,18 @@ const Menu = ({
 };
 
 Menu.propTypes = {
-  className: React.PropTypes.string,
-  playlists: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
-  selected: React.PropTypes.object,
-  showSearchResults: React.PropTypes.bool.isRequired,
-  showImportPanel: React.PropTypes.bool.isRequired,
-  searchQuery: React.PropTypes.string,
-  searchResults: React.PropTypes.number,
-  onCreatePlaylist: React.PropTypes.func.isRequired,
-  onSelectPlaylist: React.PropTypes.func.isRequired,
-  onSelectSearchResults: React.PropTypes.func.isRequired,
-  onAddToPlaylist: React.PropTypes.func.isRequired,
-  onShowImportPanel: React.PropTypes.func.isRequired
+  className: PropTypes.string,
+  playlists: PropTypes.arrayOf(PropTypes.object).isRequired,
+  selected: PropTypes.object,
+  showSearchResults: PropTypes.bool.isRequired,
+  showImportPanel: PropTypes.bool.isRequired,
+  searchQuery: PropTypes.string,
+  searchResults: PropTypes.number,
+  onCreatePlaylist: PropTypes.func.isRequired,
+  onSelectPlaylist: PropTypes.func.isRequired,
+  onSelectSearchResults: PropTypes.func.isRequired,
+  onAddToPlaylist: PropTypes.func.isRequired,
+  onShowImportPanel: PropTypes.func.isRequired
 };
 
 export default Menu;

@@ -1,5 +1,6 @@
 import cx from 'classnames';
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const Loader = ({ className, size }) => (
   <div className={cx('Loader', className)}>
@@ -8,8 +9,8 @@ const Loader = ({ className, size }) => (
 );
 
 Loader.propTypes = {
-  className: React.PropTypes.string,
-  size: React.PropTypes.string.isRequired
+  className: PropTypes.string,
+  size: PropTypes.string.isRequired
 };
 
 export default Loader;

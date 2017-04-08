@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import SongTitle from '../SongTitle';
 
@@ -11,11 +12,11 @@ const CurrentMedia = ({ t, className, media }) => (
 );
 
 CurrentMedia.propTypes = {
-  t: React.PropTypes.func.isRequired,
-  className: React.PropTypes.string,
-  media: React.PropTypes.shape({
-    artist: React.PropTypes.string.isRequired,
-    title: React.PropTypes.string.isRequired
+  t: PropTypes.func.isRequired,
+  className: PropTypes.string,
+  media: PropTypes.shape({
+    artist: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired
   })
 };
 

@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 
 const CurrentDJ = ({ t, className, dj }) => (
@@ -8,10 +9,10 @@ const CurrentDJ = ({ t, className, dj }) => (
 );
 
 CurrentDJ.propTypes = {
-  t: React.PropTypes.func.isRequired,
-  className: React.PropTypes.string,
-  dj: React.PropTypes.shape({
-    username: React.PropTypes.string.isRequired
+  t: PropTypes.func.isRequired,
+  className: PropTypes.string,
+  dj: PropTypes.shape({
+    username: PropTypes.string.isRequired
   })
 };
 

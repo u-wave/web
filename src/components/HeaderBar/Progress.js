@@ -1,6 +1,6 @@
 import cx from 'classnames';
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import transformStyle from '../../utils/transformStyle';
 import timed from '../../utils/timed';
 
@@ -29,10 +29,10 @@ const Progress = ({ className, media, currentTime, startTime }) => {
 };
 
 Progress.propTypes = {
-  className: React.PropTypes.string,
-  media: React.PropTypes.object,
-  currentTime: React.PropTypes.number.isRequired,
-  startTime: React.PropTypes.number
+  className: PropTypes.string,
+  media: PropTypes.object,
+  currentTime: PropTypes.number.isRequired,
+  startTime: PropTypes.number
 };
 
 export default timed()(Progress);

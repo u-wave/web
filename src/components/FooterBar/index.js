@@ -1,5 +1,6 @@
 import cx from 'classnames';
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 
 import NextMedia from './NextMedia';
@@ -11,35 +12,35 @@ import ResponseBar from './Responses/Bar';
 @translate()
 export default class FooterBar extends React.Component {
   static propTypes = {
-    t: React.PropTypes.func.isRequired,
-    className: React.PropTypes.string,
-    baseEta: React.PropTypes.number,
-    mediaEndTime: React.PropTypes.number,
-    nextMedia: React.PropTypes.object,
-    playlist: React.PropTypes.object,
-    user: React.PropTypes.object,
-    userInWaitlist: React.PropTypes.bool.isRequired,
-    userIsDJ: React.PropTypes.bool.isRequired,
-    currentDJ: React.PropTypes.object,
-    showSkip: React.PropTypes.bool,
-    waitlistIsLocked: React.PropTypes.bool.isRequired,
-    voteStats: React.PropTypes.object,
+    t: PropTypes.func.isRequired,
+    className: PropTypes.string,
+    baseEta: PropTypes.number,
+    mediaEndTime: PropTypes.number,
+    nextMedia: PropTypes.object,
+    playlist: PropTypes.object,
+    user: PropTypes.object,
+    userInWaitlist: PropTypes.bool.isRequired,
+    userIsDJ: PropTypes.bool.isRequired,
+    currentDJ: PropTypes.object,
+    showSkip: PropTypes.bool,
+    waitlistIsLocked: PropTypes.bool.isRequired,
+    voteStats: PropTypes.object,
 
-    openLoginDialog: React.PropTypes.func,
-    openRegisterDialog: React.PropTypes.func,
-    togglePlaylistManager: React.PropTypes.func,
-    toggleSettings: React.PropTypes.func,
-    joinWaitlist: React.PropTypes.func,
-    leaveWaitlist: React.PropTypes.func,
-    onSkipTurn: React.PropTypes.func.isRequired,
-    onModSkip: React.PropTypes.func.isRequired,
-    onFavorite: React.PropTypes.func,
-    onUpvote: React.PropTypes.func,
-    onDownvote: React.PropTypes.func
+    openLoginDialog: PropTypes.func,
+    openRegisterDialog: PropTypes.func,
+    togglePlaylistManager: PropTypes.func,
+    toggleSettings: PropTypes.func,
+    joinWaitlist: PropTypes.func,
+    leaveWaitlist: PropTypes.func,
+    onSkipTurn: PropTypes.func.isRequired,
+    onModSkip: PropTypes.func.isRequired,
+    onFavorite: PropTypes.func,
+    onUpvote: PropTypes.func,
+    onDownvote: PropTypes.func
   };
 
   static contextTypes = {
-    muiTheme: React.PropTypes.object
+    muiTheme: PropTypes.object
   };
 
   constructor(props) {

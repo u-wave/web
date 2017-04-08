@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const disableCursor = { cursor: 'none' };
 const enableCursor = {};
@@ -15,8 +16,8 @@ const MouseMoveCapture = ({
 );
 
 MouseMoveCapture.propTypes = {
-  onMouseMove: React.PropTypes.func.isRequired,
-  active: React.PropTypes.bool
+  onMouseMove: PropTypes.func.isRequired,
+  active: PropTypes.bool
 };
 
 export default MouseMoveCapture;

@@ -1,9 +1,10 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import About from '../components/About';
 
 export default class AboutContainer extends React.Component {
   static contextTypes = {
-    uwave: React.PropTypes.object
+    uwave: PropTypes.object
   };
 
   getAboutPageComponent() {

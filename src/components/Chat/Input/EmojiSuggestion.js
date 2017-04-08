@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Suggestion from './Suggestion';
 
 const EmojiSuggestion = ({
@@ -19,9 +20,9 @@ const EmojiSuggestion = ({
 );
 
 EmojiSuggestion.propTypes = {
-  value: React.PropTypes.shape({
-    shortcode: React.PropTypes.string,
-    image: React.PropTypes.string
+  value: PropTypes.shape({
+    shortcode: PropTypes.string,
+    image: PropTypes.string
   }).isRequired
 };
 

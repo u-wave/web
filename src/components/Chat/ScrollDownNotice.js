@@ -1,5 +1,6 @@
 import cx from 'classnames';
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ScrollDownIcon from 'material-ui/svg-icons/navigation/arrow-downward';
@@ -15,9 +16,9 @@ const ScrollNotice = ({ muiTheme, show, onClick }) => (
 );
 
 ScrollNotice.propTypes = {
-  muiTheme: React.PropTypes.object.isRequired,
-  show: React.PropTypes.bool.isRequired,
-  onClick: React.PropTypes.func.isRequired
+  muiTheme: PropTypes.object.isRequired,
+  show: PropTypes.bool.isRequired,
+  onClick: PropTypes.func.isRequired
 };
 
 export default muiThemeable()(ScrollNotice);

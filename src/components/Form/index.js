@@ -1,5 +1,6 @@
 import cx from 'classnames';
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const Form = ({ children, className, ...props }) => (
   <form className={cx('Form', className)} {...props}>
@@ -8,8 +9,8 @@ const Form = ({ children, className, ...props }) => (
 );
 
 Form.propTypes = {
-  className: React.PropTypes.string,
-  children: React.PropTypes.node.isRequired
+  className: PropTypes.string,
+  children: PropTypes.node.isRequired
 };
 
 export default Form;

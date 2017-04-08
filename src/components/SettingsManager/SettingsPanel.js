@@ -1,5 +1,6 @@
 import cx from 'classnames';
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import Toggle from 'material-ui/Toggle';
 import FlatButton from 'material-ui/FlatButton';
@@ -31,14 +32,14 @@ const linkProps = {
 
 class SettingsPanel extends React.Component {
   static propTypes = {
-    t: React.PropTypes.func.isRequired,
-    className: React.PropTypes.string,
-    settings: React.PropTypes.object.isRequired,
-    user: React.PropTypes.object,
-    onSettingChange: React.PropTypes.func.isRequired,
-    onChangeUsername: React.PropTypes.func.isRequired,
-    onChangeLanguage: React.PropTypes.func.isRequired,
-    onLogout: React.PropTypes.func.isRequired
+    t: PropTypes.func.isRequired,
+    className: PropTypes.string,
+    settings: PropTypes.object.isRequired,
+    user: PropTypes.object,
+    onSettingChange: PropTypes.func.isRequired,
+    onChangeUsername: PropTypes.func.isRequired,
+    onChangeLanguage: PropTypes.func.isRequired,
+    onLogout: PropTypes.func.isRequired
   };
 
   handleVideoEnabledChange = (e, value) => {

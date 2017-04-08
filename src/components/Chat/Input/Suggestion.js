@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { ListItem } from 'material-ui/List';
 import { fade } from 'material-ui/utils/colorManipulator';
 import muiThemeable from 'material-ui/styles/muiThemeable';
@@ -33,10 +34,10 @@ const Suggestion = ({
 );
 
 Suggestion.propTypes = {
-  muiTheme: React.PropTypes.object.isRequired,
-  value: React.PropTypes.string.isRequired,
-  select: React.PropTypes.func.isRequired,
-  selected: React.PropTypes.bool.isRequired
+  muiTheme: PropTypes.object.isRequired,
+  value: PropTypes.string.isRequired,
+  select: PropTypes.func.isRequired,
+  selected: PropTypes.bool.isRequired
 };
 
 export default muiThemeable()(Suggestion);

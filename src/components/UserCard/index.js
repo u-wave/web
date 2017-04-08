@@ -1,13 +1,14 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import RenderToLayer from 'material-ui/internal/RenderToLayer';
 import UserCard from './UserCard';
 
 class UserCardWrapper extends React.Component {
   static propTypes = {
-    onClose: React.PropTypes.func.isRequired,
-    position: React.PropTypes.shape({
-      x: React.PropTypes.number.isRequired,
-      y: React.PropTypes.number.isRequired
+    onClose: PropTypes.func.isRequired,
+    position: PropTypes.shape({
+      x: PropTypes.number.isRequired,
+      y: PropTypes.number.isRequired
     }).isRequired
   };
 

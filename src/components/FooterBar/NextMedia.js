@@ -1,5 +1,6 @@
 import cx from 'classnames';
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { translate, Interpolate } from 'react-i18next';
 import compose from 'recompose/compose';
 import pure from 'recompose/pure';
@@ -53,14 +54,14 @@ const NextMedia = ({
 };
 
 NextMedia.propTypes = {
-  t: React.PropTypes.func.isRequired,
-  className: React.PropTypes.string,
-  playlist: React.PropTypes.object,
-  nextMedia: React.PropTypes.object,
-  userInWaitlist: React.PropTypes.bool.isRequired,
-  userIsDJ: React.PropTypes.bool.isRequired,
-  baseEta: React.PropTypes.number,
-  mediaEndTime: React.PropTypes.number
+  t: PropTypes.func.isRequired,
+  className: PropTypes.string,
+  playlist: PropTypes.object,
+  nextMedia: PropTypes.object,
+  userInWaitlist: PropTypes.bool.isRequired,
+  userIsDJ: PropTypes.bool.isRequired,
+  baseEta: PropTypes.number,
+  mediaEndTime: PropTypes.number
 };
 
 export default compose(
