@@ -1,4 +1,5 @@
 import * as React from 'react';
+import withHandlers from 'recompose/withHandlers';
 import Drawer from 'material-ui/Drawer';
 import { List } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
@@ -6,6 +7,21 @@ import MenuItem from 'material-ui/MenuItem';
 import Divider from 'material-ui/Divider';
 
 import UserCard from '../../../components/UserCard/UserCard';
+
+const enhance = withHandlers({
+  // Prevent defaults for react-tap-event-plugin:
+  // https://github.com/zilverline/react-tap-event-plugin/issues/77
+  onShowAbout: props => (event) => {
+    event.preventDefault();
+    props.onShowAbout();
+    props.onChangeDrawerOpen(false);
+  },
+  onShowSettings: props => (event) => {
+    event.preventDefault();
+    props.onShowSettings();
+    props.onChangeDrawerOpen(false);
+  }
+});
 
 const DrawerMenu = ({
   user,
@@ -34,7 +50,11 @@ const DrawerMenu = ({
         <MenuItem
           key={playlist._id}
           checked={playlist.active}
-          onTouchTap={() => onShowPlaylist(playlist._id)}
+          onTouchTap={(event) => {
+            event.preventDefault();
+            onShowPlaylist(playlist._id);
+            onChangeDrawerOpen(false);
+          }}
         >
           {playlist.name}
         </MenuItem>
@@ -55,4 +75,4 @@ DrawerMenu.propTypes = {
   onChangeDrawerOpen: React.PropTypes.func.isRequired
 };
 
-export default DrawerMenu;
+export default enhance(DrawerMenu);

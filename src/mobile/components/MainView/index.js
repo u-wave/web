@@ -1,4 +1,5 @@
 import * as React from 'react';
+import withHandlers from 'recompose/withHandlers';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import SongTitle from '../../../components/SongTitle';
@@ -33,6 +34,23 @@ const getWaitlistLabel = (size, position) => {
   }
   return '0';
 };
+
+const enhance = withHandlers({
+  // Prevent defaults for react-tap-event-plugin:
+  // https://github.com/zilverline/react-tap-event-plugin/issues/77
+  onOpenRoomHistory: props => (event) => {
+    event.preventDefault();
+    props.onOpenRoomHistory();
+  },
+  onOpenDrawer: props => (event) => {
+    event.preventDefault();
+    props.onOpenDrawer();
+  },
+  onOpenWaitlist: props => (event) => {
+    event.preventDefault();
+    props.onOpenWaitlist();
+  }
+});
 
 const MainView = ({
   media,
@@ -90,4 +108,4 @@ MainView.propTypes = {
   onOpenDrawer: React.PropTypes.func.isRequired
 };
 
-export default MainView;
+export default enhance(MainView);
