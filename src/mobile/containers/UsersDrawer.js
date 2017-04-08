@@ -6,6 +6,7 @@ import {
   userInWaitlistSelector,
   isLockedSelector
 } from '../../selectors/waitlistSelectors';
+import { djSelector } from '../../selectors/boothSelectors';
 import { listenersSelector } from '../selectors/userSelectors';
 import {
   joinWaitlist,
@@ -17,6 +18,7 @@ import { setUsersDrawer } from '../actions/DrawerActionCreators';
 import UsersDrawer from '../components/UsersDrawer';
 
 const mapStateToProps = createStructuredSelector({
+  currentDJ: djSelector,
   users: listenersSelector,
   waitlist: waitlistUsersSelector,
   open: usersDrawerIsOpenSelector,

@@ -5,6 +5,7 @@ import Drawer from 'material-ui/Drawer';
 import UserList from './UserList';
 
 const UsersDrawer = ({
+  currentDJ,
   users,
   waitlist,
   isLockedWaitlist,
@@ -22,6 +23,7 @@ const UsersDrawer = ({
     onRequestChange={onChangeDrawerOpen}
   >
     <UserList
+      currentDJ={currentDJ}
       users={users}
       waitlist={waitlist}
       isLockedWaitlist={isLockedWaitlist}
@@ -33,6 +35,7 @@ const UsersDrawer = ({
 );
 
 UsersDrawer.propTypes = {
+  currentDJ: PropTypes.object,
   users: PropTypes.arrayOf(PropTypes.object).isRequired,
   waitlist: PropTypes.arrayOf(PropTypes.object).isRequired,
   userInWaitlist: PropTypes.bool,

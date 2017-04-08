@@ -6,8 +6,9 @@ import { List } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import Subheader from 'material-ui/Subheader';
 import RaisedButton from 'material-ui/RaisedButton';
-
+import CurrentDJIcon from 'material-ui/svg-icons/av/play-arrow';
 import UserRow from './UserRow';
+import WaitlistPosition from './WaitlistPosition';
 
 const JoinWaitlistButton = withProps({
   primary: true,
@@ -19,6 +20,7 @@ const JoinWaitlistButton = withProps({
 
 const UserList = ({
   t,
+  currentDJ,
   users,
   waitlist,
   isLockedWaitlist,
@@ -26,13 +28,21 @@ const UserList = ({
   onJoinWaitlist
 }) => (
   <div>
+    {currentDJ && <Divider />}
+
     <List>
       <Subheader>{t('waitlist.title')}</Subheader>
+      {currentDJ && (
+        <UserRow
+          user={currentDJ}
+          icon={<CurrentDJIcon style={{ margin: 5 }} />}
+        />
+      )}
       {waitlist.map((user, position) => (
         <UserRow
           key={user._id}
           user={user}
-          waitlistPosition={position + 1}
+          icon={<WaitlistPosition position={position + 1} />}
         />
       ))}
     </List>
@@ -43,7 +53,9 @@ const UserList = ({
         label={t('waitlist.join')}
       />
     )}
+
     <Divider />
+
     <List>
       <Subheader>{t('users.title')}</Subheader>
       {users.map(user => (
@@ -55,6 +67,7 @@ const UserList = ({
 
 UserList.propTypes = {
   t: PropTypes.func.isRequired,
+  currentDJ: PropTypes.object,
   users: PropTypes.arrayOf(PropTypes.object).isRequired,
   waitlist: PropTypes.arrayOf(PropTypes.object).isRequired,
   userInWaitlist: PropTypes.bool,

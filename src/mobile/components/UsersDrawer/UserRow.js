@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import withProps from 'recompose/withProps';
 import MuiAvatar from 'material-ui/Avatar';
 import { ListItem as MuiListItem } from 'material-ui/List';
@@ -14,26 +15,20 @@ const ListItem = withProps({
   }
 })(MuiListItem);
 
-const waitlistPositionStyle = {
-  margin: 8
-};
-
 const UserRow = ({
   user,
-  waitlistPosition
+  icon
 }) => (
   <ListItem
     leftAvatar={<Avatar src={user.avatar || `https://welovekpop.club/a/${user._id}`} />}
     primaryText={<Username user={user} />}
-    rightIcon={waitlistPosition && (
-      <span style={waitlistPositionStyle}>{waitlistPosition}</span>
-    )}
+    rightIcon={icon}
   />
 );
 
 UserRow.propTypes = {
-  user: React.PropTypes.object.isRequired,
-  waitlistPosition: React.PropTypes.number
+  user: PropTypes.object.isRequired,
+  icon: PropTypes.node
 };
 
 export default UserRow;
