@@ -10,6 +10,7 @@ const UsersDrawer = ({
   waitlist,
   isLockedWaitlist,
   userInWaitlist,
+  userIsLoggedIn,
   open,
   onChangeDrawerOpen,
   onJoinWaitlist,
@@ -27,6 +28,7 @@ const UsersDrawer = ({
       users={users}
       waitlist={waitlist}
       isLockedWaitlist={isLockedWaitlist}
+      userIsLoggedIn={userIsLoggedIn}
       userInWaitlist={userInWaitlist}
       onJoinWaitlist={onJoinWaitlist}
       onLeaveWaitlist={onLeaveWaitlist}
@@ -38,6 +40,7 @@ UsersDrawer.propTypes = {
   currentDJ: PropTypes.object,
   users: PropTypes.arrayOf(PropTypes.object).isRequired,
   waitlist: PropTypes.arrayOf(PropTypes.object).isRequired,
+  userIsLoggedIn: PropTypes.bool.isRequired,
   userInWaitlist: PropTypes.bool,
   isLockedWaitlist: PropTypes.bool,
   open: PropTypes.bool.isRequired,

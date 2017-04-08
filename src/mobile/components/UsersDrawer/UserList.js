@@ -24,6 +24,7 @@ const UserList = ({
   users,
   waitlist,
   isLockedWaitlist,
+  userIsLoggedIn,
   userInWaitlist,
   onJoinWaitlist
 }) => (
@@ -46,7 +47,7 @@ const UserList = ({
         />
       ))}
     </List>
-    {!userInWaitlist && (
+    {userIsLoggedIn && !userInWaitlist && (
       <JoinWaitlistButton
         onClick={() => onJoinWaitlist()}
         disabled={isLockedWaitlist}
@@ -70,6 +71,7 @@ UserList.propTypes = {
   currentDJ: PropTypes.object,
   users: PropTypes.arrayOf(PropTypes.object).isRequired,
   waitlist: PropTypes.arrayOf(PropTypes.object).isRequired,
+  userIsLoggedIn: PropTypes.bool.isRequired,
   userInWaitlist: PropTypes.bool,
   isLockedWaitlist: PropTypes.bool,
   onJoinWaitlist: PropTypes.func.isRequired

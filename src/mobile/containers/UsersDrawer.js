@@ -6,6 +6,9 @@ import {
   userInWaitlistSelector,
   isLockedSelector
 } from '../../selectors/waitlistSelectors';
+import {
+  isLoggedInSelector
+} from '../../selectors/userSelectors';
 import { djSelector } from '../../selectors/boothSelectors';
 import { listenersSelector } from '../selectors/userSelectors';
 import {
@@ -22,6 +25,7 @@ const mapStateToProps = createStructuredSelector({
   users: listenersSelector,
   waitlist: waitlistUsersSelector,
   open: usersDrawerIsOpenSelector,
+  userIsLoggedIn: isLoggedInSelector,
   userInWaitlist: userInWaitlistSelector,
   isLockedWaitlist: isLockedSelector
 });
