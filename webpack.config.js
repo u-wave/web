@@ -208,5 +208,13 @@ module.exports = {
         ]
       }
     ].filter(Boolean)
+  },
+  resolve: {
+    mainFields: [
+      'browser',
+      'module',
+      'jsnext:main',
+      'main'
+    ]
   }
 };
