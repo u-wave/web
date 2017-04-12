@@ -58,7 +58,7 @@
     "serve-static": "^1.10.2",
     "splitargs": "0.0.7",
     "trumpet": "^1.7.2",
-    "truncate-url": "^0.1.2",
+    "truncate-url": "^1.0.0",
     "u-wave-parse-chat-markup": "^2.0.0",
     "whatwg-fetch": "^2.0.0",
     "yamlify": "^0.1.3"
