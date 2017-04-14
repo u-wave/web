@@ -85,7 +85,7 @@
     "css-loader": "^0.28.0",
     "cssnano": "^3.10.0",
     "del": "^2.2.2",
-    "enzyme": "^2.7.1",
+    "enzyme": "^2.8.2",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^14.1.0",
     "eslint-config-airbnb-base": "^11.1.3",
