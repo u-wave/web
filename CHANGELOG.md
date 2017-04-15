@@ -1,3 +1,19 @@
+# 1.0.0-beta.9 / 15 Apr 2017
+
+Features:
+
+ * Use larger placeholder while dragging users in the waitlist. (#604)
+
+Bugfixes:
+
+ * Hide chat message input when logged out. (#597)
+
+Internal:
+
+ * Add a testing setup for React components. (#539)
+ * Upgrade React to v15.5 and deal with deprecations. (#600)
+ * Upgrade dependencies.
+
 # 1.0.0-beta.8 / 17 Mar 2017
 
 Features:
