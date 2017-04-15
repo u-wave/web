@@ -186,6 +186,27 @@ Object.keys(staticPages).forEach((name) => {
   }
 });
 
+plugins.push({
+  apply(compiler) {
+    const manifestModule = require.resolve('./src/manifest');
+    const manifest = require('./src/manifest').default;
+
+    compiler.plugin('emit', (compilation, cb) => {
+      const json = JSON.stringify(manifest, null, 2);
+      // eslint-disable-next-line no-param-reassign
+      compilation.assets['manifest.json'] = {
+        source: () => json,
+        size: () => json.length
+      };
+      cb();
+    });
+    compiler.plugin('after-emit', (compilation, cb) => {
+      compilation.fileDependencies.push(manifestModule);
+      cb();
+    });
+  }
+});
+
 module.exports = {
   context,
   entry: entries,
