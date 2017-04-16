@@ -79,6 +79,7 @@ uwave:
     title: Warteliste
     join: Warteliste beitreten
     leave: Warteliste verlassen
+    leaveConfirm: Bist du sicher, dass du die Warteliste verlassen möchtest?
 
   votes:
     upvote: Upvote

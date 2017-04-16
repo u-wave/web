@@ -82,12 +82,12 @@ const WaitlistButton = ({
       {userInWaitlist ? t('waitlist.leave') : t('waitlist.join')}
       {isLeaving && (
         <ConfirmDialog
-          cancelLabel="Cancel"
-          confirmLabel="Leave Waitlist"
+          title={t('waitlist.leave')}
+          confirmLabel={t('waitlist.leave')}
           onConfirm={onConfirmLeave}
           onCancel={onHideDialog}
         >
-          <FormGroup>Are you sure you want to leave the waitlist?</FormGroup>
+          <FormGroup>{t('waitlist.leaveConfirm')}</FormGroup>
         </ConfirmDialog>
       )}
     </FlatButton>

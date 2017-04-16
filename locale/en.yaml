@@ -87,6 +87,7 @@ uwave:
     title: Waitlist
     join: Join Waitlist
     leave: Leave Waitlist
+    leaveConfirm: "Are you sure you want to leave the waitlist?"
 
   votes:
     upvote: Upvote
