@@ -176,9 +176,20 @@ module.exports = {
           use: [ 'css-loader', 'postcss-loader' ]
         })
       },
+      // Locales: Compile the `en` fallback locale into the bundle.
+      {
+        test: /en\.yaml$/,
+        use: [ 'json-loader', 'yaml-loader' ]
+      },
+      // Load other locales dynamically.
       {
         test: /\.yaml$/,
-        use: [ 'json-loader', 'yaml-loader' ]
+        exclude: /en\.yaml$/,
+        use: [
+          { loader: 'file-loader', query: { name: '[name]_[hash:7].json' } },
+          nodeEnv === 'production' && require.resolve('./tasks/utils/minifyJsonLoader'),
+          'yaml-loader'
+        ].filter(Boolean)
       },
       {
         test: /\.json$/,

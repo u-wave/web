@@ -4,7 +4,8 @@ import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 
 // HACK.
-const getResourceName = (i18n, language) => i18n.store.data[language].name;
+const getResourceName = (i18n, language) =>
+  i18n.t(`locales.${language}`);
 
 const menuStyle = {
   float: 'right',

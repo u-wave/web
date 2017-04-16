@@ -22,10 +22,44 @@ const resources = {
   zh
 };
 
+class UwaveBackend {
+  static type = 'backend';
+  type = 'backend';
+  cache = {};
+
+  getResource(language) {
+    if (this.cache[language]) {
+      return this.cache[language];
+    }
+    if (!resources[language]) {
+      return Promise.reject(new Error(`The language "${language}" is not supported.`));
+    }
+    // Instantly return compiled-in locales.
+    if (typeof resources[language] === 'object') {
+      return Promise.resolve(resources[language]);
+    }
+
+    this.cache[language] = fetch(resources[language])
+      .then(response => response.json());
+
+    return this.cache[language];
+  }
+
+  read(language, namespace, callback) {
+    this.getResource(language)
+      .then(resource => resource[namespace])
+      .then((result) => {
+        callback(null, result);
+      })
+      .catch(callback);
+  }
+}
+
+i18next.use(new UwaveBackend());
+
 i18next.init({
   fallbackLng: 'en',
   defaultNS: 'uwave',
-  resources,
   interpolation: {
     // Prevent double-escapes: React already escapes things for us
     escapeValue: false
