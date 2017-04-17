@@ -13,6 +13,7 @@
     "npm": ">= 3"
   },
   "dependencies": {
+    "@u-wave/react-youtube": "^0.1.2",
     "array-find": "^1.0.0",
     "array-findindex": "^0.1.0",
     "classnames": "^2.2.4",
@@ -47,7 +48,6 @@
     "react-markdown": "^2.4.5",
     "react-redux": "^5.0.0",
     "react-tap-event-plugin": "^2.0.0",
-    "react-youtube": "^7.2.0",
     "recompose": "^0.23.0",
     "redux": "^3.5.2",
     "redux-logger": "^3.0.0",
