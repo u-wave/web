@@ -8,6 +8,7 @@ import Video from '../../../containers/Video';
 import Chat from '../../containers/Chat';
 import DrawerMenu from '../../containers/DrawerMenu';
 import UsersDrawer from '../../containers/UsersDrawer';
+import VideoDisabledMessage from './VideoDisabledMessage';
 
 const appBarStyle = {
   zIndex: 5 // Below overlays.
@@ -60,7 +61,8 @@ const MainView = ({
   waitlistSize,
   onOpenRoomHistory,
   onOpenDrawer,
-  onOpenWaitlist
+  onOpenWaitlist,
+  onEnableVideo
 }) => (
   <div className="MainView">
     <AppBar
@@ -90,6 +92,9 @@ const MainView = ({
           enabled={videoEnabled}
           size="large"
         />
+        {!videoEnabled && (
+          <VideoDisabledMessage onEnableVideo={onEnableVideo} />
+        )}
       </div>
       <div className="MobileApp-chat">
         <Chat />
@@ -108,7 +113,8 @@ MainView.propTypes = {
   waitlistSize: PropTypes.number.isRequired,
   onOpenRoomHistory: PropTypes.func.isRequired,
   onOpenWaitlist: PropTypes.func.isRequired,
-  onOpenDrawer: PropTypes.func.isRequired
+  onOpenDrawer: PropTypes.func.isRequired,
+  onEnableVideo: PropTypes.func.isRequired
 };
 
 export default enhance(MainView);

@@ -1,4 +1,5 @@
 @import "./ViewTemplate.css";
+@import "./VideoDisabledMessage.css";
 
 .MainView {
   height: 100%;

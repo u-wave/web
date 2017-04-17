@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import { selectPanel } from '../../actions/PanelSelectActionCreators';
 import { toggleRoomHistory } from '../../actions/OverlayActionCreators';
+import { set } from '../../actions/SettingsActionCreators';
 import {
   mediaSelector,
   startTimeSelector
@@ -32,7 +33,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onTabChange: selectPanel,
   onOpenRoomHistory: toggleRoomHistory,
   onOpenDrawer: openDrawer,
-  onOpenWaitlist: openUsersDrawer
+  onOpenWaitlist: openUsersDrawer,
+  onEnableVideo: () => set('videoEnabled', true)
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainView);
