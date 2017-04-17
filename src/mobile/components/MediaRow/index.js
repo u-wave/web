@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { ListItem } from 'material-ui/List';
 
 const MediaRow = ({ media }) => (
@@ -9,7 +10,7 @@ const MediaRow = ({ media }) => (
 );
 
 MediaRow.propTypes = {
-  media: React.PropTypes.object.isRequired
+  media: PropTypes.object.isRequired
 };
 
 export default MediaRow;

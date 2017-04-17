@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import find from 'array-find';
 import TransitionGroup from 'react-addons-css-transition-group';
 
@@ -23,8 +24,8 @@ const Overlays = ({ children, active }) => {
 };
 
 Overlays.propTypes = {
-  children: React.PropTypes.node,
-  active: React.PropTypes.string
+  children: PropTypes.node,
+  active: PropTypes.string
 };
 
 export default Overlays;

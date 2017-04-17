@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 import IconButton from 'material-ui/IconButton';
 import FavoritedIcon from 'material-ui/svg-icons/action/favorite';
@@ -30,15 +31,15 @@ const VoteButtons = ({
 );
 
 VoteButtons.propTypes = {
-  muiTheme: React.PropTypes.object.isRequired,
+  muiTheme: PropTypes.object.isRequired,
 
-  isUpvote: React.PropTypes.bool,
-  isFavorite: React.PropTypes.bool,
-  isDownvote: React.PropTypes.bool,
+  isUpvote: PropTypes.bool,
+  isFavorite: PropTypes.bool,
+  isDownvote: PropTypes.bool,
 
-  onUpvote: React.PropTypes.func.isRequired,
-  onDownvote: React.PropTypes.func.isRequired,
-  onFavorite: React.PropTypes.func.isRequired
+  onUpvote: PropTypes.func.isRequired,
+  onDownvote: PropTypes.func.isRequired,
+  onFavorite: PropTypes.func.isRequired
 };
 
 export default muiThemeable()(VoteButtons);

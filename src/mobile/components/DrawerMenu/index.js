@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import withHandlers from 'recompose/withHandlers';
 import Drawer from 'material-ui/Drawer';
 import { List } from 'material-ui/List';
@@ -64,15 +65,15 @@ const DrawerMenu = ({
 );
 
 DrawerMenu.propTypes = {
-  user: React.PropTypes.object,
-  playlists: React.PropTypes.arrayOf(
-    React.PropTypes.shape({ name: React.PropTypes.string.isRequired })
+  user: PropTypes.object,
+  playlists: PropTypes.arrayOf(
+    PropTypes.shape({ name: PropTypes.string.isRequired })
   ),
-  open: React.PropTypes.bool.isRequired,
-  onShowAbout: React.PropTypes.func.isRequired,
-  onShowSettings: React.PropTypes.func.isRequired,
-  onShowPlaylist: React.PropTypes.func.isRequired,
-  onChangeDrawerOpen: React.PropTypes.func.isRequired
+  open: PropTypes.bool.isRequired,
+  onShowAbout: PropTypes.func.isRequired,
+  onShowSettings: PropTypes.func.isRequired,
+  onShowPlaylist: PropTypes.func.isRequired,
+  onChangeDrawerOpen: PropTypes.func.isRequired
 };
 
 export default enhance(DrawerMenu);

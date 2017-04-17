@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { List } from 'material-ui/List';
 import MediaRow from '../MediaRow';
 
@@ -11,7 +12,7 @@ const PlaylistPanel = ({ items }) => (
 );
 
 PlaylistPanel.propTypes = {
-  items: React.PropTypes.array.isRequired
+  items: PropTypes.array.isRequired
 };
 
 export default PlaylistPanel;

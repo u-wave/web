@@ -1,6 +1,6 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import BaseVideo from '../../components/Video';
-
 import VoteButtons from './VoteButtons';
 
 const Video = ({
@@ -29,15 +29,15 @@ const Video = ({
 );
 
 Video.propTypes = {
-  enabled: React.PropTypes.bool,
+  enabled: PropTypes.bool,
 
-  isUpvote: React.PropTypes.bool,
-  isFavorite: React.PropTypes.bool,
-  isDownvote: React.PropTypes.bool,
+  isUpvote: PropTypes.bool,
+  isFavorite: PropTypes.bool,
+  isDownvote: PropTypes.bool,
 
-  onUpvote: React.PropTypes.func.isRequired,
-  onDownvote: React.PropTypes.func.isRequired,
-  onFavorite: React.PropTypes.func.isRequired
+  onUpvote: PropTypes.func.isRequired,
+  onDownvote: PropTypes.func.isRequired,
+  onFavorite: PropTypes.func.isRequired
 };
 
 export default Video;

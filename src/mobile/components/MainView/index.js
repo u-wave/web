@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import withHandlers from 'recompose/withHandlers';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
@@ -101,13 +102,13 @@ const MainView = ({
 );
 
 MainView.propTypes = {
-  media: React.PropTypes.object,
-  videoEnabled: React.PropTypes.bool.isRequired,
-  waitlistPosition: React.PropTypes.number.isRequired,
-  waitlistSize: React.PropTypes.number.isRequired,
-  onOpenRoomHistory: React.PropTypes.func.isRequired,
-  onOpenWaitlist: React.PropTypes.func.isRequired,
-  onOpenDrawer: React.PropTypes.func.isRequired
+  media: PropTypes.object,
+  videoEnabled: PropTypes.bool.isRequired,
+  waitlistPosition: PropTypes.number.isRequired,
+  waitlistSize: PropTypes.number.isRequired,
+  onOpenRoomHistory: PropTypes.func.isRequired,
+  onOpenWaitlist: PropTypes.func.isRequired,
+  onOpenDrawer: PropTypes.func.isRequired
 };
 
 export default enhance(MainView);

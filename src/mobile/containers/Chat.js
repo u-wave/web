@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
@@ -30,7 +31,7 @@ const ChatContainer = ({ isLoggedIn }) => (
 );
 
 ChatContainer.propTypes = {
-  isLoggedIn: React.PropTypes.bool.isRequired
+  isLoggedIn: PropTypes.bool.isRequired
 };
 
 export default connect(mapStateToProps)(ChatContainer);

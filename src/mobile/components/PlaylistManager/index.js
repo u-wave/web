@@ -1,5 +1,5 @@
-import * as React from 'react';
-
+import React from 'react';
+import PropTypes from 'prop-types';
 import Overlay from '../../../components/Overlay';
 import OverlayHeader from '../../../components/Overlay/Header';
 import OverlayContent from '../../../components/Overlay/Content';
@@ -20,7 +20,7 @@ const PlaylistManager = ({ onCloseOverlay }) => (
 );
 
 PlaylistManager.propTypes = {
-  onCloseOverlay: React.PropTypes.func.isRequired
+  onCloseOverlay: PropTypes.func.isRequired
 };
 
 export default PlaylistManager;

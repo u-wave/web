@@ -1,5 +1,6 @@
 import cx from 'classnames';
 import React from 'react';
+import PropTypes from 'prop-types';
 import compose from 'recompose/compose';
 import toClass from 'recompose/toClass';
 import { DragDropContext } from 'react-dnd';
@@ -49,11 +50,11 @@ const MobileApp = ({
 );
 
 MobileApp.propTypes = {
-  settings: React.PropTypes.shape({
-    videoEnabled: React.PropTypes.bool.isRequired
+  settings: PropTypes.shape({
+    videoEnabled: PropTypes.bool.isRequired
   }).isRequired,
-  activeOverlay: React.PropTypes.string,
-  onCloseOverlay: React.PropTypes.func.isRequired
+  activeOverlay: PropTypes.string,
+  onCloseOverlay: PropTypes.func.isRequired
 };
 
 export default compose(

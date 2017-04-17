@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import TabTemplate from '../../../components/Tabs/TabTemplate';
 
 const ViewTemplate = ({ selected, children }) => (
@@ -8,8 +9,8 @@ const ViewTemplate = ({ selected, children }) => (
 );
 
 ViewTemplate.propTypes = {
-  selected: React.PropTypes.bool.isRequired,
-  children: React.PropTypes.node.isRequired
+  selected: PropTypes.bool.isRequired,
+  children: PropTypes.node.isRequired
 };
 
 export default ViewTemplate;

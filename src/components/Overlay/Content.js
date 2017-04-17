@@ -1,5 +1,6 @@
 import cx from 'classnames';
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const OverlayContent = ({
   className,
@@ -11,8 +12,8 @@ const OverlayContent = ({
 );
 
 OverlayContent.propTypes = {
-  className: React.PropTypes.string,
-  children: React.PropTypes.node.isRequired
+  className: PropTypes.string,
+  children: PropTypes.node.isRequired
 };
 
 export default OverlayContent;

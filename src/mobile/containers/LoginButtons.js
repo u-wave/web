@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import compose from 'recompose/compose';
 import muiThemeable from 'material-ui/styles/muiThemeable';
@@ -44,10 +45,10 @@ const LoginButtons = ({
 );
 
 LoginButtons.propTypes = {
-  muiTheme: React.PropTypes.object.isRequired,
-  t: React.PropTypes.func.isRequired,
-  onLogin: React.PropTypes.func.isRequired,
-  onRegister: React.PropTypes.func.isRequired
+  muiTheme: PropTypes.object.isRequired,
+  t: PropTypes.func.isRequired,
+  onLogin: PropTypes.func.isRequired,
+  onRegister: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators({
