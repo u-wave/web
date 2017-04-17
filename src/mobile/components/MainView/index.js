@@ -54,6 +54,7 @@ const enhance = withHandlers({
 
 const MainView = ({
   media,
+  videoEnabled,
   waitlistPosition,
   waitlistSize,
   onOpenRoomHistory,
@@ -85,7 +86,7 @@ const MainView = ({
     <div className="MainView-content">
       <div className="MobileApp-video">
         <Video
-          enabled
+          enabled={videoEnabled}
           size="large"
         />
       </div>
@@ -101,6 +102,7 @@ const MainView = ({
 
 MainView.propTypes = {
   media: React.PropTypes.object,
+  videoEnabled: React.PropTypes.bool.isRequired,
   waitlistPosition: React.PropTypes.number.isRequired,
   waitlistSize: React.PropTypes.number.isRequired,
   onOpenRoomHistory: React.PropTypes.func.isRequired,

@@ -1,3 +1,4 @@
+import cx from 'classnames';
 import React from 'react';
 import compose from 'recompose/compose';
 import toClass from 'recompose/toClass';
@@ -16,10 +17,11 @@ import MainView from '../../containers/MainView';
 import Overlays from './Overlays';
 
 const MobileApp = ({
+  settings,
   activeOverlay,
   onCloseOverlay
 }) => (
-  <div className="App MobileApp is-mobile">
+  <div className={cx('App', 'MobileApp', 'is-mobile', settings.videoEnabled && 'MobileApp--videoEnabled')}>
     <MainView />
 
     <ErrorArea />
@@ -47,6 +49,9 @@ const MobileApp = ({
 );
 
 MobileApp.propTypes = {
+  settings: React.PropTypes.shape({
+    videoEnabled: React.PropTypes.bool.isRequired
+  }).isRequired,
   activeOverlay: React.PropTypes.string,
   onCloseOverlay: React.PropTypes.func.isRequired
 };

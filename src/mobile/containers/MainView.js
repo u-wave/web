@@ -13,12 +13,14 @@ import {
   positionSelector as waitlistPositionSelector
 } from '../../selectors/waitlistSelectors';
 import { playlistsSelector } from '../../selectors/playlistSelectors';
+import { videoEnabledSelector } from '../../selectors/settingSelectors';
 
 import { openDrawer, openUsersDrawer } from '../actions/DrawerActionCreators';
 import MainView from '../components/MainView';
 
 const mapStateToProps = createStructuredSelector({
   selected: state => state.selectedPanel,
+  videoEnabled: videoEnabledSelector,
   media: mediaSelector,
   startTime: startTimeSelector,
   waitlistPosition: waitlistPositionSelector,

@@ -2,12 +2,19 @@
 
 .MobileApp {
   &-video {
-    height: 40%;
+    height: 56px;
     position: relative;
   }
 
   &-chat {
-    height: 60%;
+    height: calc(100% - 56px);
     position: relative;
+  }
+
+  &--videoEnabled &-video {
+    height: 40%;
+  }
+  &--videoEnabled &-chat {
+    height: 60%;
   }
 }
