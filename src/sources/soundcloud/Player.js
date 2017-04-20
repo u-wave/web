@@ -104,7 +104,7 @@ export default class SoundCloudPlayer extends React.Component {
             rel="noopener noreferrer"
             className="src-soundcloud-Player-permalink"
           >
-            View on
+            View on{' '}
             <img
               src={soundcloudLogo}
               alt="SoundCloud"
