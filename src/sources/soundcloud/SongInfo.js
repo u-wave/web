@@ -15,6 +15,7 @@ const SongInfo = ({ artist, title, artistUrl, trackUrl }) => (
       target="_blank"
       rel="noopener noreferrer"
       href={artistUrl}
+      title={artist}
     >
       <ArtistIcon style={iconStyles} />
       {artist}
@@ -24,6 +25,7 @@ const SongInfo = ({ artist, title, artistUrl, trackUrl }) => (
       target="_blank"
       rel="noopener noreferrer"
       href={trackUrl}
+      title={title}
     >
       <TitleIcon style={iconStyles} />
       {title}

@@ -9,8 +9,6 @@ const debug = createDebug('uwave:component:video:soundcloud');
 
 const CLIENT_ID = '9d883cdd4c3c54c6dddda2a5b3a11200';
 
-const clearStyle = { clear: 'both' };
-
 export default class SoundCloudPlayer extends React.Component {
   static propTypes = {
     className: PropTypes.string,
@@ -91,13 +89,14 @@ export default class SoundCloudPlayer extends React.Component {
               src={media.thumbnail}
               alt=""
             />
-            <SongInfo
-              artist={sourceData.username}
-              title={sourceData.fullTitle}
-              artistUrl={sourceData.artistUrl}
-              trackUrl={sourceData.permalinkUrl}
-            />
-            <div style={clearStyle} />
+            <div className="src-soundcloud-Player-links">
+              <SongInfo
+                artist={sourceData.username}
+                title={sourceData.fullTitle}
+                artistUrl={sourceData.artistUrl}
+                trackUrl={sourceData.permalinkUrl}
+              />
+            </div>
           </div>
           <a
             href={sourceData.permalinkUrl}
@@ -105,7 +104,7 @@ export default class SoundCloudPlayer extends React.Component {
             rel="noopener noreferrer"
             className="src-soundcloud-Player-permalink"
           >
-            View on
+            View on{' '}
             <img
               src={soundcloudLogo}
               alt="SoundCloud"
