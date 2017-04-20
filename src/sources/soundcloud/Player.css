@@ -18,6 +18,7 @@
   }
 
   &-info {
+    display: flex;
     margin-bottom: var(--sc-margins);
   }
 
@@ -26,7 +27,10 @@
     width: 100px;
     height: 100px;
     margin-right: var(--sc-margins);
-    float: left;
+  }
+
+  &-links {
+    width: calc(100% - 100px - var(--sc-margins));
   }
 
   &-permalink {
