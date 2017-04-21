@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 
-// HACK.
 const getResourceName = (i18n, language) =>
   i18n.t(`locales.${language}`);
 
@@ -31,7 +30,6 @@ const LanguagePicker = (props, { i18n }) => (
   </DropDownMenu>
 );
 
-// ALSO A HACK.
 LanguagePicker.contextTypes = {
   i18n: PropTypes.object.isRequired
 };
