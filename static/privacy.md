@@ -1,4 +1,4 @@
-# ![üWave](../assets/img/logo-white.png) Privacy Policy
+# <img src="../assets/img/logo-white.png" alt="üWave" class="Privacy-logo"> Privacy Policy
 
 üWave attempts to store only the bare minimum of data necessary to make the site
 easy to use.
