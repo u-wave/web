@@ -28,6 +28,7 @@ class RegisterForm extends React.Component {
 
   state = {
     busy: false,
+    agreed: false,
     captchaResponse: null
   };
 
@@ -49,6 +50,12 @@ class RegisterForm extends React.Component {
   handleCaptchaResponse = (response) => {
     this.setState({
       captchaResponse: response
+    });
+  };
+
+  handleTosCheckbox = (event, checked) => {
+    this.setState({
+      agreed: checked
     });
   };
 
@@ -81,7 +88,7 @@ class RegisterForm extends React.Component {
 
   render() {
     const { t, error } = this.props;
-    const { busy } = this.state;
+    const { agreed, busy } = this.state;
 
     return (
       <Form className="RegisterForm" onSubmit={this.handleSubmit}>
@@ -117,7 +124,11 @@ class RegisterForm extends React.Component {
         {this.renderCaptcha()}
 
         <FormGroup>
-          <Checkbox style={{ float: 'left', width: 'auto' }} />
+          <Checkbox
+            style={{ float: 'left', width: 'auto' }}
+            checked={agreed}
+            onCheck={this.handleTosCheckbox}
+          />
           <Interpolate
             i18nKey="login.agree"
             privacyPolicy={
@@ -131,7 +142,7 @@ class RegisterForm extends React.Component {
         <FormGroup>
           <Button
             className="RegisterForm-submit"
-            disabled={busy}
+            disabled={busy || !agreed}
           >
             {busy
               ? <div className="Button-loading"><Loader size="tiny" /></div>
