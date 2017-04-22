@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import compose from 'recompose/compose';
 import withState from 'recompose/withState';
 import withProps from 'recompose/withProps';
@@ -65,12 +66,12 @@ const Motd = ({
 );
 
 Motd.propTypes = {
-  muiTheme: React.PropTypes.object.isRequired,
-  canChangeMotd: React.PropTypes.bool,
-  newMotd: React.PropTypes.string.isRequired,
-  parsedMotd: React.PropTypes.array.isRequired,
-  onChange: React.PropTypes.func.isRequired,
-  onSubmit: React.PropTypes.func.isRequired
+  muiTheme: PropTypes.object.isRequired,
+  canChangeMotd: PropTypes.bool,
+  newMotd: PropTypes.string.isRequired,
+  parsedMotd: PropTypes.array.isRequired,
+  onChange: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired
 };
 
 Motd.defaultProps = {

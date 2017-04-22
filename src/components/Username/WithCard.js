@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import compose from 'recompose/compose';
 import withProps from 'recompose/withProps';
 import userCardable from '../../utils/userCardable';
@@ -22,8 +23,8 @@ const UsernameWithCard = ({ user, onUsernameClick }) => (
 );
 
 UsernameWithCard.propTypes = {
-  user: React.PropTypes.object.isRequired,
-  onUsernameClick: React.PropTypes.func.isRequired
+  user: PropTypes.object.isRequired,
+  onUsernameClick: PropTypes.func.isRequired
 };
 
 export default enhance(UsernameWithCard);

@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import ms from 'ms';
 import {
   Table,
@@ -31,11 +32,11 @@ const BanRow = ({
 );
 
 BanRow.propTypes = {
-  ban: React.PropTypes.shape({
-    user: React.PropTypes.object.isRequired,
-    duration: React.PropTypes.number.isRequired,
-    reason: React.PropTypes.string,
-    moderator: React.PropTypes.object.isRequired
+  ban: PropTypes.shape({
+    user: PropTypes.object.isRequired,
+    duration: PropTypes.number.isRequired,
+    reason: PropTypes.string,
+    moderator: PropTypes.object.isRequired
   }).isRequired
 };
 
@@ -58,7 +59,7 @@ const BansList = ({
 );
 
 BansList.propTypes = {
-  bans: React.PropTypes.array.isRequired
+  bans: PropTypes.array.isRequired
 };
 
 export default BansList;

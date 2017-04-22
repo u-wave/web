@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import Motd from '../../containers/Motd';
 
 const Main = () => (

@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import loadable from 'react-loadable';
 import Loader from '../Loader';
 import Overlay from '../Overlay';
@@ -23,7 +24,7 @@ const AdminProxy = ({ onCloseOverlay }) => (
 );
 
 AdminProxy.propTypes = {
-  onCloseOverlay: React.PropTypes.func.isRequired
+  onCloseOverlay: PropTypes.func.isRequired
 };
 
 export default AdminProxy;

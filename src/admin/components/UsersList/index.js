@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {
   Table,
   TableBody,
@@ -25,7 +26,7 @@ const UserRow = ({
 );
 
 UserRow.propTypes = {
-  user: React.PropTypes.object.isRequired
+  user: PropTypes.object.isRequired
 };
 
 const UsersList = ({
@@ -45,7 +46,7 @@ const UsersList = ({
 );
 
 UsersList.propTypes = {
-  users: React.PropTypes.array.isRequired
+  users: PropTypes.array.isRequired
 };
 
 export default UsersList;

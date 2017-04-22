@@ -1,4 +1,4 @@
-import * as React from 'react';
+import PropTypes from 'prop-types';
 import compose from 'recompose/compose';
 import getContext from 'recompose/getContext';
 import lifecycle from 'recompose/lifecycle';
@@ -34,7 +34,7 @@ function mountAdminReducerOnce(store) {
 }
 
 const enhance = compose(
-  getContext({ store: React.PropTypes.object }),
+  getContext({ store: PropTypes.object }),
   lifecycle({
     componentWillMount() {
       if (this.props.store) {

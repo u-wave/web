@@ -1,5 +1,6 @@
 import cx from 'classnames';
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { List, ListItem } from 'material-ui/List';
 import CurrentPage from './CurrentPage';
 
@@ -36,8 +37,8 @@ const AdminApp = ({
 );
 
 AdminApp.propTypes = {
-  currentView: React.PropTypes.string.isRequired,
-  onTransition: React.PropTypes.func.isRequired
+  currentView: PropTypes.string.isRequired,
+  onTransition: PropTypes.func.isRequired
 };
 
 export default AdminApp;
