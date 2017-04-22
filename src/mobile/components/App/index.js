@@ -7,8 +7,8 @@ import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
 import ErrorArea from '../../../containers/ErrorArea';
-import PlaylistManager from '../../../containers/PlaylistManager';
-import RoomHistory from '../../../containers/RoomHistory';
+import PlaylistManager from '../../containers/PlaylistManager';
+import RoomHistory from '../../containers/RoomHistory';
 import SettingsManager from '../../../containers/SettingsManager';
 import Dialogs from '../../../components/Dialogs';
 import AddToPlaylistMenu from '../../../containers/AddToPlaylistMenu';

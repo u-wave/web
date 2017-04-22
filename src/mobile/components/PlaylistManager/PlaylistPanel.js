@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { List } from 'material-ui/List';
-import MediaRow from '../MediaRow';
+import MediaList from '../MediaList';
 
 const PlaylistPanel = ({ items }) => (
-  <List>
-    {items.map(item => (
-      <MediaRow media={item} />
-    ))}
-  </List>
+  <div className="PlaylistPanel">
+    <MediaList
+      className="PlaylistPanel-media"
+      media={items}
+    />
+  </div>
 );
 
 PlaylistPanel.propTypes = {

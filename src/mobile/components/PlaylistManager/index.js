@@ -3,23 +3,30 @@ import PropTypes from 'prop-types';
 import Overlay from '../../../components/Overlay';
 import OverlayHeader from '../../../components/Overlay/Header';
 import OverlayContent from '../../../components/Overlay/Content';
-import PlaylistPanel from '../../containers/PlaylistPanel';
+import PlaylistPanel from './PlaylistPanel';
 
-const PlaylistManager = ({ onCloseOverlay }) => (
+const PlaylistManager = ({
+  selectedPlaylist,
+  selectedItems,
+  onCloseOverlay
+}) => (
   <Overlay>
     <OverlayHeader
       className="PlaylistHeader"
+      title={selectedPlaylist.name}
       onCloseOverlay={onCloseOverlay}
-    >
-      Search comes here
-    </OverlayHeader>
+    />
     <OverlayContent>
-      <PlaylistPanel />
+      <PlaylistPanel items={selectedItems} />
     </OverlayContent>
   </Overlay>
 );
 
 PlaylistManager.propTypes = {
+  selectedPlaylist: PropTypes.shape({
+    name: PropTypes.string.isRequired
+  }).isRequired,
+  selectedItems: PropTypes.array.isRequired,
   onCloseOverlay: PropTypes.func.isRequired
 };
 
