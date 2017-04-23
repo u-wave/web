@@ -5,7 +5,6 @@ import DownvoteIcon from 'material-ui/svg-icons/action/thumb-down';
 import UpvoteIcon from 'material-ui/svg-icons/action/thumb-up';
 import FavoritedIcon from 'material-ui/svg-icons/action/favorite';
 import FavoriteIcon from 'material-ui/svg-icons/action/favorite-border';
-import './Votes.css';
 
 const iconStyles = {
   height: 16,

@@ -4,18 +4,24 @@ import Avatar from 'material-ui/Avatar';
 import { ListItem } from 'material-ui/List';
 import Votes from './Votes';
 
-const truncate = (str) => {
-  if (str.length < 30) return str;
-  return `${str.slice(0, 30)}…`;
-};
+const wrapTitle = title => (
+  <div className="MobileMediaRow-title">
+    {title}
+  </div>
+);
 
 const HistoryRow = ({ media }) => (
   <ListItem
-    primaryText={truncate(media.media.title)}
+    className="MobileMediaRow"
+    primaryText={wrapTitle(media.media.title)}
     secondaryText={
-      <div style={{ color: 'rgba(255, 255, 255, 0.8)' }}>
-        {truncate(media.media.artist)}
-        <Votes {...media.stats} />
+      // This has a wrapper div so we can override the material-ui styling using
+      // the `.MoblieMediaRow-artist` CSS class.
+      <div>
+        <div className="MobileMediaRow-artist">
+          {media.media.artist}
+          <Votes {...media.stats} />
+        </div>
       </div>
     }
     leftAvatar={
