@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate } from 'react-i18next';
+import { translate, Interpolate } from 'react-i18next';
+import Checkbox from 'material-ui/Checkbox';
 import EmailIcon from 'material-ui/svg-icons/communication/email';
 import PasswordIcon from 'material-ui/svg-icons/action/lock';
 import UserIcon from 'material-ui/svg-icons/social/person';
@@ -13,8 +14,9 @@ import Button from '../../Form/Button';
 
 import ReCaptcha from '../../ReCaptcha';
 
-@translate()
-export default class RegisterForm extends React.Component {
+const enhance = translate();
+
+class RegisterForm extends React.Component {
   static propTypes = {
     t: PropTypes.func.isRequired,
     useReCaptcha: PropTypes.bool,
@@ -26,6 +28,7 @@ export default class RegisterForm extends React.Component {
 
   state = {
     busy: false,
+    agreed: false,
     captchaResponse: null
   };
 
@@ -47,6 +50,12 @@ export default class RegisterForm extends React.Component {
   handleCaptchaResponse = (response) => {
     this.setState({
       captchaResponse: response
+    });
+  };
+
+  handleTosCheckbox = (event, checked) => {
+    this.setState({
+      agreed: checked
     });
   };
 
@@ -79,7 +88,7 @@ export default class RegisterForm extends React.Component {
 
   render() {
     const { t, error } = this.props;
-    const { busy } = this.state;
+    const { agreed, busy } = this.state;
 
     return (
       <Form className="RegisterForm" onSubmit={this.handleSubmit}>
@@ -115,9 +124,25 @@ export default class RegisterForm extends React.Component {
         {this.renderCaptcha()}
 
         <FormGroup>
+          <Checkbox
+            style={{ float: 'left', width: 'auto' }}
+            checked={agreed}
+            onCheck={this.handleTosCheckbox}
+          />
+          <Interpolate
+            i18nKey="login.agree"
+            privacyPolicy={
+              <a target="_blank" rel="noreferrer noopener" href="/privacy.html">
+                {t('login.privacyPolicy')}
+              </a>
+            }
+          />
+        </FormGroup>
+
+        <FormGroup>
           <Button
             className="RegisterForm-submit"
-            disabled={busy}
+            disabled={busy || !agreed}
           >
             {busy
               ? <div className="Button-loading"><Loader size="tiny" /></div>
@@ -129,3 +154,5 @@ export default class RegisterForm extends React.Component {
     );
   }
 }
+
+export default enhance(RegisterForm);

@@ -143,3 +143,5 @@ uwave:
     email: E-mail
     password: Password
     forgotPassword: Forgot Password?
+    privacyPolicy: Privacy Policy
+    agree: I am at least 13 years old and accept the {{privacyPolicy}}.

@@ -14,10 +14,16 @@
   text-align: center;
   text-transform: uppercase;
   font-size: 12pt;
+  transition: opacity 150ms;
 
   &-loading {
     width: calc(var(--forms-textfield-size) * 0.8);
     height: calc(var(--forms-textfield-size) * 0.8);
     margin: auto;
+  }
+
+  &:disabled {
+    cursor: default;
+    opacity: 0.5;
   }
 }
