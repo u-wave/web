@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import TransitionGroup from 'react-addons-css-transition-group';
+import TransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import { updateMedia } from '../actions/PlaylistActionCreators';
 import { closeEditMediaDialog } from '../actions/DialogActionCreators';
 

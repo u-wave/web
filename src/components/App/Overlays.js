@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import find from 'array-find';
-import TransitionGroup from 'react-addons-css-transition-group';
+import TransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
 const Overlays = ({ children, active }) => {
   let view;
