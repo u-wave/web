@@ -13,7 +13,7 @@
     "npm": ">= 3"
   },
   "dependencies": {
-    "@u-wave/react-youtube": "^0.1.2",
+    "@u-wave/react-youtube": "^0.2.0",
     "array-find": "^1.0.0",
     "array-findindex": "^0.1.0",
     "classnames": "^2.2.4",
