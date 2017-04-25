@@ -1,5 +1,5 @@
 import React from 'react';
-import loadScript from 'load-script';
+import loadScript from 'load-script2';
 
 import Loader from '../Loader';
 
