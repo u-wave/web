@@ -36,5 +36,16 @@ export default function uwaveWebClient(uw, options = {}) {
         .pipe(transform)
         .pipe(res);
     })
+    .get('/reset/:key', (req, res) => {
+      const transform = trumpet();
+      transform.select('#reset-data')
+        .createWriteStream()
+        .end(req.params.key);
+
+      fs.createReadStream(path.join(basePath, 'password-reset.html'), 'utf8')
+        .pipe(injectConfig({ apiUrl: clientOptions.apiUrl }))
+        .pipe(transform)
+        .pipe(res);
+    })
     .use(serveStatic(basePath));
 }
