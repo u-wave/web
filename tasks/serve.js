@@ -3,6 +3,7 @@
 require('loud-rejection/register');
 const gulp = require('gulp');
 const env = require('gulp-util').env;
+const log = require('gulp-util').log;
 const emojione = require('u-wave-web-emojione');
 const ytSource = require('u-wave-source-youtube');
 const scSource = require('u-wave-source-soundcloud');
@@ -57,9 +58,6 @@ gulp.task('serve', () => {
     }))
     .use('/assets/emoji/', emojione.middleware());
 
-  let fs = require('fs');
-  let publicPath;
-
   if (watch) {
     Object.keys(wpConfig.entry).forEach((chunk) => {
       const entry = wpConfig.entry[chunk];
@@ -81,29 +79,30 @@ gulp.task('serve', () => {
     const dev = webpackDevMiddleware(compiler, {
       noInfo: true,
       publicPath: '/',
-      serverSideRender: true,
-      // Specify a nonexistent file so webpack-dev-middleware doesn't attempt to
-      // serve it. It'll be served by the u-wave-web middleware instead below.
-      index: '-dummy-'
+      serverSideRender: true
     });
-    app.use(dev);
-    app.use(webpackHotMiddleware(compiler, {
-      log: require('gulp-util').log,
-      path: '/__webpack_hmr'
+
+    app.use(createWebClient(uw, {
+      apiUrl,
+      emoji: emojione.emoji,
+      publicPath: '/',
+      // Point u-wave-web middleware to the virtual webpack filesystem.
+      fs: dev.fileSystem,
+      recaptcha: { key: recaptchaTestKeys.sitekey }
     }));
 
-    // Point u-wave-web middleware to the virtual webpack filesystem.
-    fs = dev.fileSystem;
-    publicPath = '/';
+    app.use(dev);
+    app.use(webpackHotMiddleware(compiler, {
+      log,
+      path: '/__webpack_hmr'
+    }));
+  } else {
+    app.use(createWebClient(uw, {
+      apiUrl,
+      emoji: emojione.emoji,
+      recaptcha: { key: recaptchaTestKeys.sitekey }
+    }));
   }
-
-  app.use(createWebClient(uw, {
-    apiUrl,
-    emoji: emojione.emoji,
-    publicPath,
-    fs,
-    recaptcha: { key: recaptchaTestKeys.sitekey }
-  }));
 
   uw.on('stopped', () => {
     process.exit(0);
