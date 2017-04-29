@@ -191,3 +191,6 @@ uwave:
     introduction: Enter a new password below.
     submit: Reset Password
     success: Your password has been reset. You can now close this page.
+
+  admin:
+    unban: Unban

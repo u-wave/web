@@ -1,47 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ms from 'ms';
 import {
   Table,
   TableBody,
   TableHeader,
   TableHeaderColumn,
-  TableRow,
-  TableRowColumn as TableCell
+  TableRow
 } from 'material-ui/Table';
-
-import Username from '../../../components/Username/WithCard';
-
-const BanRow = ({
-  ban
-}) => (
-  <TableRow>
-    <TableCell>
-      <Username user={ban.user} />
-    </TableCell>
-    <TableCell>
-      {ms(ban.duration, { long: true })}
-    </TableCell>
-    <TableCell>
-      {ban.reason || <em>No reason given.</em>}
-    </TableCell>
-    <TableCell>
-      <Username user={ban.moderator} />
-    </TableCell>
-  </TableRow>
-);
-
-BanRow.propTypes = {
-  ban: PropTypes.shape({
-    user: PropTypes.object.isRequired,
-    duration: PropTypes.number.isRequired,
-    reason: PropTypes.string,
-    moderator: PropTypes.object.isRequired
-  }).isRequired
-};
+import BanRow from './Row';
 
 const BansList = ({
-  bans
+  bans,
+  onUnbanUser
 }) => (
   <Table selectable={false}>
     <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
@@ -50,16 +20,24 @@ const BansList = ({
         <TableHeaderColumn>Duration</TableHeaderColumn>
         <TableHeaderColumn>Reason</TableHeaderColumn>
         <TableHeaderColumn>Banned By</TableHeaderColumn>
+        <TableHeaderColumn>Actions</TableHeaderColumn>
       </TableRow>
     </TableHeader>
     <TableBody>
-      {bans.map(ban => <BanRow ban={ban} />)}
+      {bans.map(ban => (
+        <BanRow
+          key={ban.user._id}
+          ban={ban}
+          onUnbanUser={() => onUnbanUser(ban.user)}
+        />
+      ))}
     </TableBody>
   </Table>
 );
 
 BansList.propTypes = {
-  bans: PropTypes.array.isRequired
+  bans: PropTypes.array.isRequired,
+  onUnbanUser: PropTypes.func.isRequired
 };
 
 export default BansList;

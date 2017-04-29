@@ -13,7 +13,7 @@ export function loadUsersComplete(response) {
 }
 
 export function loadUsers() {
-  return get('users', {
+  return get('/users', {
     onStart: loadUsersStart,
     onComplete: loadUsersComplete
   });
