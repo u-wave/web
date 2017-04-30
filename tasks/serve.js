@@ -82,6 +82,13 @@ gulp.task('serve', () => {
       serverSideRender: true
     });
 
+    // Delay responding to HTTP requests until the first build is complete.
+    app.use((req, res, next) => {
+      dev.waitUntilValid(() => {
+        next();
+      });
+    });
+
     app.use(createWebClient(uw, {
       apiUrl,
       emoji: emojione.emoji,
