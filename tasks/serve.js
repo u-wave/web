@@ -4,6 +4,7 @@ require('loud-rejection/register');
 const gulp = require('gulp');
 const env = require('gulp-util').env;
 const log = require('gulp-util').log;
+const explain = require('explain-error');
 const emojione = require('u-wave-web-emojione');
 const ytSource = require('u-wave-source-youtube');
 const scSource = require('u-wave-source-soundcloud');
@@ -22,8 +23,7 @@ function tryRequire(file, message) {
     const mod = require(file);
     return mod.default || mod;
   } catch (e) {
-    e.message = `${message}\n"${file}" threw: ${e.message}`;
-    throw e;
+    throw explain(e, message);
   }
 }
 
@@ -41,6 +41,14 @@ gulp.task('serve', () => {
   const createWebClient = require('../src/middleware').default;
 
   const uw = uwave(config);
+
+  uw.on('mongoError', (err) => {
+    throw explain(err, 'Could not connect to MongoDB. Is it installed and running?');
+  });
+
+  uw.on('redisError', (err) => {
+    throw explain(err, 'Could not connect to the Redis server. Is it installed and running?');
+  });
 
   uw.source('youtube', ytSource, config.sources.youtube);
   uw.source('soundcloud', scSource, config.sources.soundcloud);
