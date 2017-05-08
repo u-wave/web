@@ -23,12 +23,12 @@ class SourcePicker extends React.Component {
   state = { open: false };
 
   createElement(sourceName) {
-    const { selected, getMediaSource, onChange } = this.props;
+    const { selected, getMediaSource } = this.props;
     return (
       <button
         className="SourcePicker-item"
         key={sourceName}
-        onClick={() => onChange(sourceName)}
+        onClick={() => this.handleChange(sourceName)}
       >
         <SourcePickerElement
           name={sourceName}
@@ -49,6 +49,11 @@ class SourcePicker extends React.Component {
   handleClose = () => {
     this.setState({ open: false });
   };
+
+  handleChange(sourceName) {
+    this.handleClose();
+    this.props.onChange(sourceName);
+  }
 
   refContainer = (container) => {
     this.container = container;
