@@ -3,6 +3,7 @@ import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 import { batchedSubscribe } from 'redux-batched-subscribe';
 import nanoraf from 'nanoraf';
+import raf from 'raf';
 import persistSettings from './persistSettings';
 import webApiRequest from './request';
 import webApiSocket from './socket';
@@ -19,7 +20,7 @@ export default function createUwaveStore(initialState = {}, options = {}) {
 
   const rerender = nanoraf((notify) => {
     notify();
-  });
+  }, raf);
 
   const middleware = [
     // Redux-Thunk allows dispatching a function to the store instead of an

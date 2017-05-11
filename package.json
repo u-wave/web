@@ -36,6 +36,7 @@
     "object-values": "^1.0.0",
     "object.map": "^1.0.0",
     "prop-types": "^15.5.1",
+    "raf": "^3.3.2",
     "react": "^15.5.0",
     "react-abstract-autocomplete": "^1.0.0",
     "react-dnd": "^2.0.2",
