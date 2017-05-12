@@ -113,7 +113,7 @@
     "loud-rejection": "^1.6.0",
     "mocha": "^3.2.0",
     "postcss-cssnext": "^2.9.0",
-    "postcss-import": "^9.1.0",
+    "postcss-import": "^10.0.0",
     "postcss-loader": "^2.0.0",
     "postcss-url": "^6.0.0",
     "proxyquire": "^1.7.11",
