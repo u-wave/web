@@ -24,7 +24,7 @@ const YouTubePlayer = ({
             active={active}
             seek={Math.round(seek)}
             volume={volume}
-            showControls={mode === 'preview'}
+            controllable={mode === 'preview'}
           />
         )}
       </div>

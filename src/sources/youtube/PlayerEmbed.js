@@ -8,15 +8,17 @@ export default class YouTubePlayerEmbed extends React.Component {
     media: PropTypes.object,
     seek: PropTypes.number,
     volume: PropTypes.number,
-    showControls: PropTypes.bool
+    controllable: PropTypes.bool
   };
 
   static defaultProps = {
-    showControls: false
+    controllable: false
   };
 
   handleYTPause = (event) => {
-    event.target.playVideo();
+    if (!this.props.controllable) {
+      event.target.playVideo();
+    }
   };
 
   refPlayer = (player) => {
@@ -24,7 +26,7 @@ export default class YouTubePlayerEmbed extends React.Component {
   };
 
   render() {
-    const { active, media, seek, volume, showControls } = this.props;
+    const { active, media, seek, volume, controllable } = this.props;
 
     return (
       <YouTube
@@ -36,7 +38,7 @@ export default class YouTubePlayerEmbed extends React.Component {
         modestBranding
         volume={volume / 100}
         playbackRate={1}
-        controls={showControls}
+        controls={controllable}
         showRelatedVideos={false}
         showInfo={false}
         annotations={false}
