@@ -1,6 +1,9 @@
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
+import { batchedSubscribe } from 'redux-batched-subscribe';
+import nanoraf from 'nanoraf';
+import raf from 'raf';
 import persistSettings from './persistSettings';
 import webApiRequest from './request';
 import webApiSocket from './socket';
@@ -14,6 +17,10 @@ import createSourcesReducer from '../reducers/createSourcesReducer';
 export default function createUwaveStore(initialState = {}, options = {}) {
   const isTesting = process.env.NODE_ENV === 'testing';
   const enableLogging = process.env.NODE_ENV !== 'production' && !isTesting;
+
+  const rerender = nanoraf((notify) => {
+    notify();
+  }, raf);
 
   const middleware = [
     // Redux-Thunk allows dispatching a function to the store instead of an
@@ -47,7 +54,8 @@ export default function createUwaveStore(initialState = {}, options = {}) {
       // reset all your preferences.
       // This is done separately from the Middleware features, because it changes
       // the _initial_ `settings` state, something that Middleware can't do.
-      persistSettings
+      persistSettings,
+      batchedSubscribe(rerender)
     )
   );
 
