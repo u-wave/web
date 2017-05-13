@@ -53,7 +53,7 @@ export default class MediaList extends React.Component {
     this.setState({ selection });
   }
 
-  renderRow = (index, key) => {
+  renderRow = (index) => {
     const makeActions = this.props.makeActions;
     const props = this.props.rowProps || {};
     const media = this.props.media[index];
@@ -62,7 +62,7 @@ export default class MediaList extends React.Component {
     if (!media) {
       return (
         <LoadingRow
-          key={key}
+          key={index}
           className="MediaList-row"
           selected={selected}
         />
@@ -72,7 +72,7 @@ export default class MediaList extends React.Component {
     const isAlternate = index % 2 === 0;
     return (
       <MediaRow
-        key={key}
+        key={media ? media._id : index}
         {...props}
         className={cx('MediaList-row', isAlternate && 'MediaListRow--alternate')}
         media={media}
