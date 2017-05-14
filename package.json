@@ -114,7 +114,7 @@
     "json-loader": "^0.5.4",
     "lodash-webpack-plugin": "^0.11.1",
     "loud-rejection": "^1.6.0",
-    "mocha": "^3.2.0",
+    "mocha": "^3.4.1",
     "postcss-cssnext": "^2.9.0",
     "postcss-import": "^10.0.0",
     "postcss-loader": "^2.0.0",
