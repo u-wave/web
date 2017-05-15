@@ -1,6 +1,4 @@
-.PreviewMediaDialog {
-  &-content {
-    overflow: hidden;
-    position: relative;
-  }
+.PreviewMediaDialog-content {
+  overflow: hidden;
+  position: relative;
 }

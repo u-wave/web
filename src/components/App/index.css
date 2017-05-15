@@ -38,31 +38,30 @@ button, input, optgroup, select, textarea {
 
   background: var(--background-color);
   color: var(--text-color);
+}
 
-  &-middle {
-    position: absolute;
-    top: var(--header-height);
-    bottom: var(--footer-height);
-    left: 0;
-    right: 0;
-  }
+.App-middle {
+  position: absolute;
+  top: var(--header-height);
+  bottom: var(--footer-height);
+  left: 0;
+  right: 0;
 }
 
 .AppColumn {
   position: absolute;
   height: 100%;
-
-  &--full {
-    width: 100%;
-  }
-  &--left {
-    width: 75%;
-    left: 0;
-  }
-  &--right {
-    width: 25%;
-    right: 0;
-  }
+}
+.AppColumn--full {
+  width: 100%;
+}
+.AppColumn--left {
+  width: 75%;
+  left: 0;
+}
+.AppColumn--right {
+  width: 25%;
+  right: 0;
 }
 
 .AppRow {
@@ -70,17 +69,16 @@ button, input, optgroup, select, textarea {
   left: 0;
   right: 0;
   clear: both;
-
-  &--top {
-    height: var(--header-height);
-    top: 0;
-  }
-  &--middle {
-    top: var(--header-height);
-    bottom: var(--footer-height);
-  }
-  &--bottom {
-    height: var(--footer-height);
-    bottom: 0;
-  }
+}
+.AppRow--top {
+  height: var(--header-height);
+  top: 0;
+}
+.AppRow--middle {
+  top: var(--header-height);
+  bottom: var(--footer-height);
+}
+.AppRow--bottom {
+  height: var(--footer-height);
+  bottom: 0;
 }

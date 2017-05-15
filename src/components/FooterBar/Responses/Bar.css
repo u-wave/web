@@ -19,25 +19,25 @@
   &:hover {
     background-color: var(--background-hover-color);
   }
+}
 
-  &--disabled {
-    cursor: default;
-    &:hover {
-      background-color: transparent;
-    }
+.ResponseButton--disabled {
+  cursor: default;
+  &:hover {
+    background-color: transparent;
   }
+}
 
-  &-content {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 15px;
-    position: relative;
-  }
+.ResponseButton-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 15px;
+  position: relative;
+}
 
-  &-icon {
-    height: 36px;
-    width: 36px;
-    padding: 6px 12px 6px 0px;
-  }
+.ResponseButton-icon {
+  height: 36px;
+  width: 36px;
+  padding: 6px 12px 6px 0px;
 }

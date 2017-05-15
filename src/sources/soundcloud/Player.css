@@ -9,35 +9,35 @@
   margin: auto;
   height: 300px;
   background: var(--background-color);
+}
 
-  &-meta {
-    background: color(var(--background-color) alpha(* 20%));
-    position: relative;
-    padding: var(--sc-margins);
-    z-index: 3;
-  }
+.src-soundcloud-Player-meta {
+  background: color(var(--background-color) alpha(* 20%));
+  position: relative;
+  padding: var(--sc-margins);
+  z-index: 3;
+}
 
-  &-info {
-    display: flex;
-    margin-bottom: var(--sc-margins);
-  }
+.src-soundcloud-Player-info {
+  display: flex;
+  margin-bottom: var(--sc-margins);
+}
 
-  &-art {
-    display: block;
-    width: 100px;
-    height: 100px;
-    margin-right: var(--sc-margins);
-  }
+.src-soundcloud-Player-art {
+  display: block;
+  width: 100px;
+  height: 100px;
+  margin-right: var(--sc-margins);
+}
 
-  &-links {
-    width: calc(100% - 100px - var(--sc-margins));
-  }
+.src-soundcloud-Player-links {
+  width: calc(100% - 100px - var(--sc-margins));
+}
 
-  &-permalink {
-    display: block;
-    font: 14pt;
-    color: var(--text-color);
-    text-align: right;
-    text-decoration: none;
-  }
+.src-soundcloud-Player-permalink {
+  display: block;
+  font: 14pt;
+  color: var(--text-color);
+  text-align: right;
+  text-decoration: none;
 }

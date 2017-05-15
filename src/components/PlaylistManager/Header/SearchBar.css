@@ -12,39 +12,39 @@
   &.is-focused {
     border-color: var(--highlight-color);
   }
+}
 
-  &-icon {
-    width: 80px;
-    height: 100%;
-    float: left;
-    text-align: center;
-    font-size: 32px;
-    line-height: 38px;
+.SearchBar-icon {
+  width: 80px;
+  height: 100%;
+  float: left;
+  text-align: center;
+  font-size: 32px;
+  line-height: 38px;
+}
+
+.SearchBar-query {
+  height: 100%;
+  margin-left: 80px;
+  margin-right: 100px;
+}
+
+.SearchBar-input {
+  background: transparent;
+  width: 100%;
+  height: 100%;
+  border: none;
+  padding: 0;
+  color: var(--text-color);
+  font-size: 14pt;
+
+  &:focus {
+    outline: 0;
   }
+}
 
-  &-query {
-    height: 100%;
-    margin-left: 80px;
-    margin-right: 100px;
-  }
-
-  &-input {
-    background: transparent;
-    width: 100%;
-    height: 100%;
-    border: none;
-    padding: 0;
-    color: var(--text-color);
-    font-size: 14pt;
-
-    &:focus {
-      outline: 0;
-    }
-  }
-
-  &-source {
-    float: right;
-    margin: 0 5px;
-    height: 100%;
-  }
+.SearchBar-source {
+  float: right;
+  margin: 0 5px;
+  height: 100%;
 }

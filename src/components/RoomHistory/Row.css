@@ -27,59 +27,59 @@
   &.is-selected {
     background: color(var(--highlight-color) alpha(* 70%));
   }
+}
 
-  &-thumb {
-    height: 100%;
-    width: 55px;
-    margin: 0 15px;
-    padding: 7px 0;
-    float: left;
-  }
+.HistoryRow-thumb {
+  height: 100%;
+  width: 55px;
+  margin: 0 15px;
+  padding: 7px 0;
+  float: left;
+}
 
-  &-image {
-    max-width: 100%;
-    max-height: 100%;
-  }
+.HistoryRow-image {
+  max-width: 100%;
+  max-height: 100%;
+}
 
-  &-song {
-    font-size: 1em;
-    height: 100%;
-    float: left;
-    width: calc(100% - var(--media-list-spacing) - var(--history-list-not-song-width));
-    margin-right: var(--media-list-spacing);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
+.HistoryRow-song {
+  font-size: 1em;
+  height: 100%;
+  float: left;
+  width: calc(100% - var(--media-list-spacing) - var(--history-list-not-song-width));
+  margin-right: var(--media-list-spacing);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
-  &-votes {
-    height: 100%;
-    float: left;
-    width: var(--history-list-votes-width);
-  }
+.HistoryRow-votes {
+  height: 100%;
+  float: left;
+  width: var(--history-list-votes-width);
+}
 
-  &-user {
-    height: 100%;
-    float: left;
-    width: var(--history-list-user-width);
-    text-align: right;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
+.HistoryRow-user {
+  height: 100%;
+  float: left;
+  width: var(--history-list-user-width);
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
-  &-time {
-    height: 100%;
-    float: left;
-    text-align: right;
-    padding-right: 20px;
-    color: var(--muted-text-color);
-    width: var(--history-list-time-width);
-  }
+.HistoryRow-time {
+  height: 100%;
+  float: left;
+  text-align: right;
+  padding-right: 20px;
+  color: var(--muted-text-color);
+  width: var(--history-list-time-width);
+}
 
-  &-actions {
-    height: 100%;
-    position: absolute;
-    right: 0;
-  }
+.HistoryRow-actions {
+  height: 100%;
+  position: absolute;
+  right: 0;
 }

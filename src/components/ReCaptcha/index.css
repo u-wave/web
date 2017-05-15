@@ -2,10 +2,8 @@
   --recaptcha-iframe-height: 78px;
 }
 
-.ReCaptcha {
-  &-spinner {
-    width: var(--recaptcha-iframe-height);
-    height: var(--recaptcha-iframe-height);
-    margin: auto;
-  }
+.ReCaptcha-spinner {
+  width: var(--recaptcha-iframe-height);
+  height: var(--recaptcha-iframe-height);
+  margin: auto;
 }

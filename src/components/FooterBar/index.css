@@ -9,55 +9,56 @@
   z-index: 20; /* on top of overlays */
   border-top: 1px solid var(--chat-border-color);
   background: var(--background-color);
+}
 
-  &-guest {
-    font-size: 12pt;
-    padding: 0 25px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    height: 100%;
-    flex-grow: 1;
-  }
+.FooterBar-guest {
+  font-size: 12pt;
+  padding: 0 25px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+  flex-grow: 1;
+}
 
-  &-user {
-    height: 100%;
-    width: 75px;
-  }
+.FooterBar-user {
+  height: 100%;
+  width: 75px;
+}
 
-  &-next {
-    flex-grow: 1;
-    height: 100%;
-    overflow: hidden;
-  }
+.FooterBar-next {
+  flex-grow: 1;
+  height: 100%;
+  overflow: hidden;
+}
 
-  &-responses {
-    height: 100%;
-    &--spaced {
-      padding-right: 1rem;
-    }
-  }
+.FooterBar-responses {
+  height: 100%;
+}
 
-  &-skip {
-    height: 100%;
-    padding-right: 0.5rem;
-  }
+.FooterBar-responses--spaced {
+  padding-right: 1rem;
+}
 
-  &-join {
-    font-size: 12pt;
-    float: right;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    width: 125px;
-    background: var(--highlight-color);
-    cursor: pointer;
+.FooterBar-skip {
+  height: 100%;
+  padding-right: 0.5rem;
+}
 
-    &--locked {
-      width: 140px;
-    }
-  }
+.FooterBar-join {
+  font-size: 12pt;
+  float: right;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 125px;
+  background: var(--highlight-color);
+  cursor: pointer;
+}
+
+.FooterBar-join--locked {
+  width: 140px;
 }
 
 .FooterAuthButton {
@@ -71,18 +72,18 @@
   cursor: pointer;
   color: var(--text-color);
   font-size: 12pt;
+}
 
-  &--login {
-    background: var(--background-color);
-    &:hover {
-      background: var(--background-hover-color);
-    }
+.FooterAuthButton--login {
+  background: var(--background-color);
+  &:hover {
+    background: var(--background-hover-color);
   }
+}
 
-  &--register {
-    background: var(--highlight-color);
-    &:hover {
-      background: var(--highbright-color);
-    }
+.FooterAuthButton--register {
+  background: var(--highlight-color);
+  &:hover {
+    background: var(--highbright-color);
   }
 }

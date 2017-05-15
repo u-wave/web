@@ -2,32 +2,32 @@
 
 .SettingsPanel {
   padding: 20px 50px;
+}
 
-  &-divider {
-    height: 1px;
-    border: none;
-    background: var(--muted-text-color);
-    margin: 20px 0;
-  }
+.SettingsPanel-divider {
+  height: 1px;
+  border: none;
+  background: var(--muted-text-color);
+  margin: 20px 0;
+}
 
-  &-header {
-    margin: 0 0 20px 0;
-    font-weight: 400;
-  }
+.SettingsPanel-header {
+  margin: 0 0 20px 0;
+  font-weight: 400;
+}
 
-  &-toggle {
-    margin: 0 0 20px 0;
-  }
+.SettingsPanel-toggle {
+  margin: 0 0 20px 0;
+}
 
-  &-column {
-    width: 50%;
-    float: left;
+.SettingsPanel-column {
+  width: 50%;
+  float: left;
+}
 
-    &--left {
-      padding-right: 50px;
-    }
-    &--right {
-      padding-left: 50px;
-    }
-  }
+.SettingsPanel-column--left {
+  padding-right: 50px;
+}
+.SettingsPanel-column--right {
+  padding-left: 50px;
 }

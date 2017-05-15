@@ -12,15 +12,15 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
 
-  &-loader {
-    height: 250px;
-    width: 250px;
-    height: 50vmin;
-    width: 50vmin;
-  }
+.LoadingScreen-loader {
+  height: 250px;
+  width: 250px;
+  height: 50vmin;
+  width: 50vmin;
+}
 
-  &-notice {
-    color: var(--text-color);
-  }
+.LoadingScreen-notice {
+  color: var(--text-color);
 }

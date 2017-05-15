@@ -5,13 +5,13 @@
   padding: 5px 0;
   display: block;
   text-decoration: none;
+}
 
-  &--cardable {
-    cursor: pointer;
-  }
+.UserRow--cardable {
+  cursor: pointer;
+}
 
-  &-avatar {
-    float: left;
-    margin: 3px 10px;
-  }
+.UserRow-avatar {
+  float: left;
+  margin: 3px 10px;
 }

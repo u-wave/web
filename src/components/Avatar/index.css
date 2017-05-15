@@ -5,9 +5,9 @@
   border-radius: 50%;
   overflow: hidden;
   display: inline-block;
+}
 
-  &-image {
-    width: 100%;
-    height: 100%;
-  }
+.Avatar-image {
+  width: 100%;
+  height: 100%;
 }

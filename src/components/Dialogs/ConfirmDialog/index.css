@@ -1,14 +1,12 @@
-.ConfirmDialog {
-  &-buttons {
-    display: flex;
-    justify-content: space-between;
-  }
+.ConfirmDialog-buttons {
+  display: flex;
+  justify-content: space-between;
+}
 
-  &-spacer {
-    width: 40px;
-  }
+.ConfirmDialog-spacer {
+  width: 40px;
+}
 
-  &-button {
-    width: 50%;
-  }
+.ConfirmDialog-button {
+  width: 50%;
 }

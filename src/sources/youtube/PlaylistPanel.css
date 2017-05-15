@@ -1,9 +1,7 @@
-.src-youtube-PlaylistPanel {
-  &-header {
-    display: flex;
-  }
+.src-youtube-PlaylistPanel-header {
+  display: flex;
+}
 
-  &-name {
-    flex-grow: 1;
-  }
+.src-youtube-PlaylistPanel-name {
+  flex-grow: 1;
 }

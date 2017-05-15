@@ -5,17 +5,16 @@
 @import "./Message.css";
 @import "./Motd.css";
 
-.ChatContainer {
-  &-messages {
-    position: absolute;
-    top: 0;
-    bottom: var(--footer-height);
-    width: 100%;
-  }
-  &-input {
-    position: absolute;
-    bottom: 0;
-    height: var(--footer-height);
-    width: 100%;
-  }
+.ChatContainer-messages {
+  position: absolute;
+  top: 0;
+  bottom: var(--footer-height);
+  width: 100%;
+}
+
+.ChatContainer-input {
+  position: absolute;
+  bottom: 0;
+  height: var(--footer-height);
+  width: 100%;
 }

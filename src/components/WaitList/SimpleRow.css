@@ -1,18 +1,18 @@
 .WaitlistRow {
-  &-position {
-    float: left;
-    text-align: center;
-    padding: 0 0 0 7px;
-  }
-
-  &-drop-indicator {
-    border-top: 3px solid #fff;
-    background: transparent;
-    height: 37px;
-    width: 100%;
-  }
-
   &.is-dragging {
     display: none;
   }
+}
+
+.WaitlistRow-position {
+  float: left;
+  text-align: center;
+  padding: 0 0 0 7px;
+}
+
+.WaitlistRow-drop-indicator {
+  border-top: 3px solid #fff;
+  background: transparent;
+  height: 37px;
+  width: 100%;
 }

@@ -4,9 +4,9 @@
   font-size: 14pt;
   display: flex;
   justify-content: space-between;
+}
 
-  &-content {
-    flex-grow: 1;
-    padding-left: 15px;
-  }
+.ImportPanelHeader-content {
+  flex-grow: 1;
+  padding-left: 15px;
 }

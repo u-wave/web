@@ -1,13 +1,11 @@
-.UserRow {
-  &-votes {
-    float: right;
-    display: flex;
-    align-items: center;
-    height: 100%;
-    margin-right: 4px;
-  }
+.UserRow-votes {
+  float: right;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  margin-right: 4px;
+}
 
-  &-voteIcon {
-    margin: 0 4px;
-  }
+.UserRow-voteIcon {
+  margin: 0 4px;
 }

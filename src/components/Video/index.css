@@ -13,33 +13,33 @@
   height: 100%;
   overflow: hidden;
   background: black;
+}
 
-  &-capture {
-    @apply --video-overlay;
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0;
-  }
+.Video-capture {
+  @apply --video-overlay;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+}
 
-  &-progress {
-    @apply --video-overlay;
-    bottom: 0;
-    left: 0;
-    right: 0;
-  }
+.Video-progress {
+  @apply --video-overlay;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
 
-  &-toolbar {
-    @apply --video-overlay;
-    background-color: var(--background-color);
-    top: 0;
-    right: 0;
+.Video-toolbar {
+  @apply --video-overlay;
+  background-color: var(--background-color);
+  top: 0;
+  right: 0;
 
-    display: none;
-  }
+  display: none;
 
   /* Only show the toolbar on hover. */
-  &:hover .Video-toolbar {
+  @nest .Video:hover & {
     display: block;
   }
 }

@@ -1,10 +1,8 @@
-.SettingsPanelProfile {
-  &-username {
-    font-size: 120%;
-    font-weight: normal;
-  }
-  &-avatar {
-    width: 120px;
-    height: 120px;
-  }
+.SettingsPanelProfile-username {
+  font-size: 120%;
+  font-weight: normal;
+}
+.SettingsPanelProfile-avatar {
+  width: 120px;
+  height: 120px;
 }

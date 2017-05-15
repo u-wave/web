@@ -1,35 +1,33 @@
-.WaitlistRow {
-  &--moderate {
-    display: flex;
-  }
+.WaitlistRow--moderate {
+  display: flex;
+}
 
-  &-card {
-    flex-grow: 2;
-    cursor: pointer;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+.WaitlistRow-card {
+  flex-grow: 2;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
-  &-tools {
-    float: right;
-    height: 100%;
-    padding: 5px;
-    white-space: nowrap;
-  }
+.WaitlistRow-tools {
+  float: right;
+  height: 100%;
+  padding: 5px;
+  white-space: nowrap;
+}
 
-  /* TODO use `&-handle, &-remove` here? */
-  &-tool {
-    display: inline-flex;
-    align-items: center;
-    height: 100%;
-    padding: 0 4px;
-  }
+/* TODO use `&-handle, &-remove` here? */
+.WaitlistRow-tool {
+  display: inline-flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 4px;
+}
 
-  &-handle {
-    cursor: move;
-  }
-  &-remove {
-    cursor: pointer;
-  }
+.WaitlistRow-handle {
+  cursor: move;
+}
+.WaitlistRow-remove {
+  cursor: pointer;
 }

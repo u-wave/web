@@ -1,12 +1,10 @@
 @import "../../vars.css";
 
-.Progress {
-  &-fill {
-    background: var(--highlight-color);
-    height: 100%;
-    width: 100%;
-    transform: scaleX(0);
-    transform-origin: top left;
-    transition: transform 1s linear;
-  }
+.Progress-fill {
+  background: var(--highlight-color);
+  height: 100%;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: top left;
+  transition: transform 1s linear;
 }

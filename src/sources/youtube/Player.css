@@ -3,10 +3,11 @@
   height: 100%;
   position: relative;
   z-index: 3;
+}
 
-  &--small, &--preview {
-    margin: auto;
-    width: 640px;
-    height: 360px;
-  }
+.src-youtube-Player--small,
+.src-youtube-Player--preview {
+  margin: auto;
+  width: 640px;
+  height: 360px;
 }

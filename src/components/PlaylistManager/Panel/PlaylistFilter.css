@@ -6,26 +6,26 @@
 
 .PlaylistMediaFilter {
   display: flex;
+}
 
-  &-input {
-    width: 180px;
-    border-radius: 2px;
-    background: #252727;
-    border: 1px solid #252727;
-    color: var(--text-color);
-    font-size: 12pt;
-    padding: 0 8px;
-    height: var(--playlist-filter-input-height);
-    display: none;
-    margin-top: calc((54px - var(--playlist-filter-input-height)) / 2);
+.PlaylistMediaFilter-input {
+  width: 180px;
+  border-radius: 2px;
+  background: #252727;
+  border: 1px solid #252727;
+  color: var(--text-color);
+  font-size: 12pt;
+  padding: 0 8px;
+  height: var(--playlist-filter-input-height);
+  display: none;
+  margin-top: calc((54px - var(--playlist-filter-input-height)) / 2);
 
-    &:focus {
-      outline: none;
-      border: 1px solid var(--highlight-color);
-    }
+  &:focus {
+    outline: none;
+    border: 1px solid var(--highlight-color);
+  }
 
-    &.is-open {
-      display: block;
-    }
+  &.is-open {
+    display: block;
   }
 }

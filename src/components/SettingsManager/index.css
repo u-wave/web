@@ -4,9 +4,9 @@
 
 .SettingsManager {
   z-index: 10;
+}
 
-  &-body {
-    overflow-y: scroll;
-    background: color(var(--background-color) alpha(* 96%));
-  }
+.SettingsManager-body {
+  overflow-y: scroll;
+  background: color(var(--background-color) alpha(* 96%));
 }
