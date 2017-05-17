@@ -8,17 +8,17 @@
   background: color(var(--background-color) alpha(* 96%));
   height: 100%;
   width: 100%;
+}
 
-  &-loading {
-    margin: auto;
-    width: 25%;
-  }
+.PlaylistPanel-loading {
+  margin: auto;
+  width: 25%;
+}
 
-  &-media {
-    height: calc(100% - 54px);
-  }
+.PlaylistPanel-media {
+  height: calc(100% - 54px);
+}
 
-  &--empty {
-    padding: 16px;
-  }
+.PlaylistPanel--empty {
+  padding: 16px;
 }

@@ -45,22 +45,21 @@
   color: var(--highlight-color);
   width: 100%;
   height: 100%;
+}
 
-  &-svg {
-    /* The main animation is loop 4 times. */
-    animation: rotate-progress-circle calc(var(--loader-duration) * (4 / 3)) linear infinite;
-  }
+.MuiCircularProgress-svg {
+  /* The main animation is loop 4 times. */
+  animation: rotate-progress-circle calc(var(--loader-duration) * (4 / 3)) linear infinite;
+}
 
-  &-circle {
-    stroke-dasharray: 1, calc((100% - 3px) * 3.141);
-    stroke-dashoffset: 0%;
-    stroke: currentColor;
-    stroke-linecap: round;
-    transition: all var(--loader-duration) cubic-bezier(0.4, 0.0, 0.2, 1);
-    animation: scale-progress-circle var(--loader-duration) cubic-bezier(0.4, 0.0, 0.2, 1) infinite;
-  }
-
-  &--tiny &-circle {
+.MuiCircularProgress-circle {
+  stroke-dasharray: 1, calc((100% - 3px) * 3.141);
+  stroke-dashoffset: 0%;
+  stroke: currentColor;
+  stroke-linecap: round;
+  transition: all var(--loader-duration) cubic-bezier(0.4, 0.0, 0.2, 1);
+  animation: scale-progress-circle var(--loader-duration) cubic-bezier(0.4, 0.0, 0.2, 1) infinite;
+  @nest .MuiCircularProgress--tiny & {
     animation-name: scale-progress-circle-tiny;
   }
 }

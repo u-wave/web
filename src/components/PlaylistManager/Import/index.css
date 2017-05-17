@@ -8,9 +8,9 @@
   height: 100%;
   background: var(--background-color);
   overflow: auto;
+}
 
-  &-source {
-    padding: 16px;
-    width: 50%;
-  }
+.PlaylistImport-source {
+  padding: 16px;
+  width: 50%;
 }

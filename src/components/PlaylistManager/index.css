@@ -5,25 +5,26 @@
 
 .PlaylistManager {
   z-index: 10;
+}
 
-  &-menu {
-    width: 33%; /* 25% of total screen width */
-    float: left;
+.PlaylistManager-menu {
+  width: 33%; /* 25% of total screen width */
+  float: left;
 
-    /* menu would be larger than 300px */
-    @media (min-width: 1200px) {
-      width: 300px;
-    }
+  /* menu would be larger than 300px */
+  @media (min-width: 1200px) {
+    width: 300px;
   }
-  &-panel {
-    position: absolute;
-    left: 33%;
-    right: 0;
-    height: 100%;
+}
 
-    /* menu would be larger than 300px */
-    @media (min-width: 1200px) {
-      left: 300px;
-    }
+.PlaylistManager-panel {
+  position: absolute;
+  left: 33%;
+  right: 0;
+  height: 100%;
+
+  /* menu would be larger than 300px */
+  @media (min-width: 1200px) {
+    left: 300px;
   }
 }

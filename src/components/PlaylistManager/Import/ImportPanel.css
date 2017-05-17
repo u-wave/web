@@ -1,12 +1,12 @@
 .ImportPanel {
   height: 100%;
+}
 
-  &-loading {
-    margin: auto;
-    width: 25%;
-  }
+.ImportPanel-loading {
+  margin: auto;
+  width: 25%;
+}
 
-  &-body {
-    height: calc(100% - 54px);
-  }
+.ImportPanel-body {
+  height: calc(100% - 54px);
 }

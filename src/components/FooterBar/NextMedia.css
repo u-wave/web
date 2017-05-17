@@ -11,8 +11,8 @@
   &:hover {
     background-color: var(--background-hover-color);
   }
+}
 
-  &-playlist {
-    color: var(--text-color);
-  }
+.NextMedia-playlist {
+  color: var(--text-color);
 }

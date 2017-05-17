@@ -1,10 +1,10 @@
 .UserCard {
   position: absolute;
   transform: translateX(-100%);
+}
 
-  &-avatar {
-    width: 40px;
-    height: 40px;
-    margin-right: 16px;
-  }
+.UserCard-avatar {
+  width: 40px;
+  height: 40px;
+  margin-right: 16px;
 }

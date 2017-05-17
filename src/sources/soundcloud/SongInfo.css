@@ -1,21 +1,19 @@
 @import "../../vars.css";
 
-.src-soundcloud-SongInfo {
-  &-link {
-    font: 14pt;
+.src-soundcloud-SongInfo-link {
+  font: 14pt;
+  color: var(--text-color);
+  display: block;
+  height: 25px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  &:visited {
     color: var(--text-color);
-    display: block;
-    height: 25px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-
-    &--track {
-      font-weight: bold;
-    }
-
-    &:visited {
-      color: var(--text-color);
-    }
   }
+}
+
+.src-soundcloud-SongInfo-link--track {
+  font-weight: bold;
 }

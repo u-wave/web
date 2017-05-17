@@ -6,10 +6,6 @@
   position: relative;
   background: var(--media-list-color);
 
-  &--alternate {
-    background: var(--media-list-alternate-color);
-  }
-
   &.is-loading {
     opacity: 0.75;
   }
@@ -17,53 +13,57 @@
   &.is-selected {
     background: color(var(--highlight-color) alpha(* 70%));
   }
+}
 
-  &-loader {
-    margin: 0 15px;
-  }
+.MediaListRow-loader {
+  margin: 0 15px;
+}
 
-  &-thumb {
-    height: 100%;
-    width: 55px;
-    margin: 0 15px;
-    padding: 7px 0;
-    float: left;
-  }
+.MediaListRow-thumb {
+  height: 100%;
+  width: 55px;
+  margin: 0 15px;
+  padding: 7px 0;
+  float: left;
+}
 
-  &-image {
-    max-width: 100%;
-    max-height: 100%;
-  }
+.MediaListRow-image {
+  max-width: 100%;
+  max-height: 100%;
+}
 
-  &-artist {
-    height: 100%;
-    float: left;
-    width: calc(50% - var(--media-list-spacing) - var(--media-list-thumb-width) - var(--media-list-duration-width));
-    margin-right: var(--media-list-spacing);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
+.MediaListRow-artist {
+  height: 100%;
+  float: left;
+  width: calc(50% - var(--media-list-spacing) - var(--media-list-thumb-width) - var(--media-list-duration-width));
+  margin-right: var(--media-list-spacing);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
-  &-title {
-    height: 100%;
-    float: left;
-    width: calc(50% - var(--media-list-spacing));
-    margin-right: var(--media-list-spacing);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
+.MediaListRow-title {
+  height: 100%;
+  float: left;
+  width: calc(50% - var(--media-list-spacing));
+  margin-right: var(--media-list-spacing);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
-  &-duration {
-    height: 100%;
-    float: left;
-    width: var(--media-list-duration-width);
-  }
+.MediaListRow-duration {
+  height: 100%;
+  float: left;
+  width: var(--media-list-duration-width);
+}
 
-  &-actions {
-    height: 100%;
-    position: absolute;
-    right: 0;
-  }
+.MediaListRow-actions {
+  height: 100%;
+  position: absolute;
+  right: 0;
+}
+
+.MediaListRow--alternate {
+  background: var(--media-list-alternate-color);
 }

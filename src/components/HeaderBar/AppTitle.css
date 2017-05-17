@@ -4,22 +4,22 @@
   display: flex;
   align-items: center;
   padding-right: 20px;
+}
 
-  &-logo {
-    line-height: var(--header-height);
-    height: var(--header-height);
-    background-image: url(../../../assets/img/logo-white.png);
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: contain;
-    margin-left: 10px;
-    font-size: 0;
-    flex-grow: 2;
-  }
+.AppTitle-logo {
+  line-height: var(--header-height);
+  height: var(--header-height);
+  background-image: url(../../../assets/img/logo-white.png);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+  margin-left: 10px;
+  font-size: 0;
+  flex-grow: 2;
+}
 
-  &-button {}
+.AppTitle-button {}
 
-  &--hasAboutPage {
-    padding-right: 0;
-  }
+.AppTitle--hasAboutPage {
+  padding-right: 0;
 }

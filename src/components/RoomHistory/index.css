@@ -3,11 +3,12 @@
 
 .RoomHistory {
   z-index: 10;
+}
 
-  &-body {
-    background: color(var(--background-color) alpha(* 96%));
-  }
-  &-list {
-    max-height: 100%;
-  }
+.RoomHistory-body {
+  background: color(var(--background-color) alpha(* 96%));
+}
+
+.RoomHistory-list {
+  max-height: 100%;
 }

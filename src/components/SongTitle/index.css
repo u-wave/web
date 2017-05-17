@@ -6,11 +6,12 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
 
-  &--large {
-    font-size: 14pt;
-  }
-  &--mediaRow {
-    font-size: 1em;
-  }
+.SongTitle--large {
+  font-size: 14pt;
+}
+
+.SongTitle--mediaRow {
+  font-size: 1em;
 }

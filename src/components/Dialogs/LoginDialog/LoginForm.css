@@ -1,5 +1,3 @@
-.LoginForm {
-  &-forgot {
-    font-size: 10pt;
-  }
+.LoginForm-forgot {
+  font-size: 10pt;
 }

@@ -5,36 +5,37 @@
   height: 100%;
   width: 100%;
   z-index: 6;
+}
 
-  &--from-bottom {
-    top: auto;
-    bottom: 0;
-  }
-  &--from-top {
-    top: 0;
-    bottom: auto;
-  }
+.Overlay--from-bottom {
+  top: auto;
+  bottom: 0;
+}
+.Overlay--from-top {
+  top: 0;
+  bottom: auto;
+}
 
-  &-body {
-    height: 100%;
-    height: 100vh;
-  }
+.Overlay-body {
+  height: 100%;
+  height: 100vh;
+}
 
-  /* Animations!.. */
-  &-enter {
-    overflow-y: hidden;
-    height: 0%;
-    &-active {
-      transition: height 180ms ease-out;
-      height: 100%;
-    }
-  }
-  &-leave {
-    overflow-y: hidden;
-    height: 100%;
-    &-active {
-      transition: height 180ms ease-in;
-      height: 0%;
-    }
-  }
+/* Animations!.. */
+.Overlay-enter {
+  overflow-y: hidden;
+  height: 0%;
+}
+.Overlay-enter-active {
+  transition: height 180ms ease-out;
+  height: 100%;
+}
+
+.Overlay-leave {
+  overflow-y: hidden;
+  height: 100%;
+}
+.Overlay-leave-active {
+  transition: height 180ms ease-in;
+  height: 0%;
 }

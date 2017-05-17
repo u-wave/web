@@ -6,25 +6,27 @@
 .EditMediaDialogForm {
   display: flex;
   justify-content: space-between;
-  &-column {
-    width: 50%;
-  }
-  &-separator {
-    /* Pushes columns to the side! */
-  }
+}
+
+.EditMediaDialogForm-column {
+  width: 50%;
+}
+
+.EditMediaDialogForm-separator {
+  /* Pushes columns to the side! */
 }
 
 .EditMediaDialogGroup {
   display: flex;
   justify-content: center;
+}
 
-  &-field {
-    flex-grow: 1;
-  }
+.EditMediaDialogGroup-field {
+  flex-grow: 1;
+}
 
-  &-label {
-    line-height: 50px;
-    white-space: nowrap;
-    padding: 0 20px;
-  }
+.EditMediaDialogGroup-label {
+  line-height: 50px;
+  white-space: nowrap;
+  padding: 0 20px;
 }

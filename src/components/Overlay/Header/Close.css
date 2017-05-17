@@ -6,9 +6,9 @@
   width: var(--overlay-header-close-size);
   height: var(--overlay-header-close-size);
   padding: 12px;
+}
 
-  &-icon {
-    font-size: 32px;
-    line-height: var(--overlay-header-close-size);
-  }
+.OverlayHeaderClose-icon {
+  font-size: 32px;
+  line-height: var(--overlay-header-close-size);
 }

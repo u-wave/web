@@ -4,9 +4,9 @@
   background-position: center center;
   background-repeat: no-repeat;
   background-size: contain;
+}
 
-  &--active {
-    width: 48px;
-    float: left;
-  }
+.SourcePickerElement--active {
+  width: 48px;
+  float: left;
 }

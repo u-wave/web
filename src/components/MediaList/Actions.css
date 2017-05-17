@@ -8,11 +8,11 @@
   &.is-selected {
     background: var(--highlight-color);
   }
+}
 
-  &-action {
-    height: 100%;
-    cursor: pointer;
-    display: inline-block;
-    padding: 6px 15px;
-  }
+.MediaActions-action {
+  height: 100%;
+  cursor: pointer;
+  display: inline-block;
+  padding: 6px 15px;
 }

@@ -4,20 +4,20 @@
   font-size: 14pt;
   display: flex;
   justify-content: space-between;
+}
 
-  &-name {
-    flex-grow: 1;
-    padding-left: 15px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
+.PlaylistMeta-name {
+  flex-grow: 1;
+  padding-left: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
-  &-active {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-right: 20px;
-    height: 100%;
-  }
+.PlaylistMeta-active {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-right: 20px;
+  height: 100%;
 }

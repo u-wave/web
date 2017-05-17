@@ -7,32 +7,32 @@
   border-right-color: #3e3e3e;
   height: var(--forms-textfield-size);
   font-size: 12pt;
+}
 
-  &-input {
-    width: 100%;
-    border: 0;
-    height: 100%;
-    background: transparent;
-    line-height: var(--forms-textfield-size);
-    display: block;
-    float: left;
-    padding: 0 var(--forms-element-margin);
-    padding-right: var(--forms-textfield-size);
-    font-size: 12pt;
-    color: var(--text-color);
+.TextField-input {
+  width: 100%;
+  border: 0;
+  height: 100%;
+  background: transparent;
+  line-height: var(--forms-textfield-size);
+  display: block;
+  float: left;
+  padding: 0 var(--forms-element-margin);
+  padding-right: var(--forms-textfield-size);
+  font-size: 12pt;
+  color: var(--text-color);
 
-    &::placeholder {
-      color: #9f9d9e;
-    }
+  &::placeholder {
+    color: #9f9d9e;
   }
+}
 
-  &-icon {
-    width: var(--forms-textfield-size);
-    height: var(--forms-textfield-size);
-    margin-left: -var(--forms-textfield-size);
-    padding: 13px;
-    display: block;
-    float: left;
-    text-align: center;
-  }
+.TextField-icon {
+  width: var(--forms-textfield-size);
+  height: var(--forms-textfield-size);
+  margin-left: -var(--forms-textfield-size);
+  padding: 13px;
+  display: block;
+  float: left;
+  text-align: center;
 }

@@ -10,8 +10,8 @@
   &:first-child {
     margin-top: 0;
   }
+}
 
-  &--noSpacing {
-    margin: 0;
-  }
+.FormGroup--noSpacing {
+  margin: 0;
 }

@@ -9,56 +9,56 @@
   height: 100%;
   width: 100%;
   z-index: 4; /* below overlays, above video */
+}
 
-  &-title {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 240px;
-    margin: 0;
-  }
+.HeaderBar-title {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 240px;
+  margin: 0;
+}
 
-  &-volume {
-    position: absolute;
-    right: var(--header-height);
-    top: 0;
-    width: 200px;
-    padding: 15px;
-  }
+.HeaderBar-volume {
+  position: absolute;
+  right: var(--header-height);
+  top: 0;
+  width: 200px;
+  padding: 15px;
+}
 
-  &-history {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: var(--header-height);
-    background: #111;
-  }
+.HeaderBar-history {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: var(--header-height);
+  background: #111;
+}
 
-  &-now-playing {
-    position: absolute;
-    top: 5px;
-    left: 250px;
-    right: calc(200px + var(--header-height));
-    line-height: 25px;
-  }
+.HeaderBar-now-playing {
+  position: absolute;
+  top: 5px;
+  left: 250px;
+  right: calc(200px + var(--header-height));
+  line-height: 25px;
+}
 
-  &-dj {
-    position: absolute;
-    top: 30px;
-    left: 250px;
-    right: 200px;
-    font-size: 80%;
-    color: var(--muted-text-color);
-  }
+.HeaderBar-dj {
+  position: absolute;
+  top: 30px;
+  left: 250px;
+  right: 200px;
+  font-size: 80%;
+  color: var(--muted-text-color);
+}
 
-  &-progress {
-    position: absolute;
-    bottom: 1px;
-    height: 2px;
-    width: 100%;
-    /* show above the history button background fill colour,
-     * but below the history icon and tooltip */
-    z-index: 6;
-  }
+.HeaderBar-progress {
+  position: absolute;
+  bottom: 1px;
+  height: 2px;
+  width: 100%;
+  /* show above the history button background fill colour,
+   * but below the history icon and tooltip */
+  z-index: 6;
 }

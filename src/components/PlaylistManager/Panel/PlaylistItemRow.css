@@ -1,7 +1,5 @@
-.PlaylistItemRow {
-  &-drop-indicator {
-    background: white;
-    height: 3px;
-    width: 100%;
-  }
+.PlaylistItemRow-drop-indicator {
+  background: white;
+  height: 3px;
+  width: 100%;
 }
