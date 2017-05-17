@@ -1,20 +1,17 @@
 @import "./Overlays.css";
 
-.MobileApp {
-  &-video {
-    height: 56px;
-    position: relative;
-  }
-
-  &-chat {
-    height: calc(100% - 56px);
-    position: relative;
-  }
-
-  &--videoEnabled &-video {
+.MobileApp-video {
+  height: 56px;
+  position: relative;
+  .MobileApp--videoEnabled & {
     height: 40%;
   }
-  &--videoEnabled &-chat {
+}
+
+.MobileApp-chat {
+  height: calc(100% - 56px);
+  position: relative;
+  .MobileApp--videoEnabled & {
     height: 60%;
   }
 }

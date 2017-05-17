@@ -4,8 +4,8 @@
   display: inline-flex;
   flex-direction: row;
   justify-content: center;
+}
 
-  &-vote {
-    margin-right: 5px;
-  }
+.MobileHistoryVotes-vote {
+  margin-right: 5px;
 }
