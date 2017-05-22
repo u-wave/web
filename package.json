@@ -125,7 +125,7 @@
     "run-sequence": "^1.2.2",
     "sinon": "^2.0.0",
     "sinon-chai": "^2.8.0",
-    "style-loader": "^0.17.0",
+    "style-loader": "^0.18.0",
     "through2": "^2.0.3",
     "u-wave-source-soundcloud": "^1.0.1",
     "u-wave-source-youtube": "^1.0.4",
