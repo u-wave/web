@@ -1,3 +1,28 @@
+# 1.0.0-beta.10 / 26 May 2017
+
+Features:
+
+ * Use a material-ui-like loading spinner. (#610)
+ * Default to `https://sigil.u-wave.net` avatars. (#611)
+ * Add Privacy Policy checkbox to register form. (#614)
+ * Automatically close media source picker after selecting a source. (#627)
+ * Batch rerenders into a `requestAnimationFrame`. (#629)
+ * Allow pausing YouTube videos in Preview mode. (#636)
+ * Wait for the initial state before rendering. (#649)
+
+Bugfixes:
+
+ * Truncate long song names in SoundCloud card. (#613)
+ * Fix logo size on the privacy policy page. (#615)
+
+Internal:
+
+ * Dependency upgrades (especially React, material-ui)
+ * Switch to a different YouTube component that handles state internally. (#590)
+ * Small `serve` task cleanup. (#619)
+ * Show more helpful Redis/Mongo connection errors. (#622)
+ * Flatten invalid nested CSS selectors. (#642)
+
 # 1.0.0-beta.9 / 15 Apr 2017
 
 Features:
