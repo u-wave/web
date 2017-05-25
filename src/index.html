@@ -31,8 +31,12 @@
       <script src="<%= htmlWebpackPlugin.files.chunks[chunk].entry %>"></script>
     <% } %>
     <script>
-      uw.renderToDOM(document.querySelector('#app'));
-      document.querySelector('#app-loading').innerHTML = '';
+      uw.build().then(function () {
+        uw.renderToDOM(document.querySelector('#app'));
+        document.querySelector('#app-loading').innerHTML = '';
+      }).catch(function (err) {
+        document.querySelector('.LoadingScreen-notice').textContent = 'Error: ' + err.message;
+      });
     </script>
   </body>
 </html>
