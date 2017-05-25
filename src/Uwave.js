@@ -32,6 +32,9 @@ export default class Uwave {
   constructor(options = {}, session = readSession()) {
     this.options = options;
     this.jwt = session;
+    this.ready = new Promise((resolve) => {
+      this.resolveReady = resolve;
+    });
 
     Object.assign(this, api.constants);
     Object.assign(this, api.components);
@@ -91,7 +94,9 @@ export default class Uwave {
     }
 
     this.store.dispatch(socketConnect());
-    this.store.dispatch(initState());
+    return this.store.dispatch(initState()).then(() => {
+      this.resolveReady();
+    });
   }
 
   getComponent() {

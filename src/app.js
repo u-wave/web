@@ -17,3 +17,10 @@ uw.source('youtube', youTubeSource);
 uw.source('soundcloud', soundCloudSource);
 
 window.uw = uw;
+
+uw.build().then(() => {
+  uw.renderToDOM(document.querySelector('#app'));
+  document.querySelector('#app-loading').innerHTML = '';
+}).catch((err) => {
+  document.querySelector('.LoadingScreen-notice').textContent = `Error: ${err.message}`;
+});

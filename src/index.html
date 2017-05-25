@@ -30,9 +30,5 @@
     <% for (const chunk in htmlWebpackPlugin.files.chunks) { %>
       <script src="<%= htmlWebpackPlugin.files.chunks[chunk].entry %>"></script>
     <% } %>
-    <script>
-      uw.renderToDOM(document.querySelector('#app'));
-      document.querySelector('#app-loading').innerHTML = '';
-    </script>
   </body>
 </html>
