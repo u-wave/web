@@ -18,9 +18,9 @@ uw.source('soundcloud', soundCloudSource);
 
 window.uw = uw;
 
-uw.build().then(function () {
+uw.build().then(() => {
   uw.renderToDOM(document.querySelector('#app'));
   document.querySelector('#app-loading').innerHTML = '';
-}).catch(function (err) {
-  document.querySelector('.LoadingScreen-notice').textContent = 'Error: ' + err.message;
+}).catch((err) => {
+  document.querySelector('.LoadingScreen-notice').textContent = `Error: ${err.message}`;
 });
