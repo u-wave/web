@@ -1,3 +1,9 @@
+# 1.0.0-beta.11 / 27 May 2017
+
+Bugfixes:
+
+ * Fix the Video toolbar position. (#652)
+
 # 1.0.0-beta.10 / 26 May 2017
 
 Features:
