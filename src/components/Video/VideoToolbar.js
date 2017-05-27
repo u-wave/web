@@ -18,7 +18,7 @@ const VideoToolbar = ({
   onFullscreenEnter,
   onFullscreenExit
 }) => (
-  <div className="Video-toolbar">
+  <div className="Video-overlay Video-toolbar">
     {children}
     <VideoSizeButton />
     <IconButton

@@ -1,12 +1,5 @@
 @import "./VideoBackdrop.css";
 
-:root {
-  --video-overlay: {
-    z-index: 50;
-    position: absolute;
-  };
-}
-
 .Video {
   position: relative;
   width: 100%;
@@ -15,8 +8,12 @@
   background: black;
 }
 
+.Video-overlay {
+  z-index: 50;
+  position: absolute;
+}
+
 .Video-capture {
-  @apply --video-overlay;
   top: 0;
   right: 0;
   left: 0;
@@ -24,18 +21,15 @@
 }
 
 .Video-progress {
-  @apply --video-overlay;
   bottom: 0;
   left: 0;
   right: 0;
 }
 
 .Video-toolbar {
-  @apply --video-overlay;
   background-color: var(--background-color);
   top: 0;
   right: 0;
-
   display: none;
 
   /* Only show the toolbar on hover. */

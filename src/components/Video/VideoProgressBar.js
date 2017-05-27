@@ -8,7 +8,7 @@ const VideoProgressBar = ({
   media,
   seek
 }) => (
-  <div className="Video-progress">
+  <div className="Video-overlay Video-progress">
     <LinearProgress
       mode="determinate"
       color={muiTheme.palette.primary1Color}

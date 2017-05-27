@@ -9,7 +9,7 @@ const MouseMoveCapture = ({
   onMouseMove
 }) => (
   <div
-    className="Video-capture"
+    className="Video-overlay Video-capture"
     style={active ? enableCursor : disableCursor}
     onMouseMove={onMouseMove}
   />
