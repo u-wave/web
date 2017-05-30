@@ -21,7 +21,7 @@
   }
 }
 
-.ResponseButton--disabled {
+.ResponseButton--disabled, .ResponseButton--static {
   cursor: default;
   &:hover {
     background-color: transparent;
