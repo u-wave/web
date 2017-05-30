@@ -17,7 +17,7 @@ const Votes = ({ upvotes, downvotes, favorites, isUpvote, isDownvote, isFavorite
   const CurrentFavoriteIcon = isFavorite ? FavoritedIcon : FavoriteIcon;
   return (
     <div className="HistoryVotes AudienceResponse">
-      <div className="ResponseButton">
+      <div className="ResponseButton ResponseButton--static">
         <div className="ResponseButton-content">
           <UpvoteIcon
             style={iconStyles}
@@ -26,7 +26,7 @@ const Votes = ({ upvotes, downvotes, favorites, isUpvote, isDownvote, isFavorite
           <span className="ResponseButton-count">{upvotes.length}</span>
         </div>
       </div>
-      <div className="ResponseButton">
+      <div className="ResponseButton ResponseButton--static">
         <div className="ResponseButton-content">
           <CurrentFavoriteIcon
             style={iconStyles}
@@ -35,7 +35,7 @@ const Votes = ({ upvotes, downvotes, favorites, isUpvote, isDownvote, isFavorite
           <span className="ResponseButton-count">{favorites.length}</span>
         </div>
       </div>
-      <div className="ResponseButton">
+      <div className="ResponseButton ResponseButton--static">
         <div className="ResponseButton-content">
           <DownvoteIcon
             style={iconStyles}
