@@ -40,9 +40,6 @@ export default class Video extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!this.props.isFullscreen && nextProps.isFullscreen && screenfull.enabled) {
-      screenfull.request(this.element);
-    }
     if (this.props.isFullscreen && !nextProps.isFullscreen && screenfull.enabled) {
       // Checking for `enabled` here, because our props have probably changed
       // _after_ exiting fullscreen mode (see `this.handleFullscreenChange`).
@@ -56,6 +53,13 @@ export default class Video extends React.Component {
   shouldComponentUpdate(nextProps) {
     return !isEqual(nextProps, this.props);
   }
+
+  handleFullscreenEnter = () => {
+    if (screenfull.enabled) {
+      screenfull.request(this.element);
+    }
+    this.props.onFullscreenEnter();
+  };
 
   handleFullscreenChange = () => {
     if (!screenfull.isFullscreen) {
@@ -92,7 +96,6 @@ export default class Video extends React.Component {
       isMuted,
       media,
       seek,
-      onFullscreenEnter,
       onFullscreenExit
     } = this.props;
 
@@ -155,7 +158,7 @@ export default class Video extends React.Component {
         {(!isFullscreen || shouldShowToolbar) && (
           <VideoToolbar
             isFullscreen={isFullscreen}
-            onFullscreenEnter={onFullscreenEnter}
+            onFullscreenEnter={this.handleFullscreenEnter}
             onFullscreenExit={onFullscreenExit}
           >
             <MediaSourceTools media={media} />
