@@ -6,7 +6,7 @@ import pure from 'recompose/pure';
 import Popover from 'material-ui/Popover';
 import IconButton from 'material-ui/IconButton';
 import SkipIcon from 'material-ui/svg-icons/av/skip-next';
-
+import Loader from '../Loader';
 import SkipReasonsList from './SkipReasonsList';
 
 const fullSizeStyle = {
@@ -39,6 +39,7 @@ class SkipButton extends React.Component {
   };
 
   state = {
+    isSkipping: false,
     isOpen: false,
     anchor: null
   };
@@ -62,12 +63,25 @@ class SkipButton extends React.Component {
   };
 
   handleSkip = (reason) => {
-    this.props.onSkip(reason);
+    this.setState({ isSkipping: true });
+    Promise.resolve(this.props.onSkip(reason)).then(() => {
+      this.setState({ isSkipping: false });
+    });
     this.handleClose();
   };
 
   render() {
     const { t } = this.props;
+
+    if (this.state.isSkipping) {
+      return (
+        <span>
+          <div className="SkipButton is-loading">
+            <Loader size="tiny" className="SkipButton-loader" />
+          </div>
+        </span>
+      );
+    }
 
     let message = t('booth.skip.self');
     if (!this.props.userIsDJ) {

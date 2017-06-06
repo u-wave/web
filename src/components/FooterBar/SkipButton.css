@@ -1,0 +1,13 @@
+.SkipButton.is-loading {
+  width: 24px;
+  height: 100%;
+  margin-left: 12px;
+  margin-right: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.SkipButton-loader {
+  width: 100%;
+}
