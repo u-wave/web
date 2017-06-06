@@ -1,7 +1,10 @@
 const chai = require('chai');
 
 require('babel-register')({
-  plugins: [ 'transform-es2015-modules-commonjs' ]
+  plugins: [
+    'transform-es2015-modules-commonjs',
+    'dynamic-import-node'
+  ]
 });
 require('yamlify/register');
 
