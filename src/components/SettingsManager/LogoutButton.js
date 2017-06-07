@@ -13,24 +13,25 @@ class LogoutButton extends React.Component {
   };
 
   state = {
-    loggingOut: false
+    showDialog: false
   };
 
   closeDialog() {
-    this.setState({ loggingOut: false });
+    this.setState({ showDialog: false });
   }
 
   handleOpen = () => {
-    this.setState({ loggingOut: true });
+    this.setState({ showDialog: true });
   };
 
   handleClose = () => {
     this.closeDialog();
   };
 
-  handleConfirm = () =>
-    this.props.onLogout()
-      .then(this.closeDialog.bind(this));
+  handleConfirm = () => {
+    this.props.onLogout();
+    this.closeDialog();
+  }
 
   render() {
     const { t } = this.props;
@@ -41,7 +42,7 @@ class LogoutButton extends React.Component {
         icon={<LogoutIcon />}
         onClick={this.handleOpen}
       >
-        {this.state.loggingOut && (
+        {this.state.showDialog && (
           <ConfirmDialog
             title={t('dialogs.logout.title')}
             confirmLabel={t('dialogs.logout.action')}
