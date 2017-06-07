@@ -121,7 +121,7 @@
     "postcss-loader": "^2.0.0",
     "postcss-url": "^7.0.0",
     "proxyquire": "^1.7.11",
-    "react-addons-test-utils": "^15.4.2",
+    "react-test-renderer": "^15.5.4",
     "recaptcha-test-keys": "^1.0.0",
     "run-sequence": "^1.2.2",
     "sinon": "^2.0.0",

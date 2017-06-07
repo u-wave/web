@@ -3,6 +3,7 @@ import * as ColorManipulator from 'material-ui/utils/colorManipulator';
 import Spacing from 'material-ui/styles/spacing';
 
 export default {
+  userAgent: typeof navigator === 'undefined' ? 'all' : navigator.userAgent,
   spacing: Spacing,
   fontFamily: 'Open Sans, sans-serif',
   rankColors: {
