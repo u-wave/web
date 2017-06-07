@@ -73,7 +73,7 @@ describe('reducers/chat', () => {
         username: 'SendingUser'
       };
 
-      sinon.stub(userSelectors, 'currentUserSelector', () => inFlightUser);
+      sinon.stub(userSelectors, 'currentUserSelector').returns(inFlightUser);
 
       const { dispatch, getState } = createStore();
       dispatch(setUsers([ testUser, inFlightUser ]));
@@ -129,7 +129,7 @@ describe('reducers/chat', () => {
 
     it('should add an in-flight message to the messages list immediately', () => {
       const { dispatch, getState } = createStore();
-      sinon.stub(userSelectors, 'currentUserSelector', () => testMessage.user);
+      sinon.stub(userSelectors, 'currentUserSelector').returns(testMessage.user);
 
       dispatch(a.sendChat(testMessage.message));
       expect(
