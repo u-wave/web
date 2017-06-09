@@ -6,6 +6,7 @@ import { getEmptyImage } from 'react-dnd-html5-backend';
 import { MEDIA } from '../../constants/DDItemTypes';
 import formatDuration from '../../utils/formatDuration';
 import MediaLoadingIndicator from './MediaLoadingIndicator';
+import MediaThumbnail from './MediaThumbnail';
 import Actions from './Actions';
 
 const inSelection = (selection, media) =>
@@ -61,25 +62,6 @@ export default class Row extends React.Component {
     this.props.onOpenPreviewMediaDialog(this.props.media);
   };
 
-  renderThumbnail() {
-    const { media } = this.props;
-
-    if (media.loading) {
-      return <MediaLoadingIndicator className="MediaListRow-loader" />;
-    }
-
-    return (
-      <div className="MediaListRow-thumb">
-        <img
-          className="MediaListRow-image"
-          key={media._id}
-          src={media.thumbnail}
-          alt=""
-        />
-      </div>
-    );
-  }
-
   render() {
     const {
       className,
@@ -113,7 +95,11 @@ export default class Row extends React.Component {
         onDoubleClick={this.handleDoubleClick}
         onClick={onClick}
       >
-        {this.renderThumbnail()}
+        {media.loading ? (
+          <MediaLoadingIndicator className="MediaListRow-loader" />
+        ) : (
+          <MediaThumbnail url={media.thumbnail} />
+        )}
         <div className="MediaListRow-artist" title={media.artist}>
           {media.artist}
         </div>
