@@ -1,3 +1,27 @@
+# 1.0.0-beta.12 / 09 Jun 2017
+
+Features:
+
+ * Add a loading spinner to the skip button. (#660)
+ * Resync time if the local clock changes unexpectedly. (#661)
+ * Lazy load all non-English locales. (#609)
+
+Bugfixes:
+
+ * Room History style fixes. (#655)
+ * Fix entering fullscreen mode. (#659)
+ * Fix JS error on logout. (#663)
+
+Internal:
+
+ * Add explicit dependency on es2015-modules-commonjs transform. (27199551ec131448ad9fd3454aaf9308b289f053)
+ * Remove old experimental plugin file code. (#662)
+ * Fix deprecation warnings during tests. (#664)
+ * Extract MediaThumbnail component. (#665)
+ * Use a unique key for media list rows to minimize updates while scrolling. (#637)
+ * Add Node 8 to CI. (#666)
+ * Auto-update lockfile w/ greenkeeper. (#668)
+
 # 1.0.0-beta.11 / 27 May 2017
 
 Bugfixes:
