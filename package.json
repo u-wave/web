@@ -89,7 +89,7 @@
     "cross-env": "^5.0.0",
     "css-loader": "^0.28.4",
     "cssnano": "^3.10.0",
-    "del": "^2.2.2",
+    "del": "^3.0.0",
     "enzyme": "^2.8.2",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^15.0.0",
