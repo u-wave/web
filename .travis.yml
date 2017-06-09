@@ -1,20 +1,24 @@
 language: node_js
 sudo: false
+node_js:
+  - 8
+  - 7
+  - 6
+  - 4
+
 before_install:
   - npm install -g npm@latest
   - npm install -g greenkeeper-lockfile@1
 before_script:
   - greenkeeper-lockfile-update
   - npm run build
+
 script:
   - npm test
+
 after_script:
   - greenkeeper-lockfile-upload
-node_js:
-  - "4"
-  - "6"
-  - "7"
-  - "8"
+
 cache:
   directories:
     - "node_modules"
