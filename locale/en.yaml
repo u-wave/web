@@ -1,6 +1,15 @@
-name: English
-
 uwave:
+  locales:
+    cs: Česky (Czech)
+    cy: Cymraeg (Welsh)
+    de: Deutsch (German)
+    en: English
+    fr: Français (French)
+    ko: 한국어 (Korean)
+    nl: Nederlands (Dutch)
+    pt: Português (Portuguese)
+    zh: 繁體中文 (Traditional Mandarin)
+
   close: Close
   timeAgo:
     format: "{{time}} ago"

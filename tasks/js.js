@@ -73,7 +73,10 @@ gulp.task('js:babel', [ 'js:locales' ], () => {
     .pipe(gulp.dest(destEs))
     .pipe(babel({
       babelrc: false,
-      plugins: [ 'transform-es2015-modules-commonjs' ]
+      plugins: [
+        'transform-es2015-modules-commonjs',
+        'dynamic-import-node'
+      ]
     }))
     .pipe(gulp.dest(destCommonjs))
     .on('end', () => {
