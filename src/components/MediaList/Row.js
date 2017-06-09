@@ -44,19 +44,9 @@ export default class Row extends React.Component {
     selected: false
   };
 
-  state = { showActions: false };
-
   componentDidMount() {
     this.props.connectDragPreview(getEmptyImage());
   }
-
-  handleMouseEnter = () => {
-    this.setState({ showActions: true });
-  };
-
-  handleMouseLeave = () => {
-    this.setState({ showActions: false });
-  };
 
   handleDoubleClick = () => {
     this.props.onOpenPreviewMediaDialog(this.props.media);
@@ -74,7 +64,6 @@ export default class Row extends React.Component {
       // etc
       onClick
     } = this.props;
-    const { showActions } = this.state;
     const selectedClass = selected ? 'is-selected' : '';
     const loadingClass = media.loading ? 'is-loading' : '';
     const duration = 'start' in media
@@ -109,14 +98,12 @@ export default class Row extends React.Component {
         <div className="MediaListRow-duration">
           {formatDuration(duration)}
         </div>
-        {showActions && (
-          <Actions
-            className={cx('MediaListRow-actions', selectedClass)}
-            selection={selection}
-            media={media}
-            makeActions={makeActions}
-          />
-        )}
+        <Actions
+          className={cx('MediaListRow-actions', selectedClass)}
+          selection={selection}
+          media={media}
+          makeActions={makeActions}
+        />
       </div>
     );
   }
