@@ -3,15 +3,17 @@
 .MobileApp-video {
   height: 56px;
   position: relative;
-  .MobileApp--videoEnabled & {
-    height: 40%;
-  }
+}
+
+.MobileApp--videoEnabled .MobileApp-video {
+  height: 40%;
 }
 
 .MobileApp-chat {
   height: calc(100% - 56px);
   position: relative;
-  .MobileApp--videoEnabled & {
-    height: 60%;
-  }
+}
+
+.MobileApp--videoEnabled .MobileApp-chat {
+  height: 60%;
 }
