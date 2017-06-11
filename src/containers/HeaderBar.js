@@ -9,12 +9,18 @@ import { createStructuredSelector } from 'reselect';
 import { setVolume, mute, unmute } from '../actions/PlaybackActionCreators';
 import { toggleRoomHistory, toggleAbout } from '../actions/OverlayActionCreators';
 
-import { djSelector, mediaSelector, startTimeSelector } from '../selectors/boothSelectors';
+import {
+  djSelector,
+  mediaSelector,
+  mediaProgressSelector,
+  timeRemainingSelector
+} from '../selectors/boothSelectors';
 import { volumeSelector, isMutedSelector } from '../selectors/settingSelectors';
 import HeaderBar from '../components/HeaderBar';
 
 const mapStateToProps = createStructuredSelector({
-  mediaStartTime: startTimeSelector,
+  mediaProgress: mediaProgressSelector,
+  mediaTimeRemaining: timeRemainingSelector,
   media: mediaSelector,
   dj: djSelector,
   volume: volumeSelector,
