@@ -9,12 +9,6 @@
     height: auto !important;
     padding: 0 !important;
   }
-
-  .SidePanel-tab-guests {
-    margin-left: 5px;
-    font-size: 80%;
-    color: #777;
-  }
 }
 
 .SidePanel-panel {
