@@ -6,5 +6,5 @@
   width: 100%;
   transform: scaleX(0);
   transform-origin: top left;
-  transition: transform 1s linear;
+  transition: transform 0s linear;
 }

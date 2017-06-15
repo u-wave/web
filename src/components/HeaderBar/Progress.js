@@ -2,37 +2,37 @@ import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import transformStyle from '../../utils/transformStyle';
-import timed from '../../utils/timed';
 
-const Progress = ({ className, media, currentTime, startTime }) => {
-  let width = 0;
-  if (media) {
-    const duration = media ? media.end - media.start : 0;
-    const elapsed = startTime ? Math.max((currentTime - startTime) / 1000, 0) : 0;
-    width = duration
-      // Ensure that the result is between 0 and 1
-      ? Math.max(0, Math.min(1, elapsed / duration))
-      : 0;
-  }
-  if (!isFinite(width)) {
-    width = 0;
+const Progress = ({ className, currentProgress, timeRemaining }) => {
+  function animate(el) {
+    if (!el) return;
+
+    // Set the width to the current progress without animating
+    Object.assign(el.style, {
+      transitionDuration: '0s'
+    }, transformStyle(`scaleX(${currentProgress})`));
+
+    // Force browser to rerender the bar immediately
+    el.scrollWidth; // eslint-disable-line no-unused-expressions
+
+    // Set up the actual animation. Progress bar goes to 100% full
+    // in $timeRemaining seconds.
+    Object.assign(el.style, {
+      transitionDuration: `${timeRemaining}s`
+    }, transformStyle('scaleX(1)'));
   }
 
   return (
     <div className={cx('Progress', className)}>
-      <div
-        className="Progress-fill"
-        style={transformStyle(`scaleX(${width})`)}
-      />
+      <div className="Progress-fill" ref={animate} />
     </div>
   );
 };
 
 Progress.propTypes = {
   className: PropTypes.string,
-  media: PropTypes.object,
-  currentTime: PropTypes.number.isRequired,
-  startTime: PropTypes.number
+  currentProgress: PropTypes.number.isRequired,
+  timeRemaining: PropTypes.number.isRequired
 };
 
-export default timed()(Progress);
+export default Progress;
