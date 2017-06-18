@@ -17,6 +17,11 @@ const enhance = compose(
   }))
 );
 
+const shortcode = name =>
+  `:${name}:`;
+const url = filename =>
+  `/assets/emoji/${filename}`;
+
 const Emoji = ({
   name,
   image,
@@ -28,17 +33,20 @@ const Emoji = ({
     onMouseEnter={onShowTooltip}
     onMouseLeave={onHideTooltip}
     className="Emoji"
-    style={{ backgroundImage: `url(/assets/emoji/${image})` }}
     data-emoji={name}
   >
     <Tooltip
-      label={`:${name}:`}
+      label={shortcode(name)}
       verticalPosition="top"
       horizontalPosition="center"
       show={showTooltip}
       style={tooltipStyle}
     />
-    {`:${name}:`}
+    <img
+      className="Emoji-img"
+      src={url(image)}
+      alt={shortcode(name)}
+    />
   </span>
 );
 
