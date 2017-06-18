@@ -30,6 +30,7 @@ const PlaylistImport = ({
         <ImportForm
           key={sourceType}
           onShowImportPanel={() => onShowImportPanel(sourceType)}
+          onHideImportPanel={onHideImportPanel}
         />
       );
     }
