@@ -63,7 +63,7 @@ const plugins = [
 if (nodeEnv === 'production') {
   const LoaderOptionsPlugin = require('webpack').LoaderOptionsPlugin;
   const OccurrenceOrderPlugin = require('webpack').optimize.OccurrenceOrderPlugin;
-  const UglifyJsPlugin = require('webpack').optimize.UglifyJsPlugin;
+  const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
   plugins.push(
     new OccurrenceOrderPlugin(),
