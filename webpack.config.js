@@ -63,7 +63,8 @@ const plugins = [
 if (nodeEnv === 'production') {
   const LoaderOptionsPlugin = require('webpack').LoaderOptionsPlugin;
   const OccurrenceOrderPlugin = require('webpack').optimize.OccurrenceOrderPlugin;
-  const UglifyJsPlugin = require('webpack').optimize.UglifyJsPlugin;
+  const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+  const ModuleConcatenationPlugin = require('webpack').optimize.ModuleConcatenationPlugin;
 
   plugins.push(
     new OccurrenceOrderPlugin(),
@@ -85,7 +86,8 @@ if (nodeEnv === 'production') {
       // There's no other code that depends on those variables to be
       // available, so it doesn't really matter what they're called!
       mangle: { toplevel: true }
-    })
+    }),
+    new ModuleConcatenationPlugin()
   );
 }
 
