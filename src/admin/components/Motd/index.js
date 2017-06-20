@@ -29,6 +29,10 @@ const enhance = compose(
   muiThemeable()
 );
 
+function autoFocus(el) {
+  if (el) el.focus();
+}
+
 const Motd = ({
   muiTheme,
   canChangeMotd,
@@ -48,9 +52,9 @@ const Motd = ({
       <textarea
         className="AdminMotd-field"
         rows={4}
-        autoFocus
         onChange={onChange}
         value={newMotd}
+        ref={autoFocus}
       />
     </CardText>
     <CardActions expandable>
