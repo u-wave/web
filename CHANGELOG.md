@@ -1,3 +1,19 @@
+# 1.0.0-beta.13 / 23 Jun 2017
+
+Features:
+
+ * Improve progress bar animation. (#672)
+
+Bugfixes:
+
+ * Hide import panels on error. (#674)
+
+Internal:
+
+ * Use an `<img>` for emoji. (#673)
+ * Enable ModuleConcatenationPlugin with Webpack v3. (#676)
+ * Test doing a full prod build on CI. (#678)
+
 # 1.0.0-beta.12 / 09 Jun 2017
 
 Features:
