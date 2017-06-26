@@ -9,8 +9,9 @@ import {
   REMOVE_USER_MESSAGES,
   REMOVE_ALL_MESSAGES,
   MUTE_USER,
-  UNMUTE_USER
-} from '../constants/actionTypes/chat';
+  UNMUTE_USER,
+  USER_JOIN
+} from '../constants/ActionTypes';
 
 const MAX_MESSAGES = 500;
 
@@ -100,6 +101,20 @@ export default function reduce(state = initialState, action = {}) {
       ...state,
       messages: limit(
         messages.concat([ logMessage ]), MAX_MESSAGES
+      )
+    };
+  }
+  case USER_JOIN: {
+    const joinMessage = {
+      type: 'userJoin',
+      _id: `join-${payload.user._id}-${payload.timestamp}`,
+      user: payload.user,
+      timestamp: payload.timestamp
+    };
+    return {
+      ...state,
+      messages: limit(
+        messages.concat([ joinMessage ]), MAX_MESSAGES
       )
     };
   }

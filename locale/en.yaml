@@ -25,6 +25,7 @@ uwave:
   chat:
     title: Chat
     placeholder: Click here to chat!
+    userJoin: "{{username}} joined the room"
 
   dialogs:
     confirm:

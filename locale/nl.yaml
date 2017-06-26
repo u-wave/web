@@ -13,6 +13,7 @@ uwave:
   chat:
     title: Chat
     placeholder: Klik hier om te chatten!
+    userJoin: "{{username}} is verbonden"
 
   dialogs:
     confirm:

@@ -2,8 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import LogMessage from './LogMessage';
 import Message from './Message';
+import JoinMessage from './JoinMessage';
 import Motd from './Motd';
 import ScrollDownNotice from './ScrollDownNotice';
+
+const specialTypes = {
+  log: LogMessage,
+  userJoin: JoinMessage
+};
 
 export default class ChatMessages extends React.Component {
   static propTypes = {
@@ -97,9 +103,10 @@ export default class ChatMessages extends React.Component {
   }
 
   renderMessage(msg) {
-    if (msg.type === 'log') {
+    const SpecialMessage = specialTypes[msg.type];
+    if (SpecialMessage) {
       return (
-        <LogMessage
+        <SpecialMessage
           key={msg._id}
           {...msg}
         />
