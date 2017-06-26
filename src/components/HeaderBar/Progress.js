@@ -3,6 +3,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import transformStyle from '../../utils/transformStyle';
 
+function forceReflow(el) {
+  // Hopefully the minifier won't optimise this away!
+  el.getBoundingClientRect();
+}
+
 const Progress = ({ className, currentProgress, timeRemaining }) => {
   function animate(el) {
     if (!el) return;
@@ -13,7 +18,7 @@ const Progress = ({ className, currentProgress, timeRemaining }) => {
     }, transformStyle(`scaleX(${currentProgress})`));
 
     // Force browser to rerender the bar immediately
-    el.scrollWidth; // eslint-disable-line no-unused-expressions
+    forceReflow(el);
 
     // Set up the actual animation. Progress bar goes to 100% full
     // in $timeRemaining seconds.
