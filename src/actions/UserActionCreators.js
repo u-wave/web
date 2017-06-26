@@ -30,7 +30,10 @@ export function receiveGuestCount(guests) {
 export function join(user) {
   return {
     type: USER_JOIN,
-    payload: { user }
+    payload: {
+      user,
+      timestamp: Date.now()
+    }
   };
 }
 
@@ -38,7 +41,8 @@ export function leave(id) {
   return {
     type: USER_LEAVE,
     payload: {
-      userID: id
+      userID: id,
+      timestamp: Date.now()
     }
   };
 }
@@ -46,7 +50,11 @@ export function leave(id) {
 export function changeUsername(userID, username) {
   return {
     type: CHANGE_USERNAME,
-    payload: { userID, username }
+    payload: {
+      userID,
+      username,
+      timestamp: Date.now()
+    }
   };
 }
 
@@ -76,6 +84,10 @@ export function doChangeUsername(username) {
 export function changeUserRole(userID, role) {
   return {
     type: CHANGE_ROLE,
-    payload: { userID, role }
+    payload: {
+      userID,
+      role,
+      timestamp: Date.now()
+    }
   };
 }
