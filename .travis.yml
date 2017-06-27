@@ -19,7 +19,3 @@ script:
 
 after_script:
   - greenkeeper-lockfile-upload
-
-cache:
-  directories:
-    - "node_modules"

@@ -7,7 +7,13 @@ module.exports = (options) => {
       'postcss-url': {
         url: 'rebase'
       },
-      'postcss-cssnext': {},
+      'postcss-cssnext': {
+        features: {
+          // Force enable custom properties so they can be used in color()
+          // function calls even if the target browser does not support them.
+          customProperties: true
+        }
+      },
       cssnano: env === 'production' && {
         autoprefixer: false
       }
