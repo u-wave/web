@@ -13,7 +13,12 @@ const preset = {
   presets: [
     ['env', {
       modules: false,
-      targets
+      loose: env === 'production',
+      targets,
+      // Force enable the classes transform, react-hot-loader doesn't
+      // appear to work well with native classes + arrow functions in
+      // transpiled class properties.
+      include: ['transform-es2015-classes']
     }],
     'stage-2',
     'react'
