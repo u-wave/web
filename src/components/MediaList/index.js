@@ -7,6 +7,17 @@ import itemSelection from 'item-selection/immutable';
 import Row from './Row';
 import LoadingRow from './LoadingRow';
 
+/**
+ * Check if two media lists are different, taking into account
+ * pagination. If the new media list contains items where the previous
+ * list doesn't, but every other item is identical, we assume
+ * the new list has just loaded a page that wasn't loaded in the
+ * previous one, and decide that the list is not really different.
+ */
+function didMediaChange(prev, next) {
+  return prev.some((item, i) => item && next[i] && item._id !== next[i]._id);
+}
+
 export default class MediaList extends React.Component {
   static propTypes = {
     className: PropTypes.string,
@@ -31,8 +42,12 @@ export default class MediaList extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.media !== this.props.media) {
+      const selection = this.state.selection.getIndices();
+      const mediaChanged = didMediaChange(this.props.media, nextProps.media);
       this.setState({
-        selection: itemSelection(nextProps.media)
+        selection: mediaChanged
+          ? itemSelection(nextProps.media)
+          : itemSelection(nextProps.media, selection)
       });
     }
   }
