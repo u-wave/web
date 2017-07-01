@@ -2,22 +2,25 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import UserNotificationMessage from './UserNotificationMessage';
 
-const JoinMessage = ({
+const UserNameChanged = ({
   user,
-  timestamp
+  timestamp,
+  newUsername
 }) => (
   <UserNotificationMessage
-    type="userJoin"
-    className="ChatMessage--userJoin"
-    i18nKey="chat.userJoin"
+    type="userNameChanged"
+    className="ChatMessage--userNameChanged"
+    i18nKey="chat.userNameChanged"
     user={user}
     timestamp={timestamp}
+    newUsername={newUsername}
   />
 );
 
-JoinMessage.propTypes = {
+UserNameChanged.propTypes = {
   user: PropTypes.object.isRequired,
+  newUsername: PropTypes.string.isRequired,
   timestamp: PropTypes.number.isRequired
 };
 
-export default JoinMessage;
+export default UserNameChanged;

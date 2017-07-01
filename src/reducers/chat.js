@@ -10,7 +10,8 @@ import {
   REMOVE_ALL_MESSAGES,
   MUTE_USER,
   UNMUTE_USER,
-  USER_JOIN
+  USER_JOIN,
+  CHANGE_USERNAME
 } from '../constants/ActionTypes';
 
 const MAX_MESSAGES = 500;
@@ -45,6 +46,40 @@ function removeInFlightMessage(messages, remove) {
 
 function limit(messages, n) {
   return messages.length > n ? messages.slice(1) : messages;
+}
+
+function reduceNotifications(state, { type, payload }) {
+  const { messages } = state;
+  switch (type) {
+  case USER_JOIN:
+    return {
+      ...state,
+      messages: limit(
+        messages.concat([ {
+          type: 'userJoin',
+          _id: `join-${payload.user._id}-${payload.timestamp}`,
+          user: payload.user,
+          timestamp: payload.timestamp
+        } ]),
+        MAX_MESSAGES
+      )
+    };
+  case CHANGE_USERNAME:
+    return {
+      ...state,
+      messages: limit(
+        messages.concat([ {
+          type: 'userNameChanged',
+          _id: `userNameChanged-${payload.userID}-${payload.timestamp}`,
+          user: payload.user,
+          newUsername: payload.username,
+          timestamp: payload.timestamp
+        } ])
+      )
+    };
+  default:
+    return state;
+  }
 }
 
 export default function reduce(state = initialState, action = {}) {
@@ -104,20 +139,6 @@ export default function reduce(state = initialState, action = {}) {
       )
     };
   }
-  case USER_JOIN: {
-    const joinMessage = {
-      type: 'userJoin',
-      _id: `join-${payload.user._id}-${payload.timestamp}`,
-      user: payload.user,
-      timestamp: payload.timestamp
-    };
-    return {
-      ...state,
-      messages: limit(
-        messages.concat([ joinMessage ]), MAX_MESSAGES
-      )
-    };
-  }
 
   case REMOVE_MESSAGE:
     return {
@@ -154,6 +175,6 @@ export default function reduce(state = initialState, action = {}) {
     };
 
   default:
-    return state;
+    return reduceNotifications(state, action);
   }
 }

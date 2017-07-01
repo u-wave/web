@@ -26,6 +26,7 @@ uwave:
     title: Chat
     placeholder: Click here to chat!
     userJoin: "{{username}} joined the room"
+    userNameChanged: "{{username}} changed their nickname to {{newUsername}}"
 
   dialogs:
     confirm:

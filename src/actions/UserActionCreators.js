@@ -10,7 +10,10 @@ import {
   DO_CHANGE_USERNAME_START,
   DO_CHANGE_USERNAME_COMPLETE
 } from '../constants/actionTypes/users';
-import { currentUserSelector } from '../selectors/userSelectors';
+import {
+  currentUserSelector,
+  usersSelector
+} from '../selectors/userSelectors';
 import { put } from './RequestActionCreators';
 
 export function setUsers(users) {
@@ -48,13 +51,17 @@ export function leave(id) {
 }
 
 export function changeUsername(userID, username) {
-  return {
-    type: CHANGE_USERNAME,
-    payload: {
-      userID,
-      username,
-      timestamp: Date.now()
-    }
+  return (dispatch, getState) => {
+    const user = usersSelector(getState())[userID];
+    return dispatch({
+      type: CHANGE_USERNAME,
+      payload: {
+        user,
+        userID,
+        username,
+        timestamp: Date.now()
+      }
+    });
   };
 }
 
