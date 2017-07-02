@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import LogMessage from './LogMessage';
 import Message from './Message';
-import JoinMessage from './JoinMessage';
-import LeaveMessage from './LeaveMessage';
-import NameChangedMessage from './NameChangedMessage';
+import JoinMessage from './NotificationMessages/JoinMessage';
+import LeaveMessage from './NotificationMessages/LeaveMessage';
+import NameChangedMessage from './NotificationMessages/NameChangedMessage';
 import Motd from './Motd';
 import ScrollDownNotice from './ScrollDownNotice';
 

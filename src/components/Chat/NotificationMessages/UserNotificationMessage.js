@@ -5,10 +5,10 @@ import { Interpolate } from 'react-i18next';
 import compose from 'recompose/compose';
 import pure from 'recompose/pure';
 import withHandlers from 'recompose/withHandlers';
-import userCardable from '../../utils/userCardable';
-import Avatar from '../Avatar';
-import Username from '../Username';
-import MessageTimestamp from './MessageTimestamp';
+import userCardable from '../../../utils/userCardable';
+import Avatar from '../../Avatar';
+import Username from '../../Username';
+import MessageTimestamp from '../MessageTimestamp';
 
 const enhance = compose(
   pure,

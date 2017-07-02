@@ -1,5 +1,4 @@
 import except from 'except';
-
 import {
   RECEIVE_MOTD,
   RECEIVE_MESSAGE,
@@ -9,11 +8,9 @@ import {
   REMOVE_USER_MESSAGES,
   REMOVE_ALL_MESSAGES,
   MUTE_USER,
-  UNMUTE_USER,
-  USER_JOIN,
-  USER_LEAVE,
-  CHANGE_USERNAME
+  UNMUTE_USER
 } from '../constants/ActionTypes';
+import reduceNotifications from './chat/notifications';
 
 const MAX_MESSAGES = 500;
 
@@ -47,53 +44,6 @@ function removeInFlightMessage(messages, remove) {
 
 function limit(messages, n) {
   return messages.length > n ? messages.slice(1) : messages;
-}
-
-function reduceNotifications(state, { type, payload }) {
-  const { messages } = state;
-  switch (type) {
-  case USER_JOIN:
-    return {
-      ...state,
-      messages: limit(
-        messages.concat([ {
-          type: 'userJoin',
-          _id: `userJoin-${payload.user._id}-${payload.timestamp}`,
-          user: payload.user,
-          timestamp: payload.timestamp
-        } ]),
-        MAX_MESSAGES
-      )
-    };
-  case USER_LEAVE:
-    return {
-      ...state,
-      messages: limit(
-        messages.concat([ {
-          type: 'userLeave',
-          _id: `userLeave-${payload.user._id}-${payload.timestamp}`,
-          user: payload.user,
-          timestamp: payload.timestamp
-        } ]),
-        MAX_MESSAGES
-      )
-    };
-  case CHANGE_USERNAME:
-    return {
-      ...state,
-      messages: limit(
-        messages.concat([ {
-          type: 'userNameChanged',
-          _id: `userNameChanged-${payload.userID}-${payload.timestamp}`,
-          user: payload.user,
-          newUsername: payload.username,
-          timestamp: payload.timestamp
-        } ])
-      )
-    };
-  default:
-    return state;
-  }
 }
 
 export default function reduce(state = initialState, action = {}) {
@@ -188,7 +138,15 @@ export default function reduce(state = initialState, action = {}) {
       mutedUsers: except(state.mutedUsers, payload.userID)
     };
 
-  default:
-    return reduceNotifications(state, action);
+  default: {
+    const nextMessages = reduceNotifications(messages, action);
+    if (nextMessages !== messages) {
+      return {
+        ...state,
+        messages: limit(nextMessages, MAX_MESSAGES)
+      };
+    }
+    return state;
+  }
   }
 }
