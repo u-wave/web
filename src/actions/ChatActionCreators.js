@@ -2,7 +2,7 @@ import find from 'array-find';
 import ms from 'ms';
 import splitargs from 'splitargs';
 import parseChatMarkup from 'u-wave-parse-chat-markup';
-
+import playMentionSound from '../utils/playMentionSound';
 import {
   RECEIVE_MOTD,
   SET_MOTD_START,
@@ -39,8 +39,6 @@ import {
   resolveMentions,
   hasMention
 } from '../utils/chatMentions';
-
-import mentionSoundUrl from '../../assets/audio/mention.mp3';
 
 export function receiveMotd(text) {
   return {
@@ -112,16 +110,6 @@ export function inputMessage(text) {
     }
     dispatch(sendChat(text));
   };
-}
-
-let mentionSound;
-if (typeof window !== 'undefined' && window.Audio) {
-  mentionSound = new window.Audio(mentionSoundUrl);
-}
-function playMentionSound() {
-  if (mentionSound) {
-    mentionSound.play();
-  }
 }
 
 function isMuted(state, userID) {
