@@ -17,7 +17,12 @@ const baseSelector = state => state.chat;
 
 export const motdSelector = createSelector(baseSelector, chat => chat.motd);
 
-export const messagesSelector = createSelector(baseSelector, chat => chat.messages);
+const MAX_MESSAGES = 500;
+const allMessagesSelector = createSelector(baseSelector, chat => chat.messages);
+export const messagesSelector = createSelector(
+  allMessagesSelector,
+  messages => messages.slice(-MAX_MESSAGES)
+);
 
 export const markupCompilerOptionsSelector = createStructuredSelector({
   availableEmoji: availableEmojiNamesSelector,

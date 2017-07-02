@@ -12,8 +12,6 @@ import {
 } from '../constants/ActionTypes';
 import reduceNotifications from './chat/notifications';
 
-const MAX_MESSAGES = 500;
-
 const initialState = {
   /**
    * Message of the Day, a message shown at the very top of the Chat box. Can be
@@ -42,10 +40,6 @@ function removeInFlightMessage(messages, remove) {
   ));
 }
 
-function limit(messages, n) {
-  return messages.length > n ? messages.slice(1) : messages;
-}
-
 export default function reduce(state = initialState, action = {}) {
   const { type, payload } = action;
   const { messages } = state;
@@ -70,7 +64,7 @@ export default function reduce(state = initialState, action = {}) {
     };
     return {
       ...state,
-      messages: limit(messages.concat([ inFlightMessage ]), MAX_MESSAGES)
+      messages: messages.concat([ inFlightMessage ])
     };
   }
   case RECEIVE_MESSAGE: {
@@ -84,10 +78,7 @@ export default function reduce(state = initialState, action = {}) {
 
     return {
       ...state,
-      messages: limit(
-        removeInFlightMessage(messages, message).concat([ message ]),
-        MAX_MESSAGES
-      )
+      messages: removeInFlightMessage(messages, message).concat([ message ])
     };
   }
   case LOG: {
@@ -98,9 +89,7 @@ export default function reduce(state = initialState, action = {}) {
     };
     return {
       ...state,
-      messages: limit(
-        messages.concat([ logMessage ]), MAX_MESSAGES
-      )
+      messages: messages.concat([ logMessage ])
     };
   }
 
@@ -141,10 +130,7 @@ export default function reduce(state = initialState, action = {}) {
   default: {
     const nextMessages = reduceNotifications(messages, action);
     if (nextMessages !== messages) {
-      return {
-        ...state,
-        messages: limit(nextMessages, MAX_MESSAGES)
-      };
+      return { ...state, messages: nextMessages };
     }
     return state;
   }
