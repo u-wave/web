@@ -1,5 +1,10 @@
 @import "../../vars.css";
 
+.About {
+  position: relative;
+  height: 100%;
+}
+
 .AboutPanel {
   background-color: var(--background-color);
   overflow-y: auto;

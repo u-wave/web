@@ -2,9 +2,10 @@ import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
-import Overlay from '../Overlay';
 import OverlayHeader from '../Overlay/Header';
 import SettingsPanel from './SettingsPanel';
+
+const enhance = translate();
 
 class SettingsManager extends React.Component {
   static propTypes = {
@@ -28,7 +29,7 @@ class SettingsManager extends React.Component {
     } = this.props;
 
     return (
-      <Overlay className={cx('SettingsManager', 'AppColumn', 'AppColumn--full', className)}>
+      <div className={cx('SettingsManager', className)}>
         <OverlayHeader
           title={t('settings.title')}
           onCloseOverlay={onCloseOverlay}
@@ -39,9 +40,9 @@ class SettingsManager extends React.Component {
             onLogout={this.handleLogout}
           />
         </div>
-      </Overlay>
+      </div>
     );
   }
 }
 
-export default translate()(SettingsManager);
+export default enhance(SettingsManager);

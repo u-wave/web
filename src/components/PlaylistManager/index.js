@@ -1,7 +1,6 @@
 import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
-import Overlay from '../Overlay';
 import PlaylistMenu from '../../containers/PlaylistManagerMenu';
 import PlaylistPanel from '../../containers/PlaylistManagerPanel';
 import PlaylistImport from '../../containers/PlaylistImportManager';
@@ -40,14 +39,7 @@ const PlaylistManager = ({
   }
 
   return (
-    <Overlay
-      className={cx(
-        'PlaylistManager',
-        'AppColumn',
-        'AppColumn--full',
-        className
-      )}
-    >
+    <div className={cx('PlaylistManager', className)}>
       <PlaylistHeader
         className="PlaylistManager-header AppRow AppRow--top"
         onCloseOverlay={onCloseOverlay}
@@ -60,7 +52,7 @@ const PlaylistManager = ({
           {panel}
         </div>
       </div>
-    </Overlay>
+    </div>
   );
 };
 

@@ -2,14 +2,14 @@ import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Overlay = ({ direction = 'bottom', children, className, ...props }) => (
+const Overlay = ({ direction = 'bottom', children, className }) => (
   <div
     className={cx(
       'Overlay',
       `Overlay--from-${direction}`
     )}
   >
-    <div className={cx('Overlay-body', className)} {...props}>
+    <div className={cx('Overlay-body', className)}>
       {children}
     </div>
   </div>
