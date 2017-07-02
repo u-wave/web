@@ -41,12 +41,16 @@ export function join(user) {
 }
 
 export function leave(id) {
-  return {
-    type: USER_LEAVE,
-    payload: {
-      userID: id,
-      timestamp: Date.now()
-    }
+  return (dispatch, getState) => {
+    const user = usersSelector(getState())[id];
+    return dispatch({
+      type: USER_LEAVE,
+      payload: {
+        user,
+        userID: id,
+        timestamp: Date.now()
+      }
+    });
   };
 }
 

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import LogMessage from './LogMessage';
 import Message from './Message';
 import JoinMessage from './JoinMessage';
+import LeaveMessage from './LeaveMessage';
 import NameChangedMessage from './NameChangedMessage';
 import Motd from './Motd';
 import ScrollDownNotice from './ScrollDownNotice';
@@ -10,6 +11,7 @@ import ScrollDownNotice from './ScrollDownNotice';
 const specialTypes = {
   log: LogMessage,
   userJoin: JoinMessage,
+  userLeave: LeaveMessage,
   userNameChanged: NameChangedMessage
 };
 

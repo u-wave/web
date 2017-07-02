@@ -11,6 +11,7 @@ import {
   MUTE_USER,
   UNMUTE_USER,
   USER_JOIN,
+  USER_LEAVE,
   CHANGE_USERNAME
 } from '../constants/ActionTypes';
 
@@ -57,7 +58,20 @@ function reduceNotifications(state, { type, payload }) {
       messages: limit(
         messages.concat([ {
           type: 'userJoin',
-          _id: `join-${payload.user._id}-${payload.timestamp}`,
+          _id: `userJoin-${payload.user._id}-${payload.timestamp}`,
+          user: payload.user,
+          timestamp: payload.timestamp
+        } ]),
+        MAX_MESSAGES
+      )
+    };
+  case USER_LEAVE:
+    return {
+      ...state,
+      messages: limit(
+        messages.concat([ {
+          type: 'userLeave',
+          _id: `userLeave-${payload.user._id}-${payload.timestamp}`,
           user: payload.user,
           timestamp: payload.timestamp
         } ]),
