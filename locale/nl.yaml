@@ -13,6 +13,9 @@ uwave:
   chat:
     title: Chat
     placeholder: Klik hier om te chatten!
+    userJoin: "{{username}} is verbonden"
+    userLeave: "{{username}} gaat weg"
+    userNameChanged: "{{username}} is nu {{newUsername}}"
 
   dialogs:
     confirm:
@@ -117,14 +120,21 @@ uwave:
     videoSize: Fullscreen Video
     enableLargeVideo: Video Vergroten
     disableLargeVideo: Video Verkleinen
-    mentionSound: Chatnotificaties
+    mentionSound: Chatnotificatiegeluid
     language: Taal
     logout: Uitloggen
+    notifications:
+      title: Notificatie-instellingen
+      help: "Geef een melding weer in de chatbox wanneer:"
+      userJoin: Iemand binnenkomt
+      userLeave: Iemand weggaat
+      userNameChanged: Iemand hun naam verandert
     profile:
       username:
         change: Gebruikersnaam wijzigen
         save: Wijzigen
     links:
+      title: Links
       website: üWave
       source: üWave Web Client Source Code
       license: License

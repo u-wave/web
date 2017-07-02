@@ -1,3 +1,4 @@
+import setPath from 'lodash/set';
 import {
   LOAD_SETTINGS,
   CHANGE_SETTING
@@ -11,9 +12,11 @@ export function loadSettings(obj) {
 }
 
 export function set(name, value) {
+  const changeset = {};
+  setPath(changeset, name, value);
   return {
     type: CHANGE_SETTING,
-    payload: { [name]: value }
+    payload: changeset
   };
 }
 

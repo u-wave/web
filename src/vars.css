@@ -38,6 +38,9 @@
   --media-list-color: transparent;
   --media-list-alternate-color: color(#303036 alpha(* 30%));
 
+  /* Settings panel colours */
+  --settings-help-text-color: #aaa;
+
   /* Form colours & sizes */
   --forms-element-margin: 16px;
   --forms-textfield-size: 50px;

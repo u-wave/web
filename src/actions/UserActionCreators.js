@@ -10,7 +10,10 @@ import {
   DO_CHANGE_USERNAME_START,
   DO_CHANGE_USERNAME_COMPLETE
 } from '../constants/actionTypes/users';
-import { currentUserSelector } from '../selectors/userSelectors';
+import {
+  currentUserSelector,
+  usersSelector
+} from '../selectors/userSelectors';
 import { put } from './RequestActionCreators';
 
 export function setUsers(users) {
@@ -30,23 +33,39 @@ export function receiveGuestCount(guests) {
 export function join(user) {
   return {
     type: USER_JOIN,
-    payload: { user }
-  };
-}
-
-export function leave(id) {
-  return {
-    type: USER_LEAVE,
     payload: {
-      userID: id
+      user,
+      timestamp: Date.now()
     }
   };
 }
 
+export function leave(id) {
+  return (dispatch, getState) => {
+    const user = usersSelector(getState())[id];
+    return dispatch({
+      type: USER_LEAVE,
+      payload: {
+        user,
+        userID: id,
+        timestamp: Date.now()
+      }
+    });
+  };
+}
+
 export function changeUsername(userID, username) {
-  return {
-    type: CHANGE_USERNAME,
-    payload: { userID, username }
+  return (dispatch, getState) => {
+    const user = usersSelector(getState())[userID];
+    return dispatch({
+      type: CHANGE_USERNAME,
+      payload: {
+        user,
+        userID,
+        username,
+        timestamp: Date.now()
+      }
+    });
   };
 }
 
@@ -76,6 +95,10 @@ export function doChangeUsername(username) {
 export function changeUserRole(userID, role) {
   return {
     type: CHANGE_ROLE,
-    payload: { userID, role }
+    payload: {
+      userID,
+      role,
+      timestamp: Date.now()
+    }
   };
 }

@@ -25,6 +25,9 @@ uwave:
   chat:
     title: Chat
     placeholder: Click here to chat!
+    userJoin: "{{username}} joined the room"
+    userLeave: "{{username}} left the room"
+    userNameChanged: "{{username}} changed their nickname to {{newUsername}}"
 
   dialogs:
     confirm:
@@ -136,11 +139,18 @@ uwave:
     mentionSound: Chat Mention Sound
     language: Language
     logout: Sign out
+    notifications:
+      title: Notification Settings
+      help: "Show a line in chat when the following things happen:"
+      userJoin: User Joins
+      userLeave: User Leaves
+      userNameChanged: User Changes Nickname
     profile:
       username:
         change: Change Username
         save: Save
     links:
+      title: Links
       website: üWave
       source: üWave Web Client Source Code
       license: License

@@ -12,12 +12,30 @@ import {
   usersSelector,
   currentUserSelector
 } from './userSelectors';
+import {
+  notificationSettingsSelector
+} from './settingSelectors';
 
 const baseSelector = state => state.chat;
 
 export const motdSelector = createSelector(baseSelector, chat => chat.motd);
 
-export const messagesSelector = createSelector(baseSelector, chat => chat.messages);
+const MAX_MESSAGES = 500;
+const allMessagesSelector = createSelector(baseSelector, chat => chat.messages);
+const filteredMessagesSelector = createSelector(
+  allMessagesSelector,
+  notificationSettingsSelector,
+  (messages, notificationSettings) => messages.filter((message) => {
+    if (message.type === 'userJoin') return notificationSettings.userJoin;
+    if (message.type === 'userLeave') return notificationSettings.userLeave;
+    if (message.type === 'userNameChanged') return notificationSettings.userNameChanged;
+    return true;
+  })
+);
+export const messagesSelector = createSelector(
+  filteredMessagesSelector,
+  messages => messages.slice(-MAX_MESSAGES)
+);
 
 export const markupCompilerOptionsSelector = createStructuredSelector({
   availableEmoji: availableEmojiNamesSelector,

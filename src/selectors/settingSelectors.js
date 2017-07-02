@@ -66,3 +66,8 @@ export const settingsSelector = createSelector(
     language
   })
 );
+
+export const notificationSettingsSelector = createSelector(
+  settingsSelector,
+  settings => settings.notifications
+);

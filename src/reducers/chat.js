@@ -1,5 +1,4 @@
 import except from 'except';
-
 import {
   RECEIVE_MOTD,
   RECEIVE_MESSAGE,
@@ -10,9 +9,8 @@ import {
   REMOVE_ALL_MESSAGES,
   MUTE_USER,
   UNMUTE_USER
-} from '../constants/actionTypes/chat';
-
-const MAX_MESSAGES = 500;
+} from '../constants/ActionTypes';
+import reduceNotifications from './chat/notifications';
 
 const initialState = {
   /**
@@ -42,10 +40,6 @@ function removeInFlightMessage(messages, remove) {
   ));
 }
 
-function limit(messages, n) {
-  return messages.length > n ? messages.slice(1) : messages;
-}
-
 export default function reduce(state = initialState, action = {}) {
   const { type, payload } = action;
   const { messages } = state;
@@ -70,7 +64,7 @@ export default function reduce(state = initialState, action = {}) {
     };
     return {
       ...state,
-      messages: limit(messages.concat([ inFlightMessage ]), MAX_MESSAGES)
+      messages: messages.concat([ inFlightMessage ])
     };
   }
   case RECEIVE_MESSAGE: {
@@ -84,10 +78,7 @@ export default function reduce(state = initialState, action = {}) {
 
     return {
       ...state,
-      messages: limit(
-        removeInFlightMessage(messages, message).concat([ message ]),
-        MAX_MESSAGES
-      )
+      messages: removeInFlightMessage(messages, message).concat([ message ])
     };
   }
   case LOG: {
@@ -98,9 +89,7 @@ export default function reduce(state = initialState, action = {}) {
     };
     return {
       ...state,
-      messages: limit(
-        messages.concat([ logMessage ]), MAX_MESSAGES
-      )
+      messages: messages.concat([ logMessage ])
     };
   }
 
@@ -138,7 +127,12 @@ export default function reduce(state = initialState, action = {}) {
       mutedUsers: except(state.mutedUsers, payload.userID)
     };
 
-  default:
+  default: {
+    const nextMessages = reduceNotifications(messages, action);
+    if (nextMessages !== messages) {
+      return { ...state, messages: nextMessages };
+    }
     return state;
+  }
   }
 }
