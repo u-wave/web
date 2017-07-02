@@ -1,3 +1,4 @@
+import merge from 'deepmerge';
 import {
   LOAD_SETTINGS,
   CHANGE_SETTING
@@ -9,7 +10,12 @@ const initialState = {
   muted: false,
   videoEnabled: true,
   videoSize: 'large',
-  volume: 0
+  volume: 0,
+  notifications: {
+    userJoin: true,
+    userLeave: true,
+    userNameChanged: true
+  }
 };
 
 export default function reduce(state = initialState, action = {}) {
@@ -19,7 +25,7 @@ export default function reduce(state = initialState, action = {}) {
     // Loading settings defaults to the initial state.
     return { ...initialState, ...payload };
   case CHANGE_SETTING:
-    return { ...state, ...payload };
+    return merge(state, payload, { clone: true });
   default:
     return state;
   }

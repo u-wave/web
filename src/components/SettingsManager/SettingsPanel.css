@@ -16,6 +16,11 @@
   font-weight: 400;
 }
 
+.SettingsPanel-helpText {
+  line-height: 1.5;
+  color: var(--settings-help-text-color);
+}
+
 .SettingsPanel-toggle {
   margin: 0 0 20px 0;
 }
