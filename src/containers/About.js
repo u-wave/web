@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Overlay from '../components/Overlay';
 import About from '../components/About';
 
 export default class AboutContainer extends React.Component {
@@ -17,10 +18,12 @@ export default class AboutContainer extends React.Component {
 
   render() {
     return (
-      <About
-        {...this.props}
-        render={this.getAboutPageComponent()}
-      />
+      <Overlay direction="top">
+        <About
+          {...this.props}
+          render={this.getAboutPageComponent()}
+        />
+      </Overlay>
     );
   }
 }

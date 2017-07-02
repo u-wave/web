@@ -4,6 +4,8 @@
 
 .SettingsManager {
   z-index: 10;
+  position: relative;
+  height: 100%;
 }
 
 .SettingsManager-body {

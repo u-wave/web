@@ -1,11 +1,12 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-
+import nest from 'recompose/nest';
+import withProps from 'recompose/withProps';
 import { openPreviewMediaDialog } from '../actions/DialogActionCreators';
 import { addMediaMenu } from '../actions/PlaylistActionCreators';
-
 import { roomHistoryWithVotesSelector } from '../selectors/roomHistorySelectors';
+import Overlay from '../components/Overlay';
 import RoomHistory from '../components/RoomHistory';
 
 const selectionOrOne = (media, selection) => {
@@ -27,4 +28,5 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onOpenPreviewMediaDialog: openPreviewMediaDialog
 }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(RoomHistory);
+const OverlayFromTop = withProps({ direction: 'top' })(Overlay);
+export default connect(mapStateToProps, mapDispatchToProps)(nest(OverlayFromTop, RoomHistory));

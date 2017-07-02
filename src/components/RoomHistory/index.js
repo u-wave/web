@@ -2,9 +2,10 @@ import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
-import Overlay from '../Overlay';
 import OverlayHeader from '../Overlay/Header';
 import HistoryList from './HistoryList';
+
+const enhance = translate();
 
 const RoomHistory = ({
   t,
@@ -14,10 +15,7 @@ const RoomHistory = ({
   onOpenPreviewMediaDialog,
   ...props
 }) => (
-  <Overlay
-    className={cx('RoomHistory', 'AppColumn', 'AppColumn--full', className)}
-    direction="top"
-  >
+  <div className={cx('RoomHistory', className)}>
     <OverlayHeader
       direction="top"
       className="AppRow AppRow--top"
@@ -31,7 +29,7 @@ const RoomHistory = ({
         {...props}
       />
     </div>
-  </Overlay>
+  </div>
 );
 
 RoomHistory.propTypes = {
@@ -42,4 +40,4 @@ RoomHistory.propTypes = {
   onOpenPreviewMediaDialog: PropTypes.func.isRequired
 };
 
-export default translate()(RoomHistory);
+export default enhance(RoomHistory);
