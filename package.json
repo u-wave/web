@@ -85,7 +85,6 @@
     "babel-register": "^6.22.0",
     "chai": "^4.0.1",
     "chai-enzyme": "^0.8.0",
-    "cheerio": "^0.22.0",
     "copy-webpack-plugin": "^4.0.1",
     "cross-env": "^5.0.0",
     "css-loader": "^0.28.4",

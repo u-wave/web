@@ -1,5 +1,4 @@
 const fs = require('fs');
-const cheerio = require('cheerio');
 const createTemplate = require('lodash/template');
 
 /**
@@ -11,8 +10,7 @@ module.exports = function loadStaticHtmlTemplate(source) {
   const parentTemplate = require.resolve('../../src/markdown.prod.html');
 
   // Extract the likely title from the document.
-  const $ = cheerio.load(source);
-  const title = $('h1').first().text().trim();
+  const title = source.split(/<h1[^>]*>|<\/h1>/)[1];
 
   fs.readFile(parentTemplate, 'utf8', (err, templateSource) => {
     if (err) {
