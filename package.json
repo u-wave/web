@@ -131,7 +131,7 @@
     "through2": "^2.0.3",
     "u-wave-source-soundcloud": "^1.0.1",
     "u-wave-source-youtube": "^1.0.4",
-    "u-wave-web-emojione": "^1.0.0",
+    "u-wave-web-emojione": "^2.0.0",
     "uglifyjs-webpack-plugin": "^0.4.6",
     "webpack": "^3.0.0",
     "webpack-dev-middleware": "^1.10.0",
