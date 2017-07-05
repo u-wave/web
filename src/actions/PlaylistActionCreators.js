@@ -63,10 +63,14 @@ export function loadPlaylistComplete(playlistID, media, pagination) {
   };
 }
 
-export function loadPlaylist(playlistID, page = 0) {
+export function loadPlaylist(playlistID, page = 0, sneaky = false) {
   return get(`/playlists/${playlistID}/media`, {
     qs: { page, limit: MEDIA_PAGE_SIZE },
-    onStart: () => loadPlaylistStart(playlistID, page),
+    onStart: () => (dispatch) => {
+      if (!sneaky) {
+        dispatch(loadPlaylistStart(playlistID, page));
+      }
+    },
     onComplete: res => loadPlaylistComplete(
       playlistID,
       mergeIncludedModels(res).map(flattenPlaylistItem),
@@ -583,19 +587,25 @@ export function shufflePlaylistComplete(playlistID) {
       type: SHUFFLE_PLAYLIST_COMPLETE,
       payload: { playlistID }
     });
-    dispatch(loadPlaylist(playlistID));
   };
 }
 
 export function shufflePlaylist(playlistID) {
-  return post(`/playlists/${playlistID}/shuffle`, {}, {
-    onStart: () => shufflePlaylistStart(playlistID),
-    onComplete: () => shufflePlaylistComplete(playlistID),
-    onError: error => ({
-      type: SHUFFLE_PLAYLIST_COMPLETE,
-      error: true,
-      payload: error,
-      meta: { playlistID }
-    })
-  });
+  return (dispatch) => {
+    const shuffleOperation = post(`/playlists/${playlistID}/shuffle`, {}, {
+      onStart: () => shufflePlaylistStart(playlistID),
+      // onComplete: () => shufflePlaylistComplete(playlistID),
+      onError: error => ({
+        type: SHUFFLE_PLAYLIST_COMPLETE,
+        error: true,
+        payload: error,
+        meta: { playlistID }
+      })
+    });
+    const loadOperation = loadPlaylist(playlistID, 0, true);
+
+    return dispatch(shuffleOperation)
+      .then(() => dispatch(loadOperation))
+      .then(() => dispatch(shufflePlaylistComplete(playlistID)));
+  };
 }

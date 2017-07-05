@@ -27,7 +27,6 @@ import {
   MOVE_MEDIA_COMPLETE,
   UPDATE_MEDIA_START,
   UPDATE_MEDIA_COMPLETE,
-  SHUFFLE_PLAYLIST_COMPLETE,
   FILTER_PLAYLIST_ITEMS,
   FILTER_PLAYLIST_ITEMS_COMPLETE
 } from '../constants/actionTypes/playlists';
@@ -230,9 +229,6 @@ export default function reduce(state = initialState, action = {}) {
       playlist => ({ ...playlist, loading: false }),
       items => mergePlaylistPage(meta.size, items, payload.media, meta)
     );
-  case SHUFFLE_PLAYLIST_COMPLETE:
-    // Clear the local playlist item cache.
-    return updatePlaylistItems(state, payload.playlistID, () => []);
 
   case FILTER_PLAYLIST_ITEMS:
     // Only the selected playlist can be filtered.

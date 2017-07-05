@@ -3,13 +3,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import Checkbox from 'material-ui/Checkbox';
-import IconButton from 'material-ui/IconButton';
-import ShuffleIcon from 'material-ui/svg-icons/av/shuffle';
 import ActiveIcon from 'material-ui/svg-icons/toggle/check-box';
 import ActivateIcon from 'material-ui/svg-icons/toggle/check-box-outline-blank';
 
 import RenamePlaylistButton from './RenamePlaylistButton';
 import DeletePlaylistButton from './DeletePlaylistButton';
+import ShufflePlaylistButton from './ShufflePlaylistButton';
 import PlaylistFilter from './PlaylistFilter';
 
 const checkboxIconStyle = { fill: '#fff' };
@@ -43,13 +42,7 @@ const PlaylistMeta = ({
     <PlaylistFilter
       onFilter={onFilter}
     />
-    <IconButton
-      onClick={onShufflePlaylist}
-      tooltip={t('playlists.shuffle')}
-      tooltipPosition="top-center"
-    >
-      <ShuffleIcon color="#555" hoverColor="#fff" />
-    </IconButton>
+    <ShufflePlaylistButton onShuffle={onShufflePlaylist} />
     <RenamePlaylistButton
       initialName={name}
       onRename={onRenamePlaylist}
