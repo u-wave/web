@@ -206,7 +206,7 @@ export default function reduce(state = initialState, action = {}) {
     };
 
   case LOAD_PLAYLIST_START: {
-    if (meta.page !== 0 || state.playlistItems[payload.playlistID]) {
+    if (meta.sneaky || meta.page !== 0 || state.playlistItems[payload.playlistID]) {
       return state;
     }
 

@@ -47,11 +47,11 @@ export function flattenPlaylistItem(item) {
   };
 }
 
-export function loadPlaylistStart(playlistID, page) {
+export function loadPlaylistStart(playlistID, page, { sneaky = false } = {}) {
   return {
     type: LOAD_PLAYLIST_START,
     payload: { playlistID },
-    meta: { page }
+    meta: { page, sneaky }
   };
 }
 
@@ -63,14 +63,10 @@ export function loadPlaylistComplete(playlistID, media, pagination) {
   };
 }
 
-export function loadPlaylist(playlistID, page = 0, sneaky = false) {
+export function loadPlaylist(playlistID, page = 0, meta = {}) {
   return get(`/playlists/${playlistID}/media`, {
     qs: { page, limit: MEDIA_PAGE_SIZE },
-    onStart: () => (dispatch) => {
-      if (!sneaky) {
-        dispatch(loadPlaylistStart(playlistID, page));
-      }
-    },
+    onStart: () => loadPlaylistStart(playlistID, page, meta),
     onComplete: res => loadPlaylistComplete(
       playlistID,
       mergeIncludedModels(res).map(flattenPlaylistItem),
@@ -602,7 +598,7 @@ export function shufflePlaylist(playlistID) {
         meta: { playlistID }
       })
     });
-    const loadOperation = loadPlaylist(playlistID, 0, true);
+    const loadOperation = loadPlaylist(playlistID, 0, { sneaky: true });
 
     return dispatch(shuffleOperation)
       .then(() => dispatch(loadOperation))
