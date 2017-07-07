@@ -173,6 +173,9 @@ export default function middleware({ url = defaultUrl() } = {}) {
     }
 
     function onMessage(pack) {
+      // Ignore keepalive messages.
+      if (pack.data === '-') return;
+
       const { command, data } = JSON.parse(pack.data);
       debug(command, data);
       if (typeof actions[command] === 'function') {
