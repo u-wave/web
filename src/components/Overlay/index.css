@@ -31,11 +31,11 @@
   height: 100%;
 }
 
-.Overlay-leave {
+.Overlay-exit {
   overflow-y: hidden;
   height: 100%;
 }
-.Overlay-leave-active {
+.Overlay-exit-active {
   transition: height 180ms ease-in;
   height: 0%;
 }
