@@ -85,7 +85,7 @@ export default class Uwave {
   build() {
     this.store = configureStore(
       { config: this.options },
-      { mediaSources: this.sources }
+      { mediaSources: this.sources, socketUrl: this.options.socketUrl }
     );
 
     if (this.jwt) {
