@@ -33,6 +33,8 @@ function clearLine() {
 }
 
 gulp.task('devServer', (done) => {
+  const serverPort = env.serverPort || 6042;
+
   const coreDir = tryResolve('u-wave-core/src',
     'Could not find the u-wave core module. Did you run `npm install u-wave-core`?'
   );
@@ -40,7 +42,8 @@ gulp.task('devServer', (done) => {
     'Could not find the u-wave API module. Did you run `npm install u-wave-api-v1`?'
   );
   const monitor = nodemon({
-    script: './tasks/devServer.js',
+    script: './tasks/apiServer.js',
+    args: ['--port', String(serverPort), '--watch'],
     verbose: true,
     watch: [ path.dirname(coreDir), path.dirname(apiDir) ]
   });
@@ -48,11 +51,15 @@ gulp.task('devServer', (done) => {
   monitor.once('start', done);
   monitor.on('log', ({ type, colour }) => {
     clearLine();
-    log(colors.grey('devServer'), colour);
+    log(colors.grey('apiServer'), colour);
   });
 });
 
-gulp.task('serve', ['devServer'], (done) => {
+gulp.task('apiServer', () => {
+  require('./apiServer');
+});
+
+gulp.task('serve', [env.watch ? 'devServer' : 'apiServer'], (done) => {
   const port = env.port || 6041;
   const serverPort = env.serverPort || 6042;
   const watch = env.watch || false;

@@ -18,13 +18,7 @@ function tryRequire(file, message) {
   }
 }
 
-/**
- * üWave API development server.
- */
-function devServer() {
-  const port = env.port || 6042;
-  const watch = env.watch || false;
-
+function loadDevModules() {
   require('babel-register');
   const uwave = tryRequire('u-wave-core/src/index.js',
     'Could not find the u-wave core module. Did you run `npm install u-wave-core`?'
@@ -32,6 +26,29 @@ function devServer() {
   const createWebApi = tryRequire('u-wave-api-v1/src/index.js',
     'Could not find the u-wave API module. Did you run `npm install u-wave-api-v1`?'
   );
+
+  return { uwave, createWebApi };
+}
+
+function loadProdModules() {
+  const uwave = tryRequire('u-wave-core',
+    'Could not find the u-wave core module. Did you run `npm install u-wave-core`?'
+  );
+  const createWebApi = tryRequire('u-wave-api-v1',
+    'Could not find the u-wave API module. Did you run `npm install u-wave-api-v1`?'
+  );
+
+  return { uwave, createWebApi };
+}
+
+/**
+ * üWave API development server.
+ */
+function start() {
+  const port = env.port || 6042;
+  const watch = env.watch || false;
+
+  const { uwave, createWebApi } = watch ? loadDevModules() : loadProdModules();
 
   const uw = uwave(config);
 
@@ -60,4 +77,4 @@ function devServer() {
   return app;
 }
 
-devServer();
+start();
