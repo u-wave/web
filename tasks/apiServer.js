@@ -1,5 +1,5 @@
-const { Buffer } = require('buffer');
-const { env } = require('gulp-util');
+const Buffer = require('buffer').Buffer;
+const env = require('gulp-util').env;
 const explain = require('explain-error');
 const ytSource = require('u-wave-source-youtube');
 const scSource = require('u-wave-source-soundcloud');
@@ -47,7 +47,9 @@ function start() {
   const port = env.port || 6042;
   const watch = env.watch || false;
 
-  const { uwave, createWebApi } = watch ? loadDevModules() : loadProdModules();
+  const modules = watch ? loadDevModules() : loadProdModules();
+  const uwave = modules.uwave;
+  const createWebApi = modules.createWebApi;
 
   const uw = uwave(config);
 

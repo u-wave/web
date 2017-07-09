@@ -47,9 +47,9 @@ gulp.task('devServer', (done) => {
   });
 
   monitor.once('start', done);
-  monitor.on('log', ({ colour }) => {
+  monitor.on('log', (msg) => {
     clearLine();
-    log(colors.grey('apiServer'), colour);
+    log(colors.grey('apiServer'), msg.colour);
   });
 });
 
