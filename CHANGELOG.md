@@ -1,3 +1,24 @@
+# 1.0.0-beta.14 / 09 Jul 2017
+
+Features:
+
+ * Add user join, leave, name change notifications. (#681)
+ * Add loading spinner to and move reload into shuffle operation. (#691)
+ * Support WebSocket keepalive messages. (#696)
+ * Enable source maps in production. (#697)
+
+Bugfixes:
+
+ * Fix progress bar animation in prod build. (#682)
+ * Remember playlist item selection as new pages are loaded. (#684)
+
+Internal:
+
+ * Switch to babel-preset-env. (#566)
+ * Move `playMentionSound` into util module. (#687)
+ * Make overlays standalone components, not tied to `<Overlay/>`. (#688)
+ * Development server: Auto-reload Web API on changes. (#698)
+
 # 1.0.0-beta.13 / 23 Jun 2017
 
 Features:
