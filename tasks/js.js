@@ -1,4 +1,5 @@
 const gulp = require('gulp');
+const sourcemaps = require('gulp-sourcemaps');
 const relative = require('path').relative;
 const colors = require('gulp-util').colors;
 const log = require('gulp-util').log;
@@ -67,10 +68,19 @@ gulp.task('js:babel', [ 'js:locales' ], () => {
       log(`Compiling '${colors.cyan(path)}'...`);
       cb(null, file);
     }))
+    .pipe(sourcemaps.init())
     .pipe(babel({
       plugins: [ rewriteLocaleImports ]
     }))
+    .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(destEs))
+    .pipe(through.obj((file, enc, cb) => {
+      if (/\.js$/.test(file.path)) {
+        cb(null, file);
+      } else {
+        cb();
+      }
+    }))
     .pipe(babel({
       babelrc: false,
       plugins: [
@@ -78,6 +88,7 @@ gulp.task('js:babel', [ 'js:locales' ], () => {
         'dynamic-import-node'
       ]
     }))
+    .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(destCommonjs))
     .on('end', () => {
       process.env.BABEL_ENV = oldEnv;
