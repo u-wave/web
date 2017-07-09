@@ -32,7 +32,7 @@ export default function createUwaveStore(initialState = {}, options = {}) {
     // This allows dispatching REQUEST_START actions to the store, which will
     // then be executed and handled as HTTP requests by the middleware.
     webApiRequest(),
-    !isTesting && webApiSocket(),
+    !isTesting && webApiSocket({ url: options.socketUrl }),
     // Redux-Logger logs state changes to the console, including the
     // Before-state, the Action object, and the After-state. Invaluable for
     // debugging :)
