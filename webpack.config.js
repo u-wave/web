@@ -143,7 +143,7 @@ module.exports = {
   output: {
     publicPath: '/',
     path: path.join(__dirname, 'public'),
-    filename: '[name]_[hash].js',
+    filename: nodeEnv === 'production' ? '[name]_[chunkhash].js' : '[name]_dev.js',
     hashDigestLength: 7
   },
   plugins,
