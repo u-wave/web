@@ -9,7 +9,6 @@ const colors = require('gulp-util').colors;
 const emojione = require('u-wave-web-emojione');
 const recaptchaTestKeys = require('recaptcha-test-keys');
 const express = require('express');
-const Buffer = require('buffer').Buffer;
 const proxy = require('http-proxy-middleware');
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
@@ -17,7 +16,6 @@ const webpackHotMiddleware = require('webpack-hot-middleware');
 const nodemon = require('nodemon');
 const explain = require('explain-error');
 const wpConfig = require('../webpack.config');
-const config = require('./dev-server-config.json');
 
 function tryResolve(file, message) {
   try {
@@ -43,13 +41,13 @@ gulp.task('devServer', (done) => {
   );
   const monitor = nodemon({
     script: './tasks/apiServer.js',
-    args: ['--port', String(serverPort), '--watch'],
+    args: [ '--port', String(serverPort), '--watch' ],
     verbose: true,
     watch: [ path.dirname(coreDir), path.dirname(apiDir) ]
   });
 
   monitor.once('start', done);
-  monitor.on('log', ({ type, colour }) => {
+  monitor.on('log', ({ colour }) => {
     clearLine();
     log(colors.grey('apiServer'), colour);
   });
@@ -59,7 +57,7 @@ gulp.task('apiServer', () => {
   require('./apiServer');
 });
 
-gulp.task('serve', [env.watch ? 'devServer' : 'apiServer'], (done) => {
+gulp.task('serve', [ env.watch ? 'devServer' : 'apiServer' ], (done) => {
   const port = env.port || 6041;
   const serverPort = env.serverPort || 6042;
   const watch = env.watch || false;
@@ -67,7 +65,7 @@ gulp.task('serve', [env.watch ? 'devServer' : 'apiServer'], (done) => {
   const createWebClient = require('../src/middleware').default;
 
   const app = express();
-  const server = app.listen(port);
+  app.listen(port);
 
   const apiUrl = '/v1';
   const socketUrl = `ws://localhost:${serverPort}`;

@@ -1,7 +1,6 @@
 const { Buffer } = require('buffer');
-const { env, log } = require('gulp-util');
+const { env } = require('gulp-util');
 const explain = require('explain-error');
-const emojione = require('u-wave-web-emojione');
 const ytSource = require('u-wave-source-youtube');
 const scSource = require('u-wave-source-soundcloud');
 const recaptchaTestKeys = require('recaptcha-test-keys');
