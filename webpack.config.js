@@ -181,7 +181,8 @@ module.exports = {
       {
         test: /\.js$/,
         include: [
-          /truncate-url/
+          /truncate-url/,
+          /format-duration/
         ],
         use: {
           loader: 'babel-loader',
