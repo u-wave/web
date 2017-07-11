@@ -30,7 +30,7 @@ function clearLine() {
   process.stdout.write('\x1B[2K\x1B[1G');
 }
 
-gulp.task('devServer', (done) => {
+const devServerTask = (done) => {
   const serverPort = env.serverPort || 6042;
 
   const coreDir = tryResolve('u-wave-core/src',
@@ -51,13 +51,22 @@ gulp.task('devServer', (done) => {
     clearLine();
     log(colors.grey('apiServer'), msg.colour);
   });
-});
+};
 
-gulp.task('apiServer', () => {
+const apiServerTask = () => {
   require('./apiServer');
+};
+
+gulp.task('apiServer', (done) => {
+  if (env.watch) {
+    devServerTask(done);
+  } else {
+    apiServerTask();
+    done();
+  }
 });
 
-gulp.task('serve', [ env.watch ? 'devServer' : 'apiServer' ], (done) => {
+gulp.task('serve', [ 'apiServer' ], (done) => {
   const port = env.port || 6041;
   const serverPort = env.serverPort || 6042;
   const watch = env.watch || false;
