@@ -42,4 +42,8 @@ if (env === 'production') {
   );
 }
 
+if (env === 'testing') {
+  preset.plugins.push('istanbul');
+}
+
 module.exports = preset;
