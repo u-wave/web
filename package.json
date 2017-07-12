@@ -52,7 +52,7 @@
     "react-redux": "^5.0.0",
     "react-tap-event-plugin": "^2.0.0",
     "react-transition-group": "^1.1.2",
-    "recompose": "^0.23.3",
+    "recompose": "^0.24.0",
     "redux": "^3.5.2",
     "redux-batched-subscribe": "^0.1.6",
     "redux-logger": "^3.0.0",
