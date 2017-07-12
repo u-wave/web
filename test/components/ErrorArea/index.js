@@ -1,10 +1,8 @@
-/* eslint-env mocha */
-/* global testUtils */
 import React from 'react';
 import sinon from 'sinon';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
-import ErrorArea, { errorThemeSelector } from '../';
+import ErrorArea, { errorThemeSelector } from '../../../src/components/ErrorArea';
 
 describe('<ErrorArea />', () => {
   it('should not show if there is no error', () => {
