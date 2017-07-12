@@ -40,8 +40,8 @@ export default class EditMediaDialog extends React.Component {
     errors: null,
     artist: this.props.media.artist,
     title: this.props.media.title,
-    start: formatDuration(this.props.media.start),
-    end: formatDuration(this.props.media.end)
+    start: formatDuration(this.props.media.start * 1000),
+    end: formatDuration(this.props.media.end * 1000)
   };
 
   labelStart = uniqueId('editmedia');

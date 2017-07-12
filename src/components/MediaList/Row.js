@@ -96,7 +96,7 @@ export default class Row extends React.Component {
           {media.title}
         </div>
         <div className="MediaListRow-duration">
-          {formatDuration(duration)}
+          {formatDuration(duration * 1000)}
         </div>
         <Actions
           className={cx('MediaListRow-actions', selectedClass)}
