@@ -7,7 +7,7 @@ import formatDuration from 'format-duration';
 import timed from '../../utils/timed';
 
 const Eta = ({ className, base, currentTime, endTime }) => {
-  const currentRemaining = Math.floor((endTime - currentTime) / 1000);
+  const currentRemaining = endTime - currentTime;
   return (
     <span className={cx('Eta', className)}>
       {formatDuration(base + currentRemaining)}
