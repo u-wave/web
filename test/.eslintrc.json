@@ -4,5 +4,8 @@
   },
   "env": {
     "mocha": true
+  },
+  "globals": {
+    "testUtils": true
   }
 }

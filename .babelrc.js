@@ -8,6 +8,9 @@ if (browsers) {
 if (env === 'production') {
   targets.uglify = true;
 }
+if (env === 'testing') {
+  targets.node = 'current';
+}
 
 const preset = {
   presets: [
@@ -18,7 +21,7 @@ const preset = {
       // Force enable the classes transform, react-hot-loader doesn't
       // appear to work well with native classes + arrow functions in
       // transpiled class properties.
-      include: ['transform-es2015-classes']
+      include: env === 'development' ? ['transform-es2015-classes'] : []
     }],
     'stage-2',
     'react'
