@@ -9,10 +9,14 @@ import {
 import { requestOptionsSelector } from '../selectors/configSelectors';
 import { tokenSelector } from '../selectors/userSelectors';
 
+function isEmpty(object) {
+  return !object || Object.keys(object).length === 0;
+}
+
 function makeUrl(path, params = {}) {
   let uri = path;
 
-  if (params) {
+  if (!isEmpty(params)) {
     // heh…
     uri += (uri.indexOf('?') !== -1 ? '&' : '?') + stringifyQS(params);
   }
