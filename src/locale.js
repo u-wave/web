@@ -5,6 +5,7 @@ const resources = {
   cs: () => import('../locale/cs.yaml'),
   cy: () => import('../locale/cy.yaml'),
   de: () => import('../locale/de.yaml'),
+  es: () => import('../locale/es.yaml'),
   fr: () => import('../locale/fr.yaml'),
   ko: () => import('../locale/ko.yaml'),
   nl: () => import('../locale/nl.yaml'),
