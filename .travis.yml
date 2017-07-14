@@ -15,6 +15,8 @@ before_script:
 
 script:
   - npm test
+    # Don't fail the build bc of this yet.
+  - npm run test:check-coverage || true
   - npm run prod
 
 after_script:
