@@ -31,11 +31,11 @@ const WaitlistButton = ({
 }) => {
   let icon;
   if (isLocked) {
-    const iconColor =
+    const iconColor = userInWaitlist
       // The user can still leave the waitlist, if it's locked…
-      userInWaitlist ? muiTheme.flatButton.textColor :
+      ? muiTheme.flatButton.textColor
       // …but cannot join the waitlist.
-      muiTheme.flatButton.disabledTextColor;
+      : muiTheme.flatButton.disabledTextColor;
     icon = (
       <LockedIcon
         style={inlineIconStyle}
