@@ -73,19 +73,13 @@ if (nodeEnv === 'production') {
     }),
     new UglifyJsPlugin({
       sourceMap: true,
-      // Yeah… Enables some riskier minification that doesn't work in IE8.
-      // But üWave doesn't work in IE8 _anyway_, so we don't care.
-      compress: {
-        screw_ie8: true,
-        pure_getters: true,
-        unsafe: true,
-        warnings: false
-      },
-      output: { screw_ie8: true },
-      // Rename top-level (global scope) variables to shorter names too.
-      // There's no other code that depends on those variables to be
-      // available, so it doesn't really matter what they're called!
-      mangle: { toplevel: true }
+      uglifyOptions: {
+        toplevel: true,
+        compress: {
+          pure_getters: true,
+          unsafe: true
+        }
+      }
     }),
     new ModuleConcatenationPlugin()
   );
