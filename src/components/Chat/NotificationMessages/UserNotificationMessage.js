@@ -1,7 +1,7 @@
 import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Interpolate } from 'react-i18next';
+import { translate, Interpolate } from 'react-i18next';
 import compose from 'recompose/compose';
 import pure from 'recompose/pure';
 import withHandlers from 'recompose/withHandlers';
@@ -11,6 +11,7 @@ import Username from '../../Username';
 import MessageTimestamp from '../MessageTimestamp';
 
 const enhance = compose(
+  translate(),
   pure,
   userCardable(),
   withHandlers({
