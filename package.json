@@ -17,7 +17,7 @@
     "array-find": "^1.0.0",
     "array-findindex": "^0.1.0",
     "classnames": "^2.2.4",
-    "debug": "^2.5.1",
+    "debug": "^3.0.0",
     "deepmerge": "^1.5.0",
     "es6-promise": "^4.1.1",
     "escape-string-regexp": "^1.0.3",
