@@ -56,9 +56,11 @@ export const availableLanguages = [ 'en', ...Object.keys(resources) ];
 
 export default function createLocale(language) {
   const locale = i18next.cloneInstance();
-  locale.changeLanguage(language);
-
   locale.availableLanguages = availableLanguages;
 
-  return locale;
+  return new Promise((resolve) => {
+    locale.changeLanguage(language, () => {
+      resolve(locale);
+    });
+  });
 }
