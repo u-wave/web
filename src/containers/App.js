@@ -5,9 +5,6 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { I18nextProvider } from 'react-i18next';
-
-import createLocale from '../locale';
-
 import { closeAll } from '../actions/OverlayActionCreators';
 import { createTimer, stopTimer } from '../actions/TickerActionCreators';
 
@@ -40,6 +37,7 @@ export default class AppContainer extends React.Component {
     mediaSources: PropTypes.object.isRequired,
     uwave: PropTypes.object,
     language: PropTypes.string,
+    locale: PropTypes.object.isRequired,
     muiTheme: PropTypes.object,
     createTimer: PropTypes.func.isRequired,
     stopTimer: PropTypes.func.isRequired
@@ -64,12 +62,11 @@ export default class AppContainer extends React.Component {
     // Start the clock! üWave stores the current time in the application state
     // primarily to make sure that different timers in the UI update simultaneously.
     this.timerCallbacks = this.props.createTimer();
-    this.locale = createLocale(this.props.language);
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.language !== nextProps.language) {
-      this.locale.changeLanguage(nextProps.language);
+      this.props.locale.changeLanguage(nextProps.language);
     }
   }
 
@@ -81,7 +78,7 @@ export default class AppContainer extends React.Component {
   render() {
     return (
       <MuiThemeProvider muiTheme={this.props.muiTheme}>
-        <I18nextProvider i18n={this.locale}>
+        <I18nextProvider i18n={this.props.locale}>
           <App {...this.props} />
         </I18nextProvider>
       </MuiThemeProvider>
