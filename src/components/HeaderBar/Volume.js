@@ -63,7 +63,7 @@ export default class Volume extends React.Component {
             name="volume"
             min={0}
             max={100}
-            defaultValue={this.props.volume}
+            value={this.props.volume}
             style={sliderStyle}
             onChange={this.handleVolumeChange}
           />
