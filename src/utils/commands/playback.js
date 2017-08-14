@@ -5,6 +5,10 @@ import {
   mute,
   unmute
 } from '../../actions/PlaybackActionCreators';
+import {
+  doUpvote,
+  doDownvote
+} from '../../actions/VoteActionCreators';
 
 register(
   'volume',
@@ -26,4 +30,12 @@ register('mute', 'Mute the volume.', {
 
 register('unmute', 'Unmute the media volume.', {
   action: () => unmute()
+});
+
+register('upvote', 'Upvote the current track.', {
+  action: () => doUpvote()
+});
+
+register('downvote', 'Downvote the current track.', {
+  action: () => doDownvote()
 });
