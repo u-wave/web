@@ -8,7 +8,7 @@ import ScrollDownIcon from 'material-ui/svg-icons/navigation/arrow-downward';
 const ScrollNotice = ({ muiTheme, show, onClick }) => (
   <div className={cx('ChatMessages-scrollDown', show && 'is-visible')}>
     <div className="ChatMessages-scrollDownButton">
-      <FloatingActionButton mini onTouchTap={onClick}>
+      <FloatingActionButton mini onClick={onClick}>
         <ScrollDownIcon style={{ fill: muiTheme.palette.textColor }} />
       </FloatingActionButton>
     </div>

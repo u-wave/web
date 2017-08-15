@@ -7,7 +7,6 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { AppContainer as HotContainer } from 'react-hot-loader';
-import injectTapEventPlugin from 'react-tap-event-plugin';
 import createLocale from './locale';
 import AppContainer from './containers/App';
 import { get as readSession } from './utils/Session';
@@ -18,11 +17,6 @@ import * as api from './api';
 
 // Register default chat commands.
 import './utils/commands';
-
-// A Material-UI dependency, removes the delay from tap events on some mobile
-// devices. üWave currently isn't compatible with mobile yet, but material-ui
-// wants this!
-injectTapEventPlugin();
 
 export default class Uwave {
   options = {};
