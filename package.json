@@ -50,7 +50,6 @@
     "react-list-lazy-load": "^1.0.5",
     "react-markdown": "^2.4.5",
     "react-redux": "^5.0.0",
-    "react-tap-event-plugin": "^2.0.0",
     "react-transition-group": "^1.2.0",
     "recompose": "^0.24.0",
     "redux": "^3.7.2",

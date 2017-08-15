@@ -28,7 +28,7 @@ const Suggestion = ({
     innerDivStyle={innerDivStyle}
     value={value}
     primaryText={value}
-    onTouchTap={select}
+    onClick={select}
     {...props}
   />
 );
