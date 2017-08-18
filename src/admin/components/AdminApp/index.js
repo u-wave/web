@@ -1,7 +1,7 @@
 import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { List, ListItem } from 'material-ui/List';
+import { List, ListItem } from '../../../components/List';
 import CurrentPage from './CurrentPage';
 
 import './index.css';
@@ -14,19 +14,22 @@ const AdminApp = ({
     <div className="AdminApp-menu">
       <List>
         <ListItem
-          onClick={() => onTransition('main')}
-          className={cx('AdminApp-menuItem', currentView === 'main' && 'is-selected')}
           primaryText="Main"
+          className={cx('AdminApp-menuItem', currentView === 'main' && 'is-selected')}
+          selected={currentView === 'main'}
+          onClick={() => onTransition('main')}
         />
         <ListItem
-          onClick={() => onTransition('users')}
-          className={cx('AdminApp-menuItem', currentView === 'users' && 'is-selected')}
           primaryText="Users"
+          className={cx('AdminApp-menuItem', currentView === 'users' && 'is-selected')}
+          selected={currentView === 'users'}
+          onClick={() => onTransition('users')}
         />
         <ListItem
-          onClick={() => onTransition('bans')}
-          className={cx('AdminApp-menuItem', currentView === 'bans' && 'is-selected')}
           primaryText="Bans"
+          className={cx('AdminApp-menuItem', currentView === 'bans' && 'is-selected')}
+          selected={currentView === 'bans'}
+          onClick={() => onTransition('bans')}
         />
       </List>
     </div>
