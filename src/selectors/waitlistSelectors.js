@@ -45,7 +45,7 @@ export const waitlistSelector = createStructuredSelector({
 });
 
 // Most videos come in at around 4 minutes.
-const averagePlayDuration = 4 * 60;
+const averagePlayDuration = 4 * 60 * 1000;
 export const baseEtaSelector = createSelector(
   positionSelector,
   sizeSelector,
