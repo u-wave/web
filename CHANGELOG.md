@@ -1,3 +1,23 @@
+# 1.0.0-beta.15 / 19 Aug 2017
+
+Features:
+
+ * Add Spanish translation by @GameOver1751. (#699)
+ * New chat commands: `/volume`, `/mute`, `/unmute`, `/nick`, `/upvote`, `/downvote`. (#723)
+ * Only send name change request if new name is different. (#728)
+
+Bugfixes:
+
+ * Remove ? from HTTP requests without query parameters. (#706)
+ * Fix interpolation in chat notifications. (#717)
+ * Wait for locale to be loaded before rendering anything. (#721)
+
+Internal:
+
+ * Use `format-duration` module. (#702, #703)
+ * Extract SearchBar component. (#708)
+ * Lots of dependency updates.
+
 # 1.0.0-beta.14 / 09 Jul 2017
 
 Features:
