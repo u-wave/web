@@ -42,9 +42,14 @@ class ChangeUsernameButton extends React.Component {
     this.closeDialog();
   };
 
-  handleSubmit = name =>
-    this.props.onChangeUsername(name)
+  handleSubmit = (name) => {
+    if (name === this.props.initialUsername) {
+      this.closeDialog();
+      return null;
+    }
+    return this.props.onChangeUsername(name)
       .then(this.closeDialog.bind(this));
+  };
 
   render() {
     const { t, initialUsername } = this.props;
