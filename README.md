@@ -143,6 +143,9 @@ Create a new üWave web client.
      * `options.recaptcha.key` - ReCaptcha site key. This can be obtained from
        the "Keys" panel in the [ReCaptcha site admin page][recaptcha].
 
+   * `options.title` - Document title, what's shown in the tab by the browser.
+     Default "üWave".
+
 ### uw.source(sourceType, sourcePlugin, options={})
 
 Add a media source. Media sources should also be registered with the
