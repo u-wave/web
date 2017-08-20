@@ -117,6 +117,7 @@ gulp.task('serve', [ 'apiServer' ], (done) => {
       apiUrl,
       socketUrl,
       emoji: emojione.emoji,
+      title: 'üWave (Development)',
       publicPath: '/',
       // Point u-wave-web middleware to the virtual webpack filesystem.
       fs: dev.fileSystem,
