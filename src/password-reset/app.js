@@ -1,10 +1,11 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import React from 'react';
+import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import { parse as parseQS } from 'querystring';
 import thunk from 'redux-thunk';
 import { AppContainer as HotContainer } from 'react-hot-loader';
+import createLocale from '../locale';
 import webApiRequest from '../store/request';
 import * as reducers from './reducers';
 import { setResetKey } from './actions';
@@ -27,10 +28,12 @@ const store = createStore(
 const qs = parseQS(location.search.slice(1));
 store.dispatch(setResetKey(key || qs.key));
 
-ReactDOM.render((
-  <HotContainer>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </HotContainer>
-), document.querySelector('#app'));
+createLocale('en').then((locale) => {
+  ReactDOM.render((
+    <HotContainer>
+      <Provider store={store}>
+        <App locale={locale} />
+      </Provider>
+    </HotContainer>
+  ), document.querySelector('#app'));
+});

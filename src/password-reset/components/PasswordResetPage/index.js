@@ -91,7 +91,7 @@ class PasswordResetPage extends React.Component {
           </FormGroup>
           <FormGroup>
             <Button disabled={!isValid}>
-              {t('login.login')}
+              {t('resetPassword.submit')}
             </Button>
           </FormGroup>
         </Form>
