@@ -29,6 +29,12 @@ const rewriteLocaleImports = () => ({
     ImportDeclaration(path) {
       const source = path.get('source');
       source.node.value = source.node.value.replace(/^\.\.\/locale\/(.*?)\.yaml/, './locale/$1.js');
+    },
+    CallExpression(path) {
+      if (path.get('callee').isImport()) {
+        const source = path.get('arguments.0');
+        source.node.value = source.node.value.replace(/^\.\.\/locale\/(.*?)\.yaml/, './locale/$1.js');
+      }
     }
   }
 });
