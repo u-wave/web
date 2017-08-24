@@ -1,4 +1,7 @@
-import { SET_RESET_KEY } from './constants';
+import {
+  SET_RESET_KEY,
+  SET_RESET_SUCCESS
+} from './constants';
 import { post } from '../actions/RequestActionCreators';
 
 export function setResetKey(key) {
@@ -8,17 +11,21 @@ export function setResetKey(key) {
   };
 }
 
+export function resetPasswordComplete() {
+  return { type: SET_RESET_SUCCESS };
+}
+
 export function resetPassword(newPassword) {
   return (dispatch, getState) => {
     const { key } = getState().passwordReset;
 
-    dispatch(post(`/auth/password/reset/${key}`, {
-      email: null,
-      password: newPassword
-    }, {
-      onComplete(result) {
-        console.log(result);
-      }
+    return dispatch(post(`/auth/password/reset/${key}`, { password: newPassword }, {
+      onComplete: resetPasswordComplete,
+      onError: err => ({
+        type: SET_RESET_SUCCESS,
+        error: true,
+        payload: err
+      })
     }));
   };
 }
