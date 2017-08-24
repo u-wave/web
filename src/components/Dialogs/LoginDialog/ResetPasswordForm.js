@@ -14,10 +14,14 @@ class ResetPasswordForm extends React.Component {
   static propTypes = {
     t: PropTypes.func.isRequired,
     error: PropTypes.object,
-    onResetPassword: PropTypes.func
+    onResetPassword: PropTypes.func.isRequired,
+    onCloseDialog: PropTypes.func.isRequired
   };
 
-  state = { busy: false };
+  state = {
+    busy: false,
+    done: false
+  };
 
   componentWillReceiveProps() {
     this.setState({ busy: false });
@@ -26,8 +30,13 @@ class ResetPasswordForm extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault();
     this.setState({ busy: true });
-    this.props.onResetPassword({
+    Promise.resolve(this.props.onResetPassword({
       email: this.email.value
+    })).then(() => {
+      this.setState({
+        busy: false,
+        done: true
+      });
     });
   };
 
@@ -36,8 +45,21 @@ class ResetPasswordForm extends React.Component {
   };
 
   render() {
-    const { t, error } = this.props;
-    const { busy } = this.state;
+    const { t, error, onCloseDialog } = this.props;
+    const { busy, done } = this.state;
+
+    if (done) {
+      return (
+        <div>
+          <p>{t('login.passwordResetSent')}</p>
+          <p>
+            <Button className="ResetPasswordForm-submit" onClick={onCloseDialog}>
+              {t('close')}
+            </Button>
+          </p>
+        </div>
+      );
+    }
 
     return (
       <Form className="ResetPasswordForm" onSubmit={this.handleSubmit}>
