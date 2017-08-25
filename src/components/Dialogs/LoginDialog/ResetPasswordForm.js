@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { translate } from 'react-i18next';
 import EmailIcon from 'material-ui/svg-icons/communication/email';
 import Loader from '../../Loader';
 import Form from '../../Form';
@@ -7,13 +8,20 @@ import FormGroup from '../../Form/Group';
 import TextField from '../../Form/TextField';
 import Button from '../../Form/Button';
 
-export default class ResetPasswordForm extends React.Component {
+const enhance = translate();
+
+class ResetPasswordForm extends React.Component {
   static propTypes = {
+    t: PropTypes.func.isRequired,
     error: PropTypes.object,
-    onResetPassword: PropTypes.func
+    onResetPassword: PropTypes.func.isRequired,
+    onCloseDialog: PropTypes.func.isRequired
   };
 
-  state = { busy: false };
+  state = {
+    busy: false,
+    done: false
+  };
 
   componentWillReceiveProps() {
     this.setState({ busy: false });
@@ -22,8 +30,13 @@ export default class ResetPasswordForm extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault();
     this.setState({ busy: true });
-    this.props.onResetPassword({
+    Promise.resolve(this.props.onResetPassword({
       email: this.email.value
+    })).then(() => {
+      this.setState({
+        busy: false,
+        done: true
+      });
     });
   };
 
@@ -32,8 +45,21 @@ export default class ResetPasswordForm extends React.Component {
   };
 
   render() {
-    const { error } = this.props;
-    const { busy } = this.state;
+    const { t, error, onCloseDialog } = this.props;
+    const { busy, done } = this.state;
+
+    if (done) {
+      return (
+        <div>
+          <p>{t('login.passwordResetSent')}</p>
+          <p>
+            <Button className="ResetPasswordForm-submit" onClick={onCloseDialog}>
+              {t('close')}
+            </Button>
+          </p>
+        </div>
+      );
+    }
 
     return (
       <Form className="ResetPasswordForm" onSubmit={this.handleSubmit}>
@@ -53,10 +79,14 @@ export default class ResetPasswordForm extends React.Component {
             className="ResetPasswordForm-submit"
             disabled={busy}
           >
-            {busy ? <div className="Button-loading"><Loader size="tiny" /></div> : 'RESET PASSWORD'}
+            {busy ? (
+              <div className="Button-loading"><Loader size="tiny" /></div>
+            ) : t('login.requestPasswordReset')}
           </Button>
         </FormGroup>
       </Form>
     );
   }
 }
+
+export default enhance(ResetPasswordForm);

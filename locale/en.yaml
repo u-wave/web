@@ -163,5 +163,11 @@ uwave:
     email: E-mail
     password: Password
     forgotPassword: Forgot Password?
+    requestPasswordReset: Reset Password
+    passwordResetSent: "We've sent an email to that address with password reset instructions."
     privacyPolicy: Privacy Policy
     agree: I am at least 13 years old and accept the {{privacyPolicy}}.
+  resetPassword:
+    introduction: Enter a new password below.
+    submit: Reset Password
+    success: Your password has been reset. You can now close this page.

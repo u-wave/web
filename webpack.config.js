@@ -52,6 +52,14 @@ const plugins = [
     minify: nodeEnv === 'production' ? htmlMinifierOptions : false,
     loadingScreen: () => require('./tasks/utils/renderLoadingScreen')()
   }),
+  new HtmlPlugin({
+    chunks: [ 'passwordReset' ],
+    inject: false,
+    template: './password-reset.html',
+    filename: 'password-reset.html',
+    title: 'Reset Password',
+    minify: nodeEnv === 'production' ? htmlMinifierOptions : false
+  }),
   extractAppCss,
   new ProgressPlugin(),
   new LodashModuleReplacementPlugin({
@@ -87,7 +95,8 @@ if (nodeEnv === 'production') {
 
 const context = path.join(__dirname, 'src');
 const entries = {
-  app: [ './app.js', './app.css' ]
+  app: [ './app.js', './app.css' ],
+  passwordReset: [ './password-reset/app.js' ]
 };
 
 // Add static pages.

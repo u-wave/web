@@ -1,11 +1,13 @@
 const Buffer = require('buffer').Buffer;
 const env = require('gulp-util').env;
+const concat = require('concat-stream');
 const explain = require('explain-error');
 const ytSource = require('u-wave-source-youtube');
 const scSource = require('u-wave-source-soundcloud');
 const recaptchaTestKeys = require('recaptcha-test-keys');
 const express = require('express');
 const config = require('./dev-server-config.json');
+const mailDebug = require('debug')('uwave:mail');
 
 function tryRequire(file, message) {
   try {
@@ -72,7 +74,20 @@ function start() {
   app.use(apiUrl, createWebApi(uw, {
     recaptcha: { secret: recaptchaTestKeys.secret },
     server,
-    secret: Buffer.from('none', 'utf8')
+    secret: Buffer.from('none', 'utf8'),
+    mailTransport: {
+      name: 'test',
+      version: '0.0.0',
+      send(mail, callback) {
+        mail.message.createReadStream().pipe(concat((message) => {
+          mailDebug(mail.message.getEnvelope().to, message.toString('utf8'));
+          callback(null, {
+            envelope: mail.message.getEnvelope(),
+            messageId: mail.message.messageId()
+          });
+        }));
+      }
+    }
   }));
 
   return app;

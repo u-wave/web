@@ -16,6 +16,12 @@ function injectTitle(transform, title) {
     .end(title);
 }
 
+function injectResetKey(transform, key) {
+  transform.select('#reset-data')
+    .createWriteStream()
+    .end(key);
+}
+
 export default function uwaveWebClient(uw, options = {}) {
   const {
     basePath = path.join(__dirname, '../public'),
@@ -33,6 +39,16 @@ export default function uwaveWebClient(uw, options = {}) {
       injectConfig(transform, clientOptions);
 
       fs.createReadStream(path.join(basePath, 'index.html'), 'utf8')
+        .pipe(transform)
+        .pipe(res);
+    })
+    .get('/reset/:key', (req, res) => {
+      const transform = trumpet();
+      injectTitle(transform, title);
+      injectConfig(transform, { apiUrl: clientOptions.apiUrl });
+      injectResetKey(transform, req.params.key);
+
+      fs.createReadStream(path.join(basePath, 'password-reset.html'), 'utf8')
         .pipe(transform)
         .pipe(res);
     })

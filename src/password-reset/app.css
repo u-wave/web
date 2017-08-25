@@ -1,0 +1,21 @@
+@import "normalize.css";
+
+@import "../vars.css";
+@import "../components/App/index.css";
+@import "../components/Form/index.css";
+@import "./components/PasswordResetPage/index.css";
+
+body {
+  margin: 0;
+}
+
+#app {
+  background: var(--background-color);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: scroll;
+  padding-top: 20px;
+}
