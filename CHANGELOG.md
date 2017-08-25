@@ -1,3 +1,15 @@
+# 1.0.0-beta.16 / 25 Aug 2017
+
+Features:
+
+ * Add `title` option to configure page title. (#730)
+ * Implement password reset app. Requires u-wave-api-v1@0.3.0. (#732)
+
+Bugfixes:
+
+ * Fix waitlist part of ETA. (#729)
+ * Fix locale import paths in `lib/` and `es/` builds. (#731)
+
 # 1.0.0-beta.15 / 19 Aug 2017
 
 Features:
