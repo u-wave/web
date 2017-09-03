@@ -41,9 +41,10 @@ export default class Uwave {
       this.getComponent = () => (
         <HotContainer>{this._getComponent()}</HotContainer>
       );
+      const uw = this;
       module.hot.accept('./containers/App', () => {
-        if (this.renderTarget) {
-          this.renderToDOM(this.renderTarget);
+        if (uw.renderTarget) {
+          uw.renderToDOM(uw.renderTarget);
         }
       });
     }
