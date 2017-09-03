@@ -14,6 +14,7 @@ import PlaylistManager from '../../containers/PlaylistManager';
 import RoomHistory from '../../containers/RoomHistory';
 import SettingsManager from '../../containers/SettingsManager';
 import About from '../../containers/About';
+import ConnectionIndicator from '../ConnectionIndicator';
 
 import SidePanels from '../../containers/SidePanels';
 import Dialogs from '../Dialogs';
@@ -22,6 +23,7 @@ import DragLayer from '../../containers/DragLayer';
 
 const App = ({
   activeOverlay,
+  isConnected,
   settings,
   hasAboutPage,
   onCloseOverlay
@@ -42,6 +44,7 @@ const App = ({
           volume={settings.volume}
         />
         <ErrorArea />
+        <ConnectionIndicator isConnected={isConnected} />
       </div>
       <Overlays transitionName="Overlay" active={activeOverlay}>
         {hasAboutPage && <About
@@ -77,6 +80,7 @@ const App = ({
 
 App.propTypes = {
   activeOverlay: PropTypes.string,
+  isConnected: PropTypes.bool.isRequired,
   settings: PropTypes.object.isRequired,
   hasAboutPage: PropTypes.bool,
 
