@@ -4,7 +4,9 @@ import WebSocket from '../utils/ReconnectingWebSocket';
 import {
   LOGIN_COMPLETE,
   SOCKET_CONNECT,
-  SOCKET_RECONNECT
+  SOCKET_RECONNECT,
+  SOCKET_DISCONNECTED,
+  SOCKET_CONNECTED
 } from '../constants/actionTypes/auth';
 import {
   SEND_MESSAGE
@@ -168,8 +170,13 @@ export default function middleware({ url = defaultUrl() } = {}) {
     }
 
     function onOpen() {
+      dispatch({ type: SOCKET_CONNECTED });
       maybeAuthenticateOnConnect(getState());
       drainQueuedMessages();
+    }
+
+    function onClose() {
+      dispatch({ type: SOCKET_DISCONNECTED });
     }
 
     function onMessage(pack) {
@@ -201,6 +208,8 @@ export default function middleware({ url = defaultUrl() } = {}) {
         socket = new WebSocket(url);
         socket.onmessage = onMessage;
         socket.onopen = onOpen;
+        socket.onclose = onClose;
+        socket.onconnecting = onClose;
         break;
       case SEND_MESSAGE:
         send('sendChat', payload.message);

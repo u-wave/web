@@ -13,10 +13,14 @@ import {
   languageSelector,
   muiThemeSelector
 } from '../selectors/settingSelectors';
+import {
+  isConnectedSelector
+} from '../selectors/serverSelectors';
 import App from '../components/App';
 
 const mapStateToProps = createStructuredSelector({
   activeOverlay: state => state.activeOverlay,
+  isConnected: isConnectedSelector,
   settings: settingsSelector,
   language: languageSelector,
   muiTheme: muiThemeSelector,
@@ -31,8 +35,9 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onCloseOverlay: closeAll
 }, dispatch);
 
-@connect(mapStateToProps, mapDispatchToProps)
-export default class AppContainer extends React.Component {
+const enhance = connect(mapStateToProps, mapDispatchToProps);
+
+class AppContainer extends React.Component {
   static propTypes = {
     mediaSources: PropTypes.object.isRequired,
     uwave: PropTypes.object,
@@ -85,3 +90,5 @@ export default class AppContainer extends React.Component {
     );
   }
 }
+
+export default enhance(AppContainer);
