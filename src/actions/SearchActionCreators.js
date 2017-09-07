@@ -1,3 +1,4 @@
+import find from 'array-find';
 import {
   SET_SEARCH_SOURCE,
   SHOW_SEARCH_RESULTS,
@@ -41,4 +42,22 @@ export function search(query) {
       payload: error
     })
   });
+}
+
+export function searchInRecommendedSource(sources, query) {
+  const sourceNames = Object.keys(sources);
+  const matchName = find(sourceNames, (sourceName) => {
+    const source = sources[sourceName];
+    if (!source || typeof source.isSourceQuery !== 'function') {
+      return false;
+    }
+    return source.isSourceQuery(query);
+  });
+
+  return (dispatch) => {
+    if (matchName) {
+      dispatch(setSource(matchName));
+    }
+    return dispatch(search(query));
+  };
 }

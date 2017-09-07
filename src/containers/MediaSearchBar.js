@@ -1,8 +1,12 @@
+import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
+import compose from 'recompose/compose';
+import getContext from 'recompose/getContext';
+import withProps from 'recompose/withProps';
 import SearchBar from '../components/PlaylistManager/Header/SearchBar';
 import {
-  search,
+  searchInRecommendedSource,
   setSource
 } from '../actions/SearchActionCreators';
 import {
@@ -14,8 +18,17 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = {
-  onSubmit: search,
+  onSubmit: searchInRecommendedSource,
   onSourceChange: setSource
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);
+const enhance = compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  getContext({ uwave: PropTypes.object }),
+  withProps(props => ({
+    // Add media sources to `onSubmit` handler.
+    onSubmit: query => props.onSubmit(props.uwave.sources, query)
+  }))
+);
+
+export default enhance(SearchBar);
