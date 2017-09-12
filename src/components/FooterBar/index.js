@@ -9,8 +9,9 @@ import SkipButton from './SkipButton';
 import WaitlistButton from './WaitlistButton';
 import ResponseBar from './Responses/Bar';
 
-@translate()
-export default class FooterBar extends React.Component {
+const enhance = translate();
+
+class FooterBar extends React.Component {
   static propTypes = {
     t: PropTypes.func.isRequired,
     className: PropTypes.string,
@@ -167,3 +168,5 @@ export default class FooterBar extends React.Component {
     );
   }
 }
+
+export default enhance(FooterBar);

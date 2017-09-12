@@ -9,8 +9,9 @@ import FormGroup from '../../Form/Group';
 import TextField from '../../Form/TextField';
 import Button from '../../Form/Button';
 
-@translate()
-export default class LoginForm extends React.Component {
+const enhance = translate();
+
+class LoginForm extends React.Component {
   static propTypes = {
     t: PropTypes.func.isRequired,
     error: PropTypes.object,
@@ -92,3 +93,5 @@ export default class LoginForm extends React.Component {
     );
   }
 }
+
+export default enhance(LoginForm);

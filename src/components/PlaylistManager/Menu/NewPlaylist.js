@@ -6,8 +6,9 @@ import CreatePlaylistIcon from 'material-ui/svg-icons/content/add';
 
 import PromptDialog from '../../Dialogs/PromptDialog';
 
-@translate()
-export default class NewPlaylist extends React.Component {
+const enhance = translate();
+
+class NewPlaylist extends React.Component {
   static propTypes = {
     className: PropTypes.string,
     t: PropTypes.func.isRequired,
@@ -63,3 +64,5 @@ export default class NewPlaylist extends React.Component {
     );
   }
 }
+
+export default enhance(NewPlaylist);

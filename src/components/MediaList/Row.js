@@ -25,8 +25,9 @@ const collect = connect => ({
   connectDragPreview: connect.dragPreview()
 });
 
-@DragSource(MEDIA, mediaSource, collect)
-export default class Row extends React.Component {
+const enhance = DragSource(MEDIA, mediaSource, collect);
+
+class Row extends React.Component {
   static propTypes = {
     className: PropTypes.string,
     connectDragSource: PropTypes.func.isRequired,
@@ -108,3 +109,5 @@ export default class Row extends React.Component {
     );
   }
 }
+
+export default enhance(Row);

@@ -27,8 +27,9 @@ const collect = connect => ({
   connectDragPreview: connect.dragPreview()
 });
 
-@DragSource(MEDIA, mediaSource, collect)
-export default class HistoryRow extends React.Component {
+const enhance = DragSource(MEDIA, mediaSource, collect);
+
+class HistoryRow extends React.Component {
   static propTypes = {
     className: PropTypes.string,
     connectDragSource: PropTypes.func.isRequired,
@@ -128,3 +129,5 @@ export default class HistoryRow extends React.Component {
     );
   }
 }
+
+export default enhance(HistoryRow);

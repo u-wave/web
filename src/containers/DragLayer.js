@@ -4,13 +4,14 @@ import { DragLayer } from 'react-dnd';
 import { MEDIA, WAITLIST_USER } from '../constants/DDItemTypes';
 import MediaDragPreview from '../components/MediaList/MediaDragPreview';
 
-@DragLayer(monitor => ({
+const enhance = DragLayer(monitor => ({
   items: monitor.getItem(),
   type: monitor.getItemType(),
   currentOffset: monitor.getClientOffset(),
   isDragging: monitor.isDragging()
-}))
-export default class DragLayerContainer extends React.Component {
+}));
+
+class DragLayerContainer extends React.Component {
   static propTypes = {
     type: PropTypes.oneOf([ MEDIA, WAITLIST_USER ]),
     items: PropTypes.object,
@@ -39,3 +40,5 @@ export default class DragLayerContainer extends React.Component {
     );
   }
 }
+
+export default enhance(DragLayerContainer);

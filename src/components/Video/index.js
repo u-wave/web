@@ -11,8 +11,9 @@ import MouseMoveCapture from './VideoMouseMoveCapture';
 
 const defaultSourceTools = () => null;
 
-@injectMediaSources()
-export default class Video extends React.Component {
+const enhance = injectMediaSources();
+
+class Video extends React.Component {
   static propTypes = {
     getAllMediaSources: PropTypes.func.isRequired,
     isFullscreen: PropTypes.bool,
@@ -168,3 +169,5 @@ export default class Video extends React.Component {
     );
   }
 }
+
+export default enhance(Video);

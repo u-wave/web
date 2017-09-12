@@ -41,8 +41,9 @@ const getEmojiCompletions = (value, { trigger, completions }) => {
 const getEmojiText = value => `:${value.shortcode}: `;
 const renderEmoji = props => <EmojiSuggestion {...props} />;
 
-@translate()
-export default class Input extends React.Component {
+const enhance = translate();
+
+class ChatInput extends React.Component {
   static propTypes = {
     t: PropTypes.func.isRequired,
     onSend: PropTypes.func.isRequired,
@@ -136,3 +137,5 @@ export default class Input extends React.Component {
     );
   }
 }
+
+export default enhance(ChatInput);

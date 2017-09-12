@@ -21,8 +21,9 @@ const parseDuration = str => str.split(':')
   .map(part => parseInt(part.trim(), 10))
   .reduce((duration, part) => (duration * 60) + part, 0);
 
-@translate()
-export default class EditMediaDialog extends React.Component {
+const enhance = translate();
+
+class EditMediaDialog extends React.Component {
   static propTypes = {
     t: PropTypes.func.isRequired,
     open: PropTypes.bool,
@@ -249,3 +250,5 @@ export default class EditMediaDialog extends React.Component {
     );
   }
 }
+
+export default enhance(EditMediaDialog);

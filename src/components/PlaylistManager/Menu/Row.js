@@ -18,8 +18,9 @@ const collect = (connect, monitor) => ({
   isOver: monitor.isOver()
 });
 
-@DropTarget(MEDIA, playlistTarget, collect)
-export default class PlaylistRow extends React.Component {
+const enhance = DropTarget(MEDIA, playlistTarget, collect);
+
+class PlaylistRow extends React.Component {
   static propTypes = {
     className: PropTypes.string,
     playlist: PropTypes.object,
@@ -80,3 +81,5 @@ export default class PlaylistRow extends React.Component {
     );
   }
 }
+
+export default enhance(PlaylistRow);

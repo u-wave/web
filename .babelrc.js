@@ -27,7 +27,6 @@ const preset = {
     'react'
   ],
   plugins: [
-    'transform-decorators-legacy',
     'transform-export-extensions',
     ['transform-runtime', { polyfill: false }]
   ]

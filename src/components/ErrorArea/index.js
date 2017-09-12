@@ -37,8 +37,9 @@ export const errorThemeSelector = createSelector(
   }
 );
 
-@muiThemeable()
-export default class ErrorArea extends React.Component {
+const enhance = muiThemeable();
+
+class ErrorArea extends React.Component {
   static propTypes = {
     error: PropTypes.string,
     onDismiss: PropTypes.func.isRequired,
@@ -75,3 +76,5 @@ export default class ErrorArea extends React.Component {
     );
   }
 }
+
+export default enhance(ErrorArea);
