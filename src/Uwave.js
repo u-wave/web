@@ -6,7 +6,7 @@ import 'whatwg-fetch';
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { AppContainer as HotContainer } from 'react-hot-loader';
+import { hot } from 'react-hot-loader';
 import createLocale from './locale';
 import AppContainer from './containers/App';
 import { get as readSession } from './utils/Session';
@@ -17,6 +17,8 @@ import * as api from './api';
 
 // Register default chat commands.
 import './utils/commands';
+
+const HotContainer = hot(module)(AppContainer);
 
 export default class Uwave {
   options = {};
@@ -35,19 +37,6 @@ export default class Uwave {
     Object.assign(this, api.constants);
     Object.assign(this, api.components);
     Object.assign(this, api.actions);
-
-    if (module.hot) {
-      this._getComponent = this.getComponent;
-      this.getComponent = () => (
-        <HotContainer>{this._getComponent()}</HotContainer>
-      );
-      const uw = this;
-      module.hot.accept('./containers/App', () => {
-        if (uw.renderTarget) {
-          uw.renderToDOM(uw.renderTarget);
-        }
-      });
-    }
   }
 
   use(plugin) {
@@ -105,7 +94,7 @@ export default class Uwave {
   getComponent() {
     return (
       <Provider store={this.store}>
-        <AppContainer
+        <HotContainer
           mediaSources={this.sources}
           locale={this.locale}
           uwave={this}

@@ -1,3 +1,3 @@
-export Player from './PlayerWrapper';
+export { default as Player } from './PlayerWrapper';
 
-export logo from '../../../assets/img/soundcloud.png';
+export { default as logo } from '../../../assets/img/soundcloud.png';

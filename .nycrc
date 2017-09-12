@@ -4,7 +4,5 @@
   "branches": 95,
   "statements": 95,
   "functions": 95,
-  "reporter": ["lcov"],
-  "sourceMap": false,
-  "instrument": false
+  "reporter": ["lcov"]
 }
