@@ -13,7 +13,10 @@ export default function reducer(state = initialState, action) {
   case LOAD_USERS_START:
     return state;
   case LOAD_USERS_COMPLETE:
-    return state;
+    return {
+      ...state,
+      users: action.payload.users
+    };
   default:
     return state;
   }
