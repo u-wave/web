@@ -59,7 +59,7 @@ const Motd = ({
     </CardText>
     <CardActions expandable>
       <FlatButton
-        onTouchTap={onSubmit}
+        onClick={onSubmit}
         label="Save"
         backgroundColor={muiTheme.palette.primary1Color}
         hoverColor={muiTheme.palette.primary2Color}

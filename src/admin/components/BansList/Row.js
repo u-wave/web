@@ -31,7 +31,7 @@ const BanRow = ({
     </TableCell>
     <TableCell>
       <RaisedButton
-        onTouchTap={onUnbanUser}
+        onClick={onUnbanUser}
         label={t('admin.unban')}
       />
     </TableCell>
