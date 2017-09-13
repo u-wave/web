@@ -11,6 +11,7 @@ import {
 } from '../../../components/Table';
 import Avatar from '../../../components/Avatar';
 import Username from '../../../components/Username/WithCard';
+import formatJoinDate from '../../../utils/formatJoinDate';
 
 const UserRow = ({
   user
@@ -23,7 +24,7 @@ const UserRow = ({
       <Username user={user} />
     </TableCell>
     <TableCell>
-      {user.joinedAt}
+      {formatJoinDate(user.createdAt)}
     </TableCell>
     <TableCell>
       {user.roles.join(', ')}
