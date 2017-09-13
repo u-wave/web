@@ -11,7 +11,10 @@ import {
 import BanRow from './Row';
 
 const enhance = translate();
-const avatarStyle = { width: 24 };
+const avatarStyle = {
+  width: 48,
+  paddingRight: 0
+};
 
 const BansList = ({
   t,

@@ -11,7 +11,10 @@ import Avatar from '../../../components/Avatar';
 import Username from '../../../components/Username/WithCard';
 
 const enhance = translate();
-const avatarStyle = { width: 24 };
+const avatarStyle = {
+  width: 48,
+  paddingRight: 0
+};
 
 const BanRow = ({
   t,
