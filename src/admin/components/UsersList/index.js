@@ -11,7 +11,13 @@ import {
 import UserRow from './Row';
 
 const avatarStyle = {
-  width: 24
+  width: 48,
+  paddingRight: 0
+};
+const actionsStyle = {
+  width: 48,
+  paddingLeft: 0,
+  paddingRight: 0
 };
 
 const enhance = translate();
@@ -28,7 +34,7 @@ const UsersList = ({
         <TableHeaderColumn>{t('admin.users.joinedAt')}</TableHeaderColumn>
         <TableHeaderColumn>{t('admin.users.email')}</TableHeaderColumn>
         <TableHeaderColumn>{t('admin.users.roles')}</TableHeaderColumn>
-        <TableHeaderColumn />
+        <TableHeaderColumn style={actionsStyle} />
       </TableRow>
     </TableHeader>
     <TableBody stripedRows>
