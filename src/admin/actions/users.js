@@ -8,12 +8,17 @@ export function loadUsersStart() {
 export function loadUsersComplete(response) {
   return {
     type: LOAD_USERS_COMPLETE,
-    payload: { users: response.data }
+    payload: {
+      users: response.data,
+      page: Math.floor(response.meta.offset / response.meta.pageSize)
+    },
+    meta: response.meta
   };
 }
 
-export function loadUsers() {
+export function loadUsers(pagination = null) {
   return get('/users', {
+    qs: pagination ? { page: pagination } : null,
     onStart: loadUsersStart,
     onComplete: loadUsersComplete
   });
