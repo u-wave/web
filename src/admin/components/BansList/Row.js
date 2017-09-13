@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import ms from 'ms';
+import RaisedButton from 'material-ui/RaisedButton';
 import {
   TableRow,
-  TableRowColumn as TableCell
-} from 'material-ui/Table';
-import RaisedButton from 'material-ui/RaisedButton';
+  TableCell
+} from '../../../components/Table';
 import Username from '../../../components/Username/WithCard';
 
 const enhance = translate();

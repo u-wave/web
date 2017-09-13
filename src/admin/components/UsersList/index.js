@@ -7,9 +7,8 @@ import {
   TableHeader,
   TableHeaderColumn,
   TableRow,
-  TableRowColumn as TableCell
-} from 'material-ui/Table';
-
+  TableCell
+} from '../../../components/Table';
 import Avatar from '../../../components/Avatar';
 import Username from '../../../components/Username/WithCard';
 
