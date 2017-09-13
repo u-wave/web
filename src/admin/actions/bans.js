@@ -31,3 +31,9 @@ export function loadBans() {
 export function unbanUser(user) {
   return del(`/bans/${user._id}`, {});
 }
+
+export function unbanUserAndReload(user) {
+  return dispatch =>
+    dispatch(unbanUser(user))
+      .then(() => dispatch(loadBans()));
+}
