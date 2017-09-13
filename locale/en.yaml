@@ -193,6 +193,11 @@ uwave:
     success: Your password has been reset. You can now close this page.
 
   admin:
+    users:
+      user: User
+      joinedAt: Created
+      email: E-Mail
+      roles: Roles
     bans:
       user: User
       duration: Duration

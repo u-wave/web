@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { translate } from 'react-i18next';
 import {
   Table,
   TableBody,
@@ -22,6 +23,13 @@ const UserRow = ({
     <TableCell>
       <Username user={user} />
     </TableCell>
+    <TableCell>
+      {user.joinedAt}
+    </TableCell>
+    <TableCell>
+      {user.roles.join(', ')}
+    </TableCell>
+    <TableCell />
   </TableRow>
 );
 
@@ -29,24 +37,34 @@ UserRow.propTypes = {
   user: PropTypes.object.isRequired
 };
 
+const enhance = translate();
+
 const UsersList = ({
+  t,
   users
 }) => (
   <Table selectable={false}>
     <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
       <TableRow>
         <TableHeaderColumn />
-        <TableHeaderColumn>User</TableHeaderColumn>
+        <TableHeaderColumn>{t('admin.users.user')}</TableHeaderColumn>
+        <TableHeaderColumn>{t('admin.users.joinedAt')}</TableHeaderColumn>
+        <TableHeaderColumn>{t('admin.users.email')}</TableHeaderColumn>
+        <TableHeaderColumn>{t('admin.users.roles')}</TableHeaderColumn>
+        <TableHeaderColumn />
       </TableRow>
     </TableHeader>
-    <TableBody>
-      {users.map(user => <UserRow user={user} />)}
+    <TableBody stripedRows>
+      {users.map(user => (
+        <UserRow user={user} />
+      ))}
     </TableBody>
   </Table>
 );
 
 UsersList.propTypes = {
+  t: PropTypes.func.isRequired,
   users: PropTypes.array.isRequired
 };
 
-export default UsersList;
+export default enhance(UsersList);
