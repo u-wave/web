@@ -7,9 +7,11 @@ import {
   TableRow,
   TableCell
 } from '../../../components/Table';
+import Avatar from '../../../components/Avatar';
 import Username from '../../../components/Username/WithCard';
 
 const enhance = translate();
+const avatarStyle = { width: 24 };
 
 const BanRow = ({
   t,
@@ -17,6 +19,9 @@ const BanRow = ({
   onUnbanUser
 }) => (
   <TableRow>
+    <TableCell style={avatarStyle}>
+      <Avatar user={ban.user} />
+    </TableCell>
     <TableCell>
       <Username user={ban.user} />
     </TableCell>

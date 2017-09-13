@@ -13,11 +13,15 @@ import Avatar from '../../../components/Avatar';
 import Username from '../../../components/Username/WithCard';
 import formatJoinDate from '../../../utils/formatJoinDate';
 
+const avatarStyle = {
+  width: 24
+};
+
 const UserRow = ({
   user
 }) => (
   <TableRow>
-    <TableCell>
+    <TableCell style={avatarStyle}>
       <Avatar user={user} />
     </TableCell>
     <TableCell>
@@ -26,6 +30,7 @@ const UserRow = ({
     <TableCell>
       {formatJoinDate(user.createdAt)}
     </TableCell>
+    <TableCell>Email</TableCell>
     <TableCell>
       {user.roles.join(', ')}
     </TableCell>
@@ -46,7 +51,7 @@ const UsersList = ({
   <Table selectable={false}>
     <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
       <TableRow>
-        <TableHeaderColumn />
+        <TableHeaderColumn style={avatarStyle} />
         <TableHeaderColumn>{t('admin.users.user')}</TableHeaderColumn>
         <TableHeaderColumn>{t('admin.users.joinedAt')}</TableHeaderColumn>
         <TableHeaderColumn>{t('admin.users.email')}</TableHeaderColumn>

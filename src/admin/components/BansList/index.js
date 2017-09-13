@@ -11,6 +11,7 @@ import {
 import BanRow from './Row';
 
 const enhance = translate();
+const avatarStyle = { width: 24 };
 
 const BansList = ({
   t,
@@ -20,6 +21,7 @@ const BansList = ({
   <Table selectable={false}>
     <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
       <TableRow>
+        <TableHeaderColumn style={avatarStyle} />
         <TableHeaderColumn>{t('admin.bans.user')}</TableHeaderColumn>
         <TableHeaderColumn>{t('admin.bans.duration')}</TableHeaderColumn>
         <TableHeaderColumn>{t('admin.bans.reason')}</TableHeaderColumn>
