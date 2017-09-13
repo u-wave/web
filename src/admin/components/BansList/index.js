@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import withProps from 'recompose/withProps';
+import { translate } from 'react-i18next';
 import {
   Table as MuiTable,
   TableBody,
@@ -22,18 +23,21 @@ const HeaderColumn = withProps({
   }
 })(TableHeaderColumn);
 
+const enhance = translate();
+
 const BansList = ({
+  t,
   bans,
   onUnbanUser
 }) => (
   <Table selectable={false}>
     <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
       <TableRow>
-        <HeaderColumn>User</HeaderColumn>
-        <HeaderColumn>Duration</HeaderColumn>
-        <HeaderColumn>Reason</HeaderColumn>
-        <HeaderColumn>Banned By</HeaderColumn>
-        <HeaderColumn>Actions</HeaderColumn>
+        <HeaderColumn>{t('admin.bans.user')}</HeaderColumn>
+        <HeaderColumn>{t('admin.bans.duration')}</HeaderColumn>
+        <HeaderColumn>{t('admin.bans.reason')}</HeaderColumn>
+        <HeaderColumn>{t('admin.bans.bannedBy')}</HeaderColumn>
+        <HeaderColumn>{t('admin.bans.actions')}</HeaderColumn>
       </TableRow>
     </TableHeader>
     <TableBody stripedRows>
@@ -49,8 +53,9 @@ const BansList = ({
 );
 
 BansList.propTypes = {
+  t: PropTypes.func.isRequired,
   bans: PropTypes.array.isRequired,
   onUnbanUser: PropTypes.func.isRequired
 };
 
-export default BansList;
+export default enhance(BansList);

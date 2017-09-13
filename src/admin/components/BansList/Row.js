@@ -24,7 +24,9 @@ const BanRow = ({
       {ms(ban.duration, { long: true })}
     </TableCell>
     <TableCell>
-      {ban.reason || <em>No reason given.</em>}
+      {ban.reason || (
+        <em>{t('admin.bans.noReason')}</em>
+      )}
     </TableCell>
     <TableCell>
       <Username user={ban.moderator} />
@@ -32,7 +34,7 @@ const BanRow = ({
     <TableCell>
       <RaisedButton
         onClick={onUnbanUser}
-        label={t('admin.unban')}
+        label={t('admin.bans.unban')}
       />
     </TableCell>
   </TableRow>
