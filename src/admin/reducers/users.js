@@ -6,6 +6,7 @@ import {
 const initialState = {
   currentPage: 0,
   totalPages: 0,
+  totalUsers: 0,
   users: []
 };
 
@@ -17,6 +18,7 @@ export default function reducer(state = initialState, action) {
     return {
       ...state,
       currentPage: action.payload.page,
+      totalUsers: action.meta.total,
       totalPages: Math.ceil(action.meta.total / action.meta.pageSize),
       users: action.payload.users
     };
