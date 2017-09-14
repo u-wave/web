@@ -52,6 +52,7 @@
     "react-redux": "^5.0.6",
     "react-transition-group": "^1.2.0",
     "recompose": "^0.25.0",
+    "reconnecting-websocket": "^3.2.1",
     "redux": "^3.7.2",
     "redux-batched-subscribe": "^0.1.6",
     "redux-logger": "^3.0.0",
