@@ -174,7 +174,6 @@ export default function middleware({ url = defaultUrl() } = {}) {
       opened = true;
       dispatch({ type: SOCKET_CONNECTED });
       maybeAuthenticateOnConnect(getState());
-      drainQueuedMessages();
     }
 
     function onClose() {
@@ -188,6 +187,12 @@ export default function middleware({ url = defaultUrl() } = {}) {
 
       const { command, data } = JSON.parse(pack.data);
       debug(command, data);
+
+      if (command === 'authenticated') {
+        drainQueuedMessages();
+        return;
+      }
+
       if (typeof actions[command] === 'function') {
         const action = actions[command](data);
         if (action) {
