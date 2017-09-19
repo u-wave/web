@@ -85,6 +85,9 @@ class SettingsPanel extends React.Component {
               />
             </LabeledControl>
           </div>
+          <hr className="SettingsPanel-divider" />
+          <Links />
+          <hr className="SettingsPanel-divider" />
           <LogoutButton onLogout={onLogout} />
         </div>
         <div className="SettingsPanel-column SettingsPanel-column--right">
@@ -93,7 +96,6 @@ class SettingsPanel extends React.Component {
             onSettingChange={this.props.onSettingChange}
           />
           <hr className="SettingsPanel-divider" />
-          <Links />
         </div>
       </div>
     );
