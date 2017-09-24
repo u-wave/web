@@ -1,3 +1,19 @@
+# 1.0.0-beta.17 / 24 Sep 2017
+
+Features:
+
+ * Add offline indicator. (#737)
+ * Add x-ua-compatible meta tag for IE. (#740)
+
+Bugfixes:
+
+ * Fix previous YouTube video restarting in the background when switching media source. (#744)
+
+Internal:
+
+ * Use reconnecting-websocket from npm. (#742)
+ * Fix HMR rerendering (work around webpack bug I guess?). (#736)
+
 # 1.0.0-beta.16 / 25 Aug 2017
 
 Features:
