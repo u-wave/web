@@ -133,7 +133,7 @@
     "react-test-renderer": "^15.6.1",
     "recaptcha-test-keys": "^1.0.0",
     "run-sequence": "^2.1.0",
-    "sinon": "^3.2.1",
+    "sinon": "^4.0.0",
     "sinon-chai": "^2.13.0",
     "style-loader": "^0.18.2",
     "through2": "^2.0.3",
