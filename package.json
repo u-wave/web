@@ -45,7 +45,7 @@
     "react-dnd-html5-backend": "^2.0.0",
     "react-dom": "^15.6.1",
     "react-hot-loader": "^3.0.0-beta.6",
-    "react-i18next": "^5.1.0",
+    "react-i18next": "^6.0.0",
     "react-list": "^0.8.7",
     "react-list-lazy-load": "^1.0.5",
     "react-markdown": "^2.4.5",
