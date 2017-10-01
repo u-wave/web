@@ -1,8 +1,27 @@
 .SettingsPanelProfile-username {
   font-size: 120%;
   font-weight: normal;
+  display: block;
+  margin: 0;
 }
 .SettingsPanelProfile-avatar {
-  width: 120px;
-  height: 120px;
+  width: 80px;
+  height: 80px;
+}
+
+.SettingsPanelProfile-textblock {
+  display: inline-block;
+  padding-left: 20px;
+  vertical-align: top;
+}
+
+.SettingsPanelProfile-date {
+  line-height: 1.5;
+  color: #aaa;
+  margin: 0;
+}
+
+.SettingsPanelProfile-role {
+  line-height: 1.5;
+  margin: 0;
 }
