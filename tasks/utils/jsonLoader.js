@@ -2,7 +2,7 @@
  * A JSON loader that outputs ES modules.
  */
 
-module.exports = function jsonLoader (source) {
+module.exports = function jsonLoader(source) {
   this.cacheable();
 
   const object = JSON.parse(source);
@@ -13,4 +13,4 @@ module.exports = function jsonLoader (source) {
   });
 
   return output.join('\n\n');
-}
+};
