@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * A JSON loader that outputs ES modules.
  */
@@ -8,7 +10,8 @@ module.exports = function jsonLoader(source) {
   const object = JSON.parse(source);
   const output = [];
 
-  Object.entries(object).forEach(([ key, value ]) => {
+  Object.keys(object).forEach((key) => {
+    const value = object[key];
     output.push(`export const ${key} = ${JSON.stringify(value, null, 2)};`);
   });
 
