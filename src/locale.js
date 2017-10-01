@@ -1,5 +1,5 @@
 import i18next from 'i18next';
-import en from '../locale/en.yaml';
+import * as en from '../locale/en.yaml';
 
 const resources = {
   cs: () => import('../locale/cs.yaml'),
