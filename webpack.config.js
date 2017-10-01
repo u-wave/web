@@ -80,11 +80,7 @@ if (nodeEnv === 'production') {
       minimize: true,
       debug: false
     }),
-    new CommonShakePlugin({
-      onExportDelete(resource, property) {
-        console.log('rm', resource, property);
-      }
-    }),
+    new CommonShakePlugin(),
     new UglifyJsPlugin({
       sourceMap: true,
       uglifyOptions: {
