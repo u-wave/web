@@ -1,6 +1,6 @@
 // Polyfills for browsers that might not yet support Promises or the Fetch API
 // (newer & better XMLHttpRequest).
-import 'es6-promise';
+import 'lie/polyfill';
 import 'whatwg-fetch';
 
 import React from 'react';

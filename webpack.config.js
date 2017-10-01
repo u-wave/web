@@ -72,12 +72,18 @@ if (nodeEnv === 'production') {
   const OccurrenceOrderPlugin = require('webpack').optimize.OccurrenceOrderPlugin;
   const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
   const ModuleConcatenationPlugin = require('webpack').optimize.ModuleConcatenationPlugin;
+  const CommonShakePlugin = require('webpack-common-shake').Plugin;
 
   plugins.push(
     new OccurrenceOrderPlugin(),
     new LoaderOptionsPlugin({
       minimize: true,
       debug: false
+    }),
+    new CommonShakePlugin({
+      onExportDelete(resource, property) {
+        console.log('rm', resource, property);
+      }
     }),
     new UglifyJsPlugin({
       sourceMap: true,
@@ -174,11 +180,7 @@ module.exports = {
       },
       {
         test: /\.yaml$/,
-        use: [ 'json-loader', 'yaml-loader' ]
-      },
-      {
-        test: /\.json$/,
-        use: [ 'json-loader' ]
+        use: [ require.resolve('./tasks/utils/jsonLoader'), 'yaml-loader' ]
       },
       // JS loader for dependencies that use ES2015+:
       {

@@ -19,7 +19,6 @@
     "classnames": "^2.2.4",
     "debug": "^3.0.1",
     "deepmerge": "^1.5.1",
-    "es6-promise": "^4.1.1",
     "escape-string-regexp": "^1.0.3",
     "except": "^0.1.3",
     "format-duration": "^1.0.0",
@@ -27,6 +26,7 @@
     "index-by": "0.0.1",
     "is-equal-shallow": "^0.1.3",
     "item-selection": "^1.0.0",
+    "lie": "^3.1.1",
     "load-script2": "^1.0.0",
     "lodash": "^4.12.0",
     "material-ui": "^0.19.0",
@@ -142,6 +142,7 @@
     "u-wave-web-emojione": "^2.0.0",
     "uglifyjs-webpack-plugin": "^1.0.0-beta.2",
     "webpack": "^3.5.5",
+    "webpack-common-shake": "^1.5.3",
     "webpack-dev-middleware": "^1.12.0",
     "webpack-hot-middleware": "^2.18.2",
     "yaml-loader": "^0.5.0"
