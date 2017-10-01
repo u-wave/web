@@ -23,4 +23,8 @@ uw.build().then(() => {
   document.querySelector('#app-loading').innerHTML = '';
 }).catch((err) => {
   document.querySelector('.LoadingScreen-notice').textContent = `Error: ${err.message}`;
+
+  setTimeout(() => {
+    throw err;
+  }, 0);
 });
