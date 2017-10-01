@@ -1,7 +1,7 @@
 .SettingsPanelProfile-username {
   font-size: 120%;
   font-weight: normal;
-  display:block;
+  display: block;
   margin: 0;
 }
 .SettingsPanelProfile-avatar {
@@ -9,8 +9,8 @@
   height: 80px;
 }
 
-.SettingsPanelProfile-textblock{
-  display:inline-block;
+.SettingsPanelProfile-textblock {
+  display: inline-block;
   padding-left: 20px;
   vertical-align: top;
 }
