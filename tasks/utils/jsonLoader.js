@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * A JSON loader that outputs ES modules.
  */
