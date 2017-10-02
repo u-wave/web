@@ -157,6 +157,7 @@
     "clean": "gulp clean",
     "build": "gulp",
     "serve": "gulp serve",
-    "start": "gulp start"
+    "start": "gulp start",
+    "prerelease": "npm run clean && npm test && npm run prod"
   }
 }
