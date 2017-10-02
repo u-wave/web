@@ -144,12 +144,13 @@ Object.keys(staticPages).forEach((name) => {
 module.exports = {
   context,
   entry: entries,
+  // Quit if there are errors.
+  bail: nodeEnv === 'production',
   devtool: nodeEnv === 'production' ? 'source-map' : 'inline-source-map',
   output: {
     publicPath: '/',
     path: path.join(__dirname, 'public'),
-    filename: nodeEnv === 'production' ? '[name]_[chunkhash].js' : '[name]_dev.js',
-    hashDigestLength: 7
+    filename: nodeEnv === 'production' ? '[name]_[chunkhash:7].js' : '[name]_dev.js'
   },
   plugins,
   module: {
