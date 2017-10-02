@@ -14,7 +14,7 @@ const positionStyle = {
   zIndex: 55
 };
 
-const ConnectionIndicator = enhance(({ isConnected, t }) => (
+const ConnectionIndicator = ({ isConnected, t }) => (
   isConnected ? null : (
     <div style={positionStyle}>
       <Card>
@@ -26,11 +26,11 @@ const ConnectionIndicator = enhance(({ isConnected, t }) => (
       </Card>
     </div>
   )
-));
+);
 
 ConnectionIndicator.propTypes = {
   t: PropTypes.func.isRequired,
   isConnected: PropTypes.bool.isRequired
 };
 
-export default ConnectionIndicator;
+export default enhance(ConnectionIndicator);
