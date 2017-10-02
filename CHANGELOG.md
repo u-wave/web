@@ -1,3 +1,16 @@
+# 1.0.0-beta.18 / 02 Nov 2017
+
+Features:
+
+ * Improve SettingsPanel design. (#745)
+ * Rethrow boot errors for error reporting libraries. (#755)
+
+Internal:
+
+ * Bail on error in prod build. (#758)
+ * Add prerelease npm script (#757)
+ * Add common-shake. (#754)
+
 # 1.0.0-beta.17 / 24 Sep 2017
 
 Features:
