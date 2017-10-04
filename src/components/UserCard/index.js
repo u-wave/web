@@ -26,6 +26,10 @@ class UserCardWrapper extends React.Component {
   }
 
   fitInsideWindow() {
+    if (!this.container) {
+      return;
+    }
+
     const card = this.container.firstChild;
     const rect = card.getBoundingClientRect();
     const offsetBottom = window.innerHeight - rect.bottom;
