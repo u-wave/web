@@ -1,3 +1,5 @@
+const enzyme = require('enzyme');
+const Adapter = require('enzyme-adapter-react-16');
 const chai = require('chai');
 
 require('babel-register')({
@@ -7,6 +9,10 @@ require('babel-register')({
   ]
 });
 require('yamlify/register');
+
+enzyme.configure({
+  adapter: new Adapter()
+});
 
 chai.use(require('chai-enzyme')());
 
