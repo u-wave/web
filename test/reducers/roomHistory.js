@@ -8,9 +8,7 @@ import * as s from '../../src/selectors/roomHistorySelectors';
 describe('reducers/roomHistory', () => {
   it('should default to an empty array', () => {
     const { getState } = createStore();
-    expect(s.roomHistorySelector(getState())).to.eql(
-      []
-    );
+    expect(s.roomHistorySelector(getState())).to.eql([]);
   });
 
   const userModel = {
@@ -152,16 +150,10 @@ describe('reducers/roomHistory', () => {
         }
       }));
 
-      expect(
-        s.roomHistoryWithVotesSelector(getState())
-      ).to.have.length(2);
-      expect(
-        s.roomHistoryWithVotesSelector(getState())[1]._id
-      ).to.equal('56b12b90d6bfe93733bece96');
+      expect(s.roomHistoryWithVotesSelector(getState())).to.have.length(2);
+      expect(s.roomHistoryWithVotesSelector(getState())[1]._id).to.equal('56b12b90d6bfe93733bece96');
 
-      expect(
-        s.roomHistoryWithVotesSelector(getState())[0]._id
-      ).to.equal('56b12c59d6bfe93733bece97');
+      expect(s.roomHistoryWithVotesSelector(getState())[0]._id).to.equal('56b12c59d6bfe93733bece97');
     });
 
     it('works with NULL advances', () => {

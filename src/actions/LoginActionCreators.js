@@ -123,8 +123,12 @@ export function login({ email, password }) {
   });
 }
 
-export function register({ email, username, password, grecaptcha }) {
-  return post('/auth/register', { email, username, password, grecaptcha }, {
+export function register({
+  email, username, password, grecaptcha
+}) {
+  return post('/auth/register', {
+    email, username, password, grecaptcha
+  }, {
     onStart: () => ({ type: REGISTER_START }),
     onComplete: res => (dispatch) => {
       const user = res.data;

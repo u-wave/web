@@ -33,7 +33,9 @@ const tempRoleIDToRoleName = {
 };
 
 
-const Profile = ({ className, user, onChangeUsername, muiTheme }) => (
+const Profile = ({
+  className, user, onChangeUsername, muiTheme
+}) => (
   <div className={cx('SettingsPanelProfile', className)}>
     <Avatar
       className="SettingsPanelProfile-avatar"

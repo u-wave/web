@@ -19,7 +19,7 @@ const Username = ({
   className,
   user
 }) => {
-  const rankColors = muiTheme.rankColors;
+  const { rankColors } = muiTheme;
   const roleName = tempRoleIDToRoleName[Math.min(user.role, 4)];
   let styles;
   if (rankColors[roleName]) {

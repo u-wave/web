@@ -18,16 +18,12 @@ describe('reducers/chat', () => {
     const { dispatch, getState } = createStore();
     const initial = s.messagesSelector(getState());
     dispatch({ type: 'randomOtherAction', payload: {} });
-    expect(
-      s.messagesSelector(getState())
-    ).to.eql(initial);
+    expect(s.messagesSelector(getState())).to.eql(initial);
   });
 
   it('should default to an empty list of messages', () => {
     const { getState } = createStore();
-    expect(
-      s.messagesSelector(getState())
-    ).to.eql([]);
+    expect(s.messagesSelector(getState())).to.eql([]);
   });
 
   describe('action: chat/RECEIVE_MESSAGE', () => {
@@ -46,15 +42,11 @@ describe('reducers/chat', () => {
       const { dispatch, getState } = createStore();
       dispatch(setUsers([ testUser ]));
 
-      expect(
-        s.messagesSelector(getState())
-      ).to.have.length(0);
+      expect(s.messagesSelector(getState())).to.have.length(0);
 
       dispatch(a.receive(testMessage));
 
-      expect(
-        s.messagesSelector(getState())[0]
-      ).to.eql({
+      expect(s.messagesSelector(getState())[0]).to.eql({
         _id: testMessage._id,
         type: 'chat',
         userID: testMessage.userID,
@@ -84,12 +76,8 @@ describe('reducers/chat', () => {
 
       const messageText = 'test message 🐼';
       dispatch(a.sendChat(messageText));
-      expect(
-        s.messagesSelector(getState())
-      ).to.have.length(2);
-      expect(
-        s.messagesSelector(getState())[1]
-      ).to.have.property('inFlight', true);
+      expect(s.messagesSelector(getState())).to.have.length(2);
+      expect(s.messagesSelector(getState())[1]).to.have.property('inFlight', true);
 
       // actual test: RECEIVE-ing a sent message should replace that message in
       // the messages list.
@@ -100,12 +88,8 @@ describe('reducers/chat', () => {
         timestamp: 1449941591374
       }));
 
-      expect(
-        s.messagesSelector(getState())
-      ).to.have.length(2);
-      expect(
-        s.messagesSelector(getState())[1]
-      ).to.have.property('inFlight', false);
+      expect(s.messagesSelector(getState())).to.have.length(2);
+      expect(s.messagesSelector(getState())[1]).to.have.property('inFlight', false);
 
       userSelectors.currentUserSelector.restore();
     });
@@ -132,9 +116,7 @@ describe('reducers/chat', () => {
       sinon.stub(userSelectors, 'currentUserSelector').returns(testMessage.user);
 
       dispatch(a.sendChat(testMessage.message));
-      expect(
-        s.messagesSelector(getState())
-      ).to.have.length(1);
+      expect(s.messagesSelector(getState())).to.have.length(1);
       const message = s.messagesSelector(getState())[0];
       expect(message).to.be.an('object');
       expect(message).to.have.property('_id');
@@ -156,9 +138,7 @@ describe('reducers/chat', () => {
       for (let i = 0; i < MESSAGES; i += 1) {
         dispatch(a.log(`Test message ${i}`));
       }
-      expect(
-        s.messagesSelector(getState())
-      ).to.have.length(MESSAGES);
+      expect(s.messagesSelector(getState())).to.have.length(MESSAGES);
     });
   });
 
@@ -185,24 +165,18 @@ describe('reducers/chat', () => {
     };
 
     it('chat/MUTE_USER should register muted users', () => {
-      expect(
-        s.mutedUsersSelector(getState())
-      ).to.have.length(0);
+      expect(s.mutedUsersSelector(getState())).to.have.length(0);
 
       dispatch(a.muteUser('1', {
         moderatorID: '4',
         expires: Date.now() + 3000
       }));
 
-      expect(
-        s.mutedUsersSelector(getState())
-      ).to.eql([ testUsers[0] ]);
+      expect(s.mutedUsersSelector(getState())).to.eql([ testUsers[0] ]);
     });
 
     it('should not process messages received from muted users', () => {
-      expect(
-        s.messagesSelector(getState())
-      ).to.have.length(0);
+      expect(s.messagesSelector(getState())).to.have.length(0);
 
       addTestMute();
       dispatch(a.receive({
@@ -211,33 +185,23 @@ describe('reducers/chat', () => {
         text: '*Spam*'
       }));
 
-      expect(
-        s.messagesSelector(getState())
-      ).to.have.length(0);
+      expect(s.messagesSelector(getState())).to.have.length(0);
     });
 
     it('chat/UNMUTE_USERS should remove users from the muted list', () => {
       addTestMute();
 
-      expect(
-        s.mutedUsersSelector(getState())
-      ).to.have.length(1);
+      expect(s.mutedUsersSelector(getState())).to.have.length(1);
       dispatch(a.unmuteUser('1', { moderatorID: '3' }));
-      expect(
-        s.mutedUsersSelector(getState())
-      ).to.have.length(0);
+      expect(s.mutedUsersSelector(getState())).to.have.length(0);
 
-      expect(
-        s.messagesSelector(getState())
-      ).to.have.length(0);
+      expect(s.messagesSelector(getState())).to.have.length(0);
       dispatch(a.receive({
         _id: 'abc',
         userID: '1',
         text: '*Spam*'
       }));
-      expect(
-        s.messagesSelector(getState())
-      ).to.have.length(1);
+      expect(s.messagesSelector(getState())).to.have.length(1);
     });
   });
 });

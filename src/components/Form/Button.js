@@ -2,7 +2,9 @@ import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Button = ({ children, className, text, ...props }) => (
+const Button = ({
+  children, className, text, ...props
+}) => (
   <button className={cx('Button', className)} {...props}>
     {text || children}
   </button>

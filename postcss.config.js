@@ -1,5 +1,5 @@
 module.exports = (options) => {
-  const env = options.env;
+  const { env } = options;
 
   return {
     plugins: {

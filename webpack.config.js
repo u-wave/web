@@ -1,7 +1,6 @@
 const path = require('path');
 const escapeStringRegExp = require('escape-string-regexp');
-const DefinePlugin = require('webpack').DefinePlugin;
-const ProgressPlugin = require('webpack').ProgressPlugin;
+const { DefinePlugin, ProgressPlugin } = require('webpack');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlPlugin = require('html-webpack-plugin');
@@ -68,10 +67,14 @@ const plugins = [
 ];
 
 if (nodeEnv === 'production') {
-  const LoaderOptionsPlugin = require('webpack').LoaderOptionsPlugin;
-  const OccurrenceOrderPlugin = require('webpack').optimize.OccurrenceOrderPlugin;
+  const {
+    LoaderOptionsPlugin,
+    optimize: {
+      OccurrenceOrderPlugin,
+      ModuleConcatenationPlugin
+    }
+  } = require('webpack');
   const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-  const ModuleConcatenationPlugin = require('webpack').optimize.ModuleConcatenationPlugin;
   const CommonShakePlugin = require('webpack-common-shake').Plugin;
 
   plugins.push(

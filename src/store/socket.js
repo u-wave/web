@@ -46,13 +46,16 @@ import { favorited, receiveVote } from '../actions/VoteActionCreators';
 const debug = createDebug('uwave:websocket');
 
 function defaultUrl() {
-  const port = location.port || (location.protocol === 'https:' ? 443 : 80);
-  const protocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
-  return `${protocol}//${location.hostname}:${port}`;
+  const loc = window.location;
+  const port = loc.port || (loc.protocol === 'https:' ? 443 : 80);
+  const protocol = loc.protocol === 'https:' ? 'wss:' : 'ws:';
+  return `${protocol}//${loc.hostname}:${port}`;
 }
 
 const actions = {
-  chatMessage({ id, userID, message, timestamp }) {
+  chatMessage({
+    id, userID, message, timestamp
+  }) {
     return chatReceive({
       _id: id,
       userID,
@@ -96,8 +99,12 @@ const actions = {
   waitlistLock({ locked }) {
     return setWaitlistLocked(locked);
   },
-  waitlistMove({ userID, moderatorID, position, waitlist }) {
-    return movedInWaitlist({ userID, moderatorID, position, waitlist });
+  waitlistMove({
+    userID, moderatorID, position, waitlist
+  }) {
+    return movedInWaitlist({
+      userID, moderatorID, position, waitlist
+    });
   },
   // TODO Treat moderator force-add and force-remove differently from voluntary
   // joins and leaves.
@@ -145,7 +152,7 @@ export default function middleware({ url = defaultUrl() } = {}) {
     }
 
     function maybeAuthenticateOnConnect(state) {
-      const jwt = state.auth.jwt;
+      const { jwt } = state.auth;
       debug('open', jwt);
       if (jwt) {
         sendJWT(jwt);

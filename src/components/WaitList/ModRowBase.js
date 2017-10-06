@@ -43,7 +43,7 @@ const ModRowBase = ({
   connectDragSource,
   onOpenCard,
   onRemoveUser
-}) => connectDragPreview(
+}) => connectDragPreview((
   <div
     className={cx(
       'UserRow',
@@ -65,11 +65,11 @@ const ModRowBase = ({
       <Username className="UserRow-username" user={user} />
     </button>
     <div className="WaitlistRow-tools">
-      {connectDragSource(
+      {connectDragSource((
         <div className="WaitlistRow-tool WaitlistRow-handle">
           <DragIcon />
         </div>
-      )}
+      ))}
       <button
         className="WaitlistRow-tool WaitlistRow-remove"
         onClick={onRemoveUser}
@@ -78,7 +78,7 @@ const ModRowBase = ({
       </button>
     </div>
   </div>
-);
+));
 
 ModRowBase.propTypes = {
   className: PropTypes.string,

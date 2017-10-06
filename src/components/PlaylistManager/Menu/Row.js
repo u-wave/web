@@ -64,7 +64,7 @@ class PlaylistRow extends React.Component {
       );
     }
 
-    return connectDropTarget(
+    return connectDropTarget((
       <button
         role="menuitem"
         className={cx('PlaylistMenuRow', activeClass, selectedClass, droppableClass, className)}
@@ -78,7 +78,7 @@ class PlaylistRow extends React.Component {
           <div className="PlaylistMenuRow-count">{playlist.size}</div>
         </div>
       </button>
-    );
+    ));
   }
 }
 

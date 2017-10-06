@@ -8,7 +8,9 @@ const iconStyles = {
   marginRight: 3
 };
 
-const SongInfo = ({ artist, title, artistUrl, trackUrl }) => (
+const SongInfo = ({
+  artist, title, artistUrl, trackUrl
+}) => (
   <div className="src-soundcloud-SongInfo">
     <a
       className="src-soundcloud-SongInfo-link src-soundcloud-SongInfo-link--artist"

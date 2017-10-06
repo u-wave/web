@@ -62,9 +62,13 @@ class HistoryRow extends React.Component {
   };
 
   handleDoubleClick = () => {
-    this.props.onOpenPreviewMediaDialog(
-      this.props.media.media
-    );
+    this.props.onOpenPreviewMediaDialog(this.props.media.media);
+  };
+
+  handleKeyPress = (event) => {
+    if (event.code === 'Space') {
+      this.props.onClick();
+    }
   };
 
   render() {
@@ -79,7 +83,9 @@ class HistoryRow extends React.Component {
       // etc
       onClick
     } = this.props;
-    const { media, timestamp, user, stats } = historyEntry;
+    const {
+      media, timestamp, user, stats
+    } = historyEntry;
     const { showActions } = this.state;
     const selectedClass = selected ? 'is-selected' : '';
     const thumbnail = (
@@ -91,7 +97,7 @@ class HistoryRow extends React.Component {
         />
       </div>
     );
-    return connectDragSource(
+    return connectDragSource((
       // See PlaylistManager/Panel/Row.js
       // eslint-disable-next-line jsx-a11y/no-static-element-interactions
       <div
@@ -99,6 +105,7 @@ class HistoryRow extends React.Component {
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
         onDoubleClick={this.handleDoubleClick}
+        onKeyPress={this.handleKeyPress}
         onClick={onClick}
       >
         {thumbnail}
@@ -126,7 +133,7 @@ class HistoryRow extends React.Component {
           />
         )}
       </div>
-    );
+    ));
   }
 }
 

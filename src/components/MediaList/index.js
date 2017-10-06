@@ -69,7 +69,7 @@ export default class MediaList extends React.Component {
   }
 
   renderRow = (index) => {
-    const makeActions = this.props.makeActions;
+    const { makeActions } = this.props;
     const props = this.props.rowProps || {};
     const media = this.props.media[index];
     const { selection } = this.state;
@@ -101,7 +101,9 @@ export default class MediaList extends React.Component {
   };
 
   render() {
-    const { className, media, size, onRequestPage } = this.props;
+    const {
+      className, media, size, onRequestPage
+    } = this.props;
     let list = (
       <BaseList
         itemRenderer={this.renderRow}

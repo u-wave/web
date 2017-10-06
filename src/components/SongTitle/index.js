@@ -3,7 +3,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import pure from 'recompose/pure';
 
-const SongTitle = ({ className, artist, title, size = 'large' }) => (
+const SongTitle = ({
+  className, artist, title, size = 'large'
+}) => (
   <div
     className={cx('SongTitle', `SongTitle--${size}`, className)}
     title={`${artist} – ${title}`}

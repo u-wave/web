@@ -13,7 +13,9 @@ const iconStyles = {
   padding: '6px 12px 6px 0'
 };
 
-const Votes = ({ upvotes, downvotes, favorites, isUpvote, isDownvote, isFavorite }) => {
+const Votes = ({
+  upvotes, downvotes, favorites, isUpvote, isDownvote, isFavorite
+}) => {
   const CurrentFavoriteIcon = isFavorite ? FavoritedIcon : FavoriteIcon;
   return (
     <div className="HistoryVotes AudienceResponse">

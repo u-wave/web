@@ -6,7 +6,9 @@ import pure from 'recompose/pure';
 import formatDuration from 'format-duration';
 import timed from '../../utils/timed';
 
-const Eta = ({ className, base, currentTime, endTime }) => {
+const Eta = ({
+  className, base, currentTime, endTime
+}) => {
   const currentRemaining = endTime - currentTime;
   return (
     <span className={cx('Eta', className)}>

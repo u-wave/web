@@ -62,9 +62,7 @@ class PlaylistsMenu extends React.Component {
       return;
     }
     this.props.onClose();
-    this.props.onSelect(
-      find(this.props.playlists, pl => pl._id === playlistID)
-    );
+    this.props.onSelect(find(this.props.playlists, pl => pl._id === playlistID));
   };
 
   renderLayer = () => {

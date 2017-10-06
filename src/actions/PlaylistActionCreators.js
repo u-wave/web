@@ -161,7 +161,7 @@ export function playlistCycled(playlistID) {
 }
 
 function shouldLoadAfterCycle(playlist) {
-  const media = playlist.media;
+  const { media } = playlist;
   // If the playlist was fully loaded, we can cycle naively
   if (media.length === playlist.size && media.every(Boolean)) {
     return false;
@@ -341,10 +341,8 @@ export function cannotDeleteActivePlaylist(playlistID) {
   return {
     type: DELETE_PLAYLIST_COMPLETE,
     error: true,
-    payload: new Error(
-      'The active playlist cannot be deleted. ' +
-      'Activate a different playlist first, before deleting this one.'
-    ),
+    payload: new Error('The active playlist cannot be deleted. ' +
+      'Activate a different playlist first, before deleting this one.'),
     meta: { playlistID }
   };
 }

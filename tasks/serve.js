@@ -3,9 +3,7 @@
 require('loud-rejection/register');
 const path = require('path');
 const gulp = require('gulp');
-const env = require('gulp-util').env;
-const log = require('gulp-util').log;
-const colors = require('gulp-util').colors;
+const { colors, env, log } = require('gulp-util');
 const emojione = require('u-wave-web-emojione');
 const recaptchaTestKeys = require('recaptcha-test-keys');
 const express = require('express');
@@ -33,10 +31,12 @@ function clearLine() {
 const devServerTask = (done) => {
   const serverPort = env.serverPort || 6042;
 
-  const coreDir = tryResolve('u-wave-core/src',
+  const coreDir = tryResolve(
+    'u-wave-core/src',
     'Could not find the u-wave core module. Did you run `npm install u-wave-core`?'
   );
-  const apiDir = tryResolve('u-wave-api-v1/src',
+  const apiDir = tryResolve(
+    'u-wave-api-v1/src',
     'Could not find the u-wave API module. Did you run `npm install u-wave-api-v1`?'
   );
   const monitor = nodemon({
@@ -96,9 +96,7 @@ gulp.task('serve', [ 'apiServer' ], (done) => {
     });
 
     wpConfig.entry.app.unshift('react-hot-loader/patch');
-    wpConfig.plugins.push(
-      new webpack.HotModuleReplacementPlugin()
-    );
+    wpConfig.plugins.push(new webpack.HotModuleReplacementPlugin());
     const compiler = webpack(wpConfig);
     const dev = webpackDevMiddleware(compiler, {
       noInfo: true,
