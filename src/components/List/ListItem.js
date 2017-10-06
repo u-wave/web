@@ -14,7 +14,9 @@ const selectedStyle = {
   backgroundColor: '#9d2053'
 };
 
-const enhance = mapProps(({ selected, className, style, ...props }) => ({
+const enhance = mapProps(({
+  selected, className, style, ...props
+}) => ({
   hoverColor: '#242424',
   rightIcon: selected ? <SelectedIcon color="#fff" /> : null,
   ...props,
