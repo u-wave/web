@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 const dontBubble = event => event.stopPropagation();
 
-/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events */
 const Actions = ({
   className,
   makeActions,
@@ -17,7 +17,7 @@ const Actions = ({
     {makeActions(media)}
   </div>
 );
-/* eslint-enable jsx-a11y/no-static-element-interactions */
+/* eslint-enable jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events */
 
 Actions.propTypes = {
   className: PropTypes.string,

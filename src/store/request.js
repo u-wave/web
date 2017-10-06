@@ -31,9 +31,7 @@ function rejectNonOK(response) {
         throw new Error('An unknown error occurred.');
       }
       const { errors } = res;
-      const error = assign(new Error(
-        errors.map(err => err.title).join(', ')
-      ), {
+      const error = assign(new Error(errors.map(err => err.title).join(', ')), {
         response,
         errors
       });

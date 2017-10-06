@@ -22,7 +22,9 @@ export default class TextField extends React.Component {
   };
 
   render() {
-    const { type, icon, className, ...props } = this.props;
+    const {
+      type, icon, className, ...props
+    } = this.props;
     return (
       <div className={cx('TextField', className)}>
         <input

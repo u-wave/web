@@ -159,7 +159,9 @@ function filterCachedPlaylistItems(state, playlistID, filter) {
 }
 
 export default function reduce(state = initialState, action = {}) {
-  const { type, payload, meta, error } = action;
+  const {
+    type, payload, meta, error
+  } = action;
 
   switch (type) {
   case LOAD_ALL_PLAYLISTS_COMPLETE:
@@ -254,7 +256,7 @@ export default function reduce(state = initialState, action = {}) {
     if (payload.playlistID !== state.selectedPlaylistID) {
       return state;
     }
-    const currentFilter = state.currentFilter;
+    const { currentFilter } = state;
     const items = mergePlaylistPage(meta.size, currentFilter.items, payload.media, meta);
     return {
       ...state,
@@ -265,7 +267,7 @@ export default function reduce(state = initialState, action = {}) {
   case PLAYLIST_CYCLED:
     return updatePlaylistItems(state, payload.playlistID, (items, playlist) => {
       const newItems = items.slice(1);
-      newItems[playlist.size - 1] = items[0];
+      newItems[playlist.size - 1] = items[0]; // eslint-disable-line prefer-destructuring
       return newItems;
     });
 
@@ -304,10 +306,12 @@ export default function reduce(state = initialState, action = {}) {
       ...state,
       playlists: assign(
         deselectAll(except(state.playlists, `${meta.tempId}`)),
-        { [payload.playlist._id]: {
-          ...payload.playlist,
-          selected: true
-        } }
+        {
+          [payload.playlist._id]: {
+            ...payload.playlist,
+            selected: true
+          }
+        }
       ),
       selectedPlaylistID: payload.playlist._id
     };
@@ -379,16 +383,14 @@ export default function reduce(state = initialState, action = {}) {
         media && media._id === payload.mediaID
           ? { ...media, loading: true }
           : media
-      ))
-    );
+      )));
   case UPDATE_MEDIA_COMPLETE:
     return updatePlaylistItems(state, payload.playlistID, items =>
       items.map(media => (
         media && media._id === payload.mediaID
           ? { ...media, ...payload.media, loading: false }
           : media
-      ))
-    );
+      )));
 
   case MOVE_MEDIA_START: {
     const isMovingMedia = indexBy(payload.medias, '_id');
@@ -396,13 +398,11 @@ export default function reduce(state = initialState, action = {}) {
       items.map(media => media && ({
         ...media,
         loading: isMovingMedia[media._id] || media.loading
-      }))
-    );
+      })));
   }
   case MOVE_MEDIA_COMPLETE:
     return updatePlaylistItems(state, payload.playlistID, items =>
-      processMove(items, payload.medias, payload.afterID)
-    );
+      processMove(items, payload.medias, payload.afterID));
 
   case REMOVE_MEDIA_START: {
     const isRemovingMedia = indexBy(payload.medias, '_id');
@@ -410,8 +410,7 @@ export default function reduce(state = initialState, action = {}) {
       items.map(media => media && ({
         ...media,
         loading: isRemovingMedia[media._id] || media.loading
-      }))
-    );
+      })));
   }
   case REMOVE_MEDIA_COMPLETE: {
     const isRemovedMedia = indexBy(payload.removedMedia, '_id');

@@ -79,9 +79,7 @@ export function sendChat(text) {
     const mute = currentUserMuteSelector(state);
     if (mute) {
       const timeLeft = ms(mute.expiresAt - Date.now(), { long: true });
-      dispatch(log(
-        `You have been muted, and cannot chat for another ${timeLeft}.`
-      ));
+      dispatch(log(`You have been muted, and cannot chat for another ${timeLeft}.`));
       return;
     }
 

@@ -17,8 +17,7 @@ const attempt = (fn) => {
 // [1]: http://redux.js.org/docs/Glossary.html#store-enhancer
 const persistSettings = next => (reducer, initialState) => {
   const settings = attempt(() =>
-    JSON.parse(localStorage.getItem(SETTINGS_KEY))
-  );
+    JSON.parse(localStorage.getItem(SETTINGS_KEY)));
 
   const store = next(reducer, initialState);
 
@@ -29,8 +28,7 @@ const persistSettings = next => (reducer, initialState) => {
     const newSettings = store.getState().settings;
     if (!isEqual(prevSettings, newSettings)) {
       attempt(() =>
-        localStorage.setItem(SETTINGS_KEY, JSON.stringify(newSettings))
-      );
+        localStorage.setItem(SETTINGS_KEY, JSON.stringify(newSettings)));
     }
     prevSettings = newSettings;
   });

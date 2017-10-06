@@ -5,7 +5,9 @@ import DownvoteIcon from 'material-ui/svg-icons/action/thumb-down';
 import FavoriteIcon from 'material-ui/svg-icons/action/favorite';
 import UpvoteIcon from 'material-ui/svg-icons/action/thumb-up';
 
-const Votes = ({ muiTheme, upvote, downvote, favorite, ...props }) => (
+const Votes = ({
+  muiTheme, upvote, downvote, favorite, ...props
+}) => (
   <div {...props}>
     {favorite && (
       <FavoriteIcon

@@ -1,5 +1,5 @@
-const Buffer = require('buffer').Buffer;
-const env = require('gulp-util').env;
+const { Buffer } = require('buffer');
+const { env } = require('gulp-util');
 const concat = require('concat-stream');
 const explain = require('explain-error');
 const ytSource = require('u-wave-source-youtube');
@@ -21,10 +21,12 @@ function tryRequire(file, message) {
 
 function loadDevModules() {
   require('babel-register');
-  const uwave = tryRequire('u-wave-core/src/index.js',
+  const uwave = tryRequire(
+    'u-wave-core/src/index.js',
     'Could not find the u-wave core module. Did you run `npm install u-wave-core`?'
   );
-  const createWebApi = tryRequire('u-wave-api-v1/src/index.js',
+  const createWebApi = tryRequire(
+    'u-wave-api-v1/src/index.js',
     'Could not find the u-wave API module. Did you run `npm install u-wave-api-v1`?'
   );
 
@@ -32,10 +34,12 @@ function loadDevModules() {
 }
 
 function loadProdModules() {
-  const uwave = tryRequire('u-wave-core',
+  const uwave = tryRequire(
+    'u-wave-core',
     'Could not find the u-wave core module. Did you run `npm install u-wave-core`?'
   );
-  const createWebApi = tryRequire('u-wave-api-v1',
+  const createWebApi = tryRequire(
+    'u-wave-api-v1',
     'Could not find the u-wave API module. Did you run `npm install u-wave-api-v1`?'
   );
 
@@ -49,9 +53,10 @@ function start() {
   const port = env.port || 6042;
   const watch = env.watch || false;
 
-  const modules = watch ? loadDevModules() : loadProdModules();
-  const uwave = modules.uwave;
-  const createWebApi = modules.createWebApi;
+  const {
+    uwave,
+    createWebApi
+  } = watch ? loadDevModules() : loadProdModules();
 
   const uw = uwave(config);
 

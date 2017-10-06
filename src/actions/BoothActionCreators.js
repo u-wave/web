@@ -27,7 +27,9 @@ export function advance(nextBooth) {
   if (!nextBooth || !nextBooth.historyID) {
     return advanceToEmpty();
   }
-  const { media, userID, historyID, playlistID, playedAt } = nextBooth;
+  const {
+    media, userID, historyID, playlistID, playedAt
+  } = nextBooth;
   return (dispatch, getState) => {
     const user = usersSelector(getState())[userID];
     dispatch({

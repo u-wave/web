@@ -14,7 +14,7 @@ const userTarget = {
   },
   drop(props, monitor, component) {
     const insertAfter = !isDraggingNearTopOfRow(monitor, component);
-    const position = component.props.position;
+    const { position } = component.props;
     return { position: insertAfter ? position + 1 : position };
   }
 };
@@ -48,13 +48,13 @@ class ModRow extends React.Component {
 
     const dropIndicator = <div className="WaitlistRow-drop-indicator" />;
 
-    return connectDropTarget(
+    return connectDropTarget((
       <div>
         {isOver && insertAbove && dropIndicator}
         <ModRowBase {...props} />
         {isOver && !insertAbove && dropIndicator}
       </div>
-    );
+    ));
   }
 }
 

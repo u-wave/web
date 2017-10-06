@@ -25,15 +25,17 @@ const store = createStore(
   ),
 );
 
-const qs = parseQS(location.search.slice(1));
+const qs = parseQS(window.location.search.slice(1));
 store.dispatch(setResetKey(key || qs.key));
 
 createLocale('en').then((locale) => {
-  ReactDOM.render((
-    <HotContainer>
-      <Provider store={store}>
-        <App locale={locale} />
-      </Provider>
-    </HotContainer>
-  ), document.querySelector('#app'));
+  ReactDOM.render(
+    (
+      <HotContainer>
+        <Provider store={store}>
+          <App locale={locale} />
+        </Provider>
+      </HotContainer>
+    ), document.querySelector('#app')
+  );
 });

@@ -8,8 +8,8 @@ import MediaRow from '../../MediaList/Row';
 const mediaTarget = {
   drop(props, monitor, component) {
     const item = monitor.getItem();
-    if (item.media) {
-      const media = item.media;
+    const { media } = item;
+    if (media) {
       const thisID = props.media._id;
       // Do not attempt to move when the selection is dropped on top of an item
       // that is in the selection.
@@ -58,13 +58,13 @@ class PlaylistItemRow extends React.Component {
 
     const dropIndicator = <div className="PlaylistItemRow-drop-indicator" />;
 
-    return connectDropTarget(
+    return connectDropTarget((
       <div className="PlaylistItemRow">
         {isOver && insertingAbove && dropIndicator}
         <MediaRow {...props} />
         {isOver && !insertingAbove && dropIndicator}
       </div>
-    );
+    ));
   }
 }
 

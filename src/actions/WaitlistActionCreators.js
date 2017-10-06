@@ -98,7 +98,9 @@ export function leftWaitlist({ userID, waitlist }) {
   };
 }
 
-export function movedInWaitlist({ userID, moderatorID, position, waitlist }) {
+export function movedInWaitlist({
+  userID, moderatorID, position, waitlist
+}) {
   return (dispatch) => {
     dispatch({
       type: WAITLIST_MOVE,

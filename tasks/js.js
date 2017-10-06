@@ -1,8 +1,7 @@
 const gulp = require('gulp');
 const sourcemaps = require('gulp-sourcemaps');
-const relative = require('path').relative;
-const colors = require('gulp-util').colors;
-const log = require('gulp-util').log;
+const { relative } = require('path');
+const { colors, log } = require('gulp-util');
 const babel = require('gulp-babel');
 const yaml = require('gulp-yaml');
 const newer = require('gulp-newer');
@@ -46,18 +45,17 @@ gulp.task('js:locales', () =>
       /* eslint-disable no-param-reassign */
       file.jsonText = file.contents.toString('utf-8');
       file.path = file.path.replace(/\.json$/, '.js');
-      file.contents = new Buffer(`export default ${file.jsonText};`);
+      file.contents = Buffer.from(`export default ${file.jsonText};`);
       /* eslint-enable no-param-reassign */
       cb(null, file);
     }))
     .pipe(gulp.dest('es/locale'))
     .pipe(through.obj((file, enc, cb) => {
       // eslint-disable-next-line no-param-reassign
-      file.contents = new Buffer(`module.exports = ${file.jsonText};`);
+      file.contents = Buffer.from(`module.exports = ${file.jsonText};`);
       cb(null, file);
     }))
-    .pipe(gulp.dest('lib/locale'))
-);
+    .pipe(gulp.dest('lib/locale')));
 
 gulp.task('js:babel', [ 'js:locales' ], () => {
   // We'll always compile this in production mode so other people using the

@@ -24,15 +24,15 @@ const PlaylistImport = ({
   const forms = [];
   const sources = getAllMediaSources();
   Object.keys(sources).forEach((sourceType) => {
-    const ImportForm = sources[sourceType].ImportForm;
+    const { ImportForm } = sources[sourceType];
     if (ImportForm) {
-      forms.push(
+      forms.push((
         <ImportForm
           key={sourceType}
           onShowImportPanel={() => onShowImportPanel(sourceType)}
           onHideImportPanel={onHideImportPanel}
         />
-      );
+      ));
     }
   });
 

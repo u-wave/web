@@ -85,9 +85,7 @@ export default class Uwave {
       { mediaSources: this.sources, socketUrl: this.options.socketUrl }
     );
 
-    const localePromise = createLocale(
-      languageSelector(this.store.getState())
-    );
+    const localePromise = createLocale(languageSelector(this.store.getState()));
 
     if (this.jwt) {
       this.store.dispatch(setJWT(this.jwt));

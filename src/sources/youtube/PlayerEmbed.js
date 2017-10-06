@@ -26,7 +26,9 @@ export default class YouTubePlayerEmbed extends React.Component {
   };
 
   render() {
-    const { active, media, seek, volume, controllable } = this.props;
+    const {
+      active, media, seek, volume, controllable
+    } = this.props;
 
     return (
       <YouTube

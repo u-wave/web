@@ -6,27 +6,23 @@ import ErrorArea, { errorThemeSelector } from '../../../src/components/ErrorArea
 
 describe('<ErrorArea />', () => {
   it('should not show if there is no error', () => {
-    expect(
-      shallow(
-        <ErrorArea
-          error={null}
-          onDismiss={() => {}}
-        />,
-        { context: testUtils.context }
-      ).dive().childAt(0)
-    ).to.have.prop('open', false);
+    expect(shallow(
+      <ErrorArea
+        error={null}
+        onDismiss={() => {}}
+      />,
+      { context: testUtils.context }
+    ).dive().childAt(0)).to.have.prop('open', false);
   });
 
   it('should open if there is an error', () => {
-    expect(
-      shallow(
-        <ErrorArea
-          error="Something is WRONG!"
-          onDismiss={() => {}}
-        />,
-        { context: testUtils.context }
-      ).dive().childAt(0)
-    ).to.have.prop('open', true);
+    expect(shallow(
+      <ErrorArea
+        error="Something is WRONG!"
+        onDismiss={() => {}}
+      />,
+      { context: testUtils.context }
+    ).dive().childAt(0)).to.have.prop('open', true);
   });
 
   it('uses the error notification palette overrides', () => {
@@ -41,12 +37,14 @@ describe('<ErrorArea />', () => {
   it('closes when user clicks anywhere on the page', () => {
     const spy = sinon.spy();
 
-    const area = shallow((
-      <ErrorArea
-        error="Message"
-        onDismiss={spy}
-      />
-    ), { context: testUtils.context }).dive();
+    const area = shallow(
+      (
+        <ErrorArea
+          error="Message"
+          onDismiss={spy}
+        />
+      ), { context: testUtils.context }
+    ).dive();
 
     area.childAt(0).prop('onRequestClose').call();
 

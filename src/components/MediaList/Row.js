@@ -49,6 +49,12 @@ class Row extends React.Component {
     this.props.connectDragPreview(getEmptyImage());
   }
 
+  handleKeyPress = (event) => {
+    if (event.code === 'Space') {
+      this.props.onClick();
+    }
+  };
+
   handleDoubleClick = () => {
     this.props.onOpenPreviewMediaDialog(this.props.media);
   };
@@ -73,16 +79,15 @@ class Row extends React.Component {
       // search result
       : media.duration;
 
-    return connectDragSource(
+    return connectDragSource((
       // Bit uneasy about this, but turning the entire row into a button seems
       // wrong as well! Since we nest media action <button>s inside it, too.
       //
       // eslint-disable-next-line jsx-a11y/no-static-element-interactions
       <div
         className={cx('MediaListRow', className, selectedClass, loadingClass)}
-        onMouseEnter={this.handleMouseEnter}
-        onMouseLeave={this.handleMouseLeave}
         onDoubleClick={this.handleDoubleClick}
+        onKeyPress={this.handleKeyPress}
         onClick={onClick}
       >
         {media.loading ? (
@@ -106,7 +111,7 @@ class Row extends React.Component {
           makeActions={makeActions}
         />
       </div>
-    );
+    ));
   }
 }
 

@@ -1,5 +1,5 @@
 const gulp = require('gulp');
-const env = require('gulp-util').env;
+const { env } = require('gulp-util');
 const del = require('del');
 const runSeq = require('run-sequence');
 
@@ -11,12 +11,10 @@ gulp.task('set-watching', () => {
 });
 
 gulp.task('css:clean', () =>
-  del([ 'public/app_*.css' ])
-);
+  del([ 'public/app_*.css' ]));
 
 gulp.task('clean', () =>
-  del([ 'public/', 'es/', 'lib/' ])
-);
+  del([ 'public/', 'es/', 'lib/' ]));
 
 gulp.task('start', (cb) => {
   runSeq('set-watching', 'serve', cb);

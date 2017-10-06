@@ -28,9 +28,7 @@ register(
         return dispatch(log('Provide a user to promote or demote.'));
       }
       if (!(role in roleNames)) {
-        return dispatch(log(
-          `Provide a role to promote ${username} to. [user, special, moderator, manager, admin]`
-        ));
+        return dispatch(log(`Provide a role to promote ${username} to. [user, special, moderator, manager, admin]`));
       }
       const user = findUser(
         userListSelector(getState()),

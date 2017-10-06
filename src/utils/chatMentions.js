@@ -11,9 +11,7 @@ export { groupMentions };
  */
 export function getAvailableGroupMentions(user) {
   if (user) {
-    return Object.keys(groupMentions).filter(
-      mention => user.role >= groupMentions[mention].role
-    );
+    return Object.keys(groupMentions).filter(mention => user.role >= groupMentions[mention].role);
   }
   return [];
 }

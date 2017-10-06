@@ -21,7 +21,9 @@ const mapDispatchToProps = {
 
 const enhance = connect(mapStateToProps, mapDispatchToProps);
 
-const PasswordResetApp = ({ muiTheme, locale, success, ...props }) => (
+const PasswordResetApp = ({
+  muiTheme, locale, success, ...props
+}) => (
   <MuiThemeProvider muiTheme={muiTheme}>
     <I18nextProvider i18n={locale}>
       <div>
