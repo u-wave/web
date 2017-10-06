@@ -51,7 +51,7 @@
     "react-markdown": "^2.4.5",
     "react-redux": "^5.0.6",
     "react-transition-group": "^1.2.0",
-    "recompose": "^0.25.1",
+    "recompose": "^0.26.0",
     "reconnecting-websocket": "^3.2.2",
     "redux": "^3.7.2",
     "redux-batched-subscribe": "^0.1.6",
