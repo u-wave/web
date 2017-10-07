@@ -2,7 +2,7 @@ import * as path from 'path';
 import * as defaultFs from 'fs';
 import trumpet from 'trumpet';
 import router from 'router';
-import serveStatic from 'serve-static';
+import serveStatic from 'connect-gzip-static';
 
 function injectConfig(transform, config) {
   transform.select('#u-wave-config')
