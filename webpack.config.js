@@ -67,6 +67,8 @@ const plugins = [
 ];
 
 if (nodeEnv === 'production') {
+  const CompressionPlugin = require('compression-webpack-plugin');
+  const brotli = require('brotli/compress');
   const {
     LoaderOptionsPlugin,
     optimize: {
@@ -76,6 +78,8 @@ if (nodeEnv === 'production') {
   } = require('webpack');
   const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
   const CommonShakePlugin = require('webpack-common-shake').Plugin;
+
+  const compressible = /\.(js|css|svg|mp3)$/;
 
   plugins.push(
     new OccurrenceOrderPlugin(),
@@ -94,7 +98,26 @@ if (nodeEnv === 'production') {
         }
       }
     }),
-    new ModuleConcatenationPlugin()
+    new ModuleConcatenationPlugin(),
+    // Add Gzip-compressed files.
+    new CompressionPlugin({
+      test: compressible,
+      asset: '[path].gz[query]',
+      algorithm: 'gzip'
+    }),
+    // Add Brotli-compressed files.
+    new CompressionPlugin({
+      test: compressible,
+      asset: '[path].br[query]',
+      algorithm(buffer, opts, cb) {
+        const result = brotli(buffer);
+        if (result) {
+          cb(null, Buffer.from(result));
+        } else {
+          cb(null, buffer);
+        }
+      }
+    })
   );
 }
 
