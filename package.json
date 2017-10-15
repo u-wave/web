@@ -18,6 +18,7 @@
     "array-findindex": "^0.1.0",
     "classnames": "^2.2.4",
     "connect-gzip-static": "^2.1.1",
+    "crop-url": "^1.0.0",
     "debug": "^3.1.0",
     "deepmerge": "^2.0.0",
     "escape-string-regexp": "^1.0.3",
