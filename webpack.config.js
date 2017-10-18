@@ -46,14 +46,13 @@ const plugins = [
   ]),
   new HtmlPlugin({
     chunks: [ 'app' ],
-    inject: false,
     template: './index.html',
+    title: 'üWave',
     minify: nodeEnv === 'production' ? htmlMinifierOptions : false,
     loadingScreen: () => require('./tasks/utils/renderLoadingScreen')()
   }),
   new HtmlPlugin({
     chunks: [ 'passwordReset' ],
-    inject: false,
     template: './password-reset.html',
     filename: 'password-reset.html',
     title: 'Reset Password',
@@ -78,6 +77,7 @@ if (nodeEnv === 'production') {
   } = require('webpack');
   const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
   const CommonShakePlugin = require('webpack-common-shake').Plugin;
+  const SriPlugin = require('webpack-subresource-integrity');
 
   const compressible = /\.(js|css|svg|mp3)$/;
 
@@ -117,6 +117,9 @@ if (nodeEnv === 'production') {
           cb(null, buffer);
         }
       }
+    }),
+    new SriPlugin({
+      hashFuncNames: [ 'sha512' ]
     })
   );
 }
@@ -176,7 +179,8 @@ module.exports = {
   output: {
     publicPath: '/',
     path: path.join(__dirname, 'public'),
-    filename: nodeEnv === 'production' ? '[name]_[chunkhash:7].js' : '[name]_dev.js'
+    filename: nodeEnv === 'production' ? '[name]_[chunkhash:7].js' : '[name]_dev.js',
+    crossOriginLoading: 'anonymous'
   },
   plugins,
   module: {
