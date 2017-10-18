@@ -119,7 +119,7 @@ if (nodeEnv === 'production') {
       }
     }),
     new SriPlugin({
-      hashFuncNames: ['sha384']
+      hashFuncNames: [ 'sha512' ]
     })
   );
 }
