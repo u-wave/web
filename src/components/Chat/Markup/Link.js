@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import truncate from 'truncate-url';
+import shortenUrl from 'shorten-url';
 
 const Link = ({ children, href, ...props }) => (
   <a
@@ -10,7 +10,7 @@ const Link = ({ children, href, ...props }) => (
     rel="noopener noreferrer"
     {...props}
   >
-    {truncate(children, 60)}
+    {shortenUrl(children, 60)}
   </a>
 );
 
