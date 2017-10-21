@@ -85,6 +85,7 @@ uwave:
     title: Wachtlijst
     join: Join Wachtlijst
     leave: Verlaat Wachtlijst
+    leaveConfirm: Weet je zeker dat je de wachtlijst wilt verlaten?
 
   votes:
     upvote: Upvoten
