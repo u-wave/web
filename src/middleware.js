@@ -52,5 +52,8 @@ export default function uwaveWebClient(uw, options = {}) {
         .pipe(transform)
         .pipe(res);
     })
+    .get('/u-wave-web-config.json', (req, res) => {
+      res.json(clientOptions);
+    })
     .use(serveStatic(basePath));
 }
