@@ -4,6 +4,7 @@ import { translate } from 'react-i18next';
 import IconButton from 'material-ui/IconButton';
 import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 import PromptDialog from '../Dialogs/PromptDialog';
+import DialogCloseAnimation from '../DialogCloseAnimation';
 
 const changeNameButtonStyle = {
   padding: 2,
@@ -65,16 +66,18 @@ class ChangeUsernameButton extends React.Component {
             hoverColor="#fff"
           />
         </IconButton>
-        {this.state.changingUsername && (
-          <PromptDialog
-            title={t('settings.profile.username.change')}
-            submitLabel={t('settings.profile.username.save')}
-            icon={<EditIcon color="#777" />}
-            value={initialUsername}
-            onSubmit={this.handleSubmit}
-            onCancel={this.handleClose}
-          />
-        )}
+        <DialogCloseAnimation delay={450}>
+          {this.state.changingUsername && (
+            <PromptDialog
+              title={t('settings.profile.username.change')}
+              submitLabel={t('settings.profile.username.save')}
+              icon={<EditIcon color="#777" />}
+              value={initialUsername}
+              onSubmit={this.handleSubmit}
+              onCancel={this.handleClose}
+            />
+          )}
+        </DialogCloseAnimation>
       </span>
     );
   }

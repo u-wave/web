@@ -6,6 +6,7 @@ import { updateMedia } from '../actions/PlaylistActionCreators';
 import { closeEditMediaDialog } from '../actions/DialogActionCreators';
 import { editMediaDialogSelector } from '../selectors/dialogSelectors';
 import EditMediaDialog from '../components/Dialogs/EditMediaDialog';
+import DialogCloseAnimation from '../components/DialogCloseAnimation';
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   onUpdateMedia: updateMedia,
@@ -16,50 +17,13 @@ const DIALOG_ANIMATION_DURATION = 450; // ms
 
 const enhance = connect(editMediaDialogSelector, mapDispatchToProps);
 
-class UnmountAfterCloseAnimation extends React.Component {
-  static propTypes = {
-    children: PropTypes.element,
-    delay: PropTypes.number.isRequired
-  };
-
-  state = {
-    children: this.props.children
-  };
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.children) {
-      clearTimeout(this.timeout);
-      this.setState({
-        children: nextProps.children
-      });
-    }
-    if (this.state.children && !nextProps.children) {
-      this.setState({
-        children: React.cloneElement(this.props.children, {
-          open: false
-        })
-      });
-
-      this.timeout = setTimeout(() => {
-        this.setState({
-          children: null
-        });
-      }, this.props.delay);
-    }
-  }
-
-  render() {
-    return this.state.children || null;
-  }
-}
-
 const EditMediaDialogContainer = ({
   onUpdateMedia,
   playlistID,
   media,
   ...props
 }) => (
-  <UnmountAfterCloseAnimation delay={DIALOG_ANIMATION_DURATION}>
+  <DialogCloseAnimation delay={DIALOG_ANIMATION_DURATION}>
     {media && (
       <EditMediaDialog
         {...props}
@@ -67,7 +31,7 @@ const EditMediaDialogContainer = ({
         onEditedMedia={update => onUpdateMedia(playlistID, media._id, update)}
       />
     )}
-  </UnmountAfterCloseAnimation>
+  </DialogCloseAnimation>
 );
 
 EditMediaDialogContainer.propTypes = {
