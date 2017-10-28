@@ -17,6 +17,7 @@ export default class PromptDialog extends React.Component {
     inputType: PropTypes.string,
     icon: PropTypes.node,
     value: PropTypes.string,
+    open: PropTypes.bool,
 
     bodyClassName: PropTypes.string,
     contentClassName: PropTypes.string,
@@ -28,7 +29,8 @@ export default class PromptDialog extends React.Component {
 
   static defaultProps = {
     submitLabel: 'OK',
-    inputType: 'text'
+    inputType: 'text',
+    open: true
   };
 
   state = {
@@ -86,7 +88,6 @@ export default class PromptDialog extends React.Component {
         bodyClassName={cx('Dialog-body', bodyClassName)}
         titleClassName={cx('Dialog-title', titleClassName)}
         onRequestClose={this.handleClose}
-        open
       >
         <Form onSubmit={this.handleSubmit}>
           {children}
