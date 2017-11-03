@@ -211,7 +211,13 @@ export default function middleware({ url = defaultUrl() } = {}) {
     }
 
     return next => (action) => {
-      const { type, payload } = action;
+      const { type, payload, error } = action;
+
+      if (error) {
+        next(action);
+        return;
+      }
+
       switch (type) {
       case SOCKET_RECONNECT:
         if (socket) {
