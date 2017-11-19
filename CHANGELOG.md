@@ -1,3 +1,21 @@
+# 1.0.0 / 19 Nov 2017
+
+Features:
+
+ * Compress web client files ahead of time. (#766)
+ * Add subresource integrity. (#772)
+ * Expose client configuration as a separate JSON endpoint. (#774)
+
+Bugfixes:
+
+ * Fix user cards opening slowly near window edge. (#769)
+ * Fix socket authentication after it failed the first time. (#776)
+ * Fix `enhance` on ConnectionIndicator. (3d94458b)
+
+Internal:
+
+ * Update dependencies.
+
 # 1.0.0-beta.18 / 02 Nov 2017
 
 Features:
