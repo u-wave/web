@@ -49,7 +49,7 @@
     "react-i18next": "^6.0.6",
     "react-list": "^0.8.7",
     "react-list-lazy-load": "^1.1.0",
-    "react-markdown": "^2.4.5",
+    "react-markdown": "^3.0.0",
     "react-redux": "^5.0.6",
     "react-transition-group": "^1.2.0",
     "recompose": "^0.26.0",
