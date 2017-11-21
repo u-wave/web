@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 import BaseMarkdown from 'react-markdown';
 
 const Markdown = ({ source }) => (
-  <BaseMarkdown source={source} />
+  <BaseMarkdown
+    escapeHtml={false}
+    source={source}
+  />
 );
 
 Markdown.propTypes = {
