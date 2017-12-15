@@ -83,7 +83,7 @@ class PlaylistsMenu extends React.Component {
             maxHeight={MENU_HEIGHT}
             width={MENU_WIDTH}
             autoWidth={false}
-            onItemTouchTap={this.handleSelect}
+            onItemClick={this.handleSelect}
           >
             <MenuItem
               style={menuItemStyle}
