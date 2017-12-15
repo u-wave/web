@@ -11,7 +11,7 @@ const SkipReasonsList = ({
   reasons,
   onSelect
 }) => (
-  <Menu onItemTouchTap={(event, item) => onSelect(item.props.value)}>
+  <Menu onItemClick={(event, item) => onSelect(item.props.value)}>
     {reasons.map(reason => (
       <MenuItem
         key={reason.name}
