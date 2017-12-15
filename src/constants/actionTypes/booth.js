@@ -1,4 +1,5 @@
 export const ADVANCE = 'booth/ADVANCE';
+export const BOOTH_SKIP = 'booth/SKIP';
 export const LOAD_HISTORY_START = 'booth/LOAD_HISTORY_START';
 export const LOAD_HISTORY_COMPLETE = 'booth/LOAD_HISTORY_COMPLETE';
 

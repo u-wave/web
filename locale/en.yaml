@@ -29,6 +29,10 @@ uwave:
     userJoin: "{{username}} joined the room"
     userLeave: "{{username}} left the room"
     userNameChanged: "{{username}} changed their nickname to {{newUsername}}"
+    modSkip: "{{username}} skipped {{djName}}'s turn"
+    modSkipReason: "{{username}} skipped {{djName}}'s turn: {{reason}}"
+    selfSkip: "{{username}} skipped their turn"
+    selfSkipReason: "{{username}} skipped their turn: {{reason}}"
 
   dialogs:
     confirm:

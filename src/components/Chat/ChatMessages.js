@@ -5,6 +5,7 @@ import Message from './Message';
 import JoinMessage from './NotificationMessages/JoinMessage';
 import LeaveMessage from './NotificationMessages/LeaveMessage';
 import NameChangedMessage from './NotificationMessages/NameChangedMessage';
+import SkipMessage from './NotificationMessages/SkipMessage';
 import Motd from './Motd';
 import ScrollDownNotice from './ScrollDownNotice';
 
@@ -12,7 +13,8 @@ const specialTypes = {
   log: LogMessage,
   userJoin: JoinMessage,
   userLeave: LeaveMessage,
-  userNameChanged: NameChangedMessage
+  userNameChanged: NameChangedMessage,
+  skip: SkipMessage
 };
 
 export default class ChatMessages extends React.Component {

@@ -1,4 +1,5 @@
 import {
+  BOOTH_SKIP,
   USER_JOIN,
   USER_LEAVE,
   CHANGE_USERNAME
@@ -26,6 +27,15 @@ export default function reduceNotifications(state, { type, payload }) {
       _id: `userNameChanged-${payload.userID}-${payload.timestamp}`,
       user: payload.user,
       newUsername: payload.username,
+      timestamp: payload.timestamp
+    } ]);
+  case BOOTH_SKIP:
+    return state.concat([ {
+      type: 'skip',
+      _id: `skip-${payload.timestamp}`,
+      user: payload.user,
+      moderator: payload.moderator,
+      reason: payload.reason,
       timestamp: payload.timestamp
     } ]);
   default:

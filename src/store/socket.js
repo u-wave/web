@@ -16,7 +16,10 @@ import {
   DO_DOWNVOTE
 } from '../constants/actionTypes/votes';
 
-import { advance } from '../actions/BoothActionCreators';
+import {
+  advance,
+  skipped
+} from '../actions/BoothActionCreators';
 import {
   receive as chatReceive,
   removeMessage,
@@ -80,6 +83,9 @@ const actions = {
   },
   advance(booth) {
     return advance(booth);
+  },
+  skip({ userID, moderatorID, reason }) {
+    return skipped({ userID, moderatorID, reason });
   },
   favorite({ userID, historyID }) {
     return favorited({ userID, historyID });
