@@ -14,7 +14,8 @@ const initialState = {
   notifications: {
     userJoin: true,
     userLeave: true,
-    userNameChanged: true
+    userNameChanged: true,
+    skip: true
   }
 };
 

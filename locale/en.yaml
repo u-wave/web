@@ -154,6 +154,7 @@ uwave:
       userJoin: User Joins
       userLeave: User Leaves
       userNameChanged: User Changes Nickname
+      skip: A Song Is Skipped
     profile:
       username:
         change: Change Username
