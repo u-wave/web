@@ -16,6 +16,7 @@ const Menu = ({
   onCreatePlaylist,
   onSelectPlaylist,
   onSelectSearchResults,
+  onCloseSearchResults,
   onAddToPlaylist,
   showImportPanel,
   onShowImportPanel
@@ -38,6 +39,7 @@ const Menu = ({
           query={searchQuery}
           size={searchResults}
           onClick={onSelectSearchResults}
+          onClose={onCloseSearchResults}
         />
       )}
       {playlists.map(pl => (
@@ -69,6 +71,7 @@ Menu.propTypes = {
   onCreatePlaylist: PropTypes.func.isRequired,
   onSelectPlaylist: PropTypes.func.isRequired,
   onSelectSearchResults: PropTypes.func.isRequired,
+  onCloseSearchResults: PropTypes.func.isRequired,
   onAddToPlaylist: PropTypes.func.isRequired,
   onShowImportPanel: PropTypes.func.isRequired
 };

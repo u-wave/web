@@ -8,7 +8,10 @@ import {
   selectPlaylist
 } from '../actions/PlaylistActionCreators';
 import { showImportPanel } from '../actions/ImportActionCreators';
-import { showSearchResults } from '../actions/SearchActionCreators';
+import {
+  showSearchResults,
+  deleteSearch
+} from '../actions/SearchActionCreators';
 
 import {
   playlistsSelector,
@@ -36,6 +39,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onCreatePlaylist: createPlaylist,
   onSelectPlaylist: selectPlaylist,
   onSelectSearchResults: showSearchResults,
+  onCloseSearchResults: deleteSearch,
   onShowImportPanel: showImportPanel
 }, dispatch);
 

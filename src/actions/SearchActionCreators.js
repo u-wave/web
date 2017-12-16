@@ -2,7 +2,8 @@ import {
   SET_SEARCH_SOURCE,
   SHOW_SEARCH_RESULTS,
   SEARCH_START,
-  SEARCH_COMPLETE
+  SEARCH_COMPLETE,
+  SEARCH_DELETE
 } from '../constants/actionTypes/search';
 import { get } from './RequestActionCreators';
 
@@ -41,4 +42,10 @@ export function search(query) {
       payload: error
     })
   });
+}
+
+export function deleteSearch() {
+  return {
+    type: SEARCH_DELETE
+  };
 }
