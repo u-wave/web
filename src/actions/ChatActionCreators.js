@@ -3,6 +3,7 @@ import ms from 'ms';
 import splitargs from 'splitargs';
 import parseChatMarkup from 'u-wave-parse-chat-markup';
 import playMentionSound from '../utils/playMentionSound';
+import flashWindowTitle from '../utils/flashWindowTitle';
 import {
   RECEIVE_MOTD,
   SET_MOTD_START,
@@ -146,8 +147,11 @@ export function receive(message) {
       }
     });
 
-    if (isMention && settings.mentionSound) {
-      playMentionSound();
+    if (isMention) {
+      if (settings.mentionSound) {
+        playMentionSound();
+      }
+      flashWindowTitle(`💬 ${sender.username}`);
     }
   };
 }
