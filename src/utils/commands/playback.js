@@ -9,6 +9,7 @@ import {
   doUpvote,
   doDownvote
 } from '../../actions/VoteActionCreators';
+import { set as setSetting } from '../../actions/SettingsActionCreators';
 
 register(
   'volume',
@@ -38,4 +39,16 @@ register('upvote', 'Upvote the current track.', {
 
 register('downvote', 'Downvote the current track.', {
   action: () => doDownvote()
+});
+
+register('playback', 'Enable or disable playback. Syntax: "/playback on|off"', {
+  action: (type) => {
+    if (type.toLowerCase() === 'on') {
+      return setSetting('videoEnabled', true);
+    }
+    if (type.toLowerCase() === 'off') {
+      return setSetting('videoEnabled', false);
+    }
+    return log('Use "/playback on" to enable media playback or "/playback off" to disable it.');
+  }
 });
