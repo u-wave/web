@@ -2,8 +2,8 @@ import find from 'array-find';
 import ms from 'ms';
 import splitargs from 'splitargs';
 import parseChatMarkup from 'u-wave-parse-chat-markup';
+import flashDocumentTitle from 'flash-document-title';
 import playMentionSound from '../utils/playMentionSound';
-import flashWindowTitle from '../utils/flashWindowTitle';
 import {
   RECEIVE_MOTD,
   SET_MOTD_START,
@@ -151,7 +151,7 @@ export function receive(message) {
       if (settings.mentionSound) {
         playMentionSound();
       }
-      flashWindowTitle(`💬 ${sender.username}`);
+      flashDocumentTitle(`💬 ${sender.username}`);
     }
   };
 }
