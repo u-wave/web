@@ -34,7 +34,8 @@ import {
   DO_FAVORITE_COMPLETE
 } from '../constants/actionTypes/votes';
 import {
-  SEARCH_START
+  SEARCH_START,
+  SEARCH_DELETE
 } from '../constants/actionTypes/search';
 
 const initialState = {
@@ -205,6 +206,19 @@ export default function reduce(state = initialState, action = {}) {
       ...state,
       playlists: deselectAll(state.playlists),
       selectedPlaylistID: null
+    };
+  case SEARCH_DELETE:
+    // Select the active playlist when search results are closed while they
+    // were focused.
+    if (state.selectedPlaylistID) return state;
+
+    return {
+      ...state,
+      playlists: mapObj(state.playlists, playlist => ({
+        ...playlist,
+        selected: playlist.active
+      })),
+      selectedPlaylistID: state.activePlaylistID
     };
 
   case LOAD_PLAYLIST_START: {

@@ -52,3 +52,14 @@
 .PlaylistMenuRow--create {
   background-color: var(--highlight-color);
 }
+
+.PlaylistMenuRow--search {
+  cursor: default;
+}
+.PlaylistMenuRow--search .PlaylistMenuRow-count {
+  margin-right: 0;
+}
+.PlaylistMenuRow--search .PlaylistMenuRow-title {
+  flex-grow: 2;
+  cursor: pointer;
+}

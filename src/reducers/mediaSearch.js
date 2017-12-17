@@ -8,7 +8,8 @@ import {
   SET_SEARCH_SOURCE,
   SHOW_SEARCH_RESULTS,
   SEARCH_START,
-  SEARCH_COMPLETE
+  SEARCH_COMPLETE,
+  SEARCH_DELETE
 } from '../constants/actionTypes/search';
 import { IDLE, LOADING, LOADED } from '../constants/LoadingStates';
 
@@ -45,6 +46,14 @@ export default function reduce(state = initialState, action = {}) {
     return {
       ...state,
       sourceType: payload.source
+    };
+  case SEARCH_DELETE:
+    return {
+      ...state,
+      query: null,
+      loadingState: IDLE,
+      results: {},
+      showResults: false
     };
   case SELECT_PLAYLIST:
   case SHOW_IMPORT_PANEL:
