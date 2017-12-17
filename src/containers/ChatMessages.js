@@ -1,4 +1,6 @@
+import compose from 'recompose/compose';
 import { connect } from 'react-redux';
+import { withBus } from 'react-bus';
 import { createStructuredSelector } from 'reselect';
 
 import {
@@ -24,4 +26,9 @@ const mapDispatchToProps = {
   onDeleteMessage: deleteChatMessage
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ChatMessages);
+const enhance = compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  withBus()
+);
+
+export default enhance(ChatMessages);
