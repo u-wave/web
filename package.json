@@ -22,6 +22,7 @@
     "deepmerge": "^2.0.0",
     "escape-string-regexp": "^1.0.3",
     "except": "^0.1.3",
+    "flash-document-title": "^1.0.0",
     "format-duration": "^1.0.0",
     "i18next": "^10.0.3",
     "index-by": "0.0.1",
