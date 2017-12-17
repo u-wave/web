@@ -208,7 +208,10 @@ export default function reduce(state = initialState, action = {}) {
       selectedPlaylistID: null
     };
   case SEARCH_DELETE:
-    // Select the active playlist when search results are closed.
+    // Select the active playlist when search results are closed while they
+    // were focused.
+    if (state.selectedPlaylistID) return state;
+
     return {
       ...state,
       playlists: mapObj(state.playlists, playlist => ({
