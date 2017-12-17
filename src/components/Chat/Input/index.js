@@ -47,6 +47,7 @@ class ChatInput extends React.Component {
   static propTypes = {
     t: PropTypes.func.isRequired,
     onSend: PropTypes.func.isRequired,
+    onScroll: PropTypes.func.isRequired,
     mentionableUsers: PropTypes.array.isRequired,
     mentionableGroups: PropTypes.array.isRequired,
     availableEmoji: PropTypes.array.isRequired
@@ -76,6 +77,14 @@ class ChatInput extends React.Component {
         this.props.onSend(value);
       }
       this.clear();
+    }
+    if (e.key === 'PageUp') {
+      e.preventDefault();
+      this.props.onScroll(-1);
+    }
+    if (e.key === 'PageDown') {
+      e.preventDefault();
+      this.props.onScroll(1);
     }
   };
 

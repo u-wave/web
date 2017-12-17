@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
+import compose from 'recompose/compose';
+import withProps from 'recompose/withProps';
 import { connect } from 'react-redux';
+import { withBus } from 'react-bus';
 import { createStructuredSelector } from 'reselect';
 import {
   inputMessage
@@ -28,6 +31,14 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onSend: inputMessage
 }, dispatch);
 
+const enhance = compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  withBus(),
+  withProps(({ bus }) => ({
+    onScroll: direction => bus.emit('chat:scroll', direction)
+  }))
+);
+
 const ChatInputContainer = ({ isLoggedIn, ...props }) => (
   isLoggedIn
     ? <ChatInput {...props} />
@@ -38,4 +49,4 @@ ChatInputContainer.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ChatInputContainer);
+export default enhance(ChatInputContainer);

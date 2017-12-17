@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { I18nextProvider } from 'react-i18next';
+import { Provider as BusProvider } from 'react-bus';
 import { closeAll } from '../actions/OverlayActionCreators';
 import { createTimer, stopTimer } from '../actions/TickerActionCreators';
 
@@ -84,7 +85,9 @@ class AppContainer extends React.Component {
     return (
       <MuiThemeProvider muiTheme={this.props.muiTheme}>
         <I18nextProvider i18n={this.props.locale}>
-          <App {...this.props} />
+          <BusProvider>
+            <App {...this.props} />
+          </BusProvider>
         </I18nextProvider>
       </MuiThemeProvider>
     );
