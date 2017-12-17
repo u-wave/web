@@ -60,7 +60,13 @@ export default class ChatMessages extends React.Component {
 
   onExternalScroll = (direction) => {
     const el = this.container;
-    el.scrollTop += direction * 250;
+    if (direction === 'start') {
+      el.scrollTop = 0;
+    } else if (direction === 'end') {
+      el.scrollTop = el.scrollHeight;
+    } else {
+      el.scrollTop += direction * 250;
+    }
   };
 
   scrollToBottom() {

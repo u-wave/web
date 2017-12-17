@@ -86,6 +86,14 @@ class ChatInput extends React.Component {
       e.preventDefault();
       this.props.onScroll(1);
     }
+    if (e.key === 'End' && e.ctrlKey) {
+      e.preventDefault();
+      this.props.onScroll('end');
+    }
+    if (e.key === 'Home' && e.ctrlKey) {
+      e.preventDefault();
+      this.props.onScroll('start');
+    }
   };
 
   handleUpdate = (newValue) => {
