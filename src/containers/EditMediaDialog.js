@@ -2,12 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import TransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import { updateMedia } from '../actions/PlaylistActionCreators';
 import { closeEditMediaDialog } from '../actions/DialogActionCreators';
-
 import { editMediaDialogSelector } from '../selectors/dialogSelectors';
 import EditMediaDialog from '../components/Dialogs/EditMediaDialog';
+import DialogCloseAnimation from '../components/DialogCloseAnimation';
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   onUpdateMedia: updateMedia,
@@ -24,11 +23,7 @@ const EditMediaDialogContainer = ({
   media,
   ...props
 }) => (
-  <TransitionGroup
-    transitionName="Dialog"
-    transitionEnterTimeout={DIALOG_ANIMATION_DURATION}
-    transitionLeaveTimeout={DIALOG_ANIMATION_DURATION}
-  >
+  <DialogCloseAnimation delay={DIALOG_ANIMATION_DURATION}>
     {media && (
       <EditMediaDialog
         {...props}
@@ -36,7 +31,7 @@ const EditMediaDialogContainer = ({
         onEditedMedia={update => onUpdateMedia(playlistID, media._id, update)}
       />
     )}
-  </TransitionGroup>
+  </DialogCloseAnimation>
 );
 
 EditMediaDialogContainer.propTypes = {
