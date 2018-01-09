@@ -31,6 +31,20 @@ const htmlMinifierOptions = {
   removeOptionalTags: true
 };
 
+const noConfigBabelLoader = {
+  loader: 'babel-loader',
+  query: {
+    babelrc: false,
+    presets: [
+      [ 'env', {
+        modules: false,
+        loose: true,
+        targets: { uglify: true }
+      } ]
+    ]
+  }
+};
+
 const extractAppCss = new ExtractTextPlugin({
   filename: '[name]_[contenthash:7].css',
   // Disable in development mode, so we can use CSS hot reloading.
@@ -207,28 +221,23 @@ module.exports = {
       },
       {
         test: /\.yaml$/,
-        use: [ require.resolve('./tasks/utils/jsonLoader'), 'yaml-loader' ]
+        use: [
+          noConfigBabelLoader,
+          require.resolve('./tasks/utils/jsonLoader'),
+          'yaml-loader'
+        ]
       },
       // JS loader for dependencies that use ES2015+:
       {
         test: /\.js$/,
         include: [
+          /url-regex/,
           /truncate-url/,
           /format-duration/
         ],
-        use: {
-          loader: 'babel-loader',
-          query: {
-            babelrc: false,
-            presets: [
-              [ 'env', {
-                modules: false,
-                loose: true,
-                targets: { uglify: true }
-              } ]
-            ]
-          }
-        }
+        use: [
+          noConfigBabelLoader
+        ]
       },
       // JS loader for our own code:
       {
