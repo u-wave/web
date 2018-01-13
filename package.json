@@ -9,7 +9,7 @@
   "jsnext:main": "es/Uwave.js",
   "module": "es/Uwave.js",
   "engines": {
-    "node": ">= 4",
+    "node": ">= 8",
     "npm": ">= 3"
   },
   "dependencies": {
