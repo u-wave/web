@@ -1,3 +1,23 @@
+# 1.1.0 / 13 Jan 2018
+
+Features:
+
+ * Add `/playback on|off` chat command to toggle media playback. (#777)
+ * Add skip notifications. (#785)
+ * Allow closing search results. (#787)
+ * Scroll chat when pressing PageUp/PageDown keys. (#788)
+ * Flash tab title when user is @-mentioned. (#789)
+
+Bugfixes:
+
+ * Remove last onTouchTap references. (#786)
+ * Fix some build steps that were emitting code that does not run in old browsers. (#791)
+ * Prevent publishing test coverage results to npm. (1a3397be784cb952dcc0a7c9f271011b467e46b5)
+
+Internal:
+
+ * Add Node 9 to CI. (#778)
+
 # 1.0.0 / 19 Nov 2017
 
 Features:
