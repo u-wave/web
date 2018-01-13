@@ -7,19 +7,10 @@ const yaml = require('gulp-yaml');
 const newer = require('gulp-newer');
 const plumber = require('gulp-plumber');
 const through = require('through2');
-const webpack = require('webpack');
-const del = require('del');
 
 const src = 'src/**/*.js';
 const destEs = 'es/';
 const destCommonjs = 'lib/';
-
-gulp.task('js:clean', () => del([
-  'public/app_*.js',
-  'public/app_*.js.map',
-  'lib/**/*.js',
-  'es/**/*.js'
-]));
 
 // Very naive Babel plugin to rewrite imports of locale YAML files to their
 // javascript versions.
@@ -97,18 +88,4 @@ gulp.task('js:babel', [ 'js:locales' ], () => {
     .on('end', () => {
       process.env.BABEL_ENV = oldEnv;
     });
-});
-
-gulp.task('webpack', () => {
-  const config = require('../webpack.config');
-
-  return new Promise((resolve, reject) => {
-    webpack(config, (err) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve();
-      }
-    });
-  });
 });
