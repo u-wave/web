@@ -1,2 +1,4 @@
 node_modules
-assets/screenshot.png
+/coverage
+/.nyc_output
+/assets/screenshot.png
