@@ -125,7 +125,7 @@
     "image-webpack-loader": "^3.4.2",
     "lodash-webpack-plugin": "^0.11.1",
     "loud-rejection": "^1.6.0",
-    "mocha": "^4.0.1",
+    "mocha": "^5.0.0",
     "nodemon": "^1.12.1",
     "nyc": "^11.2.1",
     "postcss-cssnext": "^3.0.2",
