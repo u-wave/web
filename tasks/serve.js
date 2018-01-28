@@ -1,7 +1,6 @@
 'use strict'; // eslint-disable-line strict, lines-around-directive
 
 require('loud-rejection/register');
-const path = require('path');
 const gulp = require('gulp');
 const { colors, env, log } = require('gulp-util');
 const emojione = require('u-wave-web-emojione');
@@ -49,14 +48,12 @@ const devServerTask = (done) => {
 };
 
 const apiServerTask = () => {
-  const serverPort = env.serverPort || 6042;
-
   const apiDevServer = tryResolve(
     'u-wave-api-v1/dev/u-wave-api-dev-server',
     'Could not find the u-wave API module. Did you run `npm link u-wave-api-v1`?'
   );
 
-  require(apiDevServer);
+  require(apiDevServer); // eslint-disable-line import/no-dynamic-require
 };
 
 gulp.task('apiServer', (done) => {
