@@ -31,19 +31,14 @@ function clearLine() {
 const devServerTask = (done) => {
   const serverPort = env.serverPort || 6042;
 
-  const coreDir = tryResolve(
-    'u-wave-core/src',
-    'Could not find the u-wave core module. Did you run `npm install u-wave-core`?'
-  );
-  const apiDir = tryResolve(
-    'u-wave-api-v1/src',
-    'Could not find the u-wave API module. Did you run `npm install u-wave-api-v1`?'
+  const apiDevServer = tryResolve(
+    'u-wave-api-v1/dev/u-wave-api-dev-server',
+    'Could not find the u-wave API module. Did you run `npm link u-wave-api-v1`?'
   );
   const monitor = nodemon({
-    script: './tasks/apiServer.js',
+    script: apiDevServer,
     args: [ '--port', String(serverPort), '--watch' ],
-    verbose: true,
-    watch: [ path.dirname(coreDir), path.dirname(apiDir) ]
+    verbose: true
   });
 
   monitor.once('start', done);
@@ -54,7 +49,14 @@ const devServerTask = (done) => {
 };
 
 const apiServerTask = () => {
-  require('./apiServer');
+  const serverPort = env.serverPort || 6042;
+
+  const apiDevServer = tryResolve(
+    'u-wave-api-v1/dev/u-wave-api-dev-server',
+    'Could not find the u-wave API module. Did you run `npm link u-wave-api-v1`?'
+  );
+
+  require(apiDevServer);
 };
 
 gulp.task('apiServer', (done) => {
@@ -66,7 +68,12 @@ gulp.task('apiServer', (done) => {
   }
 });
 
-gulp.task('serve', [ 'apiServer' ], (done) => {
+// pass --no-api to use an already running API server (on `localhost:${--server-port}`).
+const serveDeps = [];
+if (env.api !== false) {
+  serveDeps.push('apiServer');
+}
+gulp.task('serve', serveDeps, (done) => {
   const port = env.port || 6041;
   const serverPort = env.serverPort || 6042;
   const watch = env.watch || false;
