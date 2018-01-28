@@ -11,21 +11,23 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 const THICKNESS = {
-  large: 3.6,
-  tiny: 10
+  large: 1.6,
+  tiny: 2.6
 };
 
 const CircularProgress = ({ size = 'large' }) => (
-  <div className={cx('MuiCircularProgress', `MuiCircularProgress--${size}`)}>
-    <svg className="MuiCircularProgress-svg" viewBox="0 0 100 100">
+  <div
+    className={cx('MuiCircularProgress', `MuiCircularProgress--${size}`)}
+    role="progressbar"
+  >
+    <svg className="MuiCircularProgress-svg" viewBox="0 0 50 50">
       <circle
         className="MuiCircularProgress-circle"
-        cx={50}
-        cy={50}
-        r={50 - (THICKNESS[size] / 2)}
+        cx={25}
+        cy={25}
+        r={20}
         fill="none"
         strokeWidth={THICKNESS[size]}
-        strokeMiterlimit="20"
       />
     </svg>
   </div>
