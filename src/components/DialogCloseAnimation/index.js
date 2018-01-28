@@ -23,7 +23,7 @@ export default class DialogCloseAnimation extends React.Component {
     }
     if (this.state.children && !nextProps.children) {
       this.setState({
-        children: React.cloneElement(this.props.children, {
+        children: React.cloneElement(this.state.children, {
           open: false
         })
       });
