@@ -10,7 +10,8 @@ module.exports = function loadStaticHtmlTemplate(source) {
   const parentTemplate = require.resolve('../../src/markdown.prod.html');
 
   // Extract the likely title from the document.
-  const title = source.split(/<h1[^>]*>|<\/h1>/)[1];
+  const title = source.split(/<h1[^>]*>|<\/h1>/)[1]
+    .replace(/<.*?>/g, '').trim(); // strip html tags
 
   fs.readFile(parentTemplate, 'utf8', (err, templateSource) => {
     if (err) {
