@@ -14,36 +14,37 @@ For running in the browser: something modern. The aim is to support ~IE10+ and
 other modern browsers (recent Chromes and Firefoxes, at least). If you use
 something reasonably recent and üWave doesn't work, [file a bug][]!
 
-For development: Node versions >=4 and NPM 3.x.
+The server parts of üWave require Node version >= 8.9.
 
 ## Getting Things Working
 
-Some üWave components aren't yet published to NPM, so you have to do a bit of
-manual setup.
-
-First, clone the [u-wave-core][] and [u-wave-api-v1][] repositories. In both
-directories, run `npm link`:
+To run the web client, you need an [HTTP API][u-wave-api-v1]. For development,
+follow the HTTP API development server guide. Then,
 
 ```bash
-cd ./u-wave-core
+# Make u-wave-api-v1 globally available
+cd /path/to/u-wave-api-v1
 npm link
+cd ../
 
-cd ../u-wave-api-v1
-npm link
-```
-
-The `npm link` command will create a symlink to the module in the global modules
-folder. Now, you can create symlinks to the global modules folder inside the
-`u-wave-web` folder:
-
-```bash
-cd ../u-wave-web
-npm link u-wave-core u-wave-api-v1
-# and install web client dependencies:
+git clone https://github.com/u-wave/web u-wave-web
+cd u-wave-web
 npm install
+npm link u-wave-api-v1
+npm start
 ```
 
-…and now you should be good to go!
+…and now you should be good to go! `npm start` will automatically start the
+HTTP API development server.
+
+If you are running the development server yourself, you can do:
+
+```bash
+npm start -- --no-api
+```
+
+Then it won't start a new HTTP API development server, and instead assumes
+one is already running on `localhost:6042`.
 
 ## Building
 
@@ -94,7 +95,7 @@ This is a small example üWave server on top of Express, using ReCaptcha and
 ```js
 import express from 'express';
 import uwave from 'u-wave-core';
-import createWebApi from 'u-wave-api-v1';
+import createHttpApi from 'u-wave-api-v1';
 import createWebClient from 'u-wave-web/middleware';
 import emojione from 'u-wave-web-emojione';
 
@@ -103,7 +104,7 @@ const uw = uwave({ /* Options. See the u-wave-core documentation. */ });
 
 app.listen(80);
 
-app.use('/v1', createWebApi(uw, {
+app.use('/v1', createHttpApi(uw, {
   /* Options. See the u-wave-api-v1 documentation. */
 }));
 
@@ -179,7 +180,7 @@ Start the web client and render it into a DOM element.
 **Example**
 
 ```js
-uw.renderToDOM(document.getElementById('app));
+uw.renderToDOM(document.getElementById('app'));
 ```
 
 ## License
