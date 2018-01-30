@@ -1,42 +1,20 @@
 @import "../../vars.css";
 
-:root {
-  --loader-thickness: 3.6px;
-  --loader-thickness-tiny: 10px;
-  --loader-duration: 1700ms;
-  --pi: 3.1416;
-}
-
 @keyframes rotate-progress-circle {
-  0%   { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
 @keyframes scale-progress-circle {
-  8% {
-    stroke-dasharray: 1, calc((100% - var(--loader-thickness)) * var(--pi));
-    stroke-dashoffset: 0;
+  0% {
+    stroke-dasharray: 1px, 200px;
+    stroke-dashoffset: 0px;
   }
-  50%, 58% {
-    stroke-dasharray: calc((65% - var(--loader-thickness)) * var(--pi)), calc((100% - var(--loader-thickness)) * var(--pi));
-    stroke-dashoffset: calc((25% - var(--loader-thickness)) * -var(--pi));
-  }
-  100% {
-    stroke-dasharray: calc((65% - var(--loader-thickness)) * var(--pi)), calc((100% - var(--loader-thickness)) * var(--pi));
-    stroke-dashoffset: calc((99% - var(--loader-thickness)) * -var(--pi));
-  }
-}
-@keyframes scale-progress-circle-tiny {
-  8% {
-    stroke-dasharray: 1, calc((100% - var(--loader-thickness-tiny)) * var(--pi));
-    stroke-dashoffset: 0;
-  }
-  50%, 58% {
-    stroke-dasharray: calc((65% - var(--loader-thickness-tiny)) * var(--pi)), calc((100% - var(--loader-thickness-tiny)) * var(--pi));
-    stroke-dashoffset: calc((25% - var(--loader-thickness-tiny)) * -var(--pi));
+  50% {
+    stroke-dasharray: 100px, 200px;
+    stroke-dashoffset: -15px;
   }
   100% {
-    stroke-dasharray: calc((65% - var(--loader-thickness-tiny)) * var(--pi)), calc((100% - var(--loader-thickness-tiny)) * var(--pi));
-    stroke-dashoffset: calc((99% - var(--loader-thickness-tiny)) * -var(--pi));
+    stroke-dasharray: 100px, 200px;
+    stroke-dashoffset: -120px;
   }
 }
 
@@ -49,17 +27,13 @@
 
 .MuiCircularProgress-svg {
   /* The main animation is loop 4 times. */
-  animation: rotate-progress-circle calc(var(--loader-duration) * (4 / 3)) linear infinite;
+  animation: rotate-progress-circle 1.4s linear infinite;
 }
 
 .MuiCircularProgress-circle {
-  stroke-dasharray: 1, calc((100% - 3px) * 3.141);
-  stroke-dashoffset: 0%;
+  animation: scale-progress-circle 1.4s ease-in-out infinite;
+  stroke-dasharray: 80px, 200px;
+  stroke-dashoffset: 0px;
   stroke: currentColor;
   stroke-linecap: round;
-  transition: all var(--loader-duration) cubic-bezier(0.4, 0.0, 0.2, 1);
-  animation: scale-progress-circle var(--loader-duration) cubic-bezier(0.4, 0.0, 0.2, 1) infinite;
-  @nest .MuiCircularProgress--tiny & {
-    animation-name: scale-progress-circle-tiny;
-  }
 }
