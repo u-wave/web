@@ -1,8 +1,8 @@
-export Player from './Player';
+export { default as Player } from './Player';
 
-export logo from '../../../assets/img/youtube.png';
+export { default as logo } from '../../../assets/img/youtube.png';
 
-export ImportForm from './ImportForm';
-export ImportPanel from './ImportPanel';
+export { default as ImportForm } from './ImportForm';
+export { default as ImportPanel } from './ImportPanel';
 
-export reducer from './reducer';
+export { default as reducer } from './reducer';
