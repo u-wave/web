@@ -1,3 +1,17 @@
+# 1.1.1 / 30 Jan 2018
+
+Bugfixes:
+
+ * Fix "Scroll to Bottom" button visibility. (#794)
+ * Fix dialog close animation. (#801)
+ * Fix progress spinner in Firefox. (#800)
+ * Strip HTML from static markdown page titles. (#803)
+
+Internal:
+
+ * No longer test on Node versions below v8.9. (65dea161292f89f3afc765d6eb444020bbf12c66)
+ * Move development API server to u-wave-api-v1. (#799)
+
 # 1.1.0 / 13 Jan 2018
 
 Features:
