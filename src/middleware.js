@@ -1,26 +1,9 @@
-import * as path from 'path';
-import * as defaultFs from 'fs';
-import trumpet from 'trumpet';
+import path from 'path';
+import defaultFs from 'fs';
+import hstream from 'hstream';
 import router from 'router';
 import serveStatic from 'connect-gzip-static';
-
-function injectConfig(transform, config) {
-  transform.select('#u-wave-config')
-    .createWriteStream()
-    .end(JSON.stringify(config));
-}
-
-function injectTitle(transform, title) {
-  transform.select('title')
-    .createWriteStream()
-    .end(title);
-}
-
-function injectResetKey(transform, key) {
-  transform.select('#reset-data')
-    .createWriteStream()
-    .end(key);
-}
+import gzip from 'http-gzip-maybe';
 
 export default function uwaveWebClient(uw, options = {}) {
   const {
@@ -34,22 +17,30 @@ export default function uwaveWebClient(uw, options = {}) {
 
   return clientRouter
     .get('/', (req, res) => {
-      const transform = trumpet();
-      injectTitle(transform, title);
-      injectConfig(transform, clientOptions);
+      res.setHeader('content-type', 'text/html');
+
+      const transform = hstream({
+        title,
+        '#u-wave-config': JSON.stringify(clientOptions)
+      });
 
       fs.createReadStream(path.join(basePath, 'index.html'), 'utf8')
         .pipe(transform)
+        .pipe(gzip(req, res))
         .pipe(res);
     })
     .get('/reset/:key', (req, res) => {
-      const transform = trumpet();
-      injectTitle(transform, title);
-      injectConfig(transform, { apiUrl: clientOptions.apiUrl });
-      injectResetKey(transform, req.params.key);
+      res.setHeader('content-type', 'text/html');
+
+      const transform = hstream({
+        title,
+        '#u-wave-config': JSON.stringify({ apiUrl: clientOptions.apiUrl }),
+        '#reset-data': req.params.key
+      });
 
       fs.createReadStream(path.join(basePath, 'password-reset.html'), 'utf8')
         .pipe(transform)
+        .pipe(gzip(req, res))
         .pipe(res);
     })
     .get('/u-wave-web-config.json', (req, res) => {
