@@ -33,10 +33,7 @@ class Video extends React.Component {
 
   componentDidMount() {
     if (screenfull.enabled) {
-      document.documentElement.addEventListener(
-        screenfull.raw.fullscreenchange,
-        this.handleFullscreenChange
-      );
+      screenfull.on('change', this.handleFullscreenChange);
     }
   }
 
