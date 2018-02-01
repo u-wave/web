@@ -25,6 +25,7 @@
     "flash-document-title": "^1.0.0",
     "format-duration": "^1.0.0",
     "hstream": "^1.0.1",
+    "http-gzip-maybe": "^1.0.0",
     "i18next": "^10.0.3",
     "index-by": "0.0.1",
     "is-equal-shallow": "^0.1.3",
