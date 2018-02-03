@@ -5,6 +5,7 @@ import Dialog from 'material-ui/Dialog';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 import ResetPasswordForm from './ResetPasswordForm';
+import SocialLogin from './SocialLogin';
 
 const contentStyle = {
   maxWidth: 350
@@ -15,6 +16,20 @@ const bodyStyle = {
 };
 
 const enhance = translate();
+
+const Separator = () => (
+  <p
+    style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center'
+    }}
+  >
+    <span style={{ flexGrow: 1, height: 1, background: '#777' }} />
+    <span style={{ marginLeft: 7, marginRight: 7 }}>or</span>
+    <span style={{ flexGrow: 1, height: 1, background: '#777' }} />
+  </p>
+);
 
 const LoginDialog = (props) => {
   const {
@@ -47,6 +62,12 @@ const LoginDialog = (props) => {
       onRequestClose={onCloseDialog}
       autoScrollBodyContent
     >
+      {show !== 'reset' && (
+        <React.Fragment>
+          <SocialLogin />
+          <Separator />
+        </React.Fragment>
+      )}
       {form}
     </Dialog>
   );

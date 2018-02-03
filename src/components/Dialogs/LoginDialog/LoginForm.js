@@ -84,10 +84,10 @@ class LoginForm extends React.Component {
           </Button>
         </FormGroup>
 
-        <FormGroup>
-          <a href onClick={this.handleResetPassword} className="LoginForm-forgot">
+        <FormGroup className="LoginForm-forgot">
+          <button onClick={this.handleResetPassword} className="LoginForm-forgotLink">
             Forgot Password?
-          </a>
+          </button>
         </FormGroup>
       </Form>
     );

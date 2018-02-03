@@ -1,3 +1,11 @@
+@import "../../../vars.css";
+
 .LoginForm-forgot {
+  text-align: center;
+}
+
+.LoginForm-forgotLink {
+  color: var(--link-color);
+  cursor: pointer;
   font-size: 10pt;
 }

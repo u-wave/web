@@ -198,3 +198,27 @@ export function getSocketAuthToken() {
     })
   });
 }
+
+function whenWindowClosed(window) {
+  return new Promise((resolve) => {
+    const i = setInterval(() => {
+      if (window.closed) {
+        clearInterval(i);
+        resolve();
+      }
+    }, 50);
+  });
+}
+function socialLogin(service) {
+  return (dispatch, getState) => {
+    const { apiUrl } = getState().config;
+    const loginWindow = window.open(`${apiUrl}/auth/service/${service}`);
+    return whenWindowClosed(loginWindow).then(() => {
+      // Check login state after the window closed.
+      dispatch(initState());
+    });
+  };
+}
+export function loginWithGoogle() {
+  return socialLogin('google');
+}
