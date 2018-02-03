@@ -16,6 +16,7 @@ import {
   DO_DOWNVOTE
 } from '../constants/actionTypes/votes';
 
+import { getSocketAuthToken } from '../actions/LoginActionCreators';
 import {
   advance,
   skipped
@@ -145,26 +146,30 @@ export default function middleware({ url = defaultUrl() } = {}) {
   return ({ dispatch, getState }) => {
     let socket;
     let queue = [];
-    let sentJWT = false;
+    let sentAuthToken = false;
     let opened = false;
 
     function isOpen() {
       return socket && opened;
     }
 
-    function sendJWT(jwt) {
-      socket.send(jwt);
-      sentJWT = true;
+    function sendAuthToken(tokne) {
+      socket.send(tokne);
+      sentAuthToken = true;
     }
 
     function maybeAuthenticateOnConnect(state) {
-      const { jwt } = state.auth;
-      debug('open', jwt);
-      if (jwt) {
-        sendJWT(jwt);
-      } else {
-        sentJWT = false;
-      }
+      const { user } = state.auth;
+      if (!user) return;
+      debug('open', user.id);
+
+      dispatch(getSocketAuthToken()).then(({ socketToken }) => {
+        if (socketToken) {
+          sendAuthToken(socketToken);
+        } else {
+          sentAuthToken = false;
+        }
+      });
     }
 
     function send(command, data) {
@@ -247,8 +252,8 @@ export default function middleware({ url = defaultUrl() } = {}) {
         send('vote', -1);
         break;
       case LOGIN_COMPLETE:
-        if (!sentJWT && isOpen()) {
-          sendJWT(payload.jwt);
+        if (!sentAuthToken && isOpen()) {
+          sendAuthToken(payload.socketToken);
         }
         break;
       default:

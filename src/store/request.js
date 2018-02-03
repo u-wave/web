@@ -90,7 +90,7 @@ export default function middleware(middlewareOptions = {}) {
       credentials: 'same-origin'
     };
 
-    if (token) {
+    if (token && token !== 'cookie') {
       requestOptions.headers.Authorization = `JWT ${token}`;
     }
 
