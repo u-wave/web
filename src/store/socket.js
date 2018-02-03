@@ -3,6 +3,7 @@ import WebSocket from 'reconnecting-websocket';
 
 import {
   LOGIN_COMPLETE,
+  LOGOUT_START,
   SOCKET_CONNECT,
   SOCKET_RECONNECT,
   SOCKET_DISCONNECTED,
@@ -255,6 +256,10 @@ export default function middleware({ url = defaultUrl() } = {}) {
         if (!sentAuthToken && isOpen()) {
           sendAuthToken(payload.socketToken);
         }
+        break;
+      case LOGOUT_START:
+        sentAuthToken = false;
+        send('logout', null);
         break;
       default:
         break;

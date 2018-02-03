@@ -16,7 +16,7 @@ import {
 } from '../constants/actionTypes/auth';
 import { LOAD_ALL_PLAYLISTS_START } from '../constants/actionTypes/playlists';
 import * as Session from '../utils/Session';
-import { get, post } from './RequestActionCreators';
+import { get, post, del } from './RequestActionCreators';
 import { advance, loadHistory } from './BoothActionCreators';
 import { receiveMotd } from './ChatActionCreators';
 import {
@@ -27,7 +27,7 @@ import { closeLoginDialog } from './DialogActionCreators';
 import { setUsers } from './UserActionCreators';
 import { setVoteStats } from './VoteActionCreators';
 import { setWaitList } from './WaitlistActionCreators';
-import { currentUserSelector, tokenSelector } from '../selectors/userSelectors';
+import { tokenSelector } from '../selectors/userSelectors';
 
 const debug = createDebug('uwave:actions:login');
 
@@ -164,17 +164,13 @@ function logoutComplete() {
 }
 
 export function logout() {
-  return (dispatch, getState) => {
-    const me = currentUserSelector(getState());
-    dispatch(logoutStart());
-    Session.unset();
-    if (me) {
-      dispatch(logoutComplete());
-      dispatch(socketReconnect());
-    } else {
-      dispatch(logoutComplete());
-    }
-  };
+  return del('/auth', {}, {
+    onStart: () => (dispatch) => {
+      dispatch(logoutStart());
+      Session.unset();
+    },
+    onComplete: logoutComplete
+  });
 }
 
 export function resetPassword(email) {
