@@ -7,11 +7,11 @@
 }
 
 .AppTitle-logo {
-  line-height: var(--header-height);
-  height: var(--header-height);
+  line-height: calc(var(--header-height) - 20px);
+  height: calc(var(--header-height) - 20px);
   display: flex;
   align-items: center;
-  margin-left: 10px;
+  margin: 10px 0 10px 10px;
   font-size: 0;
   flex-grow: 2;
 }
