@@ -36,8 +36,10 @@ const HeaderBar = ({
     >
       {title}
     </AppTitle>
-    <CurrentMedia className="HeaderBar-now-playing" media={media} />
-    {dj && <CurrentDJ className="HeaderBar-dj" dj={dj} />}
+    <div className="HeaderBar-nowPlaying">
+      <CurrentMedia className="HeaderBar-media" media={media} />
+      {dj && <CurrentDJ className="HeaderBar-dj" dj={dj} />}
+    </div>
     {media && (
       <Progress
         className="HeaderBar-progress"

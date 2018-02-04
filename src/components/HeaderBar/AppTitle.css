@@ -7,15 +7,18 @@
 }
 
 .AppTitle-logo {
-  line-height: var(--header-height);
-  height: var(--header-height);
-  background-image: url(../../../assets/img/logo-white.png);
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: contain;
-  margin-left: 10px;
+  line-height: calc(var(--header-height) - 20px);
+  height: calc(var(--header-height) - 20px);
+  display: flex;
+  align-items: center;
+  margin: 10px 0 10px 10px;
   font-size: 0;
   flex-grow: 2;
+}
+
+.AppTitle-logoImage {
+  max-height: 100%;
+  max-width: 100%;
 }
 
 .AppTitle-button {}

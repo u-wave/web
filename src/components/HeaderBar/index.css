@@ -5,50 +5,43 @@
 @import "./Volume.css";
 
 .HeaderBar {
-  position: relative;
+  display: flex;
   height: 100%;
   width: 100%;
   z-index: 4; /* below overlays, above video */
 }
 
 .HeaderBar-title {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 240px;
   margin: 0;
+  flex-shrink: 0;
 }
 
 .HeaderBar-volume {
-  position: absolute;
-  right: var(--header-height);
   top: 0;
+  flex-shrink: 0;
   width: 200px;
   padding: 15px;
 }
 
 .HeaderBar-history {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
   width: var(--header-height);
+  height: var(--header-height);
+  flex-shrink: 0;
   background: #111;
 }
 
-.HeaderBar-now-playing {
-  position: absolute;
-  top: 5px;
-  left: 250px;
-  right: calc(200px + var(--header-height));
+.HeaderBar-nowPlaying {
+  flex-grow: 1;
+  flex-shrink: 1;
+  overflow: hidden;
+}
+
+.HeaderBar-media {
+  margin-top: 5px;
   line-height: 25px;
 }
 
 .HeaderBar-dj {
-  position: absolute;
-  top: 30px;
-  left: 250px;
-  right: 200px;
   font-size: 80%;
   color: var(--muted-text-color);
 }
