@@ -8,6 +8,8 @@ import Form from '../../Form';
 import FormGroup from '../../Form/Group';
 import TextField from '../../Form/TextField';
 import Button from '../../Form/Button';
+import SocialLogin from './SocialLogin';
+import Separator from './Separator';
 
 const enhance = translate();
 
@@ -54,6 +56,8 @@ class LoginForm extends React.Component {
     return (
       <Form className="LoginForm" onSubmit={this.handleSubmit}>
         {error && <FormGroup>{error.message}</FormGroup>}
+        <SocialLogin />
+        <Separator />
         <FormGroup>
           <TextField
             ref={this.refEmail}

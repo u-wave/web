@@ -1,0 +1,16 @@
+.LoginMethodSeparator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.LoginMethodSeparator-line {
+  flex-grow: 1;
+  height: 1px;
+  background: #777;
+}
+
+.LoginMethodSeparator-label {
+  margin-left: 7px;
+  margin-right: 7px;
+}
