@@ -17,6 +17,7 @@ class LoginForm extends React.Component {
   static propTypes = {
     t: PropTypes.func.isRequired,
     error: PropTypes.object,
+    supportsSocialAuth: PropTypes.bool,
     onLogin: PropTypes.func,
     onOpenResetPasswordDialog: PropTypes.func
   };
@@ -50,14 +51,18 @@ class LoginForm extends React.Component {
   };
 
   render() {
-    const { t, error } = this.props;
+    const { t, error, supportsSocialAuth } = this.props;
     const { busy } = this.state;
 
     return (
       <Form className="LoginForm" onSubmit={this.handleSubmit}>
         {error && <FormGroup>{error.message}</FormGroup>}
-        <SocialLogin />
-        <Separator />
+        {supportsSocialAuth && (
+          <React.Fragment>
+            <SocialLogin />
+            <Separator />
+          </React.Fragment>
+        )}
         <FormGroup>
           <TextField
             ref={this.refEmail}

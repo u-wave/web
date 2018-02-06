@@ -4,6 +4,7 @@ import {
   SOCKET_CONNECT,
   SOCKET_RECONNECT,
 
+  AUTH_STRATEGIES,
   REGISTER_START,
   REGISTER_COMPLETE,
   LOGIN_START,
@@ -39,6 +40,13 @@ export function socketReconnect() {
   return { type: SOCKET_RECONNECT };
 }
 
+export function setAuthenticationStrategies(strategies) {
+  return {
+    type: AUTH_STRATEGIES,
+    payload: { strategies }
+  };
+}
+
 export function loginComplete({ token, socketToken, user }) {
   return (dispatch) => {
     dispatch({
@@ -62,6 +70,7 @@ export function loadedState(state) {
     if (state.motd) {
       dispatch(receiveMotd(state.motd));
     }
+    dispatch(setAuthenticationStrategies(state.authStrategies));
     dispatch(setUsers(state.users || []));
     dispatch(setPlaylists(state.playlists || []));
     dispatch(setWaitList({

@@ -2,7 +2,7 @@ import assign from 'object-assign';
 import { createSelector } from 'reselect';
 import { reCaptchaSiteKeySelector } from './configSelectors';
 import { volumeSelector } from './settingSelectors';
-import { authErrorSelector } from './userSelectors';
+import { authErrorSelector, supportsSocialAuthSelector } from './userSelectors';
 
 const baseSelector = state => state.dialogs;
 
@@ -12,10 +12,12 @@ export const loginDialogSelector = createSelector(
   baseSelector,
   authErrorSelector,
   reCaptchaSiteKeySelector,
-  (dialogs, error, siteKey) => assign(merge(dialogs.login), {
+  supportsSocialAuthSelector,
+  (dialogs, error, siteKey, supportsSocialAuth) => assign(merge(dialogs.login), {
     error,
     useReCaptcha: !!siteKey,
-    reCaptchaSiteKey: siteKey || null
+    reCaptchaSiteKey: siteKey || null,
+    supportsSocialAuth
   })
 );
 

@@ -11,6 +11,14 @@ export const authErrorSelector = createSelector(authSelector, auth => auth.error
 export const currentUserSelector = createSelector(authSelector, auth => auth.user);
 export const isLoggedInSelector = createSelector(currentUserSelector, Boolean);
 export const tokenSelector = createSelector(authSelector, auth => auth.token);
+export const authStrategiesSelector = createSelector(authSelector, auth => auth.strategies);
+export function supportsAuthStrategy(name) {
+  return createSelector(authStrategiesSelector, strategies => strategies.indexOf(name) !== -1);
+}
+export const supportsSocialAuthSelector = createSelector(
+  supportsAuthStrategy('google'),
+  (...support) => support.some(Boolean)
+);
 
 const currentRoleSelector = createSelector(
   currentUserSelector,
