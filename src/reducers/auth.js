@@ -1,4 +1,5 @@
 import {
+  AUTH_STRATEGIES,
   RESET_PASSWORD_COMPLETE,
   REGISTER_COMPLETE,
   LOGIN_COMPLETE, SET_TOKEN,
@@ -9,7 +10,8 @@ import {
 } from '../constants/actionTypes/users';
 
 const initialState = {
-  jwt: null,
+  strategies: [ 'local' ],
+  token: null,
   user: null,
   error: null
 };
@@ -17,41 +19,46 @@ const initialState = {
 export default function reduce(state = initialState, action = {}) {
   const { type, payload, error: isError } = action;
   switch (type) {
+  case AUTH_STRATEGIES:
+    return {
+      ...state,
+      strategies: payload.strategies
+    };
   case RESET_PASSWORD_COMPLETE:
     return isError ? {
       ...state,
-      jwt: payload.jwt,
+      token: payload.token,
       user: null,
       error: payload
     } : {
       ...state,
-      jwt: payload.jwt,
+      token: payload.token,
       user: null,
       error: null
     };
   case SET_TOKEN:
     return {
       ...state,
-      jwt: payload.jwt,
+      token: payload.token,
       user: null,
       error: null
     };
   case LOGIN_COMPLETE:
     return isError ? {
       ...state,
-      jwt: null,
+      token: null,
       user: null,
       error: payload
     } : {
       ...state,
-      jwt: payload.jwt,
+      token: payload.token,
       user: payload.user,
       error: null
     };
   case REGISTER_COMPLETE:
     return {
       ...state,
-      jwt: null,
+      token: null,
       user: null,
       error: payload
     };

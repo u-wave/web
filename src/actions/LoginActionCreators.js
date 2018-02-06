@@ -4,6 +4,7 @@ import {
   SOCKET_CONNECT,
   SOCKET_RECONNECT,
 
+  AUTH_STRATEGIES,
   REGISTER_START,
   REGISTER_COMPLETE,
   LOGIN_START,
@@ -16,7 +17,7 @@ import {
 } from '../constants/actionTypes/auth';
 import { LOAD_ALL_PLAYLISTS_START } from '../constants/actionTypes/playlists';
 import * as Session from '../utils/Session';
-import { get, post } from './RequestActionCreators';
+import { get, post, del } from './RequestActionCreators';
 import { advance, loadHistory } from './BoothActionCreators';
 import { receiveMotd } from './ChatActionCreators';
 import {
@@ -27,7 +28,7 @@ import { closeLoginDialog } from './DialogActionCreators';
 import { setUsers } from './UserActionCreators';
 import { setVoteStats } from './VoteActionCreators';
 import { setWaitList } from './WaitlistActionCreators';
-import { currentUserSelector, tokenSelector } from '../selectors/userSelectors';
+import { tokenSelector } from '../selectors/userSelectors';
 
 const debug = createDebug('uwave:actions:login');
 
@@ -39,11 +40,22 @@ export function socketReconnect() {
   return { type: SOCKET_RECONNECT };
 }
 
-export function loginComplete({ jwt, user }) {
+export function setAuthenticationStrategies(strategies) {
+  return {
+    type: AUTH_STRATEGIES,
+    payload: { strategies }
+  };
+}
+
+export function loginComplete({ token, socketToken, user }) {
   return (dispatch) => {
     dispatch({
       type: LOGIN_COMPLETE,
-      payload: { jwt, user }
+      payload: {
+        token,
+        socketToken,
+        user
+      }
     });
     dispatch(closeLoginDialog());
   };
@@ -58,6 +70,7 @@ export function loadedState(state) {
     if (state.motd) {
       dispatch(receiveMotd(state.motd));
     }
+    dispatch(setAuthenticationStrategies(state.authStrategies));
     dispatch(setUsers(state.users || []));
     dispatch(setPlaylists(state.playlists || []));
     dispatch(setWaitList({
@@ -72,7 +85,8 @@ export function loadedState(state) {
     if (state.user) {
       const token = tokenSelector(getState());
       dispatch(loginComplete({
-        jwt: token,
+        token,
+        socketToken: state.socketToken,
         user: state.user
       }));
     }
@@ -96,10 +110,10 @@ export function initState() {
   });
 }
 
-export function setJWT(jwt) {
+export function setSessionToken(token) {
   return {
     type: SET_TOKEN,
-    payload: { jwt }
+    payload: { token }
   };
 }
 
@@ -112,7 +126,7 @@ export function login({ email, password }) {
     onStart: loginStart,
     onComplete: res => (dispatch) => {
       Session.set(res.meta.jwt);
-      dispatch(setJWT(res.meta.jwt));
+      dispatch(setSessionToken(res.meta.jwt));
       dispatch(initState());
     },
     onError: error => ({
@@ -159,17 +173,13 @@ function logoutComplete() {
 }
 
 export function logout() {
-  return (dispatch, getState) => {
-    const me = currentUserSelector(getState());
-    dispatch(logoutStart());
-    Session.unset();
-    if (me) {
-      dispatch(logoutComplete());
-      dispatch(socketReconnect());
-    } else {
-      dispatch(logoutComplete());
-    }
-  };
+  return del('/auth', {}, {
+    onStart: () => (dispatch) => {
+      dispatch(logoutStart());
+      Session.unset();
+    },
+    onComplete: logoutComplete
+  });
 }
 
 export function resetPassword(email) {
@@ -184,4 +194,36 @@ export function resetPassword(email) {
       payload: error
     })
   });
+}
+
+export function getSocketAuthToken() {
+  return get('/auth/socket', {
+    onComplete: res => () => ({
+      socketToken: res.data.socketToken
+    })
+  });
+}
+
+function whenWindowClosed(window) {
+  return new Promise((resolve) => {
+    const i = setInterval(() => {
+      if (window.closed) {
+        clearInterval(i);
+        resolve();
+      }
+    }, 50);
+  });
+}
+function socialLogin(service) {
+  return (dispatch, getState) => {
+    const { apiUrl } = getState().config;
+    const loginWindow = window.open(`${apiUrl}/auth/service/${service}`);
+    return whenWindowClosed(loginWindow).then(() => {
+      // Check login state after the window closed.
+      dispatch(initState());
+    });
+  };
+}
+export function loginWithGoogle() {
+  return socialLogin('google');
 }

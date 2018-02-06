@@ -8,6 +8,8 @@ import Form from '../../Form';
 import FormGroup from '../../Form/Group';
 import TextField from '../../Form/TextField';
 import Button from '../../Form/Button';
+import SocialLogin from './SocialLogin';
+import Separator from './Separator';
 
 const enhance = translate();
 
@@ -15,6 +17,7 @@ class LoginForm extends React.Component {
   static propTypes = {
     t: PropTypes.func.isRequired,
     error: PropTypes.object,
+    supportsSocialAuth: PropTypes.bool,
     onLogin: PropTypes.func,
     onOpenResetPasswordDialog: PropTypes.func
   };
@@ -48,12 +51,18 @@ class LoginForm extends React.Component {
   };
 
   render() {
-    const { t, error } = this.props;
+    const { t, error, supportsSocialAuth } = this.props;
     const { busy } = this.state;
 
     return (
       <Form className="LoginForm" onSubmit={this.handleSubmit}>
         {error && <FormGroup>{error.message}</FormGroup>}
+        {supportsSocialAuth && (
+          <React.Fragment>
+            <SocialLogin />
+            <Separator />
+          </React.Fragment>
+        )}
         <FormGroup>
           <TextField
             ref={this.refEmail}
@@ -84,10 +93,10 @@ class LoginForm extends React.Component {
           </Button>
         </FormGroup>
 
-        <FormGroup>
-          <a href onClick={this.handleResetPassword} className="LoginForm-forgot">
+        <FormGroup className="LoginForm-forgot">
+          <button onClick={this.handleResetPassword} className="LoginForm-forgotLink">
             Forgot Password?
-          </a>
+          </button>
         </FormGroup>
       </Form>
     );

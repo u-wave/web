@@ -11,7 +11,7 @@ import createLocale from './locale';
 import AppContainer from './containers/App';
 import { get as readSession } from './utils/Session';
 import configureStore from './store/configureStore';
-import { initState, socketConnect, setJWT } from './actions/LoginActionCreators';
+import { initState, socketConnect, setSessionToken } from './actions/LoginActionCreators';
 import { languageSelector } from './selectors/settingSelectors';
 import * as api from './api';
 
@@ -21,13 +21,13 @@ import './utils/commands';
 export default class Uwave {
   options = {};
   sources = {};
-  jwt = null;
+  sessionToken = null;
   renderTarget = null;
   aboutPageComponent = null;
 
   constructor(options = {}, session = readSession()) {
     this.options = options;
-    this.jwt = session;
+    this.sessionToken = session;
     this.ready = new Promise((resolve) => {
       this.resolveReady = resolve;
     });
@@ -87,9 +87,9 @@ export default class Uwave {
 
     const localePromise = createLocale(languageSelector(this.store.getState()));
 
-    if (this.jwt) {
-      this.store.dispatch(setJWT(this.jwt));
-      this.jwt = null;
+    if (this.sessionToken) {
+      this.store.dispatch(setSessionToken(this.sessionToken));
+      this.sessionToken = null;
     }
 
     this.store.dispatch(socketConnect());
