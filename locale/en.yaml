@@ -175,6 +175,8 @@ uwave:
     passwordResetSent: "We've sent an email to that address with password reset instructions."
     privacyPolicy: Privacy Policy
     agree: I am at least 13 years old and accept the {{privacyPolicy}}.
+    social:
+      loginWithGoogle: Sign in with Google
   resetPassword:
     introduction: Enter a new password below.
     submit: Reset Password

@@ -149,3 +149,5 @@ uwave:
     email: E-mailadres
     password: Wachtwoord
     forgotPassword: Wachtwoord vergeten?
+    social:
+      loginWithGoogle: Aanmelden via Google
