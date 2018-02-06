@@ -47,7 +47,7 @@
     "react-dnd": "^2.5.4",
     "react-dnd-html5-backend": "^2.5.4",
     "react-dom": "^16.2.0",
-    "react-google-button": "^0.5.0",
+    "react-google-button": "^0.5.1",
     "react-hot-loader": "^3.1.1",
     "react-i18next": "^7.1.0",
     "react-list": "^0.8.7",
