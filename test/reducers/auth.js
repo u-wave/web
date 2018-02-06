@@ -6,7 +6,7 @@ import * as s from '../../src/selectors/userSelectors';
 
 const {
   loginComplete,
-  setJWT
+  setSessionToken
 } = proxyquire('../../src/actions/LoginActionCreators', {
   '../utils/Socket': { auth() {} }
 });
@@ -28,7 +28,7 @@ describe('reducers/auth', () => {
   describe('action: auth/SET_TOKEN', () => {
     const { dispatch, getState } = createStore();
     it('should set the current session token', () => {
-      dispatch(setJWT('test token'));
+      dispatch(setSessionToken('test token'));
       expect(s.tokenSelector(getState())).to.equal('test token');
     });
   });
@@ -37,7 +37,7 @@ describe('reducers/auth', () => {
     const { dispatch, getState } = createStore();
     it('should set the current user if successful', () => {
       const userObj = { _id: 'test user' };
-      dispatch(loginComplete({ jwt: 'test token', user: userObj }));
+      dispatch(loginComplete({ token: 'test token', user: userObj }));
       expect(s.tokenSelector(getState())).to.equal('test token');
       expect(s.currentUserSelector(getState())).to.eql(userObj);
       expect(s.authErrorSelector(getState())).to.be.null;
