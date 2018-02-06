@@ -18,19 +18,19 @@ The server parts of üWave require Node version >= 8.9.
 
 ## Getting Things Working
 
-To run the web client, you need an [HTTP API][u-wave-api-v1]. For development,
+To run the web client, you need an [HTTP API][u-wave-http-api]. For development,
 follow the HTTP API development server guide. Then,
 
 ```bash
-# Make u-wave-api-v1 globally available
-cd /path/to/u-wave-api-v1
+# Make u-wave-http-api globally available
+cd /path/to/u-wave-http-api
 npm link
 cd ../
 
 git clone https://github.com/u-wave/web u-wave-web
 cd u-wave-web
 npm install
-npm link u-wave-api-v1
+npm link u-wave-http-api
 npm start
 ```
 
@@ -95,7 +95,7 @@ This is a small example üWave server on top of Express, using ReCaptcha and
 ```js
 import express from 'express';
 import uwave from 'u-wave-core';
-import createHttpApi from 'u-wave-api-v1';
+import createHttpApi from 'u-wave-http-api';
 import createWebClient from 'u-wave-web/middleware';
 import emojione from 'u-wave-web-emojione';
 
@@ -104,13 +104,13 @@ const uw = uwave({ /* Options. See the u-wave-core documentation. */ });
 
 app.listen(80);
 
-app.use('/v1', createHttpApi(uw, {
-  /* Options. See the u-wave-api-v1 documentation. */
+app.use('/api', createHttpApi(uw, {
+  /* Options. See the u-wave-http-api documentation. */
 }));
 
 app.use('/assets/emoji', emojione.middleware());
 app.use('/', createWebClient(uw, {
-  apiBase: '/v1',
+  apiBase: '/api',
   emoji: emojione.emoji,
   recaptcha: { key: 'my ReCaptcha site key' },
 }));
@@ -131,14 +131,14 @@ Create a new üWave web client.
 
  * `options`
    * `options.apiBase` - Base URL to the mount point of the
-     [üWave Web API][u-wave-api-v1] to talk to.
-     Defaults to `/v1`, but it's recommended to set this explicitly.
+     [üWave Web API][u-wave-http-api] to talk to.
+     Defaults to `/api`, but it's recommended to set this explicitly.
    * `options.emoji` - An object describing the emoji that will be available in
      the chat. Keys are emoji shortcodes (without `:`), and values are image
      filenames.
    * `options.recaptcha` - An object containing ReCaptcha options used to ensure
      new user registrations are human. This option should only be passed if the
-     [Web API][u-wave-api-v1] middleware is configured to check for ReCaptcha
+     [Web API][u-wave-http-api] middleware is configured to check for ReCaptcha
      entries.
 
      * `options.recaptcha.key` - ReCaptcha site key. This can be obtained from
@@ -192,7 +192,7 @@ the [Sonics.io License][] (archive link).
 
 [üWave]: https://u-wave.github.io
 [u-wave-core]: https://github.com/u-wave/core
-[u-wave-api-v1]: https://github.com/u-wave/api-v1
+[u-wave-http-api]: https://github.com/u-wave/http-api
 [u-wave-web-emojione]: https://github.com/u-wave/u-wave-web-emojione
 
 [file a bug]: https://github.com/u-wave/web/issues

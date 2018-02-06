@@ -31,8 +31,8 @@ const devServerTask = (done) => {
   const serverPort = env.serverPort || 6042;
 
   const apiDevServer = tryResolve(
-    'u-wave-api-v1/dev/u-wave-api-dev-server',
-    'Could not find the u-wave API module. Did you run `npm link u-wave-api-v1`?'
+    'u-wave-http-api/dev/u-wave-api-dev-server',
+    'Could not find the u-wave HTTP API module. Did you run `npm link u-wave-http-api`?'
   );
   const monitor = nodemon({
     script: apiDevServer,
@@ -49,8 +49,8 @@ const devServerTask = (done) => {
 
 const apiServerTask = () => {
   const apiDevServer = tryResolve(
-    'u-wave-api-v1/dev/u-wave-api-dev-server',
-    'Could not find the u-wave API module. Did you run `npm link u-wave-api-v1`?'
+    'u-wave-http-api/dev/u-wave-api-dev-server',
+    'Could not find the u-wave HTTP API module. Did you run `npm link u-wave-http-api`?'
   );
 
   require(apiDevServer); // eslint-disable-line import/no-dynamic-require
@@ -80,7 +80,7 @@ gulp.task('serve', serveDeps, (done) => {
   const app = express();
   app.listen(port);
 
-  const apiUrl = '/v1';
+  const apiUrl = '/api';
   const socketUrl = `ws://localhost:${serverPort}`;
 
   app.use(apiUrl, proxy({ target: `http://localhost:${serverPort}/` }));

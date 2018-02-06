@@ -42,7 +42,7 @@ function rejectNonOK(response) {
 }
 
 const defaultOptions = {
-  apiUrl: '/v1'
+  apiUrl: '/api'
 };
 
 export default function middleware(middlewareOptions = {}) {
