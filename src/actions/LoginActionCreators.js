@@ -39,12 +39,12 @@ export function socketReconnect() {
   return { type: SOCKET_RECONNECT };
 }
 
-export function loginComplete({ jwt, socketToken, user }) {
+export function loginComplete({ token, socketToken, user }) {
   return (dispatch) => {
     dispatch({
       type: LOGIN_COMPLETE,
       payload: {
-        jwt,
+        token,
         socketToken,
         user
       }
@@ -76,7 +76,7 @@ export function loadedState(state) {
     if (state.user) {
       const token = tokenSelector(getState());
       dispatch(loginComplete({
-        jwt: token,
+        token,
         socketToken: state.socketToken,
         user: state.user
       }));
@@ -101,10 +101,10 @@ export function initState() {
   });
 }
 
-export function setJWT(jwt) {
+export function setSessionToken(token) {
   return {
     type: SET_TOKEN,
-    payload: { jwt }
+    payload: { token }
   };
 }
 
@@ -117,7 +117,7 @@ export function login({ email, password }) {
     onStart: loginStart,
     onComplete: res => (dispatch) => {
       Session.set(res.meta.jwt);
-      dispatch(setJWT(res.meta.jwt));
+      dispatch(setSessionToken(res.meta.jwt));
       dispatch(initState());
     },
     onError: error => ({

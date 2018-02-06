@@ -9,7 +9,7 @@ import {
 } from '../constants/actionTypes/users';
 
 const initialState = {
-  jwt: null,
+  token: null,
   user: null,
   error: null
 };
@@ -20,38 +20,38 @@ export default function reduce(state = initialState, action = {}) {
   case RESET_PASSWORD_COMPLETE:
     return isError ? {
       ...state,
-      jwt: payload.jwt,
+      token: payload.token,
       user: null,
       error: payload
     } : {
       ...state,
-      jwt: payload.jwt,
+      token: payload.token,
       user: null,
       error: null
     };
   case SET_TOKEN:
     return {
       ...state,
-      jwt: payload.jwt,
+      token: payload.token,
       user: null,
       error: null
     };
   case LOGIN_COMPLETE:
     return isError ? {
       ...state,
-      jwt: null,
+      token: null,
       user: null,
       error: payload
     } : {
       ...state,
-      jwt: payload.jwt,
+      token: payload.token,
       user: payload.user,
       error: null
     };
   case REGISTER_COMPLETE:
     return {
       ...state,
-      jwt: null,
+      token: null,
       user: null,
       error: payload
     };
