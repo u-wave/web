@@ -29,7 +29,7 @@ const initialisePlaylist = (dispatch) => {
 
 describe('reducers/playlists', () => {
   beforeEach(() => {
-    fetch.mock(/\/v1\/playlists\/\w+\/media/, {
+    fetch.mock(/\/api\/playlists\/\w+\/media/, {
       meta: {},
       data: []
     });
