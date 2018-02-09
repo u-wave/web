@@ -25,6 +25,7 @@
 .FooterBar-user {
   height: 100%;
   width: 75px;
+  flex-shrink: 0;
 }
 
 .FooterBar-next {
@@ -35,6 +36,7 @@
 
 .FooterBar-responses {
   height: 100%;
+  flex-shrink: 0;
 }
 
 .FooterBar-responses--spaced {
@@ -44,12 +46,14 @@
 .FooterBar-skip {
   height: 100%;
   padding-right: 0.5rem;
+  flex-shrink: 0;
 }
 
 .FooterBar-join {
   font-size: 12pt;
   float: right;
   display: flex;
+  flex-shrink: 0;
   align-items: center;
   justify-content: center;
   height: 100%;
