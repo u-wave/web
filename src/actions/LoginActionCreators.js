@@ -122,7 +122,8 @@ function loginStart() {
 }
 
 export function login({ email, password }) {
-  return post('/auth/login', { email, password }, {
+  const sessionType = Session.preferredSessionType();
+  return post(`/auth/login?session=${sessionType}`, { email, password }, {
     onStart: loginStart,
     onComplete: res => (dispatch) => {
       Session.set(res.meta.jwt);

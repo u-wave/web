@@ -1,4 +1,10 @@
+import cookiesEnabled from '@f/cookies-enabled';
+
 const SESSION_KEY = '_session';
+
+export function preferredSessionType() {
+  return typeof navigator !== 'undefined' && cookiesEnabled() ? 'cookie' : 'token';
+}
 
 export function set(key) {
   try {
