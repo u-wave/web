@@ -13,6 +13,7 @@
     "npm": ">= 3"
   },
   "dependencies": {
+    "@f/cookies-enabled": "^1.1.1",
     "@u-wave/react-youtube": "^0.4.0",
     "array-find": "^1.0.0",
     "array-findindex": "^0.1.0",
