@@ -73,7 +73,7 @@
     "yamlify": "^0.2.0"
   },
   "devDependencies": {
-    "autoprefixer": "^7.1.5",
+    "autoprefixer": "^8.0.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^7.1.1",
     "babel-loader": "^7.1.2",
