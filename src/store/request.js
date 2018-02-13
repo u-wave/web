@@ -1,5 +1,5 @@
 import assign from 'object-assign';
-import { stringify as stringifyQS } from 'querystring';
+import qsStringify from 'qs-stringify';
 
 import { REQUEST_START } from '../constants/actionTypes/request';
 import {
@@ -18,7 +18,7 @@ function makeUrl(path, params = {}) {
 
   if (!isEmpty(params)) {
     // heh…
-    uri += (uri.indexOf('?') !== -1 ? '&' : '?') + stringifyQS(params);
+    uri += (uri.indexOf('?') !== -1 ? '&' : '?') + qsStringify(params);
   }
 
   return uri;
