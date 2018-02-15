@@ -7,7 +7,7 @@ import gzip from 'http-gzip-maybe';
 
 export default function uwaveWebClient(uw, options = {}) {
   const {
-    basePath = path.join(__dirname, '../public'),
+    basePath = path.join(__dirname, '../../public'),
     fs = defaultFs, // Should only be used by the dev server.
     title = 'üWave',
     ...clientOptions
