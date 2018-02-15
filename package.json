@@ -118,7 +118,6 @@
     "gulp": "^3.9.1",
     "gulp-babel": "^7.0.1",
     "gulp-newer": "^1.4.0",
-    "gulp-plumber": "^1.2.0",
     "gulp-sourcemaps": "^2.6.4",
     "gulp-util": "^3.0.8",
     "gulp-yaml": "^1.0.1",
