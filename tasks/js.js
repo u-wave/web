@@ -77,6 +77,7 @@ gulp.task('js:babel', [ 'js:locales' ], () => {
     .pipe(babel({
       babelrc: false,
       plugins: [
+        'syntax-object-rest-spread',
         'transform-es2015-modules-commonjs',
         'dynamic-import-node'
       ]

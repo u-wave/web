@@ -1,8 +1,6 @@
 {
-  "presets": [
-    "stage-2"
-  ],
   "plugins": [
+    "syntax-object-rest-spread",
     "transform-export-extensions"
   ]
 }
