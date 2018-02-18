@@ -5,7 +5,6 @@ const { colors, log } = require('gulp-util');
 const babel = require('gulp-babel');
 const yaml = require('gulp-yaml');
 const newer = require('gulp-newer');
-const plumber = require('gulp-plumber');
 const through = require('through2');
 
 const src = 'src/**/*.js';
@@ -56,7 +55,6 @@ gulp.task('js:babel', [ 'js:locales' ], () => {
   process.env.BABEL_ENV = 'production';
 
   return gulp.src(src)
-    .pipe(plumber())
     .pipe(newer(destCommonjs))
     .pipe(through.obj((file, enc, cb) => {
       const path = relative(`${__dirname}/../`, file.path);
@@ -79,6 +77,7 @@ gulp.task('js:babel', [ 'js:locales' ], () => {
     .pipe(babel({
       babelrc: false,
       plugins: [
+        'syntax-object-rest-spread',
         'transform-es2015-modules-commonjs',
         'dynamic-import-node'
       ]

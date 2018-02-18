@@ -23,10 +23,12 @@ const preset = {
       // transpiled class properties.
       include: env === 'development' ? ['transform-es2015-classes'] : []
     }],
-    'stage-2',
     'react'
   ],
   plugins: [
+    'syntax-dynamic-import',
+    'transform-object-rest-spread',
+    'transform-class-properties',
     'transform-export-extensions',
     ['transform-runtime', { polyfill: false }]
   ]
