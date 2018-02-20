@@ -392,10 +392,10 @@ export function closeAddMediaMenu() {
   return { type: CLOSE_ADD_MEDIA_MENU };
 }
 
-export function addMediaStart(playlistID, media, afterID) {
+export function addMediaStart(playlistID, media, location) {
   return {
     type: ADD_MEDIA_START,
-    payload: { playlistID, media, afterID }
+    payload: { playlistID, media, location }
   };
 }
 
@@ -514,36 +514,36 @@ export function removeMedia(playlistID, items) {
   });
 }
 
-export function moveMediaStart(playlistID, items, afterID) {
+export function moveMediaStart(playlistID, items, location) {
   return {
     type: MOVE_MEDIA_START,
-    payload: { playlistID, afterID, medias: items }
+    payload: { playlistID, location, medias: items }
   };
 }
 
-export function moveMediaComplete(playlistID, items, afterID) {
+export function moveMediaComplete(playlistID, items, location) {
   return {
     type: MOVE_MEDIA_COMPLETE,
-    payload: { playlistID, afterID, medias: items }
+    payload: { playlistID, location, medias: items }
   };
 }
 
 function resolveMoveOptions(playlist = [], opts = {}) {
   if (opts.after) {
-    return opts.after;
+    return { after: opts.after };
   }
   if (opts.before) {
     for (let i = 0, l = playlist.length; i < l; i += 1) {
       if (playlist[i] && playlist[i]._id === opts.before) {
         if (i === 0) {
-          return -1;
+          return { at: 'start' };
         }
-        return playlist[i - 1]._id;
+        return { after: playlist[i - 1]._id };
       }
     }
   }
-  if (opts.at === 'start') {
-    return -1;
+  if (opts.at) {
+    return { at: opts.at };
   }
   return null;
 }
@@ -551,18 +551,19 @@ function resolveMoveOptions(playlist = [], opts = {}) {
 export function moveMedia(playlistID, medias, opts) {
   return (dispatch, getState) => {
     const playlistItems = playlistItemsSelector(getState())[playlistID];
-    const afterID = resolveMoveOptions(playlistItems, opts);
+    const location = resolveMoveOptions(playlistItems, opts);
+    console.error({ location });
 
     const items = medias.map(media => media._id);
 
-    return dispatch(put(`/playlists/${playlistID}/move`, { items, after: afterID }, {
-      onStart: () => moveMediaStart(playlistID, medias, afterID),
-      onComplete: () => moveMediaComplete(playlistID, medias, afterID),
+    return dispatch(put(`/playlists/${playlistID}/move`, { items, ...location }, {
+      onStart: () => moveMediaStart(playlistID, medias, location),
+      onComplete: () => moveMediaComplete(playlistID, medias, location),
       onError: error => ({
         type: MOVE_MEDIA_COMPLETE,
         error: true,
         payload: error,
-        meta: { playlistID, medias, afterID }
+        meta: { playlistID, medias, location }
       })
     }));
   };

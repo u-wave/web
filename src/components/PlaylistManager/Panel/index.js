@@ -12,10 +12,12 @@ import AddToPlaylistAction from '../../MediaList/Actions/AddToPlaylist';
 import RemoveFromPlaylistAction from '../../MediaList/Actions/RemoveFromPlaylist';
 import EditMediaAction from '../../MediaList/Actions/EditMedia';
 import MoveToFirstAction from '../../MediaList/Actions/MoveToFirst';
+import MoveToLastAction from '../../MediaList/Actions/MoveToLast';
 
 const makeActions = ({
   onOpenAddMediaMenu,
   onMoveToFirst,
+  onMoveToLast,
   onEditMedia,
   onRemoveFromPlaylist,
   isFiltered
@@ -32,6 +34,12 @@ const makeActions = ({
       <MoveToFirstAction
         key="first"
         onFirst={() => onMoveToFirst(media, selection)}
+      />
+    ),
+    (index === 0 && !isFiltered) && (
+      <MoveToLastAction
+        key="last"
+        onLast={() => onMoveToLast(media, selection)}
       />
     ),
     <EditMediaAction
