@@ -167,7 +167,7 @@ describe('reducers/playlists', () => {
       dispatch(a.moveMediaComplete(
         1,
         [ items[1], items[2] ],
-        8
+        { after: 8 }
       ));
 
       const selectedItemIDs = s.selectedPlaylistSelector(getState()).media
@@ -193,7 +193,7 @@ describe('reducers/playlists', () => {
       dispatch(a.moveMediaComplete(
         1,
         [ items[0], items[4] ],
-        8
+        { after: 8 }
       ));
 
       const getID = item => (item ? item._id : null);

@@ -552,7 +552,6 @@ export function moveMedia(playlistID, medias, opts) {
   return (dispatch, getState) => {
     const playlistItems = playlistItemsSelector(getState())[playlistID];
     const location = resolveMoveOptions(playlistItems, opts);
-    console.error({ location });
 
     const items = medias.map(media => media._id);
 
