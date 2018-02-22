@@ -214,3 +214,10 @@ uwave:
       actions: Actions
       unban: Unban
       noReason: No reason given.
+
+  soundcloud:
+    error:
+      template: "Failed to play this track: {{error}}"
+      network: Could not load this track.
+      decode: This media file cannot be played because the format is incorrect.
+      notFound: This track could not be found—it may be deleted.
