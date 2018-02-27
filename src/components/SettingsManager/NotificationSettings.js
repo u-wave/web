@@ -15,6 +15,9 @@ const enhance = compose(
     },
     onToggleUserNameChanged(e, value) {
       props.onSettingChange('notifications.userNameChanged', value);
+    },
+    onToggleSkip(e, value) {
+      props.onSettingChange('notifications.skip', value);
     }
   })),
   translate()
@@ -25,7 +28,8 @@ const NotificationSettings = ({
   settings,
   onToggleUserJoin,
   onToggleUserLeave,
-  onToggleUserNameChanged
+  onToggleUserNameChanged,
+  onToggleSkip
 }) => (
   <div>
     <h2 className="SettingsPanel-header">{t('settings.notifications.title')}</h2>
@@ -48,6 +52,12 @@ const NotificationSettings = ({
       toggled={settings.notifications.userNameChanged}
       onToggle={onToggleUserNameChanged}
     />
+    <Toggle
+      label={t('settings.notifications.skip')}
+      labelPosition="left"
+      toggled={settings.notifications.skip}
+      onToggle={onToggleSkip}
+    />
   </div>
 );
 
@@ -57,7 +67,8 @@ NotificationSettings.propTypes = {
   onSettingChange: PropTypes.func.isRequired, // eslint-disable-line react/no-unused-prop-types
   onToggleUserJoin: PropTypes.func.isRequired,
   onToggleUserLeave: PropTypes.func.isRequired,
-  onToggleUserNameChanged: PropTypes.func.isRequired
+  onToggleUserNameChanged: PropTypes.func.isRequired,
+  onToggleSkip: PropTypes.func.isRequired
 };
 
 export default enhance(NotificationSettings);
