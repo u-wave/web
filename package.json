@@ -148,7 +148,7 @@
     "through2": "^2.0.3",
     "u-wave-web-emojione": "^2.0.0",
     "uglifyjs-webpack-plugin": "^1.1.8",
-    "webpack": "^3.11.0",
+    "webpack": "^4.0.0",
     "webpack-common-shake": "^1.5.3",
     "webpack-dev-middleware": "^2.0.5",
     "webpack-hot-middleware": "^2.21.0",
