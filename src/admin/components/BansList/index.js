@@ -42,9 +42,9 @@ const BansList = ({
   bans,
   onUnbanUser
 }) => (
-  <div>
+  <React.Fragment>
     <Header>
-      <span>Managing Users:</span>
+      <span>Managing Bans:</span>
       <span style={{ float: 'right' }}>
         Filter User:
         <Filter />
@@ -71,7 +71,7 @@ const BansList = ({
         ))}
       </TableBody>
     </Table>
-  </div>
+  </React.Fragment>
 );
 
 BansList.propTypes = {
