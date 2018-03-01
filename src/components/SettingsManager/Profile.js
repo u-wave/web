@@ -1,19 +1,9 @@
-import muiThemeable from 'material-ui/styles/muiThemeable';
 import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import Avatar from '../Avatar';
+import UserRoles from '../UserCard/UserRoles';
 import ChangeUsernameButton from './ChangeUsernameButton';
-
-const enhance = muiThemeable();
-
-const tempRoleIDToReadableName = [
-  'User',
-  'Special',
-  'Moderator',
-  'Manager',
-  'Admin'
-];
 
 const formatJoinDate = date => new Date(date).toLocaleString([], {
   year: 'numeric',
@@ -23,19 +13,7 @@ const formatJoinDate = date => new Date(date).toLocaleString([], {
   minute: 'numeric'
 });
 
-
-const tempRoleIDToRoleName = {
-  0: 'default',
-  1: 'special',
-  2: 'moderator',
-  3: 'manager',
-  4: 'admin'
-};
-
-
-const Profile = ({
-  className, user, onChangeUsername, muiTheme
-}) => (
+const Profile = ({ className, user, onChangeUsername }) => (
   <div className={cx('SettingsPanelProfile', className)}>
     <Avatar
       className="SettingsPanelProfile-avatar"
@@ -49,9 +27,7 @@ const Profile = ({
           initialUsername={user.username}
         />
       </h2>
-      <p style={{ color: muiTheme.rankColors[tempRoleIDToRoleName[user.role]] }} className="SettingsPanelProfile-role">
-        {tempRoleIDToReadableName[user.role]}
-      </p>
+      <UserRoles roles={user.roles} />
       <p className="SettingsPanelProfile-date">
         {formatJoinDate(user.createdAt)}
       </p>
@@ -63,8 +39,7 @@ Profile.propTypes = {
   className: PropTypes.string,
   user: PropTypes.object.isRequired,
 
-  onChangeUsername: PropTypes.func.isRequired,
-  muiTheme: PropTypes.object.isRequired
+  onChangeUsername: PropTypes.func.isRequired
 };
 
-export default enhance(Profile);
+export default Profile;

@@ -9,7 +9,12 @@ const usersBaseSelector = state => state.users;
 export const usersSelector = createSelector(usersBaseSelector, base => base.users);
 
 export const authErrorSelector = createSelector(authSelector, auth => auth.error);
-export const currentUserSelector = createSelector(authSelector, auth => auth.user);
+const currentUserIDSelector = createSelector(authSelector, auth => auth.user);
+export const currentUserSelector = createSelector(
+  usersSelector,
+  currentUserIDSelector,
+  (users, userID) => users[userID]
+);
 export const isLoggedInSelector = createSelector(currentUserSelector, Boolean);
 export const tokenSelector = createSelector(authSelector, auth => auth.token);
 export const authStrategiesSelector = createSelector(authSelector, auth => auth.strategies);
