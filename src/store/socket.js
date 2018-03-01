@@ -36,6 +36,8 @@ import {
   leave as userLeave,
   changeUsername,
   changeUserRole,
+  addUserRoles,
+  removeUserRoles,
   receiveGuestCount
 } from '../actions/UserActionCreators';
 import {
@@ -140,7 +142,11 @@ const actions = {
   roleChange({ userID, role }) {
     return changeUserRole(userID, role);
   },
-  guests: receiveGuestCount
+  guests: receiveGuestCount,
+  'acl:allow': ({ userID, roles }) =>
+    addUserRoles(userID, roles),
+  'acl:disallow': ({ userID, roles }) =>
+    removeUserRoles(userID, roles)
 };
 
 export default function middleware({ url = defaultUrl() } = {}) {

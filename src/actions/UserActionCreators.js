@@ -4,6 +4,8 @@ import {
   USER_LEAVE,
   CHANGE_USERNAME,
   CHANGE_ROLE,
+  USER_ADD_ROLES,
+  USER_REMOVE_ROLES,
 
   RECEIVE_GUEST_COUNT,
 
@@ -100,5 +102,35 @@ export function changeUserRole(userID, role) {
       role,
       timestamp: Date.now()
     }
+  };
+}
+
+export function addUserRoles(userID, roles) {
+  return (dispatch, getState) => {
+    const user = usersSelector(getState())[userID];
+    return dispatch({
+      type: USER_ADD_ROLES,
+      payload: {
+        user,
+        userID,
+        roles,
+        timestamp: Date.now()
+      }
+    });
+  };
+}
+
+export function removeUserRoles(userID, roles) {
+  return (dispatch, getState) => {
+    const user = usersSelector(getState())[userID];
+    return dispatch({
+      type: USER_REMOVE_ROLES,
+      payload: {
+        user,
+        userID,
+        roles,
+        timestamp: Date.now()
+      }
+    });
   };
 }

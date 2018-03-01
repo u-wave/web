@@ -2,7 +2,9 @@ import {
   BOOTH_SKIP,
   USER_JOIN,
   USER_LEAVE,
-  CHANGE_USERNAME
+  CHANGE_USERNAME,
+  USER_ADD_ROLES,
+  USER_REMOVE_ROLES
 } from '../../constants/ActionTypes';
 
 export default function reduceNotifications(state, { type, payload }) {
@@ -27,6 +29,16 @@ export default function reduceNotifications(state, { type, payload }) {
       _id: `userNameChanged-${payload.userID}-${payload.timestamp}`,
       user: payload.user,
       newUsername: payload.username,
+      timestamp: payload.timestamp
+    } ]);
+  case USER_ADD_ROLES: // fall through
+  case USER_REMOVE_ROLES:
+    return state.concat([ {
+      type: 'roleUpdate',
+      _id: `roleUpdate-${payload.timestamp}`,
+      user: payload.user,
+      updateType: type === USER_ADD_ROLES ? 'add' : 'remove',
+      roles: payload.roles,
       timestamp: payload.timestamp
     } ]);
   case BOOTH_SKIP:
