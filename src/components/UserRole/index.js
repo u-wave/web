@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import compose from 'recompose/compose';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 import { translate } from 'react-i18next';
@@ -15,9 +16,9 @@ const UserRole = ({
 );
 
 UserRole.propTypes = {
-  t: React.PropTypes.func.isRequired,
-  muiTheme: React.PropTypes.object.isRequired,
-  roleName: React.PropTypes.string.isRequired
+  t: PropTypes.func.isRequired,
+  muiTheme: PropTypes.object.isRequired,
+  roleName: PropTypes.string.isRequired
 };
 
 export default compose(

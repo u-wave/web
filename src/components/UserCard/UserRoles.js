@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import UserRole from '../UserRole';
 
 /**
@@ -18,7 +19,7 @@ UserRoles.propTypes = {
   /**
    * The roles to display.
    */
-  roles: React.PropTypes.arrayOf(React.PropTypes.string).isRequired
+  roles: PropTypes.arrayOf(PropTypes.string).isRequired
 };
 
 export default UserRoles;
