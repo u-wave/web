@@ -2,39 +2,66 @@ import { register, findUser } from '../ChatCommands';
 import { log } from '../../actions/ChatActionCreators';
 
 import {
+  rolesSelector
+} from '../../selectors/configSelectors';
+import {
   userListSelector,
   isManagerSelector
 } from '../../selectors/userSelectors';
-import { setUserRole } from '../../actions/ModerationActionCreators';
+import {
+  addUserRole,
+  removeUserRole
+} from '../../actions/ModerationActionCreators';
 
-const roleNames = {
-  user: 0,
-  default: 0,
-  normal: 0,
-  none: 0,
-  special: 1,
-  moderator: 2,
-  mod: 2,
-  manager: 3,
-  admin: 4
-};
 register(
-  'userrole',
-  'Assign a different role to a user. Syntax: "/userrole username role"',
+  'roles',
+  'List roles.',
+  {
+    action: () => (dispatch, getState) => {
+      const roles = rolesSelector(getState());
+      return dispatch(log(Object.keys(roles).join(', ')));
+    }
+  }
+);
+
+register(
+  'addrole',
+  'Assign a role to a user. Syntax: "/addrole username role"',
   {
     guard: isManagerSelector,
     action: (username, role) => (dispatch, getState) => {
       if (!username) {
         return dispatch(log('Provide a user to promote or demote.'));
       }
-      if (!(role in roleNames)) {
-        return dispatch(log(`Provide a role to promote ${username} to. [user, special, moderator, manager, admin]`));
+      if (!role) {
+        return dispatch(log(`Provide a role to assign to ${username}. Use /roles for a full list.`));
       }
       const user = findUser(
         userListSelector(getState()),
         username
       );
-      return dispatch(setUserRole(user, roleNames[role]));
+      return dispatch(addUserRole(user, role));
+    }
+  }
+);
+
+register(
+  'removerole',
+  'Remove a role from a user. Syntax: "/removerole username role"',
+  {
+    guard: isManagerSelector,
+    action: (username, role) => (dispatch, getState) => {
+      if (!username) {
+        return dispatch(log('Provide a user to promote or demote.'));
+      }
+      if (!role) {
+        return dispatch(log(`Provide a role assign to ${username}. Use /roles for a full list.`));
+      }
+      const user = findUser(
+        userListSelector(getState()),
+        username
+      );
+      return dispatch(removeUserRole(user, role));
     }
   }
 );

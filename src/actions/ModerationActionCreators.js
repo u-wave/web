@@ -122,9 +122,23 @@ export function setUserRoleComplete(user, role) {
   };
 }
 
-export function setUserRole(user, role) {
+export function addUserRole(user, role) {
   const userID = typeof user === 'object' ? user._id : user;
-  return put(`/users/${userID}/role`, { role }, {
+  return put(`/users/${userID}/roles/${role}`, {}, {
+    onStart: () => setUserRoleStart(user, role),
+    onComplete: () => setUserRoleComplete(user, role),
+    onError: error => ({
+      type: SET_USER_ROLE_COMPLETE,
+      error: true,
+      payload: error,
+      meta: { user, role }
+    })
+  });
+}
+
+export function removeUserRole(user, role) {
+  const userID = typeof user === 'object' ? user._id : user;
+  return del(`/users/${userID}/roles/${role}`, {}, {
     onStart: () => setUserRoleStart(user, role),
     onComplete: () => setUserRoleComplete(user, role),
     onError: error => ({
