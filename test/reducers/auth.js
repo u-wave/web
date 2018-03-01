@@ -3,6 +3,7 @@ import { LOGIN_COMPLETE } from '../../src/constants/actionTypes/auth';
 import createStore from '../../src/store/configureStore';
 import * as s from '../../src/selectors/userSelectors';
 import { loginComplete, setSessionToken } from '../../src/actions/LoginActionCreators';
+import { setUsers } from '../../src/actions/UserActionCreators';
 
 describe('reducers/auth', () => {
   it('should not respond to unrelated actions', () => {
@@ -30,6 +31,7 @@ describe('reducers/auth', () => {
     const { dispatch, getState } = createStore();
     it('should set the current user if successful', () => {
       const userObj = { _id: 'test user' };
+      dispatch(setUsers([ userObj ]));
       dispatch(loginComplete({ token: 'test token', user: userObj }));
       expect(s.tokenSelector(getState())).to.equal('test token');
       expect(s.currentUserSelector(getState())).to.eql(userObj);
