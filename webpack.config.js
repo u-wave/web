@@ -1,6 +1,5 @@
 const path = require('path');
 const escapeStringRegExp = require('escape-string-regexp');
-const { DefinePlugin, ProgressPlugin } = require('webpack');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlPlugin = require('html-webpack-plugin');
@@ -52,9 +51,6 @@ const extractAppCss = new ExtractTextPlugin({
 });
 
 const plugins = [
-  new DefinePlugin({
-    'process.env': { NODE_ENV: JSON.stringify(nodeEnv) }
-  }),
   new CopyPlugin([
     { from: '../assets/favicon.ico', to: 'favicon.ico' }
   ]),
@@ -73,46 +69,36 @@ const plugins = [
     minify: nodeEnv === 'production' ? htmlMinifierOptions : false
   }),
   extractAppCss,
-  new ProgressPlugin(),
   new LodashModuleReplacementPlugin({
     paths: true
   })
 ];
 
+const optimization = {
+};
+
 if (nodeEnv === 'production') {
   const CompressionPlugin = require('compression-webpack-plugin');
   const brotli = require('brotli/compress');
-  const {
-    LoaderOptionsPlugin,
-    optimize: {
-      OccurrenceOrderPlugin,
-      ModuleConcatenationPlugin
-    }
-  } = require('webpack');
   const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-  const CommonShakePlugin = require('webpack-common-shake').Plugin;
   const SriPlugin = require('webpack-subresource-integrity');
 
   const compressible = /\.(js|css|svg|mp3)$/;
 
-  plugins.push(
-    new OccurrenceOrderPlugin(),
-    new LoaderOptionsPlugin({
-      minimize: true,
-      debug: false
-    }),
-    new CommonShakePlugin(),
-    new UglifyJsPlugin({
-      sourceMap: true,
-      uglifyOptions: {
-        toplevel: true,
-        compress: {
-          pure_getters: true,
-          unsafe: true
-        }
+  optimization.minimizer = [new UglifyJsPlugin({
+    cache: true,
+    parallel: true,
+    sourceMap: true,
+    uglifyOptions: {
+      toplevel: true,
+      compress: {
+        pure_getters: true,
+        unsafe: true
       }
-    }),
-    new ModuleConcatenationPlugin(),
+    }
+  })];
+
+  plugins.push(
     // Add Gzip-compressed files.
     new CompressionPlugin({
       test: compressible,
@@ -189,13 +175,14 @@ module.exports = {
   entry: entries,
   // Quit if there are errors.
   bail: nodeEnv === 'production',
-  devtool: nodeEnv === 'production' ? 'source-map' : 'inline-source-map',
+  mode: nodeEnv === 'production' ? 'production' : 'development',
   output: {
     publicPath: '/',
     path: path.join(__dirname, 'public'),
     filename: nodeEnv === 'production' ? '[name]_[chunkhash:7].js' : '[name]_dev.js',
     crossOriginLoading: 'anonymous'
   },
+  optimization,
   plugins,
   module: {
     rules: [
