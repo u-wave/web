@@ -21,4 +21,27 @@
 
 .PlaylistPanel--empty {
   padding: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+}
+
+.PlaylistPanel-emptyIcon {
+  color: var(--muted-text-color);
+}
+
+.PlaylistPanel-create {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  flex-flow: row;
+  width: 100%;
+}
+
+.PlaylistPanel-button, .PlaylistPanel--empty .ImportSourceBlock {
+  padding: 16px;
+  width: auto;
+  flex-grow: 1;
+  flex-basis: 0;
 }
