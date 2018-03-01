@@ -3,7 +3,6 @@ import {
   USER_JOIN,
   USER_LEAVE,
   CHANGE_USERNAME,
-  CHANGE_ROLE,
   USER_ADD_ROLES,
   USER_REMOVE_ROLES,
 
@@ -91,17 +90,6 @@ export function doChangeUsername(username) {
         meta: { username }
       })
     }));
-  };
-}
-
-export function changeUserRole(userID, role) {
-  return {
-    type: CHANGE_ROLE,
-    payload: {
-      userID,
-      role,
-      timestamp: Date.now()
-    }
   };
 }
 

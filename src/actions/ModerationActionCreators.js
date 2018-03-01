@@ -7,7 +7,8 @@ import {
   MUTE_USER_START, MUTE_USER_COMPLETE,
   UNMUTE_USER_START, UNMUTE_USER_COMPLETE,
   BAN_USER_START, BAN_USER_COMPLETE,
-  SET_USER_ROLE_START, SET_USER_ROLE_COMPLETE
+  ADD_USER_ROLES_START, ADD_USER_ROLES_COMPLETE,
+  REMOVE_USER_ROLES_START, REMOVE_USER_ROLES_COMPLETE
 } from '../constants/actionTypes/moderation';
 
 import {
@@ -108,30 +109,22 @@ export function moveWaitlistUser(user, position) {
   });
 }
 
-export function setUserRoleStart(user, role) {
-  return {
-    type: SET_USER_ROLE_START,
-    payload: { user, role }
-  };
-}
-
-export function setUserRoleComplete(user, role) {
-  return {
-    type: SET_USER_ROLE_COMPLETE,
-    payload: { user, role }
-  };
-}
-
 export function addUserRole(user, role) {
   const userID = typeof user === 'object' ? user._id : user;
   return put(`/users/${userID}/roles/${role}`, {}, {
-    onStart: () => setUserRoleStart(user, role),
-    onComplete: () => setUserRoleComplete(user, role),
+    onStart: () => ({
+      type: ADD_USER_ROLES_START,
+      payload: { user, roles: [ role ] }
+    }),
+    onComplete: () => ({
+      type: ADD_USER_ROLES_COMPLETE,
+      payload: { user, roles: [ role ] }
+    }),
     onError: error => ({
-      type: SET_USER_ROLE_COMPLETE,
+      type: ADD_USER_ROLES_COMPLETE,
       error: true,
       payload: error,
-      meta: { user, role }
+      meta: { user, roles: [ role ] }
     })
   });
 }
@@ -139,13 +132,19 @@ export function addUserRole(user, role) {
 export function removeUserRole(user, role) {
   const userID = typeof user === 'object' ? user._id : user;
   return del(`/users/${userID}/roles/${role}`, {}, {
-    onStart: () => setUserRoleStart(user, role),
-    onComplete: () => setUserRoleComplete(user, role),
+    onStart: () => ({
+      type: REMOVE_USER_ROLES_START,
+      payload: { user, roles: [ role ] }
+    }),
+    onComplete: () => ({
+      type: REMOVE_USER_ROLES_COMPLETE,
+      payload: { user, roles: [ role ] }
+    }),
     onError: error => ({
-      type: SET_USER_ROLE_COMPLETE,
+      type: REMOVE_USER_ROLES_COMPLETE,
       error: true,
       payload: error,
-      meta: { user, role }
+      meta: { user, roles: [ role ] }
     })
   });
 }

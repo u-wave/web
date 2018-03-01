@@ -10,7 +10,6 @@ import {
   USER_JOIN,
   USER_LEAVE,
   CHANGE_USERNAME,
-  CHANGE_ROLE,
   USER_ADD_ROLES,
   USER_REMOVE_ROLES,
 
@@ -61,11 +60,6 @@ function usersReducer(state = {}, action = {}) {
     return updateUser(state, payload.userID, user => ({
       ...user,
       username: payload.username
-    }));
-  case CHANGE_ROLE:
-    return updateUser(state, payload.userID, user => ({
-      ...user,
-      role: payload.role
     }));
   case USER_ADD_ROLES:
     return updateUser(state, payload.userID, user => ({

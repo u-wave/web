@@ -35,7 +35,6 @@ import {
   join as userJoin,
   leave as userLeave,
   changeUsername,
-  changeUserRole,
   addUserRoles,
   removeUserRoles,
   receiveGuestCount
@@ -138,9 +137,6 @@ const actions = {
   },
   nameChange({ userID, username }) {
     return changeUsername(userID, username);
-  },
-  roleChange({ userID, role }) {
-    return changeUserRole(userID, role);
   },
   guests: receiveGuestCount,
   'acl:allow': ({ userID, roles }) =>
