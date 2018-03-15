@@ -55,7 +55,7 @@ SearchResults.propTypes = {
   className: PropTypes.string,
   query: PropTypes.string.isRequired,
   results: PropTypes.arrayOf(PropTypes.object),
-  loadingState: PropTypes.oneOf([ IDLE, LOADING, LOADED ]).isRequired,
+  loadingState: PropTypes.oneOf([IDLE, LOADING, LOADED]).isRequired,
   onOpenAddMediaMenu: PropTypes.func.isRequired,
   onOpenPreviewMediaDialog: PropTypes.func.isRequired,
 };

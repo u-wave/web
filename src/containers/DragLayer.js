@@ -13,7 +13,7 @@ const enhance = DragLayer(monitor => ({
 
 class DragLayerContainer extends React.Component {
   static propTypes = {
-    type: PropTypes.oneOf([ MEDIA, WAITLIST_USER ]),
+    type: PropTypes.oneOf([MEDIA, WAITLIST_USER]),
     items: PropTypes.object,
     isDragging: PropTypes.bool.isRequired,
   };

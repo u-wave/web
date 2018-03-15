@@ -3,13 +3,12 @@
   "parser": "babel-eslint",
 
   "rules": {
-    "array-bracket-spacing": [ "error", "always" ],
     "new-cap": [ "error", {
       "capIsNewExceptions": [ "DragDropContext", "DragSource", "DropTarget", "DragLayer", "ThemeDecorator" ]
     } ],
     "no-underscore-dangle": ["error", { "allow": ["_id"] }],
-    "react/jsx-filename-extension": "off",
     "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
+    "react/jsx-filename-extension": "off",
     "react/no-unused-prop-types": ["error", { "skipShapeProps": true }],
     "react/forbid-prop-types": "off",
     "react/require-default-props": "off"

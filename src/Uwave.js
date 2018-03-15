@@ -96,7 +96,7 @@ export default class Uwave {
     return Promise.all([
       localePromise,
       this.store.dispatch(initState()),
-    ]).then(([ locale ]) => {
+    ]).then(([locale]) => {
       this.locale = locale;
       this.resolveReady();
     });

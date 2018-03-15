@@ -15,7 +15,7 @@ const inSelection = (selection, media) =>
 const mediaSource = {
   beginDrag({ selection, media }) {
     return {
-      media: inSelection(selection, media) ? selection : [ media ],
+      media: inSelection(selection, media) ? selection : [media],
     };
   },
 };

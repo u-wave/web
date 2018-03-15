@@ -33,7 +33,7 @@ describe('reducers/chat', () => {
 
     it('should add a message to the messages list', () => {
       const { dispatch, getState } = createStore();
-      dispatch(setUsers([ testUser ]));
+      dispatch(setUsers([testUser]));
 
       expect(s.messagesSelector(getState())).to.have.length(0);
 
@@ -45,7 +45,7 @@ describe('reducers/chat', () => {
         userID: testMessage.userID,
         user: testUser,
         text: testMessage.text,
-        parsedText: [ testMessage.text ],
+        parsedText: [testMessage.text],
         timestamp: testMessage.timestamp,
         isMention: false,
         inFlight: false,
@@ -61,7 +61,7 @@ describe('reducers/chat', () => {
       sinon.stub(userSelectors, 'currentUserSelector').returns(inFlightUser);
 
       const { dispatch, getState } = createStore();
-      dispatch(setUsers([ testUser, inFlightUser ]));
+      dispatch(setUsers([testUser, inFlightUser]));
 
       // test setup: start w/ one received message and one that's been sent but
       // is pending.
@@ -92,7 +92,7 @@ describe('reducers/chat', () => {
     const testMessage = {
       user: { _id: '643abc235' },
       message: 'Message text',
-      parsed: [ 'Message text' ],
+      parsed: ['Message text'],
     };
 
     let dateNow;
@@ -165,7 +165,7 @@ describe('reducers/chat', () => {
         expires: Date.now() + 3000,
       }));
 
-      expect(s.mutedUsersSelector(getState())).to.eql([ testUsers[0] ]);
+      expect(s.mutedUsersSelector(getState())).to.eql([testUsers[0]]);
     });
 
     it('should not process messages received from muted users', () => {

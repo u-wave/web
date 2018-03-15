@@ -12,7 +12,7 @@ const nodeEnv = process.env.NODE_ENV || 'development';
 // Compile src/ on the fly so we can use components etc. during build time.
 require('babel-register')({
   only: new RegExp(escapeStringRegExp(path.join(__dirname, 'src'))),
-  plugins: [ 'transform-es2015-modules-commonjs' ],
+  plugins: ['transform-es2015-modules-commonjs'],
 });
 
 const staticPages = {
@@ -37,11 +37,11 @@ const noConfigBabelLoader = {
   query: {
     babelrc: false,
     presets: [
-      [ 'env', {
+      ['env', {
         modules: false,
         loose: true,
         targets: { uglify: true },
-      } ],
+      }],
     ],
   },
 };
@@ -60,14 +60,14 @@ const plugins = [
     { from: '../assets/favicon.ico', to: 'favicon.ico' },
   ]),
   new HtmlPlugin({
-    chunks: [ 'app' ],
+    chunks: ['app'],
     template: './index.html',
     title: 'üWave',
     minify: nodeEnv === 'production' ? htmlMinifierOptions : false,
     loadingScreen: () => require('./tasks/utils/renderLoadingScreen')(),
   }),
   new HtmlPlugin({
-    chunks: [ 'passwordReset' ],
+    chunks: ['passwordReset'],
     template: './password-reset.html',
     filename: 'password-reset.html',
     title: 'Reset Password',
@@ -134,15 +134,15 @@ if (nodeEnv === 'production') {
       },
     }),
     new SriPlugin({
-      hashFuncNames: [ 'sha512' ],
+      hashFuncNames: ['sha512'],
     }),
   );
 }
 
 const context = path.join(__dirname, 'src');
 const entries = {
-  app: [ './app.js', './app.css' ],
-  passwordReset: [ './password-reset/app.js' ],
+  app: ['./app.js', './app.css'],
+  passwordReset: ['./password-reset/app.js'],
 };
 
 // Add static pages.
@@ -166,7 +166,7 @@ Object.keys(staticPages).forEach((name) => {
     // to find the compiled markdown when you're just in a template.
     // This could use a better alternative :p
     plugins.push(new HtmlPlugin({
-      chunks: [ name ],
+      chunks: [name],
       filename: `${name}.html`,
       template: [
         require.resolve('./tasks/utils/loadStaticHtmlTemplate'),
@@ -178,7 +178,7 @@ Object.keys(staticPages).forEach((name) => {
     }));
   } else {
     plugins.push(new HtmlPlugin({
-      chunks: [ name ],
+      chunks: [name],
       template: './markdown.dev.html',
       filename: `${name}.html`,
     }));
@@ -217,7 +217,7 @@ module.exports = {
         test: /\.css$/,
         use: extractAppCss.extract({
           fallback: 'style-loader',
-          use: [ 'css-loader', 'postcss-loader' ],
+          use: ['css-loader', 'postcss-loader'],
         }),
       },
       {

@@ -40,7 +40,7 @@ function getAllUserRoles(roles, user) {
     // Recursive Reduce!
     return roles[role].reduce(
       getSubRoles,
-      [ role, ...subRoles ],
+      [role, ...subRoles],
     );
   }
   return user.roles ? user.roles.reduce(getSubRoles, []) : [];

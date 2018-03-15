@@ -62,7 +62,7 @@ export default function reduce(state = initialState, action = {}) {
       };
       return {
         ...state,
-        messages: messages.concat([ inFlightMessage ]),
+        messages: messages.concat([inFlightMessage]),
       };
     }
     case RECEIVE_MESSAGE: {
@@ -76,7 +76,7 @@ export default function reduce(state = initialState, action = {}) {
 
       return {
         ...state,
-        messages: removeInFlightMessage(messages, message).concat([ message ]),
+        messages: removeInFlightMessage(messages, message).concat([message]),
       };
     }
     case LOG: {
@@ -87,7 +87,7 @@ export default function reduce(state = initialState, action = {}) {
       };
       return {
         ...state,
-        messages: messages.concat([ logMessage ]),
+        messages: messages.concat([logMessage]),
       };
     }
 

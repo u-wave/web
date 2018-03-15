@@ -7,7 +7,7 @@ import {
 } from '../constants/actionTypes/auth';
 
 const initialState = {
-  strategies: [ 'local' ],
+  strategies: ['local'],
   token: null,
   user: null,
   error: null,

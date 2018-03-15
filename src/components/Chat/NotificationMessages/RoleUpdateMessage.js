@@ -28,7 +28,7 @@ const RoleUpdateMessage = ({
 
 RoleUpdateMessage.propTypes = {
   user: PropTypes.object.isRequired,
-  updateType: PropTypes.oneOf([ 'add', 'remove' ]).isRequired,
+  updateType: PropTypes.oneOf(['add', 'remove']).isRequired,
   roles: PropTypes.arrayOf(PropTypes.string).isRequired,
   timestamp: PropTypes.number.isRequired,
 };

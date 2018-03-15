@@ -34,7 +34,7 @@ const YouTubePlayer = ({
 
 YouTubePlayer.propTypes = {
   className: PropTypes.string,
-  mode: PropTypes.oneOf([ 'small', 'large', 'preview' ]),
+  mode: PropTypes.oneOf(['small', 'large', 'preview']),
   active: PropTypes.bool.isRequired,
   enabled: PropTypes.bool,
   media: PropTypes.object,

@@ -37,7 +37,7 @@ const devServerTask = (done) => {
   );
   const monitor = nodemon({
     script: apiDevServer,
-    args: [ '--port', String(serverPort), '--watch' ],
+    args: ['--port', String(serverPort), '--watch'],
     verbose: true,
   });
 

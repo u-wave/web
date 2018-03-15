@@ -114,17 +114,17 @@ export function addUserRole(user, role) {
   return put(`/users/${userID}/roles/${role}`, {}, {
     onStart: () => ({
       type: ADD_USER_ROLES_START,
-      payload: { user, roles: [ role ] },
+      payload: { user, roles: [role] },
     }),
     onComplete: () => ({
       type: ADD_USER_ROLES_COMPLETE,
-      payload: { user, roles: [ role ] },
+      payload: { user, roles: [role] },
     }),
     onError: error => ({
       type: ADD_USER_ROLES_COMPLETE,
       error: true,
       payload: error,
-      meta: { user, roles: [ role ] },
+      meta: { user, roles: [role] },
     }),
   });
 }
@@ -134,17 +134,17 @@ export function removeUserRole(user, role) {
   return del(`/users/${userID}/roles/${role}`, {}, {
     onStart: () => ({
       type: REMOVE_USER_ROLES_START,
-      payload: { user, roles: [ role ] },
+      payload: { user, roles: [role] },
     }),
     onComplete: () => ({
       type: REMOVE_USER_ROLES_COMPLETE,
-      payload: { user, roles: [ role ] },
+      payload: { user, roles: [role] },
     }),
     onError: error => ({
       type: REMOVE_USER_ROLES_COMPLETE,
       error: true,
       payload: error,
-      meta: { user, roles: [ role ] },
+      meta: { user, roles: [role] },
     }),
   });
 }

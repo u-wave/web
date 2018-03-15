@@ -49,21 +49,21 @@ describe('reducers/roomHistory', () => {
     it('should normalize the loaded history entries', () => {
       const { dispatch, getState } = createStore();
       dispatch(loadHistoryComplete({
-        data: [ serverHistoryEntry ],
+        data: [serverHistoryEntry],
         included: {
-          user: [ userModel ],
-          media: [ mediaModel ],
+          user: [userModel],
+          media: [mediaModel],
         },
         meta: {
           included: {
-            media: [ 'media.media' ],
-            user: [ 'user' ],
+            media: ['media.media'],
+            user: ['user'],
           },
           offset: 0,
           total: 1,
         },
       }));
-      expect(s.roomHistorySelector(getState())).to.eql([ {
+      expect(s.roomHistorySelector(getState())).to.eql([{
         _id: '56b12b90d6bfe93733bece96',
         user: {
           _id: '563ba1e3f059363574f4d0d9',
@@ -97,7 +97,7 @@ describe('reducers/roomHistory', () => {
           upvotes: [],
         },
         timestamp: new Date('2016-02-02T22:20:00.468Z').getTime(),
-      } ]);
+      }]);
     });
   });
 
@@ -105,23 +105,23 @@ describe('reducers/roomHistory', () => {
     it('prepends a new history entry', () => {
       const { dispatch, getState } = createStore();
       dispatch(setUsers({
-        users: [ {
+        users: [{
           _id: '562b748139c99dde22c6a499',
           slug: 'reanna',
           username: 'ReAnna',
-        } ],
+        }],
       }));
 
       dispatch(loadHistoryComplete({
-        data: [ serverHistoryEntry ],
+        data: [serverHistoryEntry],
         included: {
-          user: [ userModel ],
-          media: [ mediaModel ],
+          user: [userModel],
+          media: [mediaModel],
         },
         meta: {
           included: {
-            media: [ 'media.media' ],
-            user: [ 'user' ],
+            media: ['media.media'],
+            user: ['user'],
           },
           offset: 0,
           total: 1,
@@ -159,15 +159,15 @@ describe('reducers/roomHistory', () => {
     it('works with NULL advances', () => {
       const { dispatch, getState } = createStore();
       dispatch(loadHistoryComplete({
-        data: [ serverHistoryEntry ],
+        data: [serverHistoryEntry],
         included: {
-          user: [ userModel ],
-          media: [ mediaModel ],
+          user: [userModel],
+          media: [mediaModel],
         },
         meta: {
           included: {
-            media: [ 'media.media' ],
-            user: [ 'user' ],
+            media: ['media.media'],
+            user: ['user'],
           },
           offset: 0,
           total: 1,

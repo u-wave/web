@@ -26,20 +26,20 @@ export default function reduce(state = initialState, action = {}) {
     case UPVOTE:
       return {
         ...state,
-        upvotes: [ ...state.upvotes, payload.userID ],
+        upvotes: [...state.upvotes, payload.userID],
         downvotes: state.downvotes.filter(vote => vote !== payload.userID),
       };
     case DOWNVOTE:
       return {
         ...state,
         upvotes: state.upvotes.filter(vote => vote !== payload.userID),
-        downvotes: [ ...state.downvotes, payload.userID ],
+        downvotes: [...state.downvotes, payload.userID],
       };
     case FAVORITE:
       if (state.favorites.indexOf(payload.userID) === -1) {
         return {
           ...state,
-          favorites: [ ...state.favorites, payload.userID ],
+          favorites: [...state.favorites, payload.userID],
         };
       }
       return state;

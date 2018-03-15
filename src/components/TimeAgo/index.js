@@ -10,7 +10,7 @@ import timed from '../../utils/timed';
 // then translate afterwards.
 function translateMs(str) {
   // `ms` output of the form "3 hours"
-  const [ count, key ] = str.split(' ');
+  const [count, key] = str.split(' ');
   return {
     key: `${key.replace(/s$/, '')}s`,
     count: parseInt(count, 10),

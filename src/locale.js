@@ -55,7 +55,7 @@ i18next.init({
 // Synchronously add the fallback language.
 i18next.addResourceBundle('en', 'uwave', en.uwave);
 
-export const availableLanguages = [ 'en', ...Object.keys(resources) ];
+export const availableLanguages = ['en', ...Object.keys(resources)];
 
 export default function createLocale(language) {
   const locale = i18next.cloneInstance();

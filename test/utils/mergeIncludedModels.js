@@ -5,7 +5,7 @@ describe('utils/mergeIncludedModels()', () => {
   it('merges included models as described by meta.included', () => {
     const response = {
       meta: {
-        included: { user: [ 'user' ] },
+        included: { user: ['user'] },
       },
       data: [
         { user: 1 },
@@ -30,7 +30,7 @@ describe('utils/mergeIncludedModels()', () => {
   it('can contain multiple references to the same included model', () => {
     const response = {
       meta: {
-        included: { user: [ 'user' ] },
+        included: { user: ['user'] },
       },
       data: [
         { user: 1 },
@@ -57,7 +57,7 @@ describe('utils/mergeIncludedModels()', () => {
   it('can reference included models on subkeys', () => {
     const response = {
       meta: {
-        included: { user: [ 'abc.def.ghi' ] },
+        included: { user: ['abc.def.ghi'] },
       },
       data: [
         { abc: { def: { ghi: 2 } } },

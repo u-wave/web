@@ -64,7 +64,7 @@ function usersReducer(state = {}, action = {}) {
     case USER_ADD_ROLES:
       return updateUser(state, payload.userID, user => ({
         ...user,
-        roles: [ ...user.roles, ...payload.roles ],
+        roles: [...user.roles, ...payload.roles],
       }));
     case USER_REMOVE_ROLES:
       return updateUser(state, payload.userID, user => ({

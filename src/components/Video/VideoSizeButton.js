@@ -39,7 +39,7 @@ const VideoSizeButton = ({
 
 VideoSizeButton.propTypes = {
   t: PropTypes.func.isRequired,
-  videoSize: PropTypes.oneOf([ 'small', 'large' ]).isRequired,
+  videoSize: PropTypes.oneOf(['small', 'large']).isRequired,
   onToggleVideoSize: PropTypes.func.isRequired,
 };
 

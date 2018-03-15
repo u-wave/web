@@ -10,7 +10,7 @@ const selectionOrOne = (media, selection) => {
   if (selection.isSelected(media)) {
     return selection.get();
   }
-  return [ media ];
+  return [media];
 };
 
 export default class YouTubeImportPlaylistPanel extends React.Component {

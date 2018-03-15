@@ -33,7 +33,7 @@ export default function reduce(state = initialState, action = {}) {
       if (!meta || !meta.previous) {
         return state;
       }
-      return [ normalize(meta.previous), ...state ];
+      return [normalize(meta.previous), ...state];
     }
     default:
       return state;

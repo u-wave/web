@@ -134,7 +134,7 @@ class EditMediaDialog extends React.Component {
       const artistInput = (
         <TextField
           className="EditMediaDialogGroup-field"
-          placeholder={t([ 'dialogs.editMedia.artistLabel', 'media.artist' ])}
+          placeholder={t(['dialogs.editMedia.artistLabel', 'media.artist'])}
           value={artist}
           onChange={this.handleChangeArtist}
           icon={<ArtistIcon color="#9f9d9e" />}
@@ -152,7 +152,7 @@ class EditMediaDialog extends React.Component {
       const titleInput = (
         <TextField
           className="EditMediaDialogGroup-field"
-          placeholder={t([ 'dialogs.editMedia.titleLabel', 'media.title' ])}
+          placeholder={t(['dialogs.editMedia.titleLabel', 'media.title'])}
           value={title}
           onChange={this.handleChangeTitle}
           icon={<TitleIcon color="#9f9d9e" />}

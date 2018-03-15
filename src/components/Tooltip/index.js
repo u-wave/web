@@ -16,7 +16,7 @@ class Tooltip extends React.Component {
     /**
      * Desired horizontal position of the tooltip.
      */
-    horizontalPosition: PropTypes.oneOf([ 'left', 'center', 'right' ]),
+    horizontalPosition: PropTypes.oneOf(['left', 'center', 'right']),
   };
 
   state = {

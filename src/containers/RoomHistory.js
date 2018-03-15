@@ -14,7 +14,7 @@ const selectionOrOne = (media, selection) => {
   if (selection.isSelected(media)) {
     return selection.get().map(item => item.media);
   }
-  return [ media.media ];
+  return [media.media];
 };
 
 const mapStateToProps = createStructuredSelector({

@@ -166,13 +166,13 @@ describe('reducers/playlists', () => {
 
       dispatch(a.moveMediaComplete(
         1,
-        [ items[1], items[2] ],
+        [items[1], items[2]],
         { after: 8 },
       ));
 
       const selectedItemIDs = s.selectedPlaylistSelector(getState()).media
         .map(playlistItem => playlistItem._id);
-      expect(selectedItemIDs).to.eql([ 5, 8, 6, 7, 9 ]);
+      expect(selectedItemIDs).to.eql([5, 8, 6, 7, 9]);
     });
 
     it('should move playlist items in a sparse playlist', () => {
@@ -192,7 +192,7 @@ describe('reducers/playlists', () => {
 
       dispatch(a.moveMediaComplete(
         1,
-        [ items[0], items[4] ],
+        [items[0], items[4]],
         { after: 8 },
       ));
 
