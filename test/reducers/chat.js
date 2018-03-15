@@ -1,17 +1,10 @@
 import { expect } from 'chai';
 import sinon from 'sinon';
-import proxyquire from 'proxyquire';
-
 import createStore from '../../src/store/configureStore';
 import { setUsers } from '../../src/actions/UserActionCreators';
+import * as a from '../../src/actions/ChatActionCreators';
 import * as s from '../../src/selectors/chatSelectors';
 import * as userSelectors from '../../src/selectors/userSelectors';
-
-const a = proxyquire('../../src/actions/ChatActionCreators', {
-  '../utils/Socket': {
-    sendMessage() {}
-  }
-});
 
 describe('reducers/chat', () => {
   it('should not respond to unrelated actions', () => {
