@@ -11,7 +11,6 @@
     } ],
     // Conflicts with `_id` property names returned from the üWave HTTP API
     "no-underscore-dangle": "off",
-    "global-require": "off",
     "react/jsx-filename-extension": "off",
     "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
     "react/no-unused-prop-types": ["error", { "skipShapeProps": true }],

@@ -1,3 +1,4 @@
+/* eslint-disable global-require */
 const path = require('path');
 const escapeStringRegExp = require('escape-string-regexp');
 const { DefinePlugin, ProgressPlugin } = require('webpack');

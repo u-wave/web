@@ -1,3 +1,4 @@
+/* eslint-disable global-require */
 'use strict'; // eslint-disable-line strict, lines-around-directive
 
 require('loud-rejection/register');

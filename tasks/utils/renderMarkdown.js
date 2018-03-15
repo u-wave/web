@@ -1,3 +1,4 @@
+/* eslint-disable global-require */
 const React = require('react');
 const { renderToStaticMarkup } = require('react-dom/server');
 
