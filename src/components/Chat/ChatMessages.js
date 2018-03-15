@@ -14,12 +14,12 @@ export default class ChatMessages extends React.Component {
     onDeleteMessage: PropTypes.func,
     compileOptions: PropTypes.shape({
       availableEmoji: PropTypes.array,
-      emojiImages: PropTypes.object
-    })
+      emojiImages: PropTypes.object,
+    }),
   };
 
   state = {
-    isScrolledToBottom: true
+    isScrolledToBottom: true,
   };
 
   componentDidMount() {
@@ -92,7 +92,7 @@ export default class ChatMessages extends React.Component {
 
   handleScroll = () => {
     this.setState({
-      isScrolledToBottom: this.isScrolledToBottom()
+      isScrolledToBottom: this.isScrolledToBottom(),
     });
   };
 

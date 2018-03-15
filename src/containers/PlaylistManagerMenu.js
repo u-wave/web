@@ -5,22 +5,22 @@ import { createStructuredSelector } from 'reselect';
 import {
   addMedia as addToPlaylist,
   createPlaylist,
-  selectPlaylist
+  selectPlaylist,
 } from '../actions/PlaylistActionCreators';
 import { showImportPanel } from '../actions/ImportActionCreators';
 import {
   showSearchResults,
-  deleteSearch
+  deleteSearch,
 } from '../actions/SearchActionCreators';
 
 import {
   playlistsSelector,
-  selectedPlaylistSelector
+  selectedPlaylistSelector,
 } from '../selectors/playlistSelectors';
 import {
   searchQuerySelector,
   showSearchResultsSelector,
-  searchResultsCountSelector
+  searchResultsCountSelector,
 } from '../selectors/searchSelectors';
 import { showImportPanelSelector } from '../selectors/importSelectors';
 import PlaylistsMenu from '../components/PlaylistManager/Menu';
@@ -31,7 +31,7 @@ const mapStateToProps = createStructuredSelector({
   searchQuery: searchQuerySelector,
   showSearchResults: showSearchResultsSelector,
   searchResults: searchResultsCountSelector,
-  showImportPanel: showImportPanelSelector
+  showImportPanel: showImportPanelSelector,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -40,7 +40,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onSelectPlaylist: selectPlaylist,
   onSelectSearchResults: showSearchResults,
   onCloseSearchResults: deleteSearch,
-  onShowImportPanel: showImportPanel
+  onShowImportPanel: showImportPanel,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(PlaylistsMenu);

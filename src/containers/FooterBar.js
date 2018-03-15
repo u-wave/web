@@ -5,7 +5,7 @@ import { createStructuredSelector } from 'reselect';
 import { skipSelf } from '../actions/BoothActionCreators';
 import { openLoginDialog, openRegisterDialog } from '../actions/DialogActionCreators';
 import {
-  skipCurrentDJ as modSkipCurrentDJ
+  skipCurrentDJ as modSkipCurrentDJ,
 } from '../actions/ModerationActionCreators';
 import { togglePlaylistManager, toggleSettings } from '../actions/OverlayActionCreators';
 import { joinWaitlist, leaveWaitlist } from '../actions/WaitlistActionCreators';
@@ -15,22 +15,22 @@ import {
   djSelector,
   isCurrentDJSelector,
   canSkipSelector,
-  endTimeSelector
+  endTimeSelector,
 } from '../selectors/boothSelectors';
 import {
   activePlaylistSelector,
-  nextMediaSelector
+  nextMediaSelector,
 } from '../selectors/playlistSelectors';
 import {
-  currentUserSelector
+  currentUserSelector,
 } from '../selectors/userSelectors';
 import {
   baseEtaSelector,
   userInWaitlistSelector,
-  isLockedSelector
+  isLockedSelector,
 } from '../selectors/waitlistSelectors';
 import {
-  currentVoteStatsSelector
+  currentVoteStatsSelector,
 } from '../selectors/voteSelectors';
 
 import FooterBar from '../components/FooterBar';
@@ -46,7 +46,7 @@ const mapStateToProps = createStructuredSelector({
   currentDJ: djSelector,
   showSkip: canSkipSelector,
   waitlistIsLocked: isLockedSelector,
-  voteStats: currentVoteStatsSelector
+  voteStats: currentVoteStatsSelector,
 });
 
 function mapDispatchToProps(dispatch) {
@@ -61,7 +61,7 @@ function mapDispatchToProps(dispatch) {
     onModSkip: modSkipCurrentDJ,
     onFavorite: openFavoriteMenu,
     onUpvote: doUpvote,
-    onDownvote: doDownvote
+    onDownvote: doDownvote,
   }, dispatch);
 }
 

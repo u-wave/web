@@ -12,11 +12,11 @@ class AddToPlaylistMenu extends React.Component {
     t: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
     onSelect: PropTypes.func.isRequired,
-    onCreatePlaylist: PropTypes.func.isRequired
+    onCreatePlaylist: PropTypes.func.isRequired,
   };
 
   state = {
-    creating: false
+    creating: false,
   };
 
   handleOpen = () => {

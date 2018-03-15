@@ -16,7 +16,7 @@ import './index.css';
 const enhance = compose(
   withState('newMotd', 'setMotd', props => props.motd),
   withProps(props => ({
-    parsedMotd: compile(parse(props.newMotd), props.compileOptions)
+    parsedMotd: compile(parse(props.newMotd), props.compileOptions),
   })),
   withHandlers({
     onChange: props => (event) => {
@@ -24,9 +24,9 @@ const enhance = compose(
     },
     onSubmit: props => () => {
       props.onSetMotd(props.newMotd);
-    }
+    },
   }),
-  muiThemeable()
+  muiThemeable(),
 );
 
 function autoFocus(el) {
@@ -39,7 +39,7 @@ const Motd = ({
   newMotd,
   parsedMotd,
   onChange,
-  onSubmit
+  onSubmit,
 }) => (
   <Card className="AdminMotd">
     <CardHeader
@@ -75,11 +75,11 @@ Motd.propTypes = {
   newMotd: PropTypes.string.isRequired,
   parsedMotd: PropTypes.array.isRequired,
   onChange: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired
+  onSubmit: PropTypes.func.isRequired,
 };
 
 Motd.defaultProps = {
-  canChangeMotd: false
+  canChangeMotd: false,
 };
 
 export default enhance(Motd);

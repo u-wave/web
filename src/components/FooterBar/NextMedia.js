@@ -15,7 +15,7 @@ const NextMedia = ({
   userInWaitlist,
   userIsDJ,
   baseEta,
-  mediaEndTime
+  mediaEndTime,
 }) => {
   if (!playlist) {
     return (
@@ -61,10 +61,10 @@ NextMedia.propTypes = {
   userInWaitlist: PropTypes.bool.isRequired,
   userIsDJ: PropTypes.bool.isRequired,
   baseEta: PropTypes.number,
-  mediaEndTime: PropTypes.number
+  mediaEndTime: PropTypes.number,
 };
 
 export default compose(
   translate(),
-  pure
+  pure,
 )(NextMedia);

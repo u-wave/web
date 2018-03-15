@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 import {
-  historyIDSelector, mediaSelector, startTimeSelector, djSelector
+  historyIDSelector, mediaSelector, startTimeSelector, djSelector,
 } from './boothSelectors';
 import { currentUserSelector } from './userSelectors';
 import { currentVotesSelector } from './voteSelectors';
@@ -11,7 +11,7 @@ const baseSelector = state => state.roomHistory;
 
 export const roomHistorySelector = createSelector(
   baseSelector,
-  history => history.slice().sort(byTimestamp)
+  history => history.slice().sort(byTimestamp),
 );
 
 const addOwnVoteProps = id => entry => ({
@@ -21,8 +21,8 @@ const addOwnVoteProps = id => entry => ({
     // No ID is provided for guest users.
     isDownvote: !!id && entry.stats.downvotes.indexOf(id) > -1,
     isFavorite: !!id && entry.stats.favorites.indexOf(id) > -1,
-    isUpvote: !!id && entry.stats.upvotes.indexOf(id) > -1
-  }
+    isUpvote: !!id && entry.stats.upvotes.indexOf(id) > -1,
+  },
 });
 
 export const currentPlaySelector = createSelector(
@@ -41,10 +41,10 @@ export const currentPlaySelector = createSelector(
       user: dj,
       media,
       timestamp,
-      stats
+      stats,
     };
     return addOwnVoteProps(user ? user._id : null)(entry);
-  }
+  },
 );
 
 export const roomHistoryWithVotesSelector = createSelector(
@@ -57,5 +57,5 @@ export const roomHistoryWithVotesSelector = createSelector(
       roomHistory.unshift(current);
     }
     return roomHistory;
-  }
+  },
 );

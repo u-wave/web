@@ -8,13 +8,13 @@ class UserCardWrapper extends React.Component {
     onClose: PropTypes.func.isRequired,
     position: PropTypes.shape({
       x: PropTypes.number.isRequired,
-      y: PropTypes.number.isRequired
-    }).isRequired
+      y: PropTypes.number.isRequired,
+    }).isRequired,
   };
 
   state = {
     positionDiffX: 0,
-    positionDiffY: 0
+    positionDiffY: 0,
   };
 
   componentDidMount() {
@@ -35,7 +35,7 @@ class UserCardWrapper extends React.Component {
     const offsetBottom = window.innerHeight - rect.bottom;
     if (offsetBottom < 0) {
       this.setState({
-        positionDiffY: offsetBottom - 1
+        positionDiffY: offsetBottom - 1,
       });
     }
   }
@@ -64,7 +64,7 @@ class UserCardWrapper extends React.Component {
             style={{
               position: 'absolute',
               left: position.x + positionDiffX,
-              top: position.y + positionDiffY
+              top: position.y + positionDiffY,
             }}
             ref={this.refContainer}
           >

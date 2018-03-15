@@ -4,6 +4,6 @@ import { TRANSITION } from '../constants/ActionTypes';
 export function transition(target) {
   return {
     type: TRANSITION,
-    payload: target
+    payload: target,
   };
 }

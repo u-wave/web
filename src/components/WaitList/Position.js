@@ -5,7 +5,7 @@ import MuiAvatar from 'material-ui/Avatar';
 
 const Position = ({
   muiTheme,
-  position
+  position,
 }) => (
   <MuiAvatar
     className="WaitlistRow-position"
@@ -19,7 +19,7 @@ const Position = ({
 
 Position.propTypes = {
   position: PropTypes.number.isRequired,
-  muiTheme: PropTypes.object.isRequired
+  muiTheme: PropTypes.object.isRequired,
 };
 
 export default muiThemeable()(Position);

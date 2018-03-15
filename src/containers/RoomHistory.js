@@ -18,14 +18,14 @@ const selectionOrOne = (media, selection) => {
 };
 
 const mapStateToProps = createStructuredSelector({
-  media: roomHistoryWithVotesSelector
+  media: roomHistoryWithVotesSelector,
 });
 
 const onOpenAddMediaMenu = (position, media, selection) =>
   addMediaMenu(selectionOrOne(media, selection), position);
 const mapDispatchToProps = dispatch => bindActionCreators({
   onOpenAddMediaMenu,
-  onOpenPreviewMediaDialog: openPreviewMediaDialog
+  onOpenPreviewMediaDialog: openPreviewMediaDialog,
 }, dispatch);
 
 const OverlayFromTop = withProps({ direction: 'top' })(Overlay);

@@ -11,7 +11,7 @@ const RemoveFromPlaylist = ({ onRemove, ...props }) => (
 );
 
 RemoveFromPlaylist.propTypes = {
-  onRemove: PropTypes.func.isRequired
+  onRemove: PropTypes.func.isRequired,
 };
 
 export default RemoveFromPlaylist;

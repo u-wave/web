@@ -7,7 +7,7 @@ import { createSelector } from 'reselect';
 const wrapperStyle = {
   // Prevent clicks from hitting the overlay. Ensures the chat input can be
   // focused even if a snackbar is open.
-  pointerEvents: 'none'
+  pointerEvents: 'none',
 };
 const snackbarStyle = {
   // Allow multiline snackbars.
@@ -15,7 +15,7 @@ const snackbarStyle = {
   lineHeight: '24px',
   padding: '12px 24px',
   // Allow clicks on snackbars themselves.
-  pointerEvents: 'initial'
+  pointerEvents: 'initial',
 };
 
 // Create a material-ui theme with the error notification theme applied.
@@ -30,11 +30,11 @@ export const errorThemeSelector = createSelector(
         snackbar: {
           ...muiTheme.snackbar,
           textColor: notifyTheme.errorTextColor,
-          backgroundColor: notifyTheme.errorBackgroundColor
-        }
-      }
+          backgroundColor: notifyTheme.errorBackgroundColor,
+        },
+      },
     };
-  }
+  },
 );
 
 const enhance = muiThemeable();
@@ -45,11 +45,11 @@ class ErrorArea extends React.Component {
     onDismiss: PropTypes.func.isRequired,
     // Used in the theme selector above 👆
     // eslint-disable-next-line react/no-unused-prop-types
-    muiTheme: PropTypes.object.isRequired
+    muiTheme: PropTypes.object.isRequired,
   };
 
   static childContextTypes = {
-    muiTheme: PropTypes.object
+    muiTheme: PropTypes.object,
   };
 
   getChildContext() {

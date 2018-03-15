@@ -11,7 +11,7 @@ describe('<ErrorArea />', () => {
         error={null}
         onDismiss={() => {}}
       />,
-      { context: testUtils.context }
+      { context: testUtils.context },
     ).dive().childAt(0)).to.have.prop('open', false);
   });
 
@@ -21,7 +21,7 @@ describe('<ErrorArea />', () => {
         error="Something is WRONG!"
         onDismiss={() => {}}
       />,
-      { context: testUtils.context }
+      { context: testUtils.context },
     ).dive().childAt(0)).to.have.prop('open', true);
   });
 
@@ -43,7 +43,7 @@ describe('<ErrorArea />', () => {
           error="Message"
           onDismiss={spy}
         />
-      ), { context: testUtils.context }
+      ), { context: testUtils.context },
     ).dive();
 
     area.childAt(0).prop('onRequestClose').call();

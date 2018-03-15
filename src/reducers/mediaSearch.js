@@ -1,15 +1,15 @@
 import {
-  SHOW_IMPORT_PANEL
+  SHOW_IMPORT_PANEL,
 } from '../constants/actionTypes/imports';
 import {
-  SELECT_PLAYLIST
+  SELECT_PLAYLIST,
 } from '../constants/actionTypes/playlists';
 import {
   SET_SEARCH_SOURCE,
   SHOW_SEARCH_RESULTS,
   SEARCH_START,
   SEARCH_COMPLETE,
-  SEARCH_DELETE
+  SEARCH_DELETE,
 } from '../constants/actionTypes/search';
 import { IDLE, LOADING, LOADED } from '../constants/LoadingStates';
 
@@ -18,7 +18,7 @@ const initialState = {
   query: null,
   showResults: false,
   results: {},
-  loadingState: IDLE
+  loadingState: IDLE,
 };
 
 export default function reduce(state = initialState, action = {}) {
@@ -27,25 +27,25 @@ export default function reduce(state = initialState, action = {}) {
   case SHOW_SEARCH_RESULTS:
     return {
       ...state,
-      showResults: true
+      showResults: true,
     };
   case SEARCH_START:
     return {
       ...state,
       query: payload.query,
       results: {},
-      loadingState: LOADING
+      loadingState: LOADING,
     };
   case SEARCH_COMPLETE:
     return {
       ...state,
       results: payload.results,
-      loadingState: LOADED
+      loadingState: LOADED,
     };
   case SET_SEARCH_SOURCE:
     return {
       ...state,
-      sourceType: payload.source
+      sourceType: payload.source,
     };
   case SEARCH_DELETE:
     return {
@@ -53,13 +53,13 @@ export default function reduce(state = initialState, action = {}) {
       query: null,
       loadingState: IDLE,
       results: {},
-      showResults: false
+      showResults: false,
     };
   case SELECT_PLAYLIST:
   case SHOW_IMPORT_PANEL:
     return {
       ...state,
-      showResults: false
+      showResults: false,
     };
   default:
     return state;

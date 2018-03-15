@@ -8,30 +8,30 @@ const baseSelector = state => state.playlists;
 
 export const playlistsSelector = createSelector(
   baseSelector,
-  playlists => values(playlists.playlists).sort(byName)
+  playlists => values(playlists.playlists).sort(byName),
 );
 
 export const playlistItemsSelector = createSelector(
   baseSelector,
-  playlists => playlists.playlistItems
+  playlists => playlists.playlistItems,
 );
 
 export const activePlaylistIDSelector = createSelector(
   baseSelector,
-  playlists => playlists.activePlaylistID
+  playlists => playlists.activePlaylistID,
 );
 
 const activeMediaSelector = createSelector(
   playlistItemsSelector,
   activePlaylistIDSelector,
-  (playlistItems, activePlaylist) => playlistItems[activePlaylist] || []
+  (playlistItems, activePlaylist) => playlistItems[activePlaylist] || [],
 );
 
 function mergePlaylistItems(playlist, playlistItems) {
   if (playlist) {
     return {
       ...playlist,
-      media: playlistItems
+      media: playlistItems,
     };
   }
   return null;
@@ -42,23 +42,23 @@ export const activePlaylistSelector = createSelector(
   activePlaylistIDSelector,
   activeMediaSelector,
   (playlists, activeID, activeMedia) =>
-    mergePlaylistItems(playlists.playlists[activeID], activeMedia)
+    mergePlaylistItems(playlists.playlists[activeID], activeMedia),
 );
 
 export const selectedPlaylistIDSelector = createSelector(
   baseSelector,
-  playlists => playlists.selectedPlaylistID
+  playlists => playlists.selectedPlaylistID,
 );
 
 const selectedMediaSelector = createSelector(
   playlistItemsSelector,
   selectedPlaylistIDSelector,
-  (playlistItems, selectedPlaylist) => playlistItems[selectedPlaylist] || []
+  (playlistItems, selectedPlaylist) => playlistItems[selectedPlaylist] || [],
 );
 
 const filterSelector = createSelector(
   baseSelector,
-  base => base.currentFilter
+  base => base.currentFilter,
 );
 
 const currentFilterSelector = createSelector(
@@ -69,12 +69,12 @@ const currentFilterSelector = createSelector(
       return filter;
     }
     return null;
-  }
+  },
 );
 
 export const playlistItemFilterSelector = createSelector(
   currentFilterSelector,
-  filter => filter && filter.filter
+  filter => filter && filter.filter,
 );
 
 export const filteredSelectedPlaylistItemsSelector = createSelector(
@@ -86,7 +86,7 @@ export const filteredSelectedPlaylistItemsSelector = createSelector(
       return filter.items;
     }
     return selectedItems;
-  }
+  },
 );
 
 export const selectedPlaylistSelector = createSelector(
@@ -94,20 +94,20 @@ export const selectedPlaylistSelector = createSelector(
   selectedPlaylistIDSelector,
   selectedMediaSelector,
   (playlists, selectedID, selectedMedia) =>
-    mergePlaylistItems(playlists.playlists[selectedID], selectedMedia)
+    mergePlaylistItems(playlists.playlists[selectedID], selectedMedia),
 );
 
 export const nextMediaSelector = createSelector(
   activeMediaSelector,
-  media => (media ? media[0] : null)
+  media => (media ? media[0] : null),
 );
 
 export const isSelectedPlaylistLoadingSelector = createSelector(
   selectedPlaylistSelector,
-  selectedPlaylist => Boolean(selectedPlaylist.loading)
+  selectedPlaylist => Boolean(selectedPlaylist.loading),
 );
 
 export const isFilteredSelector = createSelector(
   playlistItemFilterSelector,
-  filter => Boolean(filter)
+  filter => Boolean(filter),
 );

@@ -2,7 +2,7 @@ import { get, post } from '../../actions/RequestActionCreators';
 
 import {
   createPlaylistStart,
-  createPlaylistComplete
+  createPlaylistComplete,
 } from '../../actions/PlaylistActionCreators';
 
 import {
@@ -11,20 +11,20 @@ import {
   GET_CHANNEL_PLAYLISTS_START,
   GET_CHANNEL_PLAYLISTS_COMPLETE,
   IMPORT_PLAYLIST_START,
-  IMPORT_PLAYLIST_COMPLETE
+  IMPORT_PLAYLIST_COMPLETE,
 } from './constants';
 
 function getImportablePlaylistStart(url) {
   return {
     type: GET_IMPORTABLE_PLAYLIST_START,
-    payload: { url }
+    payload: { url },
   };
 }
 
 function getImportablePlaylistComplete(url, playlist, items) {
   return {
     type: GET_IMPORTABLE_PLAYLIST_COMPLETE,
-    payload: { url, playlist, items }
+    payload: { url, playlist, items },
   };
 }
 
@@ -38,8 +38,8 @@ export function getImportablePlaylist(url) {
       type: GET_IMPORTABLE_PLAYLIST_COMPLETE,
       error: true,
       payload: error,
-      meta: { url }
-    })
+      meta: { url },
+    }),
   });
 }
 
@@ -48,7 +48,7 @@ function importPlaylistStart(id, name) {
     dispatch(createPlaylistStart({ name }, `yt:${id}`));
     dispatch({
       type: IMPORT_PLAYLIST_START,
-      payload: { id, name }
+      payload: { id, name },
     });
   };
 }
@@ -58,7 +58,7 @@ function importPlaylistComplete(id, playlist) {
     dispatch({
       type: IMPORT_PLAYLIST_COMPLETE,
       payload: { playlist },
-      meta: { id }
+      meta: { id },
     });
     dispatch(createPlaylistComplete(playlist, `yt:${id}`));
   };
@@ -72,15 +72,15 @@ export function importPlaylist(id, name) {
       type: IMPORT_PLAYLIST_COMPLETE,
       error: true,
       payload: error,
-      meta: { id }
-    })
+      meta: { id },
+    }),
   });
 }
 
 function getChannelPlaylistsStart(url) {
   return {
     type: GET_CHANNEL_PLAYLISTS_START,
-    payload: { url }
+    payload: { url },
   };
 }
 
@@ -89,8 +89,8 @@ function getChannelPlaylistsComplete(channel, playlists) {
     type: GET_CHANNEL_PLAYLISTS_COMPLETE,
     payload: {
       channel,
-      playlists
-    }
+      playlists,
+    },
   };
 }
 
@@ -104,7 +104,7 @@ export function getChannelPlaylists(url) {
       type: GET_CHANNEL_PLAYLISTS_COMPLETE,
       error: true,
       payload: error,
-      meta: { url }
-    })
+      meta: { url },
+    }),
   });
 }

@@ -11,7 +11,7 @@ const MoveToFirst = ({ onFirst, ...props }) => (
 );
 
 MoveToFirst.propTypes = {
-  onFirst: PropTypes.func.isRequired
+  onFirst: PropTypes.func.isRequired,
 };
 
 export default MoveToFirst;

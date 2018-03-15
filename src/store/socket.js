@@ -7,20 +7,20 @@ import {
   SOCKET_CONNECT,
   SOCKET_RECONNECT,
   SOCKET_DISCONNECTED,
-  SOCKET_CONNECTED
+  SOCKET_CONNECTED,
 } from '../constants/actionTypes/auth';
 import {
-  SEND_MESSAGE
+  SEND_MESSAGE,
 } from '../constants/actionTypes/chat';
 import {
   DO_UPVOTE,
-  DO_DOWNVOTE
+  DO_DOWNVOTE,
 } from '../constants/actionTypes/votes';
 
 import { getSocketAuthToken } from '../actions/LoginActionCreators';
 import {
   advance,
-  skipped
+  skipped,
 } from '../actions/BoothActionCreators';
 import {
   receive as chatReceive,
@@ -28,7 +28,7 @@ import {
   removeMessagesByUser,
   removeAllMessages,
   muteUser as chatMute,
-  unmuteUser as chatUnmute
+  unmuteUser as chatUnmute,
 } from '../actions/ChatActionCreators';
 import { cyclePlaylist } from '../actions/PlaylistActionCreators';
 import {
@@ -37,7 +37,7 @@ import {
   changeUsername,
   addUserRoles,
   removeUserRoles,
-  receiveGuestCount
+  receiveGuestCount,
 } from '../actions/UserActionCreators';
 import {
   clearWaitlist,
@@ -45,7 +45,7 @@ import {
   leftWaitlist,
   updatedWaitlist,
   movedInWaitlist,
-  setLocked as setWaitlistLocked
+  setLocked as setWaitlistLocked,
 } from '../actions/WaitlistActionCreators';
 import { favorited, receiveVote } from '../actions/VoteActionCreators';
 
@@ -60,13 +60,13 @@ function defaultUrl() {
 
 const actions = {
   chatMessage({
-    id, userID, message, timestamp
+    id, userID, message, timestamp,
   }) {
     return chatReceive({
       _id: id,
       userID,
       text: message,
-      timestamp
+      timestamp,
     });
   },
   chatDelete() {
@@ -109,10 +109,10 @@ const actions = {
     return setWaitlistLocked(locked);
   },
   waitlistMove({
-    userID, moderatorID, position, waitlist
+    userID, moderatorID, position, waitlist,
   }) {
     return movedInWaitlist({
-      userID, moderatorID, position, waitlist
+      userID, moderatorID, position, waitlist,
     });
   },
   // TODO Treat moderator force-add and force-remove differently from voluntary
@@ -142,7 +142,7 @@ const actions = {
   'acl:allow': ({ userID, roles }) =>
     addUserRoles(userID, roles),
   'acl:disallow': ({ userID, roles }) =>
-    removeUserRoles(userID, roles)
+    removeUserRoles(userID, roles),
 };
 
 export default function middleware({ url = defaultUrl() } = {}) {

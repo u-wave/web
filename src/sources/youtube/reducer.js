@@ -6,7 +6,7 @@ import {
   GET_IMPORTABLE_PLAYLIST_START,
   GET_IMPORTABLE_PLAYLIST_COMPLETE,
   GET_CHANNEL_PLAYLISTS_START,
-  GET_CHANNEL_PLAYLISTS_COMPLETE
+  GET_CHANNEL_PLAYLISTS_COMPLETE,
 } from './constants';
 
 const initialState = {
@@ -15,7 +15,7 @@ const initialState = {
   importingPlaylistName: '',
   importingPlaylistItems: [],
   importingChannelTitle: '',
-  importablePlaylists: []
+  importablePlaylists: [],
 };
 
 export default function reduce(state = initialState, action = {}) {
@@ -25,14 +25,14 @@ export default function reduce(state = initialState, action = {}) {
     return {
       ...state,
       type: PLAYLIST,
-      importingState: LOADING
+      importingState: LOADING,
     };
   case GET_IMPORTABLE_PLAYLIST_COMPLETE:
     if (error) {
       return {
         ...state,
         type: null,
-        importingState: IDLE
+        importingState: IDLE,
       };
     }
 
@@ -40,20 +40,20 @@ export default function reduce(state = initialState, action = {}) {
       ...state,
       importingState: LOADED,
       importingPlaylist: payload.playlist,
-      importingPlaylistItems: payload.items
+      importingPlaylistItems: payload.items,
     };
   case GET_CHANNEL_PLAYLISTS_START:
     return {
       ...state,
       type: CHANNEL,
-      importingState: LOADING
+      importingState: LOADING,
     };
   case GET_CHANNEL_PLAYLISTS_COMPLETE:
     if (error) {
       return {
         ...state,
         type: null,
-        importingState: IDLE
+        importingState: IDLE,
       };
     }
 
@@ -61,7 +61,7 @@ export default function reduce(state = initialState, action = {}) {
       ...state,
       importingState: LOADED,
       importingChannelTitle: payload.channel.title,
-      importablePlaylists: payload.playlists
+      importablePlaylists: payload.playlists,
     };
   default:
     return state;

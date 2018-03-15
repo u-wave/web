@@ -13,7 +13,7 @@ const PlaylistManager = ({
   selectedPlaylist,
   showSearchResults,
   showImportPanel,
-  onCloseOverlay
+  onCloseOverlay,
 }) => {
   let panel;
   if (showImportPanel) {
@@ -61,7 +61,7 @@ PlaylistManager.propTypes = {
   selectedPlaylist: PropTypes.object,
   showSearchResults: PropTypes.bool.isRequired,
   showImportPanel: PropTypes.bool.isRequired,
-  onCloseOverlay: PropTypes.func
+  onCloseOverlay: PropTypes.func,
 };
 
 export default PlaylistManager;

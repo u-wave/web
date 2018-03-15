@@ -12,8 +12,8 @@ CurrentDJ.propTypes = {
   t: PropTypes.func.isRequired,
   className: PropTypes.string,
   dj: PropTypes.shape({
-    username: PropTypes.string.isRequired
-  })
+    username: PropTypes.string.isRequired,
+  }),
 };
 
 export default translate()(CurrentDJ);

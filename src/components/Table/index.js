@@ -5,26 +5,26 @@ import {
   TableHeader,
   TableHeaderColumn as MuiTableHeaderColumn,
   TableRow,
-  TableRowColumn as TableCell
+  TableRowColumn as TableCell,
 } from 'material-ui/Table';
 
 export const Table = withProps(props => ({
   style: {
     background: 'transparent',
-    ...props.style
-  }
+    ...props.style,
+  },
 }))(MuiTable);
 
 export const TableHeaderColumn = withProps(props => ({
   style: {
     fontWeight: 'bold',
-    ...props.style
-  }
+    ...props.style,
+  },
 }))(MuiTableHeaderColumn);
 
 export {
   TableBody,
   TableHeader,
   TableRow,
-  TableCell
+  TableCell,
 };

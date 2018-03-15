@@ -12,11 +12,11 @@ import { muiThemeSelector } from '../../selectors/settingSelectors';
 
 const mapStateToProps = createStructuredSelector({
   muiTheme: muiThemeSelector,
-  success: state => state.passwordReset.success
+  success: state => state.passwordReset.success,
 });
 
 const mapDispatchToProps = {
-  onSubmit: resetPassword
+  onSubmit: resetPassword,
 };
 
 const enhance = connect(mapStateToProps, mapDispatchToProps);
@@ -41,7 +41,7 @@ const PasswordResetApp = ({
 PasswordResetApp.propTypes = {
   muiTheme: PropTypes.object.isRequired,
   locale: PropTypes.object.isRequired,
-  success: PropTypes.bool
+  success: PropTypes.bool,
 };
 
 export default enhance(PasswordResetApp);

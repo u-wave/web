@@ -11,7 +11,7 @@ const DeleteButton = ({ onDelete }) => (
 );
 
 DeleteButton.propTypes = {
-  onDelete: PropTypes.func.isRequired
+  onDelete: PropTypes.func.isRequired,
 };
 
 export default DeleteButton;

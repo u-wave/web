@@ -7,7 +7,7 @@ const SearchBar = ({
   className,
   source,
   onSubmit,
-  onSourceChange
+  onSourceChange,
 }) => (
   <BaseSearchBar className={className} onSubmit={onSubmit}>
     <SourcePicker
@@ -22,7 +22,7 @@ SearchBar.propTypes = {
   className: PropTypes.string,
   source: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  onSourceChange: PropTypes.func.isRequired
+  onSourceChange: PropTypes.func.isRequired,
 };
 
 export default SearchBar;

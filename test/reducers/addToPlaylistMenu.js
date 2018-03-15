@@ -2,7 +2,7 @@ import { expect } from 'chai';
 
 import createStore from '../../src/store/configureStore';
 import {
-  addMediaMenu, closeAddMediaMenu
+  addMediaMenu, closeAddMediaMenu,
 } from '../../src/actions/PlaylistActionCreators';
 import * as s from '../../src/selectors/addToPlaylistMenuSelectors';
 
@@ -13,7 +13,7 @@ describe('reducers/addToPlaylistMenu', () => {
       type: null,
       open: false,
       position: { x: 0, y: 0 },
-      playlists: []
+      playlists: [],
     });
   });
 
@@ -22,7 +22,7 @@ describe('reducers/addToPlaylistMenu', () => {
     it('should open the menu at the given position with the given media', () => {
       dispatch(addMediaMenu(
         [ { _id: 'mmedia' } ],
-        { x: 800, y: 300 }
+        { x: 800, y: 300 },
       ));
       expect(s.mediaSelector(getState())).to.eql([ { _id: 'mmedia' } ]);
       expect(s.isOpenSelector(getState())).to.be.true;
@@ -36,7 +36,7 @@ describe('reducers/addToPlaylistMenu', () => {
     it('should close the menu', () => {
       dispatch(addMediaMenu(
         [ { _id: 'mmedia' } ],
-        { x: 800, y: 300 }
+        { x: 800, y: 300 },
       ));
       expect(s.isOpenSelector(getState())).to.be.true;
 

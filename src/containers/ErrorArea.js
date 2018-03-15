@@ -7,11 +7,11 @@ import { firstErrorSelector } from '../selectors/errorSelectors';
 import ErrorArea from '../components/ErrorArea';
 
 const mapStateToProps = state => ({
-  error: firstErrorSelector(state)
+  error: firstErrorSelector(state),
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  onDismiss: dismiss
+  onDismiss: dismiss,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ErrorArea);

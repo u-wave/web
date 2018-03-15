@@ -7,5 +7,5 @@ import view from './view';
 export default combineReducers({
   users,
   bans,
-  view
+  view,
 });

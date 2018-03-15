@@ -17,7 +17,7 @@ export const currentUserSelector = createSelector(
     userID in users
       ? users[userID]
       : null
-  )
+  ),
 );
 export const isLoggedInSelector = createSelector(currentUserSelector, Boolean);
 export const tokenSelector = createSelector(authSelector, auth => auth.token);
@@ -27,7 +27,7 @@ export function supportsAuthStrategy(name) {
 }
 export const supportsSocialAuthSelector = createSelector(
   supportsAuthStrategy('google'),
-  (...support) => support.some(Boolean)
+  (...support) => support.some(Boolean),
 );
 
 // The Super User role allows a user to do everything. It's hardcoded as the "*"
@@ -40,7 +40,7 @@ function getAllUserRoles(roles, user) {
     // Recursive Reduce!
     return roles[role].reduce(
       getSubRoles,
-      [ role, ...subRoles ]
+      [ role, ...subRoles ],
     );
   }
   return user.roles ? user.roles.reduce(getSubRoles, []) : [];
@@ -74,23 +74,23 @@ export const userListSelector = createSelector(
   superUserRoleSelector,
   usersSelector,
   (roles, superuserRole, users) =>
-    values(users).sort(compareUsers(roles, superuserRole))
+    values(users).sort(compareUsers(roles, superuserRole)),
 );
 
 export const userCountSelector = createSelector(
   userListSelector,
-  users => users.length
+  users => users.length,
 );
 
 export const guestCountSelector = createSelector(
   usersBaseSelector,
-  base => base.guests
+  base => base.guests,
 );
 
 export const listenerCountSelector = createSelector(
   userCountSelector,
   guestCountSelector,
-  (users, guests) => users + guests
+  (users, guests) => users + guests,
 );
 
 export const userHasRoleSelector = createSelector(
@@ -109,7 +109,7 @@ export const userHasRoleSelector = createSelector(
     }
 
     return role => userRoles.indexOf(role) !== -1;
-  }
+  },
 );
 
 // Selects a function that checks if a user has the given role.
@@ -120,13 +120,13 @@ export const userHasRoleSelector = createSelector(
 export const hasRoleSelector = createSelector(
   userHasRoleSelector,
   userHasRole =>
-    (user, role) => userHasRole(user)(role)
+    (user, role) => userHasRole(user)(role),
 );
 
 export const currentUserHasRoleSelector = createSelector(
   userHasRoleSelector,
   currentUserSelector,
-  (userHasRole, user) => userHasRole(user)
+  (userHasRole, user) => userHasRole(user),
 );
 
 // Creates a selector that will check if the current user has a given role.
@@ -135,7 +135,7 @@ export const currentUserHasRoleSelector = createSelector(
 //
 export const createRoleCheckSelector = role => createSelector(
   currentUserHasRoleSelector,
-  hasRole => hasRole(role)
+  hasRole => hasRole(role),
 );
 
 // Selectors for compatibility with the old role system.

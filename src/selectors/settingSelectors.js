@@ -26,28 +26,28 @@ export const themeSelector = state => state.theme;
 
 export const muiThemeSelector = createSelector(
   themeSelector,
-  theme => getMuiTheme(theme)
+  theme => getMuiTheme(theme),
 );
 
 export const volumeSelector = createSelector(
   settingsBaseSelector,
-  settings => settings.volume
+  settings => settings.volume,
 );
 
 export const isMutedSelector = createSelector(
   settingsBaseSelector,
-  settings => settings.muted
+  settings => settings.muted,
 );
 
 export const languageSelector = createSelector(
   settingsBaseSelector,
   getDefaultLanguage,
-  (settings, defaultLanguage) => settings.language || defaultLanguage
+  (settings, defaultLanguage) => settings.language || defaultLanguage,
 );
 
 export const videoSizeSelector = createSelector(
   settingsBaseSelector,
-  settings => settings.videoSize
+  settings => settings.videoSize,
 );
 
 // Settings with selected values (from selectors above) rather than "saved"
@@ -63,11 +63,11 @@ export const settingsSelector = createSelector(
     volume,
     muted,
     videoSize,
-    language
-  })
+    language,
+  }),
 );
 
 export const notificationSettingsSelector = createSelector(
   settingsSelector,
-  settings => settings.notifications
+  settings => settings.notifications,
 );

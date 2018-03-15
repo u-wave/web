@@ -3,11 +3,11 @@ import { createStructuredSelector } from 'reselect';
 
 import { selectPanel } from '../actions/PanelSelectActionCreators';
 import {
-  listenerCountSelector
+  listenerCountSelector,
 } from '../selectors/userSelectors';
 import {
   sizeSelector as waitlistSizeSelector,
-  positionSelector as waitlistPositionSelector
+  positionSelector as waitlistPositionSelector,
 } from '../selectors/waitlistSelectors';
 
 import SidePanels from '../components/SidePanels';
@@ -16,7 +16,7 @@ const mapStateToProps = createStructuredSelector({
   selected: state => state.selectedPanel,
   waitlistPosition: waitlistPositionSelector,
   waitlistSize: waitlistSizeSelector,
-  listenerCount: listenerCountSelector
+  listenerCount: listenerCountSelector,
 });
 
 function mapDispatchToProps(dispatch) {
@@ -28,7 +28,7 @@ function mapDispatchToProps(dispatch) {
       if (typeof panelName === 'string') {
         dispatch(selectPanel(panelName));
       }
-    }
+    },
   };
 }
 

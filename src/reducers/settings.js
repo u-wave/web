@@ -1,7 +1,7 @@
 import merge from 'deepmerge';
 import {
   LOAD_SETTINGS,
-  CHANGE_SETTING
+  CHANGE_SETTING,
 } from '../constants/actionTypes/settings';
 
 const initialState = {
@@ -15,8 +15,8 @@ const initialState = {
     userJoin: true,
     userLeave: true,
     userNameChanged: true,
-    skip: true
-  }
+    skip: true,
+  },
 };
 
 export default function reduce(state = initialState, action = {}) {
@@ -32,8 +32,8 @@ export default function reduce(state = initialState, action = {}) {
       // settings were saved to localStorage.
       notifications: payload ? {
         ...initialState.notifications,
-        ...payload.notifications
-      } : initialState.notifications
+        ...payload.notifications,
+      } : initialState.notifications,
     };
   case CHANGE_SETTING:
     return merge(state, payload, { clone: true });

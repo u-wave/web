@@ -7,11 +7,11 @@ import RegisterForm from './RegisterForm';
 import ResetPasswordForm from './ResetPasswordForm';
 
 const contentStyle = {
-  maxWidth: 350
+  maxWidth: 350,
 };
 
 const bodyStyle = {
-  padding: 24
+  padding: 24,
 };
 
 const enhance = translate();
@@ -21,7 +21,7 @@ const LoginDialog = (props) => {
     t,
     open,
     show,
-    onCloseDialog
+    onCloseDialog,
   } = props;
   let form;
   let title;
@@ -56,7 +56,7 @@ LoginDialog.propTypes = {
   t: PropTypes.func.isRequired,
   open: PropTypes.bool,
   show: PropTypes.string,
-  onCloseDialog: PropTypes.func
+  onCloseDialog: PropTypes.func,
 };
 
 export default enhance(LoginDialog);

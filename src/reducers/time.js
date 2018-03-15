@@ -2,7 +2,7 @@ import { SET_TIMER, OFFSET } from '../constants/actionTypes/time';
 
 const initialState = {
   timer: 0,
-  offset: 0
+  offset: 0,
 };
 
 export default function reduce(state = initialState, action = {}) {

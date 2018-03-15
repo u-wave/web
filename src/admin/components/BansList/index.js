@@ -7,22 +7,22 @@ import {
   TableBody,
   TableHeader,
   TableHeaderColumn,
-  TableRow
+  TableRow,
 } from '../../../components/Table';
 import BanRow from './Row';
 
 const enhance = translate();
 const avatarStyle = {
   width: 48,
-  paddingRight: 0
+  paddingRight: 0,
 };
 
 const Header = withProps({
   style: {
     background: '#9d2053',
     padding: '12px 24px',
-    lineHeight: '35px'
-  }
+    lineHeight: '35px',
+  },
 })('div');
 
 const Filter = withProps({
@@ -32,15 +32,15 @@ const Filter = withProps({
     border: 0,
     marginLeft: 12,
     paddingLeft: 12,
-    height: 35
+    height: 35,
   },
-  type: 'text'
+  type: 'text',
 })('input');
 
 const BansList = ({
   t,
   bans,
-  onUnbanUser
+  onUnbanUser,
 }) => (
   <React.Fragment>
     <Header>
@@ -77,7 +77,7 @@ const BansList = ({
 BansList.propTypes = {
   t: PropTypes.func.isRequired,
   bans: PropTypes.array.isRequired,
-  onUnbanUser: PropTypes.func.isRequired
+  onUnbanUser: PropTypes.func.isRequired,
 };
 
 export default enhance(BansList);

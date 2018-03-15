@@ -6,12 +6,12 @@ import CloseTopIcon from 'material-ui/svg-icons/hardware/keyboard-arrow-up';
 
 const icons = {
   bottom: CloseBottomIcon,
-  top: CloseTopIcon
+  top: CloseTopIcon,
 };
 
 const fullSizeStyle = {
   height: '100%',
-  width: '100%'
+  width: '100%',
 };
 
 const Close = ({ className, onClose, direction }) => {
@@ -33,7 +33,7 @@ const Close = ({ className, onClose, direction }) => {
 Close.propTypes = {
   className: PropTypes.string,
   direction: PropTypes.string.isRequired,
-  onClose: PropTypes.func.isRequired
+  onClose: PropTypes.func.isRequired,
 };
 
 export default Close;

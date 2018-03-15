@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import {
   LOAD_SETTINGS,
-  CHANGE_SETTING
+  CHANGE_SETTING,
 } from '../../src/constants/actionTypes/settings';
 import settings from '../../src/reducers/settings';
 
@@ -24,8 +24,8 @@ describe('reducers/settings', () => {
         type: LOAD_SETTINGS,
         payload: {
           setting: 'value',
-          volume: 20
-        }
+          volume: 20,
+        },
       });
       expect(state.setting).to.equal('value');
       expect(state.volume).to.equal(20);
@@ -36,7 +36,7 @@ describe('reducers/settings', () => {
     it('should set a value', () => {
       const state = settings(initialState(), {
         type: CHANGE_SETTING,
-        payload: { volume: 54 }
+        payload: { volume: 54 },
       });
       expect(state.volume).to.equal(54);
     });

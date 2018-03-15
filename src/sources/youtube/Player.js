@@ -10,7 +10,7 @@ const YouTubePlayer = ({
   mode,
   media,
   seek,
-  volume
+  volume,
 }) => {
   const modeClass = `src-youtube-Player--${mode}`;
 
@@ -39,7 +39,7 @@ YouTubePlayer.propTypes = {
   enabled: PropTypes.bool,
   media: PropTypes.object,
   seek: PropTypes.number,
-  volume: PropTypes.number
+  volume: PropTypes.number,
 };
 
 export default YouTubePlayer;

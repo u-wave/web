@@ -8,10 +8,10 @@ const getResourceName = (i18n, language) =>
 
 const menuStyle = {
   float: 'right',
-  margin: -18
+  margin: -18,
 };
 const itemStyle = {
-  WebkitAppearance: 'initial'
+  WebkitAppearance: 'initial',
 };
 
 const LanguagePicker = (props, { i18n }) => (
@@ -31,7 +31,7 @@ const LanguagePicker = (props, { i18n }) => (
 );
 
 LanguagePicker.contextTypes = {
-  i18n: PropTypes.object.isRequired
+  i18n: PropTypes.object.isRequired,
 };
 
 export default LanguagePicker;

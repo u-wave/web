@@ -5,7 +5,7 @@ import { log } from '../../actions/ChatActionCreators';
 import { mutedUsersSelector } from '../../selectors/chatSelectors';
 import {
   userListSelector,
-  isModeratorSelector
+  isModeratorSelector,
 } from '../../selectors/userSelectors';
 import { muteUser, unmuteUser } from '../../actions/ModerationActionCreators';
 
@@ -20,14 +20,14 @@ register(
       }
       const user = findUser(
         userListSelector(getState()),
-        username
+        username,
       );
       if (!user) {
         return dispatch(log(`User "${username}" is not online.`));
       }
       return dispatch(muteUser(user, ms(`${duration}`)));
-    }
-  }
+    },
+  },
 );
 
 register(
@@ -44,6 +44,6 @@ register(
         return dispatch(log(`User "${username}" is not muted.`));
       }
       return dispatch(unmuteUser(user));
-    }
-  }
+    },
+  },
 );

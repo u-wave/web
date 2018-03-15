@@ -1,5 +1,5 @@
 import {
-  OPEN_OVERLAY, CLOSE_OVERLAY, TOGGLE_OVERLAY
+  OPEN_OVERLAY, CLOSE_OVERLAY, TOGGLE_OVERLAY,
 } from '../constants/actionTypes/overlay';
 
 const initialState = null;

@@ -34,10 +34,10 @@ const positionInsideWindow = (position, expectedHeight) => {
 
 const menuStyle = {
   textAlign: 'left',
-  zIndex: 30
+  zIndex: 30,
 };
 const menuItemStyle = {
-  WebkitAppearance: 'initial'
+  WebkitAppearance: 'initial',
 };
 
 const enhance = translate();
@@ -51,8 +51,8 @@ class PlaylistsMenu extends React.Component {
     playlists: PropTypes.arrayOf(PropTypes.object),
     position: PropTypes.shape({
       x: PropTypes.number,
-      y: PropTypes.number
-    })
+      y: PropTypes.number,
+    }),
   };
 
   handleSelect = (e, item) => {
@@ -74,7 +74,7 @@ class PlaylistsMenu extends React.Component {
           position: 'absolute',
           left: fixedPosition.x,
           top: fixedPosition.y,
-          width: MENU_WIDTH + RANDOM_MUI_PADDING + SCROLLBAR_WIDTH
+          width: MENU_WIDTH + RANDOM_MUI_PADDING + SCROLLBAR_WIDTH,
         }}
       >
         <Paper>

@@ -12,7 +12,7 @@ export default class ChannelPanel extends React.Component {
     importablePlaylists: PropTypes.arrayOf(PropTypes.object).isRequired,
 
     onImportPlaylist: PropTypes.func.isRequired,
-    onClosePanel: PropTypes.func.isRequired
+    onClosePanel: PropTypes.func.isRequired,
   };
 
   renderRow = (index, key) => {
@@ -31,7 +31,7 @@ export default class ChannelPanel extends React.Component {
     const {
       importingChannelTitle,
       importablePlaylists,
-      onClosePanel
+      onClosePanel,
     } = this.props;
 
     return (

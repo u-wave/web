@@ -11,7 +11,7 @@ const EmptyPanel = ({ t, className }) => (
 
 EmptyPanel.propTypes = {
   t: PropTypes.func.isRequired,
-  className: PropTypes.string
+  className: PropTypes.string,
 };
 
 export default translate()(EmptyPanel);

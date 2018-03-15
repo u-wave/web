@@ -13,7 +13,7 @@ const MessageTimestamp = ({ date }) => (
 );
 
 MessageTimestamp.propTypes = {
-  date: PropTypes.instanceOf(Date).isRequired
+  date: PropTypes.instanceOf(Date).isRequired,
 };
 
 export default MessageTimestamp;

@@ -10,11 +10,11 @@ import { transition } from '../actions/view';
 import { currentViewSelector } from '../selectors/viewSelectors';
 
 const mapStateToProps = createStructuredSelector({
-  currentView: currentViewSelector
+  currentView: currentViewSelector,
 });
 
 const mapDispatchToProps = {
-  onTransition: transition
+  onTransition: transition,
 };
 
 function hasAdminState(store) {
@@ -40,9 +40,9 @@ const enhance = compose(
       if (this.props.store) {
         mountAdminReducerOnce(this.props.store);
       }
-    }
+    },
   }),
-  connect(mapStateToProps, mapDispatchToProps)
+  connect(mapStateToProps, mapDispatchToProps),
 );
 
 export default enhance(AdminApp);

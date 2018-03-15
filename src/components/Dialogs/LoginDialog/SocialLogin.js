@@ -8,9 +8,9 @@ import { loginWithGoogle } from '../../../actions/LoginActionCreators';
 
 const enhance = compose(
   connect(null, {
-    onGoogleClick: loginWithGoogle
+    onGoogleClick: loginWithGoogle,
   }),
-  translate()
+  translate(),
 );
 
 const SocialLogin = ({ t, onGoogleClick }) => (
@@ -23,7 +23,7 @@ const SocialLogin = ({ t, onGoogleClick }) => (
 
 SocialLogin.propTypes = {
   t: PropTypes.func.isRequired,
-  onGoogleClick: PropTypes.func.isRequired
+  onGoogleClick: PropTypes.func.isRequired,
 };
 
 export default enhance(SocialLogin);

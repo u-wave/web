@@ -33,12 +33,12 @@ const devServerTask = (done) => {
 
   const apiDevServer = tryResolve(
     'u-wave-http-api/dev/u-wave-api-dev-server',
-    'Could not find the u-wave HTTP API module. Did you run `npm link u-wave-http-api`?'
+    'Could not find the u-wave HTTP API module. Did you run `npm link u-wave-http-api`?',
   );
   const monitor = nodemon({
     script: apiDevServer,
     args: [ '--port', String(serverPort), '--watch' ],
-    verbose: true
+    verbose: true,
   });
 
   monitor.once('start', done);
@@ -51,7 +51,7 @@ const devServerTask = (done) => {
 const apiServerTask = () => {
   const apiDevServer = tryResolve(
     'u-wave-http-api/dev/u-wave-api-dev-server',
-    'Could not find the u-wave HTTP API module. Did you run `npm link u-wave-http-api`?'
+    'Could not find the u-wave HTTP API module. Did you run `npm link u-wave-http-api`?',
   );
 
   require(apiDevServer); // eslint-disable-line import/no-dynamic-require
@@ -95,7 +95,7 @@ gulp.task('serve', serveDeps, (done) => {
       } else {
         wpConfig.entry[chunk] = [
           'webpack-hot-middleware/client',
-          wpConfig.entry[chunk]
+          wpConfig.entry[chunk],
         ];
       }
     });
@@ -106,7 +106,7 @@ gulp.task('serve', serveDeps, (done) => {
     const dev = webpackDevMiddleware(compiler, {
       noInfo: true,
       publicPath: '/',
-      serverSideRender: true
+      serverSideRender: true,
     });
 
     // Delay responding to HTTP requests until the first build is complete.
@@ -124,13 +124,13 @@ gulp.task('serve', serveDeps, (done) => {
       publicPath: '/',
       // Point u-wave-web middleware to the virtual webpack filesystem.
       fs: dev.fileSystem,
-      recaptcha: { key: recaptchaTestKeys.sitekey }
+      recaptcha: { key: recaptchaTestKeys.sitekey },
     }));
 
     app.use(dev);
     app.use(webpackHotMiddleware(compiler, {
       log,
-      path: '/__webpack_hmr'
+      path: '/__webpack_hmr',
     }));
 
     dev.waitUntilValid(() => {
@@ -141,7 +141,7 @@ gulp.task('serve', serveDeps, (done) => {
       apiUrl,
       socketUrl,
       emoji: emojione.emoji,
-      recaptcha: { key: recaptchaTestKeys.sitekey }
+      recaptcha: { key: recaptchaTestKeys.sitekey },
     }));
     done();
   }

@@ -14,7 +14,7 @@ function getUserColor(rankColors, user) {
 const Username = ({
   muiTheme,
   className,
-  user
+  user,
 }) => (
   <span
     className={cx('Username', className)}
@@ -27,10 +27,10 @@ const Username = ({
 Username.propTypes = {
   muiTheme: PropTypes.object.isRequired,
   className: PropTypes.string,
-  user: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired,
 };
 
 export default compose(
   muiThemeable(),
-  pure
+  pure,
 )(Username);

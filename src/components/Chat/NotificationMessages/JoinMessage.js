@@ -4,7 +4,7 @@ import UserNotificationMessage from './UserNotificationMessage';
 
 const JoinMessage = ({
   user,
-  timestamp
+  timestamp,
 }) => (
   <UserNotificationMessage
     type="userJoin"
@@ -17,7 +17,7 @@ const JoinMessage = ({
 
 JoinMessage.propTypes = {
   user: PropTypes.object.isRequired,
-  timestamp: PropTypes.number.isRequired
+  timestamp: PropTypes.number.isRequired,
 };
 
 export default JoinMessage;

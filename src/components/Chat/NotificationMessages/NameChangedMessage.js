@@ -5,7 +5,7 @@ import UserNotificationMessage from './UserNotificationMessage';
 const UserNameChanged = ({
   user,
   timestamp,
-  newUsername
+  newUsername,
 }) => (
   <UserNotificationMessage
     type="userNameChanged"
@@ -20,7 +20,7 @@ const UserNameChanged = ({
 UserNameChanged.propTypes = {
   user: PropTypes.object.isRequired,
   newUsername: PropTypes.string.isRequired,
-  timestamp: PropTypes.number.isRequired
+  timestamp: PropTypes.number.isRequired,
 };
 
 export default UserNameChanged;

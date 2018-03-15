@@ -10,11 +10,11 @@ class RenamePlaylistButton extends React.Component {
   static propTypes = {
     t: PropTypes.func.isRequired,
     onRename: PropTypes.func.isRequired,
-    initialName: PropTypes.string
+    initialName: PropTypes.string,
   };
 
   state = {
-    renaming: false
+    renaming: false,
   };
 
   closeDialog() {

@@ -8,7 +8,7 @@ const PlaylistImport = ({
   selectedSourceType,
   sourceStates,
   onShowImportPanel,
-  onHideImportPanel
+  onHideImportPanel,
 }) => {
   if (selectedSourceType) {
     const Panel = getMediaSource(selectedSourceType).ImportPanel;
@@ -50,7 +50,7 @@ PlaylistImport.propTypes = {
   getMediaSource: PropTypes.func.isRequired,
   getAllMediaSources: PropTypes.func.isRequired,
   onShowImportPanel: PropTypes.func.isRequired,
-  onHideImportPanel: PropTypes.func.isRequired
+  onHideImportPanel: PropTypes.func.isRequired,
 };
 
 export default injectMediaSources()(PlaylistImport);

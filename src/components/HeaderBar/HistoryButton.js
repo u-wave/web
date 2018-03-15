@@ -26,10 +26,10 @@ const HistoryButton = ({ t, onClick }) => (
 
 HistoryButton.propTypes = {
   t: PropTypes.func.isRequired,
-  onClick: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired,
 };
 
 export default compose(
   translate(),
-  pure
+  pure,
 )(HistoryButton);

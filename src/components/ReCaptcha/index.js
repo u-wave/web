@@ -22,7 +22,7 @@ function loadReCaptcha(cb) {
 
 export default class ReCaptcha extends React.Component {
   state = {
-    grecaptcha: window.grecaptcha
+    grecaptcha: window.grecaptcha,
   };
 
   componentDidMount() {

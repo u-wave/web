@@ -24,11 +24,11 @@ describe('reducers/chat', () => {
       _id: '643abc235-1449941591374',
       userID: '643abc235',
       text: 'Message text',
-      timestamp: 1449941591374
+      timestamp: 1449941591374,
     };
     const testUser = {
       _id: '643abc235',
-      username: 'TestUser'
+      username: 'TestUser',
     };
 
     it('should add a message to the messages list', () => {
@@ -48,14 +48,14 @@ describe('reducers/chat', () => {
         parsedText: [ testMessage.text ],
         timestamp: testMessage.timestamp,
         isMention: false,
-        inFlight: false
+        inFlight: false,
       });
     });
 
     it('should remove matching in-flight sent messages', () => {
       const inFlightUser = {
         _id: 'a user id',
-        username: 'SendingUser'
+        username: 'SendingUser',
       };
 
       sinon.stub(userSelectors, 'currentUserSelector').returns(inFlightUser);
@@ -78,7 +78,7 @@ describe('reducers/chat', () => {
         _id: 'a user id-1449941591374',
         userID: inFlightUser._id,
         text: messageText,
-        timestamp: 1449941591374
+        timestamp: 1449941591374,
       }));
 
       expect(s.messagesSelector(getState())).to.have.length(2);
@@ -92,7 +92,7 @@ describe('reducers/chat', () => {
     const testMessage = {
       user: { _id: '643abc235' },
       message: 'Message text',
-      parsed: [ 'Message text' ]
+      parsed: [ 'Message text' ],
     };
 
     let dateNow;
@@ -142,7 +142,7 @@ describe('reducers/chat', () => {
       { _id: '1', username: 'User One' },
       { _id: '2', username: 'User Two' },
       { _id: '3', username: 'User Three' },
-      { _id: '4', username: 'User Four' }
+      { _id: '4', username: 'User Four' },
     ];
 
     beforeEach(() => {
@@ -153,7 +153,7 @@ describe('reducers/chat', () => {
     const addTestMute = () => {
       dispatch(a.muteUser('1', {
         moderatorID: '4',
-        expires: Date.now() + 3000
+        expires: Date.now() + 3000,
       }));
     };
 
@@ -162,7 +162,7 @@ describe('reducers/chat', () => {
 
       dispatch(a.muteUser('1', {
         moderatorID: '4',
-        expires: Date.now() + 3000
+        expires: Date.now() + 3000,
       }));
 
       expect(s.mutedUsersSelector(getState())).to.eql([ testUsers[0] ]);
@@ -175,7 +175,7 @@ describe('reducers/chat', () => {
       dispatch(a.receive({
         _id: 'abc',
         userID: '1',
-        text: '*Spam*'
+        text: '*Spam*',
       }));
 
       expect(s.messagesSelector(getState())).to.have.length(0);
@@ -192,7 +192,7 @@ describe('reducers/chat', () => {
       dispatch(a.receive({
         _id: 'abc',
         userID: '1',
-        text: '*Spam*'
+        text: '*Spam*',
       }));
       expect(s.messagesSelector(getState())).to.have.length(1);
     });

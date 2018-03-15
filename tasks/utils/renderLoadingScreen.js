@@ -16,6 +16,6 @@ module.exports = function renderLoadingScreen() {
   return renderToStaticMarkup(React.createElement(
     MuiThemeProvider,
     { muiTheme: getMuiTheme(muiTheme) },
-    React.createElement(LoadingScreen)
+    React.createElement(LoadingScreen),
   ));
 };

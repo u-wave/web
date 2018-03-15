@@ -1,9 +1,9 @@
 import { register } from '../ChatCommands';
 import {
-  log
+  log,
 } from '../../actions/ChatActionCreators';
 import {
-  doChangeUsername
+  doChangeUsername,
 } from '../../actions/UserActionCreators';
 
 register(
@@ -16,6 +16,6 @@ register(
       }
 
       return doChangeUsername(name);
-    }
-  }
+    },
+  },
 );

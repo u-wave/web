@@ -23,13 +23,13 @@ class RegisterForm extends React.Component {
     reCaptchaSiteKey: PropTypes.string,
     error: PropTypes.object,
 
-    onRegister: PropTypes.func
+    onRegister: PropTypes.func,
   };
 
   state = {
     busy: false,
     agreed: false,
-    captchaResponse: null
+    captchaResponse: null,
   };
 
   componentWillReceiveProps() {
@@ -43,19 +43,19 @@ class RegisterForm extends React.Component {
       username: this.username.value,
       email: this.email.value,
       password: this.password.value,
-      grecaptcha: this.state.captchaResponse
+      grecaptcha: this.state.captchaResponse,
     });
   };
 
   handleCaptchaResponse = (response) => {
     this.setState({
-      captchaResponse: response
+      captchaResponse: response,
     });
   };
 
   handleTosCheckbox = (event, checked) => {
     this.setState({
-      agreed: checked
+      agreed: checked,
     });
   };
 

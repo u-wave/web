@@ -21,7 +21,7 @@ class SettingsPanel extends React.Component {
     onSettingChange: PropTypes.func.isRequired,
     onChangeUsername: PropTypes.func.isRequired,
     onChangeLanguage: PropTypes.func.isRequired,
-    onLogout: PropTypes.func.isRequired
+    onLogout: PropTypes.func.isRequired,
   };
 
   handleVideoEnabledChange = (e, value) => {
@@ -47,7 +47,7 @@ class SettingsPanel extends React.Component {
       settings,
       user,
       onChangeUsername,
-      onLogout
+      onLogout,
     } = this.props;
 
     return (

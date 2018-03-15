@@ -9,7 +9,7 @@ const addMediaActions = onOpenAddMediaMenu =>
     <AddToPlaylistAction
       key="add"
       onAdd={position => onOpenAddMediaMenu(position, media, selection)}
-    />
+    />,
   ];
 
 const noActions = () => [];
@@ -24,7 +24,7 @@ const HistoryList = ({ onOpenAddMediaMenu, ...props }) => (
 );
 
 HistoryList.propTypes = {
-  onOpenAddMediaMenu: PropTypes.func.isRequired
+  onOpenAddMediaMenu: PropTypes.func.isRequired,
 };
 
 export default HistoryList;

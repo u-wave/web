@@ -12,8 +12,8 @@ const enhance = compose(
     onUsernameClick(event) {
       event.preventDefault();
       props.openUserCard(props.user);
-    }
-  }))
+    },
+  })),
 );
 
 const UsernameWithCard = ({ user, onUsernameClick }) => (
@@ -24,7 +24,7 @@ const UsernameWithCard = ({ user, onUsernameClick }) => (
 
 UsernameWithCard.propTypes = {
   user: PropTypes.object.isRequired,
-  onUsernameClick: PropTypes.func.isRequired
+  onUsernameClick: PropTypes.func.isRequired,
 };
 
 export default enhance(UsernameWithCard);

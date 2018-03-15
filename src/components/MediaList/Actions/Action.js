@@ -13,7 +13,7 @@ const Action = ({ children, onAction, ...attrs }) => (
 
 Action.propTypes = {
   children: PropTypes.element,
-  onAction: PropTypes.func
+  onAction: PropTypes.func,
 };
 
 export default Action;

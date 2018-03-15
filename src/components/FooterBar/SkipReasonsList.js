@@ -4,12 +4,12 @@ import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 
 const menuItemStyle = {
-  WebkitAppearance: 'initial'
+  WebkitAppearance: 'initial',
 };
 
 const SkipReasonsList = ({
   reasons,
-  onSelect
+  onSelect,
 }) => (
   <Menu onItemClick={(event, item) => onSelect(item.props.value)}>
     {reasons.map(reason => (
@@ -26,9 +26,9 @@ const SkipReasonsList = ({
 SkipReasonsList.propTypes = {
   reasons: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string,
-    label: PropTypes.string
+    label: PropTypes.string,
   })).isRequired,
-  onSelect: PropTypes.func.isRequired
+  onSelect: PropTypes.func.isRequired,
 };
 
 export default SkipReasonsList;

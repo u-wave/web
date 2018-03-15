@@ -10,7 +10,7 @@ const PlaylistImportRow = ({
   t,
   className,
   importing,
-  onClick
+  onClick,
 }) => {
   let icon;
   if (importing) {
@@ -46,7 +46,7 @@ PlaylistImportRow.propTypes = {
   t: PropTypes.func.isRequired,
   className: PropTypes.string,
   importing: PropTypes.bool,
-  onClick: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired,
 };
 
 export default translate()(PlaylistImportRow);

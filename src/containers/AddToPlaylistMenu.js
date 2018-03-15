@@ -6,7 +6,7 @@ import { createStructuredSelector } from 'reselect';
 import {
   createPlaylist,
   addMedia,
-  closeAddMediaMenu
+  closeAddMediaMenu,
 } from '../actions/PlaylistActionCreators';
 import { favoriteMedia } from '../actions/VoteActionCreators';
 
@@ -15,7 +15,7 @@ import {
   isOpenSelector,
   positionSelector,
   mediaSelector,
-  historyIDSelector
+  historyIDSelector,
 } from '../selectors/addToPlaylistMenuSelectors';
 import { playlistsSelector } from '../selectors/playlistSelectors';
 import AddToPlaylistMenu from '../components/AddToPlaylistMenu';
@@ -24,7 +24,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onClose: closeAddMediaMenu,
   onCreatePlaylist: createPlaylist,
   onAddMedia: addMedia,
-  onFavoriteMedia: favoriteMedia
+  onFavoriteMedia: favoriteMedia,
 }, dispatch);
 
 const mapStateToProps = createStructuredSelector({
@@ -33,7 +33,7 @@ const mapStateToProps = createStructuredSelector({
   position: positionSelector,
   playlists: playlistsSelector,
   media: mediaSelector,
-  historyID: historyIDSelector
+  historyID: historyIDSelector,
 });
 
 const AddToPlaylistMenuContainer = ({
@@ -46,7 +46,7 @@ const AddToPlaylistMenuContainer = ({
   onCreatePlaylist,
   onAddMedia,
   onFavoriteMedia,
-  onClose
+  onClose,
 }) => {
   if (!isOpen) {
     return <span />;
@@ -75,7 +75,7 @@ AddToPlaylistMenuContainer.propTypes = {
   isOpen: PropTypes.bool,
   position: PropTypes.shape({
     x: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired
+    y: PropTypes.number.isRequired,
   }),
   playlists: PropTypes.arrayOf(PropTypes.object),
 
@@ -85,7 +85,7 @@ AddToPlaylistMenuContainer.propTypes = {
   onClose: PropTypes.func.isRequired,
   onCreatePlaylist: PropTypes.func.isRequired,
   onAddMedia: PropTypes.func.isRequired,
-  onFavoriteMedia: PropTypes.func.isRequired
+  onFavoriteMedia: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddToPlaylistMenuContainer);

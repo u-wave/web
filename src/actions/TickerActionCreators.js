@@ -7,14 +7,14 @@ export function syncTimestamps(clientTimeBefore, serverTime) {
   const clientTimeAfter = Date.now();
   return {
     type: OFFSET,
-    payload: Math.round(((serverTime - clientTimeBefore) + (serverTime - clientTimeAfter)) / 2)
+    payload: Math.round(((serverTime - clientTimeBefore) + (serverTime - clientTimeAfter)) / 2),
   };
 }
 
 export function sync() {
   const before = Date.now();
   return get('/now', {
-    onComplete: now => syncTimestamps(before, now.time)
+    onComplete: now => syncTimestamps(before, now.time),
   });
 }
 
@@ -49,7 +49,7 @@ export function createTimer() {
 
     dispatch({
       type: SET_TIMER,
-      payload: intv
+      payload: intv,
     });
 
     return callbacks;
@@ -62,7 +62,7 @@ export function stopTimer() {
     clearInterval(timer);
     dispatch({
       type: SET_TIMER,
-      payload: null
+      payload: null,
     });
   };
 }

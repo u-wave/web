@@ -7,15 +7,15 @@ import { connect } from 'react-redux';
 import { withBus } from 'react-bus';
 import { createStructuredSelector } from 'reselect';
 import {
-  inputMessage
+  inputMessage,
 } from '../actions/ChatActionCreators';
 import {
   availableGroupMentionsSelector,
-  emojiCompletionsSelector
+  emojiCompletionsSelector,
 } from '../selectors/chatSelectors';
 import {
   userListSelector,
-  isLoggedInSelector
+  isLoggedInSelector,
 } from '../selectors/userSelectors';
 
 import ChatInput from '../components/Chat/Input';
@@ -24,19 +24,19 @@ const mapStateToProps = createStructuredSelector({
   isLoggedIn: isLoggedInSelector,
   mentionableUsers: userListSelector,
   mentionableGroups: availableGroupMentionsSelector,
-  availableEmoji: emojiCompletionsSelector
+  availableEmoji: emojiCompletionsSelector,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  onSend: inputMessage
+  onSend: inputMessage,
 }, dispatch);
 
 const enhance = compose(
   connect(mapStateToProps, mapDispatchToProps),
   withBus(),
   withProps(({ bus }) => ({
-    onScroll: direction => bus.emit('chat:scroll', direction)
-  }))
+    onScroll: direction => bus.emit('chat:scroll', direction),
+  })),
 );
 
 const ChatInputContainer = ({ isLoggedIn, ...props }) => (
@@ -46,7 +46,7 @@ const ChatInputContainer = ({ isLoggedIn, ...props }) => (
 );
 
 ChatInputContainer.propTypes = {
-  isLoggedIn: PropTypes.bool.isRequired
+  isLoggedIn: PropTypes.bool.isRequired,
 };
 
 export default enhance(ChatInputContainer);

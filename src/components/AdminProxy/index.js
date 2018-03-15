@@ -7,7 +7,7 @@ import OverlayHeader from '../Overlay/Header';
 
 const AdminComponent = loadable({
   loader: () => import('../../admin/containers/AdminApp'),
-  LoadingComponent: () => <Loader size="large" />
+  LoadingComponent: () => <Loader size="large" />,
 });
 
 const AdminProxy = ({ onCloseOverlay }) => (
@@ -24,7 +24,7 @@ const AdminProxy = ({ onCloseOverlay }) => (
 );
 
 AdminProxy.propTypes = {
-  onCloseOverlay: PropTypes.func.isRequired
+  onCloseOverlay: PropTypes.func.isRequired,
 };
 
 export default AdminProxy;

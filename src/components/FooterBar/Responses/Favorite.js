@@ -12,7 +12,7 @@ const handleFavorite = onFavorite => (event) => {
   const pos = event.target.getBoundingClientRect();
   onFavorite({
     x: pos.left,
-    y: pos.top
+    y: pos.top,
   });
 };
 
@@ -22,7 +22,7 @@ const Favorite = ({
   onFavorite,
   count,
   disabled,
-  active
+  active,
 }) => {
   const CurrentIcon = active ? FavoritedIcon : FavoriteIcon;
 
@@ -44,10 +44,10 @@ Favorite.propTypes = {
   onFavorite: PropTypes.func.isRequired,
   count: PropTypes.number.isRequired,
   disabled: PropTypes.bool,
-  active: PropTypes.bool
+  active: PropTypes.bool,
 };
 
 export default compose(
   translate(),
-  muiThemeable()
+  muiThemeable(),
 )(Favorite);

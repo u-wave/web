@@ -6,7 +6,7 @@ import MenuItem from 'material-ui/MenuItem';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import {
   TableRow,
-  TableCell
+  TableCell,
 } from '../../../components/Table';
 import Avatar from '../../../components/Avatar';
 import Username from '../../../components/Username/WithCard';
@@ -14,19 +14,19 @@ import formatJoinDate from '../../../utils/formatJoinDate';
 
 const avatarStyle = {
   width: 48,
-  paddingRight: 0
+  paddingRight: 0,
 };
 const actionsStyle = {
   width: 48,
   paddingLeft: 0,
-  paddingRight: 0
+  paddingRight: 0,
 };
 
 const anchorOrigin = { horizontal: 'right', vertical: 'top' };
 const targetOrigin = { horizontal: 'right', vertical: 'top' };
 
 const UserRow = ({
-  user
+  user,
 }) => (
   <TableRow>
     <TableCell style={avatarStyle}>
@@ -59,7 +59,7 @@ const UserRow = ({
 );
 
 UserRow.propTypes = {
-  user: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired,
 };
 
 export default UserRow;

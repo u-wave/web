@@ -7,14 +7,14 @@ const normalize = entry => ({
   user: entry.user,
   media: {
     ...entry.media.media,
-    ...entry.media
+    ...entry.media,
   },
   timestamp: new Date(entry.timestamp || entry.playedAt).getTime(),
   stats: entry.stats || {
     upvotes: entry.upvotes || [],
     downvotes: entry.downvotes || [],
-    favorites: entry.favorites || []
-  }
+    favorites: entry.favorites || [],
+  },
 });
 
 export default function reduce(state = initialState, action = {}) {

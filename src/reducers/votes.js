@@ -2,13 +2,13 @@ import { ADVANCE } from '../constants/actionTypes/booth';
 import {
   LOAD_VOTES,
   FAVORITE, UPVOTE, DOWNVOTE,
-  DO_FAVORITE_START, DO_FAVORITE_COMPLETE
+  DO_FAVORITE_START, DO_FAVORITE_COMPLETE,
 } from '../constants/actionTypes/votes';
 
 const initialState = {
   upvotes: [],
   downvotes: [],
-  favorites: []
+  favorites: [],
 };
 
 export default function reduce(state = initialState, action = {}) {
@@ -21,25 +21,25 @@ export default function reduce(state = initialState, action = {}) {
       ...state,
       upvotes: payload.upvotes,
       downvotes: payload.downvotes,
-      favorites: payload.favorites
+      favorites: payload.favorites,
     };
   case UPVOTE:
     return {
       ...state,
       upvotes: [ ...state.upvotes, payload.userID ],
-      downvotes: state.downvotes.filter(vote => vote !== payload.userID)
+      downvotes: state.downvotes.filter(vote => vote !== payload.userID),
     };
   case DOWNVOTE:
     return {
       ...state,
       upvotes: state.upvotes.filter(vote => vote !== payload.userID),
-      downvotes: [ ...state.downvotes, payload.userID ]
+      downvotes: [ ...state.downvotes, payload.userID ],
     };
   case FAVORITE:
     if (state.favorites.indexOf(payload.userID) === -1) {
       return {
         ...state,
-        favorites: [ ...state.favorites, payload.userID ]
+        favorites: [ ...state.favorites, payload.userID ],
       };
     }
     return state;

@@ -11,5 +11,5 @@ export default {
   userLeave: LeaveMessage,
   userNameChanged: NameChangedMessage,
   skip: SkipMessage,
-  roleUpdate: RoleUpdateMessage
+  roleUpdate: RoleUpdateMessage,
 };

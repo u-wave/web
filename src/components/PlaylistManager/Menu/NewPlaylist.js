@@ -12,11 +12,11 @@ class NewPlaylist extends React.Component {
   static propTypes = {
     className: PropTypes.string,
     t: PropTypes.func.isRequired,
-    onCreatePlaylist: PropTypes.func.isRequired
+    onCreatePlaylist: PropTypes.func.isRequired,
   };
 
   state = {
-    creating: false
+    creating: false,
   };
 
   closeDialog() {

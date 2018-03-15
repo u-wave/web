@@ -27,7 +27,7 @@ const App = ({
   isConnected,
   settings,
   hasAboutPage,
-  onCloseOverlay
+  onCloseOverlay,
 }) => (
   <div className="App">
     <div className="AppColumn AppColumn--left">
@@ -89,12 +89,12 @@ App.propTypes = {
   settings: PropTypes.object.isRequired,
   hasAboutPage: PropTypes.bool,
 
-  onCloseOverlay: PropTypes.func.isRequired
+  onCloseOverlay: PropTypes.func.isRequired,
 };
 
 export default compose(
   DragDropContext(HTML5Backend),
   // DragDropContext needs to be able to set a ref on the component, so we can't
   // use a stateless function directly.
-  toClass
+  toClass,
 )(App);

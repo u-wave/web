@@ -16,7 +16,7 @@ export default class SoundCloudPlayer extends React.Component {
     enabled: PropTypes.bool,
     media: PropTypes.object,
     seek: PropTypes.number,
-    volume: PropTypes.number
+    volume: PropTypes.number,
   };
 
   componentDidMount() {

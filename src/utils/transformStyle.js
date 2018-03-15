@@ -8,6 +8,6 @@
 export default function transformStyle(transform) {
   return {
     transform,
-    WebkitTransform: transform
+    WebkitTransform: transform,
   };
 }

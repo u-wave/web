@@ -13,7 +13,7 @@ import {
   LOGOUT_START,
   LOGOUT_COMPLETE,
 
-  RESET_PASSWORD_COMPLETE
+  RESET_PASSWORD_COMPLETE,
 } from '../constants/actionTypes/auth';
 import { LOAD_ALL_PLAYLISTS_START } from '../constants/actionTypes/playlists';
 import * as Session from '../utils/Session';
@@ -21,7 +21,7 @@ import { get, post, del } from './RequestActionCreators';
 import { advance, loadHistory } from './BoothActionCreators';
 import { receiveMotd } from './ChatActionCreators';
 import {
-  setPlaylists, selectPlaylist, activatePlaylistComplete
+  setPlaylists, selectPlaylist, activatePlaylistComplete,
 } from './PlaylistActionCreators';
 import { syncTimestamps } from './TickerActionCreators';
 import { closeLoginDialog } from './DialogActionCreators';
@@ -43,7 +43,7 @@ export function socketReconnect() {
 export function setAuthenticationStrategies(strategies) {
   return {
     type: AUTH_STRATEGIES,
-    payload: { strategies }
+    payload: { strategies },
   };
 }
 
@@ -54,8 +54,8 @@ export function loginComplete({ token, socketToken, user }) {
       payload: {
         token,
         socketToken,
-        user
-      }
+        user,
+      },
     });
     dispatch(closeLoginDialog());
   };
@@ -65,7 +65,7 @@ export function loadedState(state) {
   return (dispatch, getState) => {
     dispatch({
       type: INIT_STATE,
-      payload: state
+      payload: state,
     });
     if (state.motd) {
       dispatch(receiveMotd(state.motd));
@@ -75,7 +75,7 @@ export function loadedState(state) {
     dispatch(setPlaylists(state.playlists || []));
     dispatch(setWaitList({
       waitlist: state.waitlist,
-      locked: state.waitlistLocked
+      locked: state.waitlistLocked,
     }));
     if (state.booth && state.booth.historyID) {
       // TODO don't set this when logging in _after_ entering the page?
@@ -87,7 +87,7 @@ export function loadedState(state) {
       dispatch(loginComplete({
         token,
         socketToken: state.socketToken,
-        user: state.user
+        user: state.user,
       }));
     }
     if (state.activePlaylist) {
@@ -106,14 +106,14 @@ export function initState() {
       dispatch(syncTimestamps(beforeTime, state.time));
       dispatch(loadedState(state));
       dispatch(loadHistory());
-    }
+    },
   });
 }
 
 export function setSessionToken(token) {
   return {
     type: SET_TOKEN,
-    payload: { token }
+    payload: { token },
   };
 }
 
@@ -133,16 +133,16 @@ export function login({ email, password }) {
     onError: error => ({
       type: LOGIN_COMPLETE,
       error: true,
-      payload: error
-    })
+      payload: error,
+    }),
   });
 }
 
 export function register({
-  email, username, password, grecaptcha
+  email, username, password, grecaptcha,
 }) {
   return post('/auth/register', {
-    email, username, password, grecaptcha
+    email, username, password, grecaptcha,
   }, {
     onStart: () => ({ type: REGISTER_START }),
     onComplete: res => (dispatch) => {
@@ -150,15 +150,15 @@ export function register({
       debug('registered', user);
       dispatch({
         type: REGISTER_COMPLETE,
-        payload: { user }
+        payload: { user },
       });
       dispatch(login({ email, password }));
     },
     onError: error => ({
       type: REGISTER_COMPLETE,
       error: true,
-      payload: error
-    })
+      payload: error,
+    }),
   });
 }
 
@@ -179,7 +179,7 @@ export function logout() {
       dispatch(logoutStart());
       Session.unset();
     },
-    onComplete: logoutComplete
+    onComplete: logoutComplete,
   });
 }
 
@@ -187,21 +187,21 @@ export function resetPassword(email) {
   return post('/auth/password/reset', email, {
     onComplete: () => ({
       type: RESET_PASSWORD_COMPLETE,
-      payload: 'Successfully sent password reset email'
+      payload: 'Successfully sent password reset email',
     }),
     onError: error => ({
       type: RESET_PASSWORD_COMPLETE,
       error: true,
-      payload: error
-    })
+      payload: error,
+    }),
   });
 }
 
 export function getSocketAuthToken() {
   return get('/auth/socket', {
     onComplete: res => () => ({
-      socketToken: res.data.socketToken
-    })
+      socketToken: res.data.socketToken,
+    }),
   });
 }
 

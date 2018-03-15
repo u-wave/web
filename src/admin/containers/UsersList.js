@@ -8,11 +8,11 @@ import { pageSelector, usersSelector } from '../selectors/userSelectors';
 
 const mapStateToProps = createStructuredSelector({
   currentPage: pageSelector,
-  users: usersSelector
+  users: usersSelector,
 });
 
 const mapDispatchToProps = {
-  onLoadUsers: loadUsers
+  onLoadUsers: loadUsers,
 };
 
 export default compose(
@@ -20,6 +20,6 @@ export default compose(
   lifecycle({
     componentDidMount() {
       this.props.onLoadUsers();
-    }
-  })
+    },
+  }),
 )(UsersList);

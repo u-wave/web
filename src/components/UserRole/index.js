@@ -8,7 +8,7 @@ import upperCaseFirst from 'upper-case-first';
 const UserRole = ({
   t,
   muiTheme,
-  roleName
+  roleName,
 }) => (
   <div className="UserRole" style={{ color: muiTheme.rankColors[roleName] }}>
     {t(`roles.${roleName}`, { defaultValue: upperCaseFirst(roleName) })}
@@ -18,10 +18,10 @@ const UserRole = ({
 UserRole.propTypes = {
   t: PropTypes.func.isRequired,
   muiTheme: PropTypes.object.isRequired,
-  roleName: PropTypes.string.isRequired
+  roleName: PropTypes.string.isRequired,
 };
 
 export default compose(
   muiThemeable(),
-  translate()
+  translate(),
 )(UserRole);

@@ -11,7 +11,7 @@ import formatJoinDate from '../../utils/formatJoinDate';
 // Our cards are much smaller than usual so we remove some padding to make it
 // look less strange.
 const smallPaddingStyle = {
-  paddingTop: 0
+  paddingTop: 0,
 };
 
 const UserCard = ({ user }) => (
@@ -31,7 +31,7 @@ const UserCard = ({ user }) => (
 );
 
 UserCard.propTypes = {
-  user: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired,
 };
 
 export default UserCard;

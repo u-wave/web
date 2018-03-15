@@ -9,7 +9,7 @@ import {
   DO_JOIN_START, DO_JOIN_COMPLETE,
   DO_LEAVE_START, DO_LEAVE_COMPLETE,
   DO_LOCK_START, DO_LOCK_COMPLETE,
-  DO_CLEAR_START, DO_CLEAR_COMPLETE
+  DO_CLEAR_START, DO_CLEAR_COMPLETE,
 } from '../constants/actionTypes/waitlist';
 import { del, post, put } from './RequestActionCreators';
 
@@ -18,8 +18,8 @@ export function setWaitList(data) {
     type: WAITLIST_LOAD,
     payload: {
       waitlist: data.waitlist,
-      locked: data.locked
-    }
+      locked: data.locked,
+    },
   };
 }
 
@@ -27,8 +27,8 @@ export function setLocked(lock) {
   return {
     type: WAITLIST_LOCK,
     payload: {
-      locked: lock
-    }
+      locked: lock,
+    },
   };
 }
 
@@ -39,7 +39,7 @@ export function clearWaitlist() {
 export function updatedWaitlist(waitlist) {
   return {
     type: WAITLIST_UPDATE,
-    payload: { waitlist }
+    payload: { waitlist },
   };
 }
 
@@ -53,13 +53,13 @@ export function joinWaitlist(user) {
       onStart: () => ({ type: DO_JOIN_START }),
       onComplete: ({ data }) => ({
         type: DO_JOIN_COMPLETE,
-        payload: { waitlist: data }
+        payload: { waitlist: data },
       }),
       onError: error => ({
         type: DO_JOIN_COMPLETE,
         error: true,
-        payload: error
-      })
+        payload: error,
+      }),
     }));
   };
 }
@@ -67,7 +67,7 @@ export function joinWaitlist(user) {
 export function joinedWaitlist({ userID, waitlist }) {
   return {
     type: WAITLIST_JOIN,
-    payload: { userID, waitlist }
+    payload: { userID, waitlist },
   };
 }
 
@@ -80,13 +80,13 @@ export function leaveWaitlist(user) {
       onStart: () => ({ type: DO_LEAVE_START }),
       onComplete: ({ data }) => ({
         type: DO_LEAVE_COMPLETE,
-        payload: { waitlist: data }
+        payload: { waitlist: data },
       }),
       onError: error => ({
         type: DO_LEAVE_COMPLETE,
         error: true,
-        payload: error
-      })
+        payload: error,
+      }),
     }));
   };
 }
@@ -94,18 +94,18 @@ export function leaveWaitlist(user) {
 export function leftWaitlist({ userID, waitlist }) {
   return {
     type: WAITLIST_LEAVE,
-    payload: { userID, waitlist }
+    payload: { userID, waitlist },
   };
 }
 
 export function movedInWaitlist({
-  userID, moderatorID, position, waitlist
+  userID, moderatorID, position, waitlist,
 }) {
   return (dispatch) => {
     dispatch({
       type: WAITLIST_MOVE,
       payload: { userID, position },
-      meta: { moderatorID }
+      meta: { moderatorID },
     });
     dispatch(updatedWaitlist(waitlist));
   };
@@ -115,17 +115,17 @@ function putLock(status) {
   return put('/waitlist/lock', { lock: status, clear: false }, {
     onStart: () => ({
       type: DO_LOCK_START,
-      payload: { locked: status }
+      payload: { locked: status },
     }),
     onComplete: ({ data }) => ({
       type: DO_LOCK_COMPLETE,
-      payload: { locked: data.locked }
+      payload: { locked: data.locked },
     }),
     onError: error => ({
       type: DO_LOCK_COMPLETE,
       error: true,
-      payload: error
-    })
+      payload: error,
+    }),
   });
 }
 
@@ -143,7 +143,7 @@ export function modClearWaitlist() {
     onError: error => ({
       type: DO_CLEAR_COMPLETE,
       error: true,
-      payload: error
-    })
+      payload: error,
+    }),
   });
 }

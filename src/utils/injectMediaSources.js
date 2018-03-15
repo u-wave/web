@@ -10,7 +10,7 @@ export default function injectMediaSources() {
     static displayName = `InjectMediaSources(${getComponentName(Component)})`;
 
     static contextTypes = {
-      mediaSources: PropTypes.object
+      mediaSources: PropTypes.object,
     };
 
     getMediaSource = name => this.context.mediaSources[name];

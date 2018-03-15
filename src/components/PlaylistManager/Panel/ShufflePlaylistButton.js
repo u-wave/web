@@ -18,15 +18,15 @@ const enhance = compose(
       }, () => {
         props.setLoading(false);
       });
-    }
+    },
   }),
-  translate()
+  translate(),
 );
 
 const ShuffleButton = ({
   t,
   isLoading,
-  onClick
+  onClick,
 }) => (
   <IconButton
     onClick={onClick}
@@ -45,7 +45,7 @@ ShuffleButton.propTypes = {
   t: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
-  onShuffle: PropTypes.func.isRequired // eslint-disable-line react/no-unused-prop-types
+  onShuffle: PropTypes.func.isRequired, // eslint-disable-line react/no-unused-prop-types
 };
 
 export default enhance(ShuffleButton);

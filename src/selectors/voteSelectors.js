@@ -7,11 +7,11 @@ const createPropSelector = (base, prop) => createSelector(base, obj => obj[prop]
 const createIsSelector = type => createSelector(
   type,
   currentUserSelector,
-  (users, me) => !!me && users.indexOf(me._id) > -1
+  (users, me) => !!me && users.indexOf(me._id) > -1,
 );
 const createCountSelector = type => createSelector(
   type,
-  array => array.length
+  array => array.length,
 );
 
 export const favoritesSelector = createPropSelector(baseSelector, 'favorites');
@@ -21,7 +21,7 @@ export const downvotesSelector = createPropSelector(baseSelector, 'downvotes');
 export const currentVotesSelector = createStructuredSelector({
   favorites: favoritesSelector,
   upvotes: upvotesSelector,
-  downvotes: downvotesSelector
+  downvotes: downvotesSelector,
 });
 
 export const isFavoriteSelector = createIsSelector(favoritesSelector);
@@ -38,5 +38,5 @@ export const currentVoteStatsSelector = createStructuredSelector({
   isDownvote: isDownvoteSelector,
   favoritesCount: favoritesCountSelector,
   upvotesCount: upvotesCountSelector,
-  downvotesCount: downvotesCountSelector
+  downvotesCount: downvotesCountSelector,
 });

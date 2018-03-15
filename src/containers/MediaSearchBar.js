@@ -3,19 +3,19 @@ import { connect } from 'react-redux';
 import SearchBar from '../components/PlaylistManager/Header/SearchBar';
 import {
   search,
-  setSource
+  setSource,
 } from '../actions/SearchActionCreators';
 import {
-  searchSourceTypeSelector
+  searchSourceTypeSelector,
 } from '../selectors/searchSelectors';
 
 const mapStateToProps = createStructuredSelector({
-  source: searchSourceTypeSelector
+  source: searchSourceTypeSelector,
 });
 
 const mapDispatchToProps = {
   onSubmit: search,
-  onSourceChange: setSource
+  onSourceChange: setSource,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);

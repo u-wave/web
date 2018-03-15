@@ -11,7 +11,7 @@ const EditMedia = ({ onEdit, ...props }) => (
 );
 
 EditMedia.propTypes = {
-  onEdit: PropTypes.func.isRequired
+  onEdit: PropTypes.func.isRequired,
 };
 
 export default EditMedia;

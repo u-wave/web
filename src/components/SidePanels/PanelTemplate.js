@@ -10,7 +10,7 @@ const PanelTemplate = ({ selected, children }) => (
 
 PanelTemplate.propTypes = {
   children: PropTypes.node.isRequired,
-  selected: PropTypes.bool.isRequired
+  selected: PropTypes.bool.isRequired,
 };
 
 export default PanelTemplate;

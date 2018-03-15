@@ -8,7 +8,7 @@ import Avatar from '../Avatar';
 
 const fullSizeStyle = {
   width: '100%',
-  height: '100%'
+  height: '100%',
 };
 
 const UserInfo = ({ className, user, onClick }) => (
@@ -32,7 +32,7 @@ const UserInfo = ({ className, user, onClick }) => (
 UserInfo.propTypes = {
   className: PropTypes.string,
   user: PropTypes.object.isRequired,
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
 };
 
 export default pure(UserInfo);

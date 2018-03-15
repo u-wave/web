@@ -10,7 +10,7 @@ const GroupMention = ({ className, group }) => (
 
 GroupMention.propTypes = {
   className: PropTypes.string,
-  group: PropTypes.string.isRequired
+  group: PropTypes.string.isRequired,
 };
 
 export default GroupMention;

@@ -5,12 +5,12 @@ import { fade } from 'material-ui/utils/colorManipulator';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 
 const listItemStyle = {
-  WebkitAppearance: 'initial'
+  WebkitAppearance: 'initial',
 };
 const innerDivStyle = {
   height: 40,
   lineHeight: '24px',
-  padding: '8px 16px 8px 48px'
+  padding: '8px 16px 8px 48px',
 };
 
 const Suggestion = ({
@@ -23,7 +23,7 @@ const Suggestion = ({
   <ListItem
     style={selected ? {
       ...listItemStyle,
-      background: fade(muiTheme.palette.textColor, 0.1)
+      background: fade(muiTheme.palette.textColor, 0.1),
     } : listItemStyle}
     innerDivStyle={innerDivStyle}
     value={value}
@@ -37,7 +37,7 @@ Suggestion.propTypes = {
   muiTheme: PropTypes.object.isRequired,
   value: PropTypes.string.isRequired,
   select: PropTypes.func.isRequired,
-  selected: PropTypes.bool.isRequired
+  selected: PropTypes.bool.isRequired,
 };
 
 export default muiThemeable()(Suggestion);

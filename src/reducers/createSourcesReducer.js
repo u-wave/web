@@ -9,7 +9,7 @@ function reduceSources(state = initialState, action, sources) {
     }
     return {
       ...newState,
-      [sourceName]: source.reducer(newState[sourceName], action)
+      [sourceName]: source.reducer(newState[sourceName], action),
     };
   }, state);
 }

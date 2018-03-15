@@ -22,8 +22,8 @@ const EmojiSuggestion = ({
 EmojiSuggestion.propTypes = {
   value: PropTypes.shape({
     shortcode: PropTypes.string,
-    image: PropTypes.string
-  }).isRequired
+    image: PropTypes.string,
+  }).isRequired,
 };
 
 export default EmojiSuggestion;

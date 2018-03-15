@@ -10,7 +10,7 @@ const MediaLoadingIndicator = ({ className }) => (
 );
 
 MediaLoadingIndicator.propTypes = {
-  className: PropTypes.string
+  className: PropTypes.string,
 };
 
 export default MediaLoadingIndicator;

@@ -9,19 +9,19 @@ import ModRowBase from './ModRowBase';
 const userTarget = {
   hover(props, monitor, component) {
     component.setState({
-      insertAbove: isDraggingNearTopOfRow(monitor, component)
+      insertAbove: isDraggingNearTopOfRow(monitor, component),
     });
   },
   drop(props, monitor, component) {
     const insertAfter = !isDraggingNearTopOfRow(monitor, component);
     const { position } = component.props;
     return { position: insertAfter ? position + 1 : position };
-  }
+  },
 };
 
 const collect = (connect, monitor) => ({
   connectDropTarget: connect.dropTarget(),
-  isOver: monitor.isOver()
+  isOver: monitor.isOver(),
 });
 
 /**
@@ -31,11 +31,11 @@ const collect = (connect, monitor) => ({
 class ModRow extends React.Component {
   static propTypes = {
     connectDropTarget: PropTypes.func.isRequired,
-    isOver: PropTypes.bool.isRequired
+    isOver: PropTypes.bool.isRequired,
   };
 
   state = {
-    insertAbove: false
+    insertAbove: false,
   };
 
   render() {

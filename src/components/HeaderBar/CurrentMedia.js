@@ -16,8 +16,8 @@ CurrentMedia.propTypes = {
   className: PropTypes.string,
   media: PropTypes.shape({
     artist: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired
-  })
+    title: PropTypes.string.isRequired,
+  }),
 };
 
 export default translate()(CurrentMedia);

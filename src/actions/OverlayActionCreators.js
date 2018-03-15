@@ -3,14 +3,14 @@ import { OPEN_OVERLAY, CLOSE_OVERLAY, TOGGLE_OVERLAY } from '../constants/action
 export function openOverlay(overlay) {
   return {
     type: OPEN_OVERLAY,
-    payload: { overlay }
+    payload: { overlay },
   };
 }
 
 export function toggleOverlay(overlay) {
   return {
     type: TOGGLE_OVERLAY,
-    payload: { overlay }
+    payload: { overlay },
   };
 }
 

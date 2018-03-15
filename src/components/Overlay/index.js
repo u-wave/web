@@ -6,7 +6,7 @@ const Overlay = ({ direction = 'bottom', children, className }) => (
   <div
     className={cx(
       'Overlay',
-      `Overlay--from-${direction}`
+      `Overlay--from-${direction}`,
     )}
   >
     <div className={cx('Overlay-body', className)}>
@@ -18,7 +18,7 @@ const Overlay = ({ direction = 'bottom', children, className }) => (
 Overlay.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
-  direction: PropTypes.string
+  direction: PropTypes.string,
 };
 
 export default Overlay;

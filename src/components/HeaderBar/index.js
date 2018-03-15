@@ -78,7 +78,7 @@ HeaderBar.propTypes = {
   onVolumeMute: PropTypes.func,
   onVolumeUnmute: PropTypes.func,
   onToggleRoomHistory: PropTypes.func,
-  onToggleAboutOverlay: PropTypes.func
+  onToggleAboutOverlay: PropTypes.func,
 };
 
 export default HeaderBar;

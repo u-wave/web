@@ -15,12 +15,12 @@ class PasswordResetPage extends React.Component {
   static propTypes = {
     t: PropTypes.func.isRequired,
     email: PropTypes.string.isRequired,
-    onSubmit: PropTypes.func.isRequired
+    onSubmit: PropTypes.func.isRequired,
   };
 
   state = {
     newPassword: '',
-    newPasswordConfirm: ''
+    newPasswordConfirm: '',
   };
 
   isValid() {
@@ -30,13 +30,13 @@ class PasswordResetPage extends React.Component {
 
   handlePasswordChange = (event) => {
     this.setState({
-      newPassword: event.target.value
+      newPassword: event.target.value,
     });
   };
 
   handlePasswordConfirmChange = (event) => {
     this.setState({
-      newPasswordConfirm: event.target.value
+      newPasswordConfirm: event.target.value,
     });
   };
 

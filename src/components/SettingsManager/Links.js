@@ -14,7 +14,7 @@ const linkStyle = {
   lineHeight: '24px',
   marginBottom: 20,
   textAlign: 'left',
-  WebkitAppearance: 'initial'
+  WebkitAppearance: 'initial',
 };
 const iconStyle = { verticalAlign: 'top' };
 
@@ -23,7 +23,7 @@ const Link = withProps({
   target: '_blank',
   labelPosition: 'after',
   backgroundColor: 'transparent',
-  hoverColor: 'transparent'
+  hoverColor: 'transparent',
 })(FlatButton);
 
 const Links = ({ t }) => (
@@ -51,7 +51,7 @@ const Links = ({ t }) => (
 );
 
 Links.propTypes = {
-  t: PropTypes.func.isRequired
+  t: PropTypes.func.isRequired,
 };
 
 export default enhance(Links);

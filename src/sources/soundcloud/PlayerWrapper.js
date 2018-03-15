@@ -11,7 +11,7 @@ const PlayerWrapper = (props) => {
 };
 
 PlayerWrapper.propTypes = {
-  mode: PropTypes.string.isRequired
+  mode: PropTypes.string.isRequired,
 };
 
 export default PlayerWrapper;

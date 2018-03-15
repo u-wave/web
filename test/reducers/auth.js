@@ -42,7 +42,7 @@ describe('reducers/auth', () => {
       dispatch({
         type: LOGIN_COMPLETE,
         payload: new Error('failed'),
-        error: true
+        error: true,
       });
       expect(s.tokenSelector(getState())).to.be.null;
       expect(s.currentUserSelector(getState())).to.be.null;

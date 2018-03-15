@@ -18,7 +18,7 @@ describe('reducers/booth', () => {
       djID: null,
       media: null,
       startTime: null,
-      isFullscreen: false
+      isFullscreen: false,
     });
   });
 
@@ -33,15 +33,15 @@ describe('reducers/booth', () => {
           historyID: 'someRandomID',
           userID: 'seventeen',
           media: { artist: 'about tess', title: 'Imaginedit' },
-          timestamp: 1449767164107
-        }
+          timestamp: 1449767164107,
+        },
       });
       expect(state).to.eql({
         historyID: 'someRandomID',
         djID: 'seventeen',
         media: { artist: 'about tess', title: 'Imaginedit' },
         startTime: 1449767164107,
-        isFullscreen: false
+        isFullscreen: false,
       });
     });
 
@@ -52,7 +52,7 @@ describe('reducers/booth', () => {
         djID: null,
         media: null,
         startTime: null,
-        isFullscreen: false
+        isFullscreen: false,
       });
     });
   });

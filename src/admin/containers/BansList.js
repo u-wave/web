@@ -5,12 +5,12 @@ import { loadBans, unbanUserAndReload } from '../actions/bans';
 import BansList from '../components/BansList';
 
 const mapStateToProps = state => ({
-  bans: state.admin.bans.bans
+  bans: state.admin.bans.bans,
 });
 
 const mapDispatchToProps = {
   onLoadBans: loadBans,
-  onUnbanUser: unbanUserAndReload
+  onUnbanUser: unbanUserAndReload,
 };
 
 export default compose(
@@ -18,6 +18,6 @@ export default compose(
   lifecycle({
     componentDidMount() {
       this.props.onLoadBans();
-    }
-  })
+    },
+  }),
 )(BansList);

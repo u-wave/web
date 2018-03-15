@@ -11,7 +11,7 @@ const LogMessage = ({ text }) => (
 );
 
 LogMessage.propTypes = {
-  text: PropTypes.string.isRequired
+  text: PropTypes.string.isRequired,
 };
 
 export default pure(LogMessage);

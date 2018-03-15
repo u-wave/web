@@ -1,14 +1,14 @@
 import {
   LOAD_BANS_START,
-  LOAD_BANS_COMPLETE
+  LOAD_BANS_COMPLETE,
 } from '../constants/ActionTypes';
 
 const initialState = {
   currentPage: {
     offset: 0,
-    limit: 50
+    limit: 50,
   },
-  bans: []
+  bans: [],
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -18,7 +18,7 @@ export default function reducer(state = initialState, action = {}) {
   case LOAD_BANS_COMPLETE:
     return {
       ...state,
-      bans: action.payload.bans
+      bans: action.payload.bans,
     };
   default:
     return state;

@@ -1,13 +1,13 @@
 import {
   SET_RESET_KEY,
-  SET_RESET_SUCCESS
+  SET_RESET_SUCCESS,
 } from './constants';
 import { post } from '../actions/RequestActionCreators';
 
 export function setResetKey(key) {
   return {
     type: SET_RESET_KEY,
-    payload: key
+    payload: key,
   };
 }
 
@@ -24,8 +24,8 @@ export function resetPassword(newPassword) {
       onError: err => ({
         type: SET_RESET_SUCCESS,
         error: true,
-        payload: err
-      })
+        payload: err,
+      }),
     }));
   };
 }

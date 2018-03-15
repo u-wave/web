@@ -15,7 +15,7 @@ const SearchResults = ({
   results,
   loadingState,
   onOpenAddMediaMenu,
-  onOpenPreviewMediaDialog
+  onOpenPreviewMediaDialog,
 }) => {
   let list;
   if (loadingState === LOADED) {
@@ -28,7 +28,7 @@ const SearchResults = ({
           <AddToPlaylistAction
             key="add"
             onAdd={position => onOpenAddMediaMenu(position, media, selection)}
-          />
+          />,
         ]}
       />
     );
@@ -57,7 +57,7 @@ SearchResults.propTypes = {
   results: PropTypes.arrayOf(PropTypes.object),
   loadingState: PropTypes.oneOf([ IDLE, LOADING, LOADED ]).isRequired,
   onOpenAddMediaMenu: PropTypes.func.isRequired,
-  onOpenPreviewMediaDialog: PropTypes.func.isRequired
+  onOpenPreviewMediaDialog: PropTypes.func.isRequired,
 };
 
 export default translate()(SearchResults);

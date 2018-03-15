@@ -11,7 +11,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onResetPassword: resetPassword,
   onLogin: login,
   onRegister: register,
-  onCloseDialog: closeLoginDialog
+  onCloseDialog: closeLoginDialog,
 }, dispatch);
 
 export default connect(loginDialogSelector, mapDispatchToProps)(LoginDialog);

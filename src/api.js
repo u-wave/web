@@ -21,10 +21,10 @@ export const components = {
   Form,
   FormGroup,
   TextField,
-  FormButton
+  FormButton,
 };
 
 export const actions = {
   playlists: PlaylistActionCreators,
-  request: RequestActionCreators
+  request: RequestActionCreators,
 };

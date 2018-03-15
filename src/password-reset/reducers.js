@@ -1,6 +1,6 @@
 import {
   SET_RESET_KEY,
-  SET_RESET_SUCCESS
+  SET_RESET_SUCCESS,
 } from './constants';
 
 export auth from '../reducers/auth';
@@ -15,12 +15,12 @@ export function passwordReset(state = {}, action = {}) {
   case SET_RESET_KEY:
     return {
       ...state,
-      key: action.payload
+      key: action.payload,
     };
   case SET_RESET_SUCCESS:
     return {
       ...state,
-      success: true
+      success: true,
     };
 
   default:

@@ -12,7 +12,7 @@ class SettingsManager extends React.Component {
     t: PropTypes.func.isRequired,
     className: PropTypes.string,
     onCloseOverlay: PropTypes.func.isRequired,
-    onLogout: PropTypes.func.isRequired
+    onLogout: PropTypes.func.isRequired,
   };
 
   handleLogout = () => {

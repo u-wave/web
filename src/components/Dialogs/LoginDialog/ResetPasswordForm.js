@@ -15,12 +15,12 @@ class ResetPasswordForm extends React.Component {
     t: PropTypes.func.isRequired,
     error: PropTypes.object,
     onResetPassword: PropTypes.func.isRequired,
-    onCloseDialog: PropTypes.func.isRequired
+    onCloseDialog: PropTypes.func.isRequired,
   };
 
   state = {
     busy: false,
-    done: false
+    done: false,
   };
 
   componentWillReceiveProps() {
@@ -31,11 +31,11 @@ class ResetPasswordForm extends React.Component {
     event.preventDefault();
     this.setState({ busy: true });
     Promise.resolve(this.props.onResetPassword({
-      email: this.email.value
+      email: this.email.value,
     })).then(() => {
       this.setState({
         busy: false,
-        done: true
+        done: true,
       });
     });
   };

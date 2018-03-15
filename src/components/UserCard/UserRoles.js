@@ -19,7 +19,7 @@ UserRoles.propTypes = {
   /**
    * The roles to display.
    */
-  roles: PropTypes.arrayOf(PropTypes.string).isRequired
+  roles: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default UserRoles;

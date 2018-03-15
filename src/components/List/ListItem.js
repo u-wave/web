@@ -11,7 +11,7 @@ import SelectedIcon from 'material-ui/svg-icons/navigation/chevron-right';
  */
 
 const selectedStyle = {
-  backgroundColor: '#9d2053'
+  backgroundColor: '#9d2053',
 };
 
 const enhance = mapProps(({
@@ -23,13 +23,13 @@ const enhance = mapProps(({
   className: cx(className, selected && 'is-selected'),
   style: selected
     ? { ...selectedStyle, ...style }
-    : style
+    : style,
 }));
 
 const ListItem = enhance(MuiListItem);
 
 ListItem.propTypes = {
-  selected: PropTypes.bool
+  selected: PropTypes.bool,
 };
 
 export default ListItem;

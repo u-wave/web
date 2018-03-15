@@ -11,7 +11,7 @@ const Loader = ({ className, size }) => (
 
 Loader.propTypes = {
   className: PropTypes.string,
-  size: PropTypes.string.isRequired
+  size: PropTypes.string.isRequired,
 };
 
 export default Loader;

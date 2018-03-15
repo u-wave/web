@@ -11,24 +11,24 @@ const changeNameButtonStyle = {
   height: 28,
   width: 28,
   marginLeft: 5,
-  verticalAlign: 'bottom'
+  verticalAlign: 'bottom',
 };
 
 const changeNameIconStyle = {
   width: 24,
   height: 24,
-  padding: 2
+  padding: 2,
 };
 
 class ChangeUsernameButton extends React.Component {
   static propTypes = {
     t: PropTypes.func.isRequired,
     onChangeUsername: PropTypes.func.isRequired,
-    initialUsername: PropTypes.string
+    initialUsername: PropTypes.string,
   };
 
   state = {
-    changingUsername: false
+    changingUsername: false,
   };
 
   closeDialog() {

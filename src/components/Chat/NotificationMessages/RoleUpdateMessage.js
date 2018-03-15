@@ -14,7 +14,7 @@ const RoleUpdateMessage = ({
   user,
   updateType,
   roles,
-  timestamp
+  timestamp,
 }) => (
   <UserNotificationMessage
     type="roleUpdate"
@@ -30,7 +30,7 @@ RoleUpdateMessage.propTypes = {
   user: PropTypes.object.isRequired,
   updateType: PropTypes.oneOf([ 'add', 'remove' ]).isRequired,
   roles: PropTypes.arrayOf(PropTypes.string).isRequired,
-  timestamp: PropTypes.number.isRequired
+  timestamp: PropTypes.number.isRequired,
 };
 
 export default RoleUpdateMessage;

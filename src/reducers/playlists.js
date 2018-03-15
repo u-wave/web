@@ -28,14 +28,14 @@ import {
   UPDATE_MEDIA_START,
   UPDATE_MEDIA_COMPLETE,
   FILTER_PLAYLIST_ITEMS,
-  FILTER_PLAYLIST_ITEMS_COMPLETE
+  FILTER_PLAYLIST_ITEMS_COMPLETE,
 } from '../constants/actionTypes/playlists';
 import {
-  DO_FAVORITE_COMPLETE
+  DO_FAVORITE_COMPLETE,
 } from '../constants/actionTypes/votes';
 import {
   SEARCH_START,
-  SEARCH_DELETE
+  SEARCH_DELETE,
 } from '../constants/actionTypes/search';
 
 const initialState = {
@@ -43,7 +43,7 @@ const initialState = {
   playlistItems: {},
   activePlaylistID: null,
   selectedPlaylistID: null,
-  currentFilter: {}
+  currentFilter: {},
 };
 
 function deselectAll(playlists) {
@@ -66,7 +66,7 @@ function processInsert(list, insert, position) {
   return [
     ...list.slice(0, insertIdx),
     ...insert,
-    ...list.slice(insertIdx)
+    ...list.slice(insertIdx),
   ];
 }
 
@@ -86,8 +86,8 @@ function updatePlaylist(state, playlistID, modify) {
       ...state,
       playlists: {
         ...state.playlists,
-        [playlistID]: modify(playlist)
-      }
+        [playlistID]: modify(playlist),
+      },
     };
   }
   return state;
@@ -103,16 +103,16 @@ function updatePlaylistItems(state, playlistID, modify) {
     if (state.selectedPlaylistID === playlistID && nextFilter) {
       nextFilter = {
         ...nextFilter,
-        items: modify(nextFilter.items || [], playlist)
+        items: modify(nextFilter.items || [], playlist),
       };
     }
     return {
       ...state,
       playlistItems: {
         ...state.playlistItems,
-        [playlistID]: modify(media || [], playlist)
+        [playlistID]: modify(media || [], playlist),
       },
-      currentFilter: nextFilter
+      currentFilter: nextFilter,
     };
   }
   return state;
@@ -126,7 +126,7 @@ function updatePlaylistAndItems(state, playlistID, modifyPlaylist, modifyItems) 
 function setPlaylistLoading(state, id, loading = true) {
   return updatePlaylist(state, id, playlist => ({
     ...playlist,
-    loading
+    loading,
   }));
 }
 
@@ -161,14 +161,14 @@ function filterCachedPlaylistItems(state, playlistID, filter) {
 
 export default function reduce(state = initialState, action = {}) {
   const {
-    type, payload, meta, error
+    type, payload, meta, error,
   } = action;
 
   switch (type) {
   case LOAD_ALL_PLAYLISTS_COMPLETE:
     return {
       ...state,
-      playlists: indexBy(payload.playlists, '_id')
+      playlists: indexBy(payload.playlists, '_id'),
     };
   case ACTIVATE_PLAYLIST_START:
     // TODO use a different property here so we can show a loading icon on
@@ -185,9 +185,9 @@ export default function reduce(state = initialState, action = {}) {
       playlists: mapObj(state.playlists, playlist => ({
         ...playlist,
         loading: playlist._id === payload.playlistID ? false : playlist.loading,
-        active: playlist._id === payload.playlistID
+        active: playlist._id === payload.playlistID,
       })),
-      activePlaylistID: payload.playlistID
+      activePlaylistID: payload.playlistID,
     };
   case SELECT_PLAYLIST:
     return {
@@ -195,9 +195,9 @@ export default function reduce(state = initialState, action = {}) {
       // set `selected` property on playlists
       playlists: mapObj(state.playlists, playlist => ({
         ...playlist,
-        selected: playlist._id === payload.playlistID
+        selected: playlist._id === payload.playlistID,
       })),
-      selectedPlaylistID: payload.playlistID
+      selectedPlaylistID: payload.playlistID,
     };
   case SEARCH_START:
     // We deselect playlists when doing a search, so the UI can switch to the
@@ -205,7 +205,7 @@ export default function reduce(state = initialState, action = {}) {
     return {
       ...state,
       playlists: deselectAll(state.playlists),
-      selectedPlaylistID: null
+      selectedPlaylistID: null,
     };
   case SEARCH_DELETE:
     // Select the active playlist when search results are closed while they
@@ -216,9 +216,9 @@ export default function reduce(state = initialState, action = {}) {
       ...state,
       playlists: mapObj(state.playlists, playlist => ({
         ...playlist,
-        selected: playlist.active
+        selected: playlist.active,
       })),
-      selectedPlaylistID: state.activePlaylistID
+      selectedPlaylistID: state.activePlaylistID,
     };
 
   case LOAD_PLAYLIST_START: {
@@ -231,7 +231,7 @@ export default function reduce(state = initialState, action = {}) {
       state,
       payload.playlistID,
       (items, playlist) => fill(Array(playlist.size), null)
-        .map((item, i) => items[i] || item)
+        .map((item, i) => items[i] || item),
     );
   }
   case LOAD_PLAYLIST_COMPLETE:
@@ -243,7 +243,7 @@ export default function reduce(state = initialState, action = {}) {
       state,
       payload.playlistID,
       playlist => ({ ...playlist, loading: false }),
-      items => mergePlaylistPage(meta.size, items, payload.media, meta)
+      items => mergePlaylistPage(meta.size, items, payload.media, meta),
     );
 
   case FILTER_PLAYLIST_ITEMS:
@@ -254,7 +254,7 @@ export default function reduce(state = initialState, action = {}) {
     if (!payload.filter) {
       return {
         ...state,
-        currentFilter: null
+        currentFilter: null,
       };
     }
     return {
@@ -262,8 +262,8 @@ export default function reduce(state = initialState, action = {}) {
       currentFilter: {
         playlistID: payload.playlistID,
         filter: payload.filter,
-        items: filterCachedPlaylistItems(state, payload.playlistID, payload.filter)
-      }
+        items: filterCachedPlaylistItems(state, payload.playlistID, payload.filter),
+      },
     };
   case FILTER_PLAYLIST_ITEMS_COMPLETE: {
     // Only the selected playlist can be filtered.
@@ -274,7 +274,7 @@ export default function reduce(state = initialState, action = {}) {
     const items = mergePlaylistPage(meta.size, currentFilter.items, payload.media, meta);
     return {
       ...state,
-      currentFilter: { ...currentFilter, items }
+      currentFilter: { ...currentFilter, items },
     };
   }
 
@@ -297,22 +297,22 @@ export default function reduce(state = initialState, action = {}) {
       description: payload.description,
       shared: payload.shared,
       selected: true,
-      creating: true
+      creating: true,
     };
     return {
       ...state,
       playlists: assign(
         deselectAll(state.playlists),
-        { [meta.tempId]: newPlaylist }
+        { [meta.tempId]: newPlaylist },
       ),
-      selectedPlaylistID: meta.tempId
+      selectedPlaylistID: meta.tempId,
     };
   }
   case CREATE_PLAYLIST_COMPLETE:
     if (error) {
       return {
         ...state,
-        playlists: except(state.playlists, `${meta.tempId}`)
+        playlists: except(state.playlists, `${meta.tempId}`),
       };
     }
 
@@ -323,11 +323,11 @@ export default function reduce(state = initialState, action = {}) {
         {
           [payload.playlist._id]: {
             ...payload.playlist,
-            selected: true
-          }
-        }
+            selected: true,
+          },
+        },
       ),
-      selectedPlaylistID: payload.playlist._id
+      selectedPlaylistID: payload.playlist._id,
     };
 
   case RENAME_PLAYLIST_START:
@@ -342,7 +342,7 @@ export default function reduce(state = initialState, action = {}) {
       return updatePlaylist(state, payload.playlistID, playlist => ({
         ...playlist,
         name: payload.name,
-        loading: false
+        loading: false,
       }));
     }
     return state;
@@ -360,7 +360,7 @@ export default function reduce(state = initialState, action = {}) {
       selectedPlaylistID: state.selectedPlaylistID === payload.playlistID
         ? state.activePlaylistID
         : state.selectedPlaylistID,
-      playlists: except(state.playlists, payload.playlistID)
+      playlists: except(state.playlists, payload.playlistID),
     };
 
   case ADD_MEDIA_START:
@@ -376,9 +376,9 @@ export default function reduce(state = initialState, action = {}) {
       playlist => ({
         ...playlist,
         loading: false,
-        size: payload.newSize
+        size: payload.newSize,
       }),
-      items => processInsert(items, payload.appendedMedia, { after: payload.afterID })
+      items => processInsert(items, payload.appendedMedia, { after: payload.afterID }),
     );
   case DO_FAVORITE_COMPLETE:
     return updatePlaylistAndItems(
@@ -386,9 +386,9 @@ export default function reduce(state = initialState, action = {}) {
       payload.playlistID,
       playlist => ({
         ...playlist,
-        size: payload.newSize
+        size: payload.newSize,
       }),
-      items => processInsert(items, payload.added, { at: 'end' })
+      items => processInsert(items, payload.added, { at: 'end' }),
     );
 
   case UPDATE_MEDIA_START:
@@ -411,7 +411,7 @@ export default function reduce(state = initialState, action = {}) {
     return updatePlaylistItems(state, payload.playlistID, items =>
       items.map(media => media && ({
         ...media,
-        loading: isMovingMedia[media._id] || media.loading
+        loading: isMovingMedia[media._id] || media.loading,
       })));
   }
   case MOVE_MEDIA_COMPLETE:
@@ -423,7 +423,7 @@ export default function reduce(state = initialState, action = {}) {
     return updatePlaylistItems(state, payload.playlistID, items =>
       items.map(media => media && ({
         ...media,
-        loading: isRemovingMedia[media._id] || media.loading
+        loading: isRemovingMedia[media._id] || media.loading,
       })));
   }
   case REMOVE_MEDIA_COMPLETE: {
@@ -432,7 +432,7 @@ export default function reduce(state = initialState, action = {}) {
       state,
       payload.playlistID,
       playlist => ({ ...playlist, size: payload.newSize }),
-      items => items.filter(media => media === null || !isRemovedMedia[media._id])
+      items => items.filter(media => media === null || !isRemovedMedia[media._id]),
     );
   }
   default:

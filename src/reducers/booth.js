@@ -1,7 +1,7 @@
 import {
   ADVANCE,
   ENTER_FULLSCREEN,
-  EXIT_FULLSCREEN
+  EXIT_FULLSCREEN,
 } from '../constants/actionTypes/booth';
 
 const initialState = {
@@ -9,7 +9,7 @@ const initialState = {
   media: null,
   djID: null,
   startTime: null,
-  isFullscreen: false
+  isFullscreen: false,
 };
 
 export default function reduce(state = initialState, action = {}) {
@@ -22,7 +22,7 @@ export default function reduce(state = initialState, action = {}) {
         historyID: payload.historyID,
         media: payload.media,
         djID: payload.userID,
-        startTime: payload.timestamp
+        startTime: payload.timestamp,
       };
     }
     return {
@@ -30,17 +30,17 @@ export default function reduce(state = initialState, action = {}) {
       historyID: null,
       media: null,
       djID: null,
-      startTime: null
+      startTime: null,
     };
   case ENTER_FULLSCREEN:
     return {
       ...state,
-      isFullscreen: true
+      isFullscreen: true,
     };
   case EXIT_FULLSCREEN:
     return {
       ...state,
-      isFullscreen: false
+      isFullscreen: false,
     };
   default:
     return state;

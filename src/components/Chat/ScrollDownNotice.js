@@ -18,7 +18,7 @@ const ScrollNotice = ({ muiTheme, show, onClick }) => (
 ScrollNotice.propTypes = {
   muiTheme: PropTypes.object.isRequired,
   show: PropTypes.bool.isRequired,
-  onClick: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired,
 };
 
 export default muiThemeable()(ScrollNotice);

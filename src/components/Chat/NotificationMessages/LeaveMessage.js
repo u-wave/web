@@ -4,7 +4,7 @@ import UserNotificationMessage from './UserNotificationMessage';
 
 const LeaveMessage = ({
   user,
-  timestamp
+  timestamp,
 }) => (
   <UserNotificationMessage
     type="userLeave"
@@ -17,7 +17,7 @@ const LeaveMessage = ({
 
 LeaveMessage.propTypes = {
   user: PropTypes.object.isRequired,
-  timestamp: PropTypes.number.isRequired
+  timestamp: PropTypes.number.isRequired,
 };
 
 export default LeaveMessage;

@@ -19,7 +19,7 @@ const Menu = ({
   onCloseSearchResults,
   onAddToPlaylist,
   showImportPanel,
-  onShowImportPanel
+  onShowImportPanel,
 }) => {
   const searchIsSelected = showSearchResults ? 'is-selected' : '';
   const importIsSelected = showImportPanel ? 'is-selected' : '';
@@ -73,7 +73,7 @@ Menu.propTypes = {
   onSelectSearchResults: PropTypes.func.isRequired,
   onCloseSearchResults: PropTypes.func.isRequired,
   onAddToPlaylist: PropTypes.func.isRequired,
-  onShowImportPanel: PropTypes.func.isRequired
+  onShowImportPanel: PropTypes.func.isRequired,
 };
 
 export default Menu;

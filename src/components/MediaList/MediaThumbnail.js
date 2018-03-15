@@ -12,7 +12,7 @@ const MediaThumbnail = ({ url }) => (
 );
 
 MediaThumbnail.propTypes = {
-  url: PropTypes.string.isRequired
+  url: PropTypes.string.isRequired,
 };
 
 export default MediaThumbnail;

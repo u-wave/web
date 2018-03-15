@@ -10,12 +10,12 @@ const playlistTarget = {
   drop({ playlist, onAddToPlaylist }, monitor) {
     const { media } = monitor.getItem();
     onAddToPlaylist(playlist, media);
-  }
+  },
 };
 
 const collect = (connect, monitor) => ({
   connectDropTarget: connect.dropTarget(),
-  isOver: monitor.isOver()
+  isOver: monitor.isOver(),
 });
 
 const enhance = DropTarget(MEDIA, playlistTarget, collect);
@@ -31,7 +31,7 @@ class PlaylistRow extends React.Component {
     onClick: PropTypes.func,
     // Used in the drop handler above 👆
     // eslint-disable-next-line react/no-unused-prop-types
-    onAddToPlaylist: PropTypes.func
+    onAddToPlaylist: PropTypes.func,
   };
 
   render() {
@@ -43,7 +43,7 @@ class PlaylistRow extends React.Component {
       onClick,
 
       connectDropTarget,
-      isOver
+      isOver,
     } = this.props;
     const activeClass = playlist.active && 'is-active';
     const selectedClass = selected && 'is-selected';

@@ -7,7 +7,7 @@ import {
   LOAD_VOTES,
   FAVORITE, UPVOTE, DOWNVOTE,
   DO_FAVORITE_START, DO_FAVORITE_COMPLETE,
-  DO_UPVOTE, DO_DOWNVOTE
+  DO_UPVOTE, DO_DOWNVOTE,
 } from '../constants/actionTypes/votes';
 import mergeIncludedModels from '../utils/mergeIncludedModels';
 
@@ -16,14 +16,14 @@ import { flattenPlaylistItem } from './PlaylistActionCreators';
 export function setVoteStats(voteStats) {
   return {
     type: LOAD_VOTES,
-    payload: voteStats
+    payload: voteStats,
   };
 }
 
 export function favorited({ userID, historyID }) {
   return {
     type: FAVORITE,
-    payload: { userID, historyID }
+    payload: { userID, historyID },
   };
 }
 
@@ -31,7 +31,7 @@ export function receiveVote({ userID, vote }) {
   const type = vote > 0 ? UPVOTE : DOWNVOTE;
   return {
     type,
-    payload: { userID }
+    payload: { userID },
   };
 }
 
@@ -53,8 +53,8 @@ export function openFavoriteMenu(position) {
       meta: {
         playlists,
         position,
-        type: 'favorite'
-      }
+        type: 'favorite',
+      },
     });
   };
 }
@@ -62,7 +62,7 @@ export function openFavoriteMenu(position) {
 export function favoriteMediaStart(playlistID, historyID) {
   return {
     type: DO_FAVORITE_START,
-    payload: { historyID, playlistID }
+    payload: { historyID, playlistID },
   };
 }
 
@@ -73,8 +73,8 @@ export function favoriteMediaComplete(playlistID, historyID, changes) {
       historyID,
       playlistID,
       added: changes.added.map(flattenPlaylistItem),
-      newSize: changes.playlistSize
-    }
+      newSize: changes.playlistSize,
+    },
   };
 }
 
@@ -85,13 +85,13 @@ export function favoriteMedia(playlist, historyID) {
     onComplete: res =>
       favoriteMediaComplete(playlistID, historyID, {
         added: mergeIncludedModels(res),
-        playlistSize: res.meta.playlistSize
+        playlistSize: res.meta.playlistSize,
       }),
     onError: error => ({
       type: DO_FAVORITE_COMPLETE,
       error: true,
       payload: error,
-      meta: { historyID, playlistID }
-    })
+      meta: { historyID, playlistID },
+    }),
   });
 }

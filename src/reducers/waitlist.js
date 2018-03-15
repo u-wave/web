@@ -4,12 +4,12 @@ import {
   WAITLIST_CLEAR,
   WAITLIST_UPDATE,
   WAITLIST_JOIN,
-  WAITLIST_LEAVE
+  WAITLIST_LEAVE,
 } from '../constants/actionTypes/waitlist';
 
 const initialState = {
   waitlist: [],
-  locked: false
+  locked: false,
 };
 
 export default function reduce(state = initialState, action = {}) {
@@ -19,24 +19,24 @@ export default function reduce(state = initialState, action = {}) {
     return {
       ...state,
       waitlist: payload.waitlist,
-      locked: payload.locked
+      locked: payload.locked,
     };
   case WAITLIST_LOCK:
     return {
       ...state,
-      locked: payload.locked
+      locked: payload.locked,
     };
   case WAITLIST_CLEAR:
     return {
       ...state,
-      waitlist: []
+      waitlist: [],
     };
   case WAITLIST_JOIN:
   case WAITLIST_LEAVE:
   case WAITLIST_UPDATE:
     return {
       ...state,
-      waitlist: payload.waitlist
+      waitlist: payload.waitlist,
     };
   default:
     return state;

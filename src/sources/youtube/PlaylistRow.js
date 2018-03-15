@@ -9,7 +9,7 @@ export default class PlaylistRow extends React.Component {
     className: PropTypes.string,
     playlist: PropTypes.object.isRequired,
 
-    onImport: PropTypes.func.isRequired
+    onImport: PropTypes.func.isRequired,
   };
 
   handleImportPlaylist = () => {
@@ -53,7 +53,7 @@ export default class PlaylistRow extends React.Component {
           <IconButton
             style={{
               width: '100%',
-              height: '100%'
+              height: '100%',
             }}
             onClick={this.handleImportPlaylist}
           >

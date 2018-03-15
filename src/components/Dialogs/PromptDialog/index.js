@@ -24,18 +24,18 @@ export default class PromptDialog extends React.Component {
     titleClassName: PropTypes.string,
 
     onSubmit: PropTypes.func.isRequired,
-    onCancel: PropTypes.func.isRequired
+    onCancel: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
     submitLabel: 'OK',
     inputType: 'text',
-    open: true
+    open: true,
   };
 
   state = {
     busy: false,
-    value: this.props.value || ''
+    value: this.props.value || '',
   };
 
   handleSubmit = (event) => {
@@ -78,7 +78,7 @@ export default class PromptDialog extends React.Component {
     } = this.props;
     const {
       busy,
-      value
+      value,
     } = this.state;
 
     return (

@@ -5,7 +5,7 @@ import About from '../components/About';
 
 export default class AboutContainer extends React.Component {
   static contextTypes = {
-    uwave: PropTypes.object
+    uwave: PropTypes.object,
   };
 
   getAboutPageComponent() {

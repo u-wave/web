@@ -1,7 +1,7 @@
 import { SOCKET_CONNECTED, SOCKET_DISCONNECTED } from '../constants/ActionTypes';
 
 const initialState = {
-  connected: false
+  connected: false,
 };
 
 export default function serverReducer(state = initialState, action = {}) {

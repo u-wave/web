@@ -14,7 +14,7 @@ import {
   REMOVE_MEDIA_START, REMOVE_MEDIA_COMPLETE,
   MOVE_MEDIA_START, MOVE_MEDIA_COMPLETE,
   UPDATE_MEDIA_START, UPDATE_MEDIA_COMPLETE,
-  SHUFFLE_PLAYLIST_START, SHUFFLE_PLAYLIST_COMPLETE
+  SHUFFLE_PLAYLIST_START, SHUFFLE_PLAYLIST_COMPLETE,
 } from '../constants/actionTypes/playlists';
 
 import { openEditMediaDialog } from './DialogActionCreators';
@@ -27,7 +27,7 @@ import {
   activePlaylistIDSelector,
   selectedPlaylistIDSelector,
   activePlaylistSelector,
-  selectedPlaylistSelector
+  selectedPlaylistSelector,
 } from '../selectors/playlistSelectors';
 import mergeIncludedModels from '../utils/mergeIncludedModels';
 
@@ -36,14 +36,14 @@ const MEDIA_PAGE_SIZE = 50;
 export function setPlaylists(playlists) {
   return {
     type: LOAD_ALL_PLAYLISTS_COMPLETE,
-    payload: { playlists }
+    payload: { playlists },
   };
 }
 
 export function flattenPlaylistItem(item) {
   return {
     ...item.media,
-    ...item
+    ...item,
   };
 }
 
@@ -51,7 +51,7 @@ export function loadPlaylistStart(playlistID, page, { sneaky = false } = {}) {
   return {
     type: LOAD_PLAYLIST_START,
     payload: { playlistID },
-    meta: { page, sneaky }
+    meta: { page, sneaky },
   };
 }
 
@@ -59,7 +59,7 @@ export function loadPlaylistComplete(playlistID, media, pagination) {
   return {
     type: LOAD_PLAYLIST_COMPLETE,
     payload: { playlistID, media },
-    meta: pagination
+    meta: pagination,
   };
 }
 
@@ -73,15 +73,15 @@ export function loadPlaylist(playlistID, page = 0, meta = {}) {
       {
         page: res.meta.offset / res.meta.pageSize,
         pageSize: res.meta.pageSize,
-        size: res.meta.total
-      }
+        size: res.meta.total,
+      },
     ),
     onError: error => ({
       type: LOAD_PLAYLIST_COMPLETE,
       error: true,
       payload: error,
-      meta: { page }
-    })
+      meta: { page },
+    }),
   });
 }
 
@@ -89,7 +89,7 @@ export function filterPlaylistItemsStart(playlistID, page, filter) {
   return {
     type: FILTER_PLAYLIST_ITEMS_START,
     payload: { playlistID, filter },
-    meta: { page }
+    meta: { page },
   };
 }
 
@@ -97,7 +97,7 @@ export function filterPlaylistItemsComplete(playlistID, media, pagination) {
   return {
     type: FILTER_PLAYLIST_ITEMS_COMPLETE,
     payload: { playlistID, media },
-    meta: pagination
+    meta: pagination,
   };
 }
 
@@ -114,15 +114,15 @@ export function loadFilteredPlaylistItems(playlistID, page = 0) {
           page: res.meta.offset / res.meta.pageSize,
           pageSize: res.meta.pageSize,
           size: res.meta.results,
-          filter
-        }
+          filter,
+        },
       ),
       onError: error => ({
         type: FILTER_PLAYLIST_ITEMS_COMPLETE,
         error: true,
         payload: error,
-        meta: { page }
-      })
+        meta: { page },
+      }),
     }));
   };
 }
@@ -131,7 +131,7 @@ export function filterPlaylistItems(playlistID, filter) {
   return (dispatch) => {
     dispatch({
       type: FILTER_PLAYLIST_ITEMS,
-      payload: { playlistID, filter }
+      payload: { playlistID, filter },
     });
 
     const loadAll = loadPlaylist(playlistID, 0);
@@ -144,7 +144,7 @@ export function selectPlaylist(playlistID) {
   return (dispatch) => {
     dispatch({
       type: SELECT_PLAYLIST,
-      payload: { playlistID }
+      payload: { playlistID },
     });
 
     if (playlistID) {
@@ -156,7 +156,7 @@ export function selectPlaylist(playlistID) {
 export function playlistCycled(playlistID) {
   return {
     type: PLAYLIST_CYCLED,
-    payload: { playlistID }
+    payload: { playlistID },
   };
 }
 
@@ -201,14 +201,14 @@ export function cyclePlaylist(playlistID) {
 export function activatePlaylistStart(playlistID) {
   return {
     type: ACTIVATE_PLAYLIST_START,
-    payload: { playlistID }
+    payload: { playlistID },
   };
 }
 
 export function activatePlaylistComplete(playlistID) {
   return {
     type: ACTIVATE_PLAYLIST_COMPLETE,
-    payload: { playlistID }
+    payload: { playlistID },
   };
 }
 
@@ -220,8 +220,8 @@ export function activatePlaylist(playlistID) {
       type: ACTIVATE_PLAYLIST_COMPLETE,
       error: true,
       payload: error,
-      meta: { playlistID }
-    })
+      meta: { playlistID },
+    }),
   });
 }
 
@@ -232,7 +232,7 @@ export function loadPlaylistsStart() {
 export function loadPlaylistsComplete(playlists) {
   return {
     type: LOAD_ALL_PLAYLISTS_COMPLETE,
-    payload: { playlists }
+    payload: { playlists },
   };
 }
 
@@ -243,8 +243,8 @@ export function loadPlaylists() {
     onError: error => ({
       type: LOAD_ALL_PLAYLISTS_COMPLETE,
       error: true,
-      payload: error
-    })
+      payload: error,
+    }),
   });
 }
 
@@ -252,7 +252,7 @@ export function createPlaylistStart(props, tempId) {
   return {
     type: CREATE_PLAYLIST_START,
     payload: props,
-    meta: { tempId }
+    meta: { tempId },
   };
 }
 
@@ -260,7 +260,7 @@ export function createPlaylistComplete(playlist, tempId) {
   return {
     type: CREATE_PLAYLIST_COMPLETE,
     payload: { playlist },
-    meta: { tempId }
+    meta: { tempId },
   };
 }
 
@@ -284,8 +284,8 @@ export function createPlaylist(name) {
       type: CREATE_PLAYLIST_COMPLETE,
       error: true,
       payload: error,
-      meta: { tempId }
-    })
+      meta: { tempId },
+    }),
   });
 }
 
@@ -293,18 +293,18 @@ export function renamePlaylist(playlistID, name) {
   return put(`/playlists/${playlistID}/rename`, { name }, {
     onStart: () => ({
       type: RENAME_PLAYLIST_START,
-      payload: { playlistID, name }
+      payload: { playlistID, name },
     }),
     onComplete: ({ data }) => ({
       type: RENAME_PLAYLIST_COMPLETE,
-      payload: { playlistID, name: data.name }
+      payload: { playlistID, name: data.name },
     }),
     onError: error => ({
       type: RENAME_PLAYLIST_COMPLETE,
       error: true,
       payload: error,
-      meta: { playlistID, name }
-    })
+      meta: { playlistID, name },
+    }),
   });
 }
 
@@ -326,14 +326,14 @@ export function deselectPlaylist(playlistID) {
 export function deletePlaylistStart(playlistID) {
   return {
     type: DELETE_PLAYLIST_START,
-    payload: { playlistID }
+    payload: { playlistID },
   };
 }
 
 export function deletePlaylistComplete(playlistID) {
   return {
     type: DELETE_PLAYLIST_COMPLETE,
-    payload: { playlistID }
+    payload: { playlistID },
   };
 }
 
@@ -343,7 +343,7 @@ export function cannotDeleteActivePlaylist(playlistID) {
     error: true,
     payload: new Error('The active playlist cannot be deleted. ' +
       'Activate a different playlist first, before deleting this one.'),
-    meta: { playlistID }
+    meta: { playlistID },
   };
 }
 
@@ -365,8 +365,8 @@ export function deletePlaylist(playlistID) {
         type: DELETE_PLAYLIST_COMPLETE,
         error: true,
         payload: error,
-        meta: { playlistID }
-      })
+        meta: { playlistID },
+      }),
     }));
   };
 }
@@ -377,13 +377,13 @@ export function addMediaMenu(items, position) {
     dispatch({
       type: OPEN_ADD_MEDIA_MENU,
       payload: {
-        media: items
+        media: items,
       },
       meta: {
         playlists,
         position,
-        type: 'add'
-      }
+        type: 'add',
+      },
     });
   };
 }
@@ -395,7 +395,7 @@ export function closeAddMediaMenu() {
 export function addMediaStart(playlistID, media, location) {
   return {
     type: ADD_MEDIA_START,
-    payload: { playlistID, media, location }
+    payload: { playlistID, media, location },
   };
 }
 
@@ -406,8 +406,8 @@ export function addMediaComplete(playlistID, newSize, insert) {
       playlistID,
       newSize,
       afterID: insert.afterID,
-      appendedMedia: insert.media
-    }
+      appendedMedia: insert.media,
+    },
   };
 }
 
@@ -423,14 +423,14 @@ function minimizePlaylistItem(item) {
     artist: item.artist,
     title: item.title,
     start: item.start,
-    end: item.end
+    end: item.end,
   };
 }
 
 export function addMedia(playlist, items, afterID = null) {
   const payload = {
     items: items.map(minimizePlaylistItem),
-    after: afterID
+    after: afterID,
   };
 
   return post(`/playlists/${playlist._id}/media`, payload, {
@@ -438,13 +438,13 @@ export function addMedia(playlist, items, afterID = null) {
     onComplete: res => addMediaComplete(
       playlist._id,
       res.meta.playlistSize,
-      { afterID, media: mergeIncludedModels(res).map(flattenPlaylistItem) }
+      { afterID, media: mergeIncludedModels(res).map(flattenPlaylistItem) },
     ),
     onError: error => ({
       type: ADD_MEDIA_COMPLETE,
       error: true,
-      payload: error
-    })
+      payload: error,
+    }),
   });
 }
 
@@ -455,14 +455,14 @@ export function editMedia(playlistID, media) {
 export function updateMediaStart(playlistID, mediaID, props) {
   return {
     type: UPDATE_MEDIA_START,
-    payload: { playlistID, mediaID, props }
+    payload: { playlistID, mediaID, props },
   };
 }
 
 export function updateMediaComplete(playlistID, mediaID, media) {
   return {
     type: UPDATE_MEDIA_COMPLETE,
-    payload: { playlistID, mediaID, media }
+    payload: { playlistID, mediaID, media },
   };
 }
 
@@ -474,15 +474,15 @@ export function updateMedia(playlistID, mediaID, props) {
       type: UPDATE_MEDIA_COMPLETE,
       payload: error,
       error: true,
-      meta: { playlistID, mediaID, props }
-    })
+      meta: { playlistID, mediaID, props },
+    }),
   });
 }
 
 export function removeMediaStart(playlistID, items) {
   return {
     type: REMOVE_MEDIA_START,
-    payload: { playlistID, medias: items }
+    payload: { playlistID, medias: items },
   };
 }
 
@@ -492,8 +492,8 @@ export function removeMediaComplete(playlistID, newSize, removedMedia) {
     payload: {
       playlistID,
       newSize,
-      removedMedia
-    }
+      removedMedia,
+    },
   };
 }
 
@@ -504,27 +504,27 @@ export function removeMedia(playlistID, items) {
     onComplete: ({ meta }) => removeMediaComplete(
       playlistID,
       meta.playlistSize,
-      items
+      items,
     ),
     onError: error => ({
       type: REMOVE_MEDIA_COMPLETE,
       error: true,
-      payload: error
-    })
+      payload: error,
+    }),
   });
 }
 
 export function moveMediaStart(playlistID, items, location) {
   return {
     type: MOVE_MEDIA_START,
-    payload: { playlistID, location, medias: items }
+    payload: { playlistID, location, medias: items },
   };
 }
 
 export function moveMediaComplete(playlistID, items, location) {
   return {
     type: MOVE_MEDIA_COMPLETE,
-    payload: { playlistID, location, medias: items }
+    payload: { playlistID, location, medias: items },
   };
 }
 
@@ -562,8 +562,8 @@ export function moveMedia(playlistID, medias, opts) {
         type: MOVE_MEDIA_COMPLETE,
         error: true,
         payload: error,
-        meta: { playlistID, medias, location }
-      })
+        meta: { playlistID, medias, location },
+      }),
     }));
   };
 }
@@ -571,7 +571,7 @@ export function moveMedia(playlistID, medias, opts) {
 export function shufflePlaylistStart(playlistID) {
   return {
     type: SHUFFLE_PLAYLIST_START,
-    payload: { playlistID }
+    payload: { playlistID },
   };
 }
 
@@ -579,7 +579,7 @@ export function shufflePlaylistComplete(playlistID) {
   return (dispatch) => {
     dispatch({
       type: SHUFFLE_PLAYLIST_COMPLETE,
-      payload: { playlistID }
+      payload: { playlistID },
     });
   };
 }
@@ -593,8 +593,8 @@ export function shufflePlaylist(playlistID) {
         type: SHUFFLE_PLAYLIST_COMPLETE,
         error: true,
         payload: error,
-        meta: { playlistID }
-      })
+        meta: { playlistID },
+      }),
     });
     const loadOperation = loadPlaylist(playlistID, 0, { sneaky: true });
 

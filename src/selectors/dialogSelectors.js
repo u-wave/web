@@ -17,13 +17,13 @@ export const loginDialogSelector = createSelector(
     error,
     useReCaptcha: !!siteKey,
     reCaptchaSiteKey: siteKey || null,
-    supportsSocialAuth
-  })
+    supportsSocialAuth,
+  }),
 );
 
 export const editMediaDialogSelector = createSelector(
   baseSelector,
-  dialogs => merge(dialogs.editMedia)
+  dialogs => merge(dialogs.editMedia),
 );
 
 export const previewMediaDialogSelector = createSelector(
@@ -31,11 +31,11 @@ export const previewMediaDialogSelector = createSelector(
   volumeSelector,
   (dialogs, volume) => ({
     ...merge(dialogs.previewMedia),
-    volume
-  })
+    volume,
+  }),
 );
 
 export const isPreviewMediaDialogOpenSelector = createSelector(
   baseSelector,
-  dialogs => dialogs.previewMedia && !!dialogs.previewMedia.open
+  dialogs => dialogs.previewMedia && !!dialogs.previewMedia.open,
 );

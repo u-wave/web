@@ -3,11 +3,11 @@ import { log } from '../../actions/ChatActionCreators';
 import {
   setVolume,
   mute,
-  unmute
+  unmute,
 } from '../../actions/PlaybackActionCreators';
 import {
   doUpvote,
-  doDownvote
+  doDownvote,
 } from '../../actions/VoteActionCreators';
 import { set as setSetting } from '../../actions/SettingsActionCreators';
 
@@ -21,24 +21,24 @@ register(
         return log('Volume must be a number between 0 and 100.');
       }
       return setVolume(volume);
-    }
-  }
+    },
+  },
 );
 
 register('mute', 'Mute the volume.', {
-  action: () => mute()
+  action: () => mute(),
 });
 
 register('unmute', 'Unmute the media volume.', {
-  action: () => unmute()
+  action: () => unmute(),
 });
 
 register('upvote', 'Upvote the current track.', {
-  action: () => doUpvote()
+  action: () => doUpvote(),
 });
 
 register('downvote', 'Downvote the current track.', {
-  action: () => doDownvote()
+  action: () => doDownvote(),
 });
 
 register('playback', 'Enable or disable playback. Syntax: "/playback on|off"', {
@@ -50,5 +50,5 @@ register('playback', 'Enable or disable playback. Syntax: "/playback on|off"', {
       return setSetting('videoEnabled', false);
     }
     return log('Use "/playback on" to enable media playback or "/playback off" to disable it.');
-  }
+  },
 });

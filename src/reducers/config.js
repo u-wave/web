@@ -9,7 +9,7 @@ export default function reduce(state = initialState, action = {}) {
     if (payload.roles) {
       return {
         ...state,
-        roles: payload.roles
+        roles: payload.roles,
       };
     }
     return state;

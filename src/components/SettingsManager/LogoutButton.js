@@ -9,11 +9,11 @@ import FormGroup from '../Form/Group';
 class LogoutButton extends React.Component {
   static propTypes = {
     t: PropTypes.func.isRequired,
-    onLogout: PropTypes.func.isRequired
+    onLogout: PropTypes.func.isRequired,
   };
 
   state = {
-    showDialog: false
+    showDialog: false,
   };
 
   closeDialog() {

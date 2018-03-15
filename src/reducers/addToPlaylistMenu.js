@@ -1,5 +1,5 @@
 import {
-  OPEN_ADD_MEDIA_MENU, CLOSE_ADD_MEDIA_MENU
+  OPEN_ADD_MEDIA_MENU, CLOSE_ADD_MEDIA_MENU,
 } from '../constants/actionTypes/playlists';
 
 const initialState = {
@@ -7,7 +7,7 @@ const initialState = {
   position: { x: 0, y: 0 },
   playlists: [],
   type: null,
-  data: null
+  data: null,
 };
 
 export default function reduce(state = initialState, action = {}) {
@@ -20,7 +20,7 @@ export default function reduce(state = initialState, action = {}) {
       type: meta.type,
       position: meta.position,
       playlists: meta.playlists,
-      data: payload
+      data: payload,
     };
   case CLOSE_ADD_MEDIA_MENU:
     return initialState;

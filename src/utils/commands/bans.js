@@ -4,7 +4,7 @@ import { log } from '../../actions/ChatActionCreators';
 
 import {
   userListSelector,
-  isModeratorSelector
+  isModeratorSelector,
 } from '../../selectors/userSelectors';
 import { banUser } from '../../actions/ModerationActionCreators';
 
@@ -19,7 +19,7 @@ register(
       }
       const user = findUser(
         userListSelector(getState()),
-        username
+        username,
       );
       if (!user) {
         return dispatch(log(`User "${username}" is not online.`));
@@ -27,8 +27,8 @@ register(
       const permanent = duration === 'perma';
       return dispatch(banUser(user, {
         duration: ms(`${duration}`),
-        permanent
+        permanent,
       }));
-    }
-  }
+    },
+  },
 );

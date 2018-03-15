@@ -6,7 +6,7 @@ import { currentTimeSelector } from './timeSelectors';
 import {
   currentUserSelector,
   currentUserHasRoleSelector,
-  usersSelector
+  usersSelector,
 } from './userSelectors';
 
 const baseSelector = state => state.booth;
@@ -17,26 +17,26 @@ export const startTimeSelector = createSelector(baseSelector, booth => booth.sta
 
 export const mediaDurationSelector = createSelector(
   mediaSelector,
-  media => (media ? media.end - media.start : 0)
+  media => (media ? media.end - media.start : 0),
 );
 
 export const endTimeSelector = createSelector(
   startTimeSelector,
   mediaDurationSelector,
-  (startTime, duration) => startTime + (duration * 1000) || 0
+  (startTime, duration) => startTime + (duration * 1000) || 0,
 );
 
 export const timeElapsedSelector = createSelector(
   startTimeSelector,
   currentTimeSelector,
   // in seconds! because media duration is in seconds, too.
-  (startTime, currentTime) => (startTime ? Math.max((currentTime - startTime) / 1000, 0) : 0)
+  (startTime, currentTime) => (startTime ? Math.max((currentTime - startTime) / 1000, 0) : 0),
 );
 
 export const timeRemainingSelector = createSelector(
   mediaDurationSelector,
   timeElapsedSelector,
-  (duration, elapsed) => (duration > 0 ? duration - elapsed : 0)
+  (duration, elapsed) => (duration > 0 ? duration - elapsed : 0),
 );
 
 export const mediaProgressSelector = createSelector(
@@ -47,13 +47,13 @@ export const mediaProgressSelector = createSelector(
       // Ensure that the result is between 0 and 1
       ? Math.max(0, Math.min(1, elapsed / duration))
       : 0
-  )
+  ),
 );
 
 export const djSelector = createSelector(
   baseSelector,
   usersSelector,
-  (booth, users) => users[booth.djID]
+  (booth, users) => users[booth.djID],
 );
 
 export const isCurrentDJSelector = createSelector(
@@ -61,7 +61,7 @@ export const isCurrentDJSelector = createSelector(
   currentUserSelector,
   (dj, me) => (
     dj && me ? dj._id === me._id : false
-  )
+  ),
 );
 
 export const canSkipSelector = createSelector(
@@ -73,7 +73,7 @@ export const canSkipSelector = createSelector(
       return false;
     }
     return isCurrentDJ ? hasRole('booth.skip.self') : hasRole('booth.skip.other');
-  }
+  },
 );
 
 export const playbackVolumeSelector = createSelector(
@@ -81,5 +81,5 @@ export const playbackVolumeSelector = createSelector(
   isMutedSelector,
   isPreviewMediaDialogOpenSelector,
   (volume, isMuted, isPreviewMediaDialogOpen) =>
-    (isMuted || isPreviewMediaDialogOpen ? 0 : volume)
+    (isMuted || isPreviewMediaDialogOpen ? 0 : volume),
 );

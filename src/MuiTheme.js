@@ -11,7 +11,7 @@ export default {
     manager: '#05daa5',
     moderator: '#00b3dc',
     special: '#fc911d',
-    default: ''
+    default: '',
   },
   palette: {
     primary1Color: '#9d2053',
@@ -28,7 +28,7 @@ export default {
 
     notifications: {
       errorBackgroundColor: '#9d202f',
-      errorTextColor: Colors.white
-    }
-  }
+      errorTextColor: Colors.white,
+    },
+  },
 };

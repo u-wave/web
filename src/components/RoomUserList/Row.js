@@ -14,14 +14,14 @@ const enhance = compose(
     onOpenCard(event) {
       event.preventDefault();
       props.openUserCard(props.user);
-    }
-  }))
+    },
+  })),
 );
 
 const RoomUserRow = ({
   className,
   user,
-  onOpenCard
+  onOpenCard,
 }) => (
   <button
     className={cx('UserRow', 'UserRow--cardable', className)}
@@ -41,7 +41,7 @@ const RoomUserRow = ({
 RoomUserRow.propTypes = {
   className: PropTypes.string,
   user: PropTypes.object.isRequired,
-  onOpenCard: PropTypes.func.isRequired
+  onOpenCard: PropTypes.func.isRequired,
 };
 
 export default enhance(RoomUserRow);

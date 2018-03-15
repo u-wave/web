@@ -10,7 +10,7 @@ const Downvote = ({
   disabled,
   active,
   count,
-  onDownvote
+  onDownvote,
 }) => (
   <Button
     disabled={disabled}
@@ -27,7 +27,7 @@ Downvote.propTypes = {
   onDownvote: PropTypes.func.isRequired,
   count: PropTypes.number.isRequired,
   disabled: PropTypes.bool,
-  active: PropTypes.bool
+  active: PropTypes.bool,
 };
 
 export default translate()(Downvote);

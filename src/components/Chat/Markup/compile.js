@@ -11,7 +11,7 @@ import Emoji from './Emoji';
 export default function compile(tree, opts = {}) {
   const {
     availableEmoji = [],
-    emojiImages = {}
+    emojiImages = {},
   } = opts;
 
   return tree.map((node, i) => {

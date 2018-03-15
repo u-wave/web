@@ -5,7 +5,7 @@ import TabTemplate from './TabTemplate';
 
 const baseTabItemContainerStyle = {
   height: 56,
-  backgroundColor: '#151515'
+  backgroundColor: '#151515',
 };
 
 const tabStyle = {
@@ -13,22 +13,22 @@ const tabStyle = {
   color: '#fff',
   fontSize: '10pt',
   height: '100%',
-  backgroundColor: '#151515'
+  backgroundColor: '#151515',
 };
 
 const activeTabStyle = {
   ...tabStyle,
-  backgroundColor: 'rgba(48, 48, 48, 0.3)'
+  backgroundColor: 'rgba(48, 48, 48, 0.3)',
 };
 
 const baseInkBarStyle = {
   height: 3,
   marginTop: -3,
-  backgroundColor: '#fff'
+  backgroundColor: '#fff',
 };
 
 const baseContentStyle = {
-  position: 'relative'
+  position: 'relative',
 };
 
 // This component just wraps the Material-UI tabs with some default styling.
@@ -45,15 +45,15 @@ const StyledTabs = ({
   <MuiTabs
     tabItemContainerStyle={{
       ...baseTabItemContainerStyle,
-      ...tabItemContainerStyle
+      ...tabItemContainerStyle,
     }}
     inkBarStyle={{
       ...baseInkBarStyle,
-      ...inkBarStyle
+      ...inkBarStyle,
     }}
     contentContainerStyle={{
       ...baseContentStyle,
-      ...contentContainerStyle
+      ...contentContainerStyle,
     }}
     tabTemplate={TabTemplate}
     value={value}
@@ -63,8 +63,8 @@ const StyledTabs = ({
       React.cloneElement(tab, {
         style: {
           ...(value === tab.props.value ? activeTabStyle : tabStyle),
-          ...tab.props.style
-        }
+          ...tab.props.style,
+        },
       })
     ))}
   </MuiTabs>
@@ -75,7 +75,7 @@ StyledTabs.propTypes = {
   inkBarStyle: PropTypes.object,
   contentContainerStyle: PropTypes.object,
   children: PropTypes.arrayOf(PropTypes.node).isRequired,
-  value: PropTypes.string
+  value: PropTypes.string,
 };
 
 export default StyledTabs;

@@ -19,7 +19,7 @@ class LoginForm extends React.Component {
     error: PropTypes.object,
     supportsSocialAuth: PropTypes.bool,
     onLogin: PropTypes.func,
-    onOpenResetPasswordDialog: PropTypes.func
+    onOpenResetPasswordDialog: PropTypes.func,
   };
 
   state = { busy: false };
@@ -33,7 +33,7 @@ class LoginForm extends React.Component {
     this.setState({ busy: true });
     this.props.onLogin({
       email: this.email.value,
-      password: this.password.value
+      password: this.password.value,
     });
   };
 

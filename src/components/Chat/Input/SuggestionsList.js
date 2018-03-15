@@ -4,7 +4,7 @@ import Paper from 'material-ui/Paper';
 import { List } from 'material-ui/List';
 
 const SuggestionsList = ({
-  children
+  children,
 }) => (
   <div className="ChatInput-suggestions">
     <Paper>
@@ -16,7 +16,7 @@ const SuggestionsList = ({
 );
 
 SuggestionsList.propTypes = {
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
 };
 
 export default SuggestionsList;
