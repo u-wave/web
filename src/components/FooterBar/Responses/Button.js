@@ -9,7 +9,7 @@ export default class Button extends React.Component {
     children: PropTypes.element.isRequired,
     disabled: PropTypes.bool,
     count: PropTypes.number,
-    tooltip: PropTypes.string
+    tooltip: PropTypes.string,
   };
 
   state = { showTooltip: false };
@@ -28,7 +28,7 @@ export default class Button extends React.Component {
       disabled,
       count,
       children,
-      tooltip
+      tooltip,
     } = this.props;
     // Buttons are fake-disabled because mouseleave acts inconsistently with
     // tooltips and actually-disabled buttons, sometimes leaving the tooltip

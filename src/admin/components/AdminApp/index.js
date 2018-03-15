@@ -8,7 +8,7 @@ import './index.css';
 
 const AdminApp = ({
   currentView,
-  onTransition
+  onTransition,
 }) => (
   <div className="AdminApp">
     <div className="AdminApp-menu">
@@ -41,7 +41,7 @@ const AdminApp = ({
 
 AdminApp.propTypes = {
   currentView: PropTypes.string.isRequired,
-  onTransition: PropTypes.func.isRequired
+  onTransition: PropTypes.func.isRequired,
 };
 
 export default AdminApp;

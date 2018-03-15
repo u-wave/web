@@ -10,7 +10,7 @@ const initialiseStore = a.setPlaylists([
   { _id: 1, name: 'Playlist One', size: 5 },
   { _id: 2, name: 'Playlist Two', size: 0 },
   { _id: 3, name: 'Playlist Three', size: 500 },
-  { _id: 4, name: 'Playlist Four', size: 120 }
+  { _id: 4, name: 'Playlist Four', size: 120 },
 ]);
 
 const initialisePlaylist = (dispatch) => {
@@ -19,7 +19,7 @@ const initialisePlaylist = (dispatch) => {
     { _id: 6, artist: 'Swiimers', title: 'Polaris' },
     { _id: 7, artist: 'of Montreal', title: 'Gronlandic Edit' },
     { _id: 8, artist: 'Angel Haze', title: 'A Tribe Called Red' },
-    { _id: 9, artist: 'tricot', title: '99.974°C' }
+    { _id: 9, artist: 'tricot', title: '99.974°C' },
   ];
   const playlistID = 1;
   dispatch(a.loadPlaylistComplete(playlistID, items, { page: 0, pageSize: 5 }));
@@ -31,7 +31,7 @@ describe('reducers/playlists', () => {
   beforeEach(() => {
     fetch.mock(/\/api\/playlists\/\w+\/media/, {
       meta: {},
-      data: []
+      data: [],
     });
   });
   afterEach(() => {
@@ -102,14 +102,14 @@ describe('reducers/playlists', () => {
         afterID: 8,
         media: [
           { _id: 347, artist: 'The Microphones', title: 'I Want Wind To Blow' },
-          { _id: 764, artist: 'Bikini Kill', title: 'Rebel Girl' }
-        ]
+          { _id: 764, artist: 'Bikini Kill', title: 'Rebel Girl' },
+        ],
       }));
 
       const { media } = s.selectedPlaylistSelector(getState());
       expect(media).to.have.length(7);
       expect(media.map(playlistItem => playlistItem._id)).to.eql([
-        5, 6, 7, 8, 347, 764, 9
+        5, 6, 7, 8, 347, 764, 9,
       ]);
     });
 
@@ -127,8 +127,8 @@ describe('reducers/playlists', () => {
         afterID: null,
         media: [
           { _id: 347, artist: 'The Microphones', title: 'I Want Wind To Blow' },
-          { _id: 764, artist: 'Bikini Kill', title: 'Rebel Girl' }
-        ]
+          { _id: 764, artist: 'Bikini Kill', title: 'Rebel Girl' },
+        ],
       }));
 
       expect(s.activePlaylistSelector(getState()).media).to.have.length(7);
@@ -145,8 +145,8 @@ describe('reducers/playlists', () => {
       dispatch(favoriteMediaComplete(playlistID, 36425, {
         playlistSize: 6,
         added: [
-          { _id: 1338, artist: 'SHINee', title: 'Odd Eye' }
-        ]
+          { _id: 1338, artist: 'SHINee', title: 'Odd Eye' },
+        ],
       }));
 
       const { size, media } = s.selectedPlaylistSelector(getState());
@@ -166,13 +166,13 @@ describe('reducers/playlists', () => {
 
       dispatch(a.moveMediaComplete(
         1,
-        [ items[1], items[2] ],
-        { after: 8 }
+        [items[1], items[2]],
+        { after: 8 },
       ));
 
       const selectedItemIDs = s.selectedPlaylistSelector(getState()).media
         .map(playlistItem => playlistItem._id);
-      expect(selectedItemIDs).to.eql([ 5, 8, 6, 7, 9 ]);
+      expect(selectedItemIDs).to.eql([5, 8, 6, 7, 9]);
     });
 
     it('should move playlist items in a sparse playlist', () => {
@@ -183,7 +183,7 @@ describe('reducers/playlists', () => {
         { _id: 6, artist: 'Swiimers', title: 'Polaris' },
         null,
         { _id: 8, artist: 'Angel Haze', title: 'A Tribe Called Red' },
-        { _id: 9, artist: 'tricot', title: '99.974°C' }
+        { _id: 9, artist: 'tricot', title: '99.974°C' },
       ];
       dispatch(a.loadPlaylistComplete(1, items, { page: 0, pageSize: 5 }));
       dispatch(a.selectPlaylist(1));
@@ -192,13 +192,13 @@ describe('reducers/playlists', () => {
 
       dispatch(a.moveMediaComplete(
         1,
-        [ items[0], items[4] ],
-        { after: 8 }
+        [items[0], items[4]],
+        { after: 8 },
       ));
 
       const getID = item => (item ? item._id : null);
       expect(s.selectedPlaylistSelector(getState()).media.map(getID)).to.eql([
-        6, null, 8, 5, 9
+        6, null, 8, 5, 9,
       ]);
     });
   });

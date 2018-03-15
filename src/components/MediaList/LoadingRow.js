@@ -21,7 +21,7 @@ const LoadingRow = ({
 
 LoadingRow.propTypes = {
   className: PropTypes.string,
-  selected: PropTypes.bool
+  selected: PropTypes.bool,
 };
 
 export default LoadingRow;

@@ -10,7 +10,7 @@ import LockedIcon from 'material-ui/svg-icons/action/lock';
 
 const inlineIconStyle = {
   width: '1em',
-  height: '1em'
+  height: '1em',
 };
 
 const buttonStyle = {
@@ -19,7 +19,7 @@ const buttonStyle = {
   textTransform: 'uppercase',
   // Align multiline button text nicely. Good for languages where "Join Waitlist"
   // becomes a longer phrase, especially.
-  lineHeight: '24px'
+  lineHeight: '24px',
 };
 
 const WaitlistButton = ({
@@ -27,7 +27,7 @@ const WaitlistButton = ({
   muiTheme,
   userInWaitlist,
   isLocked,
-  onClick
+  onClick,
 }) => {
   let icon;
   if (isLocked) {
@@ -66,11 +66,11 @@ WaitlistButton.propTypes = {
   muiTheme: PropTypes.object.isRequired,
   userInWaitlist: PropTypes.bool,
   isLocked: PropTypes.bool,
-  onClick: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired,
 };
 
 export default compose(
   muiThemeable(),
   translate(),
-  pure
+  pure,
 )(WaitlistButton);

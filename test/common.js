@@ -5,13 +5,13 @@ const chai = require('chai');
 require('babel-register')({
   plugins: [
     'transform-es2015-modules-commonjs',
-    'dynamic-import-node'
-  ]
+    'dynamic-import-node',
+  ],
 });
 require('yamlify/register');
 
 enzyme.configure({
-  adapter: new Adapter()
+  adapter: new Adapter(),
 });
 
 chai.use(require('chai-enzyme')());
@@ -22,7 +22,7 @@ global.testUtils = require('./testUtils');
 function mockAsset(modulePath) {
   const path = require.resolve(modulePath);
   require.cache[path] = {
-    exports: path
+    exports: path,
   };
 }
 

@@ -10,7 +10,7 @@ const enhance = translate();
 const PlaylistManagerHeader = ({
   t,
   className,
-  onCloseOverlay
+  onCloseOverlay,
 }) => (
   <OverlayHeader
     className={cx('PlaylistHeader', className)}
@@ -24,7 +24,7 @@ const PlaylistManagerHeader = ({
 PlaylistManagerHeader.propTypes = {
   className: PropTypes.string,
   t: PropTypes.func.isRequired,
-  onCloseOverlay: PropTypes.func.isRequired
+  onCloseOverlay: PropTypes.func.isRequired,
 };
 
 export default enhance(PlaylistManagerHeader);

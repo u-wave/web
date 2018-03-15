@@ -16,7 +16,7 @@ class Tooltip extends React.Component {
     /**
      * Desired horizontal position of the tooltip.
      */
-    horizontalPosition: PropTypes.oneOf([ 'left', 'center', 'right' ])
+    horizontalPosition: PropTypes.oneOf(['left', 'center', 'right']),
   };
 
   state = {
@@ -31,7 +31,7 @@ class Tooltip extends React.Component {
     /**
      * Whether the tooltip element is currently visible.
      */
-    show: this.props.show
+    show: this.props.show,
   };
 
   componentWillReceiveProps(nextProps) {
@@ -85,7 +85,7 @@ class Tooltip extends React.Component {
           // position. Otherwise, it might getBoundingClientRect() from an
           // already-repositioned element, discover that it is fits, and go back
           // to the initial state even if it did not fit.
-          horizontalPosition: this.props.horizontalPosition
+          horizontalPosition: this.props.horizontalPosition,
         });
       }, 450);
     });
@@ -103,7 +103,7 @@ class Tooltip extends React.Component {
     const rect = findDOMNode(this.tooltip).getBoundingClientRect();
     this.setState({
       horizontalPosition: rect.right > window.innerWidth ? 'left' :
-        this.props.horizontalPosition
+        this.props.horizontalPosition,
     });
   }
 
@@ -125,7 +125,7 @@ class Tooltip extends React.Component {
               // "pointer-events: none" avoids interference with tooltips  that
               // are very close to or overlay other elements that have tooltips.
               pointerEvents: 'none',
-              ...this.props.style
+              ...this.props.style,
             }}
           />
         )}

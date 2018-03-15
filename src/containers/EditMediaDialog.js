@@ -10,7 +10,7 @@ import DialogCloseAnimation from '../components/DialogCloseAnimation';
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   onUpdateMedia: updateMedia,
-  onCloseDialog: closeEditMediaDialog
+  onCloseDialog: closeEditMediaDialog,
 }, dispatch);
 
 const DIALOG_ANIMATION_DURATION = 450; // ms
@@ -37,7 +37,7 @@ const EditMediaDialogContainer = ({
 EditMediaDialogContainer.propTypes = {
   playlistID: PropTypes.string,
   media: PropTypes.object,
-  onUpdateMedia: PropTypes.func.isRequired
+  onUpdateMedia: PropTypes.func.isRequired,
 };
 
 export default enhance(EditMediaDialogContainer);

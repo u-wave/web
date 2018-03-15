@@ -31,7 +31,7 @@ describe('reducers/auth', () => {
     const { dispatch, getState } = createStore();
     it('should set the current user if successful', () => {
       const userObj = { _id: 'test user' };
-      dispatch(setUsers([ userObj ]));
+      dispatch(setUsers([userObj]));
       dispatch(loginComplete({ token: 'test token', user: userObj }));
       expect(s.tokenSelector(getState())).to.equal('test token');
       expect(s.currentUserSelector(getState())).to.eql(userObj);
@@ -42,7 +42,7 @@ describe('reducers/auth', () => {
       dispatch({
         type: LOGIN_COMPLETE,
         payload: new Error('failed'),
-        error: true
+        error: true,
       });
       expect(s.tokenSelector(getState())).to.be.null;
       expect(s.currentUserSelector(getState())).to.be.null;

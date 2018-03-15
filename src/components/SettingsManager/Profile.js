@@ -10,7 +10,7 @@ const formatJoinDate = date => new Date(date).toLocaleString([], {
   month: 'numeric',
   day: 'numeric',
   hour: 'numeric',
-  minute: 'numeric'
+  minute: 'numeric',
 });
 
 const Profile = ({ className, user, onChangeUsername }) => (
@@ -39,7 +39,7 @@ Profile.propTypes = {
   className: PropTypes.string,
   user: PropTypes.object.isRequired,
 
-  onChangeUsername: PropTypes.func.isRequired
+  onChangeUsername: PropTypes.func.isRequired,
 };
 
 export default Profile;

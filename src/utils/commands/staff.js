@@ -2,19 +2,19 @@ import { register, findUser } from '../ChatCommands';
 import { log } from '../../actions/ChatActionCreators';
 
 import {
-  rolesSelector
+  rolesSelector,
 } from '../../selectors/configSelectors';
 import {
   userListSelector,
   isModeratorSelector,
-  isManagerSelector
+  isManagerSelector,
 } from '../../selectors/userSelectors';
 import {
   addUserRole,
-  removeUserRole
+  removeUserRole,
 } from '../../actions/ModerationActionCreators';
 import {
-  toggleAdmin
+  toggleAdmin,
 } from '../../actions/OverlayActionCreators';
 
 register(
@@ -28,8 +28,8 @@ register(
 
       dispatch(log(`Roles: ${roles.join(', ')}`));
       return dispatch(log(`Permissions: ${permissions.join(', ')}`));
-    }
-  }
+    },
+  },
 );
 
 register(
@@ -46,11 +46,11 @@ register(
       }
       const user = findUser(
         userListSelector(getState()),
-        username
+        username,
       );
       return dispatch(addUserRole(user, role));
-    }
-  }
+    },
+  },
 );
 
 register(
@@ -67,11 +67,11 @@ register(
       }
       const user = findUser(
         userListSelector(getState()),
-        username
+        username,
       );
       return dispatch(removeUserRole(user, role));
-    }
-  }
+    },
+  },
 );
 
 register(
@@ -79,6 +79,6 @@ register(
   'Open the administration panel.',
   {
     guard: isModeratorSelector,
-    action: toggleAdmin
-  }
+    action: toggleAdmin,
+  },
 );

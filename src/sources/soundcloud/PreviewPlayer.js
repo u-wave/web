@@ -27,7 +27,7 @@ const PreviewPlayer = ({ media }) => (
 );
 
 PreviewPlayer.propTypes = {
-  media: PropTypes.object.isRequired
+  media: PropTypes.object.isRequired,
 };
 
 export default PreviewPlayer;

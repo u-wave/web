@@ -7,26 +7,26 @@ import {
   TableBody,
   TableHeader,
   TableHeaderColumn,
-  TableRow
+  TableRow,
 } from '../../../components/Table';
 import UserRow from './Row';
 
 const avatarStyle = {
   width: 48,
-  paddingRight: 0
+  paddingRight: 0,
 };
 const actionsStyle = {
   width: 48,
   paddingLeft: 0,
-  paddingRight: 0
+  paddingRight: 0,
 };
 
 const Header = withProps({
   style: {
     background: '#9d2053',
     padding: '12px 24px',
-    lineHeight: '35px'
-  }
+    lineHeight: '35px',
+  },
 })('div');
 
 const Filter = withProps({
@@ -36,16 +36,16 @@ const Filter = withProps({
     border: 0,
     marginLeft: 12,
     paddingLeft: 12,
-    height: 35
+    height: 35,
   },
-  type: 'text'
+  type: 'text',
 })('input');
 
 const enhance = translate();
 
 const UsersList = ({
   t,
-  users
+  users,
 }) => (
   <React.Fragment>
     <Header>
@@ -77,7 +77,7 @@ const UsersList = ({
 
 UsersList.propTypes = {
   t: PropTypes.func.isRequired,
-  users: PropTypes.array.isRequired
+  users: PropTypes.array.isRequired,
 };
 
 export default enhance(UsersList);

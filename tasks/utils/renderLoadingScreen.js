@@ -1,3 +1,4 @@
+/* eslint-disable global-require */
 const React = require('react');
 const { renderToStaticMarkup } = require('react-dom/server');
 
@@ -15,6 +16,6 @@ module.exports = function renderLoadingScreen() {
   return renderToStaticMarkup(React.createElement(
     MuiThemeProvider,
     { muiTheme: getMuiTheme(muiTheme) },
-    React.createElement(LoadingScreen)
+    React.createElement(LoadingScreen),
   ));
 };

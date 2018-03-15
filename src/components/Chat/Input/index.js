@@ -35,7 +35,7 @@ const getEmojiCompletions = (value, { trigger, completions }) => {
   ));
   return sortBy(
     uniqBy(results, emoji => emoji.image),
-    emoji => emoji.shortcode.length
+    emoji => emoji.shortcode.length,
   );
 };
 const getEmojiText = value => `:${value.shortcode}: `;
@@ -50,12 +50,12 @@ class ChatInput extends React.Component {
     onScroll: PropTypes.func.isRequired,
     mentionableUsers: PropTypes.array.isRequired,
     mentionableGroups: PropTypes.array.isRequired,
-    availableEmoji: PropTypes.array.isRequired
+    availableEmoji: PropTypes.array.isRequired,
   };
 
   state = {
     focused: false,
-    value: ''
+    value: '',
   };
 
   clear() {
@@ -103,13 +103,13 @@ class ChatInput extends React.Component {
   render() {
     const {
       focused,
-      value
+      value,
     } = this.state;
     const {
       t,
       mentionableUsers,
       mentionableGroups,
-      availableEmoji
+      availableEmoji,
     } = this.props;
     const focusClass = focused ? 'is-focused' : '';
     return (
@@ -121,7 +121,7 @@ class ChatInput extends React.Component {
             placeholder: focused ? '' : t('chat.placeholder'),
             onFocus: this.handleFocus,
             onBlur: this.handleBlur,
-            onKeyDown: this.handleKeyDown
+            onKeyDown: this.handleKeyDown,
           }}
           onUpdate={this.handleUpdate}
           value={value}

@@ -15,14 +15,14 @@ const inSelection = (selection, media) =>
 const mediaSource = {
   beginDrag({ selection, media }) {
     return {
-      media: inSelection(selection, media) ? selection : [ media ]
+      media: inSelection(selection, media) ? selection : [media],
     };
-  }
+  },
 };
 
 const collect = connect => ({
   connectDragSource: connect.dragSource(),
-  connectDragPreview: connect.dragPreview()
+  connectDragPreview: connect.dragPreview(),
 });
 
 const enhance = DragSource(MEDIA, mediaSource, collect);
@@ -38,11 +38,11 @@ class Row extends React.Component {
 
     onOpenPreviewMediaDialog: PropTypes.func,
     onClick: PropTypes.func,
-    makeActions: PropTypes.func
+    makeActions: PropTypes.func,
   };
 
   static defaultProps = {
-    selected: false
+    selected: false,
   };
 
   componentDidMount() {
@@ -69,7 +69,7 @@ class Row extends React.Component {
       // actions
       makeActions,
       // etc
-      onClick
+      onClick,
     } = this.props;
     const selectedClass = selected ? 'is-selected' : '';
     const loadingClass = media.loading ? 'is-loading' : '';

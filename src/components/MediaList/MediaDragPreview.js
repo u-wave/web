@@ -9,19 +9,19 @@ import transformStyle from '../../utils/transformStyle';
 const getItemStyles = offset => (
   offset ? assign(
     { display: 'inline-block' },
-    transformStyle(`translate(${offset.x}px, ${offset.y}px)`)
+    transformStyle(`translate(${offset.x}px, ${offset.y}px)`),
   ) : { display: 'none' }
 );
 
 const dragIconStyle = {
   verticalAlign: 'bottom',
-  marginRight: 3
+  marginRight: 3,
 };
 
 const MediaDragPreview = ({
   muiTheme,
   items,
-  currentOffset
+  currentOffset,
 }) => {
   if (!items || !items.media) {
     return null;
@@ -45,8 +45,8 @@ MediaDragPreview.propTypes = {
   items: PropTypes.object,
   currentOffset: PropTypes.shape({
     x: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired
-  })
+    y: PropTypes.number.isRequired,
+  }),
 };
 
 export default muiThemeable()(MediaDragPreview);

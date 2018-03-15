@@ -10,7 +10,7 @@ const Form = ({ children, className, ...props }) => (
 
 Form.propTypes = {
   className: PropTypes.string,
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
 };
 
 export default Form;

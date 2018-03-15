@@ -10,7 +10,7 @@ const Markdown = ({ source }) => (
 );
 
 Markdown.propTypes = {
-  source: PropTypes.string.isRequired
+  source: PropTypes.string.isRequired,
 };
 
 export default Markdown;

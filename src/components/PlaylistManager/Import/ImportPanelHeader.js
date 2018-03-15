@@ -10,7 +10,7 @@ const ImportPanelHeader = ({
   t,
   className,
   children,
-  onClosePanel
+  onClosePanel,
 }) => (
   <div className={cx('ImportPanelHeader', className)}>
     <div className="ImportPanelHeader-content">
@@ -30,7 +30,7 @@ ImportPanelHeader.propTypes = {
   className: PropTypes.string,
   children: PropTypes.node,
   t: PropTypes.func.isRequired,
-  onClosePanel: PropTypes.func.isRequired
+  onClosePanel: PropTypes.func.isRequired,
 };
 
 export default translate()(ImportPanelHeader);

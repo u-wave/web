@@ -6,11 +6,11 @@ export default class TextField extends React.Component {
   static propTypes = {
     className: PropTypes.string,
     type: PropTypes.string,
-    icon: PropTypes.element
+    icon: PropTypes.element,
   };
 
   static defaultProps = {
-    type: 'text'
+    type: 'text',
   };
 
   get value() {

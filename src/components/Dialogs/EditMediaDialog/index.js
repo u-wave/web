@@ -34,7 +34,7 @@ class EditMediaDialog extends React.Component {
     titleClassName: PropTypes.string,
 
     onEditedMedia: PropTypes.func.isRequired,
-    onCloseDialog: PropTypes.func.isRequired
+    onCloseDialog: PropTypes.func.isRequired,
   };
 
   state = {
@@ -42,7 +42,7 @@ class EditMediaDialog extends React.Component {
     artist: this.props.media.artist,
     title: this.props.media.title,
     start: formatDuration(this.props.media.start * 1000),
-    end: formatDuration(this.props.media.end * 1000)
+    end: formatDuration(this.props.media.end * 1000),
   };
 
   labelStart = uniqueId('editmedia');
@@ -53,7 +53,7 @@ class EditMediaDialog extends React.Component {
 
     const { media, onEditedMedia, onCloseDialog } = this.props;
     const {
-      artist, title, start, end
+      artist, title, start, end,
     } = this.state;
 
     const startSeconds = parseDuration(start);
@@ -80,7 +80,7 @@ class EditMediaDialog extends React.Component {
       artist,
       title,
       start: startSeconds,
-      end: endSeconds
+      end: endSeconds,
     });
     onCloseDialog();
   };
@@ -104,7 +104,7 @@ class EditMediaDialog extends React.Component {
   handleSwapArtistTitle = () => {
     this.setState({
       artist: this.state.title,
-      title: this.state.artist
+      title: this.state.artist,
     });
   };
 
@@ -126,7 +126,7 @@ class EditMediaDialog extends React.Component {
       artist,
       title,
       start,
-      end
+      end,
     } = this.state;
     const baseTabIndex = 1000;
     let content = null;
@@ -134,7 +134,7 @@ class EditMediaDialog extends React.Component {
       const artistInput = (
         <TextField
           className="EditMediaDialogGroup-field"
-          placeholder={t([ 'dialogs.editMedia.artistLabel', 'media.artist' ])}
+          placeholder={t(['dialogs.editMedia.artistLabel', 'media.artist'])}
           value={artist}
           onChange={this.handleChangeArtist}
           icon={<ArtistIcon color="#9f9d9e" />}
@@ -152,7 +152,7 @@ class EditMediaDialog extends React.Component {
       const titleInput = (
         <TextField
           className="EditMediaDialogGroup-field"
-          placeholder={t([ 'dialogs.editMedia.titleLabel', 'media.title' ])}
+          placeholder={t(['dialogs.editMedia.titleLabel', 'media.title'])}
           value={title}
           onChange={this.handleChangeTitle}
           icon={<TitleIcon color="#9f9d9e" />}

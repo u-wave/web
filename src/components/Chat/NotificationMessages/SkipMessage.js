@@ -22,7 +22,7 @@ const SkipMessage = ({
   user,
   moderator,
   reason,
-  timestamp
+  timestamp,
 }) => (
   <UserNotificationMessage
     type="skip"
@@ -40,7 +40,7 @@ SkipMessage.propTypes = {
   user: PropTypes.object.isRequired,
   moderator: PropTypes.object,
   timestamp: PropTypes.number.isRequired,
-  reason: PropTypes.string
+  reason: PropTypes.string,
 };
 
 export default enhance(SkipMessage);

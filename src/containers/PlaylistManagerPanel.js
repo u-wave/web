@@ -6,11 +6,11 @@ import {
   selectedPlaylistSelector,
   filteredSelectedPlaylistItemsSelector,
   isSelectedPlaylistLoadingSelector,
-  isFilteredSelector
+  isFilteredSelector,
 } from '../selectors/playlistSelectors';
 
 import {
-  openPreviewMediaDialog
+  openPreviewMediaDialog,
 } from '../actions/DialogActionCreators';
 import {
   addMediaMenu,
@@ -24,7 +24,7 @@ import {
   shufflePlaylist,
   activatePlaylist,
   loadPlaylist,
-  loadFilteredPlaylistItems
+  loadFilteredPlaylistItems,
 } from '../actions/PlaylistActionCreators';
 
 import PlaylistPanel from '../components/PlaylistManager/Panel';
@@ -33,14 +33,14 @@ const mapStateToProps = createStructuredSelector({
   playlist: selectedPlaylistSelector,
   media: filteredSelectedPlaylistItemsSelector,
   loading: isSelectedPlaylistLoadingSelector,
-  isFiltered: isFilteredSelector
+  isFiltered: isFilteredSelector,
 });
 
 const selectionOrOne = (media, selection) => {
   if (selection.isSelected(media)) {
     return selection.get();
   }
-  return [ media ];
+  return [media];
 };
 
 const onOpenAddMediaMenu = (position, media, selection) =>
@@ -88,8 +88,8 @@ const mergeProps = (state, { dispatch }, props) => ({
     onEditMedia: onEditMedia(state.playlist._id),
     onRemoveFromPlaylist: onRemoveFromPlaylist(state.playlist._id),
     onLoadPlaylistPage: onLoadPlaylistPage(state),
-    onFilterPlaylistItems: filterPlaylistItems.bind(null, state.playlist._id)
-  }, dispatch)
+    onFilterPlaylistItems: filterPlaylistItems.bind(null, state.playlist._id),
+  }, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(PlaylistPanel);

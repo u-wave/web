@@ -4,6 +4,6 @@ export default function formatJoinDate(date) {
     month: 'numeric',
     day: 'numeric',
     hour: 'numeric',
-    minute: 'numeric'
+    minute: 'numeric',
   });
 }

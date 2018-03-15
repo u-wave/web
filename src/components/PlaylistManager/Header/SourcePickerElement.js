@@ -6,14 +6,14 @@ const SourcePickerElement = ({
   className,
   name,
   source,
-  active
+  active,
 }) => (
   <div
     className={cx(
       'SourcePickerElement',
       `SourcePickerElement--${name}`,
       active && 'SourcePickerElement--active',
-      className
+      className,
     )}
     style={{ backgroundImage: `url(${source.logo})` }}
   />
@@ -23,9 +23,9 @@ SourcePickerElement.propTypes = {
   className: PropTypes.string,
   name: PropTypes.string.isRequired,
   source: PropTypes.shape({
-    logo: PropTypes.string.isRequired
+    logo: PropTypes.string.isRequired,
   }).isRequired,
-  active: PropTypes.bool
+  active: PropTypes.bool,
 };
 
 export default SourcePickerElement;

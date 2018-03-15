@@ -15,18 +15,18 @@ import PanelTemplate from './PanelTemplate';
 const contentContainerStyle = {
   // This ensures that the `position:absolute`s on divs _inside_ container
   // elements align correctly.
-  position: 'static'
+  position: 'static',
 };
 
 const subHeaderStyle = {
-  fontSize: '125%'
+  fontSize: '125%',
 };
 
 const getUsersLabel = (t, listenerCount) => [
   t('users.title'),
   <span key="sub" style={subHeaderStyle}>
     {listenerCount}
-  </span>
+  </span>,
 ];
 
 const getWaitlistLabel = (t, size, position) => {
@@ -37,7 +37,7 @@ const getWaitlistLabel = (t, size, position) => {
 
     return [
       t('waitlist.title'),
-      <span key="sub" style={subHeaderStyle}>{posText}</span>
+      <span key="sub" style={subHeaderStyle}>{posText}</span>,
     ];
   }
   return t('waitlist.title');
@@ -49,7 +49,7 @@ const SidePanels = ({
   listenerCount,
   waitlistSize,
   waitlistPosition,
-  onChange
+  onChange,
 }) => (
   <Tabs
     value={selected}
@@ -92,10 +92,10 @@ SidePanels.propTypes = {
   listenerCount: PropTypes.number.isRequired,
   waitlistSize: PropTypes.number.isRequired,
   waitlistPosition: PropTypes.number.isRequired,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
 };
 
 export default compose(
   translate(),
-  pure
+  pure,
 )(SidePanels);

@@ -21,7 +21,7 @@ export default function uwaveWebClient(uw, options = {}) {
 
       const transform = hstream({
         title,
-        '#u-wave-config': JSON.stringify(clientOptions)
+        '#u-wave-config': JSON.stringify(clientOptions),
       });
 
       fs.createReadStream(path.join(basePath, 'index.html'), 'utf8')
@@ -35,7 +35,7 @@ export default function uwaveWebClient(uw, options = {}) {
       const transform = hstream({
         title,
         '#u-wave-config': JSON.stringify({ apiUrl: clientOptions.apiUrl }),
-        '#reset-data': req.params.key
+        '#reset-data': req.params.key,
       });
 
       fs.createReadStream(path.join(basePath, 'password-reset.html'), 'utf8')

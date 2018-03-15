@@ -4,20 +4,20 @@ import Motd from '../components/Motd';
 import { setMotd } from '../../actions/ChatActionCreators';
 import {
   rawMotdSelector,
-  markupCompilerOptionsSelector
+  markupCompilerOptionsSelector,
 } from '../../selectors/chatSelectors';
 import {
-  canChangeMotdSelector
+  canChangeMotdSelector,
 } from '../selectors/authSelectors';
 
 const mapStateToProps = createStructuredSelector({
   motd: rawMotdSelector,
   compileOptions: markupCompilerOptionsSelector,
-  canChangeMotd: canChangeMotdSelector
+  canChangeMotd: canChangeMotdSelector,
 });
 
 const mapDispatchToProps = {
-  onSetMotd: setMotd
+  onSetMotd: setMotd,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Motd);

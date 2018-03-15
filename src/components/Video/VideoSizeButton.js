@@ -15,13 +15,13 @@ const paths = {
   // Currently small, show "enlarge" icon:
   small: 'm 28,11 0,14 -20,0 0,-14 z m -18,2 16,0 0,10 -16,0 0,-10 z',
   // Currently large, show smaller icon: ("ensmall"?! 😂)
-  large: 'm 26,13 0,10 -16,0 0,-10 z m -14,2 12,0 0,6 -12,0 0,-6 z'
+  large: 'm 26,13 0,10 -16,0 0,-10 z m -14,2 12,0 0,6 -12,0 0,-6 z',
 };
 
 const VideoSizeButton = ({
   t,
   videoSize,
-  onToggleVideoSize
+  onToggleVideoSize,
 }) => (
   <IconButton
     onClick={onToggleVideoSize}
@@ -39,21 +39,21 @@ const VideoSizeButton = ({
 
 VideoSizeButton.propTypes = {
   t: PropTypes.func.isRequired,
-  videoSize: PropTypes.oneOf([ 'small', 'large' ]).isRequired,
-  onToggleVideoSize: PropTypes.func.isRequired
+  videoSize: PropTypes.oneOf(['small', 'large']).isRequired,
+  onToggleVideoSize: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
-  videoSize: videoSizeSelector
+  videoSize: videoSizeSelector,
 });
 const mapDispatchToProps = dispatch => ({
-  onToggleVideoSize: () => dispatch(toggleVideoSize())
+  onToggleVideoSize: () => dispatch(toggleVideoSize()),
 });
 
 export default compose(
   translate(),
   connect(
     mapStateToProps,
-    mapDispatchToProps
-  )
+    mapDispatchToProps,
+  ),
 )(VideoSizeButton);

@@ -22,13 +22,13 @@ const userSource = {
     if (item.user && result) {
       props.onMoveUser(result.position);
     }
-  }
+  },
 };
 
 const collect = (connect, monitor) => ({
   isDragging: monitor.isDragging(),
   connectDragSource: connect.dragSource(),
-  connectDragPreview: connect.dragPreview()
+  connectDragPreview: connect.dragPreview(),
 });
 
 /**
@@ -42,7 +42,7 @@ const ModRowBase = ({
   connectDragPreview,
   connectDragSource,
   onOpenCard,
-  onRemoveUser
+  onRemoveUser,
 }) => connectDragPreview((
   <div
     className={cx(
@@ -50,7 +50,7 @@ const ModRowBase = ({
       'WaitlistRow',
       'WaitlistRow--moderate',
       isDragging && 'is-dragging',
-      className
+      className,
     )}
   >
     <Position position={position + 1} />
@@ -87,7 +87,7 @@ ModRowBase.propTypes = {
   connectDragPreview: PropTypes.func.isRequired,
   connectDragSource: PropTypes.func.isRequired,
   onMoveUser: PropTypes.func.isRequired,
-  onRemoveUser: PropTypes.func.isRequired
+  onRemoveUser: PropTypes.func.isRequired,
 };
 
 export default compose(
@@ -97,6 +97,6 @@ export default compose(
     onOpenCard(event) {
       event.preventDefault();
       props.openUserCard(props.user);
-    }
-  }))
+    },
+  })),
 )(ModRowBase);

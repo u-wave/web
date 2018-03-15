@@ -7,10 +7,10 @@ import {
   motdSelector,
   messagesSelector,
   markupCompilerOptionsSelector,
-  canDeleteMessagesSelector
+  canDeleteMessagesSelector,
 } from '../selectors/chatSelectors';
 import {
-  deleteChatMessage
+  deleteChatMessage,
 } from '../actions/ModerationActionCreators';
 
 import ChatMessages from '../components/Chat/ChatMessages';
@@ -19,16 +19,16 @@ const mapStateToProps = createStructuredSelector({
   motd: motdSelector,
   messages: messagesSelector,
   compileOptions: markupCompilerOptionsSelector,
-  canDeleteMessages: canDeleteMessagesSelector
+  canDeleteMessages: canDeleteMessagesSelector,
 });
 
 const mapDispatchToProps = {
-  onDeleteMessage: deleteChatMessage
+  onDeleteMessage: deleteChatMessage,
 };
 
 const enhance = compose(
   connect(mapStateToProps, mapDispatchToProps),
-  withBus()
+  withBus(),
 );
 
 export default enhance(ChatMessages);

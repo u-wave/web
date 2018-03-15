@@ -1,7 +1,7 @@
 import {
   ADVANCE,
   BOOTH_SKIP,
-  LOAD_HISTORY_START, LOAD_HISTORY_COMPLETE
+  LOAD_HISTORY_START, LOAD_HISTORY_COMPLETE,
 } from '../constants/actionTypes/booth';
 import { flattenPlaylistItem } from './PlaylistActionCreators';
 import { get, post } from './RequestActionCreators';
@@ -16,7 +16,7 @@ export function advanceToEmpty() {
     dispatch({
       type: ADVANCE,
       payload: null,
-      meta: { previous: currentPlaySelector(getState()) }
+      meta: { previous: currentPlaySelector(getState()) },
     });
   };
 }
@@ -29,7 +29,7 @@ export function advance(nextBooth) {
     return advanceToEmpty();
   }
   const {
-    media, userID, historyID, playlistID, playedAt
+    media, userID, historyID, playlistID, playedAt,
   } = nextBooth;
   return (dispatch, getState) => {
     const user = usersSelector(getState())[userID];
@@ -41,11 +41,11 @@ export function advance(nextBooth) {
         playlistID,
         user,
         media: flattenPlaylistItem(media),
-        timestamp: playedAt
+        timestamp: playedAt,
       },
       meta: {
-        previous: currentPlaySelector(getState())
-      }
+        previous: currentPlaySelector(getState()),
+      },
     });
   };
 }
@@ -69,8 +69,8 @@ export function skipped({ userID, moderatorID, reason }) {
         user: users[userID],
         moderator: users[moderatorID],
         reason,
-        timestamp: Date.now()
-      }
+        timestamp: Date.now(),
+      },
     });
   };
 }
@@ -92,8 +92,8 @@ export function loadHistoryComplete(response) {
       payload: playHistory,
       meta: {
         page: Math.floor(meta.offset / meta.pageSize),
-        size: meta.pageSize
-      }
+        size: meta.pageSize,
+      },
     });
   };
 }
@@ -101,6 +101,6 @@ export function loadHistoryComplete(response) {
 export function loadHistory() {
   return get('/booth/history', {
     onStart: loadHistoryStart,
-    onComplete: loadHistoryComplete
+    onComplete: loadHistoryComplete,
   });
 }

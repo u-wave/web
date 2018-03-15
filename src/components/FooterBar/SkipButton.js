@@ -11,12 +11,12 @@ import SkipReasonsList from './SkipReasonsList';
 
 const fullSizeStyle = {
   height: '100%',
-  width: '100%'
+  width: '100%',
 };
 
 const popoverProps = {
   anchorOrigin: { horizontal: 'middle', vertical: 'bottom' },
-  targetOrigin: { horizontal: 'middle', vertical: 'bottom' }
+  targetOrigin: { horizontal: 'middle', vertical: 'bottom' },
 };
 
 // TODO not hardcode these maybe?
@@ -27,7 +27,7 @@ const reasons = [
   'nsfw',
   'duration',
   'downvotes',
-  'other'
+  'other',
 ];
 
 class SkipButton extends React.Component {
@@ -35,13 +35,13 @@ class SkipButton extends React.Component {
     t: PropTypes.func.isRequired,
     userIsDJ: PropTypes.bool.isRequired,
     currentDJ: PropTypes.object.isRequired,
-    onSkip: PropTypes.func.isRequired
+    onSkip: PropTypes.func.isRequired,
   };
 
   state = {
     isSkipping: false,
     isOpen: false,
-    anchor: null
+    anchor: null,
   };
 
   handleOpen = (event) => {
@@ -52,13 +52,13 @@ class SkipButton extends React.Component {
 
     this.setState({
       isOpen: true,
-      anchor: event.currentTarget
+      anchor: event.currentTarget,
     });
   };
 
   handleClose = () => {
     this.setState({
-      isOpen: false
+      isOpen: false,
     });
   };
 
@@ -107,7 +107,7 @@ class SkipButton extends React.Component {
           <SkipReasonsList
             reasons={reasons.map(name => ({
               name,
-              label: t(`booth.skip.reasons.${name}`)
+              label: t(`booth.skip.reasons.${name}`),
             }))}
             onSelect={this.handleSkip}
           />
@@ -119,5 +119,5 @@ class SkipButton extends React.Component {
 
 export default compose(
   translate(),
-  pure
+  pure,
 )(SkipButton);

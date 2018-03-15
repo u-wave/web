@@ -3,11 +3,11 @@ import baseSelector from './baseSelector';
 
 export const pageSelector = createSelector(
   baseSelector,
-  base => base.users.currentPage
+  base => base.users.currentPage,
 );
 
 export const usersSelector = createSelector(
   baseSelector,
-  base => base.users.users
+  base => base.users.users,
 );
 

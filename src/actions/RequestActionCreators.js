@@ -1,6 +1,6 @@
 import {
   REQUEST_START,
-  REQUEST_COMPLETE
+  REQUEST_COMPLETE,
 } from '../constants/actionTypes/request';
 
 let requestID = 0;
@@ -19,14 +19,14 @@ function request(method, url, opts = {}) {
     payload: {
       ...requestOpts,
       method,
-      url
+      url,
     },
     meta: {
       onStart,
       onComplete,
       onError,
-      id: requestID
-    }
+      id: requestID,
+    },
   };
 }
 
@@ -34,7 +34,7 @@ export function requestComplete(response, meta) {
   return {
     type: REQUEST_COMPLETE,
     payload: response,
-    meta
+    meta,
   };
 }
 
@@ -43,7 +43,7 @@ export function requestCompleteError(error, meta) {
     type: REQUEST_COMPLETE,
     error: true,
     payload: error,
-    meta
+    meta,
   };
 }
 

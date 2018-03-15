@@ -12,10 +12,10 @@ import { createTimer, stopTimer } from '../actions/TickerActionCreators';
 import {
   settingsSelector,
   languageSelector,
-  muiThemeSelector
+  muiThemeSelector,
 } from '../selectors/settingSelectors';
 import {
-  isConnectedSelector
+  isConnectedSelector,
 } from '../selectors/serverSelectors';
 import App from '../components/App';
 
@@ -27,13 +27,13 @@ const mapStateToProps = createStructuredSelector({
   muiTheme: muiThemeSelector,
   hasAboutPage: (state, props) => (
     props.uwave.getAboutPageComponent() !== null
-  )
+  ),
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   createTimer,
   stopTimer,
-  onCloseOverlay: closeAll
+  onCloseOverlay: closeAll,
 }, dispatch);
 
 const enhance = connect(mapStateToProps, mapDispatchToProps);
@@ -46,20 +46,20 @@ class AppContainer extends React.Component {
     locale: PropTypes.object.isRequired,
     muiTheme: PropTypes.object,
     createTimer: PropTypes.func.isRequired,
-    stopTimer: PropTypes.func.isRequired
+    stopTimer: PropTypes.func.isRequired,
   };
 
   static childContextTypes = {
     timerCallbacks: PropTypes.arrayOf(PropTypes.func),
     mediaSources: PropTypes.object,
-    uwave: PropTypes.object
+    uwave: PropTypes.object,
   };
 
   getChildContext() {
     return {
       timerCallbacks: this.timerCallbacks,
       mediaSources: this.props.mediaSources,
-      uwave: this.props.uwave
+      uwave: this.props.uwave,
     };
   }
 

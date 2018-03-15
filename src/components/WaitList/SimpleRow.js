@@ -12,14 +12,14 @@ const SimpleRow = ({
   className,
   position,
   user,
-  onOpenCard
+  onOpenCard,
 }) => (
   <button
     className={cx(
       'UserRow',
       'WaitlistRow',
       'UserRow--cardable',
-      className
+      className,
     )}
     onClick={onOpenCard}
   >
@@ -41,7 +41,7 @@ SimpleRow.propTypes = {
   className: PropTypes.string,
   position: PropTypes.number.isRequired,
   user: PropTypes.object.isRequired,
-  onOpenCard: PropTypes.func.isRequired
+  onOpenCard: PropTypes.func.isRequired,
 };
 
 export default compose(
@@ -50,6 +50,6 @@ export default compose(
     onOpenCard(event) {
       event.preventDefault();
       props.openUserCard(props.user);
-    }
-  }))
+    },
+  })),
 )(SimpleRow);

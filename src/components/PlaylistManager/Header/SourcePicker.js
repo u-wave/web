@@ -17,7 +17,7 @@ class SourcePicker extends React.Component {
 
     muiTheme: PropTypes.object.isRequired,
     getMediaSource: PropTypes.func.isRequired,
-    getAllMediaSources: PropTypes.func.isRequired
+    getAllMediaSources: PropTypes.func.isRequired,
   };
 
   state = { open: false };
@@ -42,7 +42,7 @@ class SourcePicker extends React.Component {
   handleOpen = () => {
     this.setState({
       open: true,
-      anchor: this.container
+      anchor: this.container,
     });
   };
 
@@ -65,7 +65,7 @@ class SourcePicker extends React.Component {
       selected,
       muiTheme,
       getMediaSource,
-      getAllMediaSources
+      getAllMediaSources,
     } = this.props;
 
     const sourceNames = Object.keys(getAllMediaSources());
@@ -107,5 +107,5 @@ class SourcePicker extends React.Component {
 
 export default compose(
   injectMediaSources(),
-  muiThemeable()
+  muiThemeable(),
 )(SourcePicker);

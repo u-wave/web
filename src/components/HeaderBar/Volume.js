@@ -12,7 +12,7 @@ const sliderStyle = {
   // but we can compensate for it here.
   // TODO Do this properly when/if material-ui gets a better styling solution.
   marginTop: -21,
-  marginBottom: 3
+  marginBottom: 3,
 };
 
 export default class Volume extends React.Component {
@@ -23,7 +23,7 @@ export default class Volume extends React.Component {
 
     onVolumeChange: PropTypes.func,
     onMute: PropTypes.func,
-    onUnmute: PropTypes.func
+    onUnmute: PropTypes.func,
   };
 
   shouldComponentUpdate(nextProps) {

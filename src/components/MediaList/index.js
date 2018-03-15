@@ -28,14 +28,14 @@ export default class MediaList extends React.Component {
     rowProps: PropTypes.object,
 
     onOpenPreviewMediaDialog: PropTypes.func,
-    makeActions: PropTypes.func
+    makeActions: PropTypes.func,
   };
 
   static defaultProps = {
     // The `size` property is only necessary for lazy loading.
     size: null,
     rowComponent: Row,
-    makeActions: () => <span />
+    makeActions: () => <span />,
   };
 
   state = { selection: itemSelection(this.props.media) };
@@ -47,7 +47,7 @@ export default class MediaList extends React.Component {
       this.setState({
         selection: mediaChanged
           ? itemSelection(nextProps.media)
-          : itemSelection(nextProps.media, selection)
+          : itemSelection(nextProps.media, selection),
       });
     }
   }
@@ -102,7 +102,7 @@ export default class MediaList extends React.Component {
 
   render() {
     const {
-      className, media, size, onRequestPage
+      className, media, size, onRequestPage,
     } = this.props;
     let list = (
       <BaseList

@@ -10,17 +10,17 @@ import Button from '../../components/Form/Button';
 
 import {
   getChannelPlaylists,
-  getImportablePlaylist
+  getImportablePlaylist,
 } from './actions';
 
 export default class YoutubeImportForm extends React.Component {
   static propTypes = {
     onShowImportPanel: PropTypes.func.isRequired,
-    onHideImportPanel: PropTypes.func.isRequired
+    onHideImportPanel: PropTypes.func.isRequired,
   };
 
   static contextTypes = {
-    store: PropTypes.object
+    store: PropTypes.object,
   };
 
   dispatch(action) {

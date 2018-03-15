@@ -23,7 +23,7 @@ const PlaylistMeta = ({
   onRenamePlaylist,
   onDeletePlaylist,
   onNotDeletable,
-  onFilter
+  onFilter,
 }) => (
   <div className={cx('PlaylistMeta', className, active ? 'PlaylistMeta--active' : '')}>
     <div className="PlaylistMeta-name">
@@ -65,7 +65,7 @@ PlaylistMeta.propTypes = {
   onRenamePlaylist: PropTypes.func.isRequired,
   onDeletePlaylist: PropTypes.func.isRequired,
   onNotDeletable: PropTypes.func.isRequired,
-  onFilter: PropTypes.func.isRequired
+  onFilter: PropTypes.func.isRequired,
 };
 
 export default translate()(PlaylistMeta);

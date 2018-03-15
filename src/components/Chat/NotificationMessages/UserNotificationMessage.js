@@ -18,8 +18,8 @@ const enhance = compose(
     onClick: props => (event) => {
       event.preventDefault();
       props.openUserCard(props.user);
-    }
-  })
+    },
+  }),
 );
 
 const UserNotificationMessage = ({
@@ -54,7 +54,7 @@ UserNotificationMessage.propTypes = {
   className: PropTypes.string.isRequired,
   user: PropTypes.object.isRequired,
   timestamp: PropTypes.number.isRequired,
-  onClick: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired,
 };
 
 export default enhance(UserNotificationMessage);

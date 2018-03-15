@@ -24,8 +24,8 @@ const rewriteLocaleImports = () => ({
         const source = path.get('arguments.0');
         source.node.value = source.node.value.replace(/^\.\.\/locale\/(.*?)\.yaml/, './locale/$1.js');
       }
-    }
-  }
+    },
+  },
 });
 
 gulp.task('js:locales', () =>
@@ -47,7 +47,7 @@ gulp.task('js:locales', () =>
     }))
     .pipe(gulp.dest('lib/locale')));
 
-gulp.task('js:babel', [ 'js:locales' ], () => {
+gulp.task('js:babel', ['js:locales'], () => {
   // We'll always compile this in production mode so other people using the
   // client as a library get the optimised versions of components.
   // Save the environment value so we can restore it later.
@@ -63,7 +63,7 @@ gulp.task('js:babel', [ 'js:locales' ], () => {
     }))
     .pipe(sourcemaps.init())
     .pipe(babel({
-      plugins: [ rewriteLocaleImports ]
+      plugins: [rewriteLocaleImports],
     }))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(destEs))
@@ -79,8 +79,8 @@ gulp.task('js:babel', [ 'js:locales' ], () => {
       plugins: [
         'syntax-object-rest-spread',
         'transform-es2015-modules-commonjs',
-        'dynamic-import-node'
-      ]
+        'dynamic-import-node',
+      ],
     }))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(destCommonjs))

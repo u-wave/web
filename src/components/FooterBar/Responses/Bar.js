@@ -10,7 +10,7 @@ const ResponseBar = ({
   disabled = false,
   isUpvote, upvotesCount, onUpvote,
   isDownvote, downvotesCount, onDownvote,
-  isFavorite, favoritesCount, onFavorite
+  isFavorite, favoritesCount, onFavorite,
 }) => (
   <div className="AudienceResponse">
     <Upvote
@@ -46,7 +46,7 @@ ResponseBar.propTypes = {
 
   onUpvote: PropTypes.func.isRequired,
   onFavorite: PropTypes.func.isRequired,
-  onDownvote: PropTypes.func.isRequired
+  onDownvote: PropTypes.func.isRequired,
 };
 
 export default pure(ResponseBar);

@@ -19,34 +19,34 @@ import {
   REMOVE_ALL_MESSAGES,
 
   MUTE_USER,
-  UNMUTE_USER
+  UNMUTE_USER,
 } from '../constants/actionTypes/chat';
 import { put } from './RequestActionCreators';
 import { execute } from '../utils/ChatCommands';
 import {
   muteTimeoutsSelector,
   mutedUserIDsSelector,
-  currentUserMuteSelector
+  currentUserMuteSelector,
 } from '../selectors/chatSelectors';
 import { settingsSelector } from '../selectors/settingSelectors';
 import {
   currentUserSelector,
   userListSelector,
   userHasRoleSelector,
-  currentUserHasRoleSelector
+  currentUserHasRoleSelector,
 } from '../selectors/userSelectors';
 import { currentTimeSelector } from '../selectors/timeSelectors';
 
 import {
   getAvailableGroupMentions,
   resolveMentions,
-  hasMention
+  hasMention,
 } from '../utils/chatMentions';
 
 export function receiveMotd(text) {
   return {
     type: RECEIVE_MOTD,
-    payload: text
+    payload: text,
   };
 }
 
@@ -57,8 +57,8 @@ export function log(text) {
     type: LOG,
     payload: {
       _id: logIdx,
-      text
-    }
+      text,
+    },
   };
 }
 
@@ -70,8 +70,8 @@ export function prepareMessage(state, user, text, parseOpts = {}) {
     payload: {
       user,
       message: text,
-      parsed
-    }
+      parsed,
+    },
   };
 }
 
@@ -91,8 +91,8 @@ export function sendChat(text) {
     const message = prepareMessage(state, sender, text, {
       mentions: [
         ...users.map(user => user.username),
-        ...getAvailableGroupMentions(hasRole)
-      ]
+        ...getAvailableGroupMentions(hasRole),
+      ],
     });
     dispatch(message);
   };
@@ -101,7 +101,7 @@ export function sendChat(text) {
 export function inputMessage(text) {
   return (dispatch, getState) => {
     if (text[0] === '/') {
-      const [ command, ...params ] = splitargs(text.slice(1));
+      const [command, ...params] = splitargs(text.slice(1));
       if (command) {
         const result = execute(getState(), command, params);
         if (result) {
@@ -128,7 +128,7 @@ export function receive(message) {
     const senderHasRole = userHasRoleSelector(state)(sender);
     const mentions = [
       ...users.map(user => user.username),
-      ...getAvailableGroupMentions(mention => senderHasRole(`chat.mention.${mention}`))
+      ...getAvailableGroupMentions(mention => senderHasRole(`chat.mention.${mention}`)),
     ];
 
     if (isMuted(state, message.userID)) {
@@ -145,11 +145,11 @@ export function receive(message) {
       payload: {
         message: {
           ...message,
-          user: sender
+          user: sender,
         },
         isMention,
-        parsed
-      }
+        parsed,
+      },
     });
 
     if (isMention) {
@@ -164,27 +164,27 @@ export function receive(message) {
 export function removeMessage(id) {
   return {
     type: REMOVE_MESSAGE,
-    payload: { _id: id }
+    payload: { _id: id },
   };
 }
 
 export function removeMessagesByUser(userID) {
   return {
     type: REMOVE_USER_MESSAGES,
-    payload: { userID }
+    payload: { userID },
   };
 }
 
 export function removeAllMessages() {
   return {
-    type: REMOVE_ALL_MESSAGES
+    type: REMOVE_ALL_MESSAGES,
   };
 }
 
 function expireMute(userID) {
   return {
     type: UNMUTE_USER,
-    payload: { userID }
+    payload: { userID },
   };
 }
 
@@ -200,8 +200,8 @@ export function muteUser(userID, { moderatorID, expiresAt }) {
         moderatorID,
         expiresAt,
         expirationTimer: expireIn > 0 ?
-          setTimeout(() => dispatch(expireMute(userID)), expireIn) : null
-      }
+          setTimeout(() => dispatch(expireMute(userID)), expireIn) : null,
+      },
     });
   };
 }
@@ -214,7 +214,7 @@ export function unmuteUser(userID, { moderatorID }) {
     }
     dispatch({
       type: UNMUTE_USER,
-      payload: { userID, moderatorID }
+      payload: { userID, moderatorID },
     });
   };
 }
@@ -222,14 +222,14 @@ export function unmuteUser(userID, { moderatorID }) {
 export function setMotdStart(motd) {
   return {
     type: SET_MOTD_START,
-    payload: motd
+    payload: motd,
   };
 }
 
 export function setMotdComplete(motd) {
   return {
     type: SET_MOTD_COMPLETE,
-    payload: motd
+    payload: motd,
   };
 }
 
@@ -243,7 +243,7 @@ export function setMotd(text) {
     onError: error => ({
       type: SET_MOTD_COMPLETE,
       error: true,
-      payload: error
-    })
+      payload: error,
+    }),
   });
 }

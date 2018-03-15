@@ -12,7 +12,7 @@ const PasswordResetSuccessPage = ({ t }) => (
 );
 
 PasswordResetSuccessPage.propTypes = {
-  t: PropTypes.func.isRequired
+  t: PropTypes.func.isRequired,
 };
 
 export default enhance(PasswordResetSuccessPage);

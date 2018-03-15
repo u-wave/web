@@ -5,7 +5,7 @@ export function selectPanel(name) {
   return {
     type: SELECT_PANEL,
     payload: {
-      panel: name
-    }
+      panel: name,
+    },
   };
 }

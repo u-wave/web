@@ -14,7 +14,7 @@ const LabeledControl = ({ id, label, children }) => (
 LabeledControl.propTypes = {
   id: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
 };
 
 export default LabeledControl;

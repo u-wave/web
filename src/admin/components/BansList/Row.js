@@ -5,7 +5,7 @@ import ms from 'ms';
 import RaisedButton from 'material-ui/RaisedButton';
 import {
   TableRow,
-  TableCell
+  TableCell,
 } from '../../../components/Table';
 import Avatar from '../../../components/Avatar';
 import Username from '../../../components/Username/WithCard';
@@ -13,13 +13,13 @@ import Username from '../../../components/Username/WithCard';
 const enhance = translate();
 const avatarStyle = {
   width: 48,
-  paddingRight: 0
+  paddingRight: 0,
 };
 
 const BanRow = ({
   t,
   ban,
-  onUnbanUser
+  onUnbanUser,
 }) => (
   <TableRow>
     <TableCell style={avatarStyle}>
@@ -54,9 +54,9 @@ BanRow.propTypes = {
     user: PropTypes.object.isRequired,
     duration: PropTypes.number.isRequired,
     reason: PropTypes.string,
-    moderator: PropTypes.object.isRequired
+    moderator: PropTypes.object.isRequired,
   }).isRequired,
-  onUnbanUser: PropTypes.func.isRequired
+  onUnbanUser: PropTypes.func.isRequired,
 };
 
 export default enhance(BanRow);

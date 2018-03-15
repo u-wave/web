@@ -10,11 +10,11 @@ export default function () {
 
       static contextTypes = {
         store: PropTypes.object.isRequired,
-        timerCallbacks: PropTypes.arrayOf(PropTypes.func).isRequired
+        timerCallbacks: PropTypes.arrayOf(PropTypes.func).isRequired,
       };
 
       state = {
-        currentTime: this.getCurrentTime()
+        currentTime: this.getCurrentTime(),
       };
 
       componentDidMount() {
@@ -35,7 +35,7 @@ export default function () {
 
       tick = () => {
         this.setState({
-          currentTime: this.getCurrentTime()
+          currentTime: this.getCurrentTime(),
         });
       };
 

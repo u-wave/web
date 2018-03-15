@@ -10,11 +10,11 @@ import theme from '../../MuiTheme';
 const iconStyles = {
   height: 36,
   width: 36,
-  padding: '6px 12px 6px 0'
+  padding: '6px 12px 6px 0',
 };
 
 const Votes = ({
-  upvotes, downvotes, favorites, isUpvote, isDownvote, isFavorite
+  upvotes, downvotes, favorites, isUpvote, isDownvote, isFavorite,
 }) => {
   const CurrentFavoriteIcon = isFavorite ? FavoritedIcon : FavoriteIcon;
   return (
@@ -56,7 +56,7 @@ Votes.propTypes = {
   downvotes: PropTypes.array.isRequired,
   isUpvote: PropTypes.bool.isRequired,
   isFavorite: PropTypes.bool.isRequired,
-  isDownvote: PropTypes.bool.isRequired
+  isDownvote: PropTypes.bool.isRequired,
 };
 
 export default Votes;

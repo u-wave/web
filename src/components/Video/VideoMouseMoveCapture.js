@@ -6,7 +6,7 @@ const enableCursor = {};
 
 const MouseMoveCapture = ({
   active,
-  onMouseMove
+  onMouseMove,
 }) => (
   <div
     className="Video-overlay Video-capture"
@@ -17,7 +17,7 @@ const MouseMoveCapture = ({
 
 MouseMoveCapture.propTypes = {
   onMouseMove: PropTypes.func.isRequired,
-  active: PropTypes.bool
+  active: PropTypes.bool,
 };
 
 export default MouseMoveCapture;

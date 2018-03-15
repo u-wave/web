@@ -11,7 +11,7 @@ const MoveToLast = ({ onLast, ...props }) => (
 );
 
 MoveToLast.propTypes = {
-  onLast: PropTypes.func.isRequired
+  onLast: PropTypes.func.isRequired,
 };
 
 export default MoveToLast;

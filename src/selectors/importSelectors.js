@@ -4,10 +4,10 @@ const baseSelector = state => state.imports;
 
 export const selectedSourceTypeSelector = createSelector(
   baseSelector,
-  imports => imports.sourceType
+  imports => imports.sourceType,
 );
 
 export const showImportPanelSelector = createSelector(
   baseSelector,
-  imports => imports.showPanel
+  imports => imports.showPanel,
 );

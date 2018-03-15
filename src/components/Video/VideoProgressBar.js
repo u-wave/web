@@ -6,7 +6,7 @@ import muiThemeable from 'material-ui/styles/muiThemeable';
 const VideoProgressBar = ({
   muiTheme,
   media,
-  seek
+  seek,
 }) => (
   <div className="Video-overlay Video-progress">
     <LinearProgress
@@ -23,9 +23,9 @@ VideoProgressBar.propTypes = {
   muiTheme: PropTypes.object.isRequired,
   media: PropTypes.shape({
     start: PropTypes.number.isRequired,
-    end: PropTypes.number.isRequired
+    end: PropTypes.number.isRequired,
   }).isRequired,
-  seek: PropTypes.number.isRequired
+  seek: PropTypes.number.isRequired,
 };
 
 export default muiThemeable()(VideoProgressBar);

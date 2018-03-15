@@ -3,15 +3,15 @@ import { register, findUser } from '../ChatCommands';
 import {
   userListSelector,
   isModeratorSelector,
-  isManagerSelector
+  isManagerSelector,
 } from '../../selectors/userSelectors';
 import {
   deleteChatMessagesByUser,
-  deleteAllChatMessages
+  deleteAllChatMessages,
 } from '../../actions/ModerationActionCreators';
 import {
   log,
-  setMotd
+  setMotd,
 } from '../../actions/ChatActionCreators';
 
 register(
@@ -22,8 +22,8 @@ register(
     action: (...args) => {
       const motd = args.join(' ');
       return setMotd(motd);
-    }
-  }
+    },
+  },
 );
 
 register(
@@ -42,6 +42,6 @@ register(
         return dispatch(log(`User ${username} is not online right now.`));
       }
       return dispatch(deleteAllChatMessages());
-    }
-  }
+    },
+  },
 );

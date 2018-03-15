@@ -37,11 +37,11 @@ class FooterBar extends React.Component {
     onModSkip: PropTypes.func.isRequired,
     onFavorite: PropTypes.func,
     onUpvote: PropTypes.func,
-    onDownvote: PropTypes.func
+    onDownvote: PropTypes.func,
   };
 
   static contextTypes = {
-    muiTheme: PropTypes.object
+    muiTheme: PropTypes.object,
   };
 
   constructor(props) {
@@ -83,13 +83,13 @@ class FooterBar extends React.Component {
       t,
       openLoginDialog, openRegisterDialog,
       togglePlaylistManager, toggleSettings,
-      onFavorite, onUpvote, onDownvote
+      onFavorite, onUpvote, onDownvote,
     } = this.props;
     const {
       user, userIsDJ, userInWaitlist,
       playlist, nextMedia, showSkip,
       baseEta, mediaEndTime,
-      voteStats
+      voteStats,
     } = this.props;
     const className = cx('FooterBar', this.props.className);
 
@@ -119,7 +119,7 @@ class FooterBar extends React.Component {
           <div
             className={cx(
               'FooterBar-responses',
-              !showSkip && 'FooterBar-responses--spaced'
+              !showSkip && 'FooterBar-responses--spaced',
             )}
           >
             <ResponseBar

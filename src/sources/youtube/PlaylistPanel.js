@@ -10,26 +10,26 @@ const selectionOrOne = (media, selection) => {
   if (selection.isSelected(media)) {
     return selection.get();
   }
-  return [ media ];
+  return [media];
 };
 
 export default class YouTubeImportPlaylistPanel extends React.Component {
   static propTypes = {
     importingPlaylist: PropTypes.shape({
       sourceID: PropTypes.string,
-      name: PropTypes.string
+      name: PropTypes.string,
     }).isRequired,
     importingPlaylistItems: PropTypes.arrayOf(PropTypes.object).isRequired,
 
     onImportPlaylist: PropTypes.func.isRequired,
     onOpenAddMediaMenu: PropTypes.func.isRequired,
-    onClosePanel: PropTypes.func.isRequired
+    onClosePanel: PropTypes.func.isRequired,
   };
 
   handleImportFull = () => {
     const {
       importingPlaylist,
-      onImportPlaylist
+      onImportPlaylist,
     } = this.props;
     onImportPlaylist(importingPlaylist.sourceID, importingPlaylist.name);
   };
@@ -39,7 +39,7 @@ export default class YouTubeImportPlaylistPanel extends React.Component {
       importingPlaylist,
       importingPlaylistItems,
       onOpenAddMediaMenu,
-      onClosePanel
+      onClosePanel,
     } = this.props;
 
     return (
@@ -65,7 +65,7 @@ export default class YouTubeImportPlaylistPanel extends React.Component {
             <AddToPlaylistAction
               key="add"
               onAdd={position => onOpenAddMediaMenu(selectionOrOne(media, selection), position)}
-            />
+            />,
           ]}
         />
       </div>

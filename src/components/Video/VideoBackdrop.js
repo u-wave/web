@@ -28,7 +28,7 @@ const CSSVideoBackdrop = ({ url }) => (
 );
 
 CSSVideoBackdrop.propTypes = {
-  url: PropTypes.string.isRequired
+  url: PropTypes.string.isRequired,
 };
 
 const svgWidth = 800;
@@ -59,7 +59,7 @@ const SVGVideoBackdrop = ({ url }) => (
 );
 
 SVGVideoBackdrop.propTypes = {
-  url: PropTypes.string.isRequired
+  url: PropTypes.string.isRequired,
 };
 
 // If the browser supports the CSS `blur()` filter, we can use the <img>-style

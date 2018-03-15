@@ -6,15 +6,15 @@ import withProps from 'recompose/withProps';
 import Tooltip from '../../Tooltip';
 
 const tooltipStyle = {
-  textIndent: 'initial'
+  textIndent: 'initial',
 };
 
 const enhance = compose(
   withState('showTooltip', 'setShowTooltip', false),
   withProps(props => ({
     onShowTooltip() { props.setShowTooltip(true); },
-    onHideTooltip() { props.setShowTooltip(false); }
-  }))
+    onHideTooltip() { props.setShowTooltip(false); },
+  })),
 );
 
 const shortcode = name =>
@@ -27,7 +27,7 @@ const Emoji = ({
   image,
   showTooltip,
   onShowTooltip,
-  onHideTooltip
+  onHideTooltip,
 }) => (
   <span
     onMouseEnter={onShowTooltip}
@@ -55,7 +55,7 @@ Emoji.propTypes = {
   onShowTooltip: PropTypes.func.isRequired,
   onHideTooltip: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired
+  image: PropTypes.string.isRequired,
 };
 
 export default enhance(Emoji);

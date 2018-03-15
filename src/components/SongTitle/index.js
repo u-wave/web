@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import pure from 'recompose/pure';
 
 const SongTitle = ({
-  className, artist, title, size = 'large'
+  className, artist, title, size = 'large',
 }) => (
   <div
     className={cx('SongTitle', `SongTitle--${size}`, className)}
@@ -20,7 +20,7 @@ SongTitle.propTypes = {
   className: PropTypes.string,
   artist: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  size: PropTypes.string
+  size: PropTypes.string,
 };
 
 export default pure(SongTitle);

@@ -20,7 +20,7 @@ const makeActions = ({
   onMoveToLast,
   onEditMedia,
   onRemoveFromPlaylist,
-  isFiltered
+  isFiltered,
 }) =>
   (media, selection, index) => [
     <AddToPlaylistAction
@@ -49,7 +49,7 @@ const makeActions = ({
     <RemoveFromPlaylistAction
       key="remove"
       onRemove={() => onRemoveFromPlaylist(media, selection)}
-    />
+    />,
   ];
 
 const PlaylistPanel = (props) => {
@@ -67,7 +67,7 @@ const PlaylistPanel = (props) => {
     onLoadPlaylistPage,
     onFilterPlaylistItems,
     onMoveMedia,
-    onOpenPreviewMediaDialog
+    onOpenPreviewMediaDialog,
   } = props;
 
   let list;
@@ -125,7 +125,7 @@ PlaylistPanel.propTypes = {
   onFilterPlaylistItems: PropTypes.func.isRequired,
   onNotDeletable: PropTypes.func.isRequired,
   onMoveMedia: PropTypes.func.isRequired,
-  onOpenPreviewMediaDialog: PropTypes.func.isRequired
+  onOpenPreviewMediaDialog: PropTypes.func.isRequired,
 };
 
 export default PlaylistPanel;

@@ -11,5 +11,5 @@ register('help', 'List available commands.', {
         dispatch(log(`/${name} - ${command.description}`));
       }
     });
-  }
+  },
 });

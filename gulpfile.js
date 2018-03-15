@@ -13,6 +13,6 @@ gulp.task('start', (cb) => {
   runSeq('set-watching', 'serve', cb);
 });
 
-gulp.task('build', [ 'js:babel' ]);
+gulp.task('build', ['js:babel']);
 
-gulp.task('default', [ 'build' ]);
+gulp.task('default', ['build']);

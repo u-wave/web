@@ -11,7 +11,7 @@ class SearchBar extends React.Component {
     t: PropTypes.func.isRequired,
     className: PropTypes.string,
     children: PropTypes.node,
-    onSubmit: PropTypes.func.isRequired
+    onSubmit: PropTypes.func.isRequired,
   };
 
   state = { focused: false };

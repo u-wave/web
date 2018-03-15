@@ -5,11 +5,11 @@ import TitleIcon from 'material-ui/svg-icons/image/music-note';
 
 const iconStyles = {
   float: 'left',
-  marginRight: 3
+  marginRight: 3,
 };
 
 const SongInfo = ({
-  artist, title, artistUrl, trackUrl
+  artist, title, artistUrl, trackUrl,
 }) => (
   <div className="src-soundcloud-SongInfo">
     <a
@@ -39,7 +39,7 @@ SongInfo.propTypes = {
   artist: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   artistUrl: PropTypes.string.isRequired,
-  trackUrl: PropTypes.string.isRequired
+  trackUrl: PropTypes.string.isRequired,
 };
 
 export default SongInfo;

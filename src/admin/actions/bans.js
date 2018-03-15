@@ -12,19 +12,19 @@ export function loadBansComplete(response) {
   return {
     type: LOAD_BANS_COMPLETE,
     payload: {
-      bans: mergeIncludedModels(response)
+      bans: mergeIncludedModels(response),
     },
     meta: {
       page: Math.floor(meta.offset / meta.pageSize),
-      size: meta.pageSize
-    }
+      size: meta.pageSize,
+    },
   };
 }
 
 export function loadBans() {
   return get('/bans', {
     onStart: loadBansStart,
-    onComplete: loadBansComplete
+    onComplete: loadBansComplete,
   });
 }
 

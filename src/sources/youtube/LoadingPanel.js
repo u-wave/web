@@ -13,7 +13,7 @@ const LoadingPanel = ({ onClosePanel }) => (
 );
 
 LoadingPanel.propTypes = {
-  onClosePanel: PropTypes.func.isRequired
+  onClosePanel: PropTypes.func.isRequired,
 };
 
 export default LoadingPanel;

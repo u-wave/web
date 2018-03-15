@@ -4,7 +4,7 @@ import Loader from '../Loader';
 
 const OfflineIcon = ({ style }) => (
   <div style={{
-    ...style, width: 24, height: 24, display: 'inline-block'
+    ...style, width: 24, height: 24, display: 'inline-block',
   }}
   >
     <Loader size="tiny" />
@@ -12,7 +12,7 @@ const OfflineIcon = ({ style }) => (
 );
 
 OfflineIcon.propTypes = {
-  style: PropTypes.object
+  style: PropTypes.object,
 };
 
 export default OfflineIcon;

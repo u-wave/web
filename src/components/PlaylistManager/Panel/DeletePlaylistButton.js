@@ -12,11 +12,11 @@ class DeletePlaylistButton extends React.Component {
     t: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
     onNotDeletable: PropTypes.func.isRequired,
-    active: PropTypes.bool
+    active: PropTypes.bool,
   };
 
   state = {
-    deleting: false
+    deleting: false,
   };
 
   closeDialog() {

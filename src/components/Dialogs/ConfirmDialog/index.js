@@ -14,16 +14,16 @@ export default class ConfirmDialog extends React.Component {
     cancelLabel: PropTypes.string,
 
     onConfirm: PropTypes.func.isRequired,
-    onCancel: PropTypes.func.isRequired
+    onCancel: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
     cancelLabel: 'Cancel',
-    confirmLabel: 'OK'
+    confirmLabel: 'OK',
   };
 
   state = {
-    busy: false
+    busy: false,
   };
 
   handleSubmit = (event) => {

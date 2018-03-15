@@ -3,14 +3,14 @@ import {
   SHOW_SEARCH_RESULTS,
   SEARCH_START,
   SEARCH_COMPLETE,
-  SEARCH_DELETE
+  SEARCH_DELETE,
 } from '../constants/actionTypes/search';
 import { get } from './RequestActionCreators';
 
 export function setSource(source) {
   return {
     type: SET_SEARCH_SOURCE,
-    payload: { source }
+    payload: { source },
   };
 }
 
@@ -21,7 +21,7 @@ export function showSearchResults() {
 function searchStart(query) {
   return {
     type: SEARCH_START,
-    payload: { query }
+    payload: { query },
   };
 }
 
@@ -34,18 +34,18 @@ export function search(query) {
     },
     onComplete: results => ({
       type: SEARCH_COMPLETE,
-      payload: { results }
+      payload: { results },
     }),
     onError: error => ({
       type: SEARCH_COMPLETE,
       error: true,
-      payload: error
-    })
+      payload: error,
+    }),
   });
 }
 
 export function deleteSearch() {
   return {
-    type: SEARCH_DELETE
+    type: SEARCH_DELETE,
   };
 }

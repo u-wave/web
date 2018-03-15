@@ -10,10 +10,10 @@ import timed from '../../utils/timed';
 // then translate afterwards.
 function translateMs(str) {
   // `ms` output of the form "3 hours"
-  const [ count, key ] = str.split(' ');
+  const [count, key] = str.split(' ');
   return {
     key: `${key.replace(/s$/, '')}s`,
-    count: parseInt(count, 10)
+    count: parseInt(count, 10),
   };
 }
 
@@ -26,8 +26,8 @@ const TimeAgo = ({ t, currentTime, timestamp }) => {
       {t('timeAgo.format', {
         time: t(`timeAgo.${key}`, {
           count,
-          defaultValue: msString
-        })
+          defaultValue: msString,
+        }),
       })}
     </span>
   );
@@ -36,10 +36,10 @@ const TimeAgo = ({ t, currentTime, timestamp }) => {
 TimeAgo.propTypes = {
   t: PropTypes.func.isRequired,
   currentTime: PropTypes.number.isRequired,
-  timestamp: PropTypes.number.isRequired
+  timestamp: PropTypes.number.isRequired,
 };
 
 export default compose(
   translate(),
-  timed()
+  timed(),
 )(TimeAgo);

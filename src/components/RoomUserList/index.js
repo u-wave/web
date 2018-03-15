@@ -18,7 +18,7 @@ const RoomUserList = ({ className, users, guests }) => {
         itemRenderer={(index, key) => {
           const rowClass = cx(
             'UserList-row',
-            (index % 2 === 0) && 'UserList-row--alternate'
+            (index % 2 === 0) && 'UserList-row--alternate',
           );
           // The very last row is the guests row
           if (index === users.length) {
@@ -48,7 +48,7 @@ const RoomUserList = ({ className, users, guests }) => {
 RoomUserList.propTypes = {
   className: PropTypes.string,
   users: PropTypes.arrayOf(PropTypes.object).isRequired,
-  guests: PropTypes.number.isRequired
+  guests: PropTypes.number.isRequired,
 };
 
 export default RoomUserList;

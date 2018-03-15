@@ -6,13 +6,13 @@ import timed from '../utils/timed';
 
 import {
   enterFullscreen as onFullscreenEnter,
-  exitFullscreen as onFullscreenExit
+  exitFullscreen as onFullscreenExit,
 } from '../actions/PlaybackActionCreators';
 import {
   historyIDSelector,
   mediaSelector,
   playbackVolumeSelector,
-  timeElapsedSelector
+  timeElapsedSelector,
 } from '../selectors/boothSelectors';
 
 import Video from '../components/Video';
@@ -22,15 +22,15 @@ const mapStateToProps = createStructuredSelector({
   media: mediaSelector,
   seek: timeElapsedSelector,
   volume: playbackVolumeSelector,
-  isFullscreen: state => state.booth.isFullscreen
+  isFullscreen: state => state.booth.isFullscreen,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   onFullscreenEnter,
-  onFullscreenExit
+  onFullscreenExit,
 }, dispatch);
 
 export default compose(
   timed(),
-  connect(mapStateToProps, mapDispatchToProps)
+  connect(mapStateToProps, mapDispatchToProps),
 )(Video);

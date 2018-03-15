@@ -34,7 +34,7 @@ Votes.propTypes = {
   muiTheme: PropTypes.object.isRequired,
   upvote: PropTypes.bool,
   downvote: PropTypes.bool,
-  favorite: PropTypes.bool
+  favorite: PropTypes.bool,
 };
 
 export default muiThemeable()(Votes);

@@ -11,7 +11,7 @@ const TabTemplate = ({ className, selected, children }) => (
 TabTemplate.propTypes = {
   children: PropTypes.node.isRequired,
   selected: PropTypes.bool.isRequired,
-  className: PropTypes.string
+  className: PropTypes.string,
 };
 
 export default TabTemplate;

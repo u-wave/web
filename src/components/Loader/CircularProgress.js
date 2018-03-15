@@ -12,7 +12,7 @@ import cx from 'classnames';
 
 const THICKNESS = {
   large: 1.6,
-  tiny: 2.6
+  tiny: 2.6,
 };
 
 const CircularProgress = ({ size = 'large' }) => (
@@ -34,7 +34,7 @@ const CircularProgress = ({ size = 'large' }) => (
 );
 
 CircularProgress.propTypes = {
-  size: PropTypes.string
+  size: PropTypes.string,
 };
 
 export default CircularProgress;

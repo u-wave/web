@@ -6,7 +6,7 @@ const ImportSourceBlock = ({
   getMediaSource,
   sourceType,
   title,
-  children
+  children,
 }) => (
   <div className="ImportSourceBlock PlaylistImport-source">
     <img
@@ -23,7 +23,7 @@ ImportSourceBlock.propTypes = {
   getMediaSource: PropTypes.func.isRequired,
   sourceType: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
 };
 
 export default injectMediaSources()(ImportSourceBlock);

@@ -11,8 +11,8 @@ const Mention = ({ className, user, ...props }) => (
 Mention.propTypes = {
   className: PropTypes.string,
   user: PropTypes.shape({
-    username: PropTypes.string.isRequired
-  }).isRequired
+    username: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default Mention;

@@ -3,30 +3,30 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import {
-  openPreviewMediaDialog
+  openPreviewMediaDialog,
 } from '../actions/DialogActionCreators';
 import {
-  addMediaMenu
+  addMediaMenu,
 } from '../actions/PlaylistActionCreators';
 
 import {
   searchQuerySelector,
   searchResultsSelector,
-  searchLoadingStateSelector
+  searchLoadingStateSelector,
 } from '../selectors/searchSelectors';
 import SearchResults from '../components/PlaylistManager/Panel/SearchResults';
 
 const mapStateToProps = createStructuredSelector({
   query: searchQuerySelector,
   results: searchResultsSelector,
-  loadingState: searchLoadingStateSelector
+  loadingState: searchLoadingStateSelector,
 });
 
 const selectionOrOne = (media, selection) => {
   if (selection.isSelected(media)) {
     return selection.get();
   }
-  return [ media ];
+  return [media];
 };
 
 const onOpenAddMediaMenu = (position, media, selection) =>
@@ -34,7 +34,7 @@ const onOpenAddMediaMenu = (position, media, selection) =>
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   onOpenAddMediaMenu,
-  onOpenPreviewMediaDialog: openPreviewMediaDialog
+  onOpenPreviewMediaDialog: openPreviewMediaDialog,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchResults);

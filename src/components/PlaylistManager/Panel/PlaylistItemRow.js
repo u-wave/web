@@ -19,20 +19,20 @@ const mediaTarget = {
       const insertBefore = isDraggingNearTopOfRow(monitor, component);
       props.onMoveMedia(
         media,
-        insertBefore ? { before: thisID } : { after: thisID }
+        insertBefore ? { before: thisID } : { after: thisID },
       );
     }
   },
   hover(props, monitor, component) {
     component.setState({
-      insertingAbove: isDraggingNearTopOfRow(monitor, component)
+      insertingAbove: isDraggingNearTopOfRow(monitor, component),
     });
-  }
+  },
 };
 
 const collect = (connect, monitor) => ({
   connectDropTarget: connect.dropTarget(),
-  isOver: monitor.isOver()
+  isOver: monitor.isOver(),
 });
 
 class PlaylistItemRow extends React.Component {
@@ -41,11 +41,11 @@ class PlaylistItemRow extends React.Component {
     // Used in the drop handler above 👆
     // eslint-disable-next-line react/no-unused-prop-types
     onMoveMedia: PropTypes.func.isRequired,
-    isOver: PropTypes.bool.isRequired
+    isOver: PropTypes.bool.isRequired,
   };
 
   state = {
-    insertingAbove: false
+    insertingAbove: false,
   };
 
   render() {

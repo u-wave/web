@@ -17,14 +17,14 @@ const inSelection = (selection, media) =>
 const mediaSource = {
   beginDrag({ selection, media }) {
     return {
-      media: inSelection(selection, media.media) ? selection : [ media.media ]
+      media: inSelection(selection, media.media) ? selection : [media.media],
     };
-  }
+  },
 };
 
 const collect = connect => ({
   connectDragSource: connect.dragSource(),
-  connectDragPreview: connect.dragPreview()
+  connectDragPreview: connect.dragPreview(),
 });
 
 const enhance = DragSource(MEDIA, mediaSource, collect);
@@ -40,11 +40,11 @@ class HistoryRow extends React.Component {
 
     onOpenPreviewMediaDialog: PropTypes.func,
     onClick: PropTypes.func,
-    makeActions: PropTypes.func
+    makeActions: PropTypes.func,
   };
 
   static defaultProps = {
-    selected: false
+    selected: false,
   };
 
   state = { showActions: false };
@@ -81,10 +81,10 @@ class HistoryRow extends React.Component {
       // actions
       makeActions,
       // etc
-      onClick
+      onClick,
     } = this.props;
     const {
-      media, timestamp, user, stats
+      media, timestamp, user, stats,
     } = historyEntry;
     const { showActions } = this.state;
     const selectedClass = selected ? 'is-selected' : '';

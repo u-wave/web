@@ -10,7 +10,7 @@ const resources = {
   ko: () => import('../locale/ko.yaml'),
   nl: () => import('../locale/nl.yaml'),
   pt: () => import('../locale/pt.yaml'),
-  zh: () => import('../locale/zh.yaml')
+  zh: () => import('../locale/zh.yaml'),
 };
 
 class UwaveBackend {
@@ -48,14 +48,14 @@ i18next.init({
   defaultNS: 'uwave',
   interpolation: {
     // Prevent double-escapes: React already escapes things for us
-    escapeValue: false
-  }
+    escapeValue: false,
+  },
 });
 
 // Synchronously add the fallback language.
 i18next.addResourceBundle('en', 'uwave', en.uwave);
 
-export const availableLanguages = [ 'en', ...Object.keys(resources) ];
+export const availableLanguages = ['en', ...Object.keys(resources)];
 
 export default function createLocale(language) {
   const locale = i18next.cloneInstance();

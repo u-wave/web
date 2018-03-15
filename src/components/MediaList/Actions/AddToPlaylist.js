@@ -8,7 +8,7 @@ const handleAdd = onAdd => (event) => {
   const pos = event.target.getBoundingClientRect();
   onAdd({
     x: pos.left,
-    y: pos.top
+    y: pos.top,
   });
 };
 
@@ -22,7 +22,7 @@ const AddToPlaylist = ({ onAdd, ...props }) => (
 );
 
 AddToPlaylist.propTypes = {
-  onAdd: PropTypes.func.isRequired
+  onAdd: PropTypes.func.isRequired,
 };
 
 export default AddToPlaylist;

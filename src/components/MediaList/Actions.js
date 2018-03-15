@@ -8,7 +8,7 @@ const dontBubble = event => event.stopPropagation();
 const Actions = ({
   className,
   makeActions,
-  media
+  media,
 }) => (
   <div
     className={cx('MediaActions', className)}
@@ -22,7 +22,7 @@ const Actions = ({
 Actions.propTypes = {
   className: PropTypes.string,
   media: PropTypes.object,
-  makeActions: PropTypes.func
+  makeActions: PropTypes.func,
 };
 
 export default Actions;

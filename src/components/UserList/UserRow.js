@@ -16,7 +16,7 @@ const UserRow = ({ className, user }) => (
 
 UserRow.propTypes = {
   className: PropTypes.string,
-  user: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired,
 };
 
 export default UserRow;

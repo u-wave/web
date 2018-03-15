@@ -14,7 +14,7 @@ describe('reducers/roomHistory', () => {
   const userModel = {
     _id: '563ba1e3f059363574f4d0d9',
     slug: 'narahye',
-    username: 'Narahye'
+    username: 'Narahye',
   };
 
   const mediaModel = {
@@ -24,7 +24,7 @@ describe('reducers/roomHistory', () => {
     artist: '[ 타블로 디스 ] Superbee (슈퍼비)',
     title: '앰뷸런스 Ambulance',
     thumbnail: 'https://i.ytimg.com/vi/B7TlT1O7kjs/hqdefault.jpg',
-    duration: 201
+    duration: 201,
   };
 
   const serverHistoryEntry = {
@@ -36,39 +36,39 @@ describe('reducers/roomHistory', () => {
       artist: 'Superbee (슈퍼비)',
       title: '앰뷸런스 Ambulance',
       end: 201,
-      start: 0
+      start: 0,
     },
     playlist: '566b2d496c056392550f182b',
     favorites: [],
     downvotes: [],
     upvotes: [],
-    playedAt: '2016-02-02T22:20:00.468Z'
+    playedAt: '2016-02-02T22:20:00.468Z',
   };
 
   describe('action: LOAD_HISTORY_COMPLETE', () => {
     it('should normalize the loaded history entries', () => {
       const { dispatch, getState } = createStore();
       dispatch(loadHistoryComplete({
-        data: [ serverHistoryEntry ],
+        data: [serverHistoryEntry],
         included: {
-          user: [ userModel ],
-          media: [ mediaModel ]
+          user: [userModel],
+          media: [mediaModel],
         },
         meta: {
           included: {
-            media: [ 'media.media' ],
-            user: [ 'user' ]
+            media: ['media.media'],
+            user: ['user'],
           },
           offset: 0,
-          total: 1
-        }
+          total: 1,
+        },
       }));
-      expect(s.roomHistorySelector(getState())).to.eql([ {
+      expect(s.roomHistorySelector(getState())).to.eql([{
         _id: '56b12b90d6bfe93733bece96',
         user: {
           _id: '563ba1e3f059363574f4d0d9',
           slug: 'narahye',
-          username: 'Narahye'
+          username: 'Narahye',
         },
         media: {
           _id: '56b11d3ad6bfe93733bece65',
@@ -88,16 +88,16 @@ describe('reducers/roomHistory', () => {
             thumbnail: 'https://i.ytimg.com/vi/B7TlT1O7kjs/hqdefault.jpg',
             artist: '[ 타블로 디스 ] Superbee (슈퍼비)',
             title: '앰뷸런스 Ambulance',
-            duration: 201
-          }
+            duration: 201,
+          },
         },
         stats: {
           favorites: [],
           downvotes: [],
-          upvotes: []
+          upvotes: [],
         },
-        timestamp: new Date('2016-02-02T22:20:00.468Z').getTime()
-      } ]);
+        timestamp: new Date('2016-02-02T22:20:00.468Z').getTime(),
+      }]);
     });
   });
 
@@ -105,27 +105,27 @@ describe('reducers/roomHistory', () => {
     it('prepends a new history entry', () => {
       const { dispatch, getState } = createStore();
       dispatch(setUsers({
-        users: [ {
+        users: [{
           _id: '562b748139c99dde22c6a499',
           slug: 'reanna',
-          username: 'ReAnna'
-        } ]
+          username: 'ReAnna',
+        }],
       }));
 
       dispatch(loadHistoryComplete({
-        data: [ serverHistoryEntry ],
+        data: [serverHistoryEntry],
         included: {
-          user: [ userModel ],
-          media: [ mediaModel ]
+          user: [userModel],
+          media: [mediaModel],
         },
         meta: {
           included: {
-            media: [ 'media.media' ],
-            user: [ 'user' ]
+            media: ['media.media'],
+            user: ['user'],
           },
           offset: 0,
-          total: 1
-        }
+          total: 1,
+        },
       }));
       expect(s.roomHistorySelector(getState())).to.have.length(1);
       expect(s.roomHistorySelector(getState())[0]._id).to.equal('56b12b90d6bfe93733bece96');
@@ -141,13 +141,13 @@ describe('reducers/roomHistory', () => {
             sourceType: 'youtube',
             sourceID: '7SvxB_NL5cs',
             thumbnail: 'https://i.ytimg.com/vi/7SvxB_NL5cs/hqdefault.jpg',
-            duration: 267
+            duration: 267,
           },
           artist: 'Eleanoora Rosenholm',
           title: 'Maailmanloppu',
           start: 0,
-          end: 267
-        }
+          end: 267,
+        },
       }));
 
       expect(s.roomHistoryWithVotesSelector(getState())).to.have.length(2);
@@ -159,19 +159,19 @@ describe('reducers/roomHistory', () => {
     it('works with NULL advances', () => {
       const { dispatch, getState } = createStore();
       dispatch(loadHistoryComplete({
-        data: [ serverHistoryEntry ],
+        data: [serverHistoryEntry],
         included: {
-          user: [ userModel ],
-          media: [ mediaModel ]
+          user: [userModel],
+          media: [mediaModel],
         },
         meta: {
           included: {
-            media: [ 'media.media' ],
-            user: [ 'user' ]
+            media: ['media.media'],
+            user: ['user'],
           },
           offset: 0,
-          total: 1
-        }
+          total: 1,
+        },
       }));
       expect(s.roomHistorySelector(getState())).to.have.length(1);
 

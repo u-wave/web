@@ -10,9 +10,9 @@ export function loadUsersComplete(response) {
     type: LOAD_USERS_COMPLETE,
     payload: {
       users: response.data,
-      page: Math.floor(response.meta.offset / response.meta.pageSize)
+      page: Math.floor(response.meta.offset / response.meta.pageSize),
     },
-    meta: response.meta
+    meta: response.meta,
   };
 }
 
@@ -20,6 +20,6 @@ export function loadUsers(pagination = null) {
   return get('/users', {
     qs: pagination ? { page: pagination } : null,
     onStart: loadUsersStart,
-    onComplete: loadUsersComplete
+    onComplete: loadUsersComplete,
   });
 }

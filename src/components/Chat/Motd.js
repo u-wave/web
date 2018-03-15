@@ -16,8 +16,8 @@ Motd.propTypes = {
   children: PropTypes.array.isRequired,
   compileOptions: PropTypes.shape({
     availableEmoji: PropTypes.array,
-    emojiImages: PropTypes.object
-  })
+    emojiImages: PropTypes.object,
+  }),
 };
 
 export default pure(Motd);

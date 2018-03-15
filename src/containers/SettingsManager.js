@@ -4,7 +4,7 @@ import { createStructuredSelector } from 'reselect';
 import nest from 'recompose/nest';
 import {
   set as setSetting,
-  setLanguage
+  setLanguage,
 } from '../actions/SettingsActionCreators';
 import { doChangeUsername } from '../actions/UserActionCreators';
 import { logout } from '../actions/LoginActionCreators';
@@ -15,14 +15,14 @@ import SettingsManager from '../components/SettingsManager';
 
 const mapStateToProps = createStructuredSelector({
   settings: settingsSelector,
-  user: currentUserSelector
+  user: currentUserSelector,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   onSettingChange: setSetting,
   onChangeUsername: doChangeUsername,
   onChangeLanguage: setLanguage,
-  onLogout: logout
+  onLogout: logout,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(nest(Overlay, SettingsManager));

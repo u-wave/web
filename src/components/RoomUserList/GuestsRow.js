@@ -12,7 +12,7 @@ const GuestsRow = ({ t, className, guests }) => (
 GuestsRow.propTypes = {
   t: PropTypes.func.isRequired,
   className: PropTypes.string,
-  guests: PropTypes.number.isRequired
+  guests: PropTypes.number.isRequired,
 };
 
 export default translate()(GuestsRow);

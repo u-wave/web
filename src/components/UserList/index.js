@@ -22,7 +22,7 @@ const UserList = ({ className, users }) => (
 
 UserList.propTypes = {
   className: PropTypes.string,
-  users: PropTypes.arrayOf(PropTypes.object).isRequired
+  users: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default UserList;

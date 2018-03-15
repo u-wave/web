@@ -11,7 +11,7 @@ const positionStyle = {
   position: 'absolute',
   right: 10,
   top: 10,
-  zIndex: 55
+  zIndex: 55,
 };
 
 const ConnectionIndicator = ({ isConnected, t }) => (
@@ -30,7 +30,7 @@ const ConnectionIndicator = ({ isConnected, t }) => (
 
 ConnectionIndicator.propTypes = {
   t: PropTypes.func.isRequired,
-  isConnected: PropTypes.bool.isRequired
+  isConnected: PropTypes.bool.isRequired,
 };
 
 export default enhance(ConnectionIndicator);

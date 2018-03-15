@@ -37,9 +37,9 @@ export default class Uwave {
     Object.assign(this, api.actions);
 
     if (module.hot) {
-      this._getComponent = this.getComponent;
+      const { getComponent } = this;
       this.getComponent = () => (
-        <HotContainer>{this._getComponent()}</HotContainer>
+        <HotContainer>{getComponent.call(this)}</HotContainer>
       );
       const uw = this;
       module.hot.accept('./containers/App', () => {
@@ -82,7 +82,7 @@ export default class Uwave {
   build() {
     this.store = configureStore(
       { config: this.options },
-      { mediaSources: this.sources, socketUrl: this.options.socketUrl }
+      { mediaSources: this.sources, socketUrl: this.options.socketUrl },
     );
 
     const localePromise = createLocale(languageSelector(this.store.getState()));
@@ -95,8 +95,8 @@ export default class Uwave {
     this.store.dispatch(socketConnect());
     return Promise.all([
       localePromise,
-      this.store.dispatch(initState())
-    ]).then(([ locale ]) => {
+      this.store.dispatch(initState()),
+    ]).then(([locale]) => {
       this.locale = locale;
       this.resolveReady();
     });

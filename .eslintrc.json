@@ -3,17 +3,12 @@
   "parser": "babel-eslint",
 
   "rules": {
-    "array-bracket-spacing": [ "error", "always" ],
-    "comma-dangle": [ "error", "never" ],
-    "indent": [ "error", 2, { "SwitchCase": 0 } ],
     "new-cap": [ "error", {
       "capIsNewExceptions": [ "DragDropContext", "DragSource", "DropTarget", "DragLayer", "ThemeDecorator" ]
     } ],
-    // Conflicts with `_id` property names returned from the üWave HTTP API
-    "no-underscore-dangle": "off",
-    "global-require": "off",
-    "react/jsx-filename-extension": "off",
+    "no-underscore-dangle": ["error", { "allow": ["_id"] }],
     "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
+    "react/jsx-filename-extension": "off",
     "react/no-unused-prop-types": ["error", { "skipShapeProps": true }],
     "react/forbid-prop-types": "off",
     "react/require-default-props": "off"

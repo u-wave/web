@@ -9,14 +9,14 @@ const closeButtonStyle = {
   width: 44,
   height: 44,
   padding: 10,
-  marginRight: -10
+  marginRight: -10,
 };
 
 const SearchResultsRow = ({
   className,
   query,
   onClick,
-  onClose
+  onClose,
 }) => (
   <div role="menuitem" className={cx('PlaylistMenuRow', 'PlaylistMenuRow--search', className)}>
     <div className="PlaylistMenuRow-content">
@@ -42,7 +42,7 @@ SearchResultsRow.propTypes = {
   className: PropTypes.string,
   query: PropTypes.string,
   onClick: PropTypes.func.isRequired,
-  onClose: PropTypes.func.isRequired
+  onClose: PropTypes.func.isRequired,
 };
 
 export default SearchResultsRow;

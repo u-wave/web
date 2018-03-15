@@ -7,11 +7,11 @@ import BansList from '../../containers/BansList';
 const pages = {
   main: Main,
   users: UsersList,
-  bans: BansList
+  bans: BansList,
 };
 
 const enhance = mapProps(props => ({
-  component: pages[props.page]
+  component: pages[props.page],
 }));
 
 const CurrentPage = enhance(componentFromProp('component'));

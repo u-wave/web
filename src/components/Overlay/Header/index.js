@@ -8,7 +8,7 @@ const Header = ({
   title,
   children,
   onCloseOverlay,
-  direction = 'bottom'
+  direction = 'bottom',
 }) => (
   <div className={cx('OverlayHeader', className)}>
     <div className="OverlayHeader-title">
@@ -30,7 +30,7 @@ Header.propTypes = {
   title: PropTypes.string.isRequired,
   children: PropTypes.node,
   direction: PropTypes.string,
-  onCloseOverlay: PropTypes.func.isRequired
+  onCloseOverlay: PropTypes.func.isRequired,
 };
 
 export default Header;

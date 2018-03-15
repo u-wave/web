@@ -4,7 +4,7 @@ import qsStringify from 'qs-stringify';
 import { REQUEST_START } from '../constants/actionTypes/request';
 import {
   requestComplete,
-  requestCompleteError
+  requestCompleteError,
 } from '../actions/RequestActionCreators';
 import { requestOptionsSelector } from '../selectors/configSelectors';
 import { tokenSelector } from '../selectors/userSelectors';
@@ -33,7 +33,7 @@ function rejectNonOK(response) {
       const { errors } = res;
       const error = assign(new Error(errors.map(err => err.title).join(', ')), {
         response,
-        errors
+        errors,
       });
       throw error;
     });
@@ -42,7 +42,7 @@ function rejectNonOK(response) {
 }
 
 const defaultOptions = {
-  apiUrl: '/api'
+  apiUrl: '/api',
 };
 
 export default function middleware(middlewareOptions = {}) {
@@ -54,7 +54,7 @@ export default function middleware(middlewareOptions = {}) {
     const opts = {
       ...defaultOptions,
       ...middlewareOptions,
-      ...requestOptionsSelector(getState())
+      ...requestOptionsSelector(getState()),
     };
 
     const token = tokenSelector(getState());
@@ -62,13 +62,13 @@ export default function middleware(middlewareOptions = {}) {
       method,
       url,
       qs,
-      data
+      data,
     } = action.payload;
     const {
       id,
       onStart,
       onComplete,
-      onError
+      onError,
     } = action.meta;
 
     const completedMeta = {
@@ -76,7 +76,7 @@ export default function middleware(middlewareOptions = {}) {
       method,
       url,
       qs,
-      data
+      data,
     };
 
     const requestUrl = makeUrl(opts.apiUrl + url, qs);
@@ -85,9 +85,9 @@ export default function middleware(middlewareOptions = {}) {
       method,
       headers: {
         Accept: 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
-      credentials: 'same-origin'
+      credentials: 'same-origin',
     };
 
     if (token && token !== 'cookie') {

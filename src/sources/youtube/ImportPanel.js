@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { IDLE, LOADING, LOADED } from '../../constants/LoadingStates';
 
 import {
-  addMediaMenu as openAddMediaMenu
+  addMediaMenu as openAddMediaMenu,
 } from '../../actions/PlaylistActionCreators';
 import { PLAYLIST, CHANNEL } from './constants';
 import { importPlaylist } from './actions';
@@ -17,7 +17,7 @@ import PlaylistPanel from './PlaylistPanel';
 const mapStateToProps = () => ({});
 const mapDispatchToProps = dispatch => bindActionCreators({
   onImportPlaylist: importPlaylist,
-  onOpenAddMediaMenu: openAddMediaMenu
+  onOpenAddMediaMenu: openAddMediaMenu,
 }, dispatch);
 
 const YouTubeImportPanel = ({ type, importingState, ...props }) => {
@@ -31,8 +31,8 @@ const YouTubeImportPanel = ({ type, importingState, ...props }) => {
 };
 
 YouTubeImportPanel.propTypes = {
-  type: PropTypes.oneOf([ PLAYLIST, CHANNEL ]).isRequired,
-  importingState: PropTypes.oneOf([ IDLE, LOADING, LOADED ])
+  type: PropTypes.oneOf([PLAYLIST, CHANNEL]).isRequired,
+  importingState: PropTypes.oneOf([IDLE, LOADING, LOADED]),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(YouTubeImportPanel);

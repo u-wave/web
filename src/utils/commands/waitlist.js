@@ -5,25 +5,25 @@ import {
   joinWaitlist,
   modClearWaitlist,
   modLockWaitlist,
-  modUnlockWaitlist
+  modUnlockWaitlist,
 } from '../../actions/WaitlistActionCreators';
 import {
   skipCurrentDJ,
   removeWaitlistUser,
-  moveWaitlistUser
+  moveWaitlistUser,
 } from '../../actions/ModerationActionCreators';
 import {
   userListSelector,
-  isModeratorSelector
+  isModeratorSelector,
 } from '../../selectors/userSelectors';
 import {
   waitlistUsersSelector,
-  djAndWaitlistUsersSelector
+  djAndWaitlistUsersSelector,
 } from '../../selectors/waitlistSelectors';
 
 register('skip', 'Skip the current DJ.', {
   guard: isModeratorSelector,
-  action: (...args) => skipCurrentDJ(args ? args.join(' ') : '[No reason given]')
+  action: (...args) => skipCurrentDJ(args ? args.join(' ') : '[No reason given]'),
 });
 
 register(
@@ -41,8 +41,8 @@ register(
         return dispatch(joinWaitlist(user));
       }
       return dispatch(log(`User ${username} is not online right now.`));
-    }
-  }
+    },
+  },
 );
 
 register(
@@ -57,32 +57,32 @@ register(
 
       const user = findUser(
         djAndWaitlistUsersSelector(getState()),
-        username
+        username,
       );
       if (user) {
         return dispatch(removeWaitlistUser(user));
       }
       return dispatch(log(`User ${username} is not in the waitlist.`));
-    }
-  }
+    },
+  },
 );
 
 register(
   'wlclear',
   'Remove everyone from the waitlist.',
-  { guard: isModeratorSelector, action: modClearWaitlist }
+  { guard: isModeratorSelector, action: modClearWaitlist },
 );
 
 register(
   'wllock',
   'Lock the waitlist.',
-  { guard: isModeratorSelector, action: modLockWaitlist }
+  { guard: isModeratorSelector, action: modLockWaitlist },
 );
 
 register(
   'wlunlock',
   'Unlock the waitlist.',
-  { guard: isModeratorSelector, action: modUnlockWaitlist }
+  { guard: isModeratorSelector, action: modUnlockWaitlist },
 );
 
 register(
@@ -102,12 +102,12 @@ register(
 
       const user = findUser(
         waitlistUsersSelector(getState()),
-        username
+        username,
       );
       if (user) {
         return dispatch(moveWaitlistUser(user, position));
       }
       return dispatch(log(`User ${username} is not in the waitlist.`));
-    }
-  }
+    },
+  },
 );

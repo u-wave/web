@@ -13,5 +13,5 @@ export const staff = createSelector(
   hasRoleSelector,
   // TODO should this maybe not hardcode the 'moderator' role? How to do it
   // otherwise?
-  (users, hasRole) => users.map(user => hasRole(user, 'moderator'))
+  (users, hasRole) => users.map(user => hasRole(user, 'moderator')),
 );

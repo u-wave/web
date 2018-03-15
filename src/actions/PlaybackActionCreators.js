@@ -1,10 +1,10 @@
 import { set } from './SettingsActionCreators';
 import {
-  settingsSelector
+  settingsSelector,
 } from '../selectors/settingSelectors';
 import {
   ENTER_FULLSCREEN,
-  EXIT_FULLSCREEN
+  EXIT_FULLSCREEN,
 } from '../constants/actionTypes/booth';
 
 export function setVolume(volume) {
@@ -25,7 +25,7 @@ export function setVideoSize(size) {
 
 const nextVideoSize = {
   large: 'small',
-  small: 'large'
+  small: 'large',
 };
 export function toggleVideoSize() {
   return (dispatch, getState) => {

@@ -21,7 +21,7 @@ const store = createStore(
   { config },
   applyMiddleware(
     thunk,
-    webApiRequest()
+    webApiRequest(),
   ),
 );
 
@@ -36,6 +36,6 @@ createLocale('en').then((locale) => {
           <App locale={locale} />
         </Provider>
       </HotContainer>
-    ), document.querySelector('#app')
+    ), document.querySelector('#app'),
   );
 });

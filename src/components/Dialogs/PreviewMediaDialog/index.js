@@ -5,17 +5,17 @@ import Dialog from 'material-ui/Dialog';
 import PreviewPlayer from '../../Video/Player';
 
 const useClassNameWidthStyle = {
-  width: null
+  width: null,
 };
 const inheritWidthStyle = {
-  width: 'inherit'
+  width: 'inherit',
 };
 
 const PreviewMediaDialog = ({
   open,
   media,
   volume,
-  onCloseDialog
+  onCloseDialog,
 }) => (
   <Dialog
     className="AppColumn AppColumn--left"
@@ -46,7 +46,7 @@ PreviewMediaDialog.propTypes = {
   media: PropTypes.object,
   volume: PropTypes.number,
 
-  onCloseDialog: PropTypes.func.isRequired
+  onCloseDialog: PropTypes.func.isRequired,
 };
 
 export default PreviewMediaDialog;

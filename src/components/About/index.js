@@ -4,7 +4,7 @@ import OverlayHeader from '../Overlay/Header';
 
 const About = ({
   onCloseOverlay,
-  render: AboutPanel
+  render: AboutPanel,
 }) => (
   <div className="About">
     <OverlayHeader
@@ -20,7 +20,7 @@ const About = ({
 
 About.propTypes = {
   onCloseOverlay: PropTypes.func.isRequired,
-  render: PropTypes.func.isRequired
+  render: PropTypes.func.isRequired,
 };
 
 export default About;

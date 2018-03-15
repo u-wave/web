@@ -28,14 +28,14 @@ import {
   UPDATE_MEDIA_START,
   UPDATE_MEDIA_COMPLETE,
   FILTER_PLAYLIST_ITEMS,
-  FILTER_PLAYLIST_ITEMS_COMPLETE
+  FILTER_PLAYLIST_ITEMS_COMPLETE,
 } from '../constants/actionTypes/playlists';
 import {
-  DO_FAVORITE_COMPLETE
+  DO_FAVORITE_COMPLETE,
 } from '../constants/actionTypes/votes';
 import {
   SEARCH_START,
-  SEARCH_DELETE
+  SEARCH_DELETE,
 } from '../constants/actionTypes/search';
 
 const initialState = {
@@ -43,7 +43,7 @@ const initialState = {
   playlistItems: {},
   activePlaylistID: null,
   selectedPlaylistID: null,
-  currentFilter: {}
+  currentFilter: {},
 };
 
 function deselectAll(playlists) {
@@ -66,7 +66,7 @@ function processInsert(list, insert, position) {
   return [
     ...list.slice(0, insertIdx),
     ...insert,
-    ...list.slice(insertIdx)
+    ...list.slice(insertIdx),
   ];
 }
 
@@ -86,8 +86,8 @@ function updatePlaylist(state, playlistID, modify) {
       ...state,
       playlists: {
         ...state.playlists,
-        [playlistID]: modify(playlist)
-      }
+        [playlistID]: modify(playlist),
+      },
     };
   }
   return state;
@@ -103,16 +103,16 @@ function updatePlaylistItems(state, playlistID, modify) {
     if (state.selectedPlaylistID === playlistID && nextFilter) {
       nextFilter = {
         ...nextFilter,
-        items: modify(nextFilter.items || [], playlist)
+        items: modify(nextFilter.items || [], playlist),
       };
     }
     return {
       ...state,
       playlistItems: {
         ...state.playlistItems,
-        [playlistID]: modify(media || [], playlist)
+        [playlistID]: modify(media || [], playlist),
       },
-      currentFilter: nextFilter
+      currentFilter: nextFilter,
     };
   }
   return state;
@@ -126,7 +126,7 @@ function updatePlaylistAndItems(state, playlistID, modifyPlaylist, modifyItems) 
 function setPlaylistLoading(state, id, loading = true) {
   return updatePlaylist(state, id, playlist => ({
     ...playlist,
-    loading
+    loading,
   }));
 }
 
@@ -161,281 +161,281 @@ function filterCachedPlaylistItems(state, playlistID, filter) {
 
 export default function reduce(state = initialState, action = {}) {
   const {
-    type, payload, meta, error
+    type, payload, meta, error,
   } = action;
 
   switch (type) {
-  case LOAD_ALL_PLAYLISTS_COMPLETE:
-    return {
-      ...state,
-      playlists: indexBy(payload.playlists, '_id')
-    };
-  case ACTIVATE_PLAYLIST_START:
+    case LOAD_ALL_PLAYLISTS_COMPLETE:
+      return {
+        ...state,
+        playlists: indexBy(payload.playlists, '_id'),
+      };
+    case ACTIVATE_PLAYLIST_START:
     // TODO use a different property here so we can show a loading icon on
     // the "Active" button only, instead of on top of the entire playlist
-    return setPlaylistLoading(state, payload.playlistID);
-  case ACTIVATE_PLAYLIST_COMPLETE:
-    if (error) {
-      return setPlaylistLoading(state, meta.playlistID, false);
-    }
+      return setPlaylistLoading(state, payload.playlistID);
+    case ACTIVATE_PLAYLIST_COMPLETE:
+      if (error) {
+        return setPlaylistLoading(state, meta.playlistID, false);
+      }
 
-    return {
-      ...state,
-      // set `active` property on all playlists
-      playlists: mapObj(state.playlists, playlist => ({
-        ...playlist,
-        loading: playlist._id === payload.playlistID ? false : playlist.loading,
-        active: playlist._id === payload.playlistID
-      })),
-      activePlaylistID: payload.playlistID
-    };
-  case SELECT_PLAYLIST:
-    return {
-      ...state,
-      // set `selected` property on playlists
-      playlists: mapObj(state.playlists, playlist => ({
-        ...playlist,
-        selected: playlist._id === payload.playlistID
-      })),
-      selectedPlaylistID: payload.playlistID
-    };
-  case SEARCH_START:
+      return {
+        ...state,
+        // set `active` property on all playlists
+        playlists: mapObj(state.playlists, playlist => ({
+          ...playlist,
+          loading: playlist._id === payload.playlistID ? false : playlist.loading,
+          active: playlist._id === payload.playlistID,
+        })),
+        activePlaylistID: payload.playlistID,
+      };
+    case SELECT_PLAYLIST:
+      return {
+        ...state,
+        // set `selected` property on playlists
+        playlists: mapObj(state.playlists, playlist => ({
+          ...playlist,
+          selected: playlist._id === payload.playlistID,
+        })),
+        selectedPlaylistID: payload.playlistID,
+      };
+    case SEARCH_START:
     // We deselect playlists when doing a search, so the UI can switch to the
     // search results view instead.
-    return {
-      ...state,
-      playlists: deselectAll(state.playlists),
-      selectedPlaylistID: null
-    };
-  case SEARCH_DELETE:
+      return {
+        ...state,
+        playlists: deselectAll(state.playlists),
+        selectedPlaylistID: null,
+      };
+    case SEARCH_DELETE:
     // Select the active playlist when search results are closed while they
     // were focused.
-    if (state.selectedPlaylistID) return state;
+      if (state.selectedPlaylistID) return state;
 
-    return {
-      ...state,
-      playlists: mapObj(state.playlists, playlist => ({
-        ...playlist,
-        selected: playlist.active
-      })),
-      selectedPlaylistID: state.activePlaylistID
-    };
-
-  case LOAD_PLAYLIST_START: {
-    if (meta.sneaky || meta.page !== 0 || state.playlistItems[payload.playlistID]) {
-      return state;
-    }
-
-    // Reserve space in the playlistItems array.
-    return updatePlaylistItems(
-      state,
-      payload.playlistID,
-      (items, playlist) => fill(Array(playlist.size), null)
-        .map((item, i) => items[i] || item)
-    );
-  }
-  case LOAD_PLAYLIST_COMPLETE:
-    if (error) {
-      return setPlaylistLoading(state, meta.playlistID, false);
-    }
-
-    return updatePlaylistAndItems(
-      state,
-      payload.playlistID,
-      playlist => ({ ...playlist, loading: false }),
-      items => mergePlaylistPage(meta.size, items, payload.media, meta)
-    );
-
-  case FILTER_PLAYLIST_ITEMS:
-    // Only the selected playlist can be filtered.
-    if (payload.playlistID !== state.selectedPlaylistID) {
-      return state;
-    }
-    if (!payload.filter) {
       return {
         ...state,
-        currentFilter: null
+        playlists: mapObj(state.playlists, playlist => ({
+          ...playlist,
+          selected: playlist.active,
+        })),
+        selectedPlaylistID: state.activePlaylistID,
       };
-    }
-    return {
-      ...state,
-      currentFilter: {
-        playlistID: payload.playlistID,
-        filter: payload.filter,
-        items: filterCachedPlaylistItems(state, payload.playlistID, payload.filter)
+
+    case LOAD_PLAYLIST_START: {
+      if (meta.sneaky || meta.page !== 0 || state.playlistItems[payload.playlistID]) {
+        return state;
       }
-    };
-  case FILTER_PLAYLIST_ITEMS_COMPLETE: {
-    // Only the selected playlist can be filtered.
-    if (payload.playlistID !== state.selectedPlaylistID) {
-      return state;
+
+      // Reserve space in the playlistItems array.
+      return updatePlaylistItems(
+        state,
+        payload.playlistID,
+        (items, playlist) => fill(Array(playlist.size), null)
+          .map((item, i) => items[i] || item),
+      );
     }
-    const { currentFilter } = state;
-    const items = mergePlaylistPage(meta.size, currentFilter.items, payload.media, meta);
-    return {
-      ...state,
-      currentFilter: { ...currentFilter, items }
-    };
-  }
+    case LOAD_PLAYLIST_COMPLETE:
+      if (error) {
+        return setPlaylistLoading(state, meta.playlistID, false);
+      }
 
-  case PLAYLIST_CYCLED:
-    return updatePlaylistItems(state, payload.playlistID, (items, playlist) => {
-      const newItems = items.slice(1);
-      newItems[playlist.size - 1] = items[0]; // eslint-disable-line prefer-destructuring
-      return newItems;
-    });
+      return updatePlaylistAndItems(
+        state,
+        payload.playlistID,
+        playlist => ({ ...playlist, loading: false }),
+        items => mergePlaylistPage(meta.size, items, payload.media, meta),
+      );
 
-  // here be dragons
-  // TODO find a simpler way to store this stuff, that doesn't involve keeping
-  // millions of properties (six properties to be precise) in sync
-  // Playlists that are being created have a temporary ID that is used until the
-  // real ID comes back from the server.
-  case CREATE_PLAYLIST_START: {
-    const newPlaylist = {
-      _id: meta.tempId,
-      name: payload.name,
-      description: payload.description,
-      shared: payload.shared,
-      selected: true,
-      creating: true
-    };
-    return {
-      ...state,
-      playlists: assign(
-        deselectAll(state.playlists),
-        { [meta.tempId]: newPlaylist }
-      ),
-      selectedPlaylistID: meta.tempId
-    };
-  }
-  case CREATE_PLAYLIST_COMPLETE:
-    if (error) {
+    case FILTER_PLAYLIST_ITEMS:
+    // Only the selected playlist can be filtered.
+      if (payload.playlistID !== state.selectedPlaylistID) {
+        return state;
+      }
+      if (!payload.filter) {
+        return {
+          ...state,
+          currentFilter: null,
+        };
+      }
       return {
         ...state,
-        playlists: except(state.playlists, `${meta.tempId}`)
+        currentFilter: {
+          playlistID: payload.playlistID,
+          filter: payload.filter,
+          items: filterCachedPlaylistItems(state, payload.playlistID, payload.filter),
+        },
+      };
+    case FILTER_PLAYLIST_ITEMS_COMPLETE: {
+    // Only the selected playlist can be filtered.
+      if (payload.playlistID !== state.selectedPlaylistID) {
+        return state;
+      }
+      const { currentFilter } = state;
+      const items = mergePlaylistPage(meta.size, currentFilter.items, payload.media, meta);
+      return {
+        ...state,
+        currentFilter: { ...currentFilter, items },
       };
     }
 
-    return {
-      ...state,
-      playlists: assign(
-        deselectAll(except(state.playlists, `${meta.tempId}`)),
-        {
-          [payload.playlist._id]: {
-            ...payload.playlist,
-            selected: true
-          }
-        }
-      ),
-      selectedPlaylistID: payload.playlist._id
-    };
+    case PLAYLIST_CYCLED:
+      return updatePlaylistItems(state, payload.playlistID, (items, playlist) => {
+        const newItems = items.slice(1);
+        newItems[playlist.size - 1] = items[0]; // eslint-disable-line prefer-destructuring
+        return newItems;
+      });
 
-  case RENAME_PLAYLIST_START:
-    return setPlaylistLoading(state, payload.playlistID);
-  case RENAME_PLAYLIST_COMPLETE: {
-    if (error) {
-      return setPlaylistLoading(state, meta.playlistID, false);
-    }
-
-    const renamedPlaylist = state.playlists[payload.playlistID];
-    if (renamedPlaylist) {
-      return updatePlaylist(state, payload.playlistID, playlist => ({
-        ...playlist,
+      // here be dragons
+      // TODO find a simpler way to store this stuff, that doesn't involve keeping
+      // millions of properties (six properties to be precise) in sync
+      // Playlists that are being created have a temporary ID that is used until the
+      // real ID comes back from the server.
+    case CREATE_PLAYLIST_START: {
+      const newPlaylist = {
+        _id: meta.tempId,
         name: payload.name,
-        loading: false
-      }));
+        description: payload.description,
+        shared: payload.shared,
+        selected: true,
+        creating: true,
+      };
+      return {
+        ...state,
+        playlists: assign(
+          deselectAll(state.playlists),
+          { [meta.tempId]: newPlaylist },
+        ),
+        selectedPlaylistID: meta.tempId,
+      };
     }
-    return state;
-  }
-  case DELETE_PLAYLIST_START:
-    return setPlaylistLoading(state, payload.playlistID);
-  case DELETE_PLAYLIST_COMPLETE:
-    if (error) {
-      return setPlaylistLoading(state, meta.playlistID, false);
+    case CREATE_PLAYLIST_COMPLETE:
+      if (error) {
+        return {
+          ...state,
+          playlists: except(state.playlists, `${meta.tempId}`),
+        };
+      }
+
+      return {
+        ...state,
+        playlists: assign(
+          deselectAll(except(state.playlists, `${meta.tempId}`)),
+          {
+            [payload.playlist._id]: {
+              ...payload.playlist,
+              selected: true,
+            },
+          },
+        ),
+        selectedPlaylistID: payload.playlist._id,
+      };
+
+    case RENAME_PLAYLIST_START:
+      return setPlaylistLoading(state, payload.playlistID);
+    case RENAME_PLAYLIST_COMPLETE: {
+      if (error) {
+        return setPlaylistLoading(state, meta.playlistID, false);
+      }
+
+      const renamedPlaylist = state.playlists[payload.playlistID];
+      if (renamedPlaylist) {
+        return updatePlaylist(state, payload.playlistID, playlist => ({
+          ...playlist,
+          name: payload.name,
+          loading: false,
+        }));
+      }
+      return state;
     }
+    case DELETE_PLAYLIST_START:
+      return setPlaylistLoading(state, payload.playlistID);
+    case DELETE_PLAYLIST_COMPLETE:
+      if (error) {
+        return setPlaylistLoading(state, meta.playlistID, false);
+      }
 
-    return {
-      ...state,
-      // When deleting the selected playlist, select the active playlist instead.
-      selectedPlaylistID: state.selectedPlaylistID === payload.playlistID
-        ? state.activePlaylistID
-        : state.selectedPlaylistID,
-      playlists: except(state.playlists, payload.playlistID)
-    };
+      return {
+        ...state,
+        // When deleting the selected playlist, select the active playlist instead.
+        selectedPlaylistID: state.selectedPlaylistID === payload.playlistID
+          ? state.activePlaylistID
+          : state.selectedPlaylistID,
+        playlists: except(state.playlists, payload.playlistID),
+      };
 
-  case ADD_MEDIA_START:
-    return setPlaylistLoading(state, payload.playlistID);
-  case ADD_MEDIA_COMPLETE:
-    if (error) {
-      return setPlaylistLoading(state, meta.playlistID, false);
+    case ADD_MEDIA_START:
+      return setPlaylistLoading(state, payload.playlistID);
+    case ADD_MEDIA_COMPLETE:
+      if (error) {
+        return setPlaylistLoading(state, meta.playlistID, false);
+      }
+
+      return updatePlaylistAndItems(
+        state,
+        payload.playlistID,
+        playlist => ({
+          ...playlist,
+          loading: false,
+          size: payload.newSize,
+        }),
+        items => processInsert(items, payload.appendedMedia, { after: payload.afterID }),
+      );
+    case DO_FAVORITE_COMPLETE:
+      return updatePlaylistAndItems(
+        state,
+        payload.playlistID,
+        playlist => ({
+          ...playlist,
+          size: payload.newSize,
+        }),
+        items => processInsert(items, payload.added, { at: 'end' }),
+      );
+
+    case UPDATE_MEDIA_START:
+      return updatePlaylistItems(state, payload.playlistID, items =>
+        items.map(media => (
+          media && media._id === payload.mediaID
+            ? { ...media, loading: true }
+            : media
+        )));
+    case UPDATE_MEDIA_COMPLETE:
+      return updatePlaylistItems(state, payload.playlistID, items =>
+        items.map(media => (
+          media && media._id === payload.mediaID
+            ? { ...media, ...payload.media, loading: false }
+            : media
+        )));
+
+    case MOVE_MEDIA_START: {
+      const isMovingMedia = indexBy(payload.medias, '_id');
+      return updatePlaylistItems(state, payload.playlistID, items =>
+        items.map(media => media && ({
+          ...media,
+          loading: isMovingMedia[media._id] || media.loading,
+        })));
     }
+    case MOVE_MEDIA_COMPLETE:
+      return updatePlaylistItems(state, payload.playlistID, items =>
+        processMove(items, payload.medias, payload.location));
 
-    return updatePlaylistAndItems(
-      state,
-      payload.playlistID,
-      playlist => ({
-        ...playlist,
-        loading: false,
-        size: payload.newSize
-      }),
-      items => processInsert(items, payload.appendedMedia, { after: payload.afterID })
-    );
-  case DO_FAVORITE_COMPLETE:
-    return updatePlaylistAndItems(
-      state,
-      payload.playlistID,
-      playlist => ({
-        ...playlist,
-        size: payload.newSize
-      }),
-      items => processInsert(items, payload.added, { at: 'end' })
-    );
-
-  case UPDATE_MEDIA_START:
-    return updatePlaylistItems(state, payload.playlistID, items =>
-      items.map(media => (
-        media && media._id === payload.mediaID
-          ? { ...media, loading: true }
-          : media
-      )));
-  case UPDATE_MEDIA_COMPLETE:
-    return updatePlaylistItems(state, payload.playlistID, items =>
-      items.map(media => (
-        media && media._id === payload.mediaID
-          ? { ...media, ...payload.media, loading: false }
-          : media
-      )));
-
-  case MOVE_MEDIA_START: {
-    const isMovingMedia = indexBy(payload.medias, '_id');
-    return updatePlaylistItems(state, payload.playlistID, items =>
-      items.map(media => media && ({
-        ...media,
-        loading: isMovingMedia[media._id] || media.loading
-      })));
-  }
-  case MOVE_MEDIA_COMPLETE:
-    return updatePlaylistItems(state, payload.playlistID, items =>
-      processMove(items, payload.medias, payload.location));
-
-  case REMOVE_MEDIA_START: {
-    const isRemovingMedia = indexBy(payload.medias, '_id');
-    return updatePlaylistItems(state, payload.playlistID, items =>
-      items.map(media => media && ({
-        ...media,
-        loading: isRemovingMedia[media._id] || media.loading
-      })));
-  }
-  case REMOVE_MEDIA_COMPLETE: {
-    const isRemovedMedia = indexBy(payload.removedMedia, '_id');
-    return updatePlaylistAndItems(
-      state,
-      payload.playlistID,
-      playlist => ({ ...playlist, size: payload.newSize }),
-      items => items.filter(media => media === null || !isRemovedMedia[media._id])
-    );
-  }
-  default:
-    return state;
+    case REMOVE_MEDIA_START: {
+      const isRemovingMedia = indexBy(payload.medias, '_id');
+      return updatePlaylistItems(state, payload.playlistID, items =>
+        items.map(media => media && ({
+          ...media,
+          loading: isRemovingMedia[media._id] || media.loading,
+        })));
+    }
+    case REMOVE_MEDIA_COMPLETE: {
+      const isRemovedMedia = indexBy(payload.removedMedia, '_id');
+      return updatePlaylistAndItems(
+        state,
+        payload.playlistID,
+        playlist => ({ ...playlist, size: payload.newSize }),
+        items => items.filter(media => media === null || !isRemovedMedia[media._id]),
+      );
+    }
+    default:
+      return state;
   }
 }

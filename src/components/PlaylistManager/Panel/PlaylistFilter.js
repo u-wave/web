@@ -9,12 +9,12 @@ import FilterIcon from 'material-ui/svg-icons/action/search';
 class PlaylistFilter extends React.Component {
   static propTypes = {
     t: PropTypes.func.isRequired,
-    onFilter: PropTypes.func.isRequired
+    onFilter: PropTypes.func.isRequired,
   };
 
   state = {
     open: false,
-    value: ''
+    value: '',
   };
 
   onFilter = debounce((value) => {
@@ -36,7 +36,7 @@ class PlaylistFilter extends React.Component {
 
     this.setState({
       open: isOpen,
-      value: ''
+      value: '',
     }, () => {
       if (isOpen) {
         this.input.focus();

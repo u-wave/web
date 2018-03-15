@@ -9,5 +9,5 @@ export const timerSelector = createSelector(baseSelector, time => time.timer);
 export const currentTimeSelector = createSelector(
   timeSelector,
   offsetSelector,
-  (time, offset) => time + offset
+  (time, offset) => time + offset,
 );

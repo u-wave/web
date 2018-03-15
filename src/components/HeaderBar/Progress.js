@@ -14,7 +14,7 @@ const Progress = ({ className, currentProgress, timeRemaining }) => {
 
     // Set the width to the current progress without animating
     Object.assign(el.style, {
-      transitionDuration: '0s'
+      transitionDuration: '0s',
     }, transformStyle(`scaleX(${currentProgress})`));
 
     // Force browser to rerender the bar immediately
@@ -23,7 +23,7 @@ const Progress = ({ className, currentProgress, timeRemaining }) => {
     // Set up the actual animation. Progress bar goes to 100% full
     // in $timeRemaining seconds.
     Object.assign(el.style, {
-      transitionDuration: `${timeRemaining}s`
+      transitionDuration: `${timeRemaining}s`,
     }, transformStyle('scaleX(1)'));
   }
 
@@ -37,7 +37,7 @@ const Progress = ({ className, currentProgress, timeRemaining }) => {
 Progress.propTypes = {
   className: PropTypes.string,
   currentProgress: PropTypes.number.isRequired,
-  timeRemaining: PropTypes.number.isRequired
+  timeRemaining: PropTypes.number.isRequired,
 };
 
 export default Progress;

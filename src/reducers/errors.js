@@ -3,7 +3,7 @@ export default function reduce(state = [], action = {}) {
   if (error) {
     // Avoid adding the same error over and over
     if (state.length === 0 || state[state.length - 1] !== payload.message) {
-      return [ ...state, payload.message ];
+      return [...state, payload.message];
     }
   } else if (type === 'errors/DISMISS') {
     return state.slice(1);

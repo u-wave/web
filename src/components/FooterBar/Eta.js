@@ -7,7 +7,7 @@ import formatDuration from 'format-duration';
 import timed from '../../utils/timed';
 
 const Eta = ({
-  className, base, currentTime, endTime
+  className, base, currentTime, endTime,
 }) => {
   const currentRemaining = endTime - currentTime;
   return (
@@ -21,10 +21,10 @@ Eta.propTypes = {
   className: PropTypes.string,
   currentTime: PropTypes.number.isRequired,
   endTime: PropTypes.number,
-  base: PropTypes.number
+  base: PropTypes.number,
 };
 
 export default compose(
   timed(),
-  pure
+  pure,
 )(Eta);

@@ -23,7 +23,7 @@ const PreviewPlayer = ({
 PreviewPlayer.propTypes = {
   media: PropTypes.object.isRequired,
   seek: PropTypes.number,
-  getMediaSource: PropTypes.func.isRequired
+  getMediaSource: PropTypes.func.isRequired,
 };
 
 export default injectMediaSources()(PreviewPlayer);

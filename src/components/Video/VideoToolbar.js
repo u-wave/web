@@ -16,7 +16,7 @@ const VideoToolbar = ({
   children,
   isFullscreen,
   onFullscreenEnter,
-  onFullscreenExit
+  onFullscreenExit,
 }) => (
   <div className="Video-overlay Video-toolbar">
     {children}
@@ -42,7 +42,7 @@ VideoToolbar.propTypes = {
   /**
    * Optional further video tools.
    */
-  children: PropTypes.node
+  children: PropTypes.node,
 };
 
 export default translate()(VideoToolbar);

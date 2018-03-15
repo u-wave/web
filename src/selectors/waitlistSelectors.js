@@ -9,19 +9,19 @@ const waitlistIDsSelector = createSelector(baseSelector, wl => wl.waitlist);
 
 export const sizeSelector = createSelector(
   waitlistIDsSelector,
-  list => list.length
+  list => list.length,
 );
 
 export const waitlistUsersSelector = createSelector(
   waitlistIDsSelector,
   usersSelector,
-  (ids, users) => ids.map(id => users[id])
+  (ids, users) => ids.map(id => users[id]),
 );
 
 export const djAndWaitlistUsersSelector = createSelector(
   djSelector,
   waitlistUsersSelector,
-  (dj, waitlist) => (dj ? [ dj, ...waitlist ] : waitlist)
+  (dj, waitlist) => (dj ? [dj, ...waitlist] : waitlist),
 );
 
 export const positionSelector = createSelector(
@@ -30,18 +30,18 @@ export const positionSelector = createSelector(
   (ids, user) => {
     if (!user) return -1;
     return ids.indexOf(user._id);
-  }
+  },
 );
 
 export const userInWaitlistSelector = createSelector(
   positionSelector,
   isCurrentDJSelector,
-  (position, isDJ) => position !== -1 || isDJ
+  (position, isDJ) => position !== -1 || isDJ,
 );
 
 export const waitlistSelector = createStructuredSelector({
   locked: isLockedSelector,
-  users: waitlistUsersSelector
+  users: waitlistUsersSelector,
 });
 
 // Most videos come in at around 4 minutes.
@@ -50,11 +50,11 @@ export const baseEtaSelector = createSelector(
   positionSelector,
   sizeSelector,
   (position, size) =>
-    (position === -1 ? size : position) * averagePlayDuration
+    (position === -1 ? size : position) * averagePlayDuration,
 );
 
 export const etaSelector = createSelector(
   baseEtaSelector,
   timeRemainingSelector,
-  (eta, remaining) => eta + remaining
+  (eta, remaining) => eta + remaining,
 );

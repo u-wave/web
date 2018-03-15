@@ -24,11 +24,11 @@ class Video extends React.Component {
     media: PropTypes.object,
     seek: PropTypes.number,
     onFullscreenEnter: PropTypes.func.isRequired,
-    onFullscreenExit: PropTypes.func.isRequired
+    onFullscreenExit: PropTypes.func.isRequired,
   };
 
   state = {
-    shouldShowToolbar: false
+    shouldShowToolbar: false,
   };
 
   componentDidMount() {
@@ -94,7 +94,7 @@ class Video extends React.Component {
       isMuted,
       media,
       seek,
-      onFullscreenExit
+      onFullscreenExit,
     } = this.props;
 
     if (!media) {
@@ -102,7 +102,7 @@ class Video extends React.Component {
     }
 
     const {
-      shouldShowToolbar
+      shouldShowToolbar,
     } = this.state;
 
     const props = {
@@ -110,7 +110,7 @@ class Video extends React.Component {
       media,
       seek,
       mode: size,
-      volume: isMuted ? 0 : volume
+      volume: isMuted ? 0 : volume,
     };
 
     const sources = getAllMediaSources();

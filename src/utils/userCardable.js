@@ -7,7 +7,7 @@ export default function userCardable() {
       state = {
         open: false,
         user: null,
-        position: null
+        position: null,
       };
 
       handleOpen = (user) => {
@@ -17,8 +17,8 @@ export default function userCardable() {
           user,
           position: {
             x: pos.left,
-            y: pos.top
-          }
+            y: pos.top,
+          },
         });
       };
 

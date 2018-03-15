@@ -10,7 +10,7 @@ const WaitList = ({
   users,
   onMoveUser,
   onRemoveUser,
-  canMoveUsers
+  canMoveUsers,
 }) => {
   const Row = canMoveUsers ? ModRow : SimpleRow;
   return (
@@ -19,7 +19,7 @@ const WaitList = ({
         'UserList',
         'UserList--queue',
         'WaitList',
-        className
+        className,
       )}
     >
       <List
@@ -45,7 +45,7 @@ WaitList.propTypes = {
   users: PropTypes.arrayOf(PropTypes.object).isRequired,
   canMoveUsers: PropTypes.bool.isRequired,
   onMoveUser: PropTypes.func.isRequired,
-  onRemoveUser: PropTypes.func.isRequired
+  onRemoveUser: PropTypes.func.isRequired,
 };
 
 export default WaitList;

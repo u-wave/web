@@ -23,8 +23,8 @@ const enhance = compose(
     onUsernameClick: props => (event) => {
       event.preventDefault();
       props.openUserCard(props.user);
-    }
-  })
+    },
+  }),
 );
 
 const Message = ({
@@ -37,7 +37,7 @@ const Message = ({
   compileOptions,
   deletable,
   onDeleteClick,
-  onUsernameClick
+  onUsernameClick,
 }) => {
   let avatar;
   if (inFlight) {
@@ -95,9 +95,9 @@ Message.propTypes = {
   onDeleteClick: PropTypes.func,
   compileOptions: PropTypes.shape({
     availableEmoji: PropTypes.array,
-    emojiImages: PropTypes.object
+    emojiImages: PropTypes.object,
   }),
-  onUsernameClick: PropTypes.func.isRequired
+  onUsernameClick: PropTypes.func.isRequired,
 };
 
 export default enhance(Message);

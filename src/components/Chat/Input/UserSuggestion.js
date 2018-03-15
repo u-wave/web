@@ -19,8 +19,8 @@ UserSuggestion.propTypes = {
   value: PropTypes.shape({
     _id: PropTypes.string.isRequired,
     username: PropTypes.string.isRequired,
-    avatar: PropTypes.string
-  }).isRequired
+    avatar: PropTypes.string,
+  }).isRequired,
 };
 
 export default UserSuggestion;

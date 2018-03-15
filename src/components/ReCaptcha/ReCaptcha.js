@@ -6,18 +6,18 @@ export default class ReCaptcha extends React.Component {
     grecaptcha: PropTypes.object.isRequired,
     sitekey: PropTypes.string.isRequired,
     theme: PropTypes.string,
-    onResponse: PropTypes.func.isRequired
+    onResponse: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
-    theme: 'light'
+    theme: 'light',
   };
 
   componentDidMount() {
     this.props.grecaptcha.render(this.container, {
       sitekey: this.props.sitekey,
       callback: this.handleResponse,
-      theme: this.props.theme
+      theme: this.props.theme,
     });
   }
 
