@@ -23,6 +23,13 @@ uwave:
     days: "{{count}} day"
     days_plural: "{{count}} days"
 
+  roles:
+    user: User
+    special: Special
+    moderator: Moderator
+    manager: Manager
+    admin: Admin
+
   chat:
     title: Chat
     placeholder: Click here to chat!
@@ -33,6 +40,8 @@ uwave:
     modSkipReason: "{{username}} skipped {{djName}}'s turn: {{reason}}"
     selfSkip: "{{username}} skipped their turn"
     selfSkipReason: "{{username}} skipped their turn: {{reason}}"
+    rolesAdded: "{{username}} is now a {{roles}}"
+    rolesRemoved: "{{username}} is no longer a {{roles}}"
 
   dialogs:
     confirm:

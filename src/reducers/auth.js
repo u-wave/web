@@ -5,9 +5,6 @@ import {
   LOGIN_COMPLETE, SET_TOKEN,
   LOGOUT_COMPLETE
 } from '../constants/actionTypes/auth';
-import {
-  DO_CHANGE_USERNAME_COMPLETE
-} from '../constants/actionTypes/users';
 
 const initialState = {
   strategies: [ 'local' ],
@@ -52,7 +49,7 @@ export default function reduce(state = initialState, action = {}) {
     } : {
       ...state,
       token: payload.token,
-      user: payload.user,
+      user: payload.user._id,
       error: null
     };
   case REGISTER_COMPLETE:
@@ -64,17 +61,6 @@ export default function reduce(state = initialState, action = {}) {
     };
   case LOGOUT_COMPLETE:
     return initialState;
-  case DO_CHANGE_USERNAME_COMPLETE:
-    if (!isError && state.user) {
-      return {
-        ...state,
-        user: {
-          ...state.user,
-          username: payload.username
-        }
-      };
-    }
-    return state;
   default:
     return state;
   }

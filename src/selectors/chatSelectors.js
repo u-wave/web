@@ -10,7 +10,9 @@ import {
 } from './configSelectors';
 import {
   usersSelector,
-  currentUserSelector
+  currentUserSelector,
+  currentUserHasRoleSelector,
+  createRoleCheckSelector
 } from './userSelectors';
 import {
   notificationSettingsSelector
@@ -68,8 +70,8 @@ export const currentUserMuteSelector = createSelector(
 );
 
 export const availableGroupMentionsSelector = createSelector(
-  currentUserSelector,
-  user => getAvailableGroupMentions(user)
+  currentUserHasRoleSelector,
+  hasRole => getAvailableGroupMentions(mention => hasRole(`chat.mention.${mention}`))
 );
 
 export const emojiCompletionsSelector = createSelector(
@@ -80,4 +82,4 @@ export const emojiCompletionsSelector = createSelector(
   }))
 );
 
-export { isModeratorSelector as canDeleteMessagesSelector } from './userSelectors';
+export const canDeleteMessagesSelector = createRoleCheckSelector('chat.delete');

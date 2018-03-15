@@ -3,7 +3,11 @@ import { createSelector } from 'reselect';
 import { isPreviewMediaDialogOpenSelector } from './dialogSelectors';
 import { isMutedSelector, volumeSelector } from './settingSelectors';
 import { currentTimeSelector } from './timeSelectors';
-import { currentUserSelector, usersSelector } from './userSelectors';
+import {
+  currentUserSelector,
+  currentUserHasRoleSelector,
+  usersSelector
+} from './userSelectors';
 
 const baseSelector = state => state.booth;
 
@@ -60,18 +64,15 @@ export const isCurrentDJSelector = createSelector(
   )
 );
 
-// TODO use a permissions-based system instead of role IDs:
-// "user.can('booth.skip')"
-const ROLE_MODERATOR = 2;
 export const canSkipSelector = createSelector(
   historyIDSelector,
   isCurrentDJSelector,
-  currentUserSelector,
-  (historyID, isCurrentDJ, user) => {
-    if (!historyID || !user) {
+  currentUserHasRoleSelector,
+  (historyID, isCurrentDJ, hasRole) => {
+    if (!historyID) {
       return false;
     }
-    return isCurrentDJ || user.role >= ROLE_MODERATOR;
+    return isCurrentDJ ? hasRole('booth.skip.self') : hasRole('booth.skip.other');
   }
 );
 

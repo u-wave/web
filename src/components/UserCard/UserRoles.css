@@ -1,0 +1,11 @@
+.UserRoles {
+  margin: 0;
+  padding: 0;
+
+}
+
+.UserRoles-role {
+  display: inline-block;
+  margin-top: 5px;
+  margin-right: 1em;
+}

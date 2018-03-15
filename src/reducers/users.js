@@ -10,10 +10,21 @@ import {
   USER_JOIN,
   USER_LEAVE,
   CHANGE_USERNAME,
-  CHANGE_ROLE,
+  USER_ADD_ROLES,
+  USER_REMOVE_ROLES,
 
   RECEIVE_GUEST_COUNT
 } from '../constants/actionTypes/users';
+
+function updateUser(state, userID, update) {
+  if (state[userID]) {
+    return {
+      ...state,
+      [userID]: update(state[userID])
+    };
+  }
+  return state;
+}
 
 function guestsReducer(state = 0, action = {}) {
   if (action.type === INIT_STATE) {
@@ -46,27 +57,20 @@ function usersReducer(state = {}, action = {}) {
   case USER_LEAVE:
     return except(state, payload.userID);
   case CHANGE_USERNAME:
-    if (state[payload.userID]) {
-      return {
-        ...state,
-        [payload.userID]: {
-          ...state[payload.userID],
-          username: payload.username
-        }
-      };
-    }
-    return state;
-  case CHANGE_ROLE:
-    if (state[payload.userID]) {
-      return {
-        ...state,
-        [payload.userID]: {
-          ...state[payload.userID],
-          role: payload.role
-        }
-      };
-    }
-    return state;
+    return updateUser(state, payload.userID, user => ({
+      ...user,
+      username: payload.username
+    }));
+  case USER_ADD_ROLES:
+    return updateUser(state, payload.userID, user => ({
+      ...user,
+      roles: [ ...user.roles, ...payload.roles ]
+    }));
+  case USER_REMOVE_ROLES:
+    return updateUser(state, payload.userID, user => ({
+      ...user,
+      roles: user.roles.filter(role => payload.roles.indexOf(role) === -1)
+    }));
   default:
     return state;
   }

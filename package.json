@@ -71,6 +71,7 @@
     "shorten-url": "^1.0.0",
     "splitargs": "0.0.7",
     "u-wave-parse-chat-markup": "^2.1.0",
+    "upper-case-first": "^1.1.2",
     "whatwg-fetch": "^2.0.0",
     "yamlify": "^0.2.0"
   },

@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 import naturalCmp from 'natural-compare';
 import values from 'object-values';
+import { rolesSelector } from './configSelectors';
 
 const authSelector = state => state.auth;
 
@@ -8,7 +9,16 @@ const usersBaseSelector = state => state.users;
 export const usersSelector = createSelector(usersBaseSelector, base => base.users);
 
 export const authErrorSelector = createSelector(authSelector, auth => auth.error);
-export const currentUserSelector = createSelector(authSelector, auth => auth.user);
+const currentUserIDSelector = createSelector(authSelector, auth => auth.user);
+export const currentUserSelector = createSelector(
+  usersSelector,
+  currentUserIDSelector,
+  (users, userID) => (
+    userID in users
+      ? users[userID]
+      : null
+  )
+);
 export const isLoggedInSelector = createSelector(currentUserSelector, Boolean);
 export const tokenSelector = createSelector(authSelector, auth => auth.token);
 export const authStrategiesSelector = createSelector(authSelector, auth => auth.strategies);
@@ -20,34 +30,51 @@ export const supportsSocialAuthSelector = createSelector(
   (...support) => support.some(Boolean)
 );
 
-const currentRoleSelector = createSelector(
-  currentUserSelector,
-  user => (user ? user.role : 0)
-);
+// The Super User role allows a user to do everything. It's hardcoded as the "*"
+// role.
+const superUserRoleSelector = () => '*';
 
-export const isModeratorSelector = createSelector(
-  currentRoleSelector,
-  role => role >= 2
-);
-
-export const isManagerSelector = createSelector(
-  currentRoleSelector,
-  role => role >= 3
-);
-
-function compareUsers(a, b) {
-  if (a.role > b.role) {
-    return -1;
+// Flatten a user's roles.
+function getAllUserRoles(roles, user) {
+  function getSubRoles(subRoles, role) {
+    // Recursive Reduce!
+    return roles[role].reduce(
+      getSubRoles,
+      [ role, ...subRoles ]
+    );
   }
-  if (a.role < b.role) {
-    return 1;
-  }
-  return naturalCmp(a.username.toLowerCase(), b.username.toLowerCase());
+  return user.roles ? user.roles.reduce(getSubRoles, []) : [];
+}
+
+function compareUsers(roles, superuser) {
+  return (a, b) => {
+    const aRoles = getAllUserRoles(roles, a);
+    const bRoles = getAllUserRoles(roles, b);
+    // Sort superusers to the top,
+    if (aRoles.indexOf(superuser) !== -1) {
+      return -1;
+    }
+    if (bRoles.indexOf(superuser) !== -1) {
+      return 1;
+    }
+    // other users by the amount of permissions they have,
+    if (aRoles.length > bRoles.length) {
+      return -1;
+    }
+    if (aRoles.length < bRoles.length) {
+      return 1;
+    }
+    // and sort by username if the roles are equal.
+    return naturalCmp(a.username.toLowerCase(), b.username.toLowerCase());
+  };
 }
 
 export const userListSelector = createSelector(
+  rolesSelector,
+  superUserRoleSelector,
   usersSelector,
-  users => values(users).sort(compareUsers)
+  (roles, superuserRole, users) =>
+    values(users).sort(compareUsers(roles, superuserRole))
 );
 
 export const userCountSelector = createSelector(
@@ -65,3 +92,54 @@ export const listenerCountSelector = createSelector(
   guestCountSelector,
   (users, guests) => users + guests
 );
+
+export const userHasRoleSelector = createSelector(
+  rolesSelector,
+  superUserRoleSelector,
+  (roles, superUserRole) => (user) => {
+    // If there is no authenticated user, we always return false.
+    if (!user) {
+      return () => false;
+    }
+
+    const userRoles = getAllUserRoles(roles, user);
+    // If this is a super user, we always return true.
+    if (userRoles.indexOf(superUserRole) !== -1) {
+      return () => true;
+    }
+
+    return role => userRoles.indexOf(role) !== -1;
+  }
+);
+
+// Selects a function that checks if a user has the given role.
+//
+//   const hasRole = hasRoleSelector(getState());
+//   hasRole(user, 'waitlist.join');
+//
+export const hasRoleSelector = createSelector(
+  userHasRoleSelector,
+  userHasRole =>
+    (user, role) => userHasRole(user)(role)
+);
+
+export const currentUserHasRoleSelector = createSelector(
+  userHasRoleSelector,
+  currentUserSelector,
+  (userHasRole, user) => userHasRole(user)
+);
+
+// Creates a selector that will check if the current user has a given role.
+//
+//   createRoleCheckSelector('some.role')(store.getState()) // → true/false
+//
+export const createRoleCheckSelector = role => createSelector(
+  currentUserHasRoleSelector,
+  hasRole => hasRole(role)
+);
+
+// Selectors for compatibility with the old role system.
+// TODO All uses of these selectors should be phased out in favour of more
+// specific roles in the future.
+export const isModeratorSelector = createRoleCheckSelector('moderator');
+export const isManagerSelector = createRoleCheckSelector('manager');

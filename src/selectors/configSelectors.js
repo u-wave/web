@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import memoize from 'lodash/memoize';
 
 export const configSelector = state => state.config;
 
@@ -32,3 +33,13 @@ export const reCaptchaSiteKeySelector = createSelector(
   reCaptchaSelector,
   rc => (rc ? rc.key : false)
 );
+
+export const rolesSelector = createSelector(
+  configSelector,
+  config => config.roles
+);
+
+export const roleSelector = memoize(roleName => createSelector(
+  rolesSelector,
+  roles => roles[roleName]
+));
