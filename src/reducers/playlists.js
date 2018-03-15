@@ -71,12 +71,12 @@ function processInsert(list, insert, position) {
 }
 
 // Moves a list of media items to a given position in the playlist.
-function processMove(list, movedMedia, afterID) {
+function processMove(list, movedMedia, location) {
   // Take all moved media items out of the playlist…
   const wasMoved = indexBy(movedMedia, '_id');
   const newPlaylist = list.filter(media => media === null || !wasMoved[media._id]);
   // …and add them back in at the correct place.
-  return processInsert(newPlaylist, movedMedia, { after: afterID });
+  return processInsert(newPlaylist, movedMedia, location);
 }
 
 function updatePlaylist(state, playlistID, modify) {
@@ -416,7 +416,7 @@ export default function reduce(state = initialState, action = {}) {
   }
   case MOVE_MEDIA_COMPLETE:
     return updatePlaylistItems(state, payload.playlistID, items =>
-      processMove(items, payload.medias, payload.afterID));
+      processMove(items, payload.medias, payload.location));
 
   case REMOVE_MEDIA_START: {
     const isRemovingMedia = indexBy(payload.medias, '_id');

@@ -51,6 +51,8 @@ const onMoveMedia = playlist => (media, opts) =>
   moveMedia(playlist, media, opts);
 const onMoveToFirst = playlist => (media, selection) =>
   moveMedia(playlist, selectionOrOne(media, selection), { at: 'start' });
+const onMoveToLast = playlist => (media, selection) =>
+  moveMedia(playlist, selectionOrOne(media, selection), { at: 'end' });
 const onEditMedia = playlist => media =>
   editMedia(playlist, media);
 const onLoadPlaylistPage = ({ isFiltered, playlist }) => page => (
@@ -81,6 +83,7 @@ const mergeProps = (state, { dispatch }, props) => ({
     onOpenAddMediaMenu,
     onOpenPreviewMediaDialog: openPreviewMediaDialog,
     onMoveToFirst: onMoveToFirst(state.playlist._id),
+    onMoveToLast: onMoveToLast(state.playlist._id),
     onMoveMedia: onMoveMedia(state.playlist._id),
     onEditMedia: onEditMedia(state.playlist._id),
     onRemoveFromPlaylist: onRemoveFromPlaylist(state.playlist._id),
