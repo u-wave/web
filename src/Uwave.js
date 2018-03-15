@@ -37,9 +37,9 @@ export default class Uwave {
     Object.assign(this, api.actions);
 
     if (module.hot) {
-      this._getComponent = this.getComponent;
+      const { getComponent } = this;
       this.getComponent = () => (
-        <HotContainer>{this._getComponent()}</HotContainer>
+        <HotContainer>{getComponent.call(this)}</HotContainer>
       );
       const uw = this;
       module.hot.accept('./containers/App', () => {
