@@ -12,8 +12,11 @@ const Overlays = ({ children, active }) => {
     view = children;
   }
   if (view) {
+    // Pass on the `view.key` so that overlays are mounted and unmounted correctly
+    // when switching from one to the other.
     view = (
       <CSSTransition
+        key={view.key}
         mountOnEnter
         unmountOnExit
         classNames="Overlay"
