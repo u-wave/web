@@ -1,0 +1,4 @@
+.AdminPanel {
+  background: var(--background-color);
+  overflow-y: auto;
+}

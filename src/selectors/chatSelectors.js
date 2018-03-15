@@ -1,5 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import objMap from 'object.map';
+import parseChatMarkup from 'u-wave-parse-chat-markup';
 
 import {
   getAvailableGroupMentions
@@ -20,7 +21,8 @@ import {
 
 const baseSelector = state => state.chat;
 
-export const motdSelector = createSelector(baseSelector, chat => chat.motd);
+export const rawMotdSelector = createSelector(baseSelector, chat => chat.motd);
+export const motdSelector = createSelector(rawMotdSelector, parseChatMarkup);
 
 const MAX_MESSAGES = 500;
 const allMessagesSelector = createSelector(baseSelector, chat => chat.messages);

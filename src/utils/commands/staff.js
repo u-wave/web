@@ -6,12 +6,16 @@ import {
 } from '../../selectors/configSelectors';
 import {
   userListSelector,
+  isModeratorSelector,
   isManagerSelector
 } from '../../selectors/userSelectors';
 import {
   addUserRole,
   removeUserRole
 } from '../../actions/ModerationActionCreators';
+import {
+  toggleAdmin
+} from '../../actions/OverlayActionCreators';
 
 register(
   'roles',
@@ -67,5 +71,14 @@ register(
       );
       return dispatch(removeUserRole(user, role));
     }
+  }
+);
+
+register(
+  'admin',
+  'Open the administration panel.',
+  {
+    guard: isModeratorSelector,
+    action: toggleAdmin
   }
 );

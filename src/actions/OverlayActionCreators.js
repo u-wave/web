@@ -30,6 +30,10 @@ export function toggleAbout() {
   return toggleOverlay('about');
 }
 
+export function toggleAdmin() {
+  return toggleOverlay('admin');
+}
+
 export function closeAll() {
   return { type: CLOSE_OVERLAY };
 }

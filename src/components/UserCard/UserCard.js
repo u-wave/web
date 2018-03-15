@@ -6,14 +6,7 @@ import CardActions from 'material-ui/Card/CardActions';
 import CardText from 'material-ui/Card/CardText';
 import Avatar from '../Avatar';
 import UserRoles from './UserRoles';
-
-const formatJoinDate = date => new Date(date).toLocaleString([], {
-  year: 'numeric',
-  month: 'numeric',
-  day: 'numeric',
-  hour: 'numeric',
-  minute: 'numeric'
-});
+import formatJoinDate from '../../utils/formatJoinDate';
 
 // Our cards are much smaller than usual so we remove some padding to make it
 // look less strange.
