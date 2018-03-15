@@ -13,18 +13,18 @@ const initialState = {
 export default function reduce(state = initialState, action = {}) {
   const { type, payload, meta } = action;
   switch (type) {
-  case OPEN_ADD_MEDIA_MENU:
-    return {
-      ...state,
-      open: true,
-      type: meta.type,
-      position: meta.position,
-      playlists: meta.playlists,
-      data: payload,
-    };
-  case CLOSE_ADD_MEDIA_MENU:
-    return initialState;
-  default:
-    return state;
+    case OPEN_ADD_MEDIA_MENU:
+      return {
+        ...state,
+        open: true,
+        type: meta.type,
+        position: meta.position,
+        playlists: meta.playlists,
+        data: payload,
+      };
+    case CLOSE_ADD_MEDIA_MENU:
+      return initialState;
+    default:
+      return state;
   }
 }

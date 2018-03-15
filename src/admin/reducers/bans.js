@@ -13,14 +13,14 @@ const initialState = {
 
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
-  case LOAD_BANS_START:
-    return state;
-  case LOAD_BANS_COMPLETE:
-    return {
-      ...state,
-      bans: action.payload.bans,
-    };
-  default:
-    return state;
+    case LOAD_BANS_START:
+      return state;
+    case LOAD_BANS_COMPLETE:
+      return {
+        ...state,
+        bans: action.payload.bans,
+      };
+    default:
+      return state;
   }
 }

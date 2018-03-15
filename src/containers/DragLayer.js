@@ -20,10 +20,10 @@ class DragLayerContainer extends React.Component {
 
   renderPreview() {
     switch (this.props.type) {
-    case MEDIA:
-      return <MediaDragPreview {...this.props} />;
-    default:
-      return null;
+      case MEDIA:
+        return <MediaDragPreview {...this.props} />;
+      default:
+        return null;
     }
   }
 

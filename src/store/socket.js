@@ -233,38 +233,38 @@ export default function middleware({ url = defaultUrl() } = {}) {
       }
 
       switch (type) {
-      case SOCKET_RECONNECT:
-        if (socket) {
-          socket.close(undefined, undefined, { keepClosed: true });
-        }
+        case SOCKET_RECONNECT:
+          if (socket) {
+            socket.close(undefined, undefined, { keepClosed: true });
+          }
         // fall through
-      case SOCKET_CONNECT:
-        socket = new WebSocket(url);
-        socket.addEventListener('message', onMessage);
-        socket.addEventListener('open', onOpen);
-        socket.addEventListener('close', onClose);
-        socket.addEventListener('connecting', onClose);
-        break;
-      case SEND_MESSAGE:
-        send('sendChat', payload.message);
-        break;
-      case DO_UPVOTE:
-        send('vote', 1);
-        break;
-      case DO_DOWNVOTE:
-        send('vote', -1);
-        break;
-      case LOGIN_COMPLETE:
-        if (!sentAuthToken && isOpen()) {
-          sendAuthToken(payload.socketToken);
-        }
-        break;
-      case LOGOUT_START:
-        sentAuthToken = false;
-        send('logout', null);
-        break;
-      default:
-        break;
+        case SOCKET_CONNECT:
+          socket = new WebSocket(url);
+          socket.addEventListener('message', onMessage);
+          socket.addEventListener('open', onOpen);
+          socket.addEventListener('close', onClose);
+          socket.addEventListener('connecting', onClose);
+          break;
+        case SEND_MESSAGE:
+          send('sendChat', payload.message);
+          break;
+        case DO_UPVOTE:
+          send('vote', 1);
+          break;
+        case DO_DOWNVOTE:
+          send('vote', -1);
+          break;
+        case LOGIN_COMPLETE:
+          if (!sentAuthToken && isOpen()) {
+            sendAuthToken(payload.socketToken);
+          }
+          break;
+        case LOGOUT_START:
+          sentAuthToken = false;
+          send('logout', null);
+          break;
+        default:
+          break;
       }
       next(action);
     };

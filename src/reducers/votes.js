@@ -14,40 +14,40 @@ const initialState = {
 export default function reduce(state = initialState, action = {}) {
   const { type, payload } = action;
   switch (type) {
-  case ADVANCE:
-    return initialState;
-  case LOAD_VOTES:
-    return {
-      ...state,
-      upvotes: payload.upvotes,
-      downvotes: payload.downvotes,
-      favorites: payload.favorites,
-    };
-  case UPVOTE:
-    return {
-      ...state,
-      upvotes: [ ...state.upvotes, payload.userID ],
-      downvotes: state.downvotes.filter(vote => vote !== payload.userID),
-    };
-  case DOWNVOTE:
-    return {
-      ...state,
-      upvotes: state.upvotes.filter(vote => vote !== payload.userID),
-      downvotes: [ ...state.downvotes, payload.userID ],
-    };
-  case FAVORITE:
-    if (state.favorites.indexOf(payload.userID) === -1) {
+    case ADVANCE:
+      return initialState;
+    case LOAD_VOTES:
       return {
         ...state,
-        favorites: [ ...state.favorites, payload.userID ],
+        upvotes: payload.upvotes,
+        downvotes: payload.downvotes,
+        favorites: payload.favorites,
       };
-    }
-    return state;
-  case DO_FAVORITE_START:
-    return state;
-  case DO_FAVORITE_COMPLETE:
-    return state;
-  default:
-    return state;
+    case UPVOTE:
+      return {
+        ...state,
+        upvotes: [ ...state.upvotes, payload.userID ],
+        downvotes: state.downvotes.filter(vote => vote !== payload.userID),
+      };
+    case DOWNVOTE:
+      return {
+        ...state,
+        upvotes: state.upvotes.filter(vote => vote !== payload.userID),
+        downvotes: [ ...state.downvotes, payload.userID ],
+      };
+    case FAVORITE:
+      if (state.favorites.indexOf(payload.userID) === -1) {
+        return {
+          ...state,
+          favorites: [ ...state.favorites, payload.userID ],
+        };
+      }
+      return state;
+    case DO_FAVORITE_START:
+      return state;
+    case DO_FAVORITE_COMPLETE:
+      return state;
+    default:
+      return state;
   }
 }
