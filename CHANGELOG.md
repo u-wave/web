@@ -1,3 +1,30 @@
+# 1.2.0 / 18 Mar 2018
+
+This version of the üWave Web Client requires u-wave-http-api@0.4.0 or higher.
+
+Features:
+
+ * Adapt top bar to logo size. (#806)
+ * Social login. (#807)
+ * More consistent spacing in the footer bar. (#810)
+ * Request cookie sessions from HTTP API if supported. (#811)
+ * Add setting for skip notifications in chat. (#820)
+ * Add button to move first item to end of playlist. (#818)
+ * Implement ACL roles handling. (#492)
+ * Add initial draft of an admin page. (#741)
+
+Bugfixes:
+
+ * Fix fullscreen change detection. (#804)
+ * Optimize html responses. (#805)
+ * Synchronously add English language strings to i18next resources. (#812)
+ * Bump overlay z-index so it is on top of HistoryButton. (#815)
+ * Fix overlays diffing internally when switching between them. (#829)
+
+Internal:
+
+ * Switch to qs-stringify. (#814)
+
 # 1.1.1 / 30 Jan 2018
 
 Bugfixes:
