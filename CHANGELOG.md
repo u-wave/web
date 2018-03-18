@@ -1,3 +1,7 @@
+# 1.2.1 / 18 Mar 2018
+
+Add compiled files to the published package.
+
 # 1.2.0 / 18 Mar 2018
 
 This version of the üWave Web Client requires u-wave-http-api@0.4.0 or higher.
