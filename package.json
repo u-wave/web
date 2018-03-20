@@ -116,7 +116,7 @@
     "eslint-plugin-react": "^7.6.1",
     "explain-error": "^1.0.3",
     "express": "^4.16.2",
-    "extract-loader": "^1.0.2",
+    "extract-loader": "^2.0.0",
     "extract-text-webpack-plugin": "^3.0.2",
     "fetch-mock": "^6.0.0",
     "file-loader": "^1.1.6",
