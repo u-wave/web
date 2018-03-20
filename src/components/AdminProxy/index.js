@@ -6,7 +6,7 @@ import Overlay from '../Overlay';
 import OverlayHeader from '../Overlay/Header';
 
 const AdminComponent = loadable({
-  loader: () => import('../../admin/containers/AdminApp'),
+  loader: () => import('../../admin/containers/AdminApp' /* webpackChunkName: "admin" */),
   loading: () => <Loader size="large" />,
 });
 

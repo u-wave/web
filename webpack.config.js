@@ -195,6 +195,7 @@ module.exports = {
     publicPath: '/',
     path: path.join(__dirname, 'public'),
     filename: nodeEnv === 'production' ? '[name]_[chunkhash:7].js' : '[name]_dev.js',
+    chunkFilename: nodeEnv === 'production' ? '[name]_[chunkhash:7].js' : '[name]_dev.js',
     crossOriginLoading: 'anonymous',
   },
   plugins,
