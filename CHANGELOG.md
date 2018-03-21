@@ -1,3 +1,10 @@
+# 1.2.2 / 21 Mar 2018
+
+Features:
+
+ * Update react-loadable. (#834)
+ * Name output chunks so that it's easier to see what code is being loaded in the network tab in devtools. (#834)
+
 # 1.2.1 / 18 Mar 2018
 
 Add compiled files to the published package.
