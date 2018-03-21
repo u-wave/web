@@ -1,7 +1,5 @@
 import { set } from './SettingsActionCreators';
-import {
-  settingsSelector,
-} from '../selectors/settingSelectors';
+import { settingsSelector } from '../selectors/settingSelectors';
 import {
   ENTER_FULLSCREEN,
   EXIT_FULLSCREEN,

@@ -1,9 +1,5 @@
-import {
-  SHOW_IMPORT_PANEL,
-} from '../constants/actionTypes/imports';
-import {
-  SELECT_PLAYLIST,
-} from '../constants/actionTypes/playlists';
+import { SHOW_IMPORT_PANEL } from '../constants/actionTypes/imports';
+import { SELECT_PLAYLIST } from '../constants/actionTypes/playlists';
 import {
   SET_SEARCH_SOURCE,
   SHOW_SEARCH_RESULTS,

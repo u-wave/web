@@ -9,9 +9,7 @@ import {
   markupCompilerOptionsSelector,
   canDeleteMessagesSelector,
 } from '../selectors/chatSelectors';
-import {
-  deleteChatMessage,
-} from '../actions/ModerationActionCreators';
+import { deleteChatMessage } from '../actions/ModerationActionCreators';
 
 import ChatMessages from '../components/Chat/ChatMessages';
 

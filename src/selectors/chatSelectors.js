@@ -2,9 +2,7 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import objMap from 'object.map';
 import parseChatMarkup from 'u-wave-parse-chat-markup';
 
-import {
-  getAvailableGroupMentions,
-} from '../utils/chatMentions';
+import { getAvailableGroupMentions } from '../utils/chatMentions';
 import {
   availableEmojiNamesSelector,
   availableEmojiImagesSelector,
@@ -15,9 +13,7 @@ import {
   currentUserHasRoleSelector,
   createRoleCheckSelector,
 } from './userSelectors';
-import {
-  notificationSettingsSelector,
-} from './settingSelectors';
+import { notificationSettingsSelector } from './settingSelectors';
 
 const baseSelector = state => state.chat;
 

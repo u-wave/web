@@ -5,9 +5,7 @@ import {
   search,
   setSource,
 } from '../actions/SearchActionCreators';
-import {
-  searchSourceTypeSelector,
-} from '../selectors/searchSelectors';
+import { searchSourceTypeSelector } from '../selectors/searchSelectors';
 
 const mapStateToProps = createStructuredSelector({
   source: searchSourceTypeSelector,

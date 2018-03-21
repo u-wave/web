@@ -1,10 +1,6 @@
 import { register } from '../ChatCommands';
-import {
-  log,
-} from '../../actions/ChatActionCreators';
-import {
-  doChangeUsername,
-} from '../../actions/UserActionCreators';
+import { log } from '../../actions/ChatActionCreators';
+import { doChangeUsername } from '../../actions/UserActionCreators';
 
 register(
   'nick',

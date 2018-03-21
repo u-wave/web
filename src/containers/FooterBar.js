@@ -4,9 +4,7 @@ import { createStructuredSelector } from 'reselect';
 
 import { skipSelf } from '../actions/BoothActionCreators';
 import { openLoginDialog, openRegisterDialog } from '../actions/DialogActionCreators';
-import {
-  skipCurrentDJ as modSkipCurrentDJ,
-} from '../actions/ModerationActionCreators';
+import { skipCurrentDJ as modSkipCurrentDJ } from '../actions/ModerationActionCreators';
 import { togglePlaylistManager, toggleSettings } from '../actions/OverlayActionCreators';
 import { joinWaitlist, leaveWaitlist } from '../actions/WaitlistActionCreators';
 import { openFavoriteMenu, doUpvote, doDownvote } from '../actions/VoteActionCreators';
@@ -21,17 +19,13 @@ import {
   activePlaylistSelector,
   nextMediaSelector,
 } from '../selectors/playlistSelectors';
-import {
-  currentUserSelector,
-} from '../selectors/userSelectors';
+import { currentUserSelector } from '../selectors/userSelectors';
 import {
   baseEtaSelector,
   userInWaitlistSelector,
   isLockedSelector,
 } from '../selectors/waitlistSelectors';
-import {
-  currentVoteStatsSelector,
-} from '../selectors/voteSelectors';
+import { currentVoteStatsSelector } from '../selectors/voteSelectors';
 
 import FooterBar from '../components/FooterBar';
 

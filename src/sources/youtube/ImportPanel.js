@@ -5,9 +5,7 @@ import { connect } from 'react-redux';
 
 import { IDLE, LOADING, LOADED } from '../../constants/LoadingStates';
 
-import {
-  addMediaMenu as openAddMediaMenu,
-} from '../../actions/PlaylistActionCreators';
+import { addMediaMenu as openAddMediaMenu } from '../../actions/PlaylistActionCreators';
 import { PLAYLIST, CHANNEL } from './constants';
 import { importPlaylist } from './actions';
 import LoadingPanel from './LoadingPanel';

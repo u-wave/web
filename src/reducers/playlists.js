@@ -30,9 +30,7 @@ import {
   FILTER_PLAYLIST_ITEMS,
   FILTER_PLAYLIST_ITEMS_COMPLETE,
 } from '../constants/actionTypes/playlists';
-import {
-  DO_FAVORITE_COMPLETE,
-} from '../constants/actionTypes/votes';
+import { DO_FAVORITE_COMPLETE } from '../constants/actionTypes/votes';
 import {
   SEARCH_START,
   SEARCH_DELETE,

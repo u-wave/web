@@ -9,9 +9,7 @@ import {
   SOCKET_DISCONNECTED,
   SOCKET_CONNECTED,
 } from '../constants/actionTypes/auth';
-import {
-  SEND_MESSAGE,
-} from '../constants/actionTypes/chat';
+import { SEND_MESSAGE } from '../constants/actionTypes/chat';
 import {
   DO_UPVOTE,
   DO_DOWNVOTE,

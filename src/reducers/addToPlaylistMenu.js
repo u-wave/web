@@ -1,6 +1,4 @@
-import {
-  OPEN_ADD_MEDIA_MENU, CLOSE_ADD_MEDIA_MENU,
-} from '../constants/actionTypes/playlists';
+import { OPEN_ADD_MEDIA_MENU, CLOSE_ADD_MEDIA_MENU } from '../constants/actionTypes/playlists';
 
 const initialState = {
   open: false,

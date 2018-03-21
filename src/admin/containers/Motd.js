@@ -6,9 +6,7 @@ import {
   rawMotdSelector,
   markupCompilerOptionsSelector,
 } from '../../selectors/chatSelectors';
-import {
-  canChangeMotdSelector,
-} from '../selectors/authSelectors';
+import { canChangeMotdSelector } from '../selectors/authSelectors';
 
 const mapStateToProps = createStructuredSelector({
   motd: rawMotdSelector,

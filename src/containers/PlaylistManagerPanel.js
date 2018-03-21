@@ -9,9 +9,7 @@ import {
   isFilteredSelector,
 } from '../selectors/playlistSelectors';
 
-import {
-  openPreviewMediaDialog,
-} from '../actions/DialogActionCreators';
+import { openPreviewMediaDialog } from '../actions/DialogActionCreators';
 import {
   addMediaMenu,
   editMedia,

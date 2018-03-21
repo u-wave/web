@@ -2,9 +2,7 @@ import except from 'except';
 import indexBy from 'index-by';
 import { combineReducers } from 'redux';
 
-import {
-  INIT_STATE,
-} from '../constants/actionTypes/auth';
+import { INIT_STATE } from '../constants/actionTypes/auth';
 import {
   LOAD_ONLINE_USERS,
   USER_JOIN,

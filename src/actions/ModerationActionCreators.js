@@ -11,12 +11,8 @@ import {
   REMOVE_USER_ROLES_START, REMOVE_USER_ROLES_COMPLETE,
 } from '../constants/actionTypes/moderation';
 
-import {
-  removeMessage, removeMessagesByUser, removeAllMessages,
-} from './ChatActionCreators';
-import {
-  del, post, put,
-} from './RequestActionCreators';
+import { removeMessage, removeMessagesByUser, removeAllMessages } from './ChatActionCreators';
+import { del, post, put } from './RequestActionCreators';
 
 export function skipCurrentDJ(reason = '', shouldRemove = false) {
   return (dispatch, getState) => {

@@ -2,12 +2,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import {
-  openPreviewMediaDialog,
-} from '../actions/DialogActionCreators';
-import {
-  addMediaMenu,
-} from '../actions/PlaylistActionCreators';
+import { openPreviewMediaDialog } from '../actions/DialogActionCreators';
+import { addMediaMenu } from '../actions/PlaylistActionCreators';
 
 import {
   searchQuerySelector,

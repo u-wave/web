@@ -1,9 +1,7 @@
 import { register, findUser } from '../ChatCommands';
 import { log } from '../../actions/ChatActionCreators';
 
-import {
-  rolesSelector,
-} from '../../selectors/configSelectors';
+import { rolesSelector } from '../../selectors/configSelectors';
 import {
   userListSelector,
   isModeratorSelector,
@@ -13,9 +11,7 @@ import {
   addUserRole,
   removeUserRole,
 } from '../../actions/ModerationActionCreators';
-import {
-  toggleAdmin,
-} from '../../actions/OverlayActionCreators';
+import { toggleAdmin } from '../../actions/OverlayActionCreators';
 
 register(
   'roles',

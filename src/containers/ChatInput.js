@@ -6,9 +6,7 @@ import withProps from 'recompose/withProps';
 import { connect } from 'react-redux';
 import { withBus } from 'react-bus';
 import { createStructuredSelector } from 'reselect';
-import {
-  inputMessage,
-} from '../actions/ChatActionCreators';
+import { inputMessage } from '../actions/ChatActionCreators';
 import {
   availableGroupMentionsSelector,
   emojiCompletionsSelector,

@@ -14,9 +14,7 @@ import {
   languageSelector,
   muiThemeSelector,
 } from '../selectors/settingSelectors';
-import {
-  isConnectedSelector,
-} from '../selectors/serverSelectors';
+import { isConnectedSelector } from '../selectors/serverSelectors';
 import App from '../components/App';
 
 const mapStateToProps = createStructuredSelector({

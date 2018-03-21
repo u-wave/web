@@ -2,9 +2,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { selectPanel } from '../actions/PanelSelectActionCreators';
-import {
-  listenerCountSelector,
-} from '../selectors/userSelectors';
+import { listenerCountSelector } from '../selectors/userSelectors';
 import {
   sizeSelector as waitlistSizeSelector,
   positionSelector as waitlistPositionSelector,

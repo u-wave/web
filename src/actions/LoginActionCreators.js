@@ -20,9 +20,7 @@ import * as Session from '../utils/Session';
 import { get, post, del } from './RequestActionCreators';
 import { advance, loadHistory } from './BoothActionCreators';
 import { receiveMotd } from './ChatActionCreators';
-import {
-  setPlaylists, selectPlaylist, activatePlaylistComplete,
-} from './PlaylistActionCreators';
+import { setPlaylists, selectPlaylist, activatePlaylistComplete } from './PlaylistActionCreators';
 import { syncTimestamps } from './TickerActionCreators';
 import { closeLoginDialog } from './DialogActionCreators';
 import { setUsers } from './UserActionCreators';
