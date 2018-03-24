@@ -14,17 +14,17 @@ const VoteButtons = ({
   isFavorite, onFavorite,
 }) => (
   <div className="VoteButtons">
-    <IconButton onTouchTap={onUpvote}>
+    <IconButton onClick={onUpvote}>
       <UpvoteIcon color={isUpvote ? '#4BB64B' : 'white'} />
     </IconButton>
-    <IconButton onTouchTap={onFavorite}>
+    <IconButton onClick={onFavorite}>
       {isFavorite ? (
         <FavoritedIcon color={muiTheme.palette.primary1Color} />
       ) : (
         <FavoriteIcon color="white" />
       )}
     </IconButton>
-    <IconButton onTouchTap={onDownvote}>
+    <IconButton onClick={onDownvote}>
       <DownvoteIcon color={isDownvote ? '#B64B4B' : 'white'} />
     </IconButton>
   </div>

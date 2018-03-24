@@ -41,8 +41,8 @@ const DrawerMenu = ({
   >
     {user && <UserCard user={user} />}
     <List>
-      <MenuItem onTouchTap={onShowAbout}>About</MenuItem>
-      <MenuItem onTouchTap={onShowSettings}>Settings</MenuItem>
+      <MenuItem onClick={onShowAbout}>About</MenuItem>
+      <MenuItem onClick={onShowSettings}>Settings</MenuItem>
     </List>
     <Divider />
     <List>
@@ -51,7 +51,7 @@ const DrawerMenu = ({
         <MenuItem
           key={playlist._id}
           checked={playlist.active}
-          onTouchTap={(event) => {
+          onClick={(event) => {
             event.preventDefault();
             onShowPlaylist(playlist._id);
             onChangeDrawerOpen(false);

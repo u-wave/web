@@ -11,7 +11,7 @@ const VideoDisabledMessage = ({ t, onEnableVideo }) => (
     <RaisedButton
       primary
       label="Enable?"
-      onTouchTap={onEnableVideo}
+      onClick={onEnableVideo}
     />
   </div>
 );

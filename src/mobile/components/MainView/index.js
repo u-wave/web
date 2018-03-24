@@ -81,9 +81,9 @@ const MainView = ({
         </IconButton>
       }
 
-      onTitleTouchTap={onOpenRoomHistory}
-      onLeftIconButtonTouchTap={onOpenDrawer}
-      onRightIconButtonTouchTap={onOpenWaitlist}
+      onTitleClick={onOpenRoomHistory}
+      onLeftIconButtonClick={onOpenDrawer}
+      onRightIconButtonClick={onOpenWaitlist}
     />
 
     <div className="MainView-content">
