@@ -1,7 +1,6 @@
 import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
-import Media from 'react-media';
 import OverlayContent from '../Overlay/Content';
 import PlaylistMenu from '../../containers/PlaylistManagerMenu';
 import PlaylistPanel from '../../containers/PlaylistManagerPanel';
@@ -47,20 +46,12 @@ const PlaylistManager = ({
         onCloseOverlay={onCloseOverlay}
       />
 
-      <Media query="(min-width: 768px)">
-        {matches => (matches ? (
-          <OverlayContent>
-            <PlaylistMenu className="PlaylistManager-menu" />
-            <div className="PlaylistManager-panel">
-              {panel}
-            </div>
-          </OverlayContent>
-        ) : (
-          <OverlayContent>
-            {panel}
-          </OverlayContent>
-        ))}
-      </Media>
+      <OverlayContent>
+        <PlaylistMenu className="PlaylistManager-menu" />
+        <div className="PlaylistManager-panel">
+          {panel}
+        </div>
+      </OverlayContent>
     </div>
   );
 };
