@@ -5,22 +5,27 @@ module.exports = function ExtractManifestPlugin(opts) {
 
       compiler.plugin('emit', (compilation, cb) => {
         const filename = compilation.namedChunks[opts.chunkName].files[0];
-        const manifest = evil(compilation.assets[filename].source()).default;
+        const source = compilation.assets[filename].source();
+        try {
+          const manifest = evil(source).default;
 
-        const json = opts.minimize
-          ? JSON.stringify(manifest)
-          : JSON.stringify(manifest, null, 2);
+          const json = opts.minimize
+            ? JSON.stringify(manifest)
+            : JSON.stringify(manifest, null, 2);
 
-        // eslint-disable-next-line no-param-reassign
-        delete compilation.assets[filename];
-        // eslint-disable-next-line no-param-reassign
-        compilation.assets['manifest.json'] = {
-          source: () => json,
-          size: () => json.length
-        };
+          // eslint-disable-next-line no-param-reassign
+          delete compilation.assets[filename];
+          // eslint-disable-next-line no-param-reassign
+          compilation.assets['manifest.json'] = {
+            source: () => json,
+            size: () => json.length,
+          };
+        } catch (err) {
+          compilation.warnings.push(err);
+        }
 
         cb();
       });
-    }
+    },
   };
 };
