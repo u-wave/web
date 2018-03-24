@@ -32,7 +32,7 @@ const MediaRow = ({ media }) => (
 );
 
 MediaRow.propTypes = {
-  media: PropTypes.object
+  media: PropTypes.object,
 };
 
 export default MediaRow;

@@ -4,16 +4,14 @@ import { connect } from 'react-redux';
 import {
   waitlistUsersSelector,
   userInWaitlistSelector,
-  isLockedSelector
+  isLockedSelector,
 } from '../../selectors/waitlistSelectors';
-import {
-  isLoggedInSelector
-} from '../../selectors/userSelectors';
+import { isLoggedInSelector } from '../../selectors/userSelectors';
 import { djSelector } from '../../selectors/boothSelectors';
 import { listenersSelector } from '../selectors/userSelectors';
 import {
   joinWaitlist,
-  leaveWaitlist
+  leaveWaitlist,
 } from '../../actions/WaitlistActionCreators';
 
 import { usersDrawerIsOpenSelector } from '../selectors/drawerSelectors';
@@ -27,13 +25,13 @@ const mapStateToProps = createStructuredSelector({
   open: usersDrawerIsOpenSelector,
   userIsLoggedIn: isLoggedInSelector,
   userInWaitlist: userInWaitlistSelector,
-  isLockedWaitlist: isLockedSelector
+  isLockedWaitlist: isLockedSelector,
 });
 
 const mapDispatchToProps = {
   onChangeDrawerOpen: setUsersDrawer,
   onJoinWaitlist: joinWaitlist,
-  onLeaveWaitlist: leaveWaitlist
+  onLeaveWaitlist: leaveWaitlist,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UsersDrawer);

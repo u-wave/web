@@ -14,8 +14,8 @@ const JoinWaitlistButton = withProps({
   primary: true,
   style: {
     marginLeft: 16,
-    marginBottom: 8
-  }
+    marginBottom: 8,
+  },
 })(RaisedButton);
 
 const UserList = ({
@@ -26,7 +26,7 @@ const UserList = ({
   isLockedWaitlist,
   userIsLoggedIn,
   userInWaitlist,
-  onJoinWaitlist
+  onJoinWaitlist,
 }) => (
   <div>
     {currentDJ && <Divider />}
@@ -74,7 +74,7 @@ UserList.propTypes = {
   userIsLoggedIn: PropTypes.bool.isRequired,
   userInWaitlist: PropTypes.bool,
   isLockedWaitlist: PropTypes.bool,
-  onJoinWaitlist: PropTypes.func.isRequired
+  onJoinWaitlist: PropTypes.func.isRequired,
 };
 
 export default translate()(UserList);

@@ -20,7 +20,7 @@ import Overlays from './Overlays';
 const MobileApp = ({
   settings,
   activeOverlay,
-  onCloseOverlay
+  onCloseOverlay,
 }) => (
   <div className={cx('App', 'MobileApp', 'is-mobile', settings.videoEnabled && 'MobileApp--videoEnabled')}>
     <MainView />
@@ -51,13 +51,13 @@ const MobileApp = ({
 
 MobileApp.propTypes = {
   settings: PropTypes.shape({
-    videoEnabled: PropTypes.bool.isRequired
+    videoEnabled: PropTypes.bool.isRequired,
   }).isRequired,
   activeOverlay: PropTypes.string,
-  onCloseOverlay: PropTypes.func.isRequired
+  onCloseOverlay: PropTypes.func.isRequired,
 };
 
 export default compose(
   DragDropContext(HTML5Backend),
-  toClass
+  toClass,
 )(MobileApp);

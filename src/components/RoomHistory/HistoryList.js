@@ -21,7 +21,7 @@ const HistoryList = withProps(props => ({
   rowComponent: HistoryRow,
   makeActions: props.onOpenAddMediaMenu
     ? addMediaActions(props.onOpenAddMediaMenu)
-    : noActions
+    : noActions,
 }))(Base);
 
 HistoryList.propTypes = {

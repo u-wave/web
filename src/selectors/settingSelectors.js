@@ -52,7 +52,7 @@ export const videoSizeSelector = createSelector(
 
 export const videoEnabledSelector = createSelector(
   settingsBaseSelector,
-  settings => settings.videoEnabled
+  settings => settings.videoEnabled,
 );
 
 // Settings with selected values (from selectors above) rather than "saved"

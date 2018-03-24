@@ -1,7 +1,7 @@
 import {
   SET_DRAWER_OPEN,
   SET_USERS_DRAWER_OPEN,
-  TOGGLE_DRAWER_OPEN
+  TOGGLE_DRAWER_OPEN,
 } from '../constants/ActionTypes';
 
 export function setDrawer(val) {

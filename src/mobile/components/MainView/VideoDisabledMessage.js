@@ -18,7 +18,7 @@ const VideoDisabledMessage = ({ t, onEnableVideo }) => (
 
 VideoDisabledMessage.propTypes = {
   t: PropTypes.func.isRequired,
-  onEnableVideo: PropTypes.func.isRequired
+  onEnableVideo: PropTypes.func.isRequired,
 };
 
 export default enhance(VideoDisabledMessage);

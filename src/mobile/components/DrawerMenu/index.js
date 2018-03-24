@@ -21,7 +21,7 @@ const enhance = withHandlers({
     event.preventDefault();
     props.onShowSettings();
     props.onChangeDrawerOpen(false);
-  }
+  },
 });
 
 const DrawerMenu = ({
@@ -31,7 +31,7 @@ const DrawerMenu = ({
   onShowAbout,
   onShowSettings,
   onShowPlaylist,
-  onChangeDrawerOpen
+  onChangeDrawerOpen,
 }) => (
   <Drawer
     docked={false}
@@ -66,14 +66,12 @@ const DrawerMenu = ({
 
 DrawerMenu.propTypes = {
   user: PropTypes.object,
-  playlists: PropTypes.arrayOf(
-    PropTypes.shape({ name: PropTypes.string.isRequired })
-  ),
+  playlists: PropTypes.arrayOf(PropTypes.shape({ name: PropTypes.string.isRequired })),
   open: PropTypes.bool.isRequired,
   onShowAbout: PropTypes.func.isRequired,
   onShowSettings: PropTypes.func.isRequired,
   onShowPlaylist: PropTypes.func.isRequired,
-  onChangeDrawerOpen: PropTypes.func.isRequired
+  onChangeDrawerOpen: PropTypes.func.isRequired,
 };
 
 export default enhance(DrawerMenu);

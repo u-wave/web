@@ -34,7 +34,7 @@ const HistoryRow = ({ media }) => (
 );
 
 HistoryRow.propTypes = {
-  media: PropTypes.object
+  media: PropTypes.object,
 };
 
 export default HistoryRow;

@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const waitlistPositionStyle = {
-  margin: 8
+  margin: 8,
 };
 
 const WaitlistPosition = ({
   position,
-  style
+  style,
 }) => (
   <span style={{ ...style, ...waitlistPositionStyle }}>
     {position}
@@ -16,7 +16,7 @@ const WaitlistPosition = ({
 
 WaitlistPosition.propTypes = {
   position: PropTypes.number.isRequired,
-  style: PropTypes.object
+  style: PropTypes.object,
 };
 
 export default WaitlistPosition;

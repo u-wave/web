@@ -7,11 +7,11 @@ import { toggleRoomHistory } from '../../actions/OverlayActionCreators';
 import { set } from '../../actions/SettingsActionCreators';
 import {
   mediaSelector,
-  startTimeSelector
+  startTimeSelector,
 } from '../../selectors/boothSelectors';
 import {
   sizeSelector as waitlistSizeSelector,
-  positionSelector as waitlistPositionSelector
+  positionSelector as waitlistPositionSelector,
 } from '../../selectors/waitlistSelectors';
 import { playlistsSelector } from '../../selectors/playlistSelectors';
 import { videoEnabledSelector } from '../../selectors/settingSelectors';
@@ -26,7 +26,7 @@ const mapStateToProps = createStructuredSelector({
   startTime: startTimeSelector,
   waitlistPosition: waitlistPositionSelector,
   waitlistSize: waitlistSizeSelector,
-  playlists: playlistsSelector
+  playlists: playlistsSelector,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -34,7 +34,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onOpenRoomHistory: toggleRoomHistory,
   onOpenDrawer: openDrawer,
   onOpenWaitlist: openUsersDrawer,
-  onEnableVideo: () => set('videoEnabled', true)
+  onEnableVideo: () => set('videoEnabled', true),
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainView);

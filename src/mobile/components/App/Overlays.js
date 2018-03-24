@@ -37,7 +37,7 @@ const Overlays = ({ children, active }) => {
 
 Overlays.propTypes = {
   children: PropTypes.node,
-  active: PropTypes.string
+  active: PropTypes.string,
 };
 
 export default Overlays;

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 const OverlayContent = ({
   className,
-  children
+  children,
 }) => (
   <div className={cx('Overlay-content', className)}>
     {children}
@@ -13,7 +13,7 @@ const OverlayContent = ({
 
 OverlayContent.propTypes = {
   className: PropTypes.string,
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
 };
 
 export default OverlayContent;

@@ -10,7 +10,7 @@ const MediaRow = ({ media }) => (
 );
 
 MediaRow.propTypes = {
-  media: PropTypes.object.isRequired
+  media: PropTypes.object.isRequired,
 };
 
 export default MediaRow;

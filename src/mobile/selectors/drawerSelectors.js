@@ -4,10 +4,10 @@ const baseSelector = state => state.mobile;
 
 export const drawerIsOpenSelector = createSelector(
   baseSelector,
-  base => base.drawer
+  base => base.drawer,
 );
 
 export const usersDrawerIsOpenSelector = createSelector(
   baseSelector,
-  base => base.usersDrawer
+  base => base.usersDrawer,
 );

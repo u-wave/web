@@ -40,7 +40,7 @@ RoomHistory.propTypes = {
   className: PropTypes.string,
   onCloseOverlay: PropTypes.func.isRequired,
   onOpenAddMediaMenu: PropTypes.func.isRequired,
-  onOpenPreviewMediaDialog: PropTypes.func.isRequired
+  onOpenPreviewMediaDialog: PropTypes.func.isRequired,
 };
 
 export default translate()(RoomHistory);

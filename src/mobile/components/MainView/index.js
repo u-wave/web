@@ -11,19 +11,19 @@ import UsersDrawer from '../../containers/UsersDrawer';
 import VideoDisabledMessage from './VideoDisabledMessage';
 
 const appBarStyle = {
-  zIndex: 5 // Below overlays.
+  zIndex: 5, // Below overlays.
 };
 const appTitleStyle = {
   height: 56,
-  lineHeight: '56px'
+  lineHeight: '56px',
 };
 const appBarIconStyle = {
-  marginTop: 4
+  marginTop: 4,
 };
 
 const waitlistIconStyle = {
   fontSize: '125%',
-  textAlign: 'center'
+  textAlign: 'center',
 };
 
 const getWaitlistLabel = (size, position) => {
@@ -51,7 +51,7 @@ const enhance = withHandlers({
   onOpenWaitlist: props => (event) => {
     event.preventDefault();
     props.onOpenWaitlist();
-  }
+  },
 });
 
 const MainView = ({
@@ -62,7 +62,7 @@ const MainView = ({
   onOpenRoomHistory,
   onOpenDrawer,
   onOpenWaitlist,
-  onEnableVideo
+  onEnableVideo,
 }) => (
   <div className="MainView">
     <AppBar
@@ -114,7 +114,7 @@ MainView.propTypes = {
   onOpenRoomHistory: PropTypes.func.isRequired,
   onOpenWaitlist: PropTypes.func.isRequired,
   onOpenDrawer: PropTypes.func.isRequired,
-  onEnableVideo: PropTypes.func.isRequired
+  onEnableVideo: PropTypes.func.isRequired,
 };
 
 export default enhance(MainView);

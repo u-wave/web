@@ -6,18 +6,18 @@ import { ListItem as MuiListItem } from 'material-ui/List';
 import Username from '../../../components/Username';
 
 const Avatar = withProps({
-  size: 24
+  size: 24,
 })(MuiAvatar);
 
 const ListItem = withProps({
   innerDivStyle: {
-    padding: '12px 0px 12px 56px'
-  }
+    padding: '12px 0px 12px 56px',
+  },
 })(MuiListItem);
 
 const UserRow = ({
   user,
-  icon
+  icon,
 }) => (
   <ListItem
     leftAvatar={<Avatar src={user.avatar || `https://welovekpop.club/a/${user._id}`} />}
@@ -28,7 +28,7 @@ const UserRow = ({
 
 UserRow.propTypes = {
   user: PropTypes.object.isRequired,
-  icon: PropTypes.node
+  icon: PropTypes.node,
 };
 
 export default UserRow;

@@ -13,18 +13,18 @@ const selectionOrOne = (media, selection) => {
   if (selection.isSelected(media)) {
     return selection.get().map(item => item.media);
   }
-  return [ media.media ];
+  return [media.media];
 };
 
 const mapStateToProps = createStructuredSelector({
-  media: roomHistoryWithVotesSelector
+  media: roomHistoryWithVotesSelector,
 });
 
 const onOpenAddMediaMenu = (position, media, selection) =>
   addMediaMenu(selectionOrOne(media, selection), position);
 const mapDispatchToProps = dispatch => bindActionCreators({
   onOpenAddMediaMenu,
-  onOpenPreviewMediaDialog: openPreviewMediaDialog
+  onOpenPreviewMediaDialog: openPreviewMediaDialog,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(RoomHistory);

@@ -9,21 +9,21 @@ import FlatButton from 'material-ui/FlatButton';
 
 import {
   openLoginDialog,
-  openRegisterDialog
+  openRegisterDialog,
 } from '../../actions/DialogActionCreators';
 
 const buttonStyle = {
   height: '100%',
   fontSize: '11pt',
   textTransform: 'uppercase',
-  width: '50%'
+  width: '50%',
 };
 
 const LoginButtons = ({
   muiTheme,
   t,
   onLogin,
-  onRegister
+  onRegister,
 }) => (
   <span style={{ display: 'flex', justifyContent: 'stretch', height: '100%' }}>
     <FlatButton
@@ -48,16 +48,16 @@ LoginButtons.propTypes = {
   muiTheme: PropTypes.object.isRequired,
   t: PropTypes.func.isRequired,
   onLogin: PropTypes.func.isRequired,
-  onRegister: PropTypes.func.isRequired
+  onRegister: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   onLogin: openLoginDialog,
-  onRegister: openRegisterDialog
+  onRegister: openRegisterDialog,
 }, dispatch);
 
 export default compose(
   muiThemeable(),
   translate(),
-  connect(undefined, mapDispatchToProps)
+  connect(undefined, mapDispatchToProps),
 )(LoginButtons);

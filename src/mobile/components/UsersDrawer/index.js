@@ -14,7 +14,7 @@ const UsersDrawer = ({
   open,
   onChangeDrawerOpen,
   onJoinWaitlist,
-  onLeaveWaitlist
+  onLeaveWaitlist,
 }) => (
   <Drawer
     docked={false}
@@ -46,7 +46,7 @@ UsersDrawer.propTypes = {
   open: PropTypes.bool.isRequired,
   onChangeDrawerOpen: PropTypes.func.isRequired,
   onJoinWaitlist: PropTypes.func.isRequired,
-  onLeaveWaitlist: PropTypes.func.isRequired
+  onLeaveWaitlist: PropTypes.func.isRequired,
 };
 
 export default UsersDrawer;

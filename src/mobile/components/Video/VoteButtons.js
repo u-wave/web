@@ -11,7 +11,7 @@ const VoteButtons = ({
   muiTheme,
   isUpvote, onUpvote,
   isDownvote, onDownvote,
-  isFavorite, onFavorite
+  isFavorite, onFavorite,
 }) => (
   <div className="VoteButtons">
     <IconButton onTouchTap={onUpvote}>
@@ -39,7 +39,7 @@ VoteButtons.propTypes = {
 
   onUpvote: PropTypes.func.isRequired,
   onDownvote: PropTypes.func.isRequired,
-  onFavorite: PropTypes.func.isRequired
+  onFavorite: PropTypes.func.isRequired,
 };
 
 export default muiThemeable()(VoteButtons);

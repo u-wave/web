@@ -10,7 +10,7 @@ const ViewTemplate = ({ selected, children }) => (
 
 ViewTemplate.propTypes = {
   selected: PropTypes.bool.isRequired,
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
 };
 
 export default ViewTemplate;

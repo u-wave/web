@@ -8,7 +8,7 @@ import PlaylistPanel from './PlaylistPanel';
 const PlaylistManager = ({
   selectedPlaylist,
   selectedItems,
-  onCloseOverlay
+  onCloseOverlay,
 }) => (
   <Overlay>
     <OverlayHeader
@@ -24,10 +24,10 @@ const PlaylistManager = ({
 
 PlaylistManager.propTypes = {
   selectedPlaylist: PropTypes.shape({
-    name: PropTypes.string.isRequired
+    name: PropTypes.string.isRequired,
   }).isRequired,
   selectedItems: PropTypes.array.isRequired,
-  onCloseOverlay: PropTypes.func.isRequired
+  onCloseOverlay: PropTypes.func.isRequired,
 };
 
 export default PlaylistManager;

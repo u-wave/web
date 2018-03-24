@@ -10,12 +10,14 @@ const iconStyles = {
   height: 16,
   width: 22,
   padding: '0 4px 0 2px',
-  verticalAlign: 'top'
+  verticalAlign: 'top',
 };
 
 const enhance = muiThemeable();
 
-const Votes = ({ muiTheme, upvotes, downvotes, favorites, isUpvote, isDownvote, isFavorite }) => {
+const Votes = ({
+  muiTheme, upvotes, downvotes, favorites, isUpvote, isDownvote, isFavorite,
+}) => {
   const CurrentFavoriteIcon = isFavorite ? FavoritedIcon : FavoriteIcon;
   return (
     <div className="MobileHistoryVotes">
@@ -51,7 +53,7 @@ Votes.propTypes = {
   downvotes: PropTypes.array.isRequired,
   isUpvote: PropTypes.bool.isRequired,
   isFavorite: PropTypes.bool.isRequired,
-  isDownvote: PropTypes.bool.isRequired
+  isDownvote: PropTypes.bool.isRequired,
 };
 
 export default enhance(Votes);

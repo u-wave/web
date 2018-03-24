@@ -10,7 +10,7 @@ const Video = ({
   isDownvote,
   onUpvote,
   onDownvote,
-  onFavorite
+  onFavorite,
 }) => (
   <div>
     <BaseVideo
@@ -37,7 +37,7 @@ Video.propTypes = {
 
   onUpvote: PropTypes.func.isRequired,
   onDownvote: PropTypes.func.isRequired,
-  onFavorite: PropTypes.func.isRequired
+  onFavorite: PropTypes.func.isRequired,
 };
 
 export default Video;

@@ -9,6 +9,6 @@ export default {
   background_color: '#151515',
   display: 'standalone',
   icons: [
-    { type: 'image/png', src: icon, sizes: '144x144' }
-  ]
+    { type: 'image/png', src: icon, sizes: '144x144' },
+  ],
 };

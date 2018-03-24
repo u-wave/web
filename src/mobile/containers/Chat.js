@@ -3,16 +3,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import {
-  isLoggedInSelector
-} from '../../selectors/userSelectors';
+import { isLoggedInSelector } from '../../selectors/userSelectors';
 
 import ChatMessages from '../../containers/ChatMessages';
 import ChatInput from '../../containers/ChatInput';
 import LoginButtons from './LoginButtons';
 
 const mapStateToProps = createStructuredSelector({
-  isLoggedIn: isLoggedInSelector
+  isLoggedIn: isLoggedInSelector,
 });
 
 const ChatContainer = ({ isLoggedIn }) => (
@@ -31,7 +29,7 @@ const ChatContainer = ({ isLoggedIn }) => (
 );
 
 ChatContainer.propTypes = {
-  isLoggedIn: PropTypes.bool.isRequired
+  isLoggedIn: PropTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps)(ChatContainer);
