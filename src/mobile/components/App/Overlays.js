@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import find from 'array-find';
-import TransitionGroup from 'react-transition-group/CSSTransitionGroup';
+import CSSTransition from 'react-transition-group/CSSTransition';
+import TransitionGroup from 'react-transition-group/TransitionGroup';
 
 const Overlays = ({ children, active }) => {
   let view;
@@ -10,16 +11,27 @@ const Overlays = ({ children, active }) => {
   } else if (children.key === active) {
     view = children;
   }
-  return (
-    <div className="Overlays">
-      <TransitionGroup
-        transitionName="Overlay"
-        transitionEnterTimeout={180}
-        transitionLeaveTimeout={180}
+
+  if (view) {
+    // Pass on the `view.key` so that overlays are mounted and unmounted correctly
+    // when switching from one to the other.
+    view = (
+      <CSSTransition
+        key={view.key}
+        mountOnEnter
+        unmountOnExit
+        classNames="Overlay"
+        timeout={180}
       >
         {view}
-      </TransitionGroup>
-    </div>
+      </CSSTransition>
+    );
+  }
+
+  return (
+    <TransitionGroup className="Overlays">
+      {view}
+    </TransitionGroup>
   );
 };
 
