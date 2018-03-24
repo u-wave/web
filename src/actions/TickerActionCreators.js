@@ -18,6 +18,12 @@ export function sync() {
   });
 }
 
+/**
+ * Create an auto-syncing timer that ticks once each second.
+ *
+ * When dispatched, the action returns an array. Functions pushed
+ * to this array will be called on each tick.
+ */
 export function createTimer() {
   return (dispatch) => {
     const callbacks = [];
