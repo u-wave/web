@@ -6,7 +6,7 @@ const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
-const ExtractManifestPlugin = require('./tasks/utils/ExtractManifestPlugin');
+const ManifestPlugin = require('webpack-pwa-manifest');
 
 const nodeEnv = process.env.NODE_ENV || 'development';
 
@@ -62,7 +62,6 @@ const plugins = [
   ]),
   new HtmlPlugin({
     chunks: ['app'],
-    mobile: true,
     template: './index.html',
     title: 'üWave',
     minify: nodeEnv === 'production' ? htmlMinifierOptions : false,
@@ -80,10 +79,7 @@ const plugins = [
   new LodashModuleReplacementPlugin({
     paths: true,
   }),
-  new ExtractManifestPlugin({
-    chunkName: 'manifest',
-    minimize: nodeEnv === 'production',
-  }),
+  new ManifestPlugin(require('./src/manifest').default),
 ];
 
 if (nodeEnv === 'production') {
@@ -110,8 +106,6 @@ if (nodeEnv === 'production') {
     }),
     new CommonShakePlugin(),
     new UglifyJsPlugin({
-      // No need to minify this since it won't be emitted anyway.
-      exclude: /manifest/,
       sourceMap: true,
       uglifyOptions: {
         toplevel: true,
@@ -149,7 +143,6 @@ if (nodeEnv === 'production') {
 
 const context = path.join(__dirname, 'src');
 const entries = {
-  manifest: './manifest.js',
   app: ['./app.js', './app.css'],
   passwordReset: ['./password-reset/app.js'],
 };

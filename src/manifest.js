@@ -1,5 +1,5 @@
+import path from 'path';
 import MuiTheme from './MuiTheme';
-import icon from '../assets/icon-white.png';
 
 export default {
   name: 'üWave',
@@ -8,7 +8,9 @@ export default {
   theme_color: MuiTheme.palette.primary1Color,
   background_color: '#151515',
   display: 'standalone',
-  icons: [
-    { type: 'image/png', src: icon, sizes: '144x144' },
-  ],
+  icons: [{
+    type: 'image/png',
+    src: path.join(__dirname, '../assets/icon-white.png'),
+    sizes: [96, 144],
+  }],
 };
