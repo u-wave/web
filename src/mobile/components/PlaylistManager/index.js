@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Overlay from '../../../components/Overlay';
 import OverlayHeader from '../../../components/Overlay/Header';
 import OverlayContent from '../../../components/Overlay/Content';
 import PlaylistPanel from './PlaylistPanel';
@@ -10,7 +9,7 @@ const PlaylistManager = ({
   selectedItems,
   onCloseOverlay,
 }) => (
-  <Overlay>
+  <div className="PlaylistManager">
     <OverlayHeader
       className="PlaylistHeader"
       title={selectedPlaylist.name}
@@ -19,7 +18,7 @@ const PlaylistManager = ({
     <OverlayContent>
       <PlaylistPanel items={selectedItems} />
     </OverlayContent>
-  </Overlay>
+  </div>
 );
 
 PlaylistManager.propTypes = {
