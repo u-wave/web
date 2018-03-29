@@ -121,6 +121,7 @@ uwave:
 
   booth:
     empty: Nobody is playing!
+    videoDisabled: Video playback is disabled.
     currentDJ: "played by: {{user}}"
     skip:
       self: Skip your turn

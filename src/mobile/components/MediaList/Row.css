@@ -1,0 +1,10 @@
+.MobileMediaRow-artist, .MobileMediaRow-title {
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.MobileMediaRow-artist {
+  color: rgba(255, 255, 255, 0.8);
+}

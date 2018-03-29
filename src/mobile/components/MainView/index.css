@@ -1,0 +1,11 @@
+@import "./ViewTemplate.css";
+@import "./VideoDisabledMessage.css";
+
+.MainView {
+  height: 100%;
+  position: relative;
+}
+
+.MainView-content {
+  height: calc(100% - 56px);
+}

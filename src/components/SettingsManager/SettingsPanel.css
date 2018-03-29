@@ -25,14 +25,22 @@
   margin: 0 0 20px 0;
 }
 
-.SettingsPanel-column {
-  width: 50%;
-  float: left;
+@media (min-width: 768px) {
+  .SettingsPanel-column {
+    width: 50%;
+    float: left;
+  }
+
+  .SettingsPanel-column--left {
+    padding-right: 50px;
+  }
+  .SettingsPanel-column--right {
+    padding-left: 50px;
+  }
 }
 
-.SettingsPanel-column--left {
-  padding-right: 50px;
-}
-.SettingsPanel-column--right {
-  padding-left: 50px;
+@media (max-width: 768px) {
+  .SettinsPanel-column--left {
+    margin-bottom: 25px;
+  }
 }

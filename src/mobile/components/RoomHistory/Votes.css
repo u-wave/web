@@ -1,0 +1,11 @@
+.MobileHistoryVotes {
+  float: right;
+  height: 16px;
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.MobileHistoryVotes-vote {
+  margin-right: 5px;
+}

@@ -3,6 +3,7 @@
 @import "./components/index.css";
 @import "./sources/index.css";
 @import "./containers/DragLayer.css";
+@import "./mobile" (max-width: 768px);
 
 /* None of our buttons have a use for browser defaults! */
 button {

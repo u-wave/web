@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import OverlayHeader from '../Overlay/Header';
+import OverlayContent from '../Overlay/Content';
 
 const About = ({
   onCloseOverlay,
@@ -12,9 +13,9 @@ const About = ({
       onCloseOverlay={onCloseOverlay}
       direction="top"
     />
-    <div className="AppRow AppRow--middle AboutPanel">
+    <OverlayContent className="AboutPanel">
       <AboutPanel />
-    </div>
+    </OverlayContent>
   </div>
 );
 

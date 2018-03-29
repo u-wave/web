@@ -1,12 +1,7 @@
 @import "./UserRoles.css";
+@import "./UserCard.css";
 
-.UserCard {
+.UserCardWrapper {
   position: absolute;
   transform: translateX(-100%);
-}
-
-.UserCard-avatar {
-  width: 40px;
-  height: 40px;
-  margin-right: 16px;
 }

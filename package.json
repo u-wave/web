@@ -59,6 +59,7 @@
     "react-loadable": "^5.3.1",
     "react-markdown": "^3.3.0",
     "react-redux": "^5.0.7",
+    "react-responsive": "^4.0.5",
     "react-transition-group": "^2.2.1",
     "recompose": "^0.26.0",
     "reconnecting-websocket": "^3.2.2",
@@ -153,6 +154,7 @@
     "webpack-common-shake": "^1.5.3",
     "webpack-dev-middleware": "^2.0.6",
     "webpack-hot-middleware": "^2.21.2",
+    "webpack-pwa-manifest": "^3.6.2",
     "webpack-subresource-integrity": "^1.0.4",
     "yaml-loader": "^0.5.0"
   },

@@ -6,6 +6,7 @@ import { createStructuredSelector } from 'reselect';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { I18nextProvider } from 'react-i18next';
 import { Provider as BusProvider } from 'react-bus';
+import { Mobile, Desktop } from '../components/Responsive';
 import ClockProvider from '../components/ClockProvider';
 import { closeAll } from '../actions/OverlayActionCreators';
 import {
@@ -14,7 +15,8 @@ import {
   muiThemeSelector,
 } from '../selectors/settingSelectors';
 import { isConnectedSelector } from '../selectors/serverSelectors';
-import App from '../components/App';
+import DesktopApp from '../components/App';
+import MobileApp from '../mobile/components/App';
 
 const SimpleProviders = nest(BusProvider, ClockProvider);
 
@@ -62,12 +64,23 @@ class AppContainer extends React.Component {
     }
   }
 
+  renderApp = () => (
+    <React.Fragment>
+      <Mobile>
+        <MobileApp {...this.props} />
+      </Mobile>
+      <Desktop>
+        <DesktopApp {...this.props} />
+      </Desktop>
+    </React.Fragment>
+  );
+
   render() {
     return (
       <MuiThemeProvider muiTheme={this.props.muiTheme}>
         <I18nextProvider i18n={this.props.locale}>
           <SimpleProviders>
-            <App {...this.props} />
+            {this.renderApp()}
           </SimpleProviders>
         </I18nextProvider>
       </MuiThemeProvider>

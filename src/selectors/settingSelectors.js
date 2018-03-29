@@ -50,6 +50,11 @@ export const videoSizeSelector = createSelector(
   settings => settings.videoSize,
 );
 
+export const videoEnabledSelector = createSelector(
+  settingsBaseSelector,
+  settings => settings.videoEnabled,
+);
+
 // Settings with selected values (from selectors above) rather than "saved"
 // values (from localStorage).
 export const settingsSelector = createSelector(

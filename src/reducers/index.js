@@ -18,3 +18,4 @@ export time from './time';
 export users from './users';
 export votes from './votes';
 export waitlist from './waitlist';
+export mobile from '../mobile/reducers';

@@ -1,6 +1,7 @@
 import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
+import OverlayContent from '../Overlay/Content';
 import PlaylistMenu from '../../containers/PlaylistManagerMenu';
 import PlaylistPanel from '../../containers/PlaylistManagerPanel';
 import PlaylistImport from '../../containers/PlaylistImportManager';
@@ -45,13 +46,12 @@ const PlaylistManager = ({
         onCloseOverlay={onCloseOverlay}
       />
 
-      <div className="AppRow AppRow--middle">
+      <OverlayContent>
         <PlaylistMenu className="PlaylistManager-menu" />
-
         <div className="PlaylistManager-panel">
           {panel}
         </div>
-      </div>
+      </OverlayContent>
     </div>
   );
 };

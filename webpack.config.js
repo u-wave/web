@@ -6,6 +6,7 @@ const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const ManifestPlugin = require('webpack-pwa-manifest');
 
 const nodeEnv = process.env.NODE_ENV || 'development';
 
@@ -78,6 +79,7 @@ const plugins = [
   new LodashModuleReplacementPlugin({
     paths: true,
   }),
+  new ManifestPlugin(require('./src/manifest').default),
 ];
 
 if (nodeEnv === 'production') {
