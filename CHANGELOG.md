@@ -1,3 +1,11 @@
+# 1.3.0 / 29 Mar 2018
+
+Features:
+ * Add WIP Mobile layout. (#514)
+
+Internal:
+ * Extract second timer from App container. (#836)
+
 # 1.2.2 / 21 Mar 2018
 
 Features:
