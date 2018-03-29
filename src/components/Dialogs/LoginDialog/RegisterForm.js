@@ -21,6 +21,7 @@ class RegisterForm extends React.Component {
     t: PropTypes.func.isRequired,
     useReCaptcha: PropTypes.bool,
     reCaptchaSiteKey: PropTypes.string,
+    supportsSocialAuth: PropTypes.bool,
     error: PropTypes.object,
 
     onRegister: PropTypes.func,
@@ -87,14 +88,18 @@ class RegisterForm extends React.Component {
   }
 
   render() {
-    const { t, error } = this.props;
+    const { t, error, supportsSocialAuth } = this.props;
     const { agreed, busy } = this.state;
 
     return (
       <Form className="RegisterForm" onSubmit={this.handleSubmit}>
         {error && <FormGroup>{error.message}</FormGroup>}
-        <SocialLogin />
-        <Separator />
+        {supportsSocialAuth && (
+          <React.Fragment>
+            <SocialLogin />
+            <Separator />
+          </React.Fragment>
+        )}
         <FormGroup>
           <TextField
             ref={this.refUsername}
