@@ -17,6 +17,7 @@ const Button = ({
       <button
         className={cx('ResponseButton', disabled && 'ResponseButton--disabled')}
         disabled={disabled}
+        onClick={onClick}
       >
         <div className="ResponseButton-content">
           <div className="ResponseButton-icon">{children}</div>
