@@ -2,7 +2,7 @@ import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
-import SearchIcon from 'material-ui/svg-icons/action/search';
+import SearchIcon from 'material-ui-icons/Search';
 
 const enhance = translate();
 
@@ -40,7 +40,7 @@ class SearchBar extends React.Component {
     return (
       <div className={cx('SearchBar', focused ? 'is-focused' : '', this.props.className)}>
         <div className="SearchBar-icon">
-          <SearchIcon color="#fff" />
+          <SearchIcon />
         </div>
         {children}
         <div className="SearchBar-query">
