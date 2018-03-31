@@ -49,6 +49,13 @@
   margin-right: 5px;
 }
 
+.PlaylistMenuRow-closeButton {
+  width: 44px;
+  height: 44px;
+  padding: 10px;
+  margin-right: -10px;
+}
+
 .PlaylistMenuRow--create {
   background-color: var(--highlight-color);
 }
