@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
-import compose from 'recompose/compose';
-import FavoritedIcon from 'material-ui/svg-icons/action/favorite';
-import FavoriteIcon from 'material-ui/svg-icons/action/favorite-border';
-import muiThemeable from 'material-ui/styles/muiThemeable';
-
+import FavoritedIcon from 'material-ui-icons/Favorite';
+import FavoriteIcon from 'material-ui-icons/FavoriteBorder';
 import Button from './Button';
+
+const enhance = translate();
 
 const handleFavorite = onFavorite => (event) => {
   const pos = event.target.getBoundingClientRect();
@@ -18,7 +17,6 @@ const handleFavorite = onFavorite => (event) => {
 
 const Favorite = ({
   t,
-  muiTheme,
   onFavorite,
   count,
   disabled,
@@ -33,21 +31,17 @@ const Favorite = ({
       onClick={handleFavorite(onFavorite)}
       count={count}
     >
-      <CurrentIcon color={muiTheme.palette.primary1Color} />
+      <CurrentIcon className="ResponseButton-icon--favorite" />
     </Button>
   );
 };
 
 Favorite.propTypes = {
   t: PropTypes.func.isRequired,
-  muiTheme: PropTypes.object.isRequired,
   onFavorite: PropTypes.func.isRequired,
   count: PropTypes.number.isRequired,
   disabled: PropTypes.bool,
   active: PropTypes.bool,
 };
 
-export default compose(
-  translate(),
-  muiThemeable(),
-)(Favorite);
+export default enhance(Favorite);

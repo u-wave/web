@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
-import UpvoteIcon from 'material-ui/svg-icons/action/thumb-up';
-
+import UpvoteIcon from 'material-ui-icons/ThumbUp';
 import Button from './Button';
+
+const enhance = translate();
 
 const Upvote = ({
   t,
@@ -18,7 +19,7 @@ const Upvote = ({
     onClick={onUpvote}
     count={count}
   >
-    <UpvoteIcon color={active ? '#4BB64B' : 'white'} />
+    <UpvoteIcon className={active ? 'ResponseButton-icon--upvoted' : ''} />
   </Button>
 );
 
@@ -30,4 +31,4 @@ Upvote.propTypes = {
   active: PropTypes.bool,
 };
 
-export default translate()(Upvote);
+export default enhance(Upvote);
