@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import MoveToLastIcon from 'material-ui/svg-icons/hardware/keyboard-arrow-down';
-
+import MoveToLastIcon from 'material-ui-icons/KeyboardArrowDown';
 import Action from './Action';
 
 const MoveToLast = ({ onLast, ...props }) => (
   <Action {...props} onAction={onLast}>
-    <MoveToLastIcon color="#fff" />
+    <MoveToLastIcon />
   </Action>
 );
 

@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import MoveToFirstIcon from 'material-ui/svg-icons/hardware/keyboard-arrow-up';
-
+import MoveToFirstIcon from 'material-ui-icons/KeyboardArrowUp';
 import Action from './Action';
 
 const MoveToFirst = ({ onFirst, ...props }) => (
   <Action {...props} onAction={onFirst}>
-    <MoveToFirstIcon color="#fff" />
+    <MoveToFirstIcon />
   </Action>
 );
 
