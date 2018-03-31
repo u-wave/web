@@ -36,8 +36,8 @@ class SettingsPanel extends React.Component {
     this.props.onSettingChange('mentionSound', value);
   };
 
-  handleLanguageChange = (e, index, value) => {
-    this.props.onChangeLanguage(value);
+  handleLanguageChange = (event) => {
+    this.props.onChangeLanguage(event.target.value);
   };
 
   render() {
