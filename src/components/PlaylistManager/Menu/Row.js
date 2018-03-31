@@ -2,7 +2,7 @@ import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { DropTarget } from 'react-dnd';
-import ActiveIcon from 'material-ui/svg-icons/navigation/check';
+import ActiveIcon from 'material-ui-icons/Check';
 import { MEDIA } from '../../../constants/DDItemTypes';
 import Loader from '../../Loader';
 
@@ -59,7 +59,7 @@ class PlaylistRow extends React.Component {
     } else if (playlist.active) {
       icon = (
         <div className="PlaylistMenuRow-active-icon">
-          <ActiveIcon color="#fff" />
+          <ActiveIcon />
         </div>
       );
     }
