@@ -1,26 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Menu from 'material-ui/Menu';
-import MenuItem from 'material-ui/MenuItem';
-
-const menuItemStyle = {
-  WebkitAppearance: 'initial',
-};
+import List, { ListItem, ListItemText } from 'material-ui-next/List'; // eslint-disable-line
 
 const SkipReasonsList = ({
   reasons,
   onSelect,
 }) => (
-  <Menu onItemClick={(event, item) => onSelect(item.props.value)}>
+  <List className="SkipReasonsList">
     {reasons.map(reason => (
-      <MenuItem
+      <ListItem
         key={reason.name}
-        value={reason.name}
-        style={menuItemStyle}
-        primaryText={reason.label}
-      />
+        button
+        onClick={() => onSelect(reason.name)}
+      >
+        <ListItemText className="SkipReasonsList-label">
+          {reason.label}
+        </ListItemText>
+      </ListItem>
     ))}
-  </Menu>
+  </List>
 );
 
 SkipReasonsList.propTypes = {
