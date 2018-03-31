@@ -1,0 +1,18 @@
+@import "../../vars.css";
+
+.SettingsPanel-link {
+  display: block;
+  height: 24px;
+  line-height: 24px;
+  margin-bottom: 16px;
+  text-align: left;
+  color: var(--text-color);
+  &:visited {
+    color: var(--text-color);
+  }
+}
+
+.SettingsPanel-linkIcon {
+  margin-right: 8px;
+  vertical-align: top;
+}
