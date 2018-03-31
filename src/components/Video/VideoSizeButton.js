@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import compose from 'recompose/compose';
 import { translate } from 'react-i18next';
-import IconButton from 'material-ui/IconButton';
-import SvgIcon from 'material-ui/SvgIcon';
+import Tooltip from 'material-ui-next/Tooltip'; // eslint-disable-line
+import IconButton from 'material-ui-next/IconButton'; // eslint-disable-line
+import SvgIcon from 'material-ui-next/SvgIcon'; // eslint-disable-line
 // State-related imports
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -23,18 +24,19 @@ const VideoSizeButton = ({
   videoSize,
   onToggleVideoSize,
 }) => (
-  <IconButton
-    onClick={onToggleVideoSize}
-    tooltip={videoSize === 'large'
+  <Tooltip
+    title={videoSize === 'large'
       ? t('settings.disableLargeVideo')
       : t('settings.enableLargeVideo')
     }
-    tooltipPosition="bottom-center"
+    placement="bottom"
   >
-    <SvgIcon viewBox="6 6 24 24">
-      <path d={paths[videoSize]} fillRule="evenodd" />
-    </SvgIcon>
-  </IconButton>
+    <IconButton onClick={onToggleVideoSize}>
+      <SvgIcon viewBox="6 6 24 24">
+        <path d={paths[videoSize]} fillRule="evenodd" />
+      </SvgIcon>
+    </IconButton>
+  </Tooltip>
 );
 
 VideoSizeButton.propTypes = {
