@@ -1,0 +1,17 @@
+.ChangeUsernameButton {
+  padding: 2px;
+  height: 28px;
+  width: 28px;
+  margin-left: 5px;
+  vertical-align: bottom;
+
+  color: #777;
+  &:hover { color: #fff; }
+}
+
+.ChangeUsernameButton-icon {
+  width: 24px;
+  height: 24px;
+  padding: 2px;
+  color: inherit;
+}
