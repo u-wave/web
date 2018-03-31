@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import withHandlers from 'recompose/withHandlers';
-import Drawer from 'material-ui/Drawer';
-import { List } from 'material-ui/List';
-import Subheader from 'material-ui/Subheader';
-import MenuItem from 'material-ui/MenuItem';
-import Divider from 'material-ui/Divider';
-
+import Drawer from 'material-ui-next/Drawer'; // eslint-disable-line
+import { MenuList, MenuItem } from 'material-ui-next/Menu'; // eslint-disable-line
+import { ListItemIcon, ListSubheader, ListItemText } from 'material-ui-next/List'; // eslint-disable-line
+import Divider from 'material-ui-next/Divider'; // eslint-disable-line
+import ActiveIcon from 'material-ui-icons/Check';
 import UserCard from '../../../components/UserCard/UserCard';
 
 const enhance = withHandlers({
@@ -33,34 +32,34 @@ const DrawerMenu = ({
   onShowPlaylist,
   onChangeDrawerOpen,
 }) => (
-  <Drawer
-    docked={false}
-    width={320}
-    open={open}
-    onRequestChange={onChangeDrawerOpen}
-  >
+  <Drawer open={open} onClose={onChangeDrawerOpen}>
     {user && <UserCard user={user} />}
-    <List>
+    <MenuList>
       <MenuItem onClick={onShowAbout}>About</MenuItem>
       <MenuItem onClick={onShowSettings}>Settings</MenuItem>
-    </List>
+    </MenuList>
     <Divider />
-    <List>
-      <Subheader>Playlists</Subheader>
+    <MenuList
+      subheader={<ListSubheader>Playlists</ListSubheader>}
+    >
       {playlists.map(playlist => (
         <MenuItem
           key={playlist._id}
-          checked={playlist.active}
           onClick={(event) => {
             event.preventDefault();
             onShowPlaylist(playlist._id);
             onChangeDrawerOpen(false);
           }}
         >
-          {playlist.name}
+          {playlist.active && (
+            <ListItemIcon>
+              <ActiveIcon />
+            </ListItemIcon>
+          )}
+          <ListItemText>{playlist.name}</ListItemText>
         </MenuItem>
       ))}
-    </List>
+    </MenuList>
   </Drawer>
 );
 
