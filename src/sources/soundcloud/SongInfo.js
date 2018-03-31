@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ArtistIcon from 'material-ui/svg-icons/hardware/headset';
-import TitleIcon from 'material-ui/svg-icons/image/music-note';
+import ArtistIcon from 'material-ui-icons/Headset';
+import TitleIcon from 'material-ui-icons/MusicNote';
 
 const iconStyles = {
   float: 'left',
