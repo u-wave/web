@@ -1,0 +1,6 @@
+@import "../../../vars.css";
+
+.UsersDrawer-position {
+  color: var(--text-color);
+  margin: 8px;
+}

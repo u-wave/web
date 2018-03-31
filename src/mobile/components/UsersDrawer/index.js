@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Drawer from 'material-ui/Drawer';
-
+import Drawer from 'material-ui-next/Drawer'; // eslint-disable-line
 import UserList from './UserList';
 
 const UsersDrawer = ({
@@ -17,10 +16,8 @@ const UsersDrawer = ({
   onLeaveWaitlist,
 }) => (
   <Drawer
-    docked={false}
-    width={320}
+    anchor="right"
     open={open}
-    openSecondary
     onRequestChange={onChangeDrawerOpen}
   >
     <UserList
