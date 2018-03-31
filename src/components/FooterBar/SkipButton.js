@@ -3,20 +3,17 @@ import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import compose from 'recompose/compose';
 import pure from 'recompose/pure';
-import Popover from 'material-ui/Popover';
-import IconButton from 'material-ui/IconButton';
-import SkipIcon from 'material-ui/svg-icons/av/skip-next';
+import Popover from 'material-ui-next/Popover'; // eslint-disable-line
+import Tooltip from 'material-ui-next/Tooltip'; // eslint-disable-line
+import IconButton from 'material-ui-next/IconButton'; // eslint-disable-line
+import SkipIcon from 'material-ui-icons/SkipNext';
 import Loader from '../Loader';
 import SkipReasonsList from './SkipReasonsList';
 
-const fullSizeStyle = {
-  height: '100%',
-  width: '100%',
-};
-
-const popoverProps = {
-  anchorOrigin: { horizontal: 'middle', vertical: 'bottom' },
-  targetOrigin: { horizontal: 'middle', vertical: 'bottom' },
+const popoverPosition = {
+  marginThreshold: 0,
+  anchorOrigin: { horizontal: 'center', vertical: 'bottom' },
+  transformOrigin: { horizontal: 'center', vertical: 'bottom' },
 };
 
 // TODO not hardcode these maybe?
@@ -90,19 +87,17 @@ class SkipButton extends React.Component {
 
     return (
       <span>
-        <IconButton
-          tooltip={message}
-          tooltipPosition="top-center"
-          style={fullSizeStyle}
-          onClick={this.handleOpen}
-        >
-          <SkipIcon />
-        </IconButton>
+        <Tooltip title={message}>
+          <IconButton className="SkipButton" onClick={this.handleOpen}>
+            <SkipIcon />
+          </IconButton>
+        </Tooltip>
         <Popover
           open={this.state.isOpen}
           anchorEl={this.state.anchor}
-          onRequestClose={this.handleClose}
-          {...popoverProps}
+          onClose={this.handleClose}
+          classes={{ paper: 'SkipButton-list' }}
+          {...popoverPosition}
         >
           <SkipReasonsList
             reasons={reasons.map(name => ({
