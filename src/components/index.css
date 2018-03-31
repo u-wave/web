@@ -3,6 +3,7 @@
 @import "./App/index.css";
 @import "./Avatar/index.css";
 @import "./Chat/index.css";
+@import "./ConnectionIndicator/index.css";
 @import "./Dialogs/index.css";
 @import "./FooterBar/index.css";
 @import "./Form/index.css";

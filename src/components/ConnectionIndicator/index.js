@@ -1,26 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
-import Card from 'material-ui/Card/Card';
-import CardHeader from 'material-ui/Card/CardHeader';
+import Card from 'material-ui-next/Card/Card'; // eslint-disable-line
+import CardHeader from 'material-ui-next/Card/CardHeader'; // eslint-disable-line
 import OfflineIcon from './OfflineIcon';
 
 const enhance = translate();
 
-const positionStyle = {
-  position: 'absolute',
-  right: 10,
-  top: 10,
-  zIndex: 55,
-};
-
 const ConnectionIndicator = ({ isConnected, t }) => (
   isConnected ? null : (
-    <div style={positionStyle}>
+    <div className="ConnectionIndicator-position">
       <Card>
         <CardHeader
           title={t('server.connectionLost')}
-          subtitle={t('server.reconnecting')}
+          subheader={t('server.reconnecting')}
           avatar={<OfflineIcon />}
         />
       </Card>
