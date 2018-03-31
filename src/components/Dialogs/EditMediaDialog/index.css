@@ -1,6 +1,8 @@
 @import "../../../vars.css";
 
 .EditMediaDialog {
+  width: 75%;
+  max-width: 768px;
 }
 
 .EditMediaDialogForm {
