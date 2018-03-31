@@ -1,11 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
-import IconButton from 'material-ui/IconButton';
-import DeleteIcon from 'material-ui/svg-icons/action/delete';
+import Tooltip from 'material-ui-next/Tooltip'; // eslint-disable-line
+import IconButton from 'material-ui-next/IconButton'; // eslint-disable-line
+import DeleteIcon from 'material-ui-icons/Delete';
 
 import ConfirmDialog from '../../Dialogs/ConfirmDialog';
 import FormGroup from '../../Form/Group';
+
+const enhance = translate();
 
 class DeletePlaylistButton extends React.Component {
   static propTypes = {
@@ -41,27 +44,28 @@ class DeletePlaylistButton extends React.Component {
 
   render() {
     const { t, active } = this.props;
-    const hoverColor = active ? '#555' : '#fff';
     return (
-      <IconButton
-        onClick={this.handleOpen}
-        tooltip={t('playlists.delete')}
-        tooltipPosition="top-center"
-      >
-        <DeleteIcon color="#555" hoverColor={hoverColor} />
-        {this.state.deleting && (
-          <ConfirmDialog
-            title={t('dialogs.deletePlaylist.title')}
-            confirmLabel={t('dialogs.deletePlaylist.action')}
-            onConfirm={this.handleConfirm}
-            onCancel={this.handleClose}
-          >
-            <FormGroup>{t('dialogs.deletePlaylist.confirm')}</FormGroup>
-          </ConfirmDialog>
-        )}
-      </IconButton>
+      <Tooltip title={active ? t('playlists.deleteActive') : t('playlists.delete')} placement="top">
+        <IconButton
+          disabled={active}
+          className="PlaylistMeta-iconButton"
+          onClick={this.handleOpen}
+        >
+          <DeleteIcon />
+          {this.state.deleting && (
+            <ConfirmDialog
+              title={t('dialogs.deletePlaylist.title')}
+              confirmLabel={t('dialogs.deletePlaylist.action')}
+              onConfirm={this.handleConfirm}
+              onCancel={this.handleClose}
+            >
+              <FormGroup>{t('dialogs.deletePlaylist.confirm')}</FormGroup>
+            </ConfirmDialog>
+          )}
+        </IconButton>
+      </Tooltip>
     );
   }
 }
 
-export default translate()(DeletePlaylistButton);
+export default enhance(DeletePlaylistButton);

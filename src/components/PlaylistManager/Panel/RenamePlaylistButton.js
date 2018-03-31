@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
-import IconButton from 'material-ui/IconButton';
-import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
-
+import Tooltip from 'material-ui-next/Tooltip'; // eslint-disable-line
+import IconButton from 'material-ui-next/IconButton'; // eslint-disable-line
+import EditIcon from 'material-ui-icons/ModeEdit';
 import PromptDialog from '../../Dialogs/PromptDialog';
+
+const enhance = translate();
 
 class RenamePlaylistButton extends React.Component {
   static propTypes = {
@@ -36,25 +38,23 @@ class RenamePlaylistButton extends React.Component {
   render() {
     const { t } = this.props;
     return (
-      <IconButton
-        onClick={this.handleOpen}
-        tooltip={t('playlists.rename')}
-        tooltipPosition="top-center"
-      >
-        <EditIcon color="#555" hoverColor="#fff" />
-        {this.state.renaming && (
-          <PromptDialog
-            title={t('dialogs.renamePlaylist.nameInputTitle')}
-            submitLabel={t('dialogs.renamePlaylist.action')}
-            icon={<EditIcon color="#777" />}
-            value={this.props.initialName}
-            onSubmit={this.handleSubmit}
-            onCancel={this.handleClose}
-          />
-        )}
-      </IconButton>
+      <Tooltip title={t('playlists.rename')} placement="top">
+        <IconButton className="PlaylistMeta-iconButton" onClick={this.handleOpen}>
+          <EditIcon />
+          {this.state.renaming && (
+            <PromptDialog
+              title={t('dialogs.renamePlaylist.nameInputTitle')}
+              submitLabel={t('dialogs.renamePlaylist.action')}
+              icon={<EditIcon nativeColor="#777" />}
+              value={this.props.initialName}
+              onSubmit={this.handleSubmit}
+              onCancel={this.handleClose}
+            />
+          )}
+        </IconButton>
+      </Tooltip>
     );
   }
 }
 
-export default translate()(RenamePlaylistButton);
+export default enhance(RenamePlaylistButton);
