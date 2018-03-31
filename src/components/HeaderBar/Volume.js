@@ -1,11 +1,12 @@
 import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
+import IconButton from 'material-ui-next/IconButton'; // eslint-disable-line
 import Slider from 'material-ui/Slider';
-import VolumeDownIcon from 'material-ui/svg-icons/av/volume-down';
-import VolumeMuteIcon from 'material-ui/svg-icons/av/volume-mute';
-import VolumeOffIcon from 'material-ui/svg-icons/av/volume-off';
-import VolumeUpIcon from 'material-ui/svg-icons/av/volume-up';
+import VolumeDownIcon from 'material-ui-icons/VolumeDown';
+import VolumeMuteIcon from 'material-ui-icons/VolumeMute';
+import VolumeOffIcon from 'material-ui-icons/VolumeOff';
+import VolumeUpIcon from 'material-ui-icons/VolumeUp';
 
 const sliderStyle = {
   // The material-ui Slider has a 24px margin on top that we can't override,
@@ -54,10 +55,9 @@ export default class Volume extends React.Component {
     }
     return (
       <div className={cx('VolumeSlider', this.props.className)}>
-        <VolumeIcon
-          color="#fff"
-          onClick={this.handleMuteClick}
-        />
+        <IconButton onClick={this.handleMuteClick}>
+          <VolumeIcon />
+        </IconButton>
         <div className="VolumeSlider-slider">
           <Slider
             name="volume"
