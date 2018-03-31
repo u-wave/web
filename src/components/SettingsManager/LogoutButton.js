@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
-import FlatButton from 'material-ui/FlatButton';
-import LogoutIcon from 'material-ui/svg-icons/action/power-settings-new';
+import Button from 'material-ui-next/Button'; // eslint-disable-line
+import LogoutIcon from 'material-ui-icons/PowerSettingsNew';
 import ConfirmDialog from '../Dialogs/ConfirmDialog';
 import FormGroup from '../Form/Group';
+
+const enhance = translate();
 
 class LogoutButton extends React.Component {
   static propTypes = {
@@ -36,12 +38,9 @@ class LogoutButton extends React.Component {
   render() {
     const { t } = this.props;
     return (
-      <FlatButton
-        label={t('settings.logout')}
-        labelPosition="after"
-        icon={<LogoutIcon />}
-        onClick={this.handleOpen}
-      >
+      <Button className="LogoutButton" onClick={this.handleOpen}>
+        <LogoutIcon className="LogoutButton-icon" />
+        {t('settings.logout')}
         {this.state.showDialog && (
           <ConfirmDialog
             title={t('dialogs.logout.title')}
@@ -52,9 +51,9 @@ class LogoutButton extends React.Component {
             <FormGroup>{t('dialogs.logout.confirm')}</FormGroup>
           </ConfirmDialog>
         )}
-      </FlatButton>
+      </Button>
     );
   }
 }
 
-export default translate()(LogoutButton);
+export default enhance(LogoutButton);
