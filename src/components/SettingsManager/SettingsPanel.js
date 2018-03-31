@@ -2,13 +2,14 @@ import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
+import { FormGroup } from 'material-ui-next/Form'; // eslint-disable-line
+import Switch from 'material-ui-next/Switch'; // eslint-disable-line
 import Profile from './Profile';
 import LabeledControl from './LabeledControl';
 import LanguagePicker from './LanguagePicker';
 import LogoutButton from './LogoutButton';
 import NotificationSettings from './NotificationSettings';
 import Links from './Links';
-import Toggle from './Toggle';
 
 const enhance = translate();
 
@@ -61,30 +62,32 @@ class SettingsPanel extends React.Component {
         {user && <hr className="SettingsPanel-divider" />}
         <div className="SettingsPanel-column SettingsPanel-column--left">
           <h2 className="SettingsPanel-header">{t('settings.title')}</h2>
-          <Toggle
-            label={t('settings.videoEnabled')}
-            toggled={settings.videoEnabled}
-            onToggle={this.handleVideoEnabledChange}
-          />
-          <Toggle
-            label={t('settings.videoSize')}
-            toggled={settings.videoSize === 'large'}
-            onToggle={this.handleVideoSizeChange}
-          />
-          <Toggle
-            label={t('settings.mentionSound')}
-            toggled={settings.mentionSound}
-            onToggle={this.handleMentionSoundChange}
-          />
-          <div className="SettingsPanel-toggle">
-            <LabeledControl id="uw-setting-language" label={t('settings.language')}>
+          <FormGroup>
+            <LabeledControl label={t('settings.videoEnabled')}>
+              <Switch
+                checked={settings.videoEnabled}
+                onChange={this.handleVideoEnabledChange}
+              />
+            </LabeledControl>
+            <LabeledControl label={t('settings.videoSize')}>
+              <Switch
+                checked={settings.videoSize === 'large'}
+                onChange={this.handleVideoSizeChange}
+              />
+            </LabeledControl>
+            <LabeledControl label={t('settings.mentionSound')}>
+              <Switch
+                checked={settings.mentionSound}
+                onChange={this.handleMentionSoundChange}
+              />
+            </LabeledControl>
+            <LabeledControl label={t('settings.language')}>
               <LanguagePicker
-                id="uw-setting-language"
                 value={settings.language}
                 onChange={this.handleLanguageChange}
               />
             </LabeledControl>
-          </div>
+          </FormGroup>
           <hr className="SettingsPanel-divider" />
           <Links />
           <hr className="SettingsPanel-divider" />

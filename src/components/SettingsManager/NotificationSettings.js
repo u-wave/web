@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import compose from 'recompose/compose';
 import withProps from 'recompose/withProps';
 import { translate } from 'react-i18next';
-import Toggle from './Toggle';
+import Switch from 'material-ui-next/Switch'; // eslint-disable-line
+import LabeledControl from './LabeledControl';
 
 const enhance = compose(
   withProps(props => ({
@@ -34,30 +35,30 @@ const NotificationSettings = ({
   <div>
     <h2 className="SettingsPanel-header">{t('settings.notifications.title')}</h2>
     <p className="SettingsPanel-helpText">{t('settings.notifications.help')}</p>
-    <Toggle
-      label={t('settings.notifications.userJoin')}
-      labelPosition="left"
-      toggled={settings.notifications.userJoin}
-      onToggle={onToggleUserJoin}
-    />
-    <Toggle
-      label={t('settings.notifications.userLeave')}
-      labelPosition="left"
-      toggled={settings.notifications.userLeave}
-      onToggle={onToggleUserLeave}
-    />
-    <Toggle
-      label={t('settings.notifications.userNameChanged')}
-      labelPosition="left"
-      toggled={settings.notifications.userNameChanged}
-      onToggle={onToggleUserNameChanged}
-    />
-    <Toggle
-      label={t('settings.notifications.skip')}
-      labelPosition="left"
-      toggled={settings.notifications.skip}
-      onToggle={onToggleSkip}
-    />
+    <LabeledControl label={t('settings.notifications.userJoin')}>
+      <Switch
+        checked={settings.notifications.userJoin}
+        onChange={onToggleUserJoin}
+      />
+    </LabeledControl>
+    <LabeledControl label={t('settings.notifications.userLeave')}>
+      <Switch
+        checked={settings.notifications.userLeave}
+        onChange={onToggleUserLeave}
+      />
+    </LabeledControl>
+    <LabeledControl label={t('settings.notifications.userNameChanged')}>
+      <Switch
+        checked={settings.notifications.userNameChanged}
+        onChange={onToggleUserNameChanged}
+      />
+    </LabeledControl>
+    <LabeledControl label={t('settings.notifications.skip')}>
+      <Switch
+        checked={settings.notifications.skip}
+        onChange={onToggleSkip}
+      />
+    </LabeledControl>
   </div>
 );
 
