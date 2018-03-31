@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import withProps from 'recompose/withProps';
 import IconMenu from 'material-ui/IconMenu';
 import IconButton from 'material-ui/IconButton';
 import MenuItem from 'material-ui/MenuItem';
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import {
-  TableRow,
-  TableCell,
-} from '../../../components/Table';
+import MoreVertIcon from 'material-ui-icons/MoreVert';
+// eslint-disable-next-line
+import { TableRow, TableCell as MuiTableCell } from 'material-ui-next/Table';
 import Avatar from '../../../components/Avatar';
 import Username from '../../../components/Username/WithCard';
 import formatJoinDate from '../../../utils/formatJoinDate';
@@ -25,10 +24,14 @@ const actionsStyle = {
 const anchorOrigin = { horizontal: 'right', vertical: 'top' };
 const targetOrigin = { horizontal: 'right', vertical: 'top' };
 
+const TableCell = withProps({
+  className: 'AdminUserRow-cell',
+})(MuiTableCell);
+
 const UserRow = ({
   user,
 }) => (
-  <TableRow>
+  <TableRow className="AdminUserRow">
     <TableCell style={avatarStyle}>
       <Avatar user={user} />
     </TableCell>

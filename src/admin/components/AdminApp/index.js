@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import List, { ListItem, ListItemText } from '../../../components/List';
 import CurrentPage from './CurrentPage';
 
-import './index.css';
+import '../../index.css';
 
 const AdminApp = ({
   currentView,

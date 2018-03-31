@@ -12,8 +12,6 @@ import EditIcon from 'material-ui-icons/ModeEdit';
 import parse from 'u-wave-parse-chat-markup';
 import compile from '../../../components/Chat/Markup/compile';
 
-import './index.css';
-
 const enhance = compose(
   withState('newMotd', 'setMotd', props => props.motd),
   withState('expanded', 'setExpanded', false),
