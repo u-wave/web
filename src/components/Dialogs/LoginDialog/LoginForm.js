@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
-import EmailIcon from 'material-ui/svg-icons/communication/email';
-import PasswordIcon from 'material-ui/svg-icons/action/lock';
+import EmailIcon from 'material-ui-icons/Email';
+import PasswordIcon from 'material-ui-icons/Lock';
 import Loader from '../../Loader';
 import Form from '../../Form';
 import FormGroup from '../../Form/Group';
@@ -69,7 +69,7 @@ class LoginForm extends React.Component {
             className="LoginForm-field"
             type="email"
             placeholder={t('login.email')}
-            icon={<EmailIcon color="#9f9d9e" />}
+            icon={<EmailIcon nativeColor="#9f9d9e" />}
             autoFocus
           />
         </FormGroup>
@@ -80,7 +80,7 @@ class LoginForm extends React.Component {
             className="LoginForm-field"
             type="password"
             placeholder={t('login.password')}
-            icon={<PasswordIcon color="#9f9d9e" />}
+            icon={<PasswordIcon nativeColor="#9f9d9e" />}
           />
         </FormGroup>
 
