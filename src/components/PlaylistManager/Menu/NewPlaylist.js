@@ -2,7 +2,7 @@ import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
-import CreatePlaylistIcon from 'material-ui/svg-icons/content/add';
+import CreatePlaylistIcon from 'material-ui-icons/Add';
 
 import PromptDialog from '../../Dialogs/PromptDialog';
 
@@ -46,14 +46,14 @@ class NewPlaylist extends React.Component {
         <div className="PlaylistMenuRow-content">
           <div className="PlaylistMenuRow-title">
             <div className="PlaylistMenuRow-active-icon">
-              <CreatePlaylistIcon color="#fff" />
+              <CreatePlaylistIcon />
             </div>
             {t('playlists.new')}
           </div>
           {this.state.creating && (
             <PromptDialog
               title={t('dialogs.createPlaylist.nameInputTitle')}
-              icon={<CreatePlaylistIcon color="#777" />}
+              icon={<CreatePlaylistIcon nativeColor="#777" />}
               submitLabel={t('dialogs.createPlaylist.action')}
               onSubmit={this.handleSubmit}
               onCancel={this.handleClose}
