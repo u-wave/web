@@ -1,8 +1,8 @@
 import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
-import IconButton from 'material-ui/IconButton';
-import AboutIcon from 'material-ui/svg-icons/navigation/arrow-drop-down';
+import IconButton from 'material-ui-next/IconButton'; // eslint-disable-line
+import AboutIcon from 'material-ui-icons/ArrowDropDown';
 import logo from '../../../assets/img/logo-white.png';
 
 const AppTitle = ({
