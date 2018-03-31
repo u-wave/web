@@ -1,7 +1,6 @@
-import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { List, ListItem } from '../../../components/List';
+import List, { ListItem, ListItemText } from '../../../components/List';
 import CurrentPage from './CurrentPage';
 
 import './index.css';
@@ -14,23 +13,26 @@ const AdminApp = ({
     <div className="AdminApp-menu">
       <List>
         <ListItem
-          primaryText="Main"
-          className={cx('AdminApp-menuItem', currentView === 'main' && 'is-selected')}
           selected={currentView === 'main'}
+          className="AdminApp-menuItem"
           onClick={() => onTransition('main')}
-        />
+        >
+          <ListItemText>Main</ListItemText>
+        </ListItem>
         <ListItem
-          primaryText="Users"
-          className={cx('AdminApp-menuItem', currentView === 'users' && 'is-selected')}
           selected={currentView === 'users'}
+          className="AdminApp-menuItem"
           onClick={() => onTransition('users')}
-        />
+        >
+          <ListItemText>Users</ListItemText>
+        </ListItem>
         <ListItem
-          primaryText="Bans"
-          className={cx('AdminApp-menuItem', currentView === 'bans' && 'is-selected')}
           selected={currentView === 'bans'}
+          className="AdminApp-menuItem"
           onClick={() => onTransition('bans')}
-        />
+        >
+          <ListItemText>Bans</ListItemText>
+        </ListItem>
       </List>
     </div>
     <div className="AdminApp-page">
