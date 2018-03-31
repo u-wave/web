@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Paper from 'material-ui/Paper';
-import { List } from 'material-ui/List';
+import Paper from 'material-ui-next/Paper'; // eslint-disable-line
+import List from 'material-ui-next/List'; // eslint-disable-line
 
 const SuggestionsList = ({
   children,

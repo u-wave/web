@@ -1,22 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { ListItemAvatar, ListItemText } from 'material-ui-next/List'; // eslint-disable-line
 import Suggestion from './Suggestion';
 
 const EmojiSuggestion = ({
   value: emoji,
   ...props
 }) => (
-  <Suggestion
-    {...props}
-    value={emoji.shortcode}
-    primaryText={`:${emoji.shortcode}:`}
-    leftAvatar={
+  <Suggestion {...props}>
+    <ListItemAvatar>
       <span
         className="EmojiSuggestion-image"
         style={{ backgroundImage: `url(/assets/emoji/${emoji.image})` }}
       />
-    }
-  />
+    </ListItemAvatar>
+    <ListItemText>
+      :{emoji.shortcode}:
+    </ListItemText>
+  </Suggestion>
 );
 
 EmojiSuggestion.propTypes = {
