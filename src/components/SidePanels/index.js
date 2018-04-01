@@ -8,7 +8,7 @@ import Tabs, { Tab } from 'material-ui-next/Tabs'; // eslint-disable-line
 import Chat from '../Chat';
 import RoomUserList from '../../containers/RoomUserList';
 import WaitList from '../../containers/WaitList';
-import PanelContainer from './PanelTemplate';
+import PanelContainer from './PanelContainer';
 
 const enhance = compose(
   translate(),
