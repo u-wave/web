@@ -31,6 +31,7 @@ const htmlMinifierOptions = {
   removeScriptTypeAttributes: true,
   removeStyleLinkTypeAttributes: true,
   removeOptionalTags: true,
+  minifyCSS: true,
 };
 
 const noConfigBabelLoader = {

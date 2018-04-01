@@ -12,20 +12,13 @@ import JssProvider from 'react-jss/lib/JssProvider';
 import createLocale from './locale';
 import AppContainer from './containers/App';
 import { get as readSession } from './utils/Session';
+import generateClassName from './utils/generateClassName';
 import configureStore from './store/configureStore';
 import { initState, socketConnect, setSessionToken } from './actions/LoginActionCreators';
 import { languageSelector } from './selectors/settingSelectors';
 import * as api from './api';
 // Register default chat commands.
 import './utils/commands';
-
-function generateClassName(rule, styleSheet) {
-  const componentName = styleSheet.options.name;
-  if (rule.key === 'root') {
-    return componentName;
-  }
-  return `${componentName}-${rule.key}`;
-}
 
 export default class Uwave {
   options = {};
@@ -34,10 +27,7 @@ export default class Uwave {
   renderTarget = null;
   aboutPageComponent = null;
 
-  jss = createJss({
-    ...jssPreset(),
-    insertionPoint: 'jss',
-  });
+  jss = createJss(jssPreset());
 
   constructor(options = {}, session = readSession()) {
     this.options = options;
@@ -104,6 +94,12 @@ export default class Uwave {
     if (this.sessionToken) {
       this.store.dispatch(setSessionToken(this.sessionToken));
       this.sessionToken = null;
+    }
+
+    if (typeof window !== 'undefined') {
+      this.jss.setup({
+        insertionPoint: document.querySelector('#jss'),
+      });
     }
 
     this.store.dispatch(socketConnect());

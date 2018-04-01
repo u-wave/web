@@ -21,11 +21,7 @@ window.uw = uw;
 uw.build().then(() => {
   uw.renderToDOM(document.querySelector('#app'));
   document.querySelector('#app-loading').innerHTML = '';
-
-  // Temporary HACK to deal with JSS stylesheet overrides.
-  // Move our stylesheet into the body so it takes precedence.
-  const style = document.querySelector('style');
-  document.body.appendChild(style);
+  document.querySelector('#jss').textContent = '';
 }).catch((err) => {
   document.querySelector('.LoadingScreen-notice').textContent = `Error: ${err.message}`;
 
