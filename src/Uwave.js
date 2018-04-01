@@ -2,11 +2,13 @@
 // (newer & better XMLHttpRequest).
 import 'lie/polyfill';
 import 'whatwg-fetch';
-
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { AppContainer as HotContainer } from 'react-hot-loader';
+import { create as createJss } from 'jss';
+import { jssPreset } from 'material-ui-next/styles'; // eslint-disable-line
+import JssProvider from 'react-jss/lib/JssProvider';
 import createLocale from './locale';
 import AppContainer from './containers/App';
 import { get as readSession } from './utils/Session';
@@ -14,9 +16,16 @@ import configureStore from './store/configureStore';
 import { initState, socketConnect, setSessionToken } from './actions/LoginActionCreators';
 import { languageSelector } from './selectors/settingSelectors';
 import * as api from './api';
-
 // Register default chat commands.
 import './utils/commands';
+
+function generateClassName(rule, styleSheet) {
+  const componentName = styleSheet.options.name;
+  if (rule.key === 'root') {
+    return componentName;
+  }
+  return `${componentName}-${rule.key}`;
+}
 
 export default class Uwave {
   options = {};
@@ -24,6 +33,11 @@ export default class Uwave {
   sessionToken = null;
   renderTarget = null;
   aboutPageComponent = null;
+
+  jss = createJss({
+    ...jssPreset(),
+    insertionPoint: 'jss',
+  });
 
   constructor(options = {}, session = readSession()) {
     this.options = options;
@@ -105,11 +119,13 @@ export default class Uwave {
   getComponent() {
     return (
       <Provider store={this.store}>
-        <AppContainer
-          mediaSources={this.sources}
-          locale={this.locale}
-          uwave={this}
-        />
+        <JssProvider jss={this.jss} generateClassName={generateClassName}>
+          <AppContainer
+            mediaSources={this.sources}
+            locale={this.locale}
+            uwave={this}
+          />
+        </JssProvider>
       </Provider>
     );
   }
