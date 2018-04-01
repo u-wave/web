@@ -11,14 +11,14 @@ const UsersDrawer = ({
   userInWaitlist,
   userIsLoggedIn,
   open,
-  onChangeDrawerOpen,
+  onDrawerClose,
   onJoinWaitlist,
   onLeaveWaitlist,
 }) => (
   <Drawer
     anchor="right"
     open={open}
-    onRequestChange={onChangeDrawerOpen}
+    onClose={onDrawerClose}
   >
     <UserList
       currentDJ={currentDJ}
@@ -41,7 +41,7 @@ UsersDrawer.propTypes = {
   userInWaitlist: PropTypes.bool,
   isLockedWaitlist: PropTypes.bool,
   open: PropTypes.bool.isRequired,
-  onChangeDrawerOpen: PropTypes.func.isRequired,
+  onDrawerClose: PropTypes.func.isRequired,
   onJoinWaitlist: PropTypes.func.isRequired,
   onLeaveWaitlist: PropTypes.func.isRequired,
 };
