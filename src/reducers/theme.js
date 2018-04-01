@@ -1,4 +1,4 @@
-import initialState from '../MuiTheme';
+import initialState from '../theme';
 
 // eslint-disable-next-line no-unused-vars
 export default function reduce(state = initialState, action = {}) {

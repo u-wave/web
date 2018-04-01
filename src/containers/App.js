@@ -12,11 +12,11 @@ import { closeAll } from '../actions/OverlayActionCreators';
 import {
   settingsSelector,
   languageSelector,
+  themeSelector,
 } from '../selectors/settingSelectors';
 import { isConnectedSelector } from '../selectors/serverSelectors';
 import DesktopApp from '../components/App';
 import MobileApp from '../mobile/components/App';
-import theme from '../theme';
 
 const SimpleProviders = nest(BusProvider, ClockProvider);
 
@@ -25,6 +25,7 @@ const mapStateToProps = createStructuredSelector({
   isConnected: isConnectedSelector,
   settings: settingsSelector,
   language: languageSelector,
+  theme: themeSelector,
   hasAboutPage: (state, props) => (
     props.uwave.getAboutPageComponent() !== null
   ),
@@ -41,6 +42,7 @@ class AppContainer extends React.Component {
     mediaSources: PropTypes.object.isRequired,
     uwave: PropTypes.object,
     language: PropTypes.string,
+    theme: PropTypes.object,
     locale: PropTypes.object.isRequired,
   };
 
@@ -75,7 +77,7 @@ class AppContainer extends React.Component {
 
   render() {
     return (
-      <MuiThemeProvider theme={theme}>
+      <MuiThemeProvider theme={this.props.theme}>
         <I18nextProvider i18n={this.props.locale}>
           <SimpleProviders>
             {this.renderApp()}

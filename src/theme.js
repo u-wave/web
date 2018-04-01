@@ -1,6 +1,4 @@
-import { createMuiTheme } from 'material-ui-next/styles'; // eslint-disable-line
-
-export default createMuiTheme({
+export default {
   palette: {
     type: 'dark',
     primary: {
@@ -15,4 +13,4 @@ export default createMuiTheme({
   typography: {
     fontFamily: '"Open Sans", Roboto, Arial, sans-serif',
   },
-});
+};

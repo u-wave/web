@@ -1,11 +1,11 @@
 import path from 'path';
-import MuiTheme from './MuiTheme';
+import theme from './theme';
 
 export default {
   name: 'üWave',
   short_name: 'üWave',
   start_url: '.',
-  theme_color: MuiTheme.palette.primary1Color,
+  theme_color: theme.palette.main,
   background_color: '#151515',
   display: 'standalone',
   icons: [{
