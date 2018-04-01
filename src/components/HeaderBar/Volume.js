@@ -2,11 +2,11 @@ import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import IconButton from 'material-ui-next/IconButton'; // eslint-disable-line
-import Slider from 'material-ui/Slider';
 import VolumeDownIcon from 'material-ui-icons/VolumeDown';
 import VolumeMuteIcon from 'material-ui-icons/VolumeMute';
 import VolumeOffIcon from 'material-ui-icons/VolumeOff';
 import VolumeUpIcon from 'material-ui-icons/VolumeUp';
+import Slider from './Slider';
 
 const sliderStyle = {
   // The material-ui Slider has a 24px margin on top that we can't override,
