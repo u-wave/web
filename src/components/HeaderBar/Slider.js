@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import withStyles from 'material-ui/styles/withStyles';
 import ButtonBase from 'material-ui/ButtonBase';
-import addEventListener from 'material-ui/utils/addEventListener';
 import { fade } from 'material-ui/styles/colorManipulator';
 
 export const style = theme => {
@@ -310,7 +309,7 @@ class Slider extends React.Component {
     }
 
     this.setState({ isMove: true, isActive: true });
-    this.globalMouseUp = addEventListener(document.body, 'mouseup', this.handleMouseUp);
+    document.body.addEventListener('mouseup', this.handleMouseUp);
 
     if (typeof this.props.onDragEnd === 'function') {
       this.props.onDragStart(event);
@@ -322,9 +321,7 @@ class Slider extends React.Component {
       return;
     }
 
-    if (this.globalMouseUp) {
-      this.globalMouseUp.remove();
-    }
+    documeent.body.removeEventListener('mouseup', this.handleMouseUp);
 
     this.setState({ isMove: false, isActive: false });
 
