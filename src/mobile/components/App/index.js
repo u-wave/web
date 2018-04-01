@@ -6,7 +6,7 @@ import toClass from 'recompose/toClass';
 import withState from 'recompose/withState';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-import Snackbar from 'material-ui/Snackbar';
+import Snackbar from 'material-ui-next/Snackbar'; // eslint-disable-line
 import ErrorArea from '../../../containers/ErrorArea';
 import PlaylistManager from '../../containers/PlaylistManager';
 import RoomHistory from '../../containers/RoomHistory';
@@ -15,7 +15,6 @@ import Dialogs from '../../../components/Dialogs';
 import AddToPlaylistMenu from '../../../containers/AddToPlaylistMenu';
 import DragLayer from '../../../containers/DragLayer';
 import MainView from '../../containers/MainView';
-
 import Overlays from './Overlays';
 
 const enhance = compose(
@@ -35,10 +34,9 @@ const MobileApp = ({
     <MainView />
 
     <Snackbar
-      bodyStyle={{ background: '#151515', height: 64, lineHeight: '24px' }}
-      message="Note: The mobile version is in beta and may crash regularly."
       open={!dismissedWarning}
-      onRequestClose={() => onDismiss(true)}
+      onClose={() => onDismiss(true)}
+      message="Note: The mobile version is in beta and may crash regularly."
     />
 
     <ErrorArea />
