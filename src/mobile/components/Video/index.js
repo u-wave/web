@@ -1,26 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import BaseVideo from '../../components/Video';
+import BaseVideo from '../../../components/Video';
 import VoteButtons from './VoteButtons';
 
 const Video = ({
-  enabled,
-  isUpvote,
-  isFavorite,
-  isDownvote,
+  voteStats,
   onUpvote,
   onDownvote,
   onFavorite,
+  ...props
 }) => (
   <div>
     <BaseVideo
-      enabled={enabled}
+      {...props}
       size="large"
     />
     <VoteButtons
-      isUpvote={isUpvote}
-      isFavorite={isFavorite}
-      isDownvote={isDownvote}
+      {...voteStats}
       onUpvote={onUpvote}
       onDownvote={onDownvote}
       onFavorite={onFavorite}
@@ -29,11 +25,11 @@ const Video = ({
 );
 
 Video.propTypes = {
-  enabled: PropTypes.bool,
-
-  isUpvote: PropTypes.bool,
-  isFavorite: PropTypes.bool,
-  isDownvote: PropTypes.bool,
+  voteStats: PropTypes.shape({
+    isUpvote: PropTypes.bool,
+    isFavorite: PropTypes.bool,
+    isDownvote: PropTypes.bool,
+  }),
 
   onUpvote: PropTypes.func.isRequired,
   onDownvote: PropTypes.func.isRequired,

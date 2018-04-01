@@ -8,7 +8,7 @@ import IconButton from 'material-ui-next/IconButton'; // eslint-disable-line
 import HistoryIcon from 'material-ui-icons/History';
 import MenuIcon from 'material-ui-icons/Menu';
 import SongTitle from '../../../components/SongTitle';
-import Video from '../../../containers/Video';
+import Video from '../../containers/Video';
 import Chat from '../../containers/Chat';
 import DrawerMenu from '../../containers/DrawerMenu';
 import UsersDrawer from '../../containers/UsersDrawer';
