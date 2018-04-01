@@ -1,45 +1,27 @@
+import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
-import muiThemeable from 'material-ui/styles/muiThemeable';
-import DownvoteIcon from 'material-ui/svg-icons/action/thumb-down';
-import UpvoteIcon from 'material-ui/svg-icons/action/thumb-up';
-import FavoritedIcon from 'material-ui/svg-icons/action/favorite';
-import FavoriteIcon from 'material-ui/svg-icons/action/favorite-border';
-
-const iconStyles = {
-  height: 16,
-  width: 22,
-  padding: '0 4px 0 2px',
-  verticalAlign: 'top',
-};
-
-const enhance = muiThemeable();
+import DownvoteIcon from 'material-ui-icons/ThumbDown';
+import UpvoteIcon from 'material-ui-icons/ThumbUp';
+import FavoritedIcon from 'material-ui-icons/Favorite';
+import FavoriteIcon from 'material-ui-icons/FavoriteBorder';
 
 const Votes = ({
-  muiTheme, upvotes, downvotes, favorites, isUpvote, isDownvote, isFavorite,
+  upvotes, downvotes, favorites, isUpvote, isDownvote, isFavorite,
 }) => {
   const CurrentFavoriteIcon = isFavorite ? FavoritedIcon : FavoriteIcon;
   return (
     <div className="MobileHistoryVotes">
       <div className="MobileHistoryVotes-vote">
-        <UpvoteIcon
-          style={iconStyles}
-          color={isUpvote ? '#4BB64B' : 'white'}
-        />
+        <UpvoteIcon className={cx('MobileHistoryVotes-icon', isUpvote && 'ResponseButton-icon--upvoted')} />
         <span>{upvotes.length}</span>
       </div>
       <div className="MobileHistoryVotes-vote">
-        <CurrentFavoriteIcon
-          style={iconStyles}
-          color={muiTheme.palette.primary1Color}
-        />
+        <CurrentFavoriteIcon className="MobileHistoryVotes-icon ResponseButton-icon--favorite" />
         <span>{favorites.length}</span>
       </div>
       <div className="MobileHistoryVotes-vote">
-        <DownvoteIcon
-          style={iconStyles}
-          color={isDownvote ? '#B64B4B' : 'white'}
-        />
+        <DownvoteIcon className={cx('MobileHistoryVotes-icon', isDownvote && 'ResponseButton-icon--downvoted')} />
         <span>{downvotes.length}</span>
       </div>
     </div>
@@ -47,7 +29,6 @@ const Votes = ({
 };
 
 Votes.propTypes = {
-  muiTheme: PropTypes.object.isRequired,
   upvotes: PropTypes.array.isRequired,
   favorites: PropTypes.array.isRequired,
   downvotes: PropTypes.array.isRequired,
@@ -56,4 +37,4 @@ Votes.propTypes = {
   isDownvote: PropTypes.bool.isRequired,
 };
 
-export default enhance(Votes);
+export default Votes;

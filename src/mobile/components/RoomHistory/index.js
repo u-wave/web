@@ -6,6 +6,8 @@ import OverlayHeader from '../../../components/Overlay/Header';
 import OverlayContent from '../../../components/Overlay/Content';
 import HistoryList from './HistoryList';
 
+const enhance = translate();
+
 const RoomHistory = ({
   t,
   className,
@@ -39,4 +41,4 @@ RoomHistory.propTypes = {
   onOpenPreviewMediaDialog: PropTypes.func.isRequired,
 };
 
-export default translate()(RoomHistory);
+export default enhance(RoomHistory);
