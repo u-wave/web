@@ -14,9 +14,7 @@ const UserSuggestion = ({
         <Avatar user={user} />
       </div>
     </ListItemAvatar>
-    <ListItemText>
-      {user.username}
-    </ListItemText>
+    <ListItemText primary={user.username} />
   </Suggestion>
 );
 

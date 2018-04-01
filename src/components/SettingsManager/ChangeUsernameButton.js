@@ -6,12 +6,6 @@ import EditIcon from 'material-ui-icons/ModeEdit';
 import PromptDialog from '../Dialogs/PromptDialog';
 import DialogCloseAnimation from '../DialogCloseAnimation';
 
-const changeNameIconStyle = {
-  width: 24,
-  height: 24,
-  padding: 2,
-};
-
 const enhance = translate();
 
 class ChangeUsernameButton extends React.Component {
@@ -50,15 +44,11 @@ class ChangeUsernameButton extends React.Component {
     const { t, initialUsername } = this.props;
     return (
       <React.Fragment>
-        <IconButton
-          className="ChangeUsernameButton"
-          iconStyle={changeNameIconStyle}
-          onClick={this.handleOpen}
-        >
+        <IconButton className="ChangeUsernameButton" onClick={this.handleOpen}>
           <EditIcon className="ChangeUsernameButton-icon" />
         </IconButton>
         <DialogCloseAnimation delay={450}>
-          {this.state.changingUsername && (
+          {this.state.changingUsername ? (
             <PromptDialog
               title={t('settings.profile.username.change')}
               submitLabel={t('settings.profile.username.save')}
@@ -67,7 +57,7 @@ class ChangeUsernameButton extends React.Component {
               onSubmit={this.handleSubmit}
               onCancel={this.handleClose}
             />
-          )}
+          ) : null}
         </DialogCloseAnimation>
       </React.Fragment>
     );

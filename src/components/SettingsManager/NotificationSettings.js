@@ -35,25 +35,25 @@ const NotificationSettings = ({
   <div>
     <h2 className="SettingsPanel-header">{t('settings.notifications.title')}</h2>
     <p className="SettingsPanel-helpText">{t('settings.notifications.help')}</p>
-    <LabeledControl label={t('settings.notifications.userJoin')}>
+    <LabeledControl label={t('settings.notifications.userJoin')} id="uw-setting-userjoin">
       <Switch
         checked={settings.notifications.userJoin}
         onChange={onToggleUserJoin}
       />
     </LabeledControl>
-    <LabeledControl label={t('settings.notifications.userLeave')}>
+    <LabeledControl label={t('settings.notifications.userLeave')} id="uw-setting-userleave">
       <Switch
         checked={settings.notifications.userLeave}
         onChange={onToggleUserLeave}
       />
     </LabeledControl>
-    <LabeledControl label={t('settings.notifications.userNameChanged')}>
+    <LabeledControl label={t('settings.notifications.userNameChanged')} id="uw-setting-usernamechanged">
       <Switch
         checked={settings.notifications.userNameChanged}
         onChange={onToggleUserNameChanged}
       />
     </LabeledControl>
-    <LabeledControl label={t('settings.notifications.skip')}>
+    <LabeledControl label={t('settings.notifications.skip')} id="uw-setting-skip">
       <Switch
         checked={settings.notifications.skip}
         onChange={onToggleSkip}

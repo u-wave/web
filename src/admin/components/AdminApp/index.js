@@ -17,21 +17,21 @@ const AdminApp = ({
           className="AdminApp-menuItem"
           onClick={() => onTransition('main')}
         >
-          <ListItemText>Main</ListItemText>
+          <ListItemText primary="Main" />
         </ListItem>
         <ListItem
           selected={currentView === 'users'}
           className="AdminApp-menuItem"
           onClick={() => onTransition('users')}
         >
-          <ListItemText>Users</ListItemText>
+          <ListItemText primary="Users" />
         </ListItem>
         <ListItem
           selected={currentView === 'bans'}
           className="AdminApp-menuItem"
           onClick={() => onTransition('bans')}
         >
-          <ListItemText>Bans</ListItemText>
+          <ListItemText primary="Bans" />
         </ListItem>
       </List>
     </div>

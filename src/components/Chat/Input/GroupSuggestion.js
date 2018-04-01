@@ -9,9 +9,7 @@ const GroupSuggestion = ({ value: group, ...props }) => (
     <ListItemIcon>
       <PeopleIcon />
     </ListItemIcon>
-    <ListItemText>
-      {group}
-    </ListItemText>
+    <ListItemText primary={group} />
   </Suggestion>
 );
 

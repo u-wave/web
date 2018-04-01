@@ -13,9 +13,7 @@ const SkipReasonsList = ({
         button
         onClick={() => onSelect(reason.name)}
       >
-        <ListItemText className="SkipReasonsList-label">
-          {reason.label}
-        </ListItemText>
+        <ListItemText className="SkipReasonsList-label" primary={reason.label} />
       </ListItem>
     ))}
   </List>

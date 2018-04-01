@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { ListItemAvatar, ListItemText } from 'material-ui/List';
 import Suggestion from './Suggestion';
 
+const shortcode = emoji => `:${emoji.shortcode}:`;
+
 const EmojiSuggestion = ({
   value: emoji,
   ...props
@@ -14,9 +16,7 @@ const EmojiSuggestion = ({
         style={{ backgroundImage: `url(/assets/emoji/${emoji.image})` }}
       />
     </ListItemAvatar>
-    <ListItemText>
-      :{emoji.shortcode}:
-    </ListItemText>
+    <ListItemText primary={shortcode(emoji)} />
   </Suggestion>
 );
 

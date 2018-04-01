@@ -63,25 +63,25 @@ class SettingsPanel extends React.Component {
         <div className="SettingsPanel-column SettingsPanel-column--left">
           <h2 className="SettingsPanel-header">{t('settings.title')}</h2>
           <FormGroup>
-            <LabeledControl label={t('settings.videoEnabled')}>
+            <LabeledControl label={t('settings.videoEnabled')} id="uw-setting-videoenabled">
               <Switch
                 checked={settings.videoEnabled}
                 onChange={this.handleVideoEnabledChange}
               />
             </LabeledControl>
-            <LabeledControl label={t('settings.videoSize')}>
+            <LabeledControl label={t('settings.videoSize')} id="uw-setting-videosize">
               <Switch
                 checked={settings.videoSize === 'large'}
                 onChange={this.handleVideoSizeChange}
               />
             </LabeledControl>
-            <LabeledControl label={t('settings.mentionSound')}>
+            <LabeledControl label={t('settings.mentionSound')} id="uw-setting-mentionsound">
               <Switch
                 checked={settings.mentionSound}
                 onChange={this.handleMentionSoundChange}
               />
             </LabeledControl>
-            <LabeledControl label={t('settings.language')}>
+            <LabeledControl label={t('settings.language')} id="uw-setting-language">
               <LanguagePicker
                 value={settings.language}
                 onChange={this.handleLanguageChange}

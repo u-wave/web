@@ -47,7 +47,7 @@ class PlaylistsMenu extends React.Component {
       >
         <MenuList>
           <MenuItem onClick={onCreatePlaylist}>
-            <ListItemText>{t('playlists.new')}</ListItemText>
+            <ListItemText primary={t('playlists.new')} />
             <ListItemIcon><CreatePlaylistIcon /></ListItemIcon>
           </MenuItem>
           {playlists.map(playlist => (
@@ -61,8 +61,8 @@ class PlaylistsMenu extends React.Component {
                   <ActiveIcon />
                 </ListItemIcon>
               )}
-              <ListItemText>{playlist.name}</ListItemText>
-              <ListItemText className="AddToPlaylistMenu-smallIcon">{String(playlist.size || 0)}</ListItemText>
+              <ListItemText primary={playlist.name} />
+              <ListItemText className="AddToPlaylistMenu-smallIcon" primary={String(playlist.size || 0)} />
             </MenuItem>
           ))}
         </MenuList>

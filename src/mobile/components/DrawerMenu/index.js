@@ -56,7 +56,7 @@ const DrawerMenu = ({
               <ActiveIcon />
             </ListItemIcon>
           )}
-          <ListItemText>{playlist.name}</ListItemText>
+          <ListItemText primary={playlist.name} />
         </MenuItem>
       ))}
     </MenuList>
