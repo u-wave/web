@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import ms from 'ms';
 import Button from 'material-ui-next/Button'; // eslint-disable-line
-import { TableRow, TableCell } from '../../../components/Table';
+import { TableRow, TableCell } from 'material-ui-next/Table'; // eslint-disable-line
 import Avatar from '../../../components/Avatar';
 import Username from '../../../components/Username/WithCard';
 
