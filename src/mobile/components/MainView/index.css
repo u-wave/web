@@ -11,6 +11,7 @@
 }
 
 .MainView-title {
+  overflow: hidden;
   flex-grow: 1;
 }
 
