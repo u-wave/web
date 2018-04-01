@@ -6,13 +6,6 @@ export default {
   userAgent: typeof navigator === 'undefined' ? 'all' : navigator.userAgent,
   spacing: Spacing,
   fontFamily: 'Open Sans, sans-serif',
-  rankColors: {
-    admin: '#ff3b74',
-    manager: '#05daa5',
-    moderator: '#00b3dc',
-    special: '#fc911d',
-    default: '',
-  },
   palette: {
     primary1Color: '#9d2053',
     primary2Color: '#b20062',
