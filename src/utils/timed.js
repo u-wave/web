@@ -10,7 +10,10 @@ export default function () {
 
       static contextTypes = {
         store: PropTypes.object.isRequired,
-        timerCallbacks: PropTypes.arrayOf(PropTypes.func).isRequired,
+        timerCallbacks: PropTypes.shape({
+          add: PropTypes.func,
+          remove: PropTypes.func,
+        }).isRequired,
       };
 
       state = {
@@ -18,15 +21,11 @@ export default function () {
       };
 
       componentDidMount() {
-        this.context.timerCallbacks.push(this.tick);
+        this.context.timerCallbacks.add(this.tick);
       }
 
       componentWillUnmount() {
-        const { timerCallbacks } = this.context;
-        const index = timerCallbacks.indexOf(this.tick);
-        if (index !== -1) {
-          timerCallbacks.splice(index, 1);
-        }
+        this.context.timerCallbacks.remove(this.tick);
       }
 
       getCurrentTime() {

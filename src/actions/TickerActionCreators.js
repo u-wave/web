@@ -24,18 +24,14 @@ export function sync() {
  * When dispatched, the action returns an array. Functions pushed
  * to this array will be called on each tick.
  */
-export function createTimer() {
+export function createTimer(cb) {
   return (dispatch) => {
-    const callbacks = [];
     let last = Date.now();
     let syncing = false;
 
-    function notifyListeners() {
-      callbacks.forEach(cb => cb());
-    }
     function finishedSync() {
       syncing = false;
-      notifyListeners();
+      cb();
     }
 
     const intv = setInterval(() => {
@@ -48,7 +44,7 @@ export function createTimer() {
       } else if (!syncing) {
         // If we're currently syncing we don't update timed elements for
         // a while, to prevent weird back and forth jumps.
-        notifyListeners();
+        cb();
       }
       last = now;
     }, 1000);
@@ -57,8 +53,6 @@ export function createTimer() {
       type: SET_TIMER,
       payload: intv,
     });
-
-    return callbacks;
   };
 }
 
