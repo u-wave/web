@@ -65,18 +65,21 @@ class SettingsPanel extends React.Component {
           <FormGroup>
             <LabeledControl label={t('settings.videoEnabled')} id="uw-setting-videoenabled">
               <Switch
+                color="primary"
                 checked={settings.videoEnabled}
                 onChange={this.handleVideoEnabledChange}
               />
             </LabeledControl>
             <LabeledControl label={t('settings.videoSize')} id="uw-setting-videosize">
               <Switch
+                color="primary"
                 checked={settings.videoSize === 'large'}
                 onChange={this.handleVideoSizeChange}
               />
             </LabeledControl>
             <LabeledControl label={t('settings.mentionSound')} id="uw-setting-mentionsound">
               <Switch
+                color="primary"
                 checked={settings.mentionSound}
                 onChange={this.handleMentionSoundChange}
               />

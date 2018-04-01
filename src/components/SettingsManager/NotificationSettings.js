@@ -37,24 +37,28 @@ const NotificationSettings = ({
     <p className="SettingsPanel-helpText">{t('settings.notifications.help')}</p>
     <LabeledControl label={t('settings.notifications.userJoin')} id="uw-setting-userjoin">
       <Switch
+        color="primary"
         checked={settings.notifications.userJoin}
         onChange={onToggleUserJoin}
       />
     </LabeledControl>
     <LabeledControl label={t('settings.notifications.userLeave')} id="uw-setting-userleave">
       <Switch
+        color="primary"
         checked={settings.notifications.userLeave}
         onChange={onToggleUserLeave}
       />
     </LabeledControl>
     <LabeledControl label={t('settings.notifications.userNameChanged')} id="uw-setting-usernamechanged">
       <Switch
+        color="primary"
         checked={settings.notifications.userNameChanged}
         onChange={onToggleUserNameChanged}
       />
     </LabeledControl>
     <LabeledControl label={t('settings.notifications.skip')} id="uw-setting-skip">
       <Switch
+        color="primary"
         checked={settings.notifications.skip}
         onChange={onToggleSkip}
       />
