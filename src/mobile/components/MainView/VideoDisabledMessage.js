@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
-import Button from 'material-ui-next/Button'; // eslint-disable-line
+import Button from 'material-ui/Button';
 
 const enhance = translate();
 

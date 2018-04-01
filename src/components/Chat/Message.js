@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import compose from 'recompose/compose';
 import pure from 'recompose/pure';
 import withHandlers from 'recompose/withHandlers';
-import { CircularProgress } from 'material-ui-next/Progress'; // eslint-disable-line
+import { CircularProgress } from 'material-ui/Progress';
 import userCardable from '../../utils/userCardable';
 import Avatar from '../Avatar';
 import Username from '../Username';

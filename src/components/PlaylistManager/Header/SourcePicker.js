@@ -1,7 +1,7 @@
 import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
-import Popover from 'material-ui-next/Popover'; // eslint-disable-line
+import Popover from 'material-ui/Popover';
 import ArrowIcon from 'material-ui-icons/ArrowDropDown';
 import injectMediaSources from '../../../utils/injectMediaSources';
 import SourcePickerElement from './SourcePickerElement';

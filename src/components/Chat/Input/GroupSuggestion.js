@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ListItemIcon, ListItemText } from 'material-ui-next/List'; // eslint-disable-line
+import { ListItemIcon, ListItemText } from 'material-ui/List';
 import PeopleIcon from 'material-ui-icons/People';
 import Suggestion from './Suggestion';
 

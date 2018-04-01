@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import ms from 'ms';
-import Button from 'material-ui-next/Button'; // eslint-disable-line
-import { TableRow, TableCell } from 'material-ui-next/Table'; // eslint-disable-line
+import Button from 'material-ui/Button';
+import { TableRow, TableCell } from 'material-ui/Table';
 import Avatar from '../../../components/Avatar';
 import Username from '../../../components/Username/WithCard';
 

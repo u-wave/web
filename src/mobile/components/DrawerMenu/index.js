@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import withHandlers from 'recompose/withHandlers';
-import Drawer from 'material-ui-next/Drawer'; // eslint-disable-line
-import { MenuList, MenuItem } from 'material-ui-next/Menu'; // eslint-disable-line
-import { ListItemIcon, ListSubheader, ListItemText } from 'material-ui-next/List'; // eslint-disable-line
-import Divider from 'material-ui-next/Divider'; // eslint-disable-line
+import Drawer from 'material-ui/Drawer';
+import { MenuList, MenuItem } from 'material-ui/Menu';
+import { ListItemIcon, ListSubheader, ListItemText } from 'material-ui/List';
+import Divider from 'material-ui/Divider';
 import ActiveIcon from 'material-ui-icons/Check';
 import UserCard from '../../../components/UserCard/UserCard';
 

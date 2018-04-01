@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import compose from 'recompose/compose';
 import pure from 'recompose/pure';
-import Button from 'material-ui-next/Button'; // eslint-disable-line
+import Button from 'material-ui/Button';
 import LockedIcon from 'material-ui-icons/Lock';
 
 const WaitlistButton = ({

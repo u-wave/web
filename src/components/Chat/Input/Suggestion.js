@@ -1,7 +1,7 @@
 import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ListItem } from 'material-ui-next/List'; // eslint-disable-line
+import { ListItem } from 'material-ui/List';
 
 const Suggestion = ({
   children,

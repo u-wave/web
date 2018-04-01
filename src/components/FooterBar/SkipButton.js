@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import compose from 'recompose/compose';
 import pure from 'recompose/pure';
-import Popover from 'material-ui-next/Popover'; // eslint-disable-line
-import Tooltip from 'material-ui-next/Tooltip'; // eslint-disable-line
-import IconButton from 'material-ui-next/IconButton'; // eslint-disable-line
-import { CircularProgress } from 'material-ui-next/Progress'; // eslint-disable-line
+import Popover from 'material-ui/Popover';
+import Tooltip from 'material-ui/Tooltip';
+import IconButton from 'material-ui/IconButton';
+import { CircularProgress } from 'material-ui/Progress';
 import SkipIcon from 'material-ui-icons/SkipNext';
 import SkipReasonsList from './SkipReasonsList';
 

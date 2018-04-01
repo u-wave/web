@@ -1,7 +1,7 @@
 import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from 'material-ui-next/Button'; // eslint-disable-line
+import Button from 'material-ui/Button';
 import ScrollDownIcon from 'material-ui-icons/ArrowDownward';
 
 const ScrollNotice = ({ show, onClick }) => (

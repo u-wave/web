@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
-import Card from 'material-ui-next/Card/Card'; // eslint-disable-line
-import CardHeader from 'material-ui-next/Card/CardHeader'; // eslint-disable-line
+import Card from 'material-ui/Card/Card';
+import CardHeader from 'material-ui/Card/CardHeader';
 import OfflineIcon from './OfflineIcon';
 
 const enhance = translate();

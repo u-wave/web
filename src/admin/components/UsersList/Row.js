@@ -2,11 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import withProps from 'recompose/withProps';
 import uniqueId from 'lodash/uniqueId';
-import IconButton from 'material-ui-next/IconButton'; // eslint-disable-line
-import Menu, { MenuItem } from 'material-ui-next/Menu'; // eslint-disable-line
+import IconButton from 'material-ui/IconButton';
+import Menu, { MenuItem } from 'material-ui/Menu';
 import MoreVertIcon from 'material-ui-icons/MoreVert';
-// eslint-disable-next-line
-import { TableRow, TableCell as MuiTableCell } from 'material-ui-next/Table';
+import { TableRow, TableCell as MuiTableCell } from 'material-ui/Table';
 import Avatar from '../../../components/Avatar';
 import Username from '../../../components/Username/WithCard';
 import formatJoinDate from '../../../utils/formatJoinDate';

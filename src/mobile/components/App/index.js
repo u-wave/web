@@ -6,7 +6,7 @@ import toClass from 'recompose/toClass';
 import withState from 'recompose/withState';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-import Snackbar from 'material-ui-next/Snackbar'; // eslint-disable-line
+import Snackbar from 'material-ui/Snackbar';
 import ErrorArea from '../../../containers/ErrorArea';
 import PlaylistManager from '../../containers/PlaylistManager';
 import RoomHistory from '../../containers/RoomHistory';

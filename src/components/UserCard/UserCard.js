@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Typography from 'material-ui-next/Typography'; // eslint-disable-line
-import Card from 'material-ui-next/Card/Card'; // eslint-disable-line
-import CardHeader from 'material-ui-next/Card/CardHeader'; // eslint-disable-line
-import CardActions from 'material-ui-next/Card/CardActions'; // eslint-disable-line
-import CardContent from 'material-ui-next/Card/CardContent'; // eslint-disable-line
+import Typography from 'material-ui/Typography';
+import Card from 'material-ui/Card/Card';
+import CardHeader from 'material-ui/Card/CardHeader';
+import CardActions from 'material-ui/Card/CardActions';
+import CardContent from 'material-ui/Card/CardContent';
 import Avatar from '../Avatar';
 import UserRoles from './UserRoles';
 import formatJoinDate from '../../utils/formatJoinDate';

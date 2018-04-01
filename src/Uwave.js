@@ -7,7 +7,7 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { AppContainer as HotContainer } from 'react-hot-loader';
 import { create as createJss } from 'jss';
-import { jssPreset } from 'material-ui-next/styles'; // eslint-disable-line
+import { jssPreset } from 'material-ui/styles';
 import JssProvider from 'react-jss/lib/JssProvider';
 import createLocale from './locale';
 import AppContainer from './containers/App';

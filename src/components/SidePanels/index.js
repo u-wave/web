@@ -4,7 +4,7 @@ import { translate } from 'react-i18next';
 import compose from 'recompose/compose';
 import pure from 'recompose/pure';
 import withState from 'recompose/withState';
-import Tabs, { Tab } from 'material-ui-next/Tabs'; // eslint-disable-line
+import Tabs, { Tab } from 'material-ui/Tabs';
 import Chat from '../Chat';
 import RoomUserList from '../../containers/RoomUserList';
 import WaitList from '../../containers/WaitList';

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Modal from 'material-ui-next/Modal'; // eslint-disable-line
+import Modal from 'material-ui/Modal';
 import UserCard from './UserCard';
 
 class UserCardWrapper extends React.Component {

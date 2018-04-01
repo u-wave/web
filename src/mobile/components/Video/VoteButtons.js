@@ -1,7 +1,7 @@
 import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
-import IconButton from 'material-ui-next/IconButton'; // eslint-disable-line
+import IconButton from 'material-ui/IconButton';
 import FavoritedIcon from 'material-ui-icons/Favorite';
 import FavoriteIcon from 'material-ui-icons/FavoriteBorder';
 import DownvoteIcon from 'material-ui-icons/ThumbDown';

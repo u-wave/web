@@ -4,10 +4,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import withStyles from 'material-ui-next/styles/withStyles';
-import ButtonBase from 'material-ui-next/ButtonBase';
-import addEventListener from 'material-ui-next/utils/addEventListener';
-import { fade } from 'material-ui-next/styles/colorManipulator';
+import withStyles from 'material-ui/styles/withStyles';
+import ButtonBase from 'material-ui/ButtonBase';
+import addEventListener from 'material-ui/utils/addEventListener';
+import { fade } from 'material-ui/styles/colorManipulator';
 
 export const style = theme => {
   const commonTransitionsOptions = {

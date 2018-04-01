@@ -2,7 +2,7 @@ import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
-import { CircularProgress } from 'material-ui-next/Progress'; // eslint-disable-line
+import { CircularProgress } from 'material-ui/Progress';
 import ImportIcon from 'material-ui-icons/Input';
 
 const enhance = translate();

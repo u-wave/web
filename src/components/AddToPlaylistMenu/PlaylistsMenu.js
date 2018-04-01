@@ -2,9 +2,9 @@ import find from 'array-find';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
-import Popover from 'material-ui-next/Popover'; // eslint-disable-line
-import { MenuList, MenuItem } from 'material-ui-next/Menu'; // eslint-disable-line
-import { ListItemIcon, ListItemText } from 'material-ui-next/List'; // eslint-disable-line
+import Popover from 'material-ui/Popover';
+import { MenuList, MenuItem } from 'material-ui/Menu';
+import { ListItemIcon, ListItemText } from 'material-ui/List';
 import CreatePlaylistIcon from 'material-ui-icons/Add';
 import ActiveIcon from 'material-ui-icons/Check';
 

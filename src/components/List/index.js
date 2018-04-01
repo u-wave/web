@@ -1,2 +1,2 @@
-export { default, ListItemText } from 'material-ui-next/List'; // eslint-disable-line
+export { default, ListItemText } from 'material-ui/List';
 export ListItem from './ListItem';

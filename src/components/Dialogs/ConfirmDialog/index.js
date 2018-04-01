@@ -1,8 +1,8 @@
 import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
-import Dialog, { DialogContent } from 'material-ui-next/Dialog'; // eslint-disable-line
-import { CircularProgress } from 'material-ui-next/Progress'; // eslint-disable-line
+import Dialog, { DialogContent } from 'material-ui/Dialog';
+import { CircularProgress } from 'material-ui/Progress';
 import Form from '../../Form';
 import FormGroup from '../../Form/Group';
 import Button from '../../Form/Button';

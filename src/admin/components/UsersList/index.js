@@ -8,7 +8,7 @@ import Table, {
   TableHead,
   TableCell,
   TableRow,
-} from 'material-ui-next/Table';
+} from 'material-ui/Table';
 import UserRow from './Row';
 
 const Header = withProps({

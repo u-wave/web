@@ -2,8 +2,8 @@ import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
-import Dialog, { DialogTitle, DialogContent } from 'material-ui-next/Dialog'; // eslint-disable-line
-import IconButton from 'material-ui-next/IconButton'; // eslint-disable-line
+import Dialog, { DialogTitle, DialogContent } from 'material-ui/Dialog';
+import IconButton from 'material-ui/IconButton';
 import uniqueId from 'lodash/uniqueId';
 import formatDuration from 'format-duration';
 import ArtistIcon from 'material-ui-icons/Headset';

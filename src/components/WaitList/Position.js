@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import MuiAvatar from 'material-ui-next/Avatar'; // eslint-disable-line
+import MuiAvatar from 'material-ui/Avatar';
 
 const Position = ({ position }) => (
   <MuiAvatar className="WaitlistRow-position">

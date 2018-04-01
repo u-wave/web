@@ -1,5 +1,5 @@
 import React from 'react';
-import SvgIcon from 'material-ui-next/SvgIcon'; // eslint-disable-line
+import SvgIcon from 'material-ui/SvgIcon';
 
 /* eslint-disable max-len */
 const GithubIcon = props => (

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Drawer from 'material-ui-next/Drawer'; // eslint-disable-line
+import Drawer from 'material-ui/Drawer';
 import UserList from './UserList';
 
 const UsersDrawer = ({

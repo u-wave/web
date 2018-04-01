@@ -35,7 +35,7 @@
     "lie": "^3.3.0",
     "load-script2": "^1.0.1",
     "lodash": "^4.17.5",
-    "material-ui": "^0.20.0",
+    "material-ui": "^1.0.0-beta.40",
     "material-ui-icons": "^1.0.0-beta.36",
     "ms": "^2.1.1",
     "nanoraf": "^3.0.1",

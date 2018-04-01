@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Tooltip from 'material-ui-next/Tooltip'; // eslint-disable-line
-import IconButton from 'material-ui-next/IconButton'; // eslint-disable-line
+import Tooltip from 'material-ui/Tooltip';
+import IconButton from 'material-ui/IconButton';
 import ImportIcon from 'material-ui-icons/PlaylistAdd';
 import MediaList from '../../components/MediaList';
 import AddToPlaylistAction from '../../components/MediaList/Actions/AddToPlaylist';

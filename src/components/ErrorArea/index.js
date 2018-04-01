@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Snackbar from 'material-ui-next/Snackbar'; // eslint-disable-line
+import Snackbar from 'material-ui/Snackbar';
 
 const ErrorArea = ({ error, onDismiss }) => (
   <div className="ErrorArea">

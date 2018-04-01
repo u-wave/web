@@ -1,7 +1,7 @@
 import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
-import Tooltip from 'material-ui-next/Tooltip'; // eslint-disable-line
+import Tooltip from 'material-ui/Tooltip';
 
 /* eslint-disable */
 const Button = ({

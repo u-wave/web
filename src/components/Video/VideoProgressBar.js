@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { LinearProgress } from 'material-ui-next/Progress'; // eslint-disable-line
+import { LinearProgress } from 'material-ui/Progress';
 
 const VideoProgressBar = ({
   media,

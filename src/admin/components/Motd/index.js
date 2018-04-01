@@ -4,10 +4,10 @@ import compose from 'recompose/compose';
 import withState from 'recompose/withState';
 import withProps from 'recompose/withProps';
 import withHandlers from 'recompose/withHandlers';
-import Card, { CardHeader, CardContent, CardActions } from 'material-ui-next/Card'; // eslint-disable-line
-import Button from 'material-ui-next/Button'; // eslint-disable-line
-import IconButton from 'material-ui-next/IconButton'; // eslint-disable-line
-import Collapse from 'material-ui-next/transitions/Collapse'; // eslint-disable-line
+import Card, { CardHeader, CardContent, CardActions } from 'material-ui/Card';
+import Button from 'material-ui/Button';
+import IconButton from 'material-ui/IconButton';
+import Collapse from 'material-ui/transitions/Collapse';
 import EditIcon from 'material-ui-icons/ModeEdit';
 import parse from 'u-wave-parse-chat-markup';
 import compile from '../../../components/Chat/Markup/compile';

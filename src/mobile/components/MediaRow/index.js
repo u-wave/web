@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ListItem, ListItemText } from 'material-ui-next/List'; // eslint-disable-line
+import { ListItem, ListItemText } from 'material-ui/List';
 
 const MediaRow = ({ media }) => (
   <ListItem>

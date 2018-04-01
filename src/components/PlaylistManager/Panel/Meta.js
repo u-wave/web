@@ -2,7 +2,7 @@ import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
-import Checkbox from 'material-ui-next/Checkbox'; // eslint-disable-line
+import Checkbox from 'material-ui/Checkbox';
 import ActiveIcon from 'material-ui-icons/CheckBox';
 import ActivateIcon from 'material-ui-icons/CheckBoxOutlineBlank';
 import RenamePlaylistButton from './RenamePlaylistButton';

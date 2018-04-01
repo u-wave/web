@@ -2,8 +2,8 @@ import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
-import { FormGroup } from 'material-ui-next/Form'; // eslint-disable-line
-import Switch from 'material-ui-next/Switch'; // eslint-disable-line
+import { FormGroup } from 'material-ui/Form';
+import Switch from 'material-ui/Switch';
 import Profile from './Profile';
 import LabeledControl from './LabeledControl';
 import LanguagePicker from './LanguagePicker';

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
-import { CircularProgress } from 'material-ui-next/Progress'; // eslint-disable-line
+import { CircularProgress } from 'material-ui/Progress';
 import EmailIcon from 'material-ui-icons/Email';
 import Form from '../../Form';
 import FormGroup from '../../Form/Group';

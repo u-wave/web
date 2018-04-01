@@ -1,7 +1,7 @@
 import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ListItem as MuiListItem } from 'material-ui-next/List'; // eslint-disable-line
+import { ListItem as MuiListItem } from 'material-ui/List';
 import SelectedIcon from 'material-ui-icons/ChevronRight';
 
 /**

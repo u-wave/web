@@ -1,8 +1,8 @@
 import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
-import Dialog, { DialogTitle, DialogContent } from 'material-ui-next/Dialog'; // eslint-disable-line
-import { CircularProgress } from 'material-ui-next/Progress'; // eslint-disable-line
+import Dialog, { DialogTitle, DialogContent } from 'material-ui/Dialog';
+import { CircularProgress } from 'material-ui/Progress';
 import uniqueId from 'lodash/uniqueId';
 import Form from '../../Form';
 import FormGroup from '../../Form/Group';

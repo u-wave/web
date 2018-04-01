@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import withProps from 'recompose/withProps';
 import { translate } from 'react-i18next';
-import List, { ListSubheader } from 'material-ui-next/List'; // eslint-disable-line
-import Divider from 'material-ui-next/Divider'; // eslint-disable-line
-import Button from 'material-ui-next/Button'; // eslint-disable-line
+import List, { ListSubheader } from 'material-ui/List';
+import Divider from 'material-ui/Divider';
+import Button from 'material-ui/Button';
 import CurrentDJIcon from 'material-ui-icons/PlayArrow';
 import UserRow from './UserRow';
 import WaitlistPosition from './WaitlistPosition';

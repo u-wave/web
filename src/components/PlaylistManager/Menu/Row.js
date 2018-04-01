@@ -2,7 +2,7 @@ import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { DropTarget } from 'react-dnd';
-import { CircularProgress } from 'material-ui-next/Progress'; // eslint-disable-line
+import { CircularProgress } from 'material-ui/Progress';
 import ActiveIcon from 'material-ui-icons/Check';
 import { MEDIA } from '../../../constants/DDItemTypes';
 

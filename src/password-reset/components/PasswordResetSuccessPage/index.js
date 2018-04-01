@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
-import Paper from 'material-ui-next/Paper'; // eslint-disable-line
-import Typography from 'material-ui-next/Typography'; // eslint-disable-line
+import Paper from 'material-ui/Paper';
+import Typography from 'material-ui/Typography';
 
 const enhance = translate();
 

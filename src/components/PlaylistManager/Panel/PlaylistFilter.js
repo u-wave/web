@@ -3,8 +3,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import debounce from 'lodash/debounce';
-import Tooltip from 'material-ui-next/Tooltip'; // eslint-disable-line
-import IconButton from 'material-ui-next/IconButton'; // eslint-disable-line
+import Tooltip from 'material-ui/Tooltip';
+import IconButton from 'material-ui/IconButton';
 import FilterIcon from 'material-ui-icons/Search';
 
 const enhance = translate();

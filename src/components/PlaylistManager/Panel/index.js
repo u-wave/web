@@ -1,7 +1,7 @@
 import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { CircularProgress } from 'material-ui-next/Progress'; // eslint-disable-line
+import { CircularProgress } from 'material-ui/Progress';
 import MediaList from '../../MediaList';
 import PlaylistMeta from './Meta';
 import PlainItemRow from '../../MediaList/Row';

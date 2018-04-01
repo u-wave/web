@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import compose from 'recompose/compose';
 import { translate } from 'react-i18next';
-import Tooltip from 'material-ui-next/Tooltip'; // eslint-disable-line
-import IconButton from 'material-ui-next/IconButton'; // eslint-disable-line
-import SvgIcon from 'material-ui-next/SvgIcon'; // eslint-disable-line
+import Tooltip from 'material-ui/Tooltip';
+import IconButton from 'material-ui/IconButton';
+import SvgIcon from 'material-ui/SvgIcon';
 // State-related imports
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';

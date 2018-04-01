@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import withHandlers from 'recompose/withHandlers';
-import AppBar from 'material-ui-next/AppBar'; // eslint-disable-line
-import Toolbar from 'material-ui-next/Toolbar'; // eslint-disable-line
-import Typography from 'material-ui-next/Typography'; // eslint-disable-line
-import IconButton from 'material-ui-next/IconButton'; // eslint-disable-line
+import AppBar from 'material-ui/AppBar';
+import Toolbar from 'material-ui/Toolbar';
+import Typography from 'material-ui/Typography';
+import IconButton from 'material-ui/IconButton';
 import HistoryIcon from 'material-ui-icons/History';
 import MenuIcon from 'material-ui-icons/Menu';
 import SongTitle from '../../../components/SongTitle';

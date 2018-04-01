@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import withProps from 'recompose/withProps';
 import { translate } from 'react-i18next';
-import Button from 'material-ui-next/Button'; // eslint-disable-line
+import Button from 'material-ui/Button';
 import LicenseIcon from 'material-ui-icons/Copyright';
 import GithubIcon from './GithubIcon';
 

@@ -4,9 +4,9 @@ import compose from 'recompose/compose';
 import withState from 'recompose/withState';
 import withHandlers from 'recompose/withHandlers';
 import { translate } from 'react-i18next';
-import { CircularProgress } from 'material-ui-next/Progress'; // eslint-disable-line
-import Tooltip from 'material-ui-next/Tooltip'; // eslint-disable-line
-import IconButton from 'material-ui-next/IconButton'; // eslint-disable-line
+import { CircularProgress } from 'material-ui/Progress';
+import Tooltip from 'material-ui/Tooltip';
+import IconButton from 'material-ui/IconButton';
 import ShuffleIcon from 'material-ui-icons/Shuffle';
 
 const enhance = compose(

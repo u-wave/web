@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { MuiThemeProvider } from 'material-ui-next/styles'; // eslint-disable-line
+import { MuiThemeProvider } from 'material-ui/styles';
 import { I18nextProvider } from 'react-i18next';
 import { resetPassword } from '../actions';
 import ErrorArea from '../../containers/ErrorArea';

@@ -3,13 +3,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import compose from 'recompose/compose';
 import { translate } from 'react-i18next';
-// eslint-disable-next-line
 import Dialog, {
   DialogTitle,
   DialogContent,
   withMobileDialog,
-} from 'material-ui-next/Dialog';
-import IconButton from 'material-ui-next/IconButton'; // eslint-disable-line
+} from 'material-ui/Dialog';
+import IconButton from 'material-ui/IconButton';
 import CloseIcon from 'material-ui-icons/Close';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
