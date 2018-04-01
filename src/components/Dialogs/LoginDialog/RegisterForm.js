@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { translate, Interpolate } from 'react-i18next';
 import { FormControlLabel } from 'material-ui-next/Form'; // eslint-disable-line
 import Checkbox from 'material-ui-next/Checkbox'; // eslint-disable-line
+import { CircularProgress } from 'material-ui-next/Progress'; // eslint-disable-line
 import EmailIcon from 'material-ui-icons/Email';
 import PasswordIcon from 'material-ui-icons/Lock';
 import UserIcon from 'material-ui-icons/Person';
-import Loader from '../../Loader';
 import Form from '../../Form';
 import FormGroup from '../../Form/Group';
 import TextField from '../../Form/TextField';
@@ -158,7 +158,7 @@ class RegisterForm extends React.Component {
             disabled={busy || !agreed}
           >
             {busy
-              ? <div className="Button-loading"><Loader size="tiny" /></div>
+              ? <div className="Button-loading"><CircularProgress size="100%" /></div>
               : t('login.register')
             }
           </Button>

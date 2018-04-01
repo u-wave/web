@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import EmailIcon from 'material-ui-icons/Email';
 import PasswordIcon from 'material-ui-icons/Lock';
-import Loader from '../../Loader';
+import { CircularProgress } from 'material-ui-next/Progress'; // eslint-disable-line
 import Form from '../../Form';
 import FormGroup from '../../Form/Group';
 import TextField from '../../Form/TextField';
@@ -89,7 +89,11 @@ class LoginForm extends React.Component {
             className="LoginForm-submit"
             disabled={busy}
           >
-            {busy ? <div className="Button-loading"><Loader size="tiny" /></div> : t('login.login')}
+            {busy ? (
+              <div className="Button-loading">
+                <CircularProgress size="100%" />
+              </div>
+            ) : t('login.login')}
           </Button>
         </FormGroup>
 

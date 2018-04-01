@@ -2,10 +2,10 @@ import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import Dialog, { DialogContent } from 'material-ui-next/Dialog'; // eslint-disable-line
+import { CircularProgress } from 'material-ui-next/Progress'; // eslint-disable-line
 import Form from '../../Form';
 import FormGroup from '../../Form/Group';
 import Button from '../../Form/Button';
-import Loader from '../../Loader';
 
 export default class ConfirmDialog extends React.Component {
   static propTypes = {
@@ -79,7 +79,7 @@ export default class ConfirmDialog extends React.Component {
               <div className="ConfirmDialog-spacer" />
               <div className="ConfirmDialog-button">
                 <Button disabled={busy} onClick={this.handleConfirm}>
-                  {busy ? <div className="Button-loading"><Loader size="tiny" /></div> : confirmLabel}
+                  {busy ? <div className="Button-loading"><CircularProgress size="100%" /></div> : confirmLabel}
                 </Button>
               </div>
             </FormGroup>

@@ -1,6 +1,0 @@
-@import "../../vars.css";
-@import "./CircularProgress.css";
-
-.Loader {
-  position: relative;
-}

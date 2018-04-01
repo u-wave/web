@@ -2,8 +2,8 @@ import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
+import { CircularProgress } from 'material-ui-next/Progress'; // eslint-disable-line
 import ImportIcon from 'material-ui-icons/Input';
-import Loader from '../../Loader';
 
 const enhance = translate();
 
@@ -17,7 +17,7 @@ const PlaylistImportRow = ({
   if (importing) {
     icon = (
       <div className="PlaylistMenuRow-loading">
-        <Loader size="tiny" />
+        <CircularProgress size="100%" />
       </div>
     );
   } else {

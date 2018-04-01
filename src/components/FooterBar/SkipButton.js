@@ -6,8 +6,8 @@ import pure from 'recompose/pure';
 import Popover from 'material-ui-next/Popover'; // eslint-disable-line
 import Tooltip from 'material-ui-next/Tooltip'; // eslint-disable-line
 import IconButton from 'material-ui-next/IconButton'; // eslint-disable-line
+import { CircularProgress } from 'material-ui-next/Progress'; // eslint-disable-line
 import SkipIcon from 'material-ui-icons/SkipNext';
-import Loader from '../Loader';
 import SkipReasonsList from './SkipReasonsList';
 
 const popoverPosition = {
@@ -74,7 +74,7 @@ class SkipButton extends React.Component {
       return (
         <span>
           <div className="SkipButton is-loading">
-            <Loader size="tiny" className="SkipButton-loader" />
+            <CircularProgress className="SkipButton-loader" />
           </div>
         </span>
       );

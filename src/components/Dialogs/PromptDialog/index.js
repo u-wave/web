@@ -2,12 +2,12 @@ import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import Dialog, { DialogTitle, DialogContent } from 'material-ui-next/Dialog'; // eslint-disable-line
+import { CircularProgress } from 'material-ui-next/Progress'; // eslint-disable-line
 import uniqueId from 'lodash/uniqueId';
 import Form from '../../Form';
 import FormGroup from '../../Form/Group';
 import TextField from '../../Form/TextField';
 import Button from '../../Form/Button';
-import Loader from '../../Loader';
 
 export default class PromptDialog extends React.Component {
   static propTypes = {
@@ -114,7 +114,7 @@ export default class PromptDialog extends React.Component {
             </FormGroup>
             <FormGroup>
               <Button disabled={busy}>
-                {busy ? <div className="Button-loading"><Loader size="tiny" /></div> : submitLabel}
+                {busy ? <div className="Button-loading"><CircularProgress size="100%" /></div> : submitLabel}
               </Button>
             </FormGroup>
           </Form>

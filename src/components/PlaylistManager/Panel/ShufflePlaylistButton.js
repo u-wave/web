@@ -4,10 +4,10 @@ import compose from 'recompose/compose';
 import withState from 'recompose/withState';
 import withHandlers from 'recompose/withHandlers';
 import { translate } from 'react-i18next';
+import { CircularProgress } from 'material-ui-next/Progress'; // eslint-disable-line
 import Tooltip from 'material-ui-next/Tooltip'; // eslint-disable-line
 import IconButton from 'material-ui-next/IconButton'; // eslint-disable-line
 import ShuffleIcon from 'material-ui-icons/Shuffle';
-import Loader from '../../Loader';
 
 const enhance = compose(
   withState('isLoading', 'setLoading', false),
@@ -35,7 +35,7 @@ const ShuffleButton = ({
       onClick={onClick}
     >
       {isLoading ? (
-        <Loader size="tiny" />
+        <CircularProgress size="100%" />
       ) : (
         <ShuffleIcon />
       )}

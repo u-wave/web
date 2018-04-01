@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Loader from '../Loader';
+import { CircularProgress } from 'material-ui-next/Progress'; // eslint-disable-line
 
 const OfflineIcon = ({ style }) => (
   <div
@@ -11,7 +11,7 @@ const OfflineIcon = ({ style }) => (
       display: 'inline-block',
     }}
   >
-    <Loader size="tiny" />
+    <CircularProgress size={32} />
   </div>
 );
 

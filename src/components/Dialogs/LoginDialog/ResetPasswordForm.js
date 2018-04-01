@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
+import { CircularProgress } from 'material-ui-next/Progress'; // eslint-disable-line
 import EmailIcon from 'material-ui-icons/Email';
-import Loader from '../../Loader';
 import Form from '../../Form';
 import FormGroup from '../../Form/Group';
 import TextField from '../../Form/TextField';
@@ -80,7 +80,7 @@ class ResetPasswordForm extends React.Component {
             disabled={busy}
           >
             {busy ? (
-              <div className="Button-loading"><Loader size="tiny" /></div>
+              <div className="Button-loading"><CircularProgress size="100%" /></div>
             ) : t('login.requestPasswordReset')}
           </Button>
         </FormGroup>
