@@ -13,17 +13,17 @@ const VoteButtons = ({
   isFavorite, onFavorite,
 }) => (
   <div className="VoteButtons">
-    <IconButton onClick={onUpvote}>
+    <IconButton onClick={onUpvote} className="VoteButtons-button">
       <UpvoteIcon className={cx(isUpvote && 'ResponseButton-icon--upvoted')} />
     </IconButton>
-    <IconButton onClick={onFavorite}>
+    <IconButton onClick={onFavorite} className="VoteButtons-button">
       {isFavorite ? (
         <FavoritedIcon className="ResponseButton-icon--favorite" />
       ) : (
         <FavoriteIcon />
       )}
     </IconButton>
-    <IconButton onClick={onDownvote}>
+    <IconButton onClick={onDownvote} className="VoteButtons-button">
       <DownvoteIcon className={cx(isDownvote && 'ResponseButton-icon--downvoted')} />
     </IconButton>
   </div>

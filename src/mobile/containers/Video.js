@@ -3,10 +3,6 @@ import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import timed from '../../utils/timed';
 import {
-  enterFullscreen as onFullscreenEnter,
-  exitFullscreen as onFullscreenExit,
-} from '../../actions/PlaybackActionCreators';
-import {
   openFavoriteMenu,
   doUpvote,
   doDownvote,
@@ -25,13 +21,10 @@ const mapStateToProps = createStructuredSelector({
   media: mediaSelector,
   seek: timeElapsedSelector,
   volume: playbackVolumeSelector,
-  isFullscreen: state => state.booth.isFullscreen,
   voteStats: currentVoteStatsSelector,
 });
 
 const mapDispatchToProps = {
-  onFullscreenEnter,
-  onFullscreenExit,
   onFavorite: openFavoriteMenu,
   onUpvote: doUpvote,
   onDownvote: doDownvote,

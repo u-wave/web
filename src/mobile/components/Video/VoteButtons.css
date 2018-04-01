@@ -4,6 +4,10 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  position: absolute;
-  z-index: 5;
+  background: rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+}
+
+.VoteButtons-button {
+  pointer-events: initial;
 }
