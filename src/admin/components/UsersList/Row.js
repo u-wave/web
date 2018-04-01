@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import withProps from 'recompose/withProps';
-import IconMenu from 'material-ui/IconMenu';
-import IconButton from 'material-ui/IconButton';
-import MenuItem from 'material-ui/MenuItem';
+import uniqueId from 'lodash/uniqueId';
+import IconButton from 'material-ui-next/IconButton'; // eslint-disable-line
+import Menu, { MenuItem } from 'material-ui-next/Menu'; // eslint-disable-line
 import MoreVertIcon from 'material-ui-icons/MoreVert';
 // eslint-disable-next-line
 import { TableRow, TableCell as MuiTableCell } from 'material-ui-next/Table';
@@ -21,48 +21,65 @@ const actionsStyle = {
   paddingRight: 0,
 };
 
-const anchorOrigin = { horizontal: 'right', vertical: 'top' };
-const targetOrigin = { horizontal: 'right', vertical: 'top' };
-
 const TableCell = withProps({
   className: 'AdminUserRow-cell',
 })(MuiTableCell);
 
-const UserRow = ({
-  user,
-}) => (
-  <TableRow className="AdminUserRow">
-    <TableCell style={avatarStyle}>
-      <Avatar user={user} />
-    </TableCell>
-    <TableCell>
-      <Username user={user} />
-    </TableCell>
-    <TableCell>
-      {formatJoinDate(user.createdAt)}
-    </TableCell>
-    <TableCell>Email</TableCell>
-    <TableCell>
-      {user.roles.join(', ')}
-    </TableCell>
-    <TableCell style={actionsStyle}>
-      <IconMenu
-        iconButtonElement={(
-          <IconButton>
+export default class UserRow extends React.Component {
+  static propTypes = {
+    user: PropTypes.object.isRequired,
+  };
+
+  state = {
+    open: false,
+    anchorEl: null,
+  };
+
+  menu = uniqueId('menu');
+
+  handleOpenMenu = (event) => {
+    this.setState({ open: true, anchorEl: event.currentTarget });
+  };
+  handleCloseMenu = () => {
+    this.setState({ open: false, anchorEl: null });
+  };
+
+  render() {
+    const { user } = this.props;
+    const { open, anchorEl } = this.state;
+    return (
+      <TableRow className="AdminUserRow">
+        <TableCell style={avatarStyle}>
+          <Avatar user={user} />
+        </TableCell>
+        <TableCell>
+          <Username user={user} />
+        </TableCell>
+        <TableCell>
+          {formatJoinDate(user.createdAt)}
+        </TableCell>
+        <TableCell>Email</TableCell>
+        <TableCell>
+          {user.roles.join(', ')}
+        </TableCell>
+        <TableCell style={actionsStyle}>
+          <IconButton
+            onClick={this.handleOpenMenu}
+            aria-haspopup="true"
+            aria-owns={open ? this.menu : null}
+          >
             <MoreVertIcon />
           </IconButton>
-        )}
-        anchorOrigin={anchorOrigin}
-        targetOrigin={targetOrigin}
-      >
-        <MenuItem primaryText="Ban" />
-      </IconMenu>
-    </TableCell>
-  </TableRow>
-);
-
-UserRow.propTypes = {
-  user: PropTypes.object.isRequired,
-};
-
-export default UserRow;
+          <Menu
+            id={this.menu}
+            open={open}
+            anchorEl={anchorEl}
+            onClose={this.handleCloseMenu}
+          >
+            <MenuItem>Ban</MenuItem>
+          </Menu>
+        </TableCell>
+      </TableRow>
+    );
+  }
+}
