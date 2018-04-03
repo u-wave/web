@@ -1,6 +1,8 @@
 import cx from 'classnames';
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
+import MuiList from 'material-ui/List';
 import List from 'react-list';
 import RoomUserRow from './Row';
 import GuestsRow from './GuestsRow';
@@ -15,6 +17,15 @@ const RoomUserList = ({ className, users, guests }) => {
   return (
     <div className={cx('UserList', 'UserList--online', className)}>
       <List
+        itemsRenderer={(children, ref) => (
+          <MuiList
+            ref={(list) => {
+              ref(list && ReactDOM.findDOMNode(list)); // eslint-disable-line react/no-find-dom-node
+            }}
+          >
+            {children}
+          </MuiList>
+        )}
         itemRenderer={(index, key) => {
           const rowClass = cx(
             'UserList-row',
