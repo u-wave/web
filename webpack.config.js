@@ -1,9 +1,9 @@
 /* eslint-disable global-require */
 const path = require('path');
 const escapeStringRegExp = require('escape-string-regexp');
-const { DefinePlugin, ProgressPlugin } = require('webpack');
+const { ProgressPlugin } = require('webpack');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const ExtractCssPlugin = require('mini-css-extract-plugin');
 const HtmlPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const ManifestPlugin = require('webpack-pwa-manifest');
@@ -48,16 +48,7 @@ const noConfigBabelLoader = {
   },
 };
 
-const extractAppCss = new ExtractTextPlugin({
-  filename: '[name]_[contenthash:7].css',
-  // Disable in development mode, so we can use CSS hot reloading.
-  disable: nodeEnv === 'development',
-});
-
 const plugins = [
-  new DefinePlugin({
-    'process.env': { NODE_ENV: JSON.stringify(nodeEnv) },
-  }),
   new CopyPlugin([
     { from: '../assets/favicon.ico', to: 'favicon.ico' },
   ]),
@@ -75,7 +66,6 @@ const plugins = [
     title: 'Reset Password',
     minify: nodeEnv === 'production' ? htmlMinifierOptions : false,
   }),
-  extractAppCss,
   new ProgressPlugin(),
   new LodashModuleReplacementPlugin({
     paths: true,
@@ -83,40 +73,33 @@ const plugins = [
   new ManifestPlugin(require('./src/manifest').default),
 ];
 
+const optimization = {};
+
 if (nodeEnv === 'production') {
   const CompressionPlugin = require('compression-webpack-plugin');
   const brotli = require('brotli/compress');
-  const {
-    LoaderOptionsPlugin,
-    optimize: {
-      OccurrenceOrderPlugin,
-      ModuleConcatenationPlugin,
-    },
-  } = require('webpack');
   const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-  const CommonShakePlugin = require('webpack-common-shake').Plugin;
   const SriPlugin = require('webpack-subresource-integrity');
 
   const compressible = /\.(js|css|svg|mp3)$/;
 
-  plugins.push(
-    new OccurrenceOrderPlugin(),
-    new LoaderOptionsPlugin({
-      minimize: true,
-      debug: false,
-    }),
-    new CommonShakePlugin(),
-    new UglifyJsPlugin({
-      sourceMap: true,
-      uglifyOptions: {
-        toplevel: true,
-        compress: {
-          pure_getters: true,
-          unsafe: true,
-        },
+  optimization.minimizer = [new UglifyJsPlugin({
+    parallel: true,
+    sourceMap: true,
+    uglifyOptions: {
+      toplevel: true,
+      compress: {
+        pure_getters: true,
+        unsafe: true,
       },
+    },
+  })];
+
+  plugins.push(
+    new ExtractCssPlugin({
+      filename: '[name]_[contenthash:7].css',
+      chunkFilename: '[name]_[contenthash:7].css',
     }),
-    new ModuleConcatenationPlugin(),
     // Add Gzip-compressed files.
     new CompressionPlugin({
       test: compressible,
@@ -191,6 +174,7 @@ Object.keys(staticPages).forEach((name) => {
 module.exports = {
   context,
   entry: entries,
+  mode: nodeEnv === 'production' ? 'production' : 'development',
   // Quit if there are errors.
   bail: nodeEnv === 'production',
   devtool: nodeEnv === 'production' ? 'source-map' : 'inline-source-map',
@@ -201,6 +185,7 @@ module.exports = {
     chunkFilename: nodeEnv === 'production' ? '[name]_[chunkhash:7].js' : '[name]_dev.js',
     crossOriginLoading: 'anonymous',
   },
+  optimization,
   plugins,
   module: {
     rules: [
@@ -219,10 +204,11 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: extractAppCss.extract({
-          fallback: 'style-loader',
-          use: ['css-loader', 'postcss-loader'],
-        }),
+        use: [
+          nodeEnv === 'development' ? 'style-loader' : ExtractCssPlugin.loader,
+          'css-loader',
+          'postcss-loader',
+        ],
       },
       {
         test: /\.yaml$/,
