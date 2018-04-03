@@ -1,3 +1,8 @@
+# 1.3.1 / 03 Apr 2018
+
+Bugfixes:
+ * Hide Google signin button on Register form if not available. (#843)
+
 # 1.3.0 / 29 Mar 2018
 
 Features:
