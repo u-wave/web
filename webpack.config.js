@@ -257,6 +257,9 @@ module.exports = {
     ].filter(Boolean),
   },
   resolve: {
+    alias: {
+      'material-ui': path.join(__dirname, 'node_modules/material-ui/es/'),
+    },
     mainFields: [
       'browser',
       'module',
