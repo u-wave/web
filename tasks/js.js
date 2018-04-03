@@ -28,6 +28,15 @@ const rewriteLocaleImports = () => ({
   },
 });
 
+const rewriteMuiImports = (rx, replace) => () => ({
+  visitor: {
+    ImportDeclaration(path) {
+      const source = path.get('source');
+      source.node.value = source.node.value.replace(rx, replace);
+    },
+  },
+});
+
 gulp.task('js:locales', () =>
   gulp.src('locale/*.yaml')
     .pipe(yaml({ space: 2 }))
@@ -63,7 +72,10 @@ gulp.task('js:babel', ['js:locales'], () => {
     }))
     .pipe(sourcemaps.init())
     .pipe(babel({
-      plugins: [rewriteLocaleImports],
+      plugins: [
+        rewriteLocaleImports,
+        rewriteMuiImports(/^material-ui\//, 'material-ui/es/'),
+      ],
     }))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(destEs))
@@ -80,6 +92,7 @@ gulp.task('js:babel', ['js:locales'], () => {
         'syntax-object-rest-spread',
         'transform-es2015-modules-commonjs',
         'dynamic-import-node',
+        rewriteMuiImports(/^material-ui\/es\//, 'material-ui/'),
       ],
     }))
     .pipe(sourcemaps.write('.'))
