@@ -119,8 +119,6 @@ class EditMediaDialog extends React.Component {
       bodyClassName,
       contentClassName,
       titleClassName,
-
-      ...props
     } = this.props;
     const {
       errors,
@@ -240,9 +238,9 @@ class EditMediaDialog extends React.Component {
         </Form>
       );
     }
+
     return (
       <Dialog
-        {...props}
         classes={{
           paper: cx('Dialog', 'EditMediaDialog', contentClassName),
         }}
