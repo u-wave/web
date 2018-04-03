@@ -225,6 +225,8 @@ module.exports = {
           /url-regex/,
           /truncate-url/,
           /format-duration/,
+          /material-ui\/es/,
+          /material-ui-icons\/es/,
         ],
         use: [
           noConfigBabelLoader,
@@ -259,6 +261,7 @@ module.exports = {
   resolve: {
     alias: {
       'material-ui': path.join(__dirname, 'node_modules/material-ui/es/'),
+      'material-ui-icons': path.join(__dirname, 'node_modules/material-ui-icons/es/'),
     },
     mainFields: [
       'browser',
