@@ -2,12 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import Paper from 'material-ui/Paper';
+import Typography from 'material-ui/Typography';
 
 const enhance = translate();
 
 const PasswordResetSuccessPage = ({ t }) => (
   <Paper className="PasswordReset">
-    <p>{t('resetPassword.success')}</p>
+    <Typography variant="body1">
+      {t('resetPassword.success')}
+    </Typography>
   </Paper>
 );
 

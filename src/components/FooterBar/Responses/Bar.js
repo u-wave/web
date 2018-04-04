@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import pure from 'recompose/pure';
-
 import Favorite from './Favorite';
 import Upvote from './Upvote';
 import Downvote from './Downvote';

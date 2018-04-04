@@ -4,19 +4,20 @@ import compose from 'recompose/compose';
 import withState from 'recompose/withState';
 import withProps from 'recompose/withProps';
 import withHandlers from 'recompose/withHandlers';
-import { Card, CardHeader, CardText, CardActions } from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
-import muiThemeable from 'material-ui/styles/muiThemeable';
-import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
+import Card, { CardHeader, CardContent, CardActions } from 'material-ui/Card';
+import Button from 'material-ui/Button';
+import IconButton from 'material-ui/IconButton';
+import Collapse from 'material-ui/transitions/Collapse';
+import EditIcon from 'material-ui-icons/ModeEdit';
 import parse from 'u-wave-parse-chat-markup';
 import compile from '../../../components/Chat/Markup/compile';
 
-import './index.css';
-
 const enhance = compose(
   withState('newMotd', 'setMotd', props => props.motd),
+  withState('expanded', 'setExpanded', false),
   withProps(props => ({
     parsedMotd: compile(parse(props.newMotd), props.compileOptions),
+    onExpand: () => props.setExpanded(!props.expanded),
   })),
   withHandlers({
     onChange: props => (event) => {
@@ -24,9 +25,9 @@ const enhance = compose(
     },
     onSubmit: props => () => {
       props.onSetMotd(props.newMotd);
+      props.setExpanded(false);
     },
   }),
-  muiThemeable(),
 );
 
 function autoFocus(el) {
@@ -34,48 +35,55 @@ function autoFocus(el) {
 }
 
 const Motd = ({
-  muiTheme,
   canChangeMotd,
   newMotd,
   parsedMotd,
+  expanded,
   onChange,
   onSubmit,
+  onExpand,
 }) => (
   <Card className="AdminMotd">
     <CardHeader
       title="Message of the Day"
-      showExpandableButton={canChangeMotd}
-      closeIcon={<EditIcon color="#fff" />}
+      action={canChangeMotd && (
+        <IconButton onClick={onExpand}>
+          <EditIcon />
+        </IconButton>
+      )}
     />
-    <CardText>{parsedMotd}</CardText>
-    <CardText expandable style={{ paddingTop: 0 }}>
-      <textarea
-        className="AdminMotd-field"
-        rows={4}
-        onChange={onChange}
-        value={newMotd}
-        ref={autoFocus}
-      />
-    </CardText>
-    <CardActions expandable>
-      <FlatButton
-        onClick={onSubmit}
-        label="Save"
-        backgroundColor={muiTheme.palette.primary1Color}
-        hoverColor={muiTheme.palette.primary2Color}
-        rippleColor={muiTheme.palette.primary3Color}
-      />
-    </CardActions>
+    <CardContent>{parsedMotd}</CardContent>
+    <Collapse in={expanded} unmountOnExit>
+      <CardContent style={{ paddingTop: 0 }}>
+        <textarea
+          className="AdminMotd-field"
+          rows={4}
+          onChange={onChange}
+          value={newMotd}
+          ref={autoFocus}
+        />
+      </CardContent>
+      <CardActions>
+        <Button
+          variant="raised"
+          color="primary"
+          onClick={onSubmit}
+        >
+          Save
+        </Button>
+      </CardActions>
+    </Collapse>
   </Card>
 );
 
 Motd.propTypes = {
-  muiTheme: PropTypes.object.isRequired,
   canChangeMotd: PropTypes.bool,
   newMotd: PropTypes.string.isRequired,
   parsedMotd: PropTypes.array.isRequired,
+  expanded: PropTypes.bool.isRequired,
   onChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
+  onExpand: PropTypes.func.isRequired,
 };
 
 Motd.defaultProps = {

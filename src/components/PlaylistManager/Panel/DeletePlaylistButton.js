@@ -1,11 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
+import Tooltip from 'material-ui/Tooltip';
 import IconButton from 'material-ui/IconButton';
-import DeleteIcon from 'material-ui/svg-icons/action/delete';
+import DeleteIcon from 'material-ui-icons/Delete';
 
 import ConfirmDialog from '../../Dialogs/ConfirmDialog';
 import FormGroup from '../../Form/Group';
+
+const enhance = translate();
 
 class DeletePlaylistButton extends React.Component {
   static propTypes = {
@@ -41,14 +44,17 @@ class DeletePlaylistButton extends React.Component {
 
   render() {
     const { t, active } = this.props;
-    const hoverColor = active ? '#555' : '#fff';
     return (
-      <IconButton
-        onClick={this.handleOpen}
-        tooltip={t('playlists.delete')}
-        tooltipPosition="top-center"
-      >
-        <DeleteIcon color="#555" hoverColor={hoverColor} />
+      <React.Fragment>
+        <Tooltip title={active ? t('playlists.deleteActive') : t('playlists.delete')} placement="top">
+          <IconButton
+            disabled={active}
+            className="PlaylistMeta-iconButton"
+            onClick={this.handleOpen}
+          >
+            <DeleteIcon />
+          </IconButton>
+        </Tooltip>
         {this.state.deleting && (
           <ConfirmDialog
             title={t('dialogs.deletePlaylist.title')}
@@ -59,9 +65,9 @@ class DeletePlaylistButton extends React.Component {
             <FormGroup>{t('dialogs.deletePlaylist.confirm')}</FormGroup>
           </ConfirmDialog>
         )}
-      </IconButton>
+      </React.Fragment>
     );
   }
 }
 
-export default translate()(DeletePlaylistButton);
+export default enhance(DeletePlaylistButton);

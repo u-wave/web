@@ -2,23 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import IconButton from 'material-ui/IconButton';
-import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
+import EditIcon from 'material-ui-icons/ModeEdit';
 import PromptDialog from '../Dialogs/PromptDialog';
 import DialogCloseAnimation from '../DialogCloseAnimation';
 
-const changeNameButtonStyle = {
-  padding: 2,
-  height: 28,
-  width: 28,
-  marginLeft: 5,
-  verticalAlign: 'bottom',
-};
-
-const changeNameIconStyle = {
-  width: 24,
-  height: 24,
-  padding: 2,
-};
+const enhance = translate();
 
 class ChangeUsernameButton extends React.Component {
   static propTypes = {
@@ -55,32 +43,25 @@ class ChangeUsernameButton extends React.Component {
   render() {
     const { t, initialUsername } = this.props;
     return (
-      <span>
-        <IconButton
-          style={changeNameButtonStyle}
-          iconStyle={changeNameIconStyle}
-          onClick={this.handleOpen}
-        >
-          <EditIcon
-            color="#777"
-            hoverColor="#fff"
-          />
+      <React.Fragment>
+        <IconButton className="ChangeUsernameButton" onClick={this.handleOpen}>
+          <EditIcon className="ChangeUsernameButton-icon" />
         </IconButton>
         <DialogCloseAnimation delay={450}>
-          {this.state.changingUsername && (
+          {this.state.changingUsername ? (
             <PromptDialog
               title={t('settings.profile.username.change')}
               submitLabel={t('settings.profile.username.save')}
-              icon={<EditIcon color="#777" />}
+              icon={<EditIcon nativeColor="#777" />}
               value={initialUsername}
               onSubmit={this.handleSubmit}
               onCancel={this.handleClose}
             />
-          )}
+          ) : null}
         </DialogCloseAnimation>
-      </span>
+      </React.Fragment>
     );
   }
 }
 
-export default translate()(ChangeUsernameButton);
+export default enhance(ChangeUsernameButton);

@@ -2,9 +2,9 @@ import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { DropTarget } from 'react-dnd';
-import ActiveIcon from 'material-ui/svg-icons/navigation/check';
+import { CircularProgress } from 'material-ui/Progress';
+import ActiveIcon from 'material-ui-icons/Check';
 import { MEDIA } from '../../../constants/DDItemTypes';
-import Loader from '../../Loader';
 
 const playlistTarget = {
   drop({ playlist, onAddToPlaylist }, monitor) {
@@ -53,13 +53,13 @@ class PlaylistRow extends React.Component {
     if (playlist.creating) {
       icon = (
         <div className="PlaylistMenuRow-loading">
-          <Loader size="tiny" />
+          <CircularProgress size="100%" />
         </div>
       );
     } else if (playlist.active) {
       icon = (
         <div className="PlaylistMenuRow-active-icon">
-          <ActiveIcon color="#fff" />
+          <ActiveIcon />
         </div>
       );
     }

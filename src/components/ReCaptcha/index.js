@@ -1,8 +1,6 @@
 import React from 'react';
 import loadScript from 'load-script2';
-
-import Loader from '../Loader';
-
+import { CircularProgress } from 'material-ui/Progress';
 import InternalCaptcha from './ReCaptcha';
 
 const GRECAPTCHA_API = 'https://www.google.com/recaptcha/api.js';
@@ -35,7 +33,7 @@ export default class ReCaptcha extends React.Component {
 
   render() {
     if (!this.state.grecaptcha) {
-      return <Loader className="ReCaptcha-spinner" size="tiny" />;
+      return <CircularProgress className="ReCaptcha-spinner" />;
     }
     return (
       <InternalCaptcha

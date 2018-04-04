@@ -1,18 +1,13 @@
 /* eslint-disable global-require */
-const React = require('react');
-const { renderToStaticMarkup } = require('react-dom/server');
-
-const MuiThemeProvider = require('material-ui/styles/MuiThemeProvider').default;
-const getMuiTheme = require('material-ui/styles/getMuiTheme').default;
+const h = require('react').createElement;
+const prerender = require('./prerender');
 
 module.exports = function renderMarkdown(source) {
   const Markdown = require('../../src/components/Markdown').default;
-  const muiTheme = require('../../src/MuiTheme').default;
-  muiTheme.userAgent = 'all';
 
-  return renderToStaticMarkup(React.createElement(
-    MuiThemeProvider,
-    { muiTheme: getMuiTheme(muiTheme) },
-    React.createElement(Markdown, { source }),
-  ));
+  const { html, css } = prerender(h(Markdown, { source }));
+  if (css === '') {
+    return html;
+  }
+  return `<style>${css}</style>${html}`;
 };

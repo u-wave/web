@@ -2,9 +2,10 @@ import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
-import ImportIcon from 'material-ui/svg-icons/action/input';
+import { CircularProgress } from 'material-ui/Progress';
+import ImportIcon from 'material-ui-icons/Input';
 
-import Loader from '../../Loader';
+const enhance = translate();
 
 const PlaylistImportRow = ({
   t,
@@ -16,13 +17,13 @@ const PlaylistImportRow = ({
   if (importing) {
     icon = (
       <div className="PlaylistMenuRow-loading">
-        <Loader size="tiny" />
+        <CircularProgress size="100%" />
       </div>
     );
   } else {
     icon = (
       <div className="PlaylistMenuRow-active-icon">
-        <ImportIcon color="#fff" />
+        <ImportIcon />
       </div>
     );
   }
@@ -49,4 +50,4 @@ PlaylistImportRow.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
-export default translate()(PlaylistImportRow);
+export default enhance(PlaylistImportRow);

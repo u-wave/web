@@ -2,15 +2,8 @@ import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import IconButton from 'material-ui/IconButton';
-import SearchIcon from 'material-ui/svg-icons/action/search';
-import CloseIcon from 'material-ui/svg-icons/navigation/close';
-
-const closeButtonStyle = {
-  width: 44,
-  height: 44,
-  padding: 10,
-  marginRight: -10,
-};
+import SearchIcon from 'material-ui-icons/Search';
+import CloseIcon from 'material-ui-icons/Close';
 
 const SearchResultsRow = ({
   className,
@@ -25,13 +18,13 @@ const SearchResultsRow = ({
         onClick={onClick}
       >
         <div className="PlaylistMenuRow-active-icon">
-          <SearchIcon color="#fff" />
+          <SearchIcon />
         </div>
         &quot;{query}&quot;
       </button>
       <div className="PlaylistMenuRow-count">
-        <IconButton style={closeButtonStyle} onClick={onClose}>
-          <CloseIcon color="#777" />
+        <IconButton className="PlaylistMenuRow-closeButton" onClick={onClose}>
+          <CloseIcon nativeColor="#777" />
         </IconButton>
       </div>
     </div>

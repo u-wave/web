@@ -1,7 +1,7 @@
 /* global window */
 import find from 'array-find';
 import { createSelector } from 'reselect';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import { createMuiTheme } from 'material-ui/styles';
 import { availableLanguages } from '../locale';
 
 function getAvailableLanguage(languages) {
@@ -22,11 +22,9 @@ function getDefaultLanguage() {
 
 const settingsBaseSelector = state => state.settings;
 
-export const themeSelector = state => state.theme;
-
-export const muiThemeSelector = createSelector(
-  themeSelector,
-  theme => getMuiTheme(theme),
+export const themeSelector = createSelector(
+  state => state.theme,
+  base => createMuiTheme(base),
 );
 
 export const volumeSelector = createSelector(

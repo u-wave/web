@@ -1,9 +1,9 @@
 import React from 'react';
-import Loader from '../Loader';
+import { CircularProgress } from 'material-ui/Progress';
 
 const LoadingScreen = () => (
   <div className="LoadingScreen">
-    <Loader className="LoadingScreen-loader" size="large" />
+    <CircularProgress className="LoadingScreen-loader" />
     <p className="LoadingScreen-notice">
       üWave requires JavaScript to run.
     </p>

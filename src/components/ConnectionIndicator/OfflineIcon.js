@@ -1,13 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Loader from '../Loader';
+import { CircularProgress } from 'material-ui/Progress';
 
 const OfflineIcon = ({ style }) => (
-  <div style={{
-    ...style, width: 24, height: 24, display: 'inline-block',
-  }}
+  <div
+    style={{
+      ...style,
+      width: 32,
+      height: 32,
+      display: 'inline-block',
+    }}
   >
-    <Loader size="tiny" />
+    <CircularProgress size={32} />
   </div>
 );
 

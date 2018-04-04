@@ -3,8 +3,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import debounce from 'lodash/debounce';
+import Tooltip from 'material-ui/Tooltip';
 import IconButton from 'material-ui/IconButton';
-import FilterIcon from 'material-ui/svg-icons/action/search';
+import FilterIcon from 'material-ui-icons/Search';
+
+const enhance = translate();
 
 class PlaylistFilter extends React.Component {
   static propTypes = {
@@ -58,13 +61,14 @@ class PlaylistFilter extends React.Component {
     const isOpen = this.state.open;
     return (
       <div className="PlaylistMediaFilter">
-        <IconButton
-          onClick={this.handleClick}
-          tooltip={t('playlists.filter')}
-          tooltipPosition="top-center"
-        >
-          <FilterIcon color={isOpen ? '#fff' : '#555'} hoverColor="#fff" />
-        </IconButton>
+        <Tooltip title={t('playlists.filter')} placement="top">
+          <IconButton
+            className="PlaylistMeta-iconButton"
+            onClick={this.handleClick}
+          >
+            <FilterIcon nativeColor={isOpen ? '#fff' : null} />
+          </IconButton>
+        </Tooltip>
         <input
           type="text"
           ref={this.refInput}
@@ -77,4 +81,4 @@ class PlaylistFilter extends React.Component {
   }
 }
 
-export default translate()(PlaylistFilter);
+export default enhance(PlaylistFilter);

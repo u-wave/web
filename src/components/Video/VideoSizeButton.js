@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import compose from 'recompose/compose';
 import { translate } from 'react-i18next';
+import Tooltip from 'material-ui/Tooltip';
 import IconButton from 'material-ui/IconButton';
 import SvgIcon from 'material-ui/SvgIcon';
 // State-related imports
@@ -23,18 +24,19 @@ const VideoSizeButton = ({
   videoSize,
   onToggleVideoSize,
 }) => (
-  <IconButton
-    onClick={onToggleVideoSize}
-    tooltip={videoSize === 'large'
+  <Tooltip
+    title={videoSize === 'large'
       ? t('settings.disableLargeVideo')
       : t('settings.enableLargeVideo')
     }
-    tooltipPosition="bottom-center"
+    placement="bottom"
   >
-    <SvgIcon viewBox="6 6 24 24">
-      <path d={paths[videoSize]} fillRule="evenodd" />
-    </SvgIcon>
-  </IconButton>
+    <IconButton onClick={onToggleVideoSize}>
+      <SvgIcon viewBox="6 6 24 24">
+        <path d={paths[videoSize]} fillRule="evenodd" />
+      </SvgIcon>
+    </IconButton>
+  </Tooltip>
 );
 
 VideoSizeButton.propTypes = {

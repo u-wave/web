@@ -4,9 +4,10 @@ import compose from 'recompose/compose';
 import withState from 'recompose/withState';
 import withHandlers from 'recompose/withHandlers';
 import { translate } from 'react-i18next';
+import { CircularProgress } from 'material-ui/Progress';
+import Tooltip from 'material-ui/Tooltip';
 import IconButton from 'material-ui/IconButton';
-import ShuffleIcon from 'material-ui/svg-icons/av/shuffle';
-import Loader from '../../Loader';
+import ShuffleIcon from 'material-ui-icons/Shuffle';
 
 const enhance = compose(
   withState('isLoading', 'setLoading', false),
@@ -28,17 +29,18 @@ const ShuffleButton = ({
   isLoading,
   onClick,
 }) => (
-  <IconButton
-    onClick={onClick}
-    tooltip={t('playlists.shuffle')}
-    tooltipPosition="top-center"
-  >
-    {isLoading ? (
-      <Loader size="tiny" />
-    ) : (
-      <ShuffleIcon color="#555" hoverColor="#fff" />
-    )}
-  </IconButton>
+  <Tooltip title={t('playlists.shuffle')} placement="top">
+    <IconButton
+      className="PlaylistMeta-iconButton"
+      onClick={onClick}
+    >
+      {isLoading ? (
+        <CircularProgress size="100%" />
+      ) : (
+        <ShuffleIcon />
+      )}
+    </IconButton>
+  </Tooltip>
 );
 
 ShuffleButton.propTypes = {

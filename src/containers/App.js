@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import nest from 'recompose/nest';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { MuiThemeProvider } from 'material-ui/styles';
 import { I18nextProvider } from 'react-i18next';
 import { Provider as BusProvider } from 'react-bus';
 import { Mobile, Desktop } from '../components/Responsive';
@@ -12,7 +12,7 @@ import { closeAll } from '../actions/OverlayActionCreators';
 import {
   settingsSelector,
   languageSelector,
-  muiThemeSelector,
+  themeSelector,
 } from '../selectors/settingSelectors';
 import { isConnectedSelector } from '../selectors/serverSelectors';
 import DesktopApp from '../components/App';
@@ -25,7 +25,7 @@ const mapStateToProps = createStructuredSelector({
   isConnected: isConnectedSelector,
   settings: settingsSelector,
   language: languageSelector,
-  muiTheme: muiThemeSelector,
+  theme: themeSelector,
   hasAboutPage: (state, props) => (
     props.uwave.getAboutPageComponent() !== null
   ),
@@ -42,8 +42,8 @@ class AppContainer extends React.Component {
     mediaSources: PropTypes.object.isRequired,
     uwave: PropTypes.object,
     language: PropTypes.string,
+    theme: PropTypes.object,
     locale: PropTypes.object.isRequired,
-    muiTheme: PropTypes.object,
   };
 
   static childContextTypes = {
@@ -77,7 +77,7 @@ class AppContainer extends React.Component {
 
   render() {
     return (
-      <MuiThemeProvider muiTheme={this.props.muiTheme}>
+      <MuiThemeProvider theme={this.props.theme}>
         <I18nextProvider i18n={this.props.locale}>
           <SimpleProviders>
             {this.renderApp()}

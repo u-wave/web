@@ -1,9 +1,17 @@
-@import "./ViewTemplate.css";
 @import "./VideoDisabledMessage.css";
 
 .MainView {
   height: 100%;
   position: relative;
+}
+
+.MainView-appBar {
+  z-index: 5;
+}
+
+.MainView-title {
+  overflow: hidden;
+  flex-grow: 1;
 }
 
 .MainView-content {

@@ -2,10 +2,9 @@ import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
+import { CircularProgress } from 'material-ui/Progress';
 import { IDLE, LOADING, LOADED } from '../../../constants/LoadingStates';
-import Loader from '../../Loader';
 import MediaList from '../../MediaList';
-
 import AddToPlaylistAction from '../../MediaList/Actions/AddToPlaylist';
 
 const SearchResults = ({
@@ -24,18 +23,19 @@ const SearchResults = ({
         className="PlaylistPanel-media"
         media={results}
         onOpenPreviewMediaDialog={onOpenPreviewMediaDialog}
-        makeActions={(media, selection) => [
-          <AddToPlaylistAction
-            key="add"
-            onAdd={position => onOpenAddMediaMenu(position, media, selection)}
-          />,
-        ]}
+        makeActions={(media, selection) => (
+          <React.Fragment>
+            <AddToPlaylistAction
+              onAdd={position => onOpenAddMediaMenu(position, media, selection)}
+            />
+          </React.Fragment>
+        )}
       />
     );
   } else {
     list = (
       <div className="PlaylistPanel-loading">
-        <Loader size="large" />
+        <CircularProgress size="100%" />
       </div>
     );
   }

@@ -1,36 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Avatar from 'material-ui/Avatar';
-import { ListItem } from 'material-ui/List';
+import { ListItem, ListItemAvatar, ListItemText } from 'material-ui/List';
 import Votes from './Votes';
 
 const wrapTitle = title => (
-  <div className="MobileMediaRow-title">
+  <span className="MobileMediaRow-title">
     {title}
-  </div>
+  </span>
 );
 
 const HistoryRow = ({ media }) => (
-  <ListItem
-    className="MobileMediaRow"
-    primaryText={wrapTitle(media.media.title)}
-    secondaryText={
-      // This has a wrapper div so we can override the material-ui styling using
-      // the `.MoblieMediaRow-artist` CSS class.
-      <div>
-        <div className="MobileMediaRow-artist">
-          {media.media.artist}
-          <Votes {...media.stats} />
-        </div>
-      </div>
-    }
-    leftAvatar={
+  <ListItem className="MobileMediaRow">
+    <ListItemAvatar>
       <Avatar
         src={media.media.thumbnail}
         style={{ borderRadius: 0 }}
       />
-    }
-  />
+    </ListItemAvatar>
+    <ListItemText
+      primary={wrapTitle(media.media.title)}
+      secondary={media.media.artist}
+    />
+    <Votes {...media.stats} />
+  </ListItem>
 );
 
 HistoryRow.propTypes = {

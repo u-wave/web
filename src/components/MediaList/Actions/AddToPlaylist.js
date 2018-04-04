@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import AddIcon from 'material-ui/svg-icons/content/add';
-
+import AddIcon from 'material-ui-icons/Add';
 import Action from './Action';
 
 const handleAdd = onAdd => (event) => {
@@ -17,7 +16,7 @@ const AddToPlaylist = ({ onAdd, ...props }) => (
     {...props}
     onAction={handleAdd(onAdd)}
   >
-    <AddIcon color="#fff" />
+    <AddIcon />
   </Action>
 );
 

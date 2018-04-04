@@ -2,24 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import withHandlers from 'recompose/withHandlers';
 import AppBar from 'material-ui/AppBar';
+import Toolbar from 'material-ui/Toolbar';
+import Typography from 'material-ui/Typography';
 import IconButton from 'material-ui/IconButton';
+import HistoryIcon from 'material-ui-icons/History';
+import MenuIcon from 'material-ui-icons/Menu';
 import SongTitle from '../../../components/SongTitle';
-import Video from '../../../containers/Video';
+import Video from '../../containers/Video';
 import Chat from '../../containers/Chat';
 import DrawerMenu from '../../containers/DrawerMenu';
 import UsersDrawer from '../../containers/UsersDrawer';
 import VideoDisabledMessage from './VideoDisabledMessage';
-
-const appBarStyle = {
-  zIndex: 5, // Below overlays.
-};
-const appTitleStyle = {
-  height: 56,
-  lineHeight: '56px',
-};
-const appBarIconStyle = {
-  marginTop: 4,
-};
 
 const waitlistIconStyle = {
   fontSize: '125%',
@@ -65,26 +58,26 @@ const MainView = ({
   onEnableVideo,
 }) => (
   <div className="MainView">
-    <AppBar
-      style={appBarStyle}
-      titleStyle={appTitleStyle}
-      iconStyleLeft={appBarIconStyle}
-      title={media ? (
-        <SongTitle artist={media.artist} title={media.title} />
-      ) : (
-        'Nobody is DJing!'
-      )}
-      iconStyleRight={appBarIconStyle}
-      iconElementRight={
-        <IconButton style={waitlistIconStyle}>
+    <AppBar position="static" className="MainView-appBar">
+      <Toolbar>
+        <IconButton aria-label="Menu" onClick={onOpenDrawer}>
+          <MenuIcon />
+        </IconButton>
+        <Typography variant="title" className="MainView-title">
+          {media ? (
+            <SongTitle artist={media.artist} title={media.title} />
+          ) : (
+            'Nobody is DJing!'
+          )}
+        </Typography>
+        <IconButton onClick={onOpenRoomHistory}>
+          <HistoryIcon />
+        </IconButton>
+        <IconButton style={waitlistIconStyle} onClick={onOpenWaitlist}>
           {getWaitlistLabel(waitlistSize, waitlistPosition)}
         </IconButton>
-      }
-
-      onTitleClick={onOpenRoomHistory}
-      onLeftIconButtonClick={onOpenDrawer}
-      onRightIconButtonClick={onOpenWaitlist}
-    />
+      </Toolbar>
+    </AppBar>
 
     <div className="MainView-content">
       <div className="MobileApp-video">

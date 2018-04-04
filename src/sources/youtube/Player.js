@@ -14,21 +14,18 @@ const YouTubePlayer = ({
 }) => {
   const modeClass = `src-youtube-Player--${mode}`;
 
-  // Wrapper span so the backdrop can be full-size…
   return (
-    <span hidden={!active}>
-      <div className={cx('src-youtube-Player', modeClass, className)}>
-        {enabled && (
-          <YouTubePlayerEmbed
-            media={media}
-            active={active}
-            seek={Math.round(seek)}
-            volume={volume}
-            controllable={mode === 'preview'}
-          />
-        )}
-      </div>
-    </span>
+    <div className={cx('src-youtube-Player', modeClass, className)} hidden={!active}>
+      {enabled && (
+        <YouTubePlayerEmbed
+          media={media}
+          active={active}
+          seek={Math.round(seek)}
+          volume={volume}
+          controllable={mode === 'preview'}
+        />
+      )}
+    </div>
   );
 };
 

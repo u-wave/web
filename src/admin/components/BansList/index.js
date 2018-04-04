@@ -2,20 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import withProps from 'recompose/withProps';
 import { translate } from 'react-i18next';
-import {
-  Table,
+// eslint-disable-next-line
+import Table, {
   TableBody,
-  TableHeader,
-  TableHeaderColumn,
+  TableHead,
+  TableCell,
   TableRow,
-} from '../../../components/Table';
+} from 'material-ui/Table';
 import BanRow from './Row';
 
 const enhance = translate();
-const avatarStyle = {
-  width: 48,
-  paddingRight: 0,
-};
 
 const Header = withProps({
   style: {
@@ -50,18 +46,18 @@ const BansList = ({
         <Filter />
       </span>
     </Header>
-    <Table selectable={false}>
-      <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+    <Table>
+      <TableHead>
         <TableRow>
-          <TableHeaderColumn style={avatarStyle} />
-          <TableHeaderColumn>{t('admin.bans.user')}</TableHeaderColumn>
-          <TableHeaderColumn>{t('admin.bans.duration')}</TableHeaderColumn>
-          <TableHeaderColumn>{t('admin.bans.reason')}</TableHeaderColumn>
-          <TableHeaderColumn>{t('admin.bans.bannedBy')}</TableHeaderColumn>
-          <TableHeaderColumn>{t('admin.bans.actions')}</TableHeaderColumn>
+          <TableCell />
+          <TableCell>{t('admin.bans.user')}</TableCell>
+          <TableCell>{t('admin.bans.duration')}</TableCell>
+          <TableCell>{t('admin.bans.reason')}</TableCell>
+          <TableCell>{t('admin.bans.bannedBy')}</TableCell>
+          <TableCell>{t('admin.bans.actions')}</TableCell>
         </TableRow>
-      </TableHeader>
-      <TableBody stripedRows>
+      </TableHead>
+      <TableBody>
         {bans.map(ban => (
           <BanRow
             key={ban.user._id}

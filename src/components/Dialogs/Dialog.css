@@ -3,3 +3,8 @@
 .Dialog {
   color: var(--text-color);
 }
+
+.Dialog-close {
+  margin: -12px;
+  float: right;
+}

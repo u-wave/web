@@ -16,11 +16,7 @@
 
 .AdminApp-menuItem {
   &.is-selected {
-    /* HACK: Apply selected colour to an internal material-ui element.
-     * Can replace this when material-ui 1.0.0 comes out. */
-    & > div {
-      background-color: var(--media-list-alternate-color);
-    }
+    background-color: var(--highlight-color);
   }
 }
 

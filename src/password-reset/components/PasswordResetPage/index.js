@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import EmailIcon from 'material-ui/svg-icons/communication/email';
-import PasswordIcon from 'material-ui/svg-icons/action/lock';
+import EmailIcon from 'material-ui-icons/Email';
+import PasswordIcon from 'material-ui-icons/Lock';
 import Paper from 'material-ui/Paper';
+import Typography from 'material-ui/Typography';
 import { translate } from 'react-i18next';
 import Form from '../../../components/Form';
 import FormGroup from '../../../components/Form/Group';
@@ -54,10 +55,12 @@ class PasswordResetPage extends React.Component {
 
     return (
       <Paper className="PasswordReset">
-        <p>
-          {t('resetPassword.introduction')}
-        </p>
         <Form onSubmit={this.handleSubmit}>
+          <FormGroup>
+            <Typography>
+              {t('resetPassword.introduction')}
+            </Typography>
+          </FormGroup>
           {email && (
             // Not used at the moment, but we may show (parts of) the user's
             // email address on the reset page at some point.
@@ -67,7 +70,7 @@ class PasswordResetPage extends React.Component {
                 disabled
                 value={email}
                 placeholder={t('login.email')}
-                icon={<EmailIcon color="#9f9d9e" />}
+                icon={<EmailIcon nativeColor="#9f9d9e" />}
               />
             </FormGroup>
           )}
@@ -77,7 +80,7 @@ class PasswordResetPage extends React.Component {
               value={this.state.newPassword}
               onChange={this.handlePasswordChange}
               placeholder={t('login.password')}
-              icon={<PasswordIcon color="#9f9d9e" />}
+              icon={<PasswordIcon nativeColor="#9f9d9e" />}
             />
           </FormGroup>
           <FormGroup>
@@ -86,7 +89,7 @@ class PasswordResetPage extends React.Component {
               value={this.state.newPasswordConfirm}
               onChange={this.handlePasswordConfirmChange}
               placeholder={t('login.password')}
-              icon={<PasswordIcon color="#9f9d9e" />}
+              icon={<PasswordIcon nativeColor="#9f9d9e" />}
             />
           </FormGroup>
           <FormGroup>

@@ -1,6 +1,7 @@
 @import "../../vars.css";
 @import "./NextMedia.css";
 @import "./SkipButton.css";
+@import "./SkipReasonsList.css";
 @import "./UserInfo.css";
 @import "./Responses/index.css";
 
@@ -59,11 +60,32 @@
   height: 100%;
   width: 125px;
   background: var(--highlight-color);
+  color: var(--text-color);
   cursor: pointer;
+  font-size: 11pt;
+  text-transform: uppercase;
+  /* Align multiline button text nicely. Good for languages where "Join Waitlist"
+   * becomes a longer phrase, especially. */
+  line-height: 24px;
+  padding: 8px 4px;
+
+  &:hover {
+    background: var(--highbright-color);
+  }
 }
 
 .FooterBar-join--locked {
   width: 140px;
+  color: color(var(--text-color) alpha(* 70%));
+}
+
+.FooterBar-joinIcon {
+  width: 1em;
+  height: 1em;
+  color: var(--text-color);
+}
+.FooterBar-joinIcon--locked {
+  color: color(var(--text-color) alpha(* 70%));
 }
 
 .FooterAuthButton {

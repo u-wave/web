@@ -1,13 +1,17 @@
 import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { compose } from 'redux';
 import Popover from 'material-ui/Popover';
-import ArrowIcon from 'material-ui/svg-icons/navigation/arrow-drop-down';
-import muiThemeable from 'material-ui/styles/muiThemeable';
-
+import ArrowIcon from 'material-ui-icons/ArrowDropDown';
 import injectMediaSources from '../../../utils/injectMediaSources';
 import SourcePickerElement from './SourcePickerElement';
+
+const enhance = injectMediaSources();
+
+const popoverPosition = {
+  anchorOrigin: { vertical: 'bottom', horizontal: 'left' },
+  transformOrigin: { vertical: 'top', horizontal: 'left' },
+};
 
 class SourcePicker extends React.Component {
   static propTypes = {
@@ -15,7 +19,6 @@ class SourcePicker extends React.Component {
     selected: PropTypes.string,
     onChange: PropTypes.func,
 
-    muiTheme: PropTypes.object.isRequired,
     getMediaSource: PropTypes.func.isRequired,
     getAllMediaSources: PropTypes.func.isRequired,
   };
@@ -63,7 +66,6 @@ class SourcePicker extends React.Component {
     const {
       className,
       selected,
-      muiTheme,
       getMediaSource,
       getAllMediaSources,
     } = this.props;
@@ -87,16 +89,14 @@ class SourcePicker extends React.Component {
             source={getMediaSource(selected)}
             active
           />
-          <ArrowIcon
-            color={muiTheme.palette.textColor}
-            style={{ height: '100%' }}
-          />
+          <ArrowIcon className="SourcePicker-arrow" />
         </button>
         <Popover
-          className="SourcePicker-list"
+          classes={{ paper: 'SourcePicker-list' }}
           open={this.state.open}
           anchorEl={this.state.anchor}
-          onRequestClose={this.handleClose}
+          onClose={this.handleClose}
+          {...popoverPosition}
         >
           {sources}
         </Popover>
@@ -105,7 +105,4 @@ class SourcePicker extends React.Component {
   }
 }
 
-export default compose(
-  injectMediaSources(),
-  muiThemeable(),
-)(SourcePicker);
+export default enhance(SourcePicker);

@@ -2,9 +2,11 @@ import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
-
+import Tooltip from 'material-ui/Tooltip';
 import IconButton from 'material-ui/IconButton';
-import CloseIcon from 'material-ui/svg-icons/navigation/close';
+import CloseIcon from 'material-ui-icons/Close';
+
+const enhance = translate();
 
 const ImportPanelHeader = ({
   t,
@@ -16,13 +18,11 @@ const ImportPanelHeader = ({
     <div className="ImportPanelHeader-content">
       {children}
     </div>
-    <IconButton
-      onClick={onClosePanel}
-      tooltip={t('close')}
-      tooltipPosition="top-center"
-    >
-      <CloseIcon color="#555" hoverColor="#fff" />
-    </IconButton>
+    <Tooltip title={t('close')} placement="top">
+      <IconButton onClick={onClosePanel}>
+        <CloseIcon />
+      </IconButton>
+    </Tooltip>
   </div>
 );
 
@@ -33,4 +33,4 @@ ImportPanelHeader.propTypes = {
   onClosePanel: PropTypes.func.isRequired,
 };
 
-export default translate()(ImportPanelHeader);
+export default enhance(ImportPanelHeader);

@@ -1,43 +1,67 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import BaseVideo from '../../components/Video';
+import Player from '../../../components/Player';
 import VoteButtons from './VoteButtons';
 
-const Video = ({
-  enabled,
-  isUpvote,
-  isFavorite,
-  isDownvote,
-  onUpvote,
-  onDownvote,
-  onFavorite,
-}) => (
-  <div>
-    <BaseVideo
-      enabled={enabled}
-      size="large"
-    />
-    <VoteButtons
-      isUpvote={isUpvote}
-      isFavorite={isFavorite}
-      isDownvote={isDownvote}
-      onUpvote={onUpvote}
-      onDownvote={onDownvote}
-      onFavorite={onFavorite}
-    />
-  </div>
-);
+class Video extends React.Component {
+  static propTypes = {
+    voteStats: PropTypes.shape({
+      isUpvote: PropTypes.bool,
+      isFavorite: PropTypes.bool,
+      isDownvote: PropTypes.bool,
+    }),
 
-Video.propTypes = {
-  enabled: PropTypes.bool,
+    onUpvote: PropTypes.func.isRequired,
+    onDownvote: PropTypes.func.isRequired,
+    onFavorite: PropTypes.func.isRequired,
+  };
 
-  isUpvote: PropTypes.bool,
-  isFavorite: PropTypes.bool,
-  isDownvote: PropTypes.bool,
+  state = {
+    showVoteButtons: false,
+  };
 
-  onUpvote: PropTypes.func.isRequired,
-  onDownvote: PropTypes.func.isRequired,
-  onFavorite: PropTypes.func.isRequired,
-};
+  handleClick = () => {
+    this.setState(s => ({
+      showVoteButtons: !s.showVoteButtons,
+    }));
+  };
+
+  render() {
+    const {
+      voteStats,
+      onUpvote,
+      onDownvote,
+      onFavorite,
+      ...props
+    } = this.props;
+    const { showVoteButtons } = this.state;
+
+    return (
+      <div className="Video">
+        <div className="Video-player">
+          <Player
+            {...props}
+            size="large"
+          />
+        </div>
+        <button
+          className="Video-buttonTrigger"
+          onClick={this.handleClick}
+          aria-label="Show vote buttons"
+        />
+        {showVoteButtons && (
+          <div className="Video-buttons">
+            <VoteButtons
+              {...voteStats}
+              onUpvote={onUpvote}
+              onDownvote={onDownvote}
+              onFavorite={onFavorite}
+            />
+          </div>
+        )}
+      </div>
+    );
+  }
+}
 
 export default Video;

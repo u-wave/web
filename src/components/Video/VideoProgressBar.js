@@ -1,26 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import LinearProgress from 'material-ui/LinearProgress';
-import muiThemeable from 'material-ui/styles/muiThemeable';
+import { LinearProgress } from 'material-ui/Progress';
 
 const VideoProgressBar = ({
-  muiTheme,
   media,
   seek,
 }) => (
   <div className="Video-overlay Video-progress">
     <LinearProgress
-      mode="determinate"
-      color={muiTheme.palette.primary1Color}
-      min={media.start}
-      max={media.end}
-      value={seek - media.start}
+      variant="determinate"
+      color="primary"
+      value={((seek - media.start) / (media.end - media.start)) * 100}
     />
   </div>
 );
 
 VideoProgressBar.propTypes = {
-  muiTheme: PropTypes.object.isRequired,
   media: PropTypes.shape({
     start: PropTypes.number.isRequired,
     end: PropTypes.number.isRequired,
@@ -28,4 +23,4 @@ VideoProgressBar.propTypes = {
   seek: PropTypes.number.isRequired,
 };
 
-export default muiThemeable()(VideoProgressBar);
+export default VideoProgressBar;

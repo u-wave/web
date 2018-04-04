@@ -43,3 +43,12 @@ export const roleSelector = memoize(roleName => createSelector(
   rolesSelector,
   roles => roles[roleName],
 ));
+
+// TODO configurable.
+export const roleColorsSelector = () => ({
+  admin: '#ff3b74',
+  manager: '#05daa5',
+  moderator: '#00b3dc',
+  special: '#fc911d',
+  default: '',
+});

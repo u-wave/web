@@ -2,7 +2,7 @@ import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import IconButton from 'material-ui/IconButton';
-import AboutIcon from 'material-ui/svg-icons/navigation/arrow-drop-down';
+import AboutIcon from 'material-ui-icons/ArrowDropDown';
 import logo from '../../../assets/img/logo-white.png';
 
 const AppTitle = ({

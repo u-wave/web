@@ -2,21 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import withProps from 'recompose/withProps';
 import { translate } from 'react-i18next';
-import { List } from 'material-ui/List';
+import List, { ListSubheader } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
-import Subheader from 'material-ui/Subheader';
-import RaisedButton from 'material-ui/RaisedButton';
-import CurrentDJIcon from 'material-ui/svg-icons/av/play-arrow';
+import Button from 'material-ui/Button';
+import CurrentDJIcon from 'material-ui-icons/PlayArrow';
 import UserRow from './UserRow';
 import WaitlistPosition from './WaitlistPosition';
 
 const JoinWaitlistButton = withProps({
-  primary: true,
+  variant: 'raised',
+  color: 'primary',
   style: {
     marginLeft: 16,
     marginBottom: 8,
   },
-})(RaisedButton);
+})(Button);
 
 const UserList = ({
   t,
@@ -31,8 +31,9 @@ const UserList = ({
   <div>
     {currentDJ && <Divider />}
 
-    <List>
-      <Subheader>{t('waitlist.title')}</Subheader>
+    <List
+      subheader={<ListSubheader>{t('waitlist.title')}</ListSubheader>}
+    >
       {currentDJ && (
         <UserRow
           user={currentDJ}
@@ -51,14 +52,16 @@ const UserList = ({
       <JoinWaitlistButton
         onClick={() => onJoinWaitlist()}
         disabled={isLockedWaitlist}
-        label={t('waitlist.join')}
-      />
+      >
+        {t('waitlist.join')}
+      </JoinWaitlistButton>
     )}
 
     <Divider />
 
-    <List>
-      <Subheader>{t('users.title')}</Subheader>
+    <List
+      subheader={<ListSubheader>{t('users.title')}</ListSubheader>}
+    >
       {users.map(user => (
         <UserRow key={user._id} user={user} />
       ))}

@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import loadable from 'react-loadable';
-import Loader from '../Loader';
+import { CircularProgress } from 'material-ui/Progress';
 import Overlay from '../Overlay';
 import OverlayHeader from '../Overlay/Header';
 
 const AdminComponent = loadable({
   loader: () => import('../../admin/containers/AdminApp' /* webpackChunkName: "admin" */),
-  loading: () => <Loader size="large" />,
+  loading: () => <CircularProgress size="100%" />,
 });
 
 const AdminProxy = ({ onCloseOverlay }) => (

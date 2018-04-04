@@ -1,21 +1,9 @@
 /* eslint-disable global-require */
-const React = require('react');
-const { renderToStaticMarkup } = require('react-dom/server');
-
-const MuiThemeProvider = require('material-ui/styles/MuiThemeProvider').default;
-const getMuiTheme = require('material-ui/styles/getMuiTheme').default;
+const h = require('react').createElement;
+const prerender = require('./prerender');
 
 module.exports = function renderLoadingScreen() {
-  /* eslint-disable import/no-unresolved */
   const LoadingScreen = require('../../src/components/LoadingScreen').default;
-  const muiTheme = require('../../src/MuiTheme').default;
-  /* eslint-enable import/no-unresolved */
 
-  muiTheme.userAgent = 'all';
-
-  return renderToStaticMarkup(React.createElement(
-    MuiThemeProvider,
-    { muiTheme: getMuiTheme(muiTheme) },
-    React.createElement(LoadingScreen),
-  ));
+  return prerender(h(LoadingScreen));
 };

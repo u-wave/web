@@ -9,3 +9,13 @@
 .UserRow-voteIcon {
   margin: 0 4px;
 }
+
+.UserRow-voteIcon--favorite {
+  color: var(--highlight-color);
+}
+.UserRow-voteIcon--downvote {
+  color: #b64b4b;
+}
+.UserRow-voteIcon--upvote {
+  color: #4bb64b;
+}

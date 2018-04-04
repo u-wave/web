@@ -30,7 +30,7 @@
 .TextField-icon {
   width: var(--forms-textfield-size);
   height: var(--forms-textfield-size);
-  margin-left: -var(--forms-textfield-size);
+  margin-left: calc(var(--forms-textfield-size) * -1.0);
   padding: 13px;
   display: block;
   float: left;

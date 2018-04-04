@@ -2,15 +2,24 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import compose from 'recompose/compose';
-import muiThemeable from 'material-ui/styles/muiThemeable';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
-import FlatButton from 'material-ui/FlatButton';
+import Button from 'material-ui/Button';
 
 import {
   openLoginDialog,
   openRegisterDialog,
 } from '../../actions/DialogActionCreators';
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+  onLogin: openLoginDialog,
+  onRegister: openRegisterDialog,
+}, dispatch);
+
+const enhance = compose(
+  translate(),
+  connect(undefined, mapDispatchToProps),
+);
 
 const buttonStyle = {
   height: '100%',
@@ -20,44 +29,32 @@ const buttonStyle = {
 };
 
 const LoginButtons = ({
-  muiTheme,
   t,
   onLogin,
   onRegister,
 }) => (
   <span style={{ display: 'flex', justifyContent: 'stretch', height: '100%' }}>
-    <FlatButton
+    <Button
+      variant="raised"
+      color="primary"
       onClick={onLogin}
-      backgroundColor={muiTheme.palette.primary1Color}
-      hoverColor={muiTheme.palette.primary2Color}
-      rippleColor={muiTheme.palette.primary3Color}
       style={buttonStyle}
     >
       {t('login.login')}
-    </FlatButton>
-    <FlatButton
+    </Button>
+    <Button
       onClick={onRegister}
       style={buttonStyle}
     >
       {t('login.register')}
-    </FlatButton>
+    </Button>
   </span>
 );
 
 LoginButtons.propTypes = {
-  muiTheme: PropTypes.object.isRequired,
   t: PropTypes.func.isRequired,
   onLogin: PropTypes.func.isRequired,
   onRegister: PropTypes.func.isRequired,
 };
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  onLogin: openLoginDialog,
-  onRegister: openRegisterDialog,
-}, dispatch);
-
-export default compose(
-  muiThemeable(),
-  translate(),
-  connect(undefined, mapDispatchToProps),
-)(LoginButtons);
+export default enhance(LoginButtons);

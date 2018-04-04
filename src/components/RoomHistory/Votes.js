@@ -1,17 +1,10 @@
+import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
-import DownvoteIcon from 'material-ui/svg-icons/action/thumb-down';
-import UpvoteIcon from 'material-ui/svg-icons/action/thumb-up';
-import FavoritedIcon from 'material-ui/svg-icons/action/favorite';
-import FavoriteIcon from 'material-ui/svg-icons/action/favorite-border';
-
-import theme from '../../MuiTheme';
-
-const iconStyles = {
-  height: 36,
-  width: 36,
-  padding: '6px 12px 6px 0',
-};
+import DownvoteIcon from 'material-ui-icons/ThumbDown';
+import UpvoteIcon from 'material-ui-icons/ThumbUp';
+import FavoritedIcon from 'material-ui-icons/Favorite';
+import FavoriteIcon from 'material-ui-icons/FavoriteBorder';
 
 const Votes = ({
   upvotes, downvotes, favorites, isUpvote, isDownvote, isFavorite,
@@ -21,28 +14,19 @@ const Votes = ({
     <div className="HistoryVotes AudienceResponse">
       <div className="ResponseButton ResponseButton--static">
         <div className="ResponseButton-content">
-          <UpvoteIcon
-            style={iconStyles}
-            color={isUpvote ? '#4BB64B' : 'white'}
-          />
+          <UpvoteIcon className={cx('HistoryVotes-icon', isUpvote && 'ResponseButton-icon--upvoted')} />
           <span className="ResponseButton-count">{upvotes.length}</span>
         </div>
       </div>
       <div className="ResponseButton ResponseButton--static">
         <div className="ResponseButton-content">
-          <CurrentFavoriteIcon
-            style={iconStyles}
-            color={theme.palette.primary1Color}
-          />
+          <CurrentFavoriteIcon className="HistoryVotes-icon ResponseButton-icon--favorite" />
           <span className="ResponseButton-count">{favorites.length}</span>
         </div>
       </div>
       <div className="ResponseButton ResponseButton--static">
         <div className="ResponseButton-content">
-          <DownvoteIcon
-            style={iconStyles}
-            color={isDownvote ? '#B64B4B' : 'white'}
-          />
+          <DownvoteIcon className={cx('HistoryVotes-icon', isDownvote && 'ResponseButton-icon--downvoted')} />
           <span className="ResponseButton-count">{downvotes.length}</span>
         </div>
       </div>

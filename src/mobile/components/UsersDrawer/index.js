@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Drawer from 'material-ui/Drawer';
-
 import UserList from './UserList';
 
 const UsersDrawer = ({
@@ -12,16 +11,14 @@ const UsersDrawer = ({
   userInWaitlist,
   userIsLoggedIn,
   open,
-  onChangeDrawerOpen,
+  onDrawerClose,
   onJoinWaitlist,
   onLeaveWaitlist,
 }) => (
   <Drawer
-    docked={false}
-    width={320}
+    anchor="right"
     open={open}
-    openSecondary
-    onRequestChange={onChangeDrawerOpen}
+    onClose={onDrawerClose}
   >
     <UserList
       currentDJ={currentDJ}
@@ -44,7 +41,7 @@ UsersDrawer.propTypes = {
   userInWaitlist: PropTypes.bool,
   isLockedWaitlist: PropTypes.bool,
   open: PropTypes.bool.isRequired,
-  onChangeDrawerOpen: PropTypes.func.isRequired,
+  onDrawerClose: PropTypes.func.isRequired,
   onJoinWaitlist: PropTypes.func.isRequired,
   onLeaveWaitlist: PropTypes.func.isRequired,
 };

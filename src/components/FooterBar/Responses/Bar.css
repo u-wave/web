@@ -41,3 +41,13 @@
   width: 36px;
   padding: 6px 12px 6px 0px;
 }
+
+.ResponseButton-icon--favorite {
+  color: var(--highlight-color);
+}
+.ResponseButton-icon--downvoted {
+  color: #b64b4b;
+}
+.ResponseButton-icon--upvoted {
+  color: #4bb64b;
+}

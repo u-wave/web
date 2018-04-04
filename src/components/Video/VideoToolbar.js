@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
+import Tooltip from 'material-ui/Tooltip';
 import IconButton from 'material-ui/IconButton';
-import EnterFullscreenIcon from 'material-ui/svg-icons/navigation/fullscreen';
-import ExitFullscreenIcon from 'material-ui/svg-icons/navigation/fullscreen-exit';
+import EnterFullscreenIcon from 'material-ui-icons/Fullscreen';
+import ExitFullscreenIcon from 'material-ui-icons/FullscreenExit';
 
 import VideoSizeButton from './VideoSizeButton';
 
@@ -21,16 +22,17 @@ const VideoToolbar = ({
   <div className="Video-overlay Video-toolbar">
     {children}
     <VideoSizeButton />
-    <IconButton
-      onClick={isFullscreen ? onFullscreenExit : onFullscreenEnter}
-      tooltip={isFullscreen
+    <Tooltip
+      title={isFullscreen
         ? t('settings.disableFullscreen')
         : t('settings.enableFullscreen')
       }
-      tooltipPosition="bottom-left"
+      placement="bottom-end"
     >
-      {renderFullscreenIcon(isFullscreen)}
-    </IconButton>
+      <IconButton onClick={isFullscreen ? onFullscreenExit : onFullscreenEnter}>
+        {renderFullscreenIcon(isFullscreen)}
+      </IconButton>
+    </Tooltip>
   </div>
 );
 

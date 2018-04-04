@@ -1,19 +1,12 @@
 import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
-import Slider from 'material-ui/Slider';
-import VolumeDownIcon from 'material-ui/svg-icons/av/volume-down';
-import VolumeMuteIcon from 'material-ui/svg-icons/av/volume-mute';
-import VolumeOffIcon from 'material-ui/svg-icons/av/volume-off';
-import VolumeUpIcon from 'material-ui/svg-icons/av/volume-up';
-
-const sliderStyle = {
-  // The material-ui Slider has a 24px margin on top that we can't override,
-  // but we can compensate for it here.
-  // TODO Do this properly when/if material-ui gets a better styling solution.
-  marginTop: -21,
-  marginBottom: 3,
-};
+import IconButton from 'material-ui/IconButton';
+import VolumeDownIcon from 'material-ui-icons/VolumeDown';
+import VolumeMuteIcon from 'material-ui-icons/VolumeMute';
+import VolumeOffIcon from 'material-ui-icons/VolumeOff';
+import VolumeUpIcon from 'material-ui-icons/VolumeUp';
+import Slider from './Slider';
 
 export default class Volume extends React.Component {
   static propTypes = {
@@ -54,17 +47,15 @@ export default class Volume extends React.Component {
     }
     return (
       <div className={cx('VolumeSlider', this.props.className)}>
-        <VolumeIcon
-          color="#fff"
-          onClick={this.handleMuteClick}
-        />
+        <IconButton onClick={this.handleMuteClick}>
+          <VolumeIcon />
+        </IconButton>
         <div className="VolumeSlider-slider">
           <Slider
-            name="volume"
             min={0}
             max={100}
+            step={5}
             value={this.props.volume}
-            style={sliderStyle}
             onChange={this.handleVolumeChange}
           />
         </div>

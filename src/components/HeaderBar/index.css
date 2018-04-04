@@ -19,8 +19,6 @@
 .HeaderBar-volume {
   top: 0;
   flex-shrink: 0;
-  width: 200px;
-  padding: 15px;
 }
 
 .HeaderBar-history {

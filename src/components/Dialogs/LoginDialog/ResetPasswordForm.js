@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
-import EmailIcon from 'material-ui/svg-icons/communication/email';
-import Loader from '../../Loader';
+import { CircularProgress } from 'material-ui/Progress';
+import EmailIcon from 'material-ui-icons/Email';
 import Form from '../../Form';
 import FormGroup from '../../Form/Group';
 import TextField from '../../Form/TextField';
@@ -70,7 +70,7 @@ class ResetPasswordForm extends React.Component {
             className="ResetPasswordForm-field"
             type="email"
             placeholder="E-Mail"
-            icon={<EmailIcon color="#9f9d9e" />}
+            icon={<EmailIcon nativeColor="#9f9d9e" />}
           />
         </FormGroup>
 
@@ -80,7 +80,7 @@ class ResetPasswordForm extends React.Component {
             disabled={busy}
           >
             {busy ? (
-              <div className="Button-loading"><Loader size="tiny" /></div>
+              <div className="Button-loading"><CircularProgress size="100%" /></div>
             ) : t('login.requestPasswordReset')}
           </Button>
         </FormGroup>

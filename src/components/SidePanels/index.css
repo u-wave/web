@@ -1,14 +1,19 @@
 @import "../../vars.css";
 
+.SidePanel-indicator {
+  background-color: #fff;
+}
+
 .SidePanel-tab {
-  /* material-ui needs box-sizing: content-box on an element that is not
-   * inline-styleable :( */
-  > div {
-    box-sizing: content-box;
-    /* OK please don't hurt me :( */
-    height: auto !important;
-    padding: 0 !important;
-  }
+  height: var(--header-height);
+  min-width: 0;
+}
+
+.SidePanel-tabLabel {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .SidePanel-panel {
@@ -21,7 +26,7 @@
   visibility: hidden;
   opacity: 0;
 
-  &.is-visible {
+  &.is-selected {
     visibility: visible;
     opacity: 1;
   }

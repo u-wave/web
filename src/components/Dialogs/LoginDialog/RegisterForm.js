@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate, Interpolate } from 'react-i18next';
+import { FormControlLabel } from 'material-ui/Form';
 import Checkbox from 'material-ui/Checkbox';
-import EmailIcon from 'material-ui/svg-icons/communication/email';
-import PasswordIcon from 'material-ui/svg-icons/action/lock';
-import UserIcon from 'material-ui/svg-icons/social/person';
-import Loader from '../../Loader';
+import { CircularProgress } from 'material-ui/Progress';
+import EmailIcon from 'material-ui-icons/Email';
+import PasswordIcon from 'material-ui-icons/Lock';
+import UserIcon from 'material-ui-icons/Person';
 import Form from '../../Form';
 import FormGroup from '../../Form/Group';
 import TextField from '../../Form/TextField';
@@ -105,7 +106,7 @@ class RegisterForm extends React.Component {
             ref={this.refUsername}
             className="RegisterForm-field"
             placeholder={t('login.username')}
-            icon={<UserIcon color="#9f9d9e" />}
+            icon={<UserIcon nativeColor="#9f9d9e" />}
             autoFocus
           />
         </FormGroup>
@@ -115,7 +116,7 @@ class RegisterForm extends React.Component {
             className="RegisterForm-field"
             type="email"
             placeholder={t('login.email')}
-            icon={<EmailIcon color="#9f9d9e" />}
+            icon={<EmailIcon nativeColor="#9f9d9e" />}
           />
         </FormGroup>
         <FormGroup>
@@ -124,24 +125,29 @@ class RegisterForm extends React.Component {
             className="RegisterForm-field"
             type="password"
             placeholder={t('login.password')}
-            icon={<PasswordIcon color="#9f9d9e" />}
+            icon={<PasswordIcon nativeColor="#9f9d9e" />}
           />
         </FormGroup>
 
         {this.renderCaptcha()}
 
         <FormGroup>
-          <Checkbox
-            style={{ float: 'left', width: 'auto' }}
-            checked={agreed}
-            onCheck={this.handleTosCheckbox}
-          />
-          <Interpolate
-            i18nKey="login.agree"
-            privacyPolicy={
-              <a target="_blank" rel="noreferrer noopener" href="/privacy.html">
-                {t('login.privacyPolicy')}
-              </a>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={agreed}
+                onChange={this.handleTosCheckbox}
+              />
+            }
+            label={
+              <Interpolate
+                i18nKey="login.agree"
+                privacyPolicy={
+                  <a target="_blank" rel="noreferrer noopener" href="/privacy.html">
+                    {t('login.privacyPolicy')}
+                  </a>
+                }
+              />
             }
           />
         </FormGroup>
@@ -152,7 +158,7 @@ class RegisterForm extends React.Component {
             disabled={busy || !agreed}
           >
             {busy
-              ? <div className="Button-loading"><Loader size="tiny" /></div>
+              ? <div className="Button-loading"><CircularProgress size="100%" /></div>
               : t('login.register')
             }
           </Button>

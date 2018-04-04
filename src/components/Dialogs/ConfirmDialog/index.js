@@ -1,15 +1,16 @@
+import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
-import Dialog from 'material-ui/Dialog';
-
+import Dialog, { DialogContent } from 'material-ui/Dialog';
+import { CircularProgress } from 'material-ui/Progress';
 import Form from '../../Form';
 import FormGroup from '../../Form/Group';
 import Button from '../../Form/Button';
-import Loader from '../../Loader';
 
 export default class ConfirmDialog extends React.Component {
   static propTypes = {
     children: PropTypes.node,
+    className: PropTypes.string,
     confirmLabel: PropTypes.string,
     cancelLabel: PropTypes.string,
 
@@ -54,32 +55,34 @@ export default class ConfirmDialog extends React.Component {
       children,
       cancelLabel,
       confirmLabel,
-      ...props
+      className,
     } = this.props;
     const { busy } = this.state;
 
     return (
       <Dialog
-        {...props}
-        onRequestClose={this.handleClose}
+        className={cx('Dialog', className)}
+        onClose={this.handleClose}
         open
       >
-        <Form onSubmit={this.handleSubmit}>
-          {children}
-          <FormGroup className="ConfirmDialog-buttons">
-            <div className="ConfirmDialog-button">
-              <Button disabled={busy} onClick={this.handleClose}>
-                {cancelLabel}
-              </Button>
-            </div>
-            <div className="ConfirmDialog-spacer" />
-            <div className="ConfirmDialog-button">
-              <Button disabled={busy} onClick={this.handleConfirm}>
-                {busy ? <div className="Button-loading"><Loader size="tiny" /></div> : confirmLabel}
-              </Button>
-            </div>
-          </FormGroup>
-        </Form>
+        <DialogContent className="Dialog-body">
+          <Form onSubmit={this.handleSubmit}>
+            {children}
+            <FormGroup className="ConfirmDialog-buttons FormGroup--noSpacing">
+              <div className="ConfirmDialog-button">
+                <Button disabled={busy} onClick={this.handleClose}>
+                  {cancelLabel}
+                </Button>
+              </div>
+              <div className="ConfirmDialog-spacer" />
+              <div className="ConfirmDialog-button">
+                <Button disabled={busy} onClick={this.handleConfirm}>
+                  {busy ? <div className="Button-loading"><CircularProgress size="100%" /></div> : confirmLabel}
+                </Button>
+              </div>
+            </FormGroup>
+          </Form>
+        </DialogContent>
       </Dialog>
     );
   }

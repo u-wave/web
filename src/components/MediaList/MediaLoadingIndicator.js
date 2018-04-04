@@ -1,11 +1,11 @@
 import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
-import Loader from '../Loader';
+import { CircularProgress } from 'material-ui/Progress';
 
 const MediaLoadingIndicator = ({ className }) => (
   <div className={cx('MediaLoadingIndicator', className)}>
-    <Loader size="tiny" className="MediaLoadingIndicator-spinner" />
+    <CircularProgress className="MediaLoadingIndicator-spinner" />
   </div>
 );
 

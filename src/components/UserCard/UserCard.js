@@ -1,30 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Typography from 'material-ui/Typography';
 import Card from 'material-ui/Card/Card';
 import CardHeader from 'material-ui/Card/CardHeader';
 import CardActions from 'material-ui/Card/CardActions';
-import CardText from 'material-ui/Card/CardText';
+import CardContent from 'material-ui/Card/CardContent';
 import Avatar from '../Avatar';
 import UserRoles from './UserRoles';
 import formatJoinDate from '../../utils/formatJoinDate';
 
-// Our cards are much smaller than usual so we remove some padding to make it
-// look less strange.
-const smallPaddingStyle = {
-  paddingTop: 0,
-};
-
 const UserCard = ({ user }) => (
   <Card className="UserCard">
     <CardHeader
+      className="UserCard-header"
       title={user.username}
-      subtitle={<UserRoles roles={user.roles} />}
+      subheader={<UserRoles roles={user.roles} />}
       avatar={<Avatar className="UserCard-avatar" user={user} />}
     />
-    <CardText style={smallPaddingStyle}>
-      Joined: {formatJoinDate(user.createdAt)}
-    </CardText>
-    <CardActions style={smallPaddingStyle}>
+    <CardContent className="UserCard-joinDate">
+      <Typography>
+        Joined: {formatJoinDate(user.createdAt)}
+      </Typography>
+    </CardContent>
+    <CardActions className="UserCard-actions">
       {/* Currently empty */}
     </CardActions>
   </Card>

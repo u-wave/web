@@ -1,0 +1,7 @@
+@import "../../../vars.css";
+
+.SuggestionItem {
+  &:hover, &.is-focused {
+    background-color: color(var(--text-color) a(* 10%));
+  }
+}

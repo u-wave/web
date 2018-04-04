@@ -2,11 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import ms from 'ms';
-import RaisedButton from 'material-ui/RaisedButton';
-import {
-  TableRow,
-  TableCell,
-} from '../../../components/Table';
+import Button from 'material-ui/Button';
+import { TableRow, TableCell } from 'material-ui/Table';
 import Avatar from '../../../components/Avatar';
 import Username from '../../../components/Username/WithCard';
 
@@ -40,10 +37,12 @@ const BanRow = ({
       <Username user={ban.moderator} />
     </TableCell>
     <TableCell>
-      <RaisedButton
+      <Button
+        variant="raised"
         onClick={onUnbanUser}
-        label={t('admin.bans.unban')}
-      />
+      >
+        {t('admin.bans.unban')}
+      </Button>
     </TableCell>
   </TableRow>
 );

@@ -1,13 +1,11 @@
 import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
+import { CircularProgress } from 'material-ui/Progress';
 import MediaList from '../../MediaList';
-import Loader from '../../Loader';
-
 import PlaylistMeta from './Meta';
 import PlainItemRow from '../../MediaList/Row';
 import PlaylistItemRow from './PlaylistItemRow';
-
 import AddToPlaylistAction from '../../MediaList/Actions/AddToPlaylist';
 import RemoveFromPlaylistAction from '../../MediaList/Actions/RemoveFromPlaylist';
 import EditMediaAction from '../../MediaList/Actions/EditMedia';
@@ -74,7 +72,7 @@ const PlaylistPanel = (props) => {
   if (loading) {
     list = (
       <div className="PlaylistPanel-loading">
-        <Loader size="large" />
+        <CircularProgress size="100%" />
       </div>
     );
   } else {

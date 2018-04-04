@@ -3,31 +3,36 @@ import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import compose from 'recompose/compose';
 import pure from 'recompose/pure';
-
+import withState from 'recompose/withState';
+import Tabs, { Tab } from 'material-ui/Tabs';
 import Chat from '../Chat';
 import RoomUserList from '../../containers/RoomUserList';
 import WaitList from '../../containers/WaitList';
+import PanelContainer from './PanelContainer';
 
-import Tabs from '../Tabs';
-import Tab from '../Tabs/Tab';
-import PanelTemplate from './PanelTemplate';
-
-const contentContainerStyle = {
-  // This ensures that the `position:absolute`s on divs _inside_ container
-  // elements align correctly.
-  position: 'static',
-};
+const enhance = compose(
+  translate(),
+  withState('selected', 'setTab', 0),
+  pure,
+);
 
 const subHeaderStyle = {
   fontSize: '125%',
 };
 
-const getUsersLabel = (t, listenerCount) => [
-  t('users.title'),
-  <span key="sub" style={subHeaderStyle}>
-    {listenerCount}
-  </span>,
-];
+const tabClasses = {
+  root: 'SidePanel-tab',
+  label: 'SidePanel-tabLabel',
+};
+
+const getUsersLabel = (t, listenerCount) => (
+  <React.Fragment>
+    {t('users.title')}
+    <span key="sub" style={subHeaderStyle}>
+      {listenerCount}
+    </span>
+  </React.Fragment>
+);
 
 const getWaitlistLabel = (t, size, position) => {
   if (size > 0) {
@@ -35,10 +40,12 @@ const getWaitlistLabel = (t, size, position) => {
       ? `${position + 1} / ${size}`
       : size;
 
-    return [
-      t('waitlist.title'),
-      <span key="sub" style={subHeaderStyle}>{posText}</span>,
-    ];
+    return (
+      <React.Fragment>
+        {t('waitlist.title')}
+        <span key="sub" style={subHeaderStyle}>{posText}</span>
+      </React.Fragment>
+    );
   }
   return t('waitlist.title');
 };
@@ -49,53 +56,52 @@ const SidePanels = ({
   listenerCount,
   waitlistSize,
   waitlistPosition,
-  onChange,
+  setTab,
 }) => (
-  <Tabs
-    value={selected}
-    onChange={onChange}
-    contentContainerStyle={contentContainerStyle}
-    tabTemplate={PanelTemplate}
-  >
-    {/* NB: SidePanel-tab includes some !important styles because material-ui
-      * has an otherwise unstyleable element inside its tab bar that breaks our
-      * user and waitlist position counter elements. material-ui uses it to
-      * properly position tab labels. The overrides remove the height and
-      * padding constraints from that in-between element. */}
-    <Tab
-      className="SidePanel-tab"
-      label={t('chat.title')}
-      value="chat"
+  <div>
+    <Tabs
+      value={selected}
+      onChange={(event, value) => setTab(value)}
+      fullWidth
+      classes={{
+        root: 'SidePanel-tabs',
+        indicator: 'SidePanel-indicator',
+      }}
     >
-      <Chat />
-    </Tab>
-    <Tab
-      className="SidePanel-tab"
-      label={getUsersLabel(t, listenerCount)}
-      value="room"
-    >
-      <RoomUserList />
-    </Tab>
-    <Tab
-      className="SidePanel-tab"
-      label={getWaitlistLabel(t, waitlistSize, waitlistPosition)}
-      value="waitlist"
-    >
-      <WaitList />
-    </Tab>
-  </Tabs>
+      <Tab
+        classes={tabClasses}
+        label={t('chat.title')}
+      />
+      <Tab
+        classes={tabClasses}
+        label={getUsersLabel(t, listenerCount)}
+      />
+      <Tab
+        classes={tabClasses}
+        label={getWaitlistLabel(t, waitlistSize, waitlistPosition)}
+      />
+    </Tabs>
+    <div>
+      <PanelContainer selected={selected === 0}>
+        <Chat />
+      </PanelContainer>
+      <PanelContainer selected={selected === 1}>
+        <RoomUserList />
+      </PanelContainer>
+      <PanelContainer selected={selected === 2}>
+        <WaitList />
+      </PanelContainer>
+    </div>
+  </div>
 );
 
 SidePanels.propTypes = {
   t: PropTypes.func.isRequired,
-  selected: PropTypes.string.isRequired,
   listenerCount: PropTypes.number.isRequired,
   waitlistSize: PropTypes.number.isRequired,
   waitlistPosition: PropTypes.number.isRequired,
-  onChange: PropTypes.func.isRequired,
+  selected: PropTypes.number.isRequired,
+  setTab: PropTypes.func.isRequired,
 };
 
-export default compose(
-  translate(),
-  pure,
-)(SidePanels);
+export default enhance(SidePanels);

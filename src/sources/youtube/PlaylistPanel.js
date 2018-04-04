@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Tooltip from 'material-ui/Tooltip';
 import IconButton from 'material-ui/IconButton';
-import ImportIcon from 'material-ui/svg-icons/av/playlist-add';
+import ImportIcon from 'material-ui-icons/PlaylistAdd';
 import MediaList from '../../components/MediaList';
 import AddToPlaylistAction from '../../components/MediaList/Actions/AddToPlaylist';
 import ImportPanelHeader from '../../components/PlaylistManager/Import/ImportPanelHeader';
@@ -49,24 +50,24 @@ export default class YouTubeImportPlaylistPanel extends React.Component {
             <div className="src-youtube-PlaylistPanel-name">
               {importingPlaylist.name}
             </div>
-            <IconButton
-              onClick={this.handleImportFull}
-              tooltip={`Import All (${importingPlaylistItems.length})`}
-              tooltipPosition="top-center"
-            >
-              <ImportIcon color="#555" hoverColor="#fff" />
-            </IconButton>
+            <Tooltip title={`Import All (${importingPlaylistItems.length})`} placement="top">
+              <IconButton onClick={this.handleImportFull}>
+                <ImportIcon className="src-youtube-PlaylistPanel-importIcon" />
+              </IconButton>
+            </Tooltip>
           </div>
         </ImportPanelHeader>
         <MediaList
           className="ImportPanel-body"
           media={importingPlaylistItems}
-          makeActions={(media, selection) => [
-            <AddToPlaylistAction
-              key="add"
-              onAdd={position => onOpenAddMediaMenu(selectionOrOne(media, selection), position)}
-            />,
-          ]}
+          makeActions={(media, selection) => (
+            <React.Fragment>
+              <AddToPlaylistAction
+                key="add"
+                onAdd={position => onOpenAddMediaMenu(selectionOrOne(media, selection), position)}
+              />
+            </React.Fragment>
+          )}
         />
       </div>
     );

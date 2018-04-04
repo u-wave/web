@@ -1,1 +1,27 @@
 @import "./VoteButtons.css";
+
+.Video {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.Video-player, .Video-buttonTrigger, .Video-buttons {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.Video-player {
+  z-index: 3;
+}
+
+.Video-buttonTrigger {
+  z-index: 4;
+  cursor: default;
+}
+
+.Video-buttons {
+  z-index: 5;
+  pointer-events: none;
+}

@@ -3,15 +3,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import Checkbox from 'material-ui/Checkbox';
-import ActiveIcon from 'material-ui/svg-icons/toggle/check-box';
-import ActivateIcon from 'material-ui/svg-icons/toggle/check-box-outline-blank';
-
+import ActiveIcon from 'material-ui-icons/CheckBox';
+import ActivateIcon from 'material-ui-icons/CheckBoxOutlineBlank';
 import RenamePlaylistButton from './RenamePlaylistButton';
 import DeletePlaylistButton from './DeletePlaylistButton';
 import ShufflePlaylistButton from './ShufflePlaylistButton';
 import PlaylistFilter from './PlaylistFilter';
 
-const checkboxIconStyle = { fill: '#fff' };
+const enhance = translate();
 
 const PlaylistMeta = ({
   t,
@@ -32,12 +31,13 @@ const PlaylistMeta = ({
     <div className="PlaylistMeta-active">
       <Checkbox
         checked={active}
-        onCheck={active ? null : onActivatePlaylist}
-        checkedIcon={<ActiveIcon color="#fff" />}
-        uncheckedIcon={<ActivateIcon color="#fff" />}
-        iconStyle={checkboxIconStyle}
-        label={active ? t('playlists.active') : t('playlists.activate')}
+        onChange={active ? null : onActivatePlaylist}
+        icon={<ActivateIcon />}
+        checkedIcon={<ActiveIcon nativeColor="#fff" />}
       />
+      <span>
+        {active ? t('playlists.active') : t('playlists.activate')}
+      </span>
     </div>
     <PlaylistFilter
       onFilter={onFilter}
@@ -68,4 +68,4 @@ PlaylistMeta.propTypes = {
   onFilter: PropTypes.func.isRequired,
 };
 
-export default translate()(PlaylistMeta);
+export default enhance(PlaylistMeta);

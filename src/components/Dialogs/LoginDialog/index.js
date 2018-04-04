@@ -1,24 +1,28 @@
+import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
+import compose from 'recompose/compose';
 import { translate } from 'react-i18next';
-import Dialog from 'material-ui/Dialog';
+import Dialog, {
+  DialogTitle,
+  DialogContent,
+  withMobileDialog,
+} from 'material-ui/Dialog';
+import IconButton from 'material-ui/IconButton';
+import CloseIcon from 'material-ui-icons/Close';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 import ResetPasswordForm from './ResetPasswordForm';
 
-const contentStyle = {
-  maxWidth: 350,
-};
-
-const bodyStyle = {
-  padding: 24,
-};
-
-const enhance = translate();
+const enhance = compose(
+  translate(),
+  withMobileDialog(),
+);
 
 const LoginDialog = (props) => {
   const {
     t,
+    fullScreen,
     open,
     show,
     onCloseDialog,
@@ -37,17 +41,25 @@ const LoginDialog = (props) => {
   }
   return (
     <Dialog
-      contentClassName="Dialog LoginDialog"
-      bodyClassName="Dialog-body"
-      titleClassName="Dialog-title"
-      contentStyle={contentStyle}
-      bodyStyle={bodyStyle}
-      title={title}
+      classes={{
+        paper: cx('Dialog', 'LoginDialog', fullScreen && 'LoginDialog--mobile'),
+      }}
       open={open}
-      onRequestClose={onCloseDialog}
-      autoScrollBodyContent
+      fullScreen={fullScreen}
+      onClose={onCloseDialog}
+      aria-labelledby="uw-login-title"
     >
-      {form}
+      <DialogTitle className="Dialog-title" id="uw-login-title">
+        {title}
+        {fullScreen && (
+          <IconButton className="Dialog-close" onClick={onCloseDialog}>
+            <CloseIcon />
+          </IconButton>
+        )}
+      </DialogTitle>
+      <DialogContent className="Dialog-body">
+        {form}
+      </DialogContent>
     </Dialog>
   );
 };
@@ -56,6 +68,7 @@ LoginDialog.propTypes = {
   t: PropTypes.func.isRequired,
   open: PropTypes.bool,
   show: PropTypes.string,
+  fullScreen: PropTypes.bool.isRequired,
   onCloseDialog: PropTypes.func,
 };
 

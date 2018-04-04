@@ -1,3 +1,10 @@
+@import "../../vars.css";
+
+.SkipButton {
+  color: var(--text-color);
+  height: 100%;
+}
+
 .SkipButton.is-loading {
   width: 24px;
   height: 100%;
@@ -10,4 +17,5 @@
 
 .SkipButton-loader {
   width: 100%;
+  height: 100%;
 }

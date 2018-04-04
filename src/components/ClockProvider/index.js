@@ -18,8 +18,13 @@ class ClockProvider extends React.Component {
   };
 
   static childContextTypes = {
-    timerCallbacks: PropTypes.arrayOf(PropTypes.func),
+    timerCallbacks: PropTypes.shape({
+      add: PropTypes.func,
+      remove: PropTypes.func,
+    }),
   };
+
+  state = { callbacks: [] };
 
   getChildContext() {
     return {
@@ -27,17 +32,26 @@ class ClockProvider extends React.Component {
     };
   }
 
-  // TODO move this to constructor?
-  componentWillMount() {
+  componentDidMount() {
     // Start the clock! üWave stores the current time in the application state
     // primarily to make sure that different timers in the UI update simultaneously.
-    this.timerCallbacks = this.props.createTimer();
+    this.props.createTimer(() => {
+      this.state.callbacks.forEach(cb => cb());
+    });
   }
 
   componentWillUnmount() {
-    this.timerCallbacks = [];
     this.props.stopTimer();
   }
+
+  timerCallbacks = {
+    add: cb => this.setState(s => ({
+      callbacks: s.callbacks.concat(cb),
+    })),
+    remove: cb => this.setState(s => ({
+      callbacks: s.callbacks.filter(cb1 => cb1 !== cb),
+    })),
+  };
 
   render() {
     return this.props.children;

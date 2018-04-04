@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import PlaylistIcon from 'material-ui/svg-icons/av/playlist-play';
-
+import PlaylistIcon from 'material-ui-icons/PlaylistPlay';
 import ImportSourceBlock from '../../components/PlaylistManager/Import/ImportSourceBlock';
 import Form from '../../components/Form';
 import FormGroup from '../../components/Form/Group';
@@ -65,7 +64,7 @@ export default class YoutubeImportForm extends React.Component {
             <TextField
               ref={this.refChannel}
               placeholder="Channel URL"
-              icon={<PlaylistIcon color="#9f9d9e" />}
+              icon={<PlaylistIcon nativeColor="#9f9d9e" />}
             />
           </FormGroup>
           <FormGroup>
@@ -77,7 +76,7 @@ export default class YoutubeImportForm extends React.Component {
             <TextField
               ref={this.refPlaylist}
               placeholder="Playlist URL"
-              icon={<PlaylistIcon color="#9f9d9e" />}
+              icon={<PlaylistIcon nativeColor="#9f9d9e" />}
             />
           </FormGroup>
           <FormGroup>

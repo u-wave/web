@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import RenderToLayer from 'material-ui/internal/RenderToLayer';
+import Modal from 'material-ui/Modal';
 import UserCard from './UserCard';
 
 class UserCardWrapper extends React.Component {
@@ -56,24 +56,24 @@ class UserCardWrapper extends React.Component {
     const { positionDiffX, positionDiffY } = this.state;
 
     return (
-      <RenderToLayer
+      <Modal
         open
-        componentClickAway={onClose}
-        render={() => (
-          <div
-            style={{
-              position: 'absolute',
-              left: position.x + positionDiffX,
-              top: position.y + positionDiffY,
-            }}
-            ref={this.refContainer}
-          >
-            <div className="UserCardWrapper">
-              <UserCard {...props} />
-            </div>
+        BackdropProps={{ invisible: true }}
+        onClose={onClose}
+      >
+        <div
+          style={{
+            position: 'absolute',
+            left: position.x + positionDiffX,
+            top: position.y + positionDiffY,
+          }}
+          ref={this.refContainer}
+        >
+          <div className="UserCardWrapper">
+            <UserCard {...props} />
           </div>
-        )}
-      />
+        </div>
+      </Modal>
     );
   }
 }

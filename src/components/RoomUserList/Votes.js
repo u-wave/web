@@ -1,40 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import muiThemeable from 'material-ui/styles/muiThemeable';
-import DownvoteIcon from 'material-ui/svg-icons/action/thumb-down';
-import FavoriteIcon from 'material-ui/svg-icons/action/favorite';
-import UpvoteIcon from 'material-ui/svg-icons/action/thumb-up';
+import DownvoteIcon from 'material-ui-icons/ThumbDown';
+import FavoriteIcon from 'material-ui-icons/Favorite';
+import UpvoteIcon from 'material-ui-icons/ThumbUp';
 
 const Votes = ({
-  muiTheme, upvote, downvote, favorite, ...props
+  upvote, downvote, favorite, ...props
 }) => (
   <div {...props}>
     {favorite && (
-      <FavoriteIcon
-        className="UserRow-voteIcon"
-        color={muiTheme.palette.primary1Color}
-      />
+      <FavoriteIcon className="UserRow-voteIcon UserRow-voteIcon--favorite" />
     )}
     {upvote && (
-      <UpvoteIcon
-        className="UserRow-voteIcon"
-        color="#4BB64B"
-      />
+      <UpvoteIcon className="UserRow-voteIcon UserRow-voteIcon--upvote" />
     )}
     {downvote && (
-      <DownvoteIcon
-        className="UserRow-voteIcon"
-        color="#B64B4B"
-      />
+      <DownvoteIcon className="UserRow-voteIcon UserRow-voteIcon--downvote" />
     )}
   </div>
 );
 
 Votes.propTypes = {
-  muiTheme: PropTypes.object.isRequired,
   upvote: PropTypes.bool,
   downvote: PropTypes.bool,
   favorite: PropTypes.bool,
 };
 
-export default muiThemeable()(Votes);
+export default Votes;

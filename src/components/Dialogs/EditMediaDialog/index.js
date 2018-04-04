@@ -2,15 +2,15 @@ import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
-import Dialog from 'material-ui/Dialog';
+import Dialog, { DialogTitle, DialogContent } from 'material-ui/Dialog';
 import IconButton from 'material-ui/IconButton';
 import uniqueId from 'lodash/uniqueId';
 import formatDuration from 'format-duration';
-import ArtistIcon from 'material-ui/svg-icons/hardware/headset';
-import TitleIcon from 'material-ui/svg-icons/image/music-note';
-import StartIcon from 'material-ui/svg-icons/av/play-arrow';
-import EndIcon from 'material-ui/svg-icons/av/stop';
-import SwapArtistTitleIcon from 'material-ui/svg-icons/action/swap-horiz';
+import ArtistIcon from 'material-ui-icons/Headset';
+import TitleIcon from 'material-ui-icons/MusicNote';
+import StartIcon from 'material-ui-icons/PlayArrow';
+import EndIcon from 'material-ui-icons/Stop';
+import SwapArtistTitleIcon from 'material-ui-icons/SwapHoriz';
 import Form from '../../Form';
 import FormGroup from '../../Form/Group';
 import Button from '../../Form/Button';
@@ -45,6 +45,7 @@ class EditMediaDialog extends React.Component {
     end: formatDuration(this.props.media.end * 1000),
   };
 
+  title = uniqueId('editmedia');
   labelStart = uniqueId('editmedia');
   labelEnd = uniqueId('editmedia');
 
@@ -118,8 +119,6 @@ class EditMediaDialog extends React.Component {
       bodyClassName,
       contentClassName,
       titleClassName,
-
-      ...props
     } = this.props;
     const {
       errors,
@@ -137,7 +136,7 @@ class EditMediaDialog extends React.Component {
           placeholder={t(['dialogs.editMedia.artistLabel', 'media.artist'])}
           value={artist}
           onChange={this.handleChangeArtist}
-          icon={<ArtistIcon color="#9f9d9e" />}
+          icon={<ArtistIcon nativeColor="#9f9d9e" />}
           tabIndex={baseTabIndex}
           autoFocus
         />
@@ -145,7 +144,7 @@ class EditMediaDialog extends React.Component {
       const artistTitleLabel = (
         <div className="EditMediaDialogGroup-label">
           <IconButton onClick={this.handleSwapArtistTitle}>
-            <SwapArtistTitleIcon color="#9f9d9e" />
+            <SwapArtistTitleIcon nativeColor="#9f9d9e" />
           </IconButton>
         </div>
       );
@@ -155,7 +154,7 @@ class EditMediaDialog extends React.Component {
           placeholder={t(['dialogs.editMedia.titleLabel', 'media.title'])}
           value={title}
           onChange={this.handleChangeTitle}
-          icon={<TitleIcon color="#9f9d9e" />}
+          icon={<TitleIcon nativeColor="#9f9d9e" />}
           tabIndex={baseTabIndex + 1}
         />
       );
@@ -173,7 +172,7 @@ class EditMediaDialog extends React.Component {
           placeholder="0:00"
           value={start}
           onChange={this.handleChangeStart}
-          icon={<StartIcon color="#9f9d9e" />}
+          icon={<StartIcon nativeColor="#9f9d9e" />}
           tabIndex={baseTabIndex + 2}
         />
       );
@@ -190,13 +189,13 @@ class EditMediaDialog extends React.Component {
           placeholder={formatDuration(media.duration)}
           value={end}
           onChange={this.handleChangeEnd}
-          icon={<EndIcon color="#9f9d9e" />}
+          icon={<EndIcon nativeColor="#9f9d9e" />}
           tabIndex={baseTabIndex + 3}
         />
       );
 
       content = (
-        <Form className="EditMediaDialog" onSubmit={this.handleSubmit}>
+        <Form onSubmit={this.handleSubmit}>
           {errors && errors.length > 0 && (
             <FormGroup>
               {errors.map(error => <div>{t(`dialogs.editMedia.errors.${error}`)}</div>)}
@@ -239,17 +238,22 @@ class EditMediaDialog extends React.Component {
         </Form>
       );
     }
+
     return (
       <Dialog
-        {...props}
-        contentClassName={cx('Dialog', contentClassName)}
-        bodyClassName={cx('Dialog-body', bodyClassName)}
-        titleClassName={cx('Dialog-title', titleClassName)}
-        title={t('dialogs.editMedia.title')}
+        classes={{
+          paper: cx('Dialog', 'EditMediaDialog', contentClassName),
+        }}
         open={open}
-        onRequestClose={onCloseDialog}
+        onClose={onCloseDialog}
+        aria-labelledby={this.title}
       >
-        {content}
+        <DialogTitle id={this.title} className={cx('Dialog-title', titleClassName)}>
+          {t('dialogs.editMedia.title')}
+        </DialogTitle>
+        <DialogContent className={cx('Dialog-body', bodyClassName)}>
+          {content}
+        </DialogContent>
       </Dialog>
     );
   }

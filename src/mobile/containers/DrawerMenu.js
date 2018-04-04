@@ -21,7 +21,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onShowAbout: toggleAbout,
   onShowSettings: toggleSettings,
   onShowPlaylist: openPlaylist,
-  onChangeDrawerOpen: setDrawer,
+  onDrawerClose: () => setDrawer(false),
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(DrawerMenu);

@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ListItem } from 'material-ui/List';
+import { ListItem, ListItemText } from 'material-ui/List';
 
 const MediaRow = ({ media }) => (
-  <ListItem
-    primaryText={media.title}
-    secondaryText={media.artist}
-  />
+  <ListItem>
+    <ListItemText
+      primary={media.title}
+      secondary={media.artist}
+    />
+  </ListItem>
 );
 
 MediaRow.propTypes = {

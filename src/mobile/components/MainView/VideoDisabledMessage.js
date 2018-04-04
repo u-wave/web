@@ -1,18 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
-import RaisedButton from 'material-ui/RaisedButton';
+import Button from 'material-ui/Button';
 
 const enhance = translate();
 
 const VideoDisabledMessage = ({ t, onEnableVideo }) => (
   <div className="VideoDisabledMessage">
     <p className="VideoDisabledMessage-text">{t('booth.videoDisabled')}</p>
-    <RaisedButton
-      primary
-      label="Enable?"
-      onClick={onEnableVideo}
-    />
+    <Button variant="raised" color="primary" onClick={onEnableVideo}>
+      {'Enable?'}
+    </Button>
   </div>
 );
 

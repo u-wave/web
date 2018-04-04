@@ -8,3 +8,8 @@
   display: block;
   line-height: 24px;
 }
+
+.MediaDragPreview-icon {
+  vertical-align: bottom;
+  margin-right: 3px;
+}

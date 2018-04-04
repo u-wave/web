@@ -1,6 +1,9 @@
 .UserRow--guests {
   padding-left: 44px;
   font-style: italic;
-  color: #aaaaaa;
   background: transparent;
+}
+
+.UserRow-guestsText {
+  color: #aaaaaa;
 }

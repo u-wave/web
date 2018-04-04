@@ -1,0 +1,10 @@
+/* This is already done by a CSS file somewhere up the tree.
+ * Would leave this in for clarity, but the postcss custom properties plugin
+ * complains because all the mobile CSS is in an @media block and the plugin
+ * does not support nested variable definitions. */
+/* @import "../../../vars.css"; */
+
+.UsersDrawer-position {
+  color: var(--text-color);
+  margin: 8px;
+}

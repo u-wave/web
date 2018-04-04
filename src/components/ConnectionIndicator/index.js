@@ -7,20 +7,13 @@ import OfflineIcon from './OfflineIcon';
 
 const enhance = translate();
 
-const positionStyle = {
-  position: 'absolute',
-  right: 10,
-  top: 10,
-  zIndex: 55,
-};
-
 const ConnectionIndicator = ({ isConnected, t }) => (
   isConnected ? null : (
-    <div style={positionStyle}>
+    <div className="ConnectionIndicator-position">
       <Card>
         <CardHeader
           title={t('server.connectionLost')}
-          subtitle={t('server.reconnecting')}
+          subheader={t('server.reconnecting')}
           avatar={<OfflineIcon />}
         />
       </Card>

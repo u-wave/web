@@ -1,9 +1,7 @@
 import assign from 'object-assign';
 import React from 'react';
 import PropTypes from 'prop-types';
-import muiThemeable from 'material-ui/styles/muiThemeable';
-import ListIcon from 'material-ui/svg-icons/action/list';
-
+import ListIcon from 'material-ui-icons/List';
 import transformStyle from '../../utils/transformStyle';
 
 const getItemStyles = offset => (
@@ -13,13 +11,7 @@ const getItemStyles = offset => (
   ) : { display: 'none' }
 );
 
-const dragIconStyle = {
-  verticalAlign: 'bottom',
-  marginRight: 3,
-};
-
 const MediaDragPreview = ({
-  muiTheme,
   items,
   currentOffset,
 }) => {
@@ -31,17 +23,13 @@ const MediaDragPreview = ({
       className="MediaDragPreview"
       style={getItemStyles(currentOffset)}
     >
-      <ListIcon
-        color={muiTheme.palette.textColor}
-        style={dragIconStyle}
-      />
+      <ListIcon className="MediaDragPreview-icon" />
       {items.media.length}
     </div>
   );
 };
 
 MediaDragPreview.propTypes = {
-  muiTheme: PropTypes.object.isRequired,
   items: PropTypes.object,
   currentOffset: PropTypes.shape({
     x: PropTypes.number.isRequired,
@@ -49,4 +37,4 @@ MediaDragPreview.propTypes = {
   }),
 };
 
-export default muiThemeable()(MediaDragPreview);
+export default MediaDragPreview;

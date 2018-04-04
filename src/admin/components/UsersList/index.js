@@ -2,24 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import withProps from 'recompose/withProps';
-import {
-  Table,
+// eslint-disable-next-line
+import Table, {
   TableBody,
-  TableHeader,
-  TableHeaderColumn,
+  TableHead,
+  TableCell,
   TableRow,
-} from '../../../components/Table';
+} from 'material-ui/Table';
 import UserRow from './Row';
-
-const avatarStyle = {
-  width: 48,
-  paddingRight: 0,
-};
-const actionsStyle = {
-  width: 48,
-  paddingLeft: 0,
-  paddingRight: 0,
-};
 
 const Header = withProps({
   style: {
@@ -55,18 +45,18 @@ const UsersList = ({
         <Filter />
       </span>
     </Header>
-    <Table selectable={false}>
-      <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+    <Table>
+      <TableHead>
         <TableRow>
-          <TableHeaderColumn style={avatarStyle} />
-          <TableHeaderColumn>{t('admin.users.user')}</TableHeaderColumn>
-          <TableHeaderColumn>{t('admin.users.joinedAt')}</TableHeaderColumn>
-          <TableHeaderColumn>{t('admin.users.email')}</TableHeaderColumn>
-          <TableHeaderColumn>{t('admin.users.roles')}</TableHeaderColumn>
-          <TableHeaderColumn style={actionsStyle} />
+          <TableCell />
+          <TableCell>{t('admin.users.user')}</TableCell>
+          <TableCell>{t('admin.users.joinedAt')}</TableCell>
+          <TableCell>{t('admin.users.email')}</TableCell>
+          <TableCell>{t('admin.users.roles')}</TableCell>
+          <TableCell />
         </TableRow>
-      </TableHeader>
-      <TableBody stripedRows>
+      </TableHead>
+      <TableBody>
         {users.map(user => (
           <UserRow user={user} />
         ))}

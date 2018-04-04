@@ -2,11 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import withHandlers from 'recompose/withHandlers';
 import Drawer from 'material-ui/Drawer';
-import { List } from 'material-ui/List';
-import Subheader from 'material-ui/Subheader';
-import MenuItem from 'material-ui/MenuItem';
+import { MenuList, MenuItem } from 'material-ui/Menu';
+import { ListItemIcon, ListSubheader, ListItemText } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
-
+import ActiveIcon from 'material-ui-icons/Check';
 import UserCard from '../../../components/UserCard/UserCard';
 
 const enhance = withHandlers({
@@ -15,12 +14,12 @@ const enhance = withHandlers({
   onShowAbout: props => (event) => {
     event.preventDefault();
     props.onShowAbout();
-    props.onChangeDrawerOpen(false);
+    props.onDrawerClose();
   },
   onShowSettings: props => (event) => {
     event.preventDefault();
     props.onShowSettings();
-    props.onChangeDrawerOpen(false);
+    props.onDrawerClose();
   },
 });
 
@@ -31,36 +30,36 @@ const DrawerMenu = ({
   onShowAbout,
   onShowSettings,
   onShowPlaylist,
-  onChangeDrawerOpen,
+  onDrawerClose,
 }) => (
-  <Drawer
-    docked={false}
-    width={320}
-    open={open}
-    onRequestChange={onChangeDrawerOpen}
-  >
+  <Drawer open={open} onClose={onDrawerClose}>
     {user && <UserCard user={user} />}
-    <List>
+    <MenuList>
       <MenuItem onClick={onShowAbout}>About</MenuItem>
       <MenuItem onClick={onShowSettings}>Settings</MenuItem>
-    </List>
+    </MenuList>
     <Divider />
-    <List>
-      <Subheader>Playlists</Subheader>
+    <MenuList
+      subheader={<ListSubheader>Playlists</ListSubheader>}
+    >
       {playlists.map(playlist => (
         <MenuItem
           key={playlist._id}
-          checked={playlist.active}
           onClick={(event) => {
             event.preventDefault();
             onShowPlaylist(playlist._id);
-            onChangeDrawerOpen(false);
+            onDrawerClose();
           }}
         >
-          {playlist.name}
+          {playlist.active && (
+            <ListItemIcon>
+              <ActiveIcon />
+            </ListItemIcon>
+          )}
+          <ListItemText primary={playlist.name} />
         </MenuItem>
       ))}
-    </List>
+    </MenuList>
   </Drawer>
 );
 
@@ -71,7 +70,7 @@ DrawerMenu.propTypes = {
   onShowAbout: PropTypes.func.isRequired,
   onShowSettings: PropTypes.func.isRequired,
   onShowPlaylist: PropTypes.func.isRequired,
-  onChangeDrawerOpen: PropTypes.func.isRequired,
+  onDrawerClose: PropTypes.func.isRequired,
 };
 
 export default enhance(DrawerMenu);

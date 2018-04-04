@@ -2,14 +2,11 @@ import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import pure from 'recompose/pure';
-import SettingsIcon from 'material-ui/svg-icons/action/settings';
+import SettingsIcon from 'material-ui-icons/Settings';
 
 import Avatar from '../Avatar';
 
-const fullSizeStyle = {
-  width: '100%',
-  height: '100%',
-};
+const enhance = pure;
 
 const UserInfo = ({ className, user, onClick }) => (
   <button
@@ -21,10 +18,7 @@ const UserInfo = ({ className, user, onClick }) => (
       user={user}
     />
     <div className="UserInfo-settings">
-      <SettingsIcon
-        color="#fff"
-        style={fullSizeStyle}
-      />
+      <SettingsIcon className="UserInfo-settingsIcon" />
     </div>
   </button>
 );
@@ -35,4 +29,4 @@ UserInfo.propTypes = {
   onClick: PropTypes.func,
 };
 
-export default pure(UserInfo);
+export default enhance(UserInfo);

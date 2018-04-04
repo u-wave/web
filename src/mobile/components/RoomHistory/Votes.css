@@ -9,3 +9,10 @@
 .MobileHistoryVotes-vote {
   margin-right: 5px;
 }
+
+.MobileHistoryVotes-icon {
+  height: 16px;
+  width: 22px;
+  padding: 0 4px 0 2px;
+  vertical-align: top;
+}

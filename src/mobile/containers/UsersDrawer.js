@@ -29,7 +29,7 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = {
-  onChangeDrawerOpen: setUsersDrawer,
+  onDrawerClose: () => setUsersDrawer(false),
   onJoinWaitlist: joinWaitlist,
   onLeaveWaitlist: leaveWaitlist,
 };

@@ -1,17 +1,12 @@
 import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
-import CloseBottomIcon from 'material-ui/svg-icons/hardware/keyboard-arrow-down';
-import CloseTopIcon from 'material-ui/svg-icons/hardware/keyboard-arrow-up';
+import CloseBottomIcon from 'material-ui-icons/KeyboardArrowDown';
+import CloseTopIcon from 'material-ui-icons/KeyboardArrowUp';
 
 const icons = {
   bottom: CloseBottomIcon,
   top: CloseTopIcon,
-};
-
-const fullSizeStyle = {
-  height: '100%',
-  width: '100%',
 };
 
 const Close = ({ className, onClose, direction }) => {
@@ -21,11 +16,7 @@ const Close = ({ className, onClose, direction }) => {
       className={cx('OverlayHeaderClose', className)}
       onClick={onClose}
     >
-      <CloseIcon
-        color="#fff"
-        style={fullSizeStyle}
-        className="OverlayHeaderClose-icon"
-      />
+      <CloseIcon className="OverlayHeaderClose-icon" />
     </button>
   );
 };

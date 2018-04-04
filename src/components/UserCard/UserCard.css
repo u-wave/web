@@ -1,5 +1,16 @@
+.UserCard {
+  min-width: 250px;
+}
+
 .UserCard-avatar {
   width: 40px;
   height: 40px;
-  margin-right: 16px;
+}
+
+.UserCard-joinDate {
+  padding-top: 0;
+}
+
+.UserCard-actions {
+  padding-top: 0;
 }
