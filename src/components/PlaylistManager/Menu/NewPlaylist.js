@@ -38,29 +38,31 @@ class NewPlaylist extends React.Component {
   render() {
     const { t, className } = this.props;
     return (
-      <button
-        role="menuitem"
-        className={cx('PlaylistMenuRow', 'PlaylistMenuRow--create', className)}
-        onClick={this.handleOpen}
-      >
-        <div className="PlaylistMenuRow-content">
-          <div className="PlaylistMenuRow-title">
-            <div className="PlaylistMenuRow-active-icon">
-              <CreatePlaylistIcon />
+      <React.Fragment>
+        <button
+          role="menuitem"
+          className={cx('PlaylistMenuRow', 'PlaylistMenuRow--create', className)}
+          onClick={this.handleOpen}
+        >
+          <div className="PlaylistMenuRow-content">
+            <div className="PlaylistMenuRow-title">
+              <div className="PlaylistMenuRow-active-icon">
+                <CreatePlaylistIcon />
+              </div>
+              {t('playlists.new')}
             </div>
-            {t('playlists.new')}
           </div>
-          {this.state.creating && (
-            <PromptDialog
-              title={t('dialogs.createPlaylist.nameInputTitle')}
-              icon={<CreatePlaylistIcon nativeColor="#777" />}
-              submitLabel={t('dialogs.createPlaylist.action')}
-              onSubmit={this.handleSubmit}
-              onCancel={this.handleClose}
-            />
-          )}
-        </div>
-      </button>
+        </button>
+        {this.state.creating && (
+          <PromptDialog
+            title={t('dialogs.createPlaylist.nameInputTitle')}
+            icon={<CreatePlaylistIcon nativeColor="#777" />}
+            submitLabel={t('dialogs.createPlaylist.action')}
+            onSubmit={this.handleSubmit}
+            onCancel={this.handleClose}
+          />
+        )}
+      </React.Fragment>
     );
   }
 }

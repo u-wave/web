@@ -35,7 +35,7 @@ class AddToPlaylistMenu extends React.Component {
   render() {
     const { t, ...props } = this.props;
     return (
-      <div>
+      <React.Fragment>
         {!this.state.creating && (
           <PlaylistsMenu
             {...props}
@@ -51,7 +51,7 @@ class AddToPlaylistMenu extends React.Component {
             onCancel={this.handleClose}
           />
         )}
-      </div>
+      </React.Fragment>
     );
   }
 }

@@ -38,9 +38,11 @@ class LogoutButton extends React.Component {
   render() {
     const { t } = this.props;
     return (
-      <Button className="LogoutButton" onClick={this.handleOpen}>
-        <LogoutIcon className="LogoutButton-icon" />
-        {t('settings.logout')}
+      <React.Fragment>
+        <Button className="LogoutButton" onClick={this.handleOpen}>
+          <LogoutIcon className="LogoutButton-icon" />
+          {t('settings.logout')}
+        </Button>
         {this.state.showDialog && (
           <ConfirmDialog
             title={t('dialogs.logout.title')}
@@ -51,7 +53,7 @@ class LogoutButton extends React.Component {
             <FormGroup>{t('dialogs.logout.confirm')}</FormGroup>
           </ConfirmDialog>
         )}
-      </Button>
+      </React.Fragment>
     );
   }
 }

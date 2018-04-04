@@ -38,21 +38,23 @@ class RenamePlaylistButton extends React.Component {
   render() {
     const { t } = this.props;
     return (
-      <Tooltip title={t('playlists.rename')} placement="top">
-        <IconButton className="PlaylistMeta-iconButton" onClick={this.handleOpen}>
-          <EditIcon />
-          {this.state.renaming && (
-            <PromptDialog
-              title={t('dialogs.renamePlaylist.nameInputTitle')}
-              submitLabel={t('dialogs.renamePlaylist.action')}
-              icon={<EditIcon nativeColor="#777" />}
-              value={this.props.initialName}
-              onSubmit={this.handleSubmit}
-              onCancel={this.handleClose}
-            />
-          )}
-        </IconButton>
-      </Tooltip>
+      <React.Fragment>
+        <Tooltip title={t('playlists.rename')} placement="top">
+          <IconButton className="PlaylistMeta-iconButton" onClick={this.handleOpen}>
+            <EditIcon />
+          </IconButton>
+        </Tooltip>
+        {this.state.renaming && (
+          <PromptDialog
+            title={t('dialogs.renamePlaylist.nameInputTitle')}
+            submitLabel={t('dialogs.renamePlaylist.action')}
+            icon={<EditIcon nativeColor="#777" />}
+            value={this.props.initialName}
+            onSubmit={this.handleSubmit}
+            onCancel={this.handleClose}
+          />
+        )}
+      </React.Fragment>
     );
   }
 }

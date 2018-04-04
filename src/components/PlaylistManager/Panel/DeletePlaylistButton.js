@@ -45,25 +45,27 @@ class DeletePlaylistButton extends React.Component {
   render() {
     const { t, active } = this.props;
     return (
-      <Tooltip title={active ? t('playlists.deleteActive') : t('playlists.delete')} placement="top">
-        <IconButton
-          disabled={active}
-          className="PlaylistMeta-iconButton"
-          onClick={this.handleOpen}
-        >
-          <DeleteIcon />
-          {this.state.deleting && (
-            <ConfirmDialog
-              title={t('dialogs.deletePlaylist.title')}
-              confirmLabel={t('dialogs.deletePlaylist.action')}
-              onConfirm={this.handleConfirm}
-              onCancel={this.handleClose}
-            >
-              <FormGroup>{t('dialogs.deletePlaylist.confirm')}</FormGroup>
-            </ConfirmDialog>
-          )}
-        </IconButton>
-      </Tooltip>
+      <React.Fragment>
+        <Tooltip title={active ? t('playlists.deleteActive') : t('playlists.delete')} placement="top">
+          <IconButton
+            disabled={active}
+            className="PlaylistMeta-iconButton"
+            onClick={this.handleOpen}
+          >
+            <DeleteIcon />
+          </IconButton>
+        </Tooltip>
+        {this.state.deleting && (
+          <ConfirmDialog
+            title={t('dialogs.deletePlaylist.title')}
+            confirmLabel={t('dialogs.deletePlaylist.action')}
+            onConfirm={this.handleConfirm}
+            onCancel={this.handleClose}
+          >
+            <FormGroup>{t('dialogs.deletePlaylist.confirm')}</FormGroup>
+          </ConfirmDialog>
+        )}
+      </React.Fragment>
     );
   }
 }
