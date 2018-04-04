@@ -56,13 +56,11 @@ export default class ConfirmDialog extends React.Component {
       cancelLabel,
       confirmLabel,
       className,
-      ...props
     } = this.props;
     const { busy } = this.state;
 
     return (
       <Dialog
-        {...props}
         className={cx('Dialog', className)}
         onClose={this.handleClose}
         open
