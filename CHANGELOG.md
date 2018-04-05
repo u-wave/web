@@ -1,3 +1,8 @@
+# 1.4.2 / 05 Apr 2018
+
+Bugfixes:
+ * Build public/.
+
 # 1.4.1 / 05 Apr 2018
 
 Bugfixes:
