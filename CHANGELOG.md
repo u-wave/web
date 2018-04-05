@@ -1,3 +1,13 @@
+# 1.4.0 / 05 Apr 2018
+
+Features:
+ * Update to the material-ui v1 beta. (#844)
+ * Add vote icons in mobile layout when tapping the video. (#844)
+
+Bugfixes:
+ * Fix long playlist names overflowing in menus. (#844)
+ * Fullscreen some dialogs in the mobile layout. (#844)
+
 # 1.3.1 / 03 Apr 2018
 
 Bugfixes:
