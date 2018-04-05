@@ -1,3 +1,15 @@
+# 1.4.1 / 05 Apr 2018
+
+Bugfixes:
+ * Allow overriding MediaList rowComponent, fixes drag-drop in playlists. (#852)
+ * Fix favouriting into existing playlist. (#851)
+ * Apply fonts and colour styles to the body instead of to `.App`. (#848)
+ * Fix vote icon alignment in user rows. (#850)
+ * Slider fixes. (#849)
+
+Internal:
+ * Update i18next to the latest version 🚀 (#847)
+
 # 1.4.0 / 05 Apr 2018
 
 Features:
