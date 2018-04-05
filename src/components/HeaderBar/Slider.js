@@ -321,7 +321,7 @@ class Slider extends React.Component {
       return;
     }
 
-    documeent.body.removeEventListener('mouseup', this.handleMouseUp);
+    document.body.removeEventListener('mouseup', this.handleMouseUp);
 
     this.setState({ isMove: false, isActive: false });
 
