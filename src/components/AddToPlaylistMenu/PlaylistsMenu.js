@@ -23,8 +23,7 @@ class PlaylistsMenu extends React.Component {
     }),
   };
 
-  handleSelect = (e, item) => {
-    const playlistID = item.props.value;
+  handleSelect = (e, playlistID) => {
     this.props.onClose();
     this.props.onSelect(find(this.props.playlists, pl => pl._id === playlistID));
   };
@@ -54,7 +53,7 @@ class PlaylistsMenu extends React.Component {
             <MenuItem
               className="AddToPlaylistMenu-playlist"
               key={playlist._id}
-              onClick={this.handleSelect}
+              onClick={event => this.handleSelect(event, playlist._id)}
             >
               {!!playlist.active && (
                 <ListItemIcon>
