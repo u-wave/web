@@ -255,9 +255,11 @@ class Slider extends React.Component {
 
     const { min, max, step, value, reverse, vertical } = this.props;
 
-    const percent = reverse
-      ? 100 - calculatePercent(event, vertical)
-      : calculatePercent(event, vertical);
+    const percent = normalizeValue(
+      reverse
+        ? 100 - calculatePercent(event, vertical)
+        : calculatePercent(event, vertical),
+      min, max);
 
     const newValue = roundToStep({
       currentValue: value,
@@ -337,9 +339,11 @@ class Slider extends React.Component {
 
     const { min, max, step, value, reverse, vertical } = this.props;
 
-    const percent = reverse
-      ? 100 - calculatePercent(event, vertical)
-      : calculatePercent(event, vertical);
+    const percent = normalizeValue(
+      reverse
+        ? 100 - calculatePercent(event, vertical)
+        : calculatePercent(event, vertical),
+      min, max);
 
     const newValue = roundToStep({
       currentValue: value,
