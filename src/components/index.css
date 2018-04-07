@@ -7,6 +7,7 @@
 @import "./ConnectionIndicator/index.css";
 @import "./Dialogs/index.css";
 @import "./ErrorArea/index.css";
+@import "./FatalError/index.css";
 @import "./FooterBar/index.css";
 @import "./Form/index.css";
 @import "./HeaderBar/index.css";

@@ -1,0 +1,19 @@
+.FatalError {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.FatalError-paper {
+  padding: 16px;
+  min-width: 350px;
+}
+
+.FatalError-reload {
+  margin-left: auto;
+}
