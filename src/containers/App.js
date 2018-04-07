@@ -17,6 +17,7 @@ import {
 import { isConnectedSelector } from '../selectors/serverSelectors';
 import DesktopApp from '../components/App';
 import MobileApp from '../mobile/components/App';
+import FatalError from '../components/FatalError';
 
 const SimpleProviders = nest(BusProvider, ClockProvider);
 
@@ -51,6 +52,10 @@ class AppContainer extends React.Component {
     uwave: PropTypes.object,
   };
 
+  state = {
+    error: null,
+  };
+
   getChildContext() {
     return {
       mediaSources: this.props.mediaSources,
@@ -62,6 +67,10 @@ class AppContainer extends React.Component {
     if (this.props.language !== nextProps.language) {
       this.props.locale.changeLanguage(nextProps.language);
     }
+  }
+
+  componentDidCatch(error) {
+    this.setState({ error });
   }
 
   renderApp = () => (
@@ -76,6 +85,15 @@ class AppContainer extends React.Component {
   );
 
   render() {
+    if (this.state.error) {
+      // Let's hope the ThemeProvider works at least...
+      return (
+        <MuiThemeProvider theme={this.props.theme}>
+          <FatalError error={this.state.error} />
+        </MuiThemeProvider>
+      );
+    }
+
     return (
       <MuiThemeProvider theme={this.props.theme}>
         <I18nextProvider i18n={this.props.locale}>
