@@ -1,3 +1,11 @@
+# 1.4.3 / 07 Apr 2018
+
+Features:
+ * Show crash message + reload instruction on error. (#855)
+
+Bugfixes:
+ * Fix crashes when volume is way up. (#854)
+
 # 1.4.2 / 05 Apr 2018
 
 Bugfixes:
