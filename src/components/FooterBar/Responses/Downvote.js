@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
-import DownvoteIcon from 'material-ui-icons/ThumbDown';
+import DownvoteIcon from '@material-ui/icons/ThumbDown';
 import Button from './Button';
 
 const enhance = translate();

@@ -4,7 +4,7 @@ import withProps from 'recompose/withProps';
 import uniqueId from 'lodash/uniqueId';
 import IconButton from 'material-ui/IconButton';
 import Menu, { MenuItem } from 'material-ui/Menu';
-import MoreVertIcon from 'material-ui-icons/MoreVert';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { TableRow, TableCell as MuiTableCell } from 'material-ui/Table';
 import Avatar from '../../../components/Avatar';
 import Username from '../../../components/Username/WithCard';

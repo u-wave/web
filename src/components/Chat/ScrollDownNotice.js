@@ -2,7 +2,7 @@ import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'material-ui/Button';
-import ScrollDownIcon from 'material-ui-icons/ArrowDownward';
+import ScrollDownIcon from '@material-ui/icons/ArrowDownward';
 
 const ScrollNotice = ({ show, onClick }) => (
   <div className={cx('ChatMessages-scrollDown', show && 'is-visible')}>

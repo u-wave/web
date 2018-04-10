@@ -5,7 +5,7 @@ import compose from 'recompose/compose';
 import pure from 'recompose/pure';
 import Tooltip from 'material-ui/Tooltip';
 import IconButton from 'material-ui/IconButton';
-import HistoryIcon from 'material-ui-icons/History';
+import HistoryIcon from '@material-ui/icons/History';
 
 const HistoryButton = ({ t, onClick }) => (
   <Tooltip title={t('history.title')} position="bottom">

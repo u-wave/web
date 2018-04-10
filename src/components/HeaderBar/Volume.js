@@ -2,10 +2,10 @@ import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import IconButton from 'material-ui/IconButton';
-import VolumeDownIcon from 'material-ui-icons/VolumeDown';
-import VolumeMuteIcon from 'material-ui-icons/VolumeMute';
-import VolumeOffIcon from 'material-ui-icons/VolumeOff';
-import VolumeUpIcon from 'material-ui-icons/VolumeUp';
+import VolumeDownIcon from '@material-ui/icons/VolumeDown';
+import VolumeMuteIcon from '@material-ui/icons/VolumeMute';
+import VolumeOffIcon from '@material-ui/icons/VolumeOff';
+import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 import Slider from './Slider';
 
 export default class Volume extends React.Component {

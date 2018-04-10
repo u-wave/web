@@ -2,7 +2,7 @@ import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import IconButton from 'material-ui/IconButton';
-import ImportIcon from 'material-ui-icons/PlaylistAdd';
+import ImportIcon from '@material-ui/icons/PlaylistAdd';
 
 const PlaylistRow = ({
   className,

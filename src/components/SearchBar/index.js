@@ -2,7 +2,7 @@ import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
-import SearchIcon from 'material-ui-icons/Search';
+import SearchIcon from '@material-ui/icons/Search';
 
 const enhance = translate();
 

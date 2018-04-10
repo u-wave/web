@@ -2,8 +2,8 @@ import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import IconButton from 'material-ui/IconButton';
-import SearchIcon from 'material-ui-icons/Search';
-import CloseIcon from 'material-ui-icons/Close';
+import SearchIcon from '@material-ui/icons/Search';
+import CloseIcon from '@material-ui/icons/Close';
 
 const SearchResultsRow = ({
   className,

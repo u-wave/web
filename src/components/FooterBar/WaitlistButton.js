@@ -5,7 +5,7 @@ import { translate } from 'react-i18next';
 import compose from 'recompose/compose';
 import pure from 'recompose/pure';
 import Button from 'material-ui/Button';
-import LockedIcon from 'material-ui-icons/Lock';
+import LockedIcon from '@material-ui/icons/Lock';
 
 const WaitlistButton = ({
   t,
