@@ -9,7 +9,7 @@ import Dialog, {
   withMobileDialog,
 } from 'material-ui/Dialog';
 import IconButton from 'material-ui/IconButton';
-import CloseIcon from 'material-ui-icons/Close';
+import CloseIcon from '@material-ui/icons/Close';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 import ResetPasswordForm from './ResetPasswordForm';

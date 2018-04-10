@@ -2,7 +2,7 @@ import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ListItem as MuiListItem } from 'material-ui/List';
-import SelectedIcon from 'material-ui-icons/ChevronRight';
+import SelectedIcon from '@material-ui/icons/ChevronRight';
 
 /**
  * A ListItem component wrapper around material-ui's ListItem,

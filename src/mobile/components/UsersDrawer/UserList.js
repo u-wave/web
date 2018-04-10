@@ -5,7 +5,7 @@ import { translate } from 'react-i18next';
 import List, { ListSubheader } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import Button from 'material-ui/Button';
-import CurrentDJIcon from 'material-ui-icons/PlayArrow';
+import CurrentDJIcon from '@material-ui/icons/PlayArrow';
 import UserRow from './UserRow';
 import WaitlistPosition from './WaitlistPosition';
 

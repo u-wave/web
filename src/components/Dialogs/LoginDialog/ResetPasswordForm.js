@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import { CircularProgress } from 'material-ui/Progress';
-import EmailIcon from 'material-ui-icons/Email';
+import EmailIcon from '@material-ui/icons/Email';
 import Form from '../../Form';
 import FormGroup from '../../Form/Group';
 import TextField from '../../Form/TextField';

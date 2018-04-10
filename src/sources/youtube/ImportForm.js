@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import PlaylistIcon from 'material-ui-icons/PlaylistPlay';
+import PlaylistIcon from '@material-ui/icons/PlaylistPlay';
 import ImportSourceBlock from '../../components/PlaylistManager/Import/ImportSourceBlock';
 import Form from '../../components/Form';
 import FormGroup from '../../components/Form/Group';

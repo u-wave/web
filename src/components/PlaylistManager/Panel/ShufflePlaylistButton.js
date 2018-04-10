@@ -7,7 +7,7 @@ import { translate } from 'react-i18next';
 import { CircularProgress } from 'material-ui/Progress';
 import Tooltip from 'material-ui/Tooltip';
 import IconButton from 'material-ui/IconButton';
-import ShuffleIcon from 'material-ui-icons/Shuffle';
+import ShuffleIcon from '@material-ui/icons/Shuffle';
 
 const enhance = compose(
   withState('isLoading', 'setLoading', false),

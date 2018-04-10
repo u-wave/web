@@ -8,7 +8,7 @@ import Card, { CardHeader, CardContent, CardActions } from 'material-ui/Card';
 import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
 import Collapse from 'material-ui/transitions/Collapse';
-import EditIcon from 'material-ui-icons/ModeEdit';
+import EditIcon from '@material-ui/icons/ModeEdit';
 import parse from 'u-wave-parse-chat-markup';
 import compile from '../../../components/Chat/Markup/compile';
 

@@ -5,8 +5,8 @@ import { translate } from 'react-i18next';
 import Popover from 'material-ui/Popover';
 import { MenuList, MenuItem } from 'material-ui/Menu';
 import { ListItemIcon, ListItemText } from 'material-ui/List';
-import CreatePlaylistIcon from 'material-ui-icons/Add';
-import ActiveIcon from 'material-ui-icons/Check';
+import CreatePlaylistIcon from '@material-ui/icons/Add';
+import ActiveIcon from '@material-ui/icons/Check';
 
 const enhance = translate();
 

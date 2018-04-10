@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import EmailIcon from 'material-ui-icons/Email';
-import PasswordIcon from 'material-ui-icons/Lock';
+import EmailIcon from '@material-ui/icons/Email';
+import PasswordIcon from '@material-ui/icons/Lock';
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import { translate } from 'react-i18next';

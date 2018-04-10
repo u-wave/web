@@ -15,7 +15,7 @@ module.exports = function prerender(element) {
   const markup = renderToStaticMarkup(h(
     JssProvider, { jss: styles, registry, generateClassName },
     h(
-      MuiThemeProvider, { theme: createMuiTheme(theme) },
+      MuiThemeProvider, { theme: createMuiTheme(theme), sheetsManager: new Map() },
       element,
     ),
   ));

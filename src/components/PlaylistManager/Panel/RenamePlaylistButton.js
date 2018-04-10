@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import Tooltip from 'material-ui/Tooltip';
 import IconButton from 'material-ui/IconButton';
-import EditIcon from 'material-ui-icons/ModeEdit';
+import EditIcon from '@material-ui/icons/ModeEdit';
 import PromptDialog from '../../Dialogs/PromptDialog';
 
 const enhance = translate();

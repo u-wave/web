@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import MoveToFirstIcon from 'material-ui-icons/KeyboardArrowUp';
+import MoveToFirstIcon from '@material-ui/icons/KeyboardArrowUp';
 import Action from './Action';
 
 const MoveToFirst = ({ onFirst, ...props }) => (

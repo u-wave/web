@@ -7,7 +7,7 @@ import Popover from 'material-ui/Popover';
 import Tooltip from 'material-ui/Tooltip';
 import IconButton from 'material-ui/IconButton';
 import { CircularProgress } from 'material-ui/Progress';
-import SkipIcon from 'material-ui-icons/SkipNext';
+import SkipIcon from '@material-ui/icons/SkipNext';
 import SkipReasonsList from './SkipReasonsList';
 
 const popoverPosition = {

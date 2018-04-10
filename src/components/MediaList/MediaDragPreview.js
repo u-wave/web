@@ -1,7 +1,7 @@
 import assign from 'object-assign';
 import React from 'react';
 import PropTypes from 'prop-types';
-import ListIcon from 'material-ui-icons/List';
+import ListIcon from '@material-ui/icons/List';
 import transformStyle from '../../utils/transformStyle';
 
 const getItemStyles = offset => (

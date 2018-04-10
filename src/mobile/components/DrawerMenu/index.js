@@ -5,7 +5,7 @@ import Drawer from 'material-ui/Drawer';
 import { MenuList, MenuItem } from 'material-ui/Menu';
 import { ListItemIcon, ListSubheader, ListItemText } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
-import ActiveIcon from 'material-ui-icons/Check';
+import ActiveIcon from '@material-ui/icons/Check';
 import UserCard from '../../../components/UserCard/UserCard';
 
 const enhance = withHandlers({

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
-import CreatePlaylistIcon from 'material-ui-icons/Add';
+import CreatePlaylistIcon from '@material-ui/icons/Add';
 import PromptDialog from '../Dialogs/PromptDialog';
 import PlaylistsMenu from './PlaylistsMenu';
 
