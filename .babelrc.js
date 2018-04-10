@@ -43,9 +43,5 @@ module.exports = () => {
     );
   }
 
-  if (env === 'testing') {
-    preset.plugins.push('istanbul');
-  }
-
   return preset;
 };

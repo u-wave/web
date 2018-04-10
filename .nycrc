@@ -5,6 +5,6 @@
   "statements": 95,
   "functions": 95,
   "reporter": ["lcov"],
-  "sourceMap": false,
-  "instrument": false
+  "sourceMap": true,
+  "instrument": true
 }
