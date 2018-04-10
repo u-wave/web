@@ -1,5 +1,0 @@
-{
-  // Defer to .babelrc.js.
-  // TODO remove this file when Babel 7 is released.
-  "presets": ["./.babelrc.js"]
-}

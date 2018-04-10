@@ -89,9 +89,9 @@ gulp.task('js:babel', ['js:locales'], () => {
     .pipe(babel({
       babelrc: false,
       plugins: [
-        'syntax-object-rest-spread',
-        'transform-es2015-modules-commonjs',
-        'dynamic-import-node',
+        '@babel/plugin-syntax-object-rest-spread',
+        '@babel/plugin-transform-modules-commonjs',
+        'module:babel-plugin-dynamic-import-node',
         rewriteMuiImports(/^material-ui\/es\//, 'material-ui/'),
       ],
     }))

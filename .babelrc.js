@@ -1,50 +1,55 @@
-module.exports = () => {
-  const env = process.env.BABEL_ENV || process.env.NODE_ENV || 'development';
+module.exports = (api, envOverride) => {
+  const env = envOverride || process.env.BABEL_ENV || process.env.NODE_ENV || 'development';
   const browsers = process.env.BROWSERSLIST;
+
+  api.cache(() => `${env}${browsers || ''}`);
 
   const targets = {};
   if (browsers) {
     targets.browsers = browsers;
   }
-  if (env === 'production') {
-    targets.uglify = true;
+  if (env === 'middleware') {
+    targets.node = '8.9';
   }
   if (env === 'testing') {
     targets.node = 'current';
   }
 
+  const loose = env === 'middleware' || env === 'production';
+
   const preset = {
     presets: [
-      ['env', {
+      ['@babel/preset-env', {
         modules: false,
-        loose: env === 'production',
-        targets
+        loose,
+        targets,
+        forceAllTransforms: env === 'production',
       }],
-      'react'
+      '@babel/preset-react'
     ],
     plugins: [
-      'syntax-dynamic-import',
-      'transform-object-rest-spread',
-      'transform-class-properties',
-      'transform-export-extensions',
-      ['transform-runtime', { polyfill: false }]
+      '@babel/plugin-syntax-dynamic-import',
+      '@babel/plugin-proposal-export-default-from',
+      '@babel/plugin-proposal-export-namespace-from',
+      '@babel/plugin-proposal-object-rest-spread',
+      ['@babel/plugin-proposal-class-properties', { loose }],
+      ['@babel/plugin-transform-runtime', {
+        polyfill: false,
+        useBuiltIns: false,
+      }]
     ]
   };
 
   if (env === 'development') {
-    preset.plugins.push('react-hot-loader/babel');
+    preset.plugins.push('module:react-hot-loader/babel');
   }
 
   if (env === 'production') {
     preset.plugins.push(
-      'transform-react-constant-elements',
-      'transform-react-inline-elements',
+      '@babel/plugin-transform-react-constant-elements',
+      '@babel/plugin-transform-react-inline-elements',
       ['transform-react-remove-prop-types', { mode: 'wrap' }]
     );
-  }
-
-  if (env === 'testing') {
-    preset.plugins.push('istanbul');
   }
 
   return preset;

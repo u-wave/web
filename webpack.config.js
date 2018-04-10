@@ -11,9 +11,11 @@ const ManifestPlugin = require('webpack-pwa-manifest');
 const nodeEnv = process.env.NODE_ENV || 'development';
 
 // Compile src/ on the fly so we can use components etc. during build time.
-require('babel-register')({
-  only: new RegExp(escapeStringRegExp(path.join(__dirname, 'src'))),
-  plugins: ['transform-es2015-modules-commonjs'],
+require('@babel/register').default({
+  only: [
+    new RegExp(escapeStringRegExp(path.join(__dirname, 'src'))),
+  ],
+  plugins: ['@babel/plugin-transform-modules-commonjs'],
 });
 
 const staticPages = {
@@ -39,10 +41,10 @@ const noConfigBabelLoader = {
   query: {
     babelrc: false,
     presets: [
-      ['env', {
+      ['@babel/preset-env', {
         modules: false,
         loose: true,
-        targets: { uglify: true },
+        forceAllTransforms: true,
       }],
     ],
   },

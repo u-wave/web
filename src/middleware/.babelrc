@@ -1,6 +1,0 @@
-{
-  "plugins": [
-    "syntax-object-rest-spread",
-    "transform-export-extensions"
-  ]
-}
