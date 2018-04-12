@@ -27,9 +27,6 @@ const mapStateToProps = createStructuredSelector({
   settings: settingsSelector,
   language: languageSelector,
   theme: themeSelector,
-  hasAboutPage: (state, props) => (
-    props.uwave.getAboutPageComponent() !== null
-  ),
 });
 
 const mapDispatchToProps = {

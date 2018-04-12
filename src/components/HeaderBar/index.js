@@ -17,7 +17,6 @@ const HeaderBar = ({
   mediaTimeRemaining,
   volume,
   muted,
-  hasAboutPage,
   onVolumeChange,
   onVolumeMute,
   onVolumeUnmute,
@@ -31,7 +30,6 @@ const HeaderBar = ({
   >
     <AppTitle
       className="HeaderBar-title"
-      hasAboutPage={hasAboutPage}
       onClick={onToggleAboutOverlay}
     >
       {title}
@@ -72,7 +70,6 @@ HeaderBar.propTypes = {
   mediaTimeRemaining: PropTypes.number.isRequired,
   volume: PropTypes.number,
   muted: PropTypes.bool,
-  hasAboutPage: PropTypes.bool.isRequired,
 
   onVolumeChange: PropTypes.func,
   onVolumeMute: PropTypes.func,

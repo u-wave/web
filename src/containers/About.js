@@ -9,11 +9,16 @@ export default class AboutContainer extends React.Component {
   };
 
   getAboutPageComponent() {
-    const uw = this.context.uwave;
-    if (uw) {
+    if (this.hasAboutPageComponent()) {
+      const uw = this.context.uwave;
       return uw.getAboutPageComponent();
     }
     return () => null;
+  }
+
+  hasAboutPageComponent() {
+    const uw = this.context.uwave;
+    return Boolean(uw && uw.getAboutPageComponent());
   }
 
   render() {
@@ -21,6 +26,7 @@ export default class AboutContainer extends React.Component {
       <Overlay direction="top">
         <About
           {...this.props}
+          hasAboutPage={this.hasAboutPageComponent()}
           render={this.getAboutPageComponent()}
         />
       </Overlay>

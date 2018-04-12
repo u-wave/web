@@ -24,7 +24,3 @@
 .AppTitle-button {
   color: var(--text-color);
 }
-
-.AppTitle--hasAboutPage {
-  padding-right: 0;
-}
