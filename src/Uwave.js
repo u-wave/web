@@ -59,7 +59,7 @@ export default class Uwave {
     return this;
   }
 
-  source(sourceType, sourcePlugin, opts = {}) {
+  source(sourcePlugin, opts = {}) {
     const sourceFactory = sourcePlugin.default || sourcePlugin;
 
     const type = typeof sourceFactory;
@@ -71,7 +71,11 @@ export default class Uwave {
       ? sourceFactory(this, opts)
       : sourceFactory;
 
-    this.sources[sourceType] = source;
+    if (typeof source.name !== 'string') {
+      throw new TypeError('Source plugin did not provide a name');
+    }
+
+    this.sources[source.name] = source;
 
     return source;
   }
