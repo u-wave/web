@@ -1,6 +1,6 @@
 import Uwave from './Uwave';
-import * as youTubeSource from './sources/youtube';
-import * as soundCloudSource from './sources/soundcloud';
+import youTubeSource from './sources/youtube';
+import soundCloudSource from './sources/soundcloud';
 
 function readApplicationConfig() {
   try {
@@ -13,8 +13,8 @@ function readApplicationConfig() {
 const uw = new Uwave(readApplicationConfig());
 
 // Configure the Media sources to be used by this üWave client instance.
-uw.source('youtube', youTubeSource);
-uw.source('soundcloud', soundCloudSource);
+uw.source(youTubeSource());
+uw.source(soundCloudSource());
 
 window.uw = uw;
 
