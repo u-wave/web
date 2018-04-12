@@ -1,6 +1,4 @@
 /* eslint-disable global-require */
-'use strict'; // eslint-disable-line strict, lines-around-directive
-
 require('loud-rejection/register');
 const gulp = require('gulp');
 const { colors, env, log } = require('gulp-util');
@@ -13,7 +11,6 @@ const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const nodemon = require('nodemon');
 const explain = require('explain-error');
-const wpConfig = require('../webpack.config');
 
 function tryResolve(file, message) {
   try {
@@ -76,6 +73,7 @@ gulp.task('serve', serveDeps, (done) => {
   const serverPort = env.serverPort || 6042;
   const watch = env.watch || false;
 
+  const wpConfig = require('../webpack.config');
   const createWebClient = require('../src/middleware').default;
 
   const app = express();
