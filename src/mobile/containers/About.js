@@ -1,11 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { translate } from 'react-i18next';
 import Overlay from '../../components/Overlay';
 import OverlayHeader from '../../components/Overlay/Header';
 import OverlayContent from '../../components/Overlay/Content';
 
-export default class AboutContainer extends React.Component {
+const enhance = translate();
+
+class AboutContainer extends React.Component {
   static propTypes = {
+    t: PropTypes.func.isRequired,
     onCloseOverlay: PropTypes.func.isRequired,
   };
   static contextTypes = {
@@ -23,13 +27,18 @@ export default class AboutContainer extends React.Component {
   render() {
     const About = this.getAboutPageComponent();
     if (!About) return null;
+
+    const { t, onCloseOverlay, ...props } = this.props;
+
     return (
       <Overlay>
-        <OverlayHeader title="About" onCloseOverlay={this.props.onCloseOverlay} />
+        <OverlayHeader title={t('about.about')} onCloseOverlay={onCloseOverlay} />
         <OverlayContent className="AboutPanel">
-          <About {...this.props} />
+          <About {...props} />
         </OverlayContent>
       </Overlay>
     );
   }
 }
+
+export default enhance(AboutContainer);

@@ -1,13 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { translate } from 'react-i18next';
 import Overlay from '../../components/Overlay';
 import OverlayContent from '../../components/Overlay/Content';
 import OverlayHeader from '../../components/Overlay/Header';
 import ServerList from '../../components/ServerList';
 
-const ServerListContainer = ({ onCloseOverlay }) => (
+const enhance = translate();
+
+const ServerListContainer = ({ t, onCloseOverlay }) => (
   <Overlay>
-    <OverlayHeader title="Servers" onCloseOverlay={onCloseOverlay} />
+    <OverlayHeader title={t('about.servers')} onCloseOverlay={onCloseOverlay} />
     <OverlayContent className="AboutPanel">
       <ServerList />
     </OverlayContent>
@@ -15,7 +18,8 @@ const ServerListContainer = ({ onCloseOverlay }) => (
 );
 
 ServerListContainer.propTypes = {
+  t: PropTypes.func.isRequired,
   onCloseOverlay: PropTypes.func.isRequired,
 };
 
-export default ServerListContainer;
+export default enhance(ServerListContainer);

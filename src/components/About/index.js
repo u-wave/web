@@ -27,7 +27,7 @@ const About = ({
 }) => (
   <div className="About">
     <OverlayHeader
-      title="About"
+      title={t('about.about')}
       onCloseOverlay={onCloseOverlay}
       direction="top"
     />

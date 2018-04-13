@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { translate } from 'react-i18next';
+import compose from 'recompose/compose';
 import withHandlers from 'recompose/withHandlers';
 import Drawer from 'material-ui/Drawer';
 import { MenuList, MenuItem } from 'material-ui/Menu';
@@ -8,27 +10,31 @@ import Divider from 'material-ui/Divider';
 import ActiveIcon from '@material-ui/icons/Check';
 import UserCard from '../../../components/UserCard/UserCard';
 
-const enhance = withHandlers({
-  // Prevent defaults for react-tap-event-plugin:
-  // https://github.com/zilverline/react-tap-event-plugin/issues/77
-  onShowAbout: props => (event) => {
-    event.preventDefault();
-    props.onShowAbout();
-    props.onDrawerClose();
-  },
-  onShowServerList: props => (event) => {
-    event.preventDefault();
-    props.onShowServerList();
-    props.onDrawerClose();
-  },
-  onShowSettings: props => (event) => {
-    event.preventDefault();
-    props.onShowSettings();
-    props.onDrawerClose();
-  },
-});
+const enhance = compose(
+  translate(),
+  withHandlers({
+    // Prevent defaults for react-tap-event-plugin:
+    // https://github.com/zilverline/react-tap-event-plugin/issues/77
+    onShowAbout: props => (event) => {
+      event.preventDefault();
+      props.onShowAbout();
+      props.onDrawerClose();
+    },
+    onShowServerList: props => (event) => {
+      event.preventDefault();
+      props.onShowServerList();
+      props.onDrawerClose();
+    },
+    onShowSettings: props => (event) => {
+      event.preventDefault();
+      props.onShowSettings();
+      props.onDrawerClose();
+    },
+  }),
+);
 
 const DrawerMenu = ({
+  t,
   user,
   playlists,
   open,
@@ -42,13 +48,13 @@ const DrawerMenu = ({
   <Drawer open={open} onClose={onDrawerClose}>
     {user && <UserCard user={user} />}
     <MenuList>
-      {hasAboutPage && <MenuItem onClick={onShowAbout}>About</MenuItem>}
-      <MenuItem onClick={onShowServerList}>Servers</MenuItem>
-      <MenuItem onClick={onShowSettings}>Settings</MenuItem>
+      {hasAboutPage && <MenuItem onClick={onShowAbout}>{t('about.about')}</MenuItem>}
+      <MenuItem onClick={onShowServerList}>{t('about.servers')}</MenuItem>
+      <MenuItem onClick={onShowSettings}>{t('settings.title')}</MenuItem>
     </MenuList>
     <Divider />
     <MenuList
-      subheader={<ListSubheader>Playlists</ListSubheader>}
+      subheader={<ListSubheader>{t('playlists.title')}</ListSubheader>}
     >
       {playlists.map(playlist => (
         <MenuItem
@@ -72,6 +78,7 @@ const DrawerMenu = ({
 );
 
 DrawerMenu.propTypes = {
+  t: PropTypes.func.isRequired,
   user: PropTypes.object,
   playlists: PropTypes.arrayOf(PropTypes.shape({ name: PropTypes.string.isRequired })),
   open: PropTypes.bool.isRequired,
