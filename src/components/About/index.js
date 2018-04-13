@@ -6,7 +6,7 @@ import { translate } from 'react-i18next';
 import List, { ListItem, ListItemText } from '../List';
 import OverlayHeader from '../Overlay/Header';
 import OverlayContent from '../Overlay/Content';
-import ServerList from './ServerList';
+import ServerList from '../ServerList';
 
 const enhance = compose(
   translate(),

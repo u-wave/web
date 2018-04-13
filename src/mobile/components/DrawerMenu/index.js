@@ -16,6 +16,11 @@ const enhance = withHandlers({
     props.onShowAbout();
     props.onDrawerClose();
   },
+  onShowServerList: props => (event) => {
+    event.preventDefault();
+    props.onShowServerList();
+    props.onDrawerClose();
+  },
   onShowSettings: props => (event) => {
     event.preventDefault();
     props.onShowSettings();
@@ -27,7 +32,9 @@ const DrawerMenu = ({
   user,
   playlists,
   open,
+  hasAboutPage,
   onShowAbout,
+  onShowServerList,
   onShowSettings,
   onShowPlaylist,
   onDrawerClose,
@@ -35,7 +42,8 @@ const DrawerMenu = ({
   <Drawer open={open} onClose={onDrawerClose}>
     {user && <UserCard user={user} />}
     <MenuList>
-      <MenuItem onClick={onShowAbout}>About</MenuItem>
+      {hasAboutPage && <MenuItem onClick={onShowAbout}>About</MenuItem>}
+      <MenuItem onClick={onShowServerList}>Servers</MenuItem>
       <MenuItem onClick={onShowSettings}>Settings</MenuItem>
     </MenuList>
     <Divider />
@@ -67,7 +75,9 @@ DrawerMenu.propTypes = {
   user: PropTypes.object,
   playlists: PropTypes.arrayOf(PropTypes.shape({ name: PropTypes.string.isRequired })),
   open: PropTypes.bool.isRequired,
+  hasAboutPage: PropTypes.bool.isRequired,
   onShowAbout: PropTypes.func.isRequired,
+  onShowServerList: PropTypes.func.isRequired,
   onShowSettings: PropTypes.func.isRequired,
   onShowPlaylist: PropTypes.func.isRequired,
   onDrawerClose: PropTypes.func.isRequired,
