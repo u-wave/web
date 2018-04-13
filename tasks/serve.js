@@ -54,21 +54,16 @@ const apiServerTask = () => {
   require(apiDevServer); // eslint-disable-line import/no-dynamic-require
 };
 
-gulp.task('apiServer', (done) => {
+function apiServer(done) {
   if (env.watch) {
     devServerTask(done);
   } else {
     apiServerTask();
     done();
   }
-});
-
-// pass --no-api to use an already running API server (on `localhost:${--server-port}`).
-const serveDeps = [];
-if (env.api !== false) {
-  serveDeps.push('apiServer');
 }
-gulp.task('serve', serveDeps, (done) => {
+
+function serve(done) {
   const port = env.port || 6041;
   const serverPort = env.serverPort || 6042;
   const watch = env.watch || false;
@@ -143,4 +138,9 @@ gulp.task('serve', serveDeps, (done) => {
     }));
     done();
   }
-});
+}
+
+// pass --no-api to use an already running API server (on `localhost:${--server-port}`).
+exports.serve = env.api !== false
+  ? gulp.series(apiServer, serve)
+  : serve;
