@@ -43,7 +43,8 @@ const noConfigBabelLoader = {
     presets: [
       ['@babel/preset-env', {
         modules: false,
-        loose: true,
+        // Don't assume dependencies are OK with being run in loose mode
+        loose: false,
         forceAllTransforms: true,
       }],
     ],
