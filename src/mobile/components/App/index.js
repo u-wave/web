@@ -15,6 +15,8 @@ import Dialogs from '../../../components/Dialogs';
 import AddToPlaylistMenu from '../../../containers/AddToPlaylistMenu';
 import DragLayer from '../../../containers/DragLayer';
 import MainView from '../../containers/MainView';
+import About from '../../containers/About';
+import ServerList from '../../containers/ServerList';
 import Overlays from './Overlays';
 
 const enhance = compose(
@@ -42,18 +44,11 @@ const MobileApp = ({
     <ErrorArea />
 
     <Overlays transitionName="Overlay" active={activeOverlay}>
-      <PlaylistManager
-        key="playlistManager"
-        onCloseOverlay={onCloseOverlay}
-      />
-      <RoomHistory
-        key="roomHistory"
-        onCloseOverlay={onCloseOverlay}
-      />
-      <SettingsManager
-        key="settings"
-        onCloseOverlay={onCloseOverlay}
-      />
+      <About key="about" onCloseOverlay={onCloseOverlay} />
+      <ServerList key="serverList" onCloseOverlay={onCloseOverlay} />
+      <PlaylistManager key="playlistManager" onCloseOverlay={onCloseOverlay} />
+      <RoomHistory key="roomHistory" onCloseOverlay={onCloseOverlay} />
+      <SettingsManager key="settings" onCloseOverlay={onCloseOverlay} />
     </Overlays>
 
     <Dialogs />

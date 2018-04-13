@@ -26,7 +26,6 @@ const App = ({
   activeOverlay,
   isConnected,
   settings,
-  hasAboutPage,
   onCloseOverlay,
 }) => (
   <div className="App">
@@ -48,26 +47,11 @@ const App = ({
         <ConnectionIndicator isConnected={isConnected} />
       </div>
       <Overlays transitionName="Overlay" active={activeOverlay}>
-        {hasAboutPage && <About
-          key="about"
-          onCloseOverlay={onCloseOverlay}
-        />}
-        <AdminProxy
-          key="admin"
-          onCloseOverlay={onCloseOverlay}
-        />
-        <PlaylistManager
-          key="playlistManager"
-          onCloseOverlay={onCloseOverlay}
-        />
-        <RoomHistory
-          key="roomHistory"
-          onCloseOverlay={onCloseOverlay}
-        />
-        <SettingsManager
-          key="settings"
-          onCloseOverlay={onCloseOverlay}
-        />
+        <About key="about" onCloseOverlay={onCloseOverlay} />
+        <AdminProxy key="admin" onCloseOverlay={onCloseOverlay} />
+        <PlaylistManager key="playlistManager" onCloseOverlay={onCloseOverlay} />
+        <RoomHistory key="roomHistory" onCloseOverlay={onCloseOverlay} />
+        <SettingsManager key="settings" onCloseOverlay={onCloseOverlay} />
       </Overlays>
       <FooterBar className="AppRow AppRow--bottom" />
     </div>
@@ -87,8 +71,6 @@ App.propTypes = {
   activeOverlay: PropTypes.string,
   isConnected: PropTypes.bool.isRequired,
   settings: PropTypes.object.isRequired,
-  hasAboutPage: PropTypes.bool,
-
   onCloseOverlay: PropTypes.func.isRequired,
 };
 

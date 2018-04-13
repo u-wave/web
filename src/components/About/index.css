@@ -7,5 +7,19 @@
 
 .AboutPanel {
   background-color: var(--background-color);
+  display: flex;
+}
+
+.AboutPanel-menu {
+  width: 250px;
+}
+
+.AboutPanel-menuItem {
+  &.is-selected {
+    background-color: var(--highlight-color);
+  }
+}
+
+.AboutPanel-content {
   overflow-y: auto;
 }

@@ -25,9 +25,6 @@ const mapStateToProps = createStructuredSelector({
   dj: djSelector,
   volume: volumeSelector,
   muted: isMutedSelector,
-  hasAboutPage: (state, props) => (
-    props.uwave.getAboutPageComponent() !== null
-  ),
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
