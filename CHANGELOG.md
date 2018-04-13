@@ -1,3 +1,19 @@
+# 1.5.0 / 13 Apr 2018
+
+Features:
+* Add server list. (#864)
+
+Bugfixes:
+ * Disable mobile vote buttons so you can tap the video. (#865)
+ * Fix vertical scrollbar appearing on mobile because of the AppBar height. (#859)
+
+Internal:
+ * Update material-ui and @material-ui/icons. (#857, #866)
+ * Update to Babel 7. (#858)
+ * Lazy load webpack config. (#862)
+ * Remove custom sourceType parameter. (#861)
+ * Use `qs-stringify` to simplify building the soundcloud embed URL. (#863)
+
 # 1.4.3 / 07 Apr 2018
 
 Features:
