@@ -1,7 +1,6 @@
 /* eslint-disable global-require */
 const gulp = require('gulp');
 const { env } = require('gulp-util');
-const runSeq = require('run-sequence');
 const webpack = require('webpack');
 const rimraf = require('rimraf');
 
