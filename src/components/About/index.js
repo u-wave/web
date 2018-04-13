@@ -1,18 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import compose from 'recompose/compose';
 import withState from 'recompose/withState';
+import { translate } from 'react-i18next';
 import List, { ListItem, ListItemText } from '../List';
 import OverlayHeader from '../Overlay/Header';
 import OverlayContent from '../Overlay/Content';
 import ServerList from './ServerList';
 
-const enhance = withState(
-  'active',
-  'setActive',
-  ({ hasAboutPage }) => (hasAboutPage ? 'about' : 'servers'),
+const enhance = compose(
+  translate(),
+  withState(
+    'active',
+    'setActive',
+    ({ hasAboutPage }) => (hasAboutPage ? 'about' : 'servers'),
+  ),
 );
 
 const About = ({
+  t,
   onCloseOverlay,
   active,
   setActive,
@@ -33,7 +39,7 @@ const About = ({
             selected={active === 'about'}
             onClick={() => setActive('about')}
           >
-            <ListItemText primary="About" />
+            <ListItemText primary={t('about.about')} />
           </ListItem>
         )}
         <ListItem
@@ -41,7 +47,7 @@ const About = ({
           selected={active === 'servers'}
           onClick={() => setActive('servers')}
         >
-          <ListItemText primary="Servers" />
+          <ListItemText primary={t('about.servers')} />
         </ListItem>
       </List>
       <div className="AboutPanel-content">
@@ -53,6 +59,7 @@ const About = ({
 );
 
 About.propTypes = {
+  t: PropTypes.func.isRequired,
   onCloseOverlay: PropTypes.func.isRequired,
   hasAboutPage: PropTypes.bool.isRequired,
   active: PropTypes.oneOf(['about', 'servers']).isRequired,
