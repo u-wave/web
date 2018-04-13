@@ -263,7 +263,7 @@ module.exports = {
   resolve: {
     alias: {
       'material-ui': path.join(__dirname, 'node_modules/material-ui/es/'),
-      'material-ui-icons': path.join(__dirname, 'node_modules/material-ui-icons/es/'),
+      '@material-ui/icons': path.join(__dirname, 'node_modules/@material-ui/icons/es/'),
     },
     mainFields: [
       'browser',
