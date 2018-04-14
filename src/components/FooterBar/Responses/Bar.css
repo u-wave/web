@@ -1,53 +1,7 @@
-@import "../../../vars.css";
-
 .AudienceResponse {
   height: 100%;
   width: 100%;
   display: flex;
   justify-content: space-around;
   align-items: center;
-}
-
-.ResponseButton {
-  height: 100%;
-  border: 0;
-  background: none;
-  flex-grow: 0.334;
-  padding: 0;
-
-  cursor: pointer;
-  &:hover {
-    background-color: var(--background-hover-color);
-  }
-}
-
-.ResponseButton--disabled, .ResponseButton--static {
-  cursor: default;
-  &:hover {
-    background-color: transparent;
-  }
-}
-
-.ResponseButton-content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 15px;
-  position: relative;
-}
-
-.ResponseButton-icon {
-  height: 36px;
-  width: 36px;
-  padding: 6px 12px 6px 0px;
-}
-
-.ResponseButton-icon--favorite {
-  color: var(--highlight-color);
-}
-.ResponseButton-icon--downvoted {
-  color: #b64b4b;
-}
-.ResponseButton-icon--upvoted {
-  color: #4bb64b;
 }
