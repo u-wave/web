@@ -1,11 +1,9 @@
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import nest from 'recompose/nest';
 import { selectedPlaylistSelector } from '../selectors/playlistSelectors';
 import { showSearchResultsSelector } from '../selectors/searchSelectors';
 import { showImportPanelSelector } from '../selectors/importSelectors';
-import Overlay from '../components/Overlay';
-import PlaylistManager from '../components/PlaylistManager';
+import createLazyOverlay from '../components/LazyOverlay';
 
 const mapStateToProps = createStructuredSelector({
   selectedPlaylist: selectedPlaylistSelector,
@@ -13,4 +11,12 @@ const mapStateToProps = createStructuredSelector({
   showSearchResults: showSearchResultsSelector,
 });
 
-export default connect(mapStateToProps)(nest(Overlay, PlaylistManager));
+
+const enhance = connect(mapStateToProps);
+
+const PlaylistManager = createLazyOverlay({
+  loader: () => import('../components/PlaylistManager' /* webpackChunkName: "playlists" */),
+  title: t => t('playlists.title'),
+});
+
+export default enhance(PlaylistManager);
