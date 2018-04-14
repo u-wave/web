@@ -11,7 +11,6 @@ const mapStateToProps = createStructuredSelector({
   showSearchResults: showSearchResultsSelector,
 });
 
-
 const enhance = connect(mapStateToProps);
 
 const PlaylistManager = createLazyOverlay({
