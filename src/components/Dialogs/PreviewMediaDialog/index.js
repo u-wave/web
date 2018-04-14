@@ -25,6 +25,7 @@ const PreviewMediaDialog = ({
     }}
     open={open}
     onClose={onCloseDialog}
+    disableEnforceFocus
     maxWidth={false}
     aria-labelledby={TITLE}
   >
