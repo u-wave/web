@@ -13,7 +13,7 @@ const Button = ({
 }) => (
   // Wrapped in a <div> so the tooltip can listen for mouse events.
   <Tooltip title={tooltip} placement="top">
-    <div>
+    <div className="ResponseButton-wrap">
       <button
         className={cx('ResponseButton', disabled && 'ResponseButton--disabled')}
         disabled={disabled}

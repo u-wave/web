@@ -8,6 +8,10 @@
   align-items: center;
 }
 
+.ResponseButton-wrap {
+  height: 100%;
+}
+
 .ResponseButton {
   height: 100%;
   border: 0;
