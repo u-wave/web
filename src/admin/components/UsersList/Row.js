@@ -1,3 +1,4 @@
+import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import withProps from 'recompose/withProps';
@@ -8,21 +9,18 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { TableRow, TableCell as MuiTableCell } from 'material-ui/Table';
 import Avatar from '../../../components/Avatar';
 import Username from '../../../components/Username/WithCard';
+import UserRole from '../../../components/UserRole';
 import formatJoinDate from '../../../utils/formatJoinDate';
 
-const avatarStyle = {
-  width: 48,
-  paddingRight: 0,
-};
 const actionsStyle = {
   width: 48,
   paddingLeft: 0,
   paddingRight: 0,
 };
 
-const TableCell = withProps({
-  className: 'AdminUserRow-cell',
-})(MuiTableCell);
+const TableCell = withProps(props => ({
+  className: cx('AdminUserRow-cell', props.className),
+}))(MuiTableCell);
 
 export default class UserRow extends React.Component {
   static propTypes = {
@@ -48,18 +46,21 @@ export default class UserRow extends React.Component {
     const { open, anchorEl } = this.state;
     return (
       <TableRow className="AdminUserRow">
-        <TableCell style={avatarStyle}>
+        <TableCell className="AdminUserRow-avatar">
           <Avatar user={user} />
         </TableCell>
         <TableCell>
           <Username user={user} />
         </TableCell>
         <TableCell>
-          {formatJoinDate(user.createdAt)}
+          {formatJoinDate(user.createdAt, 'date')}
         </TableCell>
         <TableCell>Email</TableCell>
         <TableCell>
-          {user.roles.join(', ')}
+          {user.roles.length > 0 && (
+            /* Only show the primary role here for space reasons. */
+            <UserRole roleName={user.roles[0]} />
+          )}
         </TableCell>
         <TableCell style={actionsStyle}>
           <IconButton

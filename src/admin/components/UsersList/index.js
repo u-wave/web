@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
-import withProps from 'recompose/withProps';
 // eslint-disable-next-line
 import Table, {
   TableBody,
@@ -12,26 +11,7 @@ import Table, {
   TablePagination,
 } from 'material-ui/Table';
 import UserRow from './Row';
-
-const Header = withProps({
-  style: {
-    background: '#9d2053',
-    padding: '12px 24px',
-    lineHeight: '35px',
-  },
-})('div');
-
-const Filter = withProps({
-  style: {
-    background: '#631032',
-    color: '#ffffff',
-    border: 0,
-    marginLeft: 12,
-    paddingLeft: 12,
-    height: 35,
-  },
-  type: 'text',
-})('input');
+import Header from './Header';
 
 const enhance = translate();
 
@@ -44,17 +24,11 @@ const UsersList = ({
   onChangePage,
 }) => (
   <React.Fragment>
-    <Header>
-      <span>Managing Users:</span>
-      <span style={{ float: 'right' }}>
-        Filter User:
-        <Filter />
-      </span>
-    </Header>
+    <Header />
     <Table>
       <TableHead>
-        <TableRow>
-          <TableCell />
+        <TableRow className="AdminUserRow">
+          <TableCell className="AdminUserRow-avatar" />
           <TableCell>{t('admin.users.user')}</TableCell>
           <TableCell>{t('admin.users.joinedAt')}</TableCell>
           <TableCell>{t('admin.users.email')}</TableCell>
@@ -72,6 +46,7 @@ const UsersList = ({
           <TablePagination
             count={totalUsers}
             rowsPerPage={pageSize}
+            rowsPerPageOptions={[pageSize]}
             page={currentPage}
             onChangePage={onChangePage}
           />

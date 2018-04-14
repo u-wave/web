@@ -27,4 +27,5 @@
   bottom: 0;
   left: 250px;
   padding: 20px;
+  overflow-y: scroll;
 }
