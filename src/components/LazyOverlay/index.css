@@ -1,0 +1,16 @@
+@import "../../vars.css";
+
+.LoadingOverlay {
+}
+
+.LoadingOverlay-body {
+  background: color(var(--background-color) alpha(* 96%));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.LoadingOverlay-spinner {
+  min-width: 250px;
+  min-height: 250px;
+}

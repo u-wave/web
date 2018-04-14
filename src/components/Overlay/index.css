@@ -33,6 +33,10 @@
   }
 }
 
+.Overlay-loading {
+  background: color(var(--background-color) alpha(* 96%));
+}
+
 /* Animations!.. */
 .Overlay-enter {
   overflow-y: hidden;

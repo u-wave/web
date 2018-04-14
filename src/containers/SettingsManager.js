@@ -1,7 +1,6 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import nest from 'recompose/nest';
 import {
   set as setSetting,
   setLanguage,
@@ -10,8 +9,7 @@ import { doChangeUsername } from '../actions/UserActionCreators';
 import { logout } from '../actions/LoginActionCreators';
 import { currentUserSelector } from '../selectors/userSelectors';
 import { settingsSelector } from '../selectors/settingSelectors';
-import Overlay from '../components/Overlay';
-import SettingsManager from '../components/SettingsManager';
+import createLazyOverlay from '../components/LazyOverlay';
 
 const mapStateToProps = createStructuredSelector({
   settings: settingsSelector,
@@ -25,4 +23,11 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onLogout: logout,
 }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(nest(Overlay, SettingsManager));
+const enhance = connect(mapStateToProps, mapDispatchToProps);
+
+const SettingsManager = createLazyOverlay({
+  loader: () => import('../components/SettingsManager' /* webpackChunkName: "settings" */),
+  title: t => t('settings.title'),
+});
+
+export default enhance(SettingsManager);
