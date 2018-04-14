@@ -6,8 +6,10 @@ import withProps from 'recompose/withProps';
 import Table, {
   TableBody,
   TableHead,
+  TableFooter,
   TableCell,
   TableRow,
+  TablePagination,
 } from 'material-ui/Table';
 import UserRow from './Row';
 
@@ -35,7 +37,11 @@ const enhance = translate();
 
 const UsersList = ({
   t,
+  pageSize,
+  currentPage,
+  totalUsers,
   users,
+  onChangePage,
 }) => (
   <React.Fragment>
     <Header>
@@ -61,13 +67,27 @@ const UsersList = ({
           <UserRow user={user} />
         ))}
       </TableBody>
+      <TableFooter>
+        <TableRow>
+          <TablePagination
+            count={totalUsers}
+            rowsPerPage={pageSize}
+            page={currentPage}
+            onChangePage={onChangePage}
+          />
+        </TableRow>
+      </TableFooter>
     </Table>
   </React.Fragment>
 );
 
 UsersList.propTypes = {
   t: PropTypes.func.isRequired,
+  pageSize: PropTypes.number.isRequired,
+  currentPage: PropTypes.number.isRequired,
+  totalUsers: PropTypes.number.isRequired,
   users: PropTypes.array.isRequired,
+  onChangePage: PropTypes.func.isRequired,
 };
 
 export default enhance(UsersList);
