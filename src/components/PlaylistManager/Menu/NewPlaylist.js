@@ -2,6 +2,7 @@ import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
+import { MenuItem } from 'material-ui/Menu';
 import CreatePlaylistIcon from '@material-ui/icons/Add';
 
 import PromptDialog from '../../Dialogs/PromptDialog';
@@ -39,20 +40,17 @@ class NewPlaylist extends React.Component {
     const { t, className } = this.props;
     return (
       <React.Fragment>
-        <button
-          role="menuitem"
+        <MenuItem
           className={cx('PlaylistMenuRow', 'PlaylistMenuRow--create', className)}
           onClick={this.handleOpen}
         >
-          <div className="PlaylistMenuRow-content">
-            <div className="PlaylistMenuRow-title">
-              <div className="PlaylistMenuRow-active-icon">
-                <CreatePlaylistIcon />
-              </div>
-              {t('playlists.new')}
+          <div className="PlaylistMenuRow-title">
+            <div className="PlaylistMenuRow-active-icon">
+              <CreatePlaylistIcon />
             </div>
+            {t('playlists.new')}
           </div>
-        </button>
+        </MenuItem>
         {this.state.creating && (
           <PromptDialog
             title={t('dialogs.createPlaylist.nameInputTitle')}

@@ -1,12 +1,13 @@
 import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
+import { MenuList } from 'material-ui/Menu';
 import PlaylistRow from './Row';
 import PlaylistCreateRow from './NewPlaylist';
 import SearchResultsRow from './SearchResultsRow';
 import PlaylistImportRow from './PlaylistImportRow';
 
-const Menu = ({
+const PlaylistMenu = ({
   className,
   playlists,
   selected,
@@ -25,10 +26,7 @@ const Menu = ({
   const importIsSelected = showImportPanel ? 'is-selected' : '';
   const isSelectingPlaylist = selected && !showSearchResults && !showImportPanel;
   return (
-    <div
-      role="menu"
-      className={cx('PlaylistMenu', className)}
-    >
+    <MenuList className={cx('PlaylistMenu', className)}>
       <PlaylistCreateRow
         className="PlaylistMenu-row"
         onCreatePlaylist={onCreatePlaylist}
@@ -56,11 +54,11 @@ const Menu = ({
         className={cx('PlaylistMenu-row', importIsSelected)}
         onClick={onShowImportPanel}
       />
-    </div>
+    </MenuList>
   );
 };
 
-Menu.propTypes = {
+PlaylistMenu.propTypes = {
   className: PropTypes.string,
   playlists: PropTypes.arrayOf(PropTypes.object).isRequired,
   selected: PropTypes.object,
@@ -76,4 +74,4 @@ Menu.propTypes = {
   onShowImportPanel: PropTypes.func.isRequired,
 };
 
-export default Menu;
+export default PlaylistMenu;

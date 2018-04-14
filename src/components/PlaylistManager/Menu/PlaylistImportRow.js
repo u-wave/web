@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import { CircularProgress } from 'material-ui/Progress';
+import { MenuItem } from 'material-ui/Menu';
 import ImportIcon from '@material-ui/icons/Input';
 
 const enhance = translate();
@@ -28,18 +29,15 @@ const PlaylistImportRow = ({
     );
   }
   return (
-    <button
-      role="menuitem"
+    <MenuItem
       className={cx('PlaylistMenuRow', 'PlaylistMenuRow--import', className)}
       onClick={onClick}
     >
-      <div className="PlaylistMenuRow-content">
-        <div className="PlaylistMenuRow-title">
-          {icon}
-          {t('playlists.import.title')}
-        </div>
+      <div className="PlaylistMenuRow-title">
+        {icon}
+        {t('playlists.import.title')}
       </div>
-    </button>
+    </MenuItem>
   );
 };
 

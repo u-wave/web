@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { DropTarget } from 'react-dnd';
 import { CircularProgress } from 'material-ui/Progress';
+import { MenuItem } from 'material-ui/Menu';
 import ActiveIcon from '@material-ui/icons/Check';
 import { MEDIA } from '../../../constants/DDItemTypes';
 
@@ -20,9 +21,13 @@ const collect = (connect, monitor) => ({
 
 const enhance = DropTarget(MEDIA, playlistTarget, collect);
 
+const itemClasses = {
+  root: 'PlaylistMenuRow',
+  selected: 'is-selected',
+};
+
 class PlaylistRow extends React.Component {
   static propTypes = {
-    className: PropTypes.string,
     playlist: PropTypes.object,
     selected: PropTypes.bool,
     isOver: PropTypes.bool.isRequired,
@@ -36,7 +41,6 @@ class PlaylistRow extends React.Component {
 
   render() {
     const {
-      className,
       playlist,
       selected,
 
@@ -46,7 +50,6 @@ class PlaylistRow extends React.Component {
       isOver,
     } = this.props;
     const activeClass = playlist.active && 'is-active';
-    const selectedClass = selected && 'is-selected';
     const droppableClass = isOver && 'is-droppable';
 
     let icon;
@@ -65,19 +68,20 @@ class PlaylistRow extends React.Component {
     }
 
     return connectDropTarget((
-      <button
-        role="menuitem"
-        className={cx('PlaylistMenuRow', activeClass, selectedClass, droppableClass, className)}
-        onClick={onClick}
-      >
-        <div className="PlaylistMenuRow-content">
+      <div>
+        <MenuItem
+          selected={selected}
+          className={cx(activeClass, droppableClass)}
+          classes={itemClasses}
+          onClick={onClick}
+        >
           <div className="PlaylistMenuRow-title">
             {icon}
             {playlist.name}
           </div>
           <div className="PlaylistMenuRow-count">{playlist.size}</div>
-        </div>
-      </button>
+        </MenuItem>
+      </div>
     ));
   }
 }
