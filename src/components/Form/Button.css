@@ -5,11 +5,6 @@
   height: var(--forms-textfield-size);
   cursor: pointer;
 
-  background: var(--highlight-color);
-  border: 1px solid color(var(--highlight-color) blend(black 10%));
-  border-bottom-color: color(var(--highlight-color) blend(white 5%));
-  border-right-color: color(var(--highlight-color) blend(white 5%));
-
   color: var(--text-color);
   text-align: center;
   text-transform: uppercase;
