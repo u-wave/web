@@ -22,9 +22,10 @@ const UsersList = ({
   totalUsers,
   users,
   onChangePage,
+  onFilter,
 }) => (
   <React.Fragment>
-    <Header />
+    <Header onFilter={onFilter} />
     <Table>
       <TableHead>
         <TableRow className="AdminUserRow">
@@ -63,6 +64,7 @@ UsersList.propTypes = {
   totalUsers: PropTypes.number.isRequired,
   users: PropTypes.array.isRequired,
   onChangePage: PropTypes.func.isRequired,
+  onFilter: PropTypes.func.isRequired,
 };
 
 export default enhance(UsersList);

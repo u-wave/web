@@ -10,6 +10,10 @@ export const totalUsersSelector = createSelector(
   baseSelector,
   base => base.users.totalUsers,
 );
+export const filterSelector = createSelector(
+  baseSelector,
+  base => base.users.filter,
+);
 
 export const usersSelector = createSelector(
   baseSelector,
