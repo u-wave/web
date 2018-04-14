@@ -35,7 +35,7 @@ module.exports = (api, envOverride) => {
       ['@babel/plugin-proposal-class-properties', { loose }],
       ['@babel/plugin-transform-runtime', {
         polyfill: false,
-        useBuiltIns: false,
+        useBuiltIns: true,
       }]
     ]
   };
