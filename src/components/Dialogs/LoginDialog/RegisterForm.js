@@ -89,8 +89,11 @@ class RegisterForm extends React.Component {
   }
 
   render() {
-    const { t, error, supportsSocialAuth } = this.props;
-    const { agreed, busy } = this.state;
+    const {
+      t, error, supportsSocialAuth, useReCaptcha,
+    } = this.props;
+    const { agreed, busy, captchaResponse } = this.state;
+    const captchaOk = !useReCaptcha || !!captchaResponse;
 
     return (
       <Form className="RegisterForm" onSubmit={this.handleSubmit}>
@@ -155,7 +158,7 @@ class RegisterForm extends React.Component {
         <FormGroup>
           <Button
             className="RegisterForm-submit"
-            disabled={busy || !agreed}
+            disabled={busy || !agreed || !captchaOk}
           >
             {busy
               ? <div className="Button-loading"><CircularProgress size="100%" /></div>

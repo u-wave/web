@@ -7,15 +7,13 @@ const GRECAPTCHA_API = 'https://www.google.com/recaptcha/api.js';
 const onloadCallbackName = 'grecaptchaOnload__$';
 const onloadCallbacks = [];
 
-if (typeof window !== 'undefined') {
-  window[onloadCallbackName] = () => {
-    onloadCallbacks.forEach(fn => fn(window.grecaptcha));
-  };
-}
-
 function loadReCaptcha(cb) {
   loadScript(`${GRECAPTCHA_API}?onload=${onloadCallbackName}&render=explicit`);
   onloadCallbacks.push(cb);
+}
+
+function onload() {
+  onloadCallbacks.forEach(fn => fn(window.grecaptcha));
 }
 
 export default class ReCaptcha extends React.Component {
@@ -25,6 +23,10 @@ export default class ReCaptcha extends React.Component {
 
   componentDidMount() {
     if (!this.state.grecaptcha) {
+      if (typeof window[onloadCallbackName] !== 'function') {
+        window[onloadCallbackName] = onload;
+      }
+
       loadReCaptcha((grecaptcha) => {
         this.setState({ grecaptcha });
       });
