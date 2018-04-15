@@ -30,7 +30,9 @@ const mapDispatchToProps = {
   onDownvote: doDownvote,
 };
 
-export default compose(
+const enhance = compose(
   timed(),
   connect(mapStateToProps, mapDispatchToProps),
-)(Video);
+);
+
+export default enhance(Video);
