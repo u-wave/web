@@ -1,7 +1,25 @@
+# 1.6.0 / 15 Apr 2018
+
+Features:
+ * Add pagination and filtering to user administration page. (#870)
+
+Bugfixes:
+ * Wait for recaptcha response before enabling Register button. (#876)
+ * Fix theme related crash on password reset page. (#871)
+ * Fix ResponseButtons not covering the full FooterBar height. (#868)
+ * Allow focusing chat when PreviewMediaDialog is open. (#867)
+
+Internal:
+ * Fix @babel/runtime useBuiltIns configuration. (#874)
+ * Lazy overlays for the mobile layout. (#875)
+ * Lazy load overlay code. (#873)
+ * Split lots of chunks. (#872)
+ * Replace some components with material-ui versions. (#869)
+
 # 1.5.0 / 13 Apr 2018
 
 Features:
-* Add server list. (#864)
+ * Add server list. (#864)
 
 Bugfixes:
  * Disable mobile vote buttons so you can tap the video. (#865)
