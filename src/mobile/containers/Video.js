@@ -10,7 +10,7 @@ import {
 import {
   historyIDSelector,
   mediaSelector,
-  playbackVolumeSelector,
+  mobilePlaybackVolumeSelector,
   timeElapsedSelector,
 } from '../../selectors/boothSelectors';
 import { currentVoteStatsSelector } from '../../selectors/voteSelectors';
@@ -20,7 +20,7 @@ const mapStateToProps = createStructuredSelector({
   historyID: historyIDSelector,
   media: mediaSelector,
   seek: timeElapsedSelector,
-  volume: playbackVolumeSelector,
+  volume: mobilePlaybackVolumeSelector,
   voteStats: currentVoteStatsSelector,
 });
 
