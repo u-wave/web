@@ -23,7 +23,8 @@ const enhance = compose(
     onChange: props => (event) => {
       props.setMotd(event.target.value);
     },
-    onSubmit: props => () => {
+    onSubmit: props => (event) => {
+      event.preventDefault();
       props.onSetMotd(props.newMotd);
       props.setExpanded(false);
     },
@@ -54,24 +55,26 @@ const Motd = ({
     />
     <CardContent>{parsedMotd}</CardContent>
     <Collapse in={expanded} unmountOnExit>
-      <CardContent style={{ paddingTop: 0 }}>
-        <textarea
-          className="AdminMotd-field"
-          rows={4}
-          onChange={onChange}
-          value={newMotd}
-          ref={autoFocus}
-        />
-      </CardContent>
-      <CardActions>
-        <Button
-          variant="raised"
-          color="primary"
-          onClick={onSubmit}
-        >
-          Save
-        </Button>
-      </CardActions>
+      <form onSubmit={onSubmit}>
+        <CardContent style={{ paddingTop: 0 }}>
+          <textarea
+            className="AdminMotd-field"
+            rows={4}
+            onChange={onChange}
+            value={newMotd}
+            ref={autoFocus}
+          />
+        </CardContent>
+        <CardActions>
+          <Button
+            type="submit"
+            variant="raised"
+            color="primary"
+          >
+            Save
+          </Button>
+        </CardActions>
+      </form>
     </Collapse>
   </Card>
 );
