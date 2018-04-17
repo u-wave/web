@@ -45,6 +45,8 @@ export const mediaProgressSelector = createSelector(
   (duration, elapsed) => (
     duration
       // Ensure that the result is between 0 and 1
+      // It can be outside this range if a network or server hiccup
+      // results in an advance event getting delayed.
       ? Math.max(0, Math.min(1, elapsed / duration))
       : 0
   ),
@@ -76,10 +78,21 @@ export const canSkipSelector = createSelector(
   },
 );
 
-export const playbackVolumeSelector = createSelector(
-  volumeSelector,
+// Playback should be muted when the user requested it,
+// and when a media preview dialog is open. (Otherwise their audio will interfere.)
+const playbackMutedSelector = createSelector(
   isMutedSelector,
   isPreviewMediaDialogOpenSelector,
-  (volume, isMuted, isPreviewMediaDialogOpen) =>
-    (isMuted || isPreviewMediaDialogOpen ? 0 : volume),
+  (isMuted, isPreviewMediaDialogOpen) => isMuted || isPreviewMediaDialogOpen,
+);
+
+export const playbackVolumeSelector = createSelector(
+  volumeSelector,
+  playbackMutedSelector,
+  (volume, isMuted) => (isMuted ? 0 : volume),
+);
+
+export const mobilePlaybackVolumeSelector = createSelector(
+  playbackMutedSelector,
+  isMuted => (isMuted ? 0 : 100),
 );
