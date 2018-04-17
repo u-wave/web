@@ -37,8 +37,8 @@ const rewriteMuiImports = (rx, replace) => () => ({
   },
 });
 
-gulp.task('js:locales', () =>
-  gulp.src('locale/*.yaml')
+function jsLocales() {
+  return gulp.src('locale/*.yaml')
     .pipe(yaml({ space: 2 }))
     .pipe(through.obj((file, enc, cb) => {
       /* eslint-disable no-param-reassign */
@@ -54,9 +54,10 @@ gulp.task('js:locales', () =>
       file.contents = Buffer.from(`module.exports = ${file.jsonText};`);
       cb(null, file);
     }))
-    .pipe(gulp.dest('lib/locale')));
+    .pipe(gulp.dest('lib/locale'));
+}
 
-gulp.task('js:babel', ['js:locales'], () => {
+function jsBabel() {
   // We'll always compile this in production mode so other people using the
   // client as a library get the optimised versions of components.
   // Save the environment value so we can restore it later.
@@ -100,4 +101,9 @@ gulp.task('js:babel', ['js:locales'], () => {
     .on('end', () => {
       process.env.BABEL_ENV = oldEnv;
     });
-});
+}
+
+module.exports = {
+  locales: jsLocales,
+  babel: jsBabel,
+};
