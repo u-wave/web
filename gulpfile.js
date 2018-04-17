@@ -7,8 +7,9 @@ const rimraf = require('rimraf');
 const js = require('./tasks/js');
 const serve = require('./tasks/serve');
 
-function setWatching() {
+function setWatching(done) {
   env.watch = true;
+  done();
 }
 
 function cleanPublic(done) {
