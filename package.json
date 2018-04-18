@@ -150,7 +150,7 @@
     "rimraf": "^2.6.2",
     "sinon": "^4.4.10",
     "sinon-chai": "^3.0.0",
-    "style-loader": "^0.20.3",
+    "style-loader": "^0.21.0",
     "through2": "^2.0.3",
     "u-wave-web-emojione": "^2.0.1",
     "uglifyjs-webpack-plugin": "^1.2.4",
