@@ -2,6 +2,7 @@
 @import "./Import/index.css";
 @import "./Menu/index.css";
 @import "./Panel/index.css";
+@import "./SearchResults/index.css";
 
 .PlaylistManager {
   z-index: 10;
