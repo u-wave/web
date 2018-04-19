@@ -44,7 +44,7 @@
     "natural-compare": "^1.2.2",
     "normalize.css": "^8.0.0",
     "object-assign": "^4.0.1",
-    "object-values": "^1.0.0",
+    "object-values": "^2.0.0",
     "object.map": "^1.0.1",
     "prop-types": "^15.6.1",
     "qs-stringify": "^1.1.0",

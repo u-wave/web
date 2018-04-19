@@ -239,6 +239,7 @@ module.exports = {
           /url-regex/,
           /truncate-url/,
           /format-duration/,
+          /object-values/,
           /material-ui\/es/,
           /material-ui-icons\/es/,
         ],
