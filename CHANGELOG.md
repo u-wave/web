@@ -1,3 +1,17 @@
+# 1.7.0 / 19 Apr 2018
+
+Features:
+ * Show error message if SoundCloud track cannot be loaded. (#819)
+ * Play media on full volume on mobile. (#879)
+ * Request user interaction if SoundCloud autoplay is blocked. (#885)
+
+Internal:
+ * Small refactors in the dev server.
+ * Dependency updates.
+ * Use an HTML form for the MOTD update UI. (#877)
+ * Use material-ui IconButtons for media actions. (#882)
+ * Preload overlays on desktop. (#887)
+
 # 1.6.0 / 15 Apr 2018
 
 Features:
