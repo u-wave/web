@@ -47,6 +47,7 @@ function prod(done) {
 
 module.exports = {
   setWatching,
+  serve: serve.serve,
   start,
   build,
   clean,
