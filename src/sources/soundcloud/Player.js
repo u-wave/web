@@ -111,7 +111,7 @@ class SoundCloudPlayer extends React.Component {
       return (
         <div className={cx('src-soundcloud-Player', this.props.className)}>
           <Paper className="src-soundcloud-Player-autoplay">
-            <Typography component="p">
+            <Typography component="p" paragraph>
               {t('booth.autoplayBlocked')}
             </Typography>
             <Button variant="raised" color="primary" onClick={this.handlePlay}>
