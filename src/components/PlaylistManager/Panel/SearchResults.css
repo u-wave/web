@@ -7,3 +7,21 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+.SearchResults-none {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: calc(100% - 54px);
+}
+
+.SearchResults-noneIcon {
+  width: 240px;
+  height: 240px;
+  color: rgba(255, 255, 255, 0.2);
+}
+
+.SearchResults-noneHeader {
+  font-weight: bold;
+}

@@ -6,6 +6,7 @@ import { CircularProgress } from 'material-ui/Progress';
 import { IDLE, LOADING, LOADED } from '../../../constants/LoadingStates';
 import MediaList from '../../MediaList';
 import AddToPlaylistAction from '../../MediaList/Actions/AddToPlaylist';
+import NoSearchResults from './NoSearchResults';
 
 const SearchResults = ({
   t,
@@ -18,7 +19,7 @@ const SearchResults = ({
 }) => {
   let list;
   if (loadingState === LOADED) {
-    list = (
+    list = results.length > 0 ? (
       <MediaList
         className="PlaylistPanel-media"
         media={results}
@@ -31,6 +32,8 @@ const SearchResults = ({
           </React.Fragment>
         )}
       />
+    ) : (
+      <NoSearchResults />
     );
   } else {
     list = (
