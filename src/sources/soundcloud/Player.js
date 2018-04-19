@@ -2,6 +2,10 @@ import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import createDebug from 'debug';
+import { translate } from 'react-i18next';
+import Paper from 'material-ui/Paper';
+import Button from 'material-ui/Button';
+import Typography from 'material-ui/Typography';
 import SongInfo from './SongInfo';
 import soundcloudLogo from '../../../assets/img/soundcloud-inline.png';
 
@@ -9,8 +13,11 @@ const debug = createDebug('uwave:component:video:soundcloud');
 
 const CLIENT_ID = '9d883cdd4c3c54c6dddda2a5b3a11200';
 
-export default class SoundCloudPlayer extends React.Component {
+const enhance = translate();
+
+class SoundCloudPlayer extends React.Component {
   static propTypes = {
+    t: PropTypes.func.isRequired,
     className: PropTypes.string,
     active: PropTypes.bool.isRequired,
     enabled: PropTypes.bool,
@@ -19,8 +26,15 @@ export default class SoundCloudPlayer extends React.Component {
     volume: PropTypes.number,
   };
 
+  state = {
+    needsTap: false,
+  };
+
   componentDidMount() {
     this.audio = new Audio();
+    this.audio.addEventListener('error', () => {
+      this.handleError(this.audio.error);
+    });
     this.audio.autoplay = true;
     this.play();
   }
@@ -45,6 +59,7 @@ export default class SoundCloudPlayer extends React.Component {
   }
 
   play() {
+    this.setState({ needsTap: false });
     if (this.props.enabled && this.props.active) {
       // In Firefox we have to wait for the "canplaythrough" event before
       // seeking.
@@ -57,7 +72,8 @@ export default class SoundCloudPlayer extends React.Component {
 
       const { streamUrl } = this.props.media.sourceData;
       this.audio.src = `${streamUrl}?client_id=${CLIENT_ID}`;
-      this.audio.play();
+      const res = this.audio.play();
+      if (res && res.then) res.catch(this.handleError);
       debug('currentTime', this.props.seek);
       this.audio.addEventListener('canplaythrough', doSeek, false);
     } else {
@@ -69,15 +85,41 @@ export default class SoundCloudPlayer extends React.Component {
     this.audio.pause();
   }
 
+  handleError = (error) => {
+    if (error.name === 'NotAllowedError') {
+      this.setState({ needsTap: true });
+    }
+  };
+
+  handlePlay = () => {
+    this.play();
+  };
+
   render() {
     if (!this.props.active) {
       return null;
     }
 
-    const { media } = this.props;
+    const { t, media } = this.props;
+    const { needsTap } = this.state;
     const { sourceData } = media;
     if (!sourceData) {
       return <div className={cx('src-soundcloud-Player', this.props.className)} />;
+    }
+
+    if (needsTap) {
+      return (
+        <div className={cx('src-soundcloud-Player', this.props.className)}>
+          <Paper className="src-soundcloud-Player-autoplay">
+            <Typography component="p" paragraph>
+              {t('booth.autoplayBlocked')}
+            </Typography>
+            <Button variant="raised" color="primary" onClick={this.handlePlay}>
+              {t('booth.play')}
+            </Button>
+          </Paper>
+        </div>
+      );
     }
 
     return (
@@ -115,3 +157,5 @@ export default class SoundCloudPlayer extends React.Component {
     );
   }
 }
+
+export default enhance(SoundCloudPlayer);

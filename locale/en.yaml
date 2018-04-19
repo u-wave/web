@@ -123,6 +123,8 @@ uwave:
   booth:
     empty: Nobody is playing!
     videoDisabled: Video playback is disabled.
+    autoplayBlocked: Your browser is blocking autoplay. Please press the button below to manually start playing this track.
+    play: Play
     currentDJ: "played by: {{user}}"
     skip:
       self: Skip your turn
