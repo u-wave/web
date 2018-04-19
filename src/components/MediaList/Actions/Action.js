@@ -1,14 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import IconButton from 'material-ui/IconButton';
 
 const Action = ({ children, onAction, ...attrs }) => (
-  <button
+  <IconButton
     className="MediaActions-action"
     onClick={onAction}
     {...attrs}
   >
     {children}
-  </button>
+  </IconButton>
 );
 
 Action.propTypes = {
