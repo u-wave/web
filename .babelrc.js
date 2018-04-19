@@ -23,6 +23,7 @@ module.exports = (api, envOverride) => {
         modules: false,
         loose,
         targets,
+        shippedProposals: true,
         forceAllTransforms: env === 'production',
       }],
       '@babel/preset-react'
@@ -31,7 +32,6 @@ module.exports = (api, envOverride) => {
       '@babel/plugin-syntax-dynamic-import',
       '@babel/plugin-proposal-export-default-from',
       '@babel/plugin-proposal-export-namespace-from',
-      '@babel/plugin-proposal-object-rest-spread',
       ['@babel/plugin-proposal-class-properties', { loose }],
       ['@babel/plugin-transform-runtime', {
         polyfill: false,
