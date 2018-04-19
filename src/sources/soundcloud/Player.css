@@ -8,7 +8,14 @@
   width: 400px;
   margin: auto;
   height: 300px;
-  background: var(--background-color);
+}
+
+.src-soundcloud-Player-autoplay {
+  position: relative;
+  z-index: 3;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
 }
 
 .src-soundcloud-Player-meta {
