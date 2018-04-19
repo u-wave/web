@@ -237,7 +237,6 @@ module.exports = {
         test: /\.js$/,
         include: [
           /url-regex/,
-          /truncate-url/,
           /format-duration/,
           /object-values/,
           /material-ui\/es/,
