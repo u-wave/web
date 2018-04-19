@@ -4,6 +4,7 @@ import compose from 'recompose/compose';
 import nest from 'recompose/nest';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
+import hoistStatics from 'hoist-non-react-statics';
 import loadable from 'react-loadable';
 import { CircularProgress } from 'material-ui/Progress';
 import Overlay from '../Overlay';
@@ -57,5 +58,5 @@ export default function createLazyOverlay({
     loading: enhance(LoadingOverlay),
   });
 
-  return nest(OverlayComponent, LazyOverlay);
+  return hoistStatics(nest(OverlayComponent, LazyOverlay), LazyOverlay);
 }
