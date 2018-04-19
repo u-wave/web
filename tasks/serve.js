@@ -63,6 +63,22 @@ function apiServer(done) {
   }
 }
 
+function addHotReloadingClient(entry) {
+  const CLIENT = ['react-hot-loader/patch', 'webpack-hot-middleware/client'];
+  if (Array.isArray(entry)) {
+    return [...CLIENT, ...entry];
+  }
+  return [...CLIENT, entry];
+}
+
+function waitForBuild(devMiddleware) {
+  return (req, res, next) => {
+    devMiddleware.waitUntilValid(() => {
+      next();
+    });
+  };
+}
+
 function serve(done) {
   const port = env.port || 6041;
   const serverPort = env.serverPort || 6042;
@@ -83,17 +99,9 @@ function serve(done) {
   if (watch) {
     Object.keys(wpConfig.entry).forEach((chunk) => {
       const entry = wpConfig.entry[chunk];
-      if (Array.isArray(entry)) {
-        wpConfig.entry[chunk].unshift('webpack-hot-middleware/client');
-      } else {
-        wpConfig.entry[chunk] = [
-          'webpack-hot-middleware/client',
-          wpConfig.entry[chunk],
-        ];
-      }
+      wpConfig.entry[chunk] = addHotReloadingClient(entry);
     });
 
-    wpConfig.entry.app.unshift('react-hot-loader/patch');
     wpConfig.plugins.push(new webpack.HotModuleReplacementPlugin());
     const compiler = webpack(wpConfig);
     const dev = webpackDevMiddleware(compiler, {
@@ -102,14 +110,7 @@ function serve(done) {
       serverSideRender: true,
     });
 
-    // Delay responding to HTTP requests until the first build is complete.
-    app.use((req, res, next) => {
-      dev.waitUntilValid(() => {
-        next();
-      });
-    });
-
-    app.use(createWebClient(null, {
+    const webClient = createWebClient(null, {
       apiUrl,
       socketUrl,
       emoji: emojione.emoji,
@@ -118,8 +119,11 @@ function serve(done) {
       // Point u-wave-web middleware to the virtual webpack filesystem.
       fs: dev.fileSystem,
       recaptcha: { key: recaptchaTestKeys.sitekey },
-    }));
+    });
 
+    // Delay responding to HTTP requests until the first build is complete.
+    app.use(waitForBuild(dev));
+    app.use(webClient);
     app.use(dev);
     app.use(webpackHotMiddleware(compiler, {
       log,
@@ -130,12 +134,14 @@ function serve(done) {
       done();
     });
   } else {
-    app.use(createWebClient(null, {
+    const webClient = createWebClient(null, {
       apiUrl,
       socketUrl,
       emoji: emojione.emoji,
       recaptcha: { key: recaptchaTestKeys.sitekey },
-    }));
+    });
+
+    app.use(webClient);
     done();
   }
 }
