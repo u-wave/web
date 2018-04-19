@@ -10,12 +10,24 @@
   height: 300px;
 }
 
-.src-soundcloud-Player-autoplay {
+.src-soundcloud-Player-message {
   position: relative;
   z-index: 3;
   padding: 16px;
   display: flex;
   flex-direction: column;
+}
+
+.src-soundcloud-Player-error {
+  position: relative;
+  z-index: 3;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.src-soundcloud-Player-errorIcon {
+  margin-right: 16px;
 }
 
 .src-soundcloud-Player-meta {
