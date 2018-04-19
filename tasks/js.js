@@ -1,7 +1,8 @@
 const gulp = require('gulp');
 const sourcemaps = require('gulp-sourcemaps');
 const { relative } = require('path');
-const { colors, log } = require('gulp-util');
+const chalk = require('chalk');
+const log = require('fancy-log');
 const babel = require('gulp-babel');
 const yaml = require('gulp-yaml');
 const newer = require('gulp-newer');
@@ -68,7 +69,7 @@ function jsBabel() {
     .pipe(newer(destCommonjs))
     .pipe(through.obj((file, enc, cb) => {
       const path = relative(`${__dirname}/../`, file.path);
-      log(`Compiling '${colors.cyan(path)}'...`);
+      log(`Compiling '${chalk.cyan(path)}'...`);
       cb(null, file);
     }))
     .pipe(sourcemaps.init())

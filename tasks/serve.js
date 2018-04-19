@@ -1,7 +1,8 @@
 /* eslint-disable global-require */
 require('loud-rejection/register');
 const gulp = require('gulp');
-const { colors, env, log } = require('gulp-util');
+const log = require('fancy-log');
+const chalk = require('chalk');
 const emojione = require('u-wave-web-emojione');
 const recaptchaTestKeys = require('recaptcha-test-keys');
 const express = require('express');
@@ -11,6 +12,7 @@ const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const nodemon = require('nodemon');
 const explain = require('explain-error');
+const env = require('./env');
 
 function tryResolve(file, message) {
   try {
@@ -41,7 +43,7 @@ const devServerTask = (done) => {
   monitor.once('start', done);
   monitor.on('log', (msg) => {
     clearLine();
-    log(colors.grey('apiServer'), msg.colour);
+    log(chalk.grey('apiServer'), msg.colour);
   });
 };
 

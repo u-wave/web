@@ -1,9 +1,8 @@
 /* eslint-disable global-require */
 const gulp = require('gulp');
-const { env } = require('gulp-util');
 const webpack = require('webpack');
 const rimraf = require('rimraf');
-
+const env = require('./tasks/env');
 const js = require('./tasks/js');
 const serve = require('./tasks/serve');
 
