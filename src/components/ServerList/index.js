@@ -4,10 +4,18 @@ import loadable from 'react-loadable';
 
 const ServerList = loadable({
   loader: () => import('@u-wave/react-server-list' /* webpackChunkName: "serverList" */),
-  loading: () => <CircularProgress />,
+  loading: () => (
+    <div className="ServerList ServerList--loading">
+      <CircularProgress />
+    </div>
+  ),
   render(loaded, props) {
     const { Container } = loaded;
-    return <Container {...props} />;
+    return (
+      <div className="ServerList">
+        <Container {...props} />
+      </div>
+    );
   },
 });
 
