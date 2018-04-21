@@ -104,7 +104,6 @@ class SoundCloudPlayer extends React.Component {
   }
 
   handleError = (error) => {
-    console.error({ error });
     this.setState({
       error,
       needsTap: error.name === 'NotAllowedError',
