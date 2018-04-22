@@ -1,6 +1,7 @@
 import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
+import IconButton from 'material-ui/IconButton';
 import CloseBottomIcon from '@material-ui/icons/KeyboardArrowDown';
 import CloseTopIcon from '@material-ui/icons/KeyboardArrowUp';
 
@@ -12,12 +13,12 @@ const icons = {
 const Close = ({ className, onClose, direction }) => {
   const CloseIcon = icons[direction];
   return (
-    <button
+    <IconButton
       className={cx('OverlayHeaderClose', className)}
       onClick={onClose}
     >
       <CloseIcon className="OverlayHeaderClose-icon" />
-    </button>
+    </IconButton>
   );
 };
 
