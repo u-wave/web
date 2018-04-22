@@ -6,6 +6,7 @@
 
 .src-soundcloud-Player {
   width: 400px;
+  max-width: 100%;
   margin: auto;
   height: 300px;
 }
