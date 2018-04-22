@@ -1,10 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Player from '../../../components/Player';
+import VideoBackdrop from '../../../components/Video/VideoBackdrop';
 import VoteButtons from './VoteButtons';
 
 class Video extends React.Component {
   static propTypes = {
+    media: PropTypes.shape({
+      thumbnail: PropTypes.string.isRequired,
+    }).isRequired,
     voteStats: PropTypes.shape({
       isUpvote: PropTypes.bool,
       isFavorite: PropTypes.bool,
@@ -28,6 +32,7 @@ class Video extends React.Component {
 
   render() {
     const {
+      media,
       voteStats,
       onUpvote,
       onDownvote,
@@ -38,9 +43,11 @@ class Video extends React.Component {
 
     return (
       <div className="Video">
+        <VideoBackdrop url={media.thumbnail} />
         <div className="Video-player">
           <Player
             {...props}
+            media={media}
             size="large"
           />
         </div>
