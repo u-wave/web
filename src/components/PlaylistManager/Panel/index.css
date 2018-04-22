@@ -1,7 +1,6 @@
 @import "../../../vars.css";
 @import "./Meta.css";
 @import "./PlaylistFilter.css";
-@import "./SearchResults.css";
 @import "./PlaylistItemRow.css";
 
 .PlaylistPanel {

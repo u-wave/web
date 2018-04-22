@@ -2,44 +2,36 @@ import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
-import { CircularProgress } from 'material-ui/Progress';
 import { IDLE, LOADING, LOADED } from '../../../constants/LoadingStates';
-import MediaList from '../../MediaList';
-import AddToPlaylistAction from '../../MediaList/Actions/AddToPlaylist';
 import NoSearchResults from './NoSearchResults';
+import LoadingSearchResults from './LoadingSearchResults';
+import SearchResultsList from './SearchResultsList';
 
-const SearchResults = ({
+const enhance = translate();
+
+const SearchResultsPanel = ({
   t,
   className,
   query,
-  results,
   loadingState,
+  results,
   onOpenAddMediaMenu,
   onOpenPreviewMediaDialog,
 }) => {
   let list;
   if (loadingState === LOADED) {
     list = results.length > 0 ? (
-      <MediaList
-        className="PlaylistPanel-media"
-        media={results}
+      <SearchResultsList
+        results={results}
         onOpenPreviewMediaDialog={onOpenPreviewMediaDialog}
-        makeActions={(media, selection) => (
-          <React.Fragment>
-            <AddToPlaylistAction
-              onAdd={position => onOpenAddMediaMenu(position, media, selection)}
-            />
-          </React.Fragment>
-        )}
+        onOpenAddMediaMenu={onOpenAddMediaMenu}
       />
     ) : (
       <NoSearchResults />
     );
   } else {
     list = (
-      <div className="PlaylistPanel-loading">
-        <CircularProgress size="100%" />
-      </div>
+      <LoadingSearchResults />
     );
   }
 
@@ -53,14 +45,14 @@ const SearchResults = ({
   );
 };
 
-SearchResults.propTypes = {
+SearchResultsPanel.propTypes = {
   t: PropTypes.func.isRequired,
   className: PropTypes.string,
   query: PropTypes.string.isRequired,
-  results: PropTypes.arrayOf(PropTypes.object),
   loadingState: PropTypes.oneOf([IDLE, LOADING, LOADED]).isRequired,
+  results: PropTypes.arrayOf(PropTypes.object),
   onOpenAddMediaMenu: PropTypes.func.isRequired,
   onOpenPreviewMediaDialog: PropTypes.func.isRequired,
 };
 
-export default translate()(SearchResults);
+export default enhance(SearchResultsPanel);

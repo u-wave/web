@@ -10,7 +10,7 @@ import {
   searchResultsSelector,
   searchLoadingStateSelector,
 } from '../selectors/searchSelectors';
-import SearchResults from '../components/PlaylistManager/Panel/SearchResults';
+import SearchResults from '../components/PlaylistManager/SearchResults';
 
 const mapStateToProps = createStructuredSelector({
   query: searchQuerySelector,
