@@ -1,1 +1,5 @@
 @import "./WaitlistPosition.css";
+
+.UsersDrawer {
+  max-width: 90vw;
+}

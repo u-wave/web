@@ -7,6 +7,7 @@ import Drawer from 'material-ui/Drawer';
 import { MenuList, MenuItem } from 'material-ui/Menu';
 import { ListItemIcon, ListSubheader, ListItemText } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
+import Typography from 'material-ui/Typography';
 import ActiveIcon from '@material-ui/icons/Check';
 import UserCard from '../../../components/UserCard/UserCard';
 
@@ -33,6 +34,10 @@ const enhance = compose(
   }),
 );
 
+const paperProps = {
+  className: 'DrawerMenu',
+};
+
 const DrawerMenu = ({
   t,
   user,
@@ -45,7 +50,7 @@ const DrawerMenu = ({
   onShowPlaylist,
   onDrawerClose,
 }) => (
-  <Drawer open={open} onClose={onDrawerClose}>
+  <Drawer open={open} onClose={onDrawerClose} PaperProps={paperProps}>
     {user && <UserCard user={user} />}
     <MenuList>
       {hasAboutPage && <MenuItem onClick={onShowAbout}>{t('about.about')}</MenuItem>}
@@ -70,7 +75,9 @@ const DrawerMenu = ({
               <ActiveIcon />
             </ListItemIcon>
           )}
-          <ListItemText primary={playlist.name} />
+          <ListItemText noTypography>
+            <Typography noWrap variant="subheading">{playlist.name}</Typography>
+          </ListItemText>
         </MenuItem>
       ))}
     </MenuList>
