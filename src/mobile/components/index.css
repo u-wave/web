@@ -1,4 +1,5 @@
 @import "./App/index.css";
+@import "./DrawerMenu/index.css";
 @import "./MainView/index.css";
 @import "./MediaList/index.css";
 @import "./RoomHistory/index.css";

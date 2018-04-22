@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import Drawer from 'material-ui/Drawer';
 import UserList from './UserList';
 
+const paperProps = {
+  className: 'UsersDrawer',
+};
+
 const UsersDrawer = ({
   currentDJ,
   users,
@@ -19,6 +23,7 @@ const UsersDrawer = ({
     anchor="right"
     open={open}
     onClose={onDrawerClose}
+    PaperProps={paperProps}
   >
     <UserList
       currentDJ={currentDJ}
