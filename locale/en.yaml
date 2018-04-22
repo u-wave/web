@@ -104,6 +104,8 @@ uwave:
     search:
       action: Search
       results: "Search: {{query}}"
+      noResults: No results found
+      noResultsSub: Perhaps try another query?
 
   eta:
     empty: "from {{playlist}}"
