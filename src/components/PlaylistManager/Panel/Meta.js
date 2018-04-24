@@ -12,6 +12,8 @@ import PlaylistFilter from './PlaylistFilter';
 
 const enhance = translate();
 
+const ID = 'playlist-meta-active';
+
 const PlaylistMeta = ({
   t,
   className,
@@ -24,13 +26,15 @@ const PlaylistMeta = ({
   onNotDeletable,
   onFilter,
 }) => (
-  <div className={cx('PlaylistMeta', className, active ? 'PlaylistMeta--active' : '')}>
+  <div className={cx('PlaylistMeta', className, active && 'PlaylistMeta--active')}>
     <div className="PlaylistMeta-name">
       {name}
     </div>
-    <div className="PlaylistMeta-active">
+    <label htmlFor={ID} className={cx('PlaylistMeta-active', active && 'is-active')}>
       <Checkbox
+        id={ID}
         checked={active}
+        disabled={active}
         onChange={active ? null : onActivatePlaylist}
         icon={<ActivateIcon />}
         checkedIcon={<ActiveIcon nativeColor="#fff" />}
@@ -38,7 +42,7 @@ const PlaylistMeta = ({
       <span>
         {active ? t('playlists.active') : t('playlists.activate')}
       </span>
-    </div>
+    </label>
     <PlaylistFilter
       onFilter={onFilter}
     />
