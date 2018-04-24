@@ -20,6 +20,10 @@
   align-items: center;
   padding-right: 20px;
   height: 100%;
+  cursor: pointer;
+  &.is-active {
+    cursor: default;
+  }
 }
 
 .PlaylistMeta-iconButton {
