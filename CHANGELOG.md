@@ -1,3 +1,20 @@
+# 1.8.0 / 26 Apr 2018
+
+Features:
+ * Show a message if a search turned up no results. (#889)
+
+Bugfixes:
+ * Fix width of mobile SoundCloud player and add the blurred backdrop. (#893)
+ * Fix menu size on mobile with very long playlist names. (#895)
+ * Fixes for playlist "Active" checkbox. (#909)
+
+Internal:
+ * Fix server list sizing. (#891)
+ * Use a material-ui IconButton for the overlay close button. (#892)
+ * Move SearchResults panel to its own folder. (#894)
+ * Update material-ui to v1.0.0-beta.43. (a21a96e3)
+ * Wait until the page is fully loaded before preloading overlays. (7ba34cb8)
+
 # 1.7.0 / 19 Apr 2018
 
 Features:
