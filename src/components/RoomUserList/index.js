@@ -19,6 +19,7 @@ const RoomUserList = ({ className, users, guests }) => {
       <List
         itemsRenderer={(children, ref) => (
           <MuiList
+            disablePadding
             ref={(list) => {
               ref(list && ReactDOM.findDOMNode(list)); // eslint-disable-line react/no-find-dom-node
             }}

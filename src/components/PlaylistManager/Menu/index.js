@@ -26,7 +26,7 @@ const PlaylistMenu = ({
   const importIsSelected = showImportPanel ? 'is-selected' : '';
   const isSelectingPlaylist = selected && !showSearchResults && !showImportPanel;
   return (
-    <MenuList className={cx('PlaylistMenu', className)}>
+    <MenuList className={cx('PlaylistMenu', className)} disablePadding>
       <PlaylistCreateRow
         className="PlaylistMenu-row"
         onCreatePlaylist={onCreatePlaylist}
