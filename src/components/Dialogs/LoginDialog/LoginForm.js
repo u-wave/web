@@ -22,11 +22,11 @@ class LoginForm extends React.Component {
     onOpenResetPasswordDialog: PropTypes.func,
   };
 
-  state = { busy: false };
-
-  componentWillReceiveProps() {
-    this.setState({ busy: false });
+  static getDerivedStateFromProps() {
+    return { busy: false };
   }
+
+  state = { busy: false };
 
   handleSubmit = (event) => {
     event.preventDefault();

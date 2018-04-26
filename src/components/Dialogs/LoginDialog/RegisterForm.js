@@ -28,15 +28,15 @@ class RegisterForm extends React.Component {
     onRegister: PropTypes.func,
   };
 
+  static getDerivedStateFromProps() {
+    return { busy: false };
+  }
+
   state = {
     busy: false,
     agreed: false,
     captchaResponse: null,
   };
-
-  componentWillReceiveProps() {
-    this.setState({ busy: false });
-  }
 
   handleSubmit = (event) => {
     event.preventDefault();

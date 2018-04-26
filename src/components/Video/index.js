@@ -38,8 +38,12 @@ class Video extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.isFullscreen && !nextProps.isFullscreen && screenfull.enabled) {
+  shouldComponentUpdate(nextProps) {
+    return !isEqual(nextProps, this.props);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.isFullscreen && !this.props.isFullscreen && screenfull.enabled) {
       // Checking for `enabled` here, because our props have probably changed
       // _after_ exiting fullscreen mode (see `this.handleFullscreenChange`).
       // This way we don't double-exit.
@@ -47,10 +51,6 @@ class Video extends React.Component {
         screenfull.exit();
       }
     }
-  }
-
-  shouldComponentUpdate(nextProps) {
-    return !isEqual(nextProps, this.props);
   }
 
   handleFullscreenEnter = () => {

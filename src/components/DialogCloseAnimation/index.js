@@ -14,6 +14,7 @@ export default class DialogCloseAnimation extends React.Component {
     children: this.props.children,
   };
 
+  // TODO translate this to componentDidUpdate()?
   componentWillReceiveProps(nextProps) {
     if (nextProps.children) {
       this.clearTimeout();

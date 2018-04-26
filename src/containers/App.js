@@ -60,9 +60,9 @@ class AppContainer extends React.Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.language !== nextProps.language) {
-      this.props.locale.changeLanguage(nextProps.language);
+  componentDidUpdate(prevProps) {
+    if (this.props.language !== prevProps.language) {
+      this.props.locale.changeLanguage(this.props.language);
     }
   }
 

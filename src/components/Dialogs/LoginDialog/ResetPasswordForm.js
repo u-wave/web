@@ -18,14 +18,14 @@ class ResetPasswordForm extends React.Component {
     onCloseDialog: PropTypes.func.isRequired,
   };
 
+  static getDerivedStateFromProps() {
+    return { busy: false };
+  }
+
   state = {
     busy: false,
     done: false,
   };
-
-  componentWillReceiveProps() {
-    this.setState({ busy: false });
-  }
 
   handleSubmit = (event) => {
     event.preventDefault();
