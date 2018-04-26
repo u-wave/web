@@ -143,6 +143,11 @@ export default class Uwave {
     }
 
     this.renderTarget = target;
-    render(this.getComponent(), target);
+    const element = (
+      <React.StrictMode>
+        {this.getComponent()}
+      </React.StrictMode>
+    );
+    render(element, target);
   }
 }
