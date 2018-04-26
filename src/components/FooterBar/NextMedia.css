@@ -7,6 +7,9 @@
   color: var(--muted-text-color);
   font-size: 11pt;
   padding: 7px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow-x: hidden;
 
   &:hover {
     background-color: var(--background-hover-color);
