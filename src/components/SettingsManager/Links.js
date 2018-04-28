@@ -16,7 +16,7 @@ const Link = withProps({
 const Links = ({ t }) => (
   <div>
     <h2 className="SettingsPanel-header">{t('settings.links.title')}</h2>
-    <Link href="https://github.com/u-wave">
+    <Link href="http://u-wave.net">
       <GithubIcon className="SettingsPanel-linkIcon" />
       {t('settings.links.website')}
     </Link>
