@@ -1,3 +1,15 @@
+# 1.8.1 / 30 Apr 2018
+
+Bugfixes:
+ * Disable vertical padding in user and playlist lists. (#910)
+ * Prevent playlist name wrapping on narrow screens. (#911)
+ * Link to u-wave.net instead of github. (#914)
+ * Fix crash when no media is playing on mobile. (#916)
+ * Fix mobile UsersDrawer docking to the left. (#917)
+
+Internal:
+ * Upgrade material-ui to v1.0.0-beta.44.
+
 # 1.8.0 / 26 Apr 2018
 
 Features:
