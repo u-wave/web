@@ -34,8 +34,8 @@ const enhance = compose(
   }),
 );
 
-const paperProps = {
-  className: 'DrawerMenu',
+const classes = {
+  paper: 'DrawerMenu',
 };
 
 const DrawerMenu = ({
@@ -50,7 +50,7 @@ const DrawerMenu = ({
   onShowPlaylist,
   onDrawerClose,
 }) => (
-  <Drawer open={open} onClose={onDrawerClose} PaperProps={paperProps}>
+  <Drawer open={open} onClose={onDrawerClose} classes={classes}>
     {user && <UserCard user={user} />}
     <MenuList>
       {hasAboutPage && <MenuItem onClick={onShowAbout}>{t('about.about')}</MenuItem>}
