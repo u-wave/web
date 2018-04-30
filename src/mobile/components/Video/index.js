@@ -8,7 +8,7 @@ class Video extends React.Component {
   static propTypes = {
     media: PropTypes.shape({
       thumbnail: PropTypes.string.isRequired,
-    }).isRequired,
+    }),
     voteStats: PropTypes.shape({
       isUpvote: PropTypes.bool,
       isFavorite: PropTypes.bool,
@@ -43,7 +43,7 @@ class Video extends React.Component {
 
     return (
       <div className="Video">
-        <VideoBackdrop url={media.thumbnail} />
+        {media && <VideoBackdrop url={media.thumbnail} />}
         <div className="Video-player">
           <Player
             {...props}
