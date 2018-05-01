@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import Popover from 'material-ui/Popover';
+import Typography from 'material-ui/Typography';
 import { MenuList, MenuItem } from 'material-ui/Menu';
 import { ListItemIcon, ListItemText } from 'material-ui/List';
 import CreatePlaylistIcon from '@material-ui/icons/Add';
@@ -60,7 +61,9 @@ class PlaylistsMenu extends React.Component {
                   <ActiveIcon />
                 </ListItemIcon>
               )}
-              <ListItemText primary={playlist.name} />
+              <ListItemText noTypography className="AddToPlaylistMenu-playlistName">
+                <Typography noWrap variant="subheading">{playlist.name}</Typography>
+              </ListItemText>
               <ListItemText className="AddToPlaylistMenu-smallIcon" primary={String(playlist.size || 0)} />
             </MenuItem>
           ))}
