@@ -15,6 +15,7 @@ class Player extends React.Component {
     isMuted: PropTypes.bool,
     media: PropTypes.object,
     seek: PropTypes.number,
+    onPlay: PropTypes.func,
   };
 
   shouldComponentUpdate(nextProps) {
@@ -30,6 +31,7 @@ class Player extends React.Component {
       isMuted,
       media,
       seek,
+      onPlay,
     } = this.props;
 
     if (!media) {
@@ -42,6 +44,7 @@ class Player extends React.Component {
       seek,
       mode: size,
       volume: isMuted ? 0 : volume,
+      onPlay,
     };
 
     const sources = getAllMediaSources();

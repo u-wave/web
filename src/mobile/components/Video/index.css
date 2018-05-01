@@ -25,10 +25,3 @@
   z-index: 5;
   pointer-events: none;
 }
-
-/* The buttonTrigger is currently blocking access to the video element,
- * so you can't tap it to start playing. */
-/* TODO Remove this rule once that is fixed. */
-.Video-buttonTrigger, .Video-buttons {
-  display: none;
-}

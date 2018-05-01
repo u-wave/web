@@ -21,6 +21,7 @@ class Video extends React.Component {
   };
 
   state = {
+    enableOverlay: false,
     showVoteButtons: false,
   };
 
@@ -28,6 +29,11 @@ class Video extends React.Component {
     this.setState(s => ({
       showVoteButtons: !s.showVoteButtons,
     }));
+  };
+
+  // Add the vote buttons tap-trap once autoplay permission is granted.
+  handlePlay = () => {
+    this.setState({ enableOverlay: true });
   };
 
   render() {
@@ -39,7 +45,7 @@ class Video extends React.Component {
       onFavorite,
       ...props
     } = this.props;
-    const { showVoteButtons } = this.state;
+    const { enableOverlay, showVoteButtons } = this.state;
 
     return (
       <div className="Video">
@@ -49,13 +55,16 @@ class Video extends React.Component {
             {...props}
             media={media}
             size="large"
+            onPlay={this.handlePlay}
           />
         </div>
-        <button
-          className="Video-buttonTrigger"
-          onClick={this.handleClick}
-          aria-label="Show vote buttons"
-        />
+        {enableOverlay && (
+          <button
+            className="Video-buttonTrigger"
+            onClick={this.handleClick}
+            aria-label="Show vote buttons"
+          />
+        )}
         {showVoteButtons && (
           <div className="Video-buttons">
             <VoteButtons

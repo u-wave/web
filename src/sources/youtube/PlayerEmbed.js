@@ -9,10 +9,17 @@ export default class YouTubePlayerEmbed extends React.Component {
     seek: PropTypes.number,
     volume: PropTypes.number,
     controllable: PropTypes.bool,
+    onPlay: PropTypes.func,
   };
 
   static defaultProps = {
     controllable: false,
+  };
+
+  handleYTPlay = () => {
+    if (this.props.onPlay) {
+      this.props.onPlay();
+    }
   };
 
   handleYTPause = (event) => {
@@ -47,6 +54,7 @@ export default class YouTubePlayerEmbed extends React.Component {
         startSeconds={(seek || 0) + (media.start || 0)}
         endSeconds={media.end || media.duration}
         onPause={this.handleYTPause}
+        onPlaying={this.handleYTPlay}
       />
     );
   }
