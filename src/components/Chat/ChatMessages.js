@@ -36,7 +36,11 @@ export default class ChatMessages extends React.Component {
     }
   }
 
-  componentWillReceiveProps() {
+  // This usually means that new messages came in;
+  // either way it does not hurt to run this multiple times
+  // so it is safe to use.
+  // eslint-disable-next-line camelcase, react/sort-comp
+  UNSAFE_componentWillReceiveProps() {
     this.shouldScrollToBottom = this.isScrolledToBottom();
   }
 
