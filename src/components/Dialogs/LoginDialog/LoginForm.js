@@ -22,10 +22,6 @@ class LoginForm extends React.Component {
     onOpenResetPasswordDialog: PropTypes.func,
   };
 
-  static getDerivedStateFromProps() {
-    return { busy: false };
-  }
-
   state = { busy: false };
 
   handleSubmit = (event) => {
@@ -34,6 +30,8 @@ class LoginForm extends React.Component {
     this.props.onLogin({
       email: this.email.value,
       password: this.password.value,
+    }).finally(() => {
+      this.setState({ busy: false });
     });
   };
 
