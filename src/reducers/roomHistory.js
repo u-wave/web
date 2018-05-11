@@ -1,4 +1,4 @@
-import { ADVANCE, LOAD_HISTORY_COMPLETE } from '../constants/actionTypes/booth';
+import { ADVANCE, LOAD_HISTORY_COMPLETE } from '../constants/ActionTypes';
 
 const initialState = [];
 

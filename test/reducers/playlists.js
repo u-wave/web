@@ -1,6 +1,5 @@
 import { expect } from 'chai';
 import fetch from 'fetch-mock';
-
 import createStore from '../../src/store/configureStore';
 import * as a from '../../src/actions/PlaylistActionCreators';
 import { favoriteMediaComplete } from '../../src/actions/VoteActionCreators';

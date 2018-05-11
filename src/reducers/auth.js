@@ -1,10 +1,12 @@
 import {
+  INIT_STATE,
   AUTH_STRATEGIES,
   RESET_PASSWORD_COMPLETE,
   REGISTER_COMPLETE,
-  LOGIN_COMPLETE, SET_TOKEN,
+  LOGIN_COMPLETE,
+  SET_TOKEN,
   LOGOUT_COMPLETE,
-} from '../constants/actionTypes/auth';
+} from '../constants/ActionTypes';
 
 const initialState = {
   strategies: ['local'],
@@ -16,6 +18,11 @@ const initialState = {
 export default function reduce(state = initialState, action = {}) {
   const { type, payload, error: isError } = action;
   switch (type) {
+    case INIT_STATE:
+      return {
+        ...state,
+        strategies: payload.authStrategies,
+      };
     case AUTH_STRATEGIES:
       return {
         ...state,

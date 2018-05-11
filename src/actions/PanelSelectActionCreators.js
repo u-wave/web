@@ -1,4 +1,4 @@
-import { SELECT_PANEL } from '../constants/actionTypes/panel';
+import { SELECT_PANEL } from '../constants/ActionTypes';
 
 // eslint-disable-next-line import/prefer-default-export
 export function selectPanel(name) {

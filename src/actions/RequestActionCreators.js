@@ -1,7 +1,7 @@
 import {
   REQUEST_START,
   REQUEST_COMPLETE,
-} from '../constants/actionTypes/request';
+} from '../constants/ActionTypes';
 
 let requestID = 0;
 function request(method, url, opts = {}) {

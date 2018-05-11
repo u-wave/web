@@ -1,3 +1,4 @@
+import { del, post, put } from './RequestActionCreators';
 import {
   WAITLIST_LOAD,
   WAITLIST_LOCK,
@@ -10,8 +11,7 @@ import {
   DO_LEAVE_START, DO_LEAVE_COMPLETE,
   DO_LOCK_START, DO_LOCK_COMPLETE,
   DO_CLEAR_START, DO_CLEAR_COMPLETE,
-} from '../constants/actionTypes/waitlist';
-import { del, post, put } from './RequestActionCreators';
+} from '../constants/ActionTypes';
 import { currentUserSelector } from '../selectors/userSelectors';
 
 export function setWaitList(data) {

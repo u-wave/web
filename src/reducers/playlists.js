@@ -6,6 +6,8 @@ import indexBy from 'index-by';
 import mapObj from 'object.map';
 
 import {
+  INIT_STATE,
+
   LOAD_ALL_PLAYLISTS_COMPLETE,
   LOAD_PLAYLIST_START,
   LOAD_PLAYLIST_COMPLETE,
@@ -29,12 +31,12 @@ import {
   UPDATE_MEDIA_COMPLETE,
   FILTER_PLAYLIST_ITEMS,
   FILTER_PLAYLIST_ITEMS_COMPLETE,
-} from '../constants/actionTypes/playlists';
-import { DO_FAVORITE_COMPLETE } from '../constants/actionTypes/votes';
-import {
+
+  DO_FAVORITE_COMPLETE,
+
   SEARCH_START,
   SEARCH_DELETE,
-} from '../constants/actionTypes/search';
+} from '../constants/ActionTypes';
 
 const initialState = {
   playlists: {},
@@ -163,6 +165,21 @@ export default function reduce(state = initialState, action = {}) {
   } = action;
 
   switch (type) {
+    case INIT_STATE:
+      return {
+        ...state,
+        playlists: indexBy(payload.playlists.map(playlist => ({
+          ...playlist,
+          active: playlist._id === payload.activePlaylist,
+          selected: playlist._id === payload.activePlaylist,
+        })), '_id'),
+        playlistItems: payload.activePlaylist && payload.firstActivePlaylistItem ? {
+          ...state.playlistItems,
+          [payload.activePlaylist]: [payload.firstActivePlaylistItem],
+        } : state.playlistItems,
+        activePlaylistID: payload.activePlaylist,
+        selectedPlaylistID: payload.activePlaylist,
+      };
     case LOAD_ALL_PLAYLISTS_COMPLETE:
       return {
         ...state,

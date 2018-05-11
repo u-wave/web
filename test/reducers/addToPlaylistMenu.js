@@ -1,5 +1,4 @@
 import { expect } from 'chai';
-
 import createStore from '../../src/store/configureStore';
 import { addMediaMenu, closeAddMediaMenu } from '../../src/actions/PlaylistActionCreators';
 import * as s from '../../src/selectors/addToPlaylistMenuSelectors';

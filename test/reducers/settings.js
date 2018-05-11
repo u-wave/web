@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import {
   LOAD_SETTINGS,
   CHANGE_SETTING,
-} from '../../src/constants/actionTypes/settings';
+} from '../../src/constants/ActionTypes';
 import settings from '../../src/reducers/settings';
 
 describe('reducers/settings', () => {

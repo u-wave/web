@@ -3,7 +3,6 @@ import {
   INIT_STATE,
   SOCKET_CONNECT,
   SOCKET_RECONNECT,
-
   AUTH_STRATEGIES,
   REGISTER_START,
   REGISTER_COMPLETE,
@@ -12,20 +11,15 @@ import {
   SET_TOKEN,
   LOGOUT_START,
   LOGOUT_COMPLETE,
-
   RESET_PASSWORD_COMPLETE,
-} from '../constants/actionTypes/auth';
-import { LOAD_ALL_PLAYLISTS_START } from '../constants/actionTypes/playlists';
+  LOAD_ALL_PLAYLISTS_START,
+} from '../constants/ActionTypes';
 import * as Session from '../utils/Session';
 import { get, post, del } from './RequestActionCreators';
 import { advance, loadHistory } from './BoothActionCreators';
-import { receiveMotd } from './ChatActionCreators';
-import { setPlaylists, selectPlaylist, activatePlaylistComplete } from './PlaylistActionCreators';
+import { setPlaylists, loadPlaylist } from './PlaylistActionCreators';
 import { syncTimestamps } from './TickerActionCreators';
 import { closeLoginDialog } from './DialogActionCreators';
-import { setUsers } from './UserActionCreators';
-import { setVoteStats } from './VoteActionCreators';
-import { setWaitList } from './WaitlistActionCreators';
 import { tokenSelector } from '../selectors/userSelectors';
 
 const debug = createDebug('uwave:actions:login');
@@ -65,20 +59,9 @@ export function loadedState(state) {
       type: INIT_STATE,
       payload: state,
     });
-    if (state.motd) {
-      dispatch(receiveMotd(state.motd));
-    }
-    dispatch(setAuthenticationStrategies(state.authStrategies));
-    dispatch(setUsers(state.users || []));
-    dispatch(setPlaylists(state.playlists || []));
-    dispatch(setWaitList({
-      waitlist: state.waitlist,
-      locked: state.waitlistLocked,
-    }));
     if (state.booth && state.booth.historyID) {
       // TODO don't set this when logging in _after_ entering the page?
       dispatch(advance(state.booth));
-      dispatch(setVoteStats(state.booth.stats));
     }
     if (state.user) {
       const token = tokenSelector(getState());
@@ -89,8 +72,7 @@ export function loadedState(state) {
       }));
     }
     if (state.activePlaylist) {
-      dispatch(activatePlaylistComplete(state.activePlaylist));
-      dispatch(selectPlaylist(state.activePlaylist));
+      dispatch(loadPlaylist(state.activePlaylist));
     }
   };
 }

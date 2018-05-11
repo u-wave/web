@@ -2,9 +2,9 @@ import {
   SHOW_IMPORT_PANEL,
   SHOW_IMPORT_SOURCE_PANEL,
   HIDE_IMPORT_SOURCE_PANEL,
-} from '../constants/actionTypes/imports';
-import { SELECT_PLAYLIST } from '../constants/actionTypes/playlists';
-import { SHOW_SEARCH_RESULTS } from '../constants/actionTypes/search';
+  SELECT_PLAYLIST,
+  SHOW_SEARCH_RESULTS,
+} from '../constants/ActionTypes';
 
 const initialState = {
   showPanel: false,

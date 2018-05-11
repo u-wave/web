@@ -8,19 +8,15 @@ import {
   RECEIVE_MOTD,
   SET_MOTD_START,
   SET_MOTD_COMPLETE,
-
   SEND_MESSAGE,
   RECEIVE_MESSAGE,
-
   LOG,
-
   REMOVE_MESSAGE,
   REMOVE_USER_MESSAGES,
   REMOVE_ALL_MESSAGES,
-
   MUTE_USER,
   UNMUTE_USER,
-} from '../constants/actionTypes/chat';
+} from '../constants/ActionTypes';
 import { put } from './RequestActionCreators';
 import { execute } from '../utils/ChatCommands';
 import {
@@ -36,7 +32,6 @@ import {
   currentUserHasRoleSelector,
 } from '../selectors/userSelectors';
 import { currentTimeSelector } from '../selectors/timeSelectors';
-
 import {
   getAvailableGroupMentions,
   resolveMentions,

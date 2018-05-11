@@ -1,4 +1,4 @@
-import { INIT_STATE } from '../constants/actionTypes/auth';
+import { INIT_STATE } from '../constants/ActionTypes';
 
 const initialState = {};
 

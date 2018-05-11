@@ -15,11 +15,9 @@ import {
   MOVE_MEDIA_START, MOVE_MEDIA_COMPLETE,
   UPDATE_MEDIA_START, UPDATE_MEDIA_COMPLETE,
   SHUFFLE_PLAYLIST_START, SHUFFLE_PLAYLIST_COMPLETE,
-} from '../constants/actionTypes/playlists';
-
+} from '../constants/ActionTypes';
 import { openEditMediaDialog } from './DialogActionCreators';
 import { del, get, post, put } from './RequestActionCreators';
-
 import {
   playlistsSelector,
   playlistItemsSelector,

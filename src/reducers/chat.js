@@ -1,5 +1,6 @@
 import except from 'except';
 import {
+  INIT_STATE,
   RECEIVE_MOTD,
   RECEIVE_MESSAGE,
   SEND_MESSAGE,
@@ -42,6 +43,11 @@ export default function reduce(state = initialState, action = {}) {
   const { type, payload } = action;
   const { messages } = state;
   switch (type) {
+    case INIT_STATE:
+      return {
+        ...state,
+        motd: payload.motd,
+      };
     case RECEIVE_MOTD:
       return {
         ...state,

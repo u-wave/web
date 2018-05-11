@@ -1,6 +1,5 @@
 import { get } from './RequestActionCreators';
-
-import { SET_TIMER, OFFSET } from '../constants/actionTypes/time';
+import { SET_TIMER, OFFSET } from '../constants/ActionTypes';
 import { timerSelector } from '../selectors/timeSelectors';
 
 export function syncTimestamps(clientTimeBefore, serverTime) {

@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { ADVANCE } from '../../src/constants/actionTypes/booth';
+import { ADVANCE } from '../../src/constants/ActionTypes';
 import { advanceToEmpty } from '../../src/actions/BoothActionCreators';
 import booth from '../../src/reducers/booth';
 
