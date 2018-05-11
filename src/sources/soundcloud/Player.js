@@ -40,6 +40,7 @@ class SoundCloudPlayer extends React.Component {
     media: PropTypes.object,
     seek: PropTypes.number,
     volume: PropTypes.number,
+    onPlay: PropTypes.func,
   };
 
   state = {
@@ -93,6 +94,9 @@ class SoundCloudPlayer extends React.Component {
       if (res && res.then) res.catch(this.handleError);
       debug('currentTime', this.props.seek);
       this.audio.addEventListener('canplaythrough', doSeek, false);
+      if (this.props.onPlay) {
+        this.audio.addEventListener('play', this.props.onPlay, false);
+      }
     } else {
       this.stop();
     }
