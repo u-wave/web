@@ -107,7 +107,7 @@ export default class Uwave {
       });
     }
 
-    if (typeof matchMedia !== 'undefined' && matchMedia('(min-width: 768px)')) {
+    if (typeof matchMedia !== 'undefined' && matchMedia('(min-width: 768px)').matches) {
       this.ready.then(() => {
         preloadDesktop();
       });
