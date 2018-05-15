@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
-import Typography from 'material-ui/Typography';
+import Typography from '@material-ui/core/Typography';
 import NoResultsIcon from '@material-ui/icons/Search';
 
 const enhance = translate();

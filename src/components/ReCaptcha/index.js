@@ -1,6 +1,6 @@
 import React from 'react';
 import loadScript from 'load-script2';
-import { CircularProgress } from 'material-ui/Progress';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import InternalCaptcha from './ReCaptcha';
 
 const GRECAPTCHA_API = 'https://www.google.com/recaptcha/api.js';

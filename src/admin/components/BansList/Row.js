@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import ms from 'ms';
-import Button from 'material-ui/Button';
-import { TableRow, TableCell } from 'material-ui/Table';
+import Button from '@material-ui/core/Button';
+import TableRow from '@material-ui/core/TableRow';
+import TableCell from '@material-ui/core/TableCell';
 import Avatar from '../../../components/Avatar';
 import Username from '../../../components/Username/WithCard';
 

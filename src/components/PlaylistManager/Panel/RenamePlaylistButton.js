@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
-import Tooltip from 'material-ui/Tooltip';
-import IconButton from 'material-ui/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
+import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/ModeEdit';
 import PromptDialog from '../../Dialogs/PromptDialog';
 

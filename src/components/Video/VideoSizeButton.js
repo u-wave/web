@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import compose from 'recompose/compose';
 import { translate } from 'react-i18next';
-import Tooltip from 'material-ui/Tooltip';
-import IconButton from 'material-ui/IconButton';
-import SvgIcon from 'material-ui/SvgIcon';
+import Tooltip from '@material-ui/core/Tooltip';
+import IconButton from '@material-ui/core/IconButton';
+import SvgIcon from '@material-ui/core/SvgIcon';
 // State-related imports
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';

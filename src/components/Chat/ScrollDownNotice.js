@@ -1,7 +1,7 @@
 import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from 'material-ui/Button';
+import Button from '@material-ui/core/Button';
 import ScrollDownIcon from '@material-ui/icons/ArrowDownward';
 
 const ScrollNotice = ({ show, onClick }) => (

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import MuiAvatar from 'material-ui/Avatar';
+import MuiAvatar from '@material-ui/core/Avatar';
 
 const Position = ({ position }) => (
   <MuiAvatar className="WaitlistRow-position">

@@ -2,7 +2,7 @@ import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
-import Checkbox from 'material-ui/Checkbox';
+import Checkbox from '@material-ui/core/Checkbox';
 import ActiveIcon from '@material-ui/icons/CheckBox';
 import ActivateIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import RenamePlaylistButton from './RenamePlaylistButton';

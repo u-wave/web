@@ -1,7 +1,7 @@
 import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ListItem } from 'material-ui/List';
+import ListItem from '@material-ui/core/ListItem';
 
 const Suggestion = ({
   children,

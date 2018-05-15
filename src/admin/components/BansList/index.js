@@ -2,13 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import withProps from 'recompose/withProps';
 import { translate } from 'react-i18next';
-// eslint-disable-next-line
-import Table, {
-  TableBody,
-  TableHead,
-  TableCell,
-  TableRow,
-} from 'material-ui/Table';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import TableCell from '@material-ui/core/TableCell';
 import BanRow from './Row';
 
 const enhance = translate();

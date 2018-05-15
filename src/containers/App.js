@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import nest from 'recompose/nest';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { MuiThemeProvider } from 'material-ui/styles';
+import { MuiThemeProvider } from '@material-ui/core/styles';
 import { I18nextProvider } from 'react-i18next';
 import { Provider as BusProvider } from 'react-bus';
 import { Mobile, Desktop } from '../components/Responsive';

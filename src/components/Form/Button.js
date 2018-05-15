@@ -1,7 +1,7 @@
 import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
-import MuiButton from 'material-ui/Button';
+import MuiButton from '@material-ui/core/Button';
 
 const Button = ({
   children, className, text, ...props

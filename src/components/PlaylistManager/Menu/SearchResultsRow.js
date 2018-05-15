@@ -1,8 +1,8 @@
 import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
-import IconButton from 'material-ui/IconButton';
-import { ListItem } from 'material-ui/List';
+import IconButton from '@material-ui/core/IconButton';
+import ListItem from '@material-ui/core/ListItem';
 import SearchIcon from '@material-ui/icons/Search';
 import CloseIcon from '@material-ui/icons/Close';
 

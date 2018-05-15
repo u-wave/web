@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import hoistStatics from 'hoist-non-react-statics';
 import loadable from 'react-loadable';
-import { CircularProgress } from 'material-ui/Progress';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Overlay from '../Overlay';
 import OverlayContent from '../Overlay/Content';
 import OverlayHeader from '../Overlay/Header';

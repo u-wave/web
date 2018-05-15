@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import loadable from 'react-loadable';
-import { CircularProgress } from 'material-ui/Progress';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Overlay from '../Overlay';
 import OverlayHeader from '../Overlay/Header';
 

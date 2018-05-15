@@ -2,7 +2,7 @@ import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
-import { MenuItem } from 'material-ui/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import CreatePlaylistIcon from '@material-ui/icons/Add';
 
 import PromptDialog from '../../Dialogs/PromptDialog';

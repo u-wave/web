@@ -2,8 +2,8 @@ import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { DropTarget } from 'react-dnd';
-import { CircularProgress } from 'material-ui/Progress';
-import { MenuItem } from 'material-ui/Menu';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import MenuItem from '@material-ui/core/MenuItem';
 import ActiveIcon from '@material-ui/icons/Check';
 import { MEDIA } from '../../../constants/DDItemTypes';
 
