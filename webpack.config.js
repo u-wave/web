@@ -226,11 +226,8 @@ module.exports = {
       },
       {
         test: /\.yaml$/,
-        use: [
-          noConfigBabelLoader,
-          require.resolve('./tasks/utils/jsonLoader'),
-          'yaml-loader',
-        ],
+        type: 'json',
+        use: 'yaml-loader',
       },
       // JS loader for dependencies that use ES2015+:
       {
