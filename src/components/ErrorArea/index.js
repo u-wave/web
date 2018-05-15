@@ -5,7 +5,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 const ErrorArea = ({ error, onDismiss }) => (
   <div className="ErrorArea">
     <Snackbar
-      SnackbarContentProps={{ className: 'ErrorArea-snackbar' }}
+      ContentProps={{ className: 'ErrorArea-snackbar' }}
       open={!!error}
       message={error || ''}
       onClose={onDismiss}
