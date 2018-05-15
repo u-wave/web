@@ -58,13 +58,14 @@ class PlaylistItemRow extends React.Component {
 
     const dropIndicator = <div className="PlaylistItemRow-drop-indicator" />;
 
-    return connectDropTarget((
+    return connectDropTarget(
       <div className="PlaylistItemRow">
         {isOver && insertingAbove && dropIndicator}
         <MediaRow {...props} />
         {isOver && !insertingAbove && dropIndicator}
-      </div>
-    ));
+      </div>,
+      { dropEffect: 'move' },
+    );
   }
 }
 

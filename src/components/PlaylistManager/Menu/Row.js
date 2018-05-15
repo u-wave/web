@@ -67,7 +67,7 @@ class PlaylistRow extends React.Component {
       );
     }
 
-    return connectDropTarget((
+    return connectDropTarget(
       <div>
         <MenuItem
           selected={selected}
@@ -81,8 +81,9 @@ class PlaylistRow extends React.Component {
           </div>
           <div className="PlaylistMenuRow-count">{playlist.size}</div>
         </MenuItem>
-      </div>
-    ));
+      </div>,
+      { dropEffect: 'copy' },
+    );
   }
 }
 
