@@ -1,13 +1,11 @@
 module.exports = (api, envOverride) => {
   const env = envOverride || process.env.BABEL_ENV || process.env.NODE_ENV || 'development';
+  // Command-line version override.
   const browsers = process.env.BROWSERSLIST;
 
   api.cache(() => `${env}${browsers || ''}`);
 
   const targets = {};
-  if (browsers) {
-    targets.browsers = browsers;
-  }
   if (env === 'middleware') {
     targets.node = '8.9';
   }
@@ -24,7 +22,6 @@ module.exports = (api, envOverride) => {
         loose,
         targets,
         shippedProposals: true,
-        forceAllTransforms: env === 'production',
       }],
       '@babel/preset-react'
     ],
