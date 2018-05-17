@@ -78,7 +78,7 @@ const DrawerMenu = ({
               <ActiveIcon />
             </ListItemIcon>
           )}
-          <ListItemText noTypography>
+          <ListItemText disableTypography>
             <Typography noWrap variant="subheading">{playlist.name}</Typography>
           </ListItemText>
         </MenuItem>
