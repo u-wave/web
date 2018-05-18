@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import withProps from 'recompose/withProps';
-import List from 'material-ui/List';
+import List from '@material-ui/core/List';
 import Base from '../../../components/MediaList/BaseMediaList';
 import HistoryRow from './Row';
 

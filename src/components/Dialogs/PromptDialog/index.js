@@ -1,8 +1,10 @@
 import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
-import Dialog, { DialogTitle, DialogContent } from 'material-ui/Dialog';
-import { CircularProgress } from 'material-ui/Progress';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import uniqueId from 'lodash/uniqueId';
 import Form from '../../Form';
 import FormGroup from '../../Form/Group';

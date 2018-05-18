@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
-import Button from 'material-ui/Button';
+import Button from '@material-ui/core/Button';
 
 const enhance = translate();
 

@@ -1,14 +1,15 @@
-// Copy-pasted from https://github.com/mui-org/material-ui/pull/10665
-
 /* eslint-disable */
 import React from 'react';
 import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import withStyles from 'material-ui/styles/withStyles';
-import ButtonBase from 'material-ui/ButtonBase';
-import { fade } from 'material-ui/styles/colorManipulator';
-import clamp from 'lodash/clamp';
+import withStyles from '@material-ui/core/styles/withStyles';
+import ButtonBase from '@material-ui/core/ButtonBase';
+import { fade } from '@material-ui/core/styles/colorManipulator';
+
+function clamp(value, min = 0, max = 100) {
+  return Math.min(Math.max(value, min), max);
+}
 
 export const style = theme => {
   const commonTransitionsOptions = {
@@ -248,10 +249,14 @@ class Slider extends React.Component {
   }
 
   emitChange(event, rawValue, callback) {
-    const { min, max, value: previousValue, onChange } = this.props;
+    const { step, value: previousValue, onChange } = this.props;
+    let value = rawValue;
 
-    const step = this.props.step || Math.abs((max - min) / 100);
-    const value = roundToStep(rawValue, step);
+    if (step) {
+      value = roundToStep(rawValue, step);
+    } else {
+      value = Number(rawValue.toFixed(3));
+    }
 
     if (typeof onChange === 'function' && value !== previousValue) {
       onChange(event, value);

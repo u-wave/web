@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Snackbar from 'material-ui/Snackbar';
+import Snackbar from '@material-ui/core/Snackbar';
 
 const ErrorArea = ({ error, onDismiss }) => (
   <div className="ErrorArea">
     <Snackbar
-      SnackbarContentProps={{ className: 'ErrorArea-snackbar' }}
+      ContentProps={{ className: 'ErrorArea-snackbar' }}
       open={!!error}
       message={error || ''}
       onClose={onDismiss}

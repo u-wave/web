@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ListItemAvatar, ListItemText } from 'material-ui/List';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '../../Avatar';
 import Suggestion from './Suggestion';
 

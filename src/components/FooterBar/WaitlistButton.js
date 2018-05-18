@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import compose from 'recompose/compose';
 import pure from 'recompose/pure';
-import Button from 'material-ui/Button';
+import Button from '@material-ui/core/Button';
 import LockedIcon from '@material-ui/icons/Lock';
 
 const WaitlistButton = ({

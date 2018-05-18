@@ -1,7 +1,7 @@
 /* eslint-disable global-require */
 const h = require('react').createElement;
 const { renderToStaticMarkup } = require('react-dom/server');
-const { MuiThemeProvider, createMuiTheme, jssPreset } = require('material-ui/styles');
+const { MuiThemeProvider, createMuiTheme, jssPreset } = require('@material-ui/core/styles');
 const { JssProvider, SheetsRegistry } = require('react-jss');
 const jss = require('jss');
 

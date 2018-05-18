@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
-import Tooltip from 'material-ui/Tooltip';
-import IconButton from 'material-ui/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
+import IconButton from '@material-ui/core/IconButton';
 import EnterFullscreenIcon from '@material-ui/icons/Fullscreen';
 import ExitFullscreenIcon from '@material-ui/icons/FullscreenExit';
 

@@ -3,11 +3,14 @@ import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import compose from 'recompose/compose';
 import withHandlers from 'recompose/withHandlers';
-import Drawer from 'material-ui/Drawer';
-import { MenuList, MenuItem } from 'material-ui/Menu';
-import { ListItemIcon, ListSubheader, ListItemText } from 'material-ui/List';
-import Divider from 'material-ui/Divider';
-import Typography from 'material-ui/Typography';
+import Drawer from '@material-ui/core/Drawer';
+import MenuList from '@material-ui/core/MenuList';
+import MenuItem from '@material-ui/core/MenuItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListSubheader from '@material-ui/core/ListSubheader';
+import Divider from '@material-ui/core/Divider';
+import Typography from '@material-ui/core/Typography';
 import ActiveIcon from '@material-ui/icons/Check';
 import UserCard from '../../../components/UserCard/UserCard';
 
@@ -75,7 +78,7 @@ const DrawerMenu = ({
               <ActiveIcon />
             </ListItemIcon>
           )}
-          <ListItemText noTypography>
+          <ListItemText disableTypography>
             <Typography noWrap variant="subheading">{playlist.name}</Typography>
           </ListItemText>
         </MenuItem>

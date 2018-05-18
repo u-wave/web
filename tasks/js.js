@@ -76,7 +76,8 @@ function jsBabel() {
     .pipe(babel({
       plugins: [
         rewriteLocaleImports,
-        rewriteMuiImports(/^material-ui\//, 'material-ui/es/'),
+        rewriteMuiImports(/^@material-ui\/core\//, '@material-ui/core/es/'),
+        rewriteMuiImports(/^@material-ui\/icons\//, '@material-ui/icons/es/'),
       ],
     }))
     .pipe(sourcemaps.write('.'))
@@ -94,7 +95,8 @@ function jsBabel() {
         '@babel/plugin-syntax-object-rest-spread',
         '@babel/plugin-transform-modules-commonjs',
         'module:babel-plugin-dynamic-import-node',
-        rewriteMuiImports(/^material-ui\/es\//, 'material-ui/'),
+        rewriteMuiImports(/^@material-ui\/core\/es\//, '@material-ui/core/'),
+        rewriteMuiImports(/^@material-ui\/icons\/es\//, '@material-ui/icons/'),
       ],
     }))
     .pipe(sourcemaps.write('.'))

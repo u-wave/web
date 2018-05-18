@@ -3,12 +3,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import compose from 'recompose/compose';
 import { translate } from 'react-i18next';
-import Dialog, {
-  DialogTitle,
-  DialogContent,
-  withMobileDialog,
-} from 'material-ui/Dialog';
-import IconButton from 'material-ui/IconButton';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import withMobileDialog from '@material-ui/core/withMobileDialog';
+import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';

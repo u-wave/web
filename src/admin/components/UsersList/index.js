@@ -1,15 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
-// eslint-disable-next-line
-import Table, {
-  TableBody,
-  TableHead,
-  TableFooter,
-  TableCell,
-  TableRow,
-  TablePagination,
-} from 'material-ui/Table';
+import Table from '@material-ui/core/Table';
+import TableHead from '@material-ui/core/TableHead';
+import TableBody from '@material-ui/core/TableBody';
+import TableFooter from '@material-ui/core/TableFooter';
+import TablePagination from '@material-ui/core/TablePagination';
+import TableRow from '@material-ui/core/TableRow';
+import TableCell from '@material-ui/core/TableCell';
 import UserRow from './Row';
 import Header from './Header';
 
