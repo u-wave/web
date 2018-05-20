@@ -11,6 +11,7 @@ const YouTubePlayer = ({
   media,
   seek,
   volume,
+  onPlay,
 }) => {
   const modeClass = `src-youtube-Player--${mode}`;
 
@@ -23,6 +24,7 @@ const YouTubePlayer = ({
           seek={Math.round(seek)}
           volume={volume}
           controllable={mode === 'preview'}
+          onPlay={onPlay}
         />
       )}
     </div>
@@ -37,6 +39,7 @@ YouTubePlayer.propTypes = {
   media: PropTypes.object,
   seek: PropTypes.number,
   volume: PropTypes.number,
+  onPlay: PropTypes.func,
 };
 
 export default YouTubePlayer;

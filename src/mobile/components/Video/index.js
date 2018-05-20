@@ -7,6 +7,7 @@ import VoteButtons from './VoteButtons';
 class Video extends React.Component {
   static propTypes = {
     media: PropTypes.shape({
+      sourceType: PropTypes.string.isRequired,
       thumbnail: PropTypes.string.isRequired,
     }),
     voteStats: PropTypes.shape({
@@ -20,7 +21,22 @@ class Video extends React.Component {
     onFavorite: PropTypes.func.isRequired,
   };
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const { sourceType } = nextProps.media || {};
+    // Switching to a different source type may require an autoplay tap again.
+    // Disable the vote buttons until the media source reports playback started.
+    if (sourceType !== prevState.sourceType) {
+      return {
+        enableOverlay: sourceType === undefined,
+        sourceType,
+      };
+    }
+    return null;
+  }
+
   state = {
+    sourceType: undefined, // eslint-disable-line react/no-unused-state
+    enableOverlay: false,
     showVoteButtons: false,
   };
 
@@ -28,6 +44,11 @@ class Video extends React.Component {
     this.setState(s => ({
       showVoteButtons: !s.showVoteButtons,
     }));
+  };
+
+  // Add the vote buttons tap-trap once autoplay permission is granted.
+  handlePlay = () => {
+    this.setState({ enableOverlay: true });
   };
 
   render() {
@@ -39,7 +60,7 @@ class Video extends React.Component {
       onFavorite,
       ...props
     } = this.props;
-    const { showVoteButtons } = this.state;
+    const { enableOverlay, showVoteButtons } = this.state;
 
     return (
       <div className="Video">
@@ -49,13 +70,16 @@ class Video extends React.Component {
             {...props}
             media={media}
             size="large"
+            onPlay={this.handlePlay}
           />
         </div>
-        <button
-          className="Video-buttonTrigger"
-          onClick={this.handleClick}
-          aria-label="Show vote buttons"
-        />
+        {enableOverlay && (
+          <button
+            className="Video-buttonTrigger"
+            onClick={this.handleClick}
+            aria-label="Show vote buttons"
+          />
+        )}
         {showVoteButtons && (
           <div className="Video-buttons">
             <VoteButtons
