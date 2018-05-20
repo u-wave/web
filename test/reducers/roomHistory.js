@@ -1,5 +1,4 @@
 import { expect } from 'chai';
-
 import createStore from '../../src/store/configureStore';
 import { setUsers } from '../../src/actions/UserActionCreators';
 import { advance, loadHistoryComplete } from '../../src/actions/BoothActionCreators';

@@ -3,7 +3,7 @@ import {
   HIDE_IMPORT_PANEL,
   SHOW_IMPORT_SOURCE_PANEL,
   HIDE_IMPORT_SOURCE_PANEL,
-} from '../constants/actionTypes/imports';
+} from '../constants/ActionTypes';
 
 export function showImportPanel() {
   return {

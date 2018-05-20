@@ -1,4 +1,4 @@
-import { ERROR_DISMISS } from '../constants/actionTypes/errors';
+import { ERROR_DISMISS } from '../constants/ActionTypes';
 
 // eslint-disable-next-line import/prefer-default-export
 export function dismiss() {

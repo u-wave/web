@@ -1,6 +1,5 @@
 import createDebug from 'debug';
 import WebSocket from 'reconnecting-websocket';
-
 import {
   LOGIN_COMPLETE,
   LOGOUT_START,
@@ -8,13 +7,10 @@ import {
   SOCKET_RECONNECT,
   SOCKET_DISCONNECTED,
   SOCKET_CONNECTED,
-} from '../constants/actionTypes/auth';
-import { SEND_MESSAGE } from '../constants/actionTypes/chat';
-import {
+  SEND_MESSAGE,
   DO_UPVOTE,
   DO_DOWNVOTE,
-} from '../constants/actionTypes/votes';
-
+} from '../constants/ActionTypes';
 import { getSocketAuthToken } from '../actions/LoginActionCreators';
 import {
   advance,

@@ -2,10 +2,9 @@ import {
   ADVANCE,
   BOOTH_SKIP,
   LOAD_HISTORY_START, LOAD_HISTORY_COMPLETE,
-} from '../constants/actionTypes/booth';
+} from '../constants/ActionTypes';
 import { flattenPlaylistItem } from './PlaylistActionCreators';
 import { get, post } from './RequestActionCreators';
-
 import { historyIDSelector, isCurrentDJSelector } from '../selectors/boothSelectors';
 import { currentPlaySelector } from '../selectors/roomHistorySelectors';
 import { usersSelector } from '../selectors/userSelectors';

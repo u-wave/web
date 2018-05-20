@@ -3,7 +3,7 @@ import compose from 'recompose/compose';
 import {
   LOAD_SETTINGS,
   CHANGE_SETTING,
-} from '../constants/actionTypes/settings';
+} from '../constants/ActionTypes';
 
 // Some people have >100% volumes stored in their localStorage settings
 // because of a bug in üWave 1.4. This ensures that _everyone's_ volume

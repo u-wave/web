@@ -1,7 +1,6 @@
 import assign from 'object-assign';
 import qsStringify from 'qs-stringify';
-
-import { REQUEST_START } from '../constants/actionTypes/request';
+import { REQUEST_START } from '../constants/ActionTypes';
 import {
   requestComplete,
   requestCompleteError,

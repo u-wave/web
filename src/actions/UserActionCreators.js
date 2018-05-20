@@ -1,3 +1,4 @@
+import { put } from './RequestActionCreators';
 import {
   LOAD_ONLINE_USERS,
   USER_JOIN,
@@ -10,12 +11,11 @@ import {
 
   DO_CHANGE_USERNAME_START,
   DO_CHANGE_USERNAME_COMPLETE,
-} from '../constants/actionTypes/users';
+} from '../constants/ActionTypes';
 import {
   currentUserSelector,
   usersSelector,
 } from '../selectors/userSelectors';
-import { put } from './RequestActionCreators';
 
 export function setUsers(users) {
   return {

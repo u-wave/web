@@ -2,7 +2,7 @@ import {
   ADVANCE,
   ENTER_FULLSCREEN,
   EXIT_FULLSCREEN,
-} from '../constants/actionTypes/booth';
+} from '../constants/ActionTypes';
 
 const initialState = {
   historyID: null,

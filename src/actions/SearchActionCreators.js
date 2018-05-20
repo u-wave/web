@@ -1,11 +1,11 @@
+import { get } from './RequestActionCreators';
 import {
   SET_SEARCH_SOURCE,
   SHOW_SEARCH_RESULTS,
   SEARCH_START,
   SEARCH_COMPLETE,
   SEARCH_DELETE,
-} from '../constants/actionTypes/search';
-import { get } from './RequestActionCreators';
+} from '../constants/ActionTypes';
 
 export function setSource(source) {
   return {

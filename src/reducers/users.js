@@ -1,18 +1,16 @@
 import except from 'except';
 import indexBy from 'index-by';
 import { combineReducers } from 'redux';
-
-import { INIT_STATE } from '../constants/actionTypes/auth';
 import {
+  INIT_STATE,
   LOAD_ONLINE_USERS,
   USER_JOIN,
   USER_LEAVE,
   CHANGE_USERNAME,
   USER_ADD_ROLES,
   USER_REMOVE_ROLES,
-
   RECEIVE_GUEST_COUNT,
-} from '../constants/actionTypes/users';
+} from '../constants/ActionTypes';
 
 function updateUser(state, userID, update) {
   if (state[userID]) {
@@ -37,6 +35,7 @@ function guestsReducer(state = 0, action = {}) {
 function usersReducer(state = {}, action = {}) {
   const { type, payload } = action;
   switch (type) {
+    case INIT_STATE: // fall through
     case LOAD_ONLINE_USERS:
     // this is merged in instead of replacing the state, because sometimes the
     // JOIN event from the current user comes in before the LOAD event, and then

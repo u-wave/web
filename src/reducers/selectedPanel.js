@@ -1,4 +1,4 @@
-import { SELECT_PANEL } from '../constants/actionTypes/panel';
+import { SELECT_PANEL } from '../constants/ActionTypes';
 
 const initialState = 'chat';
 

@@ -1,4 +1,4 @@
-import { SET_TIMER, OFFSET } from '../constants/actionTypes/time';
+import { SET_TIMER, OFFSET } from '../constants/ActionTypes';
 
 const initialState = {
   timer: 0,
