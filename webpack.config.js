@@ -250,6 +250,7 @@ module.exports = {
           /object-values/,
           /material-ui\/es/,
           /material-ui-icons\/es/,
+          /redux-logger/,
         ],
         use: [
           noConfigBabelLoader,
