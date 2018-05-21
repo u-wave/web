@@ -1,6 +1,10 @@
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
-import logger from 'redux-logger';
+// We're importing /src here to use the ES modules build.
+// The `main` redux-logger entry point is a built webpack UMD module, which cannot
+// be tree-shaked out in production because it may have side effects. The ES module
+// however can be safely removed, saving some 3KB after gzip.
+import reduxLogger from 'redux-logger/src';
 import { batchedSubscribe } from 'redux-batched-subscribe';
 import nanoraf from 'nanoraf';
 import raf from 'raf';
@@ -15,12 +19,14 @@ import createSourcesReducer from '../reducers/createSourcesReducer';
 // on in üWave, so it's kind of manageable.
 
 export default function createUwaveStore(initialState = {}, options = {}) {
-  const isTesting = process.env.NODE_ENV === 'testing';
-  const enableLogging = process.env.NODE_ENV !== 'production' && !isTesting;
-
   const rerender = nanoraf((notify) => {
     notify();
   }, raf);
+
+  let logger;
+  if (process.env.NODE_ENV !== 'testing' && process.env.NODE_ENV !== 'production') {
+    logger = reduxLogger;
+  }
 
   const middleware = [
     // Redux-Thunk allows dispatching a function to the store instead of an
@@ -32,11 +38,11 @@ export default function createUwaveStore(initialState = {}, options = {}) {
     // This allows dispatching REQUEST_START actions to the store, which will
     // then be executed and handled as HTTP requests by the middleware.
     webApiRequest(),
-    !isTesting && webApiSocket({ url: options.socketUrl }),
+    process.env.NODE_ENV !== 'testing' && webApiSocket({ url: options.socketUrl }),
     // Redux-Logger logs state changes to the console, including the
     // Before-state, the Action object, and the After-state. Invaluable for
     // debugging :)
-    enableLogging && logger,
+    logger,
   ].filter(Boolean);
 
   let currentReducers = {
