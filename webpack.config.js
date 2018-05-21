@@ -139,6 +139,13 @@ if (nodeEnv === 'production') {
   );
 }
 
+if (process.env.ANALYZE) {
+  const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+  plugins.push(new BundleAnalyzerPlugin({
+    analyzerMode: 'static',
+  }));
+}
+
 const context = path.join(__dirname, 'src');
 const entries = {
   app: ['./app.js', './app.css'],
