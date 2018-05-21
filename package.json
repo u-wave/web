@@ -15,8 +15,8 @@
   "dependencies": {
     "@babel/runtime": "7.0.0-beta.44",
     "@f/cookies-enabled": "^1.1.1",
-    "@material-ui/icons": "^1.0.0",
     "@material-ui/core": "^1.0.0",
+    "@material-ui/icons": "^1.0.0",
     "@u-wave/react-server-list": "^2.0.0",
     "@u-wave/react-youtube": "^0.4.2",
     "array-find": "^1.0.0",
@@ -79,7 +79,7 @@
     "screenfull": "^3.3.2",
     "shorten-url": "^1.0.0",
     "splitargs": "0.0.7",
-    "u-wave-parse-chat-markup": "^2.1.0",
+    "u-wave-parse-chat-markup": "^2.2.0",
     "upper-case-first": "^1.1.2",
     "whatwg-fetch": "^2.0.0",
     "yamlify": "^0.2.0"
