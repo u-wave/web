@@ -204,6 +204,7 @@ module.exports = {
   // Quit if there are errors.
   bail: nodeEnv === 'production',
   devtool: nodeEnv === 'production' ? 'source-map' : 'inline-source-map',
+
   output: {
     publicPath: '/',
     path: path.join(__dirname, 'public'),
@@ -211,10 +212,13 @@ module.exports = {
     chunkFilename: nodeEnv === 'production' ? '[name]_[chunkhash:7].js' : '[name]_dev.js',
     crossOriginLoading: 'anonymous',
   },
+
   optimization,
   plugins,
+
   module: {
     rules: [
+      // Static files and resources.
       {
         test: /\.mp3$/,
         use: [
@@ -228,6 +232,15 @@ module.exports = {
           { loader: 'image-webpack-loader', query: { bypassOnDebug: true } },
         ],
       },
+
+      // Locale files.
+      {
+        test: /\.yaml$/,
+        type: 'json',
+        use: 'yaml-loader',
+      },
+
+      // Stylesheets.
       {
         test: /\.css$/,
         use: [
@@ -236,11 +249,7 @@ module.exports = {
           'postcss-loader',
         ],
       },
-      {
-        test: /\.yaml$/,
-        type: 'json',
-        use: 'yaml-loader',
-      },
+
       // JS loader for dependencies that use ES2015+:
       {
         test: /\.js$/,
@@ -267,6 +276,8 @@ module.exports = {
           },
         ].filter(Boolean),
       },
+
+      // Static pages.
       nodeEnv !== 'production' && {
         // Hot reload static pages in development mode.
         test: staticFiles,
@@ -283,6 +294,7 @@ module.exports = {
   },
   resolve: {
     alias: {
+      // Use the ES modules versions of some packages.
       '@material-ui/core': path.join(__dirname, 'node_modules/@material-ui/core/es/'),
       '@material-ui/icons': path.join(__dirname, 'node_modules/@material-ui/icons/es/'),
     },
