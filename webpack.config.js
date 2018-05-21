@@ -141,9 +141,14 @@ if (nodeEnv === 'production') {
 
 if (process.env.ANALYZE) {
   const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-  plugins.push(new BundleAnalyzerPlugin({
+  const openOptions = {
+    analyzerMode: 'server',
+  };
+  const staticOptions = {
     analyzerMode: 'static',
-  }));
+    openAnalyzer: false,
+  };
+  plugins.push(new BundleAnalyzerPlugin(process.env.ANALYZE === 'open' ? openOptions : staticOptions));
 }
 
 const context = path.join(__dirname, 'src');
