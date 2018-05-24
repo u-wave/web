@@ -8,6 +8,8 @@ const HtmlPlugin = require('html-webpack-plugin');
 const HtmlSiblingChunksPlugin = require('html-webpack-include-sibling-chunks-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const ManifestPlugin = require('webpack-pwa-manifest');
+const merge = require('webpack-merge');
+const htmlMinifierOptions = require('./tasks/utils/htmlMinifierOptions');
 
 const nodeEnv = process.env.NODE_ENV || 'development';
 
@@ -15,42 +17,27 @@ const nodeEnv = process.env.NODE_ENV || 'development';
 require('@babel/register').default({
   only: [
     new RegExp(escapeStringRegExp(path.join(__dirname, 'src'))),
+    new RegExp(escapeStringRegExp(path.join(__dirname, 'tasks/webpack'))),
   ],
-  plugins: ['@babel/plugin-transform-modules-commonjs'],
+  plugins: [
+    ['@babel/plugin-transform-modules-commonjs', { lazy: true }],
+  ],
 });
 
-const staticPages = {
-  privacy: './static/privacy.md',
-};
-
-// Minification options used in production mode.
-const htmlMinifierOptions = {
-  removeComments: true,
-  collapseWhitespace: true,
-  collapseBooleanAttributes: true,
-  removeTagWhitespace: true,
-  removeAttributeQuotes: true,
-  removeRedundantAttributes: true,
-  removeScriptTypeAttributes: true,
-  removeStyleLinkTypeAttributes: true,
-  removeOptionalTags: true,
-  minifyCSS: true,
-};
-
-const noConfigBabelLoader = {
-  loader: 'babel-loader',
-  query: {
-    babelrc: false,
-    presets: [
-      ['@babel/preset-env', {
-        modules: false,
-        // Don't assume dependencies are OK with being run in loose mode
-        loose: false,
-        forceAllTransforms: true,
-      }],
-    ],
-  },
-};
+// Most webpack configuration is in this file. A few things are split up to make the
+// core stuff easier to grasp.
+//
+// Other parts of the build are in the ./tasks/webpack/ folder:
+//  - compileDependencies: Compiles dependencies that only ship ES2015+ to code that
+//    works in all our browser targets.
+const compileDependencies = require('./tasks/webpack/compileDependencies').default;
+//  - compress: Emits precompressed gzip and brotli versions of static assets.
+const compress = require('./tasks/webpack/compress').default;
+//  - staticPages: Compiles static markdown pages to HTML.
+const staticPages = require('./tasks/webpack/staticPages').default;
+//  - analyze: Optionally generates a bundle size statistics page using
+//    webpack-bundle-analyzer.
+const analyze = require('./tasks/webpack/analyze').default;
 
 const plugins = [
   new CopyPlugin([
@@ -81,12 +68,8 @@ const plugins = [
 let optimization;
 
 if (nodeEnv === 'production') {
-  const CompressionPlugin = require('compression-webpack-plugin');
-  const brotli = require('brotli/compress');
   const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
   const SriPlugin = require('webpack-subresource-integrity');
-
-  const compressible = /\.(js|css|svg|mp3)$/;
 
   optimization = {
     runtimeChunk: 'single',
@@ -114,96 +97,23 @@ if (nodeEnv === 'production') {
       filename: '[name]_[contenthash:7].css',
       chunkFilename: '[name]_[contenthash:7].css',
     }),
-    // Add Gzip-compressed files.
-    new CompressionPlugin({
-      test: compressible,
-      asset: '[path].gz[query]',
-      algorithm: 'gzip',
-    }),
-    // Add Brotli-compressed files.
-    new CompressionPlugin({
-      test: compressible,
-      asset: '[path].br[query]',
-      algorithm(buffer, opts, cb) {
-        const result = brotli(buffer);
-        if (result) {
-          cb(null, Buffer.from(result));
-        } else {
-          cb(null, buffer);
-        }
-      },
-    }),
     new SriPlugin({
       hashFuncNames: ['sha512'],
     }),
   );
 }
 
-if (process.env.ANALYZE) {
-  const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-  const openOptions = {
-    analyzerMode: 'server',
-  };
-  const staticOptions = {
-    analyzerMode: 'static',
-    openAnalyzer: false,
-  };
-  plugins.push(new BundleAnalyzerPlugin(process.env.ANALYZE === 'open' ? openOptions : staticOptions));
-}
-
-const context = path.join(__dirname, 'src');
-const entries = {
-  app: ['./app.js', './app.css'],
-  passwordReset: ['./password-reset/app.js'],
-};
-
-// Add static pages.
-const staticFiles = [];
-Object.keys(staticPages).forEach((name) => {
-  const fullPath = path.join(__dirname, staticPages[name]);
-  entries[name] = [
-    path.relative(context, fullPath),
-    './markdown.css',
-  ];
-
-  staticFiles.push(fullPath);
-
-  if (nodeEnv === 'production') {
-    // When compiling static pages in production mode, we use the static page
-    // contents as the template, and wrap it in the _actual_ template using a
-    // custom loader.
-    // This is very hacky indeed.
-    // The problem is that we need to insert compiled Markdown and any
-    // potential CSS into the HTML using the HtmlPlugin, but it's really hard
-    // to find the compiled markdown when you're just in a template.
-    // This could use a better alternative :p
-    plugins.push(new HtmlPlugin({
-      chunks: [name],
-      filename: `${name}.html`,
-      template: [
-        require.resolve('./tasks/utils/loadStaticHtmlTemplate'),
-        'extract-loader',
-        fullPath,
-      ].join('!'),
-      inject: false,
-      minify: htmlMinifierOptions,
-    }));
-  } else {
-    plugins.push(new HtmlPlugin({
-      chunks: [name],
-      template: './markdown.dev.html',
-      filename: `${name}.html`,
-    }));
-  }
-});
-
-module.exports = {
-  context,
-  entry: entries,
+const base = {
+  context: path.join(__dirname, 'src'),
+  entry: {
+    app: ['./app.js', './app.css'],
+    passwordReset: ['./password-reset/app.js'],
+  },
   mode: nodeEnv === 'production' ? 'production' : 'development',
   // Quit if there are errors.
   bail: nodeEnv === 'production',
   devtool: nodeEnv === 'production' ? 'source-map' : 'inline-source-map',
+
   output: {
     publicPath: '/',
     path: path.join(__dirname, 'public'),
@@ -211,10 +121,13 @@ module.exports = {
     chunkFilename: nodeEnv === 'production' ? '[name]_[chunkhash:7].js' : '[name]_dev.js',
     crossOriginLoading: 'anonymous',
   },
+
   optimization,
   plugins,
+
   module: {
     rules: [
+      // Static files and resources.
       {
         test: /\.mp3$/,
         use: [
@@ -228,6 +141,15 @@ module.exports = {
           { loader: 'image-webpack-loader', query: { bypassOnDebug: true } },
         ],
       },
+
+      // Locale files.
+      {
+        test: /\.yaml$/,
+        type: 'json',
+        use: 'yaml-loader',
+      },
+
+      // Stylesheets.
       {
         test: /\.css$/,
         use: [
@@ -236,25 +158,7 @@ module.exports = {
           'postcss-loader',
         ],
       },
-      {
-        test: /\.yaml$/,
-        type: 'json',
-        use: 'yaml-loader',
-      },
-      // JS loader for dependencies that use ES2015+:
-      {
-        test: /\.js$/,
-        include: [
-          /url-regex/,
-          /format-duration/,
-          /object-values/,
-          /material-ui\/es/,
-          /material-ui-icons\/es/,
-        ],
-        use: [
-          noConfigBabelLoader,
-        ],
-      },
+
       // JS loader for our own code:
       {
         test: /\.js$/,
@@ -267,22 +171,11 @@ module.exports = {
           },
         ].filter(Boolean),
       },
-      nodeEnv !== 'production' && {
-        // Hot reload static pages in development mode.
-        test: staticFiles,
-        use: require.resolve('./tasks/utils/insertHtml'),
-      },
-      {
-        test: /\.md$/,
-        use: [
-          'html-loader',
-          require.resolve('./tasks/utils/renderMarkdown'),
-        ],
-      },
     ].filter(Boolean),
   },
   resolve: {
     alias: {
+      // Use the ES modules versions of some packages.
       '@material-ui/core': path.join(__dirname, 'node_modules/@material-ui/core/es/'),
       '@material-ui/icons': path.join(__dirname, 'node_modules/@material-ui/icons/es/'),
     },
@@ -294,3 +187,13 @@ module.exports = {
     ],
   },
 };
+
+module.exports = merge([
+  base,
+  compileDependencies(),
+  staticPages({
+    privacy: './static/privacy.md',
+  }, nodeEnv === 'production'),
+  nodeEnv === 'production' && compress(),
+  process.env.ANALYZE && analyze(process.env.ANALYZE),
+].filter(Boolean));
