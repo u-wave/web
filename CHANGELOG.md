@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-# 1.8.2 / 24 May 2018
+## 1.8.2 / 24 May 2018
 Features:
  * Enable mobile vote button area once media is playing. (#919)
 
@@ -18,7 +18,7 @@ Internal:
  * Upgrade redux to v4.0.0 and react-dnd to v3.0.0. (#920)
  * Upgrade material-ui to v1.0.0.
 
-# 1.8.1 / 30 Apr 2018
+## 1.8.1 / 30 Apr 2018
 
 Bugfixes:
  * Disable vertical padding in user and playlist lists. (#910)
@@ -30,7 +30,7 @@ Bugfixes:
 Internal:
  * Upgrade material-ui to v1.0.0-beta.44.
 
-# 1.8.0 / 26 Apr 2018
+## 1.8.0 / 26 Apr 2018
 
 Features:
  * Show a message if a search turned up no results. (#889)
@@ -47,7 +47,7 @@ Internal:
  * Update material-ui to v1.0.0-beta.43. (a21a96e3)
  * Wait until the page is fully loaded before preloading overlays. (7ba34cb8)
 
-# 1.7.0 / 19 Apr 2018
+## 1.7.0 / 19 Apr 2018
 
 Features:
  * Show error message if SoundCloud track cannot be loaded. (#819)
@@ -61,7 +61,7 @@ Internal:
  * Use material-ui IconButtons for media actions. (#882)
  * Preload overlays on desktop. (#887)
 
-# 1.6.0 / 15 Apr 2018
+## 1.6.0 / 15 Apr 2018
 
 Features:
  * Add pagination and filtering to user administration page. (#870)
@@ -79,7 +79,7 @@ Internal:
  * Split lots of chunks. (#872)
  * Replace some components with material-ui versions. (#869)
 
-# 1.5.0 / 13 Apr 2018
+## 1.5.0 / 13 Apr 2018
 
 Features:
  * Add server list. (#864)
@@ -95,7 +95,7 @@ Internal:
  * Remove custom sourceType parameter. (#861)
  * Use `qs-stringify` to simplify building the soundcloud embed URL. (#863)
 
-# 1.4.3 / 07 Apr 2018
+## 1.4.3 / 07 Apr 2018
 
 Features:
  * Show crash message + reload instruction on error. (#855)
@@ -103,12 +103,12 @@ Features:
 Bugfixes:
  * Fix crashes when volume is way up. (#854)
 
-# 1.4.2 / 05 Apr 2018
+## 1.4.2 / 05 Apr 2018
 
 Bugfixes:
  * Build public/.
 
-# 1.4.1 / 05 Apr 2018
+## 1.4.1 / 05 Apr 2018
 
 Bugfixes:
  * Allow overriding MediaList rowComponent, fixes drag-drop in playlists. (#852)
@@ -120,7 +120,7 @@ Bugfixes:
 Internal:
  * Update i18next to the latest version 🚀 (#847)
 
-# 1.4.0 / 05 Apr 2018
+## 1.4.0 / 05 Apr 2018
 
 Features:
  * Update to the material-ui v1 beta. (#844)
@@ -130,12 +130,12 @@ Bugfixes:
  * Fix long playlist names overflowing in menus. (#844)
  * Fullscreen some dialogs in the mobile layout. (#844)
 
-# 1.3.1 / 03 Apr 2018
+## 1.3.1 / 03 Apr 2018
 
 Bugfixes:
  * Hide Google signin button on Register form if not available. (#843)
 
-# 1.3.0 / 29 Mar 2018
+## 1.3.0 / 29 Mar 2018
 
 Features:
  * Add WIP Mobile layout. (#514)
@@ -143,18 +143,18 @@ Features:
 Internal:
  * Extract second timer from App container. (#836)
 
-# 1.2.2 / 21 Mar 2018
+## 1.2.2 / 21 Mar 2018
 
 Features:
 
  * Update react-loadable. (#834)
  * Name output chunks so that it's easier to see what code is being loaded in the network tab in devtools. (#834)
 
-# 1.2.1 / 18 Mar 2018
+## 1.2.1 / 18 Mar 2018
 
 Add compiled files to the published package.
 
-# 1.2.0 / 18 Mar 2018
+## 1.2.0 / 18 Mar 2018
 
 This version of the üWave Web Client requires u-wave-http-api@0.4.0 or higher.
 
@@ -181,7 +181,7 @@ Internal:
 
  * Switch to qs-stringify. (#814)
 
-# 1.1.1 / 30 Jan 2018
+## 1.1.1 / 30 Jan 2018
 
 Bugfixes:
 
@@ -195,7 +195,7 @@ Internal:
  * No longer test on Node versions below v8.9. (65dea161292f89f3afc765d6eb444020bbf12c66)
  * Move development API server to u-wave-api-v1. (#799)
 
-# 1.1.0 / 13 Jan 2018
+## 1.1.0 / 13 Jan 2018
 
 Features:
 
@@ -215,7 +215,7 @@ Internal:
 
  * Add Node 9 to CI. (#778)
 
-# 1.0.0 / 19 Nov 2017
+## 1.0.0 / 19 Nov 2017
 
 Features:
 
@@ -233,7 +233,7 @@ Internal:
 
  * Update dependencies.
 
-# 1.0.0-beta.18 / 02 Nov 2017
+## 1.0.0-beta.18 / 02 Nov 2017
 
 Features:
 
@@ -246,7 +246,7 @@ Internal:
  * Add prerelease npm script (#757)
  * Add common-shake. (#754)
 
-# 1.0.0-beta.17 / 24 Sep 2017
+## 1.0.0-beta.17 / 24 Sep 2017
 
 Features:
 
@@ -262,7 +262,7 @@ Internal:
  * Use reconnecting-websocket from npm. (#742)
  * Fix HMR rerendering (work around webpack bug I guess?). (#736)
 
-# 1.0.0-beta.16 / 25 Aug 2017
+## 1.0.0-beta.16 / 25 Aug 2017
 
 Features:
 
@@ -274,7 +274,7 @@ Bugfixes:
  * Fix waitlist part of ETA. (#729)
  * Fix locale import paths in `lib/` and `es/` builds. (#731)
 
-# 1.0.0-beta.15 / 19 Aug 2017
+## 1.0.0-beta.15 / 19 Aug 2017
 
 Features:
 
@@ -294,7 +294,7 @@ Internal:
  * Extract SearchBar component. (#708)
  * Lots of dependency updates.
 
-# 1.0.0-beta.14 / 09 Jul 2017
+## 1.0.0-beta.14 / 09 Jul 2017
 
 Features:
 
@@ -315,7 +315,7 @@ Internal:
  * Make overlays standalone components, not tied to `<Overlay/>`. (#688)
  * Development server: Auto-reload Web API on changes. (#698)
 
-# 1.0.0-beta.13 / 23 Jun 2017
+## 1.0.0-beta.13 / 23 Jun 2017
 
 Features:
 
@@ -331,7 +331,7 @@ Internal:
  * Enable ModuleConcatenationPlugin with Webpack v3. (#676)
  * Test doing a full prod build on CI. (#678)
 
-# 1.0.0-beta.12 / 09 Jun 2017
+## 1.0.0-beta.12 / 09 Jun 2017
 
 Features:
 
@@ -355,13 +355,13 @@ Internal:
  * Add Node 8 to CI. (#666)
  * Auto-update lockfile w/ greenkeeper. (#668)
 
-# 1.0.0-beta.11 / 27 May 2017
+## 1.0.0-beta.11 / 27 May 2017
 
 Bugfixes:
 
  * Fix the Video toolbar position. (#652)
 
-# 1.0.0-beta.10 / 26 May 2017
+## 1.0.0-beta.10 / 26 May 2017
 
 Features:
 
@@ -386,7 +386,7 @@ Internal:
  * Show more helpful Redis/Mongo connection errors. (#622)
  * Flatten invalid nested CSS selectors. (#642)
 
-# 1.0.0-beta.9 / 15 Apr 2017
+## 1.0.0-beta.9 / 15 Apr 2017
 
 Features:
 
@@ -402,7 +402,7 @@ Internal:
  * Upgrade React to v15.5 and deal with deprecations. (#600)
  * Upgrade dependencies.
 
-# 1.0.0-beta.8 / 17 Mar 2017
+## 1.0.0-beta.8 / 17 Mar 2017
 
 Features:
 
@@ -423,7 +423,7 @@ Internal:
  * Use `import` everywhere. (#576)
  * Upgrade dependencies.
 
-# 1.0.0-beta.7 / 24 Feb 2017
+## 1.0.0-beta.7 / 24 Feb 2017
 
 Features:
 
@@ -441,7 +441,7 @@ Internal:
 
   * Pull more build things from Gulp tasks into Webpack config. (#558)
 
-# 1.0.0-beta.6 / 17 Feb 2017
+## 1.0.0-beta.6 / 17 Feb 2017
 
 Features:
 
@@ -458,7 +458,7 @@ Internal:
   * Add Lodash Webpack plugin. (#512, #549)
   * Always render VideoBackdrop regardless of current media source. (#550)
 
-# 1.0.0-beta.5 / 28 Jan 2017
+## 1.0.0-beta.5 / 28 Jan 2017
 
 This release contains an important fix for renaming playlists, and some minor fixes.
 
@@ -472,7 +472,7 @@ Internal:
 
  * Deal a bit better with missing browser features. (#518)
 
-# 1.0.0-beta.4 / 22 Jan 2017
+## 1.0.0-beta.4 / 22 Jan 2017
 
 Features:
 
@@ -492,7 +492,7 @@ Internal:
   * Update Babel preset to use `babel-preset-latest` (#520)
   * Split up chat messages list and input into separate Redux containers (#521)
 
-# 1.0.0-beta.3 / 26 Nov 2016
+## 1.0.0-beta.3 / 26 Nov 2016
 
 Bugfixes:
 
@@ -500,7 +500,7 @@ Bugfixes:
   * Fix emoji in development watch mode (#496)
   * Fix username dialog sizing (#498)
 
-# 1.0.0-beta.2 / 22 Nov 2016
+## 1.0.0-beta.2 / 22 Nov 2016
 
 Features:
 
@@ -535,6 +535,6 @@ Internal:
   * Remove postcss-bem plugin, instead only using cssnext for CSS features.
     The postcss-bem project is abandoned.
 
-# 1.0.0-beta.1 / 02 Nov 2016
+## 1.0.0-beta.1 / 02 Nov 2016
 
 Start tracking changes.
