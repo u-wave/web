@@ -1,3 +1,23 @@
+# u-wave-web change log
+
+All notable changes to this project will be documented in this file.
+
+This project adheres to [Semantic Versioning](http://semver.org/).
+
+# 1.8.2 / 24 May 2018
+Features:
+ * Enable mobile vote button area once media is playing. (#919)
+
+Bugfixes:
+ * Fix playlist names overflowing in mobile AddToPlaylistMenu. (#918)
+ * Fix desktop preload check. (#940)
+
+Internal:
+ * Add Webpack bundle analyzer script. (#939)
+ * Split some of the hacky webpack parts into separate files (#942)
+ * Upgrade redux to v4.0.0 and react-dnd to v3.0.0. (#920)
+ * Upgrade material-ui to v1.0.0.
+
 # 1.8.1 / 30 Apr 2018
 
 Bugfixes:
