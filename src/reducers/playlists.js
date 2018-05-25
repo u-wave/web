@@ -166,6 +166,9 @@ export default function reduce(state = initialState, action = {}) {
 
   switch (type) {
     case INIT_STATE:
+      // Probably not signed in.
+      if (!payload.playlists) return state;
+
       return {
         ...state,
         playlists: indexBy(payload.playlists.map(playlist => ({
@@ -173,6 +176,9 @@ export default function reduce(state = initialState, action = {}) {
           active: playlist._id === payload.activePlaylist,
           selected: playlist._id === payload.activePlaylist,
         })), '_id'),
+        // Preload the first item in the active playlist so it can be shown in
+        // the footer bar immediately. Else it would flash "This playlist is empty"
+        // for a moment.
         playlistItems: payload.activePlaylist && payload.firstActivePlaylistItem ? {
           ...state.playlistItems,
           [payload.activePlaylist]: [payload.firstActivePlaylistItem],
