@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.8.3 / 26 May 2018
+Bugfixes:
+ * Fix crash in playlists reducer when not signed in. (#960)
+
+Internal:
+ * Update babel to v7.0.0-beta.49. (#961)
+
 ## 1.8.2 / 24 May 2018
 Features:
  * Enable mobile vote button area once media is playing. (#919)
