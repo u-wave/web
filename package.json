@@ -17,6 +17,7 @@
     "@f/cookies-enabled": "^1.1.1",
     "@material-ui/core": "^1.0.0",
     "@material-ui/icons": "^1.0.0",
+    "@material-ui/lab": "^1.0.0-alpha.3",
     "@u-wave/react-server-list": "^2.0.0",
     "@u-wave/react-youtube": "^0.5.0",
     "array-find": "^1.0.0",

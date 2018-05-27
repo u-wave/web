@@ -6,7 +6,7 @@ import VolumeDownIcon from '@material-ui/icons/VolumeDown';
 import VolumeMuteIcon from '@material-ui/icons/VolumeMute';
 import VolumeOffIcon from '@material-ui/icons/VolumeOff';
 import VolumeUpIcon from '@material-ui/icons/VolumeUp';
-import Slider from './Slider';
+import Slider from '@material-ui/lab/Slider';
 
 export default class Volume extends React.Component {
   static propTypes = {
