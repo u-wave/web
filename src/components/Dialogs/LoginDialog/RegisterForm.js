@@ -34,10 +34,6 @@ class RegisterForm extends React.Component {
     captchaResponse: null,
   };
 
-  componentWillReceiveProps() {
-    this.setState({ busy: false });
-  }
-
   handleSubmit = (event) => {
     event.preventDefault();
     this.setState({ busy: true });
@@ -46,6 +42,8 @@ class RegisterForm extends React.Component {
       email: this.email.value,
       password: this.password.value,
       grecaptcha: this.state.captchaResponse,
+    }).finally(() => {
+      this.setState({ busy: false });
     });
   };
 

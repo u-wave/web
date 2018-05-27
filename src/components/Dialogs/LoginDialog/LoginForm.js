@@ -24,16 +24,14 @@ class LoginForm extends React.Component {
 
   state = { busy: false };
 
-  componentWillReceiveProps() {
-    this.setState({ busy: false });
-  }
-
   handleSubmit = (event) => {
     event.preventDefault();
     this.setState({ busy: true });
     this.props.onLogin({
       email: this.email.value,
       password: this.password.value,
+    }).finally(() => {
+      this.setState({ busy: false });
     });
   };
 

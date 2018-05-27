@@ -23,10 +23,6 @@ class ResetPasswordForm extends React.Component {
     done: false,
   };
 
-  componentWillReceiveProps() {
-    this.setState({ busy: false });
-  }
-
   handleSubmit = (event) => {
     event.preventDefault();
     this.setState({ busy: true });
@@ -37,6 +33,8 @@ class ResetPasswordForm extends React.Component {
         busy: false,
         done: true,
       });
+    }, () => {
+      this.setState({ busy: false });
     });
   };
 
