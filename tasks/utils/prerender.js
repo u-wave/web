@@ -7,10 +7,11 @@ const jss = require('jss');
 
 module.exports = function prerender(element) {
   const theme = require('../../src/theme').default;
-  const generateClassName = require('../../src/utils/generateClassName').default;
+  const createGenerateClassName = require('../../src/utils/createGenerateClassName').default;
 
   const styles = jss.create(jssPreset());
   const registry = new SheetsRegistry();
+  const generateClassName = createGenerateClassName();
 
   const markup = renderToStaticMarkup(h(
     JssProvider, { jss: styles, registry, generateClassName },
