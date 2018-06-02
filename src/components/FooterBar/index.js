@@ -144,7 +144,7 @@ class FooterBar extends React.Component {
       <div className={className}>
         <SettingsButton onClick={toggleSettings} />
         <div className="FooterBar-guest">
-          You have to log in if you want to play!
+          {t('login.message')}
         </div>
         <Button
           variant="raised"

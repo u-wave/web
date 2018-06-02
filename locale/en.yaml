@@ -185,6 +185,7 @@ uwave:
       license: License
 
   login:
+    message: You have to sign in if you want to play!
     login: Sign in
     register: Register
     username: Username
