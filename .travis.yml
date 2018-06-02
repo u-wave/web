@@ -11,6 +11,10 @@ before_script:
   - greenkeeper-lockfile-update
   - npm run build
 
+install:
+  # travis does npm ci by default
+  - npm install
+
 script:
   - npm test
     # Don't fail the build bc of this yet.
