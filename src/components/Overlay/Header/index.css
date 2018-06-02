@@ -9,9 +9,10 @@
 .OverlayHeader-title {
   float: left;
   height: 100%;
-  padding-top: 17px;
   font-size: 10pt;
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   /* max width = 300px */
   width: 33%;
