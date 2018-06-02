@@ -1,0 +1,7 @@
+@import "../../vars.css";
+
+.SettingsButton {
+  color: var(--text-color);
+  height: var(--footer-height);
+  width: var(--footer-height);
+}

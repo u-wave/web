@@ -2,7 +2,7 @@ import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
-
+import SettingsButton from './SettingsButton';
 import NextMedia from './NextMedia';
 import UserInfo from './UserInfo';
 import SkipButton from './SkipButton';
@@ -141,6 +141,7 @@ class FooterBar extends React.Component {
     }
     return (
       <div className={className}>
+        <SettingsButton onClick={toggleSettings} />
         <button
           className="FooterAuthButton FooterAuthButton--login"
           onClick={openLoginDialog}
