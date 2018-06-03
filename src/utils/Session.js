@@ -3,7 +3,9 @@ import cookiesEnabled from '@f/cookies-enabled';
 const SESSION_KEY = '_session';
 
 export function preferredSessionType() {
-  return typeof navigator !== 'undefined' && cookiesEnabled() ? 'cookie' : 'token';
+  return typeof navigator !== 'undefined' && cookiesEnabled() && !process.env.FORCE_TOKEN
+    ? 'cookie'
+    : 'token';
 }
 
 export function set(key) {
