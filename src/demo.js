@@ -3,14 +3,6 @@ import Uwave from './Uwave';
 import youTubeSource from './sources/youtube';
 import soundCloudSource from './sources/soundcloud';
 
-function readApplicationConfig() {
-  try {
-    return JSON.parse(document.getElementById('u-wave-config').textContent);
-  } catch (e) {
-    return {};
-  }
-}
-
 const uw = new Uwave({
   apiUrl: 'https://u-wave-demo.now.sh/api',
   socketUrl: 'wss://u-wave-demo.now.sh',
