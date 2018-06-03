@@ -1,7 +1,7 @@
 /* eslint-disable global-require */
 const path = require('path');
 const escapeStringRegExp = require('escape-string-regexp');
-const { ProgressPlugin } = require('webpack');
+const { DefinePlugin, ProgressPlugin } = require('webpack');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const ExtractCssPlugin = require('mini-css-extract-plugin');
 const HtmlPlugin = require('html-webpack-plugin');
@@ -12,6 +12,7 @@ const merge = require('webpack-merge');
 const htmlMinifierOptions = require('./tasks/utils/htmlMinifierOptions');
 
 const nodeEnv = process.env.NODE_ENV || 'development';
+const isDemo = process.env.DEMO === '1';
 
 // Compile src/ on the fly so we can use components etc. during build time.
 require('@babel/register').default({
@@ -57,6 +58,9 @@ const plugins = [
     filename: 'password-reset.html',
     title: 'Reset Password',
     minify: nodeEnv === 'production' ? htmlMinifierOptions : false,
+  }),
+  new DefinePlugin({
+    'process.env.FORCE_TOKEN': JSON.stringify(isDemo),
   }),
   new ProgressPlugin(),
   new LodashModuleReplacementPlugin({
@@ -106,7 +110,10 @@ if (nodeEnv === 'production') {
 const base = {
   context: path.join(__dirname, 'src'),
   entry: {
-    app: ['./app.js', './app.css'],
+    app: [
+      isDemo ? './demo.js' : './app.js',
+      './app.css',
+    ],
     passwordReset: ['./password-reset/app.js'],
   },
   mode: nodeEnv === 'production' ? 'production' : 'development',
