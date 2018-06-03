@@ -18,7 +18,10 @@ import { notificationSettingsSelector } from './settingSelectors';
 const baseSelector = state => state.chat;
 
 export const rawMotdSelector = createSelector(baseSelector, chat => chat.motd);
-export const motdSelector = createSelector(rawMotdSelector, parseChatMarkup);
+export const motdSelector = createSelector(
+  rawMotdSelector,
+  motd => (motd ? parseChatMarkup(motd) : null),
+);
 
 const MAX_MESSAGES = 500;
 const allMessagesSelector = createSelector(baseSelector, chat => chat.messages);
