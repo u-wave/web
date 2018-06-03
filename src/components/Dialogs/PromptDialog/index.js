@@ -80,6 +80,8 @@ export default class PromptDialog extends React.Component {
       contentClassName,
       titleClassName,
 
+      onSubmit,
+
       ...props
     } = this.props;
     const {
