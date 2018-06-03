@@ -18,7 +18,7 @@ const initialState = {
    * Message of the Day, a message shown at the very top of the Chat box. Can be
    * used for announcements, for example, or a welcome message.
    */
-  motd: '',
+  motd: null,
   /**
    * All messages, including log messages and in-flight messages.
    */
