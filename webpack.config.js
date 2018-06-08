@@ -125,7 +125,7 @@ const base = {
 
   output: {
     publicPath: '/',
-    path: path.join(__dirname, 'public'),
+    path: path.join(__dirname, 'dist', 'public'),
     filename: nodeEnv === 'production' ? 'static/[name]_[chunkhash:7].js' : '[name]_dev.js',
     chunkFilename: nodeEnv === 'production' ? 'static/[name]_[chunkhash:7].js' : '[name]_dev.js',
     crossOriginLoading: 'anonymous',

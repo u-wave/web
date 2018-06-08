@@ -11,8 +11,8 @@ function setWatching(done) {
   done();
 }
 
-function cleanPublic(done) {
-  rimraf('public', done);
+function cleanDist(done) {
+  rimraf('dist/{public,middleware}', done);
 }
 function cleanEs(done) {
   rimraf('es', done);
@@ -20,7 +20,7 @@ function cleanEs(done) {
 function cleanLib(done) {
   rimraf('lib', done);
 }
-const clean = gulp.parallel(cleanPublic, cleanEs, cleanLib);
+const clean = gulp.parallel(cleanDist, cleanEs, cleanLib);
 
 const start = gulp.series(setWatching, serve.serve);
 
@@ -45,6 +45,11 @@ function prod(done) {
   });
 }
 
+function middleware() {
+  return gulp.src('lib/middleware/**')
+    .pipe(gulp.dest('dist/middleware'));
+}
+
 module.exports = {
   setWatching,
   serve: serve.serve,
@@ -52,5 +57,6 @@ module.exports = {
   build,
   clean,
   default: build,
-  prod: gulp.series(cleanPublic, build, prod),
+  middleware: gulp.series(build, middleware),
+  prod: gulp.series(cleanDist, build, gulp.parallel(prod, middleware)),
 };
