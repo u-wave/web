@@ -42,6 +42,7 @@ uwave:
     selfSkipReason: "{{username}} skipped their turn: {{reason}}"
     rolesAdded: "{{username}} is now a {{roles}}"
     rolesRemoved: "{{username}} is no longer a {{roles}}"
+    scrollDown: Scroll down to read new messages
 
   dialogs:
     confirm:
