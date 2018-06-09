@@ -2,4 +2,5 @@
 
 .UsersDrawer {
   max-width: 90vw;
+  min-width: 200px;
 }
