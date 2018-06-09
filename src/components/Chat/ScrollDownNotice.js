@@ -6,11 +6,15 @@ import ScrollDownIcon from '@material-ui/icons/ArrowDownward';
 
 const ScrollNotice = ({ show, onClick }) => (
   <div className={cx('ChatMessages-scrollDown', show && 'is-visible')}>
-    <div className="ChatMessages-scrollDownButton">
-      <Button variant="fab" mini color="primary" onClick={onClick}>
-        <ScrollDownIcon />
-      </Button>
-    </div>
+    <Button
+      className="ChatMessages-scrollDownButton"
+      variant="fab"
+      mini
+      color="primary"
+      onClick={onClick}
+    >
+      <ScrollDownIcon />
+    </Button>
   </div>
 );
 
