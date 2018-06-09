@@ -13,6 +13,7 @@
     <% if (htmlWebpackPlugin.files.favicon) { %>
       <link rel="shortcut icon" href="<%= htmlWebpackPlugin.files.favicon %>">
     <% } %>
+    <link rel="manifest" href="/manifest.json">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,600italic,400italic">
     <style id="jss"><%= loading ? loading.css : '' %></style>
   </head>
