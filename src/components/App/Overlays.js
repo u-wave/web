@@ -4,6 +4,15 @@ import find from 'array-find';
 import CSSTransition from 'react-transition-group/CSSTransition';
 import TransitionGroup from 'react-transition-group/TransitionGroup';
 
+// Use the css transitionend event to mark the finish of a transition.
+// Using this instead of a timeout prop so that we don't have to define
+// the timeout in multiple places, and it also fixes a small visual
+// glitch in Firefox where a scrollbar would appear for a split second
+// when the enter transition was almost complete.
+function addTransitionEndListener(node, done) {
+  node.addEventListener('transitionend', done, false);
+}
+
 const Overlays = ({ children, active }) => {
   let view;
   if (Array.isArray(children)) {
@@ -20,7 +29,7 @@ const Overlays = ({ children, active }) => {
         mountOnEnter
         unmountOnExit
         classNames="Overlay"
-        timeout={180}
+        addEndListener={addTransitionEndListener}
       >
         {view}
       </CSSTransition>
