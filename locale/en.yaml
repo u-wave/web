@@ -33,6 +33,7 @@ uwave:
   chat:
     title: Chat
     placeholder: Click here to chat!
+    label: Chat message
     userJoin: "{{username}} joined the room"
     userLeave: "{{username}} left the room"
     userNameChanged: "{{username}} changed their nickname to {{newUsername}}"

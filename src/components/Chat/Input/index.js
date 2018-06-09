@@ -119,6 +119,7 @@ class ChatInput extends React.Component {
             type: 'text',
             className: cx('ChatInput-input', focusClass),
             placeholder: focused ? '' : t('chat.placeholder'),
+            'aria-label': t('chat.label'),
             onFocus: this.handleFocus,
             onBlur: this.handleBlur,
             onKeyDown: this.handleKeyDown,
