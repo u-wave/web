@@ -4,6 +4,25 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.9.0 / 09 Jun 2018
+Features:
+ * Add autocomplete attributes to help browsers detect login forms. (#964)
+
+Bugfixes:
+ * Fix CSS className generation for anonymous components. (#969)
+ * Improve overlay title text alignment. (#975)
+ * Fix duplicate `onSubmit` calls in PromptDialog. (#976)
+ * Fix null MOTD. (#977)
+ * Use transforms for overlay transitions. (#981)
+ * Downgrade to react-dnd's v2 line, avoiding bugs introduced in newer versions. (#982)
+
+Internal:
+ * Enable React Strict Mode. (#913)
+ * Use Slider from @material-ui/lab. (#962)
+ * Update material-ui to 1.1.0. (#963)
+ * Add netlify demo. (#979)
+ * Update dependencies. (#980)
+
 ## 1.8.3 / 26 May 2018
 Bugfixes:
  * Fix crash in playlists reducer when not signed in. (#960)
