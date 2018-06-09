@@ -11,9 +11,15 @@
   top: auto;
   bottom: 0;
 }
+.Overlay--from-bottom .Overlay-body {
+  transform: translateY(100%);
+}
 .Overlay--from-top {
   top: 0;
   bottom: auto;
+}
+.Overlay--from-top .Overlay-body {
+  transform: translateY(-100%);
 }
 
 .Overlay-body {
@@ -38,20 +44,20 @@
 }
 
 /* Animations!.. */
-.Overlay-enter {
-  overflow-y: hidden;
-  height: 0%;
-}
-.Overlay-enter-active {
-  transition: height 180ms ease-out;
-  height: 100%;
-}
 
+/* Enable transitions during enter/exit. */
+.Overlay-enter,
 .Overlay-exit {
   overflow-y: hidden;
-  height: 100%;
 }
-.Overlay-exit-active {
-  transition: height 180ms ease-in;
-  height: 0%;
+.Overlay-enter .Overlay-body {
+  transition: transform 180ms ease-out;
+}
+.Overlay-exit .Overlay-body {
+  transition: transform 180ms ease-in;
+}
+/* The target (open) state. */
+.Overlay-enter-active .Overlay-body,
+.Overlay-enter-done .Overlay-body {
+  transform: translateY(0);
 }
