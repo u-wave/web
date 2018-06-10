@@ -1,6 +1,8 @@
 import cx from 'classnames';
 import React from 'react';
+import { translate } from 'react-i18next';
 import PropTypes from 'prop-types';
+import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import VolumeDownIcon from '@material-ui/icons/VolumeDown';
 import VolumeMuteIcon from '@material-ui/icons/VolumeMute';
@@ -8,8 +10,11 @@ import VolumeOffIcon from '@material-ui/icons/VolumeOff';
 import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 import Slider from '@material-ui/lab/Slider';
 
-export default class Volume extends React.Component {
+const enhance = translate();
+
+class Volume extends React.Component {
   static propTypes = {
+    t: PropTypes.func.isRequired,
     className: PropTypes.string,
     volume: PropTypes.number,
     muted: PropTypes.bool,
@@ -37,25 +42,40 @@ export default class Volume extends React.Component {
   };
 
   render() {
+    const {
+      t,
+      className,
+      muted,
+      volume,
+    } = this.props;
+
     let VolumeIcon = VolumeUpIcon;
-    if (this.props.muted) {
+    if (muted) {
       VolumeIcon = VolumeOffIcon;
-    } else if (this.props.volume === 0) {
+    } else if (volume === 0) {
       VolumeIcon = VolumeMuteIcon;
-    } else if (this.props.volume < 50) {
+    } else if (volume < 50) {
       VolumeIcon = VolumeDownIcon;
     }
+
+    const label = muted ? t('booth.unmute') : t('booth.mute');
+
     return (
-      <div className={cx('VolumeSlider', this.props.className)}>
-        <IconButton onClick={this.handleMuteClick}>
-          <VolumeIcon />
-        </IconButton>
+      <div className={cx('VolumeSlider', className)}>
+        <Tooltip title={label} position="bottom">
+          <IconButton
+            aria-label={label}
+            onClick={this.handleMuteClick}
+          >
+            <VolumeIcon />
+          </IconButton>
+        </Tooltip>
         <div className="VolumeSlider-slider">
           <Slider
             min={0}
             max={100}
             step={1}
-            value={this.props.volume}
+            value={volume}
             onChange={this.handleVolumeChange}
           />
         </div>
@@ -63,3 +83,5 @@ export default class Volume extends React.Component {
     );
   }
 }
+
+export default enhance(Volume);

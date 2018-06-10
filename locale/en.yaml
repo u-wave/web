@@ -130,6 +130,8 @@ uwave:
     autoplayBlocked: Your browser is blocking autoplay. Please press the button below to manually start playing this track.
     play: Play
     currentDJ: "played by: {{user}}"
+    mute: Mute audio
+    unmute: Unmute audio
     skip:
       self: Skip your turn
       other: "Skip {{user}}'s turn"
