@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.9.1 / 12 Jun 2018
+Bugfixes:
+ * Add a label to the volume mute/unmute button. (#988)
+ * Add a minimum width to mobile drawers. (#984)
+ * Add `lang` attribute to the html element. (#986)
+ * Animate scroll down button in and out on keyboard focus. (#983)
+
 ## 1.9.0 / 09 Jun 2018
 Features:
  * Add autocomplete attributes to help browsers detect login forms. (#964)
