@@ -10,6 +10,21 @@ import { currentPlaySelector } from '../selectors/roomHistorySelectors';
 import { usersSelector } from '../selectors/userSelectors';
 import mergeIncludedModels from '../utils/mergeIncludedModels';
 
+/**
+ * Set the media metadata in some mobile browsers.
+ */
+function setMediaMetadata({ artist, title, thumbnail }) {
+  return () => {
+    if ('mediaSession' in navigator && window.MediaMetadata) {
+      navigator.mediaSession.metadata = new window.MediaMetadata({
+        artist,
+        title,
+        artwork: [ { src: thumbnail } ]
+      });
+    }
+  };
+}
+
 export function advanceToEmpty() {
   return (dispatch, getState) => {
     dispatch({
@@ -32,6 +47,7 @@ export function advance(nextBooth) {
   } = nextBooth;
   return (dispatch, getState) => {
     const user = usersSelector(getState())[userID];
+    const item = flattenPlaylistItem(media);
     dispatch({
       type: ADVANCE,
       payload: {
@@ -39,13 +55,15 @@ export function advance(nextBooth) {
         historyID,
         playlistID,
         user,
-        media: flattenPlaylistItem(media),
+        media: item,
         timestamp: playedAt,
       },
       meta: {
         previous: currentPlaySelector(getState()),
       },
     });
+
+    dispatch(setMediaMetadata(item));
   };
 }
 
