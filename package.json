@@ -88,7 +88,7 @@
   },
   "devDependencies": {
     "@babel/core": "7.0.0-beta.49",
-    "@babel/plugin-proposal-class-properties": "7.0.0-beta.49",
+    "@babel/plugin-proposal-class-properties": "7.0.0-beta.50",
     "@babel/plugin-proposal-export-default-from": "7.0.0-beta.49",
     "@babel/plugin-proposal-export-namespace-from": "7.0.0-beta.49",
     "@babel/plugin-syntax-dynamic-import": "7.0.0-beta.49",
