@@ -198,13 +198,66 @@ function whenWindowClosed(window) {
 function socialLogin(service) {
   return (dispatch, getState) => {
     const { apiUrl } = getState().config;
+    let messageHandlerCalled = false;
+    let promise;
+
+    function onlogin() {
+      // Check login state after the window closed.
+      promise = dispatch(initState());
+    }
+    function oncreate(data) {
+      promise = Promise.resolve();
+      dispatch({
+        type: 'auth/OPEN_LOGIN_DIALOG',
+        payload: {
+          show: 'social',
+          service: data.type,
+          suggestedName: data.suggestedName,
+        },
+      });
+    }
+
+    const apiOrigin = new URL(apiUrl, window.location.href).origin;
+
+    window.addEventListener('message', (event) => {
+      const { data, origin } = event;
+      if (apiOrigin !== origin) {
+        console.warn('Incorrect origin, discarding', apiUrl, origin, data);
+        return;
+      }
+
+      messageHandlerCalled = true;
+
+      if (data.pending) {
+        oncreate(data);
+      } else {
+        onlogin();
+      }
+    });
+
     const loginWindow = window.open(`${apiUrl}/auth/service/${service}`);
     return whenWindowClosed(loginWindow).then(() => {
-      // Check login state after the window closed.
-      dispatch(initState());
+      if (messageHandlerCalled) return promise;
+      return onlogin();
     });
   };
 }
 export function loginWithGoogle() {
   return socialLogin('google');
+}
+
+export function finishSocialLogin(service, params) {
+  return post(`/auth/service/${service}/finish`, params, {
+    onStart: loginStart,
+    onComplete: res => (dispatch) => {
+      Session.set(res.meta.jwt);
+      dispatch(setSessionToken(res.meta.jwt));
+      dispatch(initState());
+    },
+    onError: error => ({
+      type: LOGIN_COMPLETE,
+      error: true,
+      payload: error,
+    }),
+  });
 }

@@ -11,6 +11,7 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
+import SocialForm from './SocialForm';
 import ResetPasswordForm from './ResetPasswordForm';
 
 const enhance = compose(
@@ -31,6 +32,9 @@ const LoginDialog = (props) => {
   if (show === 'register') {
     title = t('login.register');
     form = <RegisterForm {...props} />;
+  } else if (show === 'social') {
+    title = 'Sign Up With Google';
+    form = <SocialForm {...props} />;
   } else if (show === 'reset') {
     title = 'Reset Password';
     form = <ResetPasswordForm {...props} />;
