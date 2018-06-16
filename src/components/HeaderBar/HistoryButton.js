@@ -7,14 +7,19 @@ import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import HistoryIcon from '@material-ui/icons/History';
 
+const enhance = compose(
+  translate(),
+  pure,
+);
+
 const HistoryButton = ({ t, onClick }) => (
   <Tooltip title={t('history.title')} position="bottom">
     <IconButton
       aria-label={t('history.title')}
-      className="HeaderHistoryButton"
+      className="HistoryButton"
       onClick={onClick}
     >
-      <HistoryIcon className="HeaderHistoryButton-icon" />
+      <HistoryIcon className="HistoryButton-icon" />
     </IconButton>
   </Tooltip>
 );
@@ -24,7 +29,4 @@ HistoryButton.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
-export default compose(
-  translate(),
-  pure,
-)(HistoryButton);
+export default enhance(HistoryButton);

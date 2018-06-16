@@ -1,9 +1,6 @@
-@import "../../vars.css";
-
-.HeaderHistoryButton {
+.HistoryButton {
   /* above the progress bar, video backdrop, etc. */
   z-index: 7;
-  color: var(--text-color);
   height: 100%;
   width: 100%;
 }
