@@ -3,10 +3,26 @@
 import 'lie/polyfill';
 import 'whatwg-fetch';
 import pFinally from 'p-finally';
+import arrayFind from 'array-find';
+import arrayFindIndex from 'array-findindex';
 
 if (!Promise.prototype.finally) {
   // eslint-disable-next-line no-extend-native
   Promise.prototype.finally = function finally_(handler) {
     return pFinally(this, handler);
+  };
+}
+
+if (!Array.prototype.find) {
+  // eslint-disable-next-line no-extend-native
+  Array.prototype.find = function find_(predicate) {
+    return arrayFind(this, predicate);
+  };
+}
+
+if (!Array.prototype.findIndex) {
+  // eslint-disable-next-line no-extend-native
+  Array.prototype.findIndex = function findIndex_(predicate) {
+    return arrayFindIndex(this, predicate);
   };
 }

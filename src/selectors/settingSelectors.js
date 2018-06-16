@@ -1,11 +1,10 @@
 /* global window */
-import find from 'array-find';
 import { createSelector } from 'reselect';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { availableLanguages } from '../locale';
 
 function getAvailableLanguage(languages) {
-  return find(languages, lang => (
+  return languages.find(lang => (
     availableLanguages.indexOf(lang) !== -1
   ));
 }

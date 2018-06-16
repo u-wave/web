@@ -1,4 +1,3 @@
-import find from 'array-find';
 import ms from 'ms';
 import splitargs from 'splitargs';
 import parseChatMarkup from 'u-wave-parse-chat-markup';
@@ -119,7 +118,7 @@ export function receive(message) {
     const settings = settingsSelector(state);
     const currentUser = currentUserSelector(state);
     const users = userListSelector(state);
-    const sender = find(users, user => user._id === message.userID);
+    const sender = users.find(user => user._id === message.userID);
     const senderHasRole = userHasRoleSelector(state)(sender);
     const mentions = [
       ...users.map(user => user.username),

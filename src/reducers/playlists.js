@@ -1,7 +1,6 @@
 import assign from 'object-assign';
 import except from 'except';
 import escapeStringRegExp from 'escape-string-regexp';
-import findIndex from 'array-findindex';
 import indexBy from 'index-by';
 import mapObj from 'object.map';
 
@@ -61,7 +60,7 @@ function processInsert(list, insert, position) {
   } else if (position.at === 'start') {
     insertIdx = 0;
   } else if (position.after != null && position.after !== -1) {
-    insertIdx = findIndex(list, media => media !== null && media._id === position.after) + 1;
+    insertIdx = list.findIndex(media => media !== null && media._id === position.after) + 1;
   }
   return [
     ...list.slice(0, insertIdx),

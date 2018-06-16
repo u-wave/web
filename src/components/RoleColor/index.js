@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import find from 'array-find';
 import compose from 'recompose/compose';
 import componentFromProp from 'recompose/componentFromProp';
 import mapProps from 'recompose/mapProps';
@@ -19,7 +18,7 @@ const enhance = compose(
     ...props,
     style: {
       color: (
-        role ? colors[role] : colors[find(roles, r => colors[r])]
+        role ? colors[role] : colors[roles.find(r => colors[r])]
       ) || colors.default,
     },
     component: props.component || 'span',
