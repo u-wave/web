@@ -6,6 +6,7 @@ import pFinally from 'p-finally';
 import arrayFind from 'array-find';
 import arrayFindIndex from 'array-findindex';
 import objectAssign from 'object-assign';
+import objectValues from 'object-values';
 
 if (!Promise.prototype.finally) {
   // eslint-disable-next-line no-extend-native
@@ -31,4 +32,9 @@ if (!Array.prototype.findIndex) {
 if (!Object.assign) {
   // eslint-disable-next-line no-extend-native
   Object.assign = objectAssign;
+}
+
+if (!Object.values) {
+  // eslint-disable-next-line no-extend-native
+  Object.values = objectValues;
 }
