@@ -1,5 +1,5 @@
 import { createSelector, createStructuredSelector } from 'reselect';
-import objMap from 'object.map';
+import mapValues from 'just-map-values';
 import parseChatMarkup from 'u-wave-parse-chat-markup';
 
 import { getAvailableGroupMentions } from '../utils/chatMentions';
@@ -50,7 +50,7 @@ const mutesSelector = createSelector(baseSelector, chat => chat.mutedUsers);
 
 export const muteTimeoutsSelector = createSelector(
   mutesSelector,
-  mutes => objMap(mutes, mute => mute.expirationTimer),
+  mutes => mapValues(mutes, mute => mute.expirationTimer),
 );
 
 export const mutedUserIDsSelector = createSelector(

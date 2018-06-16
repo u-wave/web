@@ -1,7 +1,7 @@
 import except from 'except';
 import escapeStringRegExp from 'escape-string-regexp';
 import indexBy from 'index-by';
-import mapObj from 'object.map';
+import mapValues from 'just-map-values';
 
 import {
   INIT_STATE,
@@ -45,7 +45,7 @@ const initialState = {
 };
 
 function deselectAll(playlists) {
-  return mapObj(playlists, playlist => (
+  return mapValues(playlists, playlist => (
     playlist.selected
       ? { ...playlist, selected: false }
       : playlist
@@ -201,7 +201,7 @@ export default function reduce(state = initialState, action = {}) {
       return {
         ...state,
         // set `active` property on all playlists
-        playlists: mapObj(state.playlists, playlist => ({
+        playlists: mapValues(state.playlists, playlist => ({
           ...playlist,
           loading: playlist._id === payload.playlistID ? false : playlist.loading,
           active: playlist._id === payload.playlistID,
@@ -212,7 +212,7 @@ export default function reduce(state = initialState, action = {}) {
       return {
         ...state,
         // set `selected` property on playlists
-        playlists: mapObj(state.playlists, playlist => ({
+        playlists: mapValues(state.playlists, playlist => ({
           ...playlist,
           selected: playlist._id === payload.playlistID,
         })),
@@ -233,7 +233,7 @@ export default function reduce(state = initialState, action = {}) {
 
       return {
         ...state,
-        playlists: mapObj(state.playlists, playlist => ({
+        playlists: mapValues(state.playlists, playlist => ({
           ...playlist,
           selected: playlist.active,
         })),
