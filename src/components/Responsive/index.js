@@ -1,5 +1,5 @@
-import Responsive from 'react-responsive';
+import MediaQuery from '@u-wave/react-mq';
 import withProps from 'recompose/withProps';
 
-export const Mobile = withProps({ maxWidth: 767 })(Responsive);
-export const Desktop = withProps({ minWidth: 768 })(Responsive);
+export const Mobile = withProps({ query: '(max-width: 767px)' })(MediaQuery);
+export const Desktop = withProps({ query: '(min-width: 768px)' })(MediaQuery);
