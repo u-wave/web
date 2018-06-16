@@ -10,6 +10,7 @@ const enhance = translate();
 const ScrollNotice = ({ t, show, onClick }) => (
   <div className={cx('ChatMessages-scrollDown', show && 'is-visible')}>
     <Button
+      tabIndex={show ? 0 : -1}
       className="ChatMessages-scrollDownButton"
       variant="fab"
       mini
