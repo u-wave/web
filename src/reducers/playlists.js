@@ -1,4 +1,3 @@
-import assign from 'object-assign';
 import except from 'except';
 import escapeStringRegExp from 'escape-string-regexp';
 import indexBy from 'index-by';
@@ -321,7 +320,7 @@ export default function reduce(state = initialState, action = {}) {
       };
       return {
         ...state,
-        playlists: assign(
+        playlists: Object.assign(
           deselectAll(state.playlists),
           { [meta.tempId]: newPlaylist },
         ),
@@ -338,7 +337,7 @@ export default function reduce(state = initialState, action = {}) {
 
       return {
         ...state,
-        playlists: assign(
+        playlists: Object.assign(
           deselectAll(except(state.playlists, `${meta.tempId}`)),
           {
             [payload.playlist._id]: {
