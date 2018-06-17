@@ -2,6 +2,8 @@
   "extends": "airbnb",
   "parser": "babel-eslint",
 
+  "plugins": ["compat"],
+
   "rules": {
     "new-cap": [ "error", {
       "capIsNewExceptions": [ "DragDropContext", "DragSource", "DropTarget", "DragLayer", "ThemeDecorator" ]
@@ -11,6 +13,11 @@
     "react/jsx-filename-extension": "off",
     "react/no-unused-prop-types": ["error", { "skipShapeProps": true }],
     "react/forbid-prop-types": "off",
-    "react/require-default-props": "off"
+    "react/require-default-props": "off",
+    "compat/compat": "error"
+  },
+
+  "settings": {
+    "polyfills": ["promises", "fetch"]
   }
 }
