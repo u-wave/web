@@ -1,6 +1,5 @@
 import { createSelector } from 'reselect';
 import naturalCmp from 'natural-compare';
-import values from 'object-values';
 
 const byName = (a, b) => naturalCmp(a.name.toLowerCase(), b.name.toLowerCase());
 
@@ -8,7 +7,7 @@ const baseSelector = state => state.playlists;
 
 export const playlistsSelector = createSelector(
   baseSelector,
-  playlists => values(playlists.playlists).sort(byName),
+  playlists => Object.values(playlists.playlists).sort(byName),
 );
 
 export const playlistItemsSelector = createSelector(

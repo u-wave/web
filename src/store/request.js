@@ -1,4 +1,3 @@
-import assign from 'object-assign';
 import qsStringify from 'qs-stringify';
 import { REQUEST_START } from '../constants/ActionTypes';
 import {
@@ -30,7 +29,7 @@ function rejectNonOK(response) {
         throw new Error('An unknown error occurred.');
       }
       const { errors } = res;
-      const error = assign(new Error(errors.map(err => err.title).join(', ')), {
+      const error = Object.assign(new Error(errors.map(err => err.title).join(', ')), {
         response,
         errors,
       });

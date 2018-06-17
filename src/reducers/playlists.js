@@ -1,9 +1,7 @@
-import assign from 'object-assign';
 import except from 'except';
 import escapeStringRegExp from 'escape-string-regexp';
-import findIndex from 'array-findindex';
 import indexBy from 'index-by';
-import mapObj from 'object.map';
+import mapValues from 'just-map-values';
 
 import {
   INIT_STATE,
@@ -47,7 +45,7 @@ const initialState = {
 };
 
 function deselectAll(playlists) {
-  return mapObj(playlists, playlist => (
+  return mapValues(playlists, playlist => (
     playlist.selected
       ? { ...playlist, selected: false }
       : playlist
@@ -61,7 +59,7 @@ function processInsert(list, insert, position) {
   } else if (position.at === 'start') {
     insertIdx = 0;
   } else if (position.after != null && position.after !== -1) {
-    insertIdx = findIndex(list, media => media !== null && media._id === position.after) + 1;
+    insertIdx = list.findIndex(media => media !== null && media._id === position.after) + 1;
   }
   return [
     ...list.slice(0, insertIdx),
@@ -203,7 +201,7 @@ export default function reduce(state = initialState, action = {}) {
       return {
         ...state,
         // set `active` property on all playlists
-        playlists: mapObj(state.playlists, playlist => ({
+        playlists: mapValues(state.playlists, playlist => ({
           ...playlist,
           loading: playlist._id === payload.playlistID ? false : playlist.loading,
           active: playlist._id === payload.playlistID,
@@ -214,7 +212,7 @@ export default function reduce(state = initialState, action = {}) {
       return {
         ...state,
         // set `selected` property on playlists
-        playlists: mapObj(state.playlists, playlist => ({
+        playlists: mapValues(state.playlists, playlist => ({
           ...playlist,
           selected: playlist._id === payload.playlistID,
         })),
@@ -235,7 +233,7 @@ export default function reduce(state = initialState, action = {}) {
 
       return {
         ...state,
-        playlists: mapObj(state.playlists, playlist => ({
+        playlists: mapValues(state.playlists, playlist => ({
           ...playlist,
           selected: playlist.active,
         })),
@@ -322,7 +320,7 @@ export default function reduce(state = initialState, action = {}) {
       };
       return {
         ...state,
-        playlists: assign(
+        playlists: Object.assign(
           deselectAll(state.playlists),
           { [meta.tempId]: newPlaylist },
         ),
@@ -339,7 +337,7 @@ export default function reduce(state = initialState, action = {}) {
 
       return {
         ...state,
-        playlists: assign(
+        playlists: Object.assign(
           deselectAll(except(state.playlists, `${meta.tempId}`)),
           {
             [payload.playlist._id]: {

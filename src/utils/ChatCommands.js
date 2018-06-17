@@ -1,4 +1,3 @@
-import find from 'array-find';
 import createDebug from 'debug';
 
 const debug = createDebug('uwave:chat-commands');
@@ -32,5 +31,5 @@ export function execute(state, name, args = []) {
 // Helper to consistently find online users in command handlers.
 export function findUser(users, username) {
   const lname = username.toLowerCase();
-  return find(users, o => o.username.toLowerCase() === lname);
+  return users.find(o => o.username.toLowerCase() === lname);
 }

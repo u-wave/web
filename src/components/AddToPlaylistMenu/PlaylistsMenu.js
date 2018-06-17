@@ -1,4 +1,3 @@
-import find from 'array-find';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
@@ -28,7 +27,7 @@ class PlaylistsMenu extends React.Component {
 
   handleSelect = (e, playlistID) => {
     this.props.onClose();
-    this.props.onSelect(find(this.props.playlists, pl => pl._id === playlistID));
+    this.props.onSelect(this.props.playlists.find(pl => pl._id === playlistID));
   };
 
   render() {

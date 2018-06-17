@@ -1,11 +1,10 @@
-import assign from 'object-assign';
 import React from 'react';
 import PropTypes from 'prop-types';
 import ListIcon from '@material-ui/icons/List';
 import transformStyle from '../../utils/transformStyle';
 
 const getItemStyles = offset => (
-  offset ? assign(
+  offset ? Object.assign(
     { display: 'inline-block' },
     transformStyle(`translate(${offset.x}px, ${offset.y}px)`),
   ) : { display: 'none' }

@@ -1,4 +1,3 @@
-import assign from 'object-assign';
 import { createSelector } from 'reselect';
 import { reCaptchaSiteKeySelector } from './configSelectors';
 import { volumeSelector } from './settingSelectors';
@@ -13,7 +12,7 @@ export const loginDialogSelector = createSelector(
   authErrorSelector,
   reCaptchaSiteKeySelector,
   supportsSocialAuthSelector,
-  (dialogs, error, siteKey, supportsSocialAuth) => assign(merge(dialogs.login), {
+  (dialogs, error, siteKey, supportsSocialAuth) => Object.assign(merge(dialogs.login), {
     error,
     useReCaptcha: !!siteKey,
     reCaptchaSiteKey: siteKey || null,

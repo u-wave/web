@@ -1,6 +1,5 @@
 import { createSelector } from 'reselect';
 import naturalCmp from 'natural-compare';
-import values from 'object-values';
 import { rolesSelector } from './configSelectors';
 
 const authSelector = state => state.auth;
@@ -74,7 +73,7 @@ export const userListSelector = createSelector(
   superUserRoleSelector,
   usersSelector,
   (roles, superuserRole, users) =>
-    values(users).sort(compareUsers(roles, superuserRole)),
+    Object.values(users).sort(compareUsers(roles, superuserRole)),
 );
 
 export const userCountSelector = createSelector(
