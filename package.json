@@ -19,7 +19,7 @@
     "@material-ui/icons": "^1.1.0",
     "@material-ui/lab": "^1.0.0-alpha.4",
     "@u-wave/react-mq": "^1.0.0",
-    "@u-wave/react-server-list": "^2.0.0",
+    "@u-wave/react-server-list": "^2.0.1",
     "@u-wave/react-youtube": "^0.6.0",
     "array-find": "^1.0.0",
     "array-findindex": "^0.1.0",
