@@ -190,7 +190,7 @@ The üWave web client is licensed under the [MIT][] license.
 The default [mention sound file][] comes from a [Sonics.io][] pack and is under
 the [Sonics.io License][] (archive link).
 
-[üWave]: https://u-wave.github.io
+[üWave]: https://u-wave.net
 [u-wave-core]: https://github.com/u-wave/core
 [u-wave-http-api]: https://github.com/u-wave/http-api
 [u-wave-web-emojione]: https://github.com/u-wave/u-wave-web-emojione

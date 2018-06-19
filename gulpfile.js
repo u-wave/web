@@ -1,7 +1,9 @@
 /* eslint-disable global-require */
 const gulp = require('gulp');
+const { promisify } = require('util');
 const webpack = require('webpack');
 const rimraf = require('rimraf');
+const writeFile = promisify(require('fs').writeFile);
 const env = require('./tasks/env');
 const js = require('./tasks/js');
 const serve = require('./tasks/serve');
@@ -45,10 +47,34 @@ function prod(done) {
   });
 }
 
-function middleware() {
+function copyMiddleware() {
   return gulp.src('lib/middleware/**')
     .pipe(gulp.dest('dist/middleware'));
 }
+
+function copyMiddlewareMeta() {
+  return gulp.src('./LICENSE')
+    .pipe(gulp.dest('dist/'));
+}
+
+async function updateMiddlewarePackageJson() {
+  const middlewarePkg = require('./dist/package.json');
+  const pkg = require('./package.json');
+
+  // Sync versions.
+  middlewarePkg.version = pkg.version;
+  Object.keys(middlewarePkg.dependencies).forEach((name) => {
+    middlewarePkg.dependencies[name] = pkg.dependencies[name];
+  });
+
+  await writeFile('./dist/package.json', JSON.stringify(middlewarePkg, null, 2));
+}
+
+const middleware = gulp.parallel(
+  copyMiddleware,
+  copyMiddlewareMeta,
+  updateMiddlewarePackageJson,
+);
 
 module.exports = {
   setWatching,
