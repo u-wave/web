@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.9.2 / 19 Jun 2018
+Bugfixes:
+ * Use global polyfills for new runtime features. (#1009)
+ * Switch from react-responsive to @u-wave/react-mq.
+
+Internal:
+ * Add eslint-plugin-compat. (#1010)
+ * Rename HeaderHistoryButton → HistoryButton. (#992)
+ * Update deependencies.
+
 ## 1.9.1 / 12 Jun 2018
 Bugfixes:
  * Add a label to the volume mute/unmute button. (#988)
