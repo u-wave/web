@@ -67,7 +67,7 @@ async function updateMiddlewarePackageJson() {
     middlewarePkg.dependencies[name] = pkg.dependencies[name];
   });
 
-  await writeFile('./dist/package.json', JSON.stringify(middlewarePkg, null, 2));
+  await writeFile('./dist/package.json', `${JSON.stringify(middlewarePkg, null, 2)}\n`);
 }
 
 const middleware = gulp.parallel(
