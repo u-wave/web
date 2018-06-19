@@ -25,16 +25,23 @@ module.exports = (api, envOverride) => {
         targets,
         shippedProposals: true,
       }],
-      '@babel/preset-react'
+      '@babel/preset-react',
     ],
     plugins: [
       '@babel/plugin-syntax-dynamic-import',
       '@babel/plugin-proposal-export-default-from',
       '@babel/plugin-proposal-export-namespace-from',
       ['@babel/plugin-proposal-class-properties', { loose }],
-      ['@babel/plugin-transform-runtime', { corejs: false }]
-    ]
+    ],
   };
+
+  if (env !== 'middleware') {
+    preset.plugins.push(
+      ['@babel/plugin-transform-runtime', {
+        corejs: false,
+      }],
+    );
+  }
 
   if (env === 'development') {
     preset.plugins.push('module:react-hot-loader/babel');
@@ -44,7 +51,7 @@ module.exports = (api, envOverride) => {
     preset.plugins.push(
       '@babel/plugin-transform-react-constant-elements',
       '@babel/plugin-transform-react-inline-elements',
-      ['transform-react-remove-prop-types', { mode: 'wrap' }]
+      ['transform-react-remove-prop-types', { mode: 'wrap' }],
     );
   }
 

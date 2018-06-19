@@ -11,7 +11,6 @@
     "npm": ">= 3"
   },
   "dependencies": {
-    "@babel/runtime": "7.0.0-beta.51",
     "connect-gzip-static": "^2.1.1",
     "hstream": "^1.2.0",
     "http-gzip-maybe": "^1.0.0",
