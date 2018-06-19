@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.9.3 / 19 Jun 2018
+Bugfixes:
+ * Pin react-list to v0.8.9 to fix react-list-lazy-load incompatibility.
+
 ## 1.9.2 / 19 Jun 2018
 Bugfixes:
  * Use global polyfills for new runtime features. (#1009)
