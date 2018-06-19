@@ -8,9 +8,11 @@ module.exports = (api, envOverride) => {
   const targets = {};
   if (env === 'middleware') {
     targets.node = '8.9';
+    targets.browsers = '';
   }
   if (env === 'testing') {
     targets.node = 'current';
+    targets.browsers = '';
   }
 
   const loose = env === 'middleware' || env === 'production';
