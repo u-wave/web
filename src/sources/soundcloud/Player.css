@@ -32,7 +32,7 @@
 }
 
 .src-soundcloud-Player-meta {
-  background: color(var(--background-color) alpha(* 20%));
+  background: var(--soundcloud-meta-background);
   position: relative;
   padding: var(--sc-margins);
   z-index: 3;

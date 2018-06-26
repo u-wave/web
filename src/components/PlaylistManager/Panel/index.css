@@ -5,7 +5,7 @@
 @import "./PlaylistItemRow.css";
 
 .PlaylistPanel {
-  background: color(var(--background-color) alpha(* 96%));
+  background: var(--overlay-background);
   height: 100%;
   width: 100%;
 }

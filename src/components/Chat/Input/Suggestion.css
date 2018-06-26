@@ -2,6 +2,6 @@
 
 .SuggestionItem {
   &:hover, &.is-focused {
-    background-color: color(var(--text-color) a(* 10%));
+    background-color: var(--chat-suggestion-selected);
   }
 }

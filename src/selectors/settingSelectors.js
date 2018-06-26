@@ -1,7 +1,7 @@
 /* global window */
 import { createSelector } from 'reselect';
-import { createMuiTheme } from '@material-ui/core/styles';
 import { availableLanguages } from '../locale';
+import createTheme from '../utils/createTheme';
 
 function getAvailableLanguage(languages) {
   return languages.find(lang => (
@@ -23,7 +23,7 @@ const settingsBaseSelector = state => state.settings;
 
 export const themeSelector = createSelector(
   state => state.theme,
-  base => createMuiTheme(base),
+  base => createTheme(base),
 );
 
 export const volumeSelector = createSelector(
