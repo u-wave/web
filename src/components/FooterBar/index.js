@@ -2,7 +2,8 @@ import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
-
+import Button from '@material-ui/core/Button';
+import SettingsButton from './SettingsButton';
 import NextMedia from './NextMedia';
 import UserInfo from './UserInfo';
 import SkipButton from './SkipButton';
@@ -141,21 +142,26 @@ class FooterBar extends React.Component {
     }
     return (
       <div className={className}>
-        <button
+        <SettingsButton onClick={toggleSettings} />
+        <div className="FooterBar-guest">
+          {t('login.message')}
+        </div>
+        <Button
+          variant="raised"
+          color="primary"
           className="FooterAuthButton FooterAuthButton--login"
           onClick={openLoginDialog}
         >
           {t('login.login').toUpperCase()}
-        </button>
-        <button
+        </Button>
+        <Button
+          variant="raised"
+          color="primary"
           className="FooterAuthButton FooterAuthButton--register"
           onClick={openRegisterDialog}
         >
           {t('login.register').toUpperCase()}
-        </button>
-        <div className="FooterBar-guest">
-          You have to log in if you want to play!
-        </div>
+        </Button>
       </div>
     );
   }

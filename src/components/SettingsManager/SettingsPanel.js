@@ -93,8 +93,12 @@ class SettingsPanel extends React.Component {
           </FormGroup>
           <hr className="SettingsPanel-divider" />
           <Links />
-          <hr className="SettingsPanel-divider" />
-          <LogoutButton onLogout={onLogout} />
+          {user && (
+            <React.Fragment>
+              <hr className="SettingsPanel-divider" />
+              <LogoutButton onLogout={onLogout} />
+            </React.Fragment>
+          )}
         </div>
         <div className="SettingsPanel-column SettingsPanel-column--right">
           <NotificationSettings
