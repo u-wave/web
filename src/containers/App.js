@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import nest from 'recompose/nest';
 import { connect } from 'react-redux';
@@ -60,14 +61,31 @@ class AppContainer extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.applyThemeProperties();
+  }
+
   componentDidUpdate(prevProps) {
     if (this.props.language !== prevProps.language) {
       this.props.locale.changeLanguage(this.props.language);
+    }
+
+    if (this.props.theme !== prevProps.theme) {
+      this.applyThemeProperties();
     }
   }
 
   componentDidCatch(error) {
     this.setState({ error });
+  }
+
+  applyThemeProperties() {
+    const { theme } = this.props;
+    const root = ReactDOM.findDOMNode(this); // eslint-disable-line react/no-find-dom-node
+
+    Object.keys(theme.cssProperties).forEach((prop) => {
+      root.style.setProperty(prop, theme.cssProperties[prop]);
+    });
   }
 
   renderApp = () => (
