@@ -40,7 +40,7 @@
   transition: margin-top 140ms ease-in;
   margin: auto;
   margin-top: 55px;
-  @nest .ChatMessages-scrollDown.is-visible &, &:focus {
+  @nest .ChatMessages-scrollDown.is-visible & {
     transition: margin-top 140ms ease-out;
     margin-top: 0;
   }
