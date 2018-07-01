@@ -11,7 +11,9 @@ module.exports = (options) => {
         features: {
           // Force enable custom properties so they can be used in color()
           // function calls even if the target browser does not support them.
-          customProperties: true,
+          customProperties: {
+            preserve: true,
+          },
         },
       },
       cssnano: env === 'production' && {

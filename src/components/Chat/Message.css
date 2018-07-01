@@ -33,7 +33,7 @@
 }
 
 .ChatMessage-timestamp {
-  color: color(var(--text-color) blend(#777777 33%));
+  color: var(--chat-timestamp-text-color);
 }
 
 .ChatMessage-avatar {

@@ -1,5 +1,28 @@
 import { createMuiTheme } from '@material-ui/core/styles';
-import { fade } from '@material-ui/core/styles/colorManipulator';
+import { fade, decomposeColor, recomposeColor } from '@material-ui/core/styles/colorManipulator';
+
+const AVERAGE_COLOR = 'rgb(127, 127, 127)';
+
+// Taken from the color module:
+// https://github.com/Qix-/color/blob/99266cebff6d898fc6a783a483812e322b03d5fa/index.js#L366
+// Without the alpha stuff
+function blend(a, b, weight) {
+  const aColor = decomposeColor(a);
+  const bColor = decomposeColor(b);
+
+  const w = (2 * weight) - 1;
+  const w1 = (w + 1) / 2.0;
+  const w2 = 1 - w1;
+
+  const values = [
+    (w1 * aColor.values[0]) + (w2 * bColor.values[0]),
+    (w1 * aColor.values[1]) + (w2 * bColor.values[1]),
+    (w1 * aColor.values[2]) + (w2 * bColor.values[2]),
+    aColor.values[3] || 1,
+  ];
+
+  return recomposeColor({ type: 'rgba', values });
+}
 
 export default function createTheme(base) {
   const muiTheme = createMuiTheme(base);
@@ -47,6 +70,9 @@ export default function createTheme(base) {
       '--overlay-background': fade(uwave.background, 0.96),
       '--chat-suggestion-selected': fade('#fff', 0.1),
       '--soundcloud-meta-background': fade(uwave.background, 0.3),
+      '--waitlist-locked-text-color': fade(palette.text.primary, 0.7),
+      '--selected-media-row-color': fade(palette.primary.main, 0.7),
+      '--chat-timestamp-text-color': blend(palette.text.primary, AVERAGE_COLOR, 0.7),
     },
   };
 }

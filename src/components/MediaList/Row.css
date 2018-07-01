@@ -11,7 +11,7 @@
   }
 
   &.is-selected {
-    background: color(var(--highlight-color) alpha(* 70%));
+    background: var(--selected-media-row-color);
   }
 }
 

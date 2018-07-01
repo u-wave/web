@@ -25,7 +25,7 @@
 
 .WaitlistButton--locked {
   width: 140px;
-  color: color(var(--text-color) alpha(* 70%));
+  color: var(--waitlist-locked-text-color);
 }
 
 .WaitlistButton-icon {
