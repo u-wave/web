@@ -17,11 +17,12 @@ const Header = ({
     <div className="OverlayHeader-content">
       {children}
     </div>
-    <CloseButton
-      direction={direction}
-      className="OverlayHeader-close"
-      onClose={onCloseOverlay}
-    />
+    <div className="OverlayHeader-close">
+      <CloseButton
+        direction={direction}
+        onClose={onCloseOverlay}
+      />
+    </div>
   </div>
 );
 
