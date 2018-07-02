@@ -49,6 +49,8 @@
   height: 100%;
   padding-right: 0.5rem;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
 }
 
 .FooterBar-join {
