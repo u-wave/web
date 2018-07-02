@@ -10,7 +10,6 @@
   display: flex;
   justify-content: space-between;
   z-index: 20; /* on top of overlays */
-  border-top: 1px solid var(--chat-border-color);
   background: var(--background-color);
 }
 

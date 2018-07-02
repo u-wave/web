@@ -4,7 +4,6 @@
 
 .ChatInputWrapper {
   background: var(--chat-background-color);
-  border-top: 1px solid var(--chat-border-color);
 }
 
 .ChatInput {
