@@ -1,11 +1,9 @@
 @import "../../../vars.css";
 
-.ResponseButton-wrap {
-  height: 100%;
-}
-
 .ResponseButton {
   height: 100%;
+  display: flex;
+  align-items: center;
   border: 0;
   background: none;
   flex-grow: 0.334;
@@ -28,6 +26,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 48px;
   padding: 0 15px;
   position: relative;
 }
