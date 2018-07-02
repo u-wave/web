@@ -32,6 +32,7 @@
 
 .OverlayHeader-close {
   height: 100%;
+  width: var(--overlay-header-close-size);
   float: left;
   display: flex;
   align-items: center;
