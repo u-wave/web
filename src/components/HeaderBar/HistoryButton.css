@@ -1,6 +1,4 @@
 .HistoryButton {
   /* above the progress bar, video backdrop, etc. */
   z-index: 7;
-  height: 100%;
-  width: 100%;
 }

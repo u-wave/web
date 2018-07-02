@@ -19,13 +19,15 @@
 .HeaderBar-volume {
   top: 0;
   flex-shrink: 0;
+  padding-right: 12px;
 }
 
 .HeaderBar-history {
-  width: var(--header-height);
-  height: var(--header-height);
   flex-shrink: 0;
-  background: #111;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-right: 6px;
 }
 
 .HeaderBar-nowPlaying {
