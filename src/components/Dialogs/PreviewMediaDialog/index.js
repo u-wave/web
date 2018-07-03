@@ -1,11 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import PreviewPlayer from '../../Video/Player';
-
-const TITLE = 'preview-media-title';
 
 function getTitle(media) {
   return `${media.artist} – ${media.title}`;
@@ -29,11 +26,8 @@ const PreviewMediaDialog = ({
     onClose={onCloseDialog}
     disableEnforceFocus
     maxWidth={false}
-    aria-labelledby={TITLE}
+    aria-label={open ? getTitle(media) : null}
   >
-    <DialogTitle id={TITLE} className="Dialog-title">
-      {open ? getTitle(media) : 'Preview Media'}
-    </DialogTitle>
     <DialogContent className="Dialog-body PreviewMediaDialog-content">
       {open && (
         <PreviewPlayer
