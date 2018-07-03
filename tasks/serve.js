@@ -100,6 +100,7 @@ function serve(done) {
 
   if (watch) {
     Object.keys(wpConfig.entry).forEach((chunk) => {
+      if (chunk === 'polyfills') return;
       const entry = wpConfig.entry[chunk];
       wpConfig.entry[chunk] = addHotReloadingClient(entry);
     });
