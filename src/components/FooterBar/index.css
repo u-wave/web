@@ -34,6 +34,11 @@
   flex-grow: 1;
   height: 100%;
   overflow: hidden;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--background-hover-color);
+  }
 }
 
 .FooterBar-responses {
