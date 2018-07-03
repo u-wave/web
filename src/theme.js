@@ -13,4 +13,13 @@ export default {
   typography: {
     fontFamily: '"Open Sans", Roboto, Arial, sans-serif',
   },
+  overrides: {
+    MuiIconButton: {
+      root: {
+        '&:hover': {
+          backgroundColor: 'transparent',
+        },
+      },
+    },
+  },
 };

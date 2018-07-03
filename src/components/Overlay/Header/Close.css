@@ -1,6 +1,4 @@
 @import "../../../vars.css";
 
 .OverlayHeaderClose {
-  width: var(--overlay-header-close-size);
-  height: var(--overlay-header-close-size);
 }

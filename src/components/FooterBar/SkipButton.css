@@ -2,7 +2,6 @@
 
 .SkipButton {
   color: var(--text-color);
-  height: 100%;
 }
 
 .SkipButton.is-loading {
@@ -16,6 +15,8 @@
 }
 
 .SkipButton-loader {
-  width: 100%;
-  height: 100%;
+  /* IconButton size */
+  /* TODO take this from the material-ui theme instead */
+  width: 48px;
+  height: 48px;
 }
