@@ -11,7 +11,8 @@
   height: 32px;
   display: flex;
   align-items: center;
-  margin: 10px 10px 10px 10px;
+  margin-left: 10px;
+  margin-right: 10px;
   font-size: 0;
   flex-grow: 2;
 }
