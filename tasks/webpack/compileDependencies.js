@@ -2,6 +2,7 @@
 const es2015Deps = [
   /format-duration/,
   /object-values/,
+  /p-finally/,
   /@material-ui\/core\/es/,
   /@material-ui\/icons\/es/,
 ];
