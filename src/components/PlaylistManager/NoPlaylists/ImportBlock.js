@@ -1,14 +1,8 @@
-import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
-import compose from 'recompose/compose';
 import { connect } from 'react-redux';
-import { useTranslator } from '@u-wave/react-translate';
-import PlaylistIcon from 'material-ui/svg-icons/av/playlist-add';
 import { useMediaSources } from '../../../context/MediaSourceContext';
-import PlaylistIcon from '@material-ui/icons/PlaylistAdd';
 import { showImportPanel, hideImportPanel } from '../../../actions/ImportActionCreators';
-import Button from '../../Form/Button';
 
 const enhance =  connect(() => ({}), {
   onShowImportPanel: showImportPanel,
@@ -45,31 +39,4 @@ ImportBlock.propTypes = {
   onHideImportPanel: PropTypes.func.isRequired,
 };
 
-const ImportBlockContainer = enhance(ImportBlock);
-
-function NoPlaylists({ className }) {
-  const { t } = useTranslator();
-
-  return (
-    <div className={cx('PlaylistPanel', 'PlaylistPanel--empty', className)}>
-      {t('playlists.noPlaylists')}
-
-      <div className="PlaylistPanel-create">
-        <div className="PlaylistPanel-button">
-          <PlaylistIcon
-            className="PlaylistPanel-emptyIcon"
-            style={{ width: 200, height: 200 }}
-          />
-          <Button>{t('dialogs.createPlaylist.action')}</Button>
-        </div>
-        <ImportBlockContainer />
-      </div>
-    </div>
-  );
-}
-
-NoPlaylists.propTypes = {
-  className: PropTypes.string,
-};
-
-export default NoPlaylists;
+export default enhance(ImportBlock);

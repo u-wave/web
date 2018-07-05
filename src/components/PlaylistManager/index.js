@@ -8,7 +8,7 @@ import PlaylistImport from '../../containers/PlaylistImportManager';
 import SearchResults from '../../containers/SearchResultsPanel';
 import SearchBar from '../../containers/MediaSearchBar';
 import PlaylistHeader from './Header';
-import NoPlaylists from './NoPlaylists';
+import NoPlaylists from './NoPlaylists/';
 
 const PlaylistManager = ({
   className,
