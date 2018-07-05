@@ -39,7 +39,6 @@ const PlaylistManager = ({
     // selected playlist changes.
     panel = <PlaylistPanel key={selectedPlaylist._id} />;
   } else {
-    panel = <NoPlaylists />;
     empty = true;
   }
 
@@ -53,10 +52,16 @@ const PlaylistManager = ({
       </PlaylistHeader>
 
       <OverlayContent>
-        <PlaylistMenu className="PlaylistManager-menu" />
-        <div className="PlaylistManager-panel">
-          {panel}
-        </div>
+        {empty ? (
+          <NoPlaylists />
+        ) : (
+          <React.Fragment>
+            <PlaylistMenu className="PlaylistManager-menu" />
+            <div className="PlaylistManager-panel">
+              {panel}
+            </div>
+          </React.Fragment>
+        )}
       </OverlayContent>
     </div>
   );

@@ -1,0 +1,46 @@
+@import "../../../vars.css";
+
+.NoPlaylists {
+  background: var(--background-color);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.NoPlaylists-header {
+  font-weight: bold;
+}
+
+.NoPlaylists-create {
+  margin-top: 16px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.NoPlaylists-icon {
+  color: rgba(255, 255, 255, 0.2);
+}
+
+.NoPlaylists-block,
+/* TODO make this .PlaylistImport-source thing configurable in the Import components */
+.NoPlaylists-create .PlaylistImport-source {
+  flex-grow: 1;
+  margin: 0 16px;
+  width: 320px;
+  max-width: 320px;
+}
+
+.NoPlaylists-create .PlaylistImport-source {
+  padding: 0; /* override */
+}
+
+.NoPlaylists-icon {
+  display: block;
+  width: 240px;
+  height: 240px;
+  margin: auto;
+}

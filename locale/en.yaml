@@ -94,6 +94,7 @@ uwave:
     delete: Delete Playlist
     deleteActive: The active playlist cannot be deleted.
     noPlaylists: You don't have a playlist yet!
+    noPlaylistsSub: Create a new one below, or import from YouTube.
     noPlaylistsCreate: You don't have a playlist yet! Click here to create one.
     empty: "This playlist is empty :("
     active: Active
