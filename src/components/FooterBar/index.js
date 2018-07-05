@@ -132,11 +132,13 @@ class FooterBar extends React.Component {
               />
             </div>
           )}
-          <WaitlistButton
-            isLocked={this.props.waitlistIsLocked}
-            userInWaitlist={userInWaitlist}
-            onClick={userInWaitlist ? this.handleLeaveWaitlist : this.handleJoinWaitlist}
-          />
+          <div className="FooterBar-join">
+            <WaitlistButton
+              isLocked={this.props.waitlistIsLocked}
+              userInWaitlist={userInWaitlist}
+              onClick={userInWaitlist ? this.handleLeaveWaitlist : this.handleJoinWaitlist}
+            />
+          </div>
         </div>
       );
     }
