@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { useTranslator } from '@u-wave/react-translate';
 import PlaylistIcon from 'material-ui/svg-icons/av/playlist-add';
 import { useMediaSources } from '../../../context/MediaSourceContext';
+import PlaylistIcon from '@material-ui/icons/PlaylistAdd';
 import { showImportPanel, hideImportPanel } from '../../../actions/ImportActionCreators';
 import Button from '../../Form/Button';
 
@@ -41,7 +42,7 @@ function ImportBlock({ onShowImportPanel, onHideImportPanel }) {
 
 ImportBlock.propTypes = {
   onShowImportPanel: PropTypes.func.isRequired,
-  onHideImportPanel: PropTypes.func.isRequired
+  onHideImportPanel: PropTypes.func.isRequired,
 };
 
 const ImportBlockContainer = enhance(ImportBlock);
@@ -59,7 +60,7 @@ function NoPlaylists({ className }) {
             className="PlaylistPanel-emptyIcon"
             style={{ width: 200, height: 200 }}
           />
-          <Button>Create</Button>
+          <Button>{t('dialogs.createPlaylist.action')}</Button>
         </div>
         <ImportBlockContainer />
       </div>
