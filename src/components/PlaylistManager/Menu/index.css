@@ -2,7 +2,7 @@
 @import "./Row.css";
 
 .PlaylistMenu {
-  background: color(var(--background-color) alpha(* 96%));
+  background: var(--overlay-background);
   height: 100%;
   overflow-y: auto;
 }

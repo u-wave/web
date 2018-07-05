@@ -1,4 +1,5 @@
 import Uwave from './Uwave';
+import experimentalThemePlugin from './experimentalThemePlugin';
 import youTubeSource from './sources/youtube';
 import soundCloudSource from './sources/soundcloud';
 
@@ -11,6 +12,9 @@ function readApplicationConfig() {
 }
 
 const uw = new Uwave(readApplicationConfig());
+
+// Add experimental theming API.
+uw.use(experimentalThemePlugin);
 
 // Configure the Media sources to be used by this üWave client instance.
 uw.source(youTubeSource());

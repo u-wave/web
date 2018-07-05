@@ -11,6 +11,7 @@ export * from './actionTypes/playlists';
 export * from './actionTypes/request';
 export * from './actionTypes/search';
 export * from './actionTypes/settings';
+export * from './actionTypes/theme';
 export * from './actionTypes/time';
 export * from './actionTypes/users';
 export * from './actionTypes/votes';

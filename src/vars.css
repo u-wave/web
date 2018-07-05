@@ -47,4 +47,14 @@
   /* Form colours & sizes */
   --forms-element-margin: 16px;
   --forms-textfield-size: 50px;
+
+  /* Misc computed */
+  /* We can't use color(var()) because var()s are preserved. Instead these values are hardcoded. */
+  /* In modern browsers with var() support, these values are defined in src/utils/createTheme.js. */
+  --selected-media-row-color: color(#9d2053 alpha(* 70%));
+  --chat-suggestion-selected: color(#fff  alpha(* 10%));
+  --overlay-background: color(#151515 alpha(* 96%));
+  --soundcloud-meta-background: color(#151515 alpha(* 30%));
+  --waitlist-locked-text-color: color(#fff alpha(* 70%));
+  --chat-timestamp-text-color: color(#fff blend(#777777 33%));
 }

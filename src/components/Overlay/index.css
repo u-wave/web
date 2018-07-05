@@ -40,7 +40,7 @@
 }
 
 .Overlay-loading {
-  background: color(var(--background-color) alpha(* 96%));
+  background: var(--overlay-background);
 }
 
 /* Animations!.. */

@@ -1,5 +1,6 @@
 import React from 'react';
 import Uwave from './Uwave';
+import experimentalThemePlugin from './experimentalThemePlugin';
 import youTubeSource from './sources/youtube';
 import soundCloudSource from './sources/soundcloud';
 
@@ -8,6 +9,9 @@ const uw = new Uwave({
   socketUrl: 'wss://u-wave-demo.now.sh',
   emoji: {},
 });
+
+// Add experimental theming API.
+uw.use(experimentalThemePlugin);
 
 // Configure the Media sources to be used by this üWave client instance.
 uw.source(youTubeSource());
