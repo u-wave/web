@@ -6,6 +6,7 @@ import PlaylistMenu from '../../containers/PlaylistManagerMenu';
 import PlaylistPanel from '../../containers/PlaylistManagerPanel';
 import PlaylistImport from '../../containers/PlaylistImportManager';
 import SearchResults from '../../containers/SearchResultsPanel';
+import SearchBar from '../../containers/MediaSearchBar';
 import PlaylistHeader from './Header';
 import NoPlaylists from './NoPlaylists';
 
@@ -17,6 +18,8 @@ const PlaylistManager = ({
   onCloseOverlay,
 }) => {
   let panel;
+  let empty = false;
+
   if (showImportPanel) {
     panel = (
       <div className="PlaylistPanel">
@@ -37,6 +40,7 @@ const PlaylistManager = ({
     panel = <PlaylistPanel key={selectedPlaylist._id} />;
   } else {
     panel = <NoPlaylists />;
+    empty = true;
   }
 
   return (
@@ -44,7 +48,9 @@ const PlaylistManager = ({
       <PlaylistHeader
         className="PlaylistManager-header AppRow AppRow--top"
         onCloseOverlay={onCloseOverlay}
-      />
+      >
+        {!empty && <SearchBar className="PlaylistManager-searchBar" />}
+      </PlaylistHeader>
 
       <OverlayContent>
         <PlaylistMenu className="PlaylistManager-menu" />
