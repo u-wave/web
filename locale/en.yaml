@@ -101,6 +101,9 @@ uwave:
     shuffle: Shuffle
     filter: Filter
     rename: Rename
+    playlist:
+      empty: This playlist is empty
+      emptySub: Search for songs or import a playlist.
     import:
       title: Import
     search:
