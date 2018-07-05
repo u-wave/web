@@ -19,8 +19,8 @@ const createEmbedUrl = sourceID =>
 const PreviewPlayer = ({ media }) => (
   <iframe
     title="SoundCloud Embed"
-    width="100%"
-    height="240"
+    width="640"
+    height="360"
     scrolling="no"
     frameBorder="no"
     src={createEmbedUrl(media.sourceID)}
