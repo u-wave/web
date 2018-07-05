@@ -7,7 +7,7 @@ import PlaylistPanel from '../../containers/PlaylistManagerPanel';
 import PlaylistImport from '../../containers/PlaylistImportManager';
 import SearchResults from '../../containers/SearchResultsPanel';
 import PlaylistHeader from './Header';
-import PlaylistPanelEmpty from './Panel/Empty';
+import NoPlaylists from './NoPlaylists';
 
 const PlaylistManager = ({
   className,
@@ -36,7 +36,7 @@ const PlaylistManager = ({
     // selected playlist changes.
     panel = <PlaylistPanel key={selectedPlaylist._id} />;
   } else {
-    panel = <PlaylistPanelEmpty />;
+    panel = <NoPlaylists />;
   }
 
   return (
