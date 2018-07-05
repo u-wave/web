@@ -18,10 +18,10 @@ const WaitlistButton = ({
     icon = (
       <LockedIcon
         className={cx(
-          'FooterBar-joinIcon',
+          'WaitlistButton-icon',
           // The user can still leave the waitlist, if it's locked,
           // but cannot join the waitlist.
-          !userInWaitlist && 'FooterBar-joinIcon--locked',
+          !userInWaitlist && 'WaitlistButton-icon--locked',
         )}
       />
     );
@@ -30,8 +30,8 @@ const WaitlistButton = ({
   return (
     <Button
       classes={{
-        root: 'FooterBar-join',
-        disabled: 'FooterBar-join--locked',
+        root: 'WaitlistButton',
+        disabled: 'WaitlistButton--locked',
       }}
       disabled={isLocked && !userInWaitlist}
       onClick={onClick}
