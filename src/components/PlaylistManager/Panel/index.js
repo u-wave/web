@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import MediaList from '../../MediaList';
 import PlaylistMeta from './Meta';
+import PlaylistEmpty from './PlaylistEmpty';
 import PlainItemRow from '../../MediaList/Row';
 import PlaylistItemRow from './PlaylistItemRow';
 import AddToPlaylistAction from '../../MediaList/Actions/AddToPlaylist';
@@ -75,6 +76,8 @@ const PlaylistPanel = (props) => {
         <CircularProgress size="100%" />
       </div>
     );
+  } else if (media.length === 0) {
+    list = <PlaylistEmpty />;
   } else {
     list = (
       <MediaList

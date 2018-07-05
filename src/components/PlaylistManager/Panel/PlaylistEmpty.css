@@ -1,0 +1,19 @@
+.PlaylistPanel-empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: calc(100% - 54px);
+  padding: 0 20%;
+}
+
+.PlaylistPanel-emptyIcon {
+  width: 240px;
+  height: 240px;
+  max-height: 50%;
+  color: rgba(255, 255, 255, 0.2);
+}
+
+.PlaylistPanel-emptyHeader {
+  font-weight: bold;
+}
