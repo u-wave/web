@@ -57,4 +57,7 @@
   --soundcloud-meta-background: color(#151515 alpha(* 30%));
   --waitlist-locked-text-color: color(#fff alpha(* 70%));
   --chat-timestamp-text-color: color(#fff blend(#777777 33%));
+
+  /* material-ui colours */
+  --divider-color: rgba(255, 255, 255, 0.12);
 }

@@ -73,6 +73,9 @@ export default function createTheme(base) {
       '--waitlist-locked-text-color': fade(palette.text.primary, 0.7),
       '--selected-media-row-color': fade(palette.primary.main, 0.7),
       '--chat-timestamp-text-color': blend(palette.text.primary, AVERAGE_COLOR, 0.7),
+
+      // Theme property colours
+      '--divider-color': palette.divider,
     },
   };
 }
