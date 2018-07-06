@@ -50,7 +50,6 @@ export default function createTheme(base) {
 
       // Chat colours
       '--chat-background-color': uwave.sidePanel.background,
-      '--chat-background-color2': uwave.sidePanel.alternate,
       '--chat-border-color': 'var(--footer-border-color)',
 
       // User related colours

@@ -3,7 +3,6 @@
 /* Message styles are still super hacky...
  * One day! */
 .ChatMessage {
-  background: var(--chat-background-color);
   min-height: 32px;
   position: relative;
 }
@@ -13,7 +12,7 @@
 }
 
 .ChatMessage-hover {
-  background: var(--chat-background-color);
+  background: var(--background-color);
   position: absolute;
   top: 0;
   right: 0;
