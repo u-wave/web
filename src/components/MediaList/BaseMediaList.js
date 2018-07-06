@@ -96,12 +96,11 @@ export default class BaseMediaList extends React.Component {
       );
     }
     const MediaRow = this.props.rowComponent;
-    const isAlternate = index % 2 === 0;
     return (
       <MediaRow
         key={media ? media._id : index}
         {...props}
-        className={cx('MediaList-row', isAlternate && 'MediaListRow--alternate')}
+        className="MediaList-row"
         media={media}
         selected={selected}
         selection={selection.get()}

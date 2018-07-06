@@ -68,7 +68,3 @@
 .MediaListRow:hover .MediaListRow-actions {
   display: block;
 }
-
-.MediaListRow--alternate {
-  background: var(--media-list-alternate-color);
-}
