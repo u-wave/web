@@ -49,6 +49,7 @@
   width: calc(50% - var(--media-list-spacing));
   margin-right: var(--media-list-spacing);
   overflow: hidden;
+  color: var(--secondary-text-color);
   text-overflow: ellipsis;
   white-space: nowrap;
 }

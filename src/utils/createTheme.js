@@ -33,6 +33,8 @@ export default function createTheme(base) {
     ...muiTheme,
     cssProperties: {
       '--text-color': palette.text.primary,
+      '--secondary-text-color': palette.text.secondary,
+      // TODO replace all occurences with secondary-text-color
       '--muted-text-color': palette.text.secondary,
       '--background-color': uwave.background,
       '--background-hover-color': uwave.backgroundHover,
@@ -40,6 +42,7 @@ export default function createTheme(base) {
       '--highbright-color': palette.primary.light,
       '--scrollbar-color': uwave.scrollbar,
       '--canvas-color': palette.background.paper,
+      '--divider-color': palette.divider,
 
       // Link colors
       '--link-color': uwave.link,
@@ -73,9 +76,6 @@ export default function createTheme(base) {
       '--waitlist-locked-text-color': fade(palette.text.primary, 0.7),
       '--selected-media-row-color': fade(palette.primary.main, 0.7),
       '--chat-timestamp-text-color': blend(palette.text.primary, AVERAGE_COLOR, 0.7),
-
-      // Theme property colours
-      '--divider-color': palette.divider,
     },
   };
 }
