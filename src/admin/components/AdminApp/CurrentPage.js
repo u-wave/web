@@ -6,6 +6,7 @@ const pages = {
   main: Main,
   users: React.lazy(() => import('../../containers/UsersList')),
   bans: React.lazy(() => import('../../containers/BansList')),
+  config: React.lazy(() => import('../../containers/ServerConfig')),
 };
 
 function CurrentPage({ page, ...props }) {
