@@ -27,6 +27,7 @@ export default {
       background: 'transparent',
       alternate: '#303036',
     },
+    mutedText: '#777',
   },
   overrides: {
     MuiIconButton: {

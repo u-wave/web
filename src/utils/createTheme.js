@@ -34,8 +34,8 @@ export default function createTheme(base) {
     cssProperties: {
       '--text-color': palette.text.primary,
       '--secondary-text-color': palette.text.secondary,
-      // TODO replace all occurences with secondary-text-color
-      '--muted-text-color': palette.text.secondary,
+      // TODO rename to hint-text-color? it's not always used as a hint text though…
+      '--muted-text-color': palette.text.hint,
       '--background-color': uwave.background,
       '--background-hover-color': uwave.backgroundHover,
       '--highlight-color': palette.primary.main,
