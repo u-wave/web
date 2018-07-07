@@ -4,6 +4,29 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.10.0 / 07 Jul 2018
+Features:
+ * Add settings button when signed out. (#974)
+ * Add a screen for empty playlists. (#1033, #1035)
+ * Use CSS variables for theming. (#1020)
+ * Remove title and padding from PreviewMediaDialog. (#1021)
+ * Make the playlist manager toggle more obviously a button. (#1026)
+ * Remove top border from footer bar. (#1023)
+ * Tweak user avatar size in the profile/settings button. (#1024)
+
+Bugfixes:
+ * Make chat ScrollDownNotice unfocusable when hidden. (#1014)
+ * Use consistent style and size for icon buttons. (#1025)
+ * Compile p-finally dependency for IE. (#1027)
+ * Tweak logo size. (#1029)
+ * Use the same size for the SoundCloud preview player as for YouTube. (#1030)
+ * Add margin to the waitlist button icon. (#1032)
+
+Internal:
+ * Share polyfills between different entry points. (#1028)
+ * Update dependencies.
+ * Remove explicit eslint-config-airbnb-base dependency.
+
 ## 1.9.3 / 19 Jun 2018
 Bugfixes:
  * Pin react-list to v0.8.9 to fix react-list-lazy-load incompatibility.
