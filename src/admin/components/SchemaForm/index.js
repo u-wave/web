@@ -83,15 +83,15 @@ export default class SchemaForm extends React.Component {
   };
 
   renderField(schema) {
-    const widgetName = schema['ui:widget'] || schema.type;
-    const renderer = renderers[widgetName];
+    const controlName = schema['uw:control'] || schema.type;
+    const renderer = renderers[controlName];
     if (renderer) {
       return renderer(schema, this.renderField.bind(this));
     }
     return (
       <p style={{ background: 'red', color: 'white'}}>
         Unknown:
-        {widgetName}
+        {controlName}
       </p>
     );
   }
