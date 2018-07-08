@@ -9,7 +9,7 @@ import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import SchemaForm from '../SchemaForm'; // eslint-disable-line
 
-const Section = ({ schema }) => (
+const Section = ({ schema, data, onSave }) => (
   <ExpansionPanel>
     <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
       <div>
@@ -20,7 +20,9 @@ const Section = ({ schema }) => (
     <ExpansionPanelDetails>
       <SchemaForm
         schema={schema}
+        defaultData={data}
         unwrapRoot={schema.type === 'object'}
+        onSave={onSave}
       />
     </ExpansionPanelDetails>
     <ExpansionPanelActions>
@@ -34,20 +36,33 @@ Section.propTypes = {
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
   }).isRequired,
+  data: PropTypes.any.isRequired,
+  onSave: PropTypes.func.isRequired,
 };
 
-function renderSections(allSchema) {
+function partial(fn, arg) {
+  return (...args) => fn(arg, ...args);
+}
+
+function renderSections(allSchema, allValues, onSave) {
   return Object.keys(allSchema.properties).map(key => (
-    <Section key={key} schema={allSchema.properties[key]} />
+    <Section
+      key={key}
+      schema={allSchema.properties[key]}
+      data={allValues[key]}
+      onSave={partial(onSave, key)}
+    />
   ));
 }
 
 const ServerConfig = ({
+  config,
   configSchema,
+  onSaveConfig,
 }) => (
   <div>
     {configSchema ? (
-      renderSections(configSchema)
+      renderSections(configSchema, config, onSaveConfig)
     ) : (
       <p>
         Loading
@@ -57,7 +72,9 @@ const ServerConfig = ({
 );
 
 ServerConfig.propTypes = {
+  config: PropTypes,
   configSchema: PropTypes.object,
+  onSaveConfig: PropTypes.func.isRequired,
 };
 
 export default ServerConfig;

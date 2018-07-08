@@ -3,22 +3,24 @@ import { connect } from 'react-redux';
 import compose from 'recompose/compose';
 import lifecycle from 'recompose/lifecycle';
 import ServerConfig from '../components/ServerConfig';
-import { loadConfigSchema } from '../actions/config';
-import { configSchemaSelector } from '../selectors/configSelectors';
+import { loadConfig, saveConfig } from '../actions/config';
+import { configSelector, configSchemaSelector } from '../selectors/configSelectors';
 
 const mapStateToProps = createStructuredSelector({
+  config: configSelector,
   configSchema: configSchemaSelector,
 });
 
 const mapDispatchToProps = {
-  onLoadSchema: loadConfigSchema,
+  onLoadConfig: loadConfig,
+  onSaveConfig: saveConfig,
 };
 
 const enhance = compose(
   connect(mapStateToProps, mapDispatchToProps),
   lifecycle({
     componentDidMount() {
-      this.props.onLoadSchema();
+      this.props.onLoadConfig();
     },
   }),
 );

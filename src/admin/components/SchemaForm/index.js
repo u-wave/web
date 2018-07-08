@@ -16,7 +16,7 @@ function renderObjectProperties(spec, renderChild) {
     const subSchema = spec.properties[key];
 
     return (
-      <FormGroup style={{ marginBottom: 24 }}>{renderChild(subSchema)}</FormGroup>
+      <FormGroup>{renderChild(subSchema)}</FormGroup>
     );
   });
 }
@@ -44,7 +44,7 @@ const renderers = {
   string(schema) {
     return (
       <React.Fragment>
-        <Typography>{schema.title}</Typography>
+        <Typography gutterBottom>{schema.title}</Typography>
         <TextField />
         {schema.description && <FormHelperText>{schema.description}</FormHelperText>}
       </React.Fragment>
@@ -53,7 +53,7 @@ const renderers = {
   number(schema) {
     return (
       <React.Fragment>
-        <Typography>{schema.title}</Typography>
+        <Typography gutterBottom>{schema.title}</Typography>
         <TextField type="number" />
         {schema.description && <FormHelperText>{schema.description}</FormHelperText>}
       </React.Fragment>
@@ -75,6 +75,8 @@ const renderers = {
 export default class SchemaForm extends React.Component {
   static propTypes = {
     schema: PropTypes.object.isRequired,
+    defaultData: PropTypes.object.isRequired,
+    onSave: PropTypes.func.isRequired,
     unwrapRoot: PropTypes.bool,
   };
 
@@ -97,7 +99,10 @@ export default class SchemaForm extends React.Component {
   }
 
   render() {
-    const { schema, unwrapRoot } = this.props;
+    const {
+      schema,
+      unwrapRoot,
+    } = this.props;
 
     const form = unwrapRoot
       ? renderObjectProperties(schema, this.renderField.bind(this))
