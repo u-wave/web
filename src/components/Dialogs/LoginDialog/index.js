@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/aria-proptypes */
 import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
