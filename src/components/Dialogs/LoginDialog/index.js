@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/aria-proptypes */
 import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -9,6 +10,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+import DialogCloseAnimation from '../../DialogCloseAnimation';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 import ResetPasswordForm from './ResetPasswordForm';
@@ -39,27 +41,31 @@ const LoginDialog = (props) => {
     form = <LoginForm {...props} />;
   }
   return (
-    <Dialog
-      classes={{
-        paper: cx('Dialog', 'LoginDialog', fullScreen && 'LoginDialog--mobile'),
-      }}
-      open={open}
-      fullScreen={fullScreen}
-      onClose={onCloseDialog}
-      aria-labelledby="uw-login-title"
-    >
-      <DialogTitle className="Dialog-title" id="uw-login-title">
-        {title}
-        {fullScreen && (
-          <IconButton className="Dialog-close" onClick={onCloseDialog}>
-            <CloseIcon />
-          </IconButton>
-        )}
-      </DialogTitle>
-      <DialogContent className="Dialog-body">
-        {form}
-      </DialogContent>
-    </Dialog>
+    <DialogCloseAnimation delay={450}>
+      {open ? (
+        <Dialog
+          classes={{
+            paper: cx('Dialog', 'LoginDialog', fullScreen && 'LoginDialog--mobile'),
+          }}
+          fullScreen={fullScreen}
+          onClose={onCloseDialog}
+          aria-labelledby="uw-login-title"
+          open
+        >
+          <DialogTitle className="Dialog-title" id="uw-login-title">
+            {title}
+            {fullScreen && (
+              <IconButton className="Dialog-close" onClick={onCloseDialog}>
+                <CloseIcon />
+              </IconButton>
+            )}
+          </DialogTitle>
+          <DialogContent className="Dialog-body">
+            {form}
+          </DialogContent>
+        </Dialog>
+      ) : null}
+    </DialogCloseAnimation>
   );
 };
 
