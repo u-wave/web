@@ -26,6 +26,8 @@ const parseDuration = str => str.split(':')
 
 const enhance = translate();
 
+const BASE_TAB_INDEX = 1000;
+
 class EditMediaDialog extends React.Component {
   static propTypes = {
     t: PropTypes.func.isRequired,
@@ -112,16 +114,10 @@ class EditMediaDialog extends React.Component {
     });
   };
 
-  render() {
+  renderForm() {
     const {
       t,
-      open,
       media,
-      onCloseDialog,
-
-      bodyClassName,
-      contentClassName,
-      titleClassName,
     } = this.props;
     const {
       errors,
@@ -130,11 +126,6 @@ class EditMediaDialog extends React.Component {
       start,
       end,
     } = this.state;
-    const baseTabIndex = 1000;
-
-    if (!open) {
-      return <DialogCloseAnimation delay={450} />;
-    }
 
     const artistInput = (
       <TextField
@@ -143,7 +134,7 @@ class EditMediaDialog extends React.Component {
         value={artist}
         onChange={this.handleChangeArtist}
         icon={<ArtistIcon nativeColor="#9f9d9e" />}
-        tabIndex={baseTabIndex}
+        tabIndex={BASE_TAB_INDEX}
         autoFocus
       />
     );
@@ -161,7 +152,7 @@ class EditMediaDialog extends React.Component {
         value={title}
         onChange={this.handleChangeTitle}
         icon={<TitleIcon nativeColor="#9f9d9e" />}
-        tabIndex={baseTabIndex + 1}
+        tabIndex={BASE_TAB_INDEX + 1}
       />
     );
 
@@ -179,7 +170,7 @@ class EditMediaDialog extends React.Component {
         value={start}
         onChange={this.handleChangeStart}
         icon={<StartIcon nativeColor="#9f9d9e" />}
-        tabIndex={baseTabIndex + 2}
+        tabIndex={BASE_TAB_INDEX + 2}
       />
     );
     const toLabel = (
@@ -196,11 +187,11 @@ class EditMediaDialog extends React.Component {
         value={end}
         onChange={this.handleChangeEnd}
         icon={<EndIcon nativeColor="#9f9d9e" />}
-        tabIndex={baseTabIndex + 3}
+        tabIndex={BASE_TAB_INDEX + 3}
       />
     );
 
-    const form = (
+    return (
       <Form onSubmit={this.handleSubmit}>
         {errors && errors.length > 0 && (
           <FormGroup>
@@ -243,24 +234,37 @@ class EditMediaDialog extends React.Component {
         </FormGroup>
       </Form>
     );
+  }
+
+  render() {
+    const {
+      t,
+      open,
+      onCloseDialog,
+      bodyClassName,
+      contentClassName,
+      titleClassName,
+    } = this.props;
 
     return (
       <DialogCloseAnimation delay={450}>
-        <Dialog
-          classes={{
-            paper: cx('Dialog', 'EditMediaDialog', contentClassName),
-          }}
-          open={open}
-          onClose={onCloseDialog}
-          aria-labelledby={this.title}
-        >
-          <DialogTitle id={this.title} className={cx('Dialog-title', titleClassName)}>
-            {t('dialogs.editMedia.title')}
-          </DialogTitle>
-          <DialogContent className={cx('Dialog-body', bodyClassName)}>
-            {form}
-          </DialogContent>
-        </Dialog>
+        {open ? (
+          <Dialog
+            classes={{
+              paper: cx('Dialog', 'EditMediaDialog', contentClassName),
+            }}
+            open={open}
+            onClose={onCloseDialog}
+            aria-labelledby={this.title}
+          >
+            <DialogTitle id={this.title} className={cx('Dialog-title', titleClassName)}>
+              {t('dialogs.editMedia.title')}
+            </DialogTitle>
+            <DialogContent className={cx('Dialog-body', bodyClassName)}>
+              {this.renderForm()}
+            </DialogContent>
+          </Dialog>
+        ) : null}
       </DialogCloseAnimation>
     );
   }
