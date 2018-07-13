@@ -112,6 +112,7 @@
     "cross-env": "^5.1.6",
     "css-loader": "^1.0.0",
     "cssnano": "^4.0.2",
+    "ejs": "^2.6.1",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "eslint": "^4.19.1",
