@@ -15,3 +15,7 @@
 .SongTitle--mediaRow {
   font-size: 1em;
 }
+
+.SongTitle-title {
+  color: var(--secondary-text-color);
+}

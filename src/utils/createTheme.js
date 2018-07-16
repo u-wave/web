@@ -33,13 +33,16 @@ export default function createTheme(base) {
     ...muiTheme,
     cssProperties: {
       '--text-color': palette.text.primary,
-      '--muted-text-color': palette.text.secondary,
+      '--secondary-text-color': palette.text.secondary,
+      // TODO rename to hint-text-color? it's not always used as a hint text though…
+      '--muted-text-color': palette.text.hint,
       '--background-color': uwave.background,
       '--background-hover-color': uwave.backgroundHover,
       '--highlight-color': palette.primary.main,
       '--highbright-color': palette.primary.light,
       '--scrollbar-color': uwave.scrollbar,
       '--canvas-color': palette.background.paper,
+      '--divider-color': palette.divider,
 
       // Link colors
       '--link-color': uwave.link,

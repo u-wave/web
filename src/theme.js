@@ -9,9 +9,6 @@ export default {
     background: {
       paper: '#303030',
     },
-    text: {
-      secondary: '#777',
-    },
   },
   typography: {
     fontFamily: '"Open Sans", Roboto, Arial, sans-serif',
@@ -30,6 +27,7 @@ export default {
       background: 'transparent',
       alternate: '#303036',
     },
+    mutedText: '#777',
   },
   overrides: {
     MuiIconButton: {
