@@ -15,8 +15,10 @@ const enhance = compose(
   userCardable(),
   withProps(props => ({
     onOpenCard(event) {
+      const { openUserCard, user } = props;
+
       event.preventDefault();
-      props.openUserCard(props.user);
+      openUserCard(user);
     },
   })),
 );

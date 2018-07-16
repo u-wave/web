@@ -13,6 +13,7 @@ const enhance = compose(
     colors,
     role,
     roles,
+    component,
     ...props
   }) => ({
     ...props,
@@ -21,7 +22,7 @@ const enhance = compose(
         role ? colors[role] : colors[roles.find(r => colors[r])]
       ) || colors.default,
     },
-    component: props.component || 'span',
+    component: component || 'span',
   })),
 );
 
