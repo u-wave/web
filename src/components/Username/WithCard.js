@@ -10,14 +10,16 @@ const enhance = compose(
   userCardable(),
   withProps(props => ({
     onUsernameClick(event) {
+      const { openUserCard, user } = props;
+
       event.preventDefault();
-      props.openUserCard(props.user);
+      openUserCard(user);
     },
   })),
 );
 
 const UsernameWithCard = ({ user, onUsernameClick }) => (
-  <button onClick={onUsernameClick}>
+  <button type="button" onClick={onUsernameClick}>
     <UsernameBase user={user} />
   </button>
 );

@@ -25,6 +25,13 @@ class UserCardWrapper extends React.Component {
     this.shouldFit = true;
   }
 
+  refContainer = (container) => {
+    this.container = container;
+    if (this.shouldFit && container) {
+      this.fitInsideWindow();
+    }
+  };
+
   fitInsideWindow() {
     if (!this.container) {
       return;
@@ -39,13 +46,6 @@ class UserCardWrapper extends React.Component {
       });
     }
   }
-
-  refContainer = (container) => {
-    this.container = container;
-    if (this.shouldFit && container) {
-      this.fitInsideWindow();
-    }
-  };
 
   render() {
     const {
