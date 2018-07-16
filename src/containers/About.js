@@ -9,16 +9,18 @@ export default class AboutContainer extends React.Component {
   };
 
   getAboutPageComponent() {
+    const { uwave } = this.context;
+
     if (this.hasAboutPageComponent()) {
-      const uw = this.context.uwave;
-      return uw.getAboutPageComponent();
+      return uwave.getAboutPageComponent();
     }
     return () => null;
   }
 
   hasAboutPageComponent() {
-    const uw = this.context.uwave;
-    return Boolean(uw && uw.getAboutPageComponent());
+    const { uwave } = this.context;
+
+    return Boolean(uwave && uwave.getAboutPageComponent());
   }
 
   render() {
