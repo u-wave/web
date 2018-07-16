@@ -14,7 +14,9 @@
     "react/no-unused-prop-types": ["error", { "skipShapeProps": true }],
     "react/forbid-prop-types": "off",
     "react/require-default-props": "off",
-    "compat/compat": "error"
+    "compat/compat": "error",
+    // Try to enable when the autofixer is fixed
+    "react/jsx-one-expression-per-line": "off"
   },
 
   "settings": {
