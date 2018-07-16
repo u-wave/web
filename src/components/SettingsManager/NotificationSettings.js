@@ -7,18 +7,18 @@ import Switch from '@material-ui/core/Switch';
 import LabeledControl from './LabeledControl';
 
 const enhance = compose(
-  withProps(props => ({
+  withProps(({ onSettingChange }) => ({
     onToggleUserJoin(e, value) {
-      props.onSettingChange('notifications.userJoin', value);
+      onSettingChange('notifications.userJoin', value);
     },
     onToggleUserLeave(e, value) {
-      props.onSettingChange('notifications.userLeave', value);
+      onSettingChange('notifications.userLeave', value);
     },
     onToggleUserNameChanged(e, value) {
-      props.onSettingChange('notifications.userNameChanged', value);
+      onSettingChange('notifications.userNameChanged', value);
     },
     onToggleSkip(e, value) {
-      props.onSettingChange('notifications.skip', value);
+      onSettingChange('notifications.skip', value);
     },
   })),
   translate(),

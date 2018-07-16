@@ -18,10 +18,6 @@ class LogoutButton extends React.Component {
     showDialog: false,
   };
 
-  closeDialog() {
-    this.setState({ showDialog: false });
-  }
-
   handleOpen = () => {
     this.setState({ showDialog: true });
   };
@@ -31,19 +27,27 @@ class LogoutButton extends React.Component {
   };
 
   handleConfirm = () => {
-    this.props.onLogout();
+    const { onLogout } = this.props;
+
+    onLogout();
     this.closeDialog();
+  };
+
+  closeDialog() {
+    this.setState({ showDialog: false });
   }
 
   render() {
     const { t } = this.props;
+    const { showDialog } = this.state;
+
     return (
       <React.Fragment>
         <Button className="LogoutButton" onClick={this.handleOpen}>
           <LogoutIcon className="LogoutButton-icon" />
           {t('settings.logout')}
         </Button>
-        {this.state.showDialog && (
+        {showDialog && (
           <ConfirmDialog
             title={t('dialogs.logout.title')}
             confirmLabel={t('dialogs.logout.action')}

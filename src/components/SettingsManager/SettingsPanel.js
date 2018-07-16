@@ -26,19 +26,23 @@ class SettingsPanel extends React.Component {
   };
 
   handleVideoEnabledChange = (e, value) => {
-    this.props.onSettingChange('videoEnabled', value);
+    const { onSettingChange } = this.props;
+    onSettingChange('videoEnabled', value);
   };
 
   handleVideoSizeChange = (e, value) => {
-    this.props.onSettingChange('videoSize', value ? 'large' : 'small');
+    const { onSettingChange } = this.props;
+    onSettingChange('videoSize', value ? 'large' : 'small');
   };
 
   handleMentionSoundChange = (e, value) => {
-    this.props.onSettingChange('mentionSound', value);
+    const { onSettingChange } = this.props;
+    onSettingChange('mentionSound', value);
   };
 
   handleLanguageChange = (event) => {
-    this.props.onChangeLanguage(event.target.value);
+    const { onChangeLanguage } = this.props;
+    onChangeLanguage(event.target.value);
   };
 
   render() {
@@ -47,6 +51,7 @@ class SettingsPanel extends React.Component {
       className,
       settings,
       user,
+      onSettingChange,
       onChangeUsername,
       onLogout,
     } = this.props;
@@ -103,7 +108,7 @@ class SettingsPanel extends React.Component {
         <div className="SettingsPanel-column SettingsPanel-column--right">
           <NotificationSettings
             settings={settings}
-            onSettingChange={this.props.onSettingChange}
+            onSettingChange={onSettingChange}
           />
           <hr className="SettingsPanel-divider" />
         </div>

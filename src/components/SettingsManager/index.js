@@ -17,8 +17,10 @@ class SettingsManager extends React.Component {
   };
 
   handleLogout = () => {
-    this.props.onCloseOverlay();
-    this.props.onLogout();
+    const { onCloseOverlay, onLogout } = this.props;
+
+    onCloseOverlay();
+    onLogout();
   };
 
   render() {
