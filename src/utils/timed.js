@@ -21,15 +21,21 @@ export default function () {
       };
 
       componentDidMount() {
-        this.context.timerCallbacks.add(this.tick);
+        const { timerCallbacks } = this.context;
+
+        timerCallbacks.add(this.tick);
       }
 
       componentWillUnmount() {
-        this.context.timerCallbacks.remove(this.tick);
+        const { timerCallbacks } = this.context;
+
+        timerCallbacks.remove(this.tick);
       }
 
       getCurrentTime() {
-        return currentTimeSelector(this.context.store.getState());
+        const { store } = this.context;
+
+        return currentTimeSelector(store.getState());
       }
 
       tick = () => {
@@ -39,10 +45,12 @@ export default function () {
       };
 
       render() {
+        const { currentTime } = this.state;
+
         return (
           <Component
             {...this.props}
-            currentTime={this.state.currentTime}
+            currentTime={currentTime}
           />
         );
       }
