@@ -49,7 +49,9 @@ class HistoryRow extends React.Component {
   state = { showActions: false };
 
   componentDidMount() {
-    this.props.connectDragPreview(getEmptyImage());
+    const { connectDragPreview } = this.props;
+
+    connectDragPreview(getEmptyImage());
   }
 
   handleMouseEnter = () => {
@@ -61,12 +63,16 @@ class HistoryRow extends React.Component {
   };
 
   handleDoubleClick = () => {
-    this.props.onOpenPreviewMediaDialog(this.props.media.media);
+    const { onOpenPreviewMediaDialog, media } = this.props;
+
+    onOpenPreviewMediaDialog(media.media);
   };
 
   handleKeyPress = (event) => {
+    const { onClick } = this.props;
+
     if (event.code === 'Space') {
-      this.props.onClick();
+      onClick();
     }
   };
 
@@ -82,10 +88,12 @@ class HistoryRow extends React.Component {
       // etc
       onClick,
     } = this.props;
+    const { showActions } = this.state;
+
     const {
       media, timestamp, user, stats,
     } = historyEntry;
-    const { showActions } = this.state;
+
     const selectedClass = selected ? 'is-selected' : '';
     const thumbnail = (
       <div className="MediaListRow-thumb">
