@@ -13,11 +13,11 @@ const enhance = compose(
   withState('isLoading', 'setLoading', false),
   withHandlers({
     onClick: props => () => {
-      props.setLoading(true);
-      props.onShuffle().then(() => {
-        props.setLoading(false);
-      }, () => {
-        props.setLoading(false);
+      const { setLoading, onShuffle } = props;
+
+      setLoading(true);
+      onShuffle().finally(() => {
+        setLoading(false);
       });
     },
   }),

@@ -25,10 +25,34 @@ class SourcePicker extends React.Component {
 
   state = { open: false };
 
+  handleOpen = () => {
+    this.setState({
+      open: true,
+      anchor: this.container,
+    });
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
+  };
+
+  handleChange = (sourceName) => {
+    const { onChange } = this.props;
+
+    this.handleClose();
+    onChange(sourceName);
+  }
+
+  refContainer = (container) => {
+    this.container = container;
+  };
+
   createElement(sourceName) {
     const { selected, getMediaSource } = this.props;
+
     return (
       <button
+        type="button"
         className="SourcePicker-item"
         key={sourceName}
         onClick={() => this.handleChange(sourceName)}
@@ -42,26 +66,6 @@ class SourcePicker extends React.Component {
     );
   }
 
-  handleOpen = () => {
-    this.setState({
-      open: true,
-      anchor: this.container,
-    });
-  };
-
-  handleClose = () => {
-    this.setState({ open: false });
-  };
-
-  handleChange(sourceName) {
-    this.handleClose();
-    this.props.onChange(sourceName);
-  }
-
-  refContainer = (container) => {
-    this.container = container;
-  };
-
   render() {
     const {
       className,
@@ -69,6 +73,7 @@ class SourcePicker extends React.Component {
       getMediaSource,
       getAllMediaSources,
     } = this.props;
+    const { open, anchor } = this.state;
 
     const sourceNames = Object.keys(getAllMediaSources());
     const sources = sourceNames
@@ -81,6 +86,7 @@ class SourcePicker extends React.Component {
         ref={this.refContainer}
       >
         <button
+          type="button"
           className="SourcePicker-active"
           onClick={this.handleOpen}
         >
@@ -93,8 +99,8 @@ class SourcePicker extends React.Component {
         </button>
         <Popover
           classes={{ paper: 'SourcePicker-list' }}
-          open={this.state.open}
-          anchorEl={this.state.anchor}
+          open={open}
+          anchorEl={anchor}
           onClose={this.handleClose}
           {...popoverPosition}
         >

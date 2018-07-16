@@ -14,6 +14,7 @@ const SearchResultsRow = ({
 }) => (
   <ListItem role="menuitem" className={cx('PlaylistMenuRow', 'PlaylistMenuRow--search', className)}>
     <button
+      type="button"
       className="PlaylistMenuRow-title"
       onClick={onClick}
     >
