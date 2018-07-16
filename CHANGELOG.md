@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.10.1 / 16 Jul 2018
+Bugfixes:
+ * Refactor login, edit, preview dialogs, fixing the close animation. (#1070)
+
+Internal:
+ * Update material-ui to v1.4, significantly improving tooltip performance. (#1071)
+
 ## 1.10.0 / 07 Jul 2018
 Features:
  * Add settings button when signed out. (#974)
