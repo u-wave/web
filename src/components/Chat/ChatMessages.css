@@ -10,18 +10,7 @@
    * TODO fix that^ in src/components/Tooltip. Should resize(?) the positioning
    * wrapper if it's close to the edge of the screen. */
   overflow-x: hidden;
-
-  /* Add alternating background colours for child messages. */
-  /* Some messages are wrapped in additional elements, eg. to align User cards,
-   * so we need both these selectors here. */
-  & > .ChatMessage:nth-child(2n),
-  & > :nth-child(2n) .ChatMessage {
-    background: var(--chat-background-color2);
-
-    & .ChatMessage-hover {
-      background: var(--chat-background-color2);
-    }
-  }
+  background: var(--background-color);
 }
 
 .ChatMessages-scrollDown {
