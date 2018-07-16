@@ -137,22 +137,22 @@ class RegisterForm extends React.Component {
 
         <FormGroup>
           <FormControlLabel
-            control={
+            control={(
               <Checkbox
                 checked={agreed}
                 onChange={this.handleTosCheckbox}
               />
-            }
-            label={
+            )}
+            label={(
               <Interpolate
                 i18nKey="login.agree"
-                privacyPolicy={
+                privacyPolicy={(
                   <a target="_blank" rel="noreferrer noopener" href="/privacy.html">
                     {t('login.privacyPolicy')}
                   </a>
-                }
+                )}
               />
-            }
+            )}
           />
         </FormGroup>
 

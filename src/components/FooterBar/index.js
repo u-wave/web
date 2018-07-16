@@ -65,7 +65,8 @@ class FooterBar extends React.Component {
   handleLeaveWaitlist = () => {
     if (this.props.userIsDJ) {
       return this.props.onSkipTurn({ remove: true });
-    } else if (this.props.user) {
+    }
+    if (this.props.user) {
       return this.props.leaveWaitlist(this.props.user);
     }
     return null;
