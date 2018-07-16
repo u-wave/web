@@ -16,13 +16,15 @@ export default class ChannelPanel extends React.Component {
   };
 
   renderRow = (index, key) => {
-    const playlist = this.props.importablePlaylists[index];
+    const { importablePlaylists, onImportPlaylist } = this.props;
+
+    const playlist = importablePlaylists[index];
     return (
       <PlaylistRow
         key={key}
         className={index % 2 === 0 ? 'MediaListRow--alternate' : ''}
         playlist={playlist}
-        onImport={() => this.props.onImportPlaylist(playlist.sourceID, playlist.name)}
+        onImport={() => onImportPlaylist(playlist.sourceID, playlist.name)}
       />
     );
   };

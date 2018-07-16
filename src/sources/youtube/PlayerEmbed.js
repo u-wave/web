@@ -17,13 +17,16 @@ export default class YouTubePlayerEmbed extends React.Component {
   };
 
   handleYTPlay = () => {
-    if (this.props.onPlay) {
-      this.props.onPlay();
+    const { onPlay } = this.props;
+
+    if (onPlay) {
+      onPlay();
     }
   };
 
   handleYTPause = (event) => {
-    if (!this.props.controllable && this.props.active) {
+    const { active, controllable } = this.props;
+    if (active && !controllable) {
       event.target.playVideo();
     }
   };

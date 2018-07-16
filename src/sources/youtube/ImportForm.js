@@ -22,27 +22,27 @@ export default class YoutubeImportForm extends React.Component {
     store: PropTypes.object,
   };
 
-  dispatch(action) {
-    return this.context.store.dispatch(action);
-  }
-
   handleImportChannel = (e) => {
+    const { onHideImportPanel, onShowImportPanel } = this.props;
+
     e.preventDefault();
     const url = this.channel.value;
     this.dispatch(getChannelPlaylists(url)).catch(() => {
-      this.props.onHideImportPanel();
+      onHideImportPanel();
     });
-    this.props.onShowImportPanel();
+    onShowImportPanel();
   };
 
   handleImportPlaylist = (e) => {
+    const { onHideImportPanel, onShowImportPanel } = this.props;
+
     e.preventDefault();
     const url = this.playlist.value;
 
     this.dispatch(getImportablePlaylist(url)).catch(() => {
-      this.props.onHideImportPanel();
+      onHideImportPanel();
     });
-    this.props.onShowImportPanel();
+    onShowImportPanel();
   };
 
   refChannel = (channel) => {
@@ -52,6 +52,11 @@ export default class YoutubeImportForm extends React.Component {
   refPlaylist = (playlist) => {
     this.playlist = playlist;
   };
+
+  dispatch(action) {
+    const { store } = this.context;
+    return store.dispatch(action);
+  }
 
   render() {
     return (
