@@ -193,8 +193,8 @@ export function muteUser(userID, { moderatorID, expiresAt }) {
         userID,
         moderatorID,
         expiresAt,
-        expirationTimer: expireIn > 0 ?
-          setTimeout(() => dispatch(expireMute(userID)), expireIn) : null,
+        expirationTimer: expireIn > 0
+          ? setTimeout(() => dispatch(expireMute(userID)), expireIn) : null,
       },
     });
   };

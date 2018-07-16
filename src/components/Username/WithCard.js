@@ -4,7 +4,7 @@ import compose from 'recompose/compose';
 import withProps from 'recompose/withProps';
 import userCardable from '../../utils/userCardable';
 
-import UsernameBase from './';
+import UsernameBase from '.';
 
 const enhance = compose(
   userCardable(),

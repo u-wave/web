@@ -87,8 +87,8 @@ register(
 
 register(
   'wlmove',
-  'Move a user to a different position in the waitlist. ' +
-  'Syntax: "/wlmove username position"',
+  'Move a user to a different position in the waitlist. '
+  + 'Syntax: "/wlmove username position"',
   {
     guard: isModeratorSelector,
     action: (username, posStr) => (dispatch, getState) => {

@@ -27,10 +27,9 @@ class AddToPlaylistMenu extends React.Component {
     this.setState({ creating: false });
   };
 
-  handleSubmit = playlistName =>
-    Promise.resolve(this.props.onCreatePlaylist(playlistName))
-      .then(playlist => this.props.onSelect(playlist))
-      .then(() => this.props.onClose());
+  handleSubmit = playlistName => Promise.resolve(this.props.onCreatePlaylist(playlistName))
+    .then(playlist => this.props.onSelect(playlist))
+    .then(() => this.props.onClose());
 
   render() {
     const { t, ...props } = this.props;

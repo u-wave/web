@@ -31,9 +31,8 @@ class RenamePlaylistButton extends React.Component {
     this.closeDialog();
   };
 
-  handleSubmit = name =>
-    this.props.onRename(name)
-      .then(this.closeDialog.bind(this));
+  handleSubmit = name => this.props.onRename(name)
+    .then(this.closeDialog.bind(this));
 
   render() {
     const { t } = this.props;

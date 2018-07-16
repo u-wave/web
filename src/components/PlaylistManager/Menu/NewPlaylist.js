@@ -32,9 +32,8 @@ class NewPlaylist extends React.Component {
     this.closeDialog();
   };
 
-  handleSubmit = playlistName =>
-    Promise.resolve(this.props.onCreatePlaylist(playlistName))
-      .then(this.closeDialog.bind(this));
+  handleSubmit = playlistName => Promise.resolve(this.props.onCreatePlaylist(playlistName))
+    .then(this.closeDialog.bind(this));
 
   render() {
     const { t, className } = this.props;

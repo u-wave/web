@@ -38,9 +38,8 @@ class DeletePlaylistButton extends React.Component {
     this.closeDialog();
   };
 
-  handleConfirm = name =>
-    this.props.onDelete(name)
-      .then(this.closeDialog.bind(this));
+  handleConfirm = name => this.props.onDelete(name)
+    .then(this.closeDialog.bind(this));
 
   render() {
     const { t, active } = this.props;

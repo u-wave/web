@@ -11,8 +11,7 @@ import TimeAgo from '../TimeAgo';
 
 import HistoryVotes from './Votes';
 
-const inSelection = (selection, media) =>
-  selection.some(item => item._id === media._id);
+const inSelection = (selection, media) => selection.some(item => item._id === media._id);
 
 const mediaSource = {
   beginDrag({ selection, media }) {

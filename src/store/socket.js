@@ -133,10 +133,8 @@ const actions = {
     return changeUsername(userID, username);
   },
   guests: receiveGuestCount,
-  'acl:allow': ({ userID, roles }) =>
-    addUserRoles(userID, roles),
-  'acl:disallow': ({ userID, roles }) =>
-    removeUserRoles(userID, roles),
+  'acl:allow': ({ userID, roles }) => addUserRoles(userID, roles),
+  'acl:disallow': ({ userID, roles }) => removeUserRoles(userID, roles),
 };
 
 export default function middleware({ url = defaultUrl() } = {}) {

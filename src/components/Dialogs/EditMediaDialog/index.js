@@ -51,7 +51,9 @@ class EditMediaDialog extends React.Component {
   };
 
   title = uniqueId('editmedia');
+
   labelStart = uniqueId('editmedia');
+
   labelEnd = uniqueId('editmedia');
 
   handleSubmit = (e) => {

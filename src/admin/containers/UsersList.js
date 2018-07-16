@@ -30,8 +30,7 @@ const mapDispatchToProps = {
 const enhance = compose(
   connect(mapStateToProps, mapDispatchToProps),
   withProps(props => ({
-    onChangePage: (event, page) =>
-      props.onLoadUsers({ offset: page * props.pageSize, limit: props.pageSize }),
+    onChangePage: (event, page) => props.onLoadUsers({ offset: page * props.pageSize, limit: props.pageSize }),
     onFilter: (filter) => {
       props.onFilter(filter);
       props.onLoadUsers({ offset: 0, limit: props.pageSize });

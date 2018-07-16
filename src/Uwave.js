@@ -19,12 +19,17 @@ import './utils/commands';
 
 export default class Uwave {
   options = {};
+
   sources = {};
+
   sessionToken = null;
+
   renderTarget = null;
+
   aboutPageComponent = null;
 
   jss = createJss(jssPreset());
+
   generateClassName = createGenerateClassName();
 
   constructor(options = {}, session = readSession()) {
@@ -81,6 +86,7 @@ export default class Uwave {
   setAboutPageComponent(AboutPageComponent) {
     this.aboutPageComponent = AboutPageComponent;
   }
+
   getAboutPageComponent() {
     return this.aboutPageComponent;
   }

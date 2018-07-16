@@ -19,4 +19,3 @@ export const usersSelector = createSelector(
   baseSelector,
   base => base.users.users,
 );
-

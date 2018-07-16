@@ -5,13 +5,12 @@ import Base from '../MediaList/BaseMediaList';
 import AddToPlaylistAction from '../MediaList/Actions/AddToPlaylist';
 import HistoryRow from './Row';
 
-const addMediaActions = onOpenAddMediaMenu =>
-  (media, selection) => [
-    <AddToPlaylistAction
-      key="add"
-      onAdd={position => onOpenAddMediaMenu(position, media, selection)}
-    />,
-  ];
+const addMediaActions = onOpenAddMediaMenu => (media, selection) => [
+  <AddToPlaylistAction
+    key="add"
+    onAdd={position => onOpenAddMediaMenu(position, media, selection)}
+  />,
+];
 
 const noActions = () => [];
 

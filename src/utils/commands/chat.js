@@ -28,8 +28,8 @@ register(
 
 register(
   'clearchat',
-  'Delete all chat messages. ' +
-  'Pass a username ("/clearchat kool_panda") to only delete messages by that user.',
+  'Delete all chat messages. '
+  + 'Pass a username ("/clearchat kool_panda") to only delete messages by that user.',
   {
     guard: isModeratorSelector,
     action: (...args) => (dispatch, getState) => {

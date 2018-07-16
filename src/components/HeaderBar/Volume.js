@@ -25,8 +25,8 @@ class Volume extends React.Component {
   };
 
   shouldComponentUpdate(nextProps) {
-    return this.props.volume !== nextProps.volume ||
-      this.props.muted !== nextProps.muted;
+    return this.props.volume !== nextProps.volume
+      || this.props.muted !== nextProps.muted;
   }
 
   handleVolumeChange = (e, volume) => {

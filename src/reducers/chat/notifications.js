@@ -54,4 +54,3 @@ export default function reduceNotifications(state, { type, payload }) {
       return state;
   }
 }
-

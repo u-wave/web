@@ -61,9 +61,9 @@ class SoundCloudPlayer extends React.Component {
     if (prevProps.volume !== this.props.volume) {
       this.audio.volume = this.props.volume / 100;
     }
-    if (prevProps.media.sourceID !== this.props.media.sourceID ||
-        prevProps.enabled !== this.props.enabled ||
-        prevProps.active !== this.props.active) {
+    if (prevProps.media.sourceID !== this.props.media.sourceID
+        || prevProps.enabled !== this.props.enabled
+        || prevProps.active !== this.props.active) {
       if (this.props.enabled && this.props.active) {
         this.play();
       } else {

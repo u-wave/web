@@ -19,6 +19,7 @@ class SearchBar extends React.Component {
   handleFocus = () => {
     this.setState({ focused: true });
   };
+
   handleBlur = () => {
     this.setState({ focused: false });
   };

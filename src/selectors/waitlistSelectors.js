@@ -49,8 +49,7 @@ const averagePlayDuration = 4 * 60 * 1000;
 export const baseEtaSelector = createSelector(
   positionSelector,
   sizeSelector,
-  (position, size) =>
-    (position === -1 ? size : position) * averagePlayDuration,
+  (position, size) => (position === -1 ? size : position) * averagePlayDuration,
 );
 
 export const etaSelector = createSelector(

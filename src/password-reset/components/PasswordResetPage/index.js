@@ -25,8 +25,8 @@ class PasswordResetPage extends React.Component {
   };
 
   isValid() {
-    return this.state.newPassword.length >= 6 &&
-      this.state.newPassword === this.state.newPasswordConfirm;
+    return this.state.newPassword.length >= 6
+      && this.state.newPassword === this.state.newPasswordConfirm;
   }
 
   handlePasswordChange = (event) => {

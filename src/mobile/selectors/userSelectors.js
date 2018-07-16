@@ -7,6 +7,5 @@ export * from '../../selectors/userSelectors';
 export const listenersSelector = createSelector(
   userListSelector,
   djAndWaitlistUsersSelector,
-  (users, waitlist) => users.filter(user =>
-    !waitlist.some(waiting => waiting._id === user._id)),
+  (users, waitlist) => users.filter(user => !waitlist.some(waiting => waiting._id === user._id)),
 );

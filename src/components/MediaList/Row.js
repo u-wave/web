@@ -9,8 +9,7 @@ import MediaLoadingIndicator from './MediaLoadingIndicator';
 import MediaThumbnail from './MediaThumbnail';
 import Actions from './Actions';
 
-const inSelection = (selection, media) =>
-  selection.some(item => item._id === media._id);
+const inSelection = (selection, media) => selection.some(item => item._id === media._id);
 
 const mediaSource = {
   beginDrag({ selection, media }) {

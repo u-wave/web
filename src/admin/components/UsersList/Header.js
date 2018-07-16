@@ -10,8 +10,7 @@ const enhance = compose(
     onFilterDebounced: debounce(props.onFilter, 200),
   })),
   withHandlers({
-    onChange: props => event =>
-      props.onFilterDebounced(event.target.value),
+    onChange: props => event => props.onFilterDebounced(event.target.value),
   }),
 );
 

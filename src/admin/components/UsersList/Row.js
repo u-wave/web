@@ -39,6 +39,7 @@ export default class UserRow extends React.Component {
   handleOpenMenu = (event) => {
     this.setState({ open: true, anchorEl: event.currentTarget });
   };
+
   handleCloseMenu = () => {
     this.setState({ open: false, anchorEl: null });
   };

@@ -1,5 +1,7 @@
 import { createSelector } from 'reselect';
-import { historyIDSelector, mediaSelector, startTimeSelector, djSelector } from './boothSelectors';
+import {
+  historyIDSelector, mediaSelector, startTimeSelector, djSelector,
+} from './boothSelectors';
 import { currentUserSelector } from './userSelectors';
 import { currentVotesSelector } from './voteSelectors';
 

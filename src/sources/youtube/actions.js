@@ -32,8 +32,7 @@ export function getImportablePlaylist(url) {
   return get('/import/youtube/playlist', {
     qs: { url },
     onStart: () => getImportablePlaylistStart(url),
-    onComplete: ({ playlist, items }) =>
-      getImportablePlaylistComplete(url, playlist, items),
+    onComplete: ({ playlist, items }) => getImportablePlaylistComplete(url, playlist, items),
     onError: error => ({
       type: GET_IMPORTABLE_PLAYLIST_COMPLETE,
       error: true,
@@ -98,8 +97,7 @@ export function getChannelPlaylists(url) {
   return get('/import/youtube/channel', {
     qs: { url },
     onStart: () => getChannelPlaylistsStart(url),
-    onComplete: ({ channel, playlists }) =>
-      getChannelPlaylistsComplete(channel, playlists),
+    onComplete: ({ channel, playlists }) => getChannelPlaylistsComplete(channel, playlists),
     onError: error => ({
       type: GET_CHANNEL_PLAYLISTS_COMPLETE,
       error: true,

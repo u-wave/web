@@ -12,6 +12,7 @@ class AboutContainer extends React.Component {
     t: PropTypes.func.isRequired,
     onCloseOverlay: PropTypes.func.isRequired,
   };
+
   static contextTypes = {
     uwave: PropTypes.object,
   };

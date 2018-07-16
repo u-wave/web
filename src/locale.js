@@ -15,7 +15,9 @@ const resources = {
 
 class UwaveBackend {
   static type = 'backend';
+
   type = 'backend';
+
   cache = {};
 
   getResource(language) {

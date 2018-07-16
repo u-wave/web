@@ -14,6 +14,7 @@ export default function injectMediaSources() {
     };
 
     getMediaSource = name => this.context.mediaSources[name];
+
     getAllMediaSources = () => this.context.mediaSources;
 
     render() {
