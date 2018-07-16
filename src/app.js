@@ -2,14 +2,7 @@ import Uwave from './Uwave';
 import experimentalThemePlugin from './experimentalThemePlugin';
 import youTubeSource from './sources/youtube';
 import soundCloudSource from './sources/soundcloud';
-
-function readApplicationConfig() {
-  try {
-    return JSON.parse(document.getElementById('u-wave-config').textContent);
-  } catch (e) {
-    return {};
-  }
-}
+import readApplicationConfig from './utils/readApplicationConfig';
 
 const uw = new Uwave(readApplicationConfig());
 

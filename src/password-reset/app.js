@@ -10,10 +10,11 @@ import webApiRequest from '../store/request';
 import * as reducers from './reducers';
 import { setResetKey } from './actions';
 import App from './containers/PasswordResetApp';
+import readApplicationConfig from './utils/readApplicationConfig';
 
 import './app.css';
 
-const config = document.querySelector('#u-wave-config').textContent;
+const config = readApplicationConfig();
 const key = document.querySelector('#reset-data').textContent;
 
 const store = createStore(
