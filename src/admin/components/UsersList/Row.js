@@ -20,11 +20,13 @@ const actionsStyle = {
   paddingRight: 0,
 };
 
-const TableCell = withProps(props => ({
-  className: cx('AdminUserRow-cell', props.className),
+const TableCell = withProps(({ className }) => ({
+  className: cx('AdminUserRow-cell', className),
 }))(MuiTableCell);
 
 export default class UserRow extends React.Component {
+  menu = uniqueId('menu');
+
   static propTypes = {
     user: PropTypes.object.isRequired,
   };
@@ -33,8 +35,6 @@ export default class UserRow extends React.Component {
     open: false,
     anchorEl: null,
   };
-
-  menu = uniqueId('menu');
 
   handleOpenMenu = (event) => {
     this.setState({ open: true, anchorEl: event.currentTarget });
