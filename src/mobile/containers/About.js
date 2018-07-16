@@ -18,9 +18,9 @@ class AboutContainer extends React.Component {
   };
 
   getAboutPageComponent() {
-    const uw = this.context.uwave;
-    if (uw) {
-      return uw.getAboutPageComponent();
+    const { uwave } = this.context;
+    if (uwave) {
+      return uwave.getAboutPageComponent();
     }
     return null;
   }

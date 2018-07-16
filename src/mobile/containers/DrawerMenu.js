@@ -17,8 +17,8 @@ const mapStateToProps = createStructuredSelector({
   playlists: playlistsSelector,
   open: drawerIsOpenSelector,
   hasAboutPage: (state, props) => {
-    const uw = props.uwave;
-    return Boolean(uw && uw.getAboutPageComponent());
+    const { uwave } = props;
+    return Boolean(uwave && uwave.getAboutPageComponent());
   },
 });
 
