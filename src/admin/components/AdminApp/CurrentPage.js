@@ -10,8 +10,8 @@ const pages = {
   bans: BansList,
 };
 
-const enhance = mapProps(props => ({
-  component: pages[props.page],
+const enhance = mapProps(({ page }) => ({
+  component: pages[page],
 }));
 
 const CurrentPage = enhance(componentFromProp('component'));

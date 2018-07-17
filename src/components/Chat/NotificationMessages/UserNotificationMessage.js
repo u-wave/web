@@ -16,8 +16,10 @@ const enhance = compose(
   userCardable(),
   withHandlers({
     onClick: props => (event) => {
+      const { openUserCard, user } = props;
+
       event.preventDefault();
-      props.openUserCard(props.user);
+      openUserCard(user);
     },
   }),
 );
@@ -40,7 +42,11 @@ const UserNotificationMessage = ({
       </div>
       <Interpolate
         username={(
-          <button className="ChatMessage-username ChatMessage-cardable" onClick={onClick}>
+          <button
+            type="button"
+            className="ChatMessage-username ChatMessage-cardable"
+            onClick={onClick}
+          >
             <Username user={user} />
           </button>
         )}

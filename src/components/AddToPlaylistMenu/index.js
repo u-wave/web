@@ -27,22 +27,27 @@ class AddToPlaylistMenu extends React.Component {
     this.setState({ creating: false });
   };
 
-  handleSubmit = playlistName =>
-    Promise.resolve(this.props.onCreatePlaylist(playlistName))
-      .then(playlist => this.props.onSelect(playlist))
-      .then(() => this.props.onClose());
+  handleSubmit = (playlistName) => {
+    const { onCreatePlaylist, onSelect, onClose } = this.props;
+
+    return Promise.resolve(onCreatePlaylist(playlistName))
+      .then(playlist => onSelect(playlist))
+      .then(() => onClose());
+  };
 
   render() {
     const { t, ...props } = this.props;
+    const { creating } = this.state;
+
     return (
       <React.Fragment>
-        {!this.state.creating && (
+        {!creating && (
           <PlaylistsMenu
             {...props}
             onCreatePlaylist={this.handleOpen}
           />
         )}
-        {this.state.creating && (
+        {creating && (
           <PromptDialog
             title={t('dialogs.createPlaylist.nameInputTitle')}
             icon={<CreatePlaylistIcon nativeColor="#777" />}

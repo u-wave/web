@@ -52,7 +52,8 @@ export function hasMention(tree, id) {
     if (node.type === 'mention') {
       if (node.user) {
         return node.user._id === id;
-      } else if (node.group) {
+      }
+      if (node.group) {
         return node.group.some(user => user._id === id);
       }
       return false;

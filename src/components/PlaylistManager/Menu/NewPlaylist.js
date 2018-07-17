@@ -20,10 +20,6 @@ class NewPlaylist extends React.Component {
     creating: false,
   };
 
-  closeDialog() {
-    this.setState({ creating: false });
-  }
-
   handleOpen = () => {
     this.setState({ creating: true });
   };
@@ -32,12 +28,21 @@ class NewPlaylist extends React.Component {
     this.closeDialog();
   };
 
-  handleSubmit = playlistName =>
-    Promise.resolve(this.props.onCreatePlaylist(playlistName))
+  handleSubmit = (playlistName) => {
+    const { onCreatePlaylist } = this.props;
+
+    return Promise.resolve(onCreatePlaylist(playlistName))
       .then(this.closeDialog.bind(this));
+  };
+
+  closeDialog() {
+    this.setState({ creating: false });
+  }
 
   render() {
     const { t, className } = this.props;
+    const { creating } = this.state;
+
     return (
       <React.Fragment>
         <MenuItem
@@ -51,7 +56,7 @@ class NewPlaylist extends React.Component {
             {t('playlists.new')}
           </div>
         </MenuItem>
-        {this.state.creating && (
+        {creating && (
           <PromptDialog
             title={t('dialogs.createPlaylist.nameInputTitle')}
             icon={<CreatePlaylistIcon nativeColor="#777" />}

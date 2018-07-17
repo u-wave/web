@@ -25,9 +25,11 @@ class LoginForm extends React.Component {
   state = { busy: false };
 
   handleSubmit = (event) => {
+    const { onLogin } = this.props;
+
     event.preventDefault();
     this.setState({ busy: true });
-    this.props.onLogin({
+    onLogin({
       email: this.email.value,
       password: this.password.value,
     }).finally(() => {
@@ -36,8 +38,10 @@ class LoginForm extends React.Component {
   };
 
   handleResetPassword = (event) => {
+    const { onOpenResetPasswordDialog } = this.props;
+
     event.preventDefault();
-    this.props.onOpenResetPasswordDialog();
+    onOpenResetPasswordDialog();
   };
 
   refEmail = (email) => {
@@ -98,9 +102,13 @@ class LoginForm extends React.Component {
         </FormGroup>
 
         <FormGroup className="LoginForm-forgot">
-          <button onClick={this.handleResetPassword} className="LoginForm-forgotLink">
-            Forgot Password?
-          </button>
+          <a
+            href="#forgot"
+            onClick={this.handleResetPassword}
+            className="LoginForm-forgotLink"
+          >
+            {t('login.forgotPassword')}
+          </a>
         </FormGroup>
       </Form>
     );

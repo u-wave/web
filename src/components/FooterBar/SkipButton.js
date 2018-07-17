@@ -42,7 +42,9 @@ class SkipButton extends React.Component {
   };
 
   handleOpen = (event) => {
-    if (this.props.userIsDJ) {
+    const { userIsDJ } = this.props;
+
+    if (userIsDJ) {
       this.handleSkip('');
       return;
     }
@@ -60,17 +62,20 @@ class SkipButton extends React.Component {
   };
 
   handleSkip = (reason) => {
+    const { onSkip } = this.props;
+
     this.setState({ isSkipping: true });
-    Promise.resolve(this.props.onSkip(reason)).then(() => {
+    Promise.resolve(onSkip(reason)).finally(() => {
       this.setState({ isSkipping: false });
     });
     this.handleClose();
   };
 
   render() {
-    const { t } = this.props;
+    const { t, userIsDJ, currentDJ } = this.props;
+    const { isSkipping, isOpen, anchor } = this.state;
 
-    if (this.state.isSkipping) {
+    if (isSkipping) {
       return (
         <span>
           <div className="SkipButton is-loading">
@@ -81,8 +86,8 @@ class SkipButton extends React.Component {
     }
 
     let message = t('booth.skip.self');
-    if (!this.props.userIsDJ) {
-      message = t('booth.skip.other', { user: this.props.currentDJ.username });
+    if (!userIsDJ) {
+      message = t('booth.skip.other', { user: currentDJ.username });
     }
 
     return (
@@ -93,8 +98,8 @@ class SkipButton extends React.Component {
           </IconButton>
         </Tooltip>
         <Popover
-          open={this.state.isOpen}
-          anchorEl={this.state.anchor}
+          open={isOpen}
+          anchorEl={anchor}
           onClose={this.handleClose}
           classes={{ paper: 'SkipButton-list' }}
           {...popoverPosition}

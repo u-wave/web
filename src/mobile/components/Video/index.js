@@ -75,6 +75,7 @@ class Video extends React.Component {
         </div>
         {enableOverlay && (
           <button
+            type="button"
             className="Video-buttonTrigger"
             onClick={this.handleClick}
             aria-label="Show vote buttons"

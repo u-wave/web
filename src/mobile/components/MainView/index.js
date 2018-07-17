@@ -33,17 +33,17 @@ const getWaitlistLabel = (size, position) => {
 const enhance = withHandlers({
   // Prevent defaults for react-tap-event-plugin:
   // https://github.com/zilverline/react-tap-event-plugin/issues/77
-  onOpenRoomHistory: props => (event) => {
+  onOpenRoomHistory: ({ onOpenRoomHistory }) => (event) => {
     event.preventDefault();
-    props.onOpenRoomHistory();
+    onOpenRoomHistory();
   },
-  onOpenDrawer: props => (event) => {
+  onOpenDrawer: ({ onOpenDrawer }) => (event) => {
     event.preventDefault();
-    props.onOpenDrawer();
+    onOpenDrawer();
   },
-  onOpenWaitlist: props => (event) => {
+  onOpenWaitlist: ({ onOpenWaitlist }) => (event) => {
     event.preventDefault();
-    props.onOpenWaitlist();
+    onOpenWaitlist();
   },
 });
 

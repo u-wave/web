@@ -35,13 +35,16 @@ class RegisterForm extends React.Component {
   };
 
   handleSubmit = (event) => {
+    const { onRegister } = this.props;
+    const { captchaResponse } = this.state;
+
     event.preventDefault();
     this.setState({ busy: true });
-    this.props.onRegister({
+    onRegister({
       username: this.username.value,
       email: this.email.value,
       password: this.password.value,
-      grecaptcha: this.state.captchaResponse,
+      grecaptcha: captchaResponse,
     }).finally(() => {
       this.setState({ busy: false });
     });
@@ -72,13 +75,15 @@ class RegisterForm extends React.Component {
   };
 
   renderCaptcha() {
-    if (!this.props.useReCaptcha) {
+    const { useReCaptcha, reCaptchaSiteKey } = this.props;
+
+    if (!useReCaptcha) {
       return null;
     }
     return (
       <FormGroup>
         <ReCaptcha
-          sitekey={this.props.reCaptchaSiteKey}
+          sitekey={reCaptchaSiteKey}
           onResponse={this.handleCaptchaResponse}
           theme="dark"
         />
@@ -137,22 +142,22 @@ class RegisterForm extends React.Component {
 
         <FormGroup>
           <FormControlLabel
-            control={
+            control={(
               <Checkbox
                 checked={agreed}
                 onChange={this.handleTosCheckbox}
               />
-            }
-            label={
+            )}
+            label={(
               <Interpolate
                 i18nKey="login.agree"
-                privacyPolicy={
+                privacyPolicy={(
                   <a target="_blank" rel="noreferrer noopener" href="/privacy.html">
                     {t('login.privacyPolicy')}
                   </a>
-                }
+                )}
               />
-            }
+            )}
           />
         </FormGroup>
 

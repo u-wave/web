@@ -12,6 +12,8 @@ import TextField from '../../Form/TextField';
 import Button from '../../Form/Button';
 
 export default class PromptDialog extends React.Component {
+  title = uniqueId('title');
+
   static propTypes = {
     children: PropTypes.node,
     placeholder: PropTypes.string,
@@ -38,25 +40,27 @@ export default class PromptDialog extends React.Component {
 
   state = {
     busy: false,
+    // eslint-disable-next-line react/destructuring-assignment
     value: this.props.value || '',
   };
 
-  title = uniqueId('title');
-
   handleSubmit = (event) => {
+    const { onSubmit } = this.props;
+
     event.preventDefault();
-    const promise = this.props.onSubmit(this.input.value);
-    if (promise && promise.then) {
+    const promise = onSubmit(event.target.value);
+    if (promise && promise.finally) {
       this.setState({ busy: true });
-      const onDone = () => {
+      promise.finally(() => {
         this.setState({ busy: false });
-      };
-      promise.then(onDone, onDone);
+      });
     }
   };
 
   handleClose = () => {
-    this.props.onCancel();
+    const { onCancel } = this.props;
+
+    onCancel();
   };
 
   handleInputChange = (event) => {

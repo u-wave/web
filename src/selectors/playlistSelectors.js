@@ -40,8 +40,9 @@ export const activePlaylistSelector = createSelector(
   baseSelector,
   activePlaylistIDSelector,
   activeMediaSelector,
-  (playlists, activeID, activeMedia) =>
-    mergePlaylistItems(playlists.playlists[activeID], activeMedia),
+  (playlists, activeID, activeMedia) => (
+    mergePlaylistItems(playlists.playlists[activeID], activeMedia)
+  ),
 );
 
 export const selectedPlaylistIDSelector = createSelector(
@@ -92,8 +93,9 @@ export const selectedPlaylistSelector = createSelector(
   baseSelector,
   selectedPlaylistIDSelector,
   selectedMediaSelector,
-  (playlists, selectedID, selectedMedia) =>
-    mergePlaylistItems(playlists.playlists[selectedID], selectedMedia),
+  (playlists, selectedID, selectedMedia) => (
+    mergePlaylistItems(playlists.playlists[selectedID], selectedMedia)
+  ),
 );
 
 export const nextMediaSelector = createSelector(

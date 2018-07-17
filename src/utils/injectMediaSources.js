@@ -13,8 +13,15 @@ export default function injectMediaSources() {
       mediaSources: PropTypes.object,
     };
 
-    getMediaSource = name => this.context.mediaSources[name];
-    getAllMediaSources = () => this.context.mediaSources;
+    getMediaSource = (name) => {
+      const { mediaSources } = this.context;
+      return mediaSources[name];
+    };
+
+    getAllMediaSources = () => {
+      const { mediaSources } = this.context;
+      return mediaSources;
+    };
 
     render() {
       return (

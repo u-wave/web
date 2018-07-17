@@ -46,27 +46,38 @@ class FooterBar extends React.Component {
   };
 
   handleSkipTurn = (reason) => {
-    if (!this.props.showSkip) {
+    const {
+      showSkip, userIsDJ, onModSkip, onSkipTurn,
+    } = this.props;
+
+    if (!showSkip) {
       return null;
     }
-    if (!this.props.userIsDJ) {
-      return this.props.onModSkip(reason);
+    if (!userIsDJ) {
+      return onModSkip(reason);
     }
-    return this.props.onSkipTurn({ remove: false });
+    return onSkipTurn({ remove: false });
   }
 
   handleJoinWaitlist = () => {
-    if (this.props.user) {
-      return this.props.joinWaitlist(this.props.user);
+    const { user, joinWaitlist } = this.props;
+
+    if (user) {
+      return joinWaitlist(user);
     }
     return null;
   }
 
   handleLeaveWaitlist = () => {
-    if (this.props.userIsDJ) {
-      return this.props.onSkipTurn({ remove: true });
-    } else if (this.props.user) {
-      return this.props.leaveWaitlist(this.props.user);
+    const {
+      user, userIsDJ, onSkipTurn, leaveWaitlist,
+    } = this.props;
+
+    if (userIsDJ) {
+      return onSkipTurn({ remove: true });
+    }
+    if (user) {
+      return leaveWaitlist(user);
     }
     return null;
   }
@@ -80,16 +91,17 @@ class FooterBar extends React.Component {
     } = this.props;
     const {
       user, userIsDJ, userInWaitlist,
+      currentDJ, waitlistIsLocked,
       playlist, nextMedia, showSkip,
       baseEta, mediaEndTime,
       voteStats,
+      className,
     } = this.props;
-    const className = cx('FooterBar', this.props.className);
 
     if (user && !user.isGuest) {
-      const canVote = !userIsDJ && !!this.props.currentDJ;
+      const canVote = !userIsDJ && !!currentDJ;
       return (
-        <div className={className}>
+        <div className={cx('FooterBar', className)}>
           <div className="FooterBar-user">
             <UserInfo
               user={user}
@@ -97,6 +109,7 @@ class FooterBar extends React.Component {
             />
           </div>
           <button
+            type="button"
             className="FooterBar-next"
             onClick={togglePlaylistManager}
           >
@@ -123,18 +136,18 @@ class FooterBar extends React.Component {
               {...voteStats}
             />
           </div>
-          {this.props.showSkip && (
+          {showSkip && (
             <div className="FooterBar-skip">
               <SkipButton
                 userIsDJ={userIsDJ}
-                currentDJ={this.props.currentDJ}
+                currentDJ={currentDJ}
                 onSkip={this.handleSkipTurn}
               />
             </div>
           )}
           <div className="FooterBar-join">
             <WaitlistButton
-              isLocked={this.props.waitlistIsLocked}
+              isLocked={waitlistIsLocked}
               userInWaitlist={userInWaitlist}
               onClick={userInWaitlist ? this.handleLeaveWaitlist : this.handleJoinWaitlist}
             />
@@ -142,8 +155,9 @@ class FooterBar extends React.Component {
         </div>
       );
     }
+
     return (
-      <div className={className}>
+      <div className={cx('FooterBar', className)}>
         <SettingsButton onClick={toggleSettings} />
         <div className="FooterBar-guest">
           {t('login.message')}

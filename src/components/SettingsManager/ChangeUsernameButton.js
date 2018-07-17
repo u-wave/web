@@ -19,10 +19,6 @@ class ChangeUsernameButton extends React.Component {
     changingUsername: false,
   };
 
-  closeDialog() {
-    this.setState({ changingUsername: false });
-  }
-
   handleOpen = () => {
     this.setState({ changingUsername: true });
   };
@@ -32,23 +28,31 @@ class ChangeUsernameButton extends React.Component {
   };
 
   handleSubmit = (name) => {
-    if (name === this.props.initialUsername) {
+    const { initialUsername, onChangeUsername } = this.props;
+
+    if (name === initialUsername) {
       this.closeDialog();
       return null;
     }
-    return this.props.onChangeUsername(name)
+    return onChangeUsername(name)
       .then(this.closeDialog.bind(this));
   };
 
+  closeDialog() {
+    this.setState({ changingUsername: false });
+  }
+
   render() {
     const { t, initialUsername } = this.props;
+    const { changingUsername } = this.state;
+
     return (
       <React.Fragment>
         <IconButton className="ChangeUsernameButton" onClick={this.handleOpen}>
           <EditIcon className="ChangeUsernameButton-icon" />
         </IconButton>
         <DialogCloseAnimation delay={450}>
-          {this.state.changingUsername ? (
+          {changingUsername ? (
             <PromptDialog
               title={t('settings.profile.username.change')}
               submitLabel={t('settings.profile.username.save')}

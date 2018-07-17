@@ -58,47 +58,50 @@ class ChatInput extends React.Component {
     value: '',
   };
 
-  clear() {
-    this.setState({ value: '' });
-  }
-
   handleFocus = () => {
     this.setState({ focused: true });
   };
+
   handleBlur = () => {
     this.setState({ focused: false });
   };
 
   handleKeyDown = (e) => {
+    const { onSend, onScroll } = this.props;
+
     e.stopPropagation();
     if (e.key === 'Enter') {
       const value = e.target.value.trim();
       if (value.length > 0) {
-        this.props.onSend(value);
+        onSend(value);
       }
       this.clear();
     }
     if (e.key === 'PageUp') {
       e.preventDefault();
-      this.props.onScroll(-1);
+      onScroll(-1);
     }
     if (e.key === 'PageDown') {
       e.preventDefault();
-      this.props.onScroll(1);
+      onScroll(1);
     }
     if (e.key === 'End' && e.ctrlKey) {
       e.preventDefault();
-      this.props.onScroll('end');
+      onScroll('end');
     }
     if (e.key === 'Home' && e.ctrlKey) {
       e.preventDefault();
-      this.props.onScroll('start');
+      onScroll('start');
     }
   };
 
   handleUpdate = (newValue) => {
     this.setState({ value: newValue });
   };
+
+  clear() {
+    this.setState({ value: '' });
+  }
 
   render() {
     const {
@@ -111,7 +114,9 @@ class ChatInput extends React.Component {
       mentionableGroups,
       availableEmoji,
     } = this.props;
+
     const focusClass = focused ? 'is-focused' : '';
+
     return (
       <div className={cx('ChatInput', focusClass)}>
         <AutoComplete

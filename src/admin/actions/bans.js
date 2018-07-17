@@ -33,7 +33,6 @@ export function unbanUser(user) {
 }
 
 export function unbanUserAndReload(user) {
-  return dispatch =>
-    dispatch(unbanUser(user))
-      .then(() => dispatch(loadBans()));
+  return dispatch => dispatch(unbanUser(user))
+    .then(() => dispatch(loadBans()));
 }

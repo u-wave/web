@@ -9,8 +9,7 @@ import MediaLoadingIndicator from './MediaLoadingIndicator';
 import MediaThumbnail from './MediaThumbnail';
 import Actions from './Actions';
 
-const inSelection = (selection, media) =>
-  selection.some(item => item._id === media._id);
+const inSelection = (selection, media) => selection.some(item => item._id === media._id);
 
 const mediaSource = {
   beginDrag({ selection, media }) {
@@ -46,17 +45,20 @@ class Row extends React.Component {
   };
 
   componentDidMount() {
-    this.props.connectDragPreview(getEmptyImage());
+    const { connectDragPreview } = this.props;
+    connectDragPreview(getEmptyImage());
   }
 
   handleKeyPress = (event) => {
+    const { onClick } = this.props;
     if (event.code === 'Space') {
-      this.props.onClick();
+      onClick();
     }
   };
 
   handleDoubleClick = () => {
-    this.props.onOpenPreviewMediaDialog(this.props.media);
+    const { onOpenPreviewMediaDialog, media } = this.props;
+    onOpenPreviewMediaDialog(media);
   };
 
   render() {

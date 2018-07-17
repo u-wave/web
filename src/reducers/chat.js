@@ -32,10 +32,10 @@ const initialState = {
 function removeInFlightMessage(messages, remove) {
   return messages.filter(message => (
     // keep if this message is not in flight
-    !message.inFlight ||
+    !message.inFlight
     // or is not the message we're looking for
-    message.userID !== remove.userID ||
-    message.text !== remove.text
+    || message.userID !== remove.userID
+    || message.text !== remove.text
   ));
 }
 

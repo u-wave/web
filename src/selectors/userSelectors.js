@@ -72,8 +72,7 @@ export const userListSelector = createSelector(
   rolesSelector,
   superUserRoleSelector,
   usersSelector,
-  (roles, superuserRole, users) =>
-    Object.values(users).sort(compareUsers(roles, superuserRole)),
+  (roles, superuserRole, users) => Object.values(users).sort(compareUsers(roles, superuserRole)),
 );
 
 export const userCountSelector = createSelector(
@@ -118,8 +117,7 @@ export const userHasRoleSelector = createSelector(
 //
 export const hasRoleSelector = createSelector(
   userHasRoleSelector,
-  userHasRole =>
-    (user, role) => userHasRole(user)(role),
+  userHasRole => (user, role) => userHasRole(user)(role),
 );
 
 export const currentUserHasRoleSelector = createSelector(

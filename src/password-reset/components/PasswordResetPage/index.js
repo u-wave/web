@@ -24,11 +24,6 @@ class PasswordResetPage extends React.Component {
     newPasswordConfirm: '',
   };
 
-  isValid() {
-    return this.state.newPassword.length >= 6 &&
-      this.state.newPassword === this.state.newPasswordConfirm;
-  }
-
   handlePasswordChange = (event) => {
     this.setState({
       newPassword: event.target.value,
@@ -42,15 +37,26 @@ class PasswordResetPage extends React.Component {
   };
 
   handleSubmit = (event) => {
+    const { onSubmit } = this.props;
+    const { newPassword } = this.state;
+
     event.preventDefault();
 
     if (this.isValid()) {
-      this.props.onSubmit(this.state.newPassword);
+      onSubmit(newPassword);
     }
   };
 
+  isValid() {
+    const { newPassword, newPasswordConfirm } = this.state;
+
+    return newPassword.length >= 6
+      && newPassword === newPasswordConfirm;
+  }
+
   render() {
     const { t, email } = this.props;
+    const { newPassword, newPasswordConfirm } = this.state;
     const isValid = this.isValid();
 
     return (
@@ -78,7 +84,7 @@ class PasswordResetPage extends React.Component {
             <TextField
               type="password"
               autocomplete="new-password"
-              value={this.state.newPassword}
+              value={newPassword}
               onChange={this.handlePasswordChange}
               placeholder={t('login.password')}
               icon={<PasswordIcon nativeColor="#9f9d9e" />}
@@ -88,7 +94,7 @@ class PasswordResetPage extends React.Component {
             <TextField
               type="password"
               autocomplete="new-password"
-              value={this.state.newPasswordConfirm}
+              value={newPasswordConfirm}
               onChange={this.handlePasswordConfirmChange}
               placeholder={t('login.password')}
               icon={<PasswordIcon nativeColor="#9f9d9e" />}

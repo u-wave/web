@@ -19,6 +19,7 @@ class SearchBar extends React.Component {
   handleFocus = () => {
     this.setState({ focused: true });
   };
+
   handleBlur = () => {
     this.setState({ focused: false });
   };
@@ -35,10 +36,11 @@ class SearchBar extends React.Component {
   };
 
   render() {
-    const { t, children } = this.props;
+    const { t, children, className } = this.props;
     const { focused } = this.state;
+
     return (
-      <div className={cx('SearchBar', focused ? 'is-focused' : '', this.props.className)}>
+      <div className={cx('SearchBar', focused ? 'is-focused' : '', className)}>
         <div className="SearchBar-icon">
           <SearchIcon />
         </div>

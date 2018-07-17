@@ -13,9 +13,15 @@ const LoadingRow = ({
     {...attrs}
   >
     <MediaLoadingIndicator className="MediaListRow-loader" />
-    <div className="MediaListRow-artist"> … </div>
-    <div className="MediaListRow-title"> … </div>
-    <div className="MediaListRow-duration"> … </div>
+    <div className="MediaListRow-artist">
+      {' … '}
+    </div>
+    <div className="MediaListRow-title">
+      {' … '}
+    </div>
+    <div className="MediaListRow-duration">
+      {' … '}
+    </div>
   </div>
 );
 

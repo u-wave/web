@@ -54,10 +54,9 @@ class AppContainer extends React.Component {
   };
 
   getChildContext() {
-    return {
-      mediaSources: this.props.mediaSources,
-      uwave: this.props.uwave,
-    };
+    const { uwave, mediaSources } = this.props;
+
+    return { uwave, mediaSources };
   }
 
   componentDidMount() {
@@ -65,11 +64,13 @@ class AppContainer extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.language !== prevProps.language) {
-      this.props.locale.changeLanguage(this.props.language);
+    const { locale, language, theme } = this.props;
+
+    if (language !== prevProps.language) {
+      locale.changeLanguage(language);
     }
 
-    if (this.props.theme !== prevProps.theme) {
+    if (theme !== prevProps.theme) {
       this.applyThemeProperties();
     }
   }
@@ -99,18 +100,21 @@ class AppContainer extends React.Component {
   );
 
   render() {
-    if (this.state.error) {
+    const { theme, locale } = this.props;
+    const { error } = this.state;
+
+    if (error) {
       // Let's hope the ThemeProvider works at least...
       return (
-        <MuiThemeProvider theme={this.props.theme}>
-          <FatalError error={this.state.error} />
+        <MuiThemeProvider theme={theme}>
+          <FatalError error={error} />
         </MuiThemeProvider>
       );
     }
 
     return (
-      <MuiThemeProvider theme={this.props.theme}>
-        <I18nextProvider i18n={this.props.locale}>
+      <MuiThemeProvider theme={theme}>
+        <I18nextProvider i18n={locale}>
           <SimpleProviders>
             {this.renderApp()}
           </SimpleProviders>

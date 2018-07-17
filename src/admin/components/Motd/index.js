@@ -16,20 +16,28 @@ import parse from 'u-wave-parse-chat-markup';
 import compile from '../../../components/Chat/Markup/compile';
 
 const enhance = compose(
-  withState('newMotd', 'setMotd', props => props.motd),
+  withState('newMotd', 'setMotd', ({ motd }) => motd),
   withState('expanded', 'setExpanded', false),
-  withProps(props => ({
-    parsedMotd: compile(parse(props.newMotd), props.compileOptions),
-    onExpand: () => props.setExpanded(!props.expanded),
-  })),
+  withProps((props) => {
+    const {
+      newMotd, compileOptions, expanded, setExpanded,
+    } = props;
+
+    return {
+      parsedMotd: compile(parse(newMotd), compileOptions),
+      onExpand: () => setExpanded(!expanded),
+    };
+  }),
   withHandlers({
-    onChange: props => (event) => {
-      props.setMotd(event.target.value);
+    onChange: ({ setMotd }) => (event) => {
+      setMotd(event.target.value);
     },
     onSubmit: props => (event) => {
+      const { onSetMotd, newMotd, setExpanded } = props;
+
       event.preventDefault();
-      props.onSetMotd(props.newMotd);
-      props.setExpanded(false);
+      onSetMotd(newMotd);
+      setExpanded(false);
     },
   }),
 );

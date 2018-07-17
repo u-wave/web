@@ -41,21 +41,28 @@ const selectionOrOne = (media, selection) => {
   return [media];
 };
 
-const onOpenAddMediaMenu = (position, media, selection) =>
-  addMediaMenu(selectionOrOne(media, selection), position);
-const onRemoveFromPlaylist = playlist => (media, selection) =>
-  removeMedia(playlist, selectionOrOne(media, selection));
-const onMoveMedia = playlist => (media, opts) =>
-  moveMedia(playlist, media, opts);
-const onMoveToFirst = playlist => (media, selection) =>
-  moveMedia(playlist, selectionOrOne(media, selection), { at: 'start' });
-const onMoveToLast = playlist => (media, selection) =>
-  moveMedia(playlist, selectionOrOne(media, selection), { at: 'end' });
-const onEditMedia = playlist => media =>
-  editMedia(playlist, media);
+const onOpenAddMediaMenu = (position, media, selection) => (
+  addMediaMenu(selectionOrOne(media, selection), position)
+);
+const onRemoveFromPlaylist = playlist => (media, selection) => (
+  removeMedia(playlist, selectionOrOne(media, selection))
+);
+const onMoveMedia = playlist => (media, opts) => (
+  moveMedia(playlist, media, opts)
+);
+const onMoveToFirst = playlist => (media, selection) => (
+  moveMedia(playlist, selectionOrOne(media, selection), { at: 'start' })
+);
+const onMoveToLast = playlist => (media, selection) => (
+  moveMedia(playlist, selectionOrOne(media, selection), { at: 'end' })
+);
+const onEditMedia = playlist => media => (
+  editMedia(playlist, media)
+);
 const onLoadPlaylistPage = ({ isFiltered, playlist }) => page => (
-  isFiltered ? loadFilteredPlaylistItems(playlist._id, page) :
-    loadPlaylist(playlist._id, page)
+  isFiltered
+    ? loadFilteredPlaylistItems(playlist._id, page)
+    : loadPlaylist(playlist._id, page)
 );
 
 // Most of the playlist-related action creators need to know which playlist to

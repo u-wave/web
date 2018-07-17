@@ -411,39 +411,44 @@ export default function reduce(state = initialState, action = {}) {
       );
 
     case UPDATE_MEDIA_START:
-      return updatePlaylistItems(state, payload.playlistID, items =>
+      return updatePlaylistItems(state, payload.playlistID, items => (
         items.map(media => (
           media && media._id === payload.mediaID
             ? { ...media, loading: true }
             : media
-        )));
+        ))
+      ));
     case UPDATE_MEDIA_COMPLETE:
-      return updatePlaylistItems(state, payload.playlistID, items =>
+      return updatePlaylistItems(state, payload.playlistID, items => (
         items.map(media => (
           media && media._id === payload.mediaID
             ? { ...media, ...payload.media, loading: false }
             : media
-        )));
+        ))
+      ));
 
     case MOVE_MEDIA_START: {
       const isMovingMedia = indexBy(payload.medias, '_id');
-      return updatePlaylistItems(state, payload.playlistID, items =>
+      return updatePlaylistItems(state, payload.playlistID, items => (
         items.map(media => media && ({
           ...media,
           loading: isMovingMedia[media._id] || media.loading,
-        })));
+        }))
+      ));
     }
     case MOVE_MEDIA_COMPLETE:
-      return updatePlaylistItems(state, payload.playlistID, items =>
-        processMove(items, payload.medias, payload.location));
+      return updatePlaylistItems(state, payload.playlistID, items => (
+        processMove(items, payload.medias, payload.location)
+      ));
 
     case REMOVE_MEDIA_START: {
       const isRemovingMedia = indexBy(payload.medias, '_id');
-      return updatePlaylistItems(state, payload.playlistID, items =>
+      return updatePlaylistItems(state, payload.playlistID, items => (
         items.map(media => media && ({
           ...media,
           loading: isRemovingMedia[media._id] || media.loading,
-        })));
+        }))
+      ));
     }
     case REMOVE_MEDIA_COMPLETE: {
       const isRemovedMedia = indexBy(payload.removedMedia, '_id');

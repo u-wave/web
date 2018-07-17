@@ -33,22 +33,25 @@ export default class ConfirmDialog extends React.Component {
   };
 
   handleConfirm = (event) => {
+    const { onConfirm } = this.props;
+
     event.preventDefault();
-    const promise = this.props.onConfirm();
-    if (promise && promise.then) {
+    const promise = onConfirm();
+    if (promise && promise.finally) {
       this.setState({ busy: true });
-      const onDone = () => {
+      promise.finally(() => {
         this.setState({ busy: false });
-      };
-      promise.then(onDone, onDone);
+      });
     }
   };
 
   handleClose = (event) => {
+    const { onCancel } = this.props;
+
     if (event && event.preventDefault) {
       event.preventDefault();
     }
-    this.props.onCancel();
+    onCancel();
   };
 
   render() {

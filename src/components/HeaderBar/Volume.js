@@ -25,19 +25,25 @@ class Volume extends React.Component {
   };
 
   shouldComponentUpdate(nextProps) {
-    return this.props.volume !== nextProps.volume ||
-      this.props.muted !== nextProps.muted;
+    const { volume, muted } = this.props;
+
+    return volume !== nextProps.volume
+      || muted !== nextProps.muted;
   }
 
   handleVolumeChange = (e, volume) => {
-    this.props.onVolumeChange(volume);
+    const { onVolumeChange } = this.props;
+
+    onVolumeChange(volume);
   };
 
   handleMuteClick = () => {
-    if (this.props.muted) {
-      this.props.onUnmute();
+    const { muted, onMute, onUnmute } = this.props;
+
+    if (muted) {
+      onUnmute();
     } else {
-      this.props.onMute();
+      onMute();
     }
   };
 

@@ -22,25 +22,34 @@ export default class ReCaptcha extends React.Component {
   };
 
   componentDidMount() {
-    if (!this.state.grecaptcha) {
-      if (typeof window[onloadCallbackName] !== 'function') {
-        window[onloadCallbackName] = onload;
-      }
+    const { grecaptcha } = this.state;
 
-      loadReCaptcha((grecaptcha) => {
-        this.setState({ grecaptcha });
-      });
+    if (!grecaptcha) {
+      this.load();
     }
   }
 
+  load() {
+    if (typeof window[onloadCallbackName] !== 'function') {
+      window[onloadCallbackName] = onload;
+    }
+
+    loadReCaptcha((grecaptcha) => {
+      this.setState({ grecaptcha });
+    });
+  }
+
   render() {
-    if (!this.state.grecaptcha) {
+    const { grecaptcha } = this.state;
+
+    if (!grecaptcha) {
       return <CircularProgress className="ReCaptcha-spinner" />;
     }
+
     return (
       <InternalCaptcha
         {...this.props}
-        grecaptcha={this.state.grecaptcha}
+        grecaptcha={grecaptcha}
       />
     );
   }

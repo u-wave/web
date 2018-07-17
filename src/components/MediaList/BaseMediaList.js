@@ -40,16 +40,22 @@ export default class BaseMediaList extends React.Component {
     makeActions: () => <span />,
   };
 
-  state = { selection: itemSelection(this.props.media) };
+  state = {
+    // eslint-disable-next-line react/destructuring-assignment
+    selection: itemSelection(this.props.media),
+  };
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.media !== this.props.media) {
-      const selection = this.state.selection.getIndices();
-      const mediaChanged = didMediaChange(this.props.media, nextProps.media);
+    const { media } = this.props;
+    const { selection } = this.state;
+
+    if (nextProps.media !== media) {
+      const selectedIndices = selection.getIndices();
+      const mediaChanged = didMediaChange(media, nextProps.media);
       this.setState({
         selection: mediaChanged
           ? itemSelection(nextProps.media)
-          : itemSelection(nextProps.media, selection),
+          : itemSelection(nextProps.media, selectedIndices),
       });
     }
   }
@@ -71,7 +77,7 @@ export default class BaseMediaList extends React.Component {
   }
 
   renderList = (items, ref) => {
-    const ListComponent = this.props.listComponent;
+    const { listComponent: ListComponent } = this.props;
 
     return (
       <ListComponent ref={ref}>
@@ -81,12 +87,17 @@ export default class BaseMediaList extends React.Component {
   };
 
   renderRow = (index) => {
-    const { makeActions } = this.props;
-    const props = this.props.rowProps || {};
-    const media = this.props.media[index];
+    const {
+      makeActions,
+      rowProps: props = {},
+      media,
+      rowComponent: RowComponent,
+      onOpenPreviewMediaDialog,
+    } = this.props;
     const { selection } = this.state;
+
     const selected = selection.isSelectedIndex(index);
-    if (!media) {
+    if (!media[index]) {
       return (
         <LoadingRow
           key={index}
@@ -95,17 +106,17 @@ export default class BaseMediaList extends React.Component {
         />
       );
     }
-    const MediaRow = this.props.rowComponent;
+
     return (
-      <MediaRow
-        key={media ? media._id : index}
+      <RowComponent
+        key={media[index] ? media[index]._id : index}
         {...props}
         className="MediaList-row"
-        media={media}
+        media={media[index]}
         selected={selected}
         selection={selection.get()}
         onClick={e => this.selectItem(index, e)}
-        onOpenPreviewMediaDialog={this.props.onOpenPreviewMediaDialog}
+        onOpenPreviewMediaDialog={onOpenPreviewMediaDialog}
         makeActions={() => makeActions(media, selection, index)}
       />
     );
@@ -115,6 +126,8 @@ export default class BaseMediaList extends React.Component {
     const {
       className, media, size, onRequestPage,
     } = this.props;
+    const { selection } = this.state;
+
     let list = (
       <BaseList
         itemsRenderer={this.renderList}
@@ -122,9 +135,10 @@ export default class BaseMediaList extends React.Component {
         length={size || media.length}
         type="uniform"
         forceUpdateOnMediaChange={media}
-        forceUpdateOnSelectionChange={this.state.selection}
+        forceUpdateOnSelectionChange={selection}
       />
     );
+
     if (onRequestPage) {
       list = (
         <LazyList
@@ -137,6 +151,7 @@ export default class BaseMediaList extends React.Component {
         </LazyList>
       );
     }
+
     return (
       <div className={cx('MediaList', className)}>
         {list}

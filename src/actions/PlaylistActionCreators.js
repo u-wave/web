@@ -17,7 +17,9 @@ import {
   SHUFFLE_PLAYLIST_START, SHUFFLE_PLAYLIST_COMPLETE,
 } from '../constants/ActionTypes';
 import { openEditMediaDialog } from './DialogActionCreators';
-import { del, get, post, put } from './RequestActionCreators';
+import {
+  del, get, post, put,
+} from './RequestActionCreators';
 import {
   playlistsSelector,
   playlistItemsSelector,
@@ -166,8 +168,8 @@ function shouldLoadAfterCycle(playlist) {
   }
   // If the first page _after_ cycle is fully loaded, we also don't need to do
   // anything.
-  if (media.length > MEDIA_PAGE_SIZE &&
-      media.slice(1, 1 + MEDIA_PAGE_SIZE).every(Boolean)) {
+  if (media.length > MEDIA_PAGE_SIZE
+      && media.slice(1, 1 + MEDIA_PAGE_SIZE).every(Boolean)) {
     return false;
   }
   // Otherwise, there will be unloaded items on the first page after cycling,
@@ -339,8 +341,8 @@ export function cannotDeleteActivePlaylist(playlistID) {
   return {
     type: DELETE_PLAYLIST_COMPLETE,
     error: true,
-    payload: new Error('The active playlist cannot be deleted. ' +
-      'Activate a different playlist first, before deleting this one.'),
+    payload: new Error('The active playlist cannot be deleted. '
+      + 'Activate a different playlist first, before deleting this one.'),
     meta: { playlistID },
   };
 }

@@ -2,10 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Tooltip from '@material-ui/core/Tooltip';
 
-const shortcode = name =>
-  `:${name}:`;
-const url = filename =>
-  `/assets/emoji/${filename}`;
+const shortcode = name => `:${name}:`;
+const url = filename => `/assets/emoji/${filename}`;
 
 const Emoji = ({ name, image }) => (
   <Tooltip title={shortcode(name)} placement="top">

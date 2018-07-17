@@ -13,14 +13,14 @@ import Username from '../Username';
 import Position from './Position';
 
 const userSource = {
-  beginDrag(props) {
-    return { user: props.user };
+  beginDrag({ user }) {
+    return { user };
   },
-  endDrag(props, monitor) {
+  endDrag({ onMoveUser }, monitor) {
     const result = monitor.getDropResult();
     const item = monitor.getItem();
     if (item.user && result) {
-      props.onMoveUser(result.position);
+      onMoveUser(result.position);
     }
   },
 };
@@ -55,6 +55,7 @@ const ModRowBase = ({
   >
     <Position position={position + 1} />
     <button
+      type="button"
       className="WaitlistRow-card"
       onClick={onOpenCard}
     >
@@ -71,6 +72,7 @@ const ModRowBase = ({
         </div>
       ))}
       <button
+        type="button"
         className="WaitlistRow-tool WaitlistRow-remove"
         onClick={onRemoveUser}
       >
@@ -95,8 +97,10 @@ export default compose(
   userCardable(),
   withProps(props => ({
     onOpenCard(event) {
+      const { openUserCard, user } = props;
+
       event.preventDefault();
-      props.openUserCard(props.user);
+      openUserCard(user);
     },
   })),
 )(ModRowBase);

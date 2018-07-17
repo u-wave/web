@@ -1,16 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createTimer, stopTimer } from '../../actions/TickerActionCreators';
+import {
+  createTimer as createTimerAction,
+  stopTimer as stopTimerAction,
+} from '../../actions/TickerActionCreators';
 
 const mapDispatchToProps = {
-  createTimer,
-  stopTimer,
+  createTimer: createTimerAction,
+  stopTimer: stopTimerAction,
 };
 
 const enhance = connect(null, mapDispatchToProps);
 
 class ClockProvider extends React.Component {
+  timerCallbacks = {
+    add: cb => this.setState(s => ({
+      callbacks: s.callbacks.concat(cb),
+    })),
+    remove: cb => this.setState(s => ({
+      callbacks: s.callbacks.filter(cb1 => cb1 !== cb),
+    })),
+  };
+
   static propTypes = {
     createTimer: PropTypes.func.isRequired,
     stopTimer: PropTypes.func.isRequired,
@@ -33,28 +45,26 @@ class ClockProvider extends React.Component {
   }
 
   componentDidMount() {
+    const { createTimer } = this.props;
+    const { callbacks } = this.state;
+
     // Start the clock! üWave stores the current time in the application state
     // primarily to make sure that different timers in the UI update simultaneously.
-    this.props.createTimer(() => {
-      this.state.callbacks.forEach(cb => cb());
+    createTimer(() => {
+      callbacks.forEach(cb => cb());
     });
   }
 
   componentWillUnmount() {
-    this.props.stopTimer();
+    const { stopTimer } = this.props;
+
+    stopTimer();
   }
 
-  timerCallbacks = {
-    add: cb => this.setState(s => ({
-      callbacks: s.callbacks.concat(cb),
-    })),
-    remove: cb => this.setState(s => ({
-      callbacks: s.callbacks.filter(cb1 => cb1 !== cb),
-    })),
-  };
-
   render() {
-    return this.props.children;
+    const { children } = this.props;
+
+    return children;
   }
 }
 

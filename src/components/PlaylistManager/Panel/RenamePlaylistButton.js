@@ -19,10 +19,6 @@ class RenamePlaylistButton extends React.Component {
     renaming: false,
   };
 
-  closeDialog() {
-    this.setState({ renaming: false });
-  }
-
   handleOpen = () => {
     this.setState({ renaming: true });
   };
@@ -31,12 +27,21 @@ class RenamePlaylistButton extends React.Component {
     this.closeDialog();
   };
 
-  handleSubmit = name =>
-    this.props.onRename(name)
+  handleSubmit = (name) => {
+    const { onRename } = this.props;
+
+    return onRename(name)
       .then(this.closeDialog.bind(this));
+  };
+
+  closeDialog() {
+    this.setState({ renaming: false });
+  }
 
   render() {
-    const { t } = this.props;
+    const { t, initialName } = this.props;
+    const { renaming } = this.state;
+
     return (
       <React.Fragment>
         <Tooltip title={t('playlists.rename')} placement="top">
@@ -44,12 +49,12 @@ class RenamePlaylistButton extends React.Component {
             <EditIcon />
           </IconButton>
         </Tooltip>
-        {this.state.renaming && (
+        {renaming && (
           <PromptDialog
             title={t('dialogs.renamePlaylist.nameInputTitle')}
             submitLabel={t('dialogs.renamePlaylist.action')}
             icon={<EditIcon nativeColor="#777" />}
-            value={this.props.initialName}
+            value={initialName}
             onSubmit={this.handleSubmit}
             onCancel={this.handleClose}
           />

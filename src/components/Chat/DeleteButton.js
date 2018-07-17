@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 const DeleteButton = ({ onDelete }) => (
   <button
+    type="button"
     className="ChatMessage-delete"
     onClick={onDelete}
   >

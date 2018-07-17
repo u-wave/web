@@ -14,16 +14,20 @@ export default class ReCaptcha extends React.Component {
   };
 
   componentDidMount() {
-    this.props.grecaptcha.render(this.container, {
-      sitekey: this.props.sitekey,
+    const { grecaptcha, sitekey, theme } = this.props;
+
+    grecaptcha.render(this.container, {
+      sitekey,
+      theme,
       callback: this.handleResponse,
-      theme: this.props.theme,
     });
   }
 
   handleResponse = (res) => {
-    if (this.props.onResponse) {
-      this.props.onResponse(res);
+    const { onResponse } = this.props;
+
+    if (onResponse) {
+      onResponse(res);
     }
   };
 

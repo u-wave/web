@@ -6,12 +6,13 @@ import withProps from 'recompose/withProps';
 import withHandlers from 'recompose/withHandlers';
 
 const enhance = compose(
-  withProps(props => ({
-    onFilterDebounced: debounce(props.onFilter, 200),
+  withProps(({ onFilter }) => ({
+    onFilterDebounced: debounce(onFilter, 200),
   })),
   withHandlers({
-    onChange: props => event =>
-      props.onFilterDebounced(event.target.value),
+    onChange: ({ onFilterDebounced }) => (
+      event => onFilterDebounced(event.target.value)
+    ),
   }),
 );
 

@@ -20,19 +20,25 @@ const enhance = compose(
     // Prevent defaults for react-tap-event-plugin:
     // https://github.com/zilverline/react-tap-event-plugin/issues/77
     onShowAbout: props => (event) => {
+      const { onShowAbout, onDrawerClose } = props;
+
       event.preventDefault();
-      props.onShowAbout();
-      props.onDrawerClose();
+      onShowAbout();
+      onDrawerClose();
     },
     onShowServerList: props => (event) => {
+      const { onShowServerList, onDrawerClose } = props;
+
       event.preventDefault();
-      props.onShowServerList();
-      props.onDrawerClose();
+      onShowServerList();
+      onDrawerClose();
     },
     onShowSettings: props => (event) => {
+      const { onShowSettings, onDrawerClose } = props;
+
       event.preventDefault();
-      props.onShowSettings();
-      props.onDrawerClose();
+      onShowSettings();
+      onDrawerClose();
     },
   }),
 );

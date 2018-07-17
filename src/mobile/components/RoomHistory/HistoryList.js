@@ -10,9 +10,9 @@ const HistoryList = withProps({
   listComponent: React.forwardRef((props, ref) => (
     <List
       {...props}
-      ref={list =>
+      ref={list => (
         ref(list && ReactDOM.findDOMNode(list)) // eslint-disable-line react/no-find-dom-node
-      }
+      )}
     />
   )),
   rowComponent: HistoryRow,

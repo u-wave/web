@@ -16,11 +16,12 @@ const enhance = compose(
   pure,
   userCardable(),
   withHandlers({
-    onDeleteClick: props => () =>
-      props.onDelete(props._id),
+    onDeleteClick: ({ onDelete, _id: id }) => () => onDelete(id),
     onUsernameClick: props => (event) => {
+      const { openUserCard, user } = props;
+
       event.preventDefault();
-      props.openUserCard(props.user);
+      openUserCard(user);
     },
   }),
 );
@@ -71,6 +72,7 @@ const Message = ({
           <MessageTimestamp date={date} />
         </div>
         <button
+          type="button"
           className="ChatMessage-username ChatMessage-cardable"
           onClick={onUsernameClick}
         >

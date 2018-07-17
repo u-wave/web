@@ -4,7 +4,6 @@ import { translate } from 'react-i18next';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
-
 import ConfirmDialog from '../../Dialogs/ConfirmDialog';
 import FormGroup from '../../Form/Group';
 
@@ -22,13 +21,11 @@ class DeletePlaylistButton extends React.Component {
     deleting: false,
   };
 
-  closeDialog() {
-    this.setState({ deleting: false });
-  }
-
   handleOpen = () => {
-    if (this.props.active) {
-      this.props.onNotDeletable();
+    const { active, onNotDeletable } = this.props;
+
+    if (active) {
+      onNotDeletable();
     } else {
       this.setState({ deleting: true });
     }
@@ -38,12 +35,21 @@ class DeletePlaylistButton extends React.Component {
     this.closeDialog();
   };
 
-  handleConfirm = name =>
-    this.props.onDelete(name)
+  handleConfirm = (name) => {
+    const { onDelete } = this.props;
+
+    return onDelete(name)
       .then(this.closeDialog.bind(this));
+  };
+
+  closeDialog() {
+    this.setState({ deleting: false });
+  }
 
   render() {
     const { t, active } = this.props;
+    const { deleting } = this.state;
+
     return (
       <React.Fragment>
         <Tooltip title={active ? t('playlists.deleteActive') : t('playlists.delete')} placement="top">
@@ -55,7 +61,7 @@ class DeletePlaylistButton extends React.Component {
             <DeleteIcon />
           </IconButton>
         </Tooltip>
-        {this.state.deleting && (
+        {deleting && (
           <ConfirmDialog
             title={t('dialogs.deletePlaylist.title')}
             confirmLabel={t('dialogs.deletePlaylist.action')}

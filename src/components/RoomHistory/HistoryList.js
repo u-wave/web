@@ -5,22 +5,20 @@ import Base from '../MediaList/BaseMediaList';
 import AddToPlaylistAction from '../MediaList/Actions/AddToPlaylist';
 import HistoryRow from './Row';
 
-const addMediaActions = onOpenAddMediaMenu =>
-  (media, selection) => [
-    <AddToPlaylistAction
-      key="add"
-      onAdd={position => onOpenAddMediaMenu(position, media, selection)}
-    />,
-  ];
+const addMediaActions = onOpenAddMediaMenu => (media, selection) => (
+  <React.Fragment>
+    <AddToPlaylistAction onAdd={position => onOpenAddMediaMenu(position, media, selection)} />
+  </React.Fragment>
+);
 
 const noActions = () => [];
 
-const HistoryList = withProps(props => ({
+const HistoryList = withProps(({ onOpenAddMediaMenu }) => ({
   className: 'RoomHistory-list',
   listComponent: 'div',
   rowComponent: HistoryRow,
-  makeActions: props.onOpenAddMediaMenu
-    ? addMediaActions(props.onOpenAddMediaMenu)
+  makeActions: onOpenAddMediaMenu
+    ? addMediaActions(onOpenAddMediaMenu)
     : noActions,
 }))(Base);
 
