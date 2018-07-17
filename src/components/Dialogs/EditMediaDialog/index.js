@@ -29,6 +29,12 @@ const enhance = translate();
 const BASE_TAB_INDEX = 1000;
 
 class EditMediaDialog extends React.Component {
+  titleId = uniqueId('title');
+
+  startId = uniqueId('start');
+
+  endId = uniqueId('end');
+
   static propTypes = {
     t: PropTypes.func.isRequired,
     open: PropTypes.bool,
@@ -44,17 +50,13 @@ class EditMediaDialog extends React.Component {
 
   state = {
     errors: null,
+    /* eslint-disable react/destructuring-assignment */
     artist: this.props.media.artist,
     title: this.props.media.title,
     start: formatDuration(this.props.media.start * 1000),
     end: formatDuration(this.props.media.end * 1000),
+    /* eslint-enable react/destructuring-assignment */
   };
-
-  title = uniqueId('editmedia');
-
-  labelStart = uniqueId('editmedia');
-
-  labelEnd = uniqueId('editmedia');
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -110,10 +112,10 @@ class EditMediaDialog extends React.Component {
   };
 
   handleSwapArtistTitle = () => {
-    this.setState({
-      artist: this.state.title,
-      title: this.state.artist,
-    });
+    this.setState(({ artist, title }) => ({
+      artist: title,
+      title: artist,
+    }));
   };
 
   renderForm() {
@@ -160,13 +162,13 @@ class EditMediaDialog extends React.Component {
 
     const fromLabel = (
       // eslint-disable-next-line jsx-a11y/label-has-for
-      <label htmlFor={this.labelStart} className="EditMediaDialogGroup-label">
+      <label htmlFor={this.startId} className="EditMediaDialogGroup-label">
         {t('dialogs.editMedia.playFromLabel')}
       </label>
     );
     const fromInput = (
       <TextField
-        id={this.labelStart}
+        id={this.startId}
         className="EditMediaDialogGroup-field"
         placeholder="0:00"
         value={start}
@@ -177,13 +179,13 @@ class EditMediaDialog extends React.Component {
     );
     const toLabel = (
       // eslint-disable-next-line jsx-a11y/label-has-for
-      <label htmlFor={this.labelEnd} className="EditMediaDialogGroup-label">
+      <label htmlFor={this.endId} className="EditMediaDialogGroup-label">
         {t('dialogs.editMedia.playToLabel')}
       </label>
     );
     const toInput = (
       <TextField
-        id={this.labelEnd}
+        id={this.endId}
         className="EditMediaDialogGroup-field"
         placeholder={formatDuration(media.duration)}
         value={end}
@@ -257,9 +259,9 @@ class EditMediaDialog extends React.Component {
             }}
             open={open}
             onClose={onCloseDialog}
-            aria-labelledby={this.title}
+            aria-labelledby={this.titleId}
           >
-            <DialogTitle id={this.title} className={cx('Dialog-title', titleClassName)}>
+            <DialogTitle id={this.titleId} className={cx('Dialog-title', titleClassName)}>
               {t('dialogs.editMedia.title')}
             </DialogTitle>
             <DialogContent className={cx('Dialog-body', bodyClassName)}>

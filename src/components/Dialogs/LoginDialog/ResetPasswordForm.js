@@ -24,9 +24,11 @@ class ResetPasswordForm extends React.Component {
   };
 
   handleSubmit = (event) => {
+    const { onResetPassword } = this.props;
+
     event.preventDefault();
     this.setState({ busy: true });
-    Promise.resolve(this.props.onResetPassword({
+    Promise.resolve(onResetPassword({
       email: this.email.value,
     })).then(() => {
       this.setState({
