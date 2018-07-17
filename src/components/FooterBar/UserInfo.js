@@ -10,6 +10,7 @@ const enhance = pure;
 
 const UserInfo = ({ className, user, onClick }) => (
   <button
+    type="button"
     className={cx('UserInfo', className)}
     onClick={onClick}
   >
