@@ -7,18 +7,21 @@ module.exports = (options) => {
       'postcss-url': {
         url: 'rebase',
       },
-      'postcss-cssnext': {
+      'postcss-preset-env': {
+        stage: 2,
         features: {
-          // Force enable custom properties so they can be used in color()
+          'nesting-rules': true,
+          // Force enable custom properties so they can be used in color-mod()
           // function calls even if the target browser does not support them.
-          customProperties: {
+          'custom-properties': {
             preserve: true,
+          },
+          'color-mod-function': {
+            unresolved: 'warn',
           },
         },
       },
-      cssnano: env === 'production' && {
-        autoprefixer: false,
-      },
+      cssnano: env === 'production' && {},
     },
   };
 };

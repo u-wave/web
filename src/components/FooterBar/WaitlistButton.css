@@ -35,5 +35,5 @@
   color: var(--text-color);
 }
 .WaitlistButton-icon--locked {
-  color: color(var(--text-color) alpha(* 70%));
+  color: color-mod(var(--text-color) alpha(* 70%));
 }
