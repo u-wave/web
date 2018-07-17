@@ -45,17 +45,20 @@ class Row extends React.Component {
   };
 
   componentDidMount() {
-    this.props.connectDragPreview(getEmptyImage());
+    const { connectDragPreview } = this.props;
+    connectDragPreview(getEmptyImage());
   }
 
   handleKeyPress = (event) => {
+    const { onClick } = this.props;
     if (event.code === 'Space') {
-      this.props.onClick();
+      onClick();
     }
   };
 
   handleDoubleClick = () => {
-    this.props.onOpenPreviewMediaDialog(this.props.media);
+    const { onOpenPreviewMediaDialog, media } = this.props;
+    onOpenPreviewMediaDialog(media);
   };
 
   render() {
