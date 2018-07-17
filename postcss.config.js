@@ -21,9 +21,7 @@ module.exports = (options) => {
           },
         },
       },
-      cssnano: env === 'production' && {
-        autoprefixer: false,
-      },
+      cssnano: env === 'production' && {},
     },
   };
 };
