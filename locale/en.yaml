@@ -104,6 +104,8 @@ uwave:
     playlist:
       empty: This playlist is empty
       emptySub: Search for songs or import a playlist.
+      filterEmpty: No results
+      filterEmptySub: No songs match that query.
     import:
       title: Import
     search:

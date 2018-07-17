@@ -5,6 +5,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import MediaList from '../../MediaList';
 import PlaylistMeta from './Meta';
 import PlaylistEmpty from './PlaylistEmpty';
+import PlaylistFilterEmpty from './PlaylistFilterEmpty';
 import PlainItemRow from '../../MediaList/Row';
 import PlaylistItemRow from './PlaylistItemRow';
 import AddToPlaylistAction from '../../MediaList/Actions/AddToPlaylist';
@@ -63,7 +64,9 @@ const PlaylistPanel = (props) => {
       </div>
     );
   } else if (media.length === 0) {
-    list = <PlaylistEmpty />;
+    list = isFiltered
+      ? <PlaylistFilterEmpty />
+      : <PlaylistEmpty />;
   } else {
     list = (
       <MediaList
