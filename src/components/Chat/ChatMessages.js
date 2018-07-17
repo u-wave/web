@@ -89,7 +89,9 @@ export default class ChatMessages extends React.Component {
   }
 
   handleResize = () => {
-    if (this.state.isScrolledToBottom) {
+    const { isScrolledToBottom } = this.state;
+
+    if (isScrolledToBottom) {
       this.scrollToBottom();
     }
   };
@@ -110,17 +112,21 @@ export default class ChatMessages extends React.Component {
   };
 
   renderMotd() {
-    if (!this.props.motd) {
+    const { motd, compileOptions } = this.props;
+
+    if (!motd) {
       return null;
     }
     return (
-      <Motd compileOptions={this.props.compileOptions}>
-        {this.props.motd}
+      <Motd compileOptions={compileOptions}>
+        {motd}
       </Motd>
     );
   }
 
   renderMessage(msg) {
+    const { compileOptions, canDeleteMessages, onDeleteMessage } = this.props;
+
     const SpecialMessage = specialMessages[msg.type];
     if (SpecialMessage) {
       return (
@@ -134,15 +140,16 @@ export default class ChatMessages extends React.Component {
     return (
       <Message
         key={msg._id}
-        compileOptions={this.props.compileOptions}
-        deletable={this.props.canDeleteMessages}
-        onDelete={this.props.onDeleteMessage}
+        compileOptions={compileOptions}
+        deletable={canDeleteMessages}
+        onDelete={onDeleteMessage}
         {...msg}
       />
     );
   }
 
   render() {
+    const { messages } = this.props;
     const { isScrolledToBottom } = this.state;
 
     return (
@@ -156,7 +163,7 @@ export default class ChatMessages extends React.Component {
           onClick={this.handleScrollToBottom}
         />
         {this.renderMotd()}
-        {this.props.messages.map(this.renderMessage, this)}
+        {messages.map(this.renderMessage, this)}
       </div>
     );
   }
