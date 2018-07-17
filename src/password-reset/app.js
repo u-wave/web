@@ -7,10 +7,10 @@ import thunk from 'redux-thunk';
 import { AppContainer as HotContainer } from 'react-hot-loader';
 import createLocale from '../locale';
 import webApiRequest from '../store/request';
+import readApplicationConfig from '../utils/readApplicationConfig';
 import * as reducers from './reducers';
 import { setResetKey } from './actions';
 import App from './containers/PasswordResetApp';
-import readApplicationConfig from './utils/readApplicationConfig';
 
 import './app.css';
 
