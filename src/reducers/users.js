@@ -66,7 +66,7 @@ function usersReducer(state = {}, action = {}) {
     case USER_REMOVE_ROLES:
       return updateUser(state, payload.userID, user => ({
         ...user,
-        roles: user.roles.filter(role => payload.roles.indexOf(role) === -1),
+        roles: user.roles.filter(role => !payload.roles.includes(role)),
       }));
     default:
       return state;

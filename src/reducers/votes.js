@@ -47,7 +47,7 @@ export default function reduce(state = initialState, action = {}) {
         downvotes: [...state.downvotes, payload.userID],
       };
     case FAVORITE:
-      if (state.favorites.indexOf(payload.userID) === -1) {
+      if (!state.favorites.includes(payload.userID)) {
         return {
           ...state,
           favorites: [...state.favorites, payload.userID],

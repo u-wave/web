@@ -19,8 +19,8 @@ register(
   {
     action: () => (dispatch, getState) => {
       const allRoles = Object.keys(rolesSelector(getState()));
-      const roles = allRoles.filter(role => role.indexOf('.') === -1);
-      const permissions = allRoles.filter(role => role.indexOf('.') !== -1);
+      const roles = allRoles.filter(role => !role.includes('.'));
+      const permissions = allRoles.filter(role => role.includes('.'));
 
       dispatch(log(`Roles: ${roles.join(', ')}`));
       return dispatch(log(`Permissions: ${permissions.join(', ')}`));

@@ -14,9 +14,9 @@ const userListWithVotesSelector = createSelector(
   (users, votes) => users.map(user => ({
     ...user,
     votes: {
-      upvote: votes.upvotes.indexOf(user._id) !== -1,
-      downvote: votes.downvotes.indexOf(user._id) !== -1,
-      favorite: votes.favorites.indexOf(user._id) !== -1,
+      upvote: votes.upvotes.includes(user._id),
+      downvote: votes.downvotes.includes(user._id),
+      favorite: votes.favorites.includes(user._id),
     },
   })),
 );

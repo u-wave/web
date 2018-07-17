@@ -109,7 +109,7 @@ export function inputMessage(text) {
 }
 
 function isMuted(state, userID) {
-  return mutedUserIDsSelector(state).indexOf(userID) !== -1;
+  return mutedUserIDsSelector(state).includes(userID);
 }
 
 export function receive(message) {

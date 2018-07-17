@@ -7,7 +7,7 @@ const createPropSelector = (base, prop) => createSelector(base, obj => obj[prop]
 const createIsSelector = type => createSelector(
   type,
   currentUserSelector,
-  (users, me) => !!me && users.indexOf(me._id) > -1,
+  (users, me) => !!me && users.includes(me._id),
 );
 const createCountSelector = type => createSelector(
   type,
