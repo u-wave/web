@@ -4,6 +4,23 @@ import hstream from 'hstream';
 import router from 'router';
 import serveStatic from 'connect-gzip-static';
 import gzip from 'http-gzip-maybe';
+import theme from '../theme';
+
+function createManifest({ title }) {
+  return {
+    name: title,
+    short_name: title,
+    start_url: '.',
+    theme_color: theme.palette.main,
+    background_color: '#151515',
+    display: 'standalone',
+    icons: [{
+      type: 'image/png',
+      src: '/icon-white.png',
+      sizes: '144x144',
+    }],
+  };
+}
 
 export default function uwaveWebClient(uw, options = {}) {
   const {
@@ -14,6 +31,7 @@ export default function uwaveWebClient(uw, options = {}) {
   } = options;
 
   const clientRouter = router();
+  const manifest = createManifest({ title });
 
   return clientRouter
     .get('/', (req, res) => {
@@ -42,6 +60,9 @@ export default function uwaveWebClient(uw, options = {}) {
         .pipe(transform)
         .pipe(gzip(req, res))
         .pipe(res);
+    })
+    .get('/manifest.json', (req, res) => {
+      res.json(manifest);
     })
     .get('/u-wave-web-config.json', (req, res) => {
       res.json(clientOptions);
