@@ -16,7 +16,7 @@ function makeUrl(path, params = {}) {
 
   if (!isEmpty(params)) {
     // heh…
-    uri += (uri.indexOf('?') !== -1 ? '&' : '?') + qsStringify(params);
+    uri += (uri.includes('?') ? '&' : '?') + qsStringify(params);
   }
 
   return uri;

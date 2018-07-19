@@ -21,8 +21,6 @@
     "@u-wave/react-mq": "^1.0.0",
     "@u-wave/react-server-list": "^2.0.1",
     "@u-wave/react-youtube": "^0.6.0",
-    "array-find": "^1.0.0",
-    "array-findindex": "^0.1.0",
     "classnames": "^2.2.6",
     "connect-gzip-static": "^2.1.1",
     "debug": "^3.1.0",

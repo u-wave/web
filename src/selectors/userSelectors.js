@@ -22,7 +22,7 @@ export const isLoggedInSelector = createSelector(currentUserSelector, Boolean);
 export const tokenSelector = createSelector(authSelector, auth => auth.token);
 export const authStrategiesSelector = createSelector(authSelector, auth => auth.strategies);
 export function supportsAuthStrategy(name) {
-  return createSelector(authStrategiesSelector, strategies => strategies.indexOf(name) !== -1);
+  return createSelector(authStrategiesSelector, strategies => strategies.includes(name));
 }
 export const supportsSocialAuthSelector = createSelector(
   supportsAuthStrategy('google'),
@@ -50,10 +50,10 @@ function compareUsers(roles, superuser) {
     const aRoles = getAllUserRoles(roles, a);
     const bRoles = getAllUserRoles(roles, b);
     // Sort superusers to the top,
-    if (aRoles.indexOf(superuser) !== -1) {
+    if (aRoles.includes(superuser)) {
       return -1;
     }
-    if (bRoles.indexOf(superuser) !== -1) {
+    if (bRoles.includes(superuser)) {
       return 1;
     }
     // other users by the amount of permissions they have,
@@ -102,11 +102,11 @@ export const userHasRoleSelector = createSelector(
 
     const userRoles = getAllUserRoles(roles, user);
     // If this is a super user, we always return true.
-    if (userRoles.indexOf(superUserRole) !== -1) {
+    if (userRoles.includes(superUserRole)) {
       return () => true;
     }
 
-    return role => userRoles.indexOf(role) !== -1;
+    return role => userRoles.includes(role);
   },
 );
 

@@ -5,7 +5,7 @@ import createTheme from '../utils/createTheme';
 
 function getAvailableLanguage(languages) {
   return languages.find(lang => (
-    availableLanguages.indexOf(lang) !== -1
+    availableLanguages.includes(lang)
   ));
 }
 

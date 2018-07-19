@@ -28,7 +28,7 @@ export default function compile(tree, opts = {}) {
       case 'link':
         return <Link key={i} href={node.href}>{node.text}</Link>;
       case 'emoji':
-        if (availableEmoji.indexOf(node.name) !== -1 && node.name in emojiImages) {
+        if (availableEmoji.includes(node.name) && node.name in emojiImages) {
           return (
             <Emoji
               key={i}
