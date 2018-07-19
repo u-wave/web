@@ -4,6 +4,23 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.11.0 / 19 Jul 2018
+Features:
+ * Simplify MediaList styles (#1051)
+ * Simplify chat message styles. (#1052)
+ * Lazy load google signin button. (#1079)
+
+Bugfixes:
+ * Fix `Array.find*` polyfills, fixes #1081 (#1082)
+ * Add "No results" panel instead of "empty" when playlist filter does not match anything. (#1078)
+ * Manually serve the web app manifest. (#985)
+ * Fix loading client config on Password Reset page. (#1074)
+
+Internal:
+ * Switch to postcss-preset-env (#1077)
+ * Update dependencies. (#1080)
+ * Update devDependencies. (#1073, #1076)
+
 ## 1.10.1 / 16 Jul 2018
 Bugfixes:
  * Refactor login, edit, preview dialogs, fixing the close animation. (#1070)
