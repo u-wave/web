@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.11.1 / 20 Jul 2018
+Bugfixes:
+ * Fix playlist media actions.
+
 ## 1.11.0 / 19 Jul 2018
 Features:
  * Simplify MediaList styles (#1051)
