@@ -117,7 +117,7 @@ export default class BaseMediaList extends React.Component {
         selection={selection.get()}
         onClick={e => this.selectItem(index, e)}
         onOpenPreviewMediaDialog={onOpenPreviewMediaDialog}
-        makeActions={() => makeActions(media, selection, index)}
+        makeActions={() => makeActions(media[index], selection, index)}
       />
     );
   };
