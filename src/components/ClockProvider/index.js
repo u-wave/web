@@ -46,11 +46,12 @@ class ClockProvider extends React.Component {
 
   componentDidMount() {
     const { createTimer } = this.props;
-    const { callbacks } = this.state;
 
     // Start the clock! üWave stores the current time in the application state
     // primarily to make sure that different timers in the UI update simultaneously.
     createTimer(() => {
+      const { callbacks } = this.state;
+
       callbacks.forEach(cb => cb());
     });
   }
