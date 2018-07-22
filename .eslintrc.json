@@ -21,5 +21,20 @@
 
   "settings": {
     "polyfills": ["promises", "fetch"]
-  }
+  },
+
+  "overrides": [
+    {
+      "files": ["**/__tests__/**/*.js"],
+      "rules": {
+        "no-unused-expressions": "off"
+      },
+      "env": {
+        "mocha": true
+      },
+      "globals": {
+        "testUtils": true
+      }
+    }
+  ]
 }

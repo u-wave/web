@@ -1,9 +1,9 @@
 import { expect } from 'chai';
-import { LOGIN_COMPLETE } from '../../src/constants/ActionTypes';
-import createStore from '../../src/store/configureStore';
-import * as s from '../../src/selectors/userSelectors';
-import { loginComplete, setSessionToken } from '../../src/actions/LoginActionCreators';
-import { setUsers } from '../../src/actions/UserActionCreators';
+import { LOGIN_COMPLETE } from '../../constants/ActionTypes';
+import createStore from '../../store/configureStore';
+import * as s from '../../selectors/userSelectors';
+import { loginComplete, setSessionToken } from '../../actions/LoginActionCreators';
+import { setUsers } from '../../actions/UserActionCreators';
 
 describe('reducers/auth', () => {
   it('should not respond to unrelated actions', () => {

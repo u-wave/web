@@ -2,8 +2,8 @@ import { expect } from 'chai';
 import {
   OPEN_EDIT_MEDIA_DIALOG, CLOSE_EDIT_MEDIA_DIALOG,
   OPEN_LOGIN_DIALOG, CLOSE_LOGIN_DIALOG,
-} from '../../src/constants/ActionTypes';
-import dialogs from '../../src/reducers/dialogs';
+} from '../../constants/ActionTypes';
+import dialogs from '../dialogs';
 
 const closedDialog = {
   open: false,

@@ -1,2 +1,2 @@
 --require test/common.js
---recursive test
+src/**/__tests__/**/*.js

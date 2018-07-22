@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
-import Video from '../../../../src/mobile/components/Video';
+import Video from '..';
 
 function noop() {}
 

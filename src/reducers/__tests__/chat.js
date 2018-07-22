@@ -1,10 +1,10 @@
 import { expect } from 'chai';
 import sinon from 'sinon';
-import createStore from '../../src/store/configureStore';
-import { setUsers } from '../../src/actions/UserActionCreators';
-import * as a from '../../src/actions/ChatActionCreators';
-import * as s from '../../src/selectors/chatSelectors';
-import * as userSelectors from '../../src/selectors/userSelectors';
+import createStore from '../../store/configureStore';
+import { setUsers } from '../../actions/UserActionCreators';
+import * as a from '../../actions/ChatActionCreators';
+import * as s from '../../selectors/chatSelectors';
+import * as userSelectors from '../../selectors/userSelectors';
 
 describe('reducers/chat', () => {
   it('should not respond to unrelated actions', () => {

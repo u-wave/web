@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import mergeIncludedModels from '../../src/utils/mergeIncludedModels';
+import mergeIncludedModels from '../mergeIncludedModels';
 
 describe('utils/mergeIncludedModels()', () => {
   it('merges included models as described by meta.included', () => {

@@ -1,7 +1,7 @@
 import { expect } from 'chai';
-import createStore from '../../src/store/configureStore';
-import { addMediaMenu, closeAddMediaMenu } from '../../src/actions/PlaylistActionCreators';
-import * as s from '../../src/selectors/addToPlaylistMenuSelectors';
+import createStore from '../../store/configureStore';
+import { addMediaMenu, closeAddMediaMenu } from '../../actions/PlaylistActionCreators';
+import * as s from '../../selectors/addToPlaylistMenuSelectors';
 
 describe('reducers/addToPlaylistMenu', () => {
   it('should default to a closed context menu', () => {
