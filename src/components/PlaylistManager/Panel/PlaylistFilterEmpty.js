@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import Typography from '@material-ui/core/Typography';
-import EmptyIcon from '@material-ui/icons/PlaylistAdd';
+import EmptyIcon from '@material-ui/icons/Search';
 
 const enhance = translate();
 
