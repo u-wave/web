@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.11.2 / 22 Jul 2018
+Bugfixes:
+ * Fix timer. (#1084)
+
+Internal:
+ * Use async capable EJS for HTML templates. (#1085)
+ * Update dependencies.
+
 ## 1.11.1 / 20 Jul 2018
 Bugfixes:
  * Fix playlist media actions.
