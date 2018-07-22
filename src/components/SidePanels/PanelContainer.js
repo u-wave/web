@@ -2,15 +2,16 @@ import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const PanelContainer = ({ selected, children }) => (
+const PanelContainer = ({ selected, children, keepMounted }) => (
   <div className={cx('SidePanel-panel', selected && 'is-selected')}>
-    {children}
+    {(keepMounted || selected) ? children : null}
   </div>
 );
 
 PanelContainer.propTypes = {
   children: PropTypes.node.isRequired,
   selected: PropTypes.bool.isRequired,
+  keepMounted: PropTypes.bool,
 };
 
 export default PanelContainer;

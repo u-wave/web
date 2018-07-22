@@ -1,15 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
+import loadable from 'react-loadable';
 import compose from 'recompose/compose';
 import pure from 'recompose/pure';
 import withState from 'recompose/withState';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Chat from '../Chat';
-import RoomUserList from '../../containers/RoomUserList';
-import WaitList from '../../containers/WaitList';
 import PanelContainer from './PanelContainer';
+
+const RoomUserList = loadable({
+  loader: () => import('../../containers/RoomUserList' /* webpackChunkName: "roomUserList" */),
+  loading: () => null,
+});
+
+const WaitList = loadable({
+  loader: () => import('../../containers/WaitList' /* webpackChunkName: "waitList" */),
+  loading: () => null,
+});
 
 const enhance = compose(
   translate(),
@@ -29,7 +38,7 @@ const tabClasses = {
 const getUsersLabel = (t, listenerCount) => (
   <React.Fragment>
     {t('users.title')}
-    <span key="sub" style={subHeaderStyle}>
+    <span style={subHeaderStyle}>
       {listenerCount}
     </span>
   </React.Fragment>
@@ -44,7 +53,7 @@ const getWaitlistLabel = (t, size, position) => {
     return (
       <React.Fragment>
         {t('waitlist.title')}
-        <span key="sub" style={subHeaderStyle}>{posText}</span>
+        <span style={subHeaderStyle}>{posText}</span>
       </React.Fragment>
     );
   }
@@ -83,7 +92,7 @@ const SidePanels = ({
       />
     </Tabs>
     <div>
-      <PanelContainer selected={selected === 0}>
+      <PanelContainer selected={selected === 0} keepMounted>
         <Chat />
       </PanelContainer>
       <PanelContainer selected={selected === 1}>
