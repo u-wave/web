@@ -7,6 +7,7 @@ export config from './config';
 export dialogs from './dialogs';
 export errors from './errors';
 export imports from './imports';
+export locales from './locales';
 export mediaSearch from './mediaSearch';
 export playlists from './playlists';
 export roomHistory from './roomHistory';

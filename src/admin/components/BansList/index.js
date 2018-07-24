@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import withProps from 'recompose/withProps';
-import { translate } from 'react-i18next';
+import { translate } from '@u-wave/react-translate';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableHead from '@material-ui/core/TableHead';

@@ -1,23 +1,28 @@
 /* global window */
 import { createSelector } from 'reselect';
-import { availableLanguages } from '../locale';
+import { availableLanguages } from '../locales';
 import createTheme from '../utils/createTheme';
 
-function getAvailableLanguage(languages) {
+const availableLanguagesSelector = () => availableLanguages;
+
+function getAvailableLanguage(available, languages) {
   return languages.find(lang => (
-    availableLanguages.includes(lang)
+    available.includes(lang)
   ));
 }
 
-function getDefaultLanguage() {
-  if (typeof window === 'object' && window.navigator && window.navigator.languages) {
-    const browserLanguage = getAvailableLanguage(window.navigator.languages);
-    if (browserLanguage) {
-      return browserLanguage;
+const defaultLanguageSelector = createSelector(
+  availableLanguagesSelector,
+  (available) => {
+    if (typeof window === 'object' && window.navigator && window.navigator.languages) {
+      const browserLanguage = getAvailableLanguage(available, window.navigator.languages);
+      if (browserLanguage) {
+        return browserLanguage;
+      }
     }
-  }
-  return 'en';
-}
+    return 'en';
+  },
+);
 
 const settingsBaseSelector = state => state.settings;
 
@@ -38,7 +43,7 @@ export const isMutedSelector = createSelector(
 
 export const languageSelector = createSelector(
   settingsBaseSelector,
-  getDefaultLanguage,
+  defaultLanguageSelector,
   (settings, defaultLanguage) => settings.language || defaultLanguage,
 );
 

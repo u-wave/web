@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import compose from 'recompose/compose';
 import nest from 'recompose/nest';
 import { connect } from 'react-redux';
-import { translate } from 'react-i18next';
+import { translate } from '@u-wave/react-translate';
 import hoistStatics from 'hoist-non-react-statics';
 import loadable from 'react-loadable';
 import CircularProgress from '@material-ui/core/CircularProgress';

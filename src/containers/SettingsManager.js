@@ -1,10 +1,10 @@
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import {
   set as setSetting,
   setLanguage,
 } from '../actions/SettingsActionCreators';
+import { changeLanguage } from '../actions/LocaleActionCreators';
 import { doChangeUsername } from '../actions/UserActionCreators';
 import { logout } from '../actions/LoginActionCreators';
 import { currentUserSelector } from '../selectors/userSelectors';
@@ -16,12 +16,15 @@ const mapStateToProps = createStructuredSelector({
   user: currentUserSelector,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
+const mapDispatchToProps = {
   onSettingChange: setSetting,
   onChangeUsername: doChangeUsername,
-  onChangeLanguage: setLanguage,
+  onChangeLanguage: (...args) => d => Promise.all([
+    d(setLanguage(...args)),
+    d(changeLanguage(...args)),
+  ]),
   onLogout: logout,
-}, dispatch);
+};
 
 const enhance = connect(mapStateToProps, mapDispatchToProps);
 

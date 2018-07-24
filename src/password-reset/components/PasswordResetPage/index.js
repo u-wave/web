@@ -4,7 +4,7 @@ import EmailIcon from '@material-ui/icons/Email';
 import PasswordIcon from '@material-ui/icons/Lock';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import { translate } from 'react-i18next';
+import { translate } from '@u-wave/react-translate';
 import Form from '../../../components/Form';
 import FormGroup from '../../../components/Form/Group';
 import TextField from '../../../components/Form/TextField';

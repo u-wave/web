@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate } from 'react-i18next';
+import { translate } from '@u-wave/react-translate';
 import FavoritedIcon from '@material-ui/icons/Favorite';
 import FavoriteIcon from '@material-ui/icons/FavoriteBorder';
 import Button from './Button';

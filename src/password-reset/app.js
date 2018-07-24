@@ -5,12 +5,13 @@ import { Provider } from 'react-redux';
 import { parse as parseQS } from 'querystring';
 import thunk from 'redux-thunk';
 import { AppContainer as HotContainer } from 'react-hot-loader';
-import createLocale from '../locale';
+import Translator from '@u-wave/translate';
 import webApiRequest from '../store/request';
 import readApplicationConfig from '../utils/readApplicationConfig';
 import * as reducers from './reducers';
 import { setResetKey } from './actions';
 import App from './containers/PasswordResetApp';
+import * as english from '../../locale/en.yaml';
 
 import './app.css';
 
@@ -29,14 +30,14 @@ const store = createStore(
 const qs = parseQS(window.location.search.slice(1));
 store.dispatch(setResetKey(key || qs.key));
 
-createLocale('en').then((locale) => {
-  ReactDOM.render(
-    (
-      <HotContainer>
-        <Provider store={store}>
-          <App locale={locale} />
-        </Provider>
-      </HotContainer>
-    ), document.querySelector('#app'),
-  );
-});
+const translator = new Translator(english.uwave);
+
+ReactDOM.render(
+  (
+    <HotContainer>
+      <Provider store={store}>
+        <App translator={translator} />
+      </Provider>
+    </HotContainer>
+  ), document.querySelector('#app'),
+);
