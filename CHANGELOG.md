@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.11.3 / 25 Jul 2018
+Bugfixes:
+ * Fix returning value from PromptDialog. (#1090)
+ * Change icon in "No filter results" view. (#1087)
+
+Internal:
+ * Move test files into related folders. (#1086)
+
 ## 1.11.2 / 22 Jul 2018
 Bugfixes:
  * Fix timer. (#1084)
