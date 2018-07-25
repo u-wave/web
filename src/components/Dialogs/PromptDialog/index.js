@@ -46,9 +46,10 @@ export default class PromptDialog extends React.Component {
 
   handleSubmit = (event) => {
     const { onSubmit } = this.props;
+    const { value } = this.state;
 
     event.preventDefault();
-    const promise = onSubmit(event.target.value);
+    const promise = onSubmit(value);
     if (promise && promise.finally) {
       this.setState({ busy: true });
       promise.finally(() => {
