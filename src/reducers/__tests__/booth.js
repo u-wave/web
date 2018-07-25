@@ -1,7 +1,7 @@
 import { expect } from 'chai';
-import { ADVANCE } from '../../src/constants/ActionTypes';
-import { advanceToEmpty } from '../../src/actions/BoothActionCreators';
-import booth from '../../src/reducers/booth';
+import { ADVANCE } from '../../constants/ActionTypes';
+import { advanceToEmpty } from '../../actions/BoothActionCreators';
+import booth from '../booth';
 
 describe('reducers/booth', () => {
   const initialState = () => booth(undefined, { type: '@@redux/INIT' });

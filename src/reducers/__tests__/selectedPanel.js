@@ -1,6 +1,6 @@
 import { expect } from 'chai';
-import { selectPanel } from '../../src/actions/PanelSelectActionCreators';
-import selectedPanel from '../../src/reducers/selectedPanel';
+import { selectPanel } from '../../actions/PanelSelectActionCreators';
+import selectedPanel from '../selectedPanel';
 
 describe('reducers/selectedPanel', () => {
   it('should default to the chat panel', () => {

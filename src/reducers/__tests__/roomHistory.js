@@ -1,8 +1,8 @@
 import { expect } from 'chai';
-import createStore from '../../src/store/configureStore';
-import { setUsers } from '../../src/actions/UserActionCreators';
-import { advance, loadHistoryComplete } from '../../src/actions/BoothActionCreators';
-import * as s from '../../src/selectors/roomHistorySelectors';
+import createStore from '../../store/configureStore';
+import { setUsers } from '../../actions/UserActionCreators';
+import { advance, loadHistoryComplete } from '../../actions/BoothActionCreators';
+import * as s from '../../selectors/roomHistorySelectors';
 
 describe('reducers/roomHistory', () => {
   it('should default to an empty array', () => {

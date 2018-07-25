@@ -1,9 +1,9 @@
 import { expect } from 'chai';
 import fetch from 'fetch-mock';
-import createStore from '../../src/store/configureStore';
-import * as a from '../../src/actions/PlaylistActionCreators';
-import { favoriteMediaComplete } from '../../src/actions/VoteActionCreators';
-import * as s from '../../src/selectors/playlistSelectors';
+import createStore from '../../store/configureStore';
+import * as a from '../../actions/PlaylistActionCreators';
+import { favoriteMediaComplete } from '../../actions/VoteActionCreators';
+import * as s from '../../selectors/playlistSelectors';
 
 const initialiseStore = a.setPlaylists([
   { _id: 1, name: 'Playlist One', size: 5 },

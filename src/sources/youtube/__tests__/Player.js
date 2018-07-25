@@ -1,8 +1,8 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
-import YouTubePlayer from '../../../src/sources/youtube/Player';
-import YouTubeEmbed from '../../../src/sources/youtube/PlayerEmbed';
+import YouTubePlayer from '../Player';
+import YouTubeEmbed from '../PlayerEmbed';
 
 describe('sources/youtube <Player />', () => {
   it('hides when the player is inactive', () => {

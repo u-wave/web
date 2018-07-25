@@ -65,7 +65,7 @@ function jsBabel() {
   const oldEnv = process.env.BABEL_ENV;
   process.env.BABEL_ENV = 'production';
 
-  return gulp.src(src)
+  return gulp.src([src, '!**/__tests__/**'])
     .pipe(newer(destCommonjs))
     .pipe(through.obj((file, enc, cb) => {
       const path = relative(`${__dirname}/../`, file.path);
