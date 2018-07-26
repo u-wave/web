@@ -29,7 +29,7 @@
     "except": "^0.1.3",
     "flash-document-title": "^1.0.0",
     "format-duration": "^1.1.0",
-    "hoist-non-react-statics": "^2.5.5",
+    "hoist-non-react-statics": "^3.0.0",
     "hstream": "^1.2.0",
     "http-gzip-maybe": "^1.0.0",
     "i18next": "^11.4.0",
