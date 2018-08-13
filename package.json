@@ -98,7 +98,7 @@
     "@babel/preset-env": "7.0.0-beta.54",
     "@babel/preset-react": "7.0.0-beta.54",
     "@babel/register": "7.0.0-beta.54",
-    "autoprefixer": "^8.6.5",
+    "autoprefixer": "^9.0.0",
     "babel-eslint": "^8.2.6",
     "babel-loader": "8.0.0-beta.3",
     "babel-plugin-dynamic-import-node": "^2.0.0",
