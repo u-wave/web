@@ -1,5 +1,5 @@
 import {
-  ADVANCE,
+  INIT_STATE,
   LOAD_VOTES,
   FAVORITE,
   UPVOTE,
@@ -17,16 +17,18 @@ const initialState = {
 export default function reduce(state = initialState, action = {}) {
   const { type, payload } = action;
   switch (type) {
-    case ADVANCE:
-      if (payload && payload.stats) {
+    case INIT_STATE: {
+      const { stats } = payload.booth || {};
+      if (stats) {
         return {
           ...state,
-          upvotes: payload.stats.upvotes,
-          downvotes: payload.stats.downvotes,
-          favorites: payload.stats.favorites,
+          upvotes: stats.upvotes,
+          downvotes: stats.downvotes,
+          favorites: stats.favorites,
         };
       }
       return initialState;
+    }
     case LOAD_VOTES:
       return {
         ...state,
