@@ -1,0 +1,12 @@
+@import "../../vars.css";
+
+.AvatarDialog-preview {
+  width: 80px;
+  height: 80px;
+}
+
+.AvatarDialog-helpText {
+  line-height: 1.5;
+  color: var(--settings-help-text-color);
+}
+

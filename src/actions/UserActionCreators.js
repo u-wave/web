@@ -1,4 +1,4 @@
-import { put } from './RequestActionCreators';
+import { get, put } from './RequestActionCreators';
 import {
   LOAD_ONLINE_USERS,
   USER_JOIN,
@@ -91,6 +91,10 @@ export function doChangeUsername(username) {
       }),
     }));
   };
+}
+
+export function getAvailableAvatars(userID) {
+  return get(`/users/${userID}/avatars`);
 }
 
 export function addUserRoles(userID, roles) {

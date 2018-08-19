@@ -187,11 +187,24 @@ uwave:
       username:
         change: Change Username
         save: Save
+      avatar:
+        change: Change Avatar
+        helpNoUpload: Pick one of the available avatars.
+        help: Pick one of the available avatars, or upload a custom one.
+        restriction: about 240×240px, up to 50KB
+        crop: Select the area that will be visible.
+        save: Save
     links:
       title: Links
       website: üWave
       source: üWave Web Client Source Code
       license: License
+
+  avatars:
+    magic:
+      sigil: Sigil
+    social:
+      google: Google
 
   login:
     message: You have to sign in if you want to play!
