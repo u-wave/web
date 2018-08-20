@@ -3,10 +3,16 @@
 .AvatarDialog-preview {
   width: 80px;
   height: 80px;
+  &:not([disabled]) {
+    cursor: pointer;
+  }
+}
+
+.AvatarDialog-preview.is-selected {
+  box-shadow: 0 0 3px 3px var(--highlight-color);
 }
 
 .AvatarDialog-helpText {
   line-height: 1.5;
   color: var(--settings-help-text-color);
 }
-

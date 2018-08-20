@@ -14,6 +14,7 @@ import Form from '../Form';
 import FormGroup from '../Form/Group';
 import Button from '../Form/Button';
 import { getAvailableAvatars } from '../../actions/UserActionCreators';
+import AvatarPreview from './AvatarPreview';
 
 const mapDispatchToProps = {
   loadAvailableAvatars: getAvailableAvatars,
@@ -23,24 +24,6 @@ const enhance = compose(
   connect(null, mapDispatchToProps),
   translate(),
 );
-
-const AvatarPreview = ({
-  name, service, url,
-}) => (
-  <div className="Avatar AvatarDialog-preview">
-    <img
-      className="Avatar-image"
-      src={url}
-      alt={name || service}
-    />
-  </div>
-);
-
-AvatarPreview.propTypes = {
-  name: PropTypes.string,
-  service: PropTypes.string,
-  url: PropTypes.string.isRequired,
-};
 
 class AvatarDialog extends React.Component {
   title = uniqueId('avatar');
@@ -54,11 +37,19 @@ class AvatarDialog extends React.Component {
     })).isRequired,
     user: PropTypes.object.isRequired,
     loadAvailableAvatars: PropTypes.func.isRequired,
+    open: PropTypes.bool,
+    onChangeAvatar: PropTypes.func.isRequired,
+    onClose: PropTypes.func.isRequired,
+  };
+
+  static defaultProps = {
+    open: false,
   };
 
   state = {
     loading: true,
     busy: false,
+    selected: null,
   };
 
   componentDidMount() {
@@ -73,19 +64,29 @@ class AvatarDialog extends React.Component {
   }
 
   handleSubmit = (event) => {
+    const { user, onChangeAvatar } = this.props;
+
     event.preventDefault();
 
     this.setState({ busy: true });
+
+    Promise.resolve(onChangeAvatar(user, null)).finally(() => {
+      this.setState({ busy: false });
+    });
+  };
+
+  handleSelect = (avatar) => {
+    this.setState({ selected: avatar.url });
   };
 
   render() {
-    const { t } = this.props;
-    const { busy, loading, availableAvatars } = this.state;
+    const { t, open } = this.props;
+    const { busy, loading, selected, availableAvatars } = this.state;
 
     return (
       <Dialog
-        open
-        classes={{ paper: 'Dialog' }}
+        open={open}
+        classes={{ paper: 'Dialog AvatarDialog' }}
         aria-labelledby={this.title}
       >
         <DialogTitle className="Dialog-title" id={this.title}>
@@ -103,7 +104,13 @@ class AvatarDialog extends React.Component {
               {loading ? (
                 <CircularProgress size={240} />
               ) : (
-                availableAvatars.map(props => <AvatarPreview {...props} />)
+                availableAvatars.map(props => (
+                  <AvatarPreview
+                    {...props}
+                    selected={selected === props.url}
+                    onSelect={this.handleSelect.bind(null, props)}
+                  />
+                ))
               )}
             </FormGroup>
 

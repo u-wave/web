@@ -3,6 +3,7 @@
 @import "./AdminProxy/index.css";
 @import "./App/index.css";
 @import "./Avatar/index.css";
+@import "./AvatarDialog/index.css";
 @import "./Chat/index.css";
 @import "./ConnectionIndicator/index.css";
 @import "./Dialogs/index.css";

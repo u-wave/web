@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Avatar from '../Avatar';
 import UserRoles from '../UserCard/UserRoles';
 import ChangeUsernameButton from './ChangeUsernameButton';
-import AvatarDialog from './AvatarDialog';
+import ChangeAvatarButton from './ChangeAvatarButton';
 
 const formatJoinDate = date => new Date(date).toLocaleString([], {
   year: 'numeric',
@@ -20,7 +20,10 @@ const Profile = ({ className, user, onChangeUsername }) => (
       className="SettingsPanelProfile-avatar"
       user={user}
     />
-    <AvatarDialog user={user} />
+    <ChangeAvatarButton
+      user={user}
+      onChangeAvatar={console.log}
+    />
     <div className="SettingsPanelProfile-textblock">
       <h2 className="SettingsPanelProfile-username">
         {user.username}
