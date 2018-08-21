@@ -8,6 +8,8 @@ import { translate } from 'react-i18next';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
+import IconButton from '@material-ui/core/IconButton';
+import UploadIcon from '@material-ui/icons/CloudUploadOutlined';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import uniqueId from 'lodash/uniqueId';
 import Form from '../Form';
@@ -37,12 +39,14 @@ class AvatarDialog extends React.Component {
     })).isRequired,
     user: PropTypes.object.isRequired,
     loadAvailableAvatars: PropTypes.func.isRequired,
+    allowCustomAvatars: PropTypes.bool,
     open: PropTypes.bool,
     onChangeAvatar: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
+    allowCustomAvatars: true,
     open: false,
   };
 
@@ -80,7 +84,7 @@ class AvatarDialog extends React.Component {
   };
 
   render() {
-    const { t, open } = this.props;
+    const { t, open, allowCustomAvatars } = this.props;
     const { busy, loading, selected, availableAvatars } = this.state;
 
     return (
@@ -111,6 +115,11 @@ class AvatarDialog extends React.Component {
                     onSelect={this.handleSelect.bind(null, props)}
                   />
                 ))
+              )}
+              {allowCustomAvatars && (
+                <IconButton className="AvatarDialog-preview">
+                  <UploadIcon style={{ width: '100%', height: '100%' }} />
+                </IconButton>
               )}
             </FormGroup>
 

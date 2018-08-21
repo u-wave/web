@@ -1,8 +1,11 @@
 @import "../../vars.css";
 
 .AvatarDialog-preview {
-  width: 80px;
-  height: 80px;
+  width: 96px;
+  height: 96px;
+  padding: 0;
+  margin: 8px;
+
   &:not([disabled]) {
     cursor: pointer;
   }
