@@ -208,9 +208,12 @@ export default function reduce(state = initialState, action = {}) {
         })),
         activePlaylistID: payload.playlistID,
       };
-    case SELECT_PLAYLIST:
+    case SELECT_PLAYLIST: {
+      const { currentFilter } = state;
+      const shouldClearFilter = currentFilter && currentFilter.playlistID !== payload.playlistID;
       return {
         ...state,
+        currentFilter: shouldClearFilter ? {} : currentFilter,
         // set `selected` property on playlists
         playlists: mapValues(state.playlists, playlist => ({
           ...playlist,
@@ -218,6 +221,7 @@ export default function reduce(state = initialState, action = {}) {
         })),
         selectedPlaylistID: payload.playlistID,
       };
+    }
     case SEARCH_START:
     // We deselect playlists when doing a search, so the UI can switch to the
     // search results view instead.
