@@ -113,7 +113,7 @@
     "css-loader": "^1.0.0",
     "cssnano": "^4.0.5",
     "ejs": "^2.6.1",
-    "enzyme": "^3.4.4",
+    "enzyme": "^3.5.0",
     "enzyme-adapter-react-16": "^1.2.0",
     "eslint": "^5.4.0",
     "eslint-config-airbnb": "^17.1.0",
