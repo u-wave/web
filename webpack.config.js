@@ -189,7 +189,6 @@ const base = {
     alias: {
       // Use the ES modules versions of some packages.
       '@material-ui/core': path.join(__dirname, 'node_modules/@material-ui/core/es/'),
-      '@material-ui/icons': path.join(__dirname, 'node_modules/@material-ui/icons/es/'),
     },
     mainFields: [
       'browser',
