@@ -99,7 +99,7 @@
     "@babel/preset-react": "7.0.0-rc.4",
     "@babel/register": "7.0.0-rc.4",
     "autoprefixer": "^8.6.5",
-    "babel-eslint": "^8.2.6",
+    "babel-eslint": "^9.0.0",
     "babel-loader": "8.0.0-beta.3",
     "babel-plugin-dynamic-import-node": "^2.0.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.15",
