@@ -129,7 +129,7 @@
     "fetch-mock": "^6.5.2",
     "file-loader": "^2.0.0",
     "gulp": "^4.0.0",
-    "gulp-babel": "8.0.0-beta.2",
+    "gulp-babel": "8.0.0",
     "gulp-newer": "^1.4.0",
     "gulp-sourcemaps": "^2.6.4",
     "gulp-yaml": "^2.0.2",
