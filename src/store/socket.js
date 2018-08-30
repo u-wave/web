@@ -1,5 +1,4 @@
 import createDebug from 'debug';
-import WebSocket from 'reconnecting-websocket';
 import {
   LOGIN_COMPLETE,
   LOGOUT_START,
@@ -11,7 +10,7 @@ import {
   DO_UPVOTE,
   DO_DOWNVOTE,
 } from '../constants/ActionTypes';
-import { getSocketAuthToken } from '../actions/LoginActionCreators';
+import { initState } from '../actions/LoginActionCreators';
 import {
   advance,
   skipped,
@@ -137,84 +136,141 @@ const actions = {
   'acl:disallow': ({ userID, roles }) => removeUserRoles(userID, roles),
 };
 
-export default function middleware({ url = defaultUrl() } = {}) {
-  return ({ dispatch, getState }) => {
-    let socket;
-    let queue = [];
-    let sentAuthToken = false;
-    let opened = false;
+// WebSocket wrapper with reconnection and message parsing.
+// This is quite ugly, based on an older version which used reconnecting-websocket
+// and a bunch of separate functions nested inside the middleware.
+// This should be refactored to move the message handling out of the class,
+// and probably move the dispatch() calls to events using `mitt` or options.
+class UwaveSocket {
+  constructor({ url, dispatch, getState }) {
+    this.url = url;
+    this.socket = null;
+    this.queue = [];
+    this.sentAuthToken = false;
+    this.opened = false;
+    this.reconnectAttempts = 0;
+    this.reconnectTimeout = null;
+    this.dispatch = dispatch;
+    this.getState = getState;
+  }
 
-    function isOpen() {
-      return socket && opened;
+  isOpen() {
+    return this.socket && this.opened;
+  }
+
+  sendAuthToken(token) {
+    this.socket.send(token);
+    this.sentAuthToken = true;
+  }
+
+  send(command, data) {
+    if (this.isOpen()) {
+      this.socket.send(JSON.stringify({ command, data }));
+    } else {
+      this.queue.push({ command, data });
+    }
+  }
+
+  drainQueuedMessages() {
+    const messages = this.queue;
+    this.queue = [];
+    messages.forEach((msg) => {
+      this.send(msg.command, msg.data);
+    });
+  }
+
+  onOpen = () => {
+    this.opened = true;
+    this.dispatch({ type: SOCKET_CONNECTED });
+  };
+
+  onClose = () => {
+    if (this.reconnectAttempts === 0) {
+      this.opened = false;
+      this.dispatch({ type: SOCKET_DISCONNECTED });
+      this.attemptReconnect();
+    }
+  };
+
+  onMessage = (pack) => {
+    // Ignore keepalive messages.
+    if (pack.data === '-') return;
+
+    const { command, data } = JSON.parse(pack.data);
+    debug(command, data);
+
+    if (command === 'authenticated') {
+      this.drainQueuedMessages();
+      return;
     }
 
-    function sendAuthToken(tokne) {
-      socket.send(tokne);
-      sentAuthToken = true;
-    }
-
-    function maybeAuthenticateOnConnect(state) {
-      const { user } = state.auth;
-      if (!user) return;
-      debug('open', user.id);
-
-      dispatch(getSocketAuthToken()).then(({ socketToken }) => {
-        if (socketToken) {
-          sendAuthToken(socketToken);
-        } else {
-          sentAuthToken = false;
-        }
-      });
-    }
-
-    function send(command, data) {
-      if (isOpen()) {
-        socket.send(JSON.stringify({ command, data }));
-      } else {
-        queue.push({ command, data });
-      }
-    }
-
-    function drainQueuedMessages() {
-      const messages = queue;
-      queue = [];
-      messages.forEach((msg) => {
-        send(msg.command, msg.data);
-      });
-    }
-
-    function onOpen() {
-      opened = true;
-      dispatch({ type: SOCKET_CONNECTED });
-      maybeAuthenticateOnConnect(getState());
-    }
-
-    function onClose() {
-      opened = false;
-      dispatch({ type: SOCKET_DISCONNECTED });
-    }
-
-    function onMessage(pack) {
-      // Ignore keepalive messages.
-      if (pack.data === '-') return;
-
-      const { command, data } = JSON.parse(pack.data);
-      debug(command, data);
-
-      if (command === 'authenticated') {
-        drainQueuedMessages();
+    if (typeof actions[command] === 'function') {
+      const action = actions[command](data);
+      if (action) {
+        this.dispatch(action);
         return;
       }
-
-      if (typeof actions[command] === 'function') {
-        const action = actions[command](data);
-        if (action) {
-          dispatch(action);
-          return;
-        }
-      }
-      debug('!unknown socket message type');
     }
+    debug('!unknown socket message type');
+  };
+
+  connect() {
+    return new Promise((resolve, reject) => {
+      this.socket = new WebSocket(this.url);
+      this.socket.addEventListener('message', this.onMessage);
+      this.socket.addEventListener('open', () => {
+        this.onOpen();
+        resolve();
+      });
+      this.socket.addEventListener('close', this.onClose);
+      this.socket.addEventListener('error', reject);
+    });
+  }
+
+  disconnect() {
+    this.socket.removeEventListener('close', this.onClose);
+    this.socket.addEventListener('close', () => {
+      this.opened = false;
+      this.dispatch({ type: SOCKET_DISCONNECTED });
+      this.socket = null;
+    });
+    this.socket.close();
+  }
+
+  reconnect() {
+    return this.dispatch(initState())
+      .then(({ socketToken }) => (
+        this.connect().then(() => {
+          this.sendAuthToken(socketToken);
+        })
+      ))
+      .then(() => {
+        this.drainQueuedMessages();
+      });
+  }
+
+  attemptReconnect = () => {
+    this.reconnectAttempts += 1;
+    this.reconnect().then(() => {
+      this.reconnectAttempts = 0;
+    }, () => {
+      this.reconnectTimeout = setTimeout(
+        this.attemptReconnect,
+        Math.min(1000 * this.reconnectAttempts, 10000),
+      );
+    });
+  };
+}
+
+export default function middleware({ url = defaultUrl() } = {}) {
+  return ({ dispatch, getState }) => {
+    const socket = new UwaveSocket({
+      url,
+      dispatch,
+      getState,
+    });
+
+    window.soc = socket; // eslint-disable-line
 
     return next => (action) => {
       const { type, payload, error } = action;
@@ -226,34 +282,29 @@ export default function middleware({ url = defaultUrl() } = {}) {
 
       switch (type) {
         case SOCKET_RECONNECT:
-          if (socket) {
-            socket.close(undefined, undefined, { keepClosed: true });
-          }
-        // fall through
+          socket.disconnect();
+          socket.attemptReconnect();
+          break;
         case SOCKET_CONNECT:
-          socket = new WebSocket(url);
-          socket.addEventListener('message', onMessage);
-          socket.addEventListener('open', onOpen);
-          socket.addEventListener('close', onClose);
-          socket.addEventListener('connecting', onClose);
+          socket.connect();
           break;
         case SEND_MESSAGE:
-          send('sendChat', payload.message);
+          socket.send('sendChat', payload.message);
           break;
         case DO_UPVOTE:
-          send('vote', 1);
+          socket.send('vote', 1);
           break;
         case DO_DOWNVOTE:
-          send('vote', -1);
+          socket.send('vote', -1);
           break;
         case LOGIN_COMPLETE:
-          if (!sentAuthToken && isOpen()) {
-            sendAuthToken(payload.socketToken);
+          if (!socket.sentAuthToken && socket.isOpen()) {
+            socket.sendAuthToken(payload.socketToken);
           }
           break;
         case LOGOUT_START:
-          sentAuthToken = false;
-          send('logout', null);
+          socket.sentAuthToken = false;
+          socket.send('logout', null);
           break;
         default:
           break;
