@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.11.4 / 30 Aug 2018
+Bugfixes:
+ * Initialize votes on load. (#1103)
+ * Clear filter when selecting a different playlist. (#1107)
+ * New reconnect logic. (#1122)
+
+Internal:
+ * Build static hashed filenames into a /static/ folder. (#1104)
+
 ## 1.11.3 / 25 Jul 2018
 Bugfixes:
  * Fix returning value from PromptDialog. (#1090)
