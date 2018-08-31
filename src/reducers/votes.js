@@ -15,7 +15,7 @@ const initialState = {
   favorites: [],
 };
 
-function setVotes (state, stats) {
+function setVotes(state, stats) {
   return {
     ...state,
     upvotes: stats.upvotes,
