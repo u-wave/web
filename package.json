@@ -19,7 +19,7 @@
     "@material-ui/icons": "^3.0.1",
     "@material-ui/lab": "3.0.0-alpha.13",
     "@u-wave/react-mq": "^1.0.0",
-    "@u-wave/react-server-list": "^3.0.1",
+    "@u-wave/react-server-list": "^3.0.2",
     "@u-wave/react-youtube": "^0.6.0",
     "classnames": "^2.2.6",
     "connect-gzip-static": "^2.1.1",
