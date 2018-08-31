@@ -1,5 +1,6 @@
 import {
   ADVANCE,
+  INIT_STATE,
   ENTER_FULLSCREEN,
   EXIT_FULLSCREEN,
 } from '../constants/ActionTypes';
@@ -22,7 +23,24 @@ export default function reduce(state = initialState, action = {}) {
           historyID: payload.historyID,
           media: payload.media,
           djID: payload.userID,
-          startTime: payload.timestamp,
+          startTime: payload.timestamp, // TODO change this to playedAt
+        };
+      }
+      return {
+        ...state,
+        historyID: null,
+        media: null,
+        djID: null,
+        startTime: null,
+      };
+    case INIT_STATE:
+      if (payload.booth) {
+        return {
+          ...state,
+          historyID: payload.booth.historyID,
+          media: payload.booth.media,
+          djID: payload.booth.userID,
+          startTime: payload.booth.playedAt,
         };
       }
       return {
