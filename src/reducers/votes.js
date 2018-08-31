@@ -1,6 +1,7 @@
 import {
   INIT_STATE,
   LOAD_VOTES,
+  ADVANCE,
   FAVORITE,
   UPVOTE,
   DOWNVOTE,
@@ -14,28 +15,29 @@ const initialState = {
   favorites: [],
 };
 
+function setVotes (state, stats) {
+  return {
+    ...state,
+    upvotes: stats.upvotes,
+    downvotes: stats.downvotes,
+    favorites: stats.favorites,
+  };
+}
+
 export default function reduce(state = initialState, action = {}) {
   const { type, payload } = action;
   switch (type) {
     case INIT_STATE: {
       const { stats } = payload.booth || {};
       if (stats) {
-        return {
-          ...state,
-          upvotes: stats.upvotes,
-          downvotes: stats.downvotes,
-          favorites: stats.favorites,
-        };
+        return setVotes(state, stats);
       }
       return initialState;
     }
+    case ADVANCE:
+      return initialState;
     case LOAD_VOTES:
-      return {
-        ...state,
-        upvotes: payload.upvotes,
-        downvotes: payload.downvotes,
-        favorites: payload.favorites,
-      };
+      return setVotes(state, payload);
     case UPVOTE:
       return {
         ...state,
