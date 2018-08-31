@@ -16,7 +16,7 @@ import {
 } from '../constants/ActionTypes';
 import * as Session from '../utils/Session';
 import { get, post, del } from './RequestActionCreators';
-import { advance, loadHistory } from './BoothActionCreators';
+import { loadHistory } from './BoothActionCreators';
 import { setPlaylists, loadPlaylist } from './PlaylistActionCreators';
 import { syncTimestamps } from './TickerActionCreators';
 import { closeLoginDialog } from './DialogActionCreators';
@@ -59,10 +59,6 @@ export function loadedState(state) {
       type: INIT_STATE,
       payload: state,
     });
-    if (state.booth && state.booth.historyID) {
-      // TODO don't set this when logging in _after_ entering the page?
-      dispatch(advance(state.booth));
-    }
     if (state.user) {
       const token = tokenSelector(getState());
       dispatch(loginComplete({
