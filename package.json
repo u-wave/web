@@ -1,6 +1,6 @@
 {
   "name": "u-wave-web",
-  "version": "1.11.5",
+  "version": "1.11.6",
   "description": "Web client for üWave servers.",
   "author": "Renée Kooi <renee@kooi.me>",
   "license": "MIT",

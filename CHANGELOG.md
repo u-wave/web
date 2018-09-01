@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.11.6 / 01 Sep 2018
+Bugfixes:
+ * Fix initialising current song on load. (#1129)
+
 ## 1.11.5 / 31 Aug 2018
 Bugfixes:
  * Clear votes on advance, fixes a regression in v1.11.4. (#1126)
