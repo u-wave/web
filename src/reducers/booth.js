@@ -38,7 +38,10 @@ export default function reduce(state = initialState, action = {}) {
         return {
           ...state,
           historyID: payload.booth.historyID,
-          media: payload.booth.media,
+          media: {
+            ...payload.booth.media,
+            ...payload.booth.media.media,
+          },
           djID: payload.booth.userID,
           startTime: payload.booth.playedAt,
         };
