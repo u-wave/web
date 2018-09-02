@@ -1,5 +1,6 @@
 /* eslint-disable global-require */
 const gulp = require('gulp');
+const path = require('path');
 const { promisify } = require('util');
 const webpack = require('webpack');
 const rimraf = require('rimraf');
@@ -8,13 +9,15 @@ const env = require('./tasks/env');
 const js = require('./tasks/js');
 const serve = require('./tasks/serve');
 
+const middlewareDir = path.join(__dirname, 'packages/u-wave-web-middleware')
+
 function setWatching(done) {
   env.watch = true;
   done();
 }
 
 function cleanDist(done) {
-  rimraf('dist/{public,middleware}', done);
+  rimraf(`${middlewareDir}/{public,middleware}`, done);
 }
 function cleanEs(done) {
   rimraf('es', done);
@@ -49,16 +52,16 @@ function prod(done) {
 
 function copyMiddleware() {
   return gulp.src('lib/middleware/**')
-    .pipe(gulp.dest('dist/middleware'));
+    .pipe(gulp.dest(`${middlewareDir}/middleware`));
 }
 
 function copyMiddlewareMeta() {
   return gulp.src('./LICENSE')
-    .pipe(gulp.dest('dist/'));
+    .pipe(gulp.dest(middlewareDir));
 }
 
 async function updateMiddlewarePackageJson() {
-  const middlewarePkg = require('./dist/package.json');
+  const middlewarePkg = require(`${middlewareDir}/package.json`);
   const pkg = require('./package.json');
 
   // Sync versions.
@@ -67,7 +70,7 @@ async function updateMiddlewarePackageJson() {
     middlewarePkg.dependencies[name] = pkg.dependencies[name];
   });
 
-  await writeFile('./dist/package.json', `${JSON.stringify(middlewarePkg, null, 2)}\n`);
+  await writeFile(`${middlewareDir}/package.json`, `${JSON.stringify(middlewarePkg, null, 2)}\n`);
 }
 
 const middleware = gulp.parallel(
