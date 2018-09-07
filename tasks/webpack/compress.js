@@ -9,13 +9,13 @@ export default function compress() {
       // Add Gzip-compressed files.
       new CompressionPlugin({
         test: compressible,
-        asset: '[path].gz[query]',
+        filename: '[path].gz[query]',
         algorithm: 'gzip',
       }),
       // Add Brotli-compressed files.
       new CompressionPlugin({
         test: compressible,
-        asset: '[path].br[query]',
+        filename: '[path].br[query]',
         algorithm(buffer, opts, cb) {
           const result = brotli(buffer);
           if (result) {
