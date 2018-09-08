@@ -1,4 +1,4 @@
-import except from 'except';
+import omit from 'just-omit';
 import indexBy from 'index-by';
 import { combineReducers } from 'redux';
 import {
@@ -52,7 +52,7 @@ function usersReducer(state = {}, action = {}) {
         [payload.user._id]: payload.user,
       };
     case USER_LEAVE:
-      return except(state, payload.userID);
+      return omit(state, payload.userID);
     case CHANGE_USERNAME:
       return updateUser(state, payload.userID, user => ({
         ...user,

@@ -1,4 +1,4 @@
-import except from 'except';
+import omit from 'just-omit';
 import {
   INIT_STATE,
   RECEIVE_MOTD,
@@ -128,7 +128,7 @@ export default function reduce(state = initialState, action = {}) {
     case UNMUTE_USER:
       return {
         ...state,
-        mutedUsers: except(state.mutedUsers, payload.userID),
+        mutedUsers: omit(state.mutedUsers, payload.userID),
       };
 
     default: {

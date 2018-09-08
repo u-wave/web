@@ -1,4 +1,4 @@
-import except from 'except';
+import omit from 'just-omit';
 import escapeStringRegExp from 'escape-string-regexp';
 import indexBy from 'index-by';
 import mapValues from 'just-map-values';
@@ -335,14 +335,14 @@ export default function reduce(state = initialState, action = {}) {
       if (error) {
         return {
           ...state,
-          playlists: except(state.playlists, `${meta.tempId}`),
+          playlists: omit(state.playlists, `${meta.tempId}`),
         };
       }
 
       return {
         ...state,
         playlists: Object.assign(
-          deselectAll(except(state.playlists, `${meta.tempId}`)),
+          deselectAll(omit(state.playlists, `${meta.tempId}`)),
           {
             [payload.playlist._id]: {
               ...payload.playlist,
@@ -383,7 +383,7 @@ export default function reduce(state = initialState, action = {}) {
         selectedPlaylistID: state.selectedPlaylistID === payload.playlistID
           ? state.activePlaylistID
           : state.selectedPlaylistID,
-        playlists: except(state.playlists, payload.playlistID),
+        playlists: omit(state.playlists, payload.playlistID),
       };
 
     case ADD_MEDIA_START:

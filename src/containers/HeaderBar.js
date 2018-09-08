@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import compose from 'recompose/compose';
 import getContext from 'recompose/getContext';
 import mapProps from 'recompose/mapProps';
-import except from 'except';
+import omit from 'just-omit';
 import { createStructuredSelector } from 'reselect';
 import { setVolume, mute, unmute } from '../actions/PlaybackActionCreators';
 import { toggleRoomHistory, toggleAbout } from '../actions/OverlayActionCreators';
@@ -39,5 +39,5 @@ export default compose(
   getContext({ uwave: PropTypes.object }),
   connect(mapStateToProps, mapDispatchToProps),
   // Remove the "uwave" prop—it was only necessary for the selector.
-  mapProps(props => except(props, 'uwave')),
+  mapProps(props => omit(props, 'uwave')),
 )(HeaderBar);
