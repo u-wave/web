@@ -146,7 +146,7 @@
     "nyc": "^13.1.0",
     "postcss-import": "^12.0.1",
     "postcss-loader": "^3.0.0",
-    "postcss-preset-env": "^6.0.0",
+    "postcss-preset-env": "^6.0.6",
     "postcss-url": "^8.0.0",
     "react-test-renderer": "^16.6.0",
     "recaptcha-test-keys": "^1.0.0",
