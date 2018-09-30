@@ -1,10 +1,12 @@
 // List of dependency paths that need to be compiled.
 const es2015Deps = [
-  /format-duration/,
-  /object-values/,
-  /p-finally/,
-  /@material-ui\/core\/es/,
-  /@material-ui\/icons\/es/,
+  /\/format-duration\//,
+  /\/object-values\//,
+  /\/p-finally\//,
+  /\/strip-indent\//,
+  /\/debug\//,
+  /\/@material-ui\/core\/es\//,
+  /\/@material-ui\/icons\/es\//,
 ];
 
 export default function compileDependencies() {
