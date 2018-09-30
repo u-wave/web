@@ -9,36 +9,67 @@ import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import SchemaForm from '../SchemaForm'; // eslint-disable-line
 
-const Section = ({ schema, data, onSave }) => (
-  <ExpansionPanel>
-    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-      <div>
-        <Typography>{schema.title}</Typography>
-        <Typography color="textSecondary">{schema.description}</Typography>
-      </div>
-    </ExpansionPanelSummary>
-    <ExpansionPanelDetails>
-      <SchemaForm
-        schema={schema}
-        defaultData={data}
-        unwrapRoot={schema.type === 'object'}
-        onSave={onSave}
-      />
-    </ExpansionPanelDetails>
-    <ExpansionPanelActions>
-      <Button color="primary" variant="raised">Save</Button>
-    </ExpansionPanelActions>
-  </ExpansionPanel>
-);
+class Section extends React.Component {
+  static propTypes = {
+    schema: PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+    }).isRequired,
+    defaultValue: PropTypes.object.isRequired,
+    onSave: PropTypes.func.isRequired,
+  };
 
-Section.propTypes = {
-  schema: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-  }).isRequired,
-  data: PropTypes.any.isRequired,
-  onSave: PropTypes.func.isRequired,
-};
+  state = {
+    // eslint-disable-next-line react/destructuring-assignment
+    value: this.props.defaultValue,
+  };
+
+  handleChange = (value) => {
+    this.setState({ value });
+  };
+
+  handleSubmit = (event) => {
+    const { value } = this.state;
+    const { onSave } = this.props;
+
+    event.preventDefault();
+
+    onSave(value);
+  };
+
+  render() {
+    const { value } = this.state;
+    const { schema } = this.props;
+
+    return (
+      <ExpansionPanel>
+        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+          <div>
+            <Typography>{schema.title}</Typography>
+            <Typography color="textSecondary">{schema.description}</Typography>
+          </div>
+        </ExpansionPanelSummary>
+        <ExpansionPanelDetails>
+          <SchemaForm
+            schema={schema}
+            value={value}
+            unwrapRoot={schema.type === 'object'}
+            onChange={this.handleChange}
+          />
+        </ExpansionPanelDetails>
+        <ExpansionPanelActions>
+          <Button
+            color="primary"
+            variant="raised"
+            onClick={this.handleSubmit}
+          >
+            Save
+          </Button>
+        </ExpansionPanelActions>
+      </ExpansionPanel>
+    );
+  }
+}
 
 function partial(fn, arg) {
   return (...args) => fn(arg, ...args);
@@ -49,7 +80,7 @@ function renderSections(allSchema, allValues, onSave) {
     <Section
       key={key}
       schema={allSchema.properties[key]}
-      data={allValues[key]}
+      defaultValue={allValues[key]}
       onSave={partial(onSave, key)}
     />
   ));

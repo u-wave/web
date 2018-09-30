@@ -11,19 +11,29 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Form from '../../../components/Form';
 import TextField from '../../../components/Form/TextField';
 
-function renderObjectProperties(spec, renderChild) {
+function renderObjectProperties(spec, { value, onChange }, renderChild) {
   return Object.keys(spec.properties).map((key) => {
     const subSchema = spec.properties[key];
+    const subValue = value[key];
+    const subChange = newValue => onChange({
+      ...value,
+      [key]: newValue,
+    });
 
     return (
-      <FormGroup>{renderChild(subSchema)}</FormGroup>
+      <FormGroup>
+        {renderChild(subSchema, {
+          value: subValue,
+          onChange: subChange,
+        })}
+      </FormGroup>
     );
   });
 }
 
 const renderers = {
-  object(spec, renderChild) {
-    const children = renderObjectProperties(spec, renderChild);
+  object(spec, props, renderChild) {
+    const children = renderObjectProperties(spec, props, renderChild);
     return (
       <FormControl component="fieldset">
         {spec.title && <FormLabel component="legend">{spec.title}</FormLabel>}
@@ -32,38 +42,53 @@ const renderers = {
       </FormControl>
     );
   },
-  textarea(schema) {
+  textarea(schema, { value, onChange }) {
     return (
       <React.Fragment>
         <Typography component="p">{schema.title}</Typography>
-        <textarea />
+        <textarea
+          value={value}
+          onChange={e => onChange(e.target.value)}
+        />
         {schema.description && <FormHelperText>{schema.description}</FormHelperText>}
       </React.Fragment>
     );
   },
-  string(schema) {
+  string(schema, { value, onChange }) {
     return (
       <React.Fragment>
         <Typography gutterBottom>{schema.title}</Typography>
-        <TextField />
+        <TextField
+          value={value}
+          onChange={e => onChange(e.target.value)}
+        />
         {schema.description && <FormHelperText>{schema.description}</FormHelperText>}
       </React.Fragment>
     );
   },
-  number(schema) {
+  number(schema, { value, onChange }) {
     return (
       <React.Fragment>
         <Typography gutterBottom>{schema.title}</Typography>
-        <TextField type="number" />
+        <TextField
+          type="number"
+          value={value}
+          onChange={e => onChange(e.target.value)}
+        />
         {schema.description && <FormHelperText>{schema.description}</FormHelperText>}
       </React.Fragment>
     );
   },
-  boolean(schema) {
+  boolean(schema, { value, onChange }) {
     return (
       <React.Fragment>
         <FormControlLabel
-          control={<Checkbox />}
+          control={
+            <Checkbox
+              checked={value}
+              onChange={(event, checked) => onChange(checked)}
+            />
+          }
           label={schema.title}
         />
         {schema.description && <FormHelperText>{schema.description}</FormHelperText>}
@@ -75,8 +100,8 @@ const renderers = {
 export default class SchemaForm extends React.Component {
   static propTypes = {
     schema: PropTypes.object.isRequired,
-    defaultData: PropTypes.object.isRequired,
-    onSave: PropTypes.func.isRequired,
+    value: PropTypes.object.isRequired,
+    onChange: PropTypes.func.isRequired,
     unwrapRoot: PropTypes.bool,
   };
 
@@ -84,11 +109,11 @@ export default class SchemaForm extends React.Component {
     unwrapRoot: false,
   };
 
-  renderField(schema) {
+  renderField(schema, props) {
     const controlName = schema['uw:control'] || schema.type;
     const renderer = renderers[controlName];
     if (renderer) {
-      return renderer(schema, this.renderField.bind(this));
+      return renderer(schema, props, this.renderField.bind(this));
     }
     return (
       <p style={{ background: 'red', color: 'white'}}>
@@ -102,11 +127,16 @@ export default class SchemaForm extends React.Component {
     const {
       schema,
       unwrapRoot,
+      value,
+      onChange,
     } = this.props;
 
     const form = unwrapRoot
-      ? renderObjectProperties(schema, this.renderField.bind(this))
-      : this.renderField(schema);
+      ? renderObjectProperties(schema, {
+          value,
+          onChange,
+        }, this.renderField.bind(this))
+      : this.renderField(schema, value);
 
     return (
       <Form>
