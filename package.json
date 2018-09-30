@@ -60,7 +60,7 @@
     "react-dom": "^16.4.2",
     "react-google-button": "^0.5.3",
     "react-hot-loader": "^4.3.5",
-    "react-i18next": "^7.11.0",
+    "react-i18next": "^8.0.0",
     "react-jss": "^8.6.1",
     "react-list": "0.8.9",
     "react-list-lazy-load": "^1.1.1",
