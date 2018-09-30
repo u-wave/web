@@ -1,14 +1,22 @@
 import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useTranslator } from 'react-i18next';
+import { useTranslator } from '@u-wave/react-translate';
 import Typography from '@material-ui/core/Typography';
 import PlaylistIcon from '@material-ui/icons/PlaylistAdd';
+import Form from '../../Form';
+import FormGroup from '../../Form/Group';
 import Button from '../../Form/Button';
 import ImportBlock from './ImportBlock';
 
-function NoPlaylists({ className }) {
+const { useCallback } = React;
+
+function NoPlaylists({ className, onCreatePlaylist }) {
   const { t } = useTranslator();
+  const handleCreatePlaylist = useCallback((event) => {
+    event.preventDefault();
+    return onCreatePlaylist();
+  }, [onCreatePlaylist]);
 
   return (
     <div className={cx('PlaylistPanel', 'PlaylistPanel--empty', className)}>
@@ -16,10 +24,18 @@ function NoPlaylists({ className }) {
       <Typography>{t('playlists.noPlaylistsSub')}</Typography>
 
       <div className="NoPlaylists-create">
-        <div className="NoPlaylists-block">
-          <PlaylistIcon className="NoPlaylists-icon" />
-          <Button>{t('playlists.new')}</Button>
-        </div>
+        <Form
+          className="NoPlaylists-block"
+          onSubmit={onCreatePlaylist}
+        >
+          <FormGroup>
+            <PlaylistIcon className="NoPlaylists-icon" />
+          </FormGroup>
+          <FormGroup>
+            <Button>{t('playlists.new')}</Button>
+          </FormGroup>
+        </Form>
+        <ImportBlock />
       </div>
     </div>
   );
@@ -27,6 +43,7 @@ function NoPlaylists({ className }) {
 
 NoPlaylists.propTypes = {
   className: PropTypes.string,
+  onCreatePlaylist: PropTypes.func.isRequired,
 };
 
 export default NoPlaylists;

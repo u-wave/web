@@ -15,6 +15,7 @@ const PlaylistManager = ({
   selectedPlaylist,
   showSearchResults,
   showImportPanel,
+  onCreatePlaylist,
   onCloseOverlay,
 }) => {
   let panel;
@@ -53,7 +54,7 @@ const PlaylistManager = ({
 
       <OverlayContent>
         {empty ? (
-          <NoPlaylists />
+          <NoPlaylists onCreatePlaylist={onCreatePlaylist} />
         ) : (
           <React.Fragment>
             <PlaylistMenu className="PlaylistManager-menu" />
@@ -72,6 +73,7 @@ PlaylistManager.propTypes = {
   selectedPlaylist: PropTypes.object,
   showSearchResults: PropTypes.bool.isRequired,
   showImportPanel: PropTypes.bool.isRequired,
+  onCreatePlaylist: PropTypes.func.isRequired,
   onCloseOverlay: PropTypes.func,
 };
 

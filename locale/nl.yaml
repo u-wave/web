@@ -75,6 +75,8 @@ uwave:
 
   playlists:
     title: Afspeellijsten
+    name: Naam
+    defaultName: Nieuwe Afspeellijst
     new: Maak Afspeellijst
     delete: Verwijder Afspeellijst
     noPlaylists: Je hebt nog geen afspeellijsten!
