@@ -7,6 +7,7 @@ const ExtractCssPlugin = require('mini-css-extract-plugin');
 const HtmlPlugin = require('html-webpack-plugin');
 const HtmlSiblingChunksPlugin = require('html-webpack-include-sibling-chunks-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const { Plugin: ShakePlugin } = require('webpack-common-shake');
 const merge = require('webpack-merge');
 const htmlMinifierOptions = require('./tasks/utils/htmlMinifierOptions');
 
@@ -96,6 +97,7 @@ if (nodeEnv === 'production') {
   };
 
   plugins.push(
+    new ShakePlugin(),
     new ExtractCssPlugin({
       filename: 'static/[name]_[contenthash:7].css',
       chunkFilename: 'static/[name]_[contenthash:7].css',
