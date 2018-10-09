@@ -9,8 +9,8 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import IconButton from '@material-ui/core/IconButton';
-import UploadIcon from '@material-ui/icons/CloudUploadOutlined';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import UploadIcon from '@material-ui/icons/CloudUploadOutlined';
 import uniqueId from 'lodash/uniqueId';
 import Form from '../Form';
 import FormGroup from '../Form/Group';
@@ -129,7 +129,9 @@ class AvatarDialog extends React.Component {
                   <div className="Button-loading">
                     <CircularProgress size="100%" />
                   </div>
-                ) : t('settings.profile.avatar.save')}
+                ) : (
+                  t('settings.profile.avatar.save')
+                )}
               </Button>
             </FormGroup>
           </Form>
