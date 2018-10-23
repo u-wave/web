@@ -39,7 +39,7 @@ const BanRow = ({
     </TableCell>
     <TableCell>
       <Button
-        variant="raised"
+        variant="contained"
         onClick={onUnbanUser}
       >
         {t('admin.bans.unban')}

@@ -35,7 +35,7 @@ const LoginButtons = ({
 }) => (
   <span style={{ display: 'flex', justifyContent: 'stretch', height: '100%' }}>
     <Button
-      variant="raised"
+      variant="contained"
       color="primary"
       onClick={onLogin}
       style={buttonStyle}

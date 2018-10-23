@@ -163,7 +163,7 @@ class FooterBar extends React.Component {
           {t('login.message')}
         </div>
         <Button
-          variant="raised"
+          variant="contained"
           color="primary"
           className="FooterAuthButton FooterAuthButton--login"
           onClick={openLoginDialog}
@@ -171,7 +171,7 @@ class FooterBar extends React.Component {
           {t('login.login').toUpperCase()}
         </Button>
         <Button
-          variant="raised"
+          variant="contained"
           color="primary"
           className="FooterAuthButton FooterAuthButton--register"
           onClick={openRegisterDialog}
