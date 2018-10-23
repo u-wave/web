@@ -11,7 +11,7 @@ import UserRow from './UserRow';
 import WaitlistPosition from './WaitlistPosition';
 
 const JoinWaitlistButton = withProps({
-  variant: 'raised',
+  variant: 'contained',
   color: 'primary',
   style: {
     marginLeft: 16,

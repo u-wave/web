@@ -8,7 +8,7 @@ const enhance = translate();
 const VideoDisabledMessage = ({ t, onEnableVideo }) => (
   <div className="VideoDisabledMessage">
     <p className="VideoDisabledMessage-text">{t('booth.videoDisabled')}</p>
-    <Button variant="raised" color="primary" onClick={onEnableVideo}>
+    <Button variant="contained" color="primary" onClick={onEnableVideo}>
       {'Enable?'}
     </Button>
   </div>

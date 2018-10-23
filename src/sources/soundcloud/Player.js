@@ -146,7 +146,7 @@ class SoundCloudPlayer extends React.Component {
             <Typography component="p" paragraph>
               {t('booth.autoplayBlocked')}
             </Typography>
-            <Button variant="raised" color="primary" onClick={this.handlePlay}>
+            <Button variant="contained" color="primary" onClick={this.handlePlay}>
               {t('booth.play')}
             </Button>
           </Paper>

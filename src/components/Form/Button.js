@@ -7,7 +7,7 @@ const Button = ({
   children, className, text, ...props
 }) => (
   <MuiButton
-    variant="raised"
+    variant="contained"
     color="primary"
     className={cx('Button', className)}
     type="submit"

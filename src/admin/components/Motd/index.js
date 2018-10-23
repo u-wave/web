@@ -79,7 +79,7 @@ const Motd = ({
         <CardActions>
           <Button
             type="submit"
-            variant="raised"
+            variant="contained"
             color="primary"
           >
             Save
