@@ -180,5 +180,10 @@
     "serve": "gulp serve",
     "start": "gulp start",
     "prerelease": "npm run clean && npm test && npm run prod"
+  },
+  "greenkeeper": {
+    "ignore": [
+      "react-i18next"
+    ]
   }
 }
