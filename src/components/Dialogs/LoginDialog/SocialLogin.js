@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
-import loadable from 'react-loadable';
 import compose from 'recompose/compose';
 import { loginWithGoogle } from '../../../actions/LoginActionCreators';
 
@@ -13,17 +12,19 @@ const enhance = compose(
   translate(),
 );
 
-const GoogleButton = loadable({
-  loader: () => import('react-google-button' /* webpackChunkName: "googleButton" */),
-  loading: () => <div style={{ height: 50 }} />,
-});
+const GoogleButton = React.lazy(() => (
+  import('react-google-button' /* webpackChunkName: "googleButton" */)
+));
+const loadingGoogleButton = <div style={{ height: 50 }} />;
 
 const SocialLogin = ({ t, onGoogleClick }) => (
-  <GoogleButton
-    style={{ width: '100%' }}
-    label={t('login.social.loginWithGoogle')}
-    onClick={onGoogleClick}
-  />
+  <React.Suspense fallback={loadingGoogleButton}>
+    <GoogleButton
+      style={{ width: '100%' }}
+      label={t('login.social.loginWithGoogle')}
+      onClick={onGoogleClick}
+    />
+  </React.Suspense>
 );
 
 SocialLogin.propTypes = {
