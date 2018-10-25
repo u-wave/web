@@ -1,4 +1,5 @@
 import {
+  ADVANCE,
   BOOTH_SKIP,
   USER_JOIN,
   USER_LEAVE,
@@ -41,6 +42,23 @@ export default function reduceNotifications(state, { type, payload }) {
         roles: payload.roles,
         timestamp: payload.timestamp,
       }]);
+    case ADVANCE: {
+      if (payload === null) {
+        return state;
+      }
+
+      // Replace the previous line if there was no chat since the last advance event.
+      const newEntry = {
+        type: 'nowPlaying',
+        _id: `nowPlaying-${payload.historyID}`,
+        entry: payload.media,
+        timestamp: payload.timestamp,
+      };
+      if (state.length > 0 && state[state.length - 1].type === 'nowPlaying') {
+        return [...state.slice(0, -1), newEntry];
+      }
+      return [...state, newEntry];
+    }
     case BOOTH_SKIP:
       return state.concat([{
         type: 'skip',
