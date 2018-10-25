@@ -1,12 +1,11 @@
 import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
-import pure from 'recompose/pure';
 import SettingsIcon from '@material-ui/icons/SettingsRounded';
 
 import Avatar from '../Avatar';
 
-const enhance = pure;
+const enhance = React.memo;
 
 const UserInfo = ({ className, user, onClick }) => (
   <button

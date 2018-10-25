@@ -3,9 +3,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { translate, Interpolate } from 'react-i18next';
 import compose from 'recompose/compose';
-import pure from 'recompose/pure';
 import SongTitle from '../SongTitle';
 import Eta from './Eta';
+
+const enhance = compose(
+  translate(),
+  React.memo,
+);
 
 const NextMedia = ({
   t,
@@ -64,7 +68,4 @@ NextMedia.propTypes = {
   mediaEndTime: PropTypes.number,
 };
 
-export default compose(
-  translate(),
-  pure,
-)(NextMedia);
+export default enhance(NextMedia);

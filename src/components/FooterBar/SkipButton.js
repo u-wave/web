@@ -2,13 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import compose from 'recompose/compose';
-import pure from 'recompose/pure';
 import Popover from '@material-ui/core/Popover';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import SkipIcon from '@material-ui/icons/SkipNext';
 import SkipReasonsList from './SkipReasonsList';
+
+const enhance = compose(
+  translate(),
+  React.memo,
+);
 
 const popoverPosition = {
   marginThreshold: 0,
@@ -117,7 +121,4 @@ class SkipButton extends React.Component {
   }
 }
 
-export default compose(
-  translate(),
-  pure,
-)(SkipButton);
+export default enhance(SkipButton);
