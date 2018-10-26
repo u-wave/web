@@ -44,6 +44,17 @@ class PlaylistFilter extends React.Component {
     });
   };
 
+  handleKeyDown = (event) => {
+    if (event.key === 'Escape') {
+      this.setState(({ value }) => {
+        // Clear input value if there is text.
+        if (value) return { value: '' };
+        // else close the input.
+        return { value: '', isOpen: false };
+      });
+    }
+  };
+
   handleChange = (event) => {
     const { value } = event.target;
 
@@ -83,6 +94,7 @@ class PlaylistFilter extends React.Component {
           ref={this.refInput}
           className={cx('PlaylistMediaFilter-input', isOpen && 'is-open')}
           value={value}
+          onKeyDown={this.handleKeyDown}
           onChange={this.handleChange}
         />
       </div>
