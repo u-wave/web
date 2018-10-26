@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import pure from 'recompose/pure';
-
 import compile from './Markup/compile';
+
+const enhance = React.memo;
 
 const Motd = ({ children, compileOptions }) => (
   <div className="ChatMessage ChatMessage--motd">
@@ -20,4 +20,4 @@ Motd.propTypes = {
   }),
 };
 
-export default pure(Motd);
+export default enhance(Motd);

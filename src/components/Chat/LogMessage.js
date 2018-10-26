@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import pure from 'recompose/pure';
+
+const enhance = React.memo;
 
 const LogMessage = ({ text }) => (
   <div className="ChatMessage ChatMessage--log">
@@ -14,4 +15,4 @@ LogMessage.propTypes = {
   text: PropTypes.string.isRequired,
 };
 
-export default pure(LogMessage);
+export default enhance(LogMessage);

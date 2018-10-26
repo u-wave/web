@@ -2,9 +2,13 @@ import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import compose from 'recompose/compose';
-import pure from 'recompose/pure';
 import formatDuration from 'format-duration';
 import timed from '../../utils/timed';
+
+const enhance = compose(
+  timed(),
+  React.memo,
+);
 
 const Eta = ({
   className, base, currentTime, endTime,
@@ -24,7 +28,4 @@ Eta.propTypes = {
   base: PropTypes.number,
 };
 
-export default compose(
-  timed(),
-  pure,
-)(Eta);
+export default enhance(Eta);

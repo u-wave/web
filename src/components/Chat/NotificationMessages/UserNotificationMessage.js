@@ -3,7 +3,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { translate, Interpolate } from 'react-i18next';
 import compose from 'recompose/compose';
-import pure from 'recompose/pure';
 import withHandlers from 'recompose/withHandlers';
 import userCardable from '../../../utils/userCardable';
 import Avatar from '../../Avatar';
@@ -12,7 +11,7 @@ import MessageTimestamp from '../MessageTimestamp';
 
 const enhance = compose(
   translate(),
-  pure,
+  React.memo,
   userCardable(),
   withHandlers({
     onClick: props => (event) => {

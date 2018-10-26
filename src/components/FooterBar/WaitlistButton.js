@@ -3,9 +3,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import compose from 'recompose/compose';
-import pure from 'recompose/pure';
 import Button from '@material-ui/core/Button';
 import LockedIcon from '@material-ui/icons/Lock';
+
+const enhance = compose(
+  translate(),
+  React.memo,
+);
 
 const WaitlistButton = ({
   t,
@@ -50,7 +54,4 @@ WaitlistButton.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
-export default compose(
-  translate(),
-  pure,
-)(WaitlistButton);
+export default enhance(WaitlistButton);

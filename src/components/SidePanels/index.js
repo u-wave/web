@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import compose from 'recompose/compose';
-import pure from 'recompose/pure';
 import withState from 'recompose/withState';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -14,7 +13,7 @@ import PanelContainer from './PanelContainer';
 const enhance = compose(
   translate(),
   withState('selected', 'setTab', 0),
-  pure,
+  React.memo,
 );
 
 const subHeaderStyle = {
