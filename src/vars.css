@@ -1,4 +1,6 @@
 :root {
+  --font-family: "Open Sans", Roboto, Arial, sans-serif;
+
   /* Global colours */
   --text-color: #fff;
   --secondary-text-color: rgba(255, 255, 255, 0.7);
