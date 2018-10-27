@@ -3,8 +3,7 @@
 @import "./components/App/index.css";
 
 body {
-  font-family: Open Sans, sans-serif;
-
+  font-family: var(--font-family);
   background: var(--background-color);
   color: var(--text-color);
 }
