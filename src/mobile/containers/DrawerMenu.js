@@ -1,7 +1,4 @@
-import compose from 'recompose/compose';
-import getContext from 'recompose/getContext';
-import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
+import React from 'react';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { currentUserSelector } from '../../selectors/userSelectors';
@@ -11,28 +8,34 @@ import { drawerIsOpenSelector } from '../selectors/drawerSelectors';
 import { setDrawer } from '../actions/DrawerActionCreators';
 import { toggleServerList, openPlaylist } from '../actions/OverlayActionCreators';
 import DrawerMenu from '../components/DrawerMenu';
+import UwaveContext from '../../context/UwaveContext';
 
 const mapStateToProps = createStructuredSelector({
   user: currentUserSelector,
   playlists: playlistsSelector,
   open: drawerIsOpenSelector,
-  hasAboutPage: (state, props) => {
-    const { uwave } = props;
-    return Boolean(uwave && uwave.getAboutPageComponent());
-  },
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
+const mapDispatchToProps = {
   onShowAbout: toggleAbout,
   onShowServerList: toggleServerList,
   onShowSettings: toggleSettings,
   onShowPlaylist: openPlaylist,
   onDrawerClose: () => setDrawer(false),
-}, dispatch);
+};
 
-const enhance = compose(
-  getContext({ uwave: PropTypes.object }),
-  connect(mapStateToProps, mapDispatchToProps),
+const enhance = connect(mapStateToProps, mapDispatchToProps);
+
+const ConnectedDrawerMenu = enhance(DrawerMenu);
+
+const DrawerMenuWrapper = () => (
+  <UwaveContext.Consumer>
+    {uwave => (
+      <ConnectedDrawerMenu
+        hasAboutPage={uwave && uwave.getAboutPageComponent()}
+      />
+    )}
+  </UwaveContext.Consumer>
 );
 
-export default enhance(DrawerMenu);
+export default DrawerMenuWrapper;

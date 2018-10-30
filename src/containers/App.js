@@ -18,6 +18,7 @@ import { isConnectedSelector } from '../selectors/serverSelectors';
 import DesktopApp from '../components/App';
 import MobileApp from '../mobile/components/App';
 import FatalError from '../components/FatalError';
+import UwaveContext from '../context/UwaveContext';
 
 const SimpleProviders = nest(BusProvider, ClockProvider);
 
@@ -54,9 +55,9 @@ class AppContainer extends React.Component {
   };
 
   getChildContext() {
-    const { uwave, mediaSources } = this.props;
+    const { mediaSources } = this.props;
 
-    return { uwave, mediaSources };
+    return { mediaSources };
   }
 
   componentDidMount() {
@@ -100,7 +101,7 @@ class AppContainer extends React.Component {
   );
 
   render() {
-    const { theme, locale } = this.props;
+    const { uwave, theme, locale } = this.props;
     const { error } = this.state;
 
     if (error) {
@@ -116,7 +117,9 @@ class AppContainer extends React.Component {
       <MuiThemeProvider theme={theme}>
         <I18nextProvider i18n={locale}>
           <SimpleProviders>
-            {this.renderApp()}
+            <UwaveContext.Provider value={uwave}>
+              {this.renderApp()}
+            </UwaveContext.Provider>
           </SimpleProviders>
         </I18nextProvider>
       </MuiThemeProvider>
