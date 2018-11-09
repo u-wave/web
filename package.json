@@ -56,7 +56,7 @@
     "react-abstract-autocomplete": "^2.0.0",
     "react-bus": "^1.0.3",
     "react-dnd": "^6.0.0",
-    "react-dnd-html5-backend": "^2.6.0",
+    "react-dnd-html5-backend": "^6.0.0",
     "react-dom": "^16.6.0",
     "react-google-button": "^0.5.3",
     "react-hot-loader": "^4.3.11",
