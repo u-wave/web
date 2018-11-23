@@ -4,7 +4,7 @@ Web client for [üWave][].
 
 This package contains the compiled client side and server-side middleware. This is all you need to serve the web client.
 
-The main package including uncompiled and partially compiled client side code is [u-wave-web][].
+The main package including uncompiled and partially compiled client side code is [u-wave-web][]. The documentation there applies to this package as well.
 
 ## License
 

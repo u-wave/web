@@ -75,7 +75,7 @@ npm run serve
 ## Server API
 
 ```js
-import createWebClient from 'u-wave-web/middleware';
+import createWebClient from 'u-wave-web-middleware';
 ```
 
 ### createWebClient(uw, options={})
@@ -96,7 +96,7 @@ This is a small example üWave server on top of Express, using ReCaptcha and
 import express from 'express';
 import uwave from 'u-wave-core';
 import createHttpApi from 'u-wave-http-api';
-import createWebClient from 'u-wave-web/middleware';
+import createWebClient from 'u-wave-web-middleware';
 import emojione from 'u-wave-web-emojione';
 
 const app = express();
