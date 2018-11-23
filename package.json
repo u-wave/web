@@ -180,7 +180,7 @@
     "serve": "gulp serve",
     "start": "gulp start",
     "prerelease": "npm run clean && npm test && npm run prod",
-    "postpublish": "cd dist && npm publish"
+    "postpublish": "cd packages/u-wave-web-middleware && npm publish"
   },
   "greenkeeper": {
     "ignore": [
