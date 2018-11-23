@@ -9,7 +9,7 @@ const env = require('./tasks/env');
 const js = require('./tasks/js');
 const serve = require('./tasks/serve');
 
-const middlewareDir = path.join(__dirname, 'packages/u-wave-web-middleware')
+const middlewareDir = path.join(__dirname, 'packages/u-wave-web-middleware');
 
 function setWatching(done) {
   env.watch = true;
@@ -61,6 +61,7 @@ function copyMiddlewareMeta() {
 }
 
 async function updateMiddlewarePackageJson() {
+  // eslint-disable-next-line import/no-dynamic-require
   const middlewarePkg = require(`${middlewareDir}/package.json`);
   const pkg = require('./package.json');
 
