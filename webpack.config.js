@@ -72,7 +72,6 @@ const plugins = [
 let optimization;
 
 if (nodeEnv === 'production') {
-  const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
   const SriPlugin = require('webpack-subresource-integrity');
 
   optimization = {
@@ -81,19 +80,6 @@ if (nodeEnv === 'production') {
       automaticNameDelimiter: '-',
       chunks: 'all',
     },
-    minimizer: [
-      new UglifyJsPlugin({
-        parallel: true,
-        sourceMap: true,
-        uglifyOptions: {
-          toplevel: true,
-          compress: {
-            pure_getters: true,
-            unsafe: true,
-          },
-        },
-      }),
-    ],
   };
 
   plugins.push(
