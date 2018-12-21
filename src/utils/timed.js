@@ -1,4 +1,5 @@
 import React from 'react';
+import { ReactReduxContext } from 'react-redux';
 import PropTypes from 'prop-types';
 import wrapDisplayName from 'recompose/wrapDisplayName';
 import { currentTimeSelector } from '../selectors/timeSelectors';
@@ -9,15 +10,10 @@ export default function () {
       static displayName = wrapDisplayName(Component, 'Timed');
 
       static contextTypes = {
-        store: PropTypes.object.isRequired,
         timerCallbacks: PropTypes.shape({
           add: PropTypes.func,
           remove: PropTypes.func,
         }).isRequired,
-      };
-
-      state = {
-        currentTime: this.getCurrentTime(),
       };
 
       componentDidMount() {
@@ -32,26 +28,20 @@ export default function () {
         timerCallbacks.remove(this.tick);
       }
 
-      getCurrentTime() {
-        const { store } = this.context;
-
-        return currentTimeSelector(store.getState());
-      }
-
       tick = () => {
-        this.setState({
-          currentTime: this.getCurrentTime(),
-        });
+        this.setState({});
       };
 
       render() {
-        const { currentTime } = this.state;
-
         return (
-          <Component
-            {...this.props}
-            currentTime={currentTime}
-          />
+          <ReactReduxContext.Consumer>
+            {({ store }) => (
+              <Component
+                {...this.props}
+                currentTime={currentTimeSelector(store.getState())}
+              />
+            )}
+          </ReactReduxContext.Consumer>
         );
       }
     }
