@@ -69,5 +69,6 @@ export default function createLocale(language) {
     }
   });
 
-  return locale.changeLanguage(language);
+  return locale.changeLanguage(language)
+    .then(() => locale);
 }
