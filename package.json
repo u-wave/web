@@ -154,7 +154,7 @@
     "sinon": "^7.1.1",
     "sinon-chai": "^3.1.0",
     "style-loader": "^0.23.1",
-    "through2": "^2.0.5",
+    "through2": "^3.0.0",
     "u-wave-web-emojione": "^2.0.1",
     "webpack": "^4.26.0",
     "webpack-bundle-analyzer": "^3.0.3",
