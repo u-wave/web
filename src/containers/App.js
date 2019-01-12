@@ -19,6 +19,7 @@ import DesktopApp from '../components/App';
 import MobileApp from '../mobile/components/App';
 import FatalError from '../components/FatalError';
 import UwaveContext from '../context/UwaveContext';
+import MediaSourceContext from '../context/MediaSourceContext';
 
 const SimpleProviders = nest(BusProvider, ClockProvider);
 
@@ -45,19 +46,9 @@ class AppContainer extends React.Component {
     locale: PropTypes.object.isRequired,
   };
 
-  static childContextTypes = {
-    mediaSources: PropTypes.object,
-  };
-
   state = {
     error: null,
   };
-
-  getChildContext() {
-    const { mediaSources } = this.props;
-
-    return { mediaSources };
-  }
 
   componentDidMount() {
     this.applyThemeProperties();
@@ -100,7 +91,12 @@ class AppContainer extends React.Component {
   );
 
   render() {
-    const { uwave, theme, locale } = this.props;
+    const {
+      uwave,
+      mediaSources,
+      theme,
+      locale,
+    } = this.props;
     const { error } = this.state;
 
     if (error) {
@@ -117,7 +113,9 @@ class AppContainer extends React.Component {
         <I18nextProvider i18n={locale}>
           <SimpleProviders>
             <UwaveContext.Provider value={uwave}>
-              {this.renderApp()}
+              <MediaSourceContext.Provider mediaSources={mediaSources}>
+                {this.renderApp()}
+              </MediaSourceContext.Provider>
             </UwaveContext.Provider>
           </SimpleProviders>
         </I18nextProvider>
