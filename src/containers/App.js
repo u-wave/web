@@ -47,7 +47,6 @@ class AppContainer extends React.Component {
 
   static childContextTypes = {
     mediaSources: PropTypes.object,
-    uwave: PropTypes.object,
   };
 
   state = {
