@@ -24,7 +24,7 @@ const Provider = ({ mediaSources, children }) => (
 
 Provider.propTypes = {
   mediaSources: PropTypes.object.isRequired,
-  children: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default {

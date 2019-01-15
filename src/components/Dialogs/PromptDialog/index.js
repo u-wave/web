@@ -96,7 +96,7 @@ export default class PromptDialog extends React.Component {
 
     return (
       <Dialog
-        fullWidth
+        variant="fullWidth"
         {...props}
         classes={{
           paper: cx('Dialog', contentClassName),
