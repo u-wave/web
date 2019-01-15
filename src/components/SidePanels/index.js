@@ -62,7 +62,7 @@ const SidePanels = ({
     <Tabs
       value={selected}
       onChange={(event, value) => setTab(value)}
-      fullWidth
+      variant="fullWidth"
       classes={{
         root: 'SidePanel-tabs',
         indicator: 'SidePanel-indicator',
