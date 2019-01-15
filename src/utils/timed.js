@@ -2,6 +2,7 @@ import React from 'react';
 import { ReactReduxContext } from 'react-redux';
 import PropTypes from 'prop-types';
 import wrapDisplayName from 'recompose/wrapDisplayName';
+import ClockContext from '../context/ClockContext';
 import { currentTimeSelector } from '../selectors/timeSelectors';
 
 export default function () {
@@ -9,7 +10,7 @@ export default function () {
     class Timed extends React.Component {
       static displayName = wrapDisplayName(Component, 'Timed');
 
-      static contextTypes = {
+      static propTypes = {
         timerCallbacks: PropTypes.shape({
           add: PropTypes.func,
           remove: PropTypes.func,
@@ -17,13 +18,13 @@ export default function () {
       };
 
       componentDidMount() {
-        const { timerCallbacks } = this.context;
+        const { timerCallbacks } = this.props;
 
         timerCallbacks.add(this.tick);
       }
 
       componentWillUnmount() {
-        const { timerCallbacks } = this.context;
+        const { timerCallbacks } = this.props;
 
         timerCallbacks.remove(this.tick);
       }
@@ -33,11 +34,13 @@ export default function () {
       };
 
       render() {
+        const { timerCallbacks, ...props } = this.props;
+
         return (
           <ReactReduxContext.Consumer>
             {({ store }) => (
               <Component
-                {...this.props}
+                {...props}
                 currentTime={currentTimeSelector(store.getState())}
               />
             )}
@@ -45,6 +48,16 @@ export default function () {
         );
       }
     }
-    return Timed;
+
+    return props => (
+      <ClockContext.Consumer>
+        {timerCallbacks => (
+          <Timed
+            {...props}
+            timerCallbacks={timerCallbacks}
+          />
+        )}
+      </ClockContext.Consumer>
+    );
   };
 }

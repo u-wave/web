@@ -7,7 +7,6 @@ import { MuiThemeProvider } from '@material-ui/core/styles';
 import { I18nextProvider } from 'react-i18next';
 import { Provider as BusProvider } from 'react-bus';
 import { Mobile, Desktop } from '../components/Responsive';
-import ClockProvider from '../components/ClockProvider';
 import { closeAll } from '../actions/OverlayActionCreators';
 import {
   settingsSelector,
@@ -19,9 +18,13 @@ import DesktopApp from '../components/App';
 import MobileApp from '../mobile/components/App';
 import FatalError from '../components/FatalError';
 import UwaveContext from '../context/UwaveContext';
+import ClockContext from '../context/ClockContext';
 import MediaSourceContext from '../context/MediaSourceContext';
 
-const SimpleProviders = nest(BusProvider, ClockProvider);
+const SimpleProviders = nest(
+  BusProvider,
+  ClockContext.Provider,
+);
 
 const mapStateToProps = createStructuredSelector({
   activeOverlay: state => state.activeOverlay,
