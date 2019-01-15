@@ -7,7 +7,6 @@ import { MuiThemeProvider } from '@material-ui/core/styles';
 import { I18nextProvider } from 'react-i18next';
 import { Provider as BusProvider } from 'react-bus';
 import { Mobile, Desktop } from '../components/Responsive';
-import ClockProvider from '../components/ClockProvider';
 import { closeAll } from '../actions/OverlayActionCreators';
 import {
   settingsSelector,
@@ -19,8 +18,13 @@ import DesktopApp from '../components/App';
 import MobileApp from '../mobile/components/App';
 import FatalError from '../components/FatalError';
 import UwaveContext from '../context/UwaveContext';
+import ClockContext from '../context/ClockContext';
+import MediaSourceContext from '../context/MediaSourceContext';
 
-const SimpleProviders = nest(BusProvider, ClockProvider);
+const SimpleProviders = nest(
+  BusProvider,
+  ClockContext.Provider,
+);
 
 const mapStateToProps = createStructuredSelector({
   activeOverlay: state => state.activeOverlay,
@@ -45,20 +49,9 @@ class AppContainer extends React.Component {
     locale: PropTypes.object.isRequired,
   };
 
-  static childContextTypes = {
-    mediaSources: PropTypes.object,
-    uwave: PropTypes.object,
-  };
-
   state = {
     error: null,
   };
-
-  getChildContext() {
-    const { mediaSources } = this.props;
-
-    return { mediaSources };
-  }
 
   componentDidMount() {
     this.applyThemeProperties();
@@ -101,7 +94,12 @@ class AppContainer extends React.Component {
   );
 
   render() {
-    const { uwave, theme, locale } = this.props;
+    const {
+      uwave,
+      mediaSources,
+      theme,
+      locale,
+    } = this.props;
     const { error } = this.state;
 
     if (error) {
@@ -118,7 +116,9 @@ class AppContainer extends React.Component {
         <I18nextProvider i18n={locale}>
           <SimpleProviders>
             <UwaveContext.Provider value={uwave}>
-              {this.renderApp()}
+              <MediaSourceContext.Provider mediaSources={mediaSources}>
+                {this.renderApp()}
+              </MediaSourceContext.Provider>
             </UwaveContext.Provider>
           </SimpleProviders>
         </I18nextProvider>

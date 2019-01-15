@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import {
   createTimer as createTimerAction,
   stopTimer as stopTimerAction,
-} from '../../actions/TickerActionCreators';
+} from '../actions/TickerActionCreators';
 
 const mapDispatchToProps = {
   createTimer: createTimerAction,
@@ -12,6 +12,8 @@ const mapDispatchToProps = {
 };
 
 const enhance = connect(null, mapDispatchToProps);
+
+const ClockContext = React.createContext(null);
 
 class ClockProvider extends React.Component {
   timerCallbacks = {
@@ -29,20 +31,7 @@ class ClockProvider extends React.Component {
     children: PropTypes.node.isRequired,
   };
 
-  static childContextTypes = {
-    timerCallbacks: PropTypes.shape({
-      add: PropTypes.func,
-      remove: PropTypes.func,
-    }),
-  };
-
   state = { callbacks: [] };
-
-  getChildContext() {
-    return {
-      timerCallbacks: this.timerCallbacks,
-    };
-  }
 
   componentDidMount() {
     const { createTimer } = this.props;
@@ -64,9 +53,17 @@ class ClockProvider extends React.Component {
 
   render() {
     const { children } = this.props;
+    const { timerCallbacks } = this;
 
-    return children;
+    return (
+      <ClockContext.Provider value={timerCallbacks}>
+        {children}
+      </ClockContext.Provider>
+    );
   }
 }
 
-export default enhance(ClockProvider);
+export default {
+  Consumer: ClockContext.Consumer,
+  Provider: enhance(ClockProvider),
+};
