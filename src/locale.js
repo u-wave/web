@@ -69,9 +69,6 @@ export default function createLocale(language) {
     }
   });
 
-  return new Promise((resolve) => {
-    locale.changeLanguage(language, () => {
-      resolve(locale);
-    });
-  });
+  return locale.changeLanguage(language)
+    .then(() => locale);
 }

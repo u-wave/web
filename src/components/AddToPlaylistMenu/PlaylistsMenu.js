@@ -65,7 +65,7 @@ class PlaylistsMenu extends React.Component {
                 </ListItemIcon>
               )}
               <ListItemText disableTypography className="AddToPlaylistMenu-playlistName">
-                <Typography noWrap variant="subheading">{playlist.name}</Typography>
+                <Typography noWrap variant="subtitle1">{playlist.name}</Typography>
               </ListItemText>
               <ListItemText className="AddToPlaylistMenu-smallIcon" primary={String(playlist.size || 0)} />
             </MenuItem>
