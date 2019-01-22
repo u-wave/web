@@ -11,6 +11,15 @@ import { currentUserSelector } from '../selectors/userSelectors';
 import { settingsSelector } from '../selectors/settingSelectors';
 import createLazyOverlay from '../components/LazyOverlay';
 
+function changeAndSaveLanguage(language) {
+  return (dispatch) => {
+    Promise.resolve(dispatch(changeLanguage(language)))
+      .then(() => {
+        dispatch(setLanguage(language));
+      });
+  };
+}
+
 const mapStateToProps = createStructuredSelector({
   settings: settingsSelector,
   user: currentUserSelector,
@@ -19,10 +28,7 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = {
   onSettingChange: setSetting,
   onChangeUsername: doChangeUsername,
-  onChangeLanguage: (...args) => d => Promise.all([
-    d(setLanguage(...args)),
-    d(changeLanguage(...args)),
-  ]),
+  onChangeLanguage: changeAndSaveLanguage,
   onLogout: logout,
 };
 
