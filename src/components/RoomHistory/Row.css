@@ -6,7 +6,7 @@
   --history-list-time-width: 170px;
   --history-list-votes-width: 250px;
 
-  --history-list-not-song-width: (
+  --history-list-not-song-width: calc(
     var(--history-list-thumb-width) +
     var(--history-list-time-width) +
     var(--history-list-user-width) +
