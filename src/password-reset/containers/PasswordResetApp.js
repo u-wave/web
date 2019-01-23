@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { I18nextProvider } from 'react-i18next';
+import { TranslateProvider } from '@u-wave/react-translate';
 import { resetPassword } from '../actions';
 import ErrorArea from '../../containers/ErrorArea';
 import PasswordResetPage from '../components/PasswordResetPage';
@@ -23,24 +23,24 @@ const enhance = connect(mapStateToProps, mapDispatchToProps);
 const muiTheme = createMuiTheme(theme);
 
 const PasswordResetApp = ({
-  locale, success, ...props
+  translator, success, ...props
 }) => (
   <MuiThemeProvider theme={muiTheme}>
-    <I18nextProvider i18n={locale}>
-      <div>
+    <TranslateProvider translator={translator}>
+      <React.Fragment>
         {success ? (
           <PasswordResetSuccessPage />
         ) : (
           <PasswordResetPage {...props} />
         )}
         <ErrorArea />
-      </div>
-    </I18nextProvider>
+      </React.Fragment>
+    </TranslateProvider>
   </MuiThemeProvider>
 );
 
 PasswordResetApp.propTypes = {
-  locale: PropTypes.object.isRequired,
+  translator: PropTypes.object.isRequired,
   success: PropTypes.bool,
 };
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate } from 'react-i18next';
+import { translate } from '@u-wave/react-translate';
 import SongTitle from '../SongTitle';
 
 const CurrentMedia = ({ t, className, media }) => (

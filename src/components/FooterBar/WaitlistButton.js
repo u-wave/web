@@ -1,7 +1,7 @@
 import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate } from 'react-i18next';
+import { translate } from '@u-wave/react-translate';
 import compose from 'recompose/compose';
 import Button from '@material-ui/core/Button';
 import LockedIcon from '@material-ui/icons/Lock';

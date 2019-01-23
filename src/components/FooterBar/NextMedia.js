@@ -1,7 +1,7 @@
 import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate, Interpolate } from 'react-i18next';
+import { translate, Interpolate } from '@u-wave/react-translate';
 import compose from 'recompose/compose';
 import SongTitle from '../SongTitle';
 import Eta from './Eta';

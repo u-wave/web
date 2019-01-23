@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate } from 'react-i18next';
+import { translate } from '@u-wave/react-translate';
 import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
 import MenuList from '@material-ui/core/MenuList';

@@ -4,15 +4,15 @@ import nest from 'recompose/nest';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { MuiThemeProvider } from '@material-ui/core/styles';
-import { I18nextProvider } from 'react-i18next';
 import { Provider as BusProvider } from 'react-bus';
+import { TranslateProvider } from '@u-wave/react-translate';
 import { Mobile, Desktop } from '../components/Responsive';
 import { closeAll } from '../actions/OverlayActionCreators';
 import {
   settingsSelector,
-  languageSelector,
   themeSelector,
 } from '../selectors/settingSelectors';
+import { translatorSelector } from '../selectors/localeSelectors';
 import { isConnectedSelector } from '../selectors/serverSelectors';
 import DesktopApp from '../components/App';
 import MobileApp from '../mobile/components/App';
@@ -30,8 +30,8 @@ const mapStateToProps = createStructuredSelector({
   activeOverlay: state => state.activeOverlay,
   isConnected: isConnectedSelector,
   settings: settingsSelector,
-  language: languageSelector,
   theme: themeSelector,
+  translator: translatorSelector,
 });
 
 const mapDispatchToProps = {
@@ -44,9 +44,8 @@ class AppContainer extends React.Component {
   static propTypes = {
     mediaSources: PropTypes.object.isRequired,
     uwave: PropTypes.object,
-    language: PropTypes.string,
     theme: PropTypes.object,
-    locale: PropTypes.object.isRequired,
+    translator: PropTypes.object.isRequired,
   };
 
   state = {
@@ -58,11 +57,7 @@ class AppContainer extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { locale, language, theme } = this.props;
-
-    if (language !== prevProps.language) {
-      locale.changeLanguage(language);
-    }
+    const { theme } = this.props;
 
     if (theme !== prevProps.theme) {
       this.applyThemeProperties();
@@ -98,7 +93,7 @@ class AppContainer extends React.Component {
       uwave,
       mediaSources,
       theme,
-      locale,
+      translator,
     } = this.props;
     const { error } = this.state;
 
@@ -113,7 +108,7 @@ class AppContainer extends React.Component {
 
     return (
       <MuiThemeProvider theme={theme}>
-        <I18nextProvider i18n={locale}>
+        <TranslateProvider translator={translator}>
           <SimpleProviders>
             <UwaveContext.Provider value={uwave}>
               <MediaSourceContext.Provider mediaSources={mediaSources}>
@@ -121,7 +116,7 @@ class AppContainer extends React.Component {
               </MediaSourceContext.Provider>
             </UwaveContext.Provider>
           </SimpleProviders>
-        </I18nextProvider>
+        </TranslateProvider>
       </MuiThemeProvider>
     );
   }

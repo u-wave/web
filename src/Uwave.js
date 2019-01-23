@@ -5,13 +5,12 @@ import { AppContainer as HotContainer } from 'react-hot-loader';
 import { create as createJss } from 'jss';
 import { jssPreset } from '@material-ui/core/styles';
 import JssProvider from 'react-jss/lib/JssProvider';
-import createLocale from './locale';
 import AppContainer from './containers/App';
 import { get as readSession } from './utils/Session';
 import createGenerateClassName from './utils/createGenerateClassName';
 import configureStore from './store/configureStore';
 import { initState, socketConnect, setSessionToken } from './actions/LoginActionCreators';
-import { languageSelector } from './selectors/settingSelectors';
+import { loadCurrentLanguage } from './actions/LocaleActionCreators';
 import * as api from './api';
 import preloadDesktop from './utils/preloadDesktop';
 // Register default chat commands.
@@ -97,8 +96,6 @@ export default class Uwave {
       { mediaSources: this.sources, socketUrl: this.options.socketUrl },
     );
 
-    const localePromise = createLocale(languageSelector(this.store.getState()));
-
     if (this.sessionToken) {
       this.store.dispatch(setSessionToken(this.sessionToken));
       this.sessionToken = null;
@@ -118,10 +115,9 @@ export default class Uwave {
 
     this.store.dispatch(socketConnect());
     return Promise.all([
-      localePromise,
+      this.store.dispatch(loadCurrentLanguage()),
       this.store.dispatch(initState()),
-    ]).then(([locale]) => {
-      this.locale = locale;
+    ]).then(() => {
       this.resolveReady();
     });
   }
@@ -132,7 +128,6 @@ export default class Uwave {
         <JssProvider jss={this.jss} generateClassName={this.generateClassName}>
           <AppContainer
             mediaSources={this.sources}
-            locale={this.locale}
             uwave={this}
           />
         </JssProvider>

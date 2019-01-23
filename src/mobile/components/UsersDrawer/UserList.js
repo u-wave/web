@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import withProps from 'recompose/withProps';
-import { translate } from 'react-i18next';
+import { translate } from '@u-wave/react-translate';
 import List from '@material-ui/core/List';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import Divider from '@material-ui/core/Divider';
