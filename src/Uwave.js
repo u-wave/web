@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from 'react-dom';
+import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { AppContainer as HotContainer } from 'react-hot-loader';
 import { create as createJss } from 'jss';
@@ -50,7 +50,7 @@ export default class Uwave {
       const uw = this;
       module.hot.accept('./containers/App', () => {
         if (uw.renderTarget) {
-          uw.renderToDOM(uw.renderTarget);
+          uw.renderToDOM();
         }
       });
     }
@@ -139,13 +139,15 @@ export default class Uwave {
     if (!this.store) {
       this.build();
     }
+    if (!this.renderTarget) {
+      this.renderTarget = ReactDOM.unstable_createRoot(target);
+    }
 
-    this.renderTarget = target;
     const element = (
       <React.StrictMode>
         {this.getComponent()}
       </React.StrictMode>
     );
-    render(element, target);
+    this.renderTarget.render(element);
   }
 }
