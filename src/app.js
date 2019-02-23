@@ -1,3 +1,4 @@
+import './fixHooksInDev';
 import Uwave from './Uwave';
 import experimentalThemePlugin from './experimentalThemePlugin';
 import youTubeSource from './sources/youtube';

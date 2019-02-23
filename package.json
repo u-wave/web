@@ -60,7 +60,7 @@
     "react-dnd-html5-backend": "^2.6.0",
     "react-dom": "^16.8.3",
     "react-google-button": "^0.5.3",
-    "react-hot-loader": "^4.3.12",
+    "react-hot-loader": "^4.7.1",
     "react-jss": "^8.6.1",
     "react-list": "0.8.9",
     "react-list-lazy-load": "^1.1.1",
