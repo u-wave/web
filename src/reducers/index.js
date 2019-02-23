@@ -11,7 +11,6 @@ export locales from './locales';
 export mediaSearch from './mediaSearch';
 export playlists from './playlists';
 export roomHistory from './roomHistory';
-export selectedPanel from './selectedPanel';
 export server from './server';
 export settings from './settings';
 export theme from './theme';
