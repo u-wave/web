@@ -20,7 +20,7 @@
     "@material-ui/lab": "3.0.0-alpha.30",
     "@u-wave/react-mq": "^1.0.2",
     "@u-wave/react-server-list": "^3.0.4",
-    "@u-wave/react-translate": "^1.0.0",
+    "@u-wave/react-translate": "^1.1.1",
     "@u-wave/react-youtube": "^0.6.0",
     "@u-wave/translate": "^1.0.0",
     "classnames": "^2.2.6",
