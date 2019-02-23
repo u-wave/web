@@ -15,6 +15,7 @@
     "react/forbid-prop-types": "off",
     "react/require-default-props": "off",
     "compat/compat": "error",
+    "react/jsx-one-expression-per-line": "off",
     "react-hooks/rules-of-hooks": "error"
   },
 
