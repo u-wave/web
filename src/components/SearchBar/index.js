@@ -1,64 +1,46 @@
 import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate } from '@u-wave/react-translate';
+import { useTranslator } from '@u-wave/react-translate';
 import SearchIcon from '@material-ui/icons/Search';
 
-const enhance = translate();
+const { useState, useCallback } = React;
 
-class SearchBar extends React.Component {
-  static propTypes = {
-    t: PropTypes.func.isRequired,
-    className: PropTypes.string,
-    children: PropTypes.node,
-    onSubmit: PropTypes.func.isRequired,
-  };
-
-  state = { focused: false };
-
-  handleFocus = () => {
-    this.setState({ focused: true });
-  };
-
-  handleBlur = () => {
-    this.setState({ focused: false });
-  };
-
-  handleKeyDown = (e) => {
-    const { onSubmit } = this.props;
-    if (e.key === 'Enter') {
-      onSubmit(this.input.value);
+function SearchBar({ children, className, onSubmit }) {
+  const { t } = useTranslator();
+  const [focused, setFocused] = useState(false);
+  const handleFocus = useCallback(() => setFocused(true), [setFocused]);
+  const handleBlur = useCallback(() => setFocused(false), [setFocused]);
+  const handleKeyDown = useCallback((event) => {
+    if (event.key === 'Enter') {
+      onSubmit(event.target.value);
     }
-  };
+  }, [onSubmit]);
 
-  refInput = (input) => {
-    this.input = input;
-  };
-
-  render() {
-    const { t, children, className } = this.props;
-    const { focused } = this.state;
-
-    return (
-      <div className={cx('SearchBar', focused ? 'is-focused' : '', className)}>
-        <div className="SearchBar-icon">
-          <SearchIcon />
-        </div>
-        {children}
-        <div className="SearchBar-query">
-          <input
-            ref={this.refInput}
-            className="SearchBar-input"
-            type="text"
-            placeholder={focused ? '' : t('playlists.search.action')}
-            onFocus={this.handleFocus}
-            onBlur={this.handleBlur}
-            onKeyDown={this.handleKeyDown}
-          />
-        </div>
+  return (
+    <div className={cx('SearchBar', focused ? 'is-focused' : '', className)}>
+      <div className="SearchBar-icon">
+        <SearchIcon />
       </div>
-    );
-  }
+      {children}
+      <div className="SearchBar-query">
+        <input
+          className="SearchBar-input"
+          type="text"
+          placeholder={focused ? '' : t('playlists.search.action')}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          onKeyDown={handleKeyDown}
+        />
+      </div>
+    </div>
+  );
 }
 
-export default enhance(SearchBar);
+SearchBar.propTypes = {
+  className: PropTypes.string,
+  children: PropTypes.node,
+  onSubmit: PropTypes.func.isRequired,
+};
+
+export default SearchBar;
