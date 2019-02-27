@@ -8,7 +8,7 @@ require('@babel/register').default({
     'module:babel-plugin-dynamic-import-node',
   ],
 });
-require('yamlify/register');
+require('yaml-hook/register');
 
 enzyme.configure({
   adapter: new Adapter(),
