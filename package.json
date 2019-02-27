@@ -168,7 +168,7 @@
   },
   "scripts": {
     "lint": "eslint --cache .",
-    "test:mocha": "cross-env NODE_ENV=testing mocha",
+    "test:mocha": "cross-env NODE_ENV=testing mocha --require test/common.js src/**/__tests__/**/*.js",
     "test:cov": "nyc npm run test:mocha",
     "test": "npm run test:cov && npm run lint",
     "test:check-coverage": "nyc report -r text && nyc check-coverage",
