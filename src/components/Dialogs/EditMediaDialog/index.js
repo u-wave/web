@@ -137,7 +137,7 @@ class EditMediaDialog extends React.Component {
         placeholder={t(['dialogs.editMedia.artistLabel', 'media.artist'])}
         value={artist}
         onChange={this.handleChangeArtist}
-        icon={<ArtistIcon nativeColor="#9f9d9e" />}
+        icon={<ArtistIcon htmlColor="#9f9d9e" />}
         tabIndex={BASE_TAB_INDEX}
         autoFocus
       />
@@ -145,7 +145,7 @@ class EditMediaDialog extends React.Component {
     const artistTitleLabel = (
       <div className="EditMediaDialogGroup-label">
         <IconButton onClick={this.handleSwapArtistTitle}>
-          <SwapArtistTitleIcon nativeColor="#9f9d9e" />
+          <SwapArtistTitleIcon htmlColor="#9f9d9e" />
         </IconButton>
       </div>
     );
@@ -155,7 +155,7 @@ class EditMediaDialog extends React.Component {
         placeholder={t(['dialogs.editMedia.titleLabel', 'media.title'])}
         value={title}
         onChange={this.handleChangeTitle}
-        icon={<TitleIcon nativeColor="#9f9d9e" />}
+        icon={<TitleIcon htmlColor="#9f9d9e" />}
         tabIndex={BASE_TAB_INDEX + 1}
       />
     );
@@ -173,7 +173,7 @@ class EditMediaDialog extends React.Component {
         placeholder="0:00"
         value={start}
         onChange={this.handleChangeStart}
-        icon={<StartIcon nativeColor="#9f9d9e" />}
+        icon={<StartIcon htmlColor="#9f9d9e" />}
         tabIndex={BASE_TAB_INDEX + 2}
       />
     );
@@ -190,7 +190,7 @@ class EditMediaDialog extends React.Component {
         placeholder={formatDuration(media.duration)}
         value={end}
         onChange={this.handleChangeEnd}
-        icon={<EndIcon nativeColor="#9f9d9e" />}
+        icon={<EndIcon htmlColor="#9f9d9e" />}
         tabIndex={BASE_TAB_INDEX + 3}
       />
     );

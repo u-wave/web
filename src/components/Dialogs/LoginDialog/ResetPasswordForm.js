@@ -71,7 +71,7 @@ class ResetPasswordForm extends React.Component {
             type="email"
             autocomplete="email"
             placeholder={t('login.email')}
-            icon={<EmailIcon nativeColor="#9f9d9e" />}
+            icon={<EmailIcon htmlColor="#9f9d9e" />}
           />
         </FormGroup>
 

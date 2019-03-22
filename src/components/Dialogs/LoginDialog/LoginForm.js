@@ -72,7 +72,7 @@ class LoginForm extends React.Component {
             type="email"
             autocomplete="email"
             placeholder={t('login.email')}
-            icon={<EmailIcon nativeColor="#9f9d9e" />}
+            icon={<EmailIcon htmlColor="#9f9d9e" />}
             autoFocus
           />
         </FormGroup>
@@ -84,7 +84,7 @@ class LoginForm extends React.Component {
             type="password"
             autocomplete="current-password"
             placeholder={t('login.password')}
-            icon={<PasswordIcon nativeColor="#9f9d9e" />}
+            icon={<PasswordIcon htmlColor="#9f9d9e" />}
           />
         </FormGroup>
 
