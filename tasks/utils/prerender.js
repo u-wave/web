@@ -1,7 +1,8 @@
 /* eslint-disable global-require */
 const h = require('react').createElement;
 const { renderToStaticMarkup } = require('react-dom/server');
-const { MuiThemeProvider, createMuiTheme, jssPreset } = require('@material-ui/core/styles');
+const { ThemeProvider, jssPreset } = require('@material-ui/styles');
+const { createMuiTheme } = require('@material-ui/core/styles');
 const { JssProvider, SheetsRegistry } = require('react-jss');
 const jss = require('jss');
 
@@ -16,7 +17,7 @@ module.exports = function prerender(element) {
   const markup = renderToStaticMarkup(h(
     JssProvider, { jss: styles, registry, generateClassName },
     h(
-      MuiThemeProvider, { theme: createMuiTheme(theme), sheetsManager: new Map() },
+      ThemeProvider, { theme: createMuiTheme(theme), sheetsManager: new Map() },
       element,
     ),
   ));
