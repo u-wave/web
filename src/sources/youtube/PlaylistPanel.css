@@ -8,6 +8,7 @@
 
 .src-youtube-PlaylistPanel-importIcon {
   color: #555;
+
   &:hover {
     color: #fff;
   }

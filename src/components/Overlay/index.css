@@ -7,24 +7,27 @@
   z-index: 8;
 }
 
+.Overlay-body {
+  height: 100%;
+  height: 100vh;
+}
+
 .Overlay--from-bottom {
   top: auto;
   bottom: 0;
 }
+
 .Overlay--from-bottom .Overlay-body {
   transform: translateY(100%);
 }
+
 .Overlay--from-top {
   top: 0;
   bottom: auto;
 }
+
 .Overlay--from-top .Overlay-body {
   transform: translateY(-100%);
-}
-
-.Overlay-body {
-  height: 100%;
-  height: 100vh;
 }
 
 .Overlay-content {
@@ -50,12 +53,15 @@
 .Overlay-exit {
   overflow-y: hidden;
 }
+
 .Overlay-enter .Overlay-body {
   transition: transform 180ms ease-out;
 }
+
 .Overlay-exit .Overlay-body {
   transition: transform 180ms ease-in;
 }
+
 /* The target (open) state. */
 .Overlay-enter-active .Overlay-body,
 .Overlay-enter-done .Overlay-body {

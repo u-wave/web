@@ -22,6 +22,7 @@
   padding-right: 20px;
   height: 100%;
   cursor: pointer;
+
   &.is-active {
     cursor: default;
   }
@@ -29,6 +30,7 @@
 
 .PlaylistMeta-iconButton {
   color: #555;
+
   &:hover {
     color: #fff;
   }

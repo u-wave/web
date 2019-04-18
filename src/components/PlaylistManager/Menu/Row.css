@@ -13,6 +13,7 @@
   &.is-selected {
     background: var(--media-list-alternate-color);
   }
+
   &.is-droppable {
     background: var(--media-list-alternate-color);
   }
@@ -39,6 +40,7 @@
 
 .PlaylistMenuRow-title {
   align-self: flex-start;
+
   /* dot dot dot */
   overflow: hidden;
   text-overflow: ellipsis;
@@ -61,6 +63,7 @@
 
 .PlaylistMenuRow--create {
   background-color: var(--highlight-color);
+
   &:hover {
     background-color: var(--highbright-color);
   }
@@ -69,9 +72,11 @@
 .PlaylistMenuRow--search {
   cursor: default;
 }
+
 .PlaylistMenuRow--search .PlaylistMenuRow-count {
   margin-right: 0;
 }
+
 .PlaylistMenuRow--search .PlaylistMenuRow-title {
   flex-grow: 2;
   cursor: pointer;

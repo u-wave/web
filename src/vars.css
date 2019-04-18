@@ -33,13 +33,14 @@
 
   /* User related colours */
   --user-list-color: #1b1b1b;
-  --user-list-alternate-color: #222222;
+  --user-list-alternate-color: #222;
 
   /* Playlist colours & sizing */
   --media-list-spacing: 3%;
   --media-list-thumb-width: 85px;
   --media-list-duration-width: 70px;
   --media-list-color: transparent;
+
   /* TODO Name this in some other way. It's used as the menu item focus colour
    * in various places. */
   --media-list-alternate-color: color-mod(#303036 alpha(* 30%));
@@ -51,13 +52,13 @@
   --forms-element-margin: 16px;
   --forms-textfield-size: 50px;
 
-  /* Misc computed */
-  /* We can't use color-mod(var()) because var()s are preserved. Instead these values are hardcoded. */
-  /* In modern browsers with var() support, these values are defined in src/utils/createTheme.js. */
+  /* Misc computed
+   * We can't use color-mod(var()) because var()s are preserved. Instead these values are hardcoded.
+   * In modern browsers with var() support, these values are defined in src/utils/createTheme.js. */
   --selected-media-row-color: color-mod(#9d2053 alpha(* 70%));
   --chat-suggestion-selected: color-mod(#fff  alpha(* 10%));
   --overlay-background: color-mod(#151515 alpha(* 96%));
   --soundcloud-meta-background: color-mod(#151515 alpha(* 30%));
   --waitlist-locked-text-color: color-mod(#fff alpha(* 70%));
-  --chat-timestamp-text-color: color-mod(#fff blend(#777777 33%));
+  --chat-timestamp-text-color: color-mod(#fff blend(#777 33%));
 }
