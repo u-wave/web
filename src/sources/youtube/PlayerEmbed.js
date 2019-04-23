@@ -48,6 +48,7 @@ export default class YouTubePlayerEmbed extends React.Component {
         height="100%"
         autoplay
         modestBranding
+        disableKeyboard={true}
         volume={volume / 100}
         playbackRate={1}
         controls={controllable}
