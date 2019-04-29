@@ -5,6 +5,7 @@ const es2015Deps = [
   /\/p-finally\//,
   /\/strip-indent\//,
   /\/debug\//,
+  /\/escape-string-regex\//,
   /\/@material-ui\/core\/es\//,
   /\/@material-ui\/icons\/es\//,
 ];
