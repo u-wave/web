@@ -1,13 +1,14 @@
-import PropTypes from 'prop-types';
+import React from 'react';
+import { connect, ReactReduxContext } from 'react-redux';
 import compose from 'recompose/compose';
-import getContext from 'recompose/getContext';
 import lifecycle from 'recompose/lifecycle';
 import { createStructuredSelector } from 'reselect';
-import { connect } from 'react-redux';
 import AdminApp from '../components/AdminApp';
 import adminReducer from '../reducers';
 import { transition } from '../actions/view';
 import { currentViewSelector } from '../selectors/viewSelectors';
+
+const { useContext } = React;
 
 const mapStateToProps = createStructuredSelector({
   currentView: currentViewSelector,
@@ -34,7 +35,6 @@ function mountAdminReducerOnce(store) {
 }
 
 const enhance = compose(
-  getContext({ store: PropTypes.object }),
   lifecycle({
     componentWillMount() {
       if (this.props.store) {
@@ -45,4 +45,10 @@ const enhance = compose(
   connect(mapStateToProps, mapDispatchToProps),
 );
 
-export default enhance(AdminApp);
+const ConnectedApp = enhance(AdminApp);
+
+export default function AdminAppWrapper(props) {
+  const { store } = useContext(ReactReduxContext);
+
+  return <ConnectedApp store={store} {...props} />;
+}
