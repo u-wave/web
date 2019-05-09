@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import injectMediaSources from '../../utils/injectMediaSources';
+import { useMediaSources } from '../../context/MediaSourceContext';
 
 const PreviewPlayer = ({
   media,
   seek = 0,
-  getMediaSource,
   ...props
 }) => {
+  const { getMediaSource } = useMediaSources();
+
   const { Player } = getMediaSource(media.sourceType);
   return (
     <Player
@@ -23,7 +24,6 @@ const PreviewPlayer = ({
 PreviewPlayer.propTypes = {
   media: PropTypes.object.isRequired,
   seek: PropTypes.number,
-  getMediaSource: PropTypes.func.isRequired,
 };
 
-export default injectMediaSources()(PreviewPlayer);
+export default PreviewPlayer;
