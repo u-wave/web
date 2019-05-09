@@ -2,7 +2,7 @@ import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import screenfull from 'screenfull';
-import injectMediaSources from '../../utils/injectMediaSources';
+import { useMediaSources } from '../../context/MediaSourceContext';
 import VideoBackdrop from './VideoBackdrop';
 import VideoProgressBar from './VideoProgressBar';
 import VideoToolbar from './VideoToolbar';
@@ -10,16 +10,16 @@ import MouseMoveCapture from './VideoMouseMoveCapture';
 import Player from '../Player';
 
 const {
-  useEffect, useState, useCallback, useRef,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
 } = React;
 
 const defaultSourceTools = () => null;
 
-const enhance = injectMediaSources();
-
 function Video(props) {
   const {
-    getMediaSource,
     isFullscreen,
     enabled,
     size,
@@ -31,6 +31,7 @@ function Video(props) {
     onFullscreenExit,
   } = props;
 
+  const { getMediaSource } = useMediaSources();
   const [shouldShowToolbar, setShowToolbar] = useState(false);
   const container = useRef(null);
   const timer = useRef(null);
@@ -135,7 +136,6 @@ function Video(props) {
 }
 
 Video.propTypes = {
-  getMediaSource: PropTypes.func.isRequired,
   isFullscreen: PropTypes.bool,
   enabled: PropTypes.bool,
   size: PropTypes.string,
@@ -147,4 +147,4 @@ Video.propTypes = {
   onFullscreenExit: PropTypes.func.isRequired,
 };
 
-export default enhance(Video);
+export default Video;

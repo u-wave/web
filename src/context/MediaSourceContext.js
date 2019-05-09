@@ -1,8 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const InternalContext = React.createContext(null);
+const { createContext, useContext } = React;
+
+const InternalContext = createContext(null);
 const { Consumer } = InternalContext;
+
+function useMediaSources() {
+  return useContext(InternalContext);
+}
 
 function sourcesApi(sources) {
   function getMediaSource(name) {
@@ -27,7 +33,5 @@ Provider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export default {
-  Provider,
-  Consumer,
-};
+export default { Provider, Consumer };
+export { useMediaSources };
