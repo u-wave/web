@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const PanelContainer = ({ selected, children }) => (
-  <div className={cx('SidePanel-panel', selected && 'is-selected')}>
+  <div className={cx('SidePanel-panel', selected && 'is-selected')} hidden={!selected}>
     {children}
   </div>
 );
