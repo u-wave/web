@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate } from '@u-wave/react-translate';
-import compose from 'recompose/compose';
+import { useTranslator } from '@u-wave/react-translate';
 import ms from 'ms';
-
 import timed from '../../utils/timed';
+import useIntl from '../../hooks/useIntl';
+
+const enhance = timed();
 
 // Bit weird to do it like this perhaps, convert to an english string first and
 // then translate afterwards.
@@ -17,10 +18,24 @@ function translateMs(str) {
   };
 }
 
-const TimeAgo = ({ t, currentTime, timestamp }) => {
+const now = { key: 'seconds', count: 0 };
+
+function TimeAgo({ currentTime, timestamp }) {
+  const { t } = useTranslator();
+  const { relativeTimeFormatter } = useIntl();
+
   const secondsAgo = Math.max(0, Math.floor((currentTime - timestamp) / 1000));
   const msString = ms(secondsAgo * 1000, { long: true });
-  const { key, count } = translateMs(msString);
+  const { key, count } = secondsAgo < 1 ? now : translateMs(msString);
+
+  if (relativeTimeFormatter) {
+    return (
+      <span>
+        {relativeTimeFormatter.format(-count, key)}
+      </span>
+    );
+  }
+
   return (
     <span>
       {t('timeAgo.format', {
@@ -31,15 +46,11 @@ const TimeAgo = ({ t, currentTime, timestamp }) => {
       })}
     </span>
   );
-};
+}
 
 TimeAgo.propTypes = {
-  t: PropTypes.func.isRequired,
   currentTime: PropTypes.number.isRequired,
   timestamp: PropTypes.number.isRequired,
 };
 
-export default compose(
-  translate(),
-  timed(),
-)(TimeAgo);
+export default enhance(TimeAgo);

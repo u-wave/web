@@ -40,3 +40,54 @@ export const loadedLanguagesSelector = createSelector(
   loadedSelector,
   loaded => new Set(Object.keys(loaded)),
 );
+
+const relativeTimeFormatOptions = {
+  numeric: 'auto',
+  style: 'long',
+};
+const supportsRelativeTimeFormat = (() => {
+  try {
+    const formatter = new Intl.RelativeTimeFormat('nl', relativeTimeFormatOptions);
+    return formatter.format(-2, 'days') === 'eergisteren'
+      && formatter.format(10, 'seconds') === 'over 10 seconden';
+  } catch {
+    return false;
+  }
+})();
+export const relativeTimeFormatterSelector = createSelector(
+  currentLanguageSelector,
+  (current) => {
+    if (supportsRelativeTimeFormat) {
+      return new Intl.RelativeTimeFormat(current, relativeTimeFormatOptions);
+    }
+    return null;
+  },
+);
+
+const timeFormatOptions = {
+  hour: 'numeric',
+  minute: 'numeric',
+};
+const dateFormatOptions = {
+  year: 'numeric',
+  month: 'numeric',
+  day: 'numeric',
+};
+
+export const timeFormatterSelector = createSelector(
+  currentLanguageSelector,
+  current => new Intl.DateTimeFormat(current, timeFormatOptions),
+);
+
+export const dateFormatterSelector = createSelector(
+  currentLanguageSelector,
+  current => new Intl.DateTimeFormat(current, dateFormatOptions),
+);
+
+export const dateTimeFormatterSelector = createSelector(
+  currentLanguageSelector,
+  current => new Intl.DateTimeFormat(current, {
+    ...dateFormatOptions,
+    ...timeFormatOptions,
+  }),
+);
