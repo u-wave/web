@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate } from '@u-wave/react-translate';
+import { useTranslator } from '@u-wave/react-translate';
 import EmailIcon from '@material-ui/icons/Email';
 import PasswordIcon from '@material-ui/icons/Lock';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -11,108 +11,102 @@ import Button from '../../Form/Button';
 import SocialLogin from './SocialLogin';
 import Separator from './Separator';
 
-const enhance = translate();
+const {
+  useCallback,
+  useRef,
+  useState,
+} = React;
 
-class LoginForm extends React.Component {
-  static propTypes = {
-    t: PropTypes.func.isRequired,
-    error: PropTypes.object,
-    supportsSocialAuth: PropTypes.bool,
-    onLogin: PropTypes.func,
-    onOpenResetPasswordDialog: PropTypes.func,
-  };
+function LoginForm({
+  error,
+  supportsSocialAuth,
+  onLogin,
+  onOpenResetPasswordDialog,
+}) {
+  const { t } = useTranslator();
+  const [busy, setBusy] = useState(false);
+  const refEmail = useRef(null);
+  const refPassword = useRef(null);
 
-  state = { busy: false };
-
-  handleSubmit = (event) => {
-    const { onLogin } = this.props;
-
+  const handleSubmit = useCallback((event) => {
     event.preventDefault();
-    this.setState({ busy: true });
+    setBusy(true);
     onLogin({
-      email: this.email.value,
-      password: this.password.value,
+      email: refEmail.current.value,
+      password: refPassword.current.value,
     }).finally(() => {
-      this.setState({ busy: false });
+      setBusy(false);
     });
-  };
+  }, [onLogin]);
 
-  handleResetPassword = (event) => {
-    const { onOpenResetPasswordDialog } = this.props;
-
+  const handleResetPassword = useCallback((event) => {
     event.preventDefault();
     onOpenResetPasswordDialog();
-  };
+  }, [onOpenResetPasswordDialog]);
 
-  refEmail = (email) => {
-    this.email = email;
-  };
+  return (
+    <Form className="LoginForm" onSubmit={handleSubmit}>
+      {error && <FormGroup>{error.message}</FormGroup>}
+      {supportsSocialAuth && (
+        <React.Fragment>
+          <SocialLogin />
+          <Separator />
+        </React.Fragment>
+      )}
+      <FormGroup>
+        <TextField
+          ref={refEmail}
+          className="LoginForm-field"
+          type="email"
+          autocomplete="email"
+          placeholder={t('login.email')}
+          icon={<EmailIcon nativeColor="#9f9d9e" />}
+          autoFocus
+        />
+      </FormGroup>
 
-  refPassword = (password) => {
-    this.password = password;
-  };
+      <FormGroup>
+        <TextField
+          ref={refPassword}
+          className="LoginForm-field"
+          type="password"
+          autocomplete="current-password"
+          placeholder={t('login.password')}
+          icon={<PasswordIcon nativeColor="#9f9d9e" />}
+        />
+      </FormGroup>
 
-  render() {
-    const { t, error, supportsSocialAuth } = this.props;
-    const { busy } = this.state;
+      <FormGroup>
+        <Button
+          className="LoginForm-submit"
+          disabled={busy}
+        >
+          {busy ? (
+            <div className="Button-loading">
+              <CircularProgress size="100%" />
+            </div>
+          ) : t('login.login')}
+        </Button>
+      </FormGroup>
 
-    return (
-      <Form className="LoginForm" onSubmit={this.handleSubmit}>
-        {error && <FormGroup>{error.message}</FormGroup>}
-        {supportsSocialAuth && (
-          <React.Fragment>
-            <SocialLogin />
-            <Separator />
-          </React.Fragment>
-        )}
-        <FormGroup>
-          <TextField
-            ref={this.refEmail}
-            className="LoginForm-field"
-            type="email"
-            autocomplete="email"
-            placeholder={t('login.email')}
-            icon={<EmailIcon nativeColor="#9f9d9e" />}
-            autoFocus
-          />
-        </FormGroup>
-
-        <FormGroup>
-          <TextField
-            ref={this.refPassword}
-            className="LoginForm-field"
-            type="password"
-            autocomplete="current-password"
-            placeholder={t('login.password')}
-            icon={<PasswordIcon nativeColor="#9f9d9e" />}
-          />
-        </FormGroup>
-
-        <FormGroup>
-          <Button
-            className="LoginForm-submit"
-            disabled={busy}
-          >
-            {busy ? (
-              <div className="Button-loading">
-                <CircularProgress size="100%" />
-              </div>
-            ) : t('login.login')}
-          </Button>
-        </FormGroup>
-
-        <FormGroup className="LoginForm-forgot">
-          <a
-            href="#forgot"
-            onClick={this.handleResetPassword}
-            className="LoginForm-forgotLink"
-          >
-            {t('login.forgotPassword')}
-          </a>
-        </FormGroup>
-      </Form>
-    );
-  }
+      <FormGroup className="LoginForm-forgot">
+        <a
+          href="#forgot"
+          onClick={handleResetPassword}
+          className="LoginForm-forgotLink"
+        >
+          {t('login.forgotPassword')}
+        </a>
+      </FormGroup>
+    </Form>
+  );
 }
 
-export default enhance(LoginForm);
+LoginForm.propTypes = {
+  error: PropTypes.object,
+  supportsSocialAuth: PropTypes.bool,
+  onLogin: PropTypes.func,
+  onOpenResetPasswordDialog: PropTypes.func,
+};
+
+export default LoginForm;

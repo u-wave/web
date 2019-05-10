@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate, Interpolate } from '@u-wave/react-translate';
+import { useTranslator, Interpolate } from '@u-wave/react-translate';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -15,166 +15,142 @@ import ReCaptcha from '../../ReCaptcha';
 import SocialLogin from './SocialLogin';
 import Separator from './Separator';
 
-const enhance = translate();
+const {
+  useCallback,
+  useRef,
+  useState,
+} = React;
 
-class RegisterForm extends React.Component {
-  static propTypes = {
-    t: PropTypes.func.isRequired,
-    useReCaptcha: PropTypes.bool,
-    reCaptchaSiteKey: PropTypes.string,
-    supportsSocialAuth: PropTypes.bool,
-    error: PropTypes.object,
+function RegisterForm({
+  useReCaptcha,
+  reCaptchaSiteKey,
+  supportsSocialAuth,
+  error,
+  onRegister,
+}) {
+  const { t } = useTranslator();
+  const [busy, setBusy] = useState(false);
+  const [agreed, setAgreed] = useState(false);
+  const [captchaResponse, setResponse] = useState(null);
+  const refUsername = useRef(null);
+  const refEmail = useRef(null);
+  const refPassword = useRef(null);
 
-    onRegister: PropTypes.func,
-  };
-
-  state = {
-    busy: false,
-    agreed: false,
-    captchaResponse: null,
-  };
-
-  handleSubmit = (event) => {
-    const { onRegister } = this.props;
-    const { captchaResponse } = this.state;
-
+  const handleSubmit = useCallback((event) => {
     event.preventDefault();
-    this.setState({ busy: true });
+    setBusy(true);
     onRegister({
-      username: this.username.value,
-      email: this.email.value,
-      password: this.password.value,
+      username: refUsername.value,
+      email: refEmail.value,
+      password: refPassword.value,
       grecaptcha: captchaResponse,
     }).finally(() => {
-      this.setState({ busy: false });
+      setBusy(false);
     });
-  };
+  }, [onRegister, captchaResponse]);
 
-  handleCaptchaResponse = (response) => {
-    this.setState({
-      captchaResponse: response,
-    });
-  };
+  const handleCaptchaResponse = response => setResponse(response);
+  const handleTosCheckbox = (event, checked) => setAgreed(checked);
 
-  handleTosCheckbox = (event, checked) => {
-    this.setState({
-      agreed: checked,
-    });
-  };
-
-  refUsername = (username) => {
-    this.username = username;
-  };
-
-  refEmail = (email) => {
-    this.email = email;
-  };
-
-  refPassword = (password) => {
-    this.password = password;
-  };
-
-  renderCaptcha() {
-    const { useReCaptcha, reCaptchaSiteKey } = this.props;
-
-    if (!useReCaptcha) {
-      return null;
-    }
-    return (
+  let captcha = null;
+  if (useReCaptcha) {
+    captcha = (
       <FormGroup>
         <ReCaptcha
           sitekey={reCaptchaSiteKey}
-          onResponse={this.handleCaptchaResponse}
+          onResponse={handleCaptchaResponse}
           theme="dark"
         />
       </FormGroup>
     );
   }
 
-  render() {
-    const {
-      t, error, supportsSocialAuth, useReCaptcha,
-    } = this.props;
-    const { agreed, busy, captchaResponse } = this.state;
-    const captchaOk = !useReCaptcha || !!captchaResponse;
+  const captchaOk = !useReCaptcha || !!captchaResponse;
 
-    return (
-      <Form className="RegisterForm" onSubmit={this.handleSubmit}>
-        {error && <FormGroup>{error.message}</FormGroup>}
-        {supportsSocialAuth && (
-          <React.Fragment>
-            <SocialLogin />
-            <Separator />
-          </React.Fragment>
-        )}
-        <FormGroup>
-          <TextField
-            ref={this.refUsername}
-            className="RegisterForm-field"
-            autocomplete="nickname"
-            placeholder={t('login.username')}
-            icon={<UserIcon nativeColor="#9f9d9e" />}
-            autoFocus
-          />
-        </FormGroup>
-        <FormGroup>
-          <TextField
-            ref={this.refEmail}
-            className="RegisterForm-field"
-            type="email"
-            autocomplete="email"
-            placeholder={t('login.email')}
-            icon={<EmailIcon nativeColor="#9f9d9e" />}
-          />
-        </FormGroup>
-        <FormGroup>
-          <TextField
-            ref={this.refPassword}
-            className="RegisterForm-field"
-            type="password"
-            autocomplete="new-password"
-            placeholder={t('login.password')}
-            icon={<PasswordIcon nativeColor="#9f9d9e" />}
-          />
-        </FormGroup>
+  return (
+    <Form className="RegisterForm" onSubmit={handleSubmit}>
+      {error && <FormGroup>{error.message}</FormGroup>}
+      {supportsSocialAuth && (
+        <React.Fragment>
+          <SocialLogin />
+          <Separator />
+        </React.Fragment>
+      )}
+      <FormGroup>
+        <TextField
+          ref={refUsername}
+          className="RegisterForm-field"
+          autocomplete="nickname"
+          placeholder={t('login.username')}
+          icon={<UserIcon nativeColor="#9f9d9e" />}
+          autoFocus
+        />
+      </FormGroup>
+      <FormGroup>
+        <TextField
+          ref={refEmail}
+          className="RegisterForm-field"
+          type="email"
+          autocomplete="email"
+          placeholder={t('login.email')}
+          icon={<EmailIcon nativeColor="#9f9d9e" />}
+        />
+      </FormGroup>
+      <FormGroup>
+        <TextField
+          ref={refPassword}
+          className="RegisterForm-field"
+          type="password"
+          autocomplete="new-password"
+          placeholder={t('login.password')}
+          icon={<PasswordIcon nativeColor="#9f9d9e" />}
+        />
+      </FormGroup>
 
-        {this.renderCaptcha()}
+      {captcha}
 
-        <FormGroup>
-          <FormControlLabel
-            control={(
-              <Checkbox
-                checked={agreed}
-                onChange={this.handleTosCheckbox}
-              />
-            )}
-            label={(
-              <Interpolate
-                i18nKey="login.agree"
-                privacyPolicy={(
-                  <a target="_blank" rel="noreferrer noopener" href="/privacy.html">
-                    {t('login.privacyPolicy')}
-                  </a>
-                )}
-              />
-            )}
-          />
-        </FormGroup>
+      <FormGroup>
+        <FormControlLabel
+          control={(
+            <Checkbox
+              checked={agreed}
+              onChange={handleTosCheckbox}
+            />
+          )}
+          label={(
+            <Interpolate
+              i18nKey="login.agree"
+              privacyPolicy={(
+                <a target="_blank" rel="noreferrer noopener" href="/privacy.html">
+                  {t('login.privacyPolicy')}
+                </a>
+              )}
+            />
+          )}
+        />
+      </FormGroup>
 
-        <FormGroup>
-          <Button
-            className="RegisterForm-submit"
-            disabled={busy || !agreed || !captchaOk}
-          >
-            {busy
-              ? <div className="Button-loading"><CircularProgress size="100%" /></div>
-              : t('login.register')
-            }
-          </Button>
-        </FormGroup>
-      </Form>
-    );
-  }
+      <FormGroup>
+        <Button
+          className="RegisterForm-submit"
+          disabled={busy || !agreed || !captchaOk}
+        >
+          {busy
+            ? <div className="Button-loading"><CircularProgress size="100%" /></div>
+            : t('login.register')
+          }
+        </Button>
+      </FormGroup>
+    </Form>
+  );
 }
 
-export default enhance(RegisterForm);
+RegisterForm.propTypes = {
+  useReCaptcha: PropTypes.bool,
+  reCaptchaSiteKey: PropTypes.string,
+  supportsSocialAuth: PropTypes.bool,
+  error: PropTypes.object,
+  onRegister: PropTypes.func,
+};
+
+export default RegisterForm;
