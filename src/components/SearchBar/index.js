@@ -10,7 +10,9 @@ const {
   useState,
 } = React;
 
-function SearchBar({ children, className, autoFocus, onSubmit }) {
+function SearchBar({
+  children, className, autoFocus, onSubmit,
+}) {
   const { t } = useTranslator();
   const [focused, setFocused] = useState(false);
   const handleFocus = useCallback(() => setFocused(true), [setFocused]);
