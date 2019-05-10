@@ -23,7 +23,7 @@ const mapDispatchToProps = {
   },
 };
 
-const enhance =  connect(mapStateToProps, mapDispatchToProps);
+const enhance = connect(mapStateToProps, mapDispatchToProps);
 
 function ImportBlock({ onShowImportPanel, onHideImportPanel }) {
   const { getAllMediaSources } = useMediaSources();
