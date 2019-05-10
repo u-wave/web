@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import useIntl from '../../hooks/useIntl';
 import Chat from '../Chat';
 import RoomUserList from '../../containers/RoomUserList';
 import WaitList from '../../containers/WaitList';
@@ -19,20 +20,33 @@ const tabClasses = {
   label: 'SidePanel-tabLabel',
 };
 
-const getUsersLabel = (t, listenerCount) => (
-  <React.Fragment>
-    {t('users.title')}
-    <span key="sub" style={subHeaderStyle}>
-      {listenerCount}
-    </span>
-  </React.Fragment>
-);
+function UsersLabel({ count }) {
+  const { t } = useTranslator();
+  const { numberFormatter } = useIntl();
 
-const getWaitlistLabel = (t, size, position) => {
+  return (
+    <React.Fragment>
+      {t('users.title')}
+      <span key="sub" style={subHeaderStyle}>
+        {numberFormatter.format(count)}
+      </span>
+    </React.Fragment>
+  );
+}
+
+UsersLabel.propTypes = {
+  count: PropTypes.number.isRequired,
+};
+
+function WaitlistLabel({ size, position }) {
+  const { t } = useTranslator();
+  const { numberFormatter } = useIntl();
+
   if (size > 0) {
+    const sizeText = numberFormatter.format(size);
     const posText = position !== -1
-      ? `${position + 1} / ${size}`
-      : size;
+      ? `${numberFormatter.format(position + 1)} / ${sizeText}`
+      : sizeText;
 
     return (
       <React.Fragment>
@@ -42,6 +56,11 @@ const getWaitlistLabel = (t, size, position) => {
     );
   }
   return t('waitlist.title');
+}
+
+WaitlistLabel.propTypes = {
+  size: PropTypes.number.isRequired,
+  position: PropTypes.number.isRequired,
 };
 
 function SidePanels({ listenerCount, waitlistSize, waitlistPosition }) {
@@ -66,11 +85,11 @@ function SidePanels({ listenerCount, waitlistSize, waitlistPosition }) {
         />
         <Tab
           classes={tabClasses}
-          label={getUsersLabel(t, listenerCount)}
+          label={<UsersLabel count={listenerCount} />}
         />
         <Tab
           classes={tabClasses}
-          label={getWaitlistLabel(t, waitlistSize, waitlistPosition)}
+          label={<WaitlistLabel size={waitlistSize} position={waitlistPosition} />}
         />
       </Tabs>
       <div>

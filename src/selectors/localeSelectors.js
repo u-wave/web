@@ -91,3 +91,8 @@ export const dateTimeFormatterSelector = createSelector(
     ...timeFormatOptions,
   }),
 );
+
+export const numberFormatterSelector = createSelector(
+  currentLanguageSelector,
+  current => new Intl.NumberFormat(current),
+);

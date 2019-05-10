@@ -5,6 +5,7 @@ import {
   timeFormatterSelector,
   dateFormatterSelector,
   dateTimeFormatterSelector,
+  numberFormatterSelector,
 } from '../selectors/localeSelectors';
 
 const { useContext } = React;
@@ -18,5 +19,6 @@ export default function useIntl() {
     timeFormatter: timeFormatterSelector(state),
     dateFormatter: dateFormatterSelector(state),
     dateTimeFormatter: dateTimeFormatterSelector(state),
+    numberFormatter: numberFormatterSelector(state),
   };
 }
