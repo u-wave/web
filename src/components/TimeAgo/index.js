@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ReactReduxContext } from 'react-redux';
 import { useTranslator } from '@u-wave/react-translate';
 import ms from 'ms';
 import timed from '../../utils/timed';
-import { relativeTimeFormatterSelector } from '../../selectors/localeSelectors';
+import useIntl from '../../hooks/useIntl';
 
 const enhance = timed();
 
@@ -16,15 +15,6 @@ function translateMs(str) {
   return {
     key: `${key.replace(/s$/, '')}s`,
     count: parseInt(count, 10),
-  };
-}
-
-const { useContext } = React;
-
-function useIntl() {
-  const { store } = useContext(ReactReduxContext);
-  return {
-    relativeTimeFormatter: relativeTimeFormatterSelector(store.getState()),
   };
 }
 

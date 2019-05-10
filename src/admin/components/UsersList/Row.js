@@ -9,10 +9,10 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import TableRow from '@material-ui/core/TableRow';
 import MuiTableCell from '@material-ui/core/TableCell';
+import useIntl from '../../../hooks/useIntl';
 import Avatar from '../../../components/Avatar';
 import Username from '../../../components/Username/WithCard';
 import UserRole from '../../../components/UserRole';
-import formatJoinDate from '../../../utils/formatJoinDate';
 
 const actionsStyle = {
   width: 48,
@@ -23,6 +23,15 @@ const actionsStyle = {
 const TableCell = withProps(({ className }) => ({
   className: cx('AdminUserRow-cell', className),
 }))(MuiTableCell);
+
+function JoinDate({ date }) {
+  const { dateFormatter } = useIntl();
+  return dateFormatter.format(date);
+}
+
+JoinDate.propTypes = {
+  date: PropTypes.instanceOf(Date).isRequired,
+};
 
 export default class UserRow extends React.Component {
   menu = uniqueId('menu');
@@ -56,7 +65,7 @@ export default class UserRow extends React.Component {
           <Username user={user} />
         </TableCell>
         <TableCell>
-          {formatJoinDate(user.createdAt, 'date')}
+          <JoinDate date={new Date(user.createdAt)} />
         </TableCell>
         <TableCell>Email</TableCell>
         <TableCell>
