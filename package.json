@@ -154,6 +154,8 @@
     "sinon": "^7.1.1",
     "sinon-chai": "^3.1.0",
     "style-loader": "^0.23.1",
+    "stylelint": "^10.0.1",
+    "stylelint-config-standard": "^18.3.0",
     "through2": "^3.0.0",
     "u-wave-web-emojione": "^2.0.1",
     "webpack": "^4.26.0",
@@ -167,7 +169,7 @@
     "yaml-loader": "^0.5.0"
   },
   "scripts": {
-    "lint": "eslint --cache .",
+    "lint": "eslint --cache . && stylelint src/**/*.css",
     "test:mocha": "cross-env NODE_ENV=testing mocha --require test/common.js src/**/__tests__/**/*.js",
     "test:cov": "nyc npm run test:mocha",
     "test": "npm run test:cov && npm run lint",
