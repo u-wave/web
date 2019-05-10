@@ -1,8 +1,8 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import BaseList from 'react-list';
-import LazyList from 'react-list-lazy-load';
+import { FixedSizeList } from 'react-window';
+import InfiniteLoader from 'react-window-infinite-loader';
 import itemSelection from 'item-selection/immutable';
 import LoadingRow from './LoadingRow';
 
@@ -129,7 +129,7 @@ export default class BaseMediaList extends React.Component {
     const { selection } = this.state;
 
     let list = (
-      <BaseList
+      <FixedSizeList
         itemsRenderer={this.renderList}
         itemRenderer={this.renderRow}
         length={size || media.length}
@@ -141,14 +141,14 @@ export default class BaseMediaList extends React.Component {
 
     if (onRequestPage) {
       list = (
-        <LazyList
+        <InfiniteLoader
           items={media}
           length={size || media.length}
           pageSize={50}
           onRequestPage={onRequestPage}
         >
           {list}
-        </LazyList>
+        </InfiniteLoader>
       );
     }
 

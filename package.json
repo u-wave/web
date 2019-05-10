@@ -67,6 +67,8 @@
     "react-markdown": "^4.0.3",
     "react-redux": "^7.1.0",
     "react-transition-group": "^4.0.0",
+    "react-window": "^1.8.1",
+    "react-window-infinite-loader": "^1.0.3",
     "recompose": "^0.30.0",
     "redux": "^4.0.1",
     "redux-batched-subscribe": "^0.1.6",
