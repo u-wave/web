@@ -2,22 +2,9 @@ import React from 'react';
 import sinon from 'sinon';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
-import { JSDOM } from 'jsdom';
 import PromptDialog from '..';
 
 describe('<PromptDialog />', () => {
-  const dom = new JSDOM();
-
-  before(() => {
-    global.window = dom.window;
-    global.document = dom.window.document;
-  });
-  after(() => {
-    delete global.window;
-    delete global.document;
-    dom.window.close();
-  });
-
   it('should not show if there is no error', () => {
     const onSubmit = sinon.spy((value) => {
       expect(value).to.equal('test');
