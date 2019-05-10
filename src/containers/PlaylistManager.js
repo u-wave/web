@@ -1,6 +1,6 @@
 import compose from 'recompose/compose';
 import { connect } from 'react-redux';
-import { translate } from 'react-i18next';
+import { translate } from '@u-wave/react-translate';
 import { createStructuredSelector } from 'reselect';
 import { selectedPlaylistSelector } from '../selectors/playlistSelectors';
 import { showSearchResultsSelector } from '../selectors/searchSelectors';
