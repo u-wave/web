@@ -26,7 +26,7 @@ function NoPlaylists({ className, onCreatePlaylist }) {
       <div className="NoPlaylists-create">
         <Form
           className="NoPlaylists-block"
-          onSubmit={onCreatePlaylist}
+          onSubmit={handleCreatePlaylist}
         >
           <FormGroup>
             <PlaylistIcon className="NoPlaylists-icon" />
