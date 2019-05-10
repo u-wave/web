@@ -49,7 +49,7 @@ class LogoutButton extends React.Component {
         </Button>
         {showDialog && (
           <ConfirmDialog
-            title={t('dialogs.logout.title')}
+            title=""
             confirmLabel={t('dialogs.logout.action')}
             onConfirm={this.handleConfirm}
             onCancel={this.handleClose}
