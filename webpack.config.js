@@ -179,6 +179,9 @@ const base = {
       '@material-ui/core': path.join(__dirname, 'node_modules/@material-ui/core/es/'),
       '@material-ui/lab': path.join(__dirname, 'node_modules/@material-ui/lab/es/'),
       '@material-ui/utils': path.join(__dirname, 'node_modules/@material-ui/utils/es/'),
+      // For some reason the CJS versions of these don't work in prod?
+      'react-dnd': path.join(__dirname, 'node_modules/react-dnd/lib/esm/'),
+      'react-dnd-html5-backend': path.join(__dirname, 'node_modules/react-dnd-html5-backend/lib/esm/'),
     },
     mainFields: [
       'browser',
