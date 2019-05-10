@@ -1,14 +1,18 @@
+import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import injectMediaSources from '../../../utils/injectMediaSources';
 
+const enhance = injectMediaSources();
+
 const ImportSourceBlock = ({
   getMediaSource,
+  className,
   sourceType,
   title,
   children,
 }) => (
-  <div className="ImportSourceBlock PlaylistImport-source">
+  <div className={cx('ImportSourceBlock', 'PlaylistImport-source', className)}>
     <img
       className="ImportSourceBlock-image"
       alt={title}
@@ -21,9 +25,10 @@ const ImportSourceBlock = ({
 
 ImportSourceBlock.propTypes = {
   getMediaSource: PropTypes.func.isRequired,
+  className: PropTypes.string,
   sourceType: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
 };
 
-export default injectMediaSources()(ImportSourceBlock);
+export default enhance(ImportSourceBlock);

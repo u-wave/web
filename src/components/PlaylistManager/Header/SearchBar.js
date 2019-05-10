@@ -9,7 +9,7 @@ const SearchBar = ({
   onSubmit,
   onSourceChange,
 }) => (
-  <BaseSearchBar className={className} onSubmit={onSubmit}>
+  <BaseSearchBar className={className} onSubmit={onSubmit} autoFocus>
     <SourcePicker
       className="SearchBar-source"
       selected={source}

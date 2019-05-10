@@ -4,10 +4,18 @@ import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
 import SearchIcon from '@material-ui/icons/Search';
 
-const { useState, useCallback } = React;
+const {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} = React;
 
-function SearchBar({ children, className, onSubmit }) {
+function SearchBar({
+  children, className, autoFocus, onSubmit,
+}) {
   const { t } = useTranslator();
+  const inputRef = useRef(null);
   const [focused, setFocused] = useState(false);
   const handleFocus = useCallback(() => setFocused(true), [setFocused]);
   const handleBlur = useCallback(() => setFocused(false), [setFocused]);
@@ -17,6 +25,13 @@ function SearchBar({ children, className, onSubmit }) {
     }
   }, [onSubmit]);
 
+  useEffect(() => {
+    if (autoFocus && inputRef.current) {
+      inputRef.current.focus();
+    }
+    return () => null;
+  }, []);
+
   return (
     <div className={cx('SearchBar', focused ? 'is-focused' : '', className)}>
       <div className="SearchBar-icon">
@@ -25,6 +40,7 @@ function SearchBar({ children, className, onSubmit }) {
       {children}
       <div className="SearchBar-query">
         <input
+          ref={inputRef}
           className="SearchBar-input"
           type="text"
           placeholder={focused ? '' : t('playlists.search.action')}
@@ -40,6 +56,7 @@ function SearchBar({ children, className, onSubmit }) {
 SearchBar.propTypes = {
   className: PropTypes.string,
   children: PropTypes.node,
+  autoFocus: PropTypes.bool,
   onSubmit: PropTypes.func.isRequired,
 };
 
