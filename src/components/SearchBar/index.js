@@ -7,6 +7,7 @@ import SearchIcon from '@material-ui/icons/Search';
 const {
   useCallback,
   useEffect,
+  useRef,
   useState,
 } = React;
 
@@ -14,6 +15,7 @@ function SearchBar({
   children, className, autoFocus, onSubmit,
 }) {
   const { t } = useTranslator();
+  const inputRef = useRef(null);
   const [focused, setFocused] = useState(false);
   const handleFocus = useCallback(() => setFocused(true), [setFocused]);
   const handleBlur = useCallback(() => setFocused(false), [setFocused]);
@@ -24,8 +26,8 @@ function SearchBar({
   }, [onSubmit]);
 
   useEffect(() => {
-    if (autoFocus) {
-      this.input.focus();
+    if (autoFocus && inputRef.current) {
+      inputRef.current.focus();
     }
     return () => null;
   }, []);
@@ -38,6 +40,7 @@ function SearchBar({
       {children}
       <div className="SearchBar-query">
         <input
+          ref={inputRef}
           className="SearchBar-input"
           type="text"
           placeholder={focused ? '' : t('playlists.search.action')}
