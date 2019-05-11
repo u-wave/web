@@ -5,6 +5,8 @@ import 'whatwg-fetch';
 import pFinally from 'p-finally';
 import objectAssign from 'object-assign';
 import objectValues from 'object-values';
+import isNaN from 'is-nan';
+import isFinite from 'is-finite';
 
 if (!Promise.prototype.finally) {
   // eslint-disable-next-line no-extend-native
@@ -77,4 +79,14 @@ if (!Object.assign) {
 if (!Object.values) {
   // eslint-disable-next-line no-extend-native
   Object.values = objectValues;
+}
+
+if (!Number.isNaN) {
+  // eslint-disable-next-line no-extend-native
+  Number.isNaN = isNaN;
+}
+
+if (!Number.isFinite) {
+  // eslint-disable-next-line no-extend-native
+  Number.isFinite = isFinite;
 }
