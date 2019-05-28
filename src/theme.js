@@ -12,7 +12,6 @@ export default {
   },
   typography: {
     fontFamily: '"Open Sans", Roboto, Arial, sans-serif',
-    useNextVariants: true,
   },
   // üWave specific colours
   uwave: {
