@@ -2,9 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { AppContainer as HotContainer } from 'react-hot-loader';
-import { create as createJss } from 'jss';
-import { jssPreset } from '@material-ui/core/styles';
-import JssProvider from 'react-jss/lib/JssProvider';
+import { StylesProvider } from '@material-ui/styles';
 import AppContainer from './containers/App';
 import { get as readSession } from './utils/Session';
 import createGenerateClassName from './utils/createGenerateClassName';
@@ -26,8 +24,6 @@ export default class Uwave {
   renderTarget = null;
 
   aboutPageComponent = null;
-
-  jss = createJss(jssPreset());
 
   generateClassName = createGenerateClassName();
 
@@ -101,12 +97,6 @@ export default class Uwave {
       this.sessionToken = null;
     }
 
-    if (typeof window !== 'undefined') {
-      this.jss.setup({
-        insertionPoint: document.querySelector('#jss'),
-      });
-    }
-
     if (typeof matchMedia !== 'undefined' && matchMedia('(min-width: 768px)').matches) {
       this.ready.then(() => {
         preloadDesktop();
@@ -125,12 +115,12 @@ export default class Uwave {
   getComponent() {
     return (
       <Provider store={this.store}>
-        <JssProvider jss={this.jss} generateClassName={this.generateClassName}>
+        <StylesProvider injectFirst generateClassName={this.generateClassName}>
           <AppContainer
             mediaSources={this.sources}
             uwave={this}
           />
-        </JssProvider>
+        </StylesProvider>
       </Provider>
     );
   }

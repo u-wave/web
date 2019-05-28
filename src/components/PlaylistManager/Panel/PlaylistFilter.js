@@ -86,7 +86,7 @@ class PlaylistFilter extends React.Component {
             className="PlaylistMeta-iconButton"
             onClick={this.handleClick}
           >
-            <FilterIcon nativeColor={isOpen ? '#fff' : null} />
+            <FilterIcon htmlColor={isOpen ? '#fff' : null} />
           </IconButton>
         </Tooltip>
         <input

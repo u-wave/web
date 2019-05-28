@@ -38,7 +38,7 @@ const PlaylistMeta = ({
         disabled={active}
         onChange={active ? null : onActivatePlaylist}
         icon={<ActivateIcon />}
-        checkedIcon={<ActiveIcon nativeColor="#fff" />}
+        checkedIcon={<ActiveIcon htmlColor="#fff" />}
       />
       <span>
         {active ? t('playlists.active') : t('playlists.activate')}

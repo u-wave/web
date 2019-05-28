@@ -53,7 +53,7 @@ class RenamePlaylistButton extends React.Component {
           <PromptDialog
             title={t('dialogs.renamePlaylist.nameInputTitle')}
             submitLabel={t('dialogs.renamePlaylist.action')}
-            icon={<EditIcon nativeColor="#777" />}
+            icon={<EditIcon htmlColor="#777" />}
             value={initialName}
             onSubmit={this.handleSubmit}
             onCancel={this.handleClose}

@@ -25,7 +25,7 @@ const SearchResultsRow = ({
     </button>
     <div className="PlaylistMenuRow-count">
       <IconButton className="PlaylistMenuRow-closeButton" onClick={onClose}>
-        <CloseIcon nativeColor="#777" />
+        <CloseIcon htmlColor="#777" />
       </IconButton>
     </div>
   </ListItem>

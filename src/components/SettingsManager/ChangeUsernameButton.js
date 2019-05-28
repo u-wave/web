@@ -56,7 +56,7 @@ class ChangeUsernameButton extends React.Component {
             <PromptDialog
               title={t('settings.profile.username.change')}
               submitLabel={t('settings.profile.username.save')}
-              icon={<EditIcon nativeColor="#777" />}
+              icon={<EditIcon htmlColor="#777" />}
               value={initialUsername}
               onSubmit={this.handleSubmit}
               onCancel={this.handleClose}

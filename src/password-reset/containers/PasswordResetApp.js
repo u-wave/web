@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/styles';
 import { TranslateProvider } from '@u-wave/react-translate';
 import { resetPassword } from '../actions';
 import ErrorArea from '../../containers/ErrorArea';
@@ -25,7 +26,7 @@ const muiTheme = createMuiTheme(theme);
 const PasswordResetApp = ({
   translator, success, ...props
 }) => (
-  <MuiThemeProvider theme={muiTheme}>
+  <ThemeProvider theme={muiTheme}>
     <TranslateProvider translator={translator}>
       <React.Fragment>
         {success ? (
@@ -36,7 +37,7 @@ const PasswordResetApp = ({
         <ErrorArea />
       </React.Fragment>
     </TranslateProvider>
-  </MuiThemeProvider>
+  </ThemeProvider>
 );
 
 PasswordResetApp.propTypes = {

@@ -59,7 +59,7 @@ class NewPlaylist extends React.Component {
         {creating && (
           <PromptDialog
             title={t('dialogs.createPlaylist.nameInputTitle')}
-            icon={<CreatePlaylistIcon nativeColor="#777" />}
+            icon={<CreatePlaylistIcon htmlColor="#777" />}
             submitLabel={t('dialogs.createPlaylist.action')}
             onSubmit={this.handleSubmit}
             onCancel={this.handleClose}

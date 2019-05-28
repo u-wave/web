@@ -113,7 +113,7 @@ class RegisterForm extends React.Component {
             className="RegisterForm-field"
             autocomplete="nickname"
             placeholder={t('login.username')}
-            icon={<UserIcon nativeColor="#9f9d9e" />}
+            icon={<UserIcon htmlColor="#9f9d9e" />}
             autoFocus
           />
         </FormGroup>
@@ -124,7 +124,7 @@ class RegisterForm extends React.Component {
             type="email"
             autocomplete="email"
             placeholder={t('login.email')}
-            icon={<EmailIcon nativeColor="#9f9d9e" />}
+            icon={<EmailIcon htmlColor="#9f9d9e" />}
           />
         </FormGroup>
         <FormGroup>
@@ -134,7 +134,7 @@ class RegisterForm extends React.Component {
             type="password"
             autocomplete="new-password"
             placeholder={t('login.password')}
-            icon={<PasswordIcon nativeColor="#9f9d9e" />}
+            icon={<PasswordIcon htmlColor="#9f9d9e" />}
           />
         </FormGroup>
 
