@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect, ReactReduxContext } from 'react-redux';
+import { connect, useStore } from 'react-redux';
 import compose from 'recompose/compose';
 import lifecycle from 'recompose/lifecycle';
 import { createStructuredSelector } from 'reselect';
@@ -7,8 +7,6 @@ import AdminApp from '../components/AdminApp';
 import adminReducer from '../reducers';
 import { transition } from '../actions/view';
 import { currentViewSelector } from '../selectors/viewSelectors';
-
-const { useContext } = React;
 
 const mapStateToProps = createStructuredSelector({
   currentView: currentViewSelector,
@@ -48,7 +46,7 @@ const enhance = compose(
 const ConnectedApp = enhance(AdminApp);
 
 export default function AdminAppWrapper(props) {
-  const { store } = useContext(ReactReduxContext);
+  const store = useStore();
 
   return <ConnectedApp store={store} {...props} />;
 }
