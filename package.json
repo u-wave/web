@@ -62,7 +62,7 @@
     "react-dom": "^16.8.4",
     "react-google-button": "^0.5.3",
     "react-hot-loader": "^4.7.1",
-    "react-list": "0.8.11",
+    "react-list": "0.8.9",
     "react-list-lazy-load": "^1.1.1",
     "react-loadable": "^5.5.0",
     "react-markdown": "^4.0.3",
@@ -183,5 +183,10 @@
     "serve": "gulp serve",
     "start": "gulp start",
     "prerelease": "npm run clean && npm test && npm run prod"
+  },
+  "greenkeeper": {
+    "ignore": [
+      "react-list"
+    ]
   }
 }
