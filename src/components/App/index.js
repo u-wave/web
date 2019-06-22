@@ -1,10 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { DragDropContext } from 'react-dnd';
-import compose from 'recompose/compose';
-import toClass from 'recompose/toClass';
+import { DndProvider } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-
 import FooterBar from '../../containers/FooterBar';
 import HeaderBar from '../../containers/HeaderBar';
 import Video from '../../containers/Video';
@@ -16,56 +13,63 @@ import SettingsManager from '../../containers/SettingsManager';
 import AdminProxy from '../AdminProxy';
 import About from '../../containers/About';
 import ConnectionIndicator from '../ConnectionIndicator';
-
 import SidePanels from '../../containers/SidePanels';
 import Dialogs from '../Dialogs';
 import AddToPlaylistMenu from '../../containers/AddToPlaylistMenu';
 import DragLayer from '../../containers/DragLayer';
 
-const App = ({
+function App({
   activeOverlay,
   isConnected,
   settings,
   onCloseOverlay,
-}) => (
-  <div className="App">
-    <div className="AppColumn AppColumn--left">
-      <div className="AppRow AppRow--top">
-        <HeaderBar
-          className="App-header"
-          title="üWave"
-        />
+}) {
+  const el = (
+    <div className="App">
+      <div className="AppColumn AppColumn--left">
+        <div className="AppRow AppRow--top">
+          <HeaderBar
+            className="App-header"
+            title="üWave"
+          />
+        </div>
+        <div className="AppRow AppRow--middle">
+          <Video
+            enabled={settings.videoEnabled}
+            size={settings.videoSize}
+            isMuted={settings.muted}
+            volume={settings.volume}
+          />
+          <ErrorArea />
+          <ConnectionIndicator isConnected={isConnected} />
+        </div>
+        <Overlays transitionName="Overlay" active={activeOverlay}>
+          <About key="about" onCloseOverlay={onCloseOverlay} />
+          <AdminProxy key="admin" onCloseOverlay={onCloseOverlay} />
+          <PlaylistManager key="playlistManager" onCloseOverlay={onCloseOverlay} />
+          <RoomHistory key="roomHistory" onCloseOverlay={onCloseOverlay} />
+          <SettingsManager key="settings" onCloseOverlay={onCloseOverlay} />
+        </Overlays>
+        <FooterBar className="AppRow AppRow--bottom" />
       </div>
-      <div className="AppRow AppRow--middle">
-        <Video
-          enabled={settings.videoEnabled}
-          size={settings.videoSize}
-          isMuted={settings.muted}
-          volume={settings.volume}
-        />
-        <ErrorArea />
-        <ConnectionIndicator isConnected={isConnected} />
+
+      <div className="AppColumn AppColumn--right">
+        <SidePanels />
       </div>
-      <Overlays transitionName="Overlay" active={activeOverlay}>
-        <About key="about" onCloseOverlay={onCloseOverlay} />
-        <AdminProxy key="admin" onCloseOverlay={onCloseOverlay} />
-        <PlaylistManager key="playlistManager" onCloseOverlay={onCloseOverlay} />
-        <RoomHistory key="roomHistory" onCloseOverlay={onCloseOverlay} />
-        <SettingsManager key="settings" onCloseOverlay={onCloseOverlay} />
-      </Overlays>
-      <FooterBar className="AppRow AppRow--bottom" />
+
+      <Dialogs />
+
+      <AddToPlaylistMenu />
+      <DragLayer />
     </div>
+  );
 
-    <div className="AppColumn AppColumn--right">
-      <SidePanels />
-    </div>
-
-    <Dialogs />
-
-    <AddToPlaylistMenu />
-    <DragLayer />
-  </div>
-);
+  return (
+    <DndProvider backend={HTML5Backend}>
+      {el}
+    </DndProvider>
+  );
+}
 
 App.propTypes = {
   activeOverlay: PropTypes.string,
@@ -74,9 +78,4 @@ App.propTypes = {
   onCloseOverlay: PropTypes.func.isRequired,
 };
 
-export default compose(
-  DragDropContext(HTML5Backend),
-  // DragDropContext needs to be able to set a ref on the component, so we can't
-  // use a stateless function directly.
-  toClass,
-)(App);
+export default App;
