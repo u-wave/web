@@ -10,7 +10,6 @@ import configureStore from './store/configureStore';
 import { initState, socketConnect, setSessionToken } from './actions/LoginActionCreators';
 import { loadCurrentLanguage } from './actions/LocaleActionCreators';
 import * as api from './api';
-import preloadDesktop from './utils/preloadDesktop';
 // Register default chat commands.
 import './utils/commands';
 
@@ -95,12 +94,6 @@ export default class Uwave {
     if (this.sessionToken) {
       this.store.dispatch(setSessionToken(this.sessionToken));
       this.sessionToken = null;
-    }
-
-    if (typeof matchMedia !== 'undefined' && matchMedia('(min-width: 768px)').matches) {
-      this.ready.then(() => {
-        preloadDesktop();
-      });
     }
 
     this.store.dispatch(socketConnect());
