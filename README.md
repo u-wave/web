@@ -1,5 +1,7 @@
 # u-wave-web
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/u-wave/web.svg)](https://greenkeeper.io/)
+
 Web client for [üWave][].
 
 [Dependencies](#dependencies) - [Setup](#getting-things-working) -
