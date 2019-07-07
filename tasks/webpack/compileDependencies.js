@@ -21,6 +21,17 @@ export default function compileDependencies() {
           // Don't assume dependencies are OK with being run in loose mode
           loose: false,
           forceAllTransforms: true,
+          exclude: [
+            '@babel/plugin-transform-async-to-generator',
+            '@babel/plugin-transform-regenerator',
+          ],
+        }],
+      ],
+      plugins: [
+        ['module:fast-async', {
+          compiler: {
+            noRuntime: true,
+          },
         }],
       ],
     },
