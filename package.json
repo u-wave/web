@@ -23,7 +23,7 @@
     "@u-wave/react-translate": "^1.1.1",
     "@u-wave/react-youtube": "^0.7.0",
     "@u-wave/translate": "^1.0.0",
-    "classnames": "^2.2.6",
+    "clsx": "^1.0.4",
     "connect-gzip-static": "^2.1.1",
     "debug": "^4.1.0",
     "deepmerge": "^4.0.0",

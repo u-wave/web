@@ -1,4 +1,4 @@
-import cx from 'classnames';
+import cx from 'clsx';
 import React from 'react';
 import { translate } from '@u-wave/react-translate';
 import PropTypes from 'prop-types';
