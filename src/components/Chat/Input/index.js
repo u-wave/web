@@ -1,4 +1,4 @@
-import cx from 'classnames';
+import cx from 'clsx';
 import sortBy from 'lodash/sortBy';
 import uniqBy from 'lodash/uniqBy';
 import React from 'react';

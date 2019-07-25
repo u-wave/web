@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import cx from 'classnames';
+import cx from 'clsx';
 
 function LabeledControl({ id, label, children }) {
   /* eslint-disable jsx-a11y/label-has-for */
