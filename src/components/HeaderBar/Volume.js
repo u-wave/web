@@ -4,11 +4,11 @@ import { translate } from '@u-wave/react-translate';
 import PropTypes from 'prop-types';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
+import Slider from '@material-ui/core/Slider';
 import VolumeDownIcon from '@material-ui/icons/VolumeDown';
 import VolumeMuteIcon from '@material-ui/icons/VolumeMute';
 import VolumeOffIcon from '@material-ui/icons/VolumeOff';
 import VolumeUpIcon from '@material-ui/icons/VolumeUp';
-import Slider from '@material-ui/lab/Slider';
 
 const enhance = translate();
 
