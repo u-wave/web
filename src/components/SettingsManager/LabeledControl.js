@@ -1,9 +1,9 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-// The control is in `children`.
-/* eslint-disable jsx-a11y/label-has-for */
-const LabeledControl = ({ id, label, children }) => {
+function LabeledControl({ id, label, children }) {
+  /* eslint-disable jsx-a11y/label-has-for */
   return (
     <div className="LabeledControl">
       <label className="LabeledControl-label" htmlFor={id}>{label}</label>
@@ -13,8 +13,8 @@ const LabeledControl = ({ id, label, children }) => {
       })}
     </div>
   );
-};
-/* eslint-enable jsx-a11y/label-has-for */
+  /* eslint-enable jsx-a11y/label-has-for */
+}
 
 LabeledControl.propTypes = {
   id: PropTypes.string.isRequired,
