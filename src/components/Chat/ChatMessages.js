@@ -1,13 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useListener } from 'react-bus';
 import Message from './Message';
 import Motd from './Motd';
 import ScrollDownNotice from './ScrollDownNotice';
 import specialMessages from './specialMessages';
 
+function ListenerProxy({ onScroll }) {
+  useListener('chat:scroll', onScroll);
+  return null;
+}
+
+ListenerProxy.propTypes = {
+  onScroll: PropTypes.func.isRequired,
+};
+
 export default class ChatMessages extends React.Component {
   static propTypes = {
-    bus: PropTypes.object.isRequired,
     messages: PropTypes.array,
     motd: PropTypes.array,
     canDeleteMessages: PropTypes.bool,
@@ -23,12 +32,8 @@ export default class ChatMessages extends React.Component {
   };
 
   componentDidMount() {
-    const { bus } = this.props;
-
     this.scrollToBottom();
     this.shouldScrollToBottom = false;
-
-    bus.on('chat:scroll', this.onExternalScroll);
 
     // A window resize may affect the available space.
     if (typeof window !== 'undefined') {
@@ -53,10 +58,6 @@ export default class ChatMessages extends React.Component {
   }
 
   componentWillUnmount() {
-    const { bus } = this.props;
-
-    bus.off('chat:scroll', this.onExternalScroll);
-
     if (typeof window !== 'undefined') {
       window.removeEventListener('resize', this.handleResize);
     }
@@ -158,6 +159,7 @@ export default class ChatMessages extends React.Component {
         className="ChatMessages"
         onScroll={this.handleScroll}
       >
+        <ListenerProxy onScroll={this.onExternalScroll} />
         <ScrollDownNotice
           show={!isScrolledToBottom}
           onClick={this.handleScrollToBottom}
