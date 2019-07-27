@@ -1,7 +1,7 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { DragSource } from 'react-dnd';
+import { useDrag } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import formatDuration from 'format-duration';
 import { MEDIA } from '../../constants/DDItemTypes';
@@ -16,32 +16,22 @@ const {
 
 const inSelection = (selection, media) => selection.some(item => item._id === media._id);
 
-const mediaSource = {
-  beginDrag({ selection, media }) {
-    return {
-      media: inSelection(selection, media) ? selection : [media],
-    };
-  },
-};
-
-const collect = connect => ({
-  connectDragSource: connect.dragSource(),
-  connectDragPreview: connect.dragPreview(),
-});
-
-const enhance = DragSource(MEDIA, mediaSource, collect);
-
 function Row({
   className,
   media,
   selected = false,
   selection,
-  connectDragSource,
-  connectDragPreview,
   onClick,
   onOpenPreviewMediaDialog,
   makeActions,
 }) {
+  const [, drag, connectDragPreview] = useDrag({
+    item: {
+      type: MEDIA,
+      media: inSelection(selection, media) ? selection : [media],
+    },
+  });
+
   const handleKeyPress = useCallback((event) => {
     if (event.code === 'Space') {
       onClick();
@@ -64,7 +54,7 @@ function Row({
     // search result
     : media.duration;
 
-  return connectDragSource((
+  return (
     // Bit uneasy about this, but turning the entire row into a button seems
     // wrong as well! Since we nest media action <button>s inside it, too.
     //
@@ -74,6 +64,7 @@ function Row({
       onDoubleClick={handleDoubleClick}
       onKeyPress={handleKeyPress}
       onClick={onClick}
+      ref={drag}
     >
       {media.loading ? (
         <MediaLoadingIndicator className="MediaListRow-loader" />
@@ -96,7 +87,7 @@ function Row({
         makeActions={makeActions}
       />
     </div>
-  ));
+  );
 }
 
 Row.propTypes = {
@@ -104,11 +95,9 @@ Row.propTypes = {
   media: PropTypes.object,
   selected: PropTypes.bool,
   selection: PropTypes.array,
-  connectDragSource: PropTypes.func.isRequired,
-  connectDragPreview: PropTypes.func.isRequired,
   onOpenPreviewMediaDialog: PropTypes.func,
   onClick: PropTypes.func,
   makeActions: PropTypes.func,
 };
 
-export default enhance(Row);
+export default Row;
