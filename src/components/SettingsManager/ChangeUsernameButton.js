@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate } from 'react-i18next';
+import { translate } from '@u-wave/react-translate';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 import PromptDialog from '../Dialogs/PromptDialog';
@@ -56,7 +56,7 @@ class ChangeUsernameButton extends React.Component {
             <PromptDialog
               title={t('settings.profile.username.change')}
               submitLabel={t('settings.profile.username.save')}
-              icon={<EditIcon nativeColor="#777" />}
+              icon={<EditIcon htmlColor="#777" />}
               value={initialUsername}
               onSubmit={this.handleSubmit}
               onCancel={this.handleClose}

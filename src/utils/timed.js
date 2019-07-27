@@ -1,6 +1,8 @@
 import React from 'react';
+import { ReactReduxContext } from 'react-redux';
 import PropTypes from 'prop-types';
 import wrapDisplayName from 'recompose/wrapDisplayName';
+import ClockContext from '../context/ClockContext';
 import { currentTimeSelector } from '../selectors/timeSelectors';
 
 export default function () {
@@ -8,53 +10,54 @@ export default function () {
     class Timed extends React.Component {
       static displayName = wrapDisplayName(Component, 'Timed');
 
-      static contextTypes = {
-        store: PropTypes.object.isRequired,
+      static propTypes = {
         timerCallbacks: PropTypes.shape({
           add: PropTypes.func,
           remove: PropTypes.func,
         }).isRequired,
       };
 
-      state = {
-        currentTime: this.getCurrentTime(),
-      };
-
       componentDidMount() {
-        const { timerCallbacks } = this.context;
+        const { timerCallbacks } = this.props;
 
         timerCallbacks.add(this.tick);
       }
 
       componentWillUnmount() {
-        const { timerCallbacks } = this.context;
+        const { timerCallbacks } = this.props;
 
         timerCallbacks.remove(this.tick);
       }
 
-      getCurrentTime() {
-        const { store } = this.context;
-
-        return currentTimeSelector(store.getState());
-      }
-
       tick = () => {
-        this.setState({
-          currentTime: this.getCurrentTime(),
-        });
+        this.setState({});
       };
 
       render() {
-        const { currentTime } = this.state;
+        const { timerCallbacks, ...props } = this.props;
 
         return (
-          <Component
-            {...this.props}
-            currentTime={currentTime}
-          />
+          <ReactReduxContext.Consumer>
+            {({ store }) => (
+              <Component
+                {...props}
+                currentTime={currentTimeSelector(store.getState())}
+              />
+            )}
+          </ReactReduxContext.Consumer>
         );
       }
     }
-    return Timed;
+
+    return props => (
+      <ClockContext.Consumer>
+        {timerCallbacks => (
+          <Timed
+            {...props}
+            timerCallbacks={timerCallbacks}
+          />
+        )}
+      </ClockContext.Consumer>
+    );
   };
 }

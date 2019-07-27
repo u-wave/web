@@ -45,7 +45,11 @@ function prod(done) {
       process.stdout.write(stats.toString({
         colors: true,
       }));
-      done();
+      if (stats.hasErrors()) {
+        done(new Error('There were errors'));
+      } else {
+        done();
+      }
     }
   });
 }

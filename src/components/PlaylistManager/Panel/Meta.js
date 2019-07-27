@@ -1,8 +1,8 @@
 /* eslint-disable jsx-a11y/label-has-for */
-import cx from 'classnames';
+import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate } from 'react-i18next';
+import { translate } from '@u-wave/react-translate';
 import Checkbox from '@material-ui/core/Checkbox';
 import ActiveIcon from '@material-ui/icons/CheckBox';
 import ActivateIcon from '@material-ui/icons/CheckBoxOutlineBlank';
@@ -38,7 +38,7 @@ const PlaylistMeta = ({
         disabled={active}
         onChange={active ? null : onActivatePlaylist}
         icon={<ActivateIcon />}
-        checkedIcon={<ActiveIcon nativeColor="#fff" />}
+        checkedIcon={<ActiveIcon htmlColor="#fff" />}
       />
       <span>
         {active ? t('playlists.active') : t('playlists.activate')}

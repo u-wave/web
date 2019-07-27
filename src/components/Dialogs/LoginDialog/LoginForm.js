@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate } from 'react-i18next';
+import { translate } from '@u-wave/react-translate';
 import EmailIcon from '@material-ui/icons/Email';
 import PasswordIcon from '@material-ui/icons/Lock';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -72,7 +72,7 @@ class LoginForm extends React.Component {
             type="email"
             autocomplete="email"
             placeholder={t('login.email')}
-            icon={<EmailIcon nativeColor="#9f9d9e" />}
+            icon={<EmailIcon htmlColor="#9f9d9e" />}
             autoFocus
           />
         </FormGroup>
@@ -84,7 +84,7 @@ class LoginForm extends React.Component {
             type="password"
             autocomplete="current-password"
             placeholder={t('login.password')}
-            icon={<PasswordIcon nativeColor="#9f9d9e" />}
+            icon={<PasswordIcon htmlColor="#9f9d9e" />}
           />
         </FormGroup>
 

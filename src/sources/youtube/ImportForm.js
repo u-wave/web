@@ -69,7 +69,7 @@ export default class YoutubeImportForm extends React.Component {
             <TextField
               ref={this.refChannel}
               placeholder="Channel URL"
-              icon={<PlaylistIcon nativeColor="#9f9d9e" />}
+              icon={<PlaylistIcon htmlColor="#9f9d9e" />}
             />
           </FormGroup>
           <FormGroup>
@@ -81,7 +81,7 @@ export default class YoutubeImportForm extends React.Component {
             <TextField
               ref={this.refPlaylist}
               placeholder="Playlist URL"
-              icon={<PlaylistIcon nativeColor="#9f9d9e" />}
+              icon={<PlaylistIcon htmlColor="#9f9d9e" />}
             />
           </FormGroup>
           <FormGroup>

@@ -1,2 +1,0 @@
---require test/common.js
-src/**/__tests__/**/*.js

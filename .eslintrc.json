@@ -2,7 +2,7 @@
   "extends": "airbnb",
   "parser": "babel-eslint",
 
-  "plugins": ["compat"],
+  "plugins": ["compat", "react-hooks"],
 
   "rules": {
     "new-cap": [ "error", {
@@ -14,16 +14,29 @@
     "react/no-unused-prop-types": ["error", { "skipShapeProps": true }],
     "react/forbid-prop-types": "off",
     "react/require-default-props": "off",
-    "compat/compat": "error",
-    // Try to enable when the autofixer is fixed
-    "react/jsx-one-expression-per-line": "off"
+    "react/jsx-one-expression-per-line": "off",
+    "react-hooks/rules-of-hooks": "error"
   },
 
   "settings": {
-    "polyfills": ["promises", "fetch"]
+    "polyfills": [
+      "Number.isFinite",
+      "Number.isNaN",
+      "Object.assign",
+      "Object.is",
+      "Object.values",
+      "Promise",
+      "fetch"
+    ]
   },
 
   "overrides": [
+    {
+      "files": ["src/**/*.js"],
+      "rules": {
+        "compat/compat": "error"
+      }
+    },
     {
       "files": ["**/__tests__/**/*.js"],
       "rules": {

@@ -1,16 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import useIntl from '../../hooks/useIntl';
 
-const timeFormatOptions = { hour: 'numeric', minute: 'numeric' };
+function MessageTimestamp({ date }) {
+  const { timeFormatter } = useIntl();
 
-const MessageTimestamp = ({ date }) => (
-  <time
-    className="ChatMessage-timestamp"
-    dateTime={date.toISOString()}
-  >
-    {date.toLocaleTimeString([], timeFormatOptions)}
-  </time>
-);
+  return (
+    <time
+      className="ChatMessage-timestamp"
+      dateTime={date.toISOString()}
+    >
+      {timeFormatter.format(date)}
+    </time>
+  );
+}
 
 MessageTimestamp.propTypes = {
   date: PropTypes.instanceOf(Date).isRequired,

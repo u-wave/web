@@ -1,32 +1,31 @@
-import cx from 'classnames';
+import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate } from 'react-i18next';
-import Button from '@material-ui/core/Button';
+import { translate } from '@u-wave/react-translate';
+import Fab from '@material-ui/core/Fab';
 import ScrollDownIcon from '@material-ui/icons/ArrowDownward';
 
 const enhance = translate();
 
-const ScrollNotice = ({ t, show, onClick }) => (
+const ScrollDownNotice = ({ t, show, onClick }) => (
   <div className={cx('ChatMessages-scrollDown', show && 'is-visible')}>
-    <Button
+    <Fab
       tabIndex={show ? 0 : -1}
       className="ChatMessages-scrollDownButton"
-      variant="fab"
-      mini
+      size="small"
       color="primary"
       aria-label={t('chat.scrollDown')}
       onClick={onClick}
     >
       <ScrollDownIcon />
-    </Button>
+    </Fab>
   </div>
 );
 
-ScrollNotice.propTypes = {
+ScrollDownNotice.propTypes = {
   t: PropTypes.func.isRequired,
   show: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
 };
 
-export default enhance(ScrollNotice);
+export default enhance(ScrollDownNotice);

@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate } from 'react-i18next';
-import compose from 'recompose/compose';
-import withState from 'recompose/withState';
+import { useTranslator } from '@u-wave/react-translate';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Chat from '../Chat';
@@ -10,11 +8,7 @@ import RoomUserList from '../../containers/RoomUserList';
 import WaitList from '../../containers/WaitList';
 import PanelContainer from './PanelContainer';
 
-const enhance = compose(
-  translate(),
-  withState('selected', 'setTab', 0),
-  React.memo,
-);
+const { useState, useCallback } = React;
 
 const subHeaderStyle = {
   fontSize: '125%',
@@ -50,58 +44,54 @@ const getWaitlistLabel = (t, size, position) => {
   return t('waitlist.title');
 };
 
-const SidePanels = ({
-  t,
-  selected,
-  listenerCount,
-  waitlistSize,
-  waitlistPosition,
-  setTab,
-}) => (
-  <div>
-    <Tabs
-      value={selected}
-      onChange={(event, value) => setTab(value)}
-      fullWidth
-      classes={{
-        root: 'SidePanel-tabs',
-        indicator: 'SidePanel-indicator',
-      }}
-    >
-      <Tab
-        classes={tabClasses}
-        label={t('chat.title')}
-      />
-      <Tab
-        classes={tabClasses}
-        label={getUsersLabel(t, listenerCount)}
-      />
-      <Tab
-        classes={tabClasses}
-        label={getWaitlistLabel(t, waitlistSize, waitlistPosition)}
-      />
-    </Tabs>
+function SidePanels({ listenerCount, waitlistSize, waitlistPosition }) {
+  const { t } = useTranslator();
+  const [selected, setTab] = useState(0);
+  const handleChange = useCallback((event, value) => setTab(value), [setTab]);
+
+  return (
     <div>
-      <PanelContainer selected={selected === 0}>
-        <Chat />
-      </PanelContainer>
-      <PanelContainer selected={selected === 1}>
-        <RoomUserList />
-      </PanelContainer>
-      <PanelContainer selected={selected === 2}>
-        <WaitList />
-      </PanelContainer>
+      <Tabs
+        value={selected}
+        onChange={handleChange}
+        variant="fullWidth"
+        classes={{
+          root: 'SidePanel-tabs',
+          indicator: 'SidePanel-indicator',
+        }}
+      >
+        <Tab
+          classes={tabClasses}
+          label={t('chat.title')}
+        />
+        <Tab
+          classes={tabClasses}
+          label={getUsersLabel(t, listenerCount)}
+        />
+        <Tab
+          classes={tabClasses}
+          label={getWaitlistLabel(t, waitlistSize, waitlistPosition)}
+        />
+      </Tabs>
+      <div>
+        <PanelContainer selected={selected === 0}>
+          <Chat />
+        </PanelContainer>
+        <PanelContainer selected={selected === 1}>
+          <RoomUserList />
+        </PanelContainer>
+        <PanelContainer selected={selected === 2}>
+          <WaitList />
+        </PanelContainer>
+      </div>
     </div>
-  </div>
-);
+  );
+}
 
 SidePanels.propTypes = {
-  t: PropTypes.func.isRequired,
   listenerCount: PropTypes.number.isRequired,
   waitlistSize: PropTypes.number.isRequired,
   waitlistPosition: PropTypes.number.isRequired,
-  selected: PropTypes.number.isRequired,
-  setTab: PropTypes.func.isRequired,
 };
 
-export default enhance(SidePanels);
+export default SidePanels;

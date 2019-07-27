@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import compose from 'recompose/compose';
 import withState from 'recompose/withState';
-import { translate } from 'react-i18next';
+import { translate } from '@u-wave/react-translate';
 import List, { ListItem, ListItemText } from '../List';
 import OverlayHeader from '../Overlay/Header';
 import OverlayContent from '../Overlay/Content';

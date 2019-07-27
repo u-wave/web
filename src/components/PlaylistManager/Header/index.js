@@ -1,15 +1,15 @@
-import cx from 'classnames';
+import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate } from 'react-i18next';
+import { translate } from '@u-wave/react-translate';
 import OverlayHeader from '../../Overlay/Header';
-import SearchBar from '../../../containers/MediaSearchBar';
 
 const enhance = translate();
 
 const PlaylistManagerHeader = ({
   t,
   className,
+  children,
   onCloseOverlay,
 }) => (
   <OverlayHeader
@@ -17,13 +17,14 @@ const PlaylistManagerHeader = ({
     title={t('playlists.title')}
     onCloseOverlay={onCloseOverlay}
   >
-    <SearchBar className="PlaylistHeader-search" />
+    {children}
   </OverlayHeader>
 );
 
 PlaylistManagerHeader.propTypes = {
-  className: PropTypes.string,
   t: PropTypes.func.isRequired,
+  className: PropTypes.string,
+  children: PropTypes.node,
   onCloseOverlay: PropTypes.func.isRequired,
 };
 

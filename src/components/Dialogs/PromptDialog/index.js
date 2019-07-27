@@ -1,4 +1,4 @@
-import cx from 'classnames';
+import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
 import Dialog from '@material-ui/core/Dialog';
@@ -96,7 +96,7 @@ export default class PromptDialog extends React.Component {
 
     return (
       <Dialog
-        fullWidth
+        variant="fullWidth"
         {...props}
         classes={{
           paper: cx('Dialog', contentClassName),

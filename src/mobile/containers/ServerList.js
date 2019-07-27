@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate } from 'react-i18next';
+import { translate } from '@u-wave/react-translate';
 import Overlay from '../../components/Overlay';
 import OverlayContent from '../../components/Overlay/Content';
 import OverlayHeader from '../../components/Overlay/Header';

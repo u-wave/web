@@ -1,9 +1,9 @@
-import cx from 'classnames';
+import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import { translate } from 'react-i18next';
+import { translate } from '@u-wave/react-translate';
 
 const GuestsRow = ({ t, className, guests }) => (
   <ListItem className={cx('UserRow', 'UserRow--guests', className)}>

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import compose from 'recompose/compose';
 import withProps from 'recompose/withProps';
-import { translate } from 'react-i18next';
+import { translate } from '@u-wave/react-translate';
 import Switch from '@material-ui/core/Switch';
 import LabeledControl from './LabeledControl';
 

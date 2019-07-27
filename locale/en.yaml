@@ -54,7 +54,6 @@ uwave:
       defaultSubmitLabel: OK
 
     logout:
-      title: null
       action: Sign Out
       confirm: Are you sure you want to sign out?
 
@@ -90,10 +89,13 @@ uwave:
 
   playlists:
     title: Playlists
+    name: Playlist Name
+    defaultName: New Playlist
     new: Create Playlist
     delete: Delete Playlist
     deleteActive: The active playlist cannot be deleted.
     noPlaylists: You don't have a playlist yet!
+    noPlaylistsSub: Create a new one below, or import one from YouTube.
     noPlaylistsCreate: You don't have a playlist yet! Click here to create one.
     empty: "This playlist is empty :("
     active: Active

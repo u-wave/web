@@ -1,36 +1,22 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import MediaSourceContext from '../context/MediaSourceContext';
 
 function getComponentName(Component) {
   return Component.name || Component.displayName || 'Component';
 }
 
 export default function injectMediaSources() {
-  return Component => class extends React.Component {
-    static displayName = `InjectMediaSources(${getComponentName(Component)})`;
+  return (Component) => {
+    const InjectMediaSourcesWrapper = props => (
+      <MediaSourceContext.Consumer>
+        {sources => (
+          <Component {...sources} {...props} />
+        )}
+      </MediaSourceContext.Consumer>
+    );
 
-    static contextTypes = {
-      mediaSources: PropTypes.object,
-    };
+    InjectMediaSourcesWrapper.displayName = `InjectMediaSources(${getComponentName(Component)})`;
 
-    getMediaSource = (name) => {
-      const { mediaSources } = this.context;
-      return mediaSources[name];
-    };
-
-    getAllMediaSources = () => {
-      const { mediaSources } = this.context;
-      return mediaSources;
-    };
-
-    render() {
-      return (
-        <Component
-          getMediaSource={this.getMediaSource}
-          getAllMediaSources={this.getAllMediaSources}
-          {...this.props}
-        />
-      );
-    }
+    return InjectMediaSourcesWrapper;
   };
 }

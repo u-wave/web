@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate } from 'react-i18next';
+import { translate } from '@u-wave/react-translate';
 import Button from '@material-ui/core/Button';
 import LogoutIcon from '@material-ui/icons/PowerSettingsNew';
 import ConfirmDialog from '../Dialogs/ConfirmDialog';
@@ -49,7 +49,7 @@ class LogoutButton extends React.Component {
         </Button>
         {showDialog && (
           <ConfirmDialog
-            title={t('dialogs.logout.title')}
+            title=""
             confirmLabel={t('dialogs.logout.action')}
             onConfirm={this.handleConfirm}
             onCancel={this.handleClose}

@@ -1,7 +1,7 @@
-import cx from 'classnames';
+import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate } from 'react-i18next';
+import { translate } from '@u-wave/react-translate';
 import Button from '@material-ui/core/Button';
 import SettingsButton from './SettingsButton';
 import NextMedia from './NextMedia';

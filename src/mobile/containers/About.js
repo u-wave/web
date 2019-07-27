@@ -1,45 +1,50 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate } from 'react-i18next';
+import { translate } from '@u-wave/react-translate';
+import UwaveContext from '../../context/UwaveContext';
 import Overlay from '../../components/Overlay';
 import OverlayHeader from '../../components/Overlay/Header';
 import OverlayContent from '../../components/Overlay/Content';
 
 const enhance = translate();
 
-class AboutContainer extends React.Component {
-  static propTypes = {
-    t: PropTypes.func.isRequired,
-    onCloseOverlay: PropTypes.func.isRequired,
-  };
-
-  static contextTypes = {
-    uwave: PropTypes.object,
-  };
-
-  getAboutPageComponent() {
-    const { uwave } = this.context;
-    if (uwave) {
-      return uwave.getAboutPageComponent();
-    }
+const AboutOverlay = ({
+  t,
+  onCloseOverlay,
+  AboutPage,
+  ...props
+}) => {
+  if (!AboutPage) {
     return null;
   }
 
-  render() {
-    const About = this.getAboutPageComponent();
-    if (!About) return null;
+  return (
+    <Overlay>
+      <OverlayHeader title={t('about.about')} onCloseOverlay={onCloseOverlay} />
+      <OverlayContent className="AboutPanel">
+        <AboutPage {...props} />
+      </OverlayContent>
+    </Overlay>
+  );
+};
 
-    const { t, onCloseOverlay, ...props } = this.props;
+AboutOverlay.propTypes = {
+  t: PropTypes.func.isRequired,
+  onCloseOverlay: PropTypes.func.isRequired,
+  AboutPage: PropTypes.func,
+};
 
-    return (
-      <Overlay>
-        <OverlayHeader title={t('about.about')} onCloseOverlay={onCloseOverlay} />
-        <OverlayContent className="AboutPanel">
-          <About {...props} />
-        </OverlayContent>
-      </Overlay>
-    );
-  }
-}
+const TranslatedAboutOverlay = enhance(AboutOverlay);
 
-export default enhance(AboutContainer);
+const AboutContainer = props => (
+  <UwaveContext.Consumer>
+    {uwave => (
+      <TranslatedAboutOverlay
+        {...props}
+        AboutPage={uwave.getAboutPageComponent()}
+      />
+    )}
+  </UwaveContext.Consumer>
+);
+
+export default AboutContainer;

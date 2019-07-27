@@ -4,6 +4,7 @@ export * from './actionTypes/chat';
 export * from './actionTypes/dialogs';
 export * from './actionTypes/errors';
 export * from './actionTypes/imports';
+export * from './actionTypes/locales';
 export * from './actionTypes/moderation';
 export * from './actionTypes/overlay';
 export * from './actionTypes/panel';

@@ -74,7 +74,6 @@ const plugins = [
 let optimization;
 
 if (nodeEnv === 'production') {
-  const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
   const SriPlugin = require('webpack-subresource-integrity');
 
   optimization = {
@@ -83,19 +82,6 @@ if (nodeEnv === 'production') {
       automaticNameDelimiter: '-',
       chunks: 'all',
     },
-    minimizer: [
-      new UglifyJsPlugin({
-        parallel: true,
-        sourceMap: true,
-        uglifyOptions: {
-          toplevel: true,
-          compress: {
-            pure_getters: true,
-            unsafe: true,
-          },
-        },
-      }),
-    ],
   };
 
   plugins.push(
@@ -193,6 +179,7 @@ const base = {
     alias: {
       // Use the ES modules versions of some packages.
       '@material-ui/core': path.join(__dirname, 'node_modules/@material-ui/core/es/'),
+      '@material-ui/utils': path.join(__dirname, 'node_modules/@material-ui/utils/es/'),
     },
     mainFields: [
       'browser',

@@ -3,31 +3,35 @@ import PropTypes from 'prop-types';
 import nest from 'recompose/nest';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { MuiThemeProvider } from '@material-ui/core/styles';
-import { I18nextProvider } from 'react-i18next';
+import { ThemeProvider } from '@material-ui/styles';
 import { Provider as BusProvider } from 'react-bus';
+import { TranslateProvider } from '@u-wave/react-translate';
 import { Mobile, Desktop } from '../components/Responsive';
-import ClockProvider from '../components/ClockProvider';
 import { closeAll } from '../actions/OverlayActionCreators';
 import {
   settingsSelector,
-  languageSelector,
   themeSelector,
 } from '../selectors/settingSelectors';
+import { translatorSelector } from '../selectors/localeSelectors';
 import { isConnectedSelector } from '../selectors/serverSelectors';
 import DesktopApp from '../components/App';
 import MobileApp from '../mobile/components/App';
 import FatalError from '../components/FatalError';
 import UwaveContext from '../context/UwaveContext';
+import ClockContext from '../context/ClockContext';
+import MediaSourceContext from '../context/MediaSourceContext';
 
-const SimpleProviders = nest(BusProvider, ClockProvider);
+const SimpleProviders = nest(
+  BusProvider,
+  ClockContext.Provider,
+);
 
 const mapStateToProps = createStructuredSelector({
   activeOverlay: state => state.activeOverlay,
   isConnected: isConnectedSelector,
   settings: settingsSelector,
-  language: languageSelector,
   theme: themeSelector,
+  translator: translatorSelector,
 });
 
 const mapDispatchToProps = {
@@ -40,36 +44,20 @@ class AppContainer extends React.Component {
   static propTypes = {
     mediaSources: PropTypes.object.isRequired,
     uwave: PropTypes.object,
-    language: PropTypes.string,
     theme: PropTypes.object,
-    locale: PropTypes.object.isRequired,
-  };
-
-  static childContextTypes = {
-    mediaSources: PropTypes.object,
-    uwave: PropTypes.object,
+    translator: PropTypes.object.isRequired,
   };
 
   state = {
     error: null,
   };
 
-  getChildContext() {
-    const { mediaSources } = this.props;
-
-    return { mediaSources };
-  }
-
   componentDidMount() {
     this.applyThemeProperties();
   }
 
   componentDidUpdate(prevProps) {
-    const { locale, language, theme } = this.props;
-
-    if (language !== prevProps.language) {
-      locale.changeLanguage(language);
-    }
+    const { theme } = this.props;
 
     if (theme !== prevProps.theme) {
       this.applyThemeProperties();
@@ -101,28 +89,35 @@ class AppContainer extends React.Component {
   );
 
   render() {
-    const { uwave, theme, locale } = this.props;
+    const {
+      uwave,
+      mediaSources,
+      theme,
+      translator,
+    } = this.props;
     const { error } = this.state;
 
     if (error) {
       // Let's hope the ThemeProvider works at least...
       return (
-        <MuiThemeProvider theme={theme}>
+        <ThemeProvider theme={theme}>
           <FatalError error={error} />
-        </MuiThemeProvider>
+        </ThemeProvider>
       );
     }
 
     return (
-      <MuiThemeProvider theme={theme}>
-        <I18nextProvider i18n={locale}>
+      <ThemeProvider theme={theme}>
+        <TranslateProvider translator={translator}>
           <SimpleProviders>
             <UwaveContext.Provider value={uwave}>
-              {this.renderApp()}
+              <MediaSourceContext.Provider mediaSources={mediaSources}>
+                {this.renderApp()}
+              </MediaSourceContext.Provider>
             </UwaveContext.Provider>
           </SimpleProviders>
-        </I18nextProvider>
-      </MuiThemeProvider>
+        </TranslateProvider>
+      </ThemeProvider>
     );
   }
 }
