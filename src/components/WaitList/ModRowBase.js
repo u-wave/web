@@ -10,7 +10,10 @@ import Avatar from '../Avatar';
 import Username from '../Username';
 import Position from './Position';
 
-const { useCallback } = React;
+const {
+  useCallback,
+  useEffect,
+} = React;
 
 /**
  * A Draggable waitlist user row with moderation tools.
@@ -40,7 +43,13 @@ function ModRowBase({
     userCard.open();
   });
 
-  return connectDragPreview((
+  useEffect(() => {
+    if (userCard.refAnchor.current) {
+      connectDragPreview(userCard.refAnchor.current);
+    }
+  });
+
+  return (
     <div
       className={cx(
         'UserRow',
@@ -77,7 +86,7 @@ function ModRowBase({
         </button>
       </div>
     </div>
-  ));
+  );
 }
 
 ModRowBase.propTypes = {
