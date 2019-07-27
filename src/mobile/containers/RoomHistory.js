@@ -1,7 +1,6 @@
-import { bindActionCreators } from 'redux';
+import React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import withProps from 'recompose/withProps';
 import { openPreviewMediaDialog } from '../../actions/DialogActionCreators';
 import { addMediaMenu } from '../../actions/PlaylistActionCreators';
 import { roomHistoryWithVotesSelector } from '../../selectors/roomHistorySelectors';
@@ -23,19 +22,21 @@ const mapStateToProps = createStructuredSelector({
 const onOpenAddMediaMenu = (position, media, selection) => (
   addMediaMenu(selectionOrOne(media, selection), position)
 );
-const mapDispatchToProps = dispatch => bindActionCreators({
+const mapDispatchToProps = {
   onOpenAddMediaMenu,
   onOpenPreviewMediaDialog: openPreviewMediaDialog,
-}, dispatch);
+};
 
 const enhance = connect(mapStateToProps, mapDispatchToProps);
+
+function RoomHistoryOverlay(props) {
+  return <Overlay {...props} direction="top" />;
+}
 
 const RoomHistory = createLazyOverlay({
   loader: () => import('../components/RoomHistory' /* webpackChunkName: "historyMobile" */),
   title: t => t('history.title'),
-  OverlayComponent: withProps({
-    direction: 'top',
-  })(Overlay),
+  OverlayComponent: RoomHistoryOverlay,
 });
 
 export default enhance(RoomHistory);
