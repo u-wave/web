@@ -1,23 +1,22 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate } from '@u-wave/react-translate';
+import { useTranslator } from '@u-wave/react-translate';
 import { IDLE, LOADING, LOADED } from '../../../constants/LoadingStates';
 import NoSearchResults from './NoSearchResults';
 import LoadingSearchResults from './LoadingSearchResults';
 import SearchResultsList from './SearchResultsList';
 
-const enhance = translate();
-
-const SearchResultsPanel = ({
-  t,
+function SearchResultsPanel({
   className,
   query,
   loadingState,
   results,
   onOpenAddMediaMenu,
   onOpenPreviewMediaDialog,
-}) => {
+}) {
+  const { t } = useTranslator();
+
   let list;
   if (loadingState === LOADED) {
     list = results.length > 0 ? (
@@ -43,10 +42,9 @@ const SearchResultsPanel = ({
       {list}
     </div>
   );
-};
+}
 
 SearchResultsPanel.propTypes = {
-  t: PropTypes.func.isRequired,
   className: PropTypes.string,
   query: PropTypes.string.isRequired,
   loadingState: PropTypes.oneOf([IDLE, LOADING, LOADED]).isRequired,
@@ -55,4 +53,4 @@ SearchResultsPanel.propTypes = {
   onOpenPreviewMediaDialog: PropTypes.func.isRequired,
 };
 
-export default enhance(SearchResultsPanel);
+export default SearchResultsPanel;
