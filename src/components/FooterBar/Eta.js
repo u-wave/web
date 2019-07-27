@@ -1,31 +1,23 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import compose from 'recompose/compose';
 import formatDuration from 'format-duration';
-import timed from '../../utils/timed';
+import useClock from '../../hooks/useClock';
 
-const enhance = compose(
-  timed(),
-  React.memo,
-);
-
-const Eta = ({
-  className, base, currentTime, endTime,
-}) => {
+function Eta({ className, base, endTime }) {
+  const currentTime = useClock();
   const currentRemaining = endTime - currentTime;
   return (
     <span className={cx('Eta', className)}>
       {formatDuration(base + currentRemaining)}
     </span>
   );
-};
+}
 
 Eta.propTypes = {
   className: PropTypes.string,
-  currentTime: PropTypes.number.isRequired,
-  endTime: PropTypes.number,
-  base: PropTypes.number,
+  endTime: PropTypes.number.isRequired,
+  base: PropTypes.number.isRequired,
 };
 
-export default enhance(Eta);
+export default React.memo(Eta);
