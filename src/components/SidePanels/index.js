@@ -16,7 +16,7 @@ const subHeaderStyle = {
 
 const tabClasses = {
   root: 'SidePanel-tab',
-  label: 'SidePanel-tabLabel',
+  wrapper: 'SidePanel-tabLabel',
 };
 
 const getUsersLabel = (t, listenerCount) => (
