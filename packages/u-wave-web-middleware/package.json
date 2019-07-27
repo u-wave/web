@@ -6,6 +6,7 @@
   "license": "MIT",
   "repository": "u-wave/web",
   "main": "./middleware",
+  "module": "./middleware/index.mjs",
   "engines": {
     "node": ">= 8",
     "npm": ">= 3"

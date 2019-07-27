@@ -54,9 +54,38 @@ function prod(done) {
   });
 }
 
-function copyMiddleware() {
-  return gulp.src('lib/middleware/**')
-    .pipe(gulp.dest(`${middlewareDir}/middleware`));
+async function buildMiddleware() {
+  // eslint-disable-next-line import/no-dynamic-require
+  const middlewarePkg = require(`${middlewareDir}/package.json`);
+
+  const rollup = require('rollup');
+  const bundle = await rollup.rollup({
+    input: './src/middleware/index.js',
+    external: [
+      ...Object.keys(middlewarePkg.dependencies),
+      ...require('module').builtinModules,
+    ],
+    plugins: [
+      require('rollup-plugin-babel')({
+        runtimeHelpers: true,
+      }),
+      require('rollup-plugin-node-resolve')({
+        preferBuiltins: true,
+      }),
+    ],
+  });
+
+  await bundle.write({
+    format: 'cjs',
+    file: path.join(middlewareDir, 'middleware', 'index.js'),
+    sourcemap: true,
+  });
+
+  await bundle.write({
+    format: 'esm',
+    file: path.join(middlewareDir, 'middleware', 'index.mjs'),
+    sourcemap: true,
+  });
 }
 
 function copyMiddlewareMeta() {
@@ -79,7 +108,7 @@ async function updateMiddlewarePackageJson() {
 }
 
 const middleware = gulp.parallel(
-  copyMiddleware,
+  buildMiddleware,
   copyMiddlewareMeta,
   updateMiddlewarePackageJson,
 );
