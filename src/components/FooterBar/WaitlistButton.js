@@ -1,22 +1,17 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate } from '@u-wave/react-translate';
-import compose from 'recompose/compose';
+import { useTranslator } from '@u-wave/react-translate';
 import Button from '@material-ui/core/Button';
 import LockedIcon from '@material-ui/icons/Lock';
 
-const enhance = compose(
-  translate(),
-  React.memo,
-);
-
-const WaitlistButton = ({
-  t,
+function WaitlistButton({
   userInWaitlist,
   isLocked,
   onClick,
-}) => {
+}) {
+  const { t } = useTranslator();
+
   let icon;
   if (isLocked) {
     icon = (
@@ -45,13 +40,12 @@ const WaitlistButton = ({
       {userInWaitlist ? t('waitlist.leave') : t('waitlist.join')}
     </Button>
   );
-};
+}
 
 WaitlistButton.propTypes = {
-  t: PropTypes.func.isRequired,
   userInWaitlist: PropTypes.bool,
   isLocked: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
 };
 
-export default enhance(WaitlistButton);
+export default React.memo(WaitlistButton);
