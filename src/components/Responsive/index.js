@@ -1,5 +1,21 @@
+import React from 'react';
+import PropTypes from 'prop-types';
 import MediaQuery from '@u-wave/react-mq';
-import withProps from 'recompose/withProps';
 
-export const Mobile = withProps({ query: '(max-width: 767px)' })(MediaQuery);
-export const Desktop = withProps({ query: '(min-width: 768px)' })(MediaQuery);
+function Mobile({ children }) {
+  return <MediaQuery query="(max-width: 767px)">{children}</MediaQuery>;
+}
+
+Mobile.propTypes = {
+  children: PropTypes.element.isRequired,
+};
+
+function Desktop({ children }) {
+  return <MediaQuery query="(min-width: 768px)">{children}</MediaQuery>;
+}
+
+Desktop.propTypes = {
+  children: PropTypes.element.isRequired,
+};
+
+export { Mobile, Desktop };
