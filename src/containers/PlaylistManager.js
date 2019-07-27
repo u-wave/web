@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslator } from '@u-wave/react-translate';
 import { selectedPlaylistSelector } from '../selectors/playlistSelectors';
@@ -14,7 +15,7 @@ const PlaylistManager = createLazyOverlay({
   title: t => t('playlists.title'),
 });
 
-function PlaylistManagerContainer() {
+function PlaylistManagerContainer({ onCloseOverlay }) {
   const { t } = useTranslator();
 
   const selectedPlaylist = useSelector(selectedPlaylistSelector);
@@ -32,8 +33,13 @@ function PlaylistManagerContainer() {
       showImportPanel={showImportPanel}
       showSearchResults={showSearchResults}
       onCreatePlaylist={onCreatePlaylist}
+      onCloseOverlay={onCloseOverlay}
     />
   );
 }
+
+PlaylistManagerContainer.propTypes = {
+  onCloseOverlay: PropTypes.func.isRequired,
+};
 
 export default PlaylistManagerContainer;
