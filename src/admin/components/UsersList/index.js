@@ -37,7 +37,7 @@ function UsersList({
         </TableHead>
         <TableBody>
           {users.map(user => (
-            <UserRow user={user} />
+            <UserRow key={user._id} user={user} />
           ))}
         </TableBody>
         <TableFooter>
