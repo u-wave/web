@@ -65,11 +65,14 @@ const plugins = [
   new DefinePlugin({
     'process.env.FORCE_TOKEN': JSON.stringify(isDemo),
   }),
-  new ProgressPlugin(),
   new LodashModuleReplacementPlugin({
     paths: true,
   }),
 ];
+
+if (!isDemo) {
+  plugins.push(new ProgressPlugin());
+}
 
 let optimization;
 
