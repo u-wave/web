@@ -1,14 +1,13 @@
 import React from 'react';
 import { ReactReduxContext } from 'react-redux';
 import PropTypes from 'prop-types';
-import wrapDisplayName from 'recompose/wrapDisplayName';
 import ClockContext from '../context/ClockContext';
 import { currentTimeSelector } from '../selectors/timeSelectors';
 
 export default function () {
   return (Component) => {
     class Timed extends React.Component {
-      static displayName = wrapDisplayName(Component, 'Timed');
+      static displayName = `Timed(${Component.displayName || Component.name || 'anonymous'})`;
 
       static propTypes = {
         timerCallbacks: PropTypes.shape({
