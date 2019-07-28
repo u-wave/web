@@ -23,9 +23,11 @@ function RenamePlaylistButton({ initialName, onRename }) {
     setRenaming(false);
   }, []);
 
-  const handleSubmit = useCallback(name => onRename(name).then(() => {
-    setRenaming(false);
-  }), [onRename]);
+  const handleSubmit = useCallback((name) => {
+    return onRename(name).then(() => {
+      setRenaming(false);
+    });
+  }, [onRename]);
 
   return (
     <React.Fragment>
