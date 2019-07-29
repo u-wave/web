@@ -14,6 +14,8 @@ const htmlMinifierOptions = require('./tasks/utils/htmlMinifierOptions');
 const nodeEnv = process.env.NODE_ENV || 'development';
 const isDemo = process.env.DEMO === '1';
 
+const outputPackage = isDemo ? __dirname : path.join(__dirname, 'packages/u-wave-web-middleware');
+
 // Compile src/ on the fly so we can use components etc. during build time.
 require('@babel/register').default({
   only: [
@@ -63,11 +65,14 @@ const plugins = [
   new DefinePlugin({
     'process.env.FORCE_TOKEN': JSON.stringify(isDemo),
   }),
-  new ProgressPlugin(),
   new LodashModuleReplacementPlugin({
     paths: true,
   }),
 ];
+
+if (!isDemo) {
+  plugins.push(new ProgressPlugin());
+}
 
 let optimization;
 
@@ -111,7 +116,7 @@ const base = {
 
   output: {
     publicPath: '/',
-    path: path.join(__dirname, 'public'),
+    path: path.join(outputPackage, 'public'),
     filename: nodeEnv === 'production' ? 'static/[name]_[chunkhash:7].js' : '[name]_dev.js',
     chunkFilename: nodeEnv === 'production' ? 'static/[name]_[chunkhash:7].js' : '[name]_dev.js',
     crossOriginLoading: 'anonymous',

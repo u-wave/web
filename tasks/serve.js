@@ -1,6 +1,7 @@
 /* eslint-disable global-require */
 require('loud-rejection/register');
 const gulp = require('gulp');
+const path = require('path');
 const log = require('fancy-log');
 const chalk = require('chalk');
 const emojione = require('u-wave-web-emojione');
@@ -118,6 +119,7 @@ function serve(done) {
       socketUrl,
       emoji: emojione.emoji,
       title: 'üWave (Development)',
+      basePath: path.join(__dirname, '../packages/u-wave-web-middleware/public'),
       publicPath: '/',
       // Point u-wave-web middleware to the virtual webpack filesystem.
       fs: dev.fileSystem,
