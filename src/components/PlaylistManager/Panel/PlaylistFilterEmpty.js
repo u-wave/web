@@ -1,21 +1,18 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { translate } from '@u-wave/react-translate';
+import { useTranslator } from '@u-wave/react-translate';
 import Typography from '@material-ui/core/Typography';
 import EmptyIcon from '@material-ui/icons/Search';
 
-const enhance = translate();
+function PlaylistFilterEmpty() {
+  const { t } = useTranslator();
 
-const PlaylistFilterEmpty = ({ t }) => (
-  <div className="PlaylistPanel-empty">
-    <EmptyIcon className="PlaylistPanel-emptyIcon" />
-    <Typography className="PlaylistPanel-emptyHeader">{t('playlists.playlist.filterEmpty')}</Typography>
-    <Typography>{t('playlists.playlist.filterEmptySub')}</Typography>
-  </div>
-);
+  return (
+    <div className="PlaylistPanel-empty">
+      <EmptyIcon className="PlaylistPanel-emptyIcon" />
+      <Typography className="PlaylistPanel-emptyHeader">{t('playlists.playlist.filterEmpty')}</Typography>
+      <Typography>{t('playlists.playlist.filterEmptySub')}</Typography>
+    </div>
+  );
+}
 
-PlaylistFilterEmpty.propTypes = {
-  t: PropTypes.func.isRequired,
-};
-
-export default enhance(PlaylistFilterEmpty);
+export default PlaylistFilterEmpty;

@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const enhance = React.memo;
-
 const LogMessage = ({ text }) => (
   <div className="ChatMessage ChatMessage--log">
     <div className="ChatMessage-content">
@@ -15,4 +13,4 @@ LogMessage.propTypes = {
   text: PropTypes.string.isRequired,
 };
 
-export default enhance(LogMessage);
+export default React.memo(LogMessage);

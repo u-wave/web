@@ -4,8 +4,6 @@ import Favorite from './Favorite';
 import Upvote from './Upvote';
 import Downvote from './Downvote';
 
-const enhance = React.memo;
-
 const ResponseBar = ({
   disabled = false,
   isUpvote, upvotesCount, onUpvote,
@@ -49,4 +47,4 @@ ResponseBar.propTypes = {
   onDownvote: PropTypes.func.isRequired,
 };
 
-export default enhance(ResponseBar);
+export default React.memo(ResponseBar);

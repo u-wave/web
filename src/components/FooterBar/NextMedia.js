@@ -1,18 +1,11 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate, Interpolate } from '@u-wave/react-translate';
-import compose from 'recompose/compose';
+import { useTranslator, Interpolate } from '@u-wave/react-translate';
 import SongTitle from '../SongTitle';
 import Eta from './Eta';
 
-const enhance = compose(
-  translate(),
-  React.memo,
-);
-
-const NextMedia = ({
-  t,
+function NextMedia({
   className,
   playlist,
   nextMedia,
@@ -20,7 +13,9 @@ const NextMedia = ({
   userIsDJ,
   baseEta,
   mediaEndTime,
-}) => {
+}) {
+  const { t } = useTranslator();
+
   if (!playlist) {
     return (
       <div className={cx('NextMedia', className)}>
@@ -55,10 +50,9 @@ const NextMedia = ({
       />
     </div>
   );
-};
+}
 
 NextMedia.propTypes = {
-  t: PropTypes.func.isRequired,
   className: PropTypes.string,
   playlist: PropTypes.object,
   nextMedia: PropTypes.object,
@@ -68,4 +62,4 @@ NextMedia.propTypes = {
   mediaEndTime: PropTypes.number,
 };
 
-export default enhance(NextMedia);
+export default React.memo(NextMedia);

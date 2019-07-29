@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import compose from 'recompose/compose';
 import nest from 'recompose/nest';
-import { connect } from 'react-redux';
-import { translate } from '@u-wave/react-translate';
+import { useDispatch } from 'react-redux';
+import { useTranslator } from '@u-wave/react-translate';
 import hoistStatics from 'hoist-non-react-statics';
 import loadable from 'react-loadable';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -19,43 +18,36 @@ export default function createLazyOverlay({
 }) {
   if (typeof loader !== 'function') throw new TypeError('loader must be a function');
 
-  const enhance = compose(
-    translate(),
-    connect(null, {
-      onCloseOverlay: closeAll,
-    }),
-  );
+  function LoadingOverlay({ pastDelay }) {
+    const { t } = useTranslator();
+    const dispatch = useDispatch();
+    const onCloseOverlay = () => dispatch(closeAll());
 
-  const LoadingOverlay = ({
-    t,
-    pastDelay,
-    onCloseOverlay,
-  }) => (
-    <React.Fragment>
-      <OverlayHeader
-        title={title ? title(t) : '...'}
-        onCloseOverlay={onCloseOverlay}
-      />
-      <OverlayContent className="LoadingOverlay-body">
-        {pastDelay && (
-          <CircularProgress
-            className="LoadingOverlay-spinner"
-            thickness={1.6}
-          />
-        )}
-      </OverlayContent>
-    </React.Fragment>
-  );
+    return (
+      <React.Fragment>
+        <OverlayHeader
+          title={title ? title(t) : '...'}
+          onCloseOverlay={onCloseOverlay}
+        />
+        <OverlayContent className="LoadingOverlay-body">
+          {pastDelay && (
+            <CircularProgress
+              className="LoadingOverlay-spinner"
+              thickness={1.6}
+            />
+          )}
+        </OverlayContent>
+      </React.Fragment>
+    );
+  }
 
   LoadingOverlay.propTypes = {
-    t: PropTypes.func.isRequired,
     pastDelay: PropTypes.bool.isRequired,
-    onCloseOverlay: PropTypes.func.isRequired,
   };
 
   const LazyOverlay = loadable({
     loader,
-    loading: enhance(LoadingOverlay),
+    loading: LoadingOverlay,
   });
 
   return hoistStatics(nest(OverlayComponent, LazyOverlay), LazyOverlay);

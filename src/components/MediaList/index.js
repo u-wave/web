@@ -1,10 +1,15 @@
-import defaultProps from 'recompose/defaultProps';
+import React from 'react';
 import Base from './BaseMediaList';
 import Row from './Row';
 
-const MediaList = defaultProps({
-  listComponent: 'div',
-  rowComponent: Row,
-})(Base);
+function MediaList(props) {
+  return (
+    <Base
+      listComponent="div"
+      rowComponent={Row}
+      {...props}
+    />
+  );
+}
 
 export default MediaList;

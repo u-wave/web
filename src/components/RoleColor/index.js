@@ -1,31 +1,35 @@
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-import compose from 'recompose/compose';
-import componentFromProp from 'recompose/componentFromProp';
-import mapProps from 'recompose/mapProps';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import { roleColorsSelector } from '../../selectors/configSelectors';
 
-const enhance = compose(
-  connect(createStructuredSelector({
-    colors: roleColorsSelector,
-  }), {}),
-  mapProps(({
-    colors,
-    role,
-    roles,
-    component,
-    ...props
-  }) => ({
-    ...props,
-    style: {
-      color: (
-        role ? colors[role] : colors[roles.find(r => colors[r])]
-      ) || colors.default,
-    },
-    component: component || 'span',
-  })),
-);
+function RoleColor({
+  component = 'span',
+  role,
+  roles,
+  ...props
+}) {
+  const colors = useSelector(roleColorsSelector);
 
-const RoleColor = componentFromProp('component');
+  const roleColor = role
+    ? colors[role]
+    : colors[roles.find(r => colors[r])];
 
-export default enhance(RoleColor);
+  const style = {
+    color: roleColor || colors.default,
+  };
+
+  const Component = component;
+  return <Component {...props} style={style} />;
+}
+
+RoleColor.propTypes = {
+  component: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.func,
+  ]),
+  role: PropTypes.string,
+  roles: PropTypes.arrayOf(PropTypes.string.isRequired),
+};
+
+export default RoleColor;

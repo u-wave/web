@@ -1,43 +1,43 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import debounce from 'lodash/debounce';
-import compose from 'recompose/compose';
-import withProps from 'recompose/withProps';
-import withHandlers from 'recompose/withHandlers';
 
-const enhance = compose(
-  withProps(({ onFilter }) => ({
-    onFilterDebounced: debounce(onFilter, 200),
-  })),
-  withHandlers({
-    onChange: ({ onFilterDebounced }) => (
-      event => onFilterDebounced(event.target.value)
-    ),
-  }),
-);
+const {
+  useCallback,
+  useMemo,
+} = React;
 
-const Filter = ({ onChange }) => (
-  <input
-    type="text"
-    className="AdminUserHeader-filter"
-    onChange={onChange}
-  />
-);
+function Filter({ onFilter }) {
+  const onFilterDebounced = useMemo(() => debounce(onFilter, 200), [onFilter]);
+  const onChange = useCallback((event) => {
+    onFilterDebounced(event.target.value);
+  }, [onFilterDebounced]);
+
+  return (
+    <input
+      type="text"
+      className="AdminUserHeader-filter"
+      onChange={onChange}
+    />
+  );
+}
+
 Filter.propTypes = {
-  onChange: PropTypes.func.isRequired,
+  onFilter: PropTypes.func.isRequired,
 };
 
-const ConnectedFilter = enhance(Filter);
+function Header({ onFilter }) {
+  return (
+    <div className="AdminUserHeader">
+      <span>Managing Users:</span>
+      <span>
+        Filter User:
+        <Filter onFilter={onFilter} />
+      </span>
+    </div>
+  );
+}
 
-const Header = ({ onFilter }) => (
-  <div className="AdminUserHeader">
-    <span>Managing Users:</span>
-    <span>
-      Filter User:
-      <ConnectedFilter onFilter={onFilter} />
-    </span>
-  </div>
-);
 Header.propTypes = {
   onFilter: PropTypes.func.isRequired,
 };

@@ -229,6 +229,13 @@ uwave:
       unban: Unban
       noReason: No reason given.
 
+  youtube:
+    name: YouTube
+    channelUrl: Channel URL
+    playlistUrl: Playlist URL
+    importChannel: Import From Channel
+    importPlaylist: Import Playlist
+
   soundcloud:
     error:
       template: "Failed to play this track: {{error}}"

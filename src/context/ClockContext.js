@@ -1,69 +1,64 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import {
-  createTimer as createTimerAction,
-  stopTimer as stopTimerAction,
-} from '../actions/TickerActionCreators';
+import { useDispatch } from 'react-redux';
+import { createTimer, stopTimer } from '../actions/TickerActionCreators';
 
-const mapDispatchToProps = {
-  createTimer: createTimerAction,
-  stopTimer: stopTimerAction,
-};
-
-const enhance = connect(null, mapDispatchToProps);
+const {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} = React;
 
 const ClockContext = React.createContext(null);
 
-class ClockProvider extends React.Component {
-  timerCallbacks = {
-    add: cb => this.setState(s => ({
-      callbacks: s.callbacks.concat(cb),
-    })),
-    remove: cb => this.setState(s => ({
-      callbacks: s.callbacks.filter(cb1 => cb1 !== cb),
-    })),
-  };
+function ClockProvider({ children }) {
+  const [callbacks, setCallbacks] = useState([]);
+  const callbacksRef = useRef(callbacks);
+  const dispatch = useDispatch();
 
-  static propTypes = {
-    createTimer: PropTypes.func.isRequired,
-    stopTimer: PropTypes.func.isRequired,
-    children: PropTypes.node.isRequired,
-  };
+  const addCallback = useCallback((onTick) => {
+    setCallbacks(list => [...list, onTick]);
+  }, []);
+  const removeCallback = useCallback((onTick) => {
+    setCallbacks(list => list.filter(entry => entry !== onTick));
+  }, []);
 
-  state = { callbacks: [] };
+  const timerCallbacks = useMemo(() => ({
+    add: addCallback,
+    remove: removeCallback,
+  }), [addCallback, removeCallback]);
 
-  componentDidMount() {
-    const { createTimer } = this.props;
-
+  // Make sure the callbacks are up to date for the createTimer() tick function.
+  // This way we don't have to re-configure the timer every time, so it can keep
+  // ticking consistently.
+  callbacksRef.current = callbacks;
+  useEffect(() => {
     // Start the clock! üWave stores the current time in the application state
     // primarily to make sure that different timers in the UI update simultaneously.
-    createTimer(() => {
-      const { callbacks } = this.state;
+    dispatch(createTimer(() => {
+      callbacksRef.current.forEach(cb => cb());
+    }));
+    return () => dispatch(stopTimer);
+  }, []);
 
-      callbacks.forEach(cb => cb());
-    });
-  }
-
-  componentWillUnmount() {
-    const { stopTimer } = this.props;
-
-    stopTimer();
-  }
-
-  render() {
-    const { children } = this.props;
-    const { timerCallbacks } = this;
-
-    return (
-      <ClockContext.Provider value={timerCallbacks}>
-        {children}
-      </ClockContext.Provider>
-    );
-  }
+  return (
+    <ClockContext.Provider value={timerCallbacks}>
+      {children}
+    </ClockContext.Provider>
+  );
 }
+
+ClockProvider.propTypes = {
+  children: PropTypes.element.isRequired,
+};
 
 export default {
   Consumer: ClockContext.Consumer,
-  Provider: enhance(ClockProvider),
+  Provider: ClockProvider,
 };
+export function useClock() {
+  return useContext(ClockContext);
+}

@@ -5,6 +5,7 @@
   "plugins": ["compat", "react-hooks"],
 
   "rules": {
+    "arrow-body-style": "off",
     "new-cap": [ "error", {
       "capIsNewExceptions": [ "DragDropContext", "DragSource", "DropTarget", "DragLayer", "ThemeDecorator" ]
     } ],

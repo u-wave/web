@@ -5,8 +5,6 @@ import SettingsIcon from '@material-ui/icons/SettingsRounded';
 
 import Avatar from '../Avatar';
 
-const enhance = React.memo;
-
 const UserInfo = ({ className, user, onClick }) => (
   <button
     type="button"
@@ -29,4 +27,4 @@ UserInfo.propTypes = {
   onClick: PropTypes.func,
 };
 
-export default enhance(UserInfo);
+export default React.memo(UserInfo);

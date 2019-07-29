@@ -1,10 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
-import compose from 'recompose/compose';
-import withProps from 'recompose/withProps';
 import { connect } from 'react-redux';
-import { withBus } from 'react-bus';
+import { useBus } from 'react-bus';
 import { createStructuredSelector } from 'reselect';
 import { inputMessage } from '../actions/ChatActionCreators';
 import {
@@ -15,8 +12,9 @@ import {
   userListSelector,
   isLoggedInSelector,
 } from '../selectors/userSelectors';
-
 import ChatInput from '../components/Chat/Input';
+
+const { useCallback } = React;
 
 const mapStateToProps = createStructuredSelector({
   isLoggedIn: isLoggedInSelector,
@@ -25,23 +23,24 @@ const mapStateToProps = createStructuredSelector({
   availableEmoji: emojiCompletionsSelector,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
+const mapDispatchToProps = {
   onSend: inputMessage,
-}, dispatch);
+};
 
-const enhance = compose(
-  connect(mapStateToProps, mapDispatchToProps),
-  withBus(),
-  withProps(({ bus }) => ({
-    onScroll: direction => bus.emit('chat:scroll', direction),
-  })),
-);
+const enhance = connect(mapStateToProps, mapDispatchToProps);
 
-const ChatInputContainer = ({ isLoggedIn, ...props }) => (
-  isLoggedIn
-    ? <ChatInput {...props} />
-    : <span />
-);
+function ChatInputContainer({ isLoggedIn, ...props }) {
+  const bus = useBus();
+  const onScroll = useCallback((direction) => {
+    bus.emit('chat:scroll', direction);
+  }, []);
+
+  return (
+    isLoggedIn
+      ? <ChatInput {...props} onScroll={onScroll} />
+      : <span />
+  );
+}
 
 ChatInputContainer.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,

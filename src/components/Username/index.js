@@ -3,8 +3,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import RoleColor from '../RoleColor';
 
-const enhance = React.memo;
-
 const Username = ({ className, user }) => (
   <RoleColor className={cx('Username', className)} roles={user.roles}>
     {user.username}
@@ -19,4 +17,4 @@ Username.propTypes = {
   }).isRequired,
 };
 
-export default enhance(Username);
+export default React.memo(Username);

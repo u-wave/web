@@ -1,6 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useMediaSources } from '../../../context/MediaSourceContext';
 import {
   showImportPanel,
@@ -9,24 +8,19 @@ import {
   hideImportSourcePanel,
 } from '../../../actions/ImportActionCreators';
 
-const mapStateToProps = () => ({});
+function ImportBlock() {
+  const { getAllMediaSources } = useMediaSources();
+  const dispatch = useDispatch();
 
-const mapDispatchToProps = {
-  onShowImportPanel: (...args) => (dispatch) => {
+  const onShowImportPanel = (...args) => {
     dispatch(showImportPanel());
     return dispatch(showImportSourcePanel(...args));
-  },
-  onHideImportPanel: (...args) => (dispatch) => {
+  };
+  const onHideImportPanel = (...args) => {
     const result = dispatch(hideImportSourcePanel(...args));
     dispatch(hideImportPanel());
     return result;
-  },
-};
-
-const enhance = connect(mapStateToProps, mapDispatchToProps);
-
-function ImportBlock({ onShowImportPanel, onHideImportPanel }) {
-  const { getAllMediaSources } = useMediaSources();
+  };
 
   const forms = [];
   const sources = getAllMediaSources();
@@ -50,9 +44,4 @@ function ImportBlock({ onShowImportPanel, onHideImportPanel }) {
   );
 }
 
-ImportBlock.propTypes = {
-  onShowImportPanel: PropTypes.func.isRequired,
-  onHideImportPanel: PropTypes.func.isRequired,
-};
-
-export default enhance(ImportBlock);
+export default ImportBlock;

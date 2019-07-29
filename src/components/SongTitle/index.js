@@ -2,8 +2,6 @@ import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const enhance = React.memo;
-
 const SongTitle = ({
   className, artist, title, size = 'large',
 }) => (
@@ -24,4 +22,4 @@ SongTitle.propTypes = {
   size: PropTypes.string,
 };
 
-export default enhance(SongTitle);
+export default React.memo(SongTitle);
