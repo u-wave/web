@@ -16,9 +16,7 @@ function ShuffleButton({ onShuffle }) {
   const onClick = useCallback(() => {
     setLoading(true);
     onShuffle().finally(() => {
-      setTimeout(() => {
-        setLoading(false);
-      }, 10000);
+      setLoading(false);
     });
   }, [onShuffle]);
 
