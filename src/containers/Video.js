@@ -14,7 +14,7 @@ const {
   useCallback,
 } = React;
 
-function VideoContainer() {
+function VideoContainer(props) {
   // Make it rerender every second.
   useClock();
 
@@ -30,6 +30,7 @@ function VideoContainer() {
 
   return (
     <Video
+      {...props}
       historyID={historyID}
       media={media}
       seek={seek}
