@@ -1,8 +1,8 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import MuiList from '@material-ui/core/List';
-import List from 'react-list';
+import { FixedSizeList } from 'react-window';
+import AutoSizer from 'react-virtualized-auto-sizer';
 import RoomUserRow from './Row';
 import GuestsRow from './GuestsRow';
 
@@ -14,15 +14,10 @@ const RoomUserList = ({ className, users, guests }) => {
   // when th guests row is shown.
   const length = users.length + (showGuests ? 1 : 0);
 
-  function itemsRenderer(children, ref) {
-    return (
-      <MuiList disablePadding ref={ref}>
-        {children}
-      </MuiList>
-    );
-  }
+  // these are not components
+  /* eslint-disable react/prop-types */
 
-  function itemRenderer(index, key) {
+  function itemRenderer({ index, style }) {
     const rowClass = cx(
       'UserList-row',
       (index % 2 === 0) && 'UserList-row--alternate',
@@ -31,7 +26,7 @@ const RoomUserList = ({ className, users, guests }) => {
     if (index === users.length) {
       return (
         <GuestsRow
-          key={key}
+          key="guests"
           className={rowClass}
           guests={guests}
         />
@@ -39,21 +34,33 @@ const RoomUserList = ({ className, users, guests }) => {
     }
     return (
       <RoomUserRow
-        key={key}
+        key={users[index]._id}
         className={rowClass}
+        style={style}
         user={users[index]}
       />
     );
   }
 
+  function listRenderer({ height }) {
+    return (
+      <FixedSizeList
+        height={height}
+        itemCount={length}
+        itemSize={40}
+      >
+        {itemRenderer}
+      </FixedSizeList>
+    );
+  }
+
+  /* eslint-enable react/prop-types */
+
   return (
     <div className={cx('UserList', 'UserList--online', className)}>
-      <List
-        itemsRenderer={itemsRenderer}
-        itemRenderer={itemRenderer}
-        length={length}
-        type="uniform"
-      />
+      <AutoSizer disableWidth>
+        {listRenderer}
+      </AutoSizer>
     </div>
   );
 };
