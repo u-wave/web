@@ -1,22 +1,23 @@
 import React from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import loadable from 'react-loadable';
 
-const ServerList = loadable({
-  loader: () => import('@u-wave/react-server-list' /* webpackChunkName: "serverList" */),
-  loading: () => (
+const ServerListContainer = React.lazy(() => import('@u-wave/react-server-list' /* webpackChunkName: "serverList" */)
+  .then(({ Container }) => ({ default: Container })));
+
+function ServerList(props) {
+  const loading = (
     <div className="ServerList ServerList--loading">
       <CircularProgress />
     </div>
-  ),
-  render(loaded, props) {
-    const { Container } = loaded;
-    return (
+  );
+
+  return (
+    <React.Suspense fallback={loading}>
       <div className="ServerList">
-        <Container {...props} />
+        <ServerListContainer {...props} />
       </div>
-    );
-  },
-});
+    </React.Suspense>
+  );
+}
 
 export default ServerList;
