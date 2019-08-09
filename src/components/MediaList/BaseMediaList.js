@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FixedSizeList } from 'react-window';
 import InfiniteLoader from 'react-window-infinite-loader';
+import AutoSizer from 'react-virtualized-auto-sizer';
 import itemSelection from 'item-selection/immutable';
 import LoadingRow from './LoadingRow';
 
@@ -86,7 +87,7 @@ export default class BaseMediaList extends React.Component {
     );
   };
 
-  renderRow = (index) => {
+  renderRow = ({ index, style }) => {
     const {
       makeActions,
       rowProps: props = {},
@@ -102,6 +103,7 @@ export default class BaseMediaList extends React.Component {
         <LoadingRow
           key={index}
           className="MediaList-row"
+          style={style}
           selected={selected}
         />
       );
@@ -111,6 +113,7 @@ export default class BaseMediaList extends React.Component {
       <RowComponent
         key={media[index] ? media[index]._id : index}
         {...props}
+        style={style}
         className="MediaList-row"
         media={media[index]}
         selected={selected}
@@ -126,35 +129,66 @@ export default class BaseMediaList extends React.Component {
     const {
       className, media, size, onRequestPage,
     } = this.props;
-    const { selection } = this.state;
+    const { listComponent: ListComponent } = this.props;
+    // const { selection } = this.state;
 
-    let list = (
+    const innerList = ({ height, onItemsRendered, ref }) => (
       <FixedSizeList
-        itemsRenderer={this.renderList}
-        itemRenderer={this.renderRow}
-        length={size || media.length}
-        type="uniform"
-        forceUpdateOnMediaChange={media}
-        forceUpdateOnSelectionChange={selection}
-      />
+        itemCount={size || media.length}
+        itemSize={56}
+        height={height}
+        onItemsRendered={onItemsRendered}
+        ref={ref}
+        width="100%"
+      >
+        {this.renderRow}
+      </FixedSizeList>
     );
 
-    if (onRequestPage) {
-      list = (
+    const lazyLoading = makeList => ({ height }) => {
+      const isItemLoaded = index => media[index] != null;
+      const loadMoreItems = (start) => {
+        const page = Math.floor(start / 50);
+        onRequestPage(page);
+      };
+
+      const inner = ({ onItemsRendered, ref }) => makeList({ onItemsRendered, ref, height });
+      return (
         <InfiniteLoader
-          items={media}
-          length={size || media.length}
-          pageSize={50}
-          onRequestPage={onRequestPage}
+          isItemLoaded={isItemLoaded}
+          itemCount={size || media.length}
+          loadMoreItems={loadMoreItems}
         >
-          {list}
+          {inner}
         </InfiniteLoader>
       );
+    };
+
+    const customWrapper = makeList => props => (
+      <ListComponent>
+        {makeList(props)}
+      </ListComponent>
+    );
+
+    const autoSizing = makeList => () => {
+      const inner = ({ height }) => makeList({ height });
+      return (
+        <AutoSizer disableWidth>
+          {inner}
+        </AutoSizer>
+      );
+    };
+
+    let listRenderer = innerList;
+    if (onRequestPage) {
+      listRenderer = lazyLoading(listRenderer);
     }
+    listRenderer = customWrapper(listRenderer);
+    listRenderer = autoSizing(listRenderer);
 
     return (
       <div className={cx('MediaList', className)}>
-        {list}
+        {listRenderer()}
       </div>
     );
   }

@@ -19,6 +19,7 @@ const inSelection = (selection, media) => selection.some(item => item._id === me
 function Row({
   className,
   media,
+  style,
   selected = false,
   selection,
   onClick,
@@ -61,6 +62,7 @@ function Row({
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
     <div
       className={cx('MediaListRow', className, selectedClass, loadingClass)}
+      style={style}
       onDoubleClick={handleDoubleClick}
       onKeyPress={handleKeyPress}
       onClick={onClick}
@@ -92,6 +94,7 @@ function Row({
 
 Row.propTypes = {
   className: PropTypes.string,
+  style: PropTypes.object, // from react-window
   media: PropTypes.object,
   selected: PropTypes.bool,
   selection: PropTypes.array,
