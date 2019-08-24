@@ -114,7 +114,7 @@
     "enzyme-adapter-react-16": "^1.7.0",
     "eslint": "^5.9.0",
     "eslint-config-airbnb": "^17.1.0",
-    "eslint-loader": "^2.1.1",
+    "eslint-loader": "^3.0.0",
     "eslint-plugin-compat": "^3.1.1",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
