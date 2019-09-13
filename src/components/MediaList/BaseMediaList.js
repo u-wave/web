@@ -130,7 +130,7 @@ export default class BaseMediaList extends React.Component {
       className, media, size, onRequestPage,
     } = this.props;
     const { listComponent: ListComponent } = this.props;
-    // const { selection } = this.state;
+    const { selection } = this.state;
 
     const innerList = ({ height, onItemsRendered, ref }) => (
       <FixedSizeList
@@ -140,6 +140,7 @@ export default class BaseMediaList extends React.Component {
         onItemsRendered={onItemsRendered}
         ref={ref}
         width="100%"
+        rerenderOnUpdate={selection}
       >
         {this.renderRow}
       </FixedSizeList>
