@@ -12,7 +12,7 @@ const {
   useState,
 } = React;
 
-function ModRow(props) {
+function ModRow({ style, ...props }) {
   const { position } = props;
 
   const [insertAbove, setInsertAbove] = useState(false);
@@ -42,7 +42,7 @@ function ModRow(props) {
   // Need a wrapper div so hovering over the drop indicator
   // does not change the hover state.
   return (
-    <div ref={refRow}>
+    <div style={style} ref={refRow}>
       {isOver && insertAbove && dropIndicator}
       <ModRowBase {...props} />
       {isOver && !insertAbove && dropIndicator}
@@ -51,6 +51,7 @@ function ModRow(props) {
 }
 
 ModRow.propTypes = {
+  style: PropTypes.object, // for react-window
   position: PropTypes.number.isRequired,
 };
 
