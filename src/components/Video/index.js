@@ -37,7 +37,7 @@ function Video(props) {
   const timer = useRef(null);
 
   const handleRequestFullscreenEnter = useCallback(() => {
-    if (screenfull.enabled) {
+    if (screenfull.isEnabled) {
       screenfull.request(container.current);
     }
     onFullscreenEnter();
@@ -67,7 +67,7 @@ function Video(props) {
 
   // Attach fullscreen exit event listener.
   useEffect(() => {
-    if (screenfull.enabled) {
+    if (screenfull.isEnabled) {
       screenfull.on('change', handleFullscreenChange);
       return () => screenfull.off('change', handleFullscreenChange);
     }
@@ -76,8 +76,8 @@ function Video(props) {
 
   // Exit fullscreen mode if the `isFullscreen` prop changed.
   useEffect(() => {
-    if (!isFullscreen && screenfull.enabled) {
-      // Checking for `enabled` here, because our props have probably changed
+    if (!isFullscreen && screenfull.isEnabled) {
+      // Checking for `isFullscreen` here, because our props have probably changed
       // _after_ exiting fullscreen mode (see `handleFullscreenChange`).
       // This way we don't double-exit.
       if (screenfull.isFullscreen) {
