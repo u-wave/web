@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import List from 'react-list';
-
+import { FixedSizeList } from 'react-window';
+import AutoSizer from 'react-virtualized-auto-sizer';
 import ImportPanelHeader from '../../components/PlaylistManager/Import/ImportPanelHeader';
-
 import PlaylistRow from './PlaylistRow';
 
 export default class ChannelPanel extends React.Component {
@@ -15,14 +14,15 @@ export default class ChannelPanel extends React.Component {
     onClosePanel: PropTypes.func.isRequired,
   };
 
-  renderRow = (index, key) => {
+  renderRow = ({ index, style }) => {
     const { importablePlaylists, onImportPlaylist } = this.props;
 
     const playlist = importablePlaylists[index];
     return (
       <PlaylistRow
-        key={key}
+        key={playlist.sourceID}
         className={index % 2 === 0 ? 'MediaListRow--alternate' : ''}
+        style={style}
         playlist={playlist}
         onImport={() => onImportPlaylist(playlist.sourceID, playlist.name)}
       />
@@ -36,17 +36,25 @@ export default class ChannelPanel extends React.Component {
       onClosePanel,
     } = this.props;
 
+    const renderList = ({ height }) => (
+      <FixedSizeList
+        height={height}
+        itemCount={importablePlaylists.length}
+        itemSize={56}
+      >
+        {this.renderRow}
+      </FixedSizeList>
+    );
+
     return (
       <div className="ImportPanel ChannelPanel">
         <ImportPanelHeader onClosePanel={onClosePanel}>
           {`${importingChannelTitle}'s Playlists`}
         </ImportPanelHeader>
         <div className="MediaList ImportPanel-body">
-          <List
-            type="uniform"
-            length={importablePlaylists.length}
-            itemRenderer={this.renderRow}
-          />
+          <AutoSizer disableWidth>
+            {renderList}
+          </AutoSizer>
         </div>
       </div>
     );

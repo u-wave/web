@@ -19,6 +19,7 @@ const inSelection = (selection, media) => selection.some(item => item._id === me
 
 function HistoryRow({
   className,
+  style,
   media: historyEntry,
   selected = false,
   selection,
@@ -75,6 +76,7 @@ function HistoryRow({
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
     <div
       className={cx('MediaListRow', 'HistoryRow', className, selectedClass)}
+      style={style}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onDoubleClick={handleDoubleClick}
@@ -112,6 +114,7 @@ function HistoryRow({
 
 HistoryRow.propTypes = {
   className: PropTypes.string,
+  style: PropTypes.object, // for react-window
   media: PropTypes.object.isRequired,
   selected: PropTypes.bool,
   selection: PropTypes.arrayOf(PropTypes.object),
