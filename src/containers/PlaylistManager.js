@@ -12,7 +12,7 @@ const { useCallback } = React;
 
 const PlaylistManager = createLazyOverlay({
   loader: () => import('../components/PlaylistManager' /* webpackChunkName: "playlists" */),
-  title: t => t('playlists.title'),
+  title: (t) => t('playlists.title'),
 });
 
 function PlaylistManagerContainer({ onCloseOverlay }) {

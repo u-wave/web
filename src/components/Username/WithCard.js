@@ -13,7 +13,7 @@ function UsernameWithCard({ user }) {
   });
 
   return (
-    <React.Fragment>
+    <>
       {userCard.card}
       <button
         type="button"
@@ -22,7 +22,7 @@ function UsernameWithCard({ user }) {
       >
         <UsernameBase user={user} />
       </button>
-    </React.Fragment>
+    </>
   );
 }
 

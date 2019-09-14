@@ -32,14 +32,14 @@ function DeletePlaylistButton({
     setDeleting(false);
   }, []);
 
-  const handleConfirm = useCallback(name => (
+  const handleConfirm = useCallback((name) => (
     onDelete(name).then(() => {
       setDeleting(false);
     })
   ), [onDelete]);
 
   return (
-    <React.Fragment>
+    <>
       <Tooltip title={active ? t('playlists.deleteActive') : t('playlists.delete')} placement="top">
         <IconButton
           disabled={active}
@@ -59,7 +59,7 @@ function DeletePlaylistButton({
           <FormGroup>{t('dialogs.deletePlaylist.confirm')}</FormGroup>
         </ConfirmDialog>
       )}
-    </React.Fragment>
+    </>
   );
 }
 

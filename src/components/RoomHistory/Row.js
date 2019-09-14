@@ -15,7 +15,7 @@ const {
   useState,
 } = React;
 
-const inSelection = (selection, media) => selection.some(item => item._id === media._id);
+const inSelection = (selection, media) => selection.some((item) => item._id === media._id);
 
 function HistoryRow({
   className,

@@ -6,7 +6,7 @@ import MediaDragPreview from '../components/MediaList/MediaDragPreview';
 function DragLayerContainer() {
   const {
     type, items, currentOffset, isDragging,
-  } = useDragLayer(monitor => ({
+  } = useDragLayer((monitor) => ({
     items: monitor.getItem(),
     type: monitor.getItemType(),
     currentOffset: monitor.getClientOffset(),

@@ -26,7 +26,7 @@ const mapStateToProps = createStructuredSelector({
   playlists: playlistsSelector,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
+const mapDispatchToProps = (dispatch) => bindActionCreators({
   onOpenRoomHistory: toggleRoomHistory,
   onOpenDrawer: openDrawer,
   onOpenWaitlist: openUsersDrawer,

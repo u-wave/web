@@ -4,7 +4,7 @@ import { useTranslator } from '@u-wave/react-translate';
 import Username from '../../Username';
 import UserNotificationMessage from './UserNotificationMessage';
 
-const toUsername = user => (
+const toUsername = (user) => (
   <Username user={user} />
 );
 

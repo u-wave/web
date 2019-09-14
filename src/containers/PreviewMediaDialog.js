@@ -5,7 +5,7 @@ import { closePreviewMediaDialog } from '../actions/DialogActionCreators';
 import { previewMediaDialogSelector as mapStateToProps } from '../selectors/dialogSelectors';
 import PreviewMediaDialog from '../components/Dialogs/PreviewMediaDialog';
 
-const mapDispatchToProps = dispatch => bindActionCreators({
+const mapDispatchToProps = (dispatch) => bindActionCreators({
   onCloseDialog: closePreviewMediaDialog,
 }, dispatch);
 

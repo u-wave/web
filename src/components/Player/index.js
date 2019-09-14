@@ -40,7 +40,7 @@ function Player({
         active={media.sourceType === sourceType}
       />
     );
-  }).filter(player => player !== null);
+  }).filter((player) => player !== null);
 
   return (
     <div className={cx('Player', `Player--${media.sourceType}`, `Player--${size}`)}>

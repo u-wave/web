@@ -22,8 +22,8 @@ const makeActions = ({
   onRemoveFromPlaylist,
   isFiltered,
 }) => (media, selection, index) => (
-  <React.Fragment>
-    <AddToPlaylistAction onAdd={position => onOpenAddMediaMenu(position, media, selection)} />
+  <>
+    <AddToPlaylistAction onAdd={(position) => onOpenAddMediaMenu(position, media, selection)} />
     {/* Don't show the "move to first" action on the first item in the playlist.
       * If the playlist is filtered we don't know if the first item to show is
       * also the first in the playlist, so just show it always in that case. */}
@@ -35,7 +35,7 @@ const makeActions = ({
     )}
     <EditMediaAction onEdit={() => onEditMedia(media)} />
     <RemoveFromPlaylistAction onRemove={() => onRemoveFromPlaylist(media, selection)} />
-  </React.Fragment>
+  </>
 );
 
 const PlaylistPanel = (props) => {

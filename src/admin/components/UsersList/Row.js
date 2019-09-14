@@ -45,10 +45,14 @@ export default class UserRow extends React.Component {
     user: PropTypes.object.isRequired,
   };
 
-  state = {
-    open: false,
-    anchorEl: null,
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      open: false,
+      anchorEl: null,
+    };
+  }
 
   handleOpenMenu = (event) => {
     this.setState({ open: true, anchorEl: event.currentTarget });

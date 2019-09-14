@@ -11,7 +11,7 @@ function LanguagePicker(props) {
 
   return (
     <Select className="LanguagePicker" {...props}>
-      {availableLanguages.map(lang => (
+      {availableLanguages.map((lang) => (
         <MenuItem key={lang} value={lang}>
           {t(`locales.${lang}`)}
         </MenuItem>

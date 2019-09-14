@@ -34,7 +34,7 @@ const mapStateToProps = createStructuredSelector({
   showImportPanel: showImportPanelSelector,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
+const mapDispatchToProps = (dispatch) => bindActionCreators({
   onAddToPlaylist: addToPlaylist,
   onCreatePlaylist: createPlaylist,
   onSelectPlaylist: selectPlaylist,

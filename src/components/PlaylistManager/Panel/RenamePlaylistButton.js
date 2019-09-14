@@ -30,7 +30,7 @@ function RenamePlaylistButton({ initialName, onRename }) {
   }, [onRename]);
 
   return (
-    <React.Fragment>
+    <>
       <Tooltip title={t('playlists.rename')} placement="top">
         <IconButton className="PlaylistMeta-iconButton" onClick={handleOpen}>
           <EditIcon />
@@ -46,7 +46,7 @@ function RenamePlaylistButton({ initialName, onRename }) {
           onCancel={handleClose}
         />
       )}
-    </React.Fragment>
+    </>
   );
 }
 

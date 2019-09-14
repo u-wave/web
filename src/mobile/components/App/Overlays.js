@@ -5,7 +5,7 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 const Overlays = ({ children, active }) => {
   let view;
   if (Array.isArray(children)) {
-    view = children.find(child => child.key === active);
+    view = children.find((child) => child.key === active);
   } else if (children.key === active) {
     view = children;
   }

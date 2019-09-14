@@ -21,11 +21,15 @@ class Video extends React.Component {
     onFavorite: PropTypes.func.isRequired,
   };
 
-  state = {
-    sourceType: undefined, // eslint-disable-line react/no-unused-state
-    enableOverlay: false,
-    showVoteButtons: false,
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      sourceType: undefined, // eslint-disable-line react/no-unused-state
+      enableOverlay: false,
+      showVoteButtons: false,
+    };
+  }
 
   static getDerivedStateFromProps(nextProps, prevState) {
     const { sourceType } = nextProps.media || {};
@@ -41,7 +45,7 @@ class Video extends React.Component {
   }
 
   handleClick = () => {
-    this.setState(s => ({
+    this.setState((s) => ({
       showVoteButtons: !s.showVoteButtons,
     }));
   };

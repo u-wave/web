@@ -6,7 +6,7 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import Votes from './Votes';
 
-const wrapTitle = title => (
+const wrapTitle = (title) => (
   <span className="MobileMediaRow-title">
     {title}
   </span>

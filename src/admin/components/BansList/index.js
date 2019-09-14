@@ -32,7 +32,7 @@ function Filter(props) {
 function BansList({ bans, onUnbanUser }) {
   const { t } = useTranslator();
   return (
-    <React.Fragment>
+    <>
       <Header>
         <span>Managing Bans:</span>
         <span style={{ float: 'right' }}>
@@ -52,7 +52,7 @@ function BansList({ bans, onUnbanUser }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {bans.map(ban => (
+          {bans.map((ban) => (
             <BanRow
               key={ban.user._id}
               ban={ban}
@@ -61,7 +61,7 @@ function BansList({ bans, onUnbanUser }) {
           ))}
         </TableBody>
       </Table>
-    </React.Fragment>
+    </>
   );
 }
 

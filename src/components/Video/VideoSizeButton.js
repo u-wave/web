@@ -28,8 +28,7 @@ function VideoSizeButton() {
     <Tooltip
       title={videoSize === 'large'
         ? t('settings.disableLargeVideo')
-        : t('settings.enableLargeVideo')
-      }
+        : t('settings.enableLargeVideo')}
       placement="bottom"
     >
       <IconButton onClick={onToggleVideoSize}>

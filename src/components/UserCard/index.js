@@ -12,10 +12,14 @@ class UserCardWrapper extends React.Component {
     }).isRequired,
   };
 
-  state = {
-    positionDiffX: 0,
-    positionDiffY: 0,
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      positionDiffX: 0,
+      positionDiffY: 0,
+    };
+  }
 
   componentDidMount() {
     this.shouldFit = true;

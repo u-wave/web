@@ -1,4 +1,3 @@
-/* global window */
 import { createSelector } from 'reselect';
 import { availableLanguages } from '../locales';
 import createTheme from '../utils/createTheme';
@@ -6,7 +5,7 @@ import createTheme from '../utils/createTheme';
 const availableLanguagesSelector = () => availableLanguages;
 
 function getAvailableLanguage(available, languages) {
-  return languages.find(lang => (
+  return languages.find((lang) => (
     available.includes(lang)
   ));
 }
@@ -24,21 +23,21 @@ const defaultLanguageSelector = createSelector(
   },
 );
 
-const settingsBaseSelector = state => state.settings;
+const settingsBaseSelector = (state) => state.settings;
 
 export const themeSelector = createSelector(
-  state => state.theme,
-  base => createTheme(base),
+  (state) => state.theme,
+  (base) => createTheme(base),
 );
 
 export const volumeSelector = createSelector(
   settingsBaseSelector,
-  settings => settings.volume,
+  (settings) => settings.volume,
 );
 
 export const isMutedSelector = createSelector(
   settingsBaseSelector,
-  settings => settings.muted,
+  (settings) => settings.muted,
 );
 
 export const languageSelector = createSelector(
@@ -49,12 +48,12 @@ export const languageSelector = createSelector(
 
 export const videoSizeSelector = createSelector(
   settingsBaseSelector,
-  settings => settings.videoSize,
+  (settings) => settings.videoSize,
 );
 
 export const videoEnabledSelector = createSelector(
   settingsBaseSelector,
-  settings => settings.videoEnabled,
+  (settings) => settings.videoEnabled,
 );
 
 // Settings with selected values (from selectors above) rather than "saved"
@@ -76,5 +75,5 @@ export const settingsSelector = createSelector(
 
 export const notificationSettingsSelector = createSelector(
   settingsSelector,
-  settings => settings.notifications,
+  (settings) => settings.notifications,
 );

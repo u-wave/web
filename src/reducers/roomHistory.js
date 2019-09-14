@@ -2,7 +2,7 @@ import { ADVANCE, LOAD_HISTORY_COMPLETE } from '../constants/ActionTypes';
 
 const initialState = [];
 
-const normalize = entry => ({
+const normalize = (entry) => ({
   _id: entry._id || entry.historyID,
   user: entry.user,
   media: {

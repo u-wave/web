@@ -12,7 +12,7 @@ import PasswordResetSuccessPage from '../components/PasswordResetSuccessPage';
 import theme from '../../theme';
 
 const mapStateToProps = createStructuredSelector({
-  success: state => state.passwordReset.success,
+  success: (state) => state.passwordReset.success,
 });
 
 const mapDispatchToProps = {
@@ -28,14 +28,14 @@ const PasswordResetApp = ({
 }) => (
   <ThemeProvider theme={muiTheme}>
     <TranslateProvider translator={translator}>
-      <React.Fragment>
+      <>
         {success ? (
           <PasswordResetSuccessPage />
         ) : (
           <PasswordResetPage {...props} />
         )}
         <ErrorArea />
-      </React.Fragment>
+      </>
     </TranslateProvider>
   </ThemeProvider>
 );

@@ -10,7 +10,7 @@ import createLazyOverlay from '../components/LazyOverlay';
 const selectionOrOne = (media, selection) => {
   // History entries store the played media on their `.media` property
   if (selection.isSelected(media)) {
-    return selection.get().map(item => item.media);
+    return selection.get().map((item) => item.media);
   }
   return [media.media];
 };
@@ -35,7 +35,7 @@ function RoomHistoryOverlay(props) {
 
 const RoomHistory = createLazyOverlay({
   loader: () => import('../components/RoomHistory' /* webpackChunkName: "history" */),
-  title: t => t('history.title'),
+  title: (t) => t('history.title'),
   OverlayComponent: RoomHistoryOverlay,
 });
 

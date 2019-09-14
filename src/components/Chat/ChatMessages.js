@@ -27,9 +27,13 @@ export default class ChatMessages extends React.Component {
     }),
   };
 
-  state = {
-    isScrolledToBottom: true,
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isScrolledToBottom: true,
+    };
+  }
 
   componentDidMount() {
     this.scrollToBottom();
@@ -74,20 +78,9 @@ export default class ChatMessages extends React.Component {
     }
   };
 
-  scrollToBottom() {
-    const el = this.container;
-    el.scrollTop = el.scrollHeight;
-  }
-
-  isScrolledToBottom() {
-    const el = this.container;
-    const lastMessage = el.lastElementChild;
-    if (lastMessage) {
-      const neededSize = el.scrollTop + el.offsetHeight + lastMessage.offsetHeight;
-      return neededSize >= el.scrollHeight - 20;
-    }
-    return true;
-  }
+  refContainer = (container) => {
+    this.container = container;
+  };
 
   handleResize = () => {
     const { isScrolledToBottom } = this.state;
@@ -108,9 +101,20 @@ export default class ChatMessages extends React.Component {
     this.scrollToBottom();
   };
 
-  refContainer = (container) => {
-    this.container = container;
-  };
+  scrollToBottom() {
+    const el = this.container;
+    el.scrollTop = el.scrollHeight;
+  }
+
+  isScrolledToBottom() {
+    const el = this.container;
+    const lastMessage = el.lastElementChild;
+    if (lastMessage) {
+      const neededSize = el.scrollTop + el.offsetHeight + lastMessage.offsetHeight;
+      return neededSize >= el.scrollHeight - 20;
+    }
+    return true;
+  }
 
   renderMotd() {
     const { motd, compileOptions } = this.props;

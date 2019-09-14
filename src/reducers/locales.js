@@ -22,7 +22,7 @@ export default function reduce(state = initialState, action) {
       const { language } = action.meta;
       return {
         ...state,
-        loading: state.loading.filter(l => l !== language),
+        loading: state.loading.filter((l) => l !== language),
         loaded: {
           ...state.loaded,
           [language]: action.payload,

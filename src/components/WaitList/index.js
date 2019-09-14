@@ -24,7 +24,7 @@ const WaitList = ({
       style={style}
       position={index}
       user={users[index]}
-      onMoveUser={position => onMoveUser(users[index], position)}
+      onMoveUser={(position) => onMoveUser(users[index], position)}
       onRemoveUser={() => onRemoveUser(users[index])}
     />
   );

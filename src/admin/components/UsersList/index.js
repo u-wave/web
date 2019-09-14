@@ -22,7 +22,7 @@ function UsersList({
   const { t } = useTranslator();
 
   return (
-    <React.Fragment>
+    <>
       <Header onFilter={onFilter} />
       <Table>
         <TableHead>
@@ -36,7 +36,7 @@ function UsersList({
           </TableRow>
         </TableHead>
         <TableBody>
-          {users.map(user => (
+          {users.map((user) => (
             <UserRow key={user._id} user={user} />
           ))}
         </TableBody>
@@ -52,7 +52,7 @@ function UsersList({
           </TableRow>
         </TableFooter>
       </Table>
-    </React.Fragment>
+    </>
   );
 }
 

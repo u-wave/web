@@ -23,7 +23,11 @@ class SourcePicker extends React.Component {
     getAllMediaSources: PropTypes.func.isRequired,
   };
 
-  state = { open: false };
+  constructor(props) {
+    super(props);
+
+    this.state = { open: false };
+  }
 
   handleOpen = () => {
     this.setState({
@@ -77,8 +81,8 @@ class SourcePicker extends React.Component {
 
     const sourceNames = Object.keys(getAllMediaSources());
     const sources = sourceNames
-      .filter(name => name !== selected)
-      .map(name => this.createElement(name));
+      .filter((name) => name !== selected)
+      .map((name) => this.createElement(name));
 
     return (
       <div

@@ -9,15 +9,15 @@ import {
   usersSelector,
 } from './userSelectors';
 
-const baseSelector = state => state.booth;
+const baseSelector = (state) => state.booth;
 
-export const historyIDSelector = createSelector(baseSelector, booth => booth.historyID);
-export const mediaSelector = createSelector(baseSelector, booth => booth.media);
-export const startTimeSelector = createSelector(baseSelector, booth => booth.startTime || 0);
+export const historyIDSelector = createSelector(baseSelector, (booth) => booth.historyID);
+export const mediaSelector = createSelector(baseSelector, (booth) => booth.media);
+export const startTimeSelector = createSelector(baseSelector, (booth) => booth.startTime || 0);
 
 export const mediaDurationSelector = createSelector(
   mediaSelector,
-  media => (media ? media.end - media.start : 0),
+  (media) => (media ? media.end - media.start : 0),
 );
 
 export const endTimeSelector = createSelector(
@@ -94,5 +94,5 @@ export const playbackVolumeSelector = createSelector(
 
 export const mobilePlaybackVolumeSelector = createSelector(
   playbackMutedSelector,
-  isMuted => (isMuted ? 0 : 100),
+  (isMuted) => (isMuted ? 0 : 100),
 );

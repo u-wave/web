@@ -15,10 +15,10 @@ function renderAboutPage(props, uwave) {
   );
 }
 
-const AboutContainer = props => (
+const AboutContainer = (props) => (
   <Overlay direction="top">
     <UwaveContext.Consumer>
-      {uwave => renderAboutPage(props, uwave)}
+      {(uwave) => renderAboutPage(props, uwave)}
     </UwaveContext.Consumer>
   </Overlay>
 );
