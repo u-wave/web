@@ -22,7 +22,7 @@ function PlaylistItemRow({ onMoveMedia, style, ...props }) {
         const thisID = props.media._id;
         // Do not attempt to move when the selection is dropped on top of an item
         // that is in the selection.
-        if (media.some(playlistItem => playlistItem._id === thisID)) {
+        if (media.some((playlistItem) => playlistItem._id === thisID)) {
           return;
         }
         const insertBefore = isDraggingNearTopOfRow(monitor, refWrapper.current);

@@ -13,7 +13,7 @@ function RoleColor({
 
   const roleColor = role
     ? colors[role]
-    : colors[roles.find(r => colors[r])];
+    : colors[roles.find((r) => colors[r])];
 
   const style = {
     color: roleColor || colors.default,

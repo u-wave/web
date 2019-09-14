@@ -24,7 +24,7 @@ export default function createLazyOverlay({
     const onCloseOverlay = () => dispatch(closeAll());
 
     return (
-      <React.Fragment>
+      <>
         <OverlayHeader
           title={title ? title(t) : '...'}
           onCloseOverlay={onCloseOverlay}
@@ -37,7 +37,7 @@ export default function createLazyOverlay({
             />
           )}
         </OverlayContent>
-      </React.Fragment>
+      </>
     );
   }
 

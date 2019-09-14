@@ -38,9 +38,9 @@ function ImportBlock() {
   });
 
   return (
-    <React.Fragment>
+    <>
       {forms}
-    </React.Fragment>
+    </>
   );
 }
 

@@ -66,7 +66,7 @@ function UserList({
       <List
         subheader={<ListSubheader>{t('users.title')}</ListSubheader>}
       >
-        {users.map(user => (
+        {users.map((user) => (
           <UserRow key={user._id} user={user} />
         ))}
       </List>

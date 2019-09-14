@@ -11,7 +11,7 @@ function HistoryList({ onOpenAddMediaMenu, ...props }) {
     if (onOpenAddMediaMenu) {
       return (media, selection) => (
         <AddToPlaylistAction
-          onAdd={position => onOpenAddMediaMenu(position, media, selection)}
+          onAdd={(position) => onOpenAddMediaMenu(position, media, selection)}
         />
       );
     }

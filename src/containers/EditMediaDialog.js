@@ -8,7 +8,7 @@ import { editMediaDialogSelector } from '../selectors/dialogSelectors';
 import EditMediaDialog from '../components/Dialogs/EditMediaDialog';
 import DialogCloseAnimation from '../components/DialogCloseAnimation';
 
-const mapDispatchToProps = dispatch => bindActionCreators({
+const mapDispatchToProps = (dispatch) => bindActionCreators({
   onUpdateMedia: updateMedia,
   onCloseDialog: closeEditMediaDialog,
 }, dispatch);
@@ -28,7 +28,7 @@ const EditMediaDialogContainer = ({
       <EditMediaDialog
         {...props}
         media={media}
-        onEditedMedia={update => onUpdateMedia(playlistID, media._id, update)}
+        onEditedMedia={(update) => onUpdateMedia(playlistID, media._id, update)}
       />
     )}
   </DialogCloseAnimation>

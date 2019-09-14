@@ -56,7 +56,7 @@ export function joinWaitlist(otherUser) {
         type: DO_JOIN_COMPLETE,
         payload: { waitlist: data },
       }),
-      onError: error => ({
+      onError: (error) => ({
         type: DO_JOIN_COMPLETE,
         error: true,
         payload: error,
@@ -82,7 +82,7 @@ export function leaveWaitlist(otherUser) {
         type: DO_LEAVE_COMPLETE,
         payload: { waitlist: data },
       }),
-      onError: error => ({
+      onError: (error) => ({
         type: DO_LEAVE_COMPLETE,
         error: true,
         payload: error,
@@ -121,7 +121,7 @@ function putLock(status) {
       type: DO_LOCK_COMPLETE,
       payload: { locked: data.locked },
     }),
-    onError: error => ({
+    onError: (error) => ({
       type: DO_LOCK_COMPLETE,
       error: true,
       payload: error,
@@ -140,7 +140,7 @@ export function modClearWaitlist() {
   return del('/waitlist', {}, {
     onStart: () => ({ type: DO_CLEAR_START }),
     onComplete: () => ({ type: DO_CLEAR_COMPLETE }),
-    onError: error => ({
+    onError: (error) => ({
       type: DO_CLEAR_COMPLETE,
       error: true,
       payload: error,

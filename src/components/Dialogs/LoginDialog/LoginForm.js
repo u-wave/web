@@ -22,7 +22,11 @@ class LoginForm extends React.Component {
     onOpenResetPasswordDialog: PropTypes.func,
   };
 
-  state = { busy: false };
+  constructor(props) {
+    super(props);
+
+    this.state = { busy: false };
+  }
 
   handleSubmit = (event) => {
     const { onLogin } = this.props;
@@ -60,10 +64,10 @@ class LoginForm extends React.Component {
       <Form className="LoginForm" onSubmit={this.handleSubmit}>
         {error && <FormGroup>{error.message}</FormGroup>}
         {supportsSocialAuth && (
-          <React.Fragment>
+          <>
             <SocialLogin />
             <Separator />
-          </React.Fragment>
+          </>
         )}
         <FormGroup>
           <TextField

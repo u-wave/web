@@ -20,7 +20,7 @@ function SimpleRow({
   });
 
   return (
-    <React.Fragment>
+    <>
       {userCard.card}
       <button
         type="button"
@@ -39,7 +39,7 @@ function SimpleRow({
           <Username className="UserRow-username" user={user} />
         </div>
       </button>
-    </React.Fragment>
+    </>
   );
 }
 

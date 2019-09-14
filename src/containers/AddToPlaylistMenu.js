@@ -20,7 +20,7 @@ import {
 import { playlistsSelector } from '../selectors/playlistSelectors';
 import AddToPlaylistMenu from '../components/AddToPlaylistMenu';
 
-const mapDispatchToProps = dispatch => bindActionCreators({
+const mapDispatchToProps = (dispatch) => bindActionCreators({
   onClose: closeAddMediaMenu,
   onCreatePlaylist: createPlaylist,
   onAddMedia: addMedia,
@@ -52,7 +52,7 @@ const AddToPlaylistMenuContainer = ({
     return <span />;
   }
 
-  const onSelect = playlist => (
+  const onSelect = (playlist) => (
     isFavorite
       ? onFavoriteMedia(playlist, historyID)
       : onAddMedia(playlist, media)

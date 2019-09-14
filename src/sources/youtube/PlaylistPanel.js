@@ -61,12 +61,12 @@ export default class YouTubeImportPlaylistPanel extends React.Component {
           className="ImportPanel-body"
           media={importingPlaylistItems}
           makeActions={(media, selection) => (
-            <React.Fragment>
+            <>
               <AddToPlaylistAction
                 key="add"
-                onAdd={position => onOpenAddMediaMenu(selectionOrOne(media, selection), position)}
+                onAdd={(position) => onOpenAddMediaMenu(selectionOrOne(media, selection), position)}
               />
-            </React.Fragment>
+            </>
           )}
         />
       </div>

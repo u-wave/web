@@ -9,7 +9,7 @@ const SkipReasonsList = ({
   onSelect,
 }) => (
   <List className="SkipReasonsList">
-    {reasons.map(reason => (
+    {reasons.map((reason) => (
       <ListItem
         key={reason.name}
         button

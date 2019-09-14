@@ -41,10 +41,14 @@ export default class BaseMediaList extends React.Component {
     makeActions: () => <span />,
   };
 
-  state = {
-    // eslint-disable-next-line react/destructuring-assignment
-    selection: itemSelection(this.props.media),
-  };
+  constructor(props) {
+    super(props);
+
+    const { media } = this.props;
+    this.state = {
+      selection: itemSelection(media),
+    };
+  }
 
   componentWillReceiveProps(nextProps) {
     const { media } = this.props;
@@ -118,7 +122,7 @@ export default class BaseMediaList extends React.Component {
         media={media[index]}
         selected={selected}
         selection={selection.get()}
-        onClick={e => this.selectItem(index, e)}
+        onClick={(e) => this.selectItem(index, e)}
         onOpenPreviewMediaDialog={onOpenPreviewMediaDialog}
         makeActions={() => makeActions(media[index], selection, index)}
       />
@@ -146,8 +150,8 @@ export default class BaseMediaList extends React.Component {
       </FixedSizeList>
     );
 
-    const lazyLoading = makeList => ({ height }) => {
-      const isItemLoaded = index => media[index] != null;
+    const lazyLoading = (makeList) => ({ height }) => {
+      const isItemLoaded = (index) => media[index] != null;
       const loadMoreItems = (start) => {
         const page = Math.floor(start / 50);
         onRequestPage(page);
@@ -165,13 +169,13 @@ export default class BaseMediaList extends React.Component {
       );
     };
 
-    const customWrapper = makeList => props => (
+    const customWrapper = (makeList) => (props) => (
       <ListComponent>
         {makeList(props)}
       </ListComponent>
     );
 
-    const autoSizing = makeList => () => {
+    const autoSizing = (makeList) => () => {
       const inner = ({ height }) => makeList({ height });
       return (
         <AutoSizer disableWidth>

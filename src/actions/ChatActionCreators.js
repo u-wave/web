@@ -84,7 +84,7 @@ export function sendChat(text) {
     const users = userListSelector(state);
     const message = prepareMessage(state, sender, text, {
       mentions: [
-        ...users.map(user => user.username),
+        ...users.map((user) => user.username),
         ...getAvailableGroupMentions(hasRole),
       ],
     });
@@ -118,11 +118,11 @@ export function receive(message) {
     const settings = settingsSelector(state);
     const currentUser = currentUserSelector(state);
     const users = userListSelector(state);
-    const sender = users.find(user => user._id === message.userID);
+    const sender = users.find((user) => user._id === message.userID);
     const senderHasRole = userHasRoleSelector(state)(sender);
     const mentions = [
-      ...users.map(user => user.username),
-      ...getAvailableGroupMentions(mention => senderHasRole(`chat.mention.${mention}`)),
+      ...users.map((user) => user.username),
+      ...getAvailableGroupMentions((mention) => senderHasRole(`chat.mention.${mention}`)),
     ];
 
     if (isMuted(state, message.userID)) {
@@ -234,7 +234,7 @@ export function setMotd(text) {
       dispatch(setMotdComplete(data.motd));
       dispatch(log(`Message of the Day is now: ${data.motd}`));
     },
-    onError: error => ({
+    onError: (error) => ({
       type: SET_MOTD_COMPLETE,
       error: true,
       payload: error,

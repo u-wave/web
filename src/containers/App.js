@@ -27,7 +27,7 @@ const SimpleProviders = nest(
 );
 
 const mapStateToProps = createStructuredSelector({
-  activeOverlay: state => state.activeOverlay,
+  activeOverlay: (state) => state.activeOverlay,
   isConnected: isConnectedSelector,
   settings: settingsSelector,
   theme: themeSelector,
@@ -48,9 +48,13 @@ class AppContainer extends React.Component {
     translator: PropTypes.object.isRequired,
   };
 
-  state = {
-    error: null,
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      error: null,
+    };
+  }
 
   componentDidMount() {
     this.applyThemeProperties();
@@ -78,14 +82,14 @@ class AppContainer extends React.Component {
   }
 
   renderApp = () => (
-    <React.Fragment>
+    <>
       <Mobile>
         <MobileApp {...this.props} />
       </Mobile>
       <Desktop>
         <DesktopApp {...this.props} />
       </Desktop>
-    </React.Fragment>
+    </>
   );
 
   render() {

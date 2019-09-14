@@ -26,7 +26,7 @@ export function skipCurrentDJ(reason = '', shouldRemove = false) {
     return dispatch(post('/booth/skip', payload, {
       onStart: () => ({ type: SKIP_DJ_START, payload }),
       onComplete: () => ({ type: SKIP_DJ_COMPLETE, payload }),
-      onError: error => ({
+      onError: (error) => ({
         type: SKIP_DJ_COMPLETE,
         error: true,
         payload: error,
@@ -68,7 +68,7 @@ export function removeWaitlistUser(user) {
 
     return promise
       .then(() => dispatch(removeWaitlistUserComplete(user)))
-      .catch(error => dispatch({
+      .catch((error) => dispatch({
         type: REMOVE_USER_COMPLETE,
         error: true,
         payload: error,
@@ -94,7 +94,7 @@ export function moveWaitlistUser(user, position) {
   return put('/waitlist/move', { userID: user._id, position }, {
     onStart: () => moveWaitlistUserStart(user, position),
     onComplete: () => moveWaitlistUserComplete(user, position),
-    onError: error => ({
+    onError: (error) => ({
       type: MOVE_USER_COMPLETE,
       error: true,
       payload: error,
@@ -114,7 +114,7 @@ export function addUserRole(user, role) {
       type: ADD_USER_ROLES_COMPLETE,
       payload: { user, roles: [role] },
     }),
-    onError: error => ({
+    onError: (error) => ({
       type: ADD_USER_ROLES_COMPLETE,
       error: true,
       payload: error,
@@ -134,7 +134,7 @@ export function removeUserRole(user, role) {
       type: REMOVE_USER_ROLES_COMPLETE,
       payload: { user, roles: [role] },
     }),
-    onError: error => ({
+    onError: (error) => ({
       type: REMOVE_USER_ROLES_COMPLETE,
       error: true,
       payload: error,
@@ -146,7 +146,7 @@ export function removeUserRole(user, role) {
 export function deleteChatMessage(id) {
   return del(`/chat/${id}`, {}, {
     onStart: () => removeMessage(id),
-    onError: error => ({
+    onError: (error) => ({
       type: undefined,
       error: true,
       payload: error,
@@ -158,7 +158,7 @@ export function deleteChatMessage(id) {
 export function deleteChatMessagesByUser(userID) {
   return del(`/chat/user/${userID}`, {}, {
     onComplete: () => removeMessagesByUser(userID),
-    onError: error => ({
+    onError: (error) => ({
       type: undefined,
       error: true,
       payload: error,
@@ -170,7 +170,7 @@ export function deleteChatMessagesByUser(userID) {
 export function deleteAllChatMessages() {
   return del('/chat', {}, {
     onComplete: removeAllMessages,
-    onError: error => ({
+    onError: (error) => ({
       type: undefined,
       error: true,
       payload: error,
@@ -200,7 +200,7 @@ export function muteUser(user, duration = 10 * 60 * 1000) {
   return post(`/users/${userID}/mute`, { time: duration }, {
     onStart: () => muteUserStart(userID, duration),
     onComplete: () => muteUserComplete(userID, duration),
-    onError: error => ({
+    onError: (error) => ({
       type: MUTE_USER_COMPLETE,
       error: true,
       payload: error,
@@ -227,7 +227,7 @@ export function unmuteUser(user) {
   return del(`/users/${userID}/mute`, {}, {
     onStart: () => unmuteUserStart(userID),
     onComplete: () => unmuteUserComplete(userID),
-    onError: error => ({
+    onError: (error) => ({
       type: UNMUTE_USER_COMPLETE,
       error: true,
       payload: error,
@@ -257,7 +257,7 @@ export function banUser(user, { duration = 24 * 60 * 60 * 1000, permanent = fals
   return post('/bans', { userID, duration, permanent }, {
     onStart: () => banUserStart(userID, duration, permanent),
     onComplete: ({ data }) => banUserComplete(data),
-    onError: error => ({
+    onError: (error) => ({
       type: BAN_USER_COMPLETE,
       error: true,
       payload: error,

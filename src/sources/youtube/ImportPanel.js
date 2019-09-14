@@ -13,7 +13,7 @@ import ChannelPanel from './ChannelPanel';
 import PlaylistPanel from './PlaylistPanel';
 
 const mapStateToProps = () => ({});
-const mapDispatchToProps = dispatch => bindActionCreators({
+const mapDispatchToProps = (dispatch) => bindActionCreators({
   onImportPlaylist: importPlaylist,
   onOpenAddMediaMenu: openAddMediaMenu,
 }, dispatch);

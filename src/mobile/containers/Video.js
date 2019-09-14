@@ -25,7 +25,7 @@ function VideoContainer() {
 
   const historyID = useSelector(historyIDSelector);
   const media = useSelector(mediaSelector);
-  const seek = useSelector(s => timeElapsedSelector(s));
+  const seek = useSelector((s) => timeElapsedSelector(s));
   const volume = useSelector(mobilePlaybackVolumeSelector);
   const voteStats = useSelector(currentVoteStatsSelector);
   const dispatch = useDispatch();

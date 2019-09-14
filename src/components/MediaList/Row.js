@@ -14,7 +14,7 @@ const {
   useEffect,
 } = React;
 
-const inSelection = (selection, media) => selection.some(item => item._id === media._id);
+const inSelection = (selection, media) => selection.some((item) => item._id === media._id);
 
 function Row({
   className,

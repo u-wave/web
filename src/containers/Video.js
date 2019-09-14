@@ -20,9 +20,9 @@ function VideoContainer(props) {
 
   const historyID = useSelector(historyIDSelector);
   const media = useSelector(mediaSelector);
-  const seek = useSelector(s => timeElapsedSelector(s));
+  const seek = useSelector((s) => timeElapsedSelector(s));
   const volume = useSelector(playbackVolumeSelector);
-  const isFullscreen = useSelector(state => state.booth.isFullscreen);
+  const isFullscreen = useSelector((state) => state.booth.isFullscreen);
   const dispatch = useDispatch();
 
   const onFullscreenEnter = useCallback(() => dispatch(enterFullscreen()), [dispatch]);

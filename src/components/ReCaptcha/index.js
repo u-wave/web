@@ -13,13 +13,16 @@ function loadReCaptcha(cb) {
 }
 
 function onload() {
-  onloadCallbacks.forEach(fn => fn(window.grecaptcha));
+  onloadCallbacks.forEach((fn) => fn(window.grecaptcha));
 }
 
 export default class ReCaptcha extends React.Component {
-  state = {
-    grecaptcha: window.grecaptcha,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      grecaptcha: window.grecaptcha,
+    };
+  }
 
   componentDidMount() {
     const { grecaptcha } = this.state;
