@@ -7,7 +7,7 @@ const {
   useRef,
 } = React;
 
-function TextField({
+function InnerTextField({
   className,
   type = 'text',
   icon,
@@ -30,6 +30,8 @@ function TextField({
     </div>
   );
 }
+
+const TextField = React.forwardRef(InnerTextField);
 
 TextField.propTypes = {
   className: PropTypes.string,
