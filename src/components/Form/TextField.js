@@ -37,4 +37,4 @@ TextField.propTypes = {
   icon: PropTypes.node.isRequired,
 };
 
-export default React.forwardRef(TextField);
+export default TextField;
