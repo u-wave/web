@@ -30,5 +30,7 @@ describe('<PromptDialog />', () => {
 
     expect(onSubmit.calledOnce).to.equal(true);
     expect(onCancel.called).to.equal(false);
+
+    dialog.unmount();
   });
 });
