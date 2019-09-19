@@ -7,12 +7,12 @@ const {
   useRef,
 } = React;
 
-function InnerTextField({
+const TextField = React.forwardRef(({
   className,
   type = 'text',
   icon,
   ...props
-}, ref) {
+}, ref) => {
   const refInput = useRef(null);
   useImperativeHandle(ref, () => ({
     get value() { return refInput.current.value; },
@@ -29,9 +29,7 @@ function InnerTextField({
       <div className="TextField-icon">{icon}</div>
     </div>
   );
-}
-
-const TextField = React.forwardRef(InnerTextField);
+});
 
 TextField.propTypes = {
   className: PropTypes.string,
