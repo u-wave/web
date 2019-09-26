@@ -271,11 +271,11 @@ export function createPlaylist(name) {
 
   return post('/playlists', { name, description, shared }, {
     onStart: () => createPlaylistStart({ name, description, shared }, tempId),
-    onComplete: (res) => (dispatch, getState) => {
+    onComplete: (res) => (dispatch) => {
       const playlist = res.data;
-      const isFirstPlaylist = !activePlaylistIDSelector(getState());
+      const { active } = res.meta;
       dispatch(createPlaylistComplete(playlist, tempId));
-      if (isFirstPlaylist) {
+      if (active) {
         dispatch(activatePlaylistComplete(playlist._id));
       }
       return playlist;
