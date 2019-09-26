@@ -8,10 +8,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Install Node.js
-      uses: actions/setup-node@v1
-      with:
-        node-version: stable
+    - uses: actions/setup-node@v1
     - name: Install dependencies
       run: npm ci
     - name: ESLint
