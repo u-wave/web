@@ -9,7 +9,7 @@ const {
 } = React;
 
 function BansListContainer() {
-  const bans = useSelector(state => state.admin.bans.bans);
+  const bans = useSelector((state) => state.admin.bans.bans);
   const dispatch = useDispatch();
 
   const onUnbanUser = useCallback((user) => {

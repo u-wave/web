@@ -29,7 +29,7 @@ function rejectNonOK(response) {
         throw new Error('An unknown error occurred.');
       }
       const { errors } = res;
-      const error = Object.assign(new Error(errors.map(err => err.title).join(', ')), {
+      const error = Object.assign(new Error(errors.map((err) => err.title).join(', ')), {
         response,
         errors,
       });
@@ -44,7 +44,7 @@ const defaultOptions = {
 };
 
 export default function middleware(middlewareOptions = {}) {
-  return ({ dispatch, getState }) => next => (action) => {
+  return ({ dispatch, getState }) => (next) => (action) => {
     if (action.type !== REQUEST_START) {
       return next(action);
     }
@@ -102,7 +102,7 @@ export default function middleware(middlewareOptions = {}) {
 
     return fetch(requestUrl, requestOptions)
       .then(rejectNonOK)
-      .then(res => res.json())
+      .then((res) => res.json())
       .then((res) => {
         let responseValue = res;
         if (onComplete) {

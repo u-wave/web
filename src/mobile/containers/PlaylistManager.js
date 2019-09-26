@@ -19,7 +19,7 @@ const enhance = connect(mapStateToProps);
 
 const PlaylistManager = createLazyOverlay({
   loader: () => import('../components/PlaylistManager' /* webpackChunkName: "playlistsMobile" */),
-  title: t => t('playlists.title'),
+  title: (t) => t('playlists.title'),
 });
 
 export default enhance(PlaylistManager);

@@ -11,7 +11,7 @@ const {
   useState,
 } = React;
 
-function PlaylistItemRow({ onMoveMedia, ...props }) {
+function PlaylistItemRow({ onMoveMedia, style, ...props }) {
   const [insertingAbove, setInsertAbove] = useState(false);
   const refWrapper = useRef(null);
   const [{ isOver }, connectDropTarget] = useDrop({
@@ -22,7 +22,7 @@ function PlaylistItemRow({ onMoveMedia, ...props }) {
         const thisID = props.media._id;
         // Do not attempt to move when the selection is dropped on top of an item
         // that is in the selection.
-        if (media.some(playlistItem => playlistItem._id === thisID)) {
+        if (media.some((playlistItem) => playlistItem._id === thisID)) {
           return;
         }
         const insertBefore = isDraggingNearTopOfRow(monitor, refWrapper.current);
@@ -50,7 +50,7 @@ function PlaylistItemRow({ onMoveMedia, ...props }) {
   // does not change the hover state to a different element, which
   // would cause thrashing.
   return (
-    <div className="PlaylistItemRow" ref={refWrapper}>
+    <div className="PlaylistItemRow" style={style} ref={refWrapper}>
       {isOver && insertingAbove && dropIndicator}
       <MediaRow {...props} />
       {isOver && !insertingAbove && dropIndicator}
@@ -59,8 +59,9 @@ function PlaylistItemRow({ onMoveMedia, ...props }) {
 }
 
 PlaylistItemRow.propTypes = {
-  onMoveMedia: PropTypes.func.isRequired,
+  style: PropTypes.object, // from react-window
   media: PropTypes.object,
+  onMoveMedia: PropTypes.func.isRequired,
 };
 
 export default PlaylistItemRow;

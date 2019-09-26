@@ -21,14 +21,14 @@ function AddToPlaylistMenu(props) {
   const [creating, setCreating] = useState(false);
   const handleOpen = useCallback(() => setCreating(true), []);
   const handleClose = useCallback(() => setCreating(false), []);
-  const handleSubmit = useCallback(playlistName => (
+  const handleSubmit = useCallback((playlistName) => (
     Promise.resolve(onCreatePlaylist(playlistName))
-      .then(playlist => onSelect(playlist))
+      .then((playlist) => onSelect(playlist))
       .then(() => onClose())
   ), [onCreatePlaylist, onSelect, onClose]);
 
   return (
-    <React.Fragment>
+    <>
       {!creating && (
         <PlaylistsMenu
           {...props}
@@ -44,7 +44,7 @@ function AddToPlaylistMenu(props) {
           onCancel={handleClose}
         />
       )}
-    </React.Fragment>
+    </>
   );
 }
 

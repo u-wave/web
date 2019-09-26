@@ -56,12 +56,12 @@ const PlaylistManager = ({
         {empty ? (
           <NoPlaylists onCreatePlaylist={onCreatePlaylist} />
         ) : (
-          <React.Fragment>
+          <>
             <PlaylistMenu className="PlaylistManager-menu" />
             <div className="PlaylistManager-panel">
               {panel}
             </div>
-          </React.Fragment>
+          </>
         )}
       </OverlayContent>
     </div>

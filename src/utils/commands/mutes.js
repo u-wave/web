@@ -35,7 +35,7 @@ register(
   'Unmute a user in chat. Syntax: "/unmute username"',
   {
     guard: isModeratorSelector,
-    action: username => (dispatch, getState) => {
+    action: (username) => (dispatch, getState) => {
       if (!username) {
         return dispatch(log('Provide a user to unmute.'));
       }

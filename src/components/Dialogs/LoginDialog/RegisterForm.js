@@ -28,11 +28,15 @@ class RegisterForm extends React.Component {
     onRegister: PropTypes.func,
   };
 
-  state = {
-    busy: false,
-    agreed: false,
-    captchaResponse: null,
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      busy: false,
+      agreed: false,
+      captchaResponse: null,
+    };
+  }
 
   handleSubmit = (event) => {
     const { onRegister } = this.props;
@@ -102,10 +106,10 @@ class RegisterForm extends React.Component {
       <Form className="RegisterForm" onSubmit={this.handleSubmit}>
         {error && <FormGroup>{error.message}</FormGroup>}
         {supportsSocialAuth && (
-          <React.Fragment>
+          <>
             <SocialLogin />
             <Separator />
-          </React.Fragment>
+          </>
         )}
         <FormGroup>
           <TextField
@@ -168,8 +172,7 @@ class RegisterForm extends React.Component {
           >
             {busy
               ? <div className="Button-loading"><CircularProgress size="100%" /></div>
-              : t('login.register')
-            }
+              : t('login.register')}
           </Button>
         </FormGroup>
       </Form>

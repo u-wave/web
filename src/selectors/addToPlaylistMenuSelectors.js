@@ -1,13 +1,13 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { playlistsSelector } from './playlistSelectors';
 
-const baseSelector = state => state.addToPlaylistMenu;
-export const isOpenSelector = createSelector(baseSelector, menu => menu.open);
-export const positionSelector = createSelector(baseSelector, menu => menu.position);
-const typeSelector = createSelector(baseSelector, menu => menu.type);
-const dataSelector = createSelector(baseSelector, menu => menu.data);
+const baseSelector = (state) => state.addToPlaylistMenu;
+export const isOpenSelector = createSelector(baseSelector, (menu) => menu.open);
+export const positionSelector = createSelector(baseSelector, (menu) => menu.position);
+const typeSelector = createSelector(baseSelector, (menu) => menu.type);
+const dataSelector = createSelector(baseSelector, (menu) => menu.data);
 
-export const isFavoriteSelector = createSelector(typeSelector, type => type === 'favorite');
+export const isFavoriteSelector = createSelector(typeSelector, (type) => type === 'favorite');
 
 export const mediaSelector = createSelector(
   dataSelector,

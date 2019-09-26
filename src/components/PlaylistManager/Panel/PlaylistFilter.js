@@ -15,10 +15,14 @@ class PlaylistFilter extends React.Component {
     onFilter: PropTypes.func.isRequired,
   };
 
-  state = {
-    isOpen: false,
-    value: '',
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isOpen: false,
+      value: '',
+    };
+  }
 
   onFilter = debounce((value) => {
     const { onFilter } = this.props;

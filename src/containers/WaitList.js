@@ -15,7 +15,7 @@ const mapStateToProps = createStructuredSelector({
   canMoveUsers: createRoleCheckSelector('waitlist.move'),
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
+const mapDispatchToProps = (dispatch) => bindActionCreators({
   onMoveUser: moveWaitlistUser,
   onRemoveUser: removeWaitlistUser,
 }, dispatch);

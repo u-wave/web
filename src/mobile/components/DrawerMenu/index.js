@@ -58,7 +58,7 @@ function DrawerMenu({
       <MenuList
         subheader={<ListSubheader>{t('playlists.title')}</ListSubheader>}
       >
-        {playlists.map(playlist => (
+        {playlists.map((playlist) => (
           <MenuItem
             key={playlist._id}
             onClick={(event) => {

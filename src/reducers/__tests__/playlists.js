@@ -107,7 +107,7 @@ describe('reducers/playlists', () => {
 
       const { media } = s.selectedPlaylistSelector(getState());
       expect(media).to.have.length(7);
-      expect(media.map(playlistItem => playlistItem._id)).to.eql([
+      expect(media.map((playlistItem) => playlistItem._id)).to.eql([
         5, 6, 7, 8, 347, 764, 9,
       ]);
     });
@@ -170,7 +170,7 @@ describe('reducers/playlists', () => {
       ));
 
       const selectedItemIDs = s.selectedPlaylistSelector(getState()).media
-        .map(playlistItem => playlistItem._id);
+        .map((playlistItem) => playlistItem._id);
       expect(selectedItemIDs).to.eql([5, 8, 6, 7, 9]);
     });
 
@@ -195,7 +195,7 @@ describe('reducers/playlists', () => {
         { after: 8 },
       ));
 
-      const getID = item => (item ? item._id : null);
+      const getID = (item) => (item ? item._id : null);
       expect(s.selectedPlaylistSelector(getState()).media.map(getID)).to.eql([
         6, null, 8, 5, 9,
       ]);

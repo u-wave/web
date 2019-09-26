@@ -14,12 +14,6 @@
     );
 }
 
-.HistoryRow {
-  height: 54px;
-  line-height: 54px;
-  position: relative;
-}
-
 .HistoryRow-song {
   font-size: 1em;
   height: 100%;

@@ -16,9 +16,13 @@ class NewPlaylist extends React.Component {
     onCreatePlaylist: PropTypes.func.isRequired,
   };
 
-  state = {
-    creating: false,
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      creating: false,
+    };
+  }
 
   handleOpen = () => {
     this.setState({ creating: true });
@@ -44,7 +48,7 @@ class NewPlaylist extends React.Component {
     const { creating } = this.state;
 
     return (
-      <React.Fragment>
+      <>
         <MenuItem
           className={cx('PlaylistMenuRow', 'PlaylistMenuRow--create', className)}
           onClick={this.handleOpen}
@@ -65,7 +69,7 @@ class NewPlaylist extends React.Component {
             onCancel={this.handleClose}
           />
         )}
-      </React.Fragment>
+      </>
     );
   }
 }

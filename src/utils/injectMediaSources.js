@@ -7,9 +7,9 @@ function getComponentName(Component) {
 
 export default function injectMediaSources() {
   return (Component) => {
-    const InjectMediaSourcesWrapper = props => (
+    const InjectMediaSourcesWrapper = (props) => (
       <MediaSourceContext.Consumer>
-        {sources => (
+        {(sources) => (
           <Component {...sources} {...props} />
         )}
       </MediaSourceContext.Consumer>

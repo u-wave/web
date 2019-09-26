@@ -7,12 +7,12 @@ const {
   useRef,
 } = React;
 
-function TextField({
+const TextField = React.forwardRef(({
   className,
   type = 'text',
   icon,
   ...props
-}, ref) {
+}, ref) => {
   const refInput = useRef(null);
   useImperativeHandle(ref, () => ({
     get value() { return refInput.current.value; },
@@ -29,7 +29,7 @@ function TextField({
       <div className="TextField-icon">{icon}</div>
     </div>
   );
-}
+});
 
 TextField.propTypes = {
   className: PropTypes.string,
@@ -37,4 +37,4 @@ TextField.propTypes = {
   icon: PropTypes.node.isRequired,
 };
 
-export default React.forwardRef(TextField);
+export default TextField;

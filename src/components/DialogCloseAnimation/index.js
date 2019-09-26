@@ -12,10 +12,14 @@ export default class DialogCloseAnimation extends React.Component {
     delay: PropTypes.number.isRequired,
   };
 
-  state = {
-    // eslint-disable-next-line react/destructuring-assignment
-    children: this.props.children,
-  };
+  constructor(props) {
+    super(props);
+
+    const { children } = this.props;
+    this.state = {
+      children,
+    };
+  }
 
   // TODO translate this to componentDidUpdate()?
   componentWillReceiveProps(nextProps) {

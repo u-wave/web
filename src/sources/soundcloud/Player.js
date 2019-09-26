@@ -43,10 +43,14 @@ class SoundCloudPlayer extends React.Component {
     onPlay: PropTypes.func,
   };
 
-  state = {
-    error: null,
-    needsTap: false,
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      error: null,
+      needsTap: false,
+    };
+  }
 
   componentDidMount() {
     this.audio = new Audio();

@@ -20,10 +20,10 @@ function ClockProvider({ children }) {
   const dispatch = useDispatch();
 
   const addCallback = useCallback((onTick) => {
-    setCallbacks(list => [...list, onTick]);
+    setCallbacks((list) => [...list, onTick]);
   }, []);
   const removeCallback = useCallback((onTick) => {
-    setCallbacks(list => list.filter(entry => entry !== onTick));
+    setCallbacks((list) => list.filter((entry) => entry !== onTick));
   }, []);
 
   const timerCallbacks = useMemo(() => ({
@@ -39,7 +39,7 @@ function ClockProvider({ children }) {
     // Start the clock! üWave stores the current time in the application state
     // primarily to make sure that different timers in the UI update simultaneously.
     dispatch(createTimer(() => {
-      callbacksRef.current.forEach(cb => cb());
+      callbacksRef.current.forEach((cb) => cb());
     }));
     return () => dispatch(stopTimer);
   }, []);

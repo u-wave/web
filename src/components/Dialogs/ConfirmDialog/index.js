@@ -24,9 +24,13 @@ export default class ConfirmDialog extends React.Component {
     confirmLabel: 'OK',
   };
 
-  state = {
-    busy: false,
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      busy: false,
+    };
+  }
 
   handleSubmit = (event) => {
     event.preventDefault();

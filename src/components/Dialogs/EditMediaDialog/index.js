@@ -20,8 +20,8 @@ import Button from '../../Form/Button';
 import TextField from '../../Form/TextField';
 
 // naive HH:mm:ss → seconds
-const parseDuration = str => str.split(':')
-  .map(part => parseInt(part.trim(), 10))
+const parseDuration = (str) => str.split(':')
+  .map((part) => parseInt(part.trim(), 10))
   .reduce((duration, part) => (duration * 60) + part, 0);
 
 const enhance = translate();
@@ -48,15 +48,19 @@ class EditMediaDialog extends React.Component {
     onCloseDialog: PropTypes.func.isRequired,
   };
 
-  state = {
-    errors: null,
-    /* eslint-disable react/destructuring-assignment */
-    artist: this.props.media.artist,
-    title: this.props.media.title,
-    start: formatDuration(this.props.media.start * 1000),
-    end: formatDuration(this.props.media.end * 1000),
-    /* eslint-enable react/destructuring-assignment */
-  };
+  constructor(props) {
+    super(props);
+
+    const { media } = this.props;
+
+    this.state = {
+      errors: null,
+      artist: media.artist,
+      title: media.title,
+      start: formatDuration(media.start * 1000),
+      end: formatDuration(media.end * 1000),
+    };
+  }
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -199,7 +203,7 @@ class EditMediaDialog extends React.Component {
       <Form onSubmit={this.handleSubmit}>
         {errors && errors.length > 0 && (
           <FormGroup>
-            {errors.map(error => <div>{t(`dialogs.editMedia.errors.${error}`)}</div>)}
+            {errors.map((error) => <div>{t(`dialogs.editMedia.errors.${error}`)}</div>)}
           </FormGroup>
         )}
 

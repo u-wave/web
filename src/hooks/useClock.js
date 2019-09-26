@@ -10,7 +10,7 @@ const {
 
 export default function useClock() {
   const timerCallbacks = useClockCallbacks();
-  const [, rerender] = useReducer(i => i + 1, 0);
+  const [, rerender] = useReducer((i) => i + 1, 0);
 
   // Avoid useSelector's memoization since this selector relies
   // on Date.now() under the hood.

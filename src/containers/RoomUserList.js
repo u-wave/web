@@ -11,7 +11,7 @@ import RoomUserList from '../components/RoomUserList';
 const userListWithVotesSelector = createSelector(
   userListSelector,
   currentVotesSelector,
-  (users, votes) => users.map(user => ({
+  (users, votes) => users.map((user) => ({
     ...user,
     votes: {
       upvote: votes.upvotes.includes(user._id),

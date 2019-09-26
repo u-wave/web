@@ -8,7 +8,7 @@ import ExitFullscreenIcon from '@material-ui/icons/FullscreenExit';
 
 import VideoSizeButton from './VideoSizeButton';
 
-const renderFullscreenIcon = isFullscreen => (
+const renderFullscreenIcon = (isFullscreen) => (
   isFullscreen ? <ExitFullscreenIcon /> : <EnterFullscreenIcon />
 );
 
@@ -25,8 +25,7 @@ const VideoToolbar = ({
     <Tooltip
       title={isFullscreen
         ? t('settings.disableFullscreen')
-        : t('settings.enableFullscreen')
-      }
+        : t('settings.enableFullscreen')}
       placement="bottom-end"
     >
       <IconButton onClick={isFullscreen ? onFullscreenExit : onFullscreenEnter}>

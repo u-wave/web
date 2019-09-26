@@ -19,10 +19,14 @@ class PasswordResetPage extends React.Component {
     onSubmit: PropTypes.func.isRequired,
   };
 
-  state = {
-    newPassword: '',
-    newPasswordConfirm: '',
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      newPassword: '',
+      newPasswordConfirm: '',
+    };
+  }
 
   handlePasswordChange = (event) => {
     this.setState({

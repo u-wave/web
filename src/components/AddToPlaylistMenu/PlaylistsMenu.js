@@ -22,7 +22,7 @@ function PlaylistsMenu({
   const { t } = useTranslator();
   const handleSelect = useCallback((e, playlistID) => {
     onClose();
-    onSelect(playlists.find(pl => pl._id === playlistID));
+    onSelect(playlists.find((pl) => pl._id === playlistID));
   }, [onClose, onSelect]);
 
   return (
@@ -37,11 +37,11 @@ function PlaylistsMenu({
           <ListItemText primary={t('playlists.new')} />
           <ListItemIcon><CreatePlaylistIcon /></ListItemIcon>
         </MenuItem>
-        {playlists.map(playlist => (
+        {playlists.map((playlist) => (
           <MenuItem
             className="AddToPlaylistMenu-playlist"
             key={playlist._id}
-            onClick={event => handleSelect(event, playlist._id)}
+            onClick={(event) => handleSelect(event, playlist._id)}
           >
             {!!playlist.active && (
               <ListItemIcon>

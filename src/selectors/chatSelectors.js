@@ -15,16 +15,16 @@ import {
 } from './userSelectors';
 import { notificationSettingsSelector } from './settingSelectors';
 
-const baseSelector = state => state.chat;
+const baseSelector = (state) => state.chat;
 
-export const rawMotdSelector = createSelector(baseSelector, chat => chat.motd);
+export const rawMotdSelector = createSelector(baseSelector, (chat) => chat.motd);
 export const motdSelector = createSelector(
   rawMotdSelector,
-  motd => (motd ? parseChatMarkup(motd) : null),
+  (motd) => (motd ? parseChatMarkup(motd) : null),
 );
 
 const MAX_MESSAGES = 500;
-const allMessagesSelector = createSelector(baseSelector, chat => chat.messages);
+const allMessagesSelector = createSelector(baseSelector, (chat) => chat.messages);
 const filteredMessagesSelector = createSelector(
   allMessagesSelector,
   notificationSettingsSelector,
@@ -38,7 +38,7 @@ const filteredMessagesSelector = createSelector(
 );
 export const messagesSelector = createSelector(
   filteredMessagesSelector,
-  messages => messages.slice(-MAX_MESSAGES),
+  (messages) => messages.slice(-MAX_MESSAGES),
 );
 
 export const markupCompilerOptionsSelector = createStructuredSelector({
@@ -46,22 +46,22 @@ export const markupCompilerOptionsSelector = createStructuredSelector({
   emojiImages: availableEmojiImagesSelector,
 });
 
-const mutesSelector = createSelector(baseSelector, chat => chat.mutedUsers);
+const mutesSelector = createSelector(baseSelector, (chat) => chat.mutedUsers);
 
 export const muteTimeoutsSelector = createSelector(
   mutesSelector,
-  mutes => mapValues(mutes, mute => mute.expirationTimer),
+  (mutes) => mapValues(mutes, (mute) => mute.expirationTimer),
 );
 
 export const mutedUserIDsSelector = createSelector(
   mutesSelector,
-  mutes => Object.keys(mutes),
+  (mutes) => Object.keys(mutes),
 );
 
 export const mutedUsersSelector = createSelector(
   mutedUserIDsSelector,
   usersSelector,
-  (mutedIDs, users) => mutedIDs.map(userID => users[userID]),
+  (mutedIDs, users) => mutedIDs.map((userID) => users[userID]),
 );
 
 export const currentUserMuteSelector = createSelector(
@@ -72,12 +72,12 @@ export const currentUserMuteSelector = createSelector(
 
 export const availableGroupMentionsSelector = createSelector(
   currentUserHasRoleSelector,
-  hasRole => getAvailableGroupMentions(mention => hasRole(`chat.mention.${mention}`)),
+  (hasRole) => getAvailableGroupMentions((mention) => hasRole(`chat.mention.${mention}`)),
 );
 
 export const emojiCompletionsSelector = createSelector(
   availableEmojiImagesSelector,
-  images => Object.keys(images).map(name => ({
+  (images) => Object.keys(images).map((name) => ({
     shortcode: name,
     image: images[name],
   })),

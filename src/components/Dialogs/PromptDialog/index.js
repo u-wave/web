@@ -38,11 +38,15 @@ export default class PromptDialog extends React.Component {
     open: true,
   };
 
-  state = {
-    busy: false,
-    // eslint-disable-next-line react/destructuring-assignment
-    value: this.props.value || '',
-  };
+  constructor(props) {
+    super(props);
+
+    const { value } = this.props;
+    this.state = {
+      busy: false,
+      value: value || '',
+    };
+  }
 
   handleSubmit = (event) => {
     const { onSubmit } = this.props;

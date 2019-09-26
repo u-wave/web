@@ -20,12 +20,12 @@ const tabClasses = {
 };
 
 const getUsersLabel = (t, listenerCount) => (
-  <React.Fragment>
+  <>
     {t('users.title')}
     <span key="sub" style={subHeaderStyle}>
       {listenerCount}
     </span>
-  </React.Fragment>
+  </>
 );
 
 const getWaitlistLabel = (t, size, position) => {
@@ -35,10 +35,10 @@ const getWaitlistLabel = (t, size, position) => {
       : size;
 
     return (
-      <React.Fragment>
+      <>
         {t('waitlist.title')}
         <span key="sub" style={subHeaderStyle}>{posText}</span>
-      </React.Fragment>
+      </>
     );
   }
   return t('waitlist.title');

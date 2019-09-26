@@ -32,11 +32,11 @@ export function search(query) {
       dispatch(searchStart(query));
       dispatch(showSearchResults());
     },
-    onComplete: results => ({
+    onComplete: (results) => ({
       type: SEARCH_COMPLETE,
       payload: { results },
     }),
-    onError: error => ({
+    onError: (error) => ({
       type: SEARCH_COMPLETE,
       error: true,
       payload: error,

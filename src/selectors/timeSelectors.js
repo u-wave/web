@@ -1,9 +1,9 @@
 import { createSelector } from 'reselect';
 
-const baseSelector = state => state.time;
+const baseSelector = (state) => state.time;
 
-const offsetSelector = createSelector(baseSelector, time => time.offset);
-export const timerSelector = createSelector(baseSelector, time => time.timer);
+const offsetSelector = createSelector(baseSelector, (time) => time.offset);
+export const timerSelector = createSelector(baseSelector, (time) => time.timer);
 
 // Do not use createSelector() to avoid memoization.
 export const currentTimeSelector = (state) => {

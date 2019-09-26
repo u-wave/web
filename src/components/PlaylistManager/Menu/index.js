@@ -40,7 +40,7 @@ const PlaylistMenu = ({
           onClose={onCloseSearchResults}
         />
       )}
-      {playlists.map(pl => (
+      {playlists.map((pl) => (
         <PlaylistRow
           key={pl._id}
           className="PlaylistMenu-row"

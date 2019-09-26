@@ -13,7 +13,7 @@ export function syncTimestamps(clientTimeBefore, serverTime) {
 export function sync() {
   const before = Date.now();
   return get('/now', {
-    onComplete: now => syncTimestamps(before, now.time),
+    onComplete: (now) => syncTimestamps(before, now.time),
   });
 }
 

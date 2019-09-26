@@ -88,7 +88,7 @@ function SkipButton({ userIsDJ, currentDJ, onSkip }) {
         {...popoverPosition}
       >
         <SkipReasonsList
-          reasons={reasons.map(name => ({
+          reasons={reasons.map((name) => ({
             name,
             label: t(`booth.skip.reasons.${name}`),
           }))}

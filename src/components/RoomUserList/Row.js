@@ -19,7 +19,7 @@ function RoomUserRow({ className, user }) {
   }, []);
 
   return (
-    <React.Fragment>
+    <>
       {userCard.card}
       <ListItem
         button
@@ -35,7 +35,7 @@ function RoomUserRow({ className, user }) {
         </ListItemText>
         <Votes className="UserRow-votes" {...user.votes} />
       </ListItem>
-    </React.Fragment>
+    </>
   );
 }
 
