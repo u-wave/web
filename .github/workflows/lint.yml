@@ -12,4 +12,4 @@ jobs:
     - name: Install dependencies
       run: npm ci
     - name: ESLint
-      run: npx eslint --format ./tasks/eslint-formatter-actions .
+      run: npx eslint --format json . | node ./tasks/eslint-formatter-actions

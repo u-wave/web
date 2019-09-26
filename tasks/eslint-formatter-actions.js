@@ -1,6 +1,11 @@
 const fetch = require('node-fetch')
+const { CLIEngine } = require('eslint')
 
-module.exports = function format (results, opts) {
+process.stdin.pipe(require('concat-stream')({ encoding: 'string' }, (json) => {
+  format(JSON.parse(json))
+}))
+
+async function format (results) {
   const {
     FORMATTER = 'stylish',
     GITHUB_ACTION,
@@ -40,17 +45,23 @@ module.exports = function format (results, opts) {
     }
   }
 
-  fetch(`https://api.github.com/repos/${GITHUB_REPOSITORY}/check-runs`, {
+  const response = await fetch(`https://api.github.com/repos/${GITHUB_REPOSITORY}/check-runs`, {
     method: 'POST',
     headers,
     body: JSON.stringify(check)
-  }).catch((err) => {
-    console.error(err)
-    process.exit(1)
   })
 
-  const formatter = require('eslint').CLIEngine.getFormatter(FORMATTER)
-  return formatter(results, opts)
+  const formatter = CLIEngine.getFormatter(FORMATTER)
+  console.log(formatter(results, {}))
+
+  if (response.status !== 201) {
+    console.error(await response.json())
+    process.exit(1)
+  }
+
+  if (errorCount > 0 || warningCount > 0) {
+    process.exit(1)
+  }
 
   function toAnnotations ({ filePath, messages }) {
     const path = filePath.substr(GITHUB_WORKSPACE.length + 1)
