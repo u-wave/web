@@ -12,7 +12,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: stable
+    - name: Install dependencies
+      run: npm ci
     - name: ESLint
-      run: |
-        npm install
-        npx eslint --format ./tasks/eslint-formatter-actions .
+      run: npx eslint --format ./tasks/eslint-formatter-actions .
