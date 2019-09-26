@@ -13,3 +13,5 @@ jobs:
       run: npm ci
     - name: ESLint
       run: npx eslint --format json . | node ./tasks/eslint-formatter-actions
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
