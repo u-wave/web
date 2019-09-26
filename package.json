@@ -191,8 +191,7 @@
   },
   "greenkeeper": {
     "ignore": [
-      "load-script2",
-      "react-list"
+      "load-script2"
     ]
   }
 }
