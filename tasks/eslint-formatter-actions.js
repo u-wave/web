@@ -35,7 +35,7 @@ async function format (results) {
   const check = {
     name: GITHUB_ACTION,
     head_sha: GITHUB_SHA,
-    status: 'complete',
+    status: 'completed',
     started_at: new Date(),
     conclusion: errorCount > 0 ? 'failure' : 'success',
     output: {
