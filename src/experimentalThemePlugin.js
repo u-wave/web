@@ -11,4 +11,4 @@ export default function experimentalThemePlugin(instance) {
     debugApplyTheme,
     debugResetTheme,
   }, dispatchProxy));
-}
+};
