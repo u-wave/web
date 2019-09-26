@@ -14,62 +14,56 @@ const selectionOrOne = (media, selection) => {
   return [media];
 };
 
-export default class YouTubeImportPlaylistPanel extends React.Component {
-  static propTypes = {
-    importingPlaylist: PropTypes.shape({
-      sourceID: PropTypes.string,
-      name: PropTypes.string,
-    }).isRequired,
-    importingPlaylistItems: PropTypes.arrayOf(PropTypes.object).isRequired,
+function YouTubeImportPlaylistPanel({
+  importingPlaylist,
+  importingPlaylistItems,
+  onImportPlaylist,
+  onOpenAddMediaMenu,
+  onClosePanel,
+}) {
+  const handleImportFull = () => onImportPlaylist(
+    importingPlaylist.sourceID, importingPlaylist.name,
+  );
 
-    onImportPlaylist: PropTypes.func.isRequired,
-    onOpenAddMediaMenu: PropTypes.func.isRequired,
-    onClosePanel: PropTypes.func.isRequired,
-  };
-
-  handleImportFull = () => {
-    const {
-      importingPlaylist,
-      onImportPlaylist,
-    } = this.props;
-    onImportPlaylist(importingPlaylist.sourceID, importingPlaylist.name);
-  };
-
-  render() {
-    const {
-      importingPlaylist,
-      importingPlaylistItems,
-      onOpenAddMediaMenu,
-      onClosePanel,
-    } = this.props;
-
-    return (
-      <div className="ImportPanel src-youtube-PlaylistPanel">
-        <ImportPanelHeader onClosePanel={onClosePanel}>
-          <div className="src-youtube-PlaylistPanel-header">
-            <div className="src-youtube-PlaylistPanel-name">
-              {importingPlaylist.name}
-            </div>
-            <Tooltip title={`Import All (${importingPlaylistItems.length})`} placement="top">
-              <IconButton onClick={this.handleImportFull}>
-                <ImportIcon className="src-youtube-PlaylistPanel-importIcon" />
-              </IconButton>
-            </Tooltip>
+  return (
+    <div className="ImportPanel src-youtube-PlaylistPanel">
+      <ImportPanelHeader onClosePanel={onClosePanel}>
+        <div className="src-youtube-PlaylistPanel-header">
+          <div className="src-youtube-PlaylistPanel-name">
+            {importingPlaylist.name}
           </div>
-        </ImportPanelHeader>
-        <MediaList
-          className="ImportPanel-body"
-          media={importingPlaylistItems}
-          makeActions={(media, selection) => (
-            <>
-              <AddToPlaylistAction
-                key="add"
-                onAdd={(position) => onOpenAddMediaMenu(selectionOrOne(media, selection), position)}
-              />
-            </>
-          )}
-        />
-      </div>
-    );
-  }
+          <Tooltip title={`Import All (${importingPlaylistItems.length})`} placement="top">
+            <IconButton onClick={handleImportFull}>
+              <ImportIcon className="src-youtube-PlaylistPanel-importIcon" />
+            </IconButton>
+          </Tooltip>
+        </div>
+      </ImportPanelHeader>
+      <MediaList
+        className="ImportPanel-body"
+        media={importingPlaylistItems}
+        makeActions={(media, selection) => (
+          <>
+            <AddToPlaylistAction
+              key="add"
+              onAdd={(position) => onOpenAddMediaMenu(selectionOrOne(media, selection), position)}
+            />
+          </>
+        )}
+      />
+    </div>
+  );
 }
+
+YouTubeImportPlaylistPanel.propTypes = {
+  importingPlaylist: PropTypes.shape({
+    sourceID: PropTypes.string,
+    name: PropTypes.string,
+  }).isRequired,
+  importingPlaylistItems: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onImportPlaylist: PropTypes.func.isRequired,
+  onOpenAddMediaMenu: PropTypes.func.isRequired,
+  onClosePanel: PropTypes.func.isRequired,
+};
+
+export default YouTubeImportPlaylistPanel;
