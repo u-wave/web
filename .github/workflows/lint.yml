@@ -15,3 +15,12 @@ jobs:
         with:
           repo-token: ${{secrets.GITHUB_TOKEN}}
           check-name: eslint
+  stylelint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - run: npm ci
+      - uses: exelban/stylelint@v1.0.0
