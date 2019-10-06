@@ -9,7 +9,7 @@ steps:
         with:
           node-version: 12
       - run: npm ci
-      - run: npm test
+      - run: npm run test:cov
       - run: npm run test:check-coverage || true
   build:
     runs-on: ubuntu-latest
