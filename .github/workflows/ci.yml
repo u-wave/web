@@ -1,9 +1,7 @@
-name: Lint
-
-on: pull_request
-
-jobs:
-  eslint:
+name: CI
+on: push
+steps:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -11,7 +9,16 @@ jobs:
         with:
           node-version: 12
       - run: npm ci
-      - uses: tinovyatkin/action-eslint@v1
+      - run: npm test
+      - run: npm run test:check-coverage || true
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
         with:
-          repo-token: ${{secrets.GITHUB_TOKEN}}
-          check-name: eslint
+          node-version: 12
+      - run: npm ci
+      - run: npm run prod
+        env:
+          NODE_ENV: production
