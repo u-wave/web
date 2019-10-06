@@ -11,6 +11,8 @@ import FormButton from './components/Form/Button';
 
 export * as constants from './constants';
 
+var testForAction
+
 export const components = {
   MediaList,
   VideoBackdrop,
