@@ -2,7 +2,7 @@ import path from 'path';
 import defaultFs from 'fs';
 import hstream from 'hstream';
 import router from 'router';
-import serveStatic from 'connect-gzip-static';
+import serveStatic from 'serve-static';
 import gzip from 'http-gzip-maybe';
 import theme from '../theme';
 

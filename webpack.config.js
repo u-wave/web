@@ -34,8 +34,6 @@ require('@babel/register').default({
 //  - compileDependencies: Compiles dependencies that only ship ES2015+ to code that
 //    works in all our browser targets.
 const compileDependencies = require('./tasks/webpack/compileDependencies').default;
-//  - compress: Emits precompressed gzip and brotli versions of static assets.
-const compress = require('./tasks/webpack/compress').default;
 //  - staticPages: Compiles static markdown pages to HTML.
 const staticPages = require('./tasks/webpack/staticPages').default;
 //  - analyze: Optionally generates a bundle size statistics page using
@@ -202,6 +200,5 @@ module.exports = merge([
   staticPages({
     privacy: './static/privacy.md',
   }, nodeEnv === 'production'),
-  nodeEnv === 'production' && compress(),
   process.env.ANALYZE && analyze(process.env.ANALYZE),
 ].filter(Boolean));
