@@ -136,8 +136,8 @@ const base = {
         test: /\.(gif|jpe?g|png|svg)$/,
         use: [
           { loader: 'file-loader', query: { name: 'static/[name]_[hash:7].[ext]' } },
-          { loader: 'image-webpack-loader', query: { bypassOnDebug: true } },
-        ],
+          nodeEnv !== 'development' && { loader: 'image-webpack-loader' },
+        ].filter(Boolean),
       },
 
       {
