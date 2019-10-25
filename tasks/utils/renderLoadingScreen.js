@@ -42,9 +42,12 @@ module.exports = async function renderLoadingScreen(compilation) {
   });
 
   const mainChunk = entries[0];
-  assert.strictEqual(mainChunk.files.length, 1, 'Loading screen build must output a single file.');
-  const mainAsset = childCompilation.assets[mainChunk.files[0]];
-  delete childCompilation.assets[mainChunk.files[0]];
+  const mainJsFiles = mainChunk.files.filter((f) => f.endsWith('.js'))
+  assert.strictEqual(mainJsFiles.length, 1, 'Loading screen build must output a single file.');
+  const mainAsset = childCompilation.assets[mainJsFiles[0]];
+  mainChunk.files.forEach((file) => {
+    delete childCompilation.assets[file];
+  });
 
   const code = mainAsset.source();
   const LoadingScreen = evalModule(code).default;
