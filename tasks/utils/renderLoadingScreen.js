@@ -1,6 +1,5 @@
 /* eslint-disable global-require */
 const vm = require('vm');
-const path = require('path');
 const assert = require('assert');
 const h = require('react').createElement;
 const prerender = require('./prerender');
