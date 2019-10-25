@@ -1,8 +1,16 @@
 @import "../../vars.css";
 
+@keyframes initiallyHide {
+  0% { opacity: 0; }
+  80% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
 .LoadingScreen {
-  background: var(--background-color);
-  position: fixed;
+  background: #000;
+  position: relative;
+  width: 100%;
+  height: 100%;
   left: 0;
   right: 0;
   top: 0;
@@ -14,12 +22,10 @@
 }
 
 .LoadingScreen-loader {
-  height: 250px;
-  width: 250px;
-  height: 50vmin;
-  width: 50vmin;
+  animation: 1s linear 0s 1 initiallyHide;
 }
 
 .LoadingScreen-notice {
+  animation: 1s linear 0s 1 initiallyHide;
   color: var(--text-color);
 }

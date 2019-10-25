@@ -22,6 +22,8 @@ uw.build().then(() => {
   document.querySelector('#jss').textContent = '';
 }).catch((err) => {
   document.querySelector('.LoadingScreen-notice').textContent = `Error: ${err.message}`;
+  document.querySelector('.LoadingScreen-loader').hidden = true;
+  document.querySelector('.LoadingScreen-warning').hidden = false;
 
   setTimeout(() => {
     throw err;
