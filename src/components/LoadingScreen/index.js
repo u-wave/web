@@ -47,16 +47,20 @@ function FakeVolume() {
   );
 }
 
+const fakeSongTitle = (
+  <SongTitle
+    artist={<Filler width={200} />}
+    title={<Filler width={300} />}
+  />
+);
+
 function FakeHeaderBar() {
   return (
     <div className="HeaderBar App-header">
       <AppTitle className="HeaderBar-title">...</AppTitle>
       <div className="HeaderBar-nowPlaying">
         <div className="HeaderBar-media">
-          <SongTitle
-            artist={<Filler width={200} />}
-            title={<Filler width={300} />}
-          />
+          {fakeSongTitle}
         </div>
         <div className="HeaderBar-dj">
           <Filler width={300} />
@@ -83,7 +87,7 @@ const tabClasses = {
   wrapper: 'SidePanel-tabLabel',
 };
 
-const LoadingScreen = () => (
+const DesktopLoadingScreen = () => (
   <div className="App">
     <div className="AppColumn AppColumn--left">
       <div className="AppRow AppRow--top">
@@ -138,4 +142,49 @@ const LoadingScreen = () => (
   </div>
 );
 
-export default LoadingScreen;
+function MobileLoadingScreen() {
+  return (
+    <div className="App MobileApp is-mobile App--videoEnabled">
+      <div className="MainView">
+        <AppBar position="static" className="MainView-appBar">
+          <Toolbar>
+            <IconButton>
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="title" className="MainView-title">
+              {fakeSongTitle}
+            </Typography>
+            <IconButton>
+              <HistoryIcon />
+            </IconButton>
+            <IconButton style={waitlistIconStyle}>
+              <Filler width={30} />
+            </IconButton>
+          </Toolbar>
+        </AppBar>
+
+        <div className="MainView-content">
+          <div className="MobileApp-video" />
+          <div className="MobileApp-chat">
+            <div className="ChatContainer">
+              <div className="ChatContainer-messages">
+                <div className="ChatMessage ChatMessage--motd">
+                  <div className="ChatMessage-content">
+                    <Filler width={400} />
+                  </div>
+                </div>
+              </div>
+              <div className="ChatContainer-input ChatInputWrapper">
+                <div className="ChatInput">
+                  <input className="ChatInput-input" type="text" disabled />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default DesktopLoadingScreen;
