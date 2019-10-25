@@ -131,6 +131,9 @@ export default class Uwave {
         {this.getComponent()}
       </React.StrictMode>
     );
-    this.renderTarget.render(element);
+
+    return new Promise((resolve) => {
+      this.renderTarget.render(element, resolve);
+    });
   }
 }

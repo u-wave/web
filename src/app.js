@@ -17,7 +17,8 @@ uw.source(soundCloudSource());
 window.uw = uw;
 
 uw.build().then(() => {
-  uw.renderToDOM(document.querySelector('#app'));
+  return uw.renderToDOM(document.querySelector('#app'));
+}).then(() => {
   document.querySelector('#app-loading').innerHTML = '';
   document.querySelector('#jss').textContent = '';
 }).catch((err) => {
