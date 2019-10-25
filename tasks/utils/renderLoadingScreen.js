@@ -5,6 +5,15 @@ const h = require('react').createElement;
 const prerender = require('./prerender');
 const pkg = require('../../package.json');
 
+function evalModule(code) {
+  const target = {};
+  vm.runInNewContext(code, {
+    require,
+    module: target,
+  });
+  return target.exports;
+}
+
 module.exports = async function renderLoadingScreen(compilation) {
   const NodeTemplatePlugin = require('webpack/lib/node/NodeTemplatePlugin');
   const NodeTargetPlugin = require('webpack/lib/node/NodeTargetPlugin');
@@ -24,24 +33,28 @@ module.exports = async function renderLoadingScreen(compilation) {
   new LoaderTargetPlugin('node').apply(compiler);
   const dependencies = Object.keys(pkg.dependencies);
   new ExternalsPlugin('commonjs', (context, request, callback) => {
-    if (dependencies.some((dep) => request === dep || request.startsWith(dep + '/'))) {
-      return callback(null, `commonjs ${request}`);
+    if (dependencies.some((dep) => request === dep || request.startsWith(`${dep}/`))) {
+      callback(null, `commonjs ${request}`);
+    } else {
+      callback();
     }
-    callback();
   }).apply(compiler);
 
   const inputPath = require.resolve('../../src/components/LoadingScreen');
   new SingleEntryPlugin(compiler.context, inputPath, 'LoadingScreen').apply(compiler);
 
   const [entries, childCompilation] = await new Promise((resolve, reject) => {
-    compiler.runAsChild((err, entries, childCompilation) => {
-      if (err) return reject(err);
-      resolve([entries, childCompilation]);
+    compiler.runAsChild((err, ...results) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(results);
+      }
     });
   });
 
   const mainChunk = entries[0];
-  const mainJsFiles = mainChunk.files.filter((f) => f.endsWith('.js'))
+  const mainJsFiles = mainChunk.files.filter((f) => f.endsWith('.js'));
   assert.strictEqual(mainJsFiles.length, 1, 'Loading screen build must output a single file.');
   const mainAsset = childCompilation.assets[mainJsFiles[0]];
   mainChunk.files.forEach((file) => {
@@ -52,12 +65,3 @@ module.exports = async function renderLoadingScreen(compilation) {
   const LoadingScreen = evalModule(code).default;
   return prerender(h(LoadingScreen));
 };
-
-function evalModule(code) {
-  const target = {};
-  vm.runInNewContext(code, {
-    require,
-    module: target,
-  });
-  return target.exports;
-}

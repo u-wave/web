@@ -1,5 +1,6 @@
 import React from 'react';
 import Uwave from './Uwave';
+import load from './loadingUI';
 import experimentalThemePlugin from './experimentalThemePlugin';
 import youTubeSource from './sources/youtube';
 import soundCloudSource from './sources/soundcloud';
@@ -26,13 +27,7 @@ uw.setAboutPageComponent(() => (
 
 window.uw = uw;
 
-uw.build().then(() => {
-  uw.renderToDOM(document.querySelector('#app'));
-  document.querySelector('#app-loading').innerHTML = '';
-  document.querySelector('#jss').textContent = '';
-}).catch((err) => {
-  document.querySelector('.LoadingScreen-notice').textContent = `Error: ${err.message}`;
-
+load(uw).catch((err) => {
   setTimeout(() => {
     throw err;
   }, 0);
