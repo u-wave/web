@@ -114,21 +114,24 @@ function serve(done) {
       serverSideRender: true,
     });
 
-    const webClient = createWebClient(null, {
-      apiUrl,
-      socketUrl,
-      emoji: emojione.emoji,
-      title: 'üWave (Development)',
-      basePath: path.join(__dirname, '../packages/u-wave-web-middleware/public'),
-      publicPath: '/',
-      // Point u-wave-web middleware to the virtual webpack filesystem.
-      fs: dev.fileSystem,
-      recaptcha: { key: recaptchaTestKeys.sitekey },
+    let webClient = (req, res, next) => next(new Error('Build not complete'));
+    dev.waitUntilValid(() => {
+      webClient = createWebClient(null, {
+        apiUrl,
+        socketUrl,
+        emoji: emojione.emoji,
+        title: 'üWave (Development)',
+        basePath: path.join(__dirname, '../packages/u-wave-web-middleware/public'),
+        publicPath: '/',
+        // Point u-wave-web middleware to the virtual webpack filesystem.
+        fs: dev.fileSystem,
+        recaptcha: { key: recaptchaTestKeys.sitekey },
+      });
     });
 
     // Delay responding to HTTP requests until the first build is complete.
     app.use(waitForBuild(dev));
-    app.use(webClient);
+    app.use((req, res, next) => webClient(req, res, next));
     app.use(dev);
     app.use(webpackHotMiddleware(compiler, {
       log,
