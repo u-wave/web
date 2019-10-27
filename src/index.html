@@ -1,6 +1,6 @@
 <%
   const loading = htmlWebpackPlugin.options.loadingScreen &&
-    await htmlWebpackPlugin.options.loadingScreen();
+    await htmlWebpackPlugin.options.loadingScreen(compilation);
 %>
 <!DOCTYPE html>
 <!-- lang will be overwritten with user configuration at runtime. -->

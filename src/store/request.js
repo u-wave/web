@@ -29,11 +29,16 @@ function rejectNonOK(response) {
         throw new Error('An unknown error occurred.');
       }
       const { errors } = res;
-      const error = Object.assign(new Error(errors.map((err) => err.title).join(', ')), {
-        response,
-        errors,
-      });
+      const error = new Error(errors.map((err) => err.title).join(', '));
+      error.response = response;
+      error.errors = errors;
       throw error;
+    }, (error) => {
+      const pathname = response.url.replace(window.location.origin, '').replace(/\?.*$/, '');
+      const newError = new Error(`Invalid response from ${pathname}, please try again later.`);
+      newError.response = response;
+      newError.cause = error;
+      throw newError;
     });
   }
   return response;

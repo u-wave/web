@@ -143,6 +143,7 @@ function serve(done) {
       apiUrl,
       socketUrl,
       emoji: emojione.emoji,
+      basePath: path.join(__dirname, '../packages/u-wave-web-middleware/public'),
       recaptcha: { key: recaptchaTestKeys.sitekey },
     });
 

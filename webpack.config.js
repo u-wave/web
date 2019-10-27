@@ -51,7 +51,7 @@ const plugins = [
     template: './index.html',
     title: 'üWave',
     minify: nodeEnv === 'production' ? htmlMinifierOptions : false,
-    loadingScreen: () => require('./tasks/utils/renderLoadingScreen')(),
+    loadingScreen: (...args) => require('./tasks/utils/renderLoadingScreen')(...args),
   }),
   new HtmlPlugin({
     chunks: ['polyfills', 'passwordReset'],
