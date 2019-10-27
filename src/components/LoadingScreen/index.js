@@ -1,32 +1,21 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Slider from '@material-ui/core/Slider';
+import { makeStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
 import IconButton from '@material-ui/core/IconButton';
+import Slider from '@material-ui/core/Slider';
+import Tab from '@material-ui/core/Tab';
+import Tabs from '@material-ui/core/Tabs';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 import HistoryIcon from '@material-ui/icons/History';
-import WarningIcon from '@material-ui/icons/Warning';
+import MenuIcon from '@material-ui/icons/Menu';
 import VolumeOffIcon from '@material-ui/icons/VolumeOff';
 import AppTitle from '../HeaderBar/AppTitle';
 import SongTitle from '../SongTitle';
+import LoadingIndicator from './LoadingIndicator';
+import Filler from './Filler';
 
 function noop() {}
-
-function Filler({ width }) {
-  const style = {
-    display: 'inline-block',
-    background: '#444',
-    height: '1em',
-    width,
-    verticalAlign: 'middle',
-  };
-
-  return <span style={style} />;
-}
-Filler.propTypes = {
-  width: PropTypes.number.isRequired,
-};
 
 function FakeVolume() {
   return (
@@ -87,64 +76,63 @@ const tabClasses = {
   wrapper: 'SidePanel-tabLabel',
 };
 
-const DesktopLoadingScreen = () => (
-  <div className="App">
-    <div className="AppColumn AppColumn--left">
-      <div className="AppRow AppRow--top">
-        <FakeHeaderBar />
-      </div>
-      <div className="AppRow AppRow--middle">
-        <div className="LoadingScreen">
-          <CircularProgress className="LoadingScreen-loader" />
-          <div className="LoadingScreen-warning" hidden>
-            <WarningIcon color="error" fontSize="large" />
-          </div>
-          <p className="LoadingScreen-notice">
-            üWave requires JavaScript to run.
-          </p>
+function DesktopSkeleton() {
+  return (
+    <div className="App">
+      <div className="AppColumn AppColumn--left">
+        <div className="AppRow AppRow--top">
+          <FakeHeaderBar />
+        </div>
+        <div className="AppRow AppRow--middle">
+          <LoadingIndicator />
+        </div>
+        <div className="AppRow AppRow--bottom">
+          <FakeFooterBar />
         </div>
       </div>
-      <div className="AppRow AppRow--bottom">
-        <FakeFooterBar />
-      </div>
-    </div>
-    <div className="AppColumn AppColumn--right">
-      <Tabs
-        value={0}
-        variant="fullWidth"
-        classes={{
-          root: 'SidePanel-tabs',
-          indicator: 'SidePanel-indicator',
-        }}
-      >
-        <Tab classes={tabClasses} label={<Filler width={70} />} />
-        <Tab classes={tabClasses} label={<Filler width={70} />} />
-        <Tab classes={tabClasses} label={<Filler width={100} />} />
-      </Tabs>
+      <div className="AppColumn AppColumn--right">
+        <Tabs
+          value={0}
+          variant="fullWidth"
+          classes={{
+            root: 'SidePanel-tabs',
+            indicator: 'SidePanel-indicator',
+          }}
+        >
+          <Tab classes={tabClasses} label={<Filler width={70} />} />
+          <Tab classes={tabClasses} label={<Filler width={70} />} />
+          <Tab classes={tabClasses} label={<Filler width={100} />} />
+        </Tabs>
 
-      <div className="SidePanel-panel is-selected">
-        <div className="ChatContainer">
-          <div className="ChatContainer-messages">
-            <div className="ChatMessage ChatMessage--motd">
-              <div className="ChatMessage-content">
-                <Filler width={400} />
+        <div className="SidePanel-panel is-selected">
+          <div className="ChatContainer">
+            <div className="ChatContainer-messages">
+              <div className="ChatMessage ChatMessage--motd">
+                <div className="ChatMessage-content">
+                  <Filler width={400} />
+                </div>
+              </div>
+            </div>
+            <div className="ChatContainer-input ChatInputWrapper">
+              <div className="ChatInput">
+                <input className="ChatInput-input" type="text" disabled />
               </div>
             </div>
           </div>
-          <div className="ChatContainer-input ChatInputWrapper">
-            <div className="ChatInput">
-              <input className="ChatInput-input" type="text" disabled />
-            </div>
-          </div>
         </div>
       </div>
     </div>
-  </div>
-);
+  );
+}
 
-function MobileLoadingScreen() {
+const waitlistIconStyle = {
+  fontSize: '125%',
+  textAlign: 'center',
+};
+
+function MobileSkeleton() {
   return (
-    <div className="App MobileApp is-mobile App--videoEnabled">
+    <div className="App MobileApp is-mobile MobileApp--videoEnabled">
       <div className="MainView">
         <AppBar position="static" className="MainView-appBar">
           <Toolbar>
@@ -158,13 +146,15 @@ function MobileLoadingScreen() {
               <HistoryIcon />
             </IconButton>
             <IconButton style={waitlistIconStyle}>
-              <Filler width={30} />
+              <Filler width={20} />
             </IconButton>
           </Toolbar>
         </AppBar>
 
         <div className="MainView-content">
-          <div className="MobileApp-video" />
+          <div className="MobileApp-video">
+            <LoadingIndicator />
+          </div>
           <div className="MobileApp-chat">
             <div className="ChatContainer">
               <div className="ChatContainer-messages">
@@ -187,4 +177,31 @@ function MobileLoadingScreen() {
   );
 }
 
-export default DesktopLoadingScreen;
+const useStyles = makeStyles({
+  desktop: {
+    display: 'none',
+    '@media (min-width: 769px)': {
+      display: 'block',
+    },
+  },
+  mobile: {
+    display: 'block',
+    '@media (min-width: 769px)': {
+      display: 'none',
+    },
+  },
+});
+export default function LoadingScreen() {
+  const { desktop, mobile } = useStyles();
+
+  return (
+    <>
+      <div className={desktop}>
+        <DesktopSkeleton />
+      </div>
+      <div className={mobile}>
+        <MobileSkeleton />
+      </div>
+    </>
+  );
+}

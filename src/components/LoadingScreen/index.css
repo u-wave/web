@@ -1,4 +1,5 @@
 @import "../../vars.css";
+@import "./Filler.css";
 
 @keyframes initiallyHide {
   0% { opacity: 0; }
@@ -6,7 +7,7 @@
   100% { opacity: 1; }
 }
 
-.LoadingScreen {
+.LoadingIndicator {
   background: #000;
   position: relative;
   width: 100%;
@@ -21,11 +22,11 @@
   align-items: center;
 }
 
-.LoadingScreen-loader {
+.LoadingIndicator-loader {
   animation: 1s linear 0s 1 initiallyHide;
 }
 
-.LoadingScreen-notice {
+.LoadingIndicator-notice {
   animation: 1s linear 0s 1 initiallyHide;
   color: var(--text-color);
 }

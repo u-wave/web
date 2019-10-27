@@ -1,5 +1,5 @@
 function setLoadingText(text) {
-  document.querySelector('.LoadingScreen-notice').textContent = text;
+  document.querySelector('.LoadingIndicator-notice').textContent = text;
 }
 
 export default function load(uw) {
@@ -16,8 +16,8 @@ export default function load(uw) {
     document.querySelector('#jss').textContent = '';
   }).catch((err) => {
     setLoadingText(`Error: ${err.message}`);
-    document.querySelector('.LoadingScreen-loader').hidden = true;
-    document.querySelector('.LoadingScreen-warning').hidden = false;
+    document.querySelector('.LoadingIndicator-loader').hidden = true;
+    document.querySelector('.LoadingIndicator-warning').hidden = false;
 
     throw err;
   });
