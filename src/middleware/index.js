@@ -3,7 +3,6 @@ import defaultFs from 'fs';
 import hstream from 'hstream';
 import router from 'router';
 import serveStatic from 'serve-static';
-import gzip from 'http-gzip-maybe';
 import theme from '../theme';
 
 function createManifest({ title }) {
@@ -45,7 +44,7 @@ export default function uwaveWebClient(uw, options = {}) {
         '#u-wave-config': JSON.stringify(clientOptions),
       });
 
-      transform.pipe(gzip(req, res)).pipe(res);
+      transform.pipe(res);
       transform.end(indexHtml);
     })
     .get('/reset/:key', (req, res) => {
@@ -57,7 +56,7 @@ export default function uwaveWebClient(uw, options = {}) {
         '#reset-data': req.params.key,
       });
 
-      transform.pipe(gzip(req, res)).pipe(res);
+      transform.pipe(res);
       transform.end(passwordResetHtml);
     })
     .get('/manifest.json', (req, res) => {
