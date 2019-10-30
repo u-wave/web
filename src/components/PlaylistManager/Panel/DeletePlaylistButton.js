@@ -41,13 +41,15 @@ function DeletePlaylistButton({
   return (
     <>
       <Tooltip title={active ? t('playlists.deleteActive') : t('playlists.delete')} placement="top">
-        <IconButton
-          disabled={active}
-          className="PlaylistMeta-iconButton"
-          onClick={handleOpen}
-        >
-          <DeleteIcon />
-        </IconButton>
+        <span className="PlaylistMeta-possiblyDisabledButtonWrapper">
+          <IconButton
+            disabled={active}
+            className="PlaylistMeta-iconButton"
+            onClick={handleOpen}
+          >
+            <DeleteIcon />
+          </IconButton>
+        </span>
       </Tooltip>
       {deleting && (
         <ConfirmDialog
