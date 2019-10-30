@@ -59,7 +59,6 @@
     "react-dom": "^16.9.0",
     "react-google-button": "^0.5.3",
     "react-hot-loader": "^4.12.13",
-    "react-loadable": "^5.5.0",
     "react-markdown": "^4.2.2",
     "react-redux": "^7.1.1",
     "react-transition-group": "^4.3.0",
