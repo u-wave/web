@@ -129,13 +129,13 @@ const base = {
       {
         test: /\.mp3$/,
         use: [
-          { loader: 'file-loader', query: { name: 'static/[name]_[hash:7].[ext]' } },
+          { loader: 'file-loader', options: { name: 'static/[name]_[hash:7].[ext]' } },
         ],
       },
       {
         test: /\.(gif|jpe?g|png|svg)$/,
         use: [
-          { loader: 'file-loader', query: { name: 'static/[name]_[hash:7].[ext]' } },
+          { loader: 'file-loader', options: { name: 'static/[name]_[hash:7].[ext]' } },
           nodeEnv !== 'development' && { loader: 'image-webpack-loader' },
         ].filter(Boolean),
       },
@@ -170,7 +170,7 @@ const base = {
           'babel-loader',
           nodeEnv !== 'production' && {
             loader: 'eslint-loader',
-            query: { cache: true },
+            options: { cache: true },
           },
         ].filter(Boolean),
       },

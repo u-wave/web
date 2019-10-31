@@ -13,7 +13,7 @@ const es2015Deps = [
 export default function compileDependencies() {
   const babelConfig = {
     loader: 'babel-loader',
-    query: {
+    options: {
       babelrc: false,
       presets: [
         ['@babel/preset-env', {
