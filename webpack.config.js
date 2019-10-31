@@ -110,6 +110,7 @@ const base = {
     filename: nodeEnv === 'production' ? 'static/[name]_[chunkhash:7].js' : '[name]_dev.js',
     chunkFilename: nodeEnv === 'production' ? 'static/[name]_[chunkhash:7].js' : '[name]_dev.js',
     crossOriginLoading: 'anonymous',
+    ecmaVersion: 5,
   },
 
   optimization,
