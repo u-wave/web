@@ -2,7 +2,6 @@
 const path = require('path');
 const escapeStringRegExp = require('escape-string-regexp');
 const { DefinePlugin, ProgressPlugin } = require('webpack');
-const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const ExtractCssPlugin = require('mini-css-extract-plugin');
 const HtmlPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
@@ -59,9 +58,6 @@ const plugins = [
   }),
   new DefinePlugin({
     'process.env.FORCE_TOKEN': JSON.stringify(isDemo),
-  }),
-  false && new LodashModuleReplacementPlugin({
-    paths: true,
   }),
 ];
 
