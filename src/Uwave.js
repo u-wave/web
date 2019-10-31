@@ -9,7 +9,6 @@ import createGenerateClassName from './utils/createGenerateClassName';
 import configureStore from './store/configureStore';
 import { initState, socketConnect, setSessionToken } from './actions/LoginActionCreators';
 import { loadCurrentLanguage } from './actions/LocaleActionCreators';
-import * as api from './api';
 // Register default chat commands.
 import './utils/commands';
 
@@ -32,10 +31,6 @@ export default class Uwave {
     this.ready = new Promise((resolve) => {
       this.resolveReady = resolve;
     });
-
-    Object.assign(this, api.constants);
-    Object.assign(this, api.components);
-    Object.assign(this, api.actions);
 
     if (module.hot) {
       const { getComponent } = this;
