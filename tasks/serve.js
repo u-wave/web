@@ -96,7 +96,9 @@ function serve(done) {
   const apiUrl = '/api';
   const socketUrl = `ws://localhost:${serverPort}`;
 
-  app.use(apiUrl, proxy({ target: `http://localhost:${serverPort}/` }));
+  app.use(apiUrl, proxy({
+    target: process.env.SERVER_URL || `http://localhost:${serverPort}/`,
+  }));
   app.use('/assets/emoji/', emojione.middleware());
 
   if (watch) {

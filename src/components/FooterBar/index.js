@@ -41,10 +41,6 @@ class FooterBar extends React.Component {
     onDownvote: PropTypes.func,
   };
 
-  static contextTypes = {
-    muiTheme: PropTypes.object,
-  };
-
   handleSkipTurn = (reason) => {
     const {
       showSkip, userIsDJ, onModSkip, onSkipTurn,

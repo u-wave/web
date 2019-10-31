@@ -1,15 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import nest from 'recompose/nest';
 import { useDispatch } from 'react-redux';
 import { useTranslator } from '@u-wave/react-translate';
-import hoistStatics from 'hoist-non-react-statics';
-import loadable from 'react-loadable';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Overlay from '../Overlay';
 import OverlayContent from '../Overlay/Content';
 import OverlayHeader from '../Overlay/Header';
 import { closeAll } from '../../actions/OverlayActionCreators';
+
+const {
+  useEffect,
+  useState,
+} = React;
 
 export default function createLazyOverlay({
   loader,
@@ -18,10 +19,17 @@ export default function createLazyOverlay({
 }) {
   if (typeof loader !== 'function') throw new TypeError('loader must be a function');
 
-  function LoadingOverlay({ pastDelay }) {
+  function LoadingOverlay() {
     const { t } = useTranslator();
     const dispatch = useDispatch();
     const onCloseOverlay = () => dispatch(closeAll());
+
+    // Simulate `pastDelay` from react-loadable
+    const [pastDelay, setPastDelay] = useState(false);
+    useEffect(() => {
+      const timer = setTimeout(() => setPastDelay(true), 1000);
+      return () => clearTimeout(timer);
+    }, []);
 
     return (
       <>
@@ -41,14 +49,17 @@ export default function createLazyOverlay({
     );
   }
 
-  LoadingOverlay.propTypes = {
-    pastDelay: PropTypes.bool.isRequired,
-  };
+  const RealOverlay = React.lazy(loader);
 
-  const LazyOverlay = loadable({
-    loader,
-    loading: LoadingOverlay,
-  });
+  function LazyOverlay(props) {
+    return (
+      <OverlayComponent {...props}>
+        <React.Suspense fallback={<LoadingOverlay {...props} />}>
+          <RealOverlay {...props} />
+        </React.Suspense>
+      </OverlayComponent>
+    );
+  }
 
-  return hoistStatics(nest(OverlayComponent, LazyOverlay), LazyOverlay);
+  return LazyOverlay;
 }
