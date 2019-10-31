@@ -5,9 +5,7 @@ const { DefinePlugin, ProgressPlugin } = require('webpack');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const ExtractCssPlugin = require('mini-css-extract-plugin');
 const HtmlPlugin = require('html-webpack-plugin');
-const HtmlSiblingChunksPlugin = require('html-webpack-include-sibling-chunks-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
-const { Plugin: ShakePlugin } = require('webpack-common-shake');
 const merge = require('webpack-merge');
 const htmlMinifierOptions = require('./tasks/utils/htmlMinifierOptions');
 
@@ -45,7 +43,6 @@ const plugins = [
     { from: '../assets/favicon.ico', to: 'favicon.ico' },
     { from: '../assets/icon-white.png', to: 'icon-white.png' },
   ]),
-  new HtmlSiblingChunksPlugin(),
   new HtmlPlugin({
     chunks: ['polyfills', 'app'],
     template: './index.html',
@@ -86,7 +83,6 @@ if (nodeEnv === 'production') {
   };
 
   plugins.push(
-    new ShakePlugin(),
     new ExtractCssPlugin({
       filename: 'static/[name]_[contenthash:7].css',
       chunkFilename: 'static/[name]_[contenthash:7].css',
