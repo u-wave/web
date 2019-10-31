@@ -94,5 +94,5 @@ export const dateTimeFormatterSelector = createSelector(
 
 export const numberFormatterSelector = createSelector(
   currentLanguageSelector,
-  current => new Intl.NumberFormat(current),
+  (current) => new Intl.NumberFormat(current),
 );
