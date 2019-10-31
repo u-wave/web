@@ -63,7 +63,7 @@ const plugins = [
   new DefinePlugin({
     'process.env.FORCE_TOKEN': JSON.stringify(isDemo),
   }),
-  new LodashModuleReplacementPlugin({
+  false && new LodashModuleReplacementPlugin({
     paths: true,
   }),
 ];
@@ -121,7 +121,7 @@ const base = {
   },
 
   optimization,
-  plugins,
+  plugins: plugins.filter(Boolean),
 
   module: {
     rules: [
