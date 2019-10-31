@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import nest from 'recompose/nest';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { MuiThemeProvider } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/styles';
 import { Provider as BusProvider } from 'react-bus';
 import { TranslateProvider } from '@u-wave/react-translate';
 import { Mobile, Desktop } from '../components/Responsive';
@@ -27,7 +27,7 @@ const SimpleProviders = nest(
 );
 
 const mapStateToProps = createStructuredSelector({
-  activeOverlay: state => state.activeOverlay,
+  activeOverlay: (state) => state.activeOverlay,
   isConnected: isConnectedSelector,
   settings: settingsSelector,
   theme: themeSelector,
@@ -48,9 +48,13 @@ class AppContainer extends React.Component {
     translator: PropTypes.object.isRequired,
   };
 
-  state = {
-    error: null,
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      error: null,
+    };
+  }
 
   componentDidMount() {
     this.applyThemeProperties();
@@ -78,14 +82,14 @@ class AppContainer extends React.Component {
   }
 
   renderApp = () => (
-    <React.Fragment>
+    <>
       <Mobile>
         <MobileApp {...this.props} />
       </Mobile>
       <Desktop>
         <DesktopApp {...this.props} />
       </Desktop>
-    </React.Fragment>
+    </>
   );
 
   render() {
@@ -100,14 +104,14 @@ class AppContainer extends React.Component {
     if (error) {
       // Let's hope the ThemeProvider works at least...
       return (
-        <MuiThemeProvider theme={theme}>
+        <ThemeProvider theme={theme}>
           <FatalError error={error} />
-        </MuiThemeProvider>
+        </ThemeProvider>
       );
     }
 
     return (
-      <MuiThemeProvider theme={theme}>
+      <ThemeProvider theme={theme}>
         <TranslateProvider translator={translator}>
           <SimpleProviders>
             <UwaveContext.Provider value={uwave}>
@@ -117,7 +121,7 @@ class AppContainer extends React.Component {
             </UwaveContext.Provider>
           </SimpleProviders>
         </TranslateProvider>
-      </MuiThemeProvider>
+      </ThemeProvider>
     );
   }
 }

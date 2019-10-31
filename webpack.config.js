@@ -14,6 +14,8 @@ const htmlMinifierOptions = require('./tasks/utils/htmlMinifierOptions');
 const nodeEnv = process.env.NODE_ENV || 'development';
 const isDemo = process.env.DEMO === '1';
 
+const outputPackage = isDemo ? __dirname : path.join(__dirname, 'packages/u-wave-web-middleware');
+
 // Compile src/ on the fly so we can use components etc. during build time.
 require('@babel/register').default({
   only: [
@@ -32,8 +34,6 @@ require('@babel/register').default({
 //  - compileDependencies: Compiles dependencies that only ship ES2015+ to code that
 //    works in all our browser targets.
 const compileDependencies = require('./tasks/webpack/compileDependencies').default;
-//  - compress: Emits precompressed gzip and brotli versions of static assets.
-const compress = require('./tasks/webpack/compress').default;
 //  - staticPages: Compiles static markdown pages to HTML.
 const staticPages = require('./tasks/webpack/staticPages').default;
 //  - analyze: Optionally generates a bundle size statistics page using
@@ -51,7 +51,7 @@ const plugins = [
     template: './index.html',
     title: 'üWave',
     minify: nodeEnv === 'production' ? htmlMinifierOptions : false,
-    loadingScreen: () => require('./tasks/utils/renderLoadingScreen')(),
+    loadingScreen: (...args) => require('./tasks/utils/renderLoadingScreen')(...args),
   }),
   new HtmlPlugin({
     chunks: ['polyfills', 'passwordReset'],
@@ -63,11 +63,14 @@ const plugins = [
   new DefinePlugin({
     'process.env.FORCE_TOKEN': JSON.stringify(isDemo),
   }),
-  new ProgressPlugin(),
   new LodashModuleReplacementPlugin({
     paths: true,
   }),
 ];
+
+if (!isDemo) {
+  plugins.push(new ProgressPlugin());
+}
 
 let optimization;
 
@@ -111,7 +114,7 @@ const base = {
 
   output: {
     publicPath: '/',
-    path: path.join(__dirname, 'public'),
+    path: path.join(outputPackage, 'public'),
     filename: nodeEnv === 'production' ? 'static/[name]_[chunkhash:7].js' : '[name]_dev.js',
     chunkFilename: nodeEnv === 'production' ? 'static/[name]_[chunkhash:7].js' : '[name]_dev.js',
     crossOriginLoading: 'anonymous',
@@ -133,8 +136,8 @@ const base = {
         test: /\.(gif|jpe?g|png|svg)$/,
         use: [
           { loader: 'file-loader', query: { name: 'static/[name]_[hash:7].[ext]' } },
-          { loader: 'image-webpack-loader', query: { bypassOnDebug: true } },
-        ],
+          nodeEnv !== 'development' && { loader: 'image-webpack-loader' },
+        ].filter(Boolean),
       },
 
       {
@@ -176,12 +179,11 @@ const base = {
   resolve: {
     alias: {
       // Use the ES modules versions of some packages.
-      '@material-ui/core': path.join(__dirname, 'node_modules/@material-ui/core/es/'),
-      '@material-ui/lab': path.join(__dirname, 'node_modules/@material-ui/lab/es/'),
-      '@material-ui/utils': path.join(__dirname, 'node_modules/@material-ui/utils/es/'),
-      // For some reason the CJS versions of these don't work in prod?
-      'react-dnd': path.join(__dirname, 'node_modules/react-dnd/lib/esm/'),
-      'react-dnd-html5-backend': path.join(__dirname, 'node_modules/react-dnd-html5-backend/lib/esm/'),
+      '@material-ui/core': path.join(__dirname, 'node_modules/@material-ui/core/esm/'),
+      '@material-ui/icons': path.join(__dirname, 'node_modules/@material-ui/icons/esm/'),
+      '@material-ui/styles': path.join(__dirname, 'node_modules/@material-ui/styles/esm/'),
+      '@material-ui/system': path.join(__dirname, 'node_modules/@material-ui/system/esm/'),
+      '@material-ui/utils': path.join(__dirname, 'node_modules/@material-ui/utils/esm/'),
     },
     mainFields: [
       'browser',
@@ -198,6 +200,5 @@ module.exports = merge([
   staticPages({
     privacy: './static/privacy.md',
   }, nodeEnv === 'production'),
-  nodeEnv === 'production' && compress(),
   process.env.ANALYZE && analyze(process.env.ANALYZE),
 ].filter(Boolean));

@@ -2,8 +2,7 @@ import path from 'path';
 import defaultFs from 'fs';
 import hstream from 'hstream';
 import router from 'router';
-import serveStatic from 'connect-gzip-static';
-import gzip from 'http-gzip-maybe';
+import serveStatic from 'serve-static';
 import theme from '../theme';
 
 function createManifest({ title }) {
@@ -30,6 +29,9 @@ export default function uwaveWebClient(uw, options = {}) {
     ...clientOptions
   } = options;
 
+  const indexHtml = fs.readFileSync(path.join(basePath, 'index.html'), 'utf8');
+  const passwordResetHtml = fs.readFileSync(path.join(basePath, 'password-reset.html'), 'utf8');
+
   const clientRouter = router();
   const manifest = createManifest({ title });
 
@@ -42,10 +44,8 @@ export default function uwaveWebClient(uw, options = {}) {
         '#u-wave-config': JSON.stringify(clientOptions),
       });
 
-      fs.createReadStream(path.join(basePath, 'index.html'), 'utf8')
-        .pipe(transform)
-        .pipe(gzip(req, res))
-        .pipe(res);
+      transform.pipe(res);
+      transform.end(indexHtml);
     })
     .get('/reset/:key', (req, res) => {
       res.setHeader('content-type', 'text/html');
@@ -56,10 +56,8 @@ export default function uwaveWebClient(uw, options = {}) {
         '#reset-data': req.params.key,
       });
 
-      fs.createReadStream(path.join(basePath, 'password-reset.html'), 'utf8')
-        .pipe(transform)
-        .pipe(gzip(req, res))
-        .pipe(res);
+      transform.pipe(res);
+      transform.end(passwordResetHtml);
     })
     .get('/manifest.json', (req, res) => {
       res.json(manifest);

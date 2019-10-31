@@ -30,7 +30,7 @@ const ConnectedDrawerMenu = enhance(DrawerMenu);
 
 const DrawerMenuWrapper = () => (
   <UwaveContext.Consumer>
-    {uwave => (
+    {(uwave) => (
       <ConnectedDrawerMenu
         hasAboutPage={uwave && uwave.getAboutPageComponent()}
       />

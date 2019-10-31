@@ -28,11 +28,15 @@ class RegisterForm extends React.Component {
     onRegister: PropTypes.func,
   };
 
-  state = {
-    busy: false,
-    agreed: false,
-    captchaResponse: null,
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      busy: false,
+      agreed: false,
+      captchaResponse: null,
+    };
+  }
 
   handleSubmit = (event) => {
     const { onRegister } = this.props;
@@ -102,10 +106,10 @@ class RegisterForm extends React.Component {
       <Form className="RegisterForm" onSubmit={this.handleSubmit}>
         {error && <FormGroup>{error.message}</FormGroup>}
         {supportsSocialAuth && (
-          <React.Fragment>
+          <>
             <SocialLogin />
             <Separator />
-          </React.Fragment>
+          </>
         )}
         <FormGroup>
           <TextField
@@ -113,7 +117,7 @@ class RegisterForm extends React.Component {
             className="RegisterForm-field"
             autocomplete="nickname"
             placeholder={t('login.username')}
-            icon={<UserIcon nativeColor="#9f9d9e" />}
+            icon={<UserIcon htmlColor="#9f9d9e" />}
             autoFocus
           />
         </FormGroup>
@@ -124,7 +128,7 @@ class RegisterForm extends React.Component {
             type="email"
             autocomplete="email"
             placeholder={t('login.email')}
-            icon={<EmailIcon nativeColor="#9f9d9e" />}
+            icon={<EmailIcon htmlColor="#9f9d9e" />}
           />
         </FormGroup>
         <FormGroup>
@@ -134,7 +138,7 @@ class RegisterForm extends React.Component {
             type="password"
             autocomplete="new-password"
             placeholder={t('login.password')}
-            icon={<PasswordIcon nativeColor="#9f9d9e" />}
+            icon={<PasswordIcon htmlColor="#9f9d9e" />}
           />
         </FormGroup>
 
@@ -168,8 +172,7 @@ class RegisterForm extends React.Component {
           >
             {busy
               ? <div className="Button-loading"><CircularProgress size="100%" /></div>
-              : t('login.register')
-            }
+              : t('login.register')}
           </Button>
         </FormGroup>
       </Form>

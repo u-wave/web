@@ -1,23 +1,31 @@
-import { connect } from 'react-redux';
-import compose from 'recompose/compose';
-import lifecycle from 'recompose/lifecycle';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { loadBans, unbanUserAndReload } from '../actions/bans';
 import BansList from '../components/BansList';
 
-const mapStateToProps = state => ({
-  bans: state.admin.bans.bans,
-});
+const {
+  useCallback,
+  useEffect,
+} = React;
 
-const mapDispatchToProps = {
-  onLoadBans: loadBans,
-  onUnbanUser: unbanUserAndReload,
-};
+function BansListContainer() {
+  const bans = useSelector((state) => state.admin.bans.bans);
+  const dispatch = useDispatch();
 
-export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
-  lifecycle({
-    componentDidMount() {
-      this.props.onLoadBans();
-    },
-  }),
-)(BansList);
+  const onUnbanUser = useCallback((user) => {
+    dispatch(unbanUserAndReload(user));
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(loadBans());
+  }, []);
+
+  return (
+    <BansList
+      bans={bans}
+      onUnbanUser={onUnbanUser}
+    />
+  );
+}
+
+export default BansListContainer;

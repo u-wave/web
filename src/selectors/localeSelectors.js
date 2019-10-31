@@ -5,8 +5,8 @@ import { availableLanguages } from '../locales';
 import { languageSelector as currentLanguageSelector } from './settingSelectors';
 
 const defaultLanguageSelector = () => 'en';
-const baseSelector = state => state.locales;
-const loadedSelector = createSelector(baseSelector, base => base.loaded);
+const baseSelector = (state) => state.locales;
+const loadedSelector = createSelector(baseSelector, (base) => base.loaded);
 
 const defaultTranslatorSelector = createSelector(
   loadedSelector,
@@ -18,7 +18,7 @@ export const availableLanguagesSelector = () => availableLanguages;
 
 export const loadingSelector = createSelector(
   baseSelector,
-  base => new Set(base.loading),
+  (base) => new Set(base.loading),
 );
 
 export const translatorSelector = createSelector(
@@ -38,7 +38,7 @@ export const translatorSelector = createSelector(
 
 export const loadedLanguagesSelector = createSelector(
   loadedSelector,
-  loaded => new Set(Object.keys(loaded)),
+  (loaded) => new Set(Object.keys(loaded)),
 );
 
 const relativeTimeFormatOptions = {
@@ -76,17 +76,17 @@ const dateFormatOptions = {
 
 export const timeFormatterSelector = createSelector(
   currentLanguageSelector,
-  current => new Intl.DateTimeFormat(current, timeFormatOptions),
+  (current) => new Intl.DateTimeFormat(current, timeFormatOptions),
 );
 
 export const dateFormatterSelector = createSelector(
   currentLanguageSelector,
-  current => new Intl.DateTimeFormat(current, dateFormatOptions),
+  (current) => new Intl.DateTimeFormat(current, dateFormatOptions),
 );
 
 export const dateTimeFormatterSelector = createSelector(
   currentLanguageSelector,
-  current => new Intl.DateTimeFormat(current, {
+  (current) => new Intl.DateTimeFormat(current, {
     ...dateFormatOptions,
     ...timeFormatOptions,
   }),

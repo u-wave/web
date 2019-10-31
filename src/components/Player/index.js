@@ -1,4 +1,4 @@
-import cx from 'classnames';
+import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useMediaSources } from '../../context/MediaSourceContext';
@@ -40,7 +40,7 @@ function Player({
         active={media.sourceType === sourceType}
       />
     );
-  }).filter(player => player !== null);
+  }).filter((player) => player !== null);
 
   return (
     <div className={cx('Player', `Player--${media.sourceType}`, `Player--${size}`)}>

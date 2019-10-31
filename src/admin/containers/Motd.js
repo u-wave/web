@@ -9,7 +9,7 @@ import {
 import { canChangeMotdSelector } from '../selectors/authSelectors';
 
 const mapStateToProps = createStructuredSelector({
-  motd: rawMotdSelector,
+  initialMotd: rawMotdSelector,
   compileOptions: markupCompilerOptionsSelector,
   canChangeMotd: canChangeMotdSelector,
 });

@@ -1,71 +1,67 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { DropTarget } from 'react-dnd';
+import { useDrop } from 'react-dnd';
 import { MEDIA } from '../../../constants/DDItemTypes';
 import isDraggingNearTopOfRow from '../../../utils/isDraggingNearTopOfRow';
 import MediaRow from '../../MediaList/Row';
 
-const mediaTarget = {
-  drop(props, monitor, component) {
-    const item = monitor.getItem();
-    const { media } = item;
-    if (media) {
-      const thisID = props.media._id;
-      // Do not attempt to move when the selection is dropped on top of an item
-      // that is in the selection.
-      if (media.some(playlistItem => playlistItem._id === thisID)) {
-        return;
+const {
+  useEffect,
+  useRef,
+  useState,
+} = React;
+
+function PlaylistItemRow({ onMoveMedia, style, ...props }) {
+  const [insertingAbove, setInsertAbove] = useState(false);
+  const refWrapper = useRef(null);
+  const [{ isOver }, connectDropTarget] = useDrop({
+    accept: MEDIA,
+    drop(item, monitor) {
+      const { media } = monitor.getItem();
+      if (media) {
+        const thisID = props.media._id;
+        // Do not attempt to move when the selection is dropped on top of an item
+        // that is in the selection.
+        if (media.some((playlistItem) => playlistItem._id === thisID)) {
+          return;
+        }
+        const insertBefore = isDraggingNearTopOfRow(monitor, refWrapper.current);
+        onMoveMedia(
+          media,
+          insertBefore ? { before: thisID } : { after: thisID },
+        );
       }
-      const insertBefore = isDraggingNearTopOfRow(monitor, component);
-      props.onMoveMedia(
-        media,
-        insertBefore ? { before: thisID } : { after: thisID },
-      );
-    }
-  },
-  hover(props, monitor, component) {
-    component.setState({
-      insertingAbove: isDraggingNearTopOfRow(monitor, component),
-    });
-  },
-};
+    },
+    hover(item, monitor) {
+      setInsertAbove(isDraggingNearTopOfRow(monitor, refWrapper.current));
+    },
+    collect(monitor) {
+      return { isOver: monitor.isOver() };
+    },
+  });
 
-const collect = (connect, monitor) => ({
-  connectDropTarget: connect.dropTarget(),
-  isOver: monitor.isOver(),
-});
+  useEffect(() => {
+    connectDropTarget(refWrapper.current);
+  });
 
-class PlaylistItemRow extends React.Component {
-  static propTypes = {
-    connectDropTarget: PropTypes.func.isRequired,
-    // Used in the drop handler above 👆
-    // eslint-disable-next-line react/no-unused-prop-types
-    onMoveMedia: PropTypes.func.isRequired,
-    isOver: PropTypes.bool.isRequired,
-  };
+  const dropIndicator = <div className="PlaylistItemRow-drop-indicator" />;
 
-  state = {
-    insertingAbove: false,
-  };
-
-  render() {
-    const {
-      connectDropTarget,
-      isOver,
-      ...props
-    } = this.props;
-    const { insertingAbove } = this.state;
-
-    const dropIndicator = <div className="PlaylistItemRow-drop-indicator" />;
-
-    return connectDropTarget((
-      <div className="PlaylistItemRow">
-        {isOver && insertingAbove && dropIndicator}
-        <MediaRow {...props} />
-        {isOver && !insertingAbove && dropIndicator}
-      </div>
-    ));
-  }
+  // Wrapper div to make sure that hovering the drop indicator
+  // does not change the hover state to a different element, which
+  // would cause thrashing.
+  return (
+    <div className="PlaylistItemRow" style={style} ref={refWrapper}>
+      {isOver && insertingAbove && dropIndicator}
+      <MediaRow {...props} />
+      {isOver && !insertingAbove && dropIndicator}
+    </div>
+  );
 }
 
-export default DropTarget(MEDIA, mediaTarget, collect)(PlaylistItemRow);
+PlaylistItemRow.propTypes = {
+  style: PropTypes.object, // from react-window
+  media: PropTypes.object,
+  onMoveMedia: PropTypes.func.isRequired,
+};
+
+export default PlaylistItemRow;

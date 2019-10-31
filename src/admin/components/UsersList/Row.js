@@ -1,7 +1,6 @@
-import cx from 'classnames';
+import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import withProps from 'recompose/withProps';
 import uniqueId from 'lodash/uniqueId';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
@@ -14,15 +13,15 @@ import Avatar from '../../../components/Avatar';
 import Username from '../../../components/Username/WithCard';
 import UserRole from '../../../components/UserRole';
 
-const actionsStyle = {
-  width: 48,
-  paddingLeft: 0,
-  paddingRight: 0,
-};
+function TableCell({ className, ...props }) {
+  return (
+    <MuiTableCell className={cx('AdminUserRow-cell', className)} {...props} />
+  );
+}
 
-const TableCell = withProps(({ className }) => ({
-  className: cx('AdminUserRow-cell', className),
-}))(MuiTableCell);
+TableCell.propTypes = {
+  className: PropTypes.string,
+};
 
 function JoinDate({ date }) {
   const { dateFormatter } = useIntl();
@@ -33,6 +32,12 @@ JoinDate.propTypes = {
   date: PropTypes.instanceOf(Date).isRequired,
 };
 
+const actionsStyle = {
+  width: 48,
+  paddingLeft: 0,
+  paddingRight: 0,
+};
+
 export default class UserRow extends React.Component {
   menu = uniqueId('menu');
 
@@ -40,10 +45,14 @@ export default class UserRow extends React.Component {
     user: PropTypes.object.isRequired,
   };
 
-  state = {
-    open: false,
-    anchorEl: null,
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      open: false,
+      anchorEl: null,
+    };
+  }
 
   handleOpenMenu = (event) => {
     this.setState({ open: true, anchorEl: event.currentTarget });

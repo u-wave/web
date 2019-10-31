@@ -1,5 +1,5 @@
-import React from 'react';
-import { ReactReduxContext } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import {
   relativeTimeFormatterSelector,
   timeFormatterSelector,
@@ -8,17 +8,14 @@ import {
   numberFormatterSelector,
 } from '../selectors/localeSelectors';
 
-const { useContext } = React;
+const intlSelector = createStructuredSelector({
+  relativeTimeFormatter: relativeTimeFormatterSelector,
+  timeFormatter: timeFormatterSelector,
+  dateFormatter: dateFormatterSelector,
+  dateTimeFormatter: dateTimeFormatterSelector,
+  numberFormatter: numberFormatterSelector,
+});
 
 export default function useIntl() {
-  const { store } = useContext(ReactReduxContext);
-  const state = store.getState();
-
-  return {
-    relativeTimeFormatter: relativeTimeFormatterSelector(state),
-    timeFormatter: timeFormatterSelector(state),
-    dateFormatter: dateFormatterSelector(state),
-    dateTimeFormatter: dateTimeFormatterSelector(state),
-    numberFormatter: numberFormatterSelector(state),
-  };
+  return useSelector(intlSelector);
 }

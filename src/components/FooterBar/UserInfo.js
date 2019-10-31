@@ -1,11 +1,9 @@
-import cx from 'classnames';
+import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
 import SettingsIcon from '@material-ui/icons/SettingsRounded';
 
 import Avatar from '../Avatar';
-
-const enhance = React.memo;
 
 const UserInfo = ({ className, user, onClick }) => (
   <button
@@ -29,4 +27,4 @@ UserInfo.propTypes = {
   onClick: PropTypes.func,
 };
 
-export default enhance(UserInfo);
+export default React.memo(UserInfo);

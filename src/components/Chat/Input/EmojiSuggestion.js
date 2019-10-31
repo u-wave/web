@@ -4,7 +4,7 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import Suggestion from './Suggestion';
 
-const shortcode = emoji => `:${emoji.shortcode}:`;
+const shortcode = (emoji) => `:${emoji.shortcode}:`;
 
 const EmojiSuggestion = ({
   value: emoji,

@@ -45,7 +45,7 @@ export default function reduce(state = initialState, action = {}) {
       return {
         ...state,
         upvotes: [...state.upvotes, payload.userID],
-        downvotes: state.downvotes.filter(vote => vote !== payload.userID),
+        downvotes: state.downvotes.filter((vote) => vote !== payload.userID),
       };
     case DOWNVOTE:
       if (state.downvotes.includes(payload.userID)) {
@@ -53,7 +53,7 @@ export default function reduce(state = initialState, action = {}) {
       }
       return {
         ...state,
-        upvotes: state.upvotes.filter(vote => vote !== payload.userID),
+        upvotes: state.upvotes.filter((vote) => vote !== payload.userID),
         downvotes: [...state.downvotes, payload.userID],
       };
     case FAVORITE:

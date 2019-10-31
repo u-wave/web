@@ -1,4 +1,4 @@
-import cx from 'classnames';
+import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
 import OverlayContent from '../Overlay/Content';
@@ -6,7 +6,7 @@ import PlaylistMenu from '../../containers/PlaylistManagerMenu';
 import PlaylistPanel from '../../containers/PlaylistManagerPanel';
 import PlaylistImport from '../../containers/PlaylistImportManager';
 import SearchResults from '../../containers/SearchResultsPanel';
-import SearchBar from '../../containers/MediaSearchBar';
+import MediaSearchBar from './Header/SearchBar';
 import PlaylistHeader from './Header';
 import NoPlaylists from './NoPlaylists';
 
@@ -49,19 +49,19 @@ const PlaylistManager = ({
         className="PlaylistManager-header AppRow AppRow--top"
         onCloseOverlay={onCloseOverlay}
       >
-        {!empty && <SearchBar className="PlaylistManager-searchBar" />}
+        {!empty && <MediaSearchBar className="PlaylistManager-searchBar" />}
       </PlaylistHeader>
 
       <OverlayContent>
         {empty ? (
           <NoPlaylists onCreatePlaylist={onCreatePlaylist} />
         ) : (
-          <React.Fragment>
+          <>
             <PlaylistMenu className="PlaylistManager-menu" />
             <div className="PlaylistManager-panel">
               {panel}
             </div>
-          </React.Fragment>
+          </>
         )}
       </OverlayContent>
     </div>

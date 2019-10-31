@@ -21,14 +21,14 @@ function AddToPlaylistMenu(props) {
   const [creating, setCreating] = useState(false);
   const handleOpen = useCallback(() => setCreating(true), []);
   const handleClose = useCallback(() => setCreating(false), []);
-  const handleSubmit = useCallback(playlistName => (
+  const handleSubmit = useCallback((playlistName) => (
     Promise.resolve(onCreatePlaylist(playlistName))
-      .then(playlist => onSelect(playlist))
+      .then((playlist) => onSelect(playlist))
       .then(() => onClose())
   ), [onCreatePlaylist, onSelect, onClose]);
 
   return (
-    <React.Fragment>
+    <>
       {!creating && (
         <PlaylistsMenu
           {...props}
@@ -38,13 +38,13 @@ function AddToPlaylistMenu(props) {
       {creating && (
         <PromptDialog
           title={t('dialogs.createPlaylist.nameInputTitle')}
-          icon={<CreatePlaylistIcon nativeColor="#777" />}
+          icon={<CreatePlaylistIcon htmlColor="#777" />}
           submitLabel={t('dialogs.createPlaylist.action')}
           onSubmit={handleSubmit}
           onCancel={handleClose}
         />
       )}
-    </React.Fragment>
+    </>
   );
 }
 

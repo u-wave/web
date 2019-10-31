@@ -1,8 +1,5 @@
-import compose from 'recompose/compose';
 import { connect } from 'react-redux';
-import { withBus } from 'react-bus';
 import { createStructuredSelector } from 'reselect';
-
 import {
   motdSelector,
   messagesSelector,
@@ -10,7 +7,6 @@ import {
   canDeleteMessagesSelector,
 } from '../selectors/chatSelectors';
 import { deleteChatMessage } from '../actions/ModerationActionCreators';
-
 import ChatMessages from '../components/Chat/ChatMessages';
 
 const mapStateToProps = createStructuredSelector({
@@ -24,9 +20,6 @@ const mapDispatchToProps = {
   onDeleteMessage: deleteChatMessage,
 };
 
-const enhance = compose(
-  connect(mapStateToProps, mapDispatchToProps),
-  withBus(),
-);
+const enhance = connect(mapStateToProps, mapDispatchToProps);
 
 export default enhance(ChatMessages);

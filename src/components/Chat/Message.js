@@ -1,31 +1,20 @@
-import cx from 'classnames';
+import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import compose from 'recompose/compose';
-import withHandlers from 'recompose/withHandlers';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import userCardable from '../../utils/userCardable';
+import useUserCard from '../../hooks/useUserCard';
 import Avatar from '../Avatar';
 import Username from '../Username';
 import compile from './Markup/compile';
 import DeleteButton from './DeleteButton';
 import MessageTimestamp from './MessageTimestamp';
 
-const enhance = compose(
-  React.memo,
-  userCardable(),
-  withHandlers({
-    onDeleteClick: ({ onDelete, _id: id }) => () => onDelete(id),
-    onUsernameClick: props => (event) => {
-      const { openUserCard, user } = props;
+const {
+  useCallback,
+} = React;
 
-      event.preventDefault();
-      openUserCard(user);
-    },
-  }),
-);
-
-const Message = ({
+function Message({
+  _id: id,
   user,
   text,
   parsedText,
@@ -34,9 +23,14 @@ const Message = ({
   timestamp,
   compileOptions,
   deletable,
-  onDeleteClick,
-  onUsernameClick,
-}) => {
+  onDelete,
+}) {
+  const userCard = useUserCard(user);
+  const onUsernameClick = useCallback((event) => {
+    event.preventDefault();
+    userCard.open();
+  }, [user]);
+
   let avatar;
   if (inFlight) {
     avatar = (
@@ -63,11 +57,12 @@ const Message = ({
     isMention && 'ChatMessage--mention',
   );
   return (
-    <div className={className}>
+    <div className={className} ref={userCard.refAnchor}>
+      {userCard.card}
       {avatar}
       <div className="ChatMessage-content">
         <div className="ChatMessage-hover">
-          {deletable && <DeleteButton onDelete={onDeleteClick} />}
+          {deletable && <DeleteButton onDelete={() => onDelete(id)} />}
           <MessageTimestamp date={date} />
         </div>
         <button
@@ -81,9 +76,10 @@ const Message = ({
       </div>
     </div>
   );
-};
+}
 
 Message.propTypes = {
+  _id: PropTypes.string.isRequired,
   user: PropTypes.object.isRequired,
   text: PropTypes.string.isRequired,
   parsedText: PropTypes.array.isRequired,
@@ -91,12 +87,11 @@ Message.propTypes = {
   timestamp: PropTypes.number.isRequired,
   isMention: PropTypes.bool.isRequired,
   deletable: PropTypes.bool.isRequired,
-  onDeleteClick: PropTypes.func,
+  onDelete: PropTypes.func.isRequired,
   compileOptions: PropTypes.shape({
     availableEmoji: PropTypes.array,
     emojiImages: PropTypes.object,
   }),
-  onUsernameClick: PropTypes.func.isRequired,
 };
 
-export default enhance(Message);
+export default Message;

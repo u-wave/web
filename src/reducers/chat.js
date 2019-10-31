@@ -30,7 +30,7 @@ const initialState = {
 };
 
 function removeInFlightMessage(messages, remove) {
-  return messages.filter(message => (
+  return messages.filter((message) => (
     // keep if this message is not in flight
     !message.inFlight
     // or is not the message we're looking for
@@ -100,12 +100,12 @@ export default function reduce(state = initialState, action = {}) {
     case REMOVE_MESSAGE:
       return {
         ...state,
-        messages: state.messages.filter(msg => msg._id !== payload._id),
+        messages: state.messages.filter((msg) => msg._id !== payload._id),
       };
     case REMOVE_USER_MESSAGES:
       return {
         ...state,
-        messages: state.messages.filter(msg => msg.userID !== payload.userID),
+        messages: state.messages.filter((msg) => msg.userID !== payload.userID),
       };
     case REMOVE_ALL_MESSAGES:
       return {

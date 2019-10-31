@@ -19,10 +19,14 @@ class PasswordResetPage extends React.Component {
     onSubmit: PropTypes.func.isRequired,
   };
 
-  state = {
-    newPassword: '',
-    newPasswordConfirm: '',
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      newPassword: '',
+      newPasswordConfirm: '',
+    };
+  }
 
   handlePasswordChange = (event) => {
     this.setState({
@@ -76,7 +80,7 @@ class PasswordResetPage extends React.Component {
                 disabled
                 value={email}
                 placeholder={t('login.email')}
-                icon={<EmailIcon nativeColor="#9f9d9e" />}
+                icon={<EmailIcon htmlColor="#9f9d9e" />}
               />
             </FormGroup>
           )}
@@ -87,7 +91,7 @@ class PasswordResetPage extends React.Component {
               value={newPassword}
               onChange={this.handlePasswordChange}
               placeholder={t('login.password')}
-              icon={<PasswordIcon nativeColor="#9f9d9e" />}
+              icon={<PasswordIcon htmlColor="#9f9d9e" />}
             />
           </FormGroup>
           <FormGroup>
@@ -97,7 +101,7 @@ class PasswordResetPage extends React.Component {
               value={newPasswordConfirm}
               onChange={this.handlePasswordConfirmChange}
               placeholder={t('login.password')}
-              icon={<PasswordIcon nativeColor="#9f9d9e" />}
+              icon={<PasswordIcon htmlColor="#9f9d9e" />}
             />
           </FormGroup>
           <FormGroup>

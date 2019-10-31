@@ -1,35 +1,23 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import compose from 'recompose/compose';
-import { translate } from '@u-wave/react-translate';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
+import { useTranslator } from '@u-wave/react-translate';
+import { useSelector } from 'react-redux';
 import { availableLanguagesSelector } from '../../selectors/localeSelectors';
 
-const mapStateToProps = createStructuredSelector({
-  availableLanguages: availableLanguagesSelector,
-});
+function LanguagePicker(props) {
+  const { t } = useTranslator();
+  const availableLanguages = useSelector(availableLanguagesSelector);
 
-const enhance = compose(
-  translate(),
-  connect(mapStateToProps),
-);
+  return (
+    <Select className="LanguagePicker" {...props}>
+      {availableLanguages.map((lang) => (
+        <MenuItem key={lang} value={lang}>
+          {t(`locales.${lang}`)}
+        </MenuItem>
+      ))}
+    </Select>
+  );
+}
 
-const LanguagePicker = ({ availableLanguages, t, ...props }) => (
-  <Select className="LanguagePicker" {...props}>
-    {availableLanguages.map(lang => (
-      <MenuItem key={lang} value={lang}>
-        {t(`locales.${lang}`)}
-      </MenuItem>
-    ))}
-  </Select>
-);
-
-LanguagePicker.propTypes = {
-  t: PropTypes.func.isRequired,
-  availableLanguages: PropTypes.arrayOf(PropTypes.string).isRequired,
-};
-
-export default enhance(LanguagePicker);
+export default LanguagePicker;

@@ -1,4 +1,4 @@
-import cx from 'classnames';
+import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from '@u-wave/react-translate';
@@ -99,10 +99,10 @@ class SettingsPanel extends React.Component {
           <hr className="SettingsPanel-divider" />
           <Links />
           {user && (
-            <React.Fragment>
+            <>
               <hr className="SettingsPanel-divider" />
               <LogoutButton onLogout={onLogout} />
-            </React.Fragment>
+            </>
           )}
         </div>
         <div className="SettingsPanel-column SettingsPanel-column--right">

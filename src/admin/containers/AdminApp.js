@@ -1,22 +1,13 @@
 import React from 'react';
-import { connect, ReactReduxContext } from 'react-redux';
-import compose from 'recompose/compose';
-import lifecycle from 'recompose/lifecycle';
-import { createStructuredSelector } from 'reselect';
+import { useDispatch, useSelector, useStore } from 'react-redux';
 import AdminApp from '../components/AdminApp';
 import adminReducer from '../reducers';
 import { transition } from '../actions/view';
 import { currentViewSelector } from '../selectors/viewSelectors';
 
-const { useContext } = React;
-
-const mapStateToProps = createStructuredSelector({
-  currentView: currentViewSelector,
-});
-
-const mapDispatchToProps = {
-  onTransition: transition,
-};
+const {
+  useCallback,
+} = React;
 
 function hasAdminState(store) {
   const state = store.getState();
@@ -34,21 +25,23 @@ function mountAdminReducerOnce(store) {
   }
 }
 
-const enhance = compose(
-  lifecycle({
-    componentWillMount() {
-      if (this.props.store) {
-        mountAdminReducerOnce(this.props.store);
-      }
-    },
-  }),
-  connect(mapStateToProps, mapDispatchToProps),
-);
+function AdminAppContainer() {
+  const store = useStore();
+  mountAdminReducerOnce(store);
 
-const ConnectedApp = enhance(AdminApp);
+  const currentView = useSelector(currentViewSelector);
+  const dispatch = useDispatch();
 
-export default function AdminAppWrapper(props) {
-  const { store } = useContext(ReactReduxContext);
+  const onTransition = useCallback((target) => {
+    dispatch(transition(target));
+  }, [dispatch]);
 
-  return <ConnectedApp store={store} {...props} />;
+  return (
+    <AdminApp
+      currentView={currentView}
+      onTransition={onTransition}
+    />
+  );
 }
+
+export default AdminAppContainer;

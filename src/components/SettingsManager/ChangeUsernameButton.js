@@ -15,9 +15,12 @@ class ChangeUsernameButton extends React.Component {
     initialUsername: PropTypes.string,
   };
 
-  state = {
-    changingUsername: false,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      changingUsername: false,
+    };
+  }
 
   handleOpen = () => {
     this.setState({ changingUsername: true });
@@ -47,7 +50,7 @@ class ChangeUsernameButton extends React.Component {
     const { changingUsername } = this.state;
 
     return (
-      <React.Fragment>
+      <>
         <IconButton className="ChangeUsernameButton" onClick={this.handleOpen}>
           <EditIcon className="ChangeUsernameButton-icon" />
         </IconButton>
@@ -56,14 +59,14 @@ class ChangeUsernameButton extends React.Component {
             <PromptDialog
               title={t('settings.profile.username.change')}
               submitLabel={t('settings.profile.username.save')}
-              icon={<EditIcon nativeColor="#777" />}
+              icon={<EditIcon htmlColor="#777" />}
               value={initialUsername}
               onSubmit={this.handleSubmit}
               onCancel={this.handleClose}
             />
           ) : null}
         </DialogCloseAnimation>
-      </React.Fragment>
+      </>
     );
   }
 }

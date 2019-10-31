@@ -54,19 +54,19 @@ function usersReducer(state = {}, action = {}) {
     case USER_LEAVE:
       return omit(state, payload.userID);
     case CHANGE_USERNAME:
-      return updateUser(state, payload.userID, user => ({
+      return updateUser(state, payload.userID, (user) => ({
         ...user,
         username: payload.username,
       }));
     case USER_ADD_ROLES:
-      return updateUser(state, payload.userID, user => ({
+      return updateUser(state, payload.userID, (user) => ({
         ...user,
         roles: [...user.roles, ...payload.roles],
       }));
     case USER_REMOVE_ROLES:
-      return updateUser(state, payload.userID, user => ({
+      return updateUser(state, payload.userID, (user) => ({
         ...user,
-        roles: user.roles.filter(role => !payload.roles.includes(role)),
+        roles: user.roles.filter((role) => !payload.roles.includes(role)),
       }));
     default:
       return state;

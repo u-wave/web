@@ -1,4 +1,4 @@
-import cx from 'classnames';
+import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from '@u-wave/react-translate';
@@ -39,10 +39,6 @@ class FooterBar extends React.Component {
     onFavorite: PropTypes.func,
     onUpvote: PropTypes.func,
     onDownvote: PropTypes.func,
-  };
-
-  static contextTypes = {
-    muiTheme: PropTypes.object,
   };
 
   handleSkipTurn = (reason) => {

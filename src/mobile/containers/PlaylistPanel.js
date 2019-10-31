@@ -44,19 +44,19 @@ const selectionOrOne = (media, selection) => {
 const onOpenAddMediaMenu = (position, media, selection) => (
   addMediaMenu(selectionOrOne(media, selection), position)
 );
-const onRemoveFromPlaylist = playlist => (media, selection) => (
+const onRemoveFromPlaylist = (playlist) => (media, selection) => (
   removeMedia(playlist, selectionOrOne(media, selection))
 );
-const onMoveMedia = playlist => (media, opts) => (
+const onMoveMedia = (playlist) => (media, opts) => (
   moveMedia(playlist, media, opts)
 );
-const onMoveToFirst = playlist => (media, selection) => (
+const onMoveToFirst = (playlist) => (media, selection) => (
   moveMedia(playlist, selectionOrOne(media, selection), { at: 'start' })
 );
-const onEditMedia = playlist => media => (
+const onEditMedia = (playlist) => (media) => (
   editMedia(playlist, media)
 );
-const onLoadPlaylistPage = ({ isFiltered, playlist }) => page => (
+const onLoadPlaylistPage = ({ isFiltered, playlist }) => (page) => (
   isFiltered ? loadFilteredPlaylistItems(playlist._id, page)
     : loadPlaylist(playlist._id, page)
 );
@@ -69,7 +69,7 @@ const onLoadPlaylistPage = ({ isFiltered, playlist }) => page => (
 // configures the action creators.
 // TODO Maybe it's better to have versions of these action creators that work on
 // the selected playlist by default? using redux-thunk.
-const mapDispatchToProps = dispatch => ({ dispatch });
+const mapDispatchToProps = (dispatch) => ({ dispatch });
 
 const mergeProps = (state, { dispatch }, props) => ({
   ...props,

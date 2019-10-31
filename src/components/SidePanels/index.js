@@ -17,7 +17,7 @@ const subHeaderStyle = {
 
 const tabClasses = {
   root: 'SidePanel-tab',
-  label: 'SidePanel-tabLabel',
+  wrapper: 'SidePanel-tabLabel',
 };
 
 function UsersLabel({ count }) {
@@ -25,12 +25,12 @@ function UsersLabel({ count }) {
   const { numberFormatter } = useIntl();
 
   return (
-    <React.Fragment>
+    <>
       {t('users.title')}
       <span key="sub" style={subHeaderStyle}>
         {numberFormatter.format(count)}
       </span>
-    </React.Fragment>
+    </>
   );
 }
 
@@ -49,10 +49,10 @@ function WaitlistLabel({ size, position }) {
       : sizeText;
 
     return (
-      <React.Fragment>
+      <>
         {t('waitlist.title')}
         <span key="sub" style={subHeaderStyle}>{posText}</span>
-      </React.Fragment>
+      </>
     );
   }
   return t('waitlist.title');
@@ -69,7 +69,7 @@ function SidePanels({ listenerCount, waitlistSize, waitlistPosition }) {
   const handleChange = useCallback((event, value) => setTab(value), [setTab]);
 
   return (
-    <div>
+    <>
       <Tabs
         value={selected}
         onChange={handleChange}
@@ -92,18 +92,16 @@ function SidePanels({ listenerCount, waitlistSize, waitlistPosition }) {
           label={<WaitlistLabel size={waitlistSize} position={waitlistPosition} />}
         />
       </Tabs>
-      <div>
-        <PanelContainer selected={selected === 0}>
-          <Chat />
-        </PanelContainer>
-        <PanelContainer selected={selected === 1}>
-          <RoomUserList />
-        </PanelContainer>
-        <PanelContainer selected={selected === 2}>
-          <WaitList />
-        </PanelContainer>
-      </div>
-    </div>
+      <PanelContainer selected={selected === 0}>
+        <Chat />
+      </PanelContainer>
+      <PanelContainer selected={selected === 1}>
+        <RoomUserList />
+      </PanelContainer>
+      <PanelContainer selected={selected === 2}>
+        <WaitList />
+      </PanelContainer>
+    </>
   );
 }
 

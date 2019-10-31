@@ -1,4 +1,4 @@
-import cx from 'classnames';
+import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from '@u-wave/react-translate';
@@ -15,10 +15,14 @@ class PlaylistFilter extends React.Component {
     onFilter: PropTypes.func.isRequired,
   };
 
-  state = {
-    isOpen: false,
-    value: '',
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isOpen: false,
+      value: '',
+    };
+  }
 
   onFilter = debounce((value) => {
     const { onFilter } = this.props;
@@ -86,7 +90,7 @@ class PlaylistFilter extends React.Component {
             className="PlaylistMeta-iconButton"
             onClick={this.handleClick}
           >
-            <FilterIcon nativeColor={isOpen ? '#fff' : null} />
+            <FilterIcon htmlColor={isOpen ? '#fff' : null} />
           </IconButton>
         </Tooltip>
         <input

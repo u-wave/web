@@ -1,11 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useTranslator } from '@u-wave/react-translate';
 import ms from 'ms';
-import timed from '../../utils/timed';
+import { useTranslator } from '@u-wave/react-translate';
+import useClock from '../../hooks/useClock';
 import useIntl from '../../hooks/useIntl';
-
-const enhance = timed();
 
 // Bit weird to do it like this perhaps, convert to an english string first and
 // then translate afterwards.
@@ -20,9 +18,10 @@ function translateMs(str) {
 
 const now = { key: 'seconds', count: 0 };
 
-function TimeAgo({ currentTime, timestamp }) {
+function TimeAgo({ timestamp }) {
   const { t } = useTranslator();
   const { relativeTimeFormatter } = useIntl();
+  const currentTime = useClock();
 
   const secondsAgo = Math.max(0, Math.floor((currentTime - timestamp) / 1000));
   const msString = ms(secondsAgo * 1000, { long: true });
@@ -49,8 +48,7 @@ function TimeAgo({ currentTime, timestamp }) {
 }
 
 TimeAgo.propTypes = {
-  currentTime: PropTypes.number.isRequired,
   timestamp: PropTypes.number.isRequired,
 };
 
-export default enhance(TimeAgo);
+export default TimeAgo;

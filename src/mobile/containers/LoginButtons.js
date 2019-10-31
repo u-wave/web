@@ -1,25 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
-import compose from 'recompose/compose';
-import { connect } from 'react-redux';
-import { translate } from '@u-wave/react-translate';
+import { useDispatch } from 'react-redux';
+import { useTranslator } from '@u-wave/react-translate';
 import Button from '@material-ui/core/Button';
+import { openLoginDialog, openRegisterDialog } from '../../actions/DialogActionCreators';
 
-import {
-  openLoginDialog,
-  openRegisterDialog,
-} from '../../actions/DialogActionCreators';
-
-const mapDispatchToProps = dispatch => bindActionCreators({
-  onLogin: openLoginDialog,
-  onRegister: openRegisterDialog,
-}, dispatch);
-
-const enhance = compose(
-  translate(),
-  connect(undefined, mapDispatchToProps),
-);
+const wrapperStyle = {
+  display: 'flex',
+  justifyContent: 'stretch',
+  height: '100%',
+};
 
 const buttonStyle = {
   height: '100%',
@@ -28,33 +17,30 @@ const buttonStyle = {
   width: '50%',
 };
 
-const LoginButtons = ({
-  t,
-  onLogin,
-  onRegister,
-}) => (
-  <span style={{ display: 'flex', justifyContent: 'stretch', height: '100%' }}>
-    <Button
-      variant="contained"
-      color="primary"
-      onClick={onLogin}
-      style={buttonStyle}
-    >
-      {t('login.login')}
-    </Button>
-    <Button
-      onClick={onRegister}
-      style={buttonStyle}
-    >
-      {t('login.register')}
-    </Button>
-  </span>
-);
+function LoginButtons() {
+  const { t } = useTranslator();
+  const dispatch = useDispatch();
+  const onLogin = () => dispatch(openLoginDialog());
+  const onRegister = () => dispatch(openRegisterDialog());
 
-LoginButtons.propTypes = {
-  t: PropTypes.func.isRequired,
-  onLogin: PropTypes.func.isRequired,
-  onRegister: PropTypes.func.isRequired,
-};
+  return (
+    <span style={wrapperStyle}>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={onLogin}
+        style={buttonStyle}
+      >
+        {t('login.login')}
+      </Button>
+      <Button
+        onClick={onRegister}
+        style={buttonStyle}
+      >
+        {t('login.register')}
+      </Button>
+    </span>
+  );
+}
 
-export default enhance(LoginButtons);
+export default LoginButtons;
