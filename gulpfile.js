@@ -31,27 +31,31 @@ const start = gulp.series(setWatching, serve.serve);
 
 const build = gulp.parallel(js.locales, js.babel);
 
-function prod(done) {
+async function prod() {
   // Load this later because it adds require compile hooks.
   // Those don't need to run on the above imports.
   const wpConfig = require('./webpack.config');
   const compiler = webpack(wpConfig);
+  const run = promisify(compiler.run.bind(compiler));
+  const close = promisify(compiler.close.bind(compiler));
 
-  compiler.run((err, stats) => {
-    if (err) {
-      compiler.purgeInputFileSystem();
-      done(err);
-    } else {
-      process.stdout.write(stats.toString({
-        colors: true,
-      }));
-      if (stats.hasErrors()) {
-        done(new Error('There were errors'));
-      } else {
-        done();
-      }
-    }
-  });
+  let stats;
+  try {
+    stats = await run();
+  } catch (err) {
+    compiler.purgeInputFileSystem();
+    throw err;
+  } finally {
+    await close();
+  }
+
+  process.stdout.write(stats.toString({
+    colors: true,
+  }));
+
+  if (stats.hasErrors()) {
+    throw new Error('There were errors');
+  }
 }
 
 async function buildMiddleware() {
