@@ -1,4 +1,4 @@
-import * as en from '../locale/en.yaml';
+import en from '../locale/en.yaml';
 
 export const resources = {
   en: () => Promise.resolve(en),

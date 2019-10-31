@@ -11,7 +11,7 @@ import readApplicationConfig from '../utils/readApplicationConfig';
 import * as reducers from './reducers';
 import { setResetKey } from './actions';
 import App from './containers/PasswordResetApp';
-import * as english from '../../locale/en.yaml';
+import english from '../../locale/en.yaml';
 
 import './app.css';
 
