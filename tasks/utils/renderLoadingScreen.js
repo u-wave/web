@@ -59,6 +59,7 @@ module.exports = async function renderLoadingScreen(compilation) {
   const mainAsset = childCompilation.assets[mainJsFiles[0]];
   mainChunk.files.forEach((file) => {
     delete childCompilation.assets[file];
+    delete compilation.assets[file];
   });
 
   const code = mainAsset.source();
