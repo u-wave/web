@@ -59,7 +59,7 @@ module.exports = async function renderLoadingScreen(compilation) {
   const mainAsset = childCompilation.assets[mainJsFiles[0]];
   mainChunk.files.forEach((file) => {
     delete childCompilation.assets[file];
-    delete compilation.assets[file];
+    delete compilation.assets[file]; // eslint-disable-line no-param-reassign
   });
 
   const code = mainAsset.source();
