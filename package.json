@@ -9,8 +9,8 @@
   "jsnext:main": "es/Uwave.js",
   "module": "es/Uwave.js",
   "engines": {
-    "node": ">= 8",
-    "npm": ">= 3"
+    "node": ">= 10",
+    "npm": ">= 5"
   },
   "dependencies": {
     "@babel/runtime": "^7.6.0",
