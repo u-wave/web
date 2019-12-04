@@ -14,15 +14,21 @@ import mergeIncludedModels from '../utils/mergeIncludedModels';
  * Set the media metadata in some mobile browsers.
  */
 function setMediaMetadata({ artist, title, thumbnail }) {
-  return () => {
-    if ('mediaSession' in navigator && window.MediaMetadata) {
-      navigator.mediaSession.metadata = new window.MediaMetadata({
-        artist,
-        title,
-        artwork: [ { src: thumbnail } ]
-      });
-    }
-  };
+  if ('mediaSession' in navigator && window.MediaMetadata) {
+    navigator.mediaSession.metadata = new window.MediaMetadata({
+      artist,
+      title,
+      artwork: [{ src: thumbnail }],
+    });
+    navigator.mediaSession.playbackState = 'playing';
+  }
+}
+
+function clearMediaMetadata() {
+  if ('mediaSession' in navigator && window.MediaMetadata) {
+    navigator.mediaSession.metadata = null;
+    navigator.mediaSession.playbackState = 'none';
+  }
 }
 
 export function advanceToEmpty() {
@@ -32,6 +38,7 @@ export function advanceToEmpty() {
       payload: null,
       meta: { previous: currentPlaySelector(getState()) },
     });
+    clearMediaMetadata();
   };
 }
 
@@ -63,7 +70,7 @@ export function advance(nextBooth) {
       },
     });
 
-    dispatch(setMediaMetadata(item));
+    setMediaMetadata(item);
   };
 }
 
