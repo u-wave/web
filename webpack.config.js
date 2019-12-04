@@ -1,7 +1,8 @@
 /* eslint-disable global-require */
 const path = require('path');
 const escapeStringRegExp = require('escape-string-regexp');
-const { DefinePlugin, ProgressPlugin } = require('webpack');
+const { DefinePlugin } = require('webpack');
+const WebpackBar = require('webpackbar');
 const ExtractCssPlugin = require('mini-css-extract-plugin');
 const HtmlPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
@@ -62,7 +63,7 @@ const plugins = [
 ];
 
 if (!isDemo) {
-  plugins.push(new ProgressPlugin());
+  plugins.push(new WebpackBar());
 }
 
 let optimization;
