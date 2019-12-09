@@ -57,7 +57,7 @@
     "react-dnd": "^10.0.0",
     "react-dnd-html5-backend": "^10.0.0",
     "react-dom": "^16.9.0",
-    "react-google-button": "^0.6.0",
+    "react-google-button": "^0.7.0",
     "react-hot-loader": "^4.12.13",
     "react-markdown": "^4.2.2",
     "react-redux": "^7.1.1",
