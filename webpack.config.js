@@ -81,6 +81,7 @@ if (nodeEnv === 'production') {
 
   plugins.push(
     new ExtractCssPlugin({
+      esModule: true,
       filename: 'static/[name]_[contenthash:7].css',
       chunkFilename: 'static/[name]_[contenthash:7].css',
     }),
