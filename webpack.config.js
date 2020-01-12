@@ -124,13 +124,13 @@ const base = {
       {
         test: /\.mp3$/,
         use: [
-          { loader: 'file-loader', options: { name: 'static/[name]_[hash:7].[ext]' } },
+          { loader: 'file-loader', options: { esModule: false, name: 'static/[name]_[hash:7].[ext]' } },
         ],
       },
       {
         test: /\.(gif|jpe?g|png|svg)$/,
         use: [
-          { loader: 'file-loader', options: { name: 'static/[name]_[hash:7].[ext]' } },
+          { loader: 'file-loader', options: { esModule: false, name: 'static/[name]_[hash:7].[ext]' } },
           nodeEnv !== 'development' && { loader: 'image-webpack-loader' },
         ].filter(Boolean),
       },
