@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import nest from 'recompose/nest';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { ThemeProvider } from '@material-ui/styles';
@@ -20,11 +19,6 @@ import FatalError from '../components/FatalError';
 import UwaveContext from '../context/UwaveContext';
 import ClockContext from '../context/ClockContext';
 import MediaSourceContext from '../context/MediaSourceContext';
-
-const SimpleProviders = nest(
-  BusProvider,
-  ClockContext.Provider,
-);
 
 const mapStateToProps = createStructuredSelector({
   activeOverlay: (state) => state.activeOverlay,
@@ -113,13 +107,15 @@ class AppContainer extends React.Component {
     return (
       <ThemeProvider theme={theme}>
         <TranslateProvider translator={translator}>
-          <SimpleProviders>
-            <UwaveContext.Provider value={uwave}>
-              <MediaSourceContext.Provider mediaSources={mediaSources}>
-                {this.renderApp()}
-              </MediaSourceContext.Provider>
-            </UwaveContext.Provider>
-          </SimpleProviders>
+          <BusProvider>
+            <ClockContext.Provider>
+              <UwaveContext.Provider value={uwave}>
+                <MediaSourceContext.Provider mediaSources={mediaSources}>
+                  {this.renderApp()}
+                </MediaSourceContext.Provider>
+              </UwaveContext.Provider>
+            </ClockContext.Provider>
+          </BusProvider>
         </TranslateProvider>
       </ThemeProvider>
     );
