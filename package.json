@@ -65,7 +65,6 @@
     "react-virtualized-auto-sizer": "^1.0.2",
     "react-window": "^1.8.5",
     "react-window-infinite-loader": "^1.0.5",
-    "recompose": "^0.30.0",
     "redux": "^4.0.4",
     "redux-batched-subscribe": "^0.1.6",
     "redux-logger": "^3.0.0",

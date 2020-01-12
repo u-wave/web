@@ -1,5 +1,5 @@
 import merge from 'deepmerge';
-import compose from 'recompose/compose';
+import { compose } from 'redux';
 import {
   LOAD_SETTINGS,
   CHANGE_SETTING,
