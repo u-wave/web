@@ -73,7 +73,7 @@ async function buildMiddleware() {
       require('rollup-plugin-babel')({
         runtimeHelpers: true,
       }),
-      require('rollup-plugin-node-resolve')({
+      require('@rollup/plugin-node-resolve')({
         preferBuiltins: true,
       }),
     ],
