@@ -123,7 +123,7 @@ export default class Uwave {
       this.build();
     }
     if (!this.renderTarget) {
-      this.renderTarget = ReactDOM.unstable_createRoot(target);
+      this.renderTarget = target;
     }
 
     const element = (
@@ -133,7 +133,7 @@ export default class Uwave {
     );
 
     return new Promise((resolve) => {
-      this.renderTarget.render(element, resolve);
+      ReactDOM.render(element, this.renderTarget, resolve);
     });
   }
 }
