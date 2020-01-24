@@ -23,6 +23,10 @@
 
 .NoPlaylists-icon {
   color: rgba(255, 255, 255, 0.2);
+  display: block;
+  width: 240px;
+  height: 240px;
+  margin: auto;
 }
 
 .NoPlaylists-block,
@@ -36,11 +40,4 @@
 
 .NoPlaylists-create .PlaylistImport-source {
   padding: 0; /* override */
-}
-
-.NoPlaylists-icon {
-  display: block;
-  width: 240px;
-  height: 240px;
-  margin: auto;
 }

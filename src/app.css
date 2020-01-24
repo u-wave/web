@@ -1,5 +1,4 @@
 @import "normalize.css";
-
 @import "./components/index.css";
 @import "./sources/index.css";
 @import "./containers/DragLayer.css";
@@ -12,6 +11,7 @@ button {
   border: initial;
   text-align: initial;
   -webkit-appearance: initial;
+
   &:focus {
     outline: initial;
   }

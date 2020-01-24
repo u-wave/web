@@ -16,6 +16,7 @@
 
 .SkipButton-loader {
   /* IconButton size */
+
   /* TODO take this from the material-ui theme instead */
   width: 48px;
   height: 48px;
