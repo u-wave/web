@@ -7,7 +7,7 @@ const chalk = require('chalk');
 const emojione = require('u-wave-web-emojione');
 const recaptchaTestKeys = require('recaptcha-test-keys');
 const express = require('express');
-const proxy = require('http-proxy-middleware');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
@@ -96,7 +96,7 @@ function serve(done) {
   const apiUrl = '/api';
   const socketUrl = `ws://localhost:${serverPort}`;
 
-  app.use(apiUrl, proxy({
+  app.use(apiUrl, createProxyMiddleware({
     target: process.env.SERVER_URL || `http://localhost:${serverPort}/`,
   }));
   app.use('/assets/emoji/', emojione.middleware());
