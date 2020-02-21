@@ -4,6 +4,7 @@
 .LoginDialog {
   max-width: 350px;
 }
+
 .LoginDialog--mobile {
   max-width: 100%;
 }

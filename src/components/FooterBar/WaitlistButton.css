@@ -1,7 +1,6 @@
 @import "../../vars.css";
 
 .WaitlistButton {
-  font-size: 12pt;
   display: flex;
   flex-shrink: 0;
   align-items: center;
@@ -13,6 +12,7 @@
   cursor: pointer;
   font-size: 11pt;
   text-transform: uppercase;
+
   /* Align multiline button text nicely. Good for languages where "Join Waitlist"
    * becomes a longer phrase, especially. */
   line-height: 24px;
@@ -34,6 +34,7 @@
   margin-right: 6px;
   color: var(--text-color);
 }
+
 .WaitlistButton-icon--locked {
   color: color-mod(var(--text-color) alpha(* 70%));
 }

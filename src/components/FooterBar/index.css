@@ -2,7 +2,6 @@
 @import "./NextMedia.css";
 @import "./SettingsButton.css";
 @import "./SkipButton.css";
-@import "./SkipReasonsList.css";
 @import "./UserInfo.css";
 @import "./Responses/index.css";
 @import "./WaitlistButton.css";
@@ -67,6 +66,7 @@
 
 .FooterAuthButton--register {
   background: var(--background-color);
+
   &:hover {
     background: var(--background-hover-color);
   }
