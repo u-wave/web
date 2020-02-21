@@ -87,7 +87,7 @@ class PasswordResetPage extends React.Component {
           <FormGroup>
             <TextField
               type="password"
-              autocomplete="new-password"
+              autoComplete="new-password"
               value={newPassword}
               onChange={this.handlePasswordChange}
               placeholder={t('login.password')}
@@ -97,7 +97,7 @@ class PasswordResetPage extends React.Component {
           <FormGroup>
             <TextField
               type="password"
-              autocomplete="new-password"
+              autoComplete="new-password"
               value={newPasswordConfirm}
               onChange={this.handlePasswordConfirmChange}
               placeholder={t('login.password')}

@@ -23,7 +23,7 @@
   width: calc(100% - 32px);
   padding: 0 6px;
   border: 1px solid var(--chat-border-color);
-  background: #222222;
+  background: #222;
   color: var(--text-color);
   font-size: 10pt;
 

@@ -41,28 +41,28 @@ export default class BaseMediaList extends React.Component {
     makeActions: () => <span />,
   };
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (prevState.media !== nextProps.media) {
+      const selectedIndices = prevState.selection.getIndices();
+      const mediaChanged = didMediaChange(prevState.media, nextProps.media);
+      return {
+        media: nextProps.media,
+        selection: mediaChanged
+          ? itemSelection(nextProps.media)
+          : itemSelection(nextProps.media, selectedIndices),
+      };
+    }
+    return null;
+  }
+
   constructor(props) {
     super(props);
 
     const { media } = this.props;
     this.state = {
+      media,
       selection: itemSelection(media),
     };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { media } = this.props;
-    const { selection } = this.state;
-
-    if (nextProps.media !== media) {
-      const selectedIndices = selection.getIndices();
-      const mediaChanged = didMediaChange(media, nextProps.media);
-      this.setState({
-        selection: mediaChanged
-          ? itemSelection(nextProps.media)
-          : itemSelection(nextProps.media, selectedIndices),
-      });
-    }
   }
 
   selectItem(index, e) {

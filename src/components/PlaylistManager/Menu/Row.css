@@ -1,8 +1,12 @@
 @import "../../../vars.css";
 
+:root {
+  --playlist-row-height: 48px;
+}
+
 .PlaylistMenuRow {
-  height: 44px;
-  line-height: 44px;
+  height: var(--playlist-row-height);
+  line-height: var(--playlist-row-height);
   padding: 0 10px;
   cursor: pointer;
   width: 100%;
@@ -26,7 +30,7 @@
 .PlaylistMenuRow-active-icon {
   display: block;
   float: left;
-  height: 44px;
+  height: var(--playlist-row-height);
   margin-right: 7px;
   padding-top: 5px;
 }
@@ -55,8 +59,8 @@
 }
 
 .PlaylistMenuRow-closeButton {
-  width: 44px;
-  height: 44px;
+  width: var(--playlist-row-height);
+  height: var(--playlist-row-height);
   padding: 10px;
   margin-right: -10px;
 }

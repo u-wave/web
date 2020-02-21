@@ -115,7 +115,7 @@ class RegisterForm extends React.Component {
           <TextField
             ref={this.refUsername}
             className="RegisterForm-field"
-            autocomplete="nickname"
+            autoComplete="nickname"
             placeholder={t('login.username')}
             icon={<UserIcon htmlColor="#9f9d9e" />}
             autoFocus
@@ -126,7 +126,7 @@ class RegisterForm extends React.Component {
             ref={this.refEmail}
             className="RegisterForm-field"
             type="email"
-            autocomplete="email"
+            autoComplete="email"
             placeholder={t('login.email')}
             icon={<EmailIcon htmlColor="#9f9d9e" />}
           />
@@ -136,7 +136,7 @@ class RegisterForm extends React.Component {
             ref={this.refPassword}
             className="RegisterForm-field"
             type="password"
-            autocomplete="new-password"
+            autoComplete="new-password"
             placeholder={t('login.password')}
             icon={<PasswordIcon htmlColor="#9f9d9e" />}
           />

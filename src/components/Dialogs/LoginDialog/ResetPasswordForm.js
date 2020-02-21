@@ -73,7 +73,7 @@ class ResetPasswordForm extends React.Component {
             ref={this.refEmail}
             className="ResetPasswordForm-field"
             type="email"
-            autocomplete="email"
+            autoComplete="email"
             placeholder={t('login.email')}
             icon={<EmailIcon htmlColor="#9f9d9e" />}
           />

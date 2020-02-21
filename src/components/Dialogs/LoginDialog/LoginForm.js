@@ -74,7 +74,7 @@ class LoginForm extends React.Component {
             ref={this.refEmail}
             className="LoginForm-field"
             type="email"
-            autocomplete="email"
+            autoComplete="email"
             placeholder={t('login.email')}
             icon={<EmailIcon htmlColor="#9f9d9e" />}
             autoFocus
@@ -86,7 +86,7 @@ class LoginForm extends React.Component {
             ref={this.refPassword}
             className="LoginForm-field"
             type="password"
-            autocomplete="current-password"
+            autoComplete="current-password"
             placeholder={t('login.password')}
             icon={<PasswordIcon htmlColor="#9f9d9e" />}
           />

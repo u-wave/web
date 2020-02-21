@@ -2,6 +2,7 @@
 
 .SettingsButton {
   color: var(--text-color);
+
   /* -1 because the footer has a 1px border */
   height: calc(var(--footer-height) - 1px);
   width: calc(var(--footer-height) - 1px);
