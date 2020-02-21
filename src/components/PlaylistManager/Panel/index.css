@@ -39,7 +39,8 @@
   width: 100%;
 }
 
-.PlaylistPanel-button, .PlaylistPanel--empty .ImportSourceBlock {
+.PlaylistPanel-button,
+.PlaylistPanel--empty .ImportSourceBlock {
   padding: 16px;
   width: auto;
   flex-grow: 1;

@@ -33,9 +33,11 @@ const getEmojiCompletions = (value, { trigger, completions }) => {
   const results = completions.filter((emoji) => (
     emoji.shortcode.substr(0, compare.length).toLowerCase() === compare
   ));
+
+  const uniqueResults = uniqBy(results, (emoji) => emoji.image);
   return sortBy(
-    uniqBy(results, (emoji) => emoji.image),
-    (emoji) => emoji.shortcode.length,
+    uniqueResults,
+    [(emoji) => emoji.shortcode.length],
   );
 };
 const getEmojiText = (value) => `:${value.shortcode}: `;

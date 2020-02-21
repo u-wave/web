@@ -1,12 +1,15 @@
 @import "../../vars.css";
 
-*, *::after, *::before {
+*,
+*::after,
+*::before {
   box-sizing: border-box;
 }
 
 ::-webkit-scrollbar {
   width: 7px;
 }
+
 ::-webkit-scrollbar-thumb {
   background: var(--scrollbar-color);
 }
@@ -23,13 +26,18 @@ body {
 
 a {
   color: var(--link-color);
+
   &:visited {
     color: var(--link-visited-color);
   }
 }
 
 /* make sure interactive elements also use our usual fonts */
-button, input, optgroup, select, textarea {
+button,
+input,
+optgroup,
+select,
+textarea {
   font: inherit;
 }
 
@@ -53,13 +61,16 @@ button, input, optgroup, select, textarea {
   position: absolute;
   height: 100%;
 }
+
 .AppColumn--full {
   width: 100%;
 }
+
 .AppColumn--left {
   width: 75%;
   left: 0;
 }
+
 .AppColumn--right {
   width: 25%;
   right: 0;
@@ -71,14 +82,17 @@ button, input, optgroup, select, textarea {
   right: 0;
   clear: both;
 }
+
 .AppRow--top {
   height: var(--header-height);
   top: 0;
 }
+
 .AppRow--middle {
   top: var(--header-height);
   bottom: var(--footer-height);
 }
+
 .AppRow--bottom {
   height: var(--footer-height);
   bottom: 0;

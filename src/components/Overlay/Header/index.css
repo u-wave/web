@@ -1,5 +1,4 @@
 @import "../../../vars.css";
-@import "./Close.css";
 
 .OverlayHeader {
   background: var(--background-color);
