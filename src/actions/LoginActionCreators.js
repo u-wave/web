@@ -214,6 +214,7 @@ function socialLogin(service) {
       });
     }
 
+    // eslint-disable-next-line compat/compat
     const apiOrigin = new URL(apiUrl, window.location.href).origin;
 
     window.addEventListener('message', (event) => {
@@ -246,12 +247,12 @@ export function loginWithGoogle() {
 export function finishSocialLogin(service, params) {
   return post(`/auth/service/${service}/finish`, params, {
     onStart: loginStart,
-    onComplete: res => (dispatch) => {
+    onComplete: (res) => (dispatch) => {
       Session.set(res.meta.jwt);
       dispatch(setSessionToken(res.meta.jwt));
       dispatch(initState());
     },
-    onError: error => ({
+    onError: (error) => ({
       type: LOGIN_COMPLETE,
       error: true,
       payload: error,

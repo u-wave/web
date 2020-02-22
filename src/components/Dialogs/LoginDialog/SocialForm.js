@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate, Interpolate } from 'react-i18next';
+import { translate, Interpolate } from '@u-wave/react-translate';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -26,15 +26,21 @@ class SocialForm extends React.Component {
     suggestedName: '',
   };
 
-  state = {
-    busy: false,
-    agreed: false,
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      busy: false,
+      agreed: false,
+    };
+  }
 
   handleSubmit = (event) => {
+    const { service, onSocialFinish } = this.props;
     event.preventDefault();
     this.setState({ busy: true });
-    this.props.onSocialFinish(this.props.service, {
+
+    onSocialFinish(service, {
       username: this.username.value,
     }).finally(() => {
       this.setState({ busy: false });
@@ -76,22 +82,22 @@ class SocialForm extends React.Component {
 
         <FormGroup>
           <FormControlLabel
-            control={
+            control={(
               <Checkbox
                 checked={agreed}
                 onChange={this.handleTosCheckbox}
               />
-            }
-            label={
+            )}
+            label={(
               <Interpolate
                 i18nKey="login.agree"
-                privacyPolicy={
+                privacyPolicy={(
                   <a target="_blank" rel="noreferrer noopener" href="/privacy.html">
                     {t('login.privacyPolicy')}
                   </a>
-                }
+                )}
               />
-            }
+            )}
           />
         </FormGroup>
 
@@ -102,8 +108,7 @@ class SocialForm extends React.Component {
           >
             {busy
               ? <div className="Button-loading"><CircularProgress size="100%" /></div>
-              : t('login.register')
-            }
+              : t('login.register')}
           </Button>
         </FormGroup>
       </Form>

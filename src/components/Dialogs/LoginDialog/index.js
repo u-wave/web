@@ -16,6 +16,7 @@ import ResetPasswordForm from './ResetPasswordForm';
 
 const enhance = withMobileDialog();
 
+/* eslint-disable react/jsx-props-no-spreading */
 function LoginDialog(props) {
   const { t } = useTranslator();
 
