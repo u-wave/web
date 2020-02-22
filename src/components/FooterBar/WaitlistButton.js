@@ -1,27 +1,26 @@
-import cx from 'classnames';
+import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate } from 'react-i18next';
-import compose from 'recompose/compose';
-import pure from 'recompose/pure';
+import { useTranslator } from '@u-wave/react-translate';
 import Button from '@material-ui/core/Button';
 import LockedIcon from '@material-ui/icons/Lock';
 
-const WaitlistButton = ({
-  t,
+function WaitlistButton({
   userInWaitlist,
   isLocked,
   onClick,
-}) => {
+}) {
+  const { t } = useTranslator();
+
   let icon;
   if (isLocked) {
     icon = (
       <LockedIcon
         className={cx(
-          'FooterBar-joinIcon',
+          'WaitlistButton-icon',
           // The user can still leave the waitlist, if it's locked,
           // but cannot join the waitlist.
-          !userInWaitlist && 'FooterBar-joinIcon--locked',
+          !userInWaitlist && 'WaitlistButton-icon--locked',
         )}
       />
     );
@@ -30,8 +29,8 @@ const WaitlistButton = ({
   return (
     <Button
       classes={{
-        root: 'FooterBar-join',
-        disabled: 'FooterBar-join--locked',
+        root: 'WaitlistButton',
+        disabled: 'WaitlistButton--locked',
       }}
       disabled={isLocked && !userInWaitlist}
       onClick={onClick}
@@ -41,16 +40,12 @@ const WaitlistButton = ({
       {userInWaitlist ? t('waitlist.leave') : t('waitlist.join')}
     </Button>
   );
-};
+}
 
 WaitlistButton.propTypes = {
-  t: PropTypes.func.isRequired,
   userInWaitlist: PropTypes.bool,
   isLocked: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
 };
 
-export default compose(
-  translate(),
-  pure,
-)(WaitlistButton);
+export default React.memo(WaitlistButton);

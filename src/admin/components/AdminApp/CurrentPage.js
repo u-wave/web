@@ -1,19 +1,21 @@
-import mapProps from 'recompose/mapProps';
-import componentFromProp from 'recompose/componentFromProp';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Main from '../Main';
-import UsersList from '../../containers/UsersList';
-import BansList from '../../containers/BansList';
 
 const pages = {
   main: Main,
-  users: UsersList,
-  bans: BansList,
+  users: React.lazy(() => import('../../containers/UsersList')),
+  bans: React.lazy(() => import('../../containers/BansList')),
 };
 
-const enhance = mapProps(props => ({
-  component: pages[props.page],
-}));
+function CurrentPage({ page, ...props }) {
+  const PageComponent = pages[page];
 
-const CurrentPage = enhance(componentFromProp('component'));
+  return <PageComponent {...props} />;
+}
+
+CurrentPage.propTypes = {
+  page: PropTypes.string.isRequired,
+};
 
 export default CurrentPage;

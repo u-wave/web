@@ -9,9 +9,10 @@
 }
 
 .RoomHistory-body {
-  background: color(var(--background-color) alpha(* 96%));
+  background: var(--overlay-background);
 }
 
 .RoomHistory-list {
+  height: 100%;
   max-height: 100%;
 }

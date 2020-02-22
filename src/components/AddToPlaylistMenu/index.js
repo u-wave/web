@@ -1,59 +1,57 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate } from 'react-i18next';
+import { useTranslator } from '@u-wave/react-translate';
 import CreatePlaylistIcon from '@material-ui/icons/Add';
 import PromptDialog from '../Dialogs/PromptDialog';
 import PlaylistsMenu from './PlaylistsMenu';
 
-const enhance = translate();
+const {
+  useCallback,
+  useState,
+} = React;
 
-class AddToPlaylistMenu extends React.Component {
-  static propTypes = {
-    t: PropTypes.func.isRequired,
-    onClose: PropTypes.func.isRequired,
-    onSelect: PropTypes.func.isRequired,
-    onCreatePlaylist: PropTypes.func.isRequired,
-  };
+function AddToPlaylistMenu(props) {
+  const {
+    onClose,
+    onSelect,
+    onCreatePlaylist,
+  } = props;
 
-  state = {
-    creating: false,
-  };
+  const { t } = useTranslator();
+  const [creating, setCreating] = useState(false);
+  const handleOpen = useCallback(() => setCreating(true), []);
+  const handleClose = useCallback(() => setCreating(false), []);
+  const handleSubmit = useCallback((playlistName) => (
+    Promise.resolve(onCreatePlaylist(playlistName))
+      .then((playlist) => onSelect(playlist))
+      .then(() => onClose())
+  ), [onCreatePlaylist, onSelect, onClose]);
 
-  handleOpen = () => {
-    this.setState({ creating: true });
-  };
-
-  handleClose = () => {
-    this.setState({ creating: false });
-  };
-
-  handleSubmit = playlistName =>
-    Promise.resolve(this.props.onCreatePlaylist(playlistName))
-      .then(playlist => this.props.onSelect(playlist))
-      .then(() => this.props.onClose());
-
-  render() {
-    const { t, ...props } = this.props;
-    return (
-      <React.Fragment>
-        {!this.state.creating && (
-          <PlaylistsMenu
-            {...props}
-            onCreatePlaylist={this.handleOpen}
-          />
-        )}
-        {this.state.creating && (
-          <PromptDialog
-            title={t('dialogs.createPlaylist.nameInputTitle')}
-            icon={<CreatePlaylistIcon nativeColor="#777" />}
-            submitLabel={t('dialogs.createPlaylist.action')}
-            onSubmit={this.handleSubmit}
-            onCancel={this.handleClose}
-          />
-        )}
-      </React.Fragment>
-    );
-  }
+  return (
+    <>
+      {!creating && (
+        <PlaylistsMenu
+          {...props}
+          onCreatePlaylist={handleOpen}
+        />
+      )}
+      {creating && (
+        <PromptDialog
+          title={t('dialogs.createPlaylist.nameInputTitle')}
+          icon={<CreatePlaylistIcon htmlColor="#777" />}
+          submitLabel={t('dialogs.createPlaylist.action')}
+          onSubmit={handleSubmit}
+          onCancel={handleClose}
+        />
+      )}
+    </>
+  );
 }
 
-export default enhance(AddToPlaylistMenu);
+AddToPlaylistMenu.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  onSelect: PropTypes.func.isRequired,
+  onCreatePlaylist: PropTypes.func.isRequired,
+};
+
+export default AddToPlaylistMenu;

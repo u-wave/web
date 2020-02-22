@@ -47,14 +47,10 @@ export function requestCompleteError(error, meta) {
   };
 }
 
-export const get = (url, opts) =>
-  request('get', url, opts);
+export const get = (url, opts) => request('get', url, opts);
 
-export const post = (url, data, opts = {}) =>
-  request('post', url, { data, ...opts });
+export const post = (url, data, opts = {}) => request('post', url, { data, ...opts });
 
-export const put = (url, data, opts = {}) =>
-  request('put', url, { data, ...opts });
+export const put = (url, data, opts = {}) => request('put', url, { data, ...opts });
 
-export const del = (url, data, opts = {}) =>
-  request('delete', url, { data, ...opts });
+export const del = (url, data, opts = {}) => request('delete', url, { data, ...opts });

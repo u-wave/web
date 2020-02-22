@@ -12,10 +12,14 @@ class UserCardWrapper extends React.Component {
     }).isRequired,
   };
 
-  state = {
-    positionDiffX: 0,
-    positionDiffY: 0,
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      positionDiffX: 0,
+      positionDiffY: 0,
+    };
+  }
 
   componentDidMount() {
     this.shouldFit = true;
@@ -24,6 +28,13 @@ class UserCardWrapper extends React.Component {
   componentDidUpdate() {
     this.shouldFit = true;
   }
+
+  refContainer = (container) => {
+    this.container = container;
+    if (this.shouldFit && container) {
+      this.fitInsideWindow();
+    }
+  };
 
   fitInsideWindow() {
     if (!this.container) {
@@ -39,13 +50,6 @@ class UserCardWrapper extends React.Component {
       });
     }
   }
-
-  refContainer = (container) => {
-    this.container = container;
-    if (this.shouldFit && container) {
-      this.fitInsideWindow();
-    }
-  };
 
   render() {
     const {

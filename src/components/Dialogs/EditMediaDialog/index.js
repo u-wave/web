@@ -1,7 +1,7 @@
-import cx from 'classnames';
+import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate } from 'react-i18next';
+import { translate } from '@u-wave/react-translate';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -13,19 +13,28 @@ import TitleIcon from '@material-ui/icons/MusicNote';
 import StartIcon from '@material-ui/icons/PlayArrow';
 import EndIcon from '@material-ui/icons/Stop';
 import SwapArtistTitleIcon from '@material-ui/icons/SwapHoriz';
+import DialogCloseAnimation from '../../DialogCloseAnimation';
 import Form from '../../Form';
 import FormGroup from '../../Form/Group';
 import Button from '../../Form/Button';
 import TextField from '../../Form/TextField';
 
 // naive HH:mm:ss → seconds
-const parseDuration = str => str.split(':')
-  .map(part => parseInt(part.trim(), 10))
+const parseDuration = (str) => str.split(':')
+  .map((part) => parseInt(part.trim(), 10))
   .reduce((duration, part) => (duration * 60) + part, 0);
 
 const enhance = translate();
 
+const BASE_TAB_INDEX = 1000;
+
 class EditMediaDialog extends React.Component {
+  titleId = uniqueId('title');
+
+  startId = uniqueId('start');
+
+  endId = uniqueId('end');
+
   static propTypes = {
     t: PropTypes.func.isRequired,
     open: PropTypes.bool,
@@ -39,17 +48,19 @@ class EditMediaDialog extends React.Component {
     onCloseDialog: PropTypes.func.isRequired,
   };
 
-  state = {
-    errors: null,
-    artist: this.props.media.artist,
-    title: this.props.media.title,
-    start: formatDuration(this.props.media.start * 1000),
-    end: formatDuration(this.props.media.end * 1000),
-  };
+  constructor(props) {
+    super(props);
 
-  title = uniqueId('editmedia');
-  labelStart = uniqueId('editmedia');
-  labelEnd = uniqueId('editmedia');
+    const { media } = this.props;
+
+    this.state = {
+      errors: null,
+      artist: media.artist,
+      title: media.title,
+      start: formatDuration(media.start * 1000),
+      end: formatDuration(media.end * 1000),
+    };
+  }
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -105,22 +116,16 @@ class EditMediaDialog extends React.Component {
   };
 
   handleSwapArtistTitle = () => {
-    this.setState({
-      artist: this.state.title,
-      title: this.state.artist,
-    });
+    this.setState(({ artist, title }) => ({
+      artist: title,
+      title: artist,
+    }));
   };
 
-  render() {
+  renderForm() {
     const {
       t,
-      open,
       media,
-      onCloseDialog,
-
-      bodyClassName,
-      contentClassName,
-      titleClassName,
     } = this.props;
     const {
       errors,
@@ -129,134 +134,146 @@ class EditMediaDialog extends React.Component {
       start,
       end,
     } = this.state;
-    const baseTabIndex = 1000;
-    let content = null;
-    if (open) {
-      const artistInput = (
-        <TextField
-          className="EditMediaDialogGroup-field"
-          placeholder={t(['dialogs.editMedia.artistLabel', 'media.artist'])}
-          value={artist}
-          onChange={this.handleChangeArtist}
-          icon={<ArtistIcon nativeColor="#9f9d9e" />}
-          tabIndex={baseTabIndex}
-          autoFocus
-        />
-      );
-      const artistTitleLabel = (
-        <div className="EditMediaDialogGroup-label">
-          <IconButton onClick={this.handleSwapArtistTitle}>
-            <SwapArtistTitleIcon nativeColor="#9f9d9e" />
-          </IconButton>
-        </div>
-      );
-      const titleInput = (
-        <TextField
-          className="EditMediaDialogGroup-field"
-          placeholder={t(['dialogs.editMedia.titleLabel', 'media.title'])}
-          value={title}
-          onChange={this.handleChangeTitle}
-          icon={<TitleIcon nativeColor="#9f9d9e" />}
-          tabIndex={baseTabIndex + 1}
-        />
-      );
 
-      const fromLabel = (
-        // eslint-disable-next-line jsx-a11y/label-has-for
-        <label htmlFor={this.labelStart} className="EditMediaDialogGroup-label">
-          {t('dialogs.editMedia.playFromLabel')}
-        </label>
-      );
-      const fromInput = (
-        <TextField
-          id={this.labelStart}
-          className="EditMediaDialogGroup-field"
-          placeholder="0:00"
-          value={start}
-          onChange={this.handleChangeStart}
-          icon={<StartIcon nativeColor="#9f9d9e" />}
-          tabIndex={baseTabIndex + 2}
-        />
-      );
-      const toLabel = (
-        // eslint-disable-next-line jsx-a11y/label-has-for
-        <label htmlFor={this.labelEnd} className="EditMediaDialogGroup-label">
-          {t('dialogs.editMedia.playToLabel')}
-        </label>
-      );
-      const toInput = (
-        <TextField
-          id={this.labelEnd}
-          className="EditMediaDialogGroup-field"
-          placeholder={formatDuration(media.duration)}
-          value={end}
-          onChange={this.handleChangeEnd}
-          icon={<EndIcon nativeColor="#9f9d9e" />}
-          tabIndex={baseTabIndex + 3}
-        />
-      );
+    const artistInput = (
+      <TextField
+        className="EditMediaDialogGroup-field"
+        placeholder={t('dialogs.editMedia.artistLabel') || t('media.artist')}
+        value={artist}
+        onChange={this.handleChangeArtist}
+        icon={<ArtistIcon htmlColor="#9f9d9e" />}
+        tabIndex={BASE_TAB_INDEX}
+        autoFocus
+      />
+    );
+    const artistTitleLabel = (
+      <div className="EditMediaDialogGroup-label">
+        <IconButton onClick={this.handleSwapArtistTitle}>
+          <SwapArtistTitleIcon htmlColor="#9f9d9e" />
+        </IconButton>
+      </div>
+    );
+    const titleInput = (
+      <TextField
+        className="EditMediaDialogGroup-field"
+        placeholder={t('dialogs.editMedia.titleLabel') || t('media.title')}
+        value={title}
+        onChange={this.handleChangeTitle}
+        icon={<TitleIcon htmlColor="#9f9d9e" />}
+        tabIndex={BASE_TAB_INDEX + 1}
+      />
+    );
 
-      content = (
-        <Form onSubmit={this.handleSubmit}>
-          {errors && errors.length > 0 && (
-            <FormGroup>
-              {errors.map(error => <div>{t(`dialogs.editMedia.errors.${error}`)}</div>)}
-            </FormGroup>
-          )}
-
-          <div className="EditMediaDialogForm">
-            <div className="EditMediaDialogForm-column">
-              <FormGroup className="EditMediaDialogGroup">
-                {artistInput}
-              </FormGroup>
-              <FormGroup className="EditMediaDialogGroup">
-                {fromLabel}
-                {fromInput}
-              </FormGroup>
-            </div>
-            <div className="EditMediaDialogForm-separator">
-              <FormGroup className="EditMediaDialogGroup">
-                {artistTitleLabel}
-              </FormGroup>
-              <FormGroup className="EditMediaDialogGroup">
-                {toLabel}
-              </FormGroup>
-            </div>
-            <div className="EditMediaDialogForm-column">
-              <FormGroup className="EditMediaDialogGroup">
-                {titleInput}
-              </FormGroup>
-              <FormGroup className="EditMediaDialogGroup">
-                {toInput}
-              </FormGroup>
-            </div>
-          </div>
-
-          <FormGroup className="FormGroup--noSpacing">
-            <Button className="EditMediaDialog-submit">
-              {t('dialogs.editMedia.save')}
-            </Button>
-          </FormGroup>
-        </Form>
-      );
-    }
+    const fromLabel = (
+      // eslint-disable-next-line jsx-a11y/label-has-for
+      <label htmlFor={this.startId} className="EditMediaDialogGroup-label">
+        {t('dialogs.editMedia.playFromLabel')}
+      </label>
+    );
+    const fromInput = (
+      <TextField
+        id={this.startId}
+        className="EditMediaDialogGroup-field"
+        placeholder="0:00"
+        value={start}
+        onChange={this.handleChangeStart}
+        icon={<StartIcon htmlColor="#9f9d9e" />}
+        tabIndex={BASE_TAB_INDEX + 2}
+      />
+    );
+    const toLabel = (
+      // eslint-disable-next-line jsx-a11y/label-has-for
+      <label htmlFor={this.endId} className="EditMediaDialogGroup-label">
+        {t('dialogs.editMedia.playToLabel')}
+      </label>
+    );
+    const toInput = (
+      <TextField
+        id={this.endId}
+        className="EditMediaDialogGroup-field"
+        placeholder={formatDuration(media.duration)}
+        value={end}
+        onChange={this.handleChangeEnd}
+        icon={<EndIcon htmlColor="#9f9d9e" />}
+        tabIndex={BASE_TAB_INDEX + 3}
+      />
+    );
 
     return (
-      <Dialog
-        classes={{
-          paper: cx('Dialog', 'EditMediaDialog', contentClassName),
-        }}
-        open={open}
-        onClose={onCloseDialog}
-        aria-labelledby={this.title}
-      >
-        <DialogTitle id={this.title} className={cx('Dialog-title', titleClassName)}>
-          {t('dialogs.editMedia.title')}
-        </DialogTitle>
-        <DialogContent className={cx('Dialog-body', bodyClassName)}>
-          {content}
-        </DialogContent>
-      </Dialog>
+      <Form onSubmit={this.handleSubmit}>
+        {errors && errors.length > 0 && (
+          <FormGroup>
+            {errors.map((error) => <div>{t(`dialogs.editMedia.errors.${error}`)}</div>)}
+          </FormGroup>
+        )}
+
+        <div className="EditMediaDialogForm">
+          <div className="EditMediaDialogForm-column">
+            <FormGroup className="EditMediaDialogGroup">
+              {artistInput}
+            </FormGroup>
+            <FormGroup className="EditMediaDialogGroup">
+              {fromLabel}
+              {fromInput}
+            </FormGroup>
+          </div>
+          <div className="EditMediaDialogForm-separator">
+            <FormGroup className="EditMediaDialogGroup">
+              {artistTitleLabel}
+            </FormGroup>
+            <FormGroup className="EditMediaDialogGroup">
+              {toLabel}
+            </FormGroup>
+          </div>
+          <div className="EditMediaDialogForm-column">
+            <FormGroup className="EditMediaDialogGroup">
+              {titleInput}
+            </FormGroup>
+            <FormGroup className="EditMediaDialogGroup">
+              {toInput}
+            </FormGroup>
+          </div>
+        </div>
+
+        <FormGroup className="FormGroup--noSpacing">
+          <Button className="EditMediaDialog-submit">
+            {t('dialogs.editMedia.save')}
+          </Button>
+        </FormGroup>
+      </Form>
+    );
+  }
+
+  render() {
+    const {
+      t,
+      open,
+      onCloseDialog,
+      bodyClassName,
+      contentClassName,
+      titleClassName,
+    } = this.props;
+
+    return (
+      <DialogCloseAnimation delay={450}>
+        {open ? (
+          <Dialog
+            classes={{
+              paper: cx('Dialog', 'EditMediaDialog', contentClassName),
+            }}
+            open={open}
+            onClose={onCloseDialog}
+            aria-labelledby={this.titleId}
+          >
+            <DialogTitle id={this.titleId} className={cx('Dialog-title', titleClassName)}>
+              {t('dialogs.editMedia.title')}
+            </DialogTitle>
+            <DialogContent className={cx('Dialog-body', bodyClassName)}>
+              {this.renderForm()}
+            </DialogContent>
+          </Dialog>
+        ) : null}
+      </DialogCloseAnimation>
     );
   }
 }

@@ -65,7 +65,7 @@ function jsBabel() {
   const oldEnv = process.env.BABEL_ENV;
   process.env.BABEL_ENV = 'production';
 
-  return gulp.src(src)
+  return gulp.src([src, '!**/__tests__/**'])
     .pipe(newer(destCommonjs))
     .pipe(through.obj((file, enc, cb) => {
       const path = relative(`${__dirname}/../`, file.path);
@@ -92,7 +92,6 @@ function jsBabel() {
     .pipe(babel({
       babelrc: false,
       plugins: [
-        '@babel/plugin-syntax-object-rest-spread',
         '@babel/plugin-transform-modules-commonjs',
         'module:babel-plugin-dynamic-import-node',
         rewriteMuiImports(/^@material-ui\/core\/es\//, '@material-ui/core/'),

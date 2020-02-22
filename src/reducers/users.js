@@ -1,4 +1,4 @@
-import except from 'except';
+import omit from 'just-omit';
 import indexBy from 'index-by';
 import { combineReducers } from 'redux';
 import {
@@ -52,21 +52,21 @@ function usersReducer(state = {}, action = {}) {
         [payload.user._id]: payload.user,
       };
     case USER_LEAVE:
-      return except(state, payload.userID);
+      return omit(state, payload.userID);
     case CHANGE_USERNAME:
-      return updateUser(state, payload.userID, user => ({
+      return updateUser(state, payload.userID, (user) => ({
         ...user,
         username: payload.username,
       }));
     case USER_ADD_ROLES:
-      return updateUser(state, payload.userID, user => ({
+      return updateUser(state, payload.userID, (user) => ({
         ...user,
         roles: [...user.roles, ...payload.roles],
       }));
     case USER_REMOVE_ROLES:
-      return updateUser(state, payload.userID, user => ({
+      return updateUser(state, payload.userID, (user) => ({
         ...user,
-        roles: user.roles.filter(role => payload.roles.indexOf(role) === -1),
+        roles: user.roles.filter((role) => !payload.roles.includes(role)),
       }));
     default:
       return state;

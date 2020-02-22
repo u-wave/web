@@ -2,7 +2,7 @@
  * Webpack loader that inserts HTML instead of just exporting it.
  */
 
-module.exports = source => source;
+module.exports = (source) => source;
 module.exports.pitch = function insertHtml(remainingRequest) {
   const loader = this;
   loader.cacheable();

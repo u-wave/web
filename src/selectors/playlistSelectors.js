@@ -1,24 +1,23 @@
 import { createSelector } from 'reselect';
 import naturalCmp from 'natural-compare';
-import values from 'object-values';
 
 const byName = (a, b) => naturalCmp(a.name.toLowerCase(), b.name.toLowerCase());
 
-const baseSelector = state => state.playlists;
+const baseSelector = (state) => state.playlists;
 
 export const playlistsSelector = createSelector(
   baseSelector,
-  playlists => values(playlists.playlists).sort(byName),
+  (playlists) => Object.values(playlists.playlists).sort(byName),
 );
 
 export const playlistItemsSelector = createSelector(
   baseSelector,
-  playlists => playlists.playlistItems,
+  (playlists) => playlists.playlistItems,
 );
 
 export const activePlaylistIDSelector = createSelector(
   baseSelector,
-  playlists => playlists.activePlaylistID,
+  (playlists) => playlists.activePlaylistID,
 );
 
 const activeMediaSelector = createSelector(
@@ -41,13 +40,14 @@ export const activePlaylistSelector = createSelector(
   baseSelector,
   activePlaylistIDSelector,
   activeMediaSelector,
-  (playlists, activeID, activeMedia) =>
-    mergePlaylistItems(playlists.playlists[activeID], activeMedia),
+  (playlists, activeID, activeMedia) => (
+    mergePlaylistItems(playlists.playlists[activeID], activeMedia)
+  ),
 );
 
 export const selectedPlaylistIDSelector = createSelector(
   baseSelector,
-  playlists => playlists.selectedPlaylistID,
+  (playlists) => playlists.selectedPlaylistID,
 );
 
 const selectedMediaSelector = createSelector(
@@ -58,7 +58,7 @@ const selectedMediaSelector = createSelector(
 
 const filterSelector = createSelector(
   baseSelector,
-  base => base.currentFilter,
+  (base) => base.currentFilter,
 );
 
 const currentFilterSelector = createSelector(
@@ -74,7 +74,7 @@ const currentFilterSelector = createSelector(
 
 export const playlistItemFilterSelector = createSelector(
   currentFilterSelector,
-  filter => filter && filter.filter,
+  (filter) => filter && filter.filter,
 );
 
 export const filteredSelectedPlaylistItemsSelector = createSelector(
@@ -93,21 +93,22 @@ export const selectedPlaylistSelector = createSelector(
   baseSelector,
   selectedPlaylistIDSelector,
   selectedMediaSelector,
-  (playlists, selectedID, selectedMedia) =>
-    mergePlaylistItems(playlists.playlists[selectedID], selectedMedia),
+  (playlists, selectedID, selectedMedia) => (
+    mergePlaylistItems(playlists.playlists[selectedID], selectedMedia)
+  ),
 );
 
 export const nextMediaSelector = createSelector(
   activeMediaSelector,
-  media => (media ? media[0] : null),
+  (media) => (media ? media[0] : null),
 );
 
 export const isSelectedPlaylistLoadingSelector = createSelector(
   selectedPlaylistSelector,
-  selectedPlaylist => Boolean(selectedPlaylist.loading),
+  (selectedPlaylist) => Boolean(selectedPlaylist.loading),
 );
 
 export const isFilteredSelector = createSelector(
   playlistItemFilterSelector,
-  filter => Boolean(filter),
+  (filter) => Boolean(filter),
 );

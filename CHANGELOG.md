@@ -4,6 +4,108 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.11.6 / 01 Sep 2018
+Bugfixes:
+ * Fix initialising current song on load. (#1129)
+
+## 1.11.5 / 31 Aug 2018
+Bugfixes:
+ * Clear votes on advance, fixes a regression in v1.11.4. (#1126)
+
+Internal:
+ * Update dependencies. (#1123, #1124, #1127)
+ * Reduce store churn during initial load. (#1128)
+
+## 1.11.4 / 30 Aug 2018
+Bugfixes:
+ * Initialize votes on load. (#1103)
+ * Clear filter when selecting a different playlist. (#1107)
+ * New reconnect logic. (#1122)
+
+Internal:
+ * Build static hashed filenames into a /static/ folder. (#1104)
+
+## 1.11.3 / 25 Jul 2018
+Bugfixes:
+ * Fix returning value from PromptDialog. (#1090)
+ * Change icon in "No filter results" view. (#1087)
+
+Internal:
+ * Move test files into related folders. (#1086)
+
+## 1.11.2 / 22 Jul 2018
+Bugfixes:
+ * Fix timer. (#1084)
+
+Internal:
+ * Use async capable EJS for HTML templates. (#1085)
+ * Update dependencies.
+
+## 1.11.1 / 20 Jul 2018
+Bugfixes:
+ * Fix playlist media actions.
+
+## 1.11.0 / 19 Jul 2018
+Features:
+ * Simplify MediaList styles (#1051)
+ * Simplify chat message styles. (#1052)
+ * Lazy load google signin button. (#1079)
+
+Bugfixes:
+ * Fix `Array.find*` polyfills, fixes #1081 (#1082)
+ * Add "No results" panel instead of "empty" when playlist filter does not match anything. (#1078)
+ * Manually serve the web app manifest. (#985)
+ * Fix loading client config on Password Reset page. (#1074)
+
+Internal:
+ * Switch to postcss-preset-env (#1077)
+ * Update dependencies. (#1080)
+ * Update devDependencies. (#1073, #1076)
+
+## 1.10.1 / 16 Jul 2018
+Bugfixes:
+ * Refactor login, edit, preview dialogs, fixing the close animation. (#1070)
+
+Internal:
+ * Update material-ui to v1.4, significantly improving tooltip performance. (#1071)
+
+## 1.10.0 / 07 Jul 2018
+Features:
+ * Add settings button when signed out. (#974)
+ * Add a screen for empty playlists. (#1033, #1035)
+ * Use CSS variables for theming. (#1020)
+ * Remove title and padding from PreviewMediaDialog. (#1021)
+ * Make the playlist manager toggle more obviously a button. (#1026)
+ * Remove top border from footer bar. (#1023)
+ * Tweak user avatar size in the profile/settings button. (#1024)
+
+Bugfixes:
+ * Make chat ScrollDownNotice unfocusable when hidden. (#1014)
+ * Use consistent style and size for icon buttons. (#1025)
+ * Compile p-finally dependency for IE. (#1027)
+ * Tweak logo size. (#1029)
+ * Use the same size for the SoundCloud preview player as for YouTube. (#1030)
+ * Add margin to the waitlist button icon. (#1032)
+
+Internal:
+ * Share polyfills between different entry points. (#1028)
+ * Update dependencies.
+ * Remove explicit eslint-config-airbnb-base dependency.
+
+## 1.9.3 / 19 Jun 2018
+Bugfixes:
+ * Pin react-list to v0.8.9 to fix react-list-lazy-load incompatibility.
+
+## 1.9.2 / 19 Jun 2018
+Bugfixes:
+ * Use global polyfills for new runtime features. (#1009)
+ * Switch from react-responsive to @u-wave/react-mq.
+
+Internal:
+ * Add eslint-plugin-compat. (#1010)
+ * Rename HeaderHistoryButton → HistoryButton. (#992)
+ * Update deependencies.
+
 ## 1.9.1 / 12 Jun 2018
 Bugfixes:
  * Add a label to the volume mute/unmute button. (#988)

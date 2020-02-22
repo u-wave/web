@@ -1,29 +1,34 @@
+import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import injectMediaSources from '../../../utils/injectMediaSources';
+import { useMediaSources } from '../../../context/MediaSourceContext';
 
-const ImportSourceBlock = ({
-  getMediaSource,
+function ImportSourceBlock({
+  className,
   sourceType,
   title,
   children,
-}) => (
-  <div className="ImportSourceBlock PlaylistImport-source">
-    <img
-      className="ImportSourceBlock-image"
-      alt={title}
-      title={title}
-      src={getMediaSource(sourceType).logo}
-    />
-    {children}
-  </div>
-);
+}) {
+  const { getMediaSource } = useMediaSources();
+
+  return (
+    <div className={cx('ImportSourceBlock', 'PlaylistImport-source', className)}>
+      <img
+        className="ImportSourceBlock-image"
+        alt={title}
+        title={title}
+        src={getMediaSource(sourceType).logo}
+      />
+      {children}
+    </div>
+  );
+}
 
 ImportSourceBlock.propTypes = {
-  getMediaSource: PropTypes.func.isRequired,
+  className: PropTypes.string,
   sourceType: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
 };
 
-export default injectMediaSources()(ImportSourceBlock);
+export default ImportSourceBlock;

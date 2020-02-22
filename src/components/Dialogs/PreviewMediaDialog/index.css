@@ -1,4 +1,9 @@
 .PreviewMediaDialog-content {
   overflow: hidden;
   position: relative;
+  padding: 0;
+}
+
+.PreviewMediaDialog-content:first-child {
+  padding-top: 0;
 }

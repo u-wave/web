@@ -75,7 +75,7 @@ npm run serve
 ## Server API
 
 ```js
-import createWebClient from 'u-wave-web/middleware';
+import createWebClient from 'u-wave-web-middleware';
 ```
 
 ### createWebClient(uw, options={})
@@ -96,7 +96,7 @@ This is a small example üWave server on top of Express, using ReCaptcha and
 import express from 'express';
 import uwave from 'u-wave-core';
 import createHttpApi from 'u-wave-http-api';
-import createWebClient from 'u-wave-web/middleware';
+import createWebClient from 'u-wave-web-middleware';
 import emojione from 'u-wave-web-emojione';
 
 const app = express();
@@ -190,7 +190,7 @@ The üWave web client is licensed under the [MIT][] license.
 The default [mention sound file][] comes from a [Sonics.io][] pack and is under
 the [Sonics.io License][] (archive link).
 
-[üWave]: https://u-wave.github.io
+[üWave]: https://u-wave.net
 [u-wave-core]: https://github.com/u-wave/core
 [u-wave-http-api]: https://github.com/u-wave/http-api
 [u-wave-web-emojione]: https://github.com/u-wave/u-wave-web-emojione

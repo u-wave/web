@@ -1,15 +1,15 @@
 @import "../../vars.css";
 @import "./NextMedia.css";
+@import "./SettingsButton.css";
 @import "./SkipButton.css";
-@import "./SkipReasonsList.css";
 @import "./UserInfo.css";
 @import "./Responses/index.css";
+@import "./WaitlistButton.css";
 
 .FooterBar {
   display: flex;
   justify-content: space-between;
   z-index: 20; /* on top of overlays */
-  border-top: 1px solid var(--chat-border-color);
   background: var(--background-color);
 }
 
@@ -33,6 +33,11 @@
   flex-grow: 1;
   height: 100%;
   overflow: hidden;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--background-hover-color);
+  }
 }
 
 .FooterBar-responses {
@@ -48,69 +53,21 @@
   height: 100%;
   padding-right: 0.5rem;
   flex-shrink: 0;
-}
-
-.FooterBar-join {
-  font-size: 12pt;
-  float: right;
   display: flex;
-  flex-shrink: 0;
   align-items: center;
-  justify-content: center;
-  height: 100%;
-  width: 125px;
-  background: var(--highlight-color);
-  color: var(--text-color);
-  cursor: pointer;
-  font-size: 11pt;
-  text-transform: uppercase;
-  /* Align multiline button text nicely. Good for languages where "Join Waitlist"
-   * becomes a longer phrase, especially. */
-  line-height: 24px;
-  padding: 8px 4px;
-
-  &:hover {
-    background: var(--highbright-color);
-  }
-}
-
-.FooterBar-join--locked {
-  width: 140px;
-  color: color(var(--text-color) alpha(* 70%));
-}
-
-.FooterBar-joinIcon {
-  width: 1em;
-  height: 1em;
-  color: var(--text-color);
-}
-.FooterBar-joinIcon--locked {
-  color: color(var(--text-color) alpha(* 70%));
 }
 
 .FooterAuthButton {
   width: 125px;
   height: 100%;
-  border: 0;
-  border-right: 1px solid var(--chat-border-color);
-  display: block;
-  float: left;
-  text-align: center;
-  cursor: pointer;
   color: var(--text-color);
   font-size: 12pt;
 }
 
-.FooterAuthButton--login {
+.FooterAuthButton--register {
   background: var(--background-color);
+
   &:hover {
     background: var(--background-hover-color);
-  }
-}
-
-.FooterAuthButton--register {
-  background: var(--highlight-color);
-  &:hover {
-    background: var(--highbright-color);
   }
 }

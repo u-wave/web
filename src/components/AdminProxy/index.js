@@ -1,14 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import loadable from 'react-loadable';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Overlay from '../Overlay';
 import OverlayHeader from '../Overlay/Header';
 
-const AdminComponent = loadable({
-  loader: () => import('../../admin/containers/AdminApp' /* webpackChunkName: "admin" */),
-  loading: () => <CircularProgress size="100%" />,
-});
+const { lazy, Suspense } = React;
+
+const AdminComponent = lazy(() => (
+  import('../../admin/containers/AdminApp' /* webpackChunkName: "admin" */)
+));
+
+const Fallback = () => <CircularProgress size="100%" />;
 
 const AdminProxy = ({ onCloseOverlay }) => (
   <Overlay className="AppColumn AppColumn--full" direction="top">
@@ -18,7 +20,9 @@ const AdminProxy = ({ onCloseOverlay }) => (
       direction="top"
     />
     <div className="AppRow AppRow--middle AdminPanel">
-      <AdminComponent />
+      <Suspense fallback={<Fallback />}>
+        <AdminComponent />
+      </Suspense>
     </div>
   </Overlay>
 );

@@ -1,4 +1,3 @@
-import assign from 'object-assign';
 import qsStringify from 'qs-stringify';
 import { REQUEST_START } from '../constants/ActionTypes';
 import {
@@ -17,7 +16,7 @@ function makeUrl(path, params = {}) {
 
   if (!isEmpty(params)) {
     // heh…
-    uri += (uri.indexOf('?') !== -1 ? '&' : '?') + qsStringify(params);
+    uri += (uri.includes('?') ? '&' : '?') + qsStringify(params);
   }
 
   return uri;
@@ -30,11 +29,16 @@ function rejectNonOK(response) {
         throw new Error('An unknown error occurred.');
       }
       const { errors } = res;
-      const error = assign(new Error(errors.map(err => err.title).join(', ')), {
-        response,
-        errors,
-      });
+      const error = new Error(errors.map((err) => err.title).join(', '));
+      error.response = response;
+      error.errors = errors;
       throw error;
+    }, (error) => {
+      const pathname = response.url.replace(window.location.origin, '').replace(/\?.*$/, '');
+      const newError = new Error(`Invalid response from ${pathname}, please try again later.`);
+      newError.response = response;
+      newError.cause = error;
+      throw newError;
     });
   }
   return response;
@@ -45,7 +49,7 @@ const defaultOptions = {
 };
 
 export default function middleware(middlewareOptions = {}) {
-  return ({ dispatch, getState }) => next => (action) => {
+  return ({ dispatch, getState }) => (next) => (action) => {
     if (action.type !== REQUEST_START) {
       return next(action);
     }
@@ -103,7 +107,7 @@ export default function middleware(middlewareOptions = {}) {
 
     return fetch(requestUrl, requestOptions)
       .then(rejectNonOK)
-      .then(res => res.json())
+      .then((res) => res.json())
       .then((res) => {
         let responseValue = res;
         if (onComplete) {

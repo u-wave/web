@@ -1,30 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import compose from 'recompose/compose';
-import withProps from 'recompose/withProps';
-import userCardable from '../../utils/userCardable';
+import useUserCard from '../../hooks/useUserCard';
+import UsernameBase from '.';
 
-import UsernameBase from './';
+const { useCallback } = React;
 
-const enhance = compose(
-  userCardable(),
-  withProps(props => ({
-    onUsernameClick(event) {
-      event.preventDefault();
-      props.openUserCard(props.user);
-    },
-  })),
-);
+function UsernameWithCard({ user }) {
+  const userCard = useUserCard(user);
+  const onUsernameClick = useCallback((event) => {
+    event.preventDefault();
+    userCard.open();
+  });
 
-const UsernameWithCard = ({ user, onUsernameClick }) => (
-  <button onClick={onUsernameClick}>
-    <UsernameBase user={user} />
-  </button>
-);
+  return (
+    <>
+      {userCard.card}
+      <button
+        type="button"
+        onClick={onUsernameClick}
+        ref={userCard.refAnchor}
+      >
+        <UsernameBase user={user} />
+      </button>
+    </>
+  );
+}
 
 UsernameWithCard.propTypes = {
   user: PropTypes.object.isRequired,
-  onUsernameClick: PropTypes.func.isRequired,
 };
 
-export default enhance(UsernameWithCard);
+export default UsernameWithCard;

@@ -1,10 +1,7 @@
-import cx from 'classnames';
+import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import compose from 'recompose/compose';
-import toClass from 'recompose/toClass';
-import withState from 'recompose/withState';
-import { DragDropContext } from 'react-dnd';
+import { DndProvider } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import Snackbar from '@material-ui/core/Snackbar';
 import ErrorArea from '../../../containers/ErrorArea';
@@ -19,44 +16,44 @@ import About from '../../containers/About';
 import ServerList from '../../containers/ServerList';
 import Overlays from './Overlays';
 
-const enhance = compose(
-  DragDropContext(HTML5Backend),
-  toClass,
-  withState('dismissedWarning', 'onDismiss', false),
-);
+const { useState } = React;
 
-const MobileApp = ({
+function MobileApp({
   settings,
   activeOverlay,
   onCloseOverlay,
-  dismissedWarning,
-  onDismiss,
-}) => (
-  <div className={cx('App', 'MobileApp', 'is-mobile', settings.videoEnabled && 'MobileApp--videoEnabled')}>
-    <MainView />
+}) {
+  const [dismissedWarning, dismissWarning] = useState(false);
 
-    <Snackbar
-      open={!dismissedWarning}
-      onClose={() => onDismiss(true)}
-      message="Note: The mobile version is in beta and may crash regularly."
-    />
+  return (
+    <DndProvider backend={HTML5Backend}>
+      <div className={cx('App', 'MobileApp', 'is-mobile', settings.videoEnabled && 'MobileApp--videoEnabled')}>
+        <MainView />
 
-    <ErrorArea />
+        <Snackbar
+          open={!dismissedWarning}
+          onClose={() => dismissWarning(true)}
+          message="Note: The mobile version is in beta and may crash regularly."
+        />
 
-    <Overlays transitionName="Overlay" active={activeOverlay}>
-      <About key="about" onCloseOverlay={onCloseOverlay} />
-      <ServerList key="serverList" onCloseOverlay={onCloseOverlay} />
-      <PlaylistManager key="playlistManager" onCloseOverlay={onCloseOverlay} />
-      <RoomHistory key="roomHistory" onCloseOverlay={onCloseOverlay} />
-      <SettingsManager key="settings" onCloseOverlay={onCloseOverlay} />
-    </Overlays>
+        <ErrorArea />
 
-    <Dialogs />
+        <Overlays transitionName="Overlay" active={activeOverlay}>
+          <About key="about" onCloseOverlay={onCloseOverlay} />
+          <ServerList key="serverList" onCloseOverlay={onCloseOverlay} />
+          <PlaylistManager key="playlistManager" onCloseOverlay={onCloseOverlay} />
+          <RoomHistory key="roomHistory" onCloseOverlay={onCloseOverlay} />
+          <SettingsManager key="settings" onCloseOverlay={onCloseOverlay} />
+        </Overlays>
 
-    <AddToPlaylistMenu />
-    <DragLayer />
-  </div>
-);
+        <Dialogs />
+
+        <AddToPlaylistMenu />
+        <DragLayer />
+      </div>
+    </DndProvider>
+  );
+}
 
 MobileApp.propTypes = {
   settings: PropTypes.shape({
@@ -64,9 +61,6 @@ MobileApp.propTypes = {
   }).isRequired,
   activeOverlay: PropTypes.string,
   onCloseOverlay: PropTypes.func.isRequired,
-  // Mobile Beta warning
-  dismissedWarning: PropTypes.bool.isRequired,
-  onDismiss: PropTypes.func.isRequired,
 };
 
-export default enhance(MobileApp);
+export default MobileApp;

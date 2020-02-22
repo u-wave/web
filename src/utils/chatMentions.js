@@ -31,7 +31,7 @@ export function resolveMentions(tree, state) {
       if (groupSelector) {
         node.group = groupSelector(state);
       } else {
-        node.user = find(users, user => user.username.toLowerCase() === node.mention);
+        node.user = find(users, (user) => user.username.toLowerCase() === node.mention);
       }
       /* eslint-enable no-param-reassign */
     } else if (node.content) {
@@ -52,8 +52,9 @@ export function hasMention(tree, id) {
     if (node.type === 'mention') {
       if (node.user) {
         return node.user._id === id;
-      } else if (node.group) {
-        return node.group.some(user => user._id === id);
+      }
+      if (node.group) {
+        return node.group.some((user) => user._id === id);
       }
       return false;
     }

@@ -1,8 +1,8 @@
-import cx from 'classnames';
+import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
 import createDebug from 'debug';
-import { translate } from 'react-i18next';
+import { translate } from '@u-wave/react-translate';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
@@ -43,10 +43,14 @@ class SoundCloudPlayer extends React.Component {
     onPlay: PropTypes.func,
   };
 
-  state = {
-    error: null,
-    needsTap: false,
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      error: null,
+      needsTap: false,
+    };
+  }
 
   componentDidMount() {
     this.audio = new Audio();
@@ -58,13 +62,17 @@ class SoundCloudPlayer extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.volume !== this.props.volume) {
-      this.audio.volume = this.props.volume / 100;
+    const {
+      volume, active, enabled, media,
+    } = this.props;
+
+    if (prevProps.volume !== volume) {
+      this.audio.volume = volume / 100;
     }
-    if (prevProps.media.sourceID !== this.props.media.sourceID ||
-        prevProps.enabled !== this.props.enabled ||
-        prevProps.active !== this.props.active) {
-      if (this.props.enabled && this.props.active) {
+    if (prevProps.media.sourceID !== media.sourceID
+        || prevProps.enabled !== enabled
+        || prevProps.active !== active) {
+      if (enabled && active) {
         this.play();
       } else {
         this.stop();
@@ -74,37 +82,6 @@ class SoundCloudPlayer extends React.Component {
 
   componentWillUnmount() {
     this.stop();
-  }
-
-  play() {
-    this.setState({ needsTap: false, error: null });
-    if (this.props.enabled && this.props.active) {
-      // In Firefox we have to wait for the "canplaythrough" event before
-      // seeking.
-      // http://stackoverflow.com/a/34970444
-      const doSeek = () => {
-        this.audio.currentTime = this.props.seek + (this.props.media.start || 0);
-        this.audio.volume = this.props.volume / 100;
-        this.audio.removeEventListener('canplaythrough', doSeek, false);
-      };
-
-      const { streamUrl } = this.props.media.sourceData;
-      this.audio.src = `${streamUrl}?client_id=${CLIENT_ID}`;
-      const res = this.audio.play();
-      if (res && res.then) res.catch(this.handleError);
-      debug('currentTime', this.props.seek);
-      this.audio.addEventListener('canplaythrough', doSeek, false);
-      if (this.props.onPlay) {
-        this.audio.addEventListener('play', this.props.onPlay, false);
-      }
-    } else {
-      this.stop();
-    }
-  }
-
-  stop() {
-    this.setState({ error: null });
-    this.audio.pause();
   }
 
   handleError = (error) => {
@@ -118,26 +95,62 @@ class SoundCloudPlayer extends React.Component {
     this.play();
   };
 
+  play() {
+    const {
+      active, enabled, media, volume, seek, onPlay,
+    } = this.props;
+
+    this.setState({ needsTap: false, error: null });
+    if (enabled && active) {
+      // In Firefox we have to wait for the "canplaythrough" event before
+      // seeking.
+      // http://stackoverflow.com/a/34970444
+      const doSeek = () => {
+        this.audio.currentTime = seek + (media.start || 0);
+        this.audio.volume = volume / 100;
+        this.audio.removeEventListener('canplaythrough', doSeek, false);
+      };
+
+      const { streamUrl } = media.sourceData;
+      this.audio.src = `${streamUrl}?client_id=${CLIENT_ID}`;
+      const res = this.audio.play();
+      if (res && res.then) res.catch(this.handleError);
+      debug('currentTime', seek);
+      this.audio.addEventListener('canplaythrough', doSeek, false);
+      if (onPlay) {
+        this.audio.addEventListener('play', onPlay, false);
+      }
+    } else {
+      this.stop();
+    }
+  }
+
+  stop() {
+    this.setState({ error: null });
+    this.audio.pause();
+  }
+
   render() {
-    if (!this.props.active) {
+    const { active } = this.props;
+    if (!active) {
       return null;
     }
 
-    const { t, media } = this.props;
+    const { t, media, className } = this.props;
     const { error, needsTap } = this.state;
     const { sourceData } = media;
     if (!sourceData) {
-      return <div className={cx('src-soundcloud-Player', this.props.className)} />;
+      return <div className={cx('src-soundcloud-Player', className)} />;
     }
 
     if (needsTap) {
       return (
-        <div className={cx('src-soundcloud-Player', this.props.className)}>
+        <div className={cx('src-soundcloud-Player', className)}>
           <Paper className="src-soundcloud-Player-message">
             <Typography component="p" paragraph>
               {t('booth.autoplayBlocked')}
             </Typography>
-            <Button variant="raised" color="primary" onClick={this.handlePlay}>
+            <Button variant="contained" color="primary" onClick={this.handlePlay}>
               {t('booth.play')}
             </Button>
           </Paper>
@@ -147,7 +160,7 @@ class SoundCloudPlayer extends React.Component {
 
     if (error) {
       return (
-        <div className={cx('src-soundcloud-Player', this.props.className)}>
+        <div className={cx('src-soundcloud-Player', className)}>
           <Paper className="src-soundcloud-Player-error">
             <ErrorIcon className="src-soundcloud-Player-errorIcon" />
             <Typography component="p">
@@ -161,7 +174,7 @@ class SoundCloudPlayer extends React.Component {
     }
 
     return (
-      <div className={cx('src-soundcloud-Player', this.props.className)}>
+      <div className={cx('src-soundcloud-Player', className)}>
         <div className="src-soundcloud-Player-meta">
           <div className="src-soundcloud-Player-info">
             <img

@@ -1,62 +1,58 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate } from 'react-i18next';
+import { useTranslator } from '@u-wave/react-translate';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
-import EditIcon from '@material-ui/icons/ModeEdit';
+import EditIcon from '@material-ui/icons/Edit';
 import PromptDialog from '../../Dialogs/PromptDialog';
 
-const enhance = translate();
+const {
+  useCallback,
+  useState,
+} = React;
 
-class RenamePlaylistButton extends React.Component {
-  static propTypes = {
-    t: PropTypes.func.isRequired,
-    onRename: PropTypes.func.isRequired,
-    initialName: PropTypes.string,
-  };
+function RenamePlaylistButton({ initialName, onRename }) {
+  const { t } = useTranslator();
+  const [renaming, setRenaming] = useState(false);
 
-  state = {
-    renaming: false,
-  };
+  const handleOpen = useCallback(() => {
+    setRenaming(true);
+  }, []);
 
-  closeDialog() {
-    this.setState({ renaming: false });
-  }
+  const handleClose = useCallback(() => {
+    setRenaming(false);
+  }, []);
 
-  handleOpen = () => {
-    this.setState({ renaming: true });
-  };
+  const handleSubmit = useCallback((name) => {
+    return onRename(name).then(() => {
+      setRenaming(false);
+    });
+  }, [onRename]);
 
-  handleClose = () => {
-    this.closeDialog();
-  };
-
-  handleSubmit = name =>
-    this.props.onRename(name)
-      .then(this.closeDialog.bind(this));
-
-  render() {
-    const { t } = this.props;
-    return (
-      <React.Fragment>
-        <Tooltip title={t('playlists.rename')} placement="top">
-          <IconButton className="PlaylistMeta-iconButton" onClick={this.handleOpen}>
-            <EditIcon />
-          </IconButton>
-        </Tooltip>
-        {this.state.renaming && (
-          <PromptDialog
-            title={t('dialogs.renamePlaylist.nameInputTitle')}
-            submitLabel={t('dialogs.renamePlaylist.action')}
-            icon={<EditIcon nativeColor="#777" />}
-            value={this.props.initialName}
-            onSubmit={this.handleSubmit}
-            onCancel={this.handleClose}
-          />
-        )}
-      </React.Fragment>
-    );
-  }
+  return (
+    <>
+      <Tooltip title={t('playlists.rename')} placement="top">
+        <IconButton className="PlaylistMeta-iconButton" onClick={handleOpen}>
+          <EditIcon />
+        </IconButton>
+      </Tooltip>
+      {renaming && (
+        <PromptDialog
+          title={t('dialogs.renamePlaylist.nameInputTitle')}
+          submitLabel={t('dialogs.renamePlaylist.action')}
+          icon={<EditIcon htmlColor="#777" />}
+          value={initialName}
+          onSubmit={handleSubmit}
+          onCancel={handleClose}
+        />
+      )}
+    </>
+  );
 }
 
-export default enhance(RenamePlaylistButton);
+RenamePlaylistButton.propTypes = {
+  onRename: PropTypes.func.isRequired,
+  initialName: PropTypes.string,
+};
+
+export default RenamePlaylistButton;

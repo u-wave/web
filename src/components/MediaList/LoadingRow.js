@@ -1,4 +1,4 @@
-import cx from 'classnames';
+import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
 import MediaLoadingIndicator from './MediaLoadingIndicator';
@@ -13,9 +13,15 @@ const LoadingRow = ({
     {...attrs}
   >
     <MediaLoadingIndicator className="MediaListRow-loader" />
-    <div className="MediaListRow-artist"> … </div>
-    <div className="MediaListRow-title"> … </div>
-    <div className="MediaListRow-duration"> … </div>
+    <div className="MediaListRow-artist">
+      {' … '}
+    </div>
+    <div className="MediaListRow-title">
+      {' … '}
+    </div>
+    <div className="MediaListRow-duration">
+      {' … '}
+    </div>
   </div>
 );
 

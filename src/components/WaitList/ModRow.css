@@ -28,6 +28,7 @@
 .WaitlistRow-handle {
   cursor: move;
 }
+
 .WaitlistRow-remove {
   cursor: pointer;
 }

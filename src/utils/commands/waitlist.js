@@ -31,7 +31,7 @@ register(
   'Add a user to the waitlist. Syntax: "/wladd username"',
   {
     guard: isModeratorSelector,
-    action: username => (dispatch, getState) => {
+    action: (username) => (dispatch, getState) => {
       if (!username) {
         return dispatch(log('Provide a user to add to the waitlist. Syntax: "/wladd username"'));
       }
@@ -50,7 +50,7 @@ register(
   'Remove a user from the waitlist. Syntax: "/wlremove username"',
   {
     guard: isModeratorSelector,
-    action: username => (dispatch, getState) => {
+    action: (username) => (dispatch, getState) => {
       if (!username) {
         return dispatch(log('Provide a user to remove from the waitlist. Syntax: "/wlremove username"'));
       }
@@ -87,8 +87,8 @@ register(
 
 register(
   'wlmove',
-  'Move a user to a different position in the waitlist. ' +
-  'Syntax: "/wlmove username position"',
+  'Move a user to a different position in the waitlist. '
+  + 'Syntax: "/wlmove username position"',
   {
     guard: isModeratorSelector,
     action: (username, posStr) => (dispatch, getState) => {

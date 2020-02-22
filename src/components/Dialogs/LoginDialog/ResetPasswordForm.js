@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate } from 'react-i18next';
+import { translate } from '@u-wave/react-translate';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import EmailIcon from '@material-ui/icons/Email';
 import Form from '../../Form';
@@ -18,15 +18,21 @@ class ResetPasswordForm extends React.Component {
     onCloseDialog: PropTypes.func.isRequired,
   };
 
-  state = {
-    busy: false,
-    done: false,
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      busy: false,
+      done: false,
+    };
+  }
 
   handleSubmit = (event) => {
+    const { onResetPassword } = this.props;
+
     event.preventDefault();
     this.setState({ busy: true });
-    Promise.resolve(this.props.onResetPassword({
+    Promise.resolve(onResetPassword({
       email: this.email.value,
     })).then(() => {
       this.setState({
@@ -67,9 +73,9 @@ class ResetPasswordForm extends React.Component {
             ref={this.refEmail}
             className="ResetPasswordForm-field"
             type="email"
-            autocomplete="email"
+            autoComplete="email"
             placeholder={t('login.email')}
-            icon={<EmailIcon nativeColor="#9f9d9e" />}
+            icon={<EmailIcon htmlColor="#9f9d9e" />}
           />
         </FormGroup>
 

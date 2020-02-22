@@ -1,4 +1,5 @@
-.MobileMediaRow-artist, .MobileMediaRow-title {
+.MobileMediaRow-artist,
+.MobileMediaRow-title {
   max-width: 100%;
   overflow: hidden;
   white-space: nowrap;

@@ -1,4 +1,4 @@
-import except from 'except';
+import omit from 'just-omit';
 import {
   INIT_STATE,
   RECEIVE_MOTD,
@@ -30,12 +30,12 @@ const initialState = {
 };
 
 function removeInFlightMessage(messages, remove) {
-  return messages.filter(message => (
+  return messages.filter((message) => (
     // keep if this message is not in flight
-    !message.inFlight ||
+    !message.inFlight
     // or is not the message we're looking for
-    message.userID !== remove.userID ||
-    message.text !== remove.text
+    || message.userID !== remove.userID
+    || message.text !== remove.text
   ));
 }
 
@@ -100,12 +100,12 @@ export default function reduce(state = initialState, action = {}) {
     case REMOVE_MESSAGE:
       return {
         ...state,
-        messages: state.messages.filter(msg => msg._id !== payload._id),
+        messages: state.messages.filter((msg) => msg._id !== payload._id),
       };
     case REMOVE_USER_MESSAGES:
       return {
         ...state,
-        messages: state.messages.filter(msg => msg.userID !== payload.userID),
+        messages: state.messages.filter((msg) => msg.userID !== payload.userID),
       };
     case REMOVE_ALL_MESSAGES:
       return {
@@ -128,7 +128,7 @@ export default function reduce(state = initialState, action = {}) {
     case UNMUTE_USER:
       return {
         ...state,
-        mutedUsers: except(state.mutedUsers, payload.userID),
+        mutedUsers: omit(state.mutedUsers, payload.userID),
       };
 
     default: {

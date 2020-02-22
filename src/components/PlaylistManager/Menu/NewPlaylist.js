@@ -1,7 +1,7 @@
-import cx from 'classnames';
+import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate } from 'react-i18next';
+import { translate } from '@u-wave/react-translate';
 import MenuItem from '@material-ui/core/MenuItem';
 import CreatePlaylistIcon from '@material-ui/icons/Add';
 
@@ -16,12 +16,12 @@ class NewPlaylist extends React.Component {
     onCreatePlaylist: PropTypes.func.isRequired,
   };
 
-  state = {
-    creating: false,
-  };
+  constructor(props) {
+    super(props);
 
-  closeDialog() {
-    this.setState({ creating: false });
+    this.state = {
+      creating: false,
+    };
   }
 
   handleOpen = () => {
@@ -32,14 +32,23 @@ class NewPlaylist extends React.Component {
     this.closeDialog();
   };
 
-  handleSubmit = playlistName =>
-    Promise.resolve(this.props.onCreatePlaylist(playlistName))
+  handleSubmit = (playlistName) => {
+    const { onCreatePlaylist } = this.props;
+
+    return Promise.resolve(onCreatePlaylist(playlistName))
       .then(this.closeDialog.bind(this));
+  };
+
+  closeDialog() {
+    this.setState({ creating: false });
+  }
 
   render() {
     const { t, className } = this.props;
+    const { creating } = this.state;
+
     return (
-      <React.Fragment>
+      <>
         <MenuItem
           className={cx('PlaylistMenuRow', 'PlaylistMenuRow--create', className)}
           onClick={this.handleOpen}
@@ -51,16 +60,16 @@ class NewPlaylist extends React.Component {
             {t('playlists.new')}
           </div>
         </MenuItem>
-        {this.state.creating && (
+        {creating && (
           <PromptDialog
             title={t('dialogs.createPlaylist.nameInputTitle')}
-            icon={<CreatePlaylistIcon nativeColor="#777" />}
+            icon={<CreatePlaylistIcon htmlColor="#777" />}
             submitLabel={t('dialogs.createPlaylist.action')}
             onSubmit={this.handleSubmit}
             onCancel={this.handleClose}
           />
         )}
-      </React.Fragment>
+      </>
     );
   }
 }

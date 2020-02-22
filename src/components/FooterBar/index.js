@@ -1,8 +1,9 @@
-import cx from 'classnames';
+import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate } from 'react-i18next';
-
+import { translate } from '@u-wave/react-translate';
+import Button from '@material-ui/core/Button';
+import SettingsButton from './SettingsButton';
 import NextMedia from './NextMedia';
 import UserInfo from './UserInfo';
 import SkipButton from './SkipButton';
@@ -40,32 +41,39 @@ class FooterBar extends React.Component {
     onDownvote: PropTypes.func,
   };
 
-  static contextTypes = {
-    muiTheme: PropTypes.object,
-  };
-
   handleSkipTurn = (reason) => {
-    if (!this.props.showSkip) {
+    const {
+      showSkip, userIsDJ, onModSkip, onSkipTurn,
+    } = this.props;
+
+    if (!showSkip) {
       return null;
     }
-    if (!this.props.userIsDJ) {
-      return this.props.onModSkip(reason);
+    if (!userIsDJ) {
+      return onModSkip(reason);
     }
-    return this.props.onSkipTurn({ remove: false });
+    return onSkipTurn({ remove: false });
   }
 
   handleJoinWaitlist = () => {
-    if (this.props.user) {
-      return this.props.joinWaitlist(this.props.user);
+    const { user, joinWaitlist } = this.props;
+
+    if (user) {
+      return joinWaitlist(user);
     }
     return null;
   }
 
   handleLeaveWaitlist = () => {
-    if (this.props.userIsDJ) {
-      return this.props.onSkipTurn({ remove: true });
-    } else if (this.props.user) {
-      return this.props.leaveWaitlist(this.props.user);
+    const {
+      user, userIsDJ, onSkipTurn, leaveWaitlist,
+    } = this.props;
+
+    if (userIsDJ) {
+      return onSkipTurn({ remove: true });
+    }
+    if (user) {
+      return leaveWaitlist(user);
     }
     return null;
   }
@@ -79,16 +87,17 @@ class FooterBar extends React.Component {
     } = this.props;
     const {
       user, userIsDJ, userInWaitlist,
+      currentDJ, waitlistIsLocked,
       playlist, nextMedia, showSkip,
       baseEta, mediaEndTime,
       voteStats,
+      className,
     } = this.props;
-    const className = cx('FooterBar', this.props.className);
 
     if (user && !user.isGuest) {
-      const canVote = !userIsDJ && !!this.props.currentDJ;
+      const canVote = !userIsDJ && !!currentDJ;
       return (
-        <div className={className}>
+        <div className={cx('FooterBar', className)}>
           <div className="FooterBar-user">
             <UserInfo
               user={user}
@@ -96,6 +105,7 @@ class FooterBar extends React.Component {
             />
           </div>
           <button
+            type="button"
             className="FooterBar-next"
             onClick={togglePlaylistManager}
           >
@@ -122,40 +132,48 @@ class FooterBar extends React.Component {
               {...voteStats}
             />
           </div>
-          {this.props.showSkip && (
+          {showSkip && (
             <div className="FooterBar-skip">
               <SkipButton
                 userIsDJ={userIsDJ}
-                currentDJ={this.props.currentDJ}
+                currentDJ={currentDJ}
                 onSkip={this.handleSkipTurn}
               />
             </div>
           )}
-          <WaitlistButton
-            isLocked={this.props.waitlistIsLocked}
-            userInWaitlist={userInWaitlist}
-            onClick={userInWaitlist ? this.handleLeaveWaitlist : this.handleJoinWaitlist}
-          />
+          <div className="FooterBar-join">
+            <WaitlistButton
+              isLocked={waitlistIsLocked}
+              userInWaitlist={userInWaitlist}
+              onClick={userInWaitlist ? this.handleLeaveWaitlist : this.handleJoinWaitlist}
+            />
+          </div>
         </div>
       );
     }
+
     return (
-      <div className={className}>
-        <button
+      <div className={cx('FooterBar', className)}>
+        <SettingsButton onClick={toggleSettings} />
+        <div className="FooterBar-guest">
+          {t('login.message')}
+        </div>
+        <Button
+          variant="contained"
+          color="primary"
           className="FooterAuthButton FooterAuthButton--login"
           onClick={openLoginDialog}
         >
           {t('login.login').toUpperCase()}
-        </button>
-        <button
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
           className="FooterAuthButton FooterAuthButton--register"
           onClick={openRegisterDialog}
         >
           {t('login.register').toUpperCase()}
-        </button>
-        <div className="FooterBar-guest">
-          You have to log in if you want to play!
-        </div>
+        </Button>
       </div>
     );
   }

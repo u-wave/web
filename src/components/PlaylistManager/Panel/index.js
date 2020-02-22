@@ -1,9 +1,11 @@
-import cx from 'classnames';
+import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import MediaList from '../../MediaList';
 import PlaylistMeta from './Meta';
+import PlaylistEmpty from './PlaylistEmpty';
+import PlaylistFilterEmpty from './PlaylistFilterEmpty';
 import PlainItemRow from '../../MediaList/Row';
 import PlaylistItemRow from './PlaylistItemRow';
 import AddToPlaylistAction from '../../MediaList/Actions/AddToPlaylist';
@@ -19,36 +21,22 @@ const makeActions = ({
   onEditMedia,
   onRemoveFromPlaylist,
   isFiltered,
-}) =>
-  (media, selection, index) => [
-    <AddToPlaylistAction
-      key="add"
-      onAdd={position => onOpenAddMediaMenu(position, media, selection)}
-    />,
-    // Don't show the "move to first" action on the first item in the playlist.
-    // If the playlist is filtered we don't know if the first item to show is
-    // also the first in the playlist, so just show it always in that case.
-    (index > 0 || isFiltered) && (
-      <MoveToFirstAction
-        key="first"
-        onFirst={() => onMoveToFirst(media, selection)}
-      />
-    ),
-    (index === 0 && !isFiltered) && (
-      <MoveToLastAction
-        key="last"
-        onLast={() => onMoveToLast(media, selection)}
-      />
-    ),
-    <EditMediaAction
-      key="edit"
-      onEdit={() => onEditMedia(media)}
-    />,
-    <RemoveFromPlaylistAction
-      key="remove"
-      onRemove={() => onRemoveFromPlaylist(media, selection)}
-    />,
-  ];
+}) => (media, selection, index) => (
+  <>
+    <AddToPlaylistAction onAdd={(position) => onOpenAddMediaMenu(position, media, selection)} />
+    {/* Don't show the "move to first" action on the first item in the playlist.
+      * If the playlist is filtered we don't know if the first item to show is
+      * also the first in the playlist, so just show it always in that case. */}
+    {(index > 0 || isFiltered) && (
+      <MoveToFirstAction onFirst={() => onMoveToFirst(media, selection)} />
+    )}
+    {(index === 0 && !isFiltered) && (
+    <MoveToLastAction onLast={() => onMoveToLast(media, selection)} />
+    )}
+    <EditMediaAction onEdit={() => onEditMedia(media)} />
+    <RemoveFromPlaylistAction onRemove={() => onRemoveFromPlaylist(media, selection)} />
+  </>
+);
 
 const PlaylistPanel = (props) => {
   const {
@@ -75,6 +63,10 @@ const PlaylistPanel = (props) => {
         <CircularProgress size="100%" />
       </div>
     );
+  } else if (media.length === 0) {
+    list = isFiltered
+      ? <PlaylistFilterEmpty />
+      : <PlaylistEmpty />;
   } else {
     list = (
       <MediaList

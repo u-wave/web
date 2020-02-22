@@ -28,7 +28,7 @@ const FatalError = ({ error }) => (
       </CardContent>
       <CardActions>
         <Button
-          variant="raised"
+          variant="contained"
           color="secondary"
           className="FatalError-reload"
           onClick={reload}

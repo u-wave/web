@@ -1,7 +1,6 @@
-import cx from 'classnames';
+import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import pure from 'recompose/pure';
 
 const SongTitle = ({
   className, artist, title, size = 'large',
@@ -23,4 +22,4 @@ SongTitle.propTypes = {
   size: PropTypes.string,
 };
 
-export default pure(SongTitle);
+export default React.memo(SongTitle);

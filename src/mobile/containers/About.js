@@ -1,44 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate } from 'react-i18next';
+import { useTranslator } from '@u-wave/react-translate';
+import UwaveContext from '../../context/UwaveContext';
 import Overlay from '../../components/Overlay';
 import OverlayHeader from '../../components/Overlay/Header';
 import OverlayContent from '../../components/Overlay/Content';
 
-const enhance = translate();
+const { useContext } = React;
 
-class AboutContainer extends React.Component {
-  static propTypes = {
-    t: PropTypes.func.isRequired,
-    onCloseOverlay: PropTypes.func.isRequired,
-  };
-  static contextTypes = {
-    uwave: PropTypes.object,
-  };
+function AboutOverlay({
+  onCloseOverlay,
+  ...props
+}) {
+  const { t } = useTranslator();
+  const AboutPage = useContext(UwaveContext).getAboutPageComponent();
 
-  getAboutPageComponent() {
-    const uw = this.context.uwave;
-    if (uw) {
-      return uw.getAboutPageComponent();
-    }
+  if (!AboutPage) {
     return null;
   }
 
-  render() {
-    const About = this.getAboutPageComponent();
-    if (!About) return null;
-
-    const { t, onCloseOverlay, ...props } = this.props;
-
-    return (
-      <Overlay>
-        <OverlayHeader title={t('about.about')} onCloseOverlay={onCloseOverlay} />
-        <OverlayContent className="AboutPanel">
-          <About {...props} />
-        </OverlayContent>
-      </Overlay>
-    );
-  }
+  return (
+    <Overlay>
+      <OverlayHeader title={t('about.about')} onCloseOverlay={onCloseOverlay} />
+      <OverlayContent className="AboutPanel">
+        <AboutPage {...props} />
+      </OverlayContent>
+    </Overlay>
+  );
 }
 
-export default enhance(AboutContainer);
+AboutOverlay.propTypes = {
+  onCloseOverlay: PropTypes.func.isRequired,
+};
+
+export default AboutOverlay;

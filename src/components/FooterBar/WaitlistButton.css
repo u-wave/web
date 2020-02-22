@@ -1,0 +1,40 @@
+@import "../../vars.css";
+
+.WaitlistButton {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 125px;
+  background: var(--highlight-color);
+  color: var(--text-color);
+  cursor: pointer;
+  font-size: 11pt;
+  text-transform: uppercase;
+
+  /* Align multiline button text nicely. Good for languages where "Join Waitlist"
+   * becomes a longer phrase, especially. */
+  line-height: 24px;
+  padding: 8px 4px;
+
+  &:hover {
+    background: var(--highbright-color);
+  }
+}
+
+.WaitlistButton--locked {
+  width: 140px;
+  color: var(--waitlist-locked-text-color);
+}
+
+.WaitlistButton-icon {
+  width: 1em;
+  height: 1em;
+  margin-right: 6px;
+  color: var(--text-color);
+}
+
+.WaitlistButton-icon--locked {
+  color: color-mod(var(--text-color) alpha(* 70%));
+}

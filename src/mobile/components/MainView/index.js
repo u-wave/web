@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import withHandlers from 'recompose/withHandlers';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -29,23 +28,6 @@ const getWaitlistLabel = (size, position) => {
   }
   return '0';
 };
-
-const enhance = withHandlers({
-  // Prevent defaults for react-tap-event-plugin:
-  // https://github.com/zilverline/react-tap-event-plugin/issues/77
-  onOpenRoomHistory: props => (event) => {
-    event.preventDefault();
-    props.onOpenRoomHistory();
-  },
-  onOpenDrawer: props => (event) => {
-    event.preventDefault();
-    props.onOpenDrawer();
-  },
-  onOpenWaitlist: props => (event) => {
-    event.preventDefault();
-    props.onOpenWaitlist();
-  },
-});
 
 const MainView = ({
   media,
@@ -110,4 +92,4 @@ MainView.propTypes = {
   onEnableVideo: PropTypes.func.isRequired,
 };
 
-export default enhance(MainView);
+export default MainView;

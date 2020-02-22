@@ -16,7 +16,7 @@ import {
 } from '../constants/ActionTypes';
 import * as Session from '../utils/Session';
 import { get, post, del } from './RequestActionCreators';
-import { advance, loadHistory } from './BoothActionCreators';
+import { loadHistory } from './BoothActionCreators';
 import { setPlaylists, loadPlaylist } from './PlaylistActionCreators';
 import { syncTimestamps } from './TickerActionCreators';
 import { closeLoginDialog } from './DialogActionCreators';
@@ -59,10 +59,6 @@ export function loadedState(state) {
       type: INIT_STATE,
       payload: state,
     });
-    if (state.booth && state.booth.historyID) {
-      // TODO don't set this when logging in _after_ entering the page?
-      dispatch(advance(state.booth));
-    }
     if (state.user) {
       const token = tokenSelector(getState());
       dispatch(loginComplete({
@@ -82,10 +78,11 @@ export function initState() {
 
   return get('/now', {
     onStart: () => ({ type: LOAD_ALL_PLAYLISTS_START }),
-    onComplete: state => (dispatch) => {
+    onComplete: (state) => (dispatch) => {
       dispatch(syncTimestamps(beforeTime, state.time));
       dispatch(loadedState(state));
       dispatch(loadHistory());
+      return state;
     },
   });
 }
@@ -105,12 +102,12 @@ export function login({ email, password }) {
   const sessionType = Session.preferredSessionType();
   return post(`/auth/login?session=${sessionType}`, { email, password }, {
     onStart: loginStart,
-    onComplete: res => (dispatch) => {
+    onComplete: (res) => (dispatch) => {
       Session.set(res.meta.jwt);
       dispatch(setSessionToken(res.meta.jwt));
       dispatch(initState());
     },
-    onError: error => ({
+    onError: (error) => ({
       type: LOGIN_COMPLETE,
       error: true,
       payload: error,
@@ -125,7 +122,7 @@ export function register({
     email, username, password, grecaptcha,
   }, {
     onStart: () => ({ type: REGISTER_START }),
-    onComplete: res => (dispatch) => {
+    onComplete: (res) => (dispatch) => {
       const user = res.data;
       debug('registered', user);
       dispatch({
@@ -134,7 +131,7 @@ export function register({
       });
       dispatch(login({ email, password }));
     },
-    onError: error => ({
+    onError: (error) => ({
       type: REGISTER_COMPLETE,
       error: true,
       payload: error,
@@ -169,7 +166,7 @@ export function resetPassword(email) {
       type: RESET_PASSWORD_COMPLETE,
       payload: 'Successfully sent password reset email',
     }),
-    onError: error => ({
+    onError: (error) => ({
       type: RESET_PASSWORD_COMPLETE,
       error: true,
       payload: error,
@@ -179,7 +176,7 @@ export function resetPassword(email) {
 
 export function getSocketAuthToken() {
   return get('/auth/socket', {
-    onComplete: res => () => ({
+    onComplete: (res) => () => ({
       socketToken: res.data.socketToken,
     }),
   });

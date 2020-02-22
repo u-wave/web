@@ -1,9 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import compose from 'recompose/compose';
-import withState from 'recompose/withState';
-import withProps from 'recompose/withProps';
-import withHandlers from 'recompose/withHandlers';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
@@ -11,89 +7,90 @@ import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import Collapse from '@material-ui/core/Collapse';
-import EditIcon from '@material-ui/icons/ModeEdit';
+import EditIcon from '@material-ui/icons/Edit';
 import parse from 'u-wave-parse-chat-markup';
 import compile from '../../../components/Chat/Markup/compile';
 
-const enhance = compose(
-  withState('newMotd', 'setMotd', props => props.motd),
-  withState('expanded', 'setExpanded', false),
-  withProps(props => ({
-    parsedMotd: compile(parse(props.newMotd), props.compileOptions),
-    onExpand: () => props.setExpanded(!props.expanded),
-  })),
-  withHandlers({
-    onChange: props => (event) => {
-      props.setMotd(event.target.value);
-    },
-    onSubmit: props => (event) => {
-      event.preventDefault();
-      props.onSetMotd(props.newMotd);
-      props.setExpanded(false);
-    },
-  }),
-);
+const {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} = React;
 
-function autoFocus(el) {
-  if (el) el.focus();
+function Motd({
+  initialMotd,
+  compileOptions,
+  canChangeMotd = false,
+  onSetMotd,
+}) {
+  const [newMotd, setMotd] = useState(initialMotd);
+  const [expanded, setExpanded] = useState(false);
+  const parsedMotd = useMemo(
+    () => compile(parse(newMotd), compileOptions),
+    [newMotd, compileOptions],
+  );
+  const onExpand = useCallback(() => {
+    setExpanded(!expanded);
+  }, [expanded]);
+  const onChange = useCallback((event) => {
+    setMotd(event.target.value);
+  }, []);
+  const onSubmit = useCallback((event) => {
+    event.preventDefault();
+    onSetMotd(newMotd);
+    setExpanded(false);
+  }, [newMotd]);
+  const input = useRef(null);
+  useEffect(() => {
+    if (input.current) {
+      input.current.focus();
+    }
+  }, [expanded]);
+
+  return (
+    <Card className="AdminMotd">
+      <CardHeader
+        title="Message of the Day"
+        action={canChangeMotd && (
+          <IconButton onClick={onExpand}>
+            <EditIcon />
+          </IconButton>
+        )}
+      />
+      <CardContent>{parsedMotd}</CardContent>
+      <Collapse in={expanded} unmountOnExit>
+        <form onSubmit={onSubmit}>
+          <CardContent style={{ paddingTop: 0 }}>
+            <textarea
+              className="AdminMotd-field"
+              rows={4}
+              onChange={onChange}
+              value={newMotd}
+              ref={input}
+            />
+          </CardContent>
+          <CardActions>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+            >
+              Save
+            </Button>
+          </CardActions>
+        </form>
+      </Collapse>
+    </Card>
+  );
 }
 
-const Motd = ({
-  canChangeMotd,
-  newMotd,
-  parsedMotd,
-  expanded,
-  onChange,
-  onSubmit,
-  onExpand,
-}) => (
-  <Card className="AdminMotd">
-    <CardHeader
-      title="Message of the Day"
-      action={canChangeMotd && (
-        <IconButton onClick={onExpand}>
-          <EditIcon />
-        </IconButton>
-      )}
-    />
-    <CardContent>{parsedMotd}</CardContent>
-    <Collapse in={expanded} unmountOnExit>
-      <form onSubmit={onSubmit}>
-        <CardContent style={{ paddingTop: 0 }}>
-          <textarea
-            className="AdminMotd-field"
-            rows={4}
-            onChange={onChange}
-            value={newMotd}
-            ref={autoFocus}
-          />
-        </CardContent>
-        <CardActions>
-          <Button
-            type="submit"
-            variant="raised"
-            color="primary"
-          >
-            Save
-          </Button>
-        </CardActions>
-      </form>
-    </Collapse>
-  </Card>
-);
-
 Motd.propTypes = {
+  initialMotd: PropTypes.string,
+  compileOptions: PropTypes.object.isRequired,
   canChangeMotd: PropTypes.bool,
-  newMotd: PropTypes.string.isRequired,
-  parsedMotd: PropTypes.array.isRequired,
-  expanded: PropTypes.bool.isRequired,
-  onChange: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired,
-  onExpand: PropTypes.func.isRequired,
+  onSetMotd: PropTypes.func.isRequired,
 };
 
-Motd.defaultProps = {
-  canChangeMotd: false,
-};
-
-export default enhance(Motd);
+export default Motd;

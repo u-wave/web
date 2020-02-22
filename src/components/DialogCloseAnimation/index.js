@@ -5,44 +5,62 @@ import PropTypes from 'prop-types';
  * Component that handles the material-ui/Dialog close animation when a Dialog unmounts.
  */
 export default class DialogCloseAnimation extends React.Component {
+  timeout = null;
+
   static propTypes = {
     children: PropTypes.element,
     delay: PropTypes.number.isRequired,
   };
 
-  state = {
-    children: this.props.children,
-  };
+  constructor(props) {
+    super(props);
 
-  // TODO translate this to componentDidUpdate()?
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.children) {
-      this.clearTimeout();
-      this.setState({
-        children: nextProps.children,
-      });
+    const { children } = this.props;
+    this.state = {
+      cachedChildren: children,
+    };
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const { children } = nextProps;
+    const { cachedChildren } = prevState;
+
+    if (children) {
+      return { cachedChildren: children };
     }
-    if (this.state.children && !nextProps.children) {
-      this.setState({
-        children: React.cloneElement(this.state.children, {
+
+    if (!children && cachedChildren) {
+      return {
+        cachedChildren: React.cloneElement(cachedChildren, {
           open: false,
         }),
-      });
+      };
+    }
 
+    return null;
+  }
+
+  componentDidUpdate() {
+    const { children, delay } = this.props;
+    const { cachedChildren } = this.state;
+
+    if (children) {
+      this.clearTimeout();
+    }
+
+    if (cachedChildren && !children) {
       this.timeout = setTimeout(() => {
         this.setState({
-          children: null,
+          cachedChildren: null,
         });
         this.timeout = null;
-      }, this.props.delay);
+      }, delay);
     }
   }
 
   componentWillUnmount() {
     this.clearTimeout();
   }
-
-  timeout = null;
 
   clearTimeout() {
     if (this.timeout) {
@@ -52,6 +70,8 @@ export default class DialogCloseAnimation extends React.Component {
   }
 
   render() {
-    return this.state.children || null;
+    const { cachedChildren } = this.state;
+
+    return cachedChildren || null;
   }
 }

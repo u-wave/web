@@ -80,12 +80,11 @@ export function favoriteMedia(playlist, historyID) {
   const playlistID = playlist._id;
   return post('/booth/favorite', { historyID, playlistID }, {
     onStart: () => favoriteMediaStart(playlistID, historyID),
-    onComplete: res =>
-      favoriteMediaComplete(playlistID, historyID, {
-        added: mergeIncludedModels(res),
-        playlistSize: res.meta.playlistSize,
-      }),
-    onError: error => ({
+    onComplete: (res) => favoriteMediaComplete(playlistID, historyID, {
+      added: mergeIncludedModels(res),
+      playlistSize: res.meta.playlistSize,
+    }),
+    onError: (error) => ({
       type: DO_FAVORITE_COMPLETE,
       error: true,
       payload: error,

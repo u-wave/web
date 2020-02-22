@@ -1,10 +1,10 @@
 import React from 'react';
-import { translate } from 'react-i18next';
 import PropTypes from 'prop-types';
+import { useTranslator } from '@u-wave/react-translate';
 import Username from '../../Username';
 import UserNotificationMessage from './UserNotificationMessage';
 
-const toUsername = user => (
+const toUsername = (user) => (
   <Username user={user} />
 );
 
@@ -15,32 +15,32 @@ const getLangKey = (hasModerator, hasReason) => {
   return hasModerator ? 'chat.modSkip' : 'chat.selfSkip';
 };
 
-const enhance = translate();
-
-const SkipMessage = ({
-  t,
+function SkipMessage({
   user,
   moderator,
   reason,
   timestamp,
-}) => (
-  <UserNotificationMessage
-    type="skip"
-    className="ChatMessage--skip"
-    i18nKey={getLangKey(!!moderator, !!reason)}
-    user={moderator || user}
-    djName={toUsername(user)}
-    reason={reason ? t(`booth.skip.reasons.${reason}`) : undefined}
-    timestamp={timestamp}
-  />
-);
+}) {
+  const { t } = useTranslator();
+
+  return (
+    <UserNotificationMessage
+      type="skip"
+      className="ChatMessage--skip"
+      i18nKey={getLangKey(!!moderator, !!reason)}
+      user={moderator || user}
+      djName={toUsername(user)}
+      reason={reason ? t(`booth.skip.reasons.${reason}`) : undefined}
+      timestamp={timestamp}
+    />
+  );
+}
 
 SkipMessage.propTypes = {
-  t: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
   moderator: PropTypes.object,
   timestamp: PropTypes.number.isRequired,
   reason: PropTypes.string,
 };
 
-export default enhance(SkipMessage);
+export default SkipMessage;

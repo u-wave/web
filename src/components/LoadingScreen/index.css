@@ -1,26 +1,32 @@
 @import "../../vars.css";
+@import "./Filler.css";
 
-.LoadingScreen {
-  background: var(--background-color);
-  position: fixed;
+@keyframes initiallyHide {
+  0% { opacity: 0; }
+  80% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.LoadingIndicator {
+  background: #000;
+  position: relative;
+  width: 100%;
+  height: 100%;
   left: 0;
   right: 0;
   top: 0;
   bottom: 0;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.LoadingScreen-loader {
-  height: 250px;
-  width: 250px;
-  height: 50vmin;
-  width: 50vmin;
+.LoadingIndicator-loader {
+  animation: 1s linear 0s 1 initiallyHide;
 }
 
-.LoadingScreen-notice {
+.LoadingIndicator-notice {
+  animation: 1s linear 0s 1 initiallyHide;
   color: var(--text-color);
 }

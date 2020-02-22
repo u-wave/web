@@ -17,7 +17,9 @@ import {
   SHUFFLE_PLAYLIST_START, SHUFFLE_PLAYLIST_COMPLETE,
 } from '../constants/ActionTypes';
 import { openEditMediaDialog } from './DialogActionCreators';
-import { del, get, post, put } from './RequestActionCreators';
+import {
+  del, get, post, put,
+} from './RequestActionCreators';
 import {
   playlistsSelector,
   playlistItemsSelector,
@@ -65,7 +67,7 @@ export function loadPlaylist(playlistID, page = 0, meta = {}) {
   return get(`/playlists/${playlistID}/media`, {
     qs: { page, limit: MEDIA_PAGE_SIZE },
     onStart: () => loadPlaylistStart(playlistID, page, meta),
-    onComplete: res => loadPlaylistComplete(
+    onComplete: (res) => loadPlaylistComplete(
       playlistID,
       mergeIncludedModels(res).map(flattenPlaylistItem),
       {
@@ -74,7 +76,7 @@ export function loadPlaylist(playlistID, page = 0, meta = {}) {
         size: res.meta.total,
       },
     ),
-    onError: error => ({
+    onError: (error) => ({
       type: LOAD_PLAYLIST_COMPLETE,
       error: true,
       payload: error,
@@ -105,7 +107,7 @@ export function loadFilteredPlaylistItems(playlistID, page = 0) {
     return dispatch(get(`/playlists/${playlistID}/media`, {
       qs: { filter, page, limit: MEDIA_PAGE_SIZE },
       onStart: () => filterPlaylistItemsStart(playlistID, page, filter),
-      onComplete: res => filterPlaylistItemsComplete(
+      onComplete: (res) => filterPlaylistItemsComplete(
         playlistID,
         mergeIncludedModels(res).map(flattenPlaylistItem),
         {
@@ -115,7 +117,7 @@ export function loadFilteredPlaylistItems(playlistID, page = 0) {
           filter,
         },
       ),
-      onError: error => ({
+      onError: (error) => ({
         type: FILTER_PLAYLIST_ITEMS_COMPLETE,
         error: true,
         payload: error,
@@ -166,8 +168,8 @@ function shouldLoadAfterCycle(playlist) {
   }
   // If the first page _after_ cycle is fully loaded, we also don't need to do
   // anything.
-  if (media.length > MEDIA_PAGE_SIZE &&
-      media.slice(1, 1 + MEDIA_PAGE_SIZE).every(Boolean)) {
+  if (media.length > MEDIA_PAGE_SIZE
+      && media.slice(1, 1 + MEDIA_PAGE_SIZE).every(Boolean)) {
     return false;
   }
   // Otherwise, there will be unloaded items on the first page after cycling,
@@ -214,7 +216,7 @@ export function activatePlaylist(playlistID) {
   return put(`/playlists/${playlistID}/activate`, {}, {
     onStart: () => activatePlaylistStart(playlistID),
     onComplete: () => activatePlaylistComplete(playlistID),
-    onError: error => ({
+    onError: (error) => ({
       type: ACTIVATE_PLAYLIST_COMPLETE,
       error: true,
       payload: error,
@@ -237,8 +239,8 @@ export function loadPlaylistsComplete(playlists) {
 export function loadPlaylists() {
   return get('/playlists', {
     onStart: loadPlaylistsStart,
-    onComplete: res => loadPlaylistsComplete(res.data),
-    onError: error => ({
+    onComplete: (res) => loadPlaylistsComplete(res.data),
+    onError: (error) => ({
       type: LOAD_ALL_PLAYLISTS_COMPLETE,
       error: true,
       payload: error,
@@ -269,16 +271,16 @@ export function createPlaylist(name) {
 
   return post('/playlists', { name, description, shared }, {
     onStart: () => createPlaylistStart({ name, description, shared }, tempId),
-    onComplete: res => (dispatch, getState) => {
+    onComplete: (res) => (dispatch) => {
       const playlist = res.data;
-      const isFirstPlaylist = !activePlaylistIDSelector(getState());
+      const { active } = res.meta;
       dispatch(createPlaylistComplete(playlist, tempId));
-      if (isFirstPlaylist) {
+      if (active) {
         dispatch(activatePlaylistComplete(playlist._id));
       }
       return playlist;
     },
-    onError: error => ({
+    onError: (error) => ({
       type: CREATE_PLAYLIST_COMPLETE,
       error: true,
       payload: error,
@@ -297,7 +299,7 @@ export function renamePlaylist(playlistID, name) {
       type: RENAME_PLAYLIST_COMPLETE,
       payload: { playlistID, name: data.name },
     }),
-    onError: error => ({
+    onError: (error) => ({
       type: RENAME_PLAYLIST_COMPLETE,
       error: true,
       payload: error,
@@ -339,8 +341,8 @@ export function cannotDeleteActivePlaylist(playlistID) {
   return {
     type: DELETE_PLAYLIST_COMPLETE,
     error: true,
-    payload: new Error('The active playlist cannot be deleted. ' +
-      'Activate a different playlist first, before deleting this one.'),
+    payload: new Error('The active playlist cannot be deleted. '
+      + 'Activate a different playlist first, before deleting this one.'),
     meta: { playlistID },
   };
 }
@@ -359,7 +361,7 @@ export function deletePlaylist(playlistID) {
     return dispatch(del(`/playlists/${playlistID}`, {}, {
       onStart: () => deletePlaylistStart(playlistID),
       onComplete: () => deletePlaylistComplete(playlistID),
-      onError: error => ({
+      onError: (error) => ({
         type: DELETE_PLAYLIST_COMPLETE,
         error: true,
         payload: error,
@@ -433,12 +435,12 @@ export function addMedia(playlist, items, afterID = null) {
 
   return post(`/playlists/${playlist._id}/media`, payload, {
     onStart: () => addMediaStart(playlist._id, items, afterID),
-    onComplete: res => addMediaComplete(
+    onComplete: (res) => addMediaComplete(
       playlist._id,
       res.meta.playlistSize,
       { afterID, media: mergeIncludedModels(res).map(flattenPlaylistItem) },
     ),
-    onError: error => ({
+    onError: (error) => ({
       type: ADD_MEDIA_COMPLETE,
       error: true,
       payload: error,
@@ -467,8 +469,8 @@ export function updateMediaComplete(playlistID, mediaID, media) {
 export function updateMedia(playlistID, mediaID, props) {
   return put(`/playlists/${playlistID}/media/${mediaID}`, props, {
     onStart: () => updateMediaStart(playlistID, mediaID, props),
-    onComplete: res => updateMediaComplete(playlistID, mediaID, res.data),
-    onError: error => ({
+    onComplete: (res) => updateMediaComplete(playlistID, mediaID, res.data),
+    onError: (error) => ({
       type: UPDATE_MEDIA_COMPLETE,
       payload: error,
       error: true,
@@ -496,7 +498,7 @@ export function removeMediaComplete(playlistID, newSize, removedMedia) {
 }
 
 export function removeMedia(playlistID, items) {
-  const itemIDs = items.map(media => media._id);
+  const itemIDs = items.map((media) => media._id);
   return del(`/playlists/${playlistID}/media`, { items: itemIDs }, {
     onStart: () => removeMediaStart(playlistID, items),
     onComplete: ({ meta }) => removeMediaComplete(
@@ -504,7 +506,7 @@ export function removeMedia(playlistID, items) {
       meta.playlistSize,
       items,
     ),
-    onError: error => ({
+    onError: (error) => ({
       type: REMOVE_MEDIA_COMPLETE,
       error: true,
       payload: error,
@@ -551,12 +553,12 @@ export function moveMedia(playlistID, medias, opts) {
     const playlistItems = playlistItemsSelector(getState())[playlistID];
     const location = resolveMoveOptions(playlistItems, opts);
 
-    const items = medias.map(media => media._id);
+    const items = medias.map((media) => media._id);
 
     return dispatch(put(`/playlists/${playlistID}/move`, { items, ...location }, {
       onStart: () => moveMediaStart(playlistID, medias, location),
       onComplete: () => moveMediaComplete(playlistID, medias, location),
-      onError: error => ({
+      onError: (error) => ({
         type: MOVE_MEDIA_COMPLETE,
         error: true,
         payload: error,
@@ -587,7 +589,7 @@ export function shufflePlaylist(playlistID) {
     const shuffleOperation = post(`/playlists/${playlistID}/shuffle`, {}, {
       onStart: () => shufflePlaylistStart(playlistID),
       // onComplete: () => shufflePlaylistComplete(playlistID),
-      onError: error => ({
+      onError: (error) => ({
         type: SHUFFLE_PLAYLIST_COMPLETE,
         error: true,
         payload: error,

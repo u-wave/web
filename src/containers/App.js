@@ -1,32 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import nest from 'recompose/nest';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { MuiThemeProvider } from '@material-ui/core/styles';
-import { I18nextProvider } from 'react-i18next';
+import { ThemeProvider } from '@material-ui/styles';
 import { Provider as BusProvider } from 'react-bus';
+import { TranslateProvider } from '@u-wave/react-translate';
 import { Mobile, Desktop } from '../components/Responsive';
-import ClockProvider from '../components/ClockProvider';
 import { closeAll } from '../actions/OverlayActionCreators';
 import {
   settingsSelector,
-  languageSelector,
   themeSelector,
 } from '../selectors/settingSelectors';
+import { translatorSelector } from '../selectors/localeSelectors';
 import { isConnectedSelector } from '../selectors/serverSelectors';
 import DesktopApp from '../components/App';
 import MobileApp from '../mobile/components/App';
 import FatalError from '../components/FatalError';
-
-const SimpleProviders = nest(BusProvider, ClockProvider);
+import UwaveContext from '../context/UwaveContext';
+import ClockContext from '../context/ClockContext';
+import MediaSourceContext from '../context/MediaSourceContext';
 
 const mapStateToProps = createStructuredSelector({
-  activeOverlay: state => state.activeOverlay,
+  activeOverlay: (state) => state.activeOverlay,
   isConnected: isConnectedSelector,
   settings: settingsSelector,
-  language: languageSelector,
   theme: themeSelector,
+  translator: translatorSelector,
 });
 
 const mapDispatchToProps = {
@@ -39,30 +38,27 @@ class AppContainer extends React.Component {
   static propTypes = {
     mediaSources: PropTypes.object.isRequired,
     uwave: PropTypes.object,
-    language: PropTypes.string,
     theme: PropTypes.object,
-    locale: PropTypes.object.isRequired,
+    translator: PropTypes.object.isRequired,
   };
 
-  static childContextTypes = {
-    mediaSources: PropTypes.object,
-    uwave: PropTypes.object,
-  };
+  constructor(props) {
+    super(props);
 
-  state = {
-    error: null,
-  };
-
-  getChildContext() {
-    return {
-      mediaSources: this.props.mediaSources,
-      uwave: this.props.uwave,
+    this.state = {
+      error: null,
     };
   }
 
+  componentDidMount() {
+    this.applyThemeProperties();
+  }
+
   componentDidUpdate(prevProps) {
-    if (this.props.language !== prevProps.language) {
-      this.props.locale.changeLanguage(this.props.language);
+    const { theme } = this.props;
+
+    if (theme !== prevProps.theme) {
+      this.applyThemeProperties();
     }
   }
 
@@ -70,35 +66,58 @@ class AppContainer extends React.Component {
     this.setState({ error });
   }
 
+  applyThemeProperties() {
+    const { theme } = this.props;
+    const root = document.body;
+
+    Object.keys(theme.cssProperties).forEach((prop) => {
+      root.style.setProperty(prop, theme.cssProperties[prop]);
+    });
+  }
+
   renderApp = () => (
-    <React.Fragment>
+    <>
       <Mobile>
         <MobileApp {...this.props} />
       </Mobile>
       <Desktop>
         <DesktopApp {...this.props} />
       </Desktop>
-    </React.Fragment>
+    </>
   );
 
   render() {
-    if (this.state.error) {
+    const {
+      uwave,
+      mediaSources,
+      theme,
+      translator,
+    } = this.props;
+    const { error } = this.state;
+
+    if (error) {
       // Let's hope the ThemeProvider works at least...
       return (
-        <MuiThemeProvider theme={this.props.theme}>
-          <FatalError error={this.state.error} />
-        </MuiThemeProvider>
+        <ThemeProvider theme={theme}>
+          <FatalError error={error} />
+        </ThemeProvider>
       );
     }
 
     return (
-      <MuiThemeProvider theme={this.props.theme}>
-        <I18nextProvider i18n={this.props.locale}>
-          <SimpleProviders>
-            {this.renderApp()}
-          </SimpleProviders>
-        </I18nextProvider>
-      </MuiThemeProvider>
+      <ThemeProvider theme={theme}>
+        <TranslateProvider translator={translator}>
+          <BusProvider>
+            <ClockContext.Provider>
+              <UwaveContext.Provider value={uwave}>
+                <MediaSourceContext.Provider mediaSources={mediaSources}>
+                  {this.renderApp()}
+                </MediaSourceContext.Provider>
+              </UwaveContext.Provider>
+            </ClockContext.Provider>
+          </BusProvider>
+        </TranslateProvider>
+      </ThemeProvider>
     );
   }
 }

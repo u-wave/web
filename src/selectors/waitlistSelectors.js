@@ -2,20 +2,20 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import { timeRemainingSelector, djSelector, isCurrentDJSelector } from './boothSelectors';
 import { currentUserSelector, usersSelector } from './userSelectors';
 
-const baseSelector = state => state.waitlist;
+const baseSelector = (state) => state.waitlist;
 
-export const isLockedSelector = createSelector(baseSelector, wl => !!wl.locked);
-const waitlistIDsSelector = createSelector(baseSelector, wl => wl.waitlist);
+export const isLockedSelector = createSelector(baseSelector, (wl) => !!wl.locked);
+const waitlistIDsSelector = createSelector(baseSelector, (wl) => wl.waitlist);
 
 export const sizeSelector = createSelector(
   waitlistIDsSelector,
-  list => list.length,
+  (list) => list.length,
 );
 
 export const waitlistUsersSelector = createSelector(
   waitlistIDsSelector,
   usersSelector,
-  (ids, users) => ids.map(id => users[id]),
+  (ids, users) => ids.map((id) => users[id]),
 );
 
 export const djAndWaitlistUsersSelector = createSelector(
@@ -49,8 +49,7 @@ const averagePlayDuration = 4 * 60 * 1000;
 export const baseEtaSelector = createSelector(
   positionSelector,
   sizeSelector,
-  (position, size) =>
-    (position === -1 ? size : position) * averagePlayDuration,
+  (position, size) => (position === -1 ? size : position) * averagePlayDuration,
 );
 
 export const etaSelector = createSelector(

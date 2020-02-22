@@ -1,9 +1,13 @@
 // List of dependency paths that need to be compiled.
 const es2015Deps = [
-  /format-duration/,
-  /object-values/,
-  /@material-ui\/core\/es/,
-  /@material-ui\/icons\/es/,
+  /\/format-duration\//,
+  /\/object-values\//,
+  /\/p-finally\//,
+  /\/strip-indent\//,
+  /\/debug\//,
+  /\/escape-string-regex\//,
+  /\/@material-ui\/core\/es\//,
+  /\/@material-ui\/icons\/es\//,
 ];
 
 export default function compileDependencies() {
@@ -17,6 +21,17 @@ export default function compileDependencies() {
           // Don't assume dependencies are OK with being run in loose mode
           loose: false,
           forceAllTransforms: true,
+          exclude: [
+            '@babel/plugin-transform-async-to-generator',
+            '@babel/plugin-transform-regenerator',
+          ],
+        }],
+      ],
+      plugins: [
+        ['module:fast-async', {
+          compiler: {
+            noRuntime: true,
+          },
         }],
       ],
     },

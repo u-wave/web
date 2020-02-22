@@ -1,4 +1,4 @@
-import cx from 'classnames';
+import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
 import IconButton from '@material-ui/core/IconButton';
@@ -14,6 +14,7 @@ const SearchResultsRow = ({
 }) => (
   <ListItem role="menuitem" className={cx('PlaylistMenuRow', 'PlaylistMenuRow--search', className)}>
     <button
+      type="button"
       className="PlaylistMenuRow-title"
       onClick={onClick}
     >
@@ -24,7 +25,7 @@ const SearchResultsRow = ({
     </button>
     <div className="PlaylistMenuRow-count">
       <IconButton className="PlaylistMenuRow-closeButton" onClick={onClose}>
-        <CloseIcon nativeColor="#777" />
+        <CloseIcon htmlColor="#777" />
       </IconButton>
     </div>
   </ListItem>

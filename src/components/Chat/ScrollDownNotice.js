@@ -1,31 +1,32 @@
-import cx from 'classnames';
+import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate } from 'react-i18next';
-import Button from '@material-ui/core/Button';
+import { useTranslator } from '@u-wave/react-translate';
+import Fab from '@material-ui/core/Fab';
 import ScrollDownIcon from '@material-ui/icons/ArrowDownward';
 
-const enhance = translate();
+function ScrollDownNotice({ show, onClick }) {
+  const { t } = useTranslator();
 
-const ScrollNotice = ({ t, show, onClick }) => (
-  <div className={cx('ChatMessages-scrollDown', show && 'is-visible')}>
-    <Button
-      className="ChatMessages-scrollDownButton"
-      variant="fab"
-      mini
-      color="primary"
-      aria-label={t('chat.scrollDown')}
-      onClick={onClick}
-    >
-      <ScrollDownIcon />
-    </Button>
-  </div>
-);
+  return (
+    <div className={cx('ChatMessages-scrollDown', show && 'is-visible')}>
+      <Fab
+        tabIndex={show ? 0 : -1}
+        className="ChatMessages-scrollDownButton"
+        size="small"
+        color="primary"
+        aria-label={t('chat.scrollDown')}
+        onClick={onClick}
+      >
+        <ScrollDownIcon />
+      </Fab>
+    </div>
+  );
+}
 
-ScrollNotice.propTypes = {
-  t: PropTypes.func.isRequired,
+ScrollDownNotice.propTypes = {
   show: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
 };
 
-export default enhance(ScrollNotice);
+export default ScrollDownNotice;

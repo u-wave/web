@@ -1,4 +1,4 @@
-import cx from 'classnames';
+import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
 import Popover from '@material-ui/core/Popover';
@@ -23,23 +23,10 @@ class SourcePicker extends React.Component {
     getAllMediaSources: PropTypes.func.isRequired,
   };
 
-  state = { open: false };
+  constructor(props) {
+    super(props);
 
-  createElement(sourceName) {
-    const { selected, getMediaSource } = this.props;
-    return (
-      <button
-        className="SourcePicker-item"
-        key={sourceName}
-        onClick={() => this.handleChange(sourceName)}
-      >
-        <SourcePickerElement
-          name={sourceName}
-          source={getMediaSource(sourceName)}
-          active={selected === sourceName}
-        />
-      </button>
-    );
+    this.state = { open: false };
   }
 
   handleOpen = () => {
@@ -53,14 +40,35 @@ class SourcePicker extends React.Component {
     this.setState({ open: false });
   };
 
-  handleChange(sourceName) {
+  handleChange = (sourceName) => {
+    const { onChange } = this.props;
+
     this.handleClose();
-    this.props.onChange(sourceName);
+    onChange(sourceName);
   }
 
   refContainer = (container) => {
     this.container = container;
   };
+
+  createElement(sourceName) {
+    const { selected, getMediaSource } = this.props;
+
+    return (
+      <button
+        type="button"
+        className="SourcePicker-item"
+        key={sourceName}
+        onClick={() => this.handleChange(sourceName)}
+      >
+        <SourcePickerElement
+          name={sourceName}
+          source={getMediaSource(sourceName)}
+          active={selected === sourceName}
+        />
+      </button>
+    );
+  }
 
   render() {
     const {
@@ -69,11 +77,12 @@ class SourcePicker extends React.Component {
       getMediaSource,
       getAllMediaSources,
     } = this.props;
+    const { open, anchor } = this.state;
 
     const sourceNames = Object.keys(getAllMediaSources());
     const sources = sourceNames
-      .filter(name => name !== selected)
-      .map(name => this.createElement(name));
+      .filter((name) => name !== selected)
+      .map((name) => this.createElement(name));
 
     return (
       <div
@@ -81,6 +90,7 @@ class SourcePicker extends React.Component {
         ref={this.refContainer}
       >
         <button
+          type="button"
           className="SourcePicker-active"
           onClick={this.handleOpen}
         >
@@ -93,8 +103,8 @@ class SourcePicker extends React.Component {
         </button>
         <Popover
           classes={{ paper: 'SourcePicker-list' }}
-          open={this.state.open}
-          anchorEl={this.state.anchor}
+          open={open}
+          anchorEl={anchor}
           onClose={this.handleClose}
           {...popoverPosition}
         >

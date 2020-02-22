@@ -1,24 +1,24 @@
 @import "../../../vars.css";
 
-.ResponseButton-wrap {
-  height: 100%;
-}
-
 .ResponseButton {
   height: 100%;
+  display: flex;
+  align-items: center;
   border: 0;
   background: none;
   flex-grow: 0.334;
   padding: 0;
-
   cursor: pointer;
+
   &:hover {
     background-color: var(--background-hover-color);
   }
 }
 
-.ResponseButton--disabled, .ResponseButton--static {
+.ResponseButton--disabled,
+.ResponseButton--static {
   cursor: default;
+
   &:hover {
     background-color: transparent;
   }
@@ -28,6 +28,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 48px;
   padding: 0 15px;
   position: relative;
 }
@@ -35,16 +36,17 @@
 .ResponseButton-icon {
   height: 36px;
   width: 36px;
-  padding: 6px 12px 6px 0px;
+  padding: 6px 12px 6px 0;
 }
 
 .ResponseButton-icon--favorite {
   color: var(--highlight-color);
 }
+
 .ResponseButton-icon--downvoted {
   color: #b64b4b;
 }
+
 .ResponseButton-icon--upvoted {
   color: #4bb64b;
 }
-

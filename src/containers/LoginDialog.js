@@ -6,7 +6,7 @@ import { openResetPasswordDialog, closeLoginDialog } from '../actions/DialogActi
 import { loginDialogSelector } from '../selectors/dialogSelectors';
 import LoginDialog from '../components/Dialogs/LoginDialog';
 
-const mapDispatchToProps = dispatch => bindActionCreators({
+const mapDispatchToProps = (dispatch) => bindActionCreators({
   onOpenResetPasswordDialog: openResetPasswordDialog,
   onResetPassword: resetPassword,
   onLogin: login,

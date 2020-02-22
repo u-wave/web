@@ -21,7 +21,7 @@ export function resetPassword(newPassword) {
 
     return dispatch(post(`/auth/password/reset/${key}`, { password: newPassword }, {
       onComplete: resetPasswordComplete,
-      onError: err => ({
+      onError: (err) => ({
         type: SET_RESET_SUCCESS,
         error: true,
         payload: err,

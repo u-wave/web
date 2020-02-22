@@ -1,4 +1,4 @@
-import cx from 'classnames';
+import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
 import OverlayContent from '../Overlay/Content';
@@ -6,17 +6,21 @@ import PlaylistMenu from '../../containers/PlaylistManagerMenu';
 import PlaylistPanel from '../../containers/PlaylistManagerPanel';
 import PlaylistImport from '../../containers/PlaylistImportManager';
 import SearchResults from '../../containers/SearchResultsPanel';
+import MediaSearchBar from './Header/SearchBar';
 import PlaylistHeader from './Header';
-import PlaylistPanelEmpty from './Panel/Empty';
+import NoPlaylists from './NoPlaylists';
 
 const PlaylistManager = ({
   className,
   selectedPlaylist,
   showSearchResults,
   showImportPanel,
+  onCreatePlaylist,
   onCloseOverlay,
 }) => {
   let panel;
+  let empty = false;
+
   if (showImportPanel) {
     panel = (
       <div className="PlaylistPanel">
@@ -36,7 +40,7 @@ const PlaylistManager = ({
     // selected playlist changes.
     panel = <PlaylistPanel key={selectedPlaylist._id} />;
   } else {
-    panel = <PlaylistPanelEmpty />;
+    empty = true;
   }
 
   return (
@@ -44,13 +48,21 @@ const PlaylistManager = ({
       <PlaylistHeader
         className="PlaylistManager-header AppRow AppRow--top"
         onCloseOverlay={onCloseOverlay}
-      />
+      >
+        {!empty && <MediaSearchBar className="PlaylistManager-searchBar" />}
+      </PlaylistHeader>
 
       <OverlayContent>
-        <PlaylistMenu className="PlaylistManager-menu" />
-        <div className="PlaylistManager-panel">
-          {panel}
-        </div>
+        {empty ? (
+          <NoPlaylists onCreatePlaylist={onCreatePlaylist} />
+        ) : (
+          <>
+            <PlaylistMenu className="PlaylistManager-menu" />
+            <div className="PlaylistManager-panel">
+              {panel}
+            </div>
+          </>
+        )}
       </OverlayContent>
     </div>
   );
@@ -61,6 +73,7 @@ PlaylistManager.propTypes = {
   selectedPlaylist: PropTypes.object,
   showSearchResults: PropTypes.bool.isRequired,
   showImportPanel: PropTypes.bool.isRequired,
+  onCreatePlaylist: PropTypes.func.isRequired,
   onCloseOverlay: PropTypes.func,
 };
 

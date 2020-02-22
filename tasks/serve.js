@@ -1,12 +1,13 @@
 /* eslint-disable global-require */
 require('loud-rejection/register');
 const gulp = require('gulp');
+const path = require('path');
 const log = require('fancy-log');
 const chalk = require('chalk');
 const emojione = require('u-wave-web-emojione');
 const recaptchaTestKeys = require('recaptcha-test-keys');
 const express = require('express');
-const proxy = require('http-proxy-middleware');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
@@ -95,11 +96,14 @@ function serve(done) {
   const apiUrl = '/api';
   const socketUrl = `ws://localhost:${serverPort}`;
 
-  app.use(apiUrl, proxy({ target: `http://localhost:${serverPort}/` }));
+  app.use(apiUrl, createProxyMiddleware({
+    target: process.env.SERVER_URL || `http://localhost:${serverPort}/`,
+  }));
   app.use('/assets/emoji/', emojione.middleware());
 
   if (watch) {
     Object.keys(wpConfig.entry).forEach((chunk) => {
+      if (chunk === 'polyfills') return;
       const entry = wpConfig.entry[chunk];
       wpConfig.entry[chunk] = addHotReloadingClient(entry);
     });
@@ -112,20 +116,24 @@ function serve(done) {
       serverSideRender: true,
     });
 
-    const webClient = createWebClient(null, {
-      apiUrl,
-      socketUrl,
-      emoji: emojione.emoji,
-      title: 'üWave (Development)',
-      publicPath: '/',
-      // Point u-wave-web middleware to the virtual webpack filesystem.
-      fs: dev.fileSystem,
-      recaptcha: { key: recaptchaTestKeys.sitekey },
+    let webClient = (req, res, next) => next(new Error('Build not complete'));
+    dev.waitUntilValid(() => {
+      webClient = createWebClient(null, {
+        apiUrl,
+        socketUrl,
+        emoji: emojione.emoji,
+        title: 'üWave (Development)',
+        basePath: path.join(__dirname, '../packages/u-wave-web-middleware/public'),
+        publicPath: '/',
+        // Point u-wave-web middleware to the virtual webpack filesystem.
+        fs: dev.fileSystem,
+        recaptcha: { key: recaptchaTestKeys.sitekey },
+      });
     });
 
     // Delay responding to HTTP requests until the first build is complete.
     app.use(waitForBuild(dev));
-    app.use(webClient);
+    app.use((req, res, next) => webClient(req, res, next));
     app.use(dev);
     app.use(webpackHotMiddleware(compiler, {
       log,
@@ -140,6 +148,7 @@ function serve(done) {
       apiUrl,
       socketUrl,
       emoji: emojione.emoji,
+      basePath: path.join(__dirname, '../packages/u-wave-web-middleware/public'),
       recaptcha: { key: recaptchaTestKeys.sitekey },
     });
 

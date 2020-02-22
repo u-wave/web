@@ -1,4 +1,4 @@
-import cx from 'classnames';
+import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
 import Dialog from '@material-ui/core/Dialog';
@@ -12,6 +12,8 @@ import TextField from '../../Form/TextField';
 import Button from '../../Form/Button';
 
 export default class PromptDialog extends React.Component {
+  title = uniqueId('title');
+
   static propTypes = {
     children: PropTypes.node,
     placeholder: PropTypes.string,
@@ -36,27 +38,34 @@ export default class PromptDialog extends React.Component {
     open: true,
   };
 
-  state = {
-    busy: false,
-    value: this.props.value || '',
-  };
+  constructor(props) {
+    super(props);
 
-  title = uniqueId('title');
+    const { value } = this.props;
+    this.state = {
+      busy: false,
+      value: value || '',
+    };
+  }
 
   handleSubmit = (event) => {
+    const { onSubmit } = this.props;
+    const { value } = this.state;
+
     event.preventDefault();
-    const promise = this.props.onSubmit(this.input.value);
-    if (promise && promise.then) {
+    const promise = onSubmit(value);
+    if (promise && promise.finally) {
       this.setState({ busy: true });
-      const onDone = () => {
+      promise.finally(() => {
         this.setState({ busy: false });
-      };
-      promise.then(onDone, onDone);
+      });
     }
   };
 
   handleClose = () => {
-    this.props.onCancel();
+    const { onCancel } = this.props;
+
+    onCancel();
   };
 
   handleInputChange = (event) => {
@@ -91,7 +100,7 @@ export default class PromptDialog extends React.Component {
 
     return (
       <Dialog
-        fullWidth
+        variant="fullWidth"
         {...props}
         classes={{
           paper: cx('Dialog', contentClassName),

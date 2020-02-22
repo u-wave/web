@@ -1,4 +1,5 @@
 node_modules
+packages
 /coverage
 /.nyc_output
 /assets/screenshot.png

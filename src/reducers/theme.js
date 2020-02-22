@@ -1,7 +1,14 @@
+import merge from 'deepmerge';
+import { RESET_THEME, APPLY_THEME } from '../constants/ActionTypes';
 import initialState from '../theme';
 
-// eslint-disable-next-line no-unused-vars
 export default function reduce(state = initialState, action = {}) {
-  // Nothing for now!
-  return state;
+  switch (action.type) {
+    case RESET_THEME:
+      return initialState;
+    case APPLY_THEME:
+      return merge(state, action.payload);
+    default:
+      return state;
+  }
 }

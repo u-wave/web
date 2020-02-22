@@ -13,34 +13,46 @@ function loadReCaptcha(cb) {
 }
 
 function onload() {
-  onloadCallbacks.forEach(fn => fn(window.grecaptcha));
+  onloadCallbacks.forEach((fn) => fn(window.grecaptcha));
 }
 
 export default class ReCaptcha extends React.Component {
-  state = {
-    grecaptcha: window.grecaptcha,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      grecaptcha: window.grecaptcha,
+    };
+  }
 
   componentDidMount() {
-    if (!this.state.grecaptcha) {
-      if (typeof window[onloadCallbackName] !== 'function') {
-        window[onloadCallbackName] = onload;
-      }
+    const { grecaptcha } = this.state;
 
-      loadReCaptcha((grecaptcha) => {
-        this.setState({ grecaptcha });
-      });
+    if (!grecaptcha) {
+      this.load();
     }
   }
 
+  load() {
+    if (typeof window[onloadCallbackName] !== 'function') {
+      window[onloadCallbackName] = onload;
+    }
+
+    loadReCaptcha((grecaptcha) => {
+      this.setState({ grecaptcha });
+    });
+  }
+
   render() {
-    if (!this.state.grecaptcha) {
+    const { grecaptcha } = this.state;
+
+    if (!grecaptcha) {
       return <CircularProgress className="ReCaptcha-spinner" />;
     }
+
     return (
       <InternalCaptcha
         {...this.props}
-        grecaptcha={this.state.grecaptcha}
+        grecaptcha={grecaptcha}
       />
     );
   }

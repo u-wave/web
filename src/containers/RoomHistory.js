@@ -1,7 +1,6 @@
-import { bindActionCreators } from 'redux';
+import React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import withProps from 'recompose/withProps';
 import { openPreviewMediaDialog } from '../actions/DialogActionCreators';
 import { addMediaMenu } from '../actions/PlaylistActionCreators';
 import { roomHistoryWithVotesSelector } from '../selectors/roomHistorySelectors';
@@ -11,7 +10,7 @@ import createLazyOverlay from '../components/LazyOverlay';
 const selectionOrOne = (media, selection) => {
   // History entries store the played media on their `.media` property
   if (selection.isSelected(media)) {
-    return selection.get().map(item => item.media);
+    return selection.get().map((item) => item.media);
   }
   return [media.media];
 };
@@ -20,21 +19,24 @@ const mapStateToProps = createStructuredSelector({
   media: roomHistoryWithVotesSelector,
 });
 
-const onOpenAddMediaMenu = (position, media, selection) =>
-  addMediaMenu(selectionOrOne(media, selection), position);
-const mapDispatchToProps = dispatch => bindActionCreators({
+const onOpenAddMediaMenu = (position, media, selection) => (
+  addMediaMenu(selectionOrOne(media, selection), position)
+);
+const mapDispatchToProps = {
   onOpenAddMediaMenu,
   onOpenPreviewMediaDialog: openPreviewMediaDialog,
-}, dispatch);
+};
 
 const enhance = connect(mapStateToProps, mapDispatchToProps);
 
+function RoomHistoryOverlay(props) {
+  return <Overlay {...props} direction="top" />;
+}
+
 const RoomHistory = createLazyOverlay({
   loader: () => import('../components/RoomHistory' /* webpackChunkName: "history" */),
-  title: t => t('history.title'),
-  OverlayComponent: withProps({
-    direction: 'top',
-  })(Overlay),
+  title: (t) => t('history.title'),
+  OverlayComponent: RoomHistoryOverlay,
 });
 
 export default enhance(RoomHistory);

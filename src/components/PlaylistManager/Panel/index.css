@@ -1,10 +1,11 @@
 @import "../../../vars.css";
 @import "./Meta.css";
+@import "./PlaylistEmpty.css";
 @import "./PlaylistFilter.css";
 @import "./PlaylistItemRow.css";
 
 .PlaylistPanel {
-  background: color(var(--background-color) alpha(* 96%));
+  background: var(--overlay-background);
   height: 100%;
   width: 100%;
 }
@@ -20,4 +21,28 @@
 
 .PlaylistPanel--empty {
   padding: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+}
+
+.PlaylistPanel-emptyIcon {
+  color: var(--muted-text-color);
+}
+
+.PlaylistPanel-create {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  flex-flow: row;
+  width: 100%;
+}
+
+.PlaylistPanel-button,
+.PlaylistPanel--empty .ImportSourceBlock {
+  padding: 16px;
+  width: auto;
+  flex-grow: 1;
+  flex-basis: 0;
 }

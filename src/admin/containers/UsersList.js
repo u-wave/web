@@ -1,13 +1,7 @@
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-import compose from 'recompose/compose';
-import withProps from 'recompose/withProps';
-import lifecycle from 'recompose/lifecycle';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import UsersList from '../components/UsersList';
-import {
-  loadUsers,
-  setUsersFilter,
-} from '../actions/users';
+import { loadUsers, setUsersFilter } from '../actions/users';
 import {
   pageSelector,
   pageSizeSelector,
@@ -15,33 +9,41 @@ import {
   usersSelector,
 } from '../selectors/userSelectors';
 
-const mapStateToProps = createStructuredSelector({
-  currentPage: pageSelector,
-  pageSize: pageSizeSelector,
-  totalUsers: totalUsersSelector,
-  users: usersSelector,
-});
+const {
+  useCallback,
+  useEffect,
+} = React;
 
-const mapDispatchToProps = {
-  onLoadUsers: loadUsers,
-  onFilter: setUsersFilter,
-};
+function UsersListContainer() {
+  const currentPage = useSelector(pageSelector);
+  const pageSize = useSelector(pageSizeSelector);
+  const totalUsers = useSelector(totalUsersSelector);
+  const users = useSelector(usersSelector);
+  const dispatch = useDispatch();
 
-const enhance = compose(
-  connect(mapStateToProps, mapDispatchToProps),
-  withProps(props => ({
-    onChangePage: (event, page) =>
-      props.onLoadUsers({ offset: page * props.pageSize, limit: props.pageSize }),
-    onFilter: (filter) => {
-      props.onFilter(filter);
-      props.onLoadUsers({ offset: 0, limit: props.pageSize });
-    },
-  })),
-  lifecycle({
-    componentDidMount() {
-      this.props.onChangePage(null, 0);
-    },
-  }),
-);
+  const onChangePage = useCallback((event, page) => {
+    dispatch(loadUsers({ offset: page * pageSize, limit: pageSize }));
+  }, [pageSize]);
 
-export default enhance(UsersList);
+  const onFilter = useCallback((filter) => {
+    dispatch(setUsersFilter(filter));
+    dispatch(loadUsers({ offset: 0, limit: pageSize }));
+  });
+
+  useEffect(() => {
+    onChangePage(null, 0);
+  }, []);
+
+  return (
+    <UsersList
+      currentPage={currentPage}
+      pageSize={pageSize}
+      totalUsers={totalUsers}
+      users={users}
+      onChangePage={onChangePage}
+      onFilter={onFilter}
+    />
+  );
+}
+
+export default UsersListContainer;

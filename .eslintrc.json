@@ -2,7 +2,10 @@
   "extends": "airbnb",
   "parser": "babel-eslint",
 
+  "plugins": ["compat", "react-hooks"],
+
   "rules": {
+    "arrow-body-style": "off",
     "new-cap": [ "error", {
       "capIsNewExceptions": [ "DragDropContext", "DragSource", "DropTarget", "DragLayer", "ThemeDecorator" ]
     } ],
@@ -11,6 +14,42 @@
     "react/jsx-filename-extension": "off",
     "react/no-unused-prop-types": ["error", { "skipShapeProps": true }],
     "react/forbid-prop-types": "off",
-    "react/require-default-props": "off"
-  }
+    "react/jsx-props-no-spreading": "off",
+    "react/require-default-props": "off",
+    "react/static-property-placement": "off",
+    "react/jsx-one-expression-per-line": "off"
+  },
+
+  "settings": {
+    "polyfills": [
+      "Number.isFinite",
+      "Number.isNaN",
+      "Object.assign",
+      "Object.is",
+      "Object.values",
+      "Promise",
+      "fetch"
+    ]
+  },
+
+  "overrides": [
+    {
+      "files": ["src/**/*.js"],
+      "rules": {
+        "compat/compat": "error"
+      }
+    },
+    {
+      "files": ["**/__tests__/**/*.js"],
+      "rules": {
+        "no-unused-expressions": "off"
+      },
+      "env": {
+        "mocha": true
+      },
+      "globals": {
+        "testUtils": true
+      }
+    }
+  ]
 }

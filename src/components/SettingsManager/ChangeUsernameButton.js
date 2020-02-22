@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate } from 'react-i18next';
+import { translate } from '@u-wave/react-translate';
 import IconButton from '@material-ui/core/IconButton';
-import EditIcon from '@material-ui/icons/ModeEdit';
+import EditIcon from '@material-ui/icons/Edit';
 import PromptDialog from '../Dialogs/PromptDialog';
 import DialogCloseAnimation from '../DialogCloseAnimation';
 
@@ -15,12 +15,11 @@ class ChangeUsernameButton extends React.Component {
     initialUsername: PropTypes.string,
   };
 
-  state = {
-    changingUsername: false,
-  };
-
-  closeDialog() {
-    this.setState({ changingUsername: false });
+  constructor(props) {
+    super(props);
+    this.state = {
+      changingUsername: false,
+    };
   }
 
   handleOpen = () => {
@@ -32,34 +31,42 @@ class ChangeUsernameButton extends React.Component {
   };
 
   handleSubmit = (name) => {
-    if (name === this.props.initialUsername) {
+    const { initialUsername, onChangeUsername } = this.props;
+
+    if (name === initialUsername) {
       this.closeDialog();
       return null;
     }
-    return this.props.onChangeUsername(name)
+    return onChangeUsername(name)
       .then(this.closeDialog.bind(this));
   };
 
+  closeDialog() {
+    this.setState({ changingUsername: false });
+  }
+
   render() {
     const { t, initialUsername } = this.props;
+    const { changingUsername } = this.state;
+
     return (
-      <React.Fragment>
+      <>
         <IconButton className="ChangeUsernameButton" onClick={this.handleOpen}>
           <EditIcon className="ChangeUsernameButton-icon" />
         </IconButton>
         <DialogCloseAnimation delay={450}>
-          {this.state.changingUsername ? (
+          {changingUsername ? (
             <PromptDialog
               title={t('settings.profile.username.change')}
               submitLabel={t('settings.profile.username.save')}
-              icon={<EditIcon nativeColor="#777" />}
+              icon={<EditIcon htmlColor="#777" />}
               value={initialUsername}
               onSubmit={this.handleSubmit}
               onCancel={this.handleClose}
             />
           ) : null}
         </DialogCloseAnimation>
-      </React.Fragment>
+      </>
     );
   }
 }

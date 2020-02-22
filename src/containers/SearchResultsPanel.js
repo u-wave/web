@@ -25,10 +25,11 @@ const selectionOrOne = (media, selection) => {
   return [media];
 };
 
-const onOpenAddMediaMenu = (position, media, selection) =>
-  addMediaMenu(selectionOrOne(media, selection), position);
+const onOpenAddMediaMenu = (position, media, selection) => (
+  addMediaMenu(selectionOrOne(media, selection), position)
+);
 
-const mapDispatchToProps = dispatch => bindActionCreators({
+const mapDispatchToProps = (dispatch) => bindActionCreators({
   onOpenAddMediaMenu,
   onOpenPreviewMediaDialog: openPreviewMediaDialog,
 }, dispatch);

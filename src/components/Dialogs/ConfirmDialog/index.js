@@ -1,4 +1,4 @@
-import cx from 'classnames';
+import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
 import Dialog from '@material-ui/core/Dialog';
@@ -24,31 +24,38 @@ export default class ConfirmDialog extends React.Component {
     confirmLabel: 'OK',
   };
 
-  state = {
-    busy: false,
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      busy: false,
+    };
+  }
 
   handleSubmit = (event) => {
     event.preventDefault();
   };
 
   handleConfirm = (event) => {
+    const { onConfirm } = this.props;
+
     event.preventDefault();
-    const promise = this.props.onConfirm();
-    if (promise && promise.then) {
+    const promise = onConfirm();
+    if (promise && promise.finally) {
       this.setState({ busy: true });
-      const onDone = () => {
+      promise.finally(() => {
         this.setState({ busy: false });
-      };
-      promise.then(onDone, onDone);
+      });
     }
   };
 
   handleClose = (event) => {
+    const { onCancel } = this.props;
+
     if (event && event.preventDefault) {
       event.preventDefault();
     }
-    this.props.onCancel();
+    onCancel();
   };
 
   render() {

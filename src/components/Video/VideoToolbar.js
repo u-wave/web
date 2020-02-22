@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate } from 'react-i18next';
+import { translate } from '@u-wave/react-translate';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import EnterFullscreenIcon from '@material-ui/icons/Fullscreen';
@@ -8,7 +8,7 @@ import ExitFullscreenIcon from '@material-ui/icons/FullscreenExit';
 
 import VideoSizeButton from './VideoSizeButton';
 
-const renderFullscreenIcon = isFullscreen => (
+const renderFullscreenIcon = (isFullscreen) => (
   isFullscreen ? <ExitFullscreenIcon /> : <EnterFullscreenIcon />
 );
 
@@ -25,8 +25,7 @@ const VideoToolbar = ({
     <Tooltip
       title={isFullscreen
         ? t('settings.disableFullscreen')
-        : t('settings.enableFullscreen')
-      }
+        : t('settings.enableFullscreen')}
       placement="bottom-end"
     >
       <IconButton onClick={isFullscreen ? onFullscreenExit : onFullscreenEnter}>

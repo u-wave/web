@@ -1,25 +1,27 @@
 import { createSelector } from 'reselect';
-import { historyIDSelector, mediaSelector, startTimeSelector, djSelector } from './boothSelectors';
+import {
+  historyIDSelector, mediaSelector, startTimeSelector, djSelector,
+} from './boothSelectors';
 import { currentUserSelector } from './userSelectors';
 import { currentVotesSelector } from './voteSelectors';
 
 const byTimestamp = (a, b) => (a.timestamp < b.timestamp ? 1 : -1);
 
-const baseSelector = state => state.roomHistory;
+const baseSelector = (state) => state.roomHistory;
 
 export const roomHistorySelector = createSelector(
   baseSelector,
-  history => history.slice().sort(byTimestamp),
+  (history) => history.slice().sort(byTimestamp),
 );
 
-const addOwnVoteProps = id => entry => ({
+const addOwnVoteProps = (id) => (entry) => ({
   ...entry,
   stats: {
     ...entry.stats,
     // No ID is provided for guest users.
-    isDownvote: !!id && entry.stats.downvotes.indexOf(id) > -1,
-    isFavorite: !!id && entry.stats.favorites.indexOf(id) > -1,
-    isUpvote: !!id && entry.stats.upvotes.indexOf(id) > -1,
+    isDownvote: !!id && entry.stats.downvotes.includes(id),
+    isFavorite: !!id && entry.stats.favorites.includes(id),
+    isUpvote: !!id && entry.stats.upvotes.includes(id),
   },
 });
 

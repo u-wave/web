@@ -1,10 +1,7 @@
 @import "../../vars.css";
 
-.LoadingOverlay {
-}
-
 .LoadingOverlay-body {
-  background: color(var(--background-color) alpha(* 96%));
+  background: var(--overlay-background);
   display: flex;
   align-items: center;
   justify-content: center;

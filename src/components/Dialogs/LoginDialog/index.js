@@ -1,32 +1,31 @@
-import cx from 'classnames';
+import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import compose from 'recompose/compose';
-import { translate } from 'react-i18next';
+import { useTranslator } from '@u-wave/react-translate';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+import DialogCloseAnimation from '../../DialogCloseAnimation';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 import SocialForm from './SocialForm';
 import ResetPasswordForm from './ResetPasswordForm';
 
-const enhance = compose(
-  translate(),
-  withMobileDialog(),
-);
+const enhance = withMobileDialog();
 
-const LoginDialog = (props) => {
+function LoginDialog(props) {
+  const { t } = useTranslator();
+
   const {
-    t,
     fullScreen,
     open,
     show,
     onCloseDialog,
   } = props;
+
   let form;
   let title;
   if (show === 'register') {
@@ -42,33 +41,37 @@ const LoginDialog = (props) => {
     title = t('login.login');
     form = <LoginForm {...props} />;
   }
+
   return (
-    <Dialog
-      classes={{
-        paper: cx('Dialog', 'LoginDialog', fullScreen && 'LoginDialog--mobile'),
-      }}
-      open={open}
-      fullScreen={fullScreen}
-      onClose={onCloseDialog}
-      aria-labelledby="uw-login-title"
-    >
-      <DialogTitle className="Dialog-title" id="uw-login-title">
-        {title}
-        {fullScreen && (
-          <IconButton className="Dialog-close" onClick={onCloseDialog}>
-            <CloseIcon />
-          </IconButton>
-        )}
-      </DialogTitle>
-      <DialogContent className="Dialog-body">
-        {form}
-      </DialogContent>
-    </Dialog>
+    <DialogCloseAnimation delay={450}>
+      {open ? (
+        <Dialog
+          classes={{
+            paper: cx('Dialog', 'LoginDialog', fullScreen && 'LoginDialog--mobile'),
+          }}
+          fullScreen={fullScreen}
+          onClose={onCloseDialog}
+          aria-labelledby="uw-login-title"
+          open
+        >
+          <DialogTitle className="Dialog-title" id="uw-login-title">
+            {title}
+            {fullScreen && (
+              <IconButton className="Dialog-close" onClick={onCloseDialog}>
+                <CloseIcon />
+              </IconButton>
+            )}
+          </DialogTitle>
+          <DialogContent className="Dialog-body">
+            {form}
+          </DialogContent>
+        </Dialog>
+      ) : null}
+    </DialogCloseAnimation>
   );
-};
+}
 
 LoginDialog.propTypes = {
-  t: PropTypes.func.isRequired,
   open: PropTypes.bool,
   show: PropTypes.string,
   fullScreen: PropTypes.bool.isRequired,

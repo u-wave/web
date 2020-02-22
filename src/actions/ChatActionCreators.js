@@ -1,4 +1,3 @@
-import find from 'array-find';
 import ms from 'ms';
 import splitargs from 'splitargs';
 import parseChatMarkup from 'u-wave-parse-chat-markup';
@@ -85,7 +84,7 @@ export function sendChat(text) {
     const users = userListSelector(state);
     const message = prepareMessage(state, sender, text, {
       mentions: [
-        ...users.map(user => user.username),
+        ...users.map((user) => user.username),
         ...getAvailableGroupMentions(hasRole),
       ],
     });
@@ -110,7 +109,7 @@ export function inputMessage(text) {
 }
 
 function isMuted(state, userID) {
-  return mutedUserIDsSelector(state).indexOf(userID) !== -1;
+  return mutedUserIDsSelector(state).includes(userID);
 }
 
 export function receive(message) {
@@ -119,11 +118,11 @@ export function receive(message) {
     const settings = settingsSelector(state);
     const currentUser = currentUserSelector(state);
     const users = userListSelector(state);
-    const sender = find(users, user => user._id === message.userID);
+    const sender = users.find((user) => user._id === message.userID);
     const senderHasRole = userHasRoleSelector(state)(sender);
     const mentions = [
-      ...users.map(user => user.username),
-      ...getAvailableGroupMentions(mention => senderHasRole(`chat.mention.${mention}`)),
+      ...users.map((user) => user.username),
+      ...getAvailableGroupMentions((mention) => senderHasRole(`chat.mention.${mention}`)),
     ];
 
     if (isMuted(state, message.userID)) {
@@ -194,8 +193,8 @@ export function muteUser(userID, { moderatorID, expiresAt }) {
         userID,
         moderatorID,
         expiresAt,
-        expirationTimer: expireIn > 0 ?
-          setTimeout(() => dispatch(expireMute(userID)), expireIn) : null,
+        expirationTimer: expireIn > 0
+          ? setTimeout(() => dispatch(expireMute(userID)), expireIn) : null,
       },
     });
   };
@@ -235,7 +234,7 @@ export function setMotd(text) {
       dispatch(setMotdComplete(data.motd));
       dispatch(log(`Message of the Day is now: ${data.motd}`));
     },
-    onError: error => ({
+    onError: (error) => ({
       type: SET_MOTD_COMPLETE,
       error: true,
       payload: error,

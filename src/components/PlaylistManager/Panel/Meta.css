@@ -4,6 +4,7 @@
   font-size: 14pt;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .PlaylistMeta-name {
@@ -21,13 +22,21 @@
   padding-right: 20px;
   height: 100%;
   cursor: pointer;
+
   &.is-active {
     cursor: default;
   }
 }
 
+/* Makes the element wrap tightly around its content, so we can put a <span /> around buttons that may be `[disabled]`,
+ * and attach material-ui Tooltips to those spans instead. Without this, the tooltip offsets would be calculated differently. */
+.PlaylistMeta-possiblyDisabledButtonWrapper {
+  display: flex;
+}
+
 .PlaylistMeta-iconButton {
   color: #555;
+
   &:hover {
     color: #fff;
   }

@@ -41,21 +41,28 @@ const selectionOrOne = (media, selection) => {
   return [media];
 };
 
-const onOpenAddMediaMenu = (position, media, selection) =>
-  addMediaMenu(selectionOrOne(media, selection), position);
-const onRemoveFromPlaylist = playlist => (media, selection) =>
-  removeMedia(playlist, selectionOrOne(media, selection));
-const onMoveMedia = playlist => (media, opts) =>
-  moveMedia(playlist, media, opts);
-const onMoveToFirst = playlist => (media, selection) =>
-  moveMedia(playlist, selectionOrOne(media, selection), { at: 'start' });
-const onMoveToLast = playlist => (media, selection) =>
-  moveMedia(playlist, selectionOrOne(media, selection), { at: 'end' });
-const onEditMedia = playlist => media =>
-  editMedia(playlist, media);
-const onLoadPlaylistPage = ({ isFiltered, playlist }) => page => (
-  isFiltered ? loadFilteredPlaylistItems(playlist._id, page) :
-    loadPlaylist(playlist._id, page)
+const onOpenAddMediaMenu = (position, media, selection) => (
+  addMediaMenu(selectionOrOne(media, selection), position)
+);
+const onRemoveFromPlaylist = (playlist) => (media, selection) => (
+  removeMedia(playlist, selectionOrOne(media, selection))
+);
+const onMoveMedia = (playlist) => (media, opts) => (
+  moveMedia(playlist, media, opts)
+);
+const onMoveToFirst = (playlist) => (media, selection) => (
+  moveMedia(playlist, selectionOrOne(media, selection), { at: 'start' })
+);
+const onMoveToLast = (playlist) => (media, selection) => (
+  moveMedia(playlist, selectionOrOne(media, selection), { at: 'end' })
+);
+const onEditMedia = (playlist) => (media) => (
+  editMedia(playlist, media)
+);
+const onLoadPlaylistPage = ({ isFiltered, playlist }) => (page) => (
+  isFiltered
+    ? loadFilteredPlaylistItems(playlist._id, page)
+    : loadPlaylist(playlist._id, page)
 );
 
 // Most of the playlist-related action creators need to know which playlist to
@@ -66,7 +73,7 @@ const onLoadPlaylistPage = ({ isFiltered, playlist }) => page => (
 // configures the action creators.
 // TODO Maybe it's better to have versions of these action creators that work on
 // the selected playlist by default? using redux-thunk.
-const mapDispatchToProps = dispatch => ({ dispatch });
+const mapDispatchToProps = (dispatch) => ({ dispatch });
 
 const mergeProps = (state, { dispatch }, props) => ({
   ...props,

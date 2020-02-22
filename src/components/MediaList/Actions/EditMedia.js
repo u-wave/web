@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import EditIcon from '@material-ui/icons/ModeEdit';
+import EditIcon from '@material-ui/icons/Edit';
 import Action from './Action';
 
 const EditMedia = ({ onEdit, ...props }) => (

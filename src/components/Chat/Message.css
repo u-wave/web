@@ -3,17 +3,16 @@
 /* Message styles are still super hacky...
  * One day! */
 .ChatMessage {
-  background: var(--chat-background-color);
   min-height: 32px;
   position: relative;
 }
 
 .ChatMessage--mention {
-  box-shadow: 5px 0px 0px var(--highlight-color) inset;
+  box-shadow: 5px 0 0 var(--highlight-color) inset;
 }
 
 .ChatMessage-hover {
-  background: var(--chat-background-color);
+  background: var(--background-color);
   position: absolute;
   top: 0;
   right: 0;
@@ -33,7 +32,7 @@
 }
 
 .ChatMessage-timestamp {
-  color: color(var(--text-color) blend(#777777 33%));
+  color: var(--chat-timestamp-text-color);
 }
 
 .ChatMessage-avatar {
