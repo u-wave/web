@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import MediaList from '../../MediaList';
 import AddToPlaylistAction from '../../MediaList/Actions/AddToPlaylist';
 
-const makeActions = onOpenAddMediaMenu => (media, selection) => (
-  <React.Fragment>
+const makeActions = (onOpenAddMediaMenu) => (media, selection) => (
+  <>
     <AddToPlaylistAction
-      onAdd={position => onOpenAddMediaMenu(position, media, selection)}
+      onAdd={(position) => onOpenAddMediaMenu(position, media, selection)}
     />
-  </React.Fragment>
+  </>
 );
 
 const SearchResultsList = ({

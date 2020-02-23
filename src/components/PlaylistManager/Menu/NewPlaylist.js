@@ -1,7 +1,7 @@
-import cx from 'classnames';
+import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate } from 'react-i18next';
+import { translate } from '@u-wave/react-translate';
 import MenuItem from '@material-ui/core/MenuItem';
 import CreatePlaylistIcon from '@material-ui/icons/Add';
 
@@ -16,9 +16,13 @@ class NewPlaylist extends React.Component {
     onCreatePlaylist: PropTypes.func.isRequired,
   };
 
-  state = {
-    creating: false,
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      creating: false,
+    };
+  }
 
   handleOpen = () => {
     this.setState({ creating: true });
@@ -44,7 +48,7 @@ class NewPlaylist extends React.Component {
     const { creating } = this.state;
 
     return (
-      <React.Fragment>
+      <>
         <MenuItem
           className={cx('PlaylistMenuRow', 'PlaylistMenuRow--create', className)}
           onClick={this.handleOpen}
@@ -59,13 +63,13 @@ class NewPlaylist extends React.Component {
         {creating && (
           <PromptDialog
             title={t('dialogs.createPlaylist.nameInputTitle')}
-            icon={<CreatePlaylistIcon nativeColor="#777" />}
+            icon={<CreatePlaylistIcon htmlColor="#777" />}
             submitLabel={t('dialogs.createPlaylist.action')}
             onSubmit={this.handleSubmit}
             onCancel={this.handleClose}
           />
         )}
-      </React.Fragment>
+      </>
     );
   }
 }

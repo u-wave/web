@@ -1,7 +1,6 @@
-import compose from 'recompose/compose';
-import { createStructuredSelector } from 'reselect';
-import { connect } from 'react-redux';
-import timed from '../../utils/timed';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import useClock from '../../hooks/useClock';
 import {
   openFavoriteMenu,
   doUpvote,
@@ -16,23 +15,36 @@ import {
 import { currentVoteStatsSelector } from '../../selectors/voteSelectors';
 import Video from '../components/Video';
 
-const mapStateToProps = createStructuredSelector({
-  historyID: historyIDSelector,
-  media: mediaSelector,
-  seek: timeElapsedSelector,
-  volume: mobilePlaybackVolumeSelector,
-  voteStats: currentVoteStatsSelector,
-});
+const {
+  useCallback,
+} = React;
 
-const mapDispatchToProps = {
-  onFavorite: openFavoriteMenu,
-  onUpvote: doUpvote,
-  onDownvote: doDownvote,
-};
+function VideoContainer() {
+  // Update `seek` every tick.
+  useClock();
 
-const enhance = compose(
-  timed(),
-  connect(mapStateToProps, mapDispatchToProps),
-);
+  const historyID = useSelector(historyIDSelector);
+  const media = useSelector(mediaSelector);
+  const seek = useSelector((s) => timeElapsedSelector(s));
+  const volume = useSelector(mobilePlaybackVolumeSelector);
+  const voteStats = useSelector(currentVoteStatsSelector);
+  const dispatch = useDispatch();
+  const onUpvote = useCallback((...args) => dispatch(doUpvote(...args)), [dispatch]);
+  const onDownvote = useCallback((...args) => dispatch(doDownvote(...args)), [dispatch]);
+  const onFavorite = useCallback((...args) => dispatch(openFavoriteMenu(...args)), [dispatch]);
 
-export default enhance(Video);
+  return (
+    <Video
+      historyID={historyID}
+      media={media}
+      seek={seek}
+      volume={volume}
+      voteStats={voteStats}
+      onUpvote={onUpvote}
+      onDownvote={onDownvote}
+      onFavorite={onFavorite}
+    />
+  );
+}
+
+export default VideoContainer;

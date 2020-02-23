@@ -272,7 +272,7 @@ export default function middleware({ url = defaultUrl() } = {}) {
 
     window.soc = socket; // eslint-disable-line
 
-    return next => (action) => {
+    return (next) => (action) => {
       const { type, payload, error } = action;
 
       if (error) {

@@ -2,13 +2,13 @@ import { createSelector } from 'reselect';
 import naturalCmp from 'natural-compare';
 import { rolesSelector } from './configSelectors';
 
-const authSelector = state => state.auth;
+const authSelector = (state) => state.auth;
 
-const usersBaseSelector = state => state.users;
-export const usersSelector = createSelector(usersBaseSelector, base => base.users);
+const usersBaseSelector = (state) => state.users;
+export const usersSelector = createSelector(usersBaseSelector, (base) => base.users);
 
-export const authErrorSelector = createSelector(authSelector, auth => auth.error);
-const currentUserIDSelector = createSelector(authSelector, auth => auth.user);
+export const authErrorSelector = createSelector(authSelector, (auth) => auth.error);
+const currentUserIDSelector = createSelector(authSelector, (auth) => auth.user);
 export const currentUserSelector = createSelector(
   usersSelector,
   currentUserIDSelector,
@@ -19,10 +19,10 @@ export const currentUserSelector = createSelector(
   ),
 );
 export const isLoggedInSelector = createSelector(currentUserSelector, Boolean);
-export const tokenSelector = createSelector(authSelector, auth => auth.token);
-export const authStrategiesSelector = createSelector(authSelector, auth => auth.strategies);
+export const tokenSelector = createSelector(authSelector, (auth) => auth.token);
+export const authStrategiesSelector = createSelector(authSelector, (auth) => auth.strategies);
 export function supportsAuthStrategy(name) {
-  return createSelector(authStrategiesSelector, strategies => strategies.includes(name));
+  return createSelector(authStrategiesSelector, (strategies) => strategies.includes(name));
 }
 export const supportsSocialAuthSelector = createSelector(
   supportsAuthStrategy('google'),
@@ -77,12 +77,12 @@ export const userListSelector = createSelector(
 
 export const userCountSelector = createSelector(
   userListSelector,
-  users => users.length,
+  (users) => users.length,
 );
 
 export const guestCountSelector = createSelector(
   usersBaseSelector,
-  base => base.guests,
+  (base) => base.guests,
 );
 
 export const listenerCountSelector = createSelector(
@@ -106,7 +106,7 @@ export const userHasRoleSelector = createSelector(
       return () => true;
     }
 
-    return role => userRoles.includes(role);
+    return (role) => userRoles.includes(role);
   },
 );
 
@@ -117,7 +117,7 @@ export const userHasRoleSelector = createSelector(
 //
 export const hasRoleSelector = createSelector(
   userHasRoleSelector,
-  userHasRole => (user, role) => userHasRole(user)(role),
+  (userHasRole) => (user, role) => userHasRole(user)(role),
 );
 
 export const currentUserHasRoleSelector = createSelector(
@@ -130,9 +130,9 @@ export const currentUserHasRoleSelector = createSelector(
 //
 //   createRoleCheckSelector('some.role')(store.getState()) // → true/false
 //
-export const createRoleCheckSelector = role => createSelector(
+export const createRoleCheckSelector = (role) => createSelector(
   currentUserHasRoleSelector,
-  hasRole => hasRole(role),
+  (hasRole) => hasRole(role),
 );
 
 // Selectors for compatibility with the old role system.

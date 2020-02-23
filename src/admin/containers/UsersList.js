@@ -1,13 +1,7 @@
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-import compose from 'recompose/compose';
-import withProps from 'recompose/withProps';
-import lifecycle from 'recompose/lifecycle';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import UsersList from '../components/UsersList';
-import {
-  loadUsers,
-  setUsersFilter,
-} from '../actions/users';
+import { loadUsers, setUsersFilter } from '../actions/users';
 import {
   pageSelector,
   pageSizeSelector,
@@ -15,42 +9,41 @@ import {
   usersSelector,
 } from '../selectors/userSelectors';
 
-const mapStateToProps = createStructuredSelector({
-  currentPage: pageSelector,
-  pageSize: pageSizeSelector,
-  totalUsers: totalUsersSelector,
-  users: usersSelector,
-});
+const {
+  useCallback,
+  useEffect,
+} = React;
 
-const mapDispatchToProps = {
-  onLoadUsers: loadUsers,
-  onFilter: setUsersFilter,
-};
+function UsersListContainer() {
+  const currentPage = useSelector(pageSelector);
+  const pageSize = useSelector(pageSizeSelector);
+  const totalUsers = useSelector(totalUsersSelector);
+  const users = useSelector(usersSelector);
+  const dispatch = useDispatch();
 
-const enhance = compose(
-  connect(mapStateToProps, mapDispatchToProps),
+  const onChangePage = useCallback((event, page) => {
+    dispatch(loadUsers({ offset: page * pageSize, limit: pageSize }));
+  }, [pageSize]);
 
-  withProps(props => ({
-    onChangePage: (event, page) => {
-      const { pageSize, onLoadUsers } = props;
+  const onFilter = useCallback((filter) => {
+    dispatch(setUsersFilter(filter));
+    dispatch(loadUsers({ offset: 0, limit: pageSize }));
+  });
 
-      onLoadUsers({ offset: page * pageSize, limit: pageSize });
-    },
-    onFilter: (filter) => {
-      const { pageSize, onLoadUsers, onFilter } = props;
+  useEffect(() => {
+    onChangePage(null, 0);
+  }, []);
 
-      onFilter(filter);
-      onLoadUsers({ offset: 0, limit: pageSize });
-    },
-  })),
+  return (
+    <UsersList
+      currentPage={currentPage}
+      pageSize={pageSize}
+      totalUsers={totalUsers}
+      users={users}
+      onChangePage={onChangePage}
+      onFilter={onFilter}
+    />
+  );
+}
 
-  lifecycle({
-    componentDidMount() {
-      const { onChangePage } = this.props;
-
-      onChangePage(null, 0);
-    },
-  }),
-);
-
-export default enhance(UsersList);
+export default UsersListContainer;

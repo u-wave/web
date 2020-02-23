@@ -1,13 +1,13 @@
 import { createSelector } from 'reselect';
 
-const baseSelector = state => state.time;
+const baseSelector = (state) => state.time;
 
-const timeSelector = () => Date.now();
-const offsetSelector = createSelector(baseSelector, time => time.offset);
-export const timerSelector = createSelector(baseSelector, time => time.timer);
+const offsetSelector = createSelector(baseSelector, (time) => time.offset);
+export const timerSelector = createSelector(baseSelector, (time) => time.timer);
 
-export const currentTimeSelector = createSelector(
-  timeSelector,
-  offsetSelector,
-  (time, offset) => time + offset,
-);
+// Do not use createSelector() to avoid memoization.
+export const currentTimeSelector = (state) => {
+  const time = Date.now();
+  const offset = offsetSelector(state);
+  return time + offset;
+};

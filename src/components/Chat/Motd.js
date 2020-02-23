@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import pure from 'recompose/pure';
-
 import compile from './Markup/compile';
 
 const Motd = ({ children, compileOptions }) => (
@@ -20,4 +18,4 @@ Motd.propTypes = {
   }),
 };
 
-export default pure(Motd);
+export default React.memo(Motd);

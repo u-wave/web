@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import AddIcon from '@material-ui/icons/Add';
 import Action from './Action';
 
-const handleAdd = onAdd => (event) => {
+const handleAdd = (onAdd) => (event) => {
   const pos = event.target.getBoundingClientRect();
   onAdd({
     x: pos.left,

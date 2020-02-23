@@ -7,7 +7,7 @@ import UserRole from '../UserRole';
  */
 const UserRoles = ({ roles }) => (
   <div className="UserRoles">
-    {roles.map(roleName => (
+    {roles.map((roleName) => (
       <div className="UserRoles-role" key={roleName}>
         <UserRole roleName={roleName} />
       </div>

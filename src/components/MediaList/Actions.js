@@ -1,8 +1,8 @@
-import cx from 'classnames';
+import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const dontBubble = event => event.stopPropagation();
+const dontBubble = (event) => event.stopPropagation();
 
 /* eslint-disable jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events */
 const Actions = ({

@@ -1,8 +1,5 @@
 @import "../../vars.css";
 
-.LoadingOverlay {
-}
-
 .LoadingOverlay-body {
   background: var(--overlay-background);
   display: flex;

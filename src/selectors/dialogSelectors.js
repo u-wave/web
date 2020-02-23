@@ -3,9 +3,9 @@ import { reCaptchaSiteKeySelector } from './configSelectors';
 import { volumeSelector } from './settingSelectors';
 import { authErrorSelector, supportsSocialAuthSelector } from './userSelectors';
 
-const baseSelector = state => state.dialogs;
+const baseSelector = (state) => state.dialogs;
 
-const merge = dialog => ({ ...dialog.payload, open: dialog.open });
+const merge = (dialog) => ({ ...dialog.payload, open: dialog.open });
 
 export const loginDialogSelector = createSelector(
   baseSelector,
@@ -22,7 +22,7 @@ export const loginDialogSelector = createSelector(
 
 export const editMediaDialogSelector = createSelector(
   baseSelector,
-  dialogs => merge(dialogs.editMedia),
+  (dialogs) => merge(dialogs.editMedia),
 );
 
 export const previewMediaDialogSelector = createSelector(
@@ -36,5 +36,5 @@ export const previewMediaDialogSelector = createSelector(
 
 export const isPreviewMediaDialogOpenSelector = createSelector(
   baseSelector,
-  dialogs => dialogs.previewMedia && !!dialogs.previewMedia.open,
+  (dialogs) => dialogs.previewMedia && !!dialogs.previewMedia.open,
 );

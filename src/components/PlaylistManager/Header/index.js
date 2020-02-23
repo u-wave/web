@@ -1,30 +1,31 @@
-import cx from 'classnames';
+import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate } from 'react-i18next';
+import { useTranslator } from '@u-wave/react-translate';
 import OverlayHeader from '../../Overlay/Header';
-import SearchBar from '../../../containers/MediaSearchBar';
 
-const enhance = translate();
-
-const PlaylistManagerHeader = ({
-  t,
+function PlaylistManagerHeader({
   className,
+  children,
   onCloseOverlay,
-}) => (
-  <OverlayHeader
-    className={cx('PlaylistHeader', className)}
-    title={t('playlists.title')}
-    onCloseOverlay={onCloseOverlay}
-  >
-    <SearchBar className="PlaylistHeader-search" />
-  </OverlayHeader>
-);
+}) {
+  const { t } = useTranslator();
+
+  return (
+    <OverlayHeader
+      className={cx('PlaylistHeader', className)}
+      title={t('playlists.title')}
+      onCloseOverlay={onCloseOverlay}
+    >
+      {children}
+    </OverlayHeader>
+  );
+}
 
 PlaylistManagerHeader.propTypes = {
   className: PropTypes.string,
-  t: PropTypes.func.isRequired,
+  children: PropTypes.node,
   onCloseOverlay: PropTypes.func.isRequired,
 };
 
-export default enhance(PlaylistManagerHeader);
+export default PlaylistManagerHeader;

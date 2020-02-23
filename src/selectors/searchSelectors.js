@@ -1,25 +1,25 @@
 import { createSelector } from 'reselect';
 
-const baseSearchSelector = state => state.mediaSearch;
+const baseSearchSelector = (state) => state.mediaSearch;
 
 export const searchSourceTypeSelector = createSelector(
   baseSearchSelector,
-  search => search.sourceType,
+  (search) => search.sourceType,
 );
 
 export const searchQuerySelector = createSelector(
   baseSearchSelector,
-  search => search.query,
+  (search) => search.query,
 );
 
 export const searchLoadingStateSelector = createSelector(
   baseSearchSelector,
-  search => search.loadingState,
+  (search) => search.loadingState,
 );
 
 const searchResultsCombinedSelector = createSelector(
   baseSearchSelector,
-  search => search.results,
+  (search) => search.results,
 );
 
 export const searchResultsSelector = createSelector(
@@ -30,10 +30,10 @@ export const searchResultsSelector = createSelector(
 
 export const searchResultsCountSelector = createSelector(
   searchResultsSelector,
-  results => (results ? results.length : 0),
+  (results) => (results ? results.length : 0),
 );
 
 export const showSearchResultsSelector = createSelector(
   baseSearchSelector,
-  search => !!search.showResults,
+  (search) => !!search.showResults,
 );

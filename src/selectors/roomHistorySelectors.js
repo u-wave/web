@@ -7,14 +7,14 @@ import { currentVotesSelector } from './voteSelectors';
 
 const byTimestamp = (a, b) => (a.timestamp < b.timestamp ? 1 : -1);
 
-const baseSelector = state => state.roomHistory;
+const baseSelector = (state) => state.roomHistory;
 
 export const roomHistorySelector = createSelector(
   baseSelector,
-  history => history.slice().sort(byTimestamp),
+  (history) => history.slice().sort(byTimestamp),
 );
 
-const addOwnVoteProps = id => entry => ({
+const addOwnVoteProps = (id) => (entry) => ({
   ...entry,
   stats: {
     ...entry.stats,

@@ -1,10 +1,7 @@
-import cx from 'classnames';
+import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import pure from 'recompose/pure';
 import RoleColor from '../RoleColor';
-
-const enhance = pure;
 
 const Username = ({ className, user }) => (
   <RoleColor className={cx('Username', className)} roles={user.roles}>
@@ -20,4 +17,4 @@ Username.propTypes = {
   }).isRequired,
 };
 
-export default enhance(Username);
+export default React.memo(Username);

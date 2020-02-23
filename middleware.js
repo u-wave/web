@@ -1,1 +1,1 @@
-module.exports = require('./lib/middleware'); // eslint-disable-line import/no-unresolved
+module.exports = require('./dist/middleware'); // eslint-disable-line import/no-unresolved

@@ -1,4 +1,4 @@
-import cx from 'classnames';
+import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
 import MenuList from '@material-ui/core/MenuList';
@@ -40,7 +40,7 @@ const PlaylistMenu = ({
           onClose={onCloseSearchResults}
         />
       )}
-      {playlists.map(pl => (
+      {playlists.map((pl) => (
         <PlaylistRow
           key={pl._id}
           className="PlaylistMenu-row"

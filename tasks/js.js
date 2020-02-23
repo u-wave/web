@@ -92,7 +92,6 @@ function jsBabel() {
     .pipe(babel({
       babelrc: false,
       plugins: [
-        '@babel/plugin-syntax-object-rest-spread',
         '@babel/plugin-transform-modules-commonjs',
         'module:babel-plugin-dynamic-import-node',
         rewriteMuiImports(/^@material-ui\/core\/es\//, '@material-ui/core/'),

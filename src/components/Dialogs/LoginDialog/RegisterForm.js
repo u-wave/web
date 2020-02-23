@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate, Interpolate } from 'react-i18next';
+import { translate, Interpolate } from '@u-wave/react-translate';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -28,11 +28,15 @@ class RegisterForm extends React.Component {
     onRegister: PropTypes.func,
   };
 
-  state = {
-    busy: false,
-    agreed: false,
-    captchaResponse: null,
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      busy: false,
+      agreed: false,
+      captchaResponse: null,
+    };
+  }
 
   handleSubmit = (event) => {
     const { onRegister } = this.props;
@@ -102,18 +106,18 @@ class RegisterForm extends React.Component {
       <Form className="RegisterForm" onSubmit={this.handleSubmit}>
         {error && <FormGroup>{error.message}</FormGroup>}
         {supportsSocialAuth && (
-          <React.Fragment>
+          <>
             <SocialLogin />
             <Separator />
-          </React.Fragment>
+          </>
         )}
         <FormGroup>
           <TextField
             ref={this.refUsername}
             className="RegisterForm-field"
-            autocomplete="nickname"
+            autoComplete="nickname"
             placeholder={t('login.username')}
-            icon={<UserIcon nativeColor="#9f9d9e" />}
+            icon={<UserIcon htmlColor="#9f9d9e" />}
             autoFocus
           />
         </FormGroup>
@@ -122,9 +126,9 @@ class RegisterForm extends React.Component {
             ref={this.refEmail}
             className="RegisterForm-field"
             type="email"
-            autocomplete="email"
+            autoComplete="email"
             placeholder={t('login.email')}
-            icon={<EmailIcon nativeColor="#9f9d9e" />}
+            icon={<EmailIcon htmlColor="#9f9d9e" />}
           />
         </FormGroup>
         <FormGroup>
@@ -132,9 +136,9 @@ class RegisterForm extends React.Component {
             ref={this.refPassword}
             className="RegisterForm-field"
             type="password"
-            autocomplete="new-password"
+            autoComplete="new-password"
             placeholder={t('login.password')}
-            icon={<PasswordIcon nativeColor="#9f9d9e" />}
+            icon={<PasswordIcon htmlColor="#9f9d9e" />}
           />
         </FormGroup>
 
@@ -168,8 +172,7 @@ class RegisterForm extends React.Component {
           >
             {busy
               ? <div className="Button-loading"><CircularProgress size="100%" /></div>
-              : t('login.register')
-            }
+              : t('login.register')}
           </Button>
         </FormGroup>
       </Form>

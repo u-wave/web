@@ -1,13 +1,34 @@
 import React from 'react';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import { makeStyles } from '@material-ui/core/styles';
+import DesktopSkeleton from './DesktopSkeleton';
+import MobileSkeleton from './MobileSkeleton';
 
-const LoadingScreen = () => (
-  <div className="LoadingScreen">
-    <CircularProgress className="LoadingScreen-loader" />
-    <p className="LoadingScreen-notice">
-      üWave requires JavaScript to run.
-    </p>
-  </div>
-);
+const useStyles = makeStyles({
+  desktop: {
+    display: 'none',
+    '@media (min-width: 769px)': {
+      display: 'block',
+    },
+  },
+  mobile: {
+    display: 'block',
+    '@media (min-width: 769px)': {
+      display: 'none',
+    },
+  },
+});
 
-export default LoadingScreen;
+export default function LoadingScreen() {
+  const { desktop, mobile } = useStyles();
+
+  return (
+    <>
+      <div className={desktop}>
+        <DesktopSkeleton />
+      </div>
+      <div className={mobile}>
+        <MobileSkeleton />
+      </div>
+    </>
+  );
+}

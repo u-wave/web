@@ -6,11 +6,11 @@ import { firstErrorSelector } from '../selectors/errorSelectors';
 
 import ErrorArea from '../components/ErrorArea';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   error: firstErrorSelector(state),
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
+const mapDispatchToProps = (dispatch) => bindActionCreators({
   onDismiss: dismiss,
 }, dispatch);
 

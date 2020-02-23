@@ -1,9 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate } from 'react-i18next';
-import compose from 'recompose/compose';
-import pure from 'recompose/pure';
-import withState from 'recompose/withState';
+import { useTranslator } from '@u-wave/react-translate';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Chat from '../Chat';
@@ -11,11 +8,7 @@ import RoomUserList from '../../containers/RoomUserList';
 import WaitList from '../../containers/WaitList';
 import PanelContainer from './PanelContainer';
 
-const enhance = compose(
-  translate(),
-  withState('selected', 'setTab', 0),
-  pure,
-);
+const { useState, useCallback } = React;
 
 const subHeaderStyle = {
   fontSize: '125%',
@@ -23,16 +16,16 @@ const subHeaderStyle = {
 
 const tabClasses = {
   root: 'SidePanel-tab',
-  label: 'SidePanel-tabLabel',
+  wrapper: 'SidePanel-tabLabel',
 };
 
 const getUsersLabel = (t, listenerCount) => (
-  <React.Fragment>
+  <>
     {t('users.title')}
     <span key="sub" style={subHeaderStyle}>
       {listenerCount}
     </span>
-  </React.Fragment>
+  </>
 );
 
 const getWaitlistLabel = (t, size, position) => {
@@ -42,47 +35,44 @@ const getWaitlistLabel = (t, size, position) => {
       : size;
 
     return (
-      <React.Fragment>
+      <>
         {t('waitlist.title')}
         <span key="sub" style={subHeaderStyle}>{posText}</span>
-      </React.Fragment>
+      </>
     );
   }
   return t('waitlist.title');
 };
 
-const SidePanels = ({
-  t,
-  selected,
-  listenerCount,
-  waitlistSize,
-  waitlistPosition,
-  setTab,
-}) => (
-  <div>
-    <Tabs
-      value={selected}
-      onChange={(event, value) => setTab(value)}
-      fullWidth
-      classes={{
-        root: 'SidePanel-tabs',
-        indicator: 'SidePanel-indicator',
-      }}
-    >
-      <Tab
-        classes={tabClasses}
-        label={t('chat.title')}
-      />
-      <Tab
-        classes={tabClasses}
-        label={getUsersLabel(t, listenerCount)}
-      />
-      <Tab
-        classes={tabClasses}
-        label={getWaitlistLabel(t, waitlistSize, waitlistPosition)}
-      />
-    </Tabs>
-    <div>
+function SidePanels({ listenerCount, waitlistSize, waitlistPosition }) {
+  const { t } = useTranslator();
+  const [selected, setTab] = useState(0);
+  const handleChange = useCallback((event, value) => setTab(value), [setTab]);
+
+  return (
+    <>
+      <Tabs
+        value={selected}
+        onChange={handleChange}
+        variant="fullWidth"
+        classes={{
+          root: 'SidePanel-tabs',
+          indicator: 'SidePanel-indicator',
+        }}
+      >
+        <Tab
+          classes={tabClasses}
+          label={t('chat.title')}
+        />
+        <Tab
+          classes={tabClasses}
+          label={getUsersLabel(t, listenerCount)}
+        />
+        <Tab
+          classes={tabClasses}
+          label={getWaitlistLabel(t, waitlistSize, waitlistPosition)}
+        />
+      </Tabs>
       <PanelContainer selected={selected === 0}>
         <Chat />
       </PanelContainer>
@@ -92,17 +82,14 @@ const SidePanels = ({
       <PanelContainer selected={selected === 2}>
         <WaitList />
       </PanelContainer>
-    </div>
-  </div>
-);
+    </>
+  );
+}
 
 SidePanels.propTypes = {
-  t: PropTypes.func.isRequired,
   listenerCount: PropTypes.number.isRequired,
   waitlistSize: PropTypes.number.isRequired,
   waitlistPosition: PropTypes.number.isRequired,
-  selected: PropTypes.number.isRequired,
-  setTab: PropTypes.func.isRequired,
 };
 
-export default enhance(SidePanels);
+export default SidePanels;

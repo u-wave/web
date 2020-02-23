@@ -1,33 +1,42 @@
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import {
   set as setSetting,
   setLanguage,
 } from '../actions/SettingsActionCreators';
+import { changeLanguage } from '../actions/LocaleActionCreators';
 import { doChangeUsername } from '../actions/UserActionCreators';
 import { logout } from '../actions/LoginActionCreators';
 import { currentUserSelector } from '../selectors/userSelectors';
 import { settingsSelector } from '../selectors/settingSelectors';
 import createLazyOverlay from '../components/LazyOverlay';
 
+function changeAndSaveLanguage(language) {
+  return (dispatch) => {
+    Promise.resolve(dispatch(changeLanguage(language)))
+      .then(() => {
+        dispatch(setLanguage(language));
+      });
+  };
+}
+
 const mapStateToProps = createStructuredSelector({
   settings: settingsSelector,
   user: currentUserSelector,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
+const mapDispatchToProps = {
   onSettingChange: setSetting,
   onChangeUsername: doChangeUsername,
-  onChangeLanguage: setLanguage,
+  onChangeLanguage: changeAndSaveLanguage,
   onLogout: logout,
-}, dispatch);
+};
 
 const enhance = connect(mapStateToProps, mapDispatchToProps);
 
 const SettingsManager = createLazyOverlay({
   loader: () => import('../components/SettingsManager' /* webpackChunkName: "settings" */),
-  title: t => t('settings.title'),
+  title: (t) => t('settings.title'),
 });
 
 export default enhance(SettingsManager);

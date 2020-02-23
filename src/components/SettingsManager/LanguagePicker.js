@@ -1,27 +1,23 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import getContext from 'recompose/getContext';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import { useTranslator } from '@u-wave/react-translate';
+import { useSelector } from 'react-redux';
+import { availableLanguagesSelector } from '../../selectors/localeSelectors';
 
-const getResourceName = (i18n, language) => i18n.t(`locales.${language}`);
+function LanguagePicker(props) {
+  const { t } = useTranslator();
+  const availableLanguages = useSelector(availableLanguagesSelector);
 
-const enhance = getContext({
-  i18n: PropTypes.object,
-});
+  return (
+    <Select className="LanguagePicker" {...props}>
+      {availableLanguages.map((lang) => (
+        <MenuItem key={lang} value={lang}>
+          {t(`locales.${lang}`)}
+        </MenuItem>
+      ))}
+    </Select>
+  );
+}
 
-const LanguagePicker = ({ i18n, ...props }) => (
-  <Select className="LanguagePicker" {...props}>
-    {i18n.availableLanguages.map(lang => (
-      <MenuItem key={lang} value={lang}>
-        {getResourceName(i18n, lang)}
-      </MenuItem>
-    ))}
-  </Select>
-);
-
-LanguagePicker.propTypes = {
-  i18n: PropTypes.object.isRequired,
-};
-
-export default enhance(LanguagePicker);
+export default LanguagePicker;

@@ -1,1 +1,1 @@
-export default state => state.admin;
+export default (state) => state.admin;

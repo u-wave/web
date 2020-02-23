@@ -27,11 +27,13 @@ function blend(a, b, weight) {
 export default function createTheme(base) {
   const muiTheme = createMuiTheme(base);
 
-  const { palette, uwave } = muiTheme;
+  const { palette, typography, uwave } = muiTheme;
 
   return {
     ...muiTheme,
     cssProperties: {
+      '--font-family': typography.fontFamily,
+
       '--text-color': palette.text.primary,
       '--secondary-text-color': palette.text.secondary,
       // TODO rename to hint-text-color? it's not always used as a hint text though…

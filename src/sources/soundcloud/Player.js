@@ -1,8 +1,8 @@
-import cx from 'classnames';
+import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
 import createDebug from 'debug';
-import { translate } from 'react-i18next';
+import { translate } from '@u-wave/react-translate';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
@@ -43,10 +43,14 @@ class SoundCloudPlayer extends React.Component {
     onPlay: PropTypes.func,
   };
 
-  state = {
-    error: null,
-    needsTap: false,
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      error: null,
+      needsTap: false,
+    };
+  }
 
   componentDidMount() {
     this.audio = new Audio();
@@ -146,7 +150,7 @@ class SoundCloudPlayer extends React.Component {
             <Typography component="p" paragraph>
               {t('booth.autoplayBlocked')}
             </Typography>
-            <Button variant="raised" color="primary" onClick={this.handlePlay}>
+            <Button variant="contained" color="primary" onClick={this.handlePlay}>
               {t('booth.play')}
             </Button>
           </Paper>

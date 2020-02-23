@@ -1,13 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import compose from 'recompose/compose';
-import { translate } from 'react-i18next';
+import { useTranslator } from '@u-wave/react-translate';
+import { useDispatch, useSelector } from 'react-redux';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import SvgIcon from '@material-ui/core/SvgIcon';
-// State-related imports
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
 import { videoSizeSelector } from '../../selectors/settingSelectors';
 import { toggleVideoSize } from '../../actions/PlaybackActionCreators';
 
@@ -19,43 +15,29 @@ const paths = {
   large: 'm 26,13 0,10 -16,0 0,-10 z m -14,2 12,0 0,6 -12,0 0,-6 z',
 };
 
-const VideoSizeButton = ({
-  t,
-  videoSize,
-  onToggleVideoSize,
-}) => (
-  <Tooltip
-    title={videoSize === 'large'
-      ? t('settings.disableLargeVideo')
-      : t('settings.enableLargeVideo')
-    }
-    placement="bottom"
-  >
-    <IconButton onClick={onToggleVideoSize}>
-      <SvgIcon viewBox="6 6 24 24">
-        <path d={paths[videoSize]} fillRule="evenodd" />
-      </SvgIcon>
-    </IconButton>
-  </Tooltip>
-);
+function VideoSizeButton() {
+  const { t } = useTranslator();
+  const videoSize = useSelector(videoSizeSelector);
+  const dispatch = useDispatch();
 
-VideoSizeButton.propTypes = {
-  t: PropTypes.func.isRequired,
-  videoSize: PropTypes.oneOf(['small', 'large']).isRequired,
-  onToggleVideoSize: PropTypes.func.isRequired,
-};
+  const onToggleVideoSize = () => {
+    dispatch(toggleVideoSize());
+  };
 
-const mapStateToProps = createStructuredSelector({
-  videoSize: videoSizeSelector,
-});
-const mapDispatchToProps = dispatch => ({
-  onToggleVideoSize: () => dispatch(toggleVideoSize()),
-});
+  return (
+    <Tooltip
+      title={videoSize === 'large'
+        ? t('settings.disableLargeVideo')
+        : t('settings.enableLargeVideo')}
+      placement="bottom"
+    >
+      <IconButton onClick={onToggleVideoSize}>
+        <SvgIcon viewBox="6 6 24 24">
+          <path d={paths[videoSize]} fillRule="evenodd" />
+        </SvgIcon>
+      </IconButton>
+    </Tooltip>
+  );
+}
 
-export default compose(
-  translate(),
-  connect(
-    mapStateToProps,
-    mapDispatchToProps,
-  ),
-)(VideoSizeButton);
+export default VideoSizeButton;

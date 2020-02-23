@@ -15,7 +15,7 @@ const attempt = (fn) => {
 // localStorage.
 //
 // [1]: http://redux.js.org/docs/Glossary.html#store-enhancer
-const persistSettings = next => (reducer, initialState) => {
+const persistSettings = (next) => (reducer, initialState) => {
   const settings = attempt(() => JSON.parse(localStorage.getItem(SETTINGS_KEY)));
 
   const store = next(reducer, initialState);

@@ -1,7 +1,7 @@
-import cx from 'classnames';
+import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate } from 'react-i18next';
+import { translate } from '@u-wave/react-translate';
 import debounce from 'lodash/debounce';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
@@ -15,10 +15,14 @@ class PlaylistFilter extends React.Component {
     onFilter: PropTypes.func.isRequired,
   };
 
-  state = {
-    isOpen: false,
-    value: '',
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isOpen: false,
+      value: '',
+    };
+  }
 
   onFilter = debounce((value) => {
     const { onFilter } = this.props;
@@ -42,6 +46,17 @@ class PlaylistFilter extends React.Component {
         this.input.focus();
       }
     });
+  };
+
+  handleKeyDown = (event) => {
+    if (event.key === 'Escape') {
+      this.setState(({ value }) => {
+        // Clear input value if there is text.
+        if (value) return { value: '' };
+        // else close the input.
+        return { value: '', isOpen: false };
+      });
+    }
   };
 
   handleChange = (event) => {
@@ -75,7 +90,7 @@ class PlaylistFilter extends React.Component {
             className="PlaylistMeta-iconButton"
             onClick={this.handleClick}
           >
-            <FilterIcon nativeColor={isOpen ? '#fff' : null} />
+            <FilterIcon htmlColor={isOpen ? '#fff' : null} />
           </IconButton>
         </Tooltip>
         <input
@@ -83,6 +98,7 @@ class PlaylistFilter extends React.Component {
           ref={this.refInput}
           className={cx('PlaylistMediaFilter-input', isOpen && 'is-open')}
           value={value}
+          onKeyDown={this.handleKeyDown}
           onChange={this.handleChange}
         />
       </div>

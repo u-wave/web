@@ -12,29 +12,46 @@ export default class DialogCloseAnimation extends React.Component {
     delay: PropTypes.number.isRequired,
   };
 
-  state = {
-    // eslint-disable-next-line react/destructuring-assignment
-    children: this.props.children,
-  };
+  constructor(props) {
+    super(props);
 
-  // TODO translate this to componentDidUpdate()?
-  componentWillReceiveProps(nextProps) {
-    const { delay } = this.props;
-    const { children } = this.state;
+    const { children } = this.props;
+    this.state = {
+      cachedChildren: children,
+    };
+  }
 
-    if (nextProps.children) {
-      this.clearTimeout();
-      this.setState({
-        children: nextProps.children,
-      });
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const { children } = nextProps;
+    const { cachedChildren } = prevState;
+
+    if (children) {
+      return { cachedChildren: children };
     }
 
-    if (children && !nextProps.children) {
-      this.keepShowingChildren();
+    if (!children && cachedChildren) {
+      return {
+        cachedChildren: React.cloneElement(cachedChildren, {
+          open: false,
+        }),
+      };
+    }
 
+    return null;
+  }
+
+  componentDidUpdate() {
+    const { children, delay } = this.props;
+    const { cachedChildren } = this.state;
+
+    if (children) {
+      this.clearTimeout();
+    }
+
+    if (cachedChildren && !children) {
       this.timeout = setTimeout(() => {
         this.setState({
-          children: null,
+          cachedChildren: null,
         });
         this.timeout = null;
       }, delay);
@@ -52,17 +69,9 @@ export default class DialogCloseAnimation extends React.Component {
     }
   }
 
-  keepShowingChildren() {
-    this.setState(({ children }) => ({
-      children: React.cloneElement(children, {
-        open: false,
-      }),
-    }));
-  }
-
   render() {
-    const { children } = this.state;
+    const { cachedChildren } = this.state;
 
-    return children || null;
+    return cachedChildren || null;
   }
 }

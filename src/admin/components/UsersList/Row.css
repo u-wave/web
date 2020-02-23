@@ -2,13 +2,14 @@
 
 .AdminUserRow {
   background-color: var(--background-color);
+
   &:nth-child(2n) {
     background-color: #242424;
   }
 }
 
 .AdminUserRow-cell {
-  border-bottom: 0px none;
+  border-bottom: 0 none;
   font-size: 12pt;
   padding-right: 16px;
 }

@@ -83,7 +83,7 @@ export function doChangeUsername(username) {
         type: DO_CHANGE_USERNAME_COMPLETE,
         payload: { username: data.username },
       }),
-      onError: error => ({
+      onError: (error) => ({
         type: DO_CHANGE_USERNAME_COMPLETE,
         error: true,
         payload: error,

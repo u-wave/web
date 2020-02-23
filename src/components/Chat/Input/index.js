@@ -1,45 +1,47 @@
-import cx from 'classnames';
+import cx from 'clsx';
 import sortBy from 'lodash/sortBy';
 import uniqBy from 'lodash/uniqBy';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate } from 'react-i18next';
+import { translate } from '@u-wave/react-translate';
 import AutoComplete, { Completion } from 'react-abstract-autocomplete';
 import SuggestionsList from './SuggestionsList';
 import EmojiSuggestion from './EmojiSuggestion';
 import GroupSuggestion from './GroupSuggestion';
 import UserSuggestion from './UserSuggestion';
 
-const renderSuggestions = children => (
+const renderSuggestions = (children) => (
   <SuggestionsList>{children}</SuggestionsList>
 );
 
 // User suggestions:
 const getUserCompletions = (value, { trigger, completions }) => {
   const compare = value.substr(trigger.length).toLowerCase();
-  return completions.filter(user => (
+  return completions.filter((user) => (
     user.username.substr(0, compare.length).toLowerCase() === compare
   ));
 };
 const getUserText = (user, { trigger }) => `${trigger}${user.username} `;
-const renderUser = props => <UserSuggestion {...props} />;
+const renderUser = (props) => <UserSuggestion {...props} />;
 
 // Group suggestions:
-const renderGroup = props => <GroupSuggestion {...props} />;
+const renderGroup = (props) => <GroupSuggestion {...props} />;
 
 // Emoji suggestions:
 const getEmojiCompletions = (value, { trigger, completions }) => {
   const compare = value.substr(trigger.length).toLowerCase();
-  const results = completions.filter(emoji => (
+  const results = completions.filter((emoji) => (
     emoji.shortcode.substr(0, compare.length).toLowerCase() === compare
   ));
+
+  const uniqueResults = uniqBy(results, (emoji) => emoji.image);
   return sortBy(
-    uniqBy(results, emoji => emoji.image),
-    emoji => emoji.shortcode.length,
+    uniqueResults,
+    [(emoji) => emoji.shortcode.length],
   );
 };
-const getEmojiText = value => `:${value.shortcode}: `;
-const renderEmoji = props => <EmojiSuggestion {...props} />;
+const getEmojiText = (value) => `:${value.shortcode}: `;
+const renderEmoji = (props) => <EmojiSuggestion {...props} />;
 
 const enhance = translate();
 
@@ -53,10 +55,14 @@ class ChatInput extends React.Component {
     availableEmoji: PropTypes.array.isRequired,
   };
 
-  state = {
-    focused: false,
-    value: '',
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      focused: false,
+      value: '',
+    };
+  }
 
   handleFocus = () => {
     this.setState({ focused: true });

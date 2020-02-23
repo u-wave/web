@@ -1,16 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import compose from 'recompose/compose';
-import nest from 'recompose/nest';
-import { connect } from 'react-redux';
-import { translate } from 'react-i18next';
-import hoistStatics from 'hoist-non-react-statics';
-import loadable from 'react-loadable';
+import { useDispatch } from 'react-redux';
+import { useTranslator } from '@u-wave/react-translate';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Overlay from '../Overlay';
 import OverlayContent from '../Overlay/Content';
 import OverlayHeader from '../Overlay/Header';
 import { closeAll } from '../../actions/OverlayActionCreators';
+
+const {
+  useEffect,
+  useState,
+} = React;
 
 export default function createLazyOverlay({
   loader,
@@ -19,44 +19,47 @@ export default function createLazyOverlay({
 }) {
   if (typeof loader !== 'function') throw new TypeError('loader must be a function');
 
-  const enhance = compose(
-    translate(),
-    connect(null, {
-      onCloseOverlay: closeAll,
-    }),
-  );
+  function LoadingOverlay() {
+    const { t } = useTranslator();
+    const dispatch = useDispatch();
+    const onCloseOverlay = () => dispatch(closeAll());
 
-  const LoadingOverlay = ({
-    t,
-    pastDelay,
-    onCloseOverlay,
-  }) => (
-    <React.Fragment>
-      <OverlayHeader
-        title={title ? title(t) : '...'}
-        onCloseOverlay={onCloseOverlay}
-      />
-      <OverlayContent className="LoadingOverlay-body">
-        {pastDelay && (
-          <CircularProgress
-            className="LoadingOverlay-spinner"
-            thickness={1.6}
-          />
-        )}
-      </OverlayContent>
-    </React.Fragment>
-  );
+    // Simulate `pastDelay` from react-loadable
+    const [pastDelay, setPastDelay] = useState(false);
+    useEffect(() => {
+      const timer = setTimeout(() => setPastDelay(true), 1000);
+      return () => clearTimeout(timer);
+    }, []);
 
-  LoadingOverlay.propTypes = {
-    t: PropTypes.func.isRequired,
-    pastDelay: PropTypes.bool.isRequired,
-    onCloseOverlay: PropTypes.func.isRequired,
-  };
+    return (
+      <>
+        <OverlayHeader
+          title={title ? title(t) : '...'}
+          onCloseOverlay={onCloseOverlay}
+        />
+        <OverlayContent className="LoadingOverlay-body">
+          {pastDelay && (
+            <CircularProgress
+              className="LoadingOverlay-spinner"
+              thickness={1.6}
+            />
+          )}
+        </OverlayContent>
+      </>
+    );
+  }
 
-  const LazyOverlay = loadable({
-    loader,
-    loading: enhance(LoadingOverlay),
-  });
+  const RealOverlay = React.lazy(loader);
 
-  return hoistStatics(nest(OverlayComponent, LazyOverlay), LazyOverlay);
+  function LazyOverlay(props) {
+    return (
+      <OverlayComponent {...props}>
+        <React.Suspense fallback={<LoadingOverlay {...props} />}>
+          <RealOverlay {...props} />
+        </React.Suspense>
+      </OverlayComponent>
+    );
+  }
+
+  return LazyOverlay;
 }

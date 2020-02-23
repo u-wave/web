@@ -1,7 +1,7 @@
-import cx from 'classnames';
+import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate } from 'react-i18next';
+import { translate } from '@u-wave/react-translate';
 import Button from '@material-ui/core/Button';
 import SettingsButton from './SettingsButton';
 import NextMedia from './NextMedia';
@@ -39,10 +39,6 @@ class FooterBar extends React.Component {
     onFavorite: PropTypes.func,
     onUpvote: PropTypes.func,
     onDownvote: PropTypes.func,
-  };
-
-  static contextTypes = {
-    muiTheme: PropTypes.object,
   };
 
   handleSkipTurn = (reason) => {
@@ -163,7 +159,7 @@ class FooterBar extends React.Component {
           {t('login.message')}
         </div>
         <Button
-          variant="raised"
+          variant="contained"
           color="primary"
           className="FooterAuthButton FooterAuthButton--login"
           onClick={openLoginDialog}
@@ -171,7 +167,7 @@ class FooterBar extends React.Component {
           {t('login.login').toUpperCase()}
         </Button>
         <Button
-          variant="raised"
+          variant="contained"
           color="primary"
           className="FooterAuthButton FooterAuthButton--register"
           onClick={openRegisterDialog}

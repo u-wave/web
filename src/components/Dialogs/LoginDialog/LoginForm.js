@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate } from 'react-i18next';
+import { translate } from '@u-wave/react-translate';
 import EmailIcon from '@material-ui/icons/Email';
 import PasswordIcon from '@material-ui/icons/Lock';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -22,7 +22,11 @@ class LoginForm extends React.Component {
     onOpenResetPasswordDialog: PropTypes.func,
   };
 
-  state = { busy: false };
+  constructor(props) {
+    super(props);
+
+    this.state = { busy: false };
+  }
 
   handleSubmit = (event) => {
     const { onLogin } = this.props;
@@ -60,19 +64,19 @@ class LoginForm extends React.Component {
       <Form className="LoginForm" onSubmit={this.handleSubmit}>
         {error && <FormGroup>{error.message}</FormGroup>}
         {supportsSocialAuth && (
-          <React.Fragment>
+          <>
             <SocialLogin />
             <Separator />
-          </React.Fragment>
+          </>
         )}
         <FormGroup>
           <TextField
             ref={this.refEmail}
             className="LoginForm-field"
             type="email"
-            autocomplete="email"
+            autoComplete="email"
             placeholder={t('login.email')}
-            icon={<EmailIcon nativeColor="#9f9d9e" />}
+            icon={<EmailIcon htmlColor="#9f9d9e" />}
             autoFocus
           />
         </FormGroup>
@@ -82,9 +86,9 @@ class LoginForm extends React.Component {
             ref={this.refPassword}
             className="LoginForm-field"
             type="password"
-            autocomplete="current-password"
+            autoComplete="current-password"
             placeholder={t('login.password')}
-            icon={<PasswordIcon nativeColor="#9f9d9e" />}
+            icon={<PasswordIcon htmlColor="#9f9d9e" />}
           />
         </FormGroup>
 
