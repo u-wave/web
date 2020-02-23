@@ -5,52 +5,36 @@ import EditIcon from '@material-ui/icons/Edit';
 import AvatarDialog from '../AvatarDialog';
 import DialogCloseAnimation from '../DialogCloseAnimation';
 
-class ChangeAvatarButton extends React.Component {
-  static propTypes = {
-    onChangeAvatar: PropTypes.func.isRequired,
-    user: PropTypes.string,
-  };
+const { useCallback, useState } = React;
 
-  state = {
-    changingAvatar: false,
-  };
+function ChangeAvatarButton({ user, onChangeAvatar }) {
+  const [isOpen, setChangeDialogOpen] = useState(false);
 
-  handleOpen = () => {
-    this.setState({ changingAvatar: true });
-  };
+  const handleOpen = useCallback(() => setChangeDialogOpen(true), []);
+  const handleClose = useCallback(() => setChangeDialogOpen(false), []);
 
-  handleChange = (user, avatar) => {
-    const { onChangeAvatar } = this.props;
-
-    onChangeAvatar(user, avatar);
-  };
-
-  handleClose = () => {
-    this.setState({ changingAvatar: false });
-  };
-
-  render() {
-    const { user } = this.props;
-    const { changingAvatar } = this.state;
-
-    return (
-      <React.Fragment>
-        <IconButton className="ChangeAvatarButton" onClick={this.handleOpen}>
-          <EditIcon className="ChangeAvatarButton-icon" />
-        </IconButton>
-        <DialogCloseAnimation delay={450}>
-          {changingAvatar ? (
-            <AvatarDialog
-              open
-              user={user}
-              onChangeAvatar={this.handleChange}
-              onClose={this.handleClose}
-            />
-          ) : null}
-        </DialogCloseAnimation>
-      </React.Fragment>
-    );
-  }
+  return (
+    <>
+      <IconButton className="ChangeAvatarButton" onClick={handleOpen}>
+        <EditIcon className="ChangeAvatarButton-icon" />
+      </IconButton>
+      <DialogCloseAnimation delay={450}>
+        {isOpen ? (
+          <AvatarDialog
+            open
+            user={user}
+            onChangeAvatar={onChangeAvatar}
+            onClose={handleClose}
+          />
+        ) : null}
+      </DialogCloseAnimation>
+    </>
+  );
 }
+
+ChangeAvatarButton.propTypes = {
+  user: PropTypes.object.isRequired,
+  onChangeAvatar: PropTypes.func.isRequired,
+};
 
 export default ChangeAvatarButton;

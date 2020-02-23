@@ -4,39 +4,41 @@ import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import UploadIcon from '@material-ui/icons/CloudUploadOutlined';
 
-const AvatarList = ({
+function AvatarList({
   availableAvatars,
   allowCustomAvatars,
   onSelect,
   onCustom,
-}) => (
-  <GridList cellHeight="auto">
-    {allowCustomAvatars && (
-      <GridListTile
-        cols={1}
-        onClick={onCustom}
-      >
-        <UploadIcon />
-      </GridListTile>
-    )}
-    {availableAvatars.map(({
-      url, type, name, service,
-    }) => (
-      <GridListTile
-        key={url}
-        cols={1}
-        onClick={() => onSelect({ type, name, service })}
-      >
-        <img
-          src={url}
-          alt={name || service}
-          width={96}
-          height={96}
-        />
-      </GridListTile>
-    ))}
-  </GridList>
-);
+}) {
+  return (
+    <GridList cellHeight="auto">
+      {allowCustomAvatars && (
+        <GridListTile
+          cols={1}
+          onClick={onCustom}
+        >
+          <UploadIcon />
+        </GridListTile>
+      )}
+      {availableAvatars.map(({
+        url, type, name, service,
+      }) => (
+        <GridListTile
+          key={url}
+          cols={1}
+          onClick={() => onSelect({ type, name, service })}
+        >
+          <img
+            src={url}
+            alt={name || service}
+            width={96}
+            height={96}
+          />
+        </GridListTile>
+      ))}
+    </GridList>
+  );
+}
 
 AvatarList.propTypes = {
   availableAvatars: PropTypes.arrayOf(PropTypes.shape({
