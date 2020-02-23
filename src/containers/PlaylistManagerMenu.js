@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   addMedia as addToPlaylist,
@@ -24,7 +25,7 @@ import PlaylistsMenu from '../components/PlaylistManager/Menu';
 
 const { useCallback } = React;
 
-function PlaylistsMenuContainer() {
+function PlaylistsMenuContainer({ className }) {
   const playlists = useSelector(playlistsSelector);
   const selected = useSelector(selectedPlaylistSelector);
   const searchQuery = useSelector(searchQuerySelector);
@@ -45,6 +46,7 @@ function PlaylistsMenuContainer() {
 
   return (
     <PlaylistsMenu
+      className={className}
       playlists={playlists}
       selected={selected}
       searchQuery={searchQuery}
@@ -60,5 +62,9 @@ function PlaylistsMenuContainer() {
     />
   );
 }
+
+PlaylistsMenuContainer.propTypes = {
+  className: PropTypes.string,
+};
 
 export default PlaylistsMenuContainer;
