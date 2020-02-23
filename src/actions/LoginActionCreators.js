@@ -209,7 +209,9 @@ function socialLogin(service) {
         payload: {
           show: 'social',
           service: data.type,
+          id: data.id,
           suggestedName: data.suggestedName,
+          avatars: data.avatars,
         },
       });
     }
