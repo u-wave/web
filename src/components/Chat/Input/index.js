@@ -1,5 +1,4 @@
 import cx from 'clsx';
-import sortBy from 'lodash/sortBy';
 import uniqBy from 'lodash/uniqBy';
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -35,10 +34,7 @@ const getEmojiCompletions = (value, { trigger, completions }) => {
   ));
 
   const uniqueResults = uniqBy(results, (emoji) => emoji.image);
-  return sortBy(
-    uniqueResults,
-    [(emoji) => emoji.shortcode.length],
-  );
+  return uniqueResults.sort((a, b) => a.shortcode.length - b.shortcode.length);
 };
 const getEmojiText = (value) => `:${value.shortcode}: `;
 const renderEmoji = (props) => <EmojiSuggestion {...props} />;
