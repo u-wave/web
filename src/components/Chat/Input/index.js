@@ -1,5 +1,4 @@
 import cx from 'clsx';
-import uniqBy from 'lodash/uniqBy';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from '@u-wave/react-translate';
@@ -8,6 +7,26 @@ import SuggestionsList from './SuggestionsList';
 import EmojiSuggestion from './EmojiSuggestion';
 import GroupSuggestion from './GroupSuggestion';
 import UserSuggestion from './UserSuggestion';
+
+/**
+ * Filter an array down to unique elements, keyed by a function.
+ *
+ * @template Element,Key
+ * @param {Element[]} array
+ * @param {(element: Element) => Key} key
+ * @return {Element[]}
+ */
+function uniqBy(array, key) {
+  const seen = new Set();
+  return array.filter((item) => {
+    const v = key(item);
+    if (!seen.has(v)) {
+      seen.add(v);
+      return true;
+    }
+    return false;
+  });
+}
 
 const renderSuggestions = (children) => (
   <SuggestionsList>{children}</SuggestionsList>
