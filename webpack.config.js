@@ -5,6 +5,7 @@ const { DefinePlugin } = require('webpack');
 const WebpackBar = require('webpackbar');
 const ExtractCssPlugin = require('mini-css-extract-plugin');
 const HtmlPlugin = require('html-webpack-plugin');
+const HtmlInlineRuntimePlugin = require('html-webpack-inline-runtime-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const merge = require('webpack-merge');
 const htmlMinifierOptions = require('./tasks/utils/htmlMinifierOptions');
@@ -57,6 +58,7 @@ const plugins = [
     title: 'Reset Password',
     minify: nodeEnv === 'production' ? htmlMinifierOptions : false,
   }),
+  new HtmlInlineRuntimePlugin(),
   new DefinePlugin({
     'process.env.FORCE_TOKEN': JSON.stringify(isDemo),
   }),
