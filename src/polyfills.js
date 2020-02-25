@@ -5,6 +5,7 @@ import 'whatwg-fetch';
 import promiseFinally from 'promise.prototype.finally';
 import arrayFind from 'array.prototype.find';
 import arrayFindIndex from 'array.prototype.findindex';
+import arrayIncludes from 'array-includes';
 import objectAssign from 'object.assign';
 import objectIs from 'object-is';
 import objectValues from 'object.values';
@@ -33,5 +34,5 @@ if (!Object.is) {
 
 if (!Number.isFinite) {
   // eslint-disable-next-line no-extend-native
-  Number.isFinite = isFinite;
+  Number.isFinite = numberIsFinite;
 }
