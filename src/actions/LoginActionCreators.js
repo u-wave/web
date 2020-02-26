@@ -218,6 +218,7 @@ function socialLogin(service) {
 
     // eslint-disable-next-line compat/compat
     const apiOrigin = new URL(apiUrl, window.location.href).origin;
+    const clientOrigin = window.location.origin;
 
     window.addEventListener('message', (event) => {
       const { data, origin } = event;
@@ -236,7 +237,7 @@ function socialLogin(service) {
       }
     });
 
-    const loginWindow = window.open(`${apiUrl}/auth/service/${service}`);
+    const loginWindow = window.open(`${apiUrl}/auth/service/${service}?origin=${clientOrigin}`);
     return whenWindowClosed(loginWindow).then(() => {
       if (messageHandlerCalled) return promise;
       return onlogin();
