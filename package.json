@@ -168,7 +168,7 @@
     "yaml-loader": "^0.5.0"
   },
   "scripts": {
-    "lint": "eslint --cache . && stylelint src/**/*.css",
+    "lint": "eslint --cache . && stylelint --cache src/**/*.css",
     "test:mocha": "cross-env NODE_ENV=testing mocha --require test/common.js src/**/__tests__/**/*.js",
     "test:cov": "nyc npm run test:mocha",
     "test": "npm run test:cov && npm run lint",

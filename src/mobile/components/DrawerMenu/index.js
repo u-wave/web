@@ -48,7 +48,7 @@ function DrawerMenu({
 
   return (
     <Drawer open={open} onClose={onDrawerClose} classes={classes}>
-      {user && <UserCard user={user} />}
+      {user && <UserCard className="DrawerMenu-user" user={user} />}
       <MenuList>
         {hasAboutPage && <MenuItem onClick={handleShowAbout}>{t('about.about')}</MenuItem>}
         <MenuItem onClick={handleShowServerList}>{t('about.servers')}</MenuItem>
