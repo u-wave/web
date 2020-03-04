@@ -29,7 +29,7 @@ module.exports = async function renderLoadingScreen(compilation) {
   // Compile the template to nodejs javascript
   new NodeTemplatePlugin().apply(compiler);
   new NodeTargetPlugin().apply(compiler);
-  new LibraryTemplatePlugin('LOADING_SCREEN', 'commonjs2').apply(compiler);
+  new LibraryTemplatePlugin('LOADING_SCREEN', 'commonjs-module').apply(compiler);
   new LoaderTargetPlugin('node').apply(compiler);
   const dependencies = Object.keys(pkg.dependencies);
   new ExternalsPlugin('commonjs', ({ context, request }, callback) => {
