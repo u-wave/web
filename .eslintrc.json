@@ -1,6 +1,5 @@
 {
   "extends": "airbnb",
-  "parser": "babel-eslint",
 
   "plugins": ["compat", "react-hooks"],
 
@@ -33,6 +32,10 @@
   },
 
   "overrides": [
+    {
+      "files": ["src/**/*.js"],
+      "parser": "babel-eslint"
+    },
     {
       "files": ["src/**/*.js"],
       "rules": {
