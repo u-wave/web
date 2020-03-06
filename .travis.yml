@@ -21,4 +21,7 @@ jobs:
       script: npm run prod
     - name: Check code style
       node_js: stable
+      env: ALLOW_FAILURE=true
       script: npm run lint
+  allow_failures:
+    - env: ALLOW_FAILURE=true
