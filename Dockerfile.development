@@ -1,0 +1,4 @@
+FROM node:current-alpine
+# The u-wave-web repository root should be mounted as a volume on /u-wave-web
+WORKDIR /u-wave-web
+CMD ["npm", "run", "dev:no-api"]

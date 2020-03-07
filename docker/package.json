@@ -1,0 +1,18 @@
+{
+  "private": true,
+  "name": "u-wave-web-docker",
+  "version": "0.0.0",
+  "description": "",
+  "main": "bin.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "u-wave-web-emojione": "^2.0.1",
+    "u-wave-web-middleware": "file:u-wave-web-middleware"
+  }
+}

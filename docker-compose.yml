@@ -1,0 +1,73 @@
+version: '3'
+services:
+  redis:
+    image: redis:5-alpine
+    networks:
+      - databases
+  mongodb:
+    image: mongo:4-bionic
+    command: --bind_ip_all
+    volumes:
+      - mongodata:/var/lib/mongodb
+    networks:
+      - databases
+  server:
+    build:
+      context: ../core
+      dockerfile: Dockerfile.development
+    environment:
+      DEBUG: uwave:*
+      REDIS_URL: 'redis://redis:6379/'
+      MONGODB_URL: 'mongodb://mongodb:27017/uwave'
+      HUB_SERVER: 'http://hub-server:6451/'
+    ports:
+      - '6042:6042'
+    volumes:
+      - ../core:/u-wave-core
+    depends_on:
+      - redis
+      - mongodb
+      - hub-server
+    networks:
+      - instance
+      - hub
+      - databases
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile.development
+    environment:
+      DEBUG: uwave:*
+      BROWSERSLIST: last 1 Firefox version, last 1 Chrome version
+      SERVER_URL: 'http://server:6042/'
+    ports:
+      - '6041:6041'
+    volumes:
+      - ./:/u-wave-web
+    networks:
+      - instance
+  hub-server:
+    image: docker.pkg.github.com/u-wave/hub/server:v0.3.1
+    ports:
+      - '6451:6451'
+    networks:
+      - hub
+  hub-client:
+    image: docker.pkg.github.com/u-wave/hub/client:v0.4.0
+    environment:
+      HUB_SERVER: 'http://hub-server:6451/'
+    ports:
+      - '6450:3000'
+    depends_on:
+      - hub-server
+    networks:
+      - hub
+
+volumes:
+  mongodata:
+    driver: local
+
+networks:
+  hub:
+  instance:
+  databases:
