@@ -23,7 +23,7 @@ import {
 
 register('skip', 'Skip the current DJ.', {
   guard: isModeratorSelector,
-  action: (...args) => skipCurrentDJ(args ? args.join(' ') : '[No reason given]'),
+  action: (...args) => skipCurrentDJ(args.length > 0 ? args.join(' ') : '[No reason given]'),
 });
 
 register(

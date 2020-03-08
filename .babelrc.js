@@ -15,21 +15,15 @@ module.exports = (api, envOverride) => {
     targets.browsers = '';
   }
 
-  const loose = env === 'middleware' || env === 'production';
-
   const preset = {
     presets: [
-      ['@babel/preset-env', {
-        modules: false,
-        loose,
-        targets,
-      }],
+      ['@babel/preset-env', { modules: false, targets }],
       '@babel/preset-react',
     ],
     plugins: [
       '@babel/plugin-proposal-export-default-from',
       '@babel/plugin-proposal-export-namespace-from',
-      ['@babel/plugin-proposal-class-properties', { loose }],
+      '@babel/plugin-proposal-class-properties',
     ],
   };
 
