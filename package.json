@@ -38,7 +38,7 @@
     "just-map-values": "^1.1.0",
     "just-omit": "^1.1.0",
     "lie": "^3.3.0",
-    "load-script2": "^1.0.1",
+    "load-script2": "^2.0.4",
     "lodash": "^4.17.15",
     "ms": "^2.1.2",
     "nanoraf": "^3.1.0",
