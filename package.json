@@ -18,7 +18,6 @@
     "@material-ui/core": "^4.9.0",
     "@material-ui/icons": "^4.5.1",
     "@material-ui/styles": "^4.9.0",
-    "@u-wave/react-mq": "^1.0.2",
     "@u-wave/react-server-list": "^4.0.0",
     "@u-wave/react-translate": "^1.1.1",
     "@u-wave/react-youtube": "^0.7.0",
@@ -76,6 +75,7 @@
     "splitargs": "0.0.7",
     "u-wave-parse-chat-markup": "^2.4.0",
     "upper-case-first": "^2.0.1",
+    "use-mediaquery": "^1.0.1",
     "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
