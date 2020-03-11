@@ -1,5 +1,5 @@
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   motdSelector,
   messagesSelector,
@@ -9,17 +9,27 @@ import {
 import { deleteChatMessage } from '../actions/ModerationActionCreators';
 import ChatMessages from '../components/Chat/ChatMessages';
 
-const mapStateToProps = createStructuredSelector({
-  motd: motdSelector,
-  messages: messagesSelector,
-  compileOptions: markupCompilerOptionsSelector,
-  canDeleteMessages: canDeleteMessagesSelector,
-});
+const {
+  useCallback,
+} = React;
 
-const mapDispatchToProps = {
-  onDeleteMessage: deleteChatMessage,
-};
+function ChatMessagesContainer() {
+  const motd = useSelector(motdSelector);
+  const messages = useSelector(messagesSelector);
+  const compileOptions = useSelector(markupCompilerOptionsSelector);
+  const canDeleteMessages = useSelector(canDeleteMessagesSelector);
+  const dispatch = useDispatch();
+  const onDeleteMessage = useCallback((id) => dispatch(deleteChatMessage(id)), []);
 
-const enhance = connect(mapStateToProps, mapDispatchToProps);
+  return (
+    <ChatMessages
+      motd={motd}
+      messages={messages}
+      compileOptions={compileOptions}
+      canDeleteMessages={canDeleteMessages}
+      onDeleteMessage={onDeleteMessage}
+    />
+  );
+}
 
-export default enhance(ChatMessages);
+export default ChatMessagesContainer;
