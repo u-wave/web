@@ -1,15 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   createPlaylist,
   addMedia,
   closeAddMediaMenu,
 } from '../actions/PlaylistActionCreators';
 import { favoriteMedia } from '../actions/VoteActionCreators';
-
 import {
   isFavoriteSelector,
   isOpenSelector,
@@ -20,43 +16,29 @@ import {
 import { playlistsSelector } from '../selectors/playlistSelectors';
 import AddToPlaylistMenu from '../components/AddToPlaylistMenu';
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  onClose: closeAddMediaMenu,
-  onCreatePlaylist: createPlaylist,
-  onAddMedia: addMedia,
-  onFavoriteMedia: favoriteMedia,
-}, dispatch);
+const { useCallback } = React;
 
-const mapStateToProps = createStructuredSelector({
-  isFavorite: isFavoriteSelector,
-  isOpen: isOpenSelector,
-  position: positionSelector,
-  playlists: playlistsSelector,
-  media: mediaSelector,
-  historyID: historyIDSelector,
-});
+function AddToPlaylistMenuContainer() {
+  const dispatch = useDispatch();
+  const isFavorite = useSelector(isFavoriteSelector);
+  const isOpen = useSelector(isOpenSelector);
+  const position = useSelector(positionSelector);
+  const playlists = useSelector(playlistsSelector);
+  const media = useSelector(mediaSelector);
+  const historyID = useSelector(historyIDSelector);
 
-const AddToPlaylistMenuContainer = ({
-  isOpen,
-  position,
-  isFavorite,
-  playlists,
-  media,
-  historyID,
-  onCreatePlaylist,
-  onAddMedia,
-  onFavoriteMedia,
-  onClose,
-}) => {
+  const onClose = useCallback(() => dispatch(closeAddMediaMenu()), []);
+  const onCreatePlaylist = useCallback((name) => dispatch(createPlaylist(name)), []);
+  const onSelect = useCallback((playlist) => {
+    if (isFavorite) {
+      return dispatch(favoriteMedia(playlist, historyID));
+    }
+    return dispatch(addMedia(playlist, media));
+  }, [isFavorite, historyID, media]);
+
   if (!isOpen) {
     return <span />;
   }
-
-  const onSelect = (playlist) => (
-    isFavorite
-      ? onFavoriteMedia(playlist, historyID)
-      : onAddMedia(playlist, media)
-  );
 
   return (
     <AddToPlaylistMenu
@@ -68,24 +50,6 @@ const AddToPlaylistMenuContainer = ({
       onSelect={onSelect}
     />
   );
-};
+}
 
-AddToPlaylistMenuContainer.propTypes = {
-  isFavorite: PropTypes.bool,
-  isOpen: PropTypes.bool,
-  position: PropTypes.shape({
-    x: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired,
-  }),
-  playlists: PropTypes.arrayOf(PropTypes.object),
-
-  media: PropTypes.arrayOf(PropTypes.object),
-  historyID: PropTypes.string,
-
-  onClose: PropTypes.func.isRequired,
-  onCreatePlaylist: PropTypes.func.isRequired,
-  onAddMedia: PropTypes.func.isRequired,
-  onFavoriteMedia: PropTypes.func.isRequired,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(AddToPlaylistMenuContainer);
+export default AddToPlaylistMenuContainer;
