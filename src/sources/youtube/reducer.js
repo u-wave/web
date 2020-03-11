@@ -12,7 +12,6 @@ import {
 const initialState = {
   type: null,
   importingState: IDLE,
-  importingPlaylistName: '',
   importingPlaylistItems: [],
   importingChannelTitle: '',
   importablePlaylists: [],
