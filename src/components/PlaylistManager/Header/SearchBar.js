@@ -6,13 +6,15 @@ import SourcePicker from './SourcePicker';
 import { search, setSource } from '../../../actions/SearchActionCreators';
 import { searchSourceTypeSelector } from '../../../selectors/searchSelectors';
 
-const { useCallback } = React;
+const {
+  useCallback,
+} = React;
 
 function MediaSearchBar({ className }) {
   const source = useSelector(searchSourceTypeSelector);
   const dispatch = useDispatch();
   const handleSubmit = useCallback((query) => {
-    dispatch(search(query));
+    dispatch(search(source, query));
   }, []);
   const handleSourceChange = useCallback((newSource) => {
     dispatch(setSource(newSource));

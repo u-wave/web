@@ -25,16 +25,17 @@ function searchStart(query) {
   };
 }
 
-export function search(query) {
-  return get('/search', {
+export function search(sourceType, query) {
+  const endpoint = `/search/${encodeURIComponent(sourceType)}`;
+  return get(endpoint, {
     qs: { query },
     onStart: () => (dispatch) => {
       dispatch(searchStart(query));
       dispatch(showSearchResults());
     },
-    onComplete: (results) => ({
+    onComplete: ({ data }) => ({
       type: SEARCH_COMPLETE,
-      payload: { results },
+      payload: { results: { [sourceType]: data } },
     }),
     onError: (error) => ({
       type: SEARCH_COMPLETE,

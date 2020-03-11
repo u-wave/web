@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import { playlistsByIDSelector } from './playlistSelectors';
 
 const baseSearchSelector = (state) => state.mediaSearch;
 
@@ -25,7 +26,25 @@ const searchResultsCombinedSelector = createSelector(
 export const searchResultsSelector = createSelector(
   searchResultsCombinedSelector,
   searchSourceTypeSelector,
-  (results, sourceType) => results[sourceType],
+  playlistsByIDSelector,
+  (results, sourceType, playlists) => {
+    if (!results[sourceType]) {
+      return results[sourceType];
+    }
+    return results[sourceType].map((result) => {
+      if (!Array.isArray(result.inPlaylists)) {
+        return result;
+      }
+      return {
+        ...result,
+        inPlaylists: result.inPlaylists
+          .map((id) => playlists[id])
+          // If we don't know about a playlist for some reason, ignore it.
+          // That would be a bug, but not showing it is better than crashing!
+          .filter(Boolean),
+      };
+    });
+  },
 );
 
 export const searchResultsCountSelector = createSelector(
