@@ -33,7 +33,7 @@ module.exports = async function renderLoadingScreen(compilation) {
   new LibraryTemplatePlugin(null, 'commonjs').apply(compiler);
   new LoaderTargetPlugin('node').apply(compiler);
   const dependencies = Object.keys(pkg.dependencies);
-  new ExternalsPlugin('commonjs', ({ context, request }, callback) => {
+  new ExternalsPlugin('commonjs', ({ request }, callback) => {
     if (dependencies.some((dep) => request === dep || request.startsWith(`${dep}/`))) {
       callback(null, `commonjs ${request}`);
     } else {
