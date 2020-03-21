@@ -13,7 +13,7 @@ import SettingsManager from '../../containers/SettingsManager';
 import AdminProxy from '../AdminProxy';
 import About from '../../containers/About';
 import ConnectionIndicator from '../ConnectionIndicator';
-import SidePanels from '../../containers/SidePanels';
+import SidePanels from '../SidePanels';
 import Dialogs from '../Dialogs';
 import AddToPlaylistMenu from '../../containers/AddToPlaylistMenu';
 import DragLayer from '../../containers/DragLayer';

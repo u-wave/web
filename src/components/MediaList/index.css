@@ -2,7 +2,3 @@
 @import "./MediaDragPreview.css";
 @import "./MediaLoadingIndicator.css";
 @import "./Row.css";
-
-.MediaList {
-  overflow-y: auto;
-}
