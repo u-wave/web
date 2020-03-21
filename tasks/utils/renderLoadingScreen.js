@@ -6,10 +6,11 @@ const prerender = require('./prerender');
 const pkg = require('../../package.json');
 
 function evalModule(code) {
-  const target = {};
+  const target = { exports: {} };
   vm.runInNewContext(code, {
     require,
     module: target,
+    exports: target.exports,
   });
   return target.exports;
 }
@@ -29,7 +30,7 @@ module.exports = async function renderLoadingScreen(compilation) {
   // Compile the template to nodejs javascript
   new NodeTemplatePlugin().apply(compiler);
   new NodeTargetPlugin().apply(compiler);
-  new LibraryTemplatePlugin('LOADING_SCREEN', 'commonjs-module').apply(compiler);
+  new LibraryTemplatePlugin(null, 'commonjs').apply(compiler);
   new LoaderTargetPlugin('node').apply(compiler);
   const dependencies = Object.keys(pkg.dependencies);
   new ExternalsPlugin('commonjs', ({ context, request }, callback) => {
@@ -64,5 +65,6 @@ module.exports = async function renderLoadingScreen(compilation) {
 
   const code = mainAsset.source();
   const LoadingScreen = evalModule(code).default;
+
   return prerender(h(LoadingScreen));
 };
