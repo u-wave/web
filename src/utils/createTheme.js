@@ -68,7 +68,7 @@ export default function createTheme(base) {
       '--media-list-alternate-color': fade(uwave.mediaList.alternate, 0.3),
 
       // Settings panel colours
-      '--settings-help-text-color': palette.text.hint,
+      '--settings-help-text-color': palette.text.secondary,
 
       // Computed values, can't do these in CSS
       '--overlay-background': fade(uwave.background, 0.96),
