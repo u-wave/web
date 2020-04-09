@@ -13,7 +13,7 @@ const initialState = {
   sourceType: 'youtube',
   query: null,
   showResults: false,
-  results: {},
+  results: [],
   loadingState: IDLE,
 };
 
@@ -29,7 +29,7 @@ export default function reduce(state = initialState, action = {}) {
       return {
         ...state,
         query: payload.query,
-        results: {},
+        results: [],
         loadingState: LOADING,
       };
     case SEARCH_COMPLETE:
@@ -48,7 +48,7 @@ export default function reduce(state = initialState, action = {}) {
         ...state,
         query: null,
         loadingState: IDLE,
-        results: {},
+        results: [],
         showResults: false,
       };
     case SELECT_PLAYLIST:
