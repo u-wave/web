@@ -1,12 +1,19 @@
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { closePreviewMediaDialog } from '../actions/DialogActionCreators';
-
-import { previewMediaDialogSelector as mapStateToProps } from '../selectors/dialogSelectors';
+import { previewMediaDialogSelector } from '../selectors/dialogSelectors';
 import PreviewMediaDialog from '../components/Dialogs/PreviewMediaDialog';
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  onCloseDialog: closePreviewMediaDialog,
-}, dispatch);
+const {
+  useCallback,
+} = React;
 
-export default connect(mapStateToProps, mapDispatchToProps)(PreviewMediaDialog);
+function PreviewMediaDialogContainer() {
+  const props = useSelector(previewMediaDialogSelector);
+  const dispatch = useDispatch();
+  const onCloseDialog = useCallback(() => dispatch(closePreviewMediaDialog()), []);
+
+  return <PreviewMediaDialog {...props} onCloseDialog={onCloseDialog} />;
+}
+
+export default PreviewMediaDialogContainer;

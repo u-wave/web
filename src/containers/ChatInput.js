@@ -1,8 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useBus } from 'react-bus';
-import { createStructuredSelector } from 'reselect';
 import { inputMessage } from '../actions/ChatActionCreators';
 import {
   availableGroupMentionsSelector,
@@ -14,36 +12,36 @@ import {
 } from '../selectors/userSelectors';
 import ChatInput from '../components/Chat/Input';
 
-const { useCallback } = React;
+const {
+  useCallback,
+} = React;
 
-const mapStateToProps = createStructuredSelector({
-  isLoggedIn: isLoggedInSelector,
-  mentionableUsers: userListSelector,
-  mentionableGroups: availableGroupMentionsSelector,
-  availableEmoji: emojiCompletionsSelector,
-});
+function ChatInputContainer() {
+  const isLoggedIn = useSelector(isLoggedInSelector);
+  const mentionableUsers = useSelector(userListSelector);
+  const mentionableGroups = useSelector(availableGroupMentionsSelector);
+  const availableEmoji = useSelector(emojiCompletionsSelector);
+  const dispatch = useDispatch();
+  const onSend = useCallback((message) => dispatch(inputMessage(message)));
 
-const mapDispatchToProps = {
-  onSend: inputMessage,
-};
-
-const enhance = connect(mapStateToProps, mapDispatchToProps);
-
-function ChatInputContainer({ isLoggedIn, ...props }) {
   const bus = useBus();
   const onScroll = useCallback((direction) => {
     bus.emit('chat:scroll', direction);
-  }, []);
+  }, [bus]);
 
-  return (
-    isLoggedIn
-      ? <ChatInput {...props} onScroll={onScroll} />
-      : <span />
-  );
+  if (isLoggedIn) {
+    return (
+      <ChatInput
+        mentionableUsers={mentionableUsers}
+        mentionableGroups={mentionableGroups}
+        availableEmoji={availableEmoji}
+        onSend={onSend}
+        onScroll={onScroll}
+      />
+    );
+  }
+
+  return null;
 }
 
-ChatInputContainer.propTypes = {
-  isLoggedIn: PropTypes.bool.isRequired,
-};
-
-export default enhance(ChatInputContainer);
+export default ChatInputContainer;

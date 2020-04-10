@@ -5,7 +5,7 @@ import { translate } from '@u-wave/react-translate';
 import FormGroup from '@material-ui/core/FormGroup';
 import Switch from '@material-ui/core/Switch';
 import Profile from './Profile';
-import LabeledControl from './LabeledControl';
+import SettingControl from './SettingControl';
 import LanguagePicker from './LanguagePicker';
 import LogoutButton from './LogoutButton';
 import NotificationSettings from './NotificationSettings';
@@ -68,33 +68,36 @@ class SettingsPanel extends React.Component {
         <div className="SettingsPanel-column SettingsPanel-column--left">
           <h2 className="SettingsPanel-header">{t('settings.title')}</h2>
           <FormGroup>
-            <LabeledControl label={t('settings.videoEnabled')} id="uw-setting-videoenabled">
+            <SettingControl
+              label={t('settings.videoEnabled')}
+              helpText={t('settings.videoEnabledHelp')}
+            >
               <Switch
                 color="primary"
                 checked={settings.videoEnabled}
                 onChange={this.handleVideoEnabledChange}
               />
-            </LabeledControl>
-            <LabeledControl label={t('settings.videoSize')} id="uw-setting-videosize">
+            </SettingControl>
+            <SettingControl label={t('settings.videoSize')}>
               <Switch
                 color="primary"
                 checked={settings.videoSize === 'large'}
                 onChange={this.handleVideoSizeChange}
               />
-            </LabeledControl>
-            <LabeledControl label={t('settings.mentionSound')} id="uw-setting-mentionsound">
+            </SettingControl>
+            <SettingControl label={t('settings.mentionSound')}>
               <Switch
                 color="primary"
                 checked={settings.mentionSound}
                 onChange={this.handleMentionSoundChange}
               />
-            </LabeledControl>
-            <LabeledControl label={t('settings.language')} id="uw-setting-language">
+            </SettingControl>
+            <SettingControl label={t('settings.language')}>
               <LanguagePicker
                 value={settings.language}
                 onChange={this.handleLanguageChange}
               />
-            </LabeledControl>
+            </SettingControl>
           </FormGroup>
           <hr className="SettingsPanel-divider" />
           <Links />

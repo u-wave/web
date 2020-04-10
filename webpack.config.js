@@ -6,7 +6,6 @@ const WebpackBar = require('webpackbar');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const ExtractCssPlugin = require('mini-css-extract-plugin');
 const HtmlPlugin = require('html-webpack-plugin');
-const HtmlSiblingChunksPlugin = require('html-webpack-include-sibling-chunks-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const { Plugin: ShakePlugin } = require('webpack-common-shake');
 const merge = require('webpack-merge');
@@ -46,7 +45,6 @@ const plugins = [
     { from: '../assets/favicon.ico', to: 'favicon.ico' },
     { from: '../assets/icon-white.png', to: 'icon-white.png' },
   ]),
-  new HtmlSiblingChunksPlugin(),
   new HtmlPlugin({
     chunks: ['polyfills', 'app'],
     template: './index.html',
@@ -131,13 +129,13 @@ const base = {
       {
         test: /\.mp3$/,
         use: [
-          { loader: 'file-loader', query: { esModule: false, name: 'static/[name]_[hash:7].[ext]' } },
+          { loader: 'file-loader', query: { name: 'static/[name]_[hash:7].[ext]' } },
         ],
       },
       {
         test: /\.(gif|jpe?g|png|svg)$/,
         use: [
-          { loader: 'file-loader', query: { esModule: false, name: 'static/[name]_[hash:7].[ext]' } },
+          { loader: 'file-loader', query: { name: 'static/[name]_[hash:7].[ext]' } },
           nodeEnv !== 'development' && { loader: 'image-webpack-loader' },
         ].filter(Boolean),
       },

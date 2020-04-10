@@ -44,14 +44,6 @@ const initialState = {
   currentFilter: {},
 };
 
-function deselectAll(playlists) {
-  return mapValues(playlists, (playlist) => (
-    playlist.selected
-      ? { ...playlist, selected: false }
-      : playlist
-  ));
-}
-
 function processInsert(list, insert, position) {
   let insertIdx = 0;
   if (position.at === 'end') {
@@ -172,7 +164,6 @@ export default function reduce(state = initialState, action = {}) {
         playlists: indexByPath(payload.playlists.map((playlist) => ({
           ...playlist,
           active: playlist._id === payload.activePlaylist,
-          selected: playlist._id === payload.activePlaylist,
         })), '_id'),
         // Preload the first item in the active playlist so it can be shown in
         // the footer bar immediately. Else it would flash "This playlist is empty"
@@ -214,11 +205,6 @@ export default function reduce(state = initialState, action = {}) {
       return {
         ...state,
         currentFilter: shouldClearFilter ? {} : currentFilter,
-        // set `selected` property on playlists
-        playlists: mapValues(state.playlists, (playlist) => ({
-          ...playlist,
-          selected: playlist._id === payload.playlistID,
-        })),
         selectedPlaylistID: payload.playlistID,
       };
     }
@@ -227,7 +213,6 @@ export default function reduce(state = initialState, action = {}) {
     // search results view instead.
       return {
         ...state,
-        playlists: deselectAll(state.playlists),
         selectedPlaylistID: null,
       };
     case SEARCH_DELETE:
@@ -237,10 +222,6 @@ export default function reduce(state = initialState, action = {}) {
 
       return {
         ...state,
-        playlists: mapValues(state.playlists, (playlist) => ({
-          ...playlist,
-          selected: playlist.active,
-        })),
         selectedPlaylistID: state.activePlaylistID,
       };
 
@@ -319,13 +300,12 @@ export default function reduce(state = initialState, action = {}) {
         name: payload.name,
         description: payload.description,
         shared: payload.shared,
-        selected: true,
         creating: true,
       };
       return {
         ...state,
         playlists: Object.assign(
-          deselectAll(state.playlists),
+          state.playlists,
           { [meta.tempId]: newPlaylist },
         ),
         selectedPlaylistID: meta.tempId,
@@ -342,13 +322,8 @@ export default function reduce(state = initialState, action = {}) {
       return {
         ...state,
         playlists: Object.assign(
-          deselectAll(omit(state.playlists, `${meta.tempId}`)),
-          {
-            [payload.playlist._id]: {
-              ...payload.playlist,
-              selected: true,
-            },
-          },
+          omit(state.playlists, `${meta.tempId}`),
+          { [payload.playlist._id]: payload.playlist },
         ),
         selectedPlaylistID: payload.playlist._id,
       };

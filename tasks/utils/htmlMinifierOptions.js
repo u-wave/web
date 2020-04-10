@@ -8,6 +8,5 @@ module.exports = {
   removeRedundantAttributes: true,
   removeScriptTypeAttributes: true,
   removeStyleLinkTypeAttributes: true,
-  removeOptionalTags: true,
   minifyCSS: true,
 };

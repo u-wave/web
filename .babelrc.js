@@ -1,3 +1,5 @@
+const pkg = require('./package.json');
+
 module.exports = (api, envOverride) => {
   const env = envOverride || process.env.BABEL_ENV || process.env.NODE_ENV || 'development';
   // Command-line version override.
@@ -15,27 +17,22 @@ module.exports = (api, envOverride) => {
     targets.browsers = '';
   }
 
-  const loose = env === 'middleware' || env === 'production';
-
   const preset = {
     presets: [
-      ['@babel/preset-env', {
-        modules: false,
-        loose,
-        targets,
-      }],
+      ['@babel/preset-env', { modules: false, targets }],
       '@babel/preset-react',
     ],
     plugins: [
       '@babel/plugin-proposal-export-default-from',
       '@babel/plugin-proposal-export-namespace-from',
-      ['@babel/plugin-proposal-class-properties', { loose }],
+      '@babel/plugin-proposal-class-properties',
     ],
   };
 
   if (env !== 'middleware') {
     preset.plugins.push(
       ['@babel/plugin-transform-runtime', {
+        version: pkg.dependencies['@babel/runtime'],
         corejs: false,
       }],
     );

@@ -1,17 +1,19 @@
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { dismiss } from '../actions/ErrorActionCreators';
 import { firstErrorSelector } from '../selectors/errorSelectors';
-
 import ErrorArea from '../components/ErrorArea';
 
-const mapStateToProps = (state) => ({
-  error: firstErrorSelector(state),
-});
+const {
+  useCallback,
+} = React;
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  onDismiss: dismiss,
-}, dispatch);
+function ErrorAreaContainer() {
+  const error = useSelector(firstErrorSelector);
+  const dispatch = useDispatch();
+  const onDismiss = useCallback(() => dispatch(dismiss()), []);
 
-export default connect(mapStateToProps, mapDispatchToProps)(ErrorArea);
+  return <ErrorArea error={error} onDismiss={onDismiss} />;
+}
+
+export default ErrorAreaContainer;
