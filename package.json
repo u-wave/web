@@ -126,6 +126,7 @@
     "gulp-newer": "^1.4.0",
     "gulp-sourcemaps": "^2.6.4",
     "gulp-yaml": "^2.0.2",
+    "hcaptcha-test-keys": "^1.0.0",
     "html-loader": "^1.0.0",
     "html-webpack-plugin": "^4.0.2",
     "http-proxy-middleware": "^1.0.0",
