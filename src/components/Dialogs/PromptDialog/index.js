@@ -5,7 +5,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import nanoid from 'nanoid';
+import nanoid from 'nanoid/non-secure';
 import Form from '../../Form';
 import FormGroup from '../../Form/Group';
 import TextField from '../../Form/TextField';

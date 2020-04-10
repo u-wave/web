@@ -42,7 +42,7 @@
     "lie": "^3.3.0",
     "load-script2": "^1.0.1",
     "ms": "^2.1.2",
-    "nanoid": "^2.1.11",
+    "nanoid": "^3.0.2",
     "nanoraf": "^3.1.0",
     "natural-compare": "^1.2.2",
     "normalize.css": "^8.0.1",
