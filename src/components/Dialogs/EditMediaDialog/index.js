@@ -6,7 +6,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import IconButton from '@material-ui/core/IconButton';
-import nanoid from 'nanoid/non-secure';
+import { nanoid } from 'nanoid/non-secure';
 import formatDuration from 'format-duration';
 import ArtistIcon from '@material-ui/icons/Headset';
 import TitleIcon from '@material-ui/icons/MusicNote';
