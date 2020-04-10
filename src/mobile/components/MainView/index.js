@@ -45,7 +45,7 @@ const MainView = ({
         <IconButton aria-label="Menu" onClick={onOpenDrawer}>
           <MenuIcon />
         </IconButton>
-        <Typography variant="title" className="MainView-title">
+        <Typography variant="h6" className="MainView-title">
           {media ? (
             <SongTitle artist={media.artist} title={media.title} />
           ) : (
