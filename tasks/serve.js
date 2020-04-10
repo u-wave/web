@@ -5,7 +5,6 @@ const path = require('path');
 const log = require('fancy-log');
 const chalk = require('chalk');
 const emojione = require('u-wave-web-emojione');
-const recaptchaTestKeys = require('recaptcha-test-keys');
 const express = require('express');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const webpack = require('webpack');
@@ -14,6 +13,10 @@ const webpackHotMiddleware = require('webpack-hot-middleware');
 const nodemon = require('nodemon');
 const explain = require('explain-error');
 const env = require('./env');
+
+const hcaptchaTestKeys = {
+  key: '10000000-ffff-ffff-ffff-000000000001',
+};
 
 function tryResolve(file, message) {
   try {
@@ -127,7 +130,7 @@ function serve(done) {
         publicPath: '/',
         // Point u-wave-web middleware to the virtual webpack filesystem.
         fs: dev.fileSystem,
-        recaptcha: { key: recaptchaTestKeys.sitekey },
+        recaptcha: hcaptchaTestKeys,
       });
     });
 
@@ -149,7 +152,7 @@ function serve(done) {
       socketUrl,
       emoji: emojione.emoji,
       basePath: path.join(__dirname, '../packages/u-wave-web-middleware/public'),
-      recaptcha: { key: recaptchaTestKeys.sitekey },
+      recaptcha: hcaptchaTestKeys,
     });
 
     app.use(webClient);

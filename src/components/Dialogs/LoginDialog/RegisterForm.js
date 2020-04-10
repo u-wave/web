@@ -7,11 +7,11 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import EmailIcon from '@material-ui/icons/Email';
 import PasswordIcon from '@material-ui/icons/Lock';
 import UserIcon from '@material-ui/icons/Person';
+import ReCaptcha from '@hcaptcha/react-hcaptcha';
 import Form from '../../Form';
 import FormGroup from '../../Form/Group';
 import TextField from '../../Form/TextField';
 import Button from '../../Form/Button';
-import ReCaptcha from '../../ReCaptcha';
 import SocialLogin from './SocialLogin';
 import Separator from './Separator';
 
