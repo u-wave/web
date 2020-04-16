@@ -177,12 +177,6 @@ const base = {
     alias: {
       // Node.js shims
       path: 'path-browserify',
-      // Use the ES modules versions of some packages.
-      '@material-ui/core': path.join(__dirname, 'node_modules/@material-ui/core/esm/'),
-      '@material-ui/icons': path.join(__dirname, 'node_modules/@material-ui/icons/esm/'),
-      '@material-ui/styles': path.join(__dirname, 'node_modules/@material-ui/styles/esm/'),
-      '@material-ui/system': path.join(__dirname, 'node_modules/@material-ui/system/esm/'),
-      '@material-ui/utils': path.join(__dirname, 'node_modules/@material-ui/utils/esm/'),
     },
     mainFields: [
       'browser',
