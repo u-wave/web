@@ -21,7 +21,7 @@ function createManifest({ title }) {
   };
 }
 
-export default function uwaveWebClient(uw, options = {}) {
+export default function uwaveWebClient(options = {}) {
   const {
     basePath = path.join(__dirname, '../../public'),
     fs = defaultFs, // Should only be used by the dev server.
