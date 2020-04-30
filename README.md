@@ -78,13 +78,12 @@ npm run serve
 import createWebClient from 'u-wave-web-middleware';
 ```
 
-### createWebClient(uw, options={})
+### createWebClient(options={})
 
 Create a Web client middleware for use with express-style server libraries.
 
 **Parameters**
 
- * `uw` - a [üWave Core][u-wave-core] object.
  * `options` - Client options. See the [Client API](#client-parameters) section.
 
 **Example**
@@ -109,7 +108,7 @@ app.use('/api', createHttpApi(uw, {
 }));
 
 app.use('/assets/emoji', emojione.middleware());
-app.use('/', createWebClient(uw, {
+app.use('/', createWebClient({
   apiBase: '/api',
   emoji: emojione.emoji,
   recaptcha: { key: 'my ReCaptcha site key' },
