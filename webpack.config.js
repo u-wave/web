@@ -196,4 +196,19 @@ const siteConfig = merge([
   process.env.ANALYZE && analyze(process.env.ANALYZE),
 ].filter(Boolean));
 
-module.exports = siteConfig;
+const loadingScreenConfig = merge(baseConfig, {
+  entry: './components/LoadingScreen',
+  output: {
+    path: path.join(outputPackage, 'public'),
+    filename: 'loadingScreen.js',
+    library: {
+      type: 'commonjs',
+    },
+  },
+  optimization: {
+    minimize: false,
+  },
+  target: 'node',
+});
+
+module.exports = [siteConfig, loadingScreenConfig];
