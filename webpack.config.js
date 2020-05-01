@@ -12,6 +12,7 @@ const htmlMinifierOptions = require('./tasks/utils/htmlMinifierOptions');
 
 const nodeEnv = process.env.NODE_ENV || 'development';
 const isDemo = process.env.DEMO === '1';
+const useExperimentalModulesOutput = process.env.MODULES === '1';
 
 const outputPackage = isDemo ? __dirname : path.join(__dirname, 'packages/u-wave-web-middleware');
 
@@ -39,6 +40,12 @@ const staticPages = require('./tasks/webpack/staticPages');
 const analyze = require('./tasks/webpack/analyze');
 
 const plugins = [
+  new DefinePlugin({
+    'process.env.FORCE_TOKEN': JSON.stringify(isDemo),
+  }),
+];
+
+const htmlPlugins = [
   new CopyPlugin([
     { from: '../assets/favicon.ico', to: 'favicon.ico' },
     { from: '../assets/icon-white.png', to: 'icon-white.png' },
@@ -58,9 +65,6 @@ const plugins = [
     minify: nodeEnv === 'production' ? htmlMinifierOptions : false,
   }),
   new HtmlInlineRuntimePlugin(),
-  new DefinePlugin({
-    'process.env.FORCE_TOKEN': JSON.stringify(isDemo),
-  }),
 ];
 
 if (!isDemo) {
@@ -181,15 +185,21 @@ const appConfig = merge(baseConfig, {
     filename: nodeEnv === 'production' ? 'static/[name]_[chunkhash:7].js' : '[name]_dev.js',
     chunkFilename: nodeEnv === 'production' ? 'static/[name]_[chunkhash:7].js' : '[name]_dev.js',
     crossOriginLoading: 'anonymous',
-    ecmaVersion: 5,
   },
 
   optimization,
   plugins: plugins.filter(Boolean),
 });
 
+const legacyAppConfig = merge(appConfig, {
+  output: {
+    ecmaVersion: 5,
+  },
+});
+
 const siteConfig = merge([
-  appConfig,
+  useExperimentalModulesOutput ? appConfig : legacyAppConfig,
+  { plugins: htmlPlugins },
   staticPages({
     privacy: './static/privacy.md',
   }, nodeEnv === 'production'),
@@ -211,4 +221,6 @@ const loadingScreenConfig = merge(baseConfig, {
   target: 'node',
 });
 
-module.exports = [siteConfig, loadingScreenConfig];
+module.exports = useExperimentalModulesOutput
+  ? [siteConfig, legacyAppConfig, loadingScreenConfig]
+  : [siteConfig, loadingScreenConfig];

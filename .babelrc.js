@@ -7,22 +7,40 @@ module.exports = (api, envOverride) => {
   api.cache(() => `${env}${browsers || ''}`);
 
   // Check if we're part of a `target: 'node'` webpack build.
+  const callerIsRollup = api.caller(caller => caller && caller.name === 'rollup-plugin-babel');
+  const callerIsNode = api.caller(caller => caller && caller.name === '@babel/register');
   const targetIsNode = api.caller(caller => caller && caller.target === 'node');
+  const targetIsLegacy = api.caller(caller => caller && caller.output && caller.output.ecmaVersion === 5);
+  const targetIsModern = !targetIsLegacy;
 
   const targets = {};
-  if (env === 'middleware' || targetIsNode) {
+  if (callerIsNode) {
+    targets.node = 'current';
+    targets.browsers = '';
+  }
+
+  if (targetIsNode) {
     targets.node = '10.0.0';
     targets.browsers = '';
   }
-  if (env === 'testing') {
-    targets.node = 'current';
+
+  if (targetIsModern) {
+    targets.esmodules = true;
     targets.browsers = '';
   }
 
   const preset = {
     presets: [
-      ['@babel/preset-env', { modules: false, targets }],
-      '@babel/preset-react',
+      ['@babel/preset-env', {
+        modules: false,
+        targets,
+        bugfixes: true,
+      }],
+      ['@babel/preset-react', {
+        development: env === 'development',
+        // let preset-env transform ...spread if required
+        useSpread: true,
+      }],
     ],
     plugins: [
       '@babel/plugin-proposal-export-default-from',
@@ -31,7 +49,8 @@ module.exports = (api, envOverride) => {
     ],
   };
 
-  if (env !== 'middleware') {
+  // Rollup handles Babel helpers well. If we're not using Rollup, use @babel/runtime for helpers.
+  if (!callerIsRollup) {
     preset.plugins.push(
       ['@babel/plugin-transform-runtime', {
         version: pkg.dependencies['@babel/runtime'],
