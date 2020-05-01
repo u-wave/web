@@ -3,116 +3,97 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Popover from '@material-ui/core/Popover';
 import ArrowIcon from '@material-ui/icons/ArrowDropDown';
-import injectMediaSources from '../../../utils/injectMediaSources';
+import { useMediaSources } from '../../../context/MediaSourceContext';
 import SourcePickerElement from './SourcePickerElement';
-
-const enhance = injectMediaSources();
 
 const popoverPosition = {
   anchorOrigin: { vertical: 'bottom', horizontal: 'left' },
   transformOrigin: { vertical: 'top', horizontal: 'left' },
 };
 
-class SourcePicker extends React.Component {
-  static propTypes = {
-    className: PropTypes.string,
-    selected: PropTypes.string,
-    onChange: PropTypes.func,
+const {
+  useRef,
+  useState,
+} = React;
 
-    getMediaSource: PropTypes.func.isRequired,
-    getAllMediaSources: PropTypes.func.isRequired,
+function SourcePicker({
+  className,
+  selected,
+  onChange,
+}) {
+  const {
+    getMediaSource,
+    getAllMediaSources,
+  } = useMediaSources();
+
+  const refContainer = useRef(null);
+  const [open, setOpen] = useState(false);
+  const [anchor, setAnchor] = useState(null);
+
+  const handleOpen = () => {
+    setOpen(true);
+    setAnchor(refContainer.current);
   };
+  const handleClose = () => setOpen(false);
 
-  constructor(props) {
-    super(props);
-
-    this.state = { open: false };
-  }
-
-  handleOpen = () => {
-    this.setState({
-      open: true,
-      anchor: this.container,
-    });
-  };
-
-  handleClose = () => {
-    this.setState({ open: false });
-  };
-
-  handleChange = (sourceName) => {
-    const { onChange } = this.props;
-
-    this.handleClose();
+  const handleChange = (sourceName) => {
+    setOpen(false);
     onChange(sourceName);
-  }
-
-  refContainer = (container) => {
-    this.container = container;
   };
 
-  createElement(sourceName) {
-    const { selected, getMediaSource } = this.props;
+  const sourceNames = Object.keys(getAllMediaSources());
+  const sources = sourceNames.filter((name) => name !== selected).map((sourceName) => (
+    <button
+      type="button"
+      className="SourcePicker-item"
+      key={sourceName}
+      onClick={() => handleChange(sourceName)}
+    >
+      <SourcePickerElement
+        name={sourceName}
+        source={getMediaSource(sourceName)}
+        active={selected === sourceName}
+      />
+    </button>
+  ));
 
-    return (
+  return (
+    <div
+      className={cx('SourcePicker', className)}
+      ref={refContainer}
+    >
       <button
         type="button"
-        className="SourcePicker-item"
-        key={sourceName}
-        onClick={() => this.handleChange(sourceName)}
+        className="SourcePicker-active"
+        onClick={handleOpen}
       >
         <SourcePickerElement
-          name={sourceName}
-          source={getMediaSource(sourceName)}
-          active={selected === sourceName}
+          name={selected}
+          source={getMediaSource(selected)}
+          active
         />
+        <ArrowIcon className="SourcePicker-arrow" />
       </button>
-    );
-  }
-
-  render() {
-    const {
-      className,
-      selected,
-      getMediaSource,
-      getAllMediaSources,
-    } = this.props;
-    const { open, anchor } = this.state;
-
-    const sourceNames = Object.keys(getAllMediaSources());
-    const sources = sourceNames
-      .filter((name) => name !== selected)
-      .map((name) => this.createElement(name));
-
-    return (
-      <div
-        className={cx('SourcePicker', className)}
-        ref={this.refContainer}
+      <Popover
+        classes={{ paper: 'SourcePicker-list' }}
+        open={open}
+        anchorEl={anchor}
+        onClose={handleClose}
+        {...popoverPosition}
       >
-        <button
-          type="button"
-          className="SourcePicker-active"
-          onClick={this.handleOpen}
-        >
-          <SourcePickerElement
-            name={selected}
-            source={getMediaSource(selected)}
-            active
-          />
-          <ArrowIcon className="SourcePicker-arrow" />
-        </button>
-        <Popover
-          classes={{ paper: 'SourcePicker-list' }}
-          open={open}
-          anchorEl={anchor}
-          onClose={this.handleClose}
-          {...popoverPosition}
-        >
-          {sources}
-        </Popover>
-      </div>
-    );
-  }
+        {sources}
+      </Popover>
+    </div>
+  );
 }
 
-export default enhance(SourcePicker);
+SourcePicker.propTypes = {
+  className: PropTypes.string,
+  selected: PropTypes.string,
+  onChange: PropTypes.func,
+
+  getMediaSource: PropTypes.func.isRequired,
+  getAllMediaSources: PropTypes.func.isRequired,
+};
+
+export default SourcePicker;

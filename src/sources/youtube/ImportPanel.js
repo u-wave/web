@@ -24,7 +24,9 @@ function YouTubeImportPanel({
 }) {
   const dispatch = useDispatch();
   const onImportPlaylist = useCallback((id, name) => dispatch(importPlaylist(id, name)), []);
-  const onOpenAddMediaMenu = useCallback((selection, position) => dispatch(openAddMediaMenu(selection, position)), []);
+  const onOpenAddMediaMenu = useCallback((selection, position) => {
+    dispatch(openAddMediaMenu(selection, position));
+  }, []);
 
   if (importingState === LOADED) {
     if (type === PLAYLIST) {

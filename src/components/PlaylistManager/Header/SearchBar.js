@@ -6,7 +6,9 @@ import SourcePicker from './SourcePicker';
 import { search, setSource } from '../../../actions/SearchActionCreators';
 import { searchSourceTypeSelector } from '../../../selectors/searchSelectors';
 
-const { useCallback } = React;
+const {
+  useCallback,
+} = React;
 
 function MediaSearchBar({ className }) {
   const source = useSelector(searchSourceTypeSelector);
