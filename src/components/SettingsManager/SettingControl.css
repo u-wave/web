@@ -1,0 +1,8 @@
+.SettingControl-label {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.SettingControl-labelText {
+  flex-grow: 1;
+}

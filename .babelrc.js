@@ -1,3 +1,5 @@
+const pkg = require('./package.json');
+
 module.exports = (api, envOverride) => {
   const env = envOverride || process.env.BABEL_ENV || process.env.NODE_ENV || 'development';
   // Command-line version override.
@@ -30,6 +32,7 @@ module.exports = (api, envOverride) => {
   if (env !== 'middleware') {
     preset.plugins.push(
       ['@babel/plugin-transform-runtime', {
+        version: pkg.dependencies['@babel/runtime'],
         corejs: false,
       }],
     );
