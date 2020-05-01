@@ -19,7 +19,6 @@ const outputPackage = isDemo ? __dirname : path.join(__dirname, 'packages/u-wave
 require('@babel/register').default({
   only: [
     new RegExp(escapeStringRegExp(path.join(__dirname, 'src'))),
-    new RegExp(escapeStringRegExp(path.join(__dirname, 'tasks/webpack'))),
   ],
   plugins: [
     ['@babel/plugin-transform-modules-commonjs', { lazy: true }],
@@ -32,12 +31,12 @@ require('@babel/register').default({
 // Other parts of the build are in the ./tasks/webpack/ folder:
 //  - compileDependencies: Compiles dependencies that only ship ES2015+ to code that
 //    works in all our browser targets.
-const compileDependencies = require('./tasks/webpack/compileDependencies').default;
+const compileDependencies = require('./tasks/webpack/compileDependencies');
 //  - staticPages: Compiles static markdown pages to HTML.
-const staticPages = require('./tasks/webpack/staticPages').default;
+const staticPages = require('./tasks/webpack/staticPages');
 //  - analyze: Optionally generates a bundle size statistics page using
 //    webpack-bundle-analyzer.
-const analyze = require('./tasks/webpack/analyze').default;
+const analyze = require('./tasks/webpack/analyze');
 
 const plugins = [
   new CopyPlugin([
@@ -93,32 +92,12 @@ if (nodeEnv === 'production') {
   );
 }
 
-const base = {
+const baseConfig = merge({
   context: path.join(__dirname, 'src'),
-  entry: {
-    polyfills: './polyfills.js',
-    app: [
-      isDemo ? './demo.js' : './app.js',
-      './app.css',
-    ],
-    passwordReset: ['./password-reset/app.js'],
-  },
   mode: nodeEnv === 'production' ? 'production' : 'development',
   // Quit if there are errors.
   bail: nodeEnv === 'production',
   devtool: nodeEnv === 'production' ? 'source-map' : 'inline-source-map',
-
-  output: {
-    publicPath: '/',
-    path: path.join(outputPackage, 'public'),
-    filename: nodeEnv === 'production' ? 'static/[name]_[chunkhash:7].js' : '[name]_dev.js',
-    chunkFilename: nodeEnv === 'production' ? 'static/[name]_[chunkhash:7].js' : '[name]_dev.js',
-    crossOriginLoading: 'anonymous',
-    ecmaVersion: 5,
-  },
-
-  optimization,
-  plugins: plugins.filter(Boolean),
 
   module: {
     rules: [
@@ -126,13 +105,13 @@ const base = {
       {
         test: /\.mp3$/,
         use: [
-          { loader: 'file-loader', options: { esModule: false, name: 'static/[name]_[hash:7].[ext]' } },
+          { loader: 'file-loader', options: { esModule: false, name: 'static/[name]_[contenthash:7].[ext]' } },
         ],
       },
       {
         test: /\.(gif|jpe?g|png|svg)$/,
         use: [
-          { loader: 'file-loader', options: { esModule: false, name: 'static/[name]_[hash:7].[ext]' } },
+          { loader: 'file-loader', options: { esModule: false, name: 'static/[name]_[contenthash:7].[ext]' } },
           nodeEnv !== 'development' && { loader: 'image-webpack-loader' },
         ].filter(Boolean),
       },
@@ -185,13 +164,36 @@ const base = {
       'main',
     ],
   },
-};
+}, compileDependencies());
 
-module.exports = merge([
-  base,
-  compileDependencies(),
+const appConfig = merge(baseConfig, {
+  entry: {
+    polyfills: './polyfills.js',
+    app: [
+      isDemo ? './demo.js' : './app.js',
+      './app.css',
+    ],
+    passwordReset: ['./password-reset/app.js'],
+  },
+  output: {
+    publicPath: '/',
+    path: path.join(outputPackage, 'public'),
+    filename: nodeEnv === 'production' ? 'static/[name]_[chunkhash:7].js' : '[name]_dev.js',
+    chunkFilename: nodeEnv === 'production' ? 'static/[name]_[chunkhash:7].js' : '[name]_dev.js',
+    crossOriginLoading: 'anonymous',
+    ecmaVersion: 5,
+  },
+
+  optimization,
+  plugins: plugins.filter(Boolean),
+});
+
+const siteConfig = merge([
+  appConfig,
   staticPages({
     privacy: './static/privacy.md',
   }, nodeEnv === 'production'),
   process.env.ANALYZE && analyze(process.env.ANALYZE),
 ].filter(Boolean));
+
+module.exports = siteConfig;

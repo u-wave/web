@@ -1,6 +1,6 @@
-import ejs from 'ejs';
+const ejs = require('ejs');
 
-export default function ejsLoader(source) {
+module.exports = function ejsLoader(source) {
   if (this.cacheable) {
     this.cacheable();
   }
@@ -10,4 +10,4 @@ export default function ejsLoader(source) {
     client: true,
   });
   return `module.exports = ${template.toString()};`;
-}
+};

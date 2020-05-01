@@ -4,12 +4,14 @@ module.exports = (api, envOverride) => {
   const env = envOverride || process.env.BABEL_ENV || process.env.NODE_ENV || 'development';
   // Command-line version override.
   const browsers = process.env.BROWSERSLIST;
-
   api.cache(() => `${env}${browsers || ''}`);
 
+  // Check if we're part of a `target: 'node'` webpack build.
+  const targetIsNode = api.caller(caller => caller && caller.target === 'node');
+
   const targets = {};
-  if (env === 'middleware') {
-    targets.node = '8.9';
+  if (env === 'middleware' || targetIsNode) {
+    targets.node = '10.0.0';
     targets.browsers = '';
   }
   if (env === 'testing') {

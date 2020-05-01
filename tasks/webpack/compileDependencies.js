@@ -1,4 +1,4 @@
-import path from 'path';
+const path = require('path');
 
 // List of dependency paths that need to be compiled.
 const es2015Deps = [
@@ -14,7 +14,7 @@ const es2015Deps = [
   /\/@material-ui\/utils\/es\//,
 ];
 
-export default function compileDependencies() {
+module.exports = function compileDependencies() {
   const babelConfig = {
     cacheDirectory: true,
     babelrc: false,
@@ -68,4 +68,4 @@ export default function compileDependencies() {
       },
     },
   };
-}
+};

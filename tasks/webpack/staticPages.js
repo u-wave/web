@@ -1,11 +1,11 @@
-import path from 'path';
-import HtmlPlugin from 'html-webpack-plugin';
-import merge from 'webpack-merge';
-import htmlMinifierOptions from '../utils/htmlMinifierOptions';
+const path = require('path');
+const HtmlPlugin = require('html-webpack-plugin');
+const merge = require('webpack-merge');
+const htmlMinifierOptions = require('../utils/htmlMinifierOptions');
 
 const context = path.join(__dirname, '../../src');
 
-export default function staticPages(pages, production) {
+module.exports = function staticPages(pages, production) {
   // Add static pages.
   const staticFiles = [];
 
@@ -77,4 +77,4 @@ export default function staticPages(pages, production) {
     ...pageConfigs,
     loaders,
   ]);
-}
+};
