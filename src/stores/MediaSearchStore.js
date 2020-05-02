@@ -19,12 +19,12 @@ function useStoreImplementation() {
   const [query, setQuery] = useState(null);
   const [state, setState] = useState(IDLE);
   const [activeSource, setActiveSource] = useState('youtube');
-  const [combinedResults, setCombinedResults] = useState({});
+  const [results, setResults] = useState(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (query == null) {
-      setCombinedResults({});
+      setResults(null);
       return () => {};
     }
 
@@ -33,13 +33,13 @@ function useStoreImplementation() {
     // Maybe this can be pulled into a useFetch hook of some kind?
     // eslint-disable-next-line compat/compat
     const controller = new AbortController();
-    const request = get('/search', {
+    const request = get(`/search/${encodeURIComponent(activeSource)}`, {
       qs: { query },
       signal: controller.signal,
     });
 
-    dispatch(request).then((results) => {
-      setCombinedResults(results);
+    dispatch(request).then(({ data }) => {
+      setResults(data);
       setState(LOADED);
     }, () => {
       setState(IDLE);
@@ -58,11 +58,6 @@ function useStoreImplementation() {
 
     setQuery(newQuery);
   }, []);
-
-  const results = useMemo(
-    () => combinedResults[activeSource],
-    [activeSource, combinedResults],
-  );
 
   const context = useMemo(() => ({
     activeSource,

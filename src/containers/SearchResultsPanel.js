@@ -1,11 +1,15 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { openPreviewMediaDialog } from '../actions/DialogActionCreators';
 import { addMediaMenu } from '../actions/PlaylistActionCreators';
 import { useMediaSearchStore } from '../stores/MediaSearchStore';
+import { playlistsByIDSelector } from '../selectors/playlistSelectors';
 import SearchResults from '../components/PlaylistManager/SearchResults';
 
-const { useCallback } = React;
+const {
+  useCallback,
+  useMemo,
+} = React;
 
 const selectionOrOne = (media, selection) => {
   if (selection.isSelected(media)) {
@@ -20,7 +24,29 @@ function SearchResultsContainer() {
     results,
     state,
   } = useMediaSearchStore();
+
+  const playlistsByID = useSelector(playlistsByIDSelector);
   const dispatch = useDispatch();
+
+  const resultsWithPlaylists = useMemo(() => {
+    if (!results) {
+      return [];
+    }
+    return results.map((result) => {
+      if (!Array.isArray(result.inPlaylists)) {
+        return result;
+      }
+      return {
+        ...result,
+        inPlaylists: result.inPlaylists
+          .map((id) => playlistsByID[id])
+          // If we don't know about a playlist for some reason, ignore it.
+          // That would be a bug, but not showing it is better than crashing!
+          .filter(Boolean),
+      };
+    });
+  }, [results, playlistsByID]);
+
   const onOpenAddMediaMenu = useCallback((position, media, selection) => (
     dispatch(addMediaMenu(selectionOrOne(media, selection), position))
   ), []);
@@ -32,7 +58,7 @@ function SearchResultsContainer() {
   return (
     <SearchResults
       query={query}
-      results={results}
+      results={resultsWithPlaylists}
       loadingState={state}
       onOpenAddMediaMenu={onOpenAddMediaMenu}
       onOpenPreviewMediaDialog={onOpenPreviewMediaDialog}
