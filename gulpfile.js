@@ -34,7 +34,9 @@ const build = gulp.parallel(js.locales, js.babel);
 async function prod() {
   // Load this later because it adds require compile hooks.
   // Those don't need to run on the above imports.
-  const wpConfig = require('./webpack.config');
+  const wpConfig = require('./webpack.config')({
+    production: process.env.NODE_ENV === 'production',
+  }, {});
   const compiler = webpack(wpConfig);
   const run = promisify(compiler.run.bind(compiler));
   const close = promisify(compiler.close.bind(compiler));

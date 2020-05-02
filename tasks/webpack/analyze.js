@@ -1,6 +1,6 @@
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
-module.exports = function analyze(mode) {
+module.exports = function getAnalysisConfig(mode) {
   const openOptions = {
     analyzerMode: 'server',
   };

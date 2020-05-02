@@ -1,20 +1,15 @@
 /* eslint-disable global-require */
 const path = require('path');
 const escapeStringRegExp = require('escape-string-regexp');
-const { DefinePlugin } = require('webpack');
+const { DefinePlugin, HotModuleReplacementPlugin } = require('webpack');
 const WebpackBar = require('webpackbar');
 const ExtractCssPlugin = require('mini-css-extract-plugin');
 const HtmlPlugin = require('html-webpack-plugin');
-const HtmlInlineRuntimePlugin = require('html-webpack-inline-runtime-plugin');
+// const HtmlInlineRuntimePlugin = require('html-webpack-inline-runtime-plugin');
+const SriPlugin = require('webpack-subresource-integrity');
 const CopyPlugin = require('copy-webpack-plugin');
 const merge = require('webpack-merge');
 const htmlMinifierOptions = require('./tasks/utils/htmlMinifierOptions');
-
-const nodeEnv = process.env.NODE_ENV || 'development';
-const isDemo = process.env.DEMO === '1';
-const useExperimentalModulesOutput = process.env.MODULES === '1';
-
-const outputPackage = isDemo ? __dirname : path.join(__dirname, 'packages/u-wave-web-middleware');
 
 // Compile src/ on the fly so we can use components etc. during build time.
 require('@babel/register').default({
@@ -35,192 +30,247 @@ require('@babel/register').default({
 const compileDependencies = require('./tasks/webpack/compileDependencies');
 //  - staticPages: Compiles static markdown pages to HTML.
 const staticPages = require('./tasks/webpack/staticPages');
-//  - analyze: Optionally generates a bundle size statistics page using
-//    webpack-bundle-analyzer.
-const analyze = require('./tasks/webpack/analyze');
 
-const plugins = [
-  new DefinePlugin({
-    'process.env.FORCE_TOKEN': JSON.stringify(isDemo),
-  }),
-];
+function getConfig(env, {
+  watch = false,
+  demo = false,
+  analyze,
+  dualBundles = process.env.MODULES === '1',
+}) {
+  const outputPackage = path.join(__dirname, 'packages/u-wave-web-middleware');
 
-const htmlPlugins = [
-  new CopyPlugin([
-    { from: '../assets/favicon.ico', to: 'favicon.ico' },
-    { from: '../assets/icon-white.png', to: 'icon-white.png' },
-  ]),
-  new HtmlPlugin({
-    chunks: ['polyfills', 'app'],
-    template: './index.html',
-    title: 'üWave',
-    minify: nodeEnv === 'production' ? htmlMinifierOptions : false,
-    loadingScreen: (...args) => require('./tasks/utils/renderLoadingScreen')(...args),
-  }),
-  new HtmlPlugin({
-    chunks: ['polyfills', 'passwordReset'],
-    template: './password-reset.html',
-    filename: 'password-reset.html',
-    title: 'Reset Password',
-    minify: nodeEnv === 'production' ? htmlMinifierOptions : false,
-  }),
-  new HtmlInlineRuntimePlugin(),
-];
+  const plugins = [];
 
-if (!isDemo) {
-  plugins.push(new WebpackBar());
-}
+  if (!demo) {
+    plugins.push(new WebpackBar());
+  }
 
-let optimization;
+  const baseConfig = merge({
+    context: path.join(__dirname, 'src'),
+    mode: env.production ? 'production' : 'development',
+    // Quit if there are errors.
+    bail: env.production,
+    devtool: env.production ? 'source-map' : 'inline-source-map',
 
-if (nodeEnv === 'production') {
-  const SriPlugin = require('webpack-subresource-integrity');
+    module: {
+      rules: [
+        // Static files and resources.
+        {
+          test: /\.mp3$/,
+          use: [
+            { loader: 'file-loader', options: { esModule: false, name: 'static/[name]_[contenthash:7].[ext]' } },
+          ],
+        },
+        {
+          test: /\.(gif|jpe?g|png|svg)$/,
+          use: [
+            { loader: 'file-loader', options: { esModule: false, name: 'static/[name]_[contenthash:7].[ext]' } },
+            !env.production && { loader: 'image-webpack-loader' },
+          ].filter(Boolean),
+        },
 
-  optimization = {
-    runtimeChunk: 'single',
-    splitChunks: {
-      automaticNameDelimiter: '-',
-      chunks: 'all',
+        {
+          test: /\.html$/,
+          use: require.resolve('./tasks/webpack/ejs-loader'),
+        },
+
+        // Locale files.
+        {
+          test: /\.yaml$/,
+          type: 'json',
+          use: 'yaml-loader',
+        },
+
+        // Stylesheets.
+        {
+          test: /\.css$/,
+          use: [
+            env.production ? ExtractCssPlugin.loader : 'style-loader',
+            'css-loader',
+            'postcss-loader',
+          ],
+        },
+
+        // JS loader for our own code:
+        {
+          test: /\.js$/,
+          exclude: /node_modules/,
+          use: [
+            'babel-loader',
+            !env.production && {
+              loader: 'eslint-loader',
+              options: { cache: true },
+            },
+          ].filter(Boolean),
+        },
+      ],
+    },
+    resolve: {
+      alias: {
+        // Node.js shims
+        path: 'path-browserify',
+      },
+      mainFields: [
+        'browser',
+        'module',
+        'jsnext:main',
+        'main',
+      ],
+    },
+  }, compileDependencies());
+
+  const appConfig = merge(baseConfig, {
+    entry: {
+      polyfills: './polyfills.js',
+      app: {
+        import: [demo ? './demo.js' : './app.js', './app.css'],
+        dependOn: 'polyfills',
+      },
+      passwordReset: {
+        import: ['./password-reset/app.js'],
+        dependOn: 'polyfills',
+      },
+    },
+    output: {
+      publicPath: '/',
+      path: path.join(outputPackage, 'public'),
+      filename: env.production ? 'static/[name]_[chunkhash:7].js' : '[name]_dev.js',
+      chunkFilename: env.production ? 'static/[name]_[chunkhash:7].js' : '[name]_dev.js',
+      crossOriginLoading: 'anonymous',
+    },
+
+    plugins: plugins.filter(Boolean),
+  });
+
+  const hmrConfigPatch = {
+    entry: {
+      app: {
+        import: ['react-hot-loader', 'webpack-hot-middleware/client'],
+      },
+      passwordReset: {
+        import: ['react-hot-loader', 'webpack-hot-middleware/client'],
+      },
+    },
+    plugins: [
+      new HotModuleReplacementPlugin(),
+    ],
+  };
+
+  const productionConfigPatch = {
+    optimization: {
+      runtimeChunk: 'single',
+      splitChunks: {
+        automaticNameDelimiter: '-',
+        chunks: 'all',
+      },
+    },
+
+    plugins: [
+      new ExtractCssPlugin({
+        esModule: true,
+        filename: 'static/[name]_[contenthash:7].css',
+        chunkFilename: 'static/[name]_[contenthash:7].css',
+      }),
+      new SriPlugin({
+        hashFuncNames: ['sha512'],
+      }),
+    ],
+  };
+
+  const demoConfigPatch = {
+    output: {
+      path: path.join(__dirname, 'public'),
+    },
+    plugins: [
+      new DefinePlugin({
+        'process.env.FORCE_TOKEN': JSON.stringify(demo),
+      }),
+    ],
+  };
+
+  const legacyConfigPatch = {
+    output: {
+      ecmaVersion: 5,
     },
   };
 
-  plugins.push(
-    new ExtractCssPlugin({
-      esModule: true,
-      filename: 'static/[name]_[contenthash:7].css',
-      chunkFilename: 'static/[name]_[contenthash:7].css',
-    }),
-    new SriPlugin({
-      hashFuncNames: ['sha512'],
-    }),
+  // Must be used together with an app config to work correctly.
+  const staticPagesConfigPatch = merge(
+    {
+      plugins: [
+        new CopyPlugin([
+          { from: '../assets/favicon.ico', to: 'favicon.ico' },
+          { from: '../assets/icon-white.png', to: 'icon-white.png' },
+        ]),
+        new HtmlPlugin({
+          chunks: ['polyfills', 'app'],
+          template: './index.html',
+          title: 'üWave',
+          minify: env.production ? htmlMinifierOptions : false,
+          loadingScreen: (...args) => require('./tasks/utils/renderLoadingScreen')(...args),
+        }),
+        new HtmlPlugin({
+          chunks: ['polyfills', 'passwordReset'],
+          template: './password-reset.html',
+          filename: 'password-reset.html',
+          title: 'Reset Password',
+          minify: env.production ? htmlMinifierOptions : false,
+        }),
+      ],
+    },
+    // env.production ? {
+    //   plugins: [new HtmlInlineRuntimePlugin()],
+    // } : {},
+    staticPages({
+      privacy: './static/privacy.md',
+    }, env.production),
   );
+
+  const loadingScreenConfig = merge(baseConfig, {
+    entry: './components/LoadingScreen',
+    output: {
+      path: path.join(outputPackage, 'public'),
+      filename: 'loadingScreen.js',
+      library: {
+        type: 'commonjs',
+      },
+    },
+    optimization: {
+      minimize: false,
+    },
+    target: 'node',
+  });
+
+  let activeAppConfig = appConfig;
+  if (watch) {
+    // The `hmrConfigPatch` comes first so the hmr entry points are ran first.
+    activeAppConfig = merge(hmrConfigPatch, activeAppConfig);
+  }
+  if (env.production) {
+    activeAppConfig = merge(activeAppConfig, productionConfigPatch);
+  }
+  if (!dualBundles) {
+    activeAppConfig = merge(activeAppConfig, legacyConfigPatch);
+  }
+  if (demo) {
+    activeAppConfig = merge(activeAppConfig, demoConfigPatch);
+  }
+
+  let siteConfig = merge(activeAppConfig, staticPagesConfigPatch);
+  if (analyze) {
+    const getAnalysisConfig = require('./tasks/webpack/analyze');
+    siteConfig = merge(siteConfig, getAnalysisConfig(analyze));
+  }
+
+  // Currently unused.
+  loadingScreenConfig; // eslint-disable-line no-unused-expressions
+
+  if (dualBundles) {
+    const legacyAppConfig = merge(activeAppConfig, legacyConfigPatch);
+
+    return [siteConfig, legacyAppConfig];
+  }
+  return siteConfig;
 }
 
-const baseConfig = merge({
-  context: path.join(__dirname, 'src'),
-  mode: nodeEnv === 'production' ? 'production' : 'development',
-  // Quit if there are errors.
-  bail: nodeEnv === 'production',
-  devtool: nodeEnv === 'production' ? 'source-map' : 'inline-source-map',
-
-  module: {
-    rules: [
-      // Static files and resources.
-      {
-        test: /\.mp3$/,
-        use: [
-          { loader: 'file-loader', options: { esModule: false, name: 'static/[name]_[contenthash:7].[ext]' } },
-        ],
-      },
-      {
-        test: /\.(gif|jpe?g|png|svg)$/,
-        use: [
-          { loader: 'file-loader', options: { esModule: false, name: 'static/[name]_[contenthash:7].[ext]' } },
-          nodeEnv !== 'development' && { loader: 'image-webpack-loader' },
-        ].filter(Boolean),
-      },
-
-      {
-        test: /\.html$/,
-        use: require.resolve('./tasks/webpack/ejs-loader'),
-      },
-
-      // Locale files.
-      {
-        test: /\.yaml$/,
-        type: 'json',
-        use: 'yaml-loader',
-      },
-
-      // Stylesheets.
-      {
-        test: /\.css$/,
-        use: [
-          nodeEnv === 'development' ? 'style-loader' : ExtractCssPlugin.loader,
-          'css-loader',
-          'postcss-loader',
-        ],
-      },
-
-      // JS loader for our own code:
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: [
-          'babel-loader',
-          nodeEnv !== 'production' && {
-            loader: 'eslint-loader',
-            options: { cache: true },
-          },
-        ].filter(Boolean),
-      },
-    ].filter(Boolean),
-  },
-  resolve: {
-    alias: {
-      // Node.js shims
-      path: 'path-browserify',
-    },
-    mainFields: [
-      'browser',
-      'module',
-      'jsnext:main',
-      'main',
-    ],
-  },
-}, compileDependencies());
-
-const appConfig = merge(baseConfig, {
-  entry: {
-    polyfills: './polyfills.js',
-    app: [
-      isDemo ? './demo.js' : './app.js',
-      './app.css',
-    ],
-    passwordReset: ['./password-reset/app.js'],
-  },
-  output: {
-    publicPath: '/',
-    path: path.join(outputPackage, 'public'),
-    filename: nodeEnv === 'production' ? 'static/[name]_[chunkhash:7].js' : '[name]_dev.js',
-    chunkFilename: nodeEnv === 'production' ? 'static/[name]_[chunkhash:7].js' : '[name]_dev.js',
-    crossOriginLoading: 'anonymous',
-  },
-
-  optimization,
-  plugins: plugins.filter(Boolean),
-});
-
-const legacyAppConfig = merge(appConfig, {
-  output: {
-    ecmaVersion: 5,
-  },
-});
-
-const siteConfig = merge([
-  useExperimentalModulesOutput ? appConfig : legacyAppConfig,
-  { plugins: htmlPlugins },
-  staticPages({
-    privacy: './static/privacy.md',
-  }, nodeEnv === 'production'),
-  process.env.ANALYZE && analyze(process.env.ANALYZE),
-].filter(Boolean));
-
-const loadingScreenConfig = merge(baseConfig, {
-  entry: './components/LoadingScreen',
-  output: {
-    path: path.join(outputPackage, 'public'),
-    filename: 'loadingScreen.js',
-    library: {
-      type: 'commonjs',
-    },
-  },
-  optimization: {
-    minimize: false,
-  },
-  target: 'node',
-});
-
-module.exports = useExperimentalModulesOutput
-  ? [siteConfig, legacyAppConfig, loadingScreenConfig]
-  : [siteConfig, loadingScreenConfig];
+module.exports = getConfig;

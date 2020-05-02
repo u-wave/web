@@ -66,14 +66,6 @@ function apiServer(done) {
   }
 }
 
-function addHotReloadingClient(entry) {
-  const CLIENT = ['react-hot-loader/patch', 'webpack-hot-middleware/client'];
-  if (Array.isArray(entry)) {
-    return [...CLIENT, ...entry];
-  }
-  return [...CLIENT, entry];
-}
-
 function waitForBuild(devMiddleware) {
   return (req, res, next) => {
     devMiddleware.waitUntilValid(() => {
@@ -87,7 +79,9 @@ function serve(done) {
   const serverPort = env.serverPort || 6042;
   const watch = env.watch || false;
 
-  const wpConfig = require('../webpack.config');
+  const wpConfig = require('../webpack.config')({ production: !watch }, {
+    watch,
+  });
   const createWebClient = require('../src/middleware').default;
 
   const app = express();
@@ -102,13 +96,6 @@ function serve(done) {
   app.use('/assets/emoji/', emojione.middleware());
 
   if (watch) {
-    Object.keys(wpConfig.entry).forEach((chunk) => {
-      if (chunk === 'polyfills') return;
-      const entry = wpConfig.entry[chunk];
-      wpConfig.entry[chunk] = addHotReloadingClient(entry);
-    });
-
-    wpConfig.plugins.push(new webpack.HotModuleReplacementPlugin());
     const compiler = webpack(wpConfig);
     const dev = webpackDevMiddleware(compiler, {
       noInfo: true,
