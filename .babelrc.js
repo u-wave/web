@@ -6,10 +6,11 @@ module.exports = (api, envOverride) => {
   const browsers = process.env.BROWSERSLIST;
   api.cache(() => `${env}${browsers || ''}`);
 
-  // Check if we're part of a `target: 'node'` webpack build.
   const callerIsRollup = api.caller(caller => caller && caller.name === 'rollup-plugin-babel');
   const callerIsNode = api.caller(caller => caller && caller.name === '@babel/register');
+  // Check if we're part of a `target: 'node'` webpack build.
   const targetIsNode = api.caller(caller => caller && caller.target === 'node');
+  // Check if our output should support older browsers.
   const targetIsLegacy = api.caller(caller => caller && caller.output && caller.output.ecmaVersion === 5);
   const targetIsModern = !targetIsLegacy;
 
@@ -67,7 +68,7 @@ module.exports = (api, envOverride) => {
     preset.plugins.push(
       '@babel/plugin-transform-react-constant-elements',
       '@babel/plugin-transform-react-inline-elements',
-      ['transform-react-remove-prop-types', { mode: 'wrap' }],
+      ['transform-react-remove-prop-types', { mode: 'remove' }],
     );
   }
 
