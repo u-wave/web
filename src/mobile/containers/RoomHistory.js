@@ -34,7 +34,7 @@ function RoomHistoryOverlay(props) {
 }
 
 const RoomHistory = createLazyOverlay({
-  loader: () => import('../components/RoomHistory' /* webpackChunkName: "historyMobile" */),
+  loader: () => import('../components/RoomHistory'),
   title: (t) => t('history.title'),
   OverlayComponent: RoomHistoryOverlay,
 });

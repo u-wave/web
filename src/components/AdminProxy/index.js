@@ -7,7 +7,7 @@ import OverlayHeader from '../Overlay/Header';
 const { lazy, Suspense } = React;
 
 const AdminComponent = lazy(() => (
-  import('../../admin/containers/AdminApp' /* webpackChunkName: "admin" */)
+  import('../../admin/containers/AdminApp')
 ));
 
 const Fallback = () => <CircularProgress size="100%" />;

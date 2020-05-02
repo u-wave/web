@@ -35,7 +35,7 @@ const mapDispatchToProps = {
 const enhance = connect(mapStateToProps, mapDispatchToProps);
 
 const SettingsManager = createLazyOverlay({
-  loader: () => import('../components/SettingsManager' /* webpackChunkName: "settings" */),
+  loader: () => import('../components/SettingsManager'),
   title: (t) => t('settings.title'),
 });
 

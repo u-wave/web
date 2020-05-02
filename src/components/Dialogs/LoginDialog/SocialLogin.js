@@ -4,7 +4,7 @@ import { useTranslator } from '@u-wave/react-translate';
 import { loginWithGoogle } from '../../../actions/LoginActionCreators';
 
 const GoogleButton = React.lazy(() => (
-  import('react-google-button' /* webpackChunkName: "googleButton" */)
+  import('react-google-button')
 ));
 const loadingGoogleButton = <div style={{ height: 50 }} />;
 

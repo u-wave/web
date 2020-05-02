@@ -9,7 +9,7 @@ import { showImportPanelSelector } from '../../selectors/importSelectors';
 import createLazyOverlay from '../../components/LazyOverlay';
 
 const PlaylistManager = createLazyOverlay({
-  loader: () => import('../components/PlaylistManager' /* webpackChunkName: "playlistsMobile" */),
+  loader: () => import('../components/PlaylistManager'),
   title: (t) => t('playlists.title'),
 });
 

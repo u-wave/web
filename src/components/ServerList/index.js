@@ -1,7 +1,7 @@
 import React from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-const ServerListContainer = React.lazy(() => import('@u-wave/react-server-list' /* webpackChunkName: "serverList" */)
+const ServerListContainer = React.lazy(() => import('@u-wave/react-server-list')
   .then(({ Container }) => ({ default: Container })));
 
 function ServerList(props) {
