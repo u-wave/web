@@ -29,21 +29,24 @@ function useStoreImplementation() {
     }
 
     setState(LOADING);
-    // This has a race condition :)
-    (async () => {
-      try {
-        const request = get('/search', {
-          qs: { query },
-        });
-        const results = await dispatch(request);
 
-        setCombinedResults(results);
-        setState(LOADED);
-      } catch {
-        setState(IDLE);
-      }
-    })();
+    // Maybe this can be pulled into a useFetch hook of some kind?
+    // eslint-disable-next-line compat/compat
+    const controller = new AbortController();
+    const request = get('/search', {
+      qs: { query },
+      signal: controller.signal,
+    });
+
+    dispatch(request).then((results) => {
+      setCombinedResults(results);
+      setState(LOADED);
+    }, () => {
+      setState(IDLE);
+    });
+
     return () => {
+      controller.abort();
       setState(IDLE);
     };
   }, [query, activeSource]);
