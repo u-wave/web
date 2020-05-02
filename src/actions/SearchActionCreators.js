@@ -35,7 +35,7 @@ export function search(sourceType, query) {
     },
     onComplete: ({ data }) => ({
       type: SEARCH_COMPLETE,
-      payload: { results: data },
+      payload: { results: { [sourceType]: data } },
     }),
     onError: (error) => ({
       type: SEARCH_COMPLETE,

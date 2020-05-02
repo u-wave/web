@@ -18,16 +18,20 @@ export const searchLoadingStateSelector = createSelector(
   (search) => search.loadingState,
 );
 
-const rawSearchResultsSelector = createSelector(
+const searchResultsCombinedSelector = createSelector(
   baseSearchSelector,
   (search) => search.results,
 );
 
 export const searchResultsSelector = createSelector(
-  rawSearchResultsSelector,
+  searchResultsCombinedSelector,
+  searchSourceTypeSelector,
   playlistsByIDSelector,
-  (results, playlists) => {
-    return results.map((result) => {
+  (results, sourceType, playlists) => {
+    if (!results[sourceType]) {
+      return results[sourceType];
+    }
+    return results[sourceType].map((result) => {
       if (!Array.isArray(result.inPlaylists)) {
         return result;
       }
