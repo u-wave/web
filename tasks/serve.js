@@ -118,7 +118,7 @@ function serve(done) {
 
     let webClient = (req, res, next) => next(new Error('Build not complete'));
     dev.waitUntilValid(() => {
-      webClient = createWebClient(null, {
+      webClient = createWebClient({
         apiUrl,
         socketUrl,
         emoji: emojione.emoji,
@@ -144,7 +144,7 @@ function serve(done) {
       done();
     });
   } else {
-    const webClient = createWebClient(null, {
+    const webClient = createWebClient({
       apiUrl,
       socketUrl,
       emoji: emojione.emoji,

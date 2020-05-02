@@ -9,6 +9,7 @@ function request(method, url, opts = {}) {
     onStart,
     onComplete,
     onError,
+    signal,
     ...requestOpts
   } = opts;
 
@@ -25,6 +26,7 @@ function request(method, url, opts = {}) {
       onStart,
       onComplete,
       onError,
+      signal,
       id: requestID,
     },
   };
