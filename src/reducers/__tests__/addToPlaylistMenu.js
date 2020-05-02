@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import createStore from '../../store/configureStore';
+import createStore from '../../redux/configureStore';
 import { addMediaMenu, closeAddMediaMenu } from '../../actions/PlaylistActionCreators';
 import * as s from '../../selectors/addToPlaylistMenuSelectors';
 
