@@ -1,28 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
 import BaseSearchBar from '../../SearchBar';
 import SourcePicker from './SourcePicker';
-import { search, setSource } from '../../../actions/SearchActionCreators';
-import { searchSourceTypeSelector } from '../../../selectors/searchSelectors';
-
-const { useCallback } = React;
+import { useMediaSearchStore } from '../../../stores/MediaSearchStore';
 
 function MediaSearchBar({ className }) {
-  const source = useSelector(searchSourceTypeSelector);
-  const dispatch = useDispatch();
-  const handleSubmit = useCallback((query) => {
-    dispatch(search(query));
-  }, []);
-  const handleSourceChange = useCallback((newSource) => {
-    dispatch(setSource(newSource));
-  }, []);
+  const {
+    activeSource,
+    search,
+    setSource,
+  } = useMediaSearchStore();
+
+  const handleSubmit = (query) => search(query);
+  const handleSourceChange = (newSource) => setSource(newSource);
 
   return (
     <BaseSearchBar className={className} onSubmit={handleSubmit} autoFocus>
       <SourcePicker
         className="SearchBar-source"
-        selected={source}
+        selected={activeSource}
         onChange={handleSourceChange}
       />
     </BaseSearchBar>
