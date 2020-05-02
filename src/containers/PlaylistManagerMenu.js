@@ -7,20 +7,14 @@ import {
   selectPlaylist,
 } from '../actions/PlaylistActionCreators';
 import { showImportPanel } from '../actions/ImportActionCreators';
-import {
-  showSearchResults,
-  deleteSearch,
-} from '../actions/SearchActionCreators';
+import { showSearchResults } from '../actions/SearchActionCreators';
 import {
   playlistsSelector,
   selectedPlaylistSelector,
 } from '../selectors/playlistSelectors';
-import {
-  searchQuerySelector,
-  showSearchResultsSelector,
-  searchResultsCountSelector,
-} from '../selectors/searchSelectors';
+import { showSearchResultsSelector } from '../selectors/searchSelectors';
 import { showImportPanelSelector } from '../selectors/importSelectors';
+import { useMediaSearchStore } from '../stores/MediaSearchStore';
 import PlaylistsMenu from '../components/PlaylistManager/Menu';
 
 const { useCallback } = React;
@@ -28,9 +22,8 @@ const { useCallback } = React;
 function PlaylistsMenuContainer({ className }) {
   const playlists = useSelector(playlistsSelector);
   const selected = useSelector(selectedPlaylistSelector);
-  const searchQuery = useSelector(searchQuerySelector);
+  const mediaSearch = useMediaSearchStore();
   const isShowSearchResults = useSelector(showSearchResultsSelector);
-  const searchResults = useSelector(searchResultsCountSelector);
   const isShowImportPanel = useSelector(showImportPanelSelector);
   const dispatch = useDispatch();
 
@@ -41,7 +34,9 @@ function PlaylistsMenuContainer({ className }) {
   const onCreatePlaylist = useCallback((name) => dispatch(createPlaylist(name)), []);
   const onSelectPlaylist = useCallback((id) => dispatch(selectPlaylist(id)), []);
   const onSelectSearchResults = useCallback(() => dispatch(showSearchResults()), []);
-  const onCloseSearchResults = useCallback(() => dispatch(deleteSearch()), []);
+  const onCloseSearchResults = useCallback(() => {
+    mediaSearch.search(null);
+  }, []);
   const onShowImportPanel = useCallback(() => dispatch(showImportPanel()), []);
 
   return (
@@ -49,9 +44,9 @@ function PlaylistsMenuContainer({ className }) {
       className={className}
       playlists={playlists}
       selected={selected}
-      searchQuery={searchQuery}
+      searchQuery={mediaSearch.query}
       showSearchResults={isShowSearchResults}
-      searchResults={searchResults}
+      searchResults={mediaSearch.resultsCount}
       showImportPanel={isShowImportPanel}
       onAddToPlaylist={onAddToPlaylist}
       onCreatePlaylist={onCreatePlaylist}

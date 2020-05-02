@@ -5,9 +5,14 @@ const byName = (a, b) => naturalCmp(a.name.toLowerCase(), b.name.toLowerCase());
 
 const baseSelector = (state) => state.playlists;
 
-export const playlistsSelector = createSelector(
+export const playlistsByIDSelector = createSelector(
   baseSelector,
-  (playlists) => Object.values(playlists.playlists).sort(byName),
+  (playlists) => playlists.playlists,
+);
+
+export const playlistsSelector = createSelector(
+  playlistsByIDSelector,
+  (playlists) => Object.values(playlists).sort(byName),
 );
 
 export const playlistItemsSelector = createSelector(
