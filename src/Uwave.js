@@ -6,7 +6,7 @@ import { StylesProvider } from '@material-ui/styles';
 import AppContainer from './containers/App';
 import { get as readSession } from './utils/Session';
 import createGenerateClassName from './utils/createGenerateClassName';
-import configureStore from './store/configureStore';
+import configureStore from './redux/configureStore';
 import { initState, socketConnect, setSessionToken } from './actions/LoginActionCreators';
 import { loadCurrentLanguage } from './actions/LocaleActionCreators';
 // Register default chat commands.

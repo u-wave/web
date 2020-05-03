@@ -1,62 +1,19 @@
 import {
   SHOW_IMPORT_PANEL,
   SELECT_PLAYLIST,
-  SET_SEARCH_SOURCE,
   SHOW_SEARCH_RESULTS,
-  SEARCH_START,
-  SEARCH_COMPLETE,
-  SEARCH_DELETE,
 } from '../constants/ActionTypes';
-import { IDLE, LOADING, LOADED } from '../constants/LoadingStates';
 
-const initialState = {
-  sourceType: 'youtube',
-  query: null,
-  showResults: false,
-  results: {},
-  loadingState: IDLE,
-};
+const initialState = { showResults: false };
 
 export default function reduce(state = initialState, action = {}) {
-  const { type, payload } = action;
+  const { type } = action;
   switch (type) {
     case SHOW_SEARCH_RESULTS:
-      return {
-        ...state,
-        showResults: true,
-      };
-    case SEARCH_START:
-      return {
-        ...state,
-        query: payload.query,
-        results: {},
-        loadingState: LOADING,
-      };
-    case SEARCH_COMPLETE:
-      return {
-        ...state,
-        results: payload.results,
-        loadingState: LOADED,
-      };
-    case SET_SEARCH_SOURCE:
-      return {
-        ...state,
-        sourceType: payload.source,
-      };
-    case SEARCH_DELETE:
-      return {
-        ...state,
-        query: null,
-        loadingState: IDLE,
-        results: {},
-        showResults: false,
-      };
+      return { showResults: true };
     case SELECT_PLAYLIST:
     case SHOW_IMPORT_PANEL:
-      return {
-        ...state,
-        showResults: false,
-      };
+      return { showResults: false };
     default:
       return state;
   }

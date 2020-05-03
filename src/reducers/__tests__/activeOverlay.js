@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { openOverlay, closeAll, toggleOverlay } from '../../actions/OverlayActionCreators';
-import createStore from '../../store/configureStore';
+import createStore from '../../redux/configureStore';
 
 describe('reducers/activeOverlay', () => {
   it('should not respond to unrelated actions', () => {

@@ -15,7 +15,7 @@ The Redux action descriptions are created by the functions in the
 [constants/actionTypes/](./constants/actionTypes/) folder.
 
 The Redux reducer functions can be found in the [reducers/](./reducers/) folder.
-The Redux store creator and custom store enhancers are in the [store/](./store/)
+The Redux store creator and custom store enhancers are in the [redux/](./redux/)
 directory. Data can be extracted from the Redux store state (by components, or
 action creators) using selector functions. Selector functions exist in the
 [selectors/](./selectors/) directory.
