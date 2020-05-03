@@ -1,16 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
+import { useSelector, useDispatch } from 'react-redux';
 import { ThemeProvider } from '@material-ui/styles';
 import { Provider as BusProvider } from 'react-bus';
 import { TranslateProvider } from '@u-wave/react-translate';
-import { Mobile, Desktop } from '../components/Responsive';
+import useMediaQuery from 'use-mediaquery';
 import { closeAll } from '../actions/OverlayActionCreators';
-import {
-  settingsSelector,
-  themeSelector,
-} from '../selectors/settingSelectors';
+import { settingsSelector, themeSelector } from '../selectors/settingSelectors';
 import { translatorSelector } from '../selectors/localeSelectors';
 import { isConnectedSelector } from '../selectors/serverSelectors';
 import DesktopApp from '../components/App';
@@ -19,27 +15,16 @@ import FatalError from '../components/FatalError';
 import UwaveContext from '../context/UwaveContext';
 import ClockContext from '../context/ClockContext';
 import MediaSourceContext from '../context/MediaSourceContext';
+import { AllStoresProvider } from '../stores';
 
-const mapStateToProps = createStructuredSelector({
-  activeOverlay: (state) => state.activeOverlay,
-  isConnected: isConnectedSelector,
-  settings: settingsSelector,
-  theme: themeSelector,
-  translator: translatorSelector,
-});
+const {
+  useCallback,
+  useEffect,
+} = React;
 
-const mapDispatchToProps = {
-  onCloseOverlay: closeAll,
-};
-
-const enhance = connect(mapStateToProps, mapDispatchToProps);
-
-class AppContainer extends React.Component {
+class ErrorWrapper extends React.Component {
   static propTypes = {
-    mediaSources: PropTypes.object.isRequired,
-    uwave: PropTypes.object,
-    theme: PropTypes.object,
-    translator: PropTypes.object.isRequired,
+    children: PropTypes.element.isRequired,
   };
 
   constructor(props) {
@@ -50,76 +35,77 @@ class AppContainer extends React.Component {
     };
   }
 
-  componentDidMount() {
-    this.applyThemeProperties();
+  static getDerivedStateFromError(error) {
+    return { error };
   }
 
-  componentDidUpdate(prevProps) {
-    const { theme } = this.props;
+  render() {
+    const { children } = this.props;
+    const { error } = this.state;
 
-    if (theme !== prevProps.theme) {
-      this.applyThemeProperties();
+    if (error) {
+      return (
+        <FatalError error={error} />
+      );
     }
-  }
 
-  componentDidCatch(error) {
-    this.setState({ error });
+    return children;
   }
+}
 
-  applyThemeProperties() {
-    const { theme } = this.props;
+function AppContainer({ uwave, mediaSources }) {
+  const isMobile = useMediaQuery('(max-width: 767px)');
+  const activeOverlay = useSelector((state) => state.activeOverlay);
+  const isConnected = useSelector(isConnectedSelector);
+  const settings = useSelector(settingsSelector);
+  const theme = useSelector(themeSelector);
+  const translator = useSelector(translatorSelector);
+  const dispatch = useDispatch();
+  const onCloseOverlay = useCallback(() => dispatch(closeAll()));
+
+  useEffect(() => {
     const root = document.body;
 
     Object.keys(theme.cssProperties).forEach((prop) => {
       root.style.setProperty(prop, theme.cssProperties[prop]);
     });
-  }
+  }, [theme]);
 
-  renderApp = () => (
-    <>
-      <Mobile>
-        <MobileApp {...this.props} />
-      </Mobile>
-      <Desktop>
-        <DesktopApp {...this.props} />
-      </Desktop>
-    </>
-  );
+  const props = {
+    activeOverlay,
+    isConnected,
+    settings,
+    onCloseOverlay,
+  };
 
-  render() {
-    const {
-      uwave,
-      mediaSources,
-      theme,
-      translator,
-    } = this.props;
-    const { error } = this.state;
+  const app = isMobile
+    ? <MobileApp {...props} />
+    : <DesktopApp {...props} />;
 
-    if (error) {
-      // Let's hope the ThemeProvider works at least...
-      return (
-        <ThemeProvider theme={theme}>
-          <FatalError error={error} />
-        </ThemeProvider>
-      );
-    }
-
-    return (
-      <ThemeProvider theme={theme}>
+  return (
+    <ThemeProvider theme={theme}>
+      <ErrorWrapper>
         <TranslateProvider translator={translator}>
           <BusProvider>
             <ClockContext.Provider>
               <UwaveContext.Provider value={uwave}>
                 <MediaSourceContext.Provider mediaSources={mediaSources}>
-                  {this.renderApp()}
+                  <AllStoresProvider>
+                    {app}
+                  </AllStoresProvider>
                 </MediaSourceContext.Provider>
               </UwaveContext.Provider>
             </ClockContext.Provider>
           </BusProvider>
         </TranslateProvider>
-      </ThemeProvider>
-    );
-  }
+      </ErrorWrapper>
+    </ThemeProvider>
+  );
 }
 
-export default enhance(AppContainer);
+AppContainer.propTypes = {
+  mediaSources: PropTypes.object.isRequired,
+  uwave: PropTypes.object,
+};
+
+export default AppContainer;

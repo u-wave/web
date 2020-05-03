@@ -1,22 +1,15 @@
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { openPreviewMediaDialog } from '../actions/DialogActionCreators';
 import { addMediaMenu } from '../actions/PlaylistActionCreators';
-
-import {
-  searchQuerySelector,
-  searchResultsSelector,
-  searchLoadingStateSelector,
-} from '../selectors/searchSelectors';
+import { useMediaSearchStore } from '../stores/MediaSearchStore';
+import { playlistsByIDSelector } from '../selectors/playlistSelectors';
 import SearchResults from '../components/PlaylistManager/SearchResults';
 
-const mapStateToProps = createStructuredSelector({
-  query: searchQuerySelector,
-  results: searchResultsSelector,
-  loadingState: searchLoadingStateSelector,
-});
+const {
+  useCallback,
+  useMemo,
+} = React;
 
 const selectionOrOne = (media, selection) => {
   if (selection.isSelected(media)) {
@@ -25,13 +18,52 @@ const selectionOrOne = (media, selection) => {
   return [media];
 };
 
-const onOpenAddMediaMenu = (position, media, selection) => (
-  addMediaMenu(selectionOrOne(media, selection), position)
-);
+function SearchResultsContainer() {
+  const {
+    query,
+    results,
+    state,
+  } = useMediaSearchStore();
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  onOpenAddMediaMenu,
-  onOpenPreviewMediaDialog: openPreviewMediaDialog,
-}, dispatch);
+  const playlistsByID = useSelector(playlistsByIDSelector);
+  const dispatch = useDispatch();
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchResults);
+  const resultsWithPlaylists = useMemo(() => {
+    if (!results) {
+      return [];
+    }
+    return results.map((result) => {
+      if (!Array.isArray(result.inPlaylists)) {
+        return result;
+      }
+      return {
+        ...result,
+        inPlaylists: result.inPlaylists
+          .map((id) => playlistsByID[id])
+          // If we don't know about a playlist for some reason, ignore it.
+          // That would be a bug, but not showing it is better than crashing!
+          .filter(Boolean),
+      };
+    });
+  }, [results, playlistsByID]);
+
+  const onOpenAddMediaMenu = useCallback((position, media, selection) => (
+    dispatch(addMediaMenu(selectionOrOne(media, selection), position))
+  ), []);
+  const onOpenPreviewMediaDialog = useCallback(
+    (media) => dispatch(openPreviewMediaDialog(media)),
+    [],
+  );
+
+  return (
+    <SearchResults
+      query={query}
+      results={resultsWithPlaylists}
+      loadingState={state}
+      onOpenAddMediaMenu={onOpenAddMediaMenu}
+      onOpenPreviewMediaDialog={onOpenPreviewMediaDialog}
+    />
+  );
+}
+
+export default SearchResultsContainer;

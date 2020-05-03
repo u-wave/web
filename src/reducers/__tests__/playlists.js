@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import fetch from 'fetch-mock';
-import createStore from '../../store/configureStore';
+import createStore from '../../redux/configureStore';
 import * as a from '../../actions/PlaylistActionCreators';
 import { favoriteMediaComplete } from '../../actions/VoteActionCreators';
 import * as s from '../../selectors/playlistSelectors';
@@ -53,11 +53,11 @@ describe('reducers/playlists', () => {
 
       dispatch(a.selectPlaylist(1));
       expect(s.selectedPlaylistIDSelector(getState())).to.equal(1);
-      expect(s.selectedPlaylistSelector(getState())).to.have.property('selected', true);
+      expect(s.selectedPlaylistSelector(getState())).to.have.property('_id', 1);
 
       dispatch(a.selectPlaylist(3));
       expect(s.selectedPlaylistIDSelector(getState())).to.equal(3);
-      expect(s.selectedPlaylistSelector(getState())).to.have.property('selected', true);
+      expect(s.selectedPlaylistSelector(getState())).to.have.property('_id', 3);
 
       dispatch(a.selectPlaylist(null));
       expect(s.selectedPlaylistIDSelector(getState())).to.be.null;
