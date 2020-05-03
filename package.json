@@ -23,6 +23,7 @@
     "@u-wave/react-translate": "^1.1.1",
     "@u-wave/react-youtube": "^0.7.0",
     "@u-wave/translate": "^1.0.0",
+    "abortcontroller-polyfill": "^1.4.0",
     "array-includes": "^3.1.1",
     "array.prototype.find": "^2.1.1",
     "array.prototype.findindex": "^2.1.0",

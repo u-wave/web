@@ -2,6 +2,7 @@
 // (newer & better XMLHttpRequest).
 import 'lie/polyfill';
 import 'whatwg-fetch';
+import 'abortcontroller-polyfill/src/polyfill';
 import promiseFinally from 'promise.prototype.finally';
 import arrayFind from 'array.prototype.find';
 import arrayFindIndex from 'array.prototype.findindex';
