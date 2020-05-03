@@ -1,4 +1,5 @@
 const path = require('path');
+const pkg = require('../../package.json');
 
 // List of dependency paths that need to be compiled.
 const es2015Deps = [
@@ -34,6 +35,10 @@ module.exports = function compileDependencies() {
         compiler: {
           noRuntime: true,
         },
+      }],
+      ['@babel/plugin-transform-runtime', {
+        version: pkg.dependencies['@babel/runtime'],
+        corejs: false,
       }],
     ],
   };
