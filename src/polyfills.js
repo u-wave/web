@@ -18,6 +18,7 @@ arrayFind.shim();
 arrayFindIndex.shim();
 arrayIncludes.shim();
 objectAssign.shim();
+objectIs.shim();
 objectValues.shim();
 numberIsNaN.shim();
 
@@ -26,11 +27,6 @@ if (!String.prototype.includes) {
   String.prototype.includes = function includes(substring) {
     return this.indexOf(substring) !== -1;
   };
-}
-
-if (!Object.is) {
-  // eslint-disable-next-line no-extend-native
-  Object.is = objectIs;
 }
 
 if (!Number.isFinite) {
