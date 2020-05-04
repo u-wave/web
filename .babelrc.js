@@ -14,20 +14,19 @@ module.exports = (api, envOverride) => {
   const targetIsLegacy = api.caller(caller => caller && caller.output && caller.output.ecmaVersion === 5);
   const targetIsModern = !targetIsLegacy;
 
-  const targets = {};
+  let targets = {};
+  let bugfixes = false;
   if (callerIsNode) {
-    targets.node = 'current';
-    targets.browsers = '';
+    targets = { node: 'current', browsers: '' };
   }
 
   if (targetIsNode) {
-    targets.node = '10.0.0';
-    targets.browsers = '';
+    targets = { node: '10.0.0', browsers: '' };
   }
 
   if (targetIsModern) {
-    targets.esmodules = true;
-    targets.browsers = '';
+    targets = { esmodules: true, browsers: '' };
+    bugfixes = true;
   }
 
   const preset = {
@@ -35,7 +34,7 @@ module.exports = (api, envOverride) => {
       ['@babel/preset-env', {
         modules: false,
         targets,
-        bugfixes: true,
+        bugfixes,
       }],
       ['@babel/preset-react', {
         development: env === 'development',
