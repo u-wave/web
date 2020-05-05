@@ -4,6 +4,7 @@ const escapeStringRegExp = require('escape-string-regexp');
 const { DefinePlugin, HotModuleReplacementPlugin } = require('webpack');
 const WebpackBar = require('webpackbar');
 const ExtractCssPlugin = require('mini-css-extract-plugin');
+const OptimizeCssPlugin = require('optimize-css-assets-webpack-plugin');
 const HtmlPlugin = require('html-webpack-plugin');
 // const HtmlInlineRuntimePlugin = require('html-webpack-inline-runtime-plugin');
 const SriPlugin = require('webpack-subresource-integrity');
@@ -171,6 +172,7 @@ function getConfig(env, {
         filename: 'static/[name]_[contenthash:7].css',
         chunkFilename: 'static/[name]_[contenthash:7].css',
       }),
+      new OptimizeCssPlugin(),
       new SriPlugin({
         hashFuncNames: ['sha512'],
       }),
