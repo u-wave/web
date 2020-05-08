@@ -1,4 +1,3 @@
-import createDebug from 'debug';
 import {
   INIT_STATE,
   SOCKET_CONNECT,
@@ -21,8 +20,6 @@ import { setPlaylists, loadPlaylist } from './PlaylistActionCreators';
 import { syncTimestamps } from './TickerActionCreators';
 import { closeLoginDialog } from './DialogActionCreators';
 import { tokenSelector } from '../selectors/userSelectors';
-
-const debug = createDebug('uwave:actions:login');
 
 export function socketConnect() {
   return { type: SOCKET_CONNECT };
@@ -124,7 +121,6 @@ export function register({
     onStart: () => ({ type: REGISTER_START }),
     onComplete: (res) => (dispatch) => {
       const user = res.data;
-      debug('registered', user);
       dispatch({
         type: REGISTER_COMPLETE,
         payload: { user },
