@@ -1,109 +1,85 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate } from '@u-wave/react-translate';
+import { useTranslator } from '@u-wave/react-translate';
 import debounce from 'lodash/debounce';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import FilterIcon from '@material-ui/icons/Search';
 
-const enhance = translate();
+const {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} = React;
 
-class PlaylistFilter extends React.Component {
-  static propTypes = {
-    t: PropTypes.func.isRequired,
-    onFilter: PropTypes.func.isRequired,
-  };
+function PlaylistFilter({ onFilter }) {
+  const { t } = useTranslator();
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState('');
+  const inputRef = useRef(null);
 
-  constructor(props) {
-    super(props);
+  const debouncedOnFilter = useMemo(() => debounce(onFilter, 200), [onFilter]);
 
-    this.state = {
-      isOpen: false,
-      value: '',
-    };
-  }
+  const handleClick = useCallback(() => {
+    setOpen(!open);
+    setValue('');
+  }, [open]);
 
-  onFilter = debounce((value) => {
-    const { onFilter } = this.props;
-
-    onFilter(value);
-  }, 200);
-
-  handleClick = () => {
-    const { isOpen: shouldClose } = this.state;
-    const shouldOpen = !shouldClose;
-
-    if (shouldClose) {
-      this.clearFilter();
-    }
-
-    this.setState({
-      isOpen: shouldOpen,
-      value: '',
-    }, () => {
-      if (shouldOpen) {
-        this.input.focus();
-      }
-    });
-  };
-
-  handleKeyDown = (event) => {
+  const handleKeyDown = useCallback((event) => {
     if (event.key === 'Escape') {
-      this.setState(({ value }) => {
-        // Clear input value if there is text.
-        if (value) return { value: '' };
-        // else close the input.
-        return { value: '', isOpen: false };
-      });
+      // If there is still text, clear it. The next time the user presses Escape, close the input.
+      if (value !== '') {
+        setValue('');
+      } else {
+        setOpen(false);
+      }
     }
-  };
+  }, [value]);
 
-  handleChange = (event) => {
-    const { value } = event.target;
+  const handleChange = useCallback((event) => {
+    setValue(event.target.value);
+  }, []);
 
-    this.setState({ value });
-    this.onFilter(value);
-  };
-
-  refInput = (input) => {
-    this.input = input;
-  };
-
-  clearFilter() {
-    const { onFilter } = this.props;
-    const { value } = this.state;
-
-    if (value !== '') {
-      onFilter('');
+  // Focus the input element when it appears.
+  useEffect(() => {
+    if (open) {
+      inputRef.current.focus();
     }
-  }
+  }, [open]);
 
-  render() {
-    const { t } = this.props;
-    const { isOpen, value } = this.state;
+  // Filter the playlist when the value changes.
+  useEffect(() => {
+    debouncedOnFilter(value);
+    return debouncedOnFilter.cancel;
+  }, [value]);
 
-    return (
-      <div className="PlaylistMediaFilter">
-        <Tooltip title={t('playlists.filter')} placement="top">
-          <IconButton
-            className="PlaylistMeta-iconButton"
-            onClick={this.handleClick}
-          >
-            <FilterIcon htmlColor={isOpen ? '#fff' : null} />
-          </IconButton>
-        </Tooltip>
-        <input
-          type="text"
-          ref={this.refInput}
-          className={cx('PlaylistMediaFilter-input', isOpen && 'is-open')}
-          value={value}
-          onKeyDown={this.handleKeyDown}
-          onChange={this.handleChange}
-        />
-      </div>
-    );
-  }
+  return (
+    <div className="PlaylistMediaFilter">
+      <Tooltip title={t('playlists.filter')} placement="top">
+        <IconButton
+          className="PlaylistMeta-iconButton"
+          onClick={handleClick}
+        >
+          <FilterIcon htmlColor={open ? '#fff' : null} />
+        </IconButton>
+      </Tooltip>
+      <input
+        type="text"
+        ref={inputRef}
+        className={cx('PlaylistMediaFilter-input', open && 'is-open')}
+        value={value}
+        onKeyDown={handleKeyDown}
+        onChange={handleChange}
+      />
+    </div>
+  );
 }
 
-export default enhance(PlaylistFilter);
+PlaylistFilter.propTypes = {
+  onFilter: PropTypes.func.isRequired,
+};
+
+export default PlaylistFilter;
