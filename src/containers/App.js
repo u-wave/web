@@ -15,6 +15,7 @@ import FatalError from '../components/FatalError';
 import UwaveContext from '../context/UwaveContext';
 import ClockContext from '../context/ClockContext';
 import MediaSourceContext from '../context/MediaSourceContext';
+import { AllStoresProvider } from '../stores';
 
 const {
   useCallback,
@@ -89,7 +90,9 @@ function AppContainer({ uwave, mediaSources }) {
             <ClockContext.Provider>
               <UwaveContext.Provider value={uwave}>
                 <MediaSourceContext.Provider mediaSources={mediaSources}>
-                  {app}
+                  <AllStoresProvider>
+                    {app}
+                  </AllStoresProvider>
                 </MediaSourceContext.Provider>
               </UwaveContext.Provider>
             </ClockContext.Provider>

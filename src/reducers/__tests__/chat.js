@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import sinon from 'sinon';
-import createStore from '../../store/configureStore';
+import createStore from '../../redux/configureStore';
 import { setUsers } from '../../actions/UserActionCreators';
 import * as a from '../../actions/ChatActionCreators';
 import * as s from '../../selectors/chatSelectors';

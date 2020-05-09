@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { LOGIN_COMPLETE } from '../../constants/ActionTypes';
-import createStore from '../../store/configureStore';
+import createStore from '../../redux/configureStore';
 import * as s from '../../selectors/userSelectors';
 import { loginComplete, setSessionToken } from '../../actions/LoginActionCreators';
 import { setUsers } from '../../actions/UserActionCreators';

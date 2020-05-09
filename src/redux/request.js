@@ -69,6 +69,7 @@ export default function middleware(middlewareOptions = {}) {
     } = action.payload;
     const {
       id,
+      signal,
       onStart,
       onComplete,
       onError,
@@ -99,6 +100,10 @@ export default function middleware(middlewareOptions = {}) {
 
     if (method !== 'get') {
       requestOptions.body = JSON.stringify(data);
+    }
+
+    if (signal) {
+      requestOptions.signal = signal;
     }
 
     if (onStart) {
