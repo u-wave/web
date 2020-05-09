@@ -1,5 +1,5 @@
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { setVolume, mute, unmute } from '../actions/PlaybackActionCreators';
 import { toggleRoomHistory, toggleAbout } from '../actions/OverlayActionCreators';
 import {
@@ -11,23 +11,37 @@ import {
 import { volumeSelector, isMutedSelector } from '../selectors/settingSelectors';
 import HeaderBar from '../components/HeaderBar';
 
-const mapStateToProps = createStructuredSelector({
-  mediaProgress: mediaProgressSelector,
-  mediaTimeRemaining: timeRemainingSelector,
-  media: mediaSelector,
-  dj: djSelector,
-  volume: volumeSelector,
-  muted: isMutedSelector,
-});
+function HeaderBarContainer(props) {
+  const mediaProgress = useSelector(mediaProgressSelector);
+  const mediaTimeRemaining = useSelector(timeRemainingSelector);
+  const media = useSelector(mediaSelector);
+  const dj = useSelector(djSelector);
+  const volume = useSelector(volumeSelector);
+  const muted = useSelector(isMutedSelector);
+  const dispatch = useDispatch();
 
-const mapDispatchToProps = {
-  onVolumeChange: setVolume,
-  onVolumeMute: mute,
-  onVolumeUnmute: unmute,
-  onToggleRoomHistory: toggleRoomHistory,
-  onToggleAboutOverlay: toggleAbout,
-};
+  const onVolumeChange = (newVolume) => dispatch(setVolume(newVolume));
+  const onVolumeMute = () => dispatch(mute());
+  const onVolumeUnmute = () => dispatch(unmute());
+  const onToggleRoomHistory = () => dispatch(toggleRoomHistory());
+  const onToggleAboutOverlay = () => dispatch(toggleAbout());
 
-const enhance = connect(mapStateToProps, mapDispatchToProps);
+  return (
+    <HeaderBar
+      {...props}
+      mediaProgress={mediaProgress}
+      mediaTimeRemaining={mediaTimeRemaining}
+      media={media}
+      dj={dj}
+      volume={volume}
+      muted={muted}
+      onVolumeChange={onVolumeChange}
+      onVolumeMute={onVolumeMute}
+      onVolumeUnmute={onVolumeUnmute}
+      onToggleRoomHistory={onToggleRoomHistory}
+      onToggleAboutOverlay={onToggleAboutOverlay}
+    />
+  );
+}
 
-export default enhance(HeaderBar);
+export default HeaderBarContainer;
