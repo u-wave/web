@@ -89,11 +89,8 @@ function SourcePicker({
 
 SourcePicker.propTypes = {
   className: PropTypes.string,
-  selected: PropTypes.string,
-  onChange: PropTypes.func,
-
-  getMediaSource: PropTypes.func.isRequired,
-  getAllMediaSources: PropTypes.func.isRequired,
+  selected: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
 };
 
 export default SourcePicker;
