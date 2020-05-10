@@ -1,14 +1,11 @@
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { skipSelf } from '../actions/BoothActionCreators';
 import { openLoginDialog, openRegisterDialog } from '../actions/DialogActionCreators';
 import { skipCurrentDJ as modSkipCurrentDJ } from '../actions/ModerationActionCreators';
 import { togglePlaylistManager, toggleSettings } from '../actions/OverlayActionCreators';
 import { joinWaitlist, leaveWaitlist } from '../actions/WaitlistActionCreators';
 import { openFavoriteMenu, doUpvote, doDownvote } from '../actions/VoteActionCreators';
-
 import {
   djSelector,
   isCurrentDJSelector,
@@ -26,37 +23,64 @@ import {
   isLockedSelector,
 } from '../selectors/waitlistSelectors';
 import { currentVoteStatsSelector } from '../selectors/voteSelectors';
-
 import FooterBar from '../components/FooterBar';
 
-const mapStateToProps = createStructuredSelector({
-  baseEta: baseEtaSelector,
-  mediaEndTime: endTimeSelector,
-  playlist: activePlaylistSelector,
-  nextMedia: nextMediaSelector,
-  user: currentUserSelector,
-  userInWaitlist: userInWaitlistSelector,
-  userIsDJ: isCurrentDJSelector,
-  currentDJ: djSelector,
-  showSkip: canSkipSelector,
-  waitlistIsLocked: isLockedSelector,
-  voteStats: currentVoteStatsSelector,
-});
+const {
+  useCallback,
+} = React;
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    joinWaitlist,
-    leaveWaitlist,
-    openLoginDialog,
-    openRegisterDialog,
-    togglePlaylistManager,
-    toggleSettings,
-    onSkipTurn: skipSelf,
-    onModSkip: modSkipCurrentDJ,
-    onFavorite: openFavoriteMenu,
-    onUpvote: doUpvote,
-    onDownvote: doDownvote,
-  }, dispatch);
+function FooterBarContainer() {
+  const baseEta = useSelector(baseEtaSelector);
+  const mediaEndTime = useSelector(endTimeSelector);
+  const playlist = useSelector(activePlaylistSelector);
+  const nextMedia = useSelector(nextMediaSelector);
+  const user = useSelector(currentUserSelector);
+  const userInWaitlist = useSelector(userInWaitlistSelector);
+  const userIsDJ = useSelector(isCurrentDJSelector);
+  const currentDJ = useSelector(djSelector);
+  const showSkip = useSelector(canSkipSelector);
+  const waitlistIsLocked = useSelector(isLockedSelector);
+  const voteStats = useSelector(currentVoteStatsSelector);
+
+  const dispatch = useDispatch();
+  const onJoinWaitlist = useCallback(() => dispatch(joinWaitlist()), []);
+  const onLeaveWaitlist = useCallback(() => dispatch(leaveWaitlist()), []);
+  const onOpenLoginDialog = useCallback(() => dispatch(openLoginDialog()), []);
+  const onOpenRegisterDialog = useCallback(() => dispatch(openRegisterDialog()), []);
+  const onTogglePlaylistManager = useCallback(() => dispatch(togglePlaylistManager()), []);
+  const onToggleSettings = useCallback(() => dispatch(toggleSettings()), []);
+  const onSkipTurn = useCallback(() => dispatch(skipSelf()), []);
+  const onModSkip = useCallback(() => dispatch(modSkipCurrentDJ()), []);
+  const onFavorite = useCallback(() => dispatch(openFavoriteMenu()), []);
+  const onUpvote = useCallback(() => dispatch(doUpvote()), []);
+  const onDownvote = useCallback(() => dispatch(doDownvote()), []);
+
+  return (
+    <FooterBar
+      baseEta={baseEta}
+      mediaEndTime={mediaEndTime}
+      playlist={playlist}
+      nextMedia={nextMedia}
+      user={user}
+      userInWaitlist={userInWaitlist}
+      userIsDJ={userIsDJ}
+      currentDJ={currentDJ}
+      showSkip={showSkip}
+      waitlistIsLocked={waitlistIsLocked}
+      voteStats={voteStats}
+      onJoinWaitlist={onJoinWaitlist}
+      onLeaveWaitlist={onLeaveWaitlist}
+      onOpenLoginDialog={onOpenLoginDialog}
+      onOpenRegisterDialog={onOpenRegisterDialog}
+      onTogglePlaylistManager={onTogglePlaylistManager}
+      onToggleSettings={onToggleSettings}
+      onSkipTurn={onSkipTurn}
+      onModSkip={onModSkip}
+      onFavorite={onFavorite}
+      onUpvote={onUpvote}
+      onDownvote={onDownvote}
+    />
+  );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(FooterBar);
+export default FooterBarContainer;

@@ -28,12 +28,12 @@ class FooterBar extends React.Component {
     waitlistIsLocked: PropTypes.bool.isRequired,
     voteStats: PropTypes.object,
 
-    openLoginDialog: PropTypes.func,
-    openRegisterDialog: PropTypes.func,
-    togglePlaylistManager: PropTypes.func,
-    toggleSettings: PropTypes.func,
-    joinWaitlist: PropTypes.func,
-    leaveWaitlist: PropTypes.func,
+    onOpenLoginDialog: PropTypes.func,
+    onOpenRegisterDialog: PropTypes.func,
+    onTogglePlaylistManager: PropTypes.func,
+    onToggleSettings: PropTypes.func,
+    onJoinWaitlist: PropTypes.func,
+    onLeaveWaitlist: PropTypes.func,
     onSkipTurn: PropTypes.func.isRequired,
     onModSkip: PropTypes.func.isRequired,
     onFavorite: PropTypes.func,
@@ -56,24 +56,24 @@ class FooterBar extends React.Component {
   }
 
   handleJoinWaitlist = () => {
-    const { user, joinWaitlist } = this.props;
+    const { user, onJoinWaitlist } = this.props;
 
     if (user) {
-      return joinWaitlist(user);
+      return onJoinWaitlist(user);
     }
     return null;
   }
 
   handleLeaveWaitlist = () => {
     const {
-      user, userIsDJ, onSkipTurn, leaveWaitlist,
+      user, userIsDJ, onSkipTurn, onLeaveWaitlist,
     } = this.props;
 
     if (userIsDJ) {
       return onSkipTurn({ remove: true });
     }
     if (user) {
-      return leaveWaitlist(user);
+      return onLeaveWaitlist(user);
     }
     return null;
   }
@@ -81,8 +81,8 @@ class FooterBar extends React.Component {
   render() {
     const {
       t,
-      openLoginDialog, openRegisterDialog,
-      togglePlaylistManager, toggleSettings,
+      onOpenLoginDialog, onOpenRegisterDialog,
+      onTogglePlaylistManager, onToggleSettings,
       onFavorite, onUpvote, onDownvote,
     } = this.props;
     const {
@@ -101,13 +101,13 @@ class FooterBar extends React.Component {
           <div className="FooterBar-user">
             <UserInfo
               user={user}
-              onClick={toggleSettings}
+              onClick={onToggleSettings}
             />
           </div>
           <button
             type="button"
             className="FooterBar-next"
-            onClick={togglePlaylistManager}
+            onClick={onTogglePlaylistManager}
           >
             <NextMedia
               playlist={playlist}
@@ -154,7 +154,7 @@ class FooterBar extends React.Component {
 
     return (
       <div className={cx('FooterBar', className)}>
-        <SettingsButton onClick={toggleSettings} />
+        <SettingsButton onClick={onToggleSettings} />
         <div className="FooterBar-guest">
           {t('login.message')}
         </div>
@@ -162,7 +162,7 @@ class FooterBar extends React.Component {
           variant="contained"
           color="primary"
           className="FooterAuthButton FooterAuthButton--login"
-          onClick={openLoginDialog}
+          onClick={onOpenLoginDialog}
         >
           {t('login.login').toUpperCase()}
         </Button>
@@ -170,7 +170,7 @@ class FooterBar extends React.Component {
           variant="contained"
           color="primary"
           className="FooterAuthButton FooterAuthButton--register"
-          onClick={openRegisterDialog}
+          onClick={onOpenRegisterDialog}
         >
           {t('login.register').toUpperCase()}
         </Button>
