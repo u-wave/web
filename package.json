@@ -5,9 +5,6 @@
   "author": "Renée Kooi <renee@kooi.me>",
   "license": "MIT",
   "repository": "u-wave/web",
-  "main": "lib/Uwave.js",
-  "jsnext:main": "es/Uwave.js",
-  "module": "es/Uwave.js",
   "engines": {
     "node": ">= 10",
     "npm": ">= 5"
@@ -125,10 +122,6 @@
     "fetch-mock": "^9.0.0",
     "file-loader": "^6.0.0",
     "gulp": "^4.0.0",
-    "gulp-babel": "8.0.0",
-    "gulp-newer": "^1.4.0",
-    "gulp-sourcemaps": "^2.6.4",
-    "gulp-yaml": "^2.0.2",
     "html-loader": "^1.0.0",
     "html-webpack-plugin": "^4.0.2",
     "http-proxy-middleware": "^1.0.0",
@@ -178,7 +171,6 @@
     "dev": "cross-env DEBUG=uwave:* gulp start",
     "dev:no-api": "npm run dev -- --no-api",
     "clean": "gulp clean",
-    "build": "gulp build",
     "serve": "gulp serve",
     "start": "gulp start",
     "prerelease": "npm run clean && npm test && npm run prod",
