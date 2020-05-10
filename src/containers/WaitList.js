@@ -1,7 +1,5 @@
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   moveWaitlistUser,
   removeWaitlistUser,
@@ -10,14 +8,30 @@ import { waitlistUsersSelector } from '../selectors/waitlistSelectors';
 import { createRoleCheckSelector } from '../selectors/userSelectors';
 import WaitList from '../components/WaitList';
 
-const mapStateToProps = createStructuredSelector({
-  users: waitlistUsersSelector,
-  canMoveUsers: createRoleCheckSelector('waitlist.move'),
-});
+const {
+  useCallback,
+} = React;
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  onMoveUser: moveWaitlistUser,
-  onRemoveUser: removeWaitlistUser,
-}, dispatch);
+const canMoveUsersSelector = createRoleCheckSelector('waitlist.move');
 
-export default connect(mapStateToProps, mapDispatchToProps)(WaitList);
+function WaitListContainer() {
+  const users = useSelector(waitlistUsersSelector);
+  const canMoveUsers = useSelector(canMoveUsersSelector);
+  const dispatch = useDispatch();
+  const onMoveUser = useCallback(
+    (user, position) => dispatch(moveWaitlistUser(user, position)),
+    [],
+  );
+  const onRemoveUser = useCallback((user) => dispatch(removeWaitlistUser(user)), []);
+
+  return (
+    <WaitList
+      users={users}
+      canMoveUsers={canMoveUsers}
+      onMoveUser={onMoveUser}
+      onRemoveUser={onRemoveUser}
+    />
+  );
+}
+
+export default WaitListContainer;
