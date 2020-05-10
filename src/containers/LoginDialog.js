@@ -1,17 +1,33 @@
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { resetPassword, login, register } from '../actions/LoginActionCreators';
 import { openResetPasswordDialog, closeLoginDialog } from '../actions/DialogActionCreators';
-
 import { loginDialogSelector } from '../selectors/dialogSelectors';
 import LoginDialog from '../components/Dialogs/LoginDialog';
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  onOpenResetPasswordDialog: openResetPasswordDialog,
-  onResetPassword: resetPassword,
-  onLogin: login,
-  onRegister: register,
-  onCloseDialog: closeLoginDialog,
-}, dispatch);
+const {
+  useCallback,
+} = React;
 
-export default connect(loginDialogSelector, mapDispatchToProps)(LoginDialog);
+function LoginDialogContainer() {
+  const props = useSelector(loginDialogSelector);
+  const dispatch = useDispatch();
+  const onOpenResetPasswordDialog = useCallback(() => dispatch(openResetPasswordDialog()), []);
+  const onResetPassword = useCallback((email) => dispatch(resetPassword(email)), []);
+  const onLogin = useCallback((data) => dispatch(login(data)), []);
+  const onRegister = useCallback((data) => dispatch(register(data)), []);
+  const onCloseDialog = useCallback(() => dispatch(closeLoginDialog()), []);
+
+  return (
+    <LoginDialog
+      {...props}
+      onOpenResetPasswordDialog={onOpenResetPasswordDialog}
+      onResetPassword={onResetPassword}
+      onLogin={onLogin}
+      onRegister={onRegister}
+      onCloseDialog={onCloseDialog}
+    />
+  );
+}
+
+export default LoginDialogContainer;
