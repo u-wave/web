@@ -1,11 +1,14 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
+import { useSelector, useDispatch } from 'react-redux';
 import { openPreviewMediaDialog } from '../actions/DialogActionCreators';
 import { addMediaMenu } from '../actions/PlaylistActionCreators';
 import { roomHistoryWithVotesSelector } from '../selectors/roomHistorySelectors';
 import Overlay from '../components/Overlay';
 import createLazyOverlay from '../components/LazyOverlay';
+
+const {
+  useCallback,
+} = React;
 
 const selectionOrOne = (media, selection) => {
   // History entries store the played media on their `.media` property
@@ -14,20 +17,6 @@ const selectionOrOne = (media, selection) => {
   }
   return [media.media];
 };
-
-const mapStateToProps = createStructuredSelector({
-  media: roomHistoryWithVotesSelector,
-});
-
-const onOpenAddMediaMenu = (position, media, selection) => (
-  addMediaMenu(selectionOrOne(media, selection), position)
-);
-const mapDispatchToProps = {
-  onOpenAddMediaMenu,
-  onOpenPreviewMediaDialog: openPreviewMediaDialog,
-};
-
-const enhance = connect(mapStateToProps, mapDispatchToProps);
 
 function RoomHistoryOverlay(props) {
   return <Overlay {...props} direction="top" />;
@@ -39,4 +28,24 @@ const RoomHistory = createLazyOverlay({
   OverlayComponent: RoomHistoryOverlay,
 });
 
-export default enhance(RoomHistory);
+function RoomHistoryContainer() {
+  const history = useSelector(roomHistoryWithVotesSelector);
+  const dispatch = useDispatch();
+  const onOpenAddMediaMenu = useCallback((position, media, selection) => (
+    dispatch(addMediaMenu(selectionOrOne(media, selection), position))
+  ), []);
+  const onOpenPreviewMediaDialog = useCallback(
+    (media) => dispatch(openPreviewMediaDialog(media)),
+    [],
+  );
+
+  return (
+    <RoomHistory
+      media={history}
+      onOpenAddMediaMenu={onOpenAddMediaMenu}
+      onOpenPreviewMediaDialog={onOpenPreviewMediaDialog}
+    />
+  );
+}
+
+export default RoomHistoryContainer;
