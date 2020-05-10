@@ -4,7 +4,6 @@ const path = require('path');
 const { promisify } = require('util');
 const webpack = require('webpack');
 const rimraf = require('rimraf');
-const writeFile = promisify(require('fs').writeFile);
 const env = require('./tasks/env');
 const serve = require('./tasks/serve');
 
@@ -50,71 +49,10 @@ async function prod() {
   }
 }
 
-async function buildMiddleware() {
-  // eslint-disable-next-line import/no-dynamic-require
-  const middlewarePkg = require(`${middlewareDir}/package.json`);
-
-  const rollup = require('rollup');
-  const bundle = await rollup.rollup({
-    input: './src/middleware/index.js',
-    external: [
-      ...Object.keys(middlewarePkg.dependencies),
-      ...require('module').builtinModules,
-    ],
-    plugins: [
-      require('rollup-plugin-babel')({
-        runtimeHelpers: true,
-        caller: { target: 'node' },
-      }),
-      require('@rollup/plugin-node-resolve')({
-        preferBuiltins: true,
-      }),
-    ],
-  });
-
-  await bundle.write({
-    format: 'cjs',
-    file: path.join(middlewareDir, 'middleware', 'index.js'),
-    sourcemap: true,
-  });
-
-  await bundle.write({
-    format: 'esm',
-    file: path.join(middlewareDir, 'middleware', 'index.mjs'),
-    sourcemap: true,
-  });
-}
-
-function copyMiddlewareMeta() {
-  return gulp.src('./LICENSE')
-    .pipe(gulp.dest(middlewareDir));
-}
-
-async function updateMiddlewarePackageJson() {
-  // eslint-disable-next-line import/no-dynamic-require
-  const middlewarePkg = require(`${middlewareDir}/package.json`);
-  const pkg = require('./package.json');
-
-  // Sync versions.
-  middlewarePkg.version = pkg.version;
-  Object.keys(middlewarePkg.dependencies).forEach((name) => {
-    middlewarePkg.dependencies[name] = pkg.dependencies[name];
-  });
-
-  await writeFile(`${middlewareDir}/package.json`, `${JSON.stringify(middlewarePkg, null, 2)}\n`);
-}
-
-const middleware = gulp.parallel(
-  buildMiddleware,
-  copyMiddlewareMeta,
-  updateMiddlewarePackageJson,
-);
-
 module.exports = {
   setWatching,
   serve: serve.serve,
   start,
   clean,
-  middleware,
-  prod: gulp.series(clean, gulp.parallel(prod, middleware)),
+  prod: gulp.series(clean, prod),
 };

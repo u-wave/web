@@ -11,6 +11,7 @@ const SriPlugin = require('webpack-subresource-integrity');
 const CopyPlugin = require('copy-webpack-plugin');
 const merge = require('webpack-merge');
 const htmlMinifierOptions = require('./tasks/utils/htmlMinifierOptions');
+const { MiddlewarePackageJsonPlugin } = require('./tasks/webpack/middleware');
 
 // Compile src/ on the fly so we can use components etc. during build time.
 require('@babel/register').default({
@@ -45,6 +46,46 @@ function getConfig(env, {
   if (!demo) {
     plugins.push(new WebpackBar());
   }
+
+  const middlewareConfig = {
+    context: path.join(__dirname, 'src'),
+    mode: env.production ? 'production' : 'development',
+    // Quit if there are errors.
+    bail: env.production,
+    devtool: 'source-map',
+
+    entry: './middleware/index.js',
+    output: {
+      path: outputPackage,
+      filename: `./middleware/index.js`,
+      chunkFilename: `./middleware/[name].js`,
+      library: {
+        type: 'commonjs-module',
+      },
+    },
+    target: 'node',
+
+    optimization: {
+      minimize: false,
+    },
+
+    externals({ request }, callback) {
+      if (request.startsWith('./') || request.startsWith('../')) {
+        return callback();
+      }
+      callback(null, `commonjs ${request}`);
+    },
+
+    module: {
+      rules: [
+        { test: /\.js$/, use: 'babel-loader' },
+      ],
+    },
+
+    plugins: [
+      new MiddlewarePackageJsonPlugin(),
+    ],
+  };
 
   const baseConfig = merge({
     context: path.join(__dirname, 'src'),
@@ -267,12 +308,14 @@ function getConfig(env, {
   // Currently unused.
   loadingScreenConfig; // eslint-disable-line no-unused-expressions
 
+  const configs = [middlewareConfig, siteConfig];
+
   if (dualBundles) {
     const legacyAppConfig = merge(activeAppConfig, legacyConfigPatch);
 
-    return [siteConfig, legacyAppConfig];
+    configs.push(legacyAppConfig);
   }
-  return siteConfig;
+  return configs;
 }
 
 module.exports = getConfig;
