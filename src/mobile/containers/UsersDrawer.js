@@ -1,6 +1,5 @@
-import { createStructuredSelector } from 'reselect';
-import { connect } from 'react-redux';
-
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   waitlistUsersSelector,
   userInWaitlistSelector,
@@ -9,29 +8,43 @@ import {
 import { isLoggedInSelector } from '../../selectors/userSelectors';
 import { djSelector } from '../../selectors/boothSelectors';
 import { listenersSelector } from '../selectors/userSelectors';
-import {
-  joinWaitlist,
-  leaveWaitlist,
-} from '../../actions/WaitlistActionCreators';
-
+import { joinWaitlist, leaveWaitlist } from '../../actions/WaitlistActionCreators';
 import { usersDrawerIsOpenSelector } from '../selectors/drawerSelectors';
 import { setUsersDrawer } from '../actions/DrawerActionCreators';
 import UsersDrawer from '../components/UsersDrawer';
 
-const mapStateToProps = createStructuredSelector({
-  currentDJ: djSelector,
-  users: listenersSelector,
-  waitlist: waitlistUsersSelector,
-  open: usersDrawerIsOpenSelector,
-  userIsLoggedIn: isLoggedInSelector,
-  userInWaitlist: userInWaitlistSelector,
-  isLockedWaitlist: isLockedSelector,
-});
+const {
+  useCallback,
+} = React;
 
-const mapDispatchToProps = {
-  onDrawerClose: () => setUsersDrawer(false),
-  onJoinWaitlist: joinWaitlist,
-  onLeaveWaitlist: leaveWaitlist,
-};
+function UsersDrawerContainer() {
+  const currentDJ = useSelector(djSelector);
+  const users = useSelector(listenersSelector);
+  const waitlist = useSelector(waitlistUsersSelector);
+  const open = useSelector(usersDrawerIsOpenSelector);
+  const userIsLoggedIn = useSelector(isLoggedInSelector);
+  const userInWaitlist = useSelector(userInWaitlistSelector);
+  const isLockedWaitlist = useSelector(isLockedSelector);
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersDrawer);
+  const dispatch = useDispatch();
+  const onDrawerClose = useCallback(() => dispatch(setUsersDrawer(false)), []);
+  const onJoinWaitlist = useCallback(() => dispatch(joinWaitlist()), []);
+  const onLeaveWaitlist = useCallback(() => dispatch(leaveWaitlist()), []);
+
+  return (
+    <UsersDrawer
+      currentDJ={currentDJ}
+      users={users}
+      waitlist={waitlist}
+      open={open}
+      userIsLoggedIn={userIsLoggedIn}
+      userInWaitlist={userInWaitlist}
+      isLockedWaitlist={isLockedWaitlist}
+      onDrawerClose={onDrawerClose}
+      onJoinWaitlist={onJoinWaitlist}
+      onLeaveWaitlist={onLeaveWaitlist}
+    />
+  );
+}
+
+export default UsersDrawerContainer;
