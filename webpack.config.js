@@ -57,8 +57,8 @@ function getConfig(env, {
     entry: './middleware/index.js',
     output: {
       path: outputPackage,
-      filename: `./middleware/index.js`,
-      chunkFilename: `./middleware/[name].js`,
+      filename: './middleware/index.js',
+      chunkFilename: './middleware/[name].js',
       library: {
         type: 'commonjs-module',
       },
@@ -71,9 +71,10 @@ function getConfig(env, {
 
     externals({ request }, callback) {
       if (request.startsWith('./') || request.startsWith('../')) {
-        return callback();
+        callback();
+      } else {
+        callback(null, `commonjs ${request}`);
       }
-      callback(null, `commonjs ${request}`);
     },
 
     module: {
