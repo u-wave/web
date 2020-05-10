@@ -15,7 +15,7 @@ function setWatching(done) {
 }
 
 function clean(done) {
-  rimraf(`${middlewareDir}/{public,middleware}`, done);
+  rimraf(`${middlewareDir}/{package.json,public,middleware}`, done);
 }
 
 const start = gulp.series(setWatching, serve.serve);
