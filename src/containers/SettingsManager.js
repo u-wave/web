@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   set as setSetting,
@@ -20,7 +21,7 @@ const SettingsManager = createLazyOverlay({
   title: (t) => t('settings.title'),
 });
 
-function SettingsManagerContainer() {
+function SettingsManagerContainer({ onCloseOverlay }) {
   const settings = useSelector(settingsSelector);
   const user = useSelector(currentUserSelector);
   const dispatch = useDispatch();
@@ -42,8 +43,13 @@ function SettingsManagerContainer() {
       onChangeUsername={onChangeUsername}
       onChangeLanguage={onChangeLanguage}
       onLogout={onLogout}
+      onCloseOverlay={onCloseOverlay}
     />
   );
 }
+SettingsManagerContainer.propTypes = {
+  onCloseOverlay: PropTypes.func.isRequired,
+};
+
 
 export default SettingsManagerContainer;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { openPreviewMediaDialog } from '../actions/DialogActionCreators';
 import { addMediaMenu } from '../actions/PlaylistActionCreators';
@@ -28,7 +29,7 @@ const RoomHistory = createLazyOverlay({
   OverlayComponent: RoomHistoryOverlay,
 });
 
-function RoomHistoryContainer() {
+function RoomHistoryContainer({ onCloseOverlay }) {
   const history = useSelector(roomHistoryWithVotesSelector);
   const dispatch = useDispatch();
   const onOpenAddMediaMenu = useCallback((position, media, selection) => (
@@ -44,8 +45,13 @@ function RoomHistoryContainer() {
       media={history}
       onOpenAddMediaMenu={onOpenAddMediaMenu}
       onOpenPreviewMediaDialog={onOpenPreviewMediaDialog}
+      onCloseOverlay={onCloseOverlay}
     />
   );
 }
+
+RoomHistoryContainer.propTypes = {
+  onCloseOverlay: PropTypes.func.isRequired,
+};
 
 export default RoomHistoryContainer;

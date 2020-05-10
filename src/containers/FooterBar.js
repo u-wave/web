@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { skipSelf } from '../actions/BoothActionCreators';
 import { openLoginDialog, openRegisterDialog } from '../actions/DialogActionCreators';
@@ -29,7 +30,7 @@ const {
   useCallback,
 } = React;
 
-function FooterBarContainer() {
+function FooterBarContainer({ className }) {
   const baseEta = useSelector(baseEtaSelector);
   const mediaEndTime = useSelector(endTimeSelector);
   const playlist = useSelector(activePlaylistSelector);
@@ -57,6 +58,7 @@ function FooterBarContainer() {
 
   return (
     <FooterBar
+      className={className}
       baseEta={baseEta}
       mediaEndTime={mediaEndTime}
       playlist={playlist}
@@ -82,5 +84,9 @@ function FooterBarContainer() {
     />
   );
 }
+
+FooterBarContainer.propTypes = {
+  className: PropTypes.string,
+};
 
 export default FooterBarContainer;
