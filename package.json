@@ -98,7 +98,7 @@
     "chai": "^4.2.0",
     "chai-enzyme": "^1.0.0-beta.0",
     "chalk": "^3.0.0",
-    "copy-webpack-plugin": "^5.1.1",
+    "copy-webpack-plugin": "^6.0.1",
     "cross-env": "^7.0.0",
     "css-loader": "^3.4.2",
     "cssnano": "^4.1.10",
