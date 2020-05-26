@@ -241,10 +241,12 @@ function getConfig(env, {
   const staticPagesConfigPatch = merge(
     {
       plugins: [
-        new CopyPlugin([
-          { from: '../assets/favicon.ico', to: 'favicon.ico' },
-          { from: '../assets/icon-white.png', to: 'icon-white.png' },
-        ]),
+        new CopyPlugin({
+          patterns: [
+            { from: '../assets/favicon.ico', to: 'favicon.ico' },
+            { from: '../assets/icon-white.png', to: 'icon-white.png' },
+          ],
+        }),
         new HtmlPlugin({
           chunks: ['polyfills', 'app'],
           template: './index.html',
