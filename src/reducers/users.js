@@ -1,6 +1,6 @@
 import omit from 'just-omit';
 import { combineReducers } from 'redux';
-import indexByPath from '../utils/indexByPath';
+import indexBy from 'just-index';
 import {
   INIT_STATE,
   LOAD_ONLINE_USERS,
@@ -44,7 +44,7 @@ function usersReducer(state = {}, action = {}) {
     // TODO maybe replace state instead anyway and merge in the current user?
       return {
         ...state,
-        ...indexByPath(payload.users, '_id'),
+        ...indexBy(payload.users, '_id'),
       };
     case USER_JOIN:
       return {

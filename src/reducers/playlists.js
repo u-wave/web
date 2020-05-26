@@ -1,7 +1,7 @@
-import omit from 'just-omit';
 import escapeStringRegExp from 'escape-string-regexp';
+import indexBy from 'just-index';
 import mapValues from 'just-map-values';
-import indexByPath from '../utils/indexByPath';
+import omit from 'just-omit';
 
 import {
   INIT_STATE,
@@ -63,7 +63,7 @@ function processInsert(list, insert, position) {
 // Moves a list of media items to a given position in the playlist.
 function processMove(list, movedMedia, location) {
   // Take all moved media items out of the playlist…
-  const wasMoved = indexByPath(movedMedia, '_id');
+  const wasMoved = indexBy(movedMedia, '_id');
   const newPlaylist = list.filter((media) => media === null || !wasMoved[media._id]);
   // …and add them back in at the correct place.
   return processInsert(newPlaylist, movedMedia, location);
@@ -161,7 +161,7 @@ export default function reduce(state = initialState, action = {}) {
 
       return {
         ...state,
-        playlists: indexByPath(payload.playlists.map((playlist) => ({
+        playlists: indexBy(payload.playlists.map((playlist) => ({
           ...playlist,
           active: playlist._id === payload.activePlaylist,
         })), '_id'),
@@ -178,7 +178,7 @@ export default function reduce(state = initialState, action = {}) {
     case LOAD_ALL_PLAYLISTS_COMPLETE:
       return {
         ...state,
-        playlists: indexByPath(payload.playlists, '_id'),
+        playlists: indexBy(payload.playlists, '_id'),
       };
     case ACTIVATE_PLAYLIST_START:
     // TODO use a different property here so we can show a loading icon on
@@ -407,7 +407,7 @@ export default function reduce(state = initialState, action = {}) {
       ));
 
     case MOVE_MEDIA_START: {
-      const isMovingMedia = indexByPath(payload.medias, '_id');
+      const isMovingMedia = indexBy(payload.medias, '_id');
       return updatePlaylistItems(state, payload.playlistID, (items) => (
         items.map((media) => media && ({
           ...media,
@@ -421,7 +421,7 @@ export default function reduce(state = initialState, action = {}) {
       ));
 
     case REMOVE_MEDIA_START: {
-      const isRemovingMedia = indexByPath(payload.medias, '_id');
+      const isRemovingMedia = indexBy(payload.medias, '_id');
       return updatePlaylistItems(state, payload.playlistID, (items) => (
         items.map((media) => media && ({
           ...media,
@@ -430,7 +430,7 @@ export default function reduce(state = initialState, action = {}) {
       ));
     }
     case REMOVE_MEDIA_COMPLETE: {
-      const isRemovedMedia = indexByPath(payload.removedMedia, '_id');
+      const isRemovedMedia = indexBy(payload.removedMedia, '_id');
       return updatePlaylistAndItems(
         state,
         payload.playlistID,
