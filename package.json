@@ -123,7 +123,6 @@
     "file-loader": "^6.0.0",
     "gulp": "^4.0.0",
     "html-loader": "^1.0.0",
-    "html-webpack-inline-runtime-plugin": "^1.2.1",
     "html-webpack-plugin": "^4.0.2",
     "http-proxy-middleware": "^1.0.0",
     "image-webpack-loader": "^6.0.0",

@@ -6,7 +6,6 @@ const WebpackBar = require('webpackbar');
 const ExtractCssPlugin = require('mini-css-extract-plugin');
 const OptimizeCssPlugin = require('optimize-css-assets-webpack-plugin');
 const HtmlPlugin = require('html-webpack-plugin');
-// const HtmlInlineRuntimePlugin = require('html-webpack-inline-runtime-plugin');
 const SriPlugin = require('webpack-subresource-integrity');
 const CopyPlugin = require('copy-webpack-plugin');
 const merge = require('webpack-merge');
@@ -262,9 +261,6 @@ function getConfig(env, {
         }),
       ],
     },
-    // env.production ? {
-    //   plugins: [new HtmlInlineRuntimePlugin()],
-    // } : {},
     staticPages({
       privacy: './static/privacy.md',
     }, env.production),
