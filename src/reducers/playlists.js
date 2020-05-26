@@ -1,6 +1,6 @@
 import omit from 'just-omit';
 import escapeStringRegExp from 'escape-string-regexp';
-import indexBy from 'index-by';
+import indexBy from 'just-index';
 import mapValues from 'just-map-values';
 
 import {
