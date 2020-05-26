@@ -100,13 +100,13 @@ function getConfig(env, {
         {
           test: /\.mp3$/,
           use: [
-            { loader: 'file-loader', options: { name: 'static/[contenthash:7].[ext]' } },
+            { loader: 'file-loader', options: { esModule: false, name: 'static/[name]_[contenthash:7].[ext]' } },
           ],
         },
         {
           test: /\.(gif|jpe?g|png|svg)$/,
           use: [
-            { loader: 'file-loader', options: { name: 'static/[contenthash:7].[ext]' } },
+            { loader: 'file-loader', options: { esModule: false, name: 'static/[name]_[contenthash:7].[ext]' } },
             !env.production && { loader: 'image-webpack-loader' },
           ].filter(Boolean),
         },
@@ -176,8 +176,8 @@ function getConfig(env, {
     output: {
       publicPath: '/',
       path: path.join(outputPackage, 'public'),
-      filename: env.production ? 'static/[chunkhash:7].js' : '[name]_dev.js',
-      chunkFilename: env.production ? 'static/[chunkhash:7].js' : '[name]_dev.js',
+      filename: env.production ? 'static/[name]_[chunkhash:7].js' : '[name]_dev.js',
+      chunkFilename: env.production ? 'static/[name]_[chunkhash:7].js' : '[name]_dev.js',
       crossOriginLoading: 'anonymous',
     },
 
@@ -210,8 +210,8 @@ function getConfig(env, {
     plugins: [
       new ExtractCssPlugin({
         esModule: true,
-        filename: 'static/[contenthash:7].css',
-        chunkFilename: 'static/[contenthash:7].css',
+        filename: 'static/[name]_[contenthash:7].css',
+        chunkFilename: 'static/[name]_[contenthash:7].css',
       }),
       new OptimizeCssPlugin(),
       new SriPlugin({
