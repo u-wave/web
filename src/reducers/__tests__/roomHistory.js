@@ -103,11 +103,13 @@ describe('reducers/roomHistory', () => {
   describe('action: ADVANCE', () => {
     it('prepends a new history entry', () => {
       const { dispatch, getState } = createStore();
-      dispatch(setUsers([{
-        _id: '562b748139c99dde22c6a499',
-        slug: 'reanna',
-        username: 'ReAnna',
-      }]));
+      dispatch(setUsers({
+        users: [{
+          _id: '562b748139c99dde22c6a499',
+          slug: 'reanna',
+          username: 'ReAnna',
+        }],
+      }));
 
       dispatch(loadHistoryComplete({
         data: [serverHistoryEntry],

@@ -1,5 +1,5 @@
 import omit from 'just-omit';
-import indexBy from 'just-index';
+import indexBy from 'index-by';
 import { combineReducers } from 'redux';
 import {
   INIT_STATE,
