@@ -1,5 +1,6 @@
 // List of dependency paths that need to be compiled.
 const es2015Deps = [
+  /\/abortcontroller-polyfill\/src\//,
   /\/format-duration\//,
   /\/object-values\//,
   /\/p-finally\//,

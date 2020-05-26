@@ -6,7 +6,6 @@ const webpack = require('webpack');
 const rimraf = require('rimraf');
 const writeFile = promisify(require('fs').writeFile);
 const env = require('./tasks/env');
-const js = require('./tasks/js');
 const serve = require('./tasks/serve');
 
 const middlewareDir = path.join(__dirname, 'packages/u-wave-web-middleware');
@@ -16,20 +15,11 @@ function setWatching(done) {
   done();
 }
 
-function cleanDist(done) {
+function clean(done) {
   rimraf(`${middlewareDir}/{public,middleware}`, done);
 }
-function cleanEs(done) {
-  rimraf('es', done);
-}
-function cleanLib(done) {
-  rimraf('lib', done);
-}
-const clean = gulp.parallel(cleanDist, cleanEs, cleanLib);
 
 const start = gulp.series(setWatching, serve.serve);
-
-const build = gulp.parallel(js.locales, js.babel);
 
 function prod(done) {
   // Load this later because it adds require compile hooks.
@@ -117,9 +107,7 @@ module.exports = {
   setWatching,
   serve: serve.serve,
   start,
-  build,
   clean,
-  default: build,
-  middleware: gulp.series(build, middleware),
-  prod: gulp.series(cleanDist, build, gulp.parallel(prod, middleware)),
+  middleware,
+  prod: gulp.series(clean, gulp.parallel(prod, middleware)),
 };

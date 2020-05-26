@@ -1,4 +1,4 @@
-import { post } from './RequestActionCreators';
+import { put, post } from './RequestActionCreators';
 import { historyIDSelector } from '../selectors/boothSelectors';
 import { playlistsSelector } from '../selectors/playlistSelectors';
 import {
@@ -25,20 +25,36 @@ export function favorited({ userID, historyID }) {
   };
 }
 
-export function receiveVote({ userID, vote }) {
-  const type = vote > 0 ? UPVOTE : DOWNVOTE;
+export function receiveVote({ userID, vote: direction }) {
+  const type = direction > 0 ? UPVOTE : DOWNVOTE;
   return {
     type,
     payload: { userID },
   };
 }
 
+export function vote({ historyID, direction }) {
+  const type = direction > 0 ? DO_UPVOTE : DO_DOWNVOTE;
+  return put(`/booth/${historyID}/vote`, { direction }, {
+    onStart: () => ({
+      type,
+      payload: { historyID },
+    }),
+  });
+}
+
 export function doUpvote() {
-  return { type: DO_UPVOTE };
+  return (dispatch, getState) => {
+    const historyID = historyIDSelector(getState());
+    dispatch(vote({ historyID, direction: 1 }));
+  };
 }
 
 export function doDownvote() {
-  return { type: DO_DOWNVOTE };
+  return (dispatch, getState) => {
+    const historyID = historyIDSelector(getState());
+    dispatch(vote({ historyID, direction: -1 }));
+  };
 }
 
 export function openFavoriteMenu(position) {

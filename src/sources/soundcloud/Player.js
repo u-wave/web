@@ -1,7 +1,6 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import createDebug from 'debug';
 import { translate } from '@u-wave/react-translate';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
@@ -9,8 +8,6 @@ import Typography from '@material-ui/core/Typography';
 import ErrorIcon from '@material-ui/icons/Error';
 import SongInfo from './SongInfo';
 import soundcloudLogo from '../../../assets/img/soundcloud-inline.png';
-
-const debug = createDebug('uwave:component:video:soundcloud');
 
 const CLIENT_ID = '9d883cdd4c3c54c6dddda2a5b3a11200';
 
@@ -115,7 +112,6 @@ class SoundCloudPlayer extends React.Component {
       this.audio.src = `${streamUrl}?client_id=${CLIENT_ID}`;
       const res = this.audio.play();
       if (res && res.then) res.catch(this.handleError);
-      debug('currentTime', seek);
       this.audio.addEventListener('canplaythrough', doSeek, false);
       if (onPlay) {
         this.audio.addEventListener('play', onPlay, false);

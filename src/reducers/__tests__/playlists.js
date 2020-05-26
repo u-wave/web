@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import fetch from 'fetch-mock';
-import createStore from '../../store/configureStore';
+import createStore from '../../redux/configureStore';
 import * as a from '../../actions/PlaylistActionCreators';
 import { favoriteMediaComplete } from '../../actions/VoteActionCreators';
 import * as s from '../../selectors/playlistSelectors';

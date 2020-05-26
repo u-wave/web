@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import createStore from '../../store/configureStore';
+import createStore from '../../redux/configureStore';
 import { setUsers } from '../../actions/UserActionCreators';
 import { advance, loadHistoryComplete } from '../../actions/BoothActionCreators';
 import * as s from '../../selectors/roomHistorySelectors';
