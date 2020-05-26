@@ -25,7 +25,9 @@ async function prod() {
   // Those don't need to run on the above imports.
   const wpConfig = require('./webpack.config')({
     production: process.env.NODE_ENV === 'production',
-  }, {});
+  }, {
+    analyze: process.env.ANALYZE,
+  });
   const compiler = webpack(wpConfig);
   const run = promisify(compiler.run.bind(compiler));
   const close = promisify(compiler.close.bind(compiler));
