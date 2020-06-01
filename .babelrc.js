@@ -5,6 +5,7 @@ module.exports = (api, envOverride) => {
   // Command-line version override.
   const browsers = process.env.BROWSERSLIST;
 
+  const isRollup = api.caller((caller) => caller.name === '@rollup/plugin-babel');
   api.cache(() => `${env}${browsers || ''}`);
 
   const targets = {};
@@ -29,7 +30,7 @@ module.exports = (api, envOverride) => {
     ],
   };
 
-  if (env !== 'middleware') {
+  if (!isRollup) {
     preset.plugins.push(
       ['@babel/plugin-transform-runtime', {
         version: pkg.dependencies['@babel/runtime'],
