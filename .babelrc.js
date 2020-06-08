@@ -4,9 +4,9 @@ module.exports = (api, envOverride) => {
   const env = envOverride || process.env.BABEL_ENV || process.env.NODE_ENV || 'development';
   // Command-line version override.
   const browsers = process.env.BROWSERSLIST;
+
   api.cache(() => `${env}${browsers || ''}`);
 
-  const callerIsRollup = api.caller(caller => caller && caller.name === 'rollup-plugin-babel');
   const callerIsNode = api.caller(caller => caller && caller.name === '@babel/register');
   // Check if we're part of a `target: 'node'` webpack build.
   const targetIsNode = api.caller(caller => caller && caller.target === 'node');
@@ -48,16 +48,6 @@ module.exports = (api, envOverride) => {
       '@babel/plugin-proposal-class-properties',
     ],
   };
-
-  // Rollup handles Babel helpers well. If we're not using Rollup, use @babel/runtime for helpers.
-  if (!callerIsRollup) {
-    preset.plugins.push(
-      ['@babel/plugin-transform-runtime', {
-        version: pkg.dependencies['@babel/runtime'],
-        corejs: false,
-      }],
-    );
-  }
 
   if (env === 'development') {
     preset.plugins.push('module:react-hot-loader/babel');
