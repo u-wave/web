@@ -1,7 +1,7 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import uniqueId from 'lodash/uniqueId';
+import { nanoid } from 'nanoid/non-secure';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -39,7 +39,7 @@ const actionsStyle = {
 };
 
 export default class UserRow extends React.Component {
-  menu = uniqueId('menu');
+  ariaMenu = nanoid();
 
   static propTypes = {
     user: PropTypes.object.isRequired,
@@ -87,12 +87,12 @@ export default class UserRow extends React.Component {
           <IconButton
             onClick={this.handleOpenMenu}
             aria-haspopup="true"
-            aria-owns={open ? this.menu : null}
+            aria-owns={open ? this.ariaMenu : null}
           >
             <MoreVertIcon />
           </IconButton>
           <Menu
-            id={this.menu}
+            id={this.ariaMenu}
             open={open}
             anchorEl={anchorEl}
             onClose={this.handleCloseMenu}
