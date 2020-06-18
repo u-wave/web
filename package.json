@@ -146,7 +146,7 @@
     "stylelint-config-standard": "^20.0.0",
     "through2": "^3.0.0",
     "u-wave-web-emojione": "^2.0.1",
-    "webpack": "5.0.0-beta.17",
+    "webpack": "5.0.0-beta.18",
     "webpack-bundle-analyzer": "^3.6.0",
     "webpack-dev-middleware": "^3.7.2",
     "webpack-hot-middleware": "^2.25.0",
