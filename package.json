@@ -130,7 +130,7 @@
     "loud-rejection": "^2.2.0",
     "mini-css-extract-plugin": "^0.9.0",
     "minimist": "^1.2.0",
-    "mocha": "^7.0.0",
+    "mocha": "^8.0.1",
     "nodemon": "^2.0.2",
     "nyc": "^15.0.1",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
