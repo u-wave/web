@@ -47,9 +47,9 @@ function SettingsManagerContainer({ onCloseOverlay }) {
     />
   );
 }
+
 SettingsManagerContainer.propTypes = {
   onCloseOverlay: PropTypes.func.isRequired,
 };
-
 
 export default SettingsManagerContainer;
