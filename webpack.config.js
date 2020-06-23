@@ -3,7 +3,6 @@ const path = require('path');
 const escapeStringRegExp = require('escape-string-regexp');
 const { DefinePlugin } = require('webpack');
 const WebpackBar = require('webpackbar');
-const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const ExtractCssPlugin = require('mini-css-extract-plugin');
 const HtmlPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
@@ -41,10 +40,12 @@ const staticPages = require('./tasks/webpack/staticPages').default;
 const analyze = require('./tasks/webpack/analyze').default;
 
 const plugins = [
-  new CopyPlugin([
-    { from: '../assets/favicon.ico', to: 'favicon.ico' },
-    { from: '../assets/icon-white.png', to: 'icon-white.png' },
-  ]),
+  new CopyPlugin({
+    patterns: [
+      { from: '../assets/favicon.ico', to: 'favicon.ico' },
+      { from: '../assets/icon-white.png', to: 'icon-white.png' },
+    ],
+  }),
   new HtmlPlugin({
     chunks: ['polyfills', 'app'],
     template: './index.html',
@@ -61,9 +62,6 @@ const plugins = [
   }),
   new DefinePlugin({
     'process.env.FORCE_TOKEN': JSON.stringify(isDemo),
-  }),
-  new LodashModuleReplacementPlugin({
-    paths: true,
   }),
 ];
 

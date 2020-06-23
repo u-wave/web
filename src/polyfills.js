@@ -1,9 +1,8 @@
 // Polyfills for browsers that might not yet support Promises or the Fetch API
 // (newer & better XMLHttpRequest).
-import 'lie/polyfill';
+import 'es6-promise/auto';
 import 'whatwg-fetch';
 import 'abortcontroller-polyfill/src/polyfill';
-import promiseFinally from 'promise.prototype.finally';
 import arrayFind from 'array.prototype.find';
 import arrayFindIndex from 'array.prototype.findindex';
 import arrayIncludes from 'array-includes';
@@ -13,7 +12,6 @@ import objectValues from 'object.values';
 import numberIsNaN from 'is-nan';
 import numberIsFinite from 'is-finite';
 
-promiseFinally.shim();
 arrayFind.shim();
 arrayFindIndex.shim();
 arrayIncludes.shim();
