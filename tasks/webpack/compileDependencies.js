@@ -2,10 +2,7 @@
 const es2015Deps = [
   /\/abortcontroller-polyfill\/src\//,
   /\/format-duration\//,
-  /\/object-values\//,
-  /\/p-finally\//,
   /\/strip-indent\//,
-  /\/debug\//,
   /\/escape-string-regex\//,
   /\/@material-ui\/core\/es\//,
   /\/@material-ui\/icons\/es\//,
