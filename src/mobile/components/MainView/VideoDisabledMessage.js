@@ -9,7 +9,7 @@ function VideoDisabledMessage({ onEnableVideo }) {
   return (
     <div className="VideoDisabledMessage">
       <p className="VideoDisabledMessage-text">{t('booth.videoDisabled')}</p>
-      <Button variant="contained" color="primary" onClick={onEnableVideo}>
+      <Button variant="contained" onClick={onEnableVideo}>
         Enable?
       </Button>
     </div>

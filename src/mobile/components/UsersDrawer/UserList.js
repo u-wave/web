@@ -13,7 +13,6 @@ function JoinWaitlistButton(props) {
   return (
     <Button
       variant="contained"
-      color="primary"
       style={{ marginLeft: 16, marginBottom: 8 }}
       {...props}
     />

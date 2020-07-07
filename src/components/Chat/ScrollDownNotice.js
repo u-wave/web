@@ -14,7 +14,6 @@ function ScrollDownNotice({ show, onClick }) {
         tabIndex={show ? 0 : -1}
         className="ChatMessages-scrollDownButton"
         size="small"
-        color="primary"
         aria-label={t('chat.scrollDown')}
         onClick={onClick}
       >

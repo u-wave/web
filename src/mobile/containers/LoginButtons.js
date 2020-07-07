@@ -27,13 +27,14 @@ function LoginButtons() {
     <span style={wrapperStyle}>
       <Button
         variant="contained"
-        color="primary"
         onClick={onLogin}
         style={buttonStyle}
       >
         {t('login.login')}
       </Button>
       <Button
+        variant="text"
+        color="secondary"
         onClick={onRegister}
         style={buttonStyle}
       >
