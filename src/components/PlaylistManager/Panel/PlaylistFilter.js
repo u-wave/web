@@ -2,7 +2,7 @@ import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from '@u-wave/react-translate';
-import debounce from 'lodash/debounce';
+import debounce from 'just-debounce';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import FilterIcon from '@material-ui/icons/Search';

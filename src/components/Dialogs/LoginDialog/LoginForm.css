@@ -9,3 +9,8 @@
   cursor: pointer;
   font-size: 10pt;
 }
+
+.AvatarList--avatar {
+  vertical-align: middle;
+  margin-right: 9px;
+}
