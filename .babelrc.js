@@ -47,6 +47,10 @@ module.exports = (api, envOverride) => {
       '@babel/plugin-proposal-export-namespace-from',
       '@babel/plugin-proposal-class-properties',
       'module:react-hot-loader/babel',
+      ['@babel/plugin-transform-runtime', {
+        version: pkg.dependencies['@babel/runtime'],
+        corejs: false,
+      }],
     ],
   };
 
