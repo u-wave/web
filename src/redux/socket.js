@@ -192,7 +192,6 @@ class UwaveSocket {
     if (pack.data === '-') return;
 
     const { command, data } = JSON.parse(pack.data);
-    console.info('Incoming WebSocket message:', command, data);
 
     if (command === 'authenticated') {
       this.drainQueuedMessages();
@@ -203,10 +202,8 @@ class UwaveSocket {
       const action = actions[command](data);
       if (action) {
         this.dispatch(action);
-        return;
       }
     }
-    console.warn('Unknown WebSocket message type');
   };
 
   connect() {
