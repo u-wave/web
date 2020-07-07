@@ -8,7 +8,7 @@ const OptimizeCssPlugin = require('optimize-css-assets-webpack-plugin');
 const HtmlPlugin = require('html-webpack-plugin');
 const SriPlugin = require('webpack-subresource-integrity');
 const CopyPlugin = require('copy-webpack-plugin');
-const merge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const htmlMinifierOptions = require('./tasks/utils/htmlMinifierOptions');
 const { MiddlewarePackageJsonPlugin } = require('./tasks/webpack/middleware');
 

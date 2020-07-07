@@ -1,6 +1,6 @@
 const path = require('path');
 const HtmlPlugin = require('html-webpack-plugin');
-const merge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const htmlMinifierOptions = require('../utils/htmlMinifierOptions');
 
 const context = path.join(__dirname, '../../src');

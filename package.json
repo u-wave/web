@@ -152,7 +152,7 @@
     "webpack-bundle-analyzer": "^3.6.0",
     "webpack-dev-middleware": "^3.7.2",
     "webpack-hot-middleware": "^2.25.0",
-    "webpack-merge": "^4.2.2",
+    "webpack-merge": "^5.0.8",
     "webpack-sources": "^1.4.3",
     "webpack-subresource-integrity": "^1.4.0",
     "webpackbar": "^4.0.0",
