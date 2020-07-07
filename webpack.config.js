@@ -187,15 +187,20 @@ function getConfig(env, {
   const hmrConfigPatch = {
     entry: {
       app: {
-        import: ['react-hot-loader', 'webpack-hot-middleware/client'],
+        import: ['react-hot-loader/patch', 'webpack-hot-middleware/client'],
       },
       passwordReset: {
-        import: ['react-hot-loader', 'webpack-hot-middleware/client'],
+        import: ['react-hot-loader/patch', 'webpack-hot-middleware/client'],
       },
     },
     plugins: [
       new HotModuleReplacementPlugin(),
     ],
+    resolve: {
+      alias: {
+        'react-dom': '@hot-loader/react-dom',
+      },
+    },
   };
 
   const productionConfigPatch = {

@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { AppContainer as HotContainer } from 'react-hot-loader';
 import { StylesProvider } from '@material-ui/styles';
 import AppContainer from './containers/App';
 import { get as readSession } from './utils/Session';
@@ -33,10 +32,6 @@ export default class Uwave {
     });
 
     if (module.hot) {
-      const { getComponent } = this;
-      this.getComponent = () => (
-        <HotContainer>{getComponent.call(this)}</HotContainer>
-      );
       const uw = this;
       module.hot.accept('./containers/App', () => {
         if (uw.renderTarget) {

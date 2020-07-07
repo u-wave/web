@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { hot } from 'react-hot-loader/root';
 import { useSelector, useDispatch } from 'react-redux';
 import { ThemeProvider } from '@material-ui/styles';
 import { Provider as BusProvider } from 'react-bus';
@@ -108,4 +109,4 @@ AppContainer.propTypes = {
   uwave: PropTypes.object,
 };
 
-export default AppContainer;
+export default hot(AppContainer);
