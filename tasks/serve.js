@@ -9,7 +9,7 @@ const recaptchaTestKeys = require('recaptcha-test-keys');
 const express = require('express');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const webpack = require('webpack');
-const webpackDevMiddleware = require('webpack-dev-middleware');
+const webpackDevMiddleware = require('webpack-dev-middleware').default;
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const nodemon = require('nodemon');
 const explain = require('explain-error');
@@ -98,8 +98,6 @@ function serve(done) {
   if (watch) {
     const compiler = webpack(wpConfig);
     const dev = webpackDevMiddleware(compiler, {
-      noInfo: true,
-      publicPath: '/',
       serverSideRender: true,
     });
 
@@ -113,7 +111,7 @@ function serve(done) {
         basePath: path.join(__dirname, '../packages/u-wave-web-middleware/public'),
         publicPath: '/',
         // Point u-wave-web middleware to the virtual webpack filesystem.
-        fs: dev.fileSystem,
+        fs: dev.context.outputFileSystem,
         recaptcha: { key: recaptchaTestKeys.sitekey },
       });
     });
