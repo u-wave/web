@@ -5,9 +5,13 @@ import experimentalThemePlugin from './experimentalThemePlugin';
 import youTubeSource from './sources/youtube';
 import soundCloudSource from './sources/soundcloud';
 
+const url = new URL(location.href);
+const apiUrl = url.searchParams.get('apiUrl') || 'https://u-wave-demo.now.sh/api';
+const socketUrl = url.searchParams.get('socketUrl') || 'wss://u-wave-demo.now.sh';
+
 const uw = new Uwave({
-  apiUrl: 'https://u-wave-demo.now.sh/api',
-  socketUrl: 'wss://u-wave-demo.now.sh',
+  apiUrl,
+  socketUrl,
   emoji: {},
 });
 
