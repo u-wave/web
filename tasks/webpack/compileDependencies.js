@@ -5,10 +5,7 @@ const pkg = require('../../package.json');
 const es2015Deps = [
   /\/abortcontroller-polyfill\/src\//,
   /\/format-duration\//,
-  /\/object-values\//,
-  /\/p-finally\//,
   /\/strip-indent\//,
-  /\/debug\//,
   /\/escape-string-regex\//,
   /\/@material-ui\/core\/es\//,
   /\/@material-ui\/styles\/es\//,
@@ -25,18 +22,9 @@ module.exports = function compileDependencies() {
         modules: false,
         // Don't assume dependencies are OK with being run in loose mode
         loose: false,
-        exclude: [
-          '@babel/plugin-transform-async-to-generator',
-          '@babel/plugin-transform-regenerator',
-        ],
       }],
     ],
     plugins: [
-      ['module:fast-async', {
-        compiler: {
-          noRuntime: true,
-        },
-      }],
       ['@babel/plugin-transform-runtime', {
         version: pkg.dependencies['@babel/runtime'],
         corejs: false,
