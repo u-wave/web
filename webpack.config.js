@@ -176,8 +176,8 @@ function getConfig(env, {
     output: {
       publicPath: '/',
       path: path.join(outputPackage, 'public'),
-      filename: env.production ? 'static/[name]_[chunkhash:7].js' : '[name]_dev.js',
-      chunkFilename: env.production ? 'static/[name]_[chunkhash:7].js' : '[name]_dev.js',
+      filename: env.production ? 'static/[name]_[chunkhash:7].mjs' : '[name]_dev.mjs',
+      chunkFilename: env.production ? 'static/[name]_[chunkhash:7].mjs' : '[name]_dev.mjs',
       crossOriginLoading: 'anonymous',
     },
 
@@ -238,6 +238,8 @@ function getConfig(env, {
 
   const legacyConfigPatch = {
     output: {
+      filename: env.production ? 'static/[name]_[chunkhash:7].js' : '[name]_dev.js',
+      chunkFilename: env.production ? 'static/[name]_[chunkhash:7].js' : '[name]_dev.js',
       ecmaVersion: 5,
     },
   };
