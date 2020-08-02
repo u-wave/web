@@ -200,5 +200,5 @@ the [Sonics.io License][] (archive link).
 [EmojiOne]: https://github.com/Ranks/emojione
 [MIT]: ./LICENSE
 [mention sound file]: ./assets/audio/mention.opus
-[Sonics.io]: http://sonics.io
+[Sonics.io]: https://web.archive.org/web/20150905161415/http://www.sonics.io/
 [Sonics.io License]: https://web.archive.org/web/20150912030216/http://www.sonics.io/license/
