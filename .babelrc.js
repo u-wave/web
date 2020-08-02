@@ -44,7 +44,6 @@ module.exports = (api, envOverride) => {
     ],
     plugins: [
       '@babel/plugin-proposal-export-default-from',
-      '@babel/plugin-proposal-export-namespace-from',
       '@babel/plugin-proposal-class-properties',
       'module:react-hot-loader/babel',
       ['@babel/plugin-transform-runtime', {
