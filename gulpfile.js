@@ -5,7 +5,7 @@ const { promisify } = require('util');
 const webpack = require('webpack');
 const rimraf = require('rimraf');
 const env = require('./tasks/env');
-const serve = require('./tasks/serve');
+const { serve } = require('./tasks/serve');
 
 const middlewareDir = path.join(__dirname, 'packages/u-wave-web-middleware');
 
@@ -18,7 +18,7 @@ function clean(done) {
   rimraf(`${middlewareDir}/{package.json,public,middleware}`, done);
 }
 
-const start = gulp.series(setWatching, serve.serve);
+const start = gulp.series(setWatching, serve);
 
 async function prod() {
   // Load this later because it adds require compile hooks.
@@ -53,7 +53,7 @@ async function prod() {
 
 module.exports = {
   setWatching,
-  serve: serve.serve,
+  serve,
   start,
   clean,
   prod: gulp.series(clean, prod),

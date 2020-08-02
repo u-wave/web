@@ -1,6 +1,7 @@
 /* eslint-disable global-require */
 require('loud-rejection/register');
-const gulp = require('gulp');
+const { once } = require('events');
+const { promisify } = require('util');
 const path = require('path');
 const log = require('fancy-log');
 const chalk = require('chalk');
@@ -28,7 +29,7 @@ function clearLine() {
   process.stdout.write('\x1B[2K\x1B[1G');
 }
 
-const devServerTask = (done) => {
+function devServerTask() {
   const serverPort = env.serverPort || 6042;
 
   const apiDevServer = tryResolve(
@@ -41,28 +42,30 @@ const devServerTask = (done) => {
     verbose: true,
   });
 
-  monitor.once('start', done);
   monitor.on('log', (msg) => {
     clearLine();
     log(chalk.grey('apiServer'), msg.colour);
   });
-};
 
-const apiServerTask = () => {
+  return once(monitor, 'start');
+}
+
+function apiServerTask() {
   const apiDevServer = tryResolve(
     'u-wave-http-api/dev/u-wave-api-dev-server',
     'Could not find the u-wave HTTP API module. Did you run `npm link u-wave-http-api`?',
   );
 
   require(apiDevServer); // eslint-disable-line import/no-dynamic-require
-};
+}
 
-function apiServer(done) {
+async function apiServer() {
   if (env.watch) {
-    devServerTask(done);
+    log(chalk.grey('apiServer'), 'starting in watch mode');
+    await devServerTask();
   } else {
+    log(chalk.grey('apiServer'), 'starting');
     apiServerTask();
-    done();
   }
 }
 
@@ -74,10 +77,12 @@ function waitForBuild(devMiddleware) {
   };
 }
 
-function serve(done) {
+function clientServer(done) {
   const port = env.port || 6041;
   const serverPort = env.serverPort || 6042;
   const watch = env.watch || false;
+
+  log(chalk.grey('client'), `starting on port ${port}`);
 
   const wpConfig = require('../webpack.config')({ production: !watch }, {
     watch,
@@ -126,6 +131,7 @@ function serve(done) {
     }));
 
     dev.waitUntilValid(() => {
+      log(chalk.grey('client'), 'ready');
       done();
     });
   } else {
@@ -138,11 +144,18 @@ function serve(done) {
     });
 
     app.use(webClient);
+    log(chalk.grey('client'), 'ready');
     done();
   }
 }
 
 // pass --no-api to use an already running API server (on `localhost:${--server-port}`).
-exports.serve = env.api !== false
-  ? gulp.series(apiServer, serve)
-  : serve;
+async function serve() {
+  if (env.api !== false) {
+    await apiServer();
+  }
+
+  return promisify(clientServer)();
+}
+
+exports.serve = serve;
