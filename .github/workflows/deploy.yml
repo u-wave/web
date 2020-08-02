@@ -21,7 +21,6 @@ jobs:
       run: npm run prod
       env:
         DEMO: 1
-    - name: Publish docs
     - name: Deploy to Netlify
       uses: nwtgck/actions-netlify@v1.1
       with:
