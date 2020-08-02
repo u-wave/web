@@ -96,6 +96,13 @@ function clientServer(done) {
   const socketUrl = `ws://localhost:${serverPort}`;
 
   app.use(apiUrl, createProxyMiddleware({
+    logProvider: () => ({
+      log: log,
+      debug: log,
+      info: log.info,
+      warn: log.warn,
+      error: log.error,
+    }),
     target: process.env.SERVER_URL || `http://localhost:${serverPort}/`,
   }));
   app.use('/assets/emoji/', emojione.middleware());
@@ -158,4 +165,7 @@ async function serve() {
   return promisify(clientServer)();
 }
 
-exports.serve = serve;
+serve().catch((error) => {
+  console.error(error.stack);
+  process.exit(1);
+});
