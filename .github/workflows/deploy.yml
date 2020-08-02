@@ -2,7 +2,7 @@ name: Deploy demo
 
 on:
   push:
-    branches: [default, gh-actions-deploy]
+    branches: [default]
   pull_request:
     types: [opened, synchronize]
 
