@@ -47,6 +47,7 @@ function getConfig(env, {
   }
 
   const middlewareConfig = {
+    name: 'middleware',
     context: path.join(__dirname, 'src'),
     mode: env.production ? 'production' : 'development',
     // Quit if there are errors.
@@ -237,6 +238,7 @@ function getConfig(env, {
   };
 
   const legacyConfigPatch = {
+    name: 'legacy',
     output: {
       filename: env.production ? 'static/[name]_[chunkhash:7].js' : '[name]_dev.js',
       chunkFilename: env.production ? 'static/[name]_[chunkhash:7].js' : '[name]_dev.js',
@@ -305,7 +307,7 @@ function getConfig(env, {
     activeAppConfig = merge(activeAppConfig, demoConfigPatch);
   }
 
-  let siteConfig = merge(activeAppConfig, staticPagesConfigPatch);
+  let siteConfig = merge(activeAppConfig, staticPagesConfigPatch, { name: 'app' });
   if (analyze) {
     const getAnalysisConfig = require('./tasks/webpack/analyze');
     siteConfig = merge(siteConfig, getAnalysisConfig(analyze));
