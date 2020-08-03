@@ -12,62 +12,7 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware').default;
 const webpackHotMiddleware = require('webpack-hot-middleware');
-const nodemon = require('nodemon');
-const explain = require('explain-error');
 const env = require('./env');
-
-function tryResolve(file, message) {
-  try {
-    // eslint-disable-next-line import/no-dynamic-require
-    return require.resolve(file);
-  } catch (e) {
-    throw explain(e, message);
-  }
-}
-
-function clearLine() {
-  process.stdout.write('\x1B[2K\x1B[1G');
-}
-
-function devServerTask() {
-  const serverPort = env.serverPort || 6042;
-
-  const apiDevServer = tryResolve(
-    'u-wave-http-api/dev/u-wave-api-dev-server',
-    'Could not find the u-wave HTTP API module. Did you run `npm link u-wave-http-api`?',
-  );
-  const monitor = nodemon({
-    script: apiDevServer,
-    args: ['--port', String(serverPort), '--watch'],
-    verbose: true,
-  });
-
-  monitor.on('log', (msg) => {
-    clearLine();
-    log(chalk.grey('apiServer'), msg.colour);
-  });
-
-  return once(monitor, 'start');
-}
-
-function apiServerTask() {
-  const apiDevServer = tryResolve(
-    'u-wave-http-api/dev/u-wave-api-dev-server',
-    'Could not find the u-wave HTTP API module. Did you run `npm link u-wave-http-api`?',
-  );
-
-  require(apiDevServer); // eslint-disable-line import/no-dynamic-require
-}
-
-async function apiServer() {
-  if (env.watch) {
-    log(chalk.grey('apiServer'), 'starting in watch mode');
-    await devServerTask();
-  } else {
-    log(chalk.grey('apiServer'), 'starting');
-    apiServerTask();
-  }
-}
 
 function waitForBuild(devMiddleware) {
   return (req, res, next) => {
@@ -77,7 +22,7 @@ function waitForBuild(devMiddleware) {
   };
 }
 
-function clientServer(done) {
+function serve(done) {
   const port = env.port || 6041;
   const serverPort = env.serverPort || 6042;
   const watch = env.watch || false;
@@ -156,16 +101,9 @@ function clientServer(done) {
   }
 }
 
-// pass --no-api to use an already running API server (on `localhost:${--server-port}`).
-async function serve() {
-  if (env.api !== false) {
-    await apiServer();
+serve((error) => {
+  if (error) {
+    console.error(error.stack);
+    process.exit(1);
   }
-
-  return promisify(clientServer)();
-}
-
-serve().catch((error) => {
-  console.error(error.stack);
-  process.exit(1);
 });
