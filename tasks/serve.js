@@ -1,7 +1,5 @@
 /* eslint-disable global-require */
 require('loud-rejection/register');
-const { once } = require('events');
-const { promisify } = require('util');
 const path = require('path');
 const log = require('fancy-log');
 const chalk = require('chalk');
