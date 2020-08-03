@@ -2,6 +2,7 @@
 const path = require('path');
 const escapeStringRegExp = require('escape-string-regexp');
 const { DefinePlugin, HotModuleReplacementPlugin } = require('webpack');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const WebpackBar = require('webpackbar');
 const ExtractCssPlugin = require('mini-css-extract-plugin');
 const OptimizeCssPlugin = require('optimize-css-assets-webpack-plugin');
@@ -214,6 +215,7 @@ function getConfig(env, {
     },
 
     plugins: [
+      new CleanWebpackPlugin(),
       new ExtractCssPlugin({
         esModule: true,
         filename: 'static/[name]_[contenthash:7].css',
