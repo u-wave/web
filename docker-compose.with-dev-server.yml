@@ -1,0 +1,8 @@
+version: '3'
+services:
+  server:
+    build:
+      context: "${UW_CORE_PATH}"
+      dockerfile: Dockerfile.development
+    volumes:
+      -  "${UW_CORE_PATH}:/u-wave-core"
