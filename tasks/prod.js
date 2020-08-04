@@ -1,8 +1,9 @@
 const { promisify } = require('util');
 const webpack = require('webpack');
+const getConfig = require('../webpack.config');
 
 async function prod() {
-  const wpConfig = require('../webpack.config')({
+  const wpConfig = getConfig({
     production: process.env.NODE_ENV === 'production',
   }, {
     analyze: process.env.ANALYZE,

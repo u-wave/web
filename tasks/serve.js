@@ -40,7 +40,7 @@ function serve(done) {
 
   app.use(apiUrl, createProxyMiddleware({
     logProvider: () => ({
-      log: log,
+      log,
       debug: log,
       info: log.info,
       warn: log.warn,
