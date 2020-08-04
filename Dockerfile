@@ -1,4 +1,4 @@
-FROM node:current-alpine AS build
+FROM node AS build
 ADD . /build
 WORKDIR /build
 ENV PATH=./node_modules/.bin/:$PATH
