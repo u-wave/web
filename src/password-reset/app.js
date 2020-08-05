@@ -4,7 +4,6 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import { parse as parseQS } from 'querystring';
 import thunk from 'redux-thunk';
-import { AppContainer as HotContainer } from 'react-hot-loader';
 import Translator from '@u-wave/translate';
 import webApiRequest from '../redux/request';
 import readApplicationConfig from '../utils/readApplicationConfig';
@@ -34,10 +33,8 @@ const translator = new Translator(english.uwave);
 
 ReactDOM.render(
   (
-    <HotContainer>
-      <Provider store={store}>
-        <App translator={translator} />
-      </Provider>
-    </HotContainer>
+    <Provider store={store}>
+      <App translator={translator} />
+    </Provider>
   ), document.querySelector('#app'),
 );

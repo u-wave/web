@@ -2,6 +2,7 @@
 const path = require('path');
 const escapeStringRegExp = require('escape-string-regexp');
 const { DefinePlugin, HotModuleReplacementPlugin } = require('webpack');
+const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const WebpackBar = require('webpackbar');
 const ExtractCssPlugin = require('mini-css-extract-plugin');
@@ -189,14 +190,15 @@ function getConfig(env, {
   const hmrConfigPatch = {
     entry: {
       app: {
-        import: ['react-hot-loader/patch', 'webpack-hot-middleware/client'],
+        import: ['webpack-hot-middleware/client'],
       },
       passwordReset: {
-        import: ['react-hot-loader/patch', 'webpack-hot-middleware/client'],
+        import: ['webpack-hot-middleware/client'],
       },
     },
     plugins: [
       new HotModuleReplacementPlugin(),
+      new ReactRefreshPlugin(),
     ],
     resolve: {
       alias: {
