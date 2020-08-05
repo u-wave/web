@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+import AccordionActions from '@material-ui/core/AccordionActions';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import SchemaForm from '../SchemaForm'; // eslint-disable-line
 
@@ -47,22 +47,22 @@ class Section extends React.Component {
     const { schema } = this.props;
 
     return (
-      <ExpansionPanel>
-        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+      <Accordion>
+        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           <div>
             <Typography>{schema.title}</Typography>
             <Typography color="textSecondary">{schema.description}</Typography>
           </div>
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails>
+        </AccordionSummary>
+        <AccordionDetails>
           <SchemaForm
             schema={schema}
             value={value}
             unwrapRoot={schema.type === 'object'}
             onChange={this.handleChange}
           />
-        </ExpansionPanelDetails>
-        <ExpansionPanelActions>
+        </AccordionDetails>
+        <AccordionActions>
           <Button
             color="primary"
             variant="raised"
@@ -70,8 +70,8 @@ class Section extends React.Component {
           >
             Save
           </Button>
-        </ExpansionPanelActions>
-      </ExpansionPanel>
+        </AccordionActions>
+      </Accordion>
     );
   }
 }
