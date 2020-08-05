@@ -15,7 +15,7 @@ export function loadConfig() {
       dispatch({ type: LOAD_CONFIG_START });
       dispatch({ type: LOAD_CONFIG_SCHEMA_START });
     },
-    onComplete: res => (dispatch) => {
+    onComplete: (res) => (dispatch) => {
       dispatch({
         type: LOAD_CONFIG_SCHEMA_COMPLETE,
         payload: res.meta.schema,
@@ -31,7 +31,7 @@ export function loadConfig() {
 export function saveConfig(key, values) {
   return put(`/server/config/${key}`, values, {
     onStart: () => ({ type: SAVE_CONFIG_START }),
-    onComplete: res => ({
+    onComplete: (res) => ({
       type: SAVE_CONFIG_COMPLETE,
       payload: res.data,
     }),

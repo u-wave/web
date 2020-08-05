@@ -1,28 +1,30 @@
-import { createStructuredSelector } from 'reselect';
-import { connect } from 'react-redux';
-import compose from 'recompose/compose';
-import lifecycle from 'recompose/lifecycle';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import ServerConfig from '../components/ServerConfig';
 import { loadConfig, saveConfig } from '../actions/config';
 import { configSelector, configSchemaSelector } from '../selectors/configSelectors';
 
-const mapStateToProps = createStructuredSelector({
-  config: configSelector,
-  configSchema: configSchemaSelector,
-});
+const {
+  useEffect,
+} = React;
 
-const mapDispatchToProps = {
-  onLoadConfig: loadConfig,
-  onSaveConfig: saveConfig,
-};
+function ServerConfigContainer() {
+  const config = useSelector(configSelector);
+  const configSchema = useSelector(configSchemaSelector);
+  const dispatch = useDispatch();
+  const onSaveConfig = (key, value) => dispatch(saveConfig(key, value));
 
-const enhance = compose(
-  connect(mapStateToProps, mapDispatchToProps),
-  lifecycle({
-    componentDidMount() {
-      this.props.onLoadConfig();
-    },
-  }),
-);
+  useEffect(() => {
+    dispatch(loadConfig());
+  }, []);
 
-export default enhance(ServerConfig);
+  return (
+    <ServerConfig
+      config={config}
+      configSchema={configSchema}
+      onSaveConfig={onSaveConfig}
+    />
+  );
+}
+
+export default ServerConfigContainer;

@@ -12,6 +12,7 @@ import SchemaForm from '../SchemaForm'; // eslint-disable-line
 class Section extends React.Component {
   static propTypes = {
     schema: PropTypes.shape({
+      type: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
       description: PropTypes.string.isRequired,
     }).isRequired,
@@ -19,10 +20,14 @@ class Section extends React.Component {
     onSave: PropTypes.func.isRequired,
   };
 
-  state = {
-    // eslint-disable-next-line react/destructuring-assignment
-    value: this.props.defaultValue,
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      // eslint-disable-next-line react/destructuring-assignment
+      value: this.props.defaultValue,
+    };
+  }
 
   handleChange = (value) => {
     this.setState({ value });
@@ -76,7 +81,7 @@ function partial(fn, arg) {
 }
 
 function renderSections(allSchema, allValues, onSave) {
-  return Object.keys(allSchema.properties).map(key => (
+  return Object.keys(allSchema.properties).map((key) => (
     <Section
       key={key}
       schema={allSchema.properties[key]}
