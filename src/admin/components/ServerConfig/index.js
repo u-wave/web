@@ -108,7 +108,7 @@ const ServerConfig = ({
 );
 
 ServerConfig.propTypes = {
-  config: PropTypes,
+  config: PropTypes.object,
   configSchema: PropTypes.object,
   onSaveConfig: PropTypes.func.isRequired,
 };
