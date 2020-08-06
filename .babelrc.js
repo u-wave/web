@@ -45,7 +45,6 @@ module.exports = (api, envOverride) => {
     plugins: [
       '@babel/plugin-proposal-export-default-from',
       '@babel/plugin-proposal-class-properties',
-      'module:react-refresh/babel',
       ['@babel/plugin-transform-runtime', {
         version: pkg.dependencies['@babel/runtime'],
         corejs: false,
@@ -58,6 +57,10 @@ module.exports = (api, envOverride) => {
       '@babel/plugin-transform-react-constant-elements',
       '@babel/plugin-transform-react-inline-elements',
       ['transform-react-remove-prop-types', { mode: 'remove' }],
+    );
+  } else {
+    preset.plugins.push(
+      'module:react-refresh/babel',
     );
   }
 
