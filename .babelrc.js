@@ -58,7 +58,9 @@ module.exports = (api, envOverride) => {
       '@babel/plugin-transform-react-inline-elements',
       ['transform-react-remove-prop-types', { mode: 'remove' }],
     );
-  } else {
+  }
+
+  if (env === 'development') {
     preset.plugins.push(
       'module:react-refresh/babel',
     );
