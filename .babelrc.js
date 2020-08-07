@@ -60,7 +60,7 @@ module.exports = (api, envOverride) => {
     );
   }
 
-  if (env === 'development') {
+  if (env === 'development' && !targetIsNode && !callerIsNode) {
     preset.plugins.push(
       'module:react-refresh/babel',
     );
