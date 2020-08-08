@@ -6,8 +6,8 @@ import youTubeSource from './sources/youtube';
 import soundCloudSource from './sources/soundcloud';
 
 const url = new URL(location.href);
-const apiUrl = url.searchParams.get('apiUrl') || 'https://u-wave-demo.now.sh/api';
-const socketUrl = url.searchParams.get('socketUrl') || 'wss://u-wave-demo.now.sh';
+const apiUrl = url.searchParams.get('apiUrl') || 'https://u-wave-demo.fly.dev/api';
+const socketUrl = url.searchParams.get('socketUrl') || 'wss://u-wave-demo.fly.dev';
 
 const uw = new Uwave({
   apiUrl,
