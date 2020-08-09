@@ -2,8 +2,7 @@ import { createSelector } from 'reselect';
 import { userListSelector } from '../../selectors/userSelectors';
 import { djAndWaitlistUsersSelector } from '../../selectors/waitlistSelectors';
 
-export * from '../../selectors/userSelectors';
-
+// eslint-disable-next-line import/prefer-default-export
 export const listenersSelector = createSelector(
   userListSelector,
   djAndWaitlistUsersSelector,
