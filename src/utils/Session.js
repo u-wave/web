@@ -2,8 +2,16 @@ import cookiesEnabled from '@f/cookies-enabled';
 
 const SESSION_KEY = '_session';
 
+function forceToken() {
+  try {
+    return process.env.FORCE_TOKEN;
+  } catch {
+    return null;
+  }
+}
+
 export function preferredSessionType() {
-  return typeof navigator !== 'undefined' && cookiesEnabled() && !process.env.FORCE_TOKEN
+  return typeof navigator !== 'undefined' && cookiesEnabled() && !forceToken()
     ? 'cookie'
     : 'token';
 }
