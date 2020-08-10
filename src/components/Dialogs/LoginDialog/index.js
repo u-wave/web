@@ -11,10 +11,12 @@ import CloseIcon from '@material-ui/icons/Close';
 import DialogCloseAnimation from '../../DialogCloseAnimation';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
+import SocialForm from './SocialForm';
 import ResetPasswordForm from './ResetPasswordForm';
 
 const enhance = withMobileDialog();
 
+/* eslint-disable react/jsx-props-no-spreading */
 function LoginDialog(props) {
   const { t } = useTranslator();
 
@@ -30,6 +32,9 @@ function LoginDialog(props) {
   if (show === 'register') {
     title = t('login.register');
     form = <RegisterForm {...props} />;
+  } else if (show === 'social') {
+    title = 'Sign Up With Google';
+    form = <SocialForm {...props} />;
   } else if (show === 'reset') {
     title = 'Reset Password';
     form = <ResetPasswordForm {...props} />;

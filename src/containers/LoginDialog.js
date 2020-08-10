@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { resetPassword, login, register } from '../actions/LoginActionCreators';
+import { resetPassword, login, register, finishSocialLogin } from '../actions/LoginActionCreators';
 import { openResetPasswordDialog, closeLoginDialog } from '../actions/DialogActionCreators';
 import { loginDialogSelector } from '../selectors/dialogSelectors';
 import LoginDialog from '../components/Dialogs/LoginDialog';
@@ -16,6 +16,7 @@ function LoginDialogContainer() {
   const onResetPassword = useCallback((email) => dispatch(resetPassword(email)), []);
   const onLogin = useCallback((data) => dispatch(login(data)), []);
   const onRegister = useCallback((data) => dispatch(register(data)), []);
+  const onSocialFinish = useCallback((service, data) =>  dispatch(finishSocialLogin(service, data)), []);
   const onCloseDialog = useCallback(() => dispatch(closeLoginDialog()), []);
 
   return (
@@ -25,6 +26,7 @@ function LoginDialogContainer() {
       onResetPassword={onResetPassword}
       onLogin={onLogin}
       onRegister={onRegister}
+      onSocialFinish={onSocialFinish}
       onCloseDialog={onCloseDialog}
     />
   );
