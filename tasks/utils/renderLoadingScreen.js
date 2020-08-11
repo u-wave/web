@@ -59,8 +59,7 @@ module.exports = async function renderLoadingScreen(compilation) {
   assert.strictEqual(mainJsFiles.length, 1, 'Loading screen build must output a single file.');
   const mainAsset = childCompilation.assets[mainJsFiles[0]];
   mainChunk.files.forEach((file) => {
-    delete childCompilation.assets[file];
-    delete compilation.assets[file]; // eslint-disable-line no-param-reassign
+    compilation.deleteAsset(file);
   });
 
   const code = mainAsset.source();
