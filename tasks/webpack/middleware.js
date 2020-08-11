@@ -42,10 +42,9 @@ class MiddlewarePackageJsonPlugin {
         dependencies,
       };
 
-      // eslint-disable-next-line no-param-reassign
-      currentCompiler.assets['package.json'] = new RawSource(
+      currentCompiler.emitAsset('package.json', new RawSource(
         JSON.stringify(middlewarePkg, null, 2),
-      );
+      ));
 
       if (callback) {
         callback();
