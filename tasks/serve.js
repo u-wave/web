@@ -1,7 +1,6 @@
 /* eslint-disable global-require */
 require('loud-rejection/register');
 const path = require('path');
-const log = require('fancy-log');
 const chalk = require('chalk');
 const emojione = require('u-wave-web-emojione');
 const recaptchaTestKeys = require('recaptcha-test-keys');
@@ -25,7 +24,7 @@ function serve(done) {
   const serverPort = env.serverPort || 6042;
   const watch = env.watch || false;
 
-  log(chalk.grey('client'), `starting on port ${port}`);
+  console.log(chalk.grey('client'), `starting on port ${port}`);
 
   const wpConfig = require('../webpack.config')({ production: !watch }, {
     watch,
@@ -39,13 +38,6 @@ function serve(done) {
   const socketUrl = `ws://localhost:${serverPort}`;
 
   app.use(apiUrl, createProxyMiddleware({
-    logProvider: () => ({
-      log,
-      debug: log,
-      info: log.info,
-      warn: log.warn,
-      error: log.error,
-    }),
     target: process.env.SERVER_URL || `http://localhost:${serverPort}/`,
   }));
   app.use('/assets/emoji/', emojione.middleware());
@@ -76,12 +68,11 @@ function serve(done) {
     app.use((req, res, next) => webClient(req, res, next));
     app.use(dev);
     app.use(webpackHotMiddleware(compiler, {
-      log,
       path: '/__webpack_hmr',
     }));
 
     dev.waitUntilValid(() => {
-      log(chalk.grey('client'), 'ready');
+      console.log(chalk.grey('client'), 'ready');
       done();
     });
   } else {
@@ -94,7 +85,7 @@ function serve(done) {
     });
 
     app.use(webClient);
-    log(chalk.grey('client'), 'ready');
+    console.log(chalk.grey('client'), 'ready');
     done();
   }
 }
