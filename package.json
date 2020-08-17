@@ -94,7 +94,7 @@
     "@babel/preset-react": "^7.10.4",
     "@babel/register": "^7.10.5",
     "@rollup/plugin-babel": "^5.1.0",
-    "@rollup/plugin-node-resolve": "^8.4.0",
+    "@rollup/plugin-node-resolve": "^9.0.0",
     "autoprefixer": "^9.8.0",
     "babel-eslint": "11.0.0-beta.2",
     "babel-loader": "^8.1.0",
