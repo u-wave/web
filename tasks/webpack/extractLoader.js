@@ -18,12 +18,13 @@ function evalModule(code) {
   return target.exports;
 }
 
-module.exports = function extractLoader() {}
-module.exports.pitch = function extractLoaderPitch(request) {
+module.exports = function extractLoader() {};
+module.exports.pitch = function extractLoaderPitch(entrypoint) {
   const callback = this.async();
 
   const rnd = Math.random().toString(36).slice(2);
-  const compiler = this._compilation.createChildCompiler(`extract-loader ${request}`, {
+  // eslint-disable-next-line no-underscore-dangle
+  const compiler = this._compilation.createChildCompiler(`extract-loader ${entrypoint}`, {
     filename: `__tmp_for_extract-loader${rnd}_[name].js`,
   });
 
@@ -32,10 +33,11 @@ module.exports.pitch = function extractLoaderPitch(request) {
   new NodeTargetPlugin().apply(compiler);
   new LibraryTemplatePlugin(null, 'commonjs').apply(compiler);
   new LoaderTargetPlugin('node').apply(compiler);
-  new EntryPlugin(compiler.context, `!!${request}`, { name: 'main' }).apply(compiler);
+  new EntryPlugin(compiler.context, `!!${entrypoint}`, { name: 'main' }).apply(compiler);
 
   // node_modules dependencies should be require()-able, probably
   const dependencies = Object.keys(pkg.dependencies);
+  // eslint-disable-next-line no-shadow
   new ExternalsPlugin('commonjs', ({ request }, callback) => {
     if (dependencies.some((dep) => request === dep || request.startsWith(`${dep}/`))) {
       callback(null, `commonjs ${request}`);
@@ -57,6 +59,7 @@ module.exports.pitch = function extractLoaderPitch(request) {
       const result = evalModule(code).default;
 
       mainChunk.files.forEach((file) => {
+        // eslint-disable-next-line no-underscore-dangle
         this._compilation.deleteAsset(file);
       });
 
