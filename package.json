@@ -121,7 +121,6 @@
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "^4.0.4",
     "express": "^4.17.1",
-    "extract-loader": "^5.0.1",
     "fetch-mock": "^9.0.0",
     "file-loader": "^6.0.0",
     "html-loader": "^1.0.0",

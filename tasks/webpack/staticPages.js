@@ -33,7 +33,7 @@ module.exports = function staticPages(pages, production) {
             filename: `${name}.html`,
             template: [
               require.resolve('../utils/loadStaticHtmlTemplate'),
-              'extract-loader',
+              require.resolve('./extractLoader'),
               fullPath,
             ].join('!'),
             inject: false,
@@ -65,7 +65,7 @@ module.exports = function staticPages(pages, production) {
         {
           test: /\.md$/,
           use: [
-            'html-loader',
+            { loader: 'html-loader', options: { esModule: true } },
             require.resolve('../utils/renderMarkdown'),
           ],
         },
