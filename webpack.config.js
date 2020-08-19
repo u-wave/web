@@ -1,4 +1,3 @@
-/* eslint-disable global-require */
 const path = require('path');
 const escapeStringRegExp = require('escape-string-regexp');
 const { DefinePlugin, HotModuleReplacementPlugin } = require('webpack');
@@ -13,6 +12,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 const { merge } = require('webpack-merge');
 const htmlMinifierOptions = require('./tasks/utils/htmlMinifierOptions');
 const { MiddlewarePackageJsonPlugin } = require('./tasks/webpack/middleware');
+const renderLoadingScreen = require('./tasks/utils/renderLoadingScreen');
 
 // Compile src/ on the fly so we can use components etc. during build time.
 require('@babel/register').default({
@@ -33,6 +33,9 @@ require('@babel/register').default({
 const compileDependencies = require('./tasks/webpack/compileDependencies');
 //  - staticPages: Compiles static markdown pages to HTML.
 const staticPages = require('./tasks/webpack/staticPages');
+const getAnalysisConfig = require('./tasks/webpack/analyze');
+
+function unused() {}
 
 function getConfig(env, {
   watch = false,
@@ -266,7 +269,7 @@ function getConfig(env, {
           title: 'üWave',
           minify: env.production ? htmlMinifierOptions : false,
           scriptLoading: 'defer',
-          loadingScreen: (...args) => require('./tasks/utils/renderLoadingScreen')(...args),
+          loadingScreen: (...args) => renderLoadingScreen(...args),
         }),
         new HtmlPlugin({
           chunks: ['polyfills', 'passwordReset'],
@@ -315,12 +318,10 @@ function getConfig(env, {
 
   let siteConfig = merge(activeAppConfig, staticPagesConfigPatch, { name: 'app' });
   if (analyze) {
-    const getAnalysisConfig = require('./tasks/webpack/analyze');
     siteConfig = merge(siteConfig, getAnalysisConfig(analyze));
   }
 
-  // Currently unused.
-  loadingScreenConfig; // eslint-disable-line no-unused-expressions
+  unused(loadingScreenConfig);
 
   const configs = [middlewareConfig, siteConfig];
 

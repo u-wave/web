@@ -1,7 +1,12 @@
-/* eslint-disable global-require */
 const vm = require('vm');
 const assert = require('assert');
 const h = require('react').createElement;
+const NodeTemplatePlugin = require('webpack/lib/node/NodeTemplatePlugin');
+const NodeTargetPlugin = require('webpack/lib/node/NodeTargetPlugin');
+const LoaderTargetPlugin = require('webpack/lib/LoaderTargetPlugin');
+const LibraryTemplatePlugin = require('webpack/lib/LibraryTemplatePlugin');
+const ExternalsPlugin = require('webpack/lib/ExternalsPlugin');
+const SingleEntryPlugin = require('webpack/lib/SingleEntryPlugin');
 const prerender = require('./prerender');
 const pkg = require('../../package.json');
 
@@ -16,13 +21,6 @@ function evalModule(code) {
 }
 
 module.exports = async function renderLoadingScreen(compilation) {
-  const NodeTemplatePlugin = require('webpack/lib/node/NodeTemplatePlugin');
-  const NodeTargetPlugin = require('webpack/lib/node/NodeTargetPlugin');
-  const LoaderTargetPlugin = require('webpack/lib/LoaderTargetPlugin');
-  const LibraryTemplatePlugin = require('webpack/lib/LibraryTemplatePlugin');
-  const ExternalsPlugin = require('webpack/lib/ExternalsPlugin');
-  const SingleEntryPlugin = require('webpack/lib/SingleEntryPlugin');
-
   const compiler = compilation.createChildCompiler('PrerenderLoadingScreen', {
     filename: '__loading-[name].js',
   });
