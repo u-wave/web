@@ -35,12 +35,15 @@
     {
       "files": ["src/**/*.js"],
       "parser": "@babel/eslint-parser",
-      "plugins": ["@babel/eslint-plugin"]
-    },
-    {
-      "files": ["src/**/*.js"],
+      "plugins": ["@babel/eslint-plugin"],
       "rules": {
         "compat/compat": "error"
+      }
+    },
+    {
+      "files": ["tasks/**/*.js"],
+      "rules": {
+        "no-console": "off"
       }
     },
     {
