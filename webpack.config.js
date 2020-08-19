@@ -265,6 +265,7 @@ function getConfig(env, {
           template: './index.html',
           title: 'üWave',
           minify: env.production ? htmlMinifierOptions : false,
+          scriptLoading: 'defer',
           loadingScreen: (...args) => require('./tasks/utils/renderLoadingScreen')(...args),
         }),
         new HtmlPlugin({
@@ -273,6 +274,7 @@ function getConfig(env, {
           filename: 'password-reset.html',
           title: 'Reset Password',
           minify: env.production ? htmlMinifierOptions : false,
+          scriptLoading: 'defer',
         }),
       ],
     },
