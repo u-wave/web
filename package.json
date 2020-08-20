@@ -122,7 +122,6 @@
     "eslint-plugin-react-hooks": "^4.0.4",
     "express": "^4.17.1",
     "fetch-mock": "^9.0.0",
-    "file-loader": "^6.0.0",
     "html-loader": "^1.0.0",
     "html-webpack-plugin": "^4.0.2",
     "http-proxy-middleware": "^1.0.0",

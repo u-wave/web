@@ -100,19 +100,21 @@ function getConfig(env, {
     bail: env.production,
     devtool: env.production ? 'source-map' : 'inline-source-map',
 
+    experiments: {
+      asset: true,
+    },
+
     module: {
       rules: [
         // Static files and resources.
         {
           test: /\.mp3$/,
-          use: [
-            { loader: 'file-loader', options: { esModule: false, name: 'static/[name]_[contenthash:7].[ext]' } },
-          ],
+          type: 'asset',
         },
         {
           test: /\.(gif|jpe?g|png|svg)$/,
+          type: 'asset',
           use: [
-            { loader: 'file-loader', options: { esModule: false, name: 'static/[name]_[contenthash:7].[ext]' } },
             !env.production && { loader: 'image-webpack-loader' },
           ].filter(Boolean),
         },
@@ -184,6 +186,7 @@ function getConfig(env, {
       path: path.join(outputPackage, 'public'),
       filename: env.production ? 'static/[name]_[chunkhash:7].mjs' : '[name]_dev.mjs',
       chunkFilename: env.production ? 'static/[name]_[chunkhash:7].mjs' : '[name]_dev.mjs',
+      assetModuleFilename: env.production ? 'static/[name]_[hash:7][ext]' : '[name][ext]',
       crossOriginLoading: 'anonymous',
     },
 
