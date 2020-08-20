@@ -7,8 +7,10 @@ module.exports = (api, envOverride) => {
 
   api.cache(() => `${env}${browsers || ''}`);
 
+  // When the caller is @babel/register, we expect to immediately run the output, in the current Node.js version.
   const callerIsNode = api.caller(caller => caller && caller.name === '@babel/register');
-  // Check if we're part of a `target: 'node'` webpack build.
+  // When the target is `node`, we're doing a webpack build for server-side code. The output will run in any Node.js
+  // version supported by our public API.
   const targetIsNode = api.caller(caller => caller && caller.target === 'node');
   // Check if our output should support older browsers.
   const targetIsLegacy = api.caller(caller => caller && caller.output && caller.output.ecmaVersion === 5);
@@ -18,9 +20,7 @@ module.exports = (api, envOverride) => {
   let bugfixes = false;
   if (callerIsNode) {
     targets = { node: 'current', browsers: '' };
-  }
-
-  if (targetIsNode) {
+  } else if (targetIsNode) {
     targets = { node: '10.0.0', browsers: '' };
   }
 
@@ -47,6 +47,9 @@ module.exports = (api, envOverride) => {
       '@babel/plugin-proposal-class-properties',
       ['@babel/plugin-transform-runtime', {
         version: pkg.dependencies['@babel/runtime'],
+        // When targeting Node.js for any reason, dependencies are external to the webpack bundle,
+        // and must be `require()`-able.
+        useESModules: !callerIsNode && !targetIsNode,
         corejs: false,
       }],
     ],
