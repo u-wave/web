@@ -156,6 +156,12 @@ function getConfig(env, {
       ],
     },
     resolve: {
+      extensions: [
+        '.mjs',
+        '.js',
+        '.json',
+        '.wasm',
+      ],
       alias: {
         // Node.js shims
         path: 'path-browserify',
