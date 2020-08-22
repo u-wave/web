@@ -1,0 +1,9 @@
+@import "../../../vars.css";
+
+.ChapterItem-duration {
+  float: right;
+  color: var(--muted-text-color);
+  margin-right: 5px;
+  margin-left: 7px;
+}
+

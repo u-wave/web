@@ -5,6 +5,43 @@ import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Radio from '@mui/material/Radio';
+import formatDuration from 'format-duration';
+
+function ChapterItem({
+  active, start, end, title, onClick,
+}) {
+  const duration = end - start;
+
+  return (
+    <ListItem
+      className="ChapterItem"
+      button
+      onClick={onClick}
+    >
+      <ListItemIcon>
+        <Radio
+          checked={active}
+          tabIndex={-1}
+        />
+      </ListItemIcon>
+      <ListItemText>
+        {title}
+        <span className="ChapterItem-duration">
+          {formatDuration(duration * 1000)}
+        </span>
+      </ListItemText>
+    </ListItem>
+  );
+}
+
+ChapterItem.propTypes = {
+  active: PropTypes.bool.isRequired,
+  start: PropTypes.number.isRequired,
+  end: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+};
+>>>>>>> 0047506e (Display the chapter duration)
 
 function Chapters({
   className,
@@ -14,21 +51,16 @@ function Chapters({
   onChange,
 }) {
   return (
-    <List className={className} dense disablePadding>
+    <List className={className} disablePadding>
       {available.map((chapter) => (
-        <ListItem
+        <ChapterItem
           key={chapter.start}
-          button
           onClick={() => onChange(chapter)}
-        >
-          <ListItemIcon>
-            <Radio
-              checked={chapter.start === start && chapter.end === end}
-              tabIndex={-1}
-            />
-          </ListItemIcon>
-          <ListItemText primary={chapter.title} />
-        </ListItem>
+          active={chapter.start === start && chapter.end === end}
+          start={chapter.start}
+          end={chapter.end}
+          title={chapter.title}
+        />
       ))}
     </List>
   );
