@@ -63,6 +63,7 @@ uwave:
       titleLabel: Titel
       playFromLabel: "Speel van:"
       playToLabel: "tot:"
+      chapterLabel: "Of kies een deel:"
       errors:
         invalidStartTime: Die begintijd klopt niet.
         invalidEndTime: Die eindtijd klopt niet.

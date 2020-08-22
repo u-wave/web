@@ -3,6 +3,22 @@
   max-width: 768px;
 }
 
+.EditMediaDialog-chapters {
+  display: flex;
+}
+
+.EditMediaDialog-chaptersLabel {
+  line-height: 50px;
+  padding: 0 20px;
+  margin: 0;
+}
+
+.EditMediaDialog-chaptersList {
+  flex-grow: 1;
+  overflow-y: auto;
+  max-height: 30vh;
+}
+
 .EditMediaDialogForm {
   display: flex;
   justify-content: space-between;

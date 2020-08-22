@@ -17,6 +17,7 @@ import Form from '../../Form';
 import FormGroup from '../../Form/Group';
 import Button from '../../Form/Button';
 import TextField from '../../Form/TextField';
+import Chapters from './Chapters';
 
 const {
   useCallback,
@@ -100,6 +101,11 @@ function EditMediaDialog({
     setEnd(event.target.value);
   }, []);
 
+  const handleChangeChapter = useCallback((chapter) => {
+    setStart(formatDuration(chapter.start * 1000));
+    setEnd(formatDuration(chapter.end * 1000));
+  }, []);
+
   const handleSwapArtistTitle = useCallback(() => {
     setArtist(title);
     setTitle(artist);
@@ -161,13 +167,29 @@ function EditMediaDialog({
     <TextField
       id={endFieldId}
       className="EditMediaDialogGroup-field"
-      placeholder={formatDuration(media.duration)}
+      placeholder={formatDuration(media.duration * 1000)}
       value={end}
       onChange={handleChangeEnd}
       icon={<EndIcon htmlColor="#9f9d9e" />}
       tabIndex={BASE_TAB_INDEX + 3}
     />
   );
+
+  const chapterCount = media.sourceData?.chapters?.length ?? 0;
+  const chapters = chapterCount > 0 ? (
+    <FormGroup className="EditMediaDialog-chapters">
+      <p className="EditMediaDialog-chaptersLabel">
+        {t('dialogs.editMedia.chapterLabel')}
+      </p>
+      <Chapters
+        className="EditMediaDialog-chaptersList"
+        available={media.sourceData.chapters}
+        start={parseDuration(start)}
+        end={parseDuration(end)}
+        onChange={handleChangeChapter}
+      />
+    </FormGroup>
+  ) : null;
 
   const form = (
     <Form onSubmit={handleSubmit}>
@@ -176,6 +198,7 @@ function EditMediaDialog({
           {errors.map((error) => (
             <div>{t(`dialogs.editMedia.errors.${error}`)}</div>
           ))}
+
         </FormGroup>
       )}
 
@@ -207,7 +230,9 @@ function EditMediaDialog({
         </div>
       </div>
 
-      <FormGroup className="FormGroup--noSpacing">
+      {chapters}
+
+      <FormGroup>
         <Button className="EditMediaDialog-submit">
           {t('dialogs.editMedia.save')}
         </Button>
