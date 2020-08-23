@@ -4,8 +4,12 @@
   color: var(--muted-text-color);
 }
 
+.ChapterItem {
+  /* Push the duration to the edge */
+  justify-content: space-between;
+}
+
 .ChapterItem-duration {
-  float: right;
   color: var(--muted-text-color);
   margin-right: 5px;
   margin-left: 7px;

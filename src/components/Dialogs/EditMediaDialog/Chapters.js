@@ -41,7 +41,9 @@ function Chapters({
       </MenuItem>
       {available.map((chapter, index) => (
         <MenuItem className="ChapterItem" value={index}>
-          {chapter.title}
+          <span className="ChapterItem-title">
+            {chapter.title}
+          </span>
           <span className="ChapterItem-duration">
             {formatDuration((chapter.end - chapter.start) * 1000)}
           </span>
