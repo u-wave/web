@@ -124,7 +124,7 @@ function EditMediaDialog({
   );
   const artistTitleLabel = (
     <div className="EditMediaDialogGroup-label">
-      <IconButton onClick={handleSwapArtistTitle}>
+      <IconButton onClick={handleSwapArtistTitle} tabIndex={BASE_TAB_INDEX + 1}>
         <SwapArtistTitleIcon htmlColor="#9f9d9e" />
       </IconButton>
     </div>
@@ -136,7 +136,7 @@ function EditMediaDialog({
       value={title}
       onChange={handleChangeTitle}
       icon={<TitleIcon htmlColor="#9f9d9e" />}
-      tabIndex={BASE_TAB_INDEX + 1}
+      tabIndex={BASE_TAB_INDEX + 2}
     />
   );
 
@@ -154,7 +154,7 @@ function EditMediaDialog({
       value={start}
       onChange={handleChangeStart}
       icon={<StartIcon htmlColor="#9f9d9e" />}
-      tabIndex={BASE_TAB_INDEX + 2}
+      tabIndex={BASE_TAB_INDEX + 3}
     />
   );
   const toLabel = (
@@ -171,7 +171,7 @@ function EditMediaDialog({
       value={end}
       onChange={handleChangeEnd}
       icon={<EndIcon htmlColor="#9f9d9e" />}
-      tabIndex={BASE_TAB_INDEX + 3}
+      tabIndex={BASE_TAB_INDEX + 4}
     />
   );
 
@@ -187,6 +187,7 @@ function EditMediaDialog({
         start={parseDuration(start)}
         end={parseDuration(end)}
         onChange={handleChangeChapter}
+        tabIndex={BASE_TAB_INDEX + 5}
       />
     </FormGroup>
   ) : null;
@@ -233,7 +234,7 @@ function EditMediaDialog({
       {chapters}
 
       <FormGroup>
-        <Button className="EditMediaDialog-submit">
+        <Button className="EditMediaDialog-submit" tabIndex={BASE_TAB_INDEX + 6}>
           {t('dialogs.editMedia.save')}
         </Button>
       </FormGroup>
