@@ -4,9 +4,13 @@
   color: var(--muted-text-color);
 }
 
-.ChapterItem {
+.Chapters-select {
+  display: flex;
+}
+
+.ChapterItem-title {
   /* Push the duration to the edge */
-  justify-content: space-between;
+  flex-grow: 1;
 }
 
 .ChapterItem-duration {
