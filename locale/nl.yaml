@@ -64,6 +64,7 @@ uwave:
       playFromLabel: "Speel van:"
       playToLabel: "tot:"
       chapterLabel: "Of kies een deel:"
+      chapterCount: "{{}} delen"
       errors:
         invalidStartTime: Die begintijd klopt niet.
         invalidEndTime: Die eindtijd klopt niet.
@@ -131,7 +132,7 @@ uwave:
     title: Geschiedenis
 
   users:
-    title: Room
+    title: Mensen
     guests: "en {{count}} gast"
     guests_plural: "en {{count}} gasten"
 
