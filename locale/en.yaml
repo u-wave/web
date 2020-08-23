@@ -79,6 +79,8 @@ uwave:
       playFromLabel: "Play from:"
       playToLabel: "to:"
       chapterLabel: "Or pick a chapter:"
+      chapterCount: "{{count}} chapter"
+      chapterCount_plural: "{{count}} chapters"
       errors:
         invalidStartTime: That start time is invalid.
         invalidEndTime: That end time is invalid.
