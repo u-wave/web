@@ -1,5 +1,9 @@
 @import "../../../vars.css";
 
+.Chapters-placeholder {
+  color: var(--muted-text-color);
+}
+
 .ChapterItem-duration {
   float: right;
   color: var(--muted-text-color);

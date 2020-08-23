@@ -33,7 +33,9 @@ function Chapters({
       value={selectedIndex}
     >
       <MenuItem disabled value={-1}>
-        {t('dialogs.editMedia.chapterCount', { count: available.length })}
+        <span className="Chapters-placeholder">
+          {t('dialogs.editMedia.chapterCount', { count: available.length })}
+        </span>
       </MenuItem>
       {available.map((chapter, index) => (
         <MenuItem className="ChapterItem" value={index}>
