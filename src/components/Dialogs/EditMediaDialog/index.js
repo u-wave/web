@@ -177,7 +177,7 @@ function EditMediaDialog({
 
   const chapterCount = media.sourceData?.chapters?.length ?? 0;
   const chapters = chapterCount > 0 ? (
-    <FormGroup className="EditMediaDialog-chapters">
+    <FormGroup className="FormGroup--noSpacing EditMediaDialog-chapters">
       <p className="EditMediaDialog-chaptersLabel">
         {t('dialogs.editMedia.chapterLabel')}
       </p>
