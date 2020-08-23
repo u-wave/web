@@ -76,6 +76,7 @@ uwave:
       save: Save
       artistLabel: Artist
       titleLabel: Title
+      swapArtistTitle: Swap
       playFromLabel: "Play from:"
       playToLabel: "to:"
       chapterLabel: "Or pick a chapter:"
