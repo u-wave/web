@@ -12,6 +12,7 @@ import {
   LOGOUT_COMPLETE,
   RESET_PASSWORD_COMPLETE,
   LOAD_ALL_PLAYLISTS_START,
+  OPEN_LOGIN_DIALOG,
 } from '../constants/ActionTypes';
 import * as Session from '../utils/Session';
 import { get, post, del } from './RequestActionCreators';
@@ -201,7 +202,7 @@ function socialLogin(service) {
     function oncreate(data) {
       promise = Promise.resolve();
       dispatch({
-        type: 'auth/OPEN_LOGIN_DIALOG',
+        type: OPEN_LOGIN_DIALOG,
         payload: {
           show: 'social',
           service: data.type,
@@ -233,10 +234,31 @@ function socialLogin(service) {
       }
     });
 
+    dispatch({
+      type: OPEN_LOGIN_DIALOG,
+      payload: {
+        show: 'loading',
+        service,
+      },
+    });
+
     const loginWindow = window.open(`${apiUrl}/auth/service/${service}?origin=${clientOrigin}`);
     return whenWindowClosed(loginWindow).then(() => {
       if (messageHandlerCalled) return promise;
-      return onlogin();
+      // Even if the handler wasn't called it's possible that the login succeeded.
+      // Let's just check to be sure!
+      onlogin();
+      return promise.then((data) => {
+        console.log(data);
+        // If it doesn't have a `user` property, login did not succeed. Go back to
+        // the login form.
+        if (data && !data.user) {
+          dispatch({
+            type: OPEN_LOGIN_DIALOG,
+            payload: { show: 'login' },
+          });
+        }
+      });
     });
   };
 }

@@ -8,3 +8,9 @@
 .LoginDialog--mobile {
   max-width: 100%;
 }
+
+.LoginDialog-loading {
+  display: flex;
+  justify-content: center;
+  padding: 64px;
+}

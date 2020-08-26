@@ -209,7 +209,11 @@ uwave:
     privacyPolicy: Privacy Policy
     agree: I am at least 13 years old and accept the {{privacyPolicy}}.
     social:
-      loginWithGoogle: Sign in with Google
+      loginWith: Sign in with {{service}}
+      registerWithTitle: Register With {{service}}
+      waitingForTitle: Waiting For {{service}}…
+      services:
+        google: Google
   resetPassword:
     introduction: Enter a new password below.
     submit: Reset Password

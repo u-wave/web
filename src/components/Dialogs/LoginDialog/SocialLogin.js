@@ -12,11 +12,13 @@ function SocialLogin() {
   const { t } = useTranslator();
   const dispatch = useDispatch();
 
+  const googleName = t('login.social.services.google');
+
   return (
     <React.Suspense fallback={loadingGoogleButton}>
       <GoogleButton
         style={{ width: '100%' }}
-        label={t('login.social.loginWithGoogle')}
+        label={t('login.social.loginWith', { service: googleName })}
         onClick={() => dispatch(loginWithGoogle())}
       />
     </React.Suspense>
