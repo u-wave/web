@@ -73,7 +73,7 @@ function DrawerMenu({
               </ListItemIcon>
             )}
             <ListItemText disableTypography>
-              <Typography noWrap variant="subheading">{playlist.name}</Typography>
+              <Typography noWrap variant="body1">{playlist.name}</Typography>
             </ListItemText>
           </MenuItem>
         ))}
