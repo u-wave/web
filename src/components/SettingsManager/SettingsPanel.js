@@ -1,6 +1,7 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
+import useMediaQuery from 'use-mediaquery';
 import { useTranslator } from '@u-wave/react-translate';
 import FormGroup from '@material-ui/core/FormGroup';
 import Switch from '@material-ui/core/Switch';
@@ -21,6 +22,7 @@ function SettingsPanel({
   onLogout,
 }) {
   const { t } = useTranslator();
+  const isWide = useMediaQuery('(min-width: 1280px)');
 
   const handleVideoEnabledChange = (event, value) => {
     onSettingChange('videoEnabled', value);
@@ -35,65 +37,93 @@ function SettingsPanel({
     onChangeLanguage(event.target.value);
   };
 
+  const profileSection = user && (
+    <div key="profile" className="SettingsPanel-section SettingsPanel-user">
+      <Profile user={user} onChangeUsername={onChangeUsername} />
+    </div>
+  );
+
+  const settingsSection = (
+    <div key="settings" className="SettingsPanel-section SettingsPanel-settings">
+      <h2 className="SettingsPanel-header">{t('settings.title')}</h2>
+      <FormGroup>
+        <SettingControl
+          label={t('settings.videoEnabled')}
+          helpText={t('settings.videoEnabledHelp')}
+        >
+          <Switch
+            color="primary"
+            checked={settings.videoEnabled}
+            onChange={handleVideoEnabledChange}
+          />
+        </SettingControl>
+        <SettingControl label={t('settings.videoSize')}>
+          <Switch
+            color="primary"
+            checked={settings.videoSize === 'large'}
+            onChange={handleVideoSizeChange}
+          />
+        </SettingControl>
+        <SettingControl label={t('settings.mentionSound')}>
+          <Switch
+            color="primary"
+            checked={settings.mentionSound}
+            onChange={handleMentionSoundChange}
+          />
+        </SettingControl>
+        <SettingControl label={t('settings.language')}>
+          <LanguagePicker
+            value={settings.language}
+            onChange={handleLanguageChange}
+          />
+        </SettingControl>
+      </FormGroup>
+    </div>
+  );
+
+  const linksSection = (
+    <div key="links" className="SettingsPanel-section SettingsPanel-links">
+      <Links />
+    </div>
+  );
+
+  const signoutSection = user && (
+    <div key="signout" className="SettingsPanel-section SettingsPanel-signout">
+      <LogoutButton onLogout={onLogout} />
+    </div>
+  );
+
+  const notificationsSection = (
+    <div key="notifications" className="SettingsPanel-section SettingsPanel-notificationSettings">
+      <NotificationSettings settings={settings} onSettingChange={onSettingChange} />
+    </div>
+  );
+
   return (
-    <div className={cx('SettingsPanel', className)}>
-      {user && (
-        <Profile
-          user={user}
-          onChangeUsername={onChangeUsername}
-        />
+    <div className={cx('SettingsPanel', isWide && 'is-wide', className)}>
+      {isWide ? (
+        // On wider screens, use two columns
+        <>
+          {profileSection}
+          <div className="SettingsPanel-column SettingsPanel-column--left">
+            {settingsSection}
+            {linksSection}
+            {signoutSection}
+          </div>
+          <div className="SettingsPanel-column SettingsPanel-column--right">
+            {notificationsSection}
+          </div>
+        </>
+      ) : (
+        // On narrower screens, use a single-column layout
+        <>
+          {profileSection}
+          {settingsSection}
+          {notificationsSection}
+          {linksSection}
+          {signoutSection}
+        </>
       )}
-      {user && <hr className="SettingsPanel-divider" />}
-      <div className="SettingsPanel-column SettingsPanel-column--left">
-        <h2 className="SettingsPanel-header">{t('settings.title')}</h2>
-        <FormGroup>
-          <SettingControl
-            label={t('settings.videoEnabled')}
-            helpText={t('settings.videoEnabledHelp')}
-          >
-            <Switch
-              color="primary"
-              checked={settings.videoEnabled}
-              onChange={handleVideoEnabledChange}
-            />
-          </SettingControl>
-          <SettingControl label={t('settings.videoSize')}>
-            <Switch
-              color="primary"
-              checked={settings.videoSize === 'large'}
-              onChange={handleVideoSizeChange}
-            />
-          </SettingControl>
-          <SettingControl label={t('settings.mentionSound')}>
-            <Switch
-              color="primary"
-              checked={settings.mentionSound}
-              onChange={handleMentionSoundChange}
-            />
-          </SettingControl>
-          <SettingControl label={t('settings.language')}>
-            <LanguagePicker
-              value={settings.language}
-              onChange={handleLanguageChange}
-            />
-          </SettingControl>
-        </FormGroup>
-        <hr className="SettingsPanel-divider" />
-        <Links />
-        {user && (
-          <>
-            <hr className="SettingsPanel-divider" />
-            <LogoutButton onLogout={onLogout} />
-          </>
-        )}
-      </div>
-      <div className="SettingsPanel-column SettingsPanel-column--right">
-        <NotificationSettings
-          settings={settings}
-          onSettingChange={onSettingChange}
-        />
-        <hr className="SettingsPanel-divider" />
-      </div>
     </div>
   );
 }
