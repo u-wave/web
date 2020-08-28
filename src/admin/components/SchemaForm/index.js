@@ -44,44 +44,44 @@ const renderers = {
   },
   textarea(schema, { value, onChange }) {
     return (
-      <React.Fragment>
+      <>
         <Typography component="p">{schema.title}</Typography>
         <textarea
           value={value}
           onChange={e => onChange(e.target.value)}
         />
         {schema.description && <FormHelperText>{schema.description}</FormHelperText>}
-      </React.Fragment>
+      </>
     );
   },
   string(schema, { value, onChange }) {
     return (
-      <React.Fragment>
-        <Typography gutterBottom>{schema.title}</Typography>
+      <>
+        {schema.title && <Typography gutterBottom>{schema.title}</Typography>}
         <TextField
           value={value}
           onChange={e => onChange(e.target.value)}
         />
         {schema.description && <FormHelperText>{schema.description}</FormHelperText>}
-      </React.Fragment>
+      </>
     );
   },
   number(schema, { value, onChange }) {
     return (
-      <React.Fragment>
-        <Typography gutterBottom>{schema.title}</Typography>
+      <>
+        {schema.title && <Typography gutterBottom>{schema.title}</Typography>}
         <TextField
           type="number"
           value={value}
           onChange={e => onChange(e.target.value)}
         />
         {schema.description && <FormHelperText>{schema.description}</FormHelperText>}
-      </React.Fragment>
+      </>
     );
   },
   boolean(schema, { value, onChange }) {
     return (
-      <React.Fragment>
+      <>
         <FormControlLabel
           control={
             <Checkbox
@@ -92,9 +92,27 @@ const renderers = {
           label={schema.title}
         />
         {schema.description && <FormHelperText>{schema.description}</FormHelperText>}
-      </React.Fragment>
+      </>
     );
   },
+  array(schema, { value, onChange }, renderChild) {
+    return (
+      <>
+        <Typography gutterBottom>{schema.title}</Typography>
+        {value.map((subValue, index) => (
+          renderChild(schema.items, {
+            value: subValue,
+            onChange: (newValue) => onChange([
+              ...value.slice(0, index),
+              newValue,
+              ...value.slice(index + 1),
+            ]),
+          })
+        ))}
+        {schema.description && <FormHelperText>{schema.description}</FormHelperText>}
+      </>
+    );
+  }
 };
 
 export default class SchemaForm extends React.Component {
