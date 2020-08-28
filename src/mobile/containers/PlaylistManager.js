@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   selectedPlaylistSelector,
   filteredSelectedPlaylistItemsSelector,
@@ -7,6 +7,11 @@ import {
 import { showSearchResultsSelector } from '../../selectors/searchSelectors';
 import { showImportPanelSelector } from '../../selectors/importSelectors';
 import createLazyOverlay from '../../components/LazyOverlay';
+import { closeAll } from '../../actions/OverlayActionCreators';
+
+const {
+  useCallback,
+} = React;
 
 const PlaylistManager = createLazyOverlay({
   loader: () => import('../components/PlaylistManager' /* webpackChunkName: "playlistsMobile" */),
@@ -18,6 +23,8 @@ function PlaylistManagerContainer() {
   const selectedItems = useSelector(filteredSelectedPlaylistItemsSelector);
   const showImportPanel = useSelector(showImportPanelSelector);
   const showSearchResults = useSelector(showSearchResultsSelector);
+  const dispatch = useDispatch();
+  const onCloseOverlay = useCallback(() => dispatch(closeAll()), [dispatch]);
 
   return (
     <PlaylistManager
@@ -25,6 +32,7 @@ function PlaylistManagerContainer() {
       selectedItems={selectedItems}
       showImportPanel={showImportPanel}
       showSearchResults={showSearchResults}
+      onCloseOverlay={onCloseOverlay}
     />
   );
 }
