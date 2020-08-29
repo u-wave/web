@@ -64,7 +64,7 @@ function UserList({
       <Divider />
 
       <List
-        subheader={<ListSubheader>{t('users.title')}</ListSubheader>}
+        subheader={<ListSubheader>{t('users.listeners')}</ListSubheader>}
       >
         {users.map((user) => (
           <UserRow key={user._id} user={user} />

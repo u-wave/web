@@ -156,6 +156,7 @@ uwave:
 
   users:
     title: Room
+    listeners: Listeners
     guests: "and {{count}} guest"
     guests_plural: "and {{count}} guests"
 
