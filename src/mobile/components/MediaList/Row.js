@@ -5,6 +5,8 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
 
+const noWrap = { noWrap: true };
+
 const MediaRow = ({ media }) => (
   <ListItem className="MobileMediaRow">
     <ListItemAvatar>
@@ -14,6 +16,8 @@ const MediaRow = ({ media }) => (
       />
     </ListItemAvatar>
     <ListItemText
+      primaryTypographyProps={noWrap}
+      secondaryTypographyProps={noWrap}
       primary={media.title}
       secondary={media.artist}
     />
