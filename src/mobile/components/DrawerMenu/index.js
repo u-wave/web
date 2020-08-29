@@ -8,7 +8,6 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import Divider from '@material-ui/core/Divider';
-import Typography from '@material-ui/core/Typography';
 import ActiveIcon from '@material-ui/icons/Check';
 import UserCard from '../../../components/UserCard/UserCard';
 
@@ -46,10 +45,8 @@ function Playlists({
               <ActiveIcon />
             </ListItemIcon>
           )}
-          <ListItemText disableTypography>
-            <Typography noWrap variant="body1">
-              {playlist.name}
-            </Typography>
+          <ListItemText primaryTypographyProps={{ noWrap: true }}>
+            {playlist.name}
           </ListItemText>
         </MenuItem>
       ))}
