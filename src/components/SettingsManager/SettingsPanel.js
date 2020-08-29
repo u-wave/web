@@ -1,7 +1,8 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate } from '@u-wave/react-translate';
+import useMediaQuery from 'use-mediaquery';
+import { useTranslator } from '@u-wave/react-translate';
 import FormGroup from '@material-ui/core/FormGroup';
 import Switch from '@material-ui/core/Switch';
 import Profile from './Profile';
@@ -11,113 +12,130 @@ import LogoutButton from './LogoutButton';
 import NotificationSettings from './NotificationSettings';
 import Links from './Links';
 
-const enhance = translate();
+function SettingsPanel({
+  className,
+  settings,
+  user,
+  onSettingChange,
+  onChangeUsername,
+  onChangeLanguage,
+  onLogout,
+}) {
+  const { t } = useTranslator();
+  const isWide = useMediaQuery('(min-width: 1280px)');
 
-class SettingsPanel extends React.Component {
-  static propTypes = {
-    t: PropTypes.func.isRequired,
-    className: PropTypes.string,
-    settings: PropTypes.object.isRequired,
-    user: PropTypes.object,
-    onSettingChange: PropTypes.func.isRequired,
-    onChangeUsername: PropTypes.func.isRequired,
-    onChangeLanguage: PropTypes.func.isRequired,
-    onLogout: PropTypes.func.isRequired,
-  };
-
-  handleVideoEnabledChange = (e, value) => {
-    const { onSettingChange } = this.props;
+  const handleVideoEnabledChange = (event, value) => {
     onSettingChange('videoEnabled', value);
   };
-
-  handleVideoSizeChange = (e, value) => {
-    const { onSettingChange } = this.props;
+  const handleVideoSizeChange = (event, value) => {
     onSettingChange('videoSize', value ? 'large' : 'small');
   };
-
-  handleMentionSoundChange = (e, value) => {
-    const { onSettingChange } = this.props;
+  const handleMentionSoundChange = (event, value) => {
     onSettingChange('mentionSound', value);
   };
-
-  handleLanguageChange = (event) => {
-    const { onChangeLanguage } = this.props;
+  const handleLanguageChange = (event) => {
     onChangeLanguage(event.target.value);
   };
 
-  render() {
-    const {
-      t,
-      className,
-      settings,
-      user,
-      onSettingChange,
-      onChangeUsername,
-      onLogout,
-    } = this.props;
+  const profileSection = user && (
+    <div key="profile" className="SettingsPanel-section SettingsPanel-user">
+      <Profile user={user} onChangeUsername={onChangeUsername} />
+    </div>
+  );
 
-    return (
-      <div className={cx('SettingsPanel', className)}>
-        {user && (
-          <Profile
-            user={user}
-            onChangeUsername={onChangeUsername}
+  const settingsSection = (
+    <div key="settings" className="SettingsPanel-section SettingsPanel-settings">
+      <h2 className="SettingsPanel-header">{t('settings.title')}</h2>
+      <FormGroup>
+        <SettingControl
+          label={t('settings.videoEnabled')}
+          helpText={t('settings.videoEnabledHelp')}
+        >
+          <Switch
+            color="primary"
+            checked={settings.videoEnabled}
+            onChange={handleVideoEnabledChange}
           />
-        )}
-        {user && <hr className="SettingsPanel-divider" />}
-        <div className="SettingsPanel-column SettingsPanel-column--left">
-          <h2 className="SettingsPanel-header">{t('settings.title')}</h2>
-          <FormGroup>
-            <SettingControl
-              label={t('settings.videoEnabled')}
-              helpText={t('settings.videoEnabledHelp')}
-            >
-              <Switch
-                color="primary"
-                checked={settings.videoEnabled}
-                onChange={this.handleVideoEnabledChange}
-              />
-            </SettingControl>
-            <SettingControl label={t('settings.videoSize')}>
-              <Switch
-                color="primary"
-                checked={settings.videoSize === 'large'}
-                onChange={this.handleVideoSizeChange}
-              />
-            </SettingControl>
-            <SettingControl label={t('settings.mentionSound')}>
-              <Switch
-                color="primary"
-                checked={settings.mentionSound}
-                onChange={this.handleMentionSoundChange}
-              />
-            </SettingControl>
-            <SettingControl label={t('settings.language')}>
-              <LanguagePicker
-                value={settings.language}
-                onChange={this.handleLanguageChange}
-              />
-            </SettingControl>
-          </FormGroup>
-          <hr className="SettingsPanel-divider" />
-          <Links />
-          {user && (
-            <>
-              <hr className="SettingsPanel-divider" />
-              <LogoutButton onLogout={onLogout} />
-            </>
-          )}
-        </div>
-        <div className="SettingsPanel-column SettingsPanel-column--right">
-          <NotificationSettings
-            settings={settings}
-            onSettingChange={onSettingChange}
+        </SettingControl>
+        <SettingControl label={t('settings.videoSize')}>
+          <Switch
+            color="primary"
+            checked={settings.videoSize === 'large'}
+            onChange={handleVideoSizeChange}
           />
-          <hr className="SettingsPanel-divider" />
-        </div>
-      </div>
-    );
-  }
+        </SettingControl>
+        <SettingControl label={t('settings.mentionSound')}>
+          <Switch
+            color="primary"
+            checked={settings.mentionSound}
+            onChange={handleMentionSoundChange}
+          />
+        </SettingControl>
+        <SettingControl label={t('settings.language')}>
+          <LanguagePicker
+            value={settings.language}
+            onChange={handleLanguageChange}
+          />
+        </SettingControl>
+      </FormGroup>
+    </div>
+  );
+
+  const linksSection = (
+    <div key="links" className="SettingsPanel-section SettingsPanel-links">
+      <Links />
+    </div>
+  );
+
+  const signoutSection = user && (
+    <div key="signout" className="SettingsPanel-section SettingsPanel-signout">
+      <LogoutButton onLogout={onLogout} />
+    </div>
+  );
+
+  const notificationsSection = (
+    <div key="notifications" className="SettingsPanel-section SettingsPanel-notificationSettings">
+      <NotificationSettings settings={settings} onSettingChange={onSettingChange} />
+    </div>
+  );
+
+  return (
+    <div className={cx('SettingsPanel', isWide && 'is-wide', className)}>
+      {isWide ? (
+        // On wider screens, use two columns
+        <>
+          {profileSection}
+          <div className="SettingsPanel-column SettingsPanel-column--left">
+            {settingsSection}
+            {linksSection}
+            {signoutSection}
+          </div>
+          <div className="SettingsPanel-column SettingsPanel-column--right">
+            {notificationsSection}
+          </div>
+        </>
+      ) : (
+        // On narrower screens, use a single-column layout
+        <>
+          {profileSection}
+          {settingsSection}
+          {notificationsSection}
+          {linksSection}
+          {signoutSection}
+        </>
+      )}
+    </div>
+  );
 }
 
-export default enhance(SettingsPanel);
+SettingsPanel.propTypes = {
+  className: PropTypes.string,
+  settings: PropTypes.object.isRequired,
+  user: PropTypes.object,
+  onSettingChange: PropTypes.func.isRequired,
+  onChangeUsername: PropTypes.func.isRequired,
+  onChangeLanguage: PropTypes.func.isRequired,
+  onLogout: PropTypes.func.isRequired,
+};
+
+export default SettingsPanel;

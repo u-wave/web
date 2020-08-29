@@ -1,18 +1,20 @@
 .MobileHistoryVotes {
-  float: right;
-  height: 16px;
-  display: inline-flex;
-  flex-direction: row;
-  justify-content: center;
+  height: 100%;
+  display: flex;
+  flex-shrink: 0;
 }
 
 .MobileHistoryVotes-vote {
   margin-right: 5px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
 .MobileHistoryVotes-icon {
+  order: 1;
   height: 16px;
   width: 22px;
   padding: 0 4px 0 2px;
-  vertical-align: top;
 }
