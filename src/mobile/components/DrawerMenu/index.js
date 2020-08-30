@@ -4,15 +4,20 @@ import { useTranslator } from '@u-wave/react-translate';
 import Drawer from '@material-ui/core/Drawer';
 import MenuList from '@material-ui/core/MenuList';
 import MenuItem from '@material-ui/core/MenuItem';
+import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import Divider from '@material-ui/core/Divider';
+import Button from '@material-ui/core/Button';
 import ActiveIcon from '@material-ui/icons/Check';
+import CreatePlaylistIcon from '@material-ui/icons/Add';
+import PromptDialog from '../../../components/Dialogs/PromptDialog';
 import UserCard from '../../../components/UserCard/UserCard';
 
 const {
   useCallback,
+  useState,
 } = React;
 
 const classes = {
@@ -23,7 +28,17 @@ function Playlists({
   title,
   playlists,
   onShowPlaylist,
+  onCreatePlaylist,
 }) {
+  const { t } = useTranslator();
+  const [creatingPlaylist, setCreating] = useState(false);
+  const handleOpen = useCallback(() => setCreating(true), []);
+  const handleClose = useCallback(() => setCreating(false), []);
+  const handleSubmit = useCallback((playlistName) => (
+    Promise.resolve(onCreatePlaylist(playlistName))
+      .then(() => setCreating(false))
+  ), [onCreatePlaylist]);
+
   const header = (
     <ListSubheader>
       {title}
@@ -32,6 +47,25 @@ function Playlists({
 
   return (
     <MenuList subheader={header}>
+      <ListItem>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleOpen}
+        >
+          {t('playlists.new')}
+        </Button>
+        {creatingPlaylist && (
+          <PromptDialog
+            title={t('dialogs.createPlaylist.nameInputTitle')}
+            icon={<CreatePlaylistIcon htmlColor="#777" />}
+            submitLabel={t('dialogs.createPlaylist.action')}
+            onSubmit={handleSubmit}
+            onCancel={handleClose}
+          />
+        )}
+      </ListItem>
+
       {playlists.map((playlist) => (
         <MenuItem
           key={playlist._id}
@@ -58,6 +92,7 @@ Playlists.propTypes = {
   title: PropTypes.string.isRequired,
   playlists: PropTypes.arrayOf(PropTypes.shape({ name: PropTypes.string.isRequired })).isRequired,
   onShowPlaylist: PropTypes.func.isRequired,
+  onCreatePlaylist: PropTypes.func.isRequired,
 };
 
 function DrawerMenu({
@@ -69,6 +104,7 @@ function DrawerMenu({
   onShowServerList,
   onShowSettings,
   onShowPlaylist,
+  onCreatePlaylist,
   onDrawerClose,
 }) {
   const { t } = useTranslator();
@@ -113,6 +149,7 @@ function DrawerMenu({
             title={t('playlists.title')}
             playlists={playlists}
             onShowPlaylist={handleShowPlaylist}
+            onCreatePlaylist={onCreatePlaylist}
           />
         </>
       )}
@@ -129,6 +166,7 @@ DrawerMenu.propTypes = {
   onShowServerList: PropTypes.func.isRequired,
   onShowSettings: PropTypes.func.isRequired,
   onShowPlaylist: PropTypes.func.isRequired,
+  onCreatePlaylist: PropTypes.func.isRequired,
   onDrawerClose: PropTypes.func.isRequired,
 };
 

@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { currentUserSelector } from '../../selectors/userSelectors';
 import { playlistsSelector } from '../../selectors/playlistSelectors';
 import { toggleSettings, toggleAbout } from '../../actions/OverlayActionCreators';
+import { createPlaylist } from '../../actions/PlaylistActionCreators';
 import { drawerIsOpenSelector } from '../selectors/drawerSelectors';
 import { setDrawer } from '../actions/DrawerActionCreators';
 import { toggleServerList, openPlaylist } from '../actions/OverlayActionCreators';
@@ -25,6 +26,7 @@ function DrawerMenuContainer() {
   const onShowServerList = useCallback(() => dispatch(toggleServerList()), []);
   const onShowSettings = useCallback(() => dispatch(toggleSettings()), []);
   const onShowPlaylist = useCallback((playlistID) => dispatch(openPlaylist(playlistID)), []);
+  const onCreatePlaylist = useCallback((name) => dispatch(createPlaylist(name)), []);
   const onDrawerClose = useCallback(() => dispatch(setDrawer(false)), []);
 
   return (
@@ -37,6 +39,7 @@ function DrawerMenuContainer() {
       onShowServerList={onShowServerList}
       onShowSettings={onShowSettings}
       onShowPlaylist={onShowPlaylist}
+      onCreatePlaylist={onCreatePlaylist}
       onDrawerClose={onDrawerClose}
     />
   );
