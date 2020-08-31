@@ -1,5 +1,5 @@
 /* eslint-disable global-require */
-require('loud-rejection/register');
+require('make-promises-safe');
 const path = require('path');
 const chalk = require('chalk');
 const emojione = require('u-wave-web-emojione');
