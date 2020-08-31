@@ -212,11 +212,6 @@ function getConfig(env, {
       new HotModuleReplacementPlugin(),
       new ReactRefreshPlugin(),
     ],
-    resolve: {
-      alias: {
-        'react-dom': '@hot-loader/react-dom',
-      },
-    },
   };
 
   const productionConfigPatch = {
