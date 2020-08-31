@@ -1,5 +1,6 @@
 const { builtinModules } = require('module');
-const { RawSource } = require('webpack-sources');
+const { Compilation } = require('webpack');
+const { RawSource } = require('webpack').sources;
 const pkg = require('../../package.json');
 
 /**
@@ -8,8 +9,15 @@ const pkg = require('../../package.json');
 class MiddlewarePackageJsonPlugin {
   // eslint-disable-next-line class-methods-use-this
   apply(compiler) {
-    compiler.hooks.emit.tapPromise('middleware package.json', async (currentCompiler, callback) => {
-      const stats = currentCompiler.getStats().toJson();
+    compiler.hooks.compilation.tap('MiddlewarePackageJsonPlugin', this.applyCompilation.bind(this));
+  }
+
+  applyCompilation(compilation) {
+    compilation.hooks.processAssets.tapPromise({
+      name: 'middleware package.json',
+      stage: Compilation.PROCESS_ASSETS_STAGE_DERIVED,
+    }, async (assets) => {
+      const stats = compilation.getStats().toJson();
 
       // Add all external modules from the bundle as package.json dependencies.
       const externals = stats.modules
@@ -42,13 +50,9 @@ class MiddlewarePackageJsonPlugin {
         dependencies,
       };
 
-      currentCompiler.emitAsset('package.json', new RawSource(
+      compilation.emitAsset('package.json', new RawSource(
         JSON.stringify(middlewarePkg, null, 2),
       ));
-
-      if (callback) {
-        callback();
-      }
     });
   }
 }

@@ -150,7 +150,6 @@
     "webpack-dev-middleware": "4.0.0-rc.3",
     "webpack-hot-middleware": "^2.25.0",
     "webpack-merge": "^5.1.2",
-    "webpack-sources": "^1.4.3",
     "webpack-subresource-integrity": "^1.4.0",
     "webpackbar": "^4.0.0",
     "yaml-hook": "^1.0.0",
