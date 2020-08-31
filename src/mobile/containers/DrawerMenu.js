@@ -16,7 +16,7 @@ const {
 
 function DrawerMenuContainer() {
   const uwave = useContext(UwaveContext);
-  const hasAboutPage = uwave && uwave.getAboutPageComponent();
+  const hasAboutPage = !!(uwave && uwave.getAboutPageComponent());
   const user = useSelector(currentUserSelector);
   const playlists = useSelector(playlistsSelector);
   const open = useSelector(drawerIsOpenSelector);

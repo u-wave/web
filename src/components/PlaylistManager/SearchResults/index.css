@@ -39,6 +39,7 @@
   width: calc(40% - var(--media-list-spacing));
   line-height: calc(56px / 3 * 2);
 }
+
 .SearchResultRow-data .MediaListRow-title {
   height: 66%;
   width: calc(60% - var(--media-list-spacing));
