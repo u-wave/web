@@ -4,6 +4,7 @@ import { translate, Interpolate } from '@u-wave/react-translate';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Divider from '@material-ui/core/Divider';
 import EmailIcon from '@material-ui/icons/Email';
 import PasswordIcon from '@material-ui/icons/Lock';
 import UserIcon from '@material-ui/icons/Person';
@@ -13,7 +14,6 @@ import TextField from '../../Form/TextField';
 import Button from '../../Form/Button';
 import ReCaptcha from '../../ReCaptcha';
 import SocialLogin from './SocialLogin';
-import Separator from './Separator';
 
 const enhance = translate();
 
@@ -107,8 +107,10 @@ class RegisterForm extends React.Component {
         {error && <FormGroup>{error.message}</FormGroup>}
         {supportsSocialAuth && (
           <>
-            <SocialLogin />
-            <Separator />
+            <FormGroup>
+              <SocialLogin />
+            </FormGroup>
+            <Divider>or</Divider>
           </>
         )}
         <FormGroup>
