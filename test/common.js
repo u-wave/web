@@ -10,12 +10,7 @@ global.navigator = dom.window.navigator;
 const enzyme = require('enzyme');
 const Adapter = require('enzyme-adapter-react-16');
 
-require('@babel/register').default({
-  plugins: [
-    '@babel/plugin-transform-modules-commonjs',
-    'module:babel-plugin-dynamic-import-node',
-  ],
-});
+require('@babel/register');
 require('yaml-hook/register');
 
 enzyme.configure({
