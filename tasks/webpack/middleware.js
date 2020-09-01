@@ -7,16 +7,16 @@ const pkg = require('../../package.json');
  * webpack plugin to generate a package.json for the üWave Web middleware.
  */
 class MiddlewarePackageJsonPlugin {
-  // eslint-disable-next-line class-methods-use-this
   apply(compiler) {
     compiler.hooks.compilation.tap('MiddlewarePackageJsonPlugin', this.applyCompilation.bind(this));
   }
 
+  // eslint-disable-next-line class-methods-use-this
   applyCompilation(compilation) {
     compilation.hooks.processAssets.tapPromise({
       name: 'middleware package.json',
       stage: Compilation.PROCESS_ASSETS_STAGE_DERIVED,
-    }, async (assets) => {
+    }, async () => {
       const stats = compilation.getStats().toJson();
 
       // Add all external modules from the bundle as package.json dependencies.
