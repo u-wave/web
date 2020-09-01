@@ -29,11 +29,13 @@ export default {
     },
     mutedText: '#777',
   },
-  overrides: {
+  components: {
     MuiIconButton: {
-      root: {
-        '&:hover': {
-          backgroundColor: 'transparent',
+      styleOverrides: {
+        root: {
+          '&:hover': {
+            backgroundColor: 'transparent',
+          },
         },
       },
     },
