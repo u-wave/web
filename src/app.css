@@ -1,4 +1,5 @@
 @import "normalize.css";
+@import "@openfonts/open-sans_all";
 @import "./vars.css";
 @import "./components/index.css";
 @import "./sources/index.css";
