@@ -149,7 +149,7 @@
     "webpack-dev-middleware": "4.0.0-rc.3",
     "webpack-hot-middleware": "^2.25.0",
     "webpack-merge": "^5.1.2",
-    "webpack-subresource-integrity": "^1.4.0",
+    "webpack-subresource-integrity": "github:waysact/webpack-subresource-integrity#webpack-5",
     "webpackbar": "^4.0.0",
     "yaml-hook": "^1.0.0",
     "yaml-loader": "^0.6.0"
