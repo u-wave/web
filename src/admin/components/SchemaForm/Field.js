@@ -12,13 +12,21 @@ function Field({
   schema,
   value,
   onChange,
+  ...props
 }) {
   const controls = useContext(ControlsContext);
 
   const controlName = schema['uw:control'] || schema.type;
   const Control = controls.get(controlName);
   if (Control) {
-    return <Control schema={schema} value={value} onChange={onChange} />;
+    return (
+      <Control
+        {...props}
+        schema={schema}
+        value={value}
+        onChange={onChange}
+      />
+    );
   }
 
   return (

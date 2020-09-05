@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
-import FormGroup from '@material-ui/core/FormGroup';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Field from './Field';
 
@@ -20,9 +19,11 @@ function ObjectProperties({
     });
 
     return (
-      <FormGroup>
-        <Field schema={subSchema} value={subValue} onChange={subChange} />
-      </FormGroup>
+      <Field
+        schema={subSchema}
+        value={subValue}
+        onChange={subChange}
+      />
     );
   });
 }
