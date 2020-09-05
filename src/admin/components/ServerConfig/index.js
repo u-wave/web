@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useTranslator } from '@u-wave/react-translate';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Accordion from '@material-ui/core/Accordion';
@@ -9,72 +10,67 @@ import AccordionActions from '@material-ui/core/AccordionActions';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import SchemaForm from '../SchemaForm'; // eslint-disable-line
 
-class Section extends React.Component {
-  static propTypes = {
-    schema: PropTypes.shape({
-      type: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired,
-    }).isRequired,
-    defaultValue: PropTypes.object.isRequired,
-    onSave: PropTypes.func.isRequired,
-  };
+const {
+  useCallback,
+  useState,
+} = React;
 
-  constructor(props) {
-    super(props);
+function Section({
+  schema,
+  defaultValue,
+  onSave,
+}) {
+  const { t } = useTranslator();
+  const [value, setValue] = useState(defaultValue);
 
-    this.state = {
-      // eslint-disable-next-line react/destructuring-assignment
-      value: this.props.defaultValue,
-    };
-  }
+  const handleChange = useCallback((newValue) => {
+    setValue(newValue);
+  }, []);
 
-  handleChange = (value) => {
-    this.setState({ value });
-  };
-
-  handleSubmit = (event) => {
-    const { value } = this.state;
-    const { onSave } = this.props;
-
+  const handleSubmit = useCallback((event) => {
     event.preventDefault();
 
     onSave(value);
-  };
+  }, [value, onSave]);
 
-  render() {
-    const { value } = this.state;
-    const { schema } = this.props;
-
-    return (
-      <Accordion>
-        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <div>
-            <Typography>{schema.title}</Typography>
-            <Typography color="textSecondary">{schema.description}</Typography>
-          </div>
-        </AccordionSummary>
-        <AccordionDetails>
-          <SchemaForm
-            schema={schema}
-            value={value}
-            unwrapRoot={schema.type === 'object'}
-            onChange={this.handleChange}
-          />
-        </AccordionDetails>
-        <AccordionActions>
-          <Button
-            color="primary"
-            variant="contained"
-            onClick={this.handleSubmit}
-          >
-            Save
-          </Button>
-        </AccordionActions>
-      </Accordion>
-    );
-  }
+  return (
+    <Accordion>
+      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+        <div>
+          <Typography>{schema.title}</Typography>
+          <Typography color="textSecondary">{schema.description}</Typography>
+        </div>
+      </AccordionSummary>
+      <AccordionDetails>
+        <SchemaForm
+          schema={schema}
+          value={value}
+          unwrapRoot={schema.type === 'object'}
+          onChange={handleChange}
+        />
+      </AccordionDetails>
+      <AccordionActions>
+        <Button
+          color="primary"
+          variant="contained"
+          onClick={handleSubmit}
+        >
+          {t('admin.config.save')}
+        </Button>
+      </AccordionActions>
+    </Accordion>
+  );
 }
+
+Section.propTypes = {
+  schema: PropTypes.shape({
+    type: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+  }).isRequired,
+  defaultValue: PropTypes.object.isRequired,
+  onSave: PropTypes.func.isRequired,
+};
 
 function partial(fn, arg) {
   return (...args) => fn(arg, ...args);

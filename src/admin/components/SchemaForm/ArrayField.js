@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useTranslator } from '@u-wave/react-translate';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
@@ -8,6 +9,8 @@ import RemoveIcon from '@material-ui/icons/Close';
 import Field from './Field';
 
 function ArrayField({ schema, value, onChange }) {
+  const { t } = useTranslator();
+
   const remove = (index) => {
     onChange([
       ...value.slice(0, index),
@@ -44,7 +47,9 @@ function ArrayField({ schema, value, onChange }) {
           </IconButton>
         </div>
       ))}
-      <Button onClick={append}>Add</Button>
+      <Button onClick={append}>
+        {t('admin.config.array.append')}
+      </Button>
       {schema.description && <FormHelperText>{schema.description}</FormHelperText>}
     </>
   );
