@@ -65,7 +65,7 @@ class Section extends React.Component {
         <AccordionActions>
           <Button
             color="primary"
-            variant="raised"
+            variant="contained"
             onClick={this.handleSubmit}
           >
             Save
