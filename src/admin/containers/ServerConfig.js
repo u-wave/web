@@ -1,28 +1,46 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { get, put } from '../../actions/RequestActionCreators';
 import ServerConfig from '../components/ServerConfig';
-import { loadConfig, saveConfig } from '../actions/config';
-import { configSelector, configSchemaSelector } from '../selectors/configSelectors';
 
 const {
+  useCallback,
   useEffect,
+  useState,
 } = React;
 
 function ServerConfigContainer() {
-  const config = useSelector(configSelector);
-  const configSchema = useSelector(configSchemaSelector);
+  const [config, setConfig] = useState({});
+  const [configSchema, setConfigSchema] = useState(null);
+
   const dispatch = useDispatch();
-  const onSaveConfig = (key, value) => dispatch(saveConfig(key, value));
+  const handleSaveConfig = useCallback((key, value) => {
+    const request = put(`/server/config/${key}`, value);
+    return dispatch(request);
+  }, [dispatch]);
 
   useEffect(() => {
-    dispatch(loadConfig());
-  }, []);
+    const controller = new AbortController();
+    const request = get('/server/config', {
+      qs: { schema: true },
+      signal: controller.signal,
+    });
+
+    dispatch(request).then(({ data, meta }) => {
+      setConfig(data);
+      setConfigSchema(meta.schema);
+    });
+
+    return () => {
+      controller.abort();
+    };
+  }, [dispatch]);
 
   return (
     <ServerConfig
       config={config}
       configSchema={configSchema}
-      onSaveConfig={onSaveConfig}
+      onSaveConfig={handleSaveConfig}
     />
   );
 }

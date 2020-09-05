@@ -91,21 +91,19 @@ function renderSections(allSchema, allValues, onSave) {
   ));
 }
 
-const ServerConfig = ({
+function ServerConfig({
   config,
   configSchema,
   onSaveConfig,
-}) => (
-  <div>
-    {configSchema ? (
-      renderSections(configSchema, config, onSaveConfig)
-    ) : (
-      <p>
-        Loading
-      </p>
-    )}
-  </div>
-);
+}) {
+  return (
+    <div>
+      {configSchema ? (
+        renderSections(configSchema, config, onSaveConfig)
+      ) : null}
+    </div>
+  );
+}
 
 ServerConfig.propTypes = {
   config: PropTypes.object,
