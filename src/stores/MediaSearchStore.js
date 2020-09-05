@@ -31,7 +31,6 @@ function useStoreImplementation() {
     setState(LOADING);
 
     // Maybe this can be pulled into a useFetch hook of some kind?
-    // eslint-disable-next-line compat/compat
     const controller = new AbortController();
     const request = get(`/search/${encodeURIComponent(activeSource)}`, {
       qs: { query },

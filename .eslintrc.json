@@ -21,6 +21,7 @@
 
   "settings": {
     "polyfills": [
+      "AbortController",
       "Number.isFinite",
       "Number.isNaN",
       "Object.assign",
