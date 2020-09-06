@@ -64,8 +64,10 @@ function AppContainer({ uwave, mediaSources }) {
   const onCloseOverlay = useCallback(() => dispatch(closeAll()));
 
   useEffect(() => {
-    const root = document.body;
+    const html = document.documentElement;
+    html.dir = theme.direction;
 
+    const root = document.body;
     Object.keys(theme.cssProperties).forEach((prop) => {
       root.style.setProperty(prop, theme.cssProperties[prop]);
     });
