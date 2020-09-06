@@ -32,13 +32,13 @@
 
 .SettingsPanel-column {
   width: 50%;
-  float: left;
+  float: inline-start;
 }
 
 .SettingsPanel-column--left {
-  padding-right: 50px;
+  padding-inline-end: 50px;
 }
 
 .SettingsPanel-column--right {
-  padding-left: 50px;
+  padding-inline-start: 50px;
 }
