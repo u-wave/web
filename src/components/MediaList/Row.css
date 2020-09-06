@@ -30,7 +30,7 @@
   width: 55px;
   margin: 0 15px;
   padding: 7px 0;
-  float: left;
+  float: inline-start;
 }
 
 .MediaListRow-image {
@@ -43,14 +43,14 @@
   padding: 7px 0;
   line-height: var(--unpadded-media-list-row-height);
   width: calc(100% - var(--media-list-spacing) - var(--media-list-thumb-width) - var(--media-list-duration-width));
-  float: left;
+  float: inline-start;
 }
 
 .MediaListRow-artist {
   height: 100%;
-  float: left;
+  float: inline-start;
   width: calc(40% - var(--media-list-spacing));
-  margin-right: var(--media-list-spacing);
+  margin-inline-end: var(--media-list-spacing);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -58,9 +58,9 @@
 
 .MediaListRow-title {
   height: 100%;
-  float: left;
+  float: inline-start;
   width: calc(60% - var(--media-list-spacing));
-  margin-right: var(--media-list-spacing);
+  margin-inline-end: var(--media-list-spacing);
   overflow: hidden;
   color: var(--secondary-text-color);
   text-overflow: ellipsis;
@@ -71,7 +71,7 @@
   height: calc(var(--unpadded-media-list-row-height) / 3);
   line-height: calc(var(--unpadded-media-list-row-height) / 3);
   width: calc(100% - var(--media-list-spacing));
-  margin-right: var(--media-list-spacing);
+  margin-inline-end: var(--media-list-spacing);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -86,14 +86,14 @@
 
 .MediaListRow-duration {
   height: 100%;
-  float: left;
+  float: inline-start;
   width: var(--media-list-duration-width);
 }
 
 .MediaListRow-actions {
   height: 100%;
   position: absolute;
-  right: 0;
+  inset-inline-end: 0;
   display: none;
 }
 
