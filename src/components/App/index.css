@@ -48,6 +48,20 @@ textarea {
   font: inherit;
 }
 
+/* utility classes */
+
+/* hide element only if the text direction is right-to-left */
+html[dir="rtl"] .u-rtl-hidden {
+  display: none;
+}
+
+/* show element only if the text direction is right-to-left */
+html:not([dir="rtl"]) .u-rtl-only {
+  display: none;
+}
+
+/* the actual app component */
+
 .App {
   display: flex;
   width: 100%;
