@@ -5,6 +5,7 @@ import { FixedSizeList } from 'react-window';
 import InfiniteLoader from 'react-window-infinite-loader';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import itemSelection from 'item-selection/immutable';
+import useDirection from '../../hooks/useDirection';
 import LoadingRow from './LoadingRow';
 
 const {
@@ -40,6 +41,7 @@ function BaseMediaList({
 }) {
   const [lastMedia, setLastMedia] = useState(media);
   const [selection, setSelection] = useState(() => itemSelection(media));
+  const direction = useDirection();
 
   useEffect(() => {
     if (lastMedia !== media) {
@@ -99,6 +101,7 @@ function BaseMediaList({
       onItemsRendered={onItemsRendered}
       ref={ref}
       width="100%"
+      direction={direction}
       rerenderOnUpdate={selection}
     >
       {renderRow}
