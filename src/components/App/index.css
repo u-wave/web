@@ -105,3 +105,8 @@ html:not([dir="rtl"]) .u-rtl-only {
 .AppRow--bottom {
   height: var(--footer-height);
 }
+
+/* Make App-level overlays fit in an AppColumn--left */
+.Overlays .Overlay {
+  width: 75%;
+}
