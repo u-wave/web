@@ -6,6 +6,13 @@
   box-sizing: border-box;
 }
 
+/* Custom scrollbars for Firefox: */
+html {
+  scrollbar-color: var(--scrollbar-color) transparent;
+  scrollbar-width: 7px;
+}
+
+/* Custom scrollbars for Chrome: */
 ::-webkit-scrollbar {
   width: 7px;
 }
