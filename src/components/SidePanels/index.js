@@ -64,7 +64,7 @@ function SidePanels() {
         onChange={handleChange}
         variant="fullWidth"
         classes={{
-          root: 'SidePanel-tabs',
+          root: 'AppRow--top SidePanel-tabs',
           indicator: 'SidePanel-indicator',
         }}
       >

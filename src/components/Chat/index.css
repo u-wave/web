@@ -6,6 +6,12 @@
 @import "./Message.css";
 @import "./Motd.css";
 
+.ChatContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
 .ChatContainer-messages {
   position: absolute;
   top: 0;
