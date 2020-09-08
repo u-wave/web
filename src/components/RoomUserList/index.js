@@ -3,10 +3,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FixedSizeList } from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
+import useDirection from '../../hooks/useDirection';
 import RoomUserRow from './Row';
 import GuestsRow from './GuestsRow';
 
 const RoomUserList = ({ className, users, guests }) => {
+  const direction = useDirection();
+
   const showGuests = guests > 0;
   // The "and X guests" row is implemented somewhat hackily as an extra user
   // row. To render properly at the end of the list, it needs to be rendered as
@@ -48,6 +51,7 @@ const RoomUserList = ({ className, users, guests }) => {
         height={height}
         itemCount={length}
         itemSize={40}
+        direction={direction}
       >
         {itemRenderer}
       </FixedSizeList>

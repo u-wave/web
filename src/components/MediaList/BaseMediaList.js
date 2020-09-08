@@ -5,7 +5,14 @@ import { FixedSizeList } from 'react-window';
 import InfiniteLoader from 'react-window-infinite-loader';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import itemSelection from 'item-selection/immutable';
+import useDirection from '../../hooks/useDirection';
 import LoadingRow from './LoadingRow';
+
+const {
+  useCallback,
+  useEffect,
+  useState,
+} = React;
 
 /**
  * Check if two media lists are different, taking into account
@@ -18,89 +25,46 @@ function didMediaChange(prev, next) {
   return prev.some((item, i) => item && next[i] && item._id !== next[i]._id);
 }
 
-export default class BaseMediaList extends React.Component {
-  static propTypes = {
-    className: PropTypes.string,
-    media: PropTypes.array,
-    size: PropTypes.number,
-    onRequestPage: PropTypes.func,
-    listComponent: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.func,
-    ]).isRequired,
-    rowComponent: PropTypes.func.isRequired,
-    rowProps: PropTypes.object,
+const defaultMakeActions = () => null;
 
-    onOpenPreviewMediaDialog: PropTypes.func,
-    makeActions: PropTypes.func,
-  };
+function BaseMediaList({
+  className,
+  media,
+  listComponent: ListComponent,
+  rowComponent: RowComponent,
+  rowProps = {},
+  onRequestPage,
+  onOpenPreviewMediaDialog,
+  // The `size` property is only necessary for lazy loading.
+  size = null,
+  makeActions = defaultMakeActions,
+}) {
+  const [lastMedia, setLastMedia] = useState(media);
+  const [selection, setSelection] = useState(() => itemSelection(media));
+  const direction = useDirection();
 
-  static defaultProps = {
-    // The `size` property is only necessary for lazy loading.
-    size: null,
-    makeActions: () => <span />,
-  };
-
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (prevState.media !== nextProps.media) {
-      const selectedIndices = prevState.selection.getIndices();
-      const mediaChanged = didMediaChange(prevState.media, nextProps.media);
-      return {
-        media: nextProps.media,
-        selection: mediaChanged
-          ? itemSelection(nextProps.media)
-          : itemSelection(nextProps.media, selectedIndices),
-      };
+  useEffect(() => {
+    if (lastMedia !== media) {
+      setLastMedia(media);
+      const selectedIndices = selection.getIndices();
+      const mediaChanged = didMediaChange(lastMedia, media);
+      setSelection(mediaChanged ? itemSelection(media) : itemSelection(media, selectedIndices));
     }
-    return null;
-  }
+  }, [media]);
 
-  constructor(props) {
-    super(props);
+  const selectItem = useCallback((index, event) => {
+    event.preventDefault();
 
-    const { media } = this.props;
-    this.state = {
-      media,
-      selection: itemSelection(media),
-    };
-  }
-
-  selectItem(index, e) {
-    e.preventDefault();
-
-    let { selection } = this.state;
-
-    if (e.shiftKey) {
-      selection = selection.selectRange(index);
-    } else if (e.ctrlKey) {
-      selection = selection.selectToggle(index);
+    if (event.shiftKey) {
+      setSelection(selection.selectRange(index));
+    } else if (event.ctrlKey) {
+      setSelection(selection.selectToggle(index));
     } else {
-      selection = selection.select(index);
+      setSelection(selection.select(index));
     }
+  }, [selection]);
 
-    this.setState({ selection });
-  }
-
-  renderList = (items, ref) => {
-    const { listComponent: ListComponent } = this.props;
-
-    return (
-      <ListComponent ref={ref}>
-        {items}
-      </ListComponent>
-    );
-  };
-
-  renderRow = ({ index, style }) => {
-    const {
-      makeActions,
-      rowProps: props = {},
-      media,
-      rowComponent: RowComponent,
-      onOpenPreviewMediaDialog,
-    } = this.props;
-    const { selection } = this.state;
-
+  const renderRow = useCallback(({ index, style }) => {
     const selected = selection.isSelectedIndex(index);
     if (!media[index]) {
       return (
@@ -116,85 +80,98 @@ export default class BaseMediaList extends React.Component {
     return (
       <RowComponent
         key={media[index] ? media[index]._id : index}
-        {...props}
+        {...rowProps}
         style={style}
         className="MediaList-row"
         media={media[index]}
         selected={selected}
         selection={selection.get()}
-        onClick={(e) => this.selectItem(index, e)}
+        onClick={(event) => selectItem(index, event)}
         onOpenPreviewMediaDialog={onOpenPreviewMediaDialog}
         makeActions={() => makeActions(media[index], selection, index)}
       />
     );
+  }, [selection, media, RowComponent, rowProps, onOpenPreviewMediaDialog, makeActions]);
+
+  const innerList = ({ height, onItemsRendered, ref }) => (
+    <FixedSizeList
+      itemCount={size || media.length}
+      itemSize={56}
+      height={height}
+      onItemsRendered={onItemsRendered}
+      ref={ref}
+      width="100%"
+      direction={direction}
+      rerenderOnUpdate={selection}
+    >
+      {renderRow}
+    </FixedSizeList>
+  );
+
+  // This is not used as a real React component.
+  // eslint-disable-next-line react/prop-types
+  const lazyLoading = (makeList) => ({ height }) => {
+    const isItemLoaded = (index) => media[index] != null;
+    const loadMoreItems = (start) => {
+      const page = Math.floor(start / 50);
+      onRequestPage(page);
+    };
+
+    const inner = ({ onItemsRendered, ref }) => makeList({ onItemsRendered, ref, height });
+    return (
+      <InfiniteLoader
+        isItemLoaded={isItemLoaded}
+        itemCount={size || media.length}
+        loadMoreItems={loadMoreItems}
+      >
+        {inner}
+      </InfiniteLoader>
+    );
   };
 
-  render() {
-    const {
-      className, media, size, onRequestPage,
-    } = this.props;
-    const { listComponent: ListComponent } = this.props;
-    const { selection } = this.state;
+  const customWrapper = (makeList) => (props) => (
+    <ListComponent>
+      {makeList(props)}
+    </ListComponent>
+  );
 
-    const innerList = ({ height, onItemsRendered, ref }) => (
-      <FixedSizeList
-        itemCount={size || media.length}
-        itemSize={56}
-        height={height}
-        onItemsRendered={onItemsRendered}
-        ref={ref}
-        width="100%"
-        rerenderOnUpdate={selection}
-      >
-        {this.renderRow}
-      </FixedSizeList>
-    );
-
-    const lazyLoading = (makeList) => ({ height }) => {
-      const isItemLoaded = (index) => media[index] != null;
-      const loadMoreItems = (start) => {
-        const page = Math.floor(start / 50);
-        onRequestPage(page);
-      };
-
-      const inner = ({ onItemsRendered, ref }) => makeList({ onItemsRendered, ref, height });
-      return (
-        <InfiniteLoader
-          isItemLoaded={isItemLoaded}
-          itemCount={size || media.length}
-          loadMoreItems={loadMoreItems}
-        >
-          {inner}
-        </InfiniteLoader>
-      );
-    };
-
-    const customWrapper = (makeList) => (props) => (
-      <ListComponent>
-        {makeList(props)}
-      </ListComponent>
-    );
-
-    const autoSizing = (makeList) => () => {
-      const inner = ({ height }) => makeList({ height });
-      return (
-        <AutoSizer disableWidth>
-          {inner}
-        </AutoSizer>
-      );
-    };
-
-    let listRenderer = innerList;
-    if (onRequestPage) {
-      listRenderer = lazyLoading(listRenderer);
-    }
-    listRenderer = customWrapper(listRenderer);
-    listRenderer = autoSizing(listRenderer);
-
+  const autoSizing = (makeList) => () => {
+    const inner = ({ height }) => makeList({ height });
     return (
-      <div className={cx('MediaList', className)}>
-        {listRenderer()}
-      </div>
+      <AutoSizer disableWidth>
+        {inner}
+      </AutoSizer>
     );
+  };
+
+  let listRenderer = innerList;
+  if (onRequestPage) {
+    listRenderer = lazyLoading(listRenderer);
   }
+  listRenderer = customWrapper(listRenderer);
+  listRenderer = autoSizing(listRenderer);
+
+  return (
+    <div className={cx('MediaList', className)}>
+      {listRenderer()}
+    </div>
+  );
 }
+
+BaseMediaList.propTypes = {
+  className: PropTypes.string,
+  media: PropTypes.array,
+  size: PropTypes.number,
+  onRequestPage: PropTypes.func,
+  listComponent: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.func,
+  ]).isRequired,
+  rowComponent: PropTypes.func.isRequired,
+  rowProps: PropTypes.object,
+
+  onOpenPreviewMediaDialog: PropTypes.func,
+  makeActions: PropTypes.func,
+};
+
+export default BaseMediaList;

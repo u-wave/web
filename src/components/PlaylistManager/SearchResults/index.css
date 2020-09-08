@@ -2,7 +2,7 @@
   height: 54px;
   line-height: 54px;
   font-size: 14pt;
-  padding-left: 15px;
+  padding-inline-start: 15px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -43,7 +43,7 @@
 .SearchResultRow-data .MediaListRow-title {
   height: 66%;
   width: calc(60% - var(--media-list-spacing));
-  margin-right: 0;
+  margin-inline-end: 0;
   line-height: calc(56px / 3 * 2);
 }
 

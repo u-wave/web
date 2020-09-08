@@ -3,16 +3,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FixedSizeList } from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
+import useDirection from '../../hooks/useDirection';
 import ModRow from './ModRow';
 import SimpleRow from './SimpleRow';
 
-const WaitList = ({
+function WaitList({
   className,
   users,
   onMoveUser,
   onRemoveUser,
   canMoveUsers,
-}) => {
+}) {
+  const direction = useDirection();
   const Row = canMoveUsers ? ModRow : SimpleRow;
 
   // these are not components
@@ -34,6 +36,7 @@ const WaitList = ({
       height={height}
       itemCount={users.length}
       itemSize={40}
+      direction={direction}
     >
       {renderRow}
     </FixedSizeList>
@@ -54,7 +57,7 @@ const WaitList = ({
       </AutoSizer>
     </div>
   );
-};
+}
 
 WaitList.propTypes = {
   className: PropTypes.string,

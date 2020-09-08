@@ -8,5 +8,5 @@
 
 .SourcePickerElement--active {
   width: 48px;
-  float: left;
+  float: inline-start;
 }
