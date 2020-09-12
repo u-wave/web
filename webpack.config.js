@@ -141,6 +141,16 @@ function getConfig(env, {
           ],
         },
 
+        {
+          test: /\.js$/,
+          include: /node_modules/,
+          resolve: {
+            byDependency: {
+              esm: { fullySpecified: false },
+            },
+          },
+        },
+
         // JS loader for our own code:
         {
           test: /\.js$/,
@@ -216,6 +226,8 @@ function getConfig(env, {
 
   const productionConfigPatch = {
     optimization: {
+      // TODO reenable once the crash is fixed
+      minimize: false,
       runtimeChunk: 'single',
       splitChunks: {
         automaticNameDelimiter: '-',
@@ -253,7 +265,7 @@ function getConfig(env, {
     output: {
       filename: env.production ? 'static/[name]_[chunkhash:7].js' : '[name]_dev.js',
       chunkFilename: env.production ? 'static/[name]_[chunkhash:7].js' : '[name]_dev.js',
-      ecmaVersion: 5,
+      environment: {},
     },
   };
 
