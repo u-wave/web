@@ -127,6 +127,16 @@ function getConfig(env, {
         // Locale files.
         {
           test: /\.yaml$/,
+          exclude: /en\.yaml$/,
+          use: 'yaml-loader',
+          type: 'asset/resource',
+          generator: {
+            filename: env.production ? 'static/[name]_[hash:7].json' : '[name].json',
+          },
+        },
+        //  English is embedded in the bundle, we always need it as a fallback.
+        {
+          test: /en\.yaml$/,
           type: 'json',
           use: 'yaml-loader',
         },
