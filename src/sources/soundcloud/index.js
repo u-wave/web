@@ -1,5 +1,6 @@
 import Player from './PlayerWrapper';
-import logo from '../../../assets/img/soundcloud.png';
+
+const logo = new URL('../../../assets/img/soundcloud.png', import.meta.url);
 
 export default function soundcloud() {
   return {

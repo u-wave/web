@@ -27,7 +27,8 @@
       "Object.is",
       "Object.values",
       "Promise",
-      "fetch"
+      "fetch",
+      "URL"
     ]
   },
 

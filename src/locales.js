@@ -1,4 +1,3 @@
-/* eslint-disable compat/compat */
 import en from '../locale/en.yaml';
 
 function fetchLocale(url) {

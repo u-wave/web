@@ -13,7 +13,10 @@ const pkg = require('../../package.json');
 function evalModule(code) {
   const target = { exports: {} };
   vm.runInNewContext(code, {
+    // The URL global is not made available in new contexts by default.
+    URL,
     require,
+    __filename,
     module: target,
     exports: target.exports,
   });
