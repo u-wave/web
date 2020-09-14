@@ -1,6 +1,7 @@
 // Polyfills for browsers that might not yet support Promises or the Fetch API
 // (newer & better XMLHttpRequest).
 import 'es6-promise/auto';
+import 'url-polyfill';
 import 'whatwg-fetch';
 import 'abortcontroller-polyfill/src/polyfill';
 import arrayFind from 'array.prototype.find';
