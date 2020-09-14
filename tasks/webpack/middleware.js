@@ -1,3 +1,5 @@
+'use strict';
+
 const { builtinModules } = require('module');
 const { Compilation } = require('webpack');
 const { RawSource } = require('webpack').sources;

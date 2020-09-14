@@ -1,3 +1,5 @@
+'use strict';
+
 const { promisify } = require('util');
 const webpack = require('webpack');
 const getConfig = require('../webpack.config');

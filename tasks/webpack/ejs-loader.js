@@ -1,3 +1,5 @@
+'use strict';
+
 const ejs = require('ejs');
 
 module.exports = function ejsLoader(source) {

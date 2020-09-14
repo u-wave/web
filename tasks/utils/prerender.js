@@ -1,3 +1,5 @@
+'use strict';
+
 const h = require('react').createElement;
 const { renderToStaticMarkup } = require('react-dom/server');
 const { ServerStyleSheets, ThemeProvider, StylesProvider } = require('@material-ui/styles');

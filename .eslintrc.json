@@ -42,8 +42,12 @@
       }
     },
     {
-      "files": ["tasks/**/*.js"],
+      "files": ["tasks/**/*.js", ".babelrc.js", "postcss.config.js", "webpack.config.js"],
+      "parserOptions": {
+        "sourceType": "script"
+      },
       "rules": {
+        "strict": ["error", "global"],
         "no-console": "off"
       }
     },

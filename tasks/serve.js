@@ -1,3 +1,5 @@
+'use strict';
+
 /* eslint-disable global-require */
 require('make-promises-safe');
 const path = require('path');

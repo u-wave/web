@@ -1,3 +1,5 @@
+'use strict';
+
 const vm = require('vm');
 const assert = require('assert');
 const NodeTemplatePlugin = require('webpack/lib/node/NodeTemplatePlugin');

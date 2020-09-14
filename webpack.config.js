@@ -1,3 +1,5 @@
+'use strict';
+
 const path = require('path');
 const escapeStringRegExp = require('escape-string-regexp');
 const { DefinePlugin, HotModuleReplacementPlugin } = require('webpack');

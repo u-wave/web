@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Webpack loader that inserts HTML instead of just exporting it.
  */

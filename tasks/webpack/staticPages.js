@@ -1,3 +1,5 @@
+'use strict';
+
 const path = require('path');
 const HtmlPlugin = require('html-webpack-plugin');
 const { merge } = require('webpack-merge');

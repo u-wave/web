@@ -1,3 +1,5 @@
+'use strict';
+
 const h = require('react').createElement;
 const prerender = require('./prerender');
 
