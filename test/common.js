@@ -18,13 +18,3 @@ enzyme.configure({
 });
 
 chai.use(require('chai-enzyme')());
-
-// Mock an asset like Webpack's file-loader.
-function mockAsset(modulePath) {
-  const path = require.resolve(modulePath);
-  require.cache[path] = {
-    exports: path,
-  };
-}
-
-mockAsset('../assets/audio/mention.mp3');

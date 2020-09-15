@@ -2,6 +2,25 @@
 
 const pkg = require('./package.json');
 
+function importMetaToCommonJs(babel) {
+  const t = babel.types;
+
+  return {
+    visitor: {
+      MetaProperty(path) {
+        if (path.node.property.name !== 'meta') {
+          return;
+        }
+        const parent = path.parentPath
+        if (!parent.isMemberExpression() || parent.node.property.name !== 'url') {
+          return;
+        }
+        parent.replaceWithSourceString('require("url").pathToFileURL(__filename)');
+      },
+    },
+  };
+}
+
 module.exports = (api, envOverride) => {
   const env = envOverride || process.env.BABEL_ENV || process.env.NODE_ENV || 'development';
   // Command-line version override.
@@ -76,6 +95,10 @@ module.exports = (api, envOverride) => {
     preset.plugins.push(
       'module:react-refresh/babel',
     );
+  }
+
+  if (callerIsNode) {
+    preset.plugins.push(importMetaToCommonJs);
   }
 
   return preset;
