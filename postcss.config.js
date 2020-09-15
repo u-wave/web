@@ -1,11 +1,9 @@
 'use strict';
 
+const path = require('path');
+
 module.exports = () => ({
   plugins: {
-    'postcss-import': {},
-    'postcss-url': {
-      url: 'rebase',
-    },
     'postcss-preset-env': {
       stage: 2,
       features: {
@@ -14,6 +12,7 @@ module.exports = () => ({
         // function calls even if the target browser does not support them.
         'custom-properties': {
           preserve: true,
+          importFrom: path.join(__dirname, 'src/vars.css'),
         },
         'color-mod-function': {
           unresolved: 'warn',

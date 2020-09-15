@@ -1,5 +1,3 @@
-@import "../../vars.css";
-
 .ChatMessages {
   height: 100%;
   overflow-y: scroll;

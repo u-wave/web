@@ -1,5 +1,3 @@
-@import "../../../vars.css";
-
 .SuggestionItem {
   &:hover,
   &.is-focused {

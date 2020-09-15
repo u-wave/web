@@ -1,5 +1,3 @@
-@import "../../vars.css";
-
 .Progress-fill {
   background: var(--highlight-color);
   height: 100%;

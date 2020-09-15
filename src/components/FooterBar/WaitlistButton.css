@@ -1,5 +1,3 @@
-@import "../../vars.css";
-
 .WaitlistButton {
   display: flex;
   flex-shrink: 0;
@@ -36,5 +34,6 @@
 }
 
 .WaitlistButton-icon--locked {
-  color: color-mod(var(--text-color) alpha(* 70%));
+  color: var(--text-color);
+  opacity: 0.7;
 }

@@ -1,5 +1,3 @@
-@import "../../vars.css";
-
 .SettingsPanel {
   display: flex;
   flex-direction: column;
