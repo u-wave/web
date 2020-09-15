@@ -209,7 +209,7 @@ function getConfig(env, {
   const appConfig = merge(baseConfig, {
     name: 'app',
     entry: {
-      polyfills: './polyfills.js',
+      polyfills: 'triage-polyfills',
       app: {
         import: [demo ? './demo.js' : './app.js', './app.css'],
         dependOn: 'polyfills',
@@ -229,6 +229,12 @@ function getConfig(env, {
     },
 
     plugins: plugins.filter(Boolean),
+
+    resolve: {
+      alias: {
+        'triage-polyfills': './polyfills-modern.js',
+      },
+    },
   });
 
   const hmrConfigPatch = {
@@ -295,6 +301,11 @@ function getConfig(env, {
         dynamicImport: false,
         forOf: false,
         module: false,
+      },
+    },
+    resolve: {
+      alias: {
+        'triage-polyfills': './polyfills-legacy.js',
       },
     },
   };

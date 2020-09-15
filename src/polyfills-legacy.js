@@ -1,5 +1,4 @@
-// Polyfills for browsers that might not yet support Promises or the Fetch API
-// (newer & better XMLHttpRequest).
+// Polyfills for browsers all the way down to IE11.
 import 'es6-promise/auto';
 import 'url-polyfill';
 import 'whatwg-fetch';
