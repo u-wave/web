@@ -15,7 +15,7 @@ module.exports = (api, envOverride) => {
   // version supported by our public API.
   const targetIsNode = api.caller(caller => caller && caller.target === 'node');
   // Check if our output should support older browsers.
-  const targetIsLegacy = api.caller(caller => caller && caller.output && caller.output.ecmaVersion === 5);
+  const targetIsLegacy = api.caller(caller => caller && caller.compiler === 'app-legacy');
   const targetIsModern = !targetIsLegacy;
 
   let targets = {};

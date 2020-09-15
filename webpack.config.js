@@ -168,7 +168,16 @@ function getConfig(env, {
           test: /\.js$/,
           exclude: /node_modules/,
           use: [
-            'babel-loader',
+            (info) => ({
+              loader: 'babel-loader',
+              options: {
+                caller: {
+                  // Name of the compiler config: 'app' for modern JS,
+                  // 'legacy' for IE11 support.
+                  compiler: info.compiler,
+                },
+              },
+            }),
             !env.production && {
               loader: 'eslint-loader',
               options: { cache: true },
@@ -198,6 +207,7 @@ function getConfig(env, {
   }, compileDependencies());
 
   const appConfig = merge(baseConfig, {
+    name: 'app',
     entry: {
       polyfills: './polyfills.js',
       app: {
@@ -273,11 +283,19 @@ function getConfig(env, {
   };
 
   const legacyConfigPatch = {
-    name: 'legacy',
+    name: 'app-legacy',
     output: {
       filename: env.production ? 'static/[name]_[chunkhash:7].js' : '[name]_dev.js',
       chunkFilename: env.production ? 'static/[name]_[chunkhash:7].js' : '[name]_dev.js',
-      environment: {},
+      environment: {
+        arrowFunction: false,
+        bigIntLiteral: false,
+        const: false,
+        destructuring: false,
+        dynamicImport: false,
+        forOf: false,
+        module: false,
+      },
     },
   };
 
@@ -344,7 +362,7 @@ function getConfig(env, {
     activeAppConfig = merge(activeAppConfig, demoConfigPatch);
   }
 
-  let siteConfig = merge(activeAppConfig, staticPagesConfigPatch, { name: 'app' });
+  let siteConfig = merge(activeAppConfig, staticPagesConfigPatch);
   if (analyze) {
     siteConfig = merge(siteConfig, getAnalysisConfig(analyze));
   }
