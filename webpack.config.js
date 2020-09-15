@@ -7,7 +7,7 @@ const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const WebpackBar = require('webpackbar');
 const ExtractCssPlugin = require('mini-css-extract-plugin');
-const OptimizeCssPlugin = require('optimize-css-assets-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const HtmlPlugin = require('html-webpack-plugin');
 const SriPlugin = require('webpack-subresource-integrity');
 const CopyPlugin = require('copy-webpack-plugin');
@@ -261,6 +261,10 @@ function getConfig(env, {
         automaticNameDelimiter: '-',
         chunks: 'all',
       },
+      minimizer: [
+        '...', // terser
+        new CssMinimizerPlugin(),
+      ],
     },
 
     plugins: [
@@ -270,7 +274,6 @@ function getConfig(env, {
         filename: 'static/[name]_[contenthash:7].css',
         chunkFilename: 'static/[name]_[contenthash:7].css',
       }),
-      new OptimizeCssPlugin(),
       new SriPlugin({
         hashFuncNames: ['sha512'],
       }),
