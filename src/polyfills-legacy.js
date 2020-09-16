@@ -8,6 +8,7 @@ import 'object.values/auto';
 import 'is-nan/auto';
 import 'string.prototype.includes/auto';
 import 'es6-promise/auto';
+import 'es6-symbol/implement';
 import 'url-polyfill';
 import 'whatwg-fetch';
 import 'abortcontroller-polyfill/src/polyfill';
