@@ -13,7 +13,7 @@
   background: var(--background-color);
   position: absolute;
   top: 0;
-  right: 0;
+  inset-inline-end: 0;
   padding: 0 6px;
   display: none;
   font-size: 80%;
@@ -38,14 +38,14 @@
   width: 24px;
   height: 24px;
   top: 0;
-  left: 12px;
+  inset-inline-start: 12px;
   margin: 4px 0;
 }
 
 .ChatMessage-content {
   position: relative;
-  padding-left: 50px;
-  padding-right: 3px;
+  padding-inline-start: 50px;
+  padding-inline-end: 3px;
   width: 100%;
   display: inline-block;
   margin: 6px 0;
@@ -63,7 +63,7 @@
 }
 
 .ChatMessage-text {
-  margin-left: 5px;
+  margin-inline-start: 5px;
 }
 
 .ChatMessage--loading {

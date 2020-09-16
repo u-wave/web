@@ -13,7 +13,7 @@
 
 .PlaylistManager-menu {
   width: 33%; /* 25% of total screen width */
-  float: left;
+  float: inline-start;
 
   /* menu would be larger than 300px */
   @media (min-width: 1200px) {
@@ -23,12 +23,12 @@
 
 .PlaylistManager-panel {
   position: absolute;
-  left: 33%;
-  right: 0;
+  inset-inline-start: 33%;
+  inset-inline-end: 0;
   height: 100%;
 
   /* menu would be larger than 300px */
   @media (min-width: 1200px) {
-    left: 300px;
+    inset-inline-start: 300px;
   }
 }

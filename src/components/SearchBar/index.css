@@ -15,7 +15,7 @@
 .SearchBar-icon {
   width: 80px;
   height: 100%;
-  float: left;
+  float: inline-start;
   text-align: center;
   font-size: 32px;
   line-height: 38px;
@@ -23,8 +23,8 @@
 
 .SearchBar-query {
   height: 100%;
-  margin-left: 80px;
-  margin-right: 100px;
+  margin-inline-start: 80px;
+  margin-inline-end: 100px;
 }
 
 .SearchBar-input {

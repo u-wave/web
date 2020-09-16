@@ -34,7 +34,9 @@
 .ResponseButton-icon {
   height: 36px;
   width: 36px;
-  padding: 6px 12px 6px 0;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-inline-end: 12px;
 }
 
 .ResponseButton-icon--favorite {

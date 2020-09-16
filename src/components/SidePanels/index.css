@@ -15,11 +15,6 @@
 }
 
 .SidePanel-panel {
-  position: absolute;
-  top: var(--header-height);
-  bottom: 0;
-  left: 0;
-  right: 0;
   visibility: hidden;
   opacity: 0;
 

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import FooterBar from '../../containers/FooterBar';
+import FooterBar from '../FooterBar';
 import HeaderBar from '../../containers/HeaderBar';
 import Video from '../../containers/Video';
 import ErrorArea from '../../containers/ErrorArea';
