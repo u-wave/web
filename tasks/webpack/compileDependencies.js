@@ -6,10 +6,13 @@ const pkg = require('../../package.json');
 // List of dependency paths that need to be compiled.
 const es2015Deps = [
   /\/abortcontroller-polyfill\/src\//,
-  /\/escape-string-regex\//,
+  /\/escape-string-regexp\//,
   /\/format-duration\//,
+  /\/is-plain-obj\//,
+  /\/min-indent\//,
   /\/nanoid\//,
   /\/strip-indent\//,
+  /\/use-mediaquery\//,
   /\/@material-ui\/core\/es\//,
   /\/@material-ui\/styles\/es\//,
   /\/@material-ui\/system\/es\//,
