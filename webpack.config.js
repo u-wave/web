@@ -102,10 +102,6 @@ function getConfig(env, {
     bail: env.production,
     devtool: env.production ? 'source-map' : 'inline-source-map',
 
-    experiments: {
-      asset: true,
-    },
-
     module: {
       rules: [
         // Static files and resources.
