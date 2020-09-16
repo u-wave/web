@@ -7,7 +7,6 @@ const pkg = require('../../package.json');
 const es2015Deps = [
   /\/abortcontroller-polyfill\/src\//,
   /\/escape-string-regexp\//,
-  /\/format-duration\//,
   /\/is-plain-obj\//,
   /\/min-indent\//,
   /\/nanoid\//,
