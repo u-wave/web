@@ -8,6 +8,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const WebpackBar = require('webpackbar');
 const ExtractCssPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const HtmlPlugin = require('html-webpack-plugin');
 const SriPlugin = require('webpack-subresource-integrity');
 const CopyPlugin = require('copy-webpack-plugin');
@@ -250,15 +251,19 @@ function getConfig(env, {
 
   const productionConfigPatch = {
     optimization: {
-      // TODO reenable once the crash is fixed
-      minimize: false,
       runtimeChunk: 'single',
       splitChunks: {
         automaticNameDelimiter: '-',
         chunks: 'all',
       },
       minimizer: [
-        '...', // terser
+        new TerserPlugin({
+          terserOptions: {
+            compress: {
+              passes: 2,
+            },
+          },
+        }),
         new CssMinimizerPlugin(),
       ],
     },
