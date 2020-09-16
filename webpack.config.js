@@ -256,6 +256,7 @@ function getConfig(env, {
         automaticNameDelimiter: '-',
         chunks: 'all',
       },
+      minimize: false,
       minimizer: [
         new TerserPlugin({
           terserOptions: {
