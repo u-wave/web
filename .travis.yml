@@ -22,6 +22,3 @@ jobs:
     - name: Check code style
       node_js: stable
       script: npm run lint
-  allow_failures:
-    # babel-eslint is broken
-    - script: npm run lint
