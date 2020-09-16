@@ -2,16 +2,14 @@
 
 const pkg = require('./package.json');
 
-function importMetaToCommonJs(babel) {
-  const t = babel.types;
-
+function importMetaToCommonJs() {
   return {
     visitor: {
       MetaProperty(path) {
         if (path.node.property.name !== 'meta') {
           return;
         }
-        const parent = path.parentPath
+        const parent = path.parentPath;
         if (!parent.isMemberExpression() || parent.node.property.name !== 'url') {
           return;
         }
@@ -28,13 +26,14 @@ module.exports = (api, envOverride) => {
 
   api.cache(() => `${env}${browsers || ''}`);
 
-  // When the caller is @babel/register, we expect to immediately run the output, in the current Node.js version.
-  const callerIsNode = api.caller(caller => caller && caller.name === '@babel/register');
-  // When the target is `node`, we're doing a webpack build for server-side code. The output will run in any Node.js
-  // version supported by our public API.
-  const targetIsNode = api.caller(caller => caller && caller.target === 'node');
+  // When the caller is @babel/register, we expect to immediately run the output, in the current
+  // Node.js version.
+  const callerIsNode = api.caller((caller) => caller && caller.name === '@babel/register');
+  // When the target is `node`, we're doing a webpack build for server-side code. The output will
+  // run in any Node.js version supported by our public API.
+  const targetIsNode = api.caller((caller) => caller && caller.target === 'node');
   // Check if our output should support older browsers.
-  const targetIsLegacy = api.caller(caller => caller && caller.compiler === 'app-legacy');
+  const targetIsLegacy = api.caller((caller) => caller && caller.compiler === 'app-legacy');
   const targetIsModern = !targetIsLegacy;
 
   let targets = {};
