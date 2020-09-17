@@ -1,4 +1,5 @@
 // Polyfills for browsers all the way down to IE11.
+import 'array.from/auto';
 import 'array.prototype.find/auto';
 import 'array.prototype.findindex/auto';
 import 'array-includes/auto';
