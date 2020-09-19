@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import expect from 'expect';
 import fetch from 'fetch-mock';
 import createStore from '../../redux/configureStore';
 import * as a from '../../actions/PlaylistActionCreators';
@@ -39,9 +39,9 @@ describe('reducers/playlists', () => {
 
   it('should not respond to unrelated actions', () => {
     const { dispatch, getState } = createStore();
-    expect(s.playlistsSelector(getState())).to.eql([]);
+    expect(s.playlistsSelector(getState())).toEqual([]);
     dispatch({ type: 'randomOtherAction', payload: {} });
-    expect(s.playlistsSelector(getState())).to.eql([]);
+    expect(s.playlistsSelector(getState())).toEqual([]);
   });
 
   describe('action: playlists/SELECT_PLAYLIST', () => {
@@ -49,19 +49,19 @@ describe('reducers/playlists', () => {
       const { dispatch, getState } = createStore();
       dispatch(initialiseStore);
 
-      expect(s.selectedPlaylistIDSelector(getState())).to.be.null;
+      expect(s.selectedPlaylistIDSelector(getState())).toBeNull();
 
       dispatch(a.selectPlaylist(1));
-      expect(s.selectedPlaylistIDSelector(getState())).to.equal(1);
-      expect(s.selectedPlaylistSelector(getState())).to.have.property('_id', 1);
+      expect(s.selectedPlaylistIDSelector(getState())).toBe(1);
+      expect(s.selectedPlaylistSelector(getState())).toHaveProperty('_id', 1);
 
       dispatch(a.selectPlaylist(3));
-      expect(s.selectedPlaylistIDSelector(getState())).to.equal(3);
-      expect(s.selectedPlaylistSelector(getState())).to.have.property('_id', 3);
+      expect(s.selectedPlaylistIDSelector(getState())).toBe(3);
+      expect(s.selectedPlaylistSelector(getState())).toHaveProperty('_id', 3);
 
       dispatch(a.selectPlaylist(null));
-      expect(s.selectedPlaylistIDSelector(getState())).to.be.null;
-      expect(s.selectedPlaylistSelector(getState())).to.be.null;
+      expect(s.selectedPlaylistIDSelector(getState())).toBeNull();
+      expect(s.selectedPlaylistSelector(getState())).toBeNull();
     });
 
     it('loads playlist items for a newly selected playlist', () => {
@@ -70,7 +70,7 @@ describe('reducers/playlists', () => {
 
       dispatch(a.selectPlaylist(1));
 
-      expect(fetch.called()).to.be.true;
+      expect(fetch.called()).toBe(true);
     });
 
     it('does not attempt to playlist items when deselecting a playlist', () => {
@@ -81,7 +81,7 @@ describe('reducers/playlists', () => {
       fetch.reset();
       dispatch(a.selectPlaylist(null));
 
-      expect(fetch.called()).to.be.false;
+      expect(fetch.called()).toBe(false);
     });
   });
 
@@ -95,7 +95,7 @@ describe('reducers/playlists', () => {
       dispatch(initialiseStore);
       dispatch(initialisePlaylist);
 
-      expect(s.selectedPlaylistSelector(getState()).media).to.have.length(5);
+      expect(s.selectedPlaylistSelector(getState()).media).toHaveLength(5);
 
       dispatch(a.addMediaComplete(1, 7, {
         afterID: 8,
@@ -106,8 +106,8 @@ describe('reducers/playlists', () => {
       }));
 
       const { media } = s.selectedPlaylistSelector(getState());
-      expect(media).to.have.length(7);
-      expect(media.map((playlistItem) => playlistItem._id)).to.eql([
+      expect(media).toHaveLength(7);
+      expect(media.map((playlistItem) => playlistItem._id)).toEqual([
         5, 6, 7, 8, 347, 764, 9,
       ]);
     });
@@ -120,7 +120,7 @@ describe('reducers/playlists', () => {
       dispatch(a.selectPlaylist(null));
       dispatch(a.activatePlaylistComplete(playlistID));
 
-      expect(s.activePlaylistSelector(getState()).media).to.have.length(5);
+      expect(s.activePlaylistSelector(getState()).media).toHaveLength(5);
 
       dispatch(a.addMediaComplete(1, 7, {
         afterID: null,
@@ -130,8 +130,8 @@ describe('reducers/playlists', () => {
         ],
       }));
 
-      expect(s.activePlaylistSelector(getState()).media).to.have.length(7);
-      expect(s.nextMediaSelector(getState())._id).to.eql(347);
+      expect(s.activePlaylistSelector(getState()).media).toHaveLength(7);
+      expect(s.nextMediaSelector(getState())._id).toEqual(347);
     });
 
     it('appends favourited items to the end of the playlist', () => {
@@ -139,7 +139,7 @@ describe('reducers/playlists', () => {
       dispatch(initialiseStore);
       const { playlistID } = dispatch(initialisePlaylist);
 
-      expect(s.selectedPlaylistSelector(getState()).media).to.have.length(5);
+      expect(s.selectedPlaylistSelector(getState()).media).toHaveLength(5);
 
       dispatch(favoriteMediaComplete(playlistID, 36425, {
         playlistSize: 6,
@@ -149,9 +149,9 @@ describe('reducers/playlists', () => {
       }));
 
       const { size, media } = s.selectedPlaylistSelector(getState());
-      expect(size).to.eql(6);
-      expect(media).to.have.length(6);
-      expect(media[5]._id).to.eql(1338);
+      expect(size).toEqual(6);
+      expect(media).toHaveLength(6);
+      expect(media[5]._id).toEqual(1338);
     });
   });
 
@@ -161,7 +161,7 @@ describe('reducers/playlists', () => {
       dispatch(initialiseStore);
       const { items } = dispatch(initialisePlaylist);
 
-      expect(s.selectedPlaylistSelector(getState()).media).to.have.length(5);
+      expect(s.selectedPlaylistSelector(getState()).media).toHaveLength(5);
 
       dispatch(a.moveMediaComplete(
         1,
@@ -171,7 +171,7 @@ describe('reducers/playlists', () => {
 
       const selectedItemIDs = s.selectedPlaylistSelector(getState()).media
         .map((playlistItem) => playlistItem._id);
-      expect(selectedItemIDs).to.eql([5, 8, 6, 7, 9]);
+      expect(selectedItemIDs).toEqual([5, 8, 6, 7, 9]);
     });
 
     it('should move playlist items in a sparse playlist', () => {
@@ -187,7 +187,7 @@ describe('reducers/playlists', () => {
       dispatch(a.loadPlaylistComplete(1, items, { page: 0, pageSize: 5 }));
       dispatch(a.selectPlaylist(1));
 
-      expect(s.selectedPlaylistSelector(getState()).media).to.have.length(5);
+      expect(s.selectedPlaylistSelector(getState()).media).toHaveLength(5);
 
       dispatch(a.moveMediaComplete(
         1,
@@ -196,7 +196,7 @@ describe('reducers/playlists', () => {
       ));
 
       const getID = (item) => (item ? item._id : null);
-      expect(s.selectedPlaylistSelector(getState()).media.map(getID)).to.eql([
+      expect(s.selectedPlaylistSelector(getState()).media.map(getID)).toEqual([
         6, null, 8, 5, 9,
       ]);
     });

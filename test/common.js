@@ -1,5 +1,4 @@
 const { JSDOM } = require('jsdom');
-const chai = require('chai');
 
 const dom = new JSDOM();
 
@@ -16,5 +15,3 @@ require('yaml-hook/register');
 enzyme.configure({
   adapter: new Adapter(),
 });
-
-chai.use(require('chai-enzyme')());

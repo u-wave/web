@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import expect from 'expect';
 import { ADVANCE } from '../../constants/ActionTypes';
 import { advanceToEmpty } from '../../actions/BoothActionCreators';
 import booth from '../booth';
@@ -8,12 +8,12 @@ describe('reducers/booth', () => {
   it('should not respond to unrelated actions', () => {
     let state = { historyID: 'someRandomID' };
     state = booth(state, { type: 'randomOtherAction', payload: {} });
-    expect(state.historyID).to.equal('someRandomID');
+    expect(state.historyID).toBe('someRandomID');
   });
 
   it('should default to an empty DJ booth', () => {
     const state = booth(undefined, { type: '@@redux/INIT' });
-    expect(state).to.eql({
+    expect(state).toEqual({
       historyID: null,
       djID: null,
       media: null,
@@ -36,7 +36,7 @@ describe('reducers/booth', () => {
           timestamp: 1449767164107,
         },
       });
-      expect(state).to.eql({
+      expect(state).toEqual({
         historyID: 'someRandomID',
         djID: 'seventeen',
         media: { artist: 'about tess', title: 'Imaginedit' },
@@ -47,7 +47,7 @@ describe('reducers/booth', () => {
 
     it('should stop playing if there is no next song', () => {
       const state = booth(initialState(), advanceToEmpty());
-      expect(state).to.eql({
+      expect(state).toEqual({
         historyID: null,
         djID: null,
         media: null,

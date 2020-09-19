@@ -1,13 +1,13 @@
 import React from 'react';
 import sinon from 'sinon';
-import { expect } from 'chai';
+import expect from 'expect';
 import { mount } from 'enzyme';
 import PromptDialog from '..';
 
 describe('<PromptDialog />', () => {
   it('should not show if there is no error', () => {
     const onSubmit = sinon.spy((value) => {
-      expect(value).to.equal('test');
+      expect(value).toEqual('test');
     });
     const onCancel = sinon.spy();
 
@@ -28,8 +28,8 @@ describe('<PromptDialog />', () => {
     const form = dialog.find('form');
     form.simulate('submit');
 
-    expect(onSubmit.calledOnce).to.equal(true);
-    expect(onCancel.called).to.equal(false);
+    expect(onSubmit.calledOnce).toEqual(true);
+    expect(onCancel.called).toEqual(false);
 
     dialog.unmount();
   });

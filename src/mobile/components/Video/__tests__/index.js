@@ -1,5 +1,5 @@
 import React from 'react';
-import { expect } from 'chai';
+import expect from 'expect';
 import { shallow } from 'enzyme';
 import Video from '..';
 
@@ -14,6 +14,6 @@ describe('mobile <Video />', () => {
         onDownvote={noop}
         onFavorite={noop}
       />
-    ))).not.to.throw();
+    ))).not.toThrow();
   });
 });

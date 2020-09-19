@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import expect from 'expect';
 import createStore from '../../redux/configureStore';
 import { addMediaMenu, closeAddMediaMenu } from '../../actions/PlaylistActionCreators';
 import * as s from '../../selectors/addToPlaylistMenuSelectors';
@@ -6,7 +6,7 @@ import * as s from '../../selectors/addToPlaylistMenuSelectors';
 describe('reducers/addToPlaylistMenu', () => {
   it('should default to a closed context menu', () => {
     const { getState } = createStore();
-    expect(s.addToPlaylistMenuSelector(getState())).to.eql({
+    expect(s.addToPlaylistMenuSelector(getState())).toEqual({
       type: null,
       open: false,
       position: { x: 0, y: 0 },
@@ -21,10 +21,10 @@ describe('reducers/addToPlaylistMenu', () => {
         [{ _id: 'mmedia' }],
         { x: 800, y: 300 },
       ));
-      expect(s.mediaSelector(getState())).to.eql([{ _id: 'mmedia' }]);
-      expect(s.isOpenSelector(getState())).to.be.true;
-      expect(s.isFavoriteSelector(getState())).to.be.false;
-      expect(s.positionSelector(getState())).to.eql({ x: 800, y: 300 });
+      expect(s.mediaSelector(getState())).toEqual([{ _id: 'mmedia' }]);
+      expect(s.isOpenSelector(getState())).toBe(true);
+      expect(s.isFavoriteSelector(getState())).toBe(false);
+      expect(s.positionSelector(getState())).toEqual({ x: 800, y: 300 });
     });
   });
 
@@ -35,10 +35,10 @@ describe('reducers/addToPlaylistMenu', () => {
         [{ _id: 'mmedia' }],
         { x: 800, y: 300 },
       ));
-      expect(s.isOpenSelector(getState())).to.be.true;
+      expect(s.isOpenSelector(getState())).toBe(true);
 
       dispatch(closeAddMediaMenu());
-      expect(s.isOpenSelector(getState())).to.be.false;
+      expect(s.isOpenSelector(getState())).toBe(false);
     });
   });
 });
