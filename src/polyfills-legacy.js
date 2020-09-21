@@ -20,6 +20,7 @@ if (!window.Symbol) {
   let si = 0;
   const symbols = new Map();
   window.Symbol = function Symbol(description) {
+    // eslint-disable-next-line
     return Object.assign(new String(`$$symbol-${si++}`), { description });
   };
   Symbol.for = function SymbolFor(key) {
