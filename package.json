@@ -155,7 +155,7 @@
     "webpack-common-shake": "^2.1.0",
     "webpack-dev-middleware": "^3.7.2",
     "webpack-hot-middleware": "^2.25.0",
-    "webpack-merge": "^4.2.2",
+    "webpack-merge": "^5.1.4",
     "webpack-subresource-integrity": "^1.4.0",
     "webpackbar": "^4.0.0",
     "yaml-hook": "^1.0.0",
