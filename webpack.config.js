@@ -71,7 +71,7 @@ function getConfig(env, {
         type: 'commonjs-module',
       },
     },
-    target: 'node',
+    target: 'node10',
 
     optimization: {
       minimize: false,
@@ -298,16 +298,8 @@ function getConfig(env, {
     output: {
       filename: env.production ? 'static/[name]_[chunkhash:7].js' : '[name]_dev.js',
       chunkFilename: env.production ? 'static/[name]_[chunkhash:7].js' : '[name]_dev.js',
-      environment: {
-        arrowFunction: false,
-        bigIntLiteral: false,
-        const: false,
-        destructuring: false,
-        dynamicImport: false,
-        forOf: false,
-        module: false,
-      },
     },
+    target: ['web', 'es5'],
     resolve: {
       alias: {
         'triage-polyfills': './polyfills-legacy.js',
@@ -360,7 +352,7 @@ function getConfig(env, {
     optimization: {
       minimize: false,
     },
-    target: 'node',
+    target: 'node10',
   });
 
   let activeAppConfig = appConfig;
