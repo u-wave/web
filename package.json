@@ -127,7 +127,7 @@
     "html-loader": "^1.2.1",
     "html-webpack-plugin": "^4.0.2",
     "http-proxy-middleware": "^1.0.0",
-    "image-webpack-loader": "^7.0.0",
+    "image-webpack-loader": "^7.0.1",
     "jsdom": "^16.4.0",
     "lodash": "^4.17.19",
     "make-promises-safe": "^5.1.0",
