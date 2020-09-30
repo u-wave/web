@@ -268,6 +268,10 @@ function getConfig(env, {
       ],
     },
 
+    cache: {
+      type: 'filesystem',
+    },
+
     plugins: [
       new CleanWebpackPlugin(),
       new ExtractCssPlugin({
