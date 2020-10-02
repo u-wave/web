@@ -1,6 +1,6 @@
 export default {
   palette: {
-    type: 'dark',
+    mode: 'dark',
     primary: {
       light: '#b20062',
       main: '#9d2053',
