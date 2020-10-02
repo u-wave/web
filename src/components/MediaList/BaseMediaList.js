@@ -93,9 +93,10 @@ function BaseMediaList({
     );
   }, [selection, media, RowComponent, rowProps, onOpenPreviewMediaDialog, makeActions]);
 
+  const mediaLength = media.length;
   const innerList = ({ height, onItemsRendered, ref }) => (
     <FixedSizeList
-      itemCount={size || media.length}
+      itemCount={size || mediaLength}
       itemSize={56}
       height={height}
       onItemsRendered={onItemsRendered}
@@ -121,7 +122,7 @@ function BaseMediaList({
     return (
       <InfiniteLoader
         isItemLoaded={isItemLoaded}
-        itemCount={size || media.length}
+        itemCount={size || mediaLength}
         loadMoreItems={loadMoreItems}
       >
         {inner}
