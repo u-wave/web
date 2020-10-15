@@ -1,3 +1,5 @@
+'use strict';
+
 // Minification options for html-minifier.
 module.exports = {
   removeComments: true,

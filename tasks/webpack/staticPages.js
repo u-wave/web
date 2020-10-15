@@ -1,11 +1,13 @@
-import path from 'path';
-import HtmlPlugin from 'html-webpack-plugin';
-import merge from 'webpack-merge';
-import htmlMinifierOptions from '../utils/htmlMinifierOptions';
+'use strict';
+
+const path = require('path');
+const HtmlPlugin = require('html-webpack-plugin');
+const { merge } = require('webpack-merge');
+const htmlMinifierOptions = require('../utils/htmlMinifierOptions');
 
 const context = path.join(__dirname, '../../src');
 
-export default function staticPages(pages, production) {
+module.exports = function staticPages(pages, production) {
   // Add static pages.
   const staticFiles = [];
 
@@ -33,7 +35,7 @@ export default function staticPages(pages, production) {
             filename: `${name}.html`,
             template: [
               require.resolve('../utils/loadStaticHtmlTemplate'),
-              'extract-loader',
+              require.resolve('./extractLoader'),
               fullPath,
             ].join('!'),
             inject: false,
@@ -65,7 +67,7 @@ export default function staticPages(pages, production) {
         {
           test: /\.md$/,
           use: [
-            'html-loader',
+            { loader: 'html-loader', options: { esModule: true } },
             require.resolve('../utils/renderMarkdown'),
           ],
         },
@@ -77,4 +79,4 @@ export default function staticPages(pages, production) {
     ...pageConfigs,
     loaders,
   ]);
-}
+};

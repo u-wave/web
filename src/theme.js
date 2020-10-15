@@ -1,6 +1,6 @@
 export default {
   palette: {
-    type: 'dark',
+    mode: 'dark',
     primary: {
       light: '#b20062',
       main: '#9d2053',
@@ -29,11 +29,13 @@ export default {
     },
     mutedText: '#777',
   },
-  overrides: {
+  components: {
     MuiIconButton: {
-      root: {
-        '&:hover': {
-          backgroundColor: 'transparent',
+      styleOverrides: {
+        root: {
+          '&:hover': {
+            backgroundColor: 'transparent',
+          },
         },
       },
     },

@@ -1,5 +1,3 @@
-@import "../../../vars.css";
-
 .AdminUserHeader {
   background: var(--highlight-color);
   padding: 12px 24px;

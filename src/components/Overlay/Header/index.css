@@ -1,5 +1,3 @@
-@import "../../../vars.css";
-
 .OverlayHeader {
   background: var(--background-color);
   height: var(--header-height);

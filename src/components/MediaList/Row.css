@@ -1,5 +1,3 @@
-@import "../../vars.css";
-
 :root {
   --media-list-row-height: 56px;
   --unpadded-media-list-row-height: calc(var(--media-list-row-height) - 14px);

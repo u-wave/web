@@ -7,7 +7,8 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import ErrorIcon from '@material-ui/icons/Error';
 import SongInfo from './SongInfo';
-import soundcloudLogo from '../../../assets/img/soundcloud-inline.png';
+
+const soundcloudLogo = new URL('../../../assets/img/soundcloud-inline.png', import.meta.url);
 
 const CLIENT_ID = '9d883cdd4c3c54c6dddda2a5b3a11200';
 
@@ -146,7 +147,7 @@ class SoundCloudPlayer extends React.Component {
             <Typography component="p" paragraph>
               {t('booth.autoplayBlocked')}
             </Typography>
-            <Button variant="contained" color="primary" onClick={this.handlePlay}>
+            <Button variant="contained" onClick={this.handlePlay}>
               {t('booth.play')}
             </Button>
           </Paper>

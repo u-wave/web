@@ -27,19 +27,28 @@
       "Object.is",
       "Object.values",
       "Promise",
-      "fetch"
+      "fetch",
+      "URL"
     ]
   },
 
   "overrides": [
     {
       "files": ["src/**/*.js"],
-      "parser": "babel-eslint"
-    },
-    {
-      "files": ["src/**/*.js"],
+      "parser": "@babel/eslint-parser",
+      "plugins": ["@babel/eslint-plugin"],
       "rules": {
         "compat/compat": "error"
+      }
+    },
+    {
+      "files": ["tasks/**/*.js", "*.config.js"],
+      "parserOptions": {
+        "sourceType": "script"
+      },
+      "rules": {
+        "strict": ["error", "global"],
+        "no-console": "off"
       }
     },
     {

@@ -31,9 +31,6 @@ import {
   FILTER_PLAYLIST_ITEMS_COMPLETE,
 
   DO_FAVORITE_COMPLETE,
-
-  SEARCH_START,
-  SEARCH_DELETE,
 } from '../constants/ActionTypes';
 
 const initialState = {
@@ -208,23 +205,6 @@ export default function reduce(state = initialState, action = {}) {
         selectedPlaylistID: payload.playlistID,
       };
     }
-    case SEARCH_START:
-    // We deselect playlists when doing a search, so the UI can switch to the
-    // search results view instead.
-      return {
-        ...state,
-        selectedPlaylistID: null,
-      };
-    case SEARCH_DELETE:
-    // Select the active playlist when search results are closed while they
-    // were focused.
-      if (state.selectedPlaylistID) return state;
-
-      return {
-        ...state,
-        selectedPlaylistID: state.activePlaylistID,
-      };
-
     case LOAD_PLAYLIST_START: {
       if (meta.sneaky || meta.page !== 0 || state.playlistItems[payload.playlistID]) {
         return state;

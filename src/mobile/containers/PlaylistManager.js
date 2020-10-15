@@ -14,7 +14,7 @@ const {
 } = React;
 
 const PlaylistManager = createLazyOverlay({
-  loader: () => import('../components/PlaylistManager' /* webpackChunkName: "playlistsMobile" */),
+  loader: () => import('../components/PlaylistManager'),
   title: (t) => t('playlists.title'),
 });
 

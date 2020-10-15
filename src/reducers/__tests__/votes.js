@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import expect from 'expect';
 import { INIT_STATE, ADVANCE } from '../../constants/ActionTypes';
 import votes from '../votes';
 
@@ -13,12 +13,12 @@ describe('reducers/votes', () => {
   it('should not respond to unrelated actions', () => {
     let state = { upvotes: [1] };
     state = votes(state, { type: 'randomOtherAction', payload: {} });
-    expect(state.upvotes).to.eql([1]);
+    expect(state.upvotes).toEqual([1]);
   });
 
   it('should default to empty vote arrays', () => {
     const state = votes(undefined, { type: '@@redux/INIT' });
-    expect(state).to.eql(EMPTY_STATE);
+    expect(state).toEqual(EMPTY_STATE);
   });
 
   describe('action: auth/INIT_STATE', () => {
@@ -38,7 +38,7 @@ describe('reducers/votes', () => {
         },
       });
 
-      expect(state).to.eql({
+      expect(state).toEqual({
         upvotes: [1],
         downvotes: [],
         favorites: [2],
@@ -51,7 +51,7 @@ describe('reducers/votes', () => {
         payload: { booth: null },
       });
 
-      expect(state).to.eql(EMPTY_STATE);
+      expect(state).toEqual(EMPTY_STATE);
     });
   });
 
@@ -70,7 +70,7 @@ describe('reducers/votes', () => {
           timestamp: 1449767164107,
         },
       });
-      expect(state).to.eql(EMPTY_STATE);
+      expect(state).toEqual(EMPTY_STATE);
     });
   });
 });

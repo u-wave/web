@@ -1,78 +1,17 @@
+'use strict';
+
 /* eslint-disable global-require */
-require('loud-rejection/register');
-const gulp = require('gulp');
+require('make-promises-safe');
 const path = require('path');
-const log = require('fancy-log');
 const chalk = require('chalk');
 const emojione = require('u-wave-web-emojione');
 const recaptchaTestKeys = require('recaptcha-test-keys');
 const express = require('express');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const webpack = require('webpack');
-const webpackDevMiddleware = require('webpack-dev-middleware');
+const webpackDevMiddleware = require('webpack-dev-middleware').default;
 const webpackHotMiddleware = require('webpack-hot-middleware');
-const nodemon = require('nodemon');
-const explain = require('explain-error');
 const env = require('./env');
-
-function tryResolve(file, message) {
-  try {
-    // eslint-disable-next-line import/no-dynamic-require
-    return require.resolve(file);
-  } catch (e) {
-    throw explain(e, message);
-  }
-}
-
-function clearLine() {
-  process.stdout.write('\x1B[2K\x1B[1G');
-}
-
-const devServerTask = (done) => {
-  const serverPort = env.serverPort || 6042;
-
-  const apiDevServer = tryResolve(
-    'u-wave-http-api/dev/u-wave-api-dev-server',
-    'Could not find the u-wave HTTP API module. Did you run `npm link u-wave-http-api`?',
-  );
-  const monitor = nodemon({
-    script: apiDevServer,
-    args: ['--port', String(serverPort), '--watch'],
-    verbose: true,
-  });
-
-  monitor.once('start', done);
-  monitor.on('log', (msg) => {
-    clearLine();
-    log(chalk.grey('apiServer'), msg.colour);
-  });
-};
-
-const apiServerTask = () => {
-  const apiDevServer = tryResolve(
-    'u-wave-http-api/dev/u-wave-api-dev-server',
-    'Could not find the u-wave HTTP API module. Did you run `npm link u-wave-http-api`?',
-  );
-
-  require(apiDevServer); // eslint-disable-line import/no-dynamic-require
-};
-
-function apiServer(done) {
-  if (env.watch) {
-    devServerTask(done);
-  } else {
-    apiServerTask();
-    done();
-  }
-}
-
-function addHotReloadingClient(entry) {
-  const CLIENT = ['react-hot-loader/patch', 'webpack-hot-middleware/client'];
-  if (Array.isArray(entry)) {
-    return [...CLIENT, ...entry];
-  }
-  return [...CLIENT, entry];
-}
 
 function waitForBuild(devMiddleware) {
   return (req, res, next) => {
@@ -87,7 +26,11 @@ function serve(done) {
   const serverPort = env.serverPort || 6042;
   const watch = env.watch || false;
 
-  const wpConfig = require('../webpack.config');
+  console.log(chalk.grey('client'), `starting on port ${port}`);
+
+  const wpConfig = require('../webpack.config')({ production: !watch }, {
+    watch,
+  });
   const createWebClient = require('../src/middleware').default;
 
   const app = express();
@@ -102,17 +45,8 @@ function serve(done) {
   app.use('/assets/emoji/', emojione.middleware());
 
   if (watch) {
-    Object.keys(wpConfig.entry).forEach((chunk) => {
-      if (chunk === 'polyfills') return;
-      const entry = wpConfig.entry[chunk];
-      wpConfig.entry[chunk] = addHotReloadingClient(entry);
-    });
-
-    wpConfig.plugins.push(new webpack.HotModuleReplacementPlugin());
     const compiler = webpack(wpConfig);
     const dev = webpackDevMiddleware(compiler, {
-      noInfo: true,
-      publicPath: '/',
       serverSideRender: true,
     });
 
@@ -126,7 +60,7 @@ function serve(done) {
         basePath: path.join(__dirname, '../packages/u-wave-web-middleware/public'),
         publicPath: '/',
         // Point u-wave-web middleware to the virtual webpack filesystem.
-        fs: dev.fileSystem,
+        fs: dev.context.outputFileSystem,
         recaptcha: { key: recaptchaTestKeys.sitekey },
       });
     });
@@ -136,11 +70,11 @@ function serve(done) {
     app.use((req, res, next) => webClient(req, res, next));
     app.use(dev);
     app.use(webpackHotMiddleware(compiler, {
-      log,
       path: '/__webpack_hmr',
     }));
 
     dev.waitUntilValid(() => {
+      console.log(chalk.grey('client'), 'ready');
       done();
     });
   } else {
@@ -153,11 +87,14 @@ function serve(done) {
     });
 
     app.use(webClient);
+    console.log(chalk.grey('client'), 'ready');
     done();
   }
 }
 
-// pass --no-api to use an already running API server (on `localhost:${--server-port}`).
-exports.serve = env.api !== false
-  ? gulp.series(apiServer, serve)
-  : serve;
+serve((error) => {
+  if (error) {
+    console.error(error.stack);
+    process.exit(1);
+  }
+});

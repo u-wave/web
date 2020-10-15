@@ -10,11 +10,21 @@ import {
   userListSelector,
   isLoggedInSelector,
 } from '../selectors/userSelectors';
-import ChatInput from '../components/Chat/Input';
+
+const ChatInput = React.lazy(() => (
+  import(/* webpackPreload: true */ '../components/Chat/Input')
+));
 
 const {
   useCallback,
+  Suspense,
 } = React;
+
+const inactiveChatInput = (
+  <div className="ChatInput">
+    <input className="ChatInput-input" type="text" disabled />
+  </div>
+);
 
 function ChatInputContainer() {
   const isLoggedIn = useSelector(isLoggedInSelector);
@@ -31,13 +41,15 @@ function ChatInputContainer() {
 
   if (isLoggedIn) {
     return (
-      <ChatInput
-        mentionableUsers={mentionableUsers}
-        mentionableGroups={mentionableGroups}
-        availableEmoji={availableEmoji}
-        onSend={onSend}
-        onScroll={onScroll}
-      />
+      <Suspense fallback={inactiveChatInput}>
+        <ChatInput
+          mentionableUsers={mentionableUsers}
+          mentionableGroups={mentionableGroups}
+          availableEmoji={availableEmoji}
+          onSend={onSend}
+          onScroll={onScroll}
+        />
+      </Suspense>
     );
   }
 

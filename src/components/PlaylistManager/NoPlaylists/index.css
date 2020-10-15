@@ -1,5 +1,3 @@
-@import "../../../vars.css";
-
 .NoPlaylists {
   background: var(--background-color);
   display: flex;

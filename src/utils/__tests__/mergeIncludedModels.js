@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import expect from 'expect';
 import mergeIncludedModels from '../mergeIncludedModels';
 
 describe('utils/mergeIncludedModels()', () => {
@@ -21,7 +21,7 @@ describe('utils/mergeIncludedModels()', () => {
 
     const merged = mergeIncludedModels(response);
 
-    expect(merged).to.eql([
+    expect(merged).toEqual([
       { user: { _id: 1, name: 'one' } },
       { user: { _id: 2, name: 'two' } },
     ]);
@@ -45,13 +45,13 @@ describe('utils/mergeIncludedModels()', () => {
       },
     };
 
-    expect(mergeIncludedModels(response)).to.eql([
+    expect(mergeIncludedModels(response)).toEqual([
       { user: { _id: 1, name: 'one' } },
       { user: { _id: 2, name: 'two' } },
       { user: { _id: 1, name: 'one' } },
     ]);
     const merged = mergeIncludedModels(response);
-    expect(merged[0].user).to.equal(merged[2].user);
+    expect(merged[0].user).toBe(merged[2].user);
   });
 
   it('can reference included models on subkeys', () => {
@@ -71,7 +71,7 @@ describe('utils/mergeIncludedModels()', () => {
       },
     };
 
-    expect(mergeIncludedModels(response)).to.eql([
+    expect(mergeIncludedModels(response)).toEqual([
       { abc: { def: { ghi: { _id: 2, name: 'goodbye' } } } },
       { abc: { def: { ghi: { _id: 1, name: 'hello' } } } },
     ]);

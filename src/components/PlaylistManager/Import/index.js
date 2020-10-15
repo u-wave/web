@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useMediaSources } from '../../../context/MediaSourceContext';
+import LoadingPanel from './LoadingPanel';
+
+const { Suspense } = React;
 
 const PlaylistImport = ({
   selectedSourceType,
@@ -13,11 +16,14 @@ const PlaylistImport = ({
   if (selectedSourceType) {
     const Panel = getMediaSource(selectedSourceType).ImportPanel;
     const state = sourceStates[selectedSourceType];
+    // The panels may be lazy loaded.
     return (
-      <Panel
-        onClosePanel={onHideImportPanel}
-        {...state}
-      />
+      <Suspense fallback={<LoadingPanel />}>
+        <Panel
+          onClosePanel={onHideImportPanel}
+          {...state}
+        />
+      </Suspense>
     );
   }
 

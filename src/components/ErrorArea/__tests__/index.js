@@ -1,26 +1,28 @@
 import React from 'react';
 import sinon from 'sinon';
-import { expect } from 'chai';
+import expect from 'expect';
 import { shallow } from 'enzyme';
 import ErrorArea from '..';
 
 describe('<ErrorArea />', () => {
   it('should not show if there is no error', () => {
-    expect(shallow((
+    const area = shallow((
       <ErrorArea
         error={null}
         onDismiss={() => {}}
       />
-    )).childAt(0)).to.have.prop('open', false);
+    ));
+    expect(area.childAt(0).props()).toHaveProperty('open', false);
   });
 
   it('should open if there is an error', () => {
-    expect(shallow((
+    const area = shallow((
       <ErrorArea
         error="Something is WRONG!"
         onDismiss={() => {}}
       />
-    )).childAt(0)).to.have.prop('open', true);
+    ));
+    expect(area.childAt(0).props()).toHaveProperty('open', true);
   });
 
   it('closes when user clicks anywhere on the page', () => {
@@ -35,6 +37,6 @@ describe('<ErrorArea />', () => {
 
     area.childAt(0).prop('onClose').call();
 
-    expect(spy.calledOnce).to.equal(true);
+    expect(spy.calledOnce).toEqual(true);
   });
 });

@@ -1,5 +1,3 @@
-@import "../../vars.css";
-
 .WaitlistRow {
   &.is-dragging {
     display: none;

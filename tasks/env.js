@@ -1,1 +1,9 @@
-module.exports = require('minimist')(process.argv.slice(2));
+'use strict';
+
+const path = require('path');
+const argv = require('minimist')(process.argv.slice(2));
+
+module.exports = {
+  ...argv,
+  middlewareDir: path.join(__dirname, '../packages/u-wave-web-middleware'),
+};
