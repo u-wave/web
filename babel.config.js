@@ -58,8 +58,7 @@ module.exports = (api, envOverride) => {
       }],
       ['@babel/preset-react', {
         development: env === 'development',
-        // let preset-env transform ...spread if required
-        useSpread: true,
+        runtime: 'automatic',
       }],
     ],
     plugins: [
