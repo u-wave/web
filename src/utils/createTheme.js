@@ -1,5 +1,5 @@
 import { createMuiTheme } from '@material-ui/core/styles';
-import { fade, decomposeColor, recomposeColor } from '@material-ui/core/styles/colorManipulator';
+import { alpha, decomposeColor, recomposeColor } from '@material-ui/core/styles/colorManipulator';
 
 const AVERAGE_COLOR = 'rgb(127, 127, 127)';
 
@@ -65,17 +65,17 @@ export default function createTheme(base) {
       '--media-list-color': 'transparent',
       // TODO Name this in some other way. It's used as the menu item focus colour
       // in various places.
-      '--media-list-alternate-color': fade(uwave.mediaList.alternate, 0.3),
+      '--media-list-alternate-color': alpha(uwave.mediaList.alternate, 0.3),
 
       // Settings panel colours
       '--settings-help-text-color': palette.text.secondary,
 
       // Computed values, can't do these in CSS
-      '--overlay-background': fade(uwave.background, 0.96),
-      '--chat-suggestion-selected': fade('#fff', 0.1),
-      '--soundcloud-meta-background': fade(uwave.background, 0.3),
-      '--waitlist-locked-text-color': fade(palette.text.primary, 0.7),
-      '--selected-media-row-color': fade(palette.primary.main, 0.7),
+      '--overlay-background': alpha(uwave.background, 0.96),
+      '--chat-suggestion-selected': alpha('#fff', 0.1),
+      '--soundcloud-meta-background': alpha(uwave.background, 0.3),
+      '--waitlist-locked-text-color': alpha(palette.text.primary, 0.7),
+      '--selected-media-row-color': alpha(palette.primary.main, 0.7),
       '--chat-timestamp-text-color': blend(palette.text.primary, AVERAGE_COLOR, 0.7),
     },
   };
