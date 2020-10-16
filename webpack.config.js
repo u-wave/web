@@ -44,7 +44,7 @@ function getConfig(env, {
   watch = false,
   demo = false,
   analyze,
-  dualBundles = process.env.MODULES === '1',
+  dualBundles = false,
 }) {
   const outputPackage = path.join(__dirname, 'packages/u-wave-web-middleware');
 
@@ -286,9 +286,6 @@ function getConfig(env, {
   };
 
   const demoConfigPatch = {
-    output: {
-      path: path.join(__dirname, 'public'),
-    },
     plugins: [
       new DefinePlugin({
         'process.env.FORCE_TOKEN': JSON.stringify(demo),
