@@ -9,6 +9,8 @@ async function prod() {
     production: process.env.NODE_ENV === 'production',
   }, {
     analyze: process.env.ANALYZE,
+    demo: process.env.DEMO === '1',
+    dualBundles: process.env.MODULES === '1',
   });
   const compiler = webpack(wpConfig);
   const run = promisify(compiler.run.bind(compiler));
