@@ -2,7 +2,7 @@
 
 const path = require('path');
 const escapeStringRegExp = require('escape-string-regexp');
-const { DefinePlugin, HotModuleReplacementPlugin } = require('webpack');
+const { DefinePlugin, HotModuleReplacementPlugin, ProvidePlugin } = require('webpack');
 const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const WebpackBar = require('webpackbar');
@@ -102,6 +102,12 @@ function getConfig(env, {
     // Quit if there are errors.
     bail: env.production,
     devtool: env.production ? 'source-map' : 'inline-source-map',
+
+    plugins: [
+      new ProvidePlugin({
+        process: 'process',
+      }),
+    ],
 
     module: {
       rules: [
