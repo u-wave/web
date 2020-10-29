@@ -1,5 +1,9 @@
-import { createMuiTheme } from '@material-ui/core/styles';
-import { alpha, decomposeColor, recomposeColor } from '@material-ui/core/styles';
+import {
+  createMuiTheme,
+  alpha,
+  decomposeColor,
+  recomposeColor,
+} from '@material-ui/core/styles';
 
 const AVERAGE_COLOR = 'rgb(127, 127, 127)';
 
