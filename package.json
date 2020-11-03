@@ -156,6 +156,7 @@
     "webpack-merge": "^5.2.0",
     "webpack-subresource-integrity": "^1.5.1",
     "webpackbar": "^4.0.0",
+    "why-is-node-running": "^2.2.0",
     "yaml-hook": "^1.0.0",
     "yaml-loader": "^0.6.0"
   },
