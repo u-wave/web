@@ -281,7 +281,6 @@ function getConfig(env, {
     plugins: [
       new CleanWebpackPlugin(),
       new ExtractCssPlugin({
-        esModule: true,
         filename: 'static/[name]_[contenthash:7].css',
         chunkFilename: 'static/[name]_[contenthash:7].css',
       }),
