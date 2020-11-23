@@ -139,7 +139,7 @@
     "minimist": "^1.2.0",
     "mocha": "^8.2.0",
     "nyc": "^15.0.1",
-    "postcss": "^7.0.35",
+    "postcss": "^8.1.9",
     "postcss-loader": "^4.0.4",
     "postcss-preset-env": "^6.7.0",
     "recaptcha-test-keys": "^1.0.0",
