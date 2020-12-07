@@ -9,7 +9,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import Radio from '@material-ui/core/Radio';
 import UserIcon from '@material-ui/icons/Person';
-import { upperCaseFirst } from 'upper-case-first';
+import upperCaseFirst from '../../../utils/upperCaseFirst';
 import Form from '../../Form';
 import FormGroup from '../../Form/Group';
 import TextField from '../../Form/TextField';

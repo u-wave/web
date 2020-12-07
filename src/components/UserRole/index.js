@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
-import { upperCaseFirst } from 'upper-case-first';
+import upperCaseFirst from '../../utils/upperCaseFirst';
 import RoleColor from '../RoleColor';
 
 function UserRole({ roleName }) {
