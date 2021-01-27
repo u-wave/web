@@ -1,21 +1,45 @@
-export activeOverlay from './activeOverlay';
-export addToPlaylistMenu from './addToPlaylistMenu';
-export auth from './auth';
-export booth from './booth';
-export chat from './chat';
-export config from './config';
-export dialogs from './dialogs';
-export errors from './errors';
-export imports from './imports';
-export locales from './locales';
-export mediaSearch from './mediaSearch';
-export playlists from './playlists';
-export roomHistory from './roomHistory';
-export server from './server';
-export settings from './settings';
-export theme from './theme';
-export time from './time';
-export users from './users';
-export votes from './votes';
-export waitlist from './waitlist';
-export mobile from '../mobile/reducers';
+import activeOverlay from './activeOverlay';
+import addToPlaylistMenu from './addToPlaylistMenu';
+import auth from './auth';
+import booth from './booth';
+import chat from './chat';
+import config from './config';
+import dialogs from './dialogs';
+import errors from './errors';
+import imports from './imports';
+import locales from './locales';
+import mediaSearch from './mediaSearch';
+import playlists from './playlists';
+import roomHistory from './roomHistory';
+import server from './server';
+import settings from './settings';
+import theme from './theme';
+import time from './time';
+import users from './users';
+import votes from './votes';
+import waitlist from './waitlist';
+import mobile from '../mobile/reducers';
+
+export {
+  activeOverlay,
+  addToPlaylistMenu,
+  auth,
+  booth,
+  chat,
+  config,
+  dialogs,
+  errors,
+  imports,
+  locales,
+  mediaSearch,
+  playlists,
+  roomHistory,
+  server,
+  settings,
+  theme,
+  time,
+  users,
+  votes,
+  waitlist,
+  mobile,
+};
