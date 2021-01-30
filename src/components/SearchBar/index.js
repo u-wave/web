@@ -12,7 +12,11 @@ const {
 } = React;
 
 function SearchBar({
-  children, className, autoFocus, onSubmit,
+  children,
+  className,
+  autoFocus,
+  onSubmit,
+  icon = <SearchIcon />,
 }) {
   const { t } = useTranslator();
   const inputRef = useRef(null);
@@ -37,7 +41,7 @@ function SearchBar({
   return (
     <div className={cx('SearchBar', focused ? 'is-focused' : '', className)}>
       <div className="SearchBar-icon">
-        <SearchIcon />
+        {icon}
       </div>
       {children}
       <div className="SearchBar-query">
@@ -61,6 +65,7 @@ SearchBar.propTypes = {
   children: PropTypes.node,
   autoFocus: PropTypes.bool,
   onSubmit: PropTypes.func.isRequired,
+  icon: PropTypes.element,
 };
 
 export default SearchBar;
