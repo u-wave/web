@@ -28,7 +28,12 @@ function Motd({
   const [newMotd, setMotd] = useState(initialMotd);
   const [expanded, setExpanded] = useState(false);
   const parsedMotd = useMemo(
-    () => compile(parse(newMotd ?? ''), compileOptions),
+    () => {
+      if (newMotd == null) {
+        return null;
+      }
+      return compile(parse(newMotd), compileOptions);
+    },
     [newMotd, compileOptions],
   );
   const onExpand = useCallback(() => {

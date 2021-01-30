@@ -12,10 +12,11 @@ const es2015Deps = [
   /\/nanoid\//,
   /\/strip-indent\//,
   /\/use-mediaquery\//,
-  /\/@material-ui\/core\/es\//,
-  /\/@material-ui\/styles\/es\//,
-  /\/@material-ui\/system\/es\//,
-  /\/@material-ui\/utils\/es\//,
+  /\/@material-ui\/core\/modern\//,
+  /\/@material-ui\/icons\/esm\//,
+  /\/@material-ui\/styles\/modern\//,
+  /\/@material-ui\/system\/modern\//,
+  /\/@material-ui\/utils\/modern\//,
 ];
 
 module.exports = function compileDependencies() {
@@ -59,11 +60,11 @@ module.exports = function compileDependencies() {
 
     resolve: {
       alias: {
-        '@material-ui/core': path.join(__dirname, '../../node_modules/@material-ui/core/es/'),
+        '@material-ui/core': path.join(__dirname, '../../node_modules/@material-ui/core/modern/'),
         '@material-ui/icons': path.join(__dirname, '../../node_modules/@material-ui/icons/esm/'),
-        '@material-ui/styles': path.join(__dirname, '../../node_modules/@material-ui/styles/es/'),
-        '@material-ui/system': path.join(__dirname, '../../node_modules/@material-ui/system/es/'),
-        '@material-ui/utils': path.join(__dirname, '../../node_modules/@material-ui/utils/es/'),
+        '@material-ui/styles': path.join(__dirname, '../../node_modules/@material-ui/styles/modern/'),
+        '@material-ui/system': path.join(__dirname, '../../node_modules/@material-ui/system/modern/'),
+        '@material-ui/utils': path.join(__dirname, '../../node_modules/@material-ui/utils/modern/'),
       },
     },
   };

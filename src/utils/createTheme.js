@@ -1,5 +1,9 @@
-import { createMuiTheme } from '@material-ui/core/styles';
-import { alpha, decomposeColor, recomposeColor } from '@material-ui/core/styles/colorManipulator';
+import {
+  createMuiTheme,
+  alpha,
+  decomposeColor,
+  recomposeColor,
+} from '@material-ui/core/styles';
 
 const AVERAGE_COLOR = 'rgb(127, 127, 127)';
 
@@ -37,7 +41,7 @@ export default function createTheme(base) {
       '--text-color': palette.text.primary,
       '--secondary-text-color': palette.text.secondary,
       // TODO rename to hint-text-color? it's not always used as a hint text though…
-      '--muted-text-color': palette.text.hint,
+      '--muted-text-color': palette.text.disabled,
       '--background-color': uwave.background,
       '--background-hover-color': uwave.backgroundHover,
       '--highlight-color': palette.primary.main,

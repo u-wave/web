@@ -9,7 +9,7 @@ const recaptchaTestKeys = require('recaptcha-test-keys');
 const express = require('express');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const webpack = require('webpack');
-const webpackDevMiddleware = require('webpack-dev-middleware').default;
+const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const env = require('./env');
 

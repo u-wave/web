@@ -2,11 +2,17 @@ import {
   SET_RESET_KEY,
   SET_RESET_SUCCESS,
 } from './constants';
+import auth from '../reducers/auth';
+import config from '../reducers/config';
+import errors from '../reducers/errors';
+import theme from '../reducers/theme';
 
-export auth from '../reducers/auth';
-export config from '../reducers/config';
-export errors from '../reducers/errors';
-export theme from '../reducers/theme';
+export {
+  auth,
+  config,
+  errors,
+  theme,
+};
 
 export function passwordReset(state = {}, action = {}) {
   if (action.error) return state;
