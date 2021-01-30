@@ -23,7 +23,10 @@ SourcePickerElement.propTypes = {
   className: PropTypes.string,
   name: PropTypes.string.isRequired,
   source: PropTypes.shape({
-    logo: PropTypes.string.isRequired,
+    logo: PropTypes.oneOfType([
+      PropTypes.string.isRequired,
+      PropTypes.instanceOf(URL).isRequired,
+    ]),
   }).isRequired,
   active: PropTypes.bool,
 };

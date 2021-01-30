@@ -5,7 +5,8 @@ import { useTranslator } from '@u-wave/react-translate';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
-import withMobileDialog from '@material-ui/core/withMobileDialog';
+import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from 'use-mediaquery';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import DialogCloseAnimation from '../../DialogCloseAnimation';
@@ -14,14 +15,13 @@ import RegisterForm from './RegisterForm';
 import SocialForm from './SocialForm';
 import ResetPasswordForm from './ResetPasswordForm';
 
-const enhance = withMobileDialog();
-
 /* eslint-disable react/jsx-props-no-spreading */
 function LoginDialog(props) {
   const { t } = useTranslator();
+  const theme = useTheme();
+  const isFullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   const {
-    fullScreen,
     open,
     show,
     onCloseDialog,
@@ -48,16 +48,16 @@ function LoginDialog(props) {
       {open ? (
         <Dialog
           classes={{
-            paper: cx('Dialog', 'LoginDialog', fullScreen && 'LoginDialog--mobile'),
+            paper: cx('Dialog', 'LoginDialog', isFullScreen && 'LoginDialog--mobile'),
           }}
-          fullScreen={fullScreen}
+          fullScreen={isFullScreen}
           onClose={onCloseDialog}
           aria-labelledby="uw-login-title"
           open
         >
           <DialogTitle className="Dialog-title" id="uw-login-title">
             {title}
-            {fullScreen && (
+            {isFullScreen && (
               <IconButton className="Dialog-close" onClick={onCloseDialog}>
                 <CloseIcon />
               </IconButton>
@@ -75,8 +75,7 @@ function LoginDialog(props) {
 LoginDialog.propTypes = {
   open: PropTypes.bool,
   show: PropTypes.string,
-  fullScreen: PropTypes.bool.isRequired,
   onCloseDialog: PropTypes.func,
 };
 
-export default enhance(LoginDialog);
+export default LoginDialog;

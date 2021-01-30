@@ -46,7 +46,7 @@ class LogoutButton extends React.Component {
 
     return (
       <>
-        <Button className="LogoutButton" onClick={this.handleOpen}>
+        <Button color="inherit" className="LogoutButton" onClick={this.handleOpen}>
           <LogoutIcon className="LogoutButton-icon" />
           {t('settings.logout')}
         </Button>
