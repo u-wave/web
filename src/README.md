@@ -15,7 +15,7 @@ The Redux action descriptions are created by the functions in the
 [constants/actionTypes/](./constants/actionTypes/) folder.
 
 The Redux reducer functions can be found in the [reducers/](./reducers/) folder.
-The Redux store creator and custom store enhancers are in the [store/](./store/)
+The Redux store creator and custom store enhancers are in the [redux/](./redux/)
 directory. Data can be extracted from the Redux store state (by components, or
 action creators) using selector functions. Selector functions exist in the
 [selectors/](./selectors/) directory.
@@ -23,6 +23,10 @@ action creators) using selector functions. Selector functions exist in the
 Most React components just render what their parent tells them to render, but
 some do have to interact with the global state. These components are called
 Container components, and they live in the [containers/](./containers/) folder.
+Since the introduction of React Hooks, this distinction is starting to fade, and
+many components in the [components/](./components/) folder also use global state
+through the context or through Redux. We're still figuring out which style works
+best for us in that area!
 
 The üWave web client is "started" by the [app.js](./app.js) file in this folder.
 

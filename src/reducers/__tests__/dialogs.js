@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import expect from 'expect';
 import {
   OPEN_EDIT_MEDIA_DIALOG, CLOSE_EDIT_MEDIA_DIALOG,
   OPEN_LOGIN_DIALOG, CLOSE_LOGIN_DIALOG,
@@ -17,7 +17,7 @@ const testDialogOpen = (type, prop, text) => {
     let state = initialState();
     const testPayload = { test: 'payload' };
     state = dialogs(state, { type, payload: testPayload });
-    expect(state[prop]).to.eql({
+    expect(state[prop]).toEqual({
       open: true,
       payload: testPayload,
     });
@@ -28,7 +28,7 @@ const testDialogClose = (type, prop, text) => {
   it(text, () => {
     let state = initialState();
     state = dialogs(state, { type });
-    expect(state[prop]).to.eql({
+    expect(state[prop]).toEqual({
       open: false,
       payload: {},
     });
@@ -38,11 +38,11 @@ const testDialogClose = (type, prop, text) => {
 describe('reducers/dialogs', () => {
   it('should default to a closed media edit dialog', () => {
     const state = dialogs(undefined, { type: '@@redux/INIT' });
-    expect(state.editMedia).to.eql(closedDialog);
+    expect(state.editMedia).toEqual(closedDialog);
   });
   it('should default to a closed login dialog', () => {
     const state = dialogs(undefined, { type: '@@redux/INIT' });
-    expect(state.login).to.eql(closedDialog);
+    expect(state.login).toEqual(closedDialog);
   });
 
   describe('action: OPEN_EDIT_MEDIA_DIALOG', () => {

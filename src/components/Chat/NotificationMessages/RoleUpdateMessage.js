@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { upperCaseFirst } from 'upper-case-first';
+import upperCaseFirst from '../../../utils/upperCaseFirst';
 import UserNotificationMessage from './UserNotificationMessage';
 
 const getLangKey = (updateType) => {

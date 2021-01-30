@@ -3,7 +3,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import IconButton from '@material-ui/core/IconButton';
 import AboutIcon from '@material-ui/icons/ArrowDropDown';
-import logo from '../../../assets/img/logo-white.png';
+
+const logo = new URL('../../../assets/img/logo-white.png', import.meta.url);
+
+// We use `logo.pathname` to ensure that the prerendered loading screen
+// does not include a `file://` prefix. This should still work fine in browsers
+// so long as the asset is hosted on the same domain as the web client, which
+// has always been the expected situation.
+function pathname(url) {
+  if (url.protocol === 'data:') {
+    return url.toString();
+  }
+  return url.pathname;
+}
 
 const AppTitle = ({
   className,
@@ -15,7 +27,7 @@ const AppTitle = ({
       <img
         className="AppTitle-logoImage"
         alt={children}
-        src={logo}
+        src={pathname(logo)}
       />
     </h1>
     <IconButton className="AppTitle-button" onClick={onClick}>

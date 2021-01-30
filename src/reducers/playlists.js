@@ -1,7 +1,7 @@
-import omit from 'just-omit';
 import escapeStringRegExp from 'escape-string-regexp';
-import indexBy from 'index-by';
+import indexBy from 'just-index';
 import mapValues from 'just-map-values';
+import omit from 'just-omit';
 
 import {
   INIT_STATE,
@@ -31,9 +31,6 @@ import {
   FILTER_PLAYLIST_ITEMS_COMPLETE,
 
   DO_FAVORITE_COMPLETE,
-
-  SEARCH_START,
-  SEARCH_DELETE,
 } from '../constants/ActionTypes';
 
 const initialState = {
@@ -43,14 +40,6 @@ const initialState = {
   selectedPlaylistID: null,
   currentFilter: {},
 };
-
-function deselectAll(playlists) {
-  return mapValues(playlists, (playlist) => (
-    playlist.selected
-      ? { ...playlist, selected: false }
-      : playlist
-  ));
-}
 
 function processInsert(list, insert, position) {
   let insertIdx = 0;
@@ -172,7 +161,6 @@ export default function reduce(state = initialState, action = {}) {
         playlists: indexBy(payload.playlists.map((playlist) => ({
           ...playlist,
           active: playlist._id === payload.activePlaylist,
-          selected: playlist._id === payload.activePlaylist,
         })), '_id'),
         // Preload the first item in the active playlist so it can be shown in
         // the footer bar immediately. Else it would flash "This playlist is empty"
@@ -214,36 +202,9 @@ export default function reduce(state = initialState, action = {}) {
       return {
         ...state,
         currentFilter: shouldClearFilter ? {} : currentFilter,
-        // set `selected` property on playlists
-        playlists: mapValues(state.playlists, (playlist) => ({
-          ...playlist,
-          selected: playlist._id === payload.playlistID,
-        })),
         selectedPlaylistID: payload.playlistID,
       };
     }
-    case SEARCH_START:
-    // We deselect playlists when doing a search, so the UI can switch to the
-    // search results view instead.
-      return {
-        ...state,
-        playlists: deselectAll(state.playlists),
-        selectedPlaylistID: null,
-      };
-    case SEARCH_DELETE:
-    // Select the active playlist when search results are closed while they
-    // were focused.
-      if (state.selectedPlaylistID) return state;
-
-      return {
-        ...state,
-        playlists: mapValues(state.playlists, (playlist) => ({
-          ...playlist,
-          selected: playlist.active,
-        })),
-        selectedPlaylistID: state.activePlaylistID,
-      };
-
     case LOAD_PLAYLIST_START: {
       if (meta.sneaky || meta.page !== 0 || state.playlistItems[payload.playlistID]) {
         return state;
@@ -319,13 +280,12 @@ export default function reduce(state = initialState, action = {}) {
         name: payload.name,
         description: payload.description,
         shared: payload.shared,
-        selected: true,
         creating: true,
       };
       return {
         ...state,
         playlists: Object.assign(
-          deselectAll(state.playlists),
+          state.playlists,
           { [meta.tempId]: newPlaylist },
         ),
         selectedPlaylistID: meta.tempId,
@@ -342,13 +302,8 @@ export default function reduce(state = initialState, action = {}) {
       return {
         ...state,
         playlists: Object.assign(
-          deselectAll(omit(state.playlists, `${meta.tempId}`)),
-          {
-            [payload.playlist._id]: {
-              ...payload.playlist,
-              selected: true,
-            },
-          },
+          omit(state.playlists, `${meta.tempId}`),
+          { [payload.playlist._id]: payload.playlist },
         ),
         selectedPlaylistID: payload.playlist._id,
       };

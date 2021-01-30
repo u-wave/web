@@ -1,15 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { AppContainer as HotContainer } from 'react-hot-loader';
 import { StylesProvider } from '@material-ui/styles';
 import AppContainer from './containers/App';
 import { get as readSession } from './utils/Session';
 import createGenerateClassName from './utils/createGenerateClassName';
-import configureStore from './store/configureStore';
+import configureStore from './redux/configureStore';
 import { initState, socketConnect, setSessionToken } from './actions/LoginActionCreators';
 import { loadCurrentLanguage } from './actions/LocaleActionCreators';
-import * as api from './api';
 // Register default chat commands.
 import './utils/commands';
 
@@ -33,15 +31,7 @@ export default class Uwave {
       this.resolveReady = resolve;
     });
 
-    Object.assign(this, api.constants);
-    Object.assign(this, api.components);
-    Object.assign(this, api.actions);
-
     if (module.hot) {
-      const { getComponent } = this;
-      this.getComponent = () => (
-        <HotContainer>{getComponent.call(this)}</HotContainer>
-      );
       const uw = this;
       module.hot.accept('./containers/App', () => {
         if (uw.renderTarget) {

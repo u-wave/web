@@ -1,4 +1,4 @@
-import setPath from 'lodash/set';
+import setPath from 'dset';
 import {
   LOAD_SETTINGS,
   CHANGE_SETTING,

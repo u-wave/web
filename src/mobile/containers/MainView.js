@@ -1,6 +1,5 @@
-import { bindActionCreators } from 'redux';
-import { createStructuredSelector } from 'reselect';
-import { connect } from 'react-redux';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { toggleRoomHistory } from '../../actions/OverlayActionCreators';
 import { set } from '../../actions/SettingsActionCreators';
 import {
@@ -13,24 +12,40 @@ import {
 } from '../../selectors/waitlistSelectors';
 import { playlistsSelector } from '../../selectors/playlistSelectors';
 import { videoEnabledSelector } from '../../selectors/settingSelectors';
-
 import { openDrawer, openUsersDrawer } from '../actions/DrawerActionCreators';
 import MainView from '../components/MainView';
 
-const mapStateToProps = createStructuredSelector({
-  videoEnabled: videoEnabledSelector,
-  media: mediaSelector,
-  startTime: startTimeSelector,
-  waitlistPosition: waitlistPositionSelector,
-  waitlistSize: waitlistSizeSelector,
-  playlists: playlistsSelector,
-});
+const {
+  useCallback,
+} = React;
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  onOpenRoomHistory: toggleRoomHistory,
-  onOpenDrawer: openDrawer,
-  onOpenWaitlist: openUsersDrawer,
-  onEnableVideo: () => set('videoEnabled', true),
-}, dispatch);
+function MainViewContainer() {
+  const videoEnabled = useSelector(videoEnabledSelector);
+  const media = useSelector(mediaSelector);
+  const startTime = useSelector(startTimeSelector);
+  const waitlistPosition = useSelector(waitlistPositionSelector);
+  const waitlistSize = useSelector(waitlistSizeSelector);
+  const playlists = useSelector(playlistsSelector);
+  const dispatch = useDispatch();
+  const onOpenRoomHistory = useCallback(() => dispatch(toggleRoomHistory()), []);
+  const onOpenDrawer = useCallback(() => dispatch(openDrawer()), []);
+  const onOpenWaitlist = useCallback(() => dispatch(openUsersDrawer()), []);
+  const onEnableVideo = useCallback(() => dispatch(set('videoEnabled', true)), []);
 
-export default connect(mapStateToProps, mapDispatchToProps)(MainView);
+  return (
+    <MainView
+      videoEnabled={videoEnabled}
+      media={media}
+      startTime={startTime}
+      waitlistPosition={waitlistPosition}
+      waitlistSize={waitlistSize}
+      playlists={playlists}
+      onOpenRoomHistory={onOpenRoomHistory}
+      onOpenDrawer={onOpenDrawer}
+      onOpenWaitlist={onOpenWaitlist}
+      onEnableVideo={onEnableVideo}
+    />
+  );
+}
+
+export default MainViewContainer;

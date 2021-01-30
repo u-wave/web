@@ -1,3 +1,7 @@
+.ServerList {
+  width: 100%;
+}
+
 .ServerList--loading {
   display: flex;
   align-items: center;

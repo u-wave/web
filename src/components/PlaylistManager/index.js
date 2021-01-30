@@ -9,6 +9,7 @@ import SearchResults from '../../containers/SearchResultsPanel';
 import MediaSearchBar from './Header/SearchBar';
 import PlaylistHeader from './Header';
 import NoPlaylists from './NoPlaylists';
+import './index.css';
 
 const PlaylistManager = ({
   className,

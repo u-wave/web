@@ -5,14 +5,14 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import uniqueId from 'lodash/uniqueId';
+import { nanoid } from 'nanoid/non-secure';
 import Form from '../../Form';
 import FormGroup from '../../Form/Group';
 import TextField from '../../Form/TextField';
 import Button from '../../Form/Button';
 
 export default class PromptDialog extends React.Component {
-  title = uniqueId('title');
+  ariaTitle = nanoid();
 
   static propTypes = {
     children: PropTypes.node,
@@ -106,9 +106,9 @@ export default class PromptDialog extends React.Component {
           paper: cx('Dialog', contentClassName),
         }}
         onClose={this.handleClose}
-        aria-labelledby={this.title}
+        aria-labelledby={this.ariaTitle}
       >
-        <DialogTitle className={cx('Dialog-title', titleClassName)} id={this.title}>
+        <DialogTitle className={cx('Dialog-title', titleClassName)} id={this.ariaTitle}>
           {title}
         </DialogTitle>
         <DialogContent className={cx('Dialog-body', bodyClassName)}>

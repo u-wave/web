@@ -3,8 +3,8 @@
     await htmlWebpackPlugin.options.loadingScreen(compilation);
 %>
 <!DOCTYPE html>
-<!-- lang will be overwritten with user configuration at runtime. -->
-<html lang="en">
+<!-- lang/dir will be overwritten with user configuration at runtime. -->
+<html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -14,6 +14,8 @@
       <link rel="shortcut icon" href="<%= htmlWebpackPlugin.files.favicon %>">
     <% } %>
     <link rel="manifest" href="/manifest.json">
+    <link rel="dns-prefetch" href="https://www.youtube.com">
+    <link rel="dns-prefetch" href="https://i.ytimg.com">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,600italic,400italic">
     <style id="jss"><%= loading ? loading.css : '' %></style>
   </head>

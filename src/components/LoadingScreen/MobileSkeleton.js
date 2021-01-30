@@ -22,7 +22,7 @@ function MobileSkeleton() {
             <IconButton>
               <MenuIcon />
             </IconButton>
-            <Typography variant="title" className="MainView-title">
+            <Typography variant="h6" className="MainView-title">
               <Filler width={200} />
             </Typography>
             <IconButton>

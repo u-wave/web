@@ -6,7 +6,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import IconButton from '@material-ui/core/IconButton';
-import uniqueId from 'lodash/uniqueId';
+import { nanoid } from 'nanoid/non-secure';
 import formatDuration from 'format-duration';
 import ArtistIcon from '@material-ui/icons/Headset';
 import TitleIcon from '@material-ui/icons/MusicNote';
@@ -29,11 +29,11 @@ const enhance = translate();
 const BASE_TAB_INDEX = 1000;
 
 class EditMediaDialog extends React.Component {
-  titleId = uniqueId('title');
+  ariaTitle = nanoid();
 
-  startId = uniqueId('start');
+  startFieldId = nanoid();
 
-  endId = uniqueId('end');
+  endFieldId = nanoid();
 
   static propTypes = {
     t: PropTypes.func.isRequired,
@@ -166,13 +166,13 @@ class EditMediaDialog extends React.Component {
 
     const fromLabel = (
       // eslint-disable-next-line jsx-a11y/label-has-for
-      <label htmlFor={this.startId} className="EditMediaDialogGroup-label">
+      <label htmlFor={this.startFieldId} className="EditMediaDialogGroup-label">
         {t('dialogs.editMedia.playFromLabel')}
       </label>
     );
     const fromInput = (
       <TextField
-        id={this.startId}
+        id={this.startFieldId}
         className="EditMediaDialogGroup-field"
         placeholder="0:00"
         value={start}
@@ -183,13 +183,13 @@ class EditMediaDialog extends React.Component {
     );
     const toLabel = (
       // eslint-disable-next-line jsx-a11y/label-has-for
-      <label htmlFor={this.endId} className="EditMediaDialogGroup-label">
+      <label htmlFor={this.endFieldId} className="EditMediaDialogGroup-label">
         {t('dialogs.editMedia.playToLabel')}
       </label>
     );
     const toInput = (
       <TextField
-        id={this.endId}
+        id={this.endFieldId}
         className="EditMediaDialogGroup-field"
         placeholder={formatDuration(media.duration)}
         value={end}
@@ -263,9 +263,9 @@ class EditMediaDialog extends React.Component {
             }}
             open={open}
             onClose={onCloseDialog}
-            aria-labelledby={this.titleId}
+            aria-labelledby={this.ariaTitle}
           >
-            <DialogTitle id={this.titleId} className={cx('Dialog-title', titleClassName)}>
+            <DialogTitle id={this.ariaTitle} className={cx('Dialog-title', titleClassName)}>
               {t('dialogs.editMedia.title')}
             </DialogTitle>
             <DialogContent className={cx('Dialog-body', bodyClassName)}>

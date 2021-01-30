@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import { useTranslator } from '@u-wave/react-translate';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -7,6 +7,11 @@ import Chat from '../Chat';
 import RoomUserList from '../../containers/RoomUserList';
 import WaitList from '../../containers/WaitList';
 import PanelContainer from './PanelContainer';
+import { listenerCountSelector } from '../../selectors/userSelectors';
+import {
+  sizeSelector as waitlistSizeSelector,
+  positionSelector as waitlistPositionSelector,
+} from '../../selectors/waitlistSelectors';
 
 const { useState, useCallback } = React;
 
@@ -44,10 +49,13 @@ const getWaitlistLabel = (t, size, position) => {
   return t('waitlist.title');
 };
 
-function SidePanels({ listenerCount, waitlistSize, waitlistPosition }) {
+function SidePanels() {
   const { t } = useTranslator();
   const [selected, setTab] = useState(0);
   const handleChange = useCallback((event, value) => setTab(value), [setTab]);
+  const waitlistPosition = useSelector(waitlistPositionSelector);
+  const waitlistSize = useSelector(waitlistSizeSelector);
+  const listenerCount = useSelector(listenerCountSelector);
 
   return (
     <>
@@ -56,7 +64,7 @@ function SidePanels({ listenerCount, waitlistSize, waitlistPosition }) {
         onChange={handleChange}
         variant="fullWidth"
         classes={{
-          root: 'SidePanel-tabs',
+          root: 'AppRow--top SidePanel-tabs',
           indicator: 'SidePanel-indicator',
         }}
       >
@@ -85,11 +93,5 @@ function SidePanels({ listenerCount, waitlistSize, waitlistPosition }) {
     </>
   );
 }
-
-SidePanels.propTypes = {
-  listenerCount: PropTypes.number.isRequired,
-  waitlistSize: PropTypes.number.isRequired,
-  waitlistPosition: PropTypes.number.isRequired,
-};
 
 export default SidePanels;

@@ -1,4 +1,3 @@
-import createDebug from 'debug';
 import {
   INIT_STATE,
   SOCKET_CONNECT,
@@ -21,8 +20,6 @@ import { setPlaylists, loadPlaylist } from './PlaylistActionCreators';
 import { syncTimestamps } from './TickerActionCreators';
 import { closeLoginDialog } from './DialogActionCreators';
 import { tokenSelector } from '../selectors/userSelectors';
-
-const debug = createDebug('uwave:actions:login');
 
 export function socketConnect() {
   return { type: SOCKET_CONNECT };
@@ -124,7 +121,6 @@ export function register({
     onStart: () => ({ type: REGISTER_START }),
     onComplete: (res) => (dispatch) => {
       const user = res.data;
-      debug('registered', user);
       dispatch({
         type: REGISTER_COMPLETE,
         payload: { user },
@@ -195,13 +191,71 @@ function whenWindowClosed(window) {
 function socialLogin(service) {
   return (dispatch, getState) => {
     const { apiUrl } = getState().config;
-    const loginWindow = window.open(`${apiUrl}/auth/service/${service}`);
-    return whenWindowClosed(loginWindow).then(() => {
+    let messageHandlerCalled = false;
+    let promise;
+
+    function onlogin() {
       // Check login state after the window closed.
-      dispatch(initState());
+      promise = dispatch(initState());
+    }
+    function oncreate(data) {
+      promise = Promise.resolve();
+      dispatch({
+        type: 'auth/OPEN_LOGIN_DIALOG',
+        payload: {
+          show: 'social',
+          service: data.type,
+          id: data.id,
+          suggestedName: data.suggestedName,
+          avatars: data.avatars,
+        },
+      });
+    }
+
+    // eslint-disable-next-line compat/compat
+    const apiOrigin = new URL(apiUrl, window.location.href).origin;
+    const clientOrigin = window.location.origin;
+
+    window.addEventListener('message', (event) => {
+      const { data, origin } = event;
+      if (apiOrigin !== origin) {
+        // eslint-disable-next-line no-console
+        console.warn('Incorrect origin, discarding', apiUrl, origin, data);
+        return;
+      }
+
+      messageHandlerCalled = true;
+
+      if (data.pending) {
+        oncreate(data);
+      } else {
+        onlogin();
+      }
+    });
+
+    const loginWindow = window.open(`${apiUrl}/auth/service/${service}?origin=${clientOrigin}`);
+    return whenWindowClosed(loginWindow).then(() => {
+      if (messageHandlerCalled) return promise;
+      return onlogin();
     });
   };
 }
 export function loginWithGoogle() {
   return socialLogin('google');
+}
+
+export function finishSocialLogin(service, params) {
+  return post(`/auth/service/${service}/finish`, params, {
+    onStart: loginStart,
+    onComplete: (res) => (dispatch) => {
+      Session.set(res.meta.jwt);
+      dispatch(setSessionToken(res.meta.jwt));
+      dispatch(initState());
+    },
+    onError: (error) => ({
+      type: LOGIN_COMPLETE,
+      error: true,
+      payload: error,
+    }),
+  });
 }

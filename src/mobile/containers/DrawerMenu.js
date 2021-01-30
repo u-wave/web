@@ -1,6 +1,5 @@
 import React from 'react';
-import { createStructuredSelector } from 'reselect';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { currentUserSelector } from '../../selectors/userSelectors';
 import { playlistsSelector } from '../../selectors/playlistSelectors';
 import { toggleSettings, toggleAbout } from '../../actions/OverlayActionCreators';
@@ -10,32 +9,37 @@ import { toggleServerList, openPlaylist } from '../actions/OverlayActionCreators
 import DrawerMenu from '../components/DrawerMenu';
 import UwaveContext from '../../context/UwaveContext';
 
-const mapStateToProps = createStructuredSelector({
-  user: currentUserSelector,
-  playlists: playlistsSelector,
-  open: drawerIsOpenSelector,
-});
+const {
+  useCallback,
+  useContext,
+} = React;
 
-const mapDispatchToProps = {
-  onShowAbout: toggleAbout,
-  onShowServerList: toggleServerList,
-  onShowSettings: toggleSettings,
-  onShowPlaylist: openPlaylist,
-  onDrawerClose: () => setDrawer(false),
-};
+function DrawerMenuContainer() {
+  const uwave = useContext(UwaveContext);
+  const hasAboutPage = !!(uwave && uwave.getAboutPageComponent());
+  const user = useSelector(currentUserSelector);
+  const playlists = useSelector(playlistsSelector);
+  const open = useSelector(drawerIsOpenSelector);
+  const dispatch = useDispatch();
+  const onShowAbout = useCallback(() => dispatch(toggleAbout()), []);
+  const onShowServerList = useCallback(() => dispatch(toggleServerList()), []);
+  const onShowSettings = useCallback(() => dispatch(toggleSettings()), []);
+  const onShowPlaylist = useCallback((playlistID) => dispatch(openPlaylist(playlistID)), []);
+  const onDrawerClose = useCallback(() => dispatch(setDrawer(false)), []);
 
-const enhance = connect(mapStateToProps, mapDispatchToProps);
+  return (
+    <DrawerMenu
+      hasAboutPage={hasAboutPage}
+      user={user}
+      playlists={playlists}
+      open={open}
+      onShowAbout={onShowAbout}
+      onShowServerList={onShowServerList}
+      onShowSettings={onShowSettings}
+      onShowPlaylist={onShowPlaylist}
+      onDrawerClose={onDrawerClose}
+    />
+  );
+}
 
-const ConnectedDrawerMenu = enhance(DrawerMenu);
-
-const DrawerMenuWrapper = () => (
-  <UwaveContext.Consumer>
-    {(uwave) => (
-      <ConnectedDrawerMenu
-        hasAboutPage={uwave && uwave.getAboutPageComponent()}
-      />
-    )}
-  </UwaveContext.Consumer>
-);
-
-export default DrawerMenuWrapper;
+export default DrawerMenuContainer;

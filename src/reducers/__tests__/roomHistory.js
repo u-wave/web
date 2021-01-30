@@ -1,5 +1,5 @@
-import { expect } from 'chai';
-import createStore from '../../store/configureStore';
+import expect from 'expect';
+import createStore from '../../redux/configureStore';
 import { setUsers } from '../../actions/UserActionCreators';
 import { advance, loadHistoryComplete } from '../../actions/BoothActionCreators';
 import * as s from '../../selectors/roomHistorySelectors';
@@ -7,7 +7,7 @@ import * as s from '../../selectors/roomHistorySelectors';
 describe('reducers/roomHistory', () => {
   it('should default to an empty array', () => {
     const { getState } = createStore();
-    expect(s.roomHistorySelector(getState())).to.eql([]);
+    expect(s.roomHistorySelector(getState())).toEqual([]);
   });
 
   const userModel = {
@@ -62,7 +62,7 @@ describe('reducers/roomHistory', () => {
           total: 1,
         },
       }));
-      expect(s.roomHistorySelector(getState())).to.eql([{
+      expect(s.roomHistorySelector(getState())).toEqual([{
         _id: '56b12b90d6bfe93733bece96',
         user: {
           _id: '563ba1e3f059363574f4d0d9',
@@ -103,13 +103,11 @@ describe('reducers/roomHistory', () => {
   describe('action: ADVANCE', () => {
     it('prepends a new history entry', () => {
       const { dispatch, getState } = createStore();
-      dispatch(setUsers({
-        users: [{
-          _id: '562b748139c99dde22c6a499',
-          slug: 'reanna',
-          username: 'ReAnna',
-        }],
-      }));
+      dispatch(setUsers([{
+        _id: '562b748139c99dde22c6a499',
+        slug: 'reanna',
+        username: 'ReAnna',
+      }]));
 
       dispatch(loadHistoryComplete({
         data: [serverHistoryEntry],
@@ -126,8 +124,8 @@ describe('reducers/roomHistory', () => {
           total: 1,
         },
       }));
-      expect(s.roomHistorySelector(getState())).to.have.length(1);
-      expect(s.roomHistorySelector(getState())[0]._id).to.equal('56b12b90d6bfe93733bece96');
+      expect(s.roomHistorySelector(getState())).toHaveLength(1);
+      expect(s.roomHistorySelector(getState())[0]._id).toBe('56b12b90d6bfe93733bece96');
 
       dispatch(advance({
         historyID: '56b12c59d6bfe93733bece97',
@@ -149,10 +147,10 @@ describe('reducers/roomHistory', () => {
         },
       }));
 
-      expect(s.roomHistoryWithVotesSelector(getState())).to.have.length(2);
-      expect(s.roomHistoryWithVotesSelector(getState())[1]._id).to.equal('56b12b90d6bfe93733bece96');
+      expect(s.roomHistoryWithVotesSelector(getState())).toHaveLength(2);
+      expect(s.roomHistoryWithVotesSelector(getState())[1]._id).toBe('56b12b90d6bfe93733bece96');
 
-      expect(s.roomHistoryWithVotesSelector(getState())[0]._id).to.equal('56b12c59d6bfe93733bece97');
+      expect(s.roomHistoryWithVotesSelector(getState())[0]._id).toBe('56b12c59d6bfe93733bece97');
     });
 
     it('works with NULL advances', () => {
@@ -172,10 +170,10 @@ describe('reducers/roomHistory', () => {
           total: 1,
         },
       }));
-      expect(s.roomHistorySelector(getState())).to.have.length(1);
+      expect(s.roomHistorySelector(getState())).toHaveLength(1);
 
       dispatch(advance());
-      expect(s.roomHistorySelector(getState())).to.have.length(1);
+      expect(s.roomHistorySelector(getState())).toHaveLength(1);
     });
   });
 });

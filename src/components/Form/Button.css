@@ -1,5 +1,3 @@
-@import "../../vars.css";
-
 .Button {
   width: 100%;
   height: var(--forms-textfield-size);

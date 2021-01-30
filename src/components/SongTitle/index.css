@@ -1,5 +1,3 @@
-@import "../../vars.css";
-
 .SongTitle {
   color: var(--text-color);
   white-space: nowrap;

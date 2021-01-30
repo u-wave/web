@@ -27,7 +27,6 @@ build/Release
 node_modules
 
 /public
-/lib
-/es
 .eslintcache
+.stylelintcache
 .nyc_output

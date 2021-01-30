@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import expect from 'expect';
 import {
   LOAD_SETTINGS,
   CHANGE_SETTING,
@@ -10,12 +10,12 @@ describe('reducers/settings', () => {
   it('should not respond to unrelated actions', () => {
     let state = { volume: 10 };
     state = settings(state, { type: 'randomOtherAction', payload: {} });
-    expect(state.volume).to.equal(10);
+    expect(state.volume).toBe(10);
   });
 
   it('should default to a settings object', () => {
     const state = settings(undefined, { type: '@@redux/INIT' });
-    expect(state).to.be.an('object');
+    expect(typeof state).toBe('object');
   });
 
   describe('action: settings/LOAD_SETTINGS', () => {
@@ -27,8 +27,8 @@ describe('reducers/settings', () => {
           volume: 20,
         },
       });
-      expect(state.setting).to.equal('value');
-      expect(state.volume).to.equal(20);
+      expect(state.setting).toBe('value');
+      expect(state.volume).toBe(20);
     });
   });
 
@@ -38,7 +38,7 @@ describe('reducers/settings', () => {
         type: CHANGE_SETTING,
         payload: { volume: 54 },
       });
-      expect(state.volume).to.equal(54);
+      expect(state.volume).toBe(54);
     });
   });
 });

@@ -1,4 +1,3 @@
-import isEqual from 'is-equal-shallow';
 import { loadSettings } from '../actions/SettingsActionCreators';
 
 const SETTINGS_KEY = 'uwaveSettings';
@@ -25,7 +24,7 @@ const persistSettings = (next) => (reducer, initialState) => {
   let prevSettings = settings;
   store.subscribe(() => {
     const newSettings = store.getState().settings;
-    if (!isEqual(prevSettings, newSettings)) {
+    if (newSettings !== prevSettings) {
       attempt(() => localStorage.setItem(SETTINGS_KEY, JSON.stringify(newSettings)));
     }
     prevSettings = newSettings;

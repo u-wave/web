@@ -1,8 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useBus } from 'react-bus';
-import { createStructuredSelector } from 'reselect';
 import { inputMessage } from '../actions/ChatActionCreators';
 import {
   availableGroupMentionsSelector,
@@ -12,38 +10,50 @@ import {
   userListSelector,
   isLoggedInSelector,
 } from '../selectors/userSelectors';
-import ChatInput from '../components/Chat/Input';
 
-const { useCallback } = React;
+const ChatInput = React.lazy(() => (
+  import(/* webpackPreload: true */ '../components/Chat/Input')
+));
 
-const mapStateToProps = createStructuredSelector({
-  isLoggedIn: isLoggedInSelector,
-  mentionableUsers: userListSelector,
-  mentionableGroups: availableGroupMentionsSelector,
-  availableEmoji: emojiCompletionsSelector,
-});
+const {
+  useCallback,
+  Suspense,
+} = React;
 
-const mapDispatchToProps = {
-  onSend: inputMessage,
-};
+const inactiveChatInput = (
+  <div className="ChatInput">
+    <input className="ChatInput-input" type="text" disabled />
+  </div>
+);
 
-const enhance = connect(mapStateToProps, mapDispatchToProps);
+function ChatInputContainer() {
+  const isLoggedIn = useSelector(isLoggedInSelector);
+  const mentionableUsers = useSelector(userListSelector);
+  const mentionableGroups = useSelector(availableGroupMentionsSelector);
+  const availableEmoji = useSelector(emojiCompletionsSelector);
+  const dispatch = useDispatch();
+  const onSend = useCallback((message) => dispatch(inputMessage(message)));
 
-function ChatInputContainer({ isLoggedIn, ...props }) {
   const bus = useBus();
   const onScroll = useCallback((direction) => {
     bus.emit('chat:scroll', direction);
-  }, []);
+  }, [bus]);
 
-  return (
-    isLoggedIn
-      ? <ChatInput {...props} onScroll={onScroll} />
-      : <span />
-  );
+  if (isLoggedIn) {
+    return (
+      <Suspense fallback={inactiveChatInput}>
+        <ChatInput
+          mentionableUsers={mentionableUsers}
+          mentionableGroups={mentionableGroups}
+          availableEmoji={availableEmoji}
+          onSend={onSend}
+          onScroll={onScroll}
+        />
+      </Suspense>
+    );
+  }
+
+  return null;
 }
 
-ChatInputContainer.propTypes = {
-  isLoggedIn: PropTypes.bool.isRequired,
-};
-
-export default enhance(ChatInputContainer);
+export default ChatInputContainer;

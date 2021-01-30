@@ -1,7 +1,3 @@
-import createDebug from 'debug';
-
-const debug = createDebug('uwave:chat-commands');
-
 const commands = {};
 
 export function getCommands() {
@@ -17,10 +13,8 @@ export function canExecute(state, { guard } = {}) {
 }
 
 export function execute(state, name, args = []) {
-  debug('execute', name, args);
   if (commands[name]) {
     const allowed = canExecute(state, commands[name]);
-    debug('canExecute', allowed);
     if (allowed) {
       return commands[name].action(...args);
     }

@@ -1,4 +1,5 @@
 import React from 'react';
+import cx from 'clsx';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card/Card';
@@ -9,13 +10,13 @@ import useIntl from '../../hooks/useIntl';
 import Avatar from '../Avatar';
 import UserRoles from './UserRoles';
 
-function UserCard({ user }) {
+function UserCard({ className, user }) {
   const { dateTimeFormatter } = useIntl();
 
   const joinDate = new Date(user.createdAt);
 
   return (
-    <Card className="UserCard">
+    <Card className={cx('UserCard', className)}>
       <CardHeader
         className="UserCard-header"
         title={user.username}
@@ -35,6 +36,7 @@ function UserCard({ user }) {
 }
 
 UserCard.propTypes = {
+  className: PropTypes.string,
   user: PropTypes.object.isRequired,
 };
 

@@ -1,5 +1,12 @@
+// We use `querySelectorAll` in this file because there are typically _two_
+// loading indicators, even if only one is visible: one for the desktop loading
+// screen and one for the mobile loading screen.
+
 function setLoadingText(text) {
-  document.querySelector('.LoadingIndicator-notice').textContent = text;
+  Array.from(document.querySelectorAll('.LoadingIndicator-notice')).forEach((notice) => {
+    // eslint-disable-next-line no-param-reassign
+    notice.textContent = text;
+  });
 }
 
 export default function load(uw) {
@@ -15,9 +22,17 @@ export default function load(uw) {
     document.querySelector('#app-loading').innerHTML = '';
     document.querySelector('#jss').textContent = '';
   }).catch((err) => {
+    clearTimeout(longBuildTimer);
+
     setLoadingText(`Error: ${err.message}`);
-    document.querySelector('.LoadingIndicator-loader').hidden = true;
-    document.querySelector('.LoadingIndicator-warning').hidden = false;
+    Array.from(document.querySelectorAll('.LoadingIndicator-loader')).forEach((el) => {
+      // eslint-disable-next-line no-param-reassign
+      el.hidden = true;
+    });
+    Array.from(document.querySelectorAll('.LoadingIndicator-warning')).forEach((el) => {
+      // eslint-disable-next-line no-param-reassign
+      el.hidden = false;
+    });
 
     throw err;
   });

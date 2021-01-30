@@ -1,4 +1,3 @@
-@import "../../vars.css";
 @import "./Filler.css";
 
 @keyframes initiallyHide {
@@ -29,4 +28,5 @@
 .LoadingIndicator-notice {
   animation: 1s linear 0s 1 initiallyHide;
   color: var(--text-color);
+  text-align: center;
 }

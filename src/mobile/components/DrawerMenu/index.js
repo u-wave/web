@@ -8,7 +8,6 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import Divider from '@material-ui/core/Divider';
-import Typography from '@material-ui/core/Typography';
 import ActiveIcon from '@material-ui/icons/Check';
 import UserCard from '../../../components/UserCard/UserCard';
 
@@ -18,6 +17,47 @@ const {
 
 const classes = {
   paper: 'DrawerMenu',
+};
+
+function Playlists({
+  title,
+  playlists,
+  onShowPlaylist,
+}) {
+  const header = (
+    <ListSubheader>
+      {title}
+    </ListSubheader>
+  );
+
+  return (
+    <MenuList subheader={header}>
+      {playlists.map((playlist) => (
+        <MenuItem
+          key={playlist._id}
+          onClick={(event) => {
+            event.preventDefault();
+            onShowPlaylist(playlist._id);
+          }}
+        >
+          {playlist.active && (
+            <ListItemIcon>
+              <ActiveIcon />
+            </ListItemIcon>
+          )}
+          <ListItemText primaryTypographyProps={{ noWrap: true }}>
+            {playlist.name}
+          </ListItemText>
+        </MenuItem>
+      ))}
+    </MenuList>
+  );
+}
+
+Playlists.propTypes = {
+  title: PropTypes.string.isRequired,
+  playlists: PropTypes.arrayOf(PropTypes.shape({ name: PropTypes.string.isRequired })).isRequired,
+  onShowPlaylist: PropTypes.func.isRequired,
 };
 
 function DrawerMenu({
@@ -45,39 +85,37 @@ function DrawerMenu({
     onShowSettings();
     onDrawerClose();
   }, [onShowSettings, onDrawerClose]);
+  const handleShowPlaylist = useCallback((id) => {
+    onShowPlaylist(id);
+    onDrawerClose();
+  }, [onShowPlaylist, onDrawerClose]);
 
   return (
     <Drawer open={open} onClose={onDrawerClose} classes={classes}>
-      {user && <UserCard user={user} />}
+      {user && <UserCard className="DrawerMenu-user" user={user} />}
       <MenuList>
-        {hasAboutPage && <MenuItem onClick={handleShowAbout}>{t('about.about')}</MenuItem>}
-        <MenuItem onClick={handleShowServerList}>{t('about.servers')}</MenuItem>
-        <MenuItem onClick={handleShowSettings}>{t('settings.title')}</MenuItem>
-      </MenuList>
-      <Divider />
-      <MenuList
-        subheader={<ListSubheader>{t('playlists.title')}</ListSubheader>}
-      >
-        {playlists.map((playlist) => (
-          <MenuItem
-            key={playlist._id}
-            onClick={(event) => {
-              event.preventDefault();
-              onShowPlaylist(playlist._id);
-              onDrawerClose();
-            }}
-          >
-            {playlist.active && (
-              <ListItemIcon>
-                <ActiveIcon />
-              </ListItemIcon>
-            )}
-            <ListItemText disableTypography>
-              <Typography noWrap variant="subheading">{playlist.name}</Typography>
-            </ListItemText>
+        {hasAboutPage && (
+          <MenuItem onClick={handleShowAbout}>
+            {t('about.about')}
           </MenuItem>
-        ))}
+        )}
+        <MenuItem onClick={handleShowServerList}>
+          {t('about.servers')}
+        </MenuItem>
+        <MenuItem onClick={handleShowSettings}>
+          {t('settings.title')}
+        </MenuItem>
       </MenuList>
+      {user && (
+        <>
+          <Divider />
+          <Playlists
+            title={t('playlists.title')}
+            playlists={playlists}
+            onShowPlaylist={handleShowPlaylist}
+          />
+        </>
+      )}
     </Drawer>
   );
 }

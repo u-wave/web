@@ -12,11 +12,13 @@ const Header = ({
 }) => (
   <div className={cx('OverlayHeader', className)}>
     <div className="OverlayHeader-title">
-      {title.toUpperCase()}
+      {title}
     </div>
-    <div className="OverlayHeader-content">
-      {children}
-    </div>
+    {children && (
+      <div className="OverlayHeader-content">
+        {children}
+      </div>
+    )}
     <div className="OverlayHeader-close">
       <CloseButton
         direction={direction}

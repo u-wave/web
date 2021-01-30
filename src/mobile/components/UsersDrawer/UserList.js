@@ -13,7 +13,6 @@ function JoinWaitlistButton(props) {
   return (
     <Button
       variant="contained"
-      color="primary"
       style={{ marginLeft: 16, marginBottom: 8 }}
       {...props}
     />
@@ -64,7 +63,7 @@ function UserList({
       <Divider />
 
       <List
-        subheader={<ListSubheader>{t('users.title')}</ListSubheader>}
+        subheader={<ListSubheader>{t('users.listeners')}</ListSubheader>}
       >
         {users.map((user) => (
           <UserRow key={user._id} user={user} />

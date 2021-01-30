@@ -11,7 +11,7 @@ import createLazyOverlay from '../components/LazyOverlay';
 const { useCallback } = React;
 
 const PlaylistManager = createLazyOverlay({
-  loader: () => import('../components/PlaylistManager' /* webpackChunkName: "playlists" */),
+  loader: () => import('../components/PlaylistManager'),
   title: (t) => t('playlists.title'),
 });
 

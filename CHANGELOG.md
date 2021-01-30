@@ -4,6 +4,35 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## Unreleased
+Features:
+ * **Breaking:** Create a separate u-wave-web-middleware package. (#1018)
+ * **Breaking:** Remove `uw` argument from middleware API.
+ * Add intro screen if user has no playlists. (#1034)
+ * Use Intl APIs for date and time formatting if available. (#1234)
+ * New app loading screen. (#1285)
+ * In search results, show playlists a song is already in. (#1363)
+
+Bugfixes:
+ * Fix default message for forced DJ skips. (#1336)
+
+Internal:
+ * Rewrite AddToPlaylistMenu using hooks. (#1233)
+ * Update to Material UI v4. (#1237)
+ * Remove MediaSearchBar container. (#1240)
+ * Remove broken split bundle preloading. (#1241)
+ * Update webpack plugins and loaders. (#1242)
+ * Transpile async functions in dependencies. (#1248)
+ * Migrate many things away from HOCs. (#1257)
+ * Remove uses of ReactDOM.findDOMNode. (#1258)
+ * Switch to react-window. (#1262)
+ * **Breaking:** Update for server-side playlist auto-activation. (#1263)
+ * Reduce Concurrent Mode warnings. (#1286)
+ * Remove recompose. (#1294)
+ * **Breaking:** Implement votes using HTTP requests. (#1302)
+ * Remove unused `.selected` property from playlists. (#1405)
+ * Use mui FormControl components in the SettingsManager. (#1414)
+
 ## 1.11.6 / 01 Sep 2018
 Bugfixes:
  * Fix initialising current song on load. (#1129)

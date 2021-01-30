@@ -1,4 +1,3 @@
-import './fixHooksInDev';
 import Uwave from './Uwave';
 import load from './loadingUI';
 import experimentalThemePlugin from './experimentalThemePlugin';

@@ -47,6 +47,7 @@ const relativeTimeFormatOptions = {
 };
 const supportsRelativeTimeFormat = (() => {
   try {
+    // eslint-disable-next-line compat/compat
     const formatter = new Intl.RelativeTimeFormat('nl', relativeTimeFormatOptions);
     return formatter.format(-2, 'days') === 'eergisteren'
       && formatter.format(10, 'seconds') === 'over 10 seconden';
@@ -58,6 +59,7 @@ export const relativeTimeFormatterSelector = createSelector(
   currentLanguageSelector,
   (current) => {
     if (supportsRelativeTimeFormat) {
+    // eslint-disable-next-line compat/compat
       return new Intl.RelativeTimeFormat(current, relativeTimeFormatOptions);
     }
     return null;

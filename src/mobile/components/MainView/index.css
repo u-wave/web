@@ -1,13 +1,15 @@
 @import "./VideoDisabledMessage.css";
 
 .MainView {
+  --app-bar-height: 56px;
+
   height: 100%;
   position: relative;
 }
 
 .MainView-appBar {
   z-index: 5;
-  height: 56px;
+  height: var(--app-bar-height);
 }
 
 .MainView-title {
@@ -16,5 +18,11 @@
 }
 
 .MainView-content {
-  height: calc(100% - 56px);
+  height: calc(100% - var(--app-bar-height));
+}
+
+@media (min-width: 600px) {
+  .MainView {
+    --app-bar-height: 64px;
+  }
 }

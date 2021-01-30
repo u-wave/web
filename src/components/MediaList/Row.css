@@ -1,8 +1,11 @@
-@import "../../vars.css";
+:root {
+  --media-list-row-height: 56px;
+  --unpadded-media-list-row-height: calc(var(--media-list-row-height) - 14px);
+}
 
 .MediaListRow {
-  height: 56px;
-  line-height: 56px;
+  height: var(--media-list-row-height);
+  line-height: var(--media-list-row-height);
   position: relative;
   background: var(--media-list-color);
   border-bottom: 1px solid var(--divider-color);
@@ -25,7 +28,7 @@
   width: 55px;
   margin: 0 15px;
   padding: 7px 0;
-  float: left;
+  float: inline-start;
 }
 
 .MediaListRow-image {
@@ -33,11 +36,19 @@
   max-height: 100%;
 }
 
+.MediaListRow-data {
+  height: 100%;
+  padding: 7px 0;
+  line-height: var(--unpadded-media-list-row-height);
+  width: calc(100% - var(--media-list-spacing) - var(--media-list-thumb-width) - var(--media-list-duration-width));
+  float: inline-start;
+}
+
 .MediaListRow-artist {
   height: 100%;
-  float: left;
-  width: calc(50% - var(--media-list-spacing) - var(--media-list-thumb-width) - var(--media-list-duration-width));
-  margin-right: var(--media-list-spacing);
+  float: inline-start;
+  width: calc(40% - var(--media-list-spacing));
+  margin-inline-end: var(--media-list-spacing);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -45,25 +56,42 @@
 
 .MediaListRow-title {
   height: 100%;
-  float: left;
-  width: calc(50% - var(--media-list-spacing));
-  margin-right: var(--media-list-spacing);
+  float: inline-start;
+  width: calc(60% - var(--media-list-spacing));
+  margin-inline-end: var(--media-list-spacing);
   overflow: hidden;
   color: var(--secondary-text-color);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
+.MediaListRow-note {
+  height: calc(var(--unpadded-media-list-row-height) / 3);
+  line-height: calc(var(--unpadded-media-list-row-height) / 3);
+  width: calc(100% - var(--media-list-spacing));
+  margin-inline-end: var(--media-list-spacing);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 75%;
+}
+
+.MediaListRow-data.has-note .MediaListRow-artist,
+.MediaListRow-data.has-note .MediaListRow-title {
+  height: calc(var(--unpadded-media-list-row-height) / 3 * 2);
+  line-height: calc(var(--unpadded-media-list-row-height) / 3 * 2);
+}
+
 .MediaListRow-duration {
   height: 100%;
-  float: left;
+  float: inline-start;
   width: var(--media-list-duration-width);
 }
 
 .MediaListRow-actions {
   height: 100%;
   position: absolute;
-  right: 0;
+  inset-inline-end: 0;
   display: none;
 }
 

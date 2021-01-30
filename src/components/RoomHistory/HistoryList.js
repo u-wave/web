@@ -6,9 +6,13 @@ import HistoryRow from './Row';
 
 const { useMemo } = React;
 
-function HistoryList({ onOpenAddMediaMenu, ...props }) {
+function HistoryList({
+  onOpenAddMediaMenu,
+  isLoggedIn = false,
+  ...props
+}) {
   const makeActions = useMemo(() => {
-    if (onOpenAddMediaMenu) {
+    if (onOpenAddMediaMenu && isLoggedIn) {
       return (media, selection) => (
         <AddToPlaylistAction
           onAdd={(position) => onOpenAddMediaMenu(position, media, selection)}
@@ -31,6 +35,7 @@ function HistoryList({ onOpenAddMediaMenu, ...props }) {
 
 HistoryList.propTypes = {
   onOpenAddMediaMenu: PropTypes.func.isRequired,
+  isLoggedIn: PropTypes.bool,
 };
 
 export default HistoryList;

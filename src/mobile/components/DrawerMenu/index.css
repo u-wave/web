@@ -2,3 +2,7 @@
   max-width: 90vw;
   min-width: 200px;
 }
+
+.DrawerMenu-user {
+  flex-shrink: 0; /* ensure it gets all the height it needs */
+}

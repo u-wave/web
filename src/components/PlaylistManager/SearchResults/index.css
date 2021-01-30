@@ -2,7 +2,7 @@
   height: 54px;
   line-height: 54px;
   font-size: 14pt;
-  padding-left: 15px;
+  padding-inline-start: 15px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -25,4 +25,31 @@
 
 .SearchResults-noneHeader {
   font-weight: bold;
+}
+
+.SearchResultRow-data {
+  width: calc(100% - var(--media-list-spacing) - var(--media-list-thumb-width) - var(--media-list-duration-width));
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.SearchResultRow-data .MediaListRow-artist {
+  height: 66%;
+  width: calc(40% - var(--media-list-spacing));
+  line-height: calc(56px / 3 * 2);
+}
+
+.SearchResultRow-data .MediaListRow-title {
+  height: 66%;
+  width: calc(60% - var(--media-list-spacing));
+  margin-inline-end: 0;
+  line-height: calc(56px / 3 * 2);
+}
+
+.SearchResultRow-inPlaylists {
+  width: 100%;
+  line-height: calc(56px / 3);
+  height: 34%;
+  font-size: 80%;
 }

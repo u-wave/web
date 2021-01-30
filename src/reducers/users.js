@@ -1,6 +1,6 @@
 import omit from 'just-omit';
-import indexBy from 'index-by';
 import { combineReducers } from 'redux';
+import indexBy from 'just-index';
 import {
   INIT_STATE,
   LOAD_ONLINE_USERS,

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useTranslator } from '@u-wave/react-translate';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -29,7 +30,7 @@ const getWaitlistLabel = (size, position) => {
   return '0';
 };
 
-const MainView = ({
+function MainView({
   media,
   videoEnabled,
   waitlistPosition,
@@ -38,48 +39,53 @@ const MainView = ({
   onOpenDrawer,
   onOpenWaitlist,
   onEnableVideo,
-}) => (
-  <div className="MainView">
-    <AppBar position="static" className="MainView-appBar">
-      <Toolbar>
-        <IconButton aria-label="Menu" onClick={onOpenDrawer}>
-          <MenuIcon />
-        </IconButton>
-        <Typography variant="title" className="MainView-title">
-          {media ? (
-            <SongTitle artist={media.artist} title={media.title} />
-          ) : (
-            'Nobody is DJing!'
+}) {
+  const { t } = useTranslator();
+
+  let title = t('booth.empty');
+  if (media) {
+    title = <SongTitle artist={media.artist} title={media.title} />;
+  }
+
+  return (
+    <div className="MainView">
+      <AppBar position="static" className="MainView-appBar">
+        <Toolbar>
+          <IconButton aria-label="Menu" onClick={onOpenDrawer}>
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" className="MainView-title">
+            {title}
+          </Typography>
+          <IconButton onClick={onOpenRoomHistory}>
+            <HistoryIcon />
+          </IconButton>
+          <IconButton style={waitlistIconStyle} onClick={onOpenWaitlist}>
+            {getWaitlistLabel(waitlistSize, waitlistPosition)}
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+
+      <div className="MainView-content">
+        <div className="MobileApp-video">
+          <Video
+            enabled={videoEnabled}
+            size="large"
+          />
+          {!videoEnabled && (
+            <VideoDisabledMessage onEnableVideo={onEnableVideo} />
           )}
-        </Typography>
-        <IconButton onClick={onOpenRoomHistory}>
-          <HistoryIcon />
-        </IconButton>
-        <IconButton style={waitlistIconStyle} onClick={onOpenWaitlist}>
-          {getWaitlistLabel(waitlistSize, waitlistPosition)}
-        </IconButton>
-      </Toolbar>
-    </AppBar>
+        </div>
+        <div className="MobileApp-chat">
+          <Chat />
+        </div>
+      </div>
 
-    <div className="MainView-content">
-      <div className="MobileApp-video">
-        <Video
-          enabled={videoEnabled}
-          size="large"
-        />
-        {!videoEnabled && (
-          <VideoDisabledMessage onEnableVideo={onEnableVideo} />
-        )}
-      </div>
-      <div className="MobileApp-chat">
-        <Chat />
-      </div>
+      <DrawerMenu />
+      <UsersDrawer />
     </div>
-
-    <DrawerMenu />
-    <UsersDrawer />
-  </div>
-);
+  );
+}
 
 MainView.propTypes = {
   media: PropTypes.object,

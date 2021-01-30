@@ -3,8 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import useClock from '../../hooks/useClock';
 import {
   openFavoriteMenu,
-  doUpvote,
-  doDownvote,
+  vote,
 } from '../../actions/VoteActionCreators';
 import {
   historyIDSelector,
@@ -29,8 +28,14 @@ function VideoContainer() {
   const volume = useSelector(mobilePlaybackVolumeSelector);
   const voteStats = useSelector(currentVoteStatsSelector);
   const dispatch = useDispatch();
-  const onUpvote = useCallback((...args) => dispatch(doUpvote(...args)), [dispatch]);
-  const onDownvote = useCallback((...args) => dispatch(doDownvote(...args)), [dispatch]);
+  const onUpvote = useCallback(() => dispatch(vote({
+    historyID,
+    direction: 1,
+  })), [historyID]);
+  const onDownvote = useCallback(() => dispatch(vote({
+    historyID,
+    direction: -1,
+  })), [historyID]);
   const onFavorite = useCallback((...args) => dispatch(openFavoriteMenu(...args)), [dispatch]);
 
   return (

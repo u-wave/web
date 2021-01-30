@@ -1,14 +1,11 @@
-import { bindActionCreators } from 'redux';
-import { createStructuredSelector } from 'reselect';
-import { connect } from 'react-redux';
-
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   selectedPlaylistSelector,
   filteredSelectedPlaylistItemsSelector,
   isSelectedPlaylistLoadingSelector,
   isFilteredSelector,
 } from '../selectors/playlistSelectors';
-
 import { openPreviewMediaDialog } from '../actions/DialogActionCreators';
 import {
   addMediaMenu,
@@ -24,15 +21,9 @@ import {
   loadPlaylist,
   loadFilteredPlaylistItems,
 } from '../actions/PlaylistActionCreators';
-
 import PlaylistPanel from '../components/PlaylistManager/Panel';
 
-const mapStateToProps = createStructuredSelector({
-  playlist: selectedPlaylistSelector,
-  media: filteredSelectedPlaylistItemsSelector,
-  loading: isSelectedPlaylistLoadingSelector,
-  isFiltered: isFilteredSelector,
-});
+const { useCallback } = React;
 
 const selectionOrOne = (media, selection) => {
   if (selection.isSelected(media)) {
@@ -41,60 +32,79 @@ const selectionOrOne = (media, selection) => {
   return [media];
 };
 
-const onOpenAddMediaMenu = (position, media, selection) => (
-  addMediaMenu(selectionOrOne(media, selection), position)
-);
-const onRemoveFromPlaylist = (playlist) => (media, selection) => (
-  removeMedia(playlist, selectionOrOne(media, selection))
-);
-const onMoveMedia = (playlist) => (media, opts) => (
-  moveMedia(playlist, media, opts)
-);
-const onMoveToFirst = (playlist) => (media, selection) => (
-  moveMedia(playlist, selectionOrOne(media, selection), { at: 'start' })
-);
-const onMoveToLast = (playlist) => (media, selection) => (
-  moveMedia(playlist, selectionOrOne(media, selection), { at: 'end' })
-);
-const onEditMedia = (playlist) => (media) => (
-  editMedia(playlist, media)
-);
-const onLoadPlaylistPage = ({ isFiltered, playlist }) => (page) => (
-  isFiltered
-    ? loadFilteredPlaylistItems(playlist._id, page)
-    : loadPlaylist(playlist._id, page)
-);
+function PlaylistPanelContainer() {
+  const playlist = useSelector(selectedPlaylistSelector);
+  const playlistItems = useSelector(filteredSelectedPlaylistItemsSelector);
+  const loading = useSelector(isSelectedPlaylistLoadingSelector);
+  const isFiltered = useSelector(isFilteredSelector);
+  const dispatch = useDispatch();
 
-// Most of the playlist-related action creators need to know which playlist to
-// use, i.e. need to have a reference to the selected playlist. The selected
-// playlist is picked out in `mapStateToProps`, but we can't access its result
-// in `mapDispatchToProps` yet. Instead, `mapDispatchToProps` passes the
-// `dispatch` function to the `mergeProps` function below, and then that
-// configures the action creators.
-// TODO Maybe it's better to have versions of these action creators that work on
-// the selected playlist by default? using redux-thunk.
-const mapDispatchToProps = (dispatch) => ({ dispatch });
+  const onShufflePlaylist = useCallback(() => dispatch(shufflePlaylist(playlist._id)), [playlist]);
+  const onActivatePlaylist = useCallback(
+    () => dispatch(activatePlaylist(playlist._id)),
+    [playlist],
+  );
+  const onRenamePlaylist = useCallback(
+    (name) => dispatch(renamePlaylist(playlist._id, name)),
+    [playlist],
+  );
+  const onDeletePlaylist = useCallback(() => dispatch(deletePlaylist(playlist._id)), [playlist]);
+  const onNotDeletable = useCallback(
+    () => dispatch(cannotDeleteActivePlaylist(playlist._id)),
+    [playlist],
+  );
 
-const mergeProps = (state, { dispatch }, props) => ({
-  ...props,
-  ...state,
-  ...bindActionCreators({
-    onShufflePlaylist: shufflePlaylist.bind(null, state.playlist._id),
-    onActivatePlaylist: activatePlaylist.bind(null, state.playlist._id),
-    onRenamePlaylist: renamePlaylist.bind(null, state.playlist._id),
-    onDeletePlaylist: deletePlaylist.bind(null, state.playlist._id),
-    onNotDeletable: cannotDeleteActivePlaylist,
+  const onOpenAddMediaMenu = useCallback((position, media, selection) => (
+    dispatch(addMediaMenu(selectionOrOne(media, selection), position))
+  ), [playlist]);
+  const onOpenPreviewMediaDialog = useCallback((media) => dispatch(openPreviewMediaDialog(media)));
+  const onMoveToFirst = useCallback((media, selection) => (
+    dispatch(moveMedia(playlist._id, selectionOrOne(media, selection), { at: 'start' }))
+  ), [playlist]);
+  const onMoveToLast = useCallback((media, selection) => (
+    dispatch(moveMedia(playlist._id, selectionOrOne(media, selection), { at: 'end' }))
+  ), [playlist]);
+  const onMoveMedia = useCallback(
+    (media, opts) => dispatch(moveMedia(playlist._id, media, opts)),
+    [playlist],
+  );
+  const onEditMedia = useCallback((media) => dispatch(editMedia(playlist._id, media)), [playlist]);
+  const onRemoveFromPlaylist = useCallback((media, selection) => (
+    dispatch(removeMedia(playlist._id, selectionOrOne(media, selection)))
+  ), [playlist]);
+  const onLoadPlaylistPage = useCallback((page) => {
+    if (isFiltered) {
+      return dispatch(loadFilteredPlaylistItems(playlist._id, page));
+    }
+    return dispatch(loadPlaylist(playlist._id, page));
+  }, [isFiltered, playlist]);
+  const onFilterPlaylistItems = useCallback(
+    (filter) => dispatch(filterPlaylistItems(playlist._id, filter)),
+    [playlist],
+  );
 
-    onOpenAddMediaMenu,
-    onOpenPreviewMediaDialog: openPreviewMediaDialog,
-    onMoveToFirst: onMoveToFirst(state.playlist._id),
-    onMoveToLast: onMoveToLast(state.playlist._id),
-    onMoveMedia: onMoveMedia(state.playlist._id),
-    onEditMedia: onEditMedia(state.playlist._id),
-    onRemoveFromPlaylist: onRemoveFromPlaylist(state.playlist._id),
-    onLoadPlaylistPage: onLoadPlaylistPage(state),
-    onFilterPlaylistItems: filterPlaylistItems.bind(null, state.playlist._id),
-  }, dispatch),
-});
+  return (
+    <PlaylistPanel
+      playlist={playlist}
+      media={playlistItems}
+      loading={loading}
+      isFiltered={isFiltered}
+      onShufflePlaylist={onShufflePlaylist}
+      onActivatePlaylist={onActivatePlaylist}
+      onRenamePlaylist={onRenamePlaylist}
+      onDeletePlaylist={onDeletePlaylist}
+      onNotDeletable={onNotDeletable}
+      onOpenAddMediaMenu={onOpenAddMediaMenu}
+      onOpenPreviewMediaDialog={onOpenPreviewMediaDialog}
+      onMoveToFirst={onMoveToFirst}
+      onMoveToLast={onMoveToLast}
+      onMoveMedia={onMoveMedia}
+      onEditMedia={onEditMedia}
+      onRemoveFromPlaylist={onRemoveFromPlaylist}
+      onLoadPlaylistPage={onLoadPlaylistPage}
+      onFilterPlaylistItems={onFilterPlaylistItems}
+    />
+  );
+}
 
-export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(PlaylistPanel);
+export default PlaylistPanelContainer;

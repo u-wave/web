@@ -1,5 +1,5 @@
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   selectedPlaylistSelector,
   filteredSelectedPlaylistItemsSelector,
@@ -7,19 +7,34 @@ import {
 import { showSearchResultsSelector } from '../../selectors/searchSelectors';
 import { showImportPanelSelector } from '../../selectors/importSelectors';
 import createLazyOverlay from '../../components/LazyOverlay';
+import { closeAll } from '../../actions/OverlayActionCreators';
 
-const mapStateToProps = createStructuredSelector({
-  selectedPlaylist: selectedPlaylistSelector,
-  selectedItems: filteredSelectedPlaylistItemsSelector,
-  showImportPanel: showImportPanelSelector,
-  showSearchResults: showSearchResultsSelector,
-});
-
-const enhance = connect(mapStateToProps);
+const {
+  useCallback,
+} = React;
 
 const PlaylistManager = createLazyOverlay({
-  loader: () => import('../components/PlaylistManager' /* webpackChunkName: "playlistsMobile" */),
+  loader: () => import('../components/PlaylistManager'),
   title: (t) => t('playlists.title'),
 });
 
-export default enhance(PlaylistManager);
+function PlaylistManagerContainer() {
+  const selectedPlaylist = useSelector(selectedPlaylistSelector);
+  const selectedItems = useSelector(filteredSelectedPlaylistItemsSelector);
+  const showImportPanel = useSelector(showImportPanelSelector);
+  const showSearchResults = useSelector(showSearchResultsSelector);
+  const dispatch = useDispatch();
+  const onCloseOverlay = useCallback(() => dispatch(closeAll()), [dispatch]);
+
+  return (
+    <PlaylistManager
+      selectedPlaylist={selectedPlaylist}
+      selectedItems={selectedItems}
+      showImportPanel={showImportPanel}
+      showSearchResults={showSearchResults}
+      onCloseOverlay={onCloseOverlay}
+    />
+  );
+}
+
+export default PlaylistManagerContainer;

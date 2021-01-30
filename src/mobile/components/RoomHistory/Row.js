@@ -6,22 +6,20 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import Votes from './Votes';
 
-const wrapTitle = (title) => (
-  <span className="MobileMediaRow-title">
-    {title}
-  </span>
-);
+const noWrap = { noWrap: true };
 
 const HistoryRow = ({ media }) => (
   <ListItem className="MobileMediaRow">
     <ListItemAvatar>
       <Avatar
         src={media.media.thumbnail}
-        style={{ borderRadius: 0 }}
+        variant="square"
       />
     </ListItemAvatar>
     <ListItemText
-      primary={wrapTitle(media.media.title)}
+      primaryTypographyProps={noWrap}
+      secondaryTypographyProps={noWrap}
+      primary={media.media.title}
       secondary={media.media.artist}
     />
     <Votes {...media.stats} />

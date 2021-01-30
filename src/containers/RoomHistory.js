@@ -4,6 +4,7 @@ import { createStructuredSelector } from 'reselect';
 import { openPreviewMediaDialog } from '../actions/DialogActionCreators';
 import { addMediaMenu } from '../actions/PlaylistActionCreators';
 import { roomHistoryWithVotesSelector } from '../selectors/roomHistorySelectors';
+import { isLoggedInSelector } from '../selectors/userSelectors';
 import Overlay from '../components/Overlay';
 import createLazyOverlay from '../components/LazyOverlay';
 
@@ -17,6 +18,7 @@ const selectionOrOne = (media, selection) => {
 
 const mapStateToProps = createStructuredSelector({
   media: roomHistoryWithVotesSelector,
+  isLoggedIn: isLoggedInSelector,
 });
 
 const onOpenAddMediaMenu = (position, media, selection) => (
@@ -34,7 +36,7 @@ function RoomHistoryOverlay(props) {
 }
 
 const RoomHistory = createLazyOverlay({
-  loader: () => import('../components/RoomHistory' /* webpackChunkName: "history" */),
+  loader: () => import('../components/RoomHistory'),
   title: (t) => t('history.title'),
   OverlayComponent: RoomHistoryOverlay,
 });

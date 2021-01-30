@@ -1,4 +1,3 @@
-import createDebug from 'debug';
 import {
   LOGIN_COMPLETE,
   LOGOUT_START,
@@ -7,8 +6,6 @@ import {
   SOCKET_DISCONNECTED,
   SOCKET_CONNECTED,
   SEND_MESSAGE,
-  DO_UPVOTE,
-  DO_DOWNVOTE,
 } from '../constants/ActionTypes';
 import { initState } from '../actions/LoginActionCreators';
 import {
@@ -41,8 +38,6 @@ import {
   setLocked as setWaitlistLocked,
 } from '../actions/WaitlistActionCreators';
 import { favorited, receiveVote } from '../actions/VoteActionCreators';
-
-const debug = createDebug('uwave:websocket');
 
 function defaultUrl() {
   const loc = window.location;
@@ -197,7 +192,6 @@ class UwaveSocket {
     if (pack.data === '-') return;
 
     const { command, data } = JSON.parse(pack.data);
-    debug(command, data);
 
     if (command === 'authenticated') {
       this.drainQueuedMessages();
@@ -208,10 +202,8 @@ class UwaveSocket {
       const action = actions[command](data);
       if (action) {
         this.dispatch(action);
-        return;
       }
     }
-    debug('!unknown socket message type');
   };
 
   connect() {
@@ -290,12 +282,6 @@ export default function middleware({ url = defaultUrl() } = {}) {
           break;
         case SEND_MESSAGE:
           socket.send('sendChat', payload.message);
-          break;
-        case DO_UPVOTE:
-          socket.send('vote', 1);
-          break;
-        case DO_DOWNVOTE:
-          socket.send('vote', -1);
           break;
         case LOGIN_COMPLETE:
           if (!socket.sentAuthToken && socket.isOpen()) {

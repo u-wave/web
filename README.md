@@ -14,37 +14,33 @@ For running in the browser: something modern. The aim is to support ~IE11+ and
 other modern browsers (recent Chromes and Firefoxes, at least). If you use
 something reasonably recent and üWave doesn't work, [file a bug][]!
 
-The server parts of üWave require Node version >= 8.9.
+The server parts of üWave require Node version >= 10.13.0.
 
 ## Getting Things Working
 
-To run the web client, you need an [HTTP API][u-wave-http-api]. For development,
-follow the HTTP API development server guide. Then,
+To run the web client, you need an [üWave server][u-wave-core] to connect to.
+For development, first install the server:
 
 ```bash
-# Make u-wave-http-api globally available
-cd /path/to/u-wave-http-api
-npm link
-cd ../
-
-git clone https://github.com/u-wave/web u-wave-web
-cd u-wave-web
+git clone https://github.com/u-wave/core u-wave-core
+cd u-wave-core
 npm install
-npm link u-wave-http-api
 npm start
 ```
 
-…and now you should be good to go! `npm start` will automatically start the
-HTTP API development server.
+`npm start` will run the üWave server on port 6042.
 
-If you are running the development server yourself, you can do:
+Then in a separate terminal do:
 
 ```bash
-npm start -- --no-api
+git clone https://github.com/u-wave/web u-wave-web
+cd u-wave-web
+npm install
+npm run dev
 ```
 
-Then it won't start a new HTTP API development server, and instead assumes
-one is already running on `localhost:6042`.
+This will run the web client on port 6041. Visit <http://localhost:6041> to use
+it!
 
 ## Building
 
@@ -54,7 +50,7 @@ The development script runs a local üWave server and auto-reloads the web clien
 when you make changes.
 
 ```bash
-npm start # or `npm run dev`
+npm run dev
 ```
 
 When building the üWave web client for use on a server, the production build
@@ -78,13 +74,12 @@ npm run serve
 import createWebClient from 'u-wave-web-middleware';
 ```
 
-### createWebClient(uw, options={})
+### createWebClient(options={})
 
 Create a Web client middleware for use with express-style server libraries.
 
 **Parameters**
 
- * `uw` - a [üWave Core][u-wave-core] object.
  * `options` - Client options. See the [Client API](#client-parameters) section.
 
 **Example**
@@ -94,22 +89,16 @@ This is a small example üWave server on top of Express, using ReCaptcha and
 
 ```js
 import express from 'express';
-import uwave from 'u-wave-core';
-import createHttpApi from 'u-wave-http-api';
 import createWebClient from 'u-wave-web-middleware';
 import emojione from 'u-wave-web-emojione';
 
 const app = express();
-const uw = uwave({ /* Options. See the u-wave-core documentation. */ });
 
-app.listen(80);
-
-app.use('/api', createHttpApi(uw, {
-  /* Options. See the u-wave-http-api documentation. */
-}));
+app.listen(6041);
 
 app.use('/assets/emoji', emojione.middleware());
-app.use('/', createWebClient(uw, {
+app.use('/', createWebClient({
+  // Use nginx to send this traffic to the API server.
   apiBase: '/api',
   emoji: emojione.emoji,
   recaptcha: { key: 'my ReCaptcha site key' },
@@ -131,15 +120,14 @@ Create a new üWave web client.
 
  * `options`
    * `options.apiBase` - Base URL to the mount point of the
-     [üWave Web API][u-wave-http-api] to talk to.
+     [üWave Web API][u-wave-core] to talk to.
      Defaults to `/api`, but it's recommended to set this explicitly.
    * `options.emoji` - An object describing the emoji that will be available in
      the chat. Keys are emoji shortcodes (without `:`), and values are image
      filenames.
    * `options.recaptcha` - An object containing ReCaptcha options used to ensure
      new user registrations are human. This option should only be passed if the
-     [Web API][u-wave-http-api] middleware is configured to check for ReCaptcha
-     entries.
+     [Web API][u-wave-core] is configured to check for ReCaptcha entries.
 
      * `options.recaptcha.key` - ReCaptcha site key. This can be obtained from
        the "Keys" panel in the [ReCaptcha site admin page][recaptcha].
@@ -192,7 +180,6 @@ the [Sonics.io License][] (archive link).
 
 [üWave]: https://u-wave.net
 [u-wave-core]: https://github.com/u-wave/core
-[u-wave-http-api]: https://github.com/u-wave/http-api
 [u-wave-web-emojione]: https://github.com/u-wave/u-wave-web-emojione
 
 [file a bug]: https://github.com/u-wave/web/issues
@@ -201,5 +188,5 @@ the [Sonics.io License][] (archive link).
 [EmojiOne]: https://github.com/Ranks/emojione
 [MIT]: ./LICENSE
 [mention sound file]: ./assets/audio/mention.opus
-[Sonics.io]: http://sonics.io
+[Sonics.io]: https://web.archive.org/web/20150905161415/http://www.sonics.io/
 [Sonics.io License]: https://web.archive.org/web/20150912030216/http://www.sonics.io/license/

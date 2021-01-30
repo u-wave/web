@@ -1,5 +1,3 @@
-@import "../../vars.css";
-
 .Progress-fill {
   background: var(--highlight-color);
   height: 100%;
@@ -7,4 +5,8 @@
   transform: scaleX(0);
   transform-origin: top left;
   transition: transform 0s linear;
+}
+
+.Progress-fill:dir(rtl) {
+  transform-origin: top right;
 }
