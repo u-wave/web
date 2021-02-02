@@ -1,4 +1,4 @@
-import setPath from 'dset';
+import { dset } from 'dset';
 import {
   LOAD_SETTINGS,
   CHANGE_SETTING,
@@ -13,7 +13,7 @@ export function loadSettings(obj) {
 
 export function set(name, value) {
   const changeset = {};
-  setPath(changeset, name, value);
+  dset(changeset, name, value);
   return {
     type: CHANGE_SETTING,
     payload: changeset,
