@@ -113,7 +113,7 @@ function getConfig(env, {
       rules: [
         // Static files and resources.
         {
-          test: /\.mp3$/,
+          test: /\.(mp3|woff2?)$/,
           type: 'asset',
         },
         {

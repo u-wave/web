@@ -20,6 +20,7 @@
     "@material-ui/styles": "5.0.0-alpha.24",
     "@material-ui/system": "5.0.0-alpha.24",
     "@material-ui/utils": "5.0.0-alpha.24",
+    "@openfonts/open-sans_all": "^1.44.1",
     "@u-wave/react-server-list": "5.0.0-alpha.3",
     "@u-wave/react-translate": "^1.1.1",
     "@u-wave/react-youtube": "^0.7.2",
