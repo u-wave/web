@@ -9,6 +9,11 @@ import VideoToolbar from './VideoToolbar';
 import MouseMoveCapture from './VideoMouseMoveCapture';
 import Player from '../Player';
 
+// Overlays over the video (even tiny in the corner like ours) violate TOS,
+// so we can not show them. Toggling it off with a conditional for now until
+// we find a good place for the fullscreen control (if we do).
+const OVERLAY_ALLOWED = false;
+
 const {
   useCallback,
   useEffect,
@@ -110,26 +115,30 @@ function Video(props) {
         seek={seek}
       />
 
-      {isFullscreen && (
-        <MouseMoveCapture
-          active={shouldShowToolbar}
-          onMouseMove={handleMouseMove}
-        />
-      )}
-      {isFullscreen && (
-        <VideoProgressBar
-          media={media}
-          seek={seek}
-        />
-      )}
-      {(!isFullscreen || shouldShowToolbar) && (
-        <VideoToolbar
-          isFullscreen={isFullscreen}
-          onFullscreenEnter={handleRequestFullscreenEnter}
-          onFullscreenExit={onFullscreenExit}
-        >
-          <MediaSourceTools media={media} />
-        </VideoToolbar>
+      {OVERLAY_ALLOWED && (
+        <>
+          {isFullscreen && (
+            <MouseMoveCapture
+              active={shouldShowToolbar}
+              onMouseMove={handleMouseMove}
+            />
+          )}
+          {isFullscreen && (
+            <VideoProgressBar
+              media={media}
+              seek={seek}
+            />
+          )}
+          {(!isFullscreen || shouldShowToolbar) && (
+            <VideoToolbar
+              isFullscreen={isFullscreen}
+              onFullscreenEnter={handleRequestFullscreenEnter}
+              onFullscreenExit={onFullscreenExit}
+            >
+              <MediaSourceTools media={media} />
+            </VideoToolbar>
+          )}
+        </>
       )}
     </div>
   );
