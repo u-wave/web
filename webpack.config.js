@@ -10,7 +10,7 @@ const ExtractCssPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const HtmlPlugin = require('html-webpack-plugin');
-const SriPlugin = require('webpack-subresource-integrity');
+const { SubresourceIntegrityPlugin } = require('webpack-subresource-integrity');
 const CopyPlugin = require('copy-webpack-plugin');
 const { merge } = require('webpack-merge');
 const htmlMinifierOptions = require('./tasks/utils/htmlMinifierOptions');
@@ -284,8 +284,8 @@ function getConfig(env, {
         filename: 'static/[name]_[contenthash:7].css',
         chunkFilename: 'static/[name]_[contenthash:7].css',
       }),
-      new SriPlugin({
-        hashFuncNames: ['sha512'],
+      new SubresourceIntegrityPlugin({
+        hashFuncNames: ['sha384', 'sha512'],
       }),
     ],
   };
