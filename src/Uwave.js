@@ -2,6 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { StylesProvider } from '@material-ui/styles';
+import StyledEngineProvider from '@material-ui/core/StyledEngineProvider';
+import { CacheProvider } from '@emotion/react';
+import createCache from '@emotion/cache';
 import AppContainer from './containers/App';
 import { get as readSession } from './utils/Session';
 import createGenerateClassName from './utils/createGenerateClassName';
@@ -23,6 +26,11 @@ export default class Uwave {
   aboutPageComponent = null;
 
   generateClassName = createGenerateClassName();
+
+  emotionCache = createCache({
+    key: 'emc',
+    prepend: true,
+  });
 
   constructor(options = {}, session = readSession()) {
     this.options = options;
@@ -98,12 +106,16 @@ export default class Uwave {
   getComponent() {
     return (
       <Provider store={this.store}>
-        <StylesProvider injectFirst generateClassName={this.generateClassName}>
-          <AppContainer
-            mediaSources={this.sources}
-            uwave={this}
-          />
-        </StylesProvider>
+        <StyledEngineProvider injectFirst>
+          <CacheProvider value={this.emotionCache}>
+            <StylesProvider injectFirst generateClassName={this.generateClassName}>
+              <AppContainer
+                mediaSources={this.sources}
+                uwave={this}
+              />
+            </StylesProvider>
+          </CacheProvider>
+        </StyledEngineProvider>
       </Provider>
     );
   }
