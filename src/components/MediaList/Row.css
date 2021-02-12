@@ -91,9 +91,9 @@
 
 .MediaListRow-icon {
   height: 100%;
-  inset-inline-end: 0;
-  vertical-align: middle;
-  display: inline-block;
+  float: left;  
+  display: flex;
+  align-items: center;
 }
 
 .MediaListRow-actions {
