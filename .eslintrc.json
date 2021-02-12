@@ -21,13 +21,13 @@
 
   "settings": {
     "polyfills": [
-      "AbortController",
       "Number.isFinite",
       "Number.isNaN",
       "Object.assign",
       "Object.is",
       "Object.values",
       "Promise",
+      "AbortController",
       "fetch",
       "URL"
     ]
