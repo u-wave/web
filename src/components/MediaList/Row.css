@@ -88,6 +88,14 @@
   width: var(--media-list-duration-width);
 }
 
+
+.MediaListRow-icon {
+  height: 100%;
+  inset-inline-end: 0;
+  vertical-align: middle;
+  display: inline-block;
+}
+
 .MediaListRow-actions {
   height: 100%;
   position: absolute;
@@ -98,3 +106,8 @@
 .MediaListRow:hover .MediaListRow-actions {
   display: block;
 }
+
+.MediaListRow:hover .MediaListRow-icon {
+  display: none;
+}
+
