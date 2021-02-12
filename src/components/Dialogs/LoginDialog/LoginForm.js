@@ -4,6 +4,7 @@ import { translate } from '@u-wave/react-translate';
 import EmailIcon from '@material-ui/icons/Email';
 import PasswordIcon from '@material-ui/icons/Lock';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Alert from '@material-ui/core/Alert';
 import Divider from '@material-ui/core/Divider';
 import Form from '../../Form';
 import FormGroup from '../../Form/Group';
@@ -62,7 +63,11 @@ class LoginForm extends React.Component {
 
     return (
       <Form className="LoginForm" onSubmit={this.handleSubmit}>
-        {error && <FormGroup>{error.message}</FormGroup>}
+        {error && (
+          <FormGroup>
+            <Alert severity="error">{error.message}</Alert>
+          </FormGroup>
+        )}
         {supportsSocialAuth && (
           <>
             <FormGroup>
