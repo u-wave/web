@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslator, Interpolate } from '@u-wave/react-translate';
+import Alert from '@material-ui/core/Alert';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -93,7 +94,11 @@ function SocialForm({
 
   return (
     <Form className="RegisterForm" onSubmit={handleSubmit}>
-      {error && <FormGroup>{error.message}</FormGroup>}
+      {error && (
+        <FormGroup>
+          <Alert severity="error">{error.message}</Alert>
+        </FormGroup>
+      )}
       <FormGroup>
         <TextField
           ref={refUsername}
