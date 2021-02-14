@@ -18,6 +18,12 @@ function ObjectProperties({
       [key]: newValue,
     });
 
+    // Internal fields can be skipped.
+    // TODO this should really be done server-side for security…
+    if (subSchema.readOnly && subSchema.writeOnly) {
+      return null;
+    }
+
     return (
       <Field
         schema={subSchema}

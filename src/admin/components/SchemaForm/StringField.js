@@ -8,10 +8,12 @@ function StringField({
   className, schema, value, onChange,
 }) {
   return (
-    <div className={className}>
+    <div className={className} style={{ marginBottom: '8px' }}>
       {schema.title && <Typography gutterBottom>{schema.title}</Typography>}
       <TextField
+        type={schema.writeOnly ? 'password' : 'text'}
         value={value}
+        disabled={schema.readOnly}
         onChange={(event) => onChange(event.target.value)}
       />
       {schema.description && <FormHelperText>{schema.description}</FormHelperText>}
