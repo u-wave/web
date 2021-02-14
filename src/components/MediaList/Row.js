@@ -54,8 +54,9 @@ function Row({
     <img
       height="20dp"
       src={getMediaSource(media.sourceType).icon}
+      alt={getMediaSource(media.sourceType).name}
     />
-  )
+  );
   const selectedClass = selected ? 'is-selected' : '';
   const loadingClass = media.loading ? 'is-loading' : '';
   const duration = 'start' in media
