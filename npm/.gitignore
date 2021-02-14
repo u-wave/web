@@ -1,4 +1,6 @@
 *
+!bin
+!bin/**
 !.gitignore
 !.npmignore
 !README.md

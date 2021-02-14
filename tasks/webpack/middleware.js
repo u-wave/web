@@ -34,7 +34,11 @@ class MiddlewarePackageJsonPlugin {
         })
         .filter((name) => !builtinModules.includes(name));
 
-      const dependencies = {};
+      const dependencies = {
+        // Used by the bin file.
+        'env-schema': pkg.dependencies['env-schema'],
+        minimist: pkg.dependencies.minimist,
+      };
       externals.forEach((external) => {
         dependencies[external] = pkg.dependencies[external];
       });
