@@ -14,7 +14,7 @@ jobs:
         with:
           node-version: 14.x
       - name: Install dependencies
-        run: npm install
+        run: npm ci
       - name: Check code style
         run: npm run lint
   test:
@@ -31,7 +31,7 @@ jobs:
         with:
           node-version: ${{matrix.node-version}}
       - name: Install dependencies
-        run: npm install
+        run: npm ci
       - name: Run tests
         run: npm run test:cov
       - name: Check coverage
