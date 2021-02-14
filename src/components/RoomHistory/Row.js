@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { useDrag } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import { MEDIA } from '../../constants/DDItemTypes';
+import { useMediaSources } from '../../context/MediaSourceContext';
 import Actions from '../MediaList/Actions';
 import SongTitle from '../SongTitle';
 import TimeAgo from '../TimeAgo';
@@ -60,7 +61,14 @@ function HistoryRow({
       onClick();
     }
   }, [onClick]);
-
+  const { getMediaSource } = useMediaSources();
+  const sourceIcon = (
+    <img
+      height="20dp"
+      src={getMediaSource(media.sourceType).icon}
+      alt=""
+    />
+  );
   const selectedClass = selected ? 'is-selected' : '';
   const thumbnail = (
     <div className="MediaListRow-thumb">
@@ -91,6 +99,7 @@ function HistoryRow({
         artist={media.artist}
         title={media.title}
       />
+      
       <div className="HistoryRow-votes">
         <HistoryVotes {...stats} />
       </div>
@@ -100,6 +109,10 @@ function HistoryRow({
       <div className="HistoryRow-time" dateTime={timestamp}>
         <TimeAgo timestamp={timestamp} />
       </div>
+      <div className="HistoryRow-icon">
+        {sourceIcon}
+      </div>
+
       {showActions && (
         <Actions
           className={cx('MediaListRow-actions', selectedClass)}
