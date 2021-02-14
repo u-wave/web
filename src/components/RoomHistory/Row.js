@@ -99,7 +99,7 @@ function HistoryRow({
         artist={media.artist}
         title={media.title}
       />
-      
+
       <div className="HistoryRow-votes">
         <HistoryVotes {...stats} />
       </div>
