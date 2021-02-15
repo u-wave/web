@@ -122,4 +122,6 @@ uwave:
     username: Nome de Usuário
     email: E-mail
     password: Senha
+    passwordConfirmation: Confirmar senha
+    passwordMismatch: 'Sua senha não corresponde à sua confirmação.'
     forgotPassword: Esqueceu sua Senha?

@@ -27,6 +27,7 @@ class RegisterForm extends React.Component {
     error: PropTypes.object,
 
     onRegister: PropTypes.func,
+    displayRegisterError: PropTypes.func,
   };
 
   constructor(props) {
@@ -40,10 +41,15 @@ class RegisterForm extends React.Component {
   }
 
   handleSubmit = (event) => {
-    const { onRegister } = this.props;
+    const { t, onRegister, displayRegisterError } = this.props;
     const { captchaResponse } = this.state;
 
     event.preventDefault();
+
+    if (this.password.value !== this.passwordConfirmation.value) {
+      return displayRegisterError(new Error(t('login.passwordMismatch')));
+    }
+
     this.setState({ busy: true });
     onRegister({
       username: this.username.value,
@@ -77,6 +83,10 @@ class RegisterForm extends React.Component {
 
   refPassword = (password) => {
     this.password = password;
+  };
+
+  refPasswordConfirmation = (password) => {
+    this.passwordConfirmation = password;
   };
 
   renderCaptcha() {
@@ -145,6 +155,16 @@ class RegisterForm extends React.Component {
             type="password"
             autoComplete="new-password"
             placeholder={t('login.password')}
+            icon={<PasswordIcon htmlColor="#9f9d9e" />}
+          />
+        </FormGroup>
+        <FormGroup>
+          <TextField
+            ref={this.refPasswordConfirmation}
+            className="RegisterForm-field"
+            type="password"
+            autoComplete="new-password"
+            placeholder={t('login.passwordConfirmation')}
             icon={<PasswordIcon htmlColor="#9f9d9e" />}
           />
         </FormGroup>
