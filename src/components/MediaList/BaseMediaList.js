@@ -13,6 +13,7 @@ const {
   useEffect,
   useRef,
   useState,
+  useRef,
 } = React;
 
 /**
@@ -42,6 +43,7 @@ function BaseMediaList({
 }) {
   const lastMediaRef = useRef(media);
   const [selection, setSelection] = useState(() => itemSelection(media));
+  const inFlightPageRequests = useRef({});
   const direction = useDirection();
 
   useEffect(() => {
@@ -120,7 +122,15 @@ function BaseMediaList({
     const isItemLoaded = (index) => media[index] != null;
     const loadMoreItems = (start) => {
       const page = Math.floor(start / 50);
-      onRequestPage(page);
+      if (inFlightPageRequests.current[page]) return Promise.resolve(null);
+      inFlightPageRequests.current[page] = 1;
+
+      return onRequestPage(page).finally(() => {
+        // an attempt to throttle since cached requests are too fast
+        setTimeout(() => {
+          delete inFlightPageRequests.current[page];
+        }, 200);
+      });
     };
 
     const inner = ({ onItemsRendered, ref }) => makeList({ onItemsRendered, ref, height });
