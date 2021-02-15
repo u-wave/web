@@ -15,9 +15,9 @@ function PlaylistImportContainer() {
   const dispatch = useDispatch();
   const onShowImportPanel = useCallback(
     (sourceType) => dispatch(showImportSourcePanel(sourceType)),
-    [],
+    [dispatch],
   );
-  const onHideImportPanel = useCallback(() => dispatch(hideImportSourcePanel()), []);
+  const onHideImportPanel = useCallback(() => dispatch(hideImportSourcePanel()), [dispatch]);
 
   return (
     <PlaylistImport

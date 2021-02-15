@@ -18,10 +18,14 @@ export default function useUserCard(user) {
       setPosition({ x: pos.left, y: pos.top });
     }
     setOpen(true);
-  });
+    // Users of `useUserCard` rely on `open` references never changing.
+    // If dependencies are added to this list, all usage points must be double-checked.
+  }, []);
 
   const close = useCallback(() => {
     setOpen(false);
+    // Users of `useUserCard` rely on `close` references never changing.
+    // If dependencies are added to this list, all usage points must be double-checked.
   }, []);
 
   const card = isOpen && (

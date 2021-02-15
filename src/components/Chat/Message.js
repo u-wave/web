@@ -29,7 +29,9 @@ function Message({
   const onUsernameClick = useCallback((event) => {
     event.preventDefault();
     userCard.open();
-  }, [user]);
+    // The `userCard.open` reference never changes.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   let avatar;
   if (inFlight) {

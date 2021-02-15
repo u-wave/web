@@ -27,10 +27,10 @@ function MainViewContainer() {
   const waitlistSize = useSelector(waitlistSizeSelector);
   const playlists = useSelector(playlistsSelector);
   const dispatch = useDispatch();
-  const onOpenRoomHistory = useCallback(() => dispatch(toggleRoomHistory()), []);
-  const onOpenDrawer = useCallback(() => dispatch(openDrawer()), []);
-  const onOpenWaitlist = useCallback(() => dispatch(openUsersDrawer()), []);
-  const onEnableVideo = useCallback(() => dispatch(set('videoEnabled', true)), []);
+  const onOpenRoomHistory = useCallback(() => dispatch(toggleRoomHistory()), [dispatch]);
+  const onOpenDrawer = useCallback(() => dispatch(openDrawer()), [dispatch]);
+  const onOpenWaitlist = useCallback(() => dispatch(openUsersDrawer()), [dispatch]);
+  const onEnableVideo = useCallback(() => dispatch(set('videoEnabled', true)), [dispatch]);
 
   return (
     <MainView

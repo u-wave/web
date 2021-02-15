@@ -31,11 +31,11 @@ function VideoContainer() {
   const onUpvote = useCallback(() => dispatch(vote({
     historyID,
     direction: 1,
-  })), [historyID]);
+  })), [dispatch, historyID]);
   const onDownvote = useCallback(() => dispatch(vote({
     historyID,
     direction: -1,
-  })), [historyID]);
+  })), [dispatch, historyID]);
   const onFavorite = useCallback((...args) => dispatch(openFavoriteMenu(...args)), [dispatch]);
 
   return (

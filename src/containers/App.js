@@ -61,7 +61,7 @@ function AppContainer({ uwave, mediaSources }) {
   const theme = useSelector(themeSelector);
   const translator = useSelector(translatorSelector);
   const dispatch = useDispatch();
-  const onCloseOverlay = useCallback(() => dispatch(closeAll()));
+  const onCloseOverlay = useCallback(() => dispatch(closeAll()), [dispatch]);
 
   useEffect(() => {
     const html = document.documentElement;

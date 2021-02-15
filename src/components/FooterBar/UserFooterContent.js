@@ -77,7 +77,7 @@ function UserFooterContent() {
       return dispatch(skipSelf({ remove: true }));
     }
     return dispatch(leaveWaitlist(currentUser));
-  }, [userIsDJ, dispatch]);
+  }, [userIsDJ, dispatch, currentUser]);
 
   const canVote = !userIsDJ && !!currentDJ;
 
