@@ -30,6 +30,9 @@ const makeActions = ({
     {(index > 0 || isFiltered) && (
       <MoveToFirstAction onFirst={() => onMoveToFirst(media, selection)} />
     )}
+    {(index > 0 && index !== (selection.items.length -1) || isFiltered) && (
+      <MoveToLastAction onLast={() => onMoveToLast(media, selection)} />
+    )}
     {(index === 0 && !isFiltered) && (
     <MoveToLastAction onLast={() => onMoveToLast(media, selection)} />
     )}
