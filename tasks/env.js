@@ -5,5 +5,5 @@ const argv = require('minimist')(process.argv.slice(2));
 
 module.exports = {
   ...argv,
-  middlewareDir: path.join(__dirname, '../packages/u-wave-web-middleware'),
+  middlewareDir: path.join(__dirname, '../npm'),
 };

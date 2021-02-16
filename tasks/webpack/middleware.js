@@ -40,12 +40,15 @@ class MiddlewarePackageJsonPlugin {
       });
 
       const middlewarePkg = {
-        name: 'u-wave-web-middleware',
+        name: 'u-wave-web',
         version: pkg.version,
         description: pkg.description,
         author: pkg.author,
         license: pkg.license,
-        repository: pkg.repository,
+        repository: {
+          ...pkg.repository,
+          directory: 'npm',
+        },
         type: 'commonjs',
         main: './middleware/index.js',
         engines: pkg.engines,
