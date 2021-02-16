@@ -2,14 +2,18 @@ uwave:
   close: Закрыть
   timeAgo:
     format: "{{time}} назад"
-    seconds: "{{count}} секунду"
-    seconds_plural: "{{count}} секунд(ы)"
-    minutes: "{{count}} минуту"
-    minutes_plural: "{{count}} минут(ы)"
-    hours: "{{count}} час"
-    hours_plural: "{{count}} часа/часов"
-    days: "{{count}} день"
-    days_plural: "{{count}} дня/дней"
+    seconds_one: "{{count}} секунду"
+    seconds_few: "{{count}} секунды"
+    seconds_many: "{{count}} секунд"
+    minutes_one: "{{count}} минуту"
+    minutes_few: "{{count}} минуты"
+    minutes_many: "{{count}} минут"
+    hours_one: "{{count}} час"
+    hours_few: "{{count}} часа"
+    hours_many: "{{count}} часов"
+    days_one: "{{count}} день"
+    days_few: "{{count}} дня"
+    days_many: "{{count}} дней"
 
   roles:
     user: Пользователь
