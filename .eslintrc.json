@@ -28,7 +28,8 @@
       "Object.values",
       "Promise",
       "fetch",
-      "URL"
+      "URL",
+      "CSS.escape"
     ]
   },
 
