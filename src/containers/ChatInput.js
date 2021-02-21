@@ -32,7 +32,7 @@ function ChatInputContainer() {
   const mentionableGroups = useSelector(availableGroupMentionsSelector);
   const availableEmoji = useSelector(emojiCompletionsSelector);
   const dispatch = useDispatch();
-  const onSend = useCallback((message) => dispatch(inputMessage(message)));
+  const onSend = useCallback((message) => dispatch(inputMessage(message)), [dispatch]);
 
   const bus = useBus();
   const onScroll = useCallback((direction) => {

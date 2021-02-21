@@ -23,7 +23,7 @@ function PlaylistsMenu({
   const handleSelect = useCallback((e, playlistID) => {
     onClose();
     onSelect(playlists.find((pl) => pl._id === playlistID));
-  }, [onClose, onSelect]);
+  }, [onClose, onSelect, playlists]);
 
   return (
     <Popover

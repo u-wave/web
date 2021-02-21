@@ -42,7 +42,7 @@ function HistoryRow({
 
   useEffect(() => {
     connectDragPreview(getEmptyImage());
-  }, []);
+  }, [connectDragPreview]);
 
   const handleMouseEnter = useCallback(() => {
     setShowActions(true);

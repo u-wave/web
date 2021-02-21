@@ -47,7 +47,7 @@ function Row({
 
   useEffect(() => {
     connectDragPreview(getEmptyImage());
-  }, []);
+  }, [connectDragPreview]);
 
   const { getMediaSource } = useMediaSources();
   const sourceIcon = (

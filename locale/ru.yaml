@@ -1,0 +1,241 @@
+uwave:
+  close: Закрыть
+  timeAgo:
+    format: "{{time}} назад"
+    seconds_one: "{{count}} секунду"
+    seconds_few: "{{count}} секунды"
+    seconds_many: "{{count}} секунд"
+    minutes_one: "{{count}} минуту"
+    minutes_few: "{{count}} минуты"
+    minutes_many: "{{count}} минут"
+    hours_one: "{{count}} час"
+    hours_few: "{{count}} часа"
+    hours_many: "{{count}} часов"
+    days_one: "{{count}} день"
+    days_few: "{{count}} дня"
+    days_many: "{{count}} дней"
+
+  roles:
+    user: Пользователь
+    special: Особенный
+    moderator: Модератор
+    manager: Менеджер
+    admin: Админ
+
+  chat:
+    title: Чат
+    placeholder: Жми тут, чтобы чатиться!
+    label: Сообщение чата
+    userJoin: "{{username}} вошел"
+    userLeave: "{{username}} покинул(а) комнату"
+    userNameChanged: "{{username}} сменил(а) ник на {{newUsername}}"
+    modSkip: "{{username}} пропустил(а) трек {{djName}}"
+    modSkipReason: "{{username}} пропустил(а) трек {{djName}}: {{reason}}"
+    selfSkip: "{{username}} пропустил(а) свой трек"
+    selfSkipReason: "{{username}} пропустил(а) свой трек: {{reason}}"
+    rolesAdded: "{{username}} теперь {{roles}}"
+    rolesRemoved: "{{username}} больше не {{roles}}"
+    scrollDown: Прокрути вниз чтобы прочесть новые сообщения
+
+  dialogs:
+    confirm:
+      defaultConfirmLabel: OK
+      defaultCancelLabel: Отмена
+
+    prompt:
+      defaultSubmitLabel: OK
+
+    logout:
+      action: Выйти
+      confirm: Ты уверен(а), что хочешь выйти?
+
+    createPlaylist:
+      action: Создать
+      nameInputTitle: Название плейлиста
+
+    deletePlaylist:
+      action: Удалить
+      title: Удалить плейлист
+      confirm: Ты уверен(а), что хочешь удалить этот плейлист?
+
+    renamePlaylist:
+      action: Переименовать
+      nameInputTitle: Название плейлиста
+
+    editMedia:
+      title: Редактировать трек
+      save: Сохранить
+      artistLabel: Исполнитель
+      titleLabel: Название
+      playFromLabel: "Играть от:"
+      playToLabel: "до:"
+      errors:
+        invalidStartTime: Неверное время начала.
+        invalidEndTime: Неверное время окончания.
+        endTimeBeforeStart: Время окончания должно быть после времени начала.
+        endTimeAfterSongEnd: Время окончания не может превышать длину трека.
+
+  media:
+    artist: Исполнитель
+    title: Название
+
+  playlists:
+    title: Плейлисты
+    name: Название плейлиста
+    defaultName: Новый плейлист
+    new: Создать плейлист
+    delete: Удалить плейлист
+    deleteActive: Активный плейлист удалить невозможно.
+    noPlaylists: У тебя еще нет плейлиста!
+    noPlaylistsSub: Создай новый ниже или импортируй из YouTube.
+    noPlaylistsCreate: У тебя еще нет плейлиста! Жми здесь, чтобы создать.
+    empty: "Этот плейлист пуст :("
+    active: Активен
+    activate: Активировать
+    shuffle: Перемешать
+    filter: Фильтр
+    rename: Переименовать
+    playlist:
+      empty: Этот плейлист пуст
+      emptySub: Ищи песни или импортируй из плейлиста.
+      filterEmpty: Нет результатов
+      filterEmptySub: Нет песен, соответствующих запросу.
+    import:
+      title: Импортировать
+    search:
+      action: Поиск
+      results: "Поиск: {{query}}"
+      noResults: Не найдено результатов
+      noResultsSub: Может, попробовать другой запрос?
+
+  eta:
+    empty: "из {{playlist}}"
+    playingNow: "играет из {{playlist}}"
+    eta: "сыграет через {{eta}} из {{playlist}}"
+
+  waitlist:
+    title: Очередь
+    join: В очередь
+    leave: Покинуть
+
+  votes:
+    upvote: Лайк
+    downvote: Дислайк
+    favorite: Забрать трек себе
+
+  booth:
+    empty: Никто не играет!
+    videoDisabled: Воспр. видео отключено.
+    autoplayBlocked: Твой браузер блокирует автовоспроизведение. Нажми кнопку ниже чтобы начать воспроизведение трека.
+    play: Воспроизвести
+    currentDJ: "играет: {{user}}"
+    mute: Откл. звук
+    unmute: Вкл. звук
+    skip:
+      self: Пропустить свой трек
+      other: "Пропустить трек {{user}}"
+      reasons:
+        genre: Off-genre
+        history: Трек есть в истории
+        unavailable: Трек недоступен или заблокирован
+        nsfw: NSFW
+        duration: Трек слишком длинный
+        downvotes: Слишком много дислайков
+        other: Другое
+
+  history:
+    title: История треков
+
+  users:
+    title: Комната
+    listeners: Слушатели
+    guests: "и {{count}} гость"
+    guests_plural: "и {{count}} гостя/гостей"
+
+  server:
+    connectionLost: Потеряна связь с сервером
+    reconnecting: Попытка восстановить соединение...
+
+  about:
+    about: Инфо
+    servers: Серверы
+
+  settings:
+    title: Настройки
+    videoEnabled: Воспроизводить аудио/видео
+    videoEnabledHelp: "Можно отключить воспроизведение если ты здесь только поболтать."
+    videoSize: Видео во весь экран
+    enableLargeVideo: Увеличить размер видео
+    disableLargeVideo: Уменьшить размер видео
+    enableFullscreen: Войти в полноэкранный режим
+    disableFullscreen: Выйти из полноэкранного режима
+    mentionSound: Звук уведомления о личных сообщениях в чате
+    language: Язык
+    logout: Выйти
+    notifications:
+      title: Настройки уведомлений
+      help: "Показывать уведомления, когда..."
+      userJoin: Кто-то заходит
+      userLeave: Кто-то выходит
+      userNameChanged: Кто-то меняет ник
+      skip: Кто-то пропускает трек
+    profile:
+      username:
+        change: Сменить ник
+        save: Сохранить
+    links:
+      title: Ссылки
+      website: üWave
+      source: исходный код веб-клиента üWave
+      license: Лицензия
+
+  loading:
+    jsRequired: Для üWave требуется поддержка JavaScript.
+
+  login:
+    message: Нужно войти если хочешь ставить треки!
+    login: Вход
+    register: Регистрация
+    username: Ник
+    email: E-mail
+    password: Пароль
+    forgotPassword: Забыл(а) пароль?
+    requestPasswordReset: Сброс пароля
+    passwordResetSent: "Мы отправили на этот адрес сообщение с инструкциями по сбросу пароля."
+    privacyPolicy: Политику обработки персональной информации
+    agree: Мне 13 лет или больше и я принимаю {{privacyPolicy}}.
+    social:
+      loginWithGoogle: Войти при помощи Google
+  resetPassword:
+    introduction: Введите ниже новый пароль.
+    submit: Сброс пароля
+    success: Ваш пароль сброшен. Можно закрыть эту страницу.
+
+  admin:
+    users:
+      user: Пользователь
+      joinedAt: Создан
+      email: E-Mail
+      roles: Роли
+    bans:
+      user: Пользователь
+      duration: Длительность
+      reason: Причина
+      bannedBy: Кем забанен(а)
+      actions: Действия
+      unban: разбанить
+      noReason: Причина не указана.
+
+  youtube:
+    name: YouTube
+    channelUrl: URL канала
+    playlistUrl: URL плейлиста
+    importChannel: Импорт из канала
+    importPlaylist: Импорт из плейлиста
+
+  soundcloud:
+    error:
+      template: "Невозможно воспроизвести трек: {{error}}"
+      network: Невозможно загрузить трек.
+      decode: Медиафайл невозможно воспроизвести — неверный формат.
+      notFound: Трек невозможно воспроизвести, возможно он удалён.

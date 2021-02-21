@@ -68,7 +68,7 @@ function Video(props) {
       setShowToolbar(true);
     }
     timer.current = setTimeout(handleMouseMoveEnd, 5000);
-  }, []);
+  }, [handleMouseMoveEnd]);
 
   // Attach fullscreen exit event listener.
   useEffect(() => {
