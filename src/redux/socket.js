@@ -142,6 +142,7 @@ class UwaveSocket {
     this.socket = null;
     this.queue = [];
     this.sentAuthToken = false;
+    this.authToken = null;
     this.opened = false;
     this.reconnectAttempts = 0;
     this.reconnectTimeout = null;
@@ -154,8 +155,12 @@ class UwaveSocket {
   }
 
   sendAuthToken(token) {
-    this.socket.send(token);
-    this.sentAuthToken = true;
+    if (this.isOpen()) {
+      this.socket.send(token);
+      this.sentAuthToken = true;
+    } else {
+      this.authToken = token;
+    }
   }
 
   send(command, data) {
@@ -176,6 +181,11 @@ class UwaveSocket {
 
   onOpen = () => {
     this.opened = true;
+    if (this.authToken) {
+      this.socket.send(this.authToken);
+      this.authToken = null;
+      this.sentAuthToken = true;
+    }
     this.dispatch({ type: SOCKET_CONNECTED });
   };
 
@@ -284,7 +294,7 @@ export default function middleware({ url = defaultUrl() } = {}) {
           socket.send('sendChat', payload.message);
           break;
         case LOGIN_COMPLETE:
-          if (!socket.sentAuthToken && socket.isOpen()) {
+          if (!socket.sentAuthToken) {
             socket.sendAuthToken(payload.socketToken);
           }
           break;

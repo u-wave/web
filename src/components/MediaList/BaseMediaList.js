@@ -11,6 +11,7 @@ import LoadingRow from './LoadingRow';
 const {
   useCallback,
   useEffect,
+  useRef,
   useState,
 } = React;
 
@@ -39,18 +40,19 @@ function BaseMediaList({
   size = null,
   makeActions = defaultMakeActions,
 }) {
-  const [lastMedia, setLastMedia] = useState(media);
+  const lastMediaRef = useRef(media);
   const [selection, setSelection] = useState(() => itemSelection(media));
   const direction = useDirection();
 
   useEffect(() => {
+    const lastMedia = lastMediaRef.current;
     if (lastMedia !== media) {
-      setLastMedia(media);
+      lastMediaRef.current = media;
       const selectedIndices = selection.getIndices();
       const mediaChanged = didMediaChange(lastMedia, media);
       setSelection(mediaChanged ? itemSelection(media) : itemSelection(media, selectedIndices));
     }
-  }, [media]);
+  }, [media, selection]);
 
   const selectItem = useCallback((index, event) => {
     event.preventDefault();
@@ -91,7 +93,10 @@ function BaseMediaList({
         makeActions={() => makeActions(media[index], selection, index)}
       />
     );
-  }, [selection, media, RowComponent, rowProps, onOpenPreviewMediaDialog, makeActions]);
+    // `RowComponent` should really be in this list but then react-hooks/exhaustive-deps complains.
+    // We don't change it on the fly ever I think and shouldn't, but if we ever did have a reason
+    // to do it, this might break :)
+  }, [selection, media, rowProps, onOpenPreviewMediaDialog, makeActions, selectItem]);
 
   const mediaLength = media.length;
   const innerList = ({ height, onItemsRendered, ref }) => (

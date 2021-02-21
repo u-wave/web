@@ -1,5 +1,5 @@
 {
-  "extends": "airbnb",
+  "extends": ["airbnb", "airbnb/hooks"],
 
   "plugins": ["compat", "react-hooks"],
 
@@ -29,7 +29,8 @@
       "Promise",
       "AbortController",
       "fetch",
-      "URL"
+      "URL",
+      "CSS.escape"
     ]
   },
 

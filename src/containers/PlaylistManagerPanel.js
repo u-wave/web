@@ -39,48 +39,59 @@ function PlaylistPanelContainer() {
   const isFiltered = useSelector(isFilteredSelector);
   const dispatch = useDispatch();
 
-  const onShufflePlaylist = useCallback(() => dispatch(shufflePlaylist(playlist._id)), [playlist]);
+  const onShufflePlaylist = useCallback(
+    () => dispatch(shufflePlaylist(playlist._id)),
+    [dispatch, playlist],
+  );
   const onActivatePlaylist = useCallback(
     () => dispatch(activatePlaylist(playlist._id)),
-    [playlist],
+    [dispatch, playlist],
   );
   const onRenamePlaylist = useCallback(
     (name) => dispatch(renamePlaylist(playlist._id, name)),
-    [playlist],
+    [dispatch, playlist],
   );
-  const onDeletePlaylist = useCallback(() => dispatch(deletePlaylist(playlist._id)), [playlist]);
+  const onDeletePlaylist = useCallback(
+    () => dispatch(deletePlaylist(playlist._id)),
+    [dispatch, playlist],
+  );
   const onNotDeletable = useCallback(
     () => dispatch(cannotDeleteActivePlaylist(playlist._id)),
-    [playlist],
+    [dispatch, playlist],
   );
 
   const onOpenAddMediaMenu = useCallback((position, media, selection) => (
     dispatch(addMediaMenu(selectionOrOne(media, selection), position))
-  ), [playlist]);
-  const onOpenPreviewMediaDialog = useCallback((media) => dispatch(openPreviewMediaDialog(media)));
+  ), [dispatch]);
+  const onOpenPreviewMediaDialog = useCallback((media) => {
+    dispatch(openPreviewMediaDialog(media));
+  }, [dispatch]);
   const onMoveToFirst = useCallback((media, selection) => (
     dispatch(moveMedia(playlist._id, selectionOrOne(media, selection), { at: 'start' }))
-  ), [playlist]);
+  ), [dispatch, playlist]);
   const onMoveToLast = useCallback((media, selection) => (
     dispatch(moveMedia(playlist._id, selectionOrOne(media, selection), { at: 'end' }))
-  ), [playlist]);
+  ), [dispatch, playlist]);
   const onMoveMedia = useCallback(
     (media, opts) => dispatch(moveMedia(playlist._id, media, opts)),
-    [playlist],
+    [dispatch, playlist],
   );
-  const onEditMedia = useCallback((media) => dispatch(editMedia(playlist._id, media)), [playlist]);
+  const onEditMedia = useCallback(
+    (media) => dispatch(editMedia(playlist._id, media)),
+    [dispatch, playlist],
+  );
   const onRemoveFromPlaylist = useCallback((media, selection) => (
     dispatch(removeMedia(playlist._id, selectionOrOne(media, selection)))
-  ), [playlist]);
+  ), [dispatch, playlist]);
   const onLoadPlaylistPage = useCallback((page) => {
     if (isFiltered) {
       return dispatch(loadFilteredPlaylistItems(playlist._id, page));
     }
     return dispatch(loadPlaylist(playlist._id, page));
-  }, [isFiltered, playlist]);
+  }, [dispatch, isFiltered, playlist]);
   const onFilterPlaylistItems = useCallback(
     (filter) => dispatch(filterPlaylistItems(playlist._id, filter)),
-    [playlist],
+    [dispatch, playlist],
   );
 
   return (

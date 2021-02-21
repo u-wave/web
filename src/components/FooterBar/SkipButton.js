@@ -10,7 +10,6 @@ import SkipReasonsList from './SkipReasonsList';
 
 const {
   useCallback,
-  useMemo,
   useRef,
   useState,
 } = React;
@@ -52,7 +51,7 @@ function SkipButton({ userIsDJ, currentDJ, onSkip }) {
     });
     setOpen(false);
   }, [onSkip]);
-  const handleSelfSkip = useMemo(() => handleSkip.bind(null, ''), handleSkip);
+  const handleSelfSkip = useCallback(() => handleSkip(''), [handleSkip]);
 
   if (isSkipping) {
     return (

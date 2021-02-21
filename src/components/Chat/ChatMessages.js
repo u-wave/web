@@ -66,6 +66,9 @@ function ChatMessages({
     if (isScrolledToBottom) {
       scrollToBottom(container.current);
     }
+    // We need to scroll to the bottom only if a new message comes in, not when the scroll-to-bottom
+    // state changed.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lastMessage]);
 
   // Accept externally controlled scrolling using the global event bus, so the chat input box

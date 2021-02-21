@@ -29,15 +29,17 @@ function PlaylistsMenuContainer({ className }) {
 
   const onAddToPlaylist = useCallback(
     (playlist, items, afterID) => dispatch(addToPlaylist(playlist, items, afterID)),
-    [],
+    [dispatch],
   );
-  const onCreatePlaylist = useCallback((name) => dispatch(createPlaylist(name)), []);
-  const onSelectPlaylist = useCallback((id) => dispatch(selectPlaylist(id)), []);
-  const onSelectSearchResults = useCallback(() => dispatch(showSearchResults()), []);
+  const onCreatePlaylist = useCallback((name) => dispatch(createPlaylist(name)), [dispatch]);
+  const onSelectPlaylist = useCallback((id) => dispatch(selectPlaylist(id)), [dispatch]);
+  const onSelectSearchResults = useCallback(() => dispatch(showSearchResults()), [dispatch]);
   const onCloseSearchResults = useCallback(() => {
     mediaSearch.search(null);
+    // The `mediaSearch.search` reference never changes.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const onShowImportPanel = useCallback(() => dispatch(showImportPanel()), []);
+  const onShowImportPanel = useCallback(() => dispatch(showImportPanel()), [dispatch]);
 
   return (
     <PlaylistsMenu

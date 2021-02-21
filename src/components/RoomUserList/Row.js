@@ -16,6 +16,8 @@ function RoomUserRow({ className, user }) {
   const onOpenCard = useCallback((event) => {
     event.preventDefault();
     userCard.open();
+    // The `userCard.open` reference never changes.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

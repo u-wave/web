@@ -31,7 +31,7 @@ function SourcePicker({ className, selected, onChange }) {
   const handleChange = useCallback((sourceName) => {
     onChange(sourceName);
     setOpen(false);
-  }, []);
+  }, [onChange]);
 
   const sourceNames = Object.keys(getAllMediaSources());
   const sources = sourceNames

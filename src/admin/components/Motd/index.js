@@ -46,7 +46,7 @@ function Motd({
     event.preventDefault();
     onSetMotd(newMotd);
     setExpanded(false);
-  }, [newMotd]);
+  }, [newMotd, onSetMotd]);
   const input = useRef(null);
   useEffect(() => {
     if (input.current) {

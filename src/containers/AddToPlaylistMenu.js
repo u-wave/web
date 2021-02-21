@@ -27,14 +27,14 @@ function AddToPlaylistMenuContainer() {
   const media = useSelector(mediaSelector);
   const historyID = useSelector(historyIDSelector);
 
-  const onClose = useCallback(() => dispatch(closeAddMediaMenu()), []);
-  const onCreatePlaylist = useCallback((name) => dispatch(createPlaylist(name)), []);
+  const onClose = useCallback(() => dispatch(closeAddMediaMenu()), [dispatch]);
+  const onCreatePlaylist = useCallback((name) => dispatch(createPlaylist(name)), [dispatch]);
   const onSelect = useCallback((playlist) => {
     if (isFavorite) {
       return dispatch(favoriteMedia(playlist, historyID));
     }
     return dispatch(addMedia(playlist, media));
-  }, [isFavorite, historyID, media]);
+  }, [dispatch, isFavorite, historyID, media]);
 
   if (!isOpen) {
     return <span />;

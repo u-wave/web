@@ -48,7 +48,7 @@ function useStoreImplementation() {
       controller.abort();
       setState(IDLE);
     };
-  }, [query, activeSource]);
+  }, [dispatch, query, activeSource]);
 
   const search = useCallback((newQuery) => {
     // For compatibility.
@@ -56,7 +56,7 @@ function useStoreImplementation() {
     dispatch(showSearchResults());
 
     setQuery(newQuery);
-  }, []);
+  }, [dispatch]);
 
   const context = useMemo(() => ({
     activeSource,

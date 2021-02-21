@@ -24,7 +24,7 @@ export default function useClock() {
   useEffect(() => {
     timerCallbacks.add(tick);
     return () => timerCallbacks.remove(tick);
-  }, []);
+  }, [timerCallbacks]);
 
   return currentTime;
 }

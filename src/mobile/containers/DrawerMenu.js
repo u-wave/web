@@ -21,11 +21,14 @@ function DrawerMenuContainer() {
   const playlists = useSelector(playlistsSelector);
   const open = useSelector(drawerIsOpenSelector);
   const dispatch = useDispatch();
-  const onShowAbout = useCallback(() => dispatch(toggleAbout()), []);
-  const onShowServerList = useCallback(() => dispatch(toggleServerList()), []);
-  const onShowSettings = useCallback(() => dispatch(toggleSettings()), []);
-  const onShowPlaylist = useCallback((playlistID) => dispatch(openPlaylist(playlistID)), []);
-  const onDrawerClose = useCallback(() => dispatch(setDrawer(false)), []);
+  const onShowAbout = useCallback(() => dispatch(toggleAbout()), [dispatch]);
+  const onShowServerList = useCallback(() => dispatch(toggleServerList()), [dispatch]);
+  const onShowSettings = useCallback(() => dispatch(toggleSettings()), [dispatch]);
+  const onShowPlaylist = useCallback(
+    (playlistID) => dispatch(openPlaylist(playlistID)),
+    [dispatch],
+  );
+  const onDrawerClose = useCallback(() => dispatch(setDrawer(false)), [dispatch]);
 
   return (
     <DrawerMenu

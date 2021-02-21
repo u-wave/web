@@ -30,6 +30,8 @@ function SearchBar({
       inputRef.current.focus();
     }
     return () => null;
+    // `autoFocus` is only checked on mount on purpose.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
