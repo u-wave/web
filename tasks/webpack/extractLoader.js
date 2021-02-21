@@ -10,12 +10,14 @@ const ExternalsPlugin = require('webpack/lib/ExternalsPlugin');
 const EntryPlugin = require('webpack/lib/EntryPlugin');
 const pkg = require('../../package.json');
 
-function evalModule(code) {
+function evalModule(code, { filename }) {
   const target = { exports: {} };
   vm.runInNewContext(code, {
     require,
     module: target,
     exports: target.exports,
+    __filename: filename,
+    URL,
   });
   return target.exports;
 }
@@ -58,7 +60,9 @@ module.exports.pitch = function extractLoaderPitch(entrypoint) {
       const mainAsset = compilation.assets[mainJsFiles[0]];
 
       const code = mainAsset.source();
-      const result = evalModule(code).default;
+      const result = evalModule(code, {
+        filename: entrypoint,
+      }).default;
 
       mainChunk.files.forEach((file) => {
         // eslint-disable-next-line no-underscore-dangle
