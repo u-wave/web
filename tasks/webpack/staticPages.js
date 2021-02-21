@@ -67,7 +67,7 @@ module.exports = function staticPages(pages, production) {
         {
           test: /\.md$/,
           use: [
-            { loader: 'html-loader', options: { esModule: true } },
+            'html-loader',
             require.resolve('../utils/renderMarkdown'),
           ],
         },
