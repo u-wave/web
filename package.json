@@ -10,7 +10,7 @@
     "npm": ">= 5"
   },
   "dependencies": {
-    "@babel/runtime": "^7.12.13",
+    "@babel/runtime": "^7.12.18",
     "@emotion/cache": "^11.1.3",
     "@emotion/core": "^11.0.0",
     "@emotion/react": "^11.1.4",
@@ -95,15 +95,15 @@
     "whatwg-fetch": "^3.4.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.16",
-    "@babel/eslint-parser": "^7.12.16",
+    "@babel/core": "^7.12.17",
+    "@babel/eslint-parser": "^7.12.17",
     "@babel/eslint-plugin": "^7.12.13",
     "@babel/plugin-proposal-class-properties": "^7.12.13",
     "@babel/plugin-transform-modules-commonjs": "^7.12.13",
     "@babel/plugin-transform-react-constant-elements": "^7.12.13",
     "@babel/plugin-transform-react-inline-elements": "^7.12.13",
-    "@babel/plugin-transform-runtime": "^7.12.15",
-    "@babel/preset-env": "^7.12.16",
+    "@babel/plugin-transform-runtime": "^7.12.17",
+    "@babel/preset-env": "^7.12.17",
     "@babel/preset-react": "^7.12.13",
     "@babel/register": "^7.12.13",
     "@emotion/server": "^11.0.0",
@@ -150,7 +150,7 @@
     "rimraf": "^3.0.0",
     "sinon": "^9.2.4",
     "style-loader": "^2.0.0",
-    "stylelint": "^13.10.0",
+    "stylelint": "^13.11.0",
     "stylelint-config-standard": "^20.0.0",
     "terser-webpack-plugin": "^5.1.1",
     "u-wave-web-emojione": "^2.0.1",
