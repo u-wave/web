@@ -47,7 +47,8 @@ class RegisterForm extends React.Component {
     event.preventDefault();
 
     if (this.password.value !== this.passwordConfirmation.value) {
-      return displayRegisterError(new Error(t('login.passwordMismatch')));
+      displayRegisterError(new Error(t('login.passwordMismatch')));
+      return;
     }
 
     this.setState({ busy: true });
