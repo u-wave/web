@@ -13,7 +13,6 @@ const {
   useEffect,
   useRef,
   useState,
-  useRef,
 } = React;
 
 /**
