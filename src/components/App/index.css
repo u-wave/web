@@ -97,6 +97,7 @@ html:not([dir="rtl"]) .u-rtl-only {
 }
 
 .AppRow--middle {
+  flex-basis: 0;
   flex-grow: 1;
 }
 
