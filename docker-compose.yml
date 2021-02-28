@@ -12,13 +12,14 @@ services:
     networks:
       - databases
   server:
-    image: u-wave-core:0.5.0-alpha.0
+    image: ghcr.io/u-wave/core:v0.5.0-alpha.1
     environment:
       DEBUG: uwave:*
       SECRET: ef4d4332bcdea2a6d63416dc2ac9a78de5d1f70d914e77a38203340032dd5de6
       REDIS_URL: 'redis://redis:6379/'
       MONGODB_URL: 'mongodb://mongodb:27017/uwave'
       HUB_SERVER: 'http://hub-server:6451/'
+      PORT: '6042'
     ports:
       - '6042:6042'
     depends_on:
