@@ -3,23 +3,28 @@ import PropTypes from 'prop-types';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import Suggestion from './Suggestion';
+import emojiUrl from '../../../utils/emojiUrl';
 
 const shortcode = (emoji) => `:${emoji.shortcode}:`;
 
-const EmojiSuggestion = ({
+function EmojiSuggestion({
   value: emoji,
   ...props
-}) => (
-  <Suggestion {...props}>
-    <ListItemAvatar>
-      <span
-        className="EmojiSuggestion-image"
-        style={{ backgroundImage: `url(/assets/emoji/${emoji.image})` }}
-      />
-    </ListItemAvatar>
-    <ListItemText primary={shortcode(emoji)} />
-  </Suggestion>
-);
+}) {
+  const url = emojiUrl(emoji.image);
+
+  return (
+    <Suggestion {...props}>
+      <ListItemAvatar>
+        <span
+          className="EmojiSuggestion-image"
+          style={{ backgroundImage: `url(${CSS.escape(url)})` }}
+        />
+      </ListItemAvatar>
+      <ListItemText primary={shortcode(emoji)} />
+    </Suggestion>
+  );
+}
 
 EmojiSuggestion.propTypes = {
   value: PropTypes.shape({

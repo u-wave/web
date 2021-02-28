@@ -2,7 +2,11 @@ import React from 'react';
 import sinon from 'sinon';
 import expect from 'expect';
 import { mount } from 'enzyme';
+import createCache from '@emotion/cache';
+import { CacheProvider } from '@emotion/react';
 import PromptDialog from '..';
+
+const cache = createCache({ key: 'emc' });
 
 describe('<PromptDialog />', () => {
   it('should not show if there is no error', () => {
@@ -12,12 +16,14 @@ describe('<PromptDialog />', () => {
     const onCancel = sinon.spy();
 
     const dialog = mount((
-      <PromptDialog
-        open
-        title="Test Prompt"
-        onSubmit={onSubmit}
-        onCancel={onCancel}
-      />
+      <CacheProvider value={cache}>
+        <PromptDialog
+          open
+          title="Test Prompt"
+          onSubmit={onSubmit}
+          onCancel={onCancel}
+        />
+      </CacheProvider>
     ));
 
     // Type "test" into the prompt input

@@ -11,7 +11,7 @@ const {
 function PreviewMediaDialogContainer() {
   const props = useSelector(previewMediaDialogSelector);
   const dispatch = useDispatch();
-  const onCloseDialog = useCallback(() => dispatch(closePreviewMediaDialog()), []);
+  const onCloseDialog = useCallback(() => dispatch(closePreviewMediaDialog()), [dispatch]);
 
   return <PreviewMediaDialog {...props} onCloseDialog={onCloseDialog} />;
 }

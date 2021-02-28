@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate, Interpolate } from '@u-wave/react-translate';
+import Alert from '@material-ui/core/Alert';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -104,7 +105,11 @@ class RegisterForm extends React.Component {
 
     return (
       <Form className="RegisterForm" onSubmit={this.handleSubmit}>
-        {error && <FormGroup>{error.message}</FormGroup>}
+        {error && (
+          <FormGroup>
+            <Alert severity="error">{error.message}</Alert>
+          </FormGroup>
+        )}
         {supportsSocialAuth && (
           <>
             <FormGroup>

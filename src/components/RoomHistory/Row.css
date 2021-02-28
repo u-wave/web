@@ -1,5 +1,6 @@
 :root {
   --history-list-thumb-width: 85px;
+  --history-list-icon-width: 50px;
   --history-list-user-width: 130px;
   --history-list-time-width: 170px;
   --history-list-votes-width: 250px;
@@ -8,7 +9,8 @@
       var(--history-list-thumb-width) +
       var(--history-list-time-width) +
       var(--history-list-user-width) +
-      var(--history-list-votes-width)
+      var(--history-list-votes-width) +
+      var(--history-list-icon-width)
     );
 }
 
@@ -27,6 +29,13 @@
   height: 100%;
   float: left;
   width: var(--history-list-votes-width);
+}
+
+.HistoryRow-icon {
+  height: 100%;
+  float: left;
+  display: flex;
+  align-items: center;
 }
 
 .HistoryRow-user {

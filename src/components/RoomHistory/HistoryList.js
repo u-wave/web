@@ -20,7 +20,7 @@ function HistoryList({
       );
     }
     return () => [];
-  }, [onOpenAddMediaMenu]);
+  }, [onOpenAddMediaMenu, isLoggedIn]);
 
   return (
     <Base

@@ -21,6 +21,7 @@ export const resources = {
   nl: fetchLocale(new URL('../locale/nl.yaml', import.meta.url)),
   pt: fetchLocale(new URL('../locale/pt.yaml', import.meta.url)),
   zh: fetchLocale(new URL('../locale/zh.yaml', import.meta.url)),
+  ru: fetchLocale(new URL('../locale/ru.yaml', import.meta.url)),
 };
 
 export const availableLanguages = Object.keys(resources);
