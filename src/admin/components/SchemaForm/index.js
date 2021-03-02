@@ -7,6 +7,7 @@ import BooleanField from './BooleanField';
 import NumberField from './NumberField';
 import ObjectField, { ObjectProperties } from './ObjectField';
 import StringField from './StringField';
+import MarkdownField from './MarkdownField';
 
 const controls = new Map([
   ['array', ArrayField],
@@ -14,6 +15,7 @@ const controls = new Map([
   ['number', NumberField],
   ['object', ObjectField],
   ['string', StringField],
+  ['markdown', MarkdownField],
 ]);
 
 function SchemaForm({
