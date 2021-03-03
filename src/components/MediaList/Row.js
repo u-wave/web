@@ -28,12 +28,12 @@ function Row({
   onOpenPreviewMediaDialog,
   makeActions,
 }) {
-  const [, drag, connectDragPreview] = useDrag({
+  const [, drag, connectDragPreview] = useDrag(() => ({
     item: {
       type: MEDIA,
       media: inSelection(selection, media) ? selection : [media],
     },
-  });
+  }), [selection, media]);
 
   const handleKeyPress = useCallback((event) => {
     if (event.code === 'Space') {
