@@ -125,7 +125,10 @@ function BaseMediaList({
       inFlightPageRequests.current[page] = 1;
 
       return onRequestPage(page).finally(() => {
-        // an attempt to throttle since cached requests are too fast
+        // Without the timeout we can still get duplicate requests.
+        // That is *probably* because a rerender is triggered by some
+        // redux action on request completion, just *before* the new
+        // playlist items are actually stored in state.
         setTimeout(() => {
           delete inFlightPageRequests.current[page];
         }, 200);
