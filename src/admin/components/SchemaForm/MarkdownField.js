@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Markdown from '../../../components/Markdown';
-import TextField from '../../../components/Form/TextField';
 
 function MarkdownField({
   className, schema, value, onChange,
@@ -11,7 +10,7 @@ function MarkdownField({
   return (
     <div className={className} style={{ marginBottom: '8px' }}>
       {schema.title && <Typography gutterBottom>{schema.title}</Typography>}
-      <div className="TextField">
+      <div className="TextField" style={{ height: '120px' }}>
         <textarea
           className="TextField-input"
           value={value}
@@ -20,6 +19,7 @@ function MarkdownField({
         />
       </div>
       {schema.description && <FormHelperText>{schema.description}</FormHelperText>}
+      <Markdown source={value} />
     </div>
   );
 }
