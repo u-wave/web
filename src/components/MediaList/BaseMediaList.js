@@ -45,6 +45,13 @@ function BaseMediaList({
   const inFlightPageRequests = useRef({});
   const direction = useDirection();
 
+  const itemKey = useCallback((index) => {
+    if (media[index]) {
+      return media[index]._id;
+    }
+    return `unloaded_${index}`;
+  }, [media]);
+
   useEffect(() => {
     const lastMedia = lastMediaRef.current;
     if (lastMedia !== media) {
@@ -72,7 +79,6 @@ function BaseMediaList({
     if (!media[index]) {
       return (
         <LoadingRow
-          key={index}
           className="MediaList-row"
           style={style}
           selected={selected}
@@ -82,7 +88,6 @@ function BaseMediaList({
 
     return (
       <RowComponent
-        key={media[index] ? media[index]._id : index}
         {...rowProps}
         style={style}
         className="MediaList-row"
@@ -104,6 +109,7 @@ function BaseMediaList({
     <FixedSizeList
       itemCount={size || mediaLength}
       itemSize={56}
+      itemKey={itemKey}
       height={height}
       onItemsRendered={onItemsRendered}
       ref={ref}
