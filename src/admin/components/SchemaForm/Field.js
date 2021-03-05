@@ -8,6 +8,18 @@ const {
 
 const errstyle = { background: 'red', color: 'white' };
 
+function getControlName(schema) {
+  if (schema['uw:control']) {
+    return schema['uw:control'];
+  }
+
+  if (Array.isArray(schema.enum)) {
+    return 'enum';
+  }
+
+  return schema.type;
+}
+
 function Field({
   schema,
   value,
@@ -16,7 +28,7 @@ function Field({
 }) {
   const controls = useContext(ControlsContext);
 
-  const controlName = schema['uw:control'] || schema.type;
+  const controlName = getControlName(schema);
   const Control = controls.get(controlName);
   if (Control) {
     return (

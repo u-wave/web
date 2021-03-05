@@ -8,6 +8,7 @@ import NumberField from './NumberField';
 import ObjectField, { ObjectProperties } from './ObjectField';
 import StringField from './StringField';
 import MarkdownField from './MarkdownField';
+import EnumField from './EnumField';
 
 const controls = new Map([
   ['array', ArrayField],
@@ -15,6 +16,7 @@ const controls = new Map([
   ['number', NumberField],
   ['object', ObjectField],
   ['string', StringField],
+  ['enum', EnumField],
   ['markdown', MarkdownField],
 ]);
 
