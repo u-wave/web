@@ -102,7 +102,7 @@ export function login({ email, password }) {
     onComplete: (res) => (dispatch) => {
       Session.set(res.meta.jwt);
       dispatch(setSessionToken(res.meta.jwt));
-      dispatch(initState());
+      return dispatch(initState());
     },
     onError: (error) => ({
       type: LOGIN_COMPLETE,
