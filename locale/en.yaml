@@ -233,6 +233,7 @@ uwave:
       noReason: No reason given.
     config:
       save: Save
+      saved: Saved
       array:
         append: Add
 

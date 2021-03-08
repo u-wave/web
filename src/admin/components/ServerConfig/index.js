@@ -2,12 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionActions from '@material-ui/core/AccordionActions';
+import LoadingButton from '@material-ui/lab/LoadingButton';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import CheckIcon from '@material-ui/icons/Check';
 import SchemaForm from '../SchemaForm'; // eslint-disable-line
 
 const {
@@ -22,15 +23,22 @@ function Section({
 }) {
   const { t } = useTranslator();
   const [value, setValue] = useState(defaultValue);
+  const [busy, setBusy] = useState(false);
+  const [done, setDone] = useState(false);
 
   const handleChange = useCallback((newValue) => {
     setValue(newValue);
+    setDone(false);
   }, []);
 
   const handleSubmit = useCallback((event) => {
     event.preventDefault();
 
-    onSave(value);
+    setBusy(true);
+    onSave(value).finally(() => {
+      setBusy(false);
+      setDone(true);
+    });
   }, [value, onSave]);
 
   return (
@@ -50,13 +58,16 @@ function Section({
         />
       </AccordionDetails>
       <AccordionActions>
-        <Button
+        <LoadingButton
           color="primary"
           variant="contained"
+          pending={busy}
+          disabled={done}
+          startIcon={done ? <CheckIcon /> : null}
           onClick={handleSubmit}
         >
-          {t('admin.config.save')}
-        </Button>
+          {done ? t('admin.config.saved') : t('admin.config.save')}
+        </LoadingButton>
       </AccordionActions>
     </Accordion>
   );
