@@ -114,11 +114,11 @@ function getConfig(env, {
         // Static files and resources.
         {
           test: /\.(mp3|woff2?)$/,
-          type: 'asset',
+          type: 'asset/resource',
         },
         {
           test: /\.(gif|jpe?g|png|svg)$/,
-          type: 'asset',
+          type: 'asset/resource',
           use: [
             !env.production && { loader: 'image-webpack-loader' },
           ].filter(Boolean),

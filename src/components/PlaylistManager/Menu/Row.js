@@ -18,7 +18,7 @@ function PlaylistRow({
   onClick,
   onAddToPlaylist,
 }) {
-  const [{ isOver }, drop] = useDrop({
+  const [{ isOver }, drop] = useDrop(() => ({
     accept: MEDIA,
     drop(item, monitor) {
       const { media } = monitor.getItem();
@@ -27,7 +27,7 @@ function PlaylistRow({
     collect(monitor) {
       return { isOver: monitor.isOver() };
     },
-  });
+  }), [playlist]);
 
   const activeClass = playlist.active && 'is-active';
   const droppableClass = isOver && 'is-droppable';

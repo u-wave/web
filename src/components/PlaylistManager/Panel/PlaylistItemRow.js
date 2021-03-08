@@ -11,24 +11,25 @@ const {
   useState,
 } = React;
 
-function PlaylistItemRow({ onMoveMedia, style, ...props }) {
+function PlaylistItemRow({
+  onMoveMedia, style, media, ...props
+}) {
   const [insertingAbove, setInsertAbove] = useState(false);
   const refWrapper = useRef(null);
-  const [{ isOver }, connectDropTarget] = useDrop({
+  const [{ isOver }, connectDropTarget] = useDrop(() => ({
     accept: MEDIA,
     drop(item, monitor) {
-      const { media } = monitor.getItem();
-      if (media) {
-        const thisID = props.media._id;
+      const { media: droppedItems } = monitor.getItem();
+      if (droppedItems) {
         // Do not attempt to move when the selection is dropped on top of an item
         // that is in the selection.
-        if (media.some((playlistItem) => playlistItem._id === thisID)) {
+        if (droppedItems.some((playlistItem) => playlistItem._id === media._id)) {
           return;
         }
         const insertBefore = isDraggingNearTopOfRow(monitor, refWrapper.current);
         onMoveMedia(
-          media,
-          insertBefore ? { before: thisID } : { after: thisID },
+          droppedItems,
+          insertBefore ? { before: media._id } : { after: media._id },
         );
       }
     },
@@ -38,7 +39,7 @@ function PlaylistItemRow({ onMoveMedia, style, ...props }) {
     collect(monitor) {
       return { isOver: monitor.isOver() };
     },
-  });
+  }), [media]);
 
   useEffect(() => {
     connectDropTarget(refWrapper.current);
@@ -52,7 +53,7 @@ function PlaylistItemRow({ onMoveMedia, style, ...props }) {
   return (
     <div className="PlaylistItemRow" style={style} ref={refWrapper}>
       {isOver && insertingAbove && dropIndicator}
-      <MediaRow {...props} />
+      <MediaRow {...props} media={media} />
       {isOver && !insertingAbove && dropIndicator}
     </div>
   );
