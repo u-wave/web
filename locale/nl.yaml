@@ -168,3 +168,23 @@ uwave:
     forgotPassword: Wachtwoord vergeten?
     social:
       loginWithGoogle: Aanmelden via Google
+
+  admin:
+    users:
+      user: Gebruiker
+      joinedAt: Aangemaakt
+      email: E-Mail
+      roles: Roles
+    bans:
+      user: Gebruiker
+      duration: Lengte
+      reason: Reden
+      bannedBy: Verbannen door
+      actions: Acties
+      unban: Ongedaan maken
+      noReason: Geen reden opgegeven.
+    config:
+      save: Opslaan
+      saved: Opgeslagen
+      array:
+        append: Regel Toevoegen
