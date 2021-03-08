@@ -9,7 +9,8 @@ import AccordionActions from '@material-ui/core/AccordionActions';
 import LoadingButton from '@material-ui/lab/LoadingButton';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import CheckIcon from '@material-ui/icons/Check';
-import SchemaForm from '../SchemaForm'; // eslint-disable-line
+import WarningIcon from '@material-ui/icons/Warning';
+import SchemaForm from '../SchemaForm';
 
 const {
   useCallback,
@@ -24,10 +25,12 @@ function Section({
   const { t } = useTranslator();
   const [value, setValue] = useState(defaultValue);
   const [busy, setBusy] = useState(false);
+  const [edited, setEdited] = useState(false);
   const [done, setDone] = useState(false);
 
   const handleChange = useCallback((newValue) => {
     setValue(newValue);
+    setEdited(true);
     setDone(false);
   }, []);
 
@@ -37,17 +40,27 @@ function Section({
     setBusy(true);
     onSave(value).finally(() => {
       setBusy(false);
+      setEdited(false);
       setDone(true);
     });
   }, [value, onSave]);
 
   return (
     <Accordion>
-      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-        <div>
+      <AccordionSummary
+        className="ServerConfigGroupHeader"
+        expandIcon={<ExpandMoreIcon />}
+      >
+        <div className="ServerConfigGroupHeader-contents">
           <Typography>{schema.title}</Typography>
           <Typography color="textSecondary">{schema.description}</Typography>
         </div>
+        {edited ? (
+          <div className="ServerConfigGroupHeader-saveWarning">
+            <WarningIcon sx={{ marginRight: 1 }} />
+            {t('admin.config.unsavedChanges')}
+          </div>
+        ) : null}
       </AccordionSummary>
       <AccordionDetails>
         <SchemaForm
@@ -62,7 +75,7 @@ function Section({
           color="primary"
           variant="contained"
           pending={busy}
-          disabled={done}
+          disabled={!edited}
           startIcon={done ? <CheckIcon /> : null}
           onClick={handleSubmit}
         >

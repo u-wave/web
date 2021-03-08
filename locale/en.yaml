@@ -234,6 +234,7 @@ uwave:
     config:
       save: Save
       saved: Saved
+      unsavedChanges: Unsaved changes
       array:
         append: Add
 
