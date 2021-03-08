@@ -3,6 +3,8 @@ name: Deploy demo
 on:
   push:
     branches: [default]
+  pull_request:
+    types: [opened, synchronize]
 
 env:
   NODE_OPTIONS: '--unhandled-rejections=strict'
