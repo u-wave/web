@@ -1,10 +1,19 @@
+:root {
+  --tab-text-color: #fff;
+}
+
 .SidePanel-indicator {
-  background-color: #fff;
+  background-color: var(--tab-text-color);
 }
 
 .SidePanel-tab {
+  color: var(--tab-text-color);
   height: var(--header-height);
   min-width: 0;
+
+  &.Mui-selected {
+    color: var(--tab-text-color);
+  }
 }
 
 .SidePanel-tabLabel {

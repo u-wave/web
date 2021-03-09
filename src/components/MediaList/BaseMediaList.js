@@ -42,7 +42,15 @@ function BaseMediaList({
 }) {
   const lastMediaRef = useRef(media);
   const [selection, setSelection] = useState(() => itemSelection(media));
+  const inFlightPageRequests = useRef({});
   const direction = useDirection();
+
+  const itemKey = useCallback((index) => {
+    if (media[index]) {
+      return media[index]._id;
+    }
+    return `unloaded_${index}`;
+  }, [media]);
 
   useEffect(() => {
     const lastMedia = lastMediaRef.current;
@@ -71,7 +79,6 @@ function BaseMediaList({
     if (!media[index]) {
       return (
         <LoadingRow
-          key={index}
           className="MediaList-row"
           style={style}
           selected={selected}
@@ -81,7 +88,6 @@ function BaseMediaList({
 
     return (
       <RowComponent
-        key={media[index] ? media[index]._id : index}
         {...rowProps}
         style={style}
         className="MediaList-row"
@@ -103,6 +109,7 @@ function BaseMediaList({
     <FixedSizeList
       itemCount={size || mediaLength}
       itemSize={56}
+      itemKey={itemKey}
       height={height}
       onItemsRendered={onItemsRendered}
       ref={ref}
@@ -120,7 +127,18 @@ function BaseMediaList({
     const isItemLoaded = (index) => media[index] != null;
     const loadMoreItems = (start) => {
       const page = Math.floor(start / 50);
-      onRequestPage(page);
+      if (inFlightPageRequests.current[page]) return Promise.resolve(null);
+      inFlightPageRequests.current[page] = 1;
+
+      return onRequestPage(page).finally(() => {
+        // Without the timeout we can still get duplicate requests.
+        // That is *probably* because a rerender is triggered by some
+        // redux action on request completion, just *before* the new
+        // playlist items are actually stored in state.
+        setTimeout(() => {
+          delete inFlightPageRequests.current[page];
+        }, 200);
+      });
     };
 
     const inner = ({ onItemsRendered, ref }) => makeList({ onItemsRendered, ref, height });

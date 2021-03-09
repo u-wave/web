@@ -17,7 +17,7 @@ function ModRow({ style, ...props }) {
 
   const [insertAbove, setInsertAbove] = useState(false);
   const refRow = useRef(null);
-  const [{ isOver }, connectDropTarget] = useDrop({
+  const [{ isOver }, connectDropTarget] = useDrop(() => ({
     accept: WAITLIST_USER,
     hover(item, monitor) {
       setInsertAbove(isDraggingNearTopOfRow(monitor, refRow.current));
@@ -31,7 +31,7 @@ function ModRow({ style, ...props }) {
     collect(monitor) {
       return { isOver: monitor.isOver() };
     },
-  });
+  }), [position]);
 
   useEffect(() => {
     connectDropTarget(refRow.current);
