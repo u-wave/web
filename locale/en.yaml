@@ -113,6 +113,7 @@ uwave:
       title: Import
     search:
       action: Search
+      placeholder: Search query or URL
       results: "Search: {{query}}"
       noResults: No results found
       noResultsSub: Perhaps try another query?

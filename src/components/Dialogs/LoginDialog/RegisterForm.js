@@ -130,42 +130,54 @@ class RegisterForm extends React.Component {
           </>
         )}
         <FormGroup>
+          <label className="FormGroup-label" htmlFor="register-username">
+            {t('login.username')}
+          </label>
           <TextField
             ref={this.refUsername}
+            id="register-username"
             className="RegisterForm-field"
             autoComplete="nickname"
-            placeholder={t('login.username')}
             icon={<UserIcon htmlColor="#9f9d9e" />}
             autoFocus
           />
         </FormGroup>
         <FormGroup>
+          <label className="FormGroup-label" htmlFor="register-email">
+            {t('login.email')}
+          </label>
           <TextField
             ref={this.refEmail}
+            id="register-email"
             className="RegisterForm-field"
             type="email"
             autoComplete="email"
-            placeholder={t('login.email')}
             icon={<EmailIcon htmlColor="#9f9d9e" />}
           />
         </FormGroup>
         <FormGroup>
+          <label className="FormGroup-label" htmlFor="register-password">
+            {t('login.password')}
+          </label>
           <TextField
             ref={this.refPassword}
+            id="register-password"
             className="RegisterForm-field"
             type="password"
             autoComplete="new-password"
-            placeholder={t('login.password')}
             icon={<PasswordIcon htmlColor="#9f9d9e" />}
           />
         </FormGroup>
         <FormGroup>
+          <label className="FormGroup-label" htmlFor="register-confirm">
+            {t('login.passwordConfirmation')}
+          </label>
           <TextField
             ref={this.refPasswordConfirmation}
+            id="register-confirm"
             className="RegisterForm-field"
             type="password"
             autoComplete="new-password"
-            placeholder={t('login.passwordConfirmation')}
             icon={<PasswordIcon htmlColor="#9f9d9e" />}
           />
         </FormGroup>
