@@ -1,7 +1,7 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import {
-  resetPassword, login, register, finishSocialLogin,
+  resetPassword, login, register, finishSocialLogin, registerCompleteError,
 } from '../actions/LoginActionCreators';
 import { openResetPasswordDialog, closeLoginDialog } from '../actions/DialogActionCreators';
 import { loginDialogSelector } from '../selectors/dialogSelectors';
@@ -14,6 +14,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   onRegister: register,
   onSocialFinish: finishSocialLogin,
   onCloseDialog: closeLoginDialog,
+  onRegisterError: registerCompleteError,
 }, dispatch);
 
 export default connect(loginDialogSelector, mapDispatchToProps)(LoginDialog);
