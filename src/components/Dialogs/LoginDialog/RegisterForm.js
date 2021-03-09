@@ -169,12 +169,15 @@ class RegisterForm extends React.Component {
           />
         </FormGroup>
         <FormGroup>
+          <label className="FormGroup-label" htmlFor="register-confirm">
+            {t('login.passwordConfirmation')}
+          </label>
           <TextField
             ref={this.refPasswordConfirmation}
+            id="register-confirm"
             className="RegisterForm-field"
             type="password"
             autoComplete="new-password"
-            placeholder={t('login.passwordConfirmation')}
             icon={<PasswordIcon htmlColor="#9f9d9e" />}
           />
         </FormGroup>
