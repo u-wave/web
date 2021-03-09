@@ -14,7 +14,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   onRegister: register,
   onSocialFinish: finishSocialLogin,
   onCloseDialog: closeLoginDialog,
-  displayRegisterError: registerCompleteError,
+  onRegisterError: registerCompleteError,
 }, dispatch);
 
 export default connect(loginDialogSelector, mapDispatchToProps)(LoginDialog);

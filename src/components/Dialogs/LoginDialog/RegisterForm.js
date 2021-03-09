@@ -27,7 +27,7 @@ class RegisterForm extends React.Component {
     error: PropTypes.object,
 
     onRegister: PropTypes.func,
-    displayRegisterError: PropTypes.func,
+    onRegisterError: PropTypes.func,
   };
 
   constructor(props) {
@@ -41,13 +41,13 @@ class RegisterForm extends React.Component {
   }
 
   handleSubmit = (event) => {
-    const { t, onRegister, displayRegisterError } = this.props;
+    const { t, onRegister, onRegisterError } = this.props;
     const { captchaResponse } = this.state;
 
     event.preventDefault();
 
     if (this.password.value !== this.passwordConfirmation.value) {
-      displayRegisterError(new Error(t('login.passwordMismatch')));
+      onRegisterError(new Error(t('login.passwordMismatch')));
       return;
     }
 
