@@ -45,7 +45,8 @@ function SearchBar({
           ref={inputRef}
           className="SearchBar-input"
           type="text"
-          placeholder={focused ? '' : t('playlists.search.action')}
+          aria-label={t('playlists.search.action')}
+          placeholder={focused ? '' : t('playlists.search.placeholder')}
           onFocus={handleFocus}
           onBlur={handleBlur}
           onKeyDown={handleKeyDown}
