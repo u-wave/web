@@ -14,3 +14,8 @@
 .FormGroup--noSpacing {
   margin: 0;
 }
+
+.FormGroup-label {
+  margin-bottom: 8px;
+  display: block;
+}
