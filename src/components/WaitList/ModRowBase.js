@@ -25,8 +25,11 @@ function ModRowBase({
   onMoveUser,
   onRemoveUser,
 }) {
-  const [{ isDragging }, connectDragSource, connectDragPreview] = useDrag(() => ({
-    item: { type: WAITLIST_USER, user },
+  const [{ isDragging }, connectDragSource, connectDragPreview] = useDrag({
+    type: WAITLIST_USER,
+    item() {
+      return { user };
+    },
     end(item, monitor) {
       const result = monitor.getDropResult();
       if (item.user && result) {
@@ -36,7 +39,7 @@ function ModRowBase({
     collect(monitor) {
       return { isDragging: monitor.isDragging() };
     },
-  }), [user]);
+  });
   const userCard = useUserCard(user);
   const onOpenCard = useCallback((event) => {
     event.preventDefault();
