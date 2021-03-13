@@ -109,7 +109,7 @@ function HistoryRow({
       <div className="HistoryRow-time" dateTime={timestamp}>
         <TimeAgo timestamp={timestamp} />
       </div>
-      <div className="HistoryRow-icon">
+      <div className="MediaListRow-icon HistoryRow-icon">
         {sourceIcon}
       </div>
 

@@ -1,6 +1,5 @@
 :root {
   --history-list-thumb-width: 85px;
-  --history-list-icon-width: 50px;
   --history-list-user-width: 130px;
   --history-list-time-width: 170px;
   --history-list-votes-width: 250px;
@@ -10,16 +9,16 @@
       var(--history-list-time-width) +
       var(--history-list-user-width) +
       var(--history-list-votes-width) +
-      var(--history-list-icon-width)
+      var(--media-list-row-icon-width)
     );
 }
 
 .HistoryRow-song {
   font-size: 1em;
   height: 100%;
-  float: left;
+  float: inline-start;
   width: calc(100% - var(--media-list-spacing) - var(--history-list-not-song-width));
-  margin-right: var(--media-list-spacing);
+  margin-inline-end: var(--media-list-spacing);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -27,20 +26,21 @@
 
 .HistoryRow-votes {
   height: 100%;
-  float: left;
+  float: inline-start;
   width: var(--history-list-votes-width);
 }
 
 .HistoryRow-icon {
   height: 100%;
-  float: left;
+  width: var(--media-list-row-icon-width);
+  float: inline-start;
   display: flex;
   align-items: center;
 }
 
 .HistoryRow-user {
   height: 100%;
-  float: left;
+  float: inline-start;
   width: var(--history-list-user-width);
   text-align: right;
   overflow: hidden;
@@ -50,8 +50,8 @@
 
 .HistoryRow-time {
   height: 100%;
-  float: left;
-  text-align: right;
+  float: inline-start;
+  text-align: end;
   padding-right: 20px;
   color: var(--muted-text-color);
   width: var(--history-list-time-width);
