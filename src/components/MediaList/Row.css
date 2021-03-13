@@ -1,6 +1,6 @@
 :root {
   --media-list-row-height: 56px;
-  --media-list-row-icon-offset: 8px;
+  --media-list-row-icon-width: 50px;
   --unpadded-media-list-row-height: calc(var(--media-list-row-height) - 14px);
 }
 
@@ -41,7 +41,7 @@
   height: 100%;
   padding: 7px 0;
   line-height: var(--unpadded-media-list-row-height);
-  width: calc(100% - var(--media-list-spacing) - var(--media-list-thumb-width) - var(--media-list-row-icon-offset) - var(--media-list-duration-width));
+  width: calc(100% - var(--media-list-thumb-width) - var(--media-list-row-icon-width) - var(--media-list-duration-width));
   float: inline-start;
 }
 
@@ -91,7 +91,8 @@
 
 .MediaListRow-icon {
   height: 100%;
-  float: left;
+  width: var(--media-list-row-icon-width);
+  float: inline-start;
   display: flex;
   align-items: center;
 }
@@ -105,8 +106,4 @@
 
 .MediaListRow:hover .MediaListRow-actions {
   display: block;
-}
-
-.MediaListRow:hover .MediaListRow-icon {
-  display: none;
 }
