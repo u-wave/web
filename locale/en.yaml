@@ -234,6 +234,12 @@ uwave:
       actions: Actions
       unban: Unban
       noReason: No reason given.
+    config:
+      save: Save
+      saved: Saved
+      unsavedChanges: Unsaved changes
+      array:
+        append: Add
 
   youtube:
     name: YouTube

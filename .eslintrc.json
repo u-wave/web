@@ -27,6 +27,7 @@
       "Object.is",
       "Object.values",
       "Promise",
+      "AbortController",
       "fetch",
       "URL",
       "CSS.escape"

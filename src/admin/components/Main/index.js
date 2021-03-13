@@ -1,12 +1,12 @@
 import React from 'react';
+import Alert from '@material-ui/core/Alert';
 import Motd from '../../containers/Motd';
 
 const Main = () => (
   <div>
-    <p>
-      Note that the admin interface is not yet done and most things do not work.
-      You can, however, configure the message of the day! :P
-    </p>
+    <Alert severity="warning">
+      The admin interface is not yet done and most things do not work.
+    </Alert>
     <Motd />
   </div>
 );

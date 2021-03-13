@@ -1,0 +1,7 @@
+.ArrayFieldElement {
+  display: flex;
+}
+
+.ArrayFieldElement-field {
+  flex-grow: 1;
+}
