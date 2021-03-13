@@ -38,10 +38,13 @@ function Section({
     event.preventDefault();
 
     setBusy(true);
-    onSave(value).finally(() => {
-      setBusy(false);
-      setEdited(false);
+    onSave(value).then(() => {
       setDone(true);
+      setEdited(false);
+      setBusy(false);
+    }, () => {
+      // Error is reported in the snackbar, enable the save button again
+      setBusy(false);
     });
   }, [value, onSave]);
 
