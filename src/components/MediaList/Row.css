@@ -89,10 +89,9 @@
   width: var(--media-list-duration-width);
 }
 
-
 .MediaListRow-icon {
   height: 100%;
-  float: left;  
+  float: left;
   display: flex;
   align-items: center;
 }
@@ -111,4 +110,3 @@
 .MediaListRow:hover .MediaListRow-icon {
   display: none;
 }
-

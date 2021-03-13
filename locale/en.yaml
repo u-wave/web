@@ -113,6 +113,7 @@ uwave:
       title: Import
     search:
       action: Search
+      placeholder: Search query or URL
       results: "Search: {{query}}"
       noResults: No results found
       noResultsSub: Perhaps try another query?
@@ -205,6 +206,8 @@ uwave:
     username: Username
     email: E-mail
     password: Password
+    passwordConfirmation: Confirm Password
+    passwordMismatch: 'Your password does not match your confirmation.'
     forgotPassword: Forgot Password?
     requestPasswordReset: Reset Password
     passwordResetSent: "We've sent an email to that address with password reset instructions."

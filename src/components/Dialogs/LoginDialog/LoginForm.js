@@ -77,24 +77,30 @@ class LoginForm extends React.Component {
           </>
         )}
         <FormGroup>
+          <label className="FormGroup-label" htmlFor="login-email">
+            {t('login.email')}
+          </label>
           <TextField
             ref={this.refEmail}
+            id="login-email"
             className="LoginForm-field"
             type="email"
             autoComplete="email"
-            placeholder={t('login.email')}
             icon={<EmailIcon htmlColor="#9f9d9e" />}
             autoFocus
           />
         </FormGroup>
 
         <FormGroup>
+          <label className="FormGroup-label" htmlFor="login-password">
+            {t('login.password')}
+          </label>
           <TextField
             ref={this.refPassword}
+            id="login-password"
             className="LoginForm-field"
             type="password"
             autoComplete="current-password"
-            placeholder={t('login.password')}
             icon={<PasswordIcon htmlColor="#9f9d9e" />}
           />
         </FormGroup>
