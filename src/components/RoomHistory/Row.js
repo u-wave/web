@@ -33,12 +33,12 @@ function HistoryRow({
   } = historyEntry;
 
   const [showActions, setShowActions] = useState(false);
-  const [, drag, connectDragPreview] = useDrag(() => ({
-    item: {
-      type: MEDIA,
+  const [, drag, connectDragPreview] = useDrag({
+    type: MEDIA,
+    item: () => ({
       media: inSelection(selection, media) ? selection : [media],
-    },
-  }), [selection, media]);
+    }),
+  });
 
   useEffect(() => {
     connectDragPreview(getEmptyImage());
