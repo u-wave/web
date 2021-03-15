@@ -37,3 +37,7 @@
     visibility: visible;
   }
 }
+
+.pointer-events-off {
+  pointer-events: none;
+}
