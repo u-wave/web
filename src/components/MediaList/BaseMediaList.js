@@ -64,14 +64,21 @@ function BaseMediaList({
 
   const selectItem = useCallback((index, event) => {
     event.preventDefault();
+    const eShift = event.shiftKey;
+    const eCtrl = event.ctrlKey;
+    const eMeta = event.metaKey;
 
-    if (event.shiftKey) {
-      setSelection(selection.selectRange(index));
-    } else if (event.ctrlKey) {
-      setSelection(selection.selectToggle(index));
-    } else {
-      setSelection(selection.select(index));
-    }
+    setTimeout(() => {
+      if (eShift) {
+        setSelection(selection.selectRange(index));
+      } else if (eCtrl) {
+        setSelection(selection.selectToggle(index));
+      } else if (eMeta) {
+        setSelection(selection.selectToggle(index)); // for macOS command key
+      } else {
+        setSelection(selection.select(index));
+      }
+    }, 100);
   }, [selection]);
 
   const renderRow = useCallback(({ index, style }) => {
