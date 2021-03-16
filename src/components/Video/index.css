@@ -38,6 +38,6 @@
   }
 }
 
-.pointer-events-off {
+.Video--nonInteractive {
   pointer-events: none;
 }

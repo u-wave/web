@@ -105,7 +105,7 @@ function Video(props) {
   return (
     <div
       ref={container}
-      className={cx('Video', `Video--${media.sourceType}`, `Video--${size}`, { 'pointer-events-off': activeOverlay })}
+      className={cx('Video', `Video--${media.sourceType}`, `Video--${size}`, { 'Video--nonInteractive': activeOverlay })}
     >
       <VideoBackdrop url={media.thumbnail} />
       <Player
