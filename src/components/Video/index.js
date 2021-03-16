@@ -1,5 +1,6 @@
 import cx from 'clsx';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import screenfull from 'screenfull';
 import { useMediaSources } from '../../context/MediaSourceContext';
@@ -38,6 +39,7 @@ function Video(props) {
 
   const { getMediaSource } = useMediaSources();
   const [shouldShowToolbar, setShowToolbar] = useState(false);
+  const activeOverlay = useSelector((state) => state.activeOverlay);
   const container = useRef(null);
   const timer = useRef(null);
 
@@ -103,7 +105,7 @@ function Video(props) {
   return (
     <div
       ref={container}
-      className={cx('Video', `Video--${media.sourceType}`, `Video--${size}`)}
+      className={cx('Video', `Video--${media.sourceType}`, `Video--${size}`, { 'Video--nonInteractive': activeOverlay })}
     >
       <VideoBackdrop url={media.thumbnail} />
       <Player

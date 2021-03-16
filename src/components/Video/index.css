@@ -37,3 +37,7 @@
     visibility: visible;
   }
 }
+
+.Video--nonInteractive {
+  pointer-events: none;
+}
