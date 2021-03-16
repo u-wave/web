@@ -41,6 +41,7 @@ const getAnalysisConfig = require('./tasks/webpack/analyze');
 function unused() {}
 
 function getConfig(env, {
+  profiling = false,
   watch = false,
   demo = false,
   analyze,
@@ -265,6 +266,10 @@ function getConfig(env, {
       minimizer: [
         new TerserPlugin({
           terserOptions: {
+            mangle: profiling ? {
+              keep_fnames: true,
+              keep_classnames: true,
+            } : {},
             compress: {
               passes: 2,
             },
@@ -364,6 +369,16 @@ function getConfig(env, {
   if (watch) {
     // The `hmrConfigPatch` comes first so the hmr entry points are ran first.
     activeAppConfig = merge(hmrConfigPatch, activeAppConfig);
+  }
+  if (profiling) {
+    activeAppConfig = merge(appConfig, {
+      resolve: {
+        alias: {
+          'react-dom': 'react-dom/profiling',
+          'scheduler/tracing': 'scheduler/tracing-profiling',
+        },
+      },
+    });
   }
   if (env.production) {
     activeAppConfig = merge(activeAppConfig, productionConfigPatch);
