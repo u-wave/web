@@ -8,7 +8,7 @@ function UserRole({ roleName }) {
   const { t } = useTranslator();
 
   return (
-    <RoleColor component="div" className="UserRole" role={roleName}>
+    <RoleColor component="div" className="UserRole" username={roleName}>
       {t(`roles.${roleName}`, { defaultValue: upperCaseFirst(roleName) })}
     </RoleColor>
   );

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import RoleColor from '../RoleColor';
 
 const Username = ({ className, user }) => (
-  <RoleColor className={cx('Username', className)} roles={user.roles}>
+  <RoleColor className={cx('Username', className)} username={user.username}>
     {user.username}
   </RoleColor>
 );

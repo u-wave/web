@@ -1,3 +1,6 @@
+  /* eslint-disable no-bitwise */
+  /* eslint-disable no-plusplus */
+  /* eslint-disable no-const-assign */
 import { createSelector } from 'reselect';
 
 export const configSelector = (state) => state.config;
@@ -62,11 +65,11 @@ export const roleSelector = memoizePermanently((roleName) => createSelector(
   (roles) => roles[roleName],
 ));
 
-// TODO make this configurable.
-export const roleColorsSelector = () => ({
-  admin: '#ff3b74',
-  manager: '#05daa5',
-  moderator: '#00b3dc',
-  special: '#fc911d',
-  default: '',
-});
+// 😎
+export const roleColorsSelector = (str) => {
+  const hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return `hsl('${Math.abs(hash % 360)},50%,50%)`;
+};
