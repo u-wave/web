@@ -4,7 +4,9 @@ import PropTypes from 'prop-types';
 import AddToPlaylistAction from '../../MediaList/AddToPlaylistAction';
 import PreviewMediaAction from '../../MediaList/PreviewMediaAction';
 
-const dontBubble = (event) => event.stopPropagation();
+function dontBubble(event) {
+  event.stopPropagation();
+}
 
 function SearchResultActions({ className, media }) {
   return (

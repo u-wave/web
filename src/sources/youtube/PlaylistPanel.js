@@ -4,21 +4,12 @@ import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import ImportIcon from '@material-ui/icons/PlaylistAdd';
 import MediaList from '../../components/MediaList';
-import AddToPlaylistAction from '../../components/MediaList/Actions/AddToPlaylist';
 import ImportPanelHeader from '../../components/PlaylistManager/Import/ImportPanelHeader';
-
-const selectionOrOne = (media, selection) => {
-  if (selection.isSelected(media)) {
-    return selection.get();
-  }
-  return [media];
-};
 
 function YouTubeImportPlaylistPanel({
   importingPlaylist,
   importingPlaylistItems,
   onImportPlaylist,
-  onOpenAddMediaMenu,
   onClosePanel,
 }) {
   const handleImportFull = () => onImportPlaylist(
@@ -42,14 +33,6 @@ function YouTubeImportPlaylistPanel({
       <MediaList
         className="ImportPanel-body"
         media={importingPlaylistItems}
-        makeActions={(media, selection) => (
-          <>
-            <AddToPlaylistAction
-              key="add"
-              onAdd={(position) => onOpenAddMediaMenu(selectionOrOne(media, selection), position)}
-            />
-          </>
-        )}
       />
     </div>
   );
@@ -62,7 +45,6 @@ YouTubeImportPlaylistPanel.propTypes = {
   }).isRequired,
   importingPlaylistItems: PropTypes.arrayOf(PropTypes.object).isRequired,
   onImportPlaylist: PropTypes.func.isRequired,
-  onOpenAddMediaMenu: PropTypes.func.isRequired,
   onClosePanel: PropTypes.func.isRequired,
 };
 
