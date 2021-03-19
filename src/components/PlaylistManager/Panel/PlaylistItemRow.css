@@ -1,5 +1,18 @@
-.PlaylistItemRow-drop-indicator {
+.PlaylistItemRow--dropAbove:before,
+.PlaylistItemRow--dropBelow:after {
+  content: ' ';
+  display: block;
   background: white;
   height: 3px;
   width: 100%;
+}
+
+.PlaylistItemRow--dropAbove:before {
+  margin-top: -1px;
+  margin-bottom: -2px;
+}
+
+.PlaylistItemRow--dropBelow:after {
+  margin-top: calc(var(--playlist-row-height) - 1px);
+  margin-bottom: -2px;
 }

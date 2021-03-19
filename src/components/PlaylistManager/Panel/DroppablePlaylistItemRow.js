@@ -1,3 +1,4 @@
+import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useDrop } from 'react-dnd';
@@ -6,7 +7,6 @@ import isDraggingNearTopOfRow from '../../../utils/isDraggingNearTopOfRow';
 import PlaylistItemRow from './PlaylistItemRow';
 
 const {
-  useEffect,
   useRef,
   useState,
 } = React;
@@ -19,8 +19,8 @@ function DroppablePlaylistItemRow({
   onMoveMedia,
 }) {
   const [insertingAbove, setInsertAbove] = useState(false);
-  const refWrapper = useRef(null);
-  const [{ isOver }, connectDropTarget] = useDrop(() => ({
+  const droppableRef = useRef(null);
+  const [{ isOver }, drop] = useDrop(() => ({
     accept: MEDIA,
     drop(item, monitor) {
       const { media: droppedItems } = monitor.getItem();
@@ -30,7 +30,7 @@ function DroppablePlaylistItemRow({
         if (droppedItems.some((playlistItem) => playlistItem._id === media._id)) {
           return;
         }
-        const insertBefore = isDraggingNearTopOfRow(monitor, refWrapper.current);
+        const insertBefore = isDraggingNearTopOfRow(monitor, droppableRef.current);
         onMoveMedia(
           droppedItems,
           insertBefore ? { before: media._id } : { after: media._id },
@@ -38,32 +38,26 @@ function DroppablePlaylistItemRow({
       }
     },
     hover(item, monitor) {
-      setInsertAbove(isDraggingNearTopOfRow(monitor, refWrapper.current));
+      setInsertAbove(isDraggingNearTopOfRow(monitor, droppableRef.current));
     },
     collect(monitor) {
       return { isOver: monitor.isOver() };
     },
   }), [media]);
 
-  useEffect(() => {
-    connectDropTarget(refWrapper.current);
-  }, [connectDropTarget]);
-
-  const dropIndicator = <div className="PlaylistItemRow-drop-indicator" />;
-
-  // Wrapper div to make sure that hovering the drop indicator
-  // does not change the hover state to a different element, which
-  // would cause thrashing.
+  drop(droppableRef);
   return (
-    <div className="PlaylistItemRow" style={style} ref={refWrapper}>
-      {isOver && insertingAbove && dropIndicator}
-      <PlaylistItemRow
-        index={index}
-        media={media}
-        onClick={onClick}
-      />
-      {isOver && !insertingAbove && dropIndicator}
-    </div>
+    <PlaylistItemRow
+      className={cx({
+        'PlaylistItemRow--dropAbove': isOver && insertingAbove,
+        'PlaylistItemRow--dropBelow': isOver && !insertingAbove,
+      })}
+      style={style}
+      index={index}
+      media={media}
+      onClick={onClick}
+      containerRef={droppableRef}
+    />
   );
 }
 

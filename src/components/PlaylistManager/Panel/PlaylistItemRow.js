@@ -1,3 +1,4 @@
+import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
 import MediaDuration from '../../MediaList/MediaDuration';
@@ -8,7 +9,9 @@ import MediaThumbnail from '../../MediaList/MediaThumbnail';
 import PlaylistItemActions from './PlaylistItemActions';
 
 function PlaylistItemRow({
+  className,
   style,
+  containerRef,
   index,
   media,
   onClick,
@@ -20,8 +23,9 @@ function PlaylistItemRow({
   // would cause thrashing.
   return (
     <MediaRowBase
-      className={loadingClass}
+      className={cx(className, loadingClass)}
       style={style}
+      containerRef={containerRef}
       media={media}
       onClick={onClick}
     >
@@ -54,8 +58,10 @@ function PlaylistItemRow({
 }
 
 PlaylistItemRow.propTypes = {
+  className: PropTypes.string,
   style: PropTypes.object, // from react-window
   index: PropTypes.number.isRequired,
+  containerRef: PropTypes.any,
   media: PropTypes.object.isRequired,
   onClick: PropTypes.func.isRequired,
 };

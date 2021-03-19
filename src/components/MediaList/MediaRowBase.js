@@ -9,6 +9,7 @@ import { useMediaListContext } from './BaseMediaList';
 const {
   useCallback,
   useEffect,
+  useRef,
 } = React;
 
 function MediaRowBase({
@@ -18,10 +19,14 @@ function MediaRowBase({
   media,
   onClick,
   children,
+  containerRef,
   ...props
 }) {
   const { selection } = useMediaListContext();
   const selected = selection.isSelected(media);
+
+  const localRef = useRef();
+  const ref = containerRef || localRef;
 
   const [, drag, connectDragPreview] = useDrag({
     type: dragType,
@@ -40,6 +45,7 @@ function MediaRowBase({
     }
   }, [onClick]);
 
+  drag(ref);
   return (
     <div
       role="checkbox"
@@ -50,7 +56,7 @@ function MediaRowBase({
       onKeyPress={handleKeyPress}
       onClick={onClick}
       {...props}
-      ref={drag}
+      ref={ref}
     >
       {children}
     </div>
@@ -64,6 +70,7 @@ MediaRowBase.propTypes = {
   media: PropTypes.object.isRequired,
   onClick: PropTypes.func,
   children: PropTypes.node.isRequired,
+  containerRef: PropTypes.any,
 };
 
 export default MediaRowBase;
