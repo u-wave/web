@@ -8,21 +8,12 @@ import MediaSourceIcon from './MediaSourceIcon';
 import MediaThumbnail from './MediaThumbnail';
 import MediaActions from './MediaActions';
 
-const {
-  useCallback,
-} = React;
-
 function MediaRow({
   className,
   media,
   style,
   onClick,
-  onOpenPreviewMediaDialog,
 }) {
-  const handleDoubleClick = useCallback(() => {
-    onOpenPreviewMediaDialog(media);
-  }, [onOpenPreviewMediaDialog, media]);
-
   const loadingClass = media.loading ? 'is-loading' : '';
 
   return (
@@ -30,7 +21,6 @@ function MediaRow({
       media={media}
       className={cx(className, loadingClass)}
       style={style}
-      onDoubleClick={handleDoubleClick}
       onClick={onClick}
     >
       {media.loading ? (
@@ -64,7 +54,6 @@ MediaRow.propTypes = {
   className: PropTypes.string,
   style: PropTypes.object, // from react-window
   media: PropTypes.object,
-  onOpenPreviewMediaDialog: PropTypes.func,
   onClick: PropTypes.func,
 };
 

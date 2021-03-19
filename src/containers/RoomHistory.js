@@ -1,20 +1,8 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-import { openPreviewMediaDialog } from '../actions/DialogActionCreators';
+import { useSelector } from 'react-redux';
 import { roomHistoryWithVotesSelector } from '../selectors/roomHistorySelectors';
 import Overlay from '../components/Overlay';
 import createLazyOverlay from '../components/LazyOverlay';
-
-const mapStateToProps = createStructuredSelector({
-  media: roomHistoryWithVotesSelector,
-});
-
-const mapDispatchToProps = {
-  onOpenPreviewMediaDialog: openPreviewMediaDialog,
-};
-
-const enhance = connect(mapStateToProps, mapDispatchToProps);
 
 function RoomHistoryOverlay(props) {
   return <Overlay {...props} direction="top" />;
@@ -26,4 +14,10 @@ const RoomHistory = createLazyOverlay({
   OverlayComponent: RoomHistoryOverlay,
 });
 
-export default enhance(RoomHistory);
+function RoomHistoryContainer(props) {
+  const media = useSelector(roomHistoryWithVotesSelector);
+
+  return <RoomHistory {...props} media={media} />;
+}
+
+export default RoomHistoryContainer;

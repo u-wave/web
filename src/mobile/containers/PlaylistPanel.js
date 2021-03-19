@@ -1,20 +1,14 @@
 import { bindActionCreators } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
-
 import {
   selectedPlaylistSelector,
   filteredSelectedPlaylistItemsSelector,
   isSelectedPlaylistLoadingSelector,
   isFilteredSelector,
 } from '../../selectors/playlistSelectors';
-
-import { openPreviewMediaDialog } from '../../actions/DialogActionCreators';
 import {
-  addMediaMenu,
-  editMedia,
   moveMedia,
-  removeMedia,
   filterPlaylistItems,
   renamePlaylist,
   deletePlaylist,
@@ -24,7 +18,6 @@ import {
   loadPlaylist,
   loadFilteredPlaylistItems,
 } from '../../actions/PlaylistActionCreators';
-
 import PlaylistPanel from '../components/PlaylistManager/PlaylistPanel';
 
 const mapStateToProps = createStructuredSelector({
@@ -34,27 +27,8 @@ const mapStateToProps = createStructuredSelector({
   isFiltered: isFilteredSelector,
 });
 
-const selectionOrOne = (media, selection) => {
-  if (selection.isSelected(media)) {
-    return selection.get();
-  }
-  return [media];
-};
-
-const onOpenAddMediaMenu = (position, media, selection) => (
-  addMediaMenu(selectionOrOne(media, selection), position)
-);
-const onRemoveFromPlaylist = (playlist) => (media, selection) => (
-  removeMedia(playlist, selectionOrOne(media, selection))
-);
 const onMoveMedia = (playlist) => (media, opts) => (
   moveMedia(playlist, media, opts)
-);
-const onMoveToFirst = (playlist) => (media, selection) => (
-  moveMedia(playlist, selectionOrOne(media, selection), { at: 'start' })
-);
-const onEditMedia = (playlist) => (media) => (
-  editMedia(playlist, media)
 );
 const onLoadPlaylistPage = ({ isFiltered, playlist }) => (page) => (
   isFiltered ? loadFilteredPlaylistItems(playlist._id, page)
@@ -80,13 +54,7 @@ const mergeProps = (state, { dispatch }, props) => ({
     onRenamePlaylist: renamePlaylist.bind(null, state.playlist._id),
     onDeletePlaylist: deletePlaylist.bind(null, state.playlist._id),
     onNotDeletable: cannotDeleteActivePlaylist,
-
-    onOpenAddMediaMenu,
-    onOpenPreviewMediaDialog: openPreviewMediaDialog,
-    onMoveToFirst: onMoveToFirst(state.playlist._id),
     onMoveMedia: onMoveMedia(state.playlist._id),
-    onEditMedia: onEditMedia(state.playlist._id),
-    onRemoveFromPlaylist: onRemoveFromPlaylist(state.playlist._id),
     onLoadPlaylistPage: onLoadPlaylistPage(state),
     onFilterPlaylistItems: filterPlaylistItems.bind(null, state.playlist._id),
   }, dispatch),

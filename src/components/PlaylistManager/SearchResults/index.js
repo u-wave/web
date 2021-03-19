@@ -12,19 +12,13 @@ function SearchResultsPanel({
   query,
   loadingState,
   results,
-  onOpenAddMediaMenu,
-  onOpenPreviewMediaDialog,
 }) {
   const { t } = useTranslator();
 
   let list;
   if (loadingState === LOADED) {
     list = results.length > 0 ? (
-      <SearchResultsList
-        results={results}
-        onOpenPreviewMediaDialog={onOpenPreviewMediaDialog}
-        onOpenAddMediaMenu={onOpenAddMediaMenu}
-      />
+      <SearchResultsList results={results} />
     ) : (
       <NoSearchResults />
     );
@@ -49,8 +43,6 @@ SearchResultsPanel.propTypes = {
   query: PropTypes.string.isRequired,
   loadingState: PropTypes.oneOf([IDLE, LOADING, LOADED]).isRequired,
   results: PropTypes.arrayOf(PropTypes.object),
-  onOpenAddMediaMenu: PropTypes.func.isRequired,
-  onOpenPreviewMediaDialog: PropTypes.func.isRequired,
 };
 
 export default SearchResultsPanel;

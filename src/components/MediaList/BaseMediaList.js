@@ -37,11 +37,10 @@ function BaseMediaList({
   className,
   media,
   listComponent: ListComponent,
-  rowComponent: RowComponent,
+  rowComponent,
   rowProps = {},
   contextProps,
   onRequestPage,
-  onOpenPreviewMediaDialog,
   // The `size` property is only necessary for lazy loading.
   size = null,
 }) {
@@ -97,6 +96,10 @@ function BaseMediaList({
       );
     }
 
+    // Rename it here instead of in the parameter list,
+    // else the react-hooks/exhaustive-deps lint rule does not see
+    // that `RowComponent` is used in this effect.
+    const RowComponent = rowComponent;
     return (
       <RowComponent
         {...rowProps}
@@ -107,13 +110,9 @@ function BaseMediaList({
         selected={selected}
         selection={selection.get()}
         onClick={(event) => selectItem(index, event)}
-        onOpenPreviewMediaDialog={onOpenPreviewMediaDialog}
       />
     );
-    // `RowComponent` should really be in this list but then react-hooks/exhaustive-deps complains.
-    // We don't change it on the fly ever I think and shouldn't, but if we ever did have a reason
-    // to do it, this might break :)
-  }, [selection, media, rowProps, onOpenPreviewMediaDialog, selectItem]);
+  }, [selection, media, rowComponent, rowProps, selectItem]);
 
   const mediaLength = media.length;
   const innerList = ({ height, onItemsRendered, ref }) => (
@@ -207,8 +206,6 @@ BaseMediaList.propTypes = {
   rowComponent: PropTypes.func.isRequired,
   rowProps: PropTypes.object,
   contextProps: PropTypes.object,
-
-  onOpenPreviewMediaDialog: PropTypes.func,
 };
 
 export default BaseMediaList;
