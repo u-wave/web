@@ -41,6 +41,7 @@ function BaseMediaList({
   listComponent: ListComponent,
   rowComponent: RowComponent,
   rowProps = {},
+  contextProps,
   onRequestPage,
   onOpenPreviewMediaDialog,
   // The `size` property is only necessary for lazy loading.
@@ -55,7 +56,8 @@ function BaseMediaList({
   const context = useMemo(() => ({
     media,
     selection,
-  }), [media, selection]);
+    ...contextProps,
+  }), [media, selection, contextProps]);
 
   const itemKey = useCallback((index) => {
     if (media[index]) {
@@ -103,6 +105,7 @@ function BaseMediaList({
         {...rowProps}
         style={style}
         className="MediaList-row"
+        index={index}
         media={media[index]}
         selected={selected}
         selection={selection.get()}
@@ -207,6 +210,7 @@ BaseMediaList.propTypes = {
   ]).isRequired,
   rowComponent: PropTypes.func.isRequired,
   rowProps: PropTypes.object,
+  contextProps: PropTypes.object,
 
   onOpenPreviewMediaDialog: PropTypes.func,
   makeActions: PropTypes.func,

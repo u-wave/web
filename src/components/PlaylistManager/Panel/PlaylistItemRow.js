@@ -3,7 +3,12 @@ import PropTypes from 'prop-types';
 import { useDrop } from 'react-dnd';
 import { MEDIA } from '../../../constants/DDItemTypes';
 import isDraggingNearTopOfRow from '../../../utils/isDraggingNearTopOfRow';
-import MediaRow from '../../MediaList/Row';
+import MediaDuration from '../../MediaList/MediaDuration';
+import MediaLoadingIndicator from '../../MediaList/MediaLoadingIndicator';
+import MediaRowBase from '../../MediaList/MediaRowBase';
+import MediaSourceIcon from '../../MediaList/MediaSourceIcon';
+import MediaThumbnail from '../../MediaList/MediaThumbnail';
+import PlaylistItemActions from './PlaylistItemActions';
 
 const {
   useEffect,
@@ -12,7 +17,11 @@ const {
 } = React;
 
 function PlaylistItemRow({
-  onMoveMedia, style, media, ...props
+  style,
+  index,
+  media,
+  onClick,
+  onMoveMedia,
 }) {
   const [insertingAbove, setInsertAbove] = useState(false);
   const refWrapper = useRef(null);
@@ -43,9 +52,11 @@ function PlaylistItemRow({
 
   useEffect(() => {
     connectDropTarget(refWrapper.current);
-  });
+  }, [connectDropTarget]);
 
   const dropIndicator = <div className="PlaylistItemRow-drop-indicator" />;
+
+  const loadingClass = media.loading ? 'is-loading' : '';
 
   // Wrapper div to make sure that hovering the drop indicator
   // does not change the hover state to a different element, which
@@ -53,7 +64,36 @@ function PlaylistItemRow({
   return (
     <div className="PlaylistItemRow" style={style} ref={refWrapper}>
       {isOver && insertingAbove && dropIndicator}
-      <MediaRow {...props} media={media} />
+      <MediaRowBase
+        className={loadingClass}
+        media={media}
+        onClick={onClick}
+      >
+        {media.loading ? (
+          <MediaLoadingIndicator className="MediaListRow-loader" />
+        ) : (
+          <MediaThumbnail url={media.thumbnail} />
+        )}
+        <div className="MediaListRow-data">
+          <div className="MediaListRow-artist" title={media.artist}>
+            {media.artist}
+          </div>
+          <div className="MediaListRow-title" title={media.title}>
+            {media.title}
+          </div>
+        </div>
+        <div className="MediaListRow-duration">
+          <MediaDuration media={media} />
+        </div>
+        <div className="MediaListRow-icon">
+          <MediaSourceIcon sourceType={media.sourceType} />
+        </div>
+        <PlaylistItemActions
+          className="MediaListRow-actions"
+          index={index}
+          media={media}
+        />
+      </MediaRowBase>
       {isOver && !insertingAbove && dropIndicator}
     </div>
   );
@@ -61,7 +101,9 @@ function PlaylistItemRow({
 
 PlaylistItemRow.propTypes = {
   style: PropTypes.object, // from react-window
-  media: PropTypes.object,
+  index: PropTypes.number.isRequired,
+  media: PropTypes.object.isRequired,
+  onClick: PropTypes.func.isRequired,
   onMoveMedia: PropTypes.func.isRequired,
 };
 
