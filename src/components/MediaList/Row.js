@@ -6,19 +6,18 @@ import MediaDuration from './MediaDuration';
 import MediaLoadingIndicator from './MediaLoadingIndicator';
 import MediaSourceIcon from './MediaSourceIcon';
 import MediaThumbnail from './MediaThumbnail';
-import MediaActions from './Actions';
+import MediaActions from './MediaActions';
 
 const {
   useCallback,
 } = React;
 
-function Row({
+function MediaRow({
   className,
   media,
   style,
   onClick,
   onOpenPreviewMediaDialog,
-  makeActions,
 }) {
   const handleDoubleClick = useCallback(() => {
     onOpenPreviewMediaDialog(media);
@@ -56,19 +55,17 @@ function Row({
       <MediaActions
         className="MediaListRow-actions"
         media={media}
-        makeActions={makeActions}
       />
     </MediaRowBase>
   );
 }
 
-Row.propTypes = {
+MediaRow.propTypes = {
   className: PropTypes.string,
   style: PropTypes.object, // from react-window
   media: PropTypes.object,
   onOpenPreviewMediaDialog: PropTypes.func,
   onClick: PropTypes.func,
-  makeActions: PropTypes.func,
 };
 
-export default Row;
+export default MediaRow;

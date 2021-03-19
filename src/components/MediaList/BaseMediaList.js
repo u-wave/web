@@ -33,8 +33,6 @@ function didMediaChange(prev, next) {
   return prev.some((item, i) => item && next[i] && item._id !== next[i]._id);
 }
 
-const defaultMakeActions = () => null;
-
 function BaseMediaList({
   className,
   media,
@@ -46,7 +44,6 @@ function BaseMediaList({
   onOpenPreviewMediaDialog,
   // The `size` property is only necessary for lazy loading.
   size = null,
-  makeActions = defaultMakeActions,
 }) {
   const lastMediaRef = useRef(media);
   const [selection, setSelection] = useState(() => itemSelection(media));
@@ -111,13 +108,12 @@ function BaseMediaList({
         selection={selection.get()}
         onClick={(event) => selectItem(index, event)}
         onOpenPreviewMediaDialog={onOpenPreviewMediaDialog}
-        makeActions={() => makeActions(media[index], selection, index)}
       />
     );
     // `RowComponent` should really be in this list but then react-hooks/exhaustive-deps complains.
     // We don't change it on the fly ever I think and shouldn't, but if we ever did have a reason
     // to do it, this might break :)
-  }, [selection, media, rowProps, onOpenPreviewMediaDialog, makeActions, selectItem]);
+  }, [selection, media, rowProps, onOpenPreviewMediaDialog, selectItem]);
 
   const mediaLength = media.length;
   const innerList = ({ height, onItemsRendered, ref }) => (
@@ -213,7 +209,6 @@ BaseMediaList.propTypes = {
   contextProps: PropTypes.object,
 
   onOpenPreviewMediaDialog: PropTypes.func,
-  makeActions: PropTypes.func,
 };
 
 export default BaseMediaList;
