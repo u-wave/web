@@ -8,8 +8,8 @@ import Votes from './Votes';
 
 const noWrap = { noWrap: true };
 
-const HistoryRow = ({ media }) => (
-  <ListItem className="MobileMediaRow">
+const HistoryRow = ({ media, style }) => (
+  <ListItem className="MobileMediaRow" style={style}>
     <ListItemAvatar>
       <Avatar
         src={media.media.thumbnail}
@@ -27,6 +27,7 @@ const HistoryRow = ({ media }) => (
 );
 
 HistoryRow.propTypes = {
+  style: PropTypes.object, // from react-window
   media: PropTypes.object,
 };
 
