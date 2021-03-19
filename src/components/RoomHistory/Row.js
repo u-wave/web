@@ -2,12 +2,12 @@ import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { HISTORY_ENTRY } from '../../constants/DDItemTypes';
-import MediaActions from '../MediaList/Actions';
 import MediaRowBase from '../MediaList/MediaRowBase';
 import MediaSourceIcon from '../MediaList/MediaSourceIcon';
 import MediaThumbnail from '../MediaList/MediaThumbnail';
 import SongTitle from '../SongTitle';
 import TimeAgo from '../TimeAgo';
+import HistoryActions from './HistoryActions';
 import HistoryVotes from './Votes';
 
 const {
@@ -21,7 +21,6 @@ function HistoryRow({
   media: historyEntry,
   onOpenPreviewMediaDialog,
   onClick,
-  makeActions,
 }) {
   const {
     media, timestamp, user, stats,
@@ -74,11 +73,7 @@ function HistoryRow({
       </div>
 
       {showActions && (
-        <MediaActions
-          className="MediaListRow-actions"
-          media={media}
-          makeActions={makeActions}
-        />
+        <HistoryActions className="MediaListRow-actions" historyEntry={historyEntry} />
       )}
     </MediaRowBase>
   );
@@ -90,7 +85,6 @@ HistoryRow.propTypes = {
   media: PropTypes.object.isRequired,
   onOpenPreviewMediaDialog: PropTypes.func.isRequired,
   onClick: PropTypes.func.isRequired,
-  makeActions: PropTypes.func.isRequired,
 };
 
 export default HistoryRow;
