@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import MediaList from '../../MediaList';
-import SearchResultRow from './ResultRow';
+import MediaListBase from '../../MediaList/BaseMediaList';
+import SearchResultRow from './SearchResultRow';
 
 function SearchResultsList({ results }) {
   return (
-    <MediaList
+    <MediaListBase
       className="PlaylistPanel-media"
       media={results}
+      listComponent="div"
       rowComponent={SearchResultRow}
     />
   );
