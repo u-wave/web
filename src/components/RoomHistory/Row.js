@@ -6,6 +6,7 @@ import { getEmptyImage } from 'react-dnd-html5-backend';
 import { MEDIA } from '../../constants/DDItemTypes';
 import MediaActions from '../MediaList/Actions';
 import MediaSourceIcon from '../MediaList/MediaSourceIcon';
+import MediaThumbnail from '../MediaList/MediaThumbnail';
 import SongTitle from '../SongTitle';
 import TimeAgo from '../TimeAgo';
 import HistoryVotes from './Votes';
@@ -62,15 +63,6 @@ function HistoryRow({
     }
   }, [onClick]);
   const selectedClass = selected ? 'is-selected' : '';
-  const thumbnail = (
-    <div className="MediaListRow-thumb">
-      <img
-        className="MediaListRow-image"
-        src={media.thumbnail}
-        alt=""
-      />
-    </div>
-  );
   return (
     // See PlaylistManager/Panel/Row.js
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
@@ -84,7 +76,7 @@ function HistoryRow({
       onClick={onClick}
       ref={drag}
     >
-      {thumbnail}
+      <MediaThumbnail url={media.thumbnail} />
       <SongTitle
         className="HistoryRow-song"
         size="mediaRow"

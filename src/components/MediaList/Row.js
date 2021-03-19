@@ -9,7 +9,7 @@ import MediaDuration from './MediaDuration';
 import MediaLoadingIndicator from './MediaLoadingIndicator';
 import MediaSourceIcon from './MediaSourceIcon';
 import MediaThumbnail from './MediaThumbnail';
-import Actions from './Actions';
+import MediaActions from './Actions';
 
 const {
   useCallback,
@@ -88,7 +88,7 @@ function Row({
       <div className="MediaListRow-icon">
         <MediaSourceIcon sourceType={media.sourceType} />
       </div>
-      <Actions
+      <MediaActions
         className={cx('MediaListRow-actions', selectedClass)}
         selection={selection}
         media={media}
