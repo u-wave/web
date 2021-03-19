@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 import { useDrag } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import formatDuration from 'format-duration';
-import { useMediaSources } from '../../context/MediaSourceContext';
 import { MEDIA } from '../../constants/DDItemTypes';
 import MediaLoadingIndicator from './MediaLoadingIndicator';
 import MediaThumbnail from './MediaThumbnail';
+import MediaSourceIcon from './MediaSourceIcon';
 import Actions from './Actions';
 
 const {
@@ -49,14 +49,6 @@ function Row({
     connectDragPreview(getEmptyImage());
   }, [connectDragPreview]);
 
-  const { getMediaSource } = useMediaSources();
-  const sourceIcon = (
-    <img
-      height="20dp"
-      src={getMediaSource(media.sourceType).icon}
-      alt={getMediaSource(media.sourceType).name}
-    />
-  );
   const selectedClass = selected ? 'is-selected' : '';
   const loadingClass = media.loading ? 'is-loading' : '';
   const duration = 'start' in media
@@ -100,7 +92,7 @@ function Row({
         {formatDuration(duration * 1000)}
       </div>
       <div className="MediaListRow-icon">
-        {sourceIcon}
+        <MediaSourceIcon sourceType={media.sourceType} />
       </div>
       <Actions
         className={cx('MediaListRow-actions', selectedClass)}
