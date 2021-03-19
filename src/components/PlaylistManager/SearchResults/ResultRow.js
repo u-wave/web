@@ -1,16 +1,16 @@
+import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import BaseRow from '../../MediaList/Row';
+import MediaRowBase from '../../MediaList/MediaRowBase';
+import MediaDuration from '../../MediaList/MediaDuration';
+import MediaThumbnail from '../../MediaList/MediaThumbnail';
+import SearchResultActions from './SearchResultActions';
 
 function SearchResultRow({
   className,
   media,
   style,
-  selected = false,
-  selection,
   onClick,
-  onOpenPreviewMediaDialog,
-  makeActions,
 }) {
   let note = null;
   if (media.inPlaylists) {
@@ -23,17 +23,31 @@ function SearchResultRow({
   }
 
   return (
-    <BaseRow
-      className={className}
+    <MediaRowBase
       media={media}
-      note={note}
+      className={className}
       style={style}
-      selected={selected}
-      selection={selection}
       onClick={onClick}
-      onOpenPreviewMediaDialog={onOpenPreviewMediaDialog}
-      makeActions={makeActions}
-    />
+    >
+      <MediaThumbnail url={media.thumbnail} />
+      <div className={cx('MediaListRow-data', note && 'has-note')}>
+        <div className="MediaListRow-artist" title={media.artist}>
+          {media.artist}
+        </div>
+        <div className="MediaListRow-title" title={media.title}>
+          {media.title}
+        </div>
+        {note ? (
+          <div className="MediaListRow-note">
+            {note}
+          </div>
+        ) : null}
+      </div>
+      <div className="MediaListRow-duration">
+        <MediaDuration media={media} />
+      </div>
+      <SearchResultActions className="MediaListRow-actions" media={media} />
+    </MediaRowBase>
   );
 }
 
@@ -41,12 +55,7 @@ SearchResultRow.propTypes = {
   className: PropTypes.string,
   style: PropTypes.object, // from react-window
   media: PropTypes.object,
-  inPlaylists: PropTypes.arrayOf(PropTypes.object),
-  selected: PropTypes.bool,
-  selection: PropTypes.array,
-  onOpenPreviewMediaDialog: PropTypes.func,
   onClick: PropTypes.func,
-  makeActions: PropTypes.func,
 };
 
 export default SearchResultRow;

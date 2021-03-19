@@ -15,7 +15,6 @@ const {
 function Row({
   className,
   media,
-  note,
   style,
   onClick,
   onOpenPreviewMediaDialog,
@@ -40,18 +39,13 @@ function Row({
       ) : (
         <MediaThumbnail url={media.thumbnail} />
       )}
-      <div className={cx('MediaListRow-data', note && 'has-note')}>
+      <div className="MediaListRow-data">
         <div className="MediaListRow-artist" title={media.artist}>
           {media.artist}
         </div>
         <div className="MediaListRow-title" title={media.title}>
           {media.title}
         </div>
-        {note ? (
-          <div className="MediaListRow-note">
-            {note}
-          </div>
-        ) : null}
       </div>
       <div className="MediaListRow-duration">
         <MediaDuration media={media} />
@@ -72,7 +66,6 @@ Row.propTypes = {
   className: PropTypes.string,
   style: PropTypes.object, // from react-window
   media: PropTypes.object,
-  note: PropTypes.node,
   onOpenPreviewMediaDialog: PropTypes.func,
   onClick: PropTypes.func,
   makeActions: PropTypes.func,
