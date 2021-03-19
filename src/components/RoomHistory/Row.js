@@ -1,10 +1,9 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useDrag } from 'react-dnd';
-import { getEmptyImage } from 'react-dnd-html5-backend';
-import { MEDIA } from '../../constants/DDItemTypes';
+import { HISTORY_ENTRY } from '../../constants/DDItemTypes';
 import MediaActions from '../MediaList/Actions';
+import MediaRowBase from '../MediaList/MediaRowBase';
 import MediaSourceIcon from '../MediaList/MediaSourceIcon';
 import MediaThumbnail from '../MediaList/MediaThumbnail';
 import SongTitle from '../SongTitle';
@@ -13,18 +12,13 @@ import HistoryVotes from './Votes';
 
 const {
   useCallback,
-  useEffect,
   useState,
 } = React;
-
-const inSelection = (selection, media) => selection.some((item) => item._id === media._id);
 
 function HistoryRow({
   className,
   style,
   media: historyEntry,
-  selected = false,
-  selection,
   onOpenPreviewMediaDialog,
   onClick,
   makeActions,
@@ -34,16 +28,6 @@ function HistoryRow({
   } = historyEntry;
 
   const [showActions, setShowActions] = useState(false);
-  const [, drag, connectDragPreview] = useDrag({
-    type: MEDIA,
-    item: () => ({
-      media: inSelection(selection, media) ? selection : [media],
-    }),
-  });
-
-  useEffect(() => {
-    connectDragPreview(getEmptyImage());
-  }, [connectDragPreview]);
 
   const handleMouseEnter = useCallback(() => {
     setShowActions(true);
@@ -57,24 +41,16 @@ function HistoryRow({
     onOpenPreviewMediaDialog(media);
   }, [onOpenPreviewMediaDialog, media]);
 
-  const handleKeyPress = useCallback((event) => {
-    if (event.key === 'Space') {
-      onClick();
-    }
-  }, [onClick]);
-  const selectedClass = selected ? 'is-selected' : '';
   return (
-    // See PlaylistManager/Panel/Row.js
-    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-    <div
-      className={cx('MediaListRow', 'HistoryRow', className, selectedClass)}
+    <MediaRowBase
+      dragType={HISTORY_ENTRY}
+      media={historyEntry}
+      className={cx('HistoryRow', className)}
       style={style}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onDoubleClick={handleDoubleClick}
-      onKeyPress={handleKeyPress}
       onClick={onClick}
-      ref={drag}
     >
       <MediaThumbnail url={media.thumbnail} />
       <SongTitle
@@ -99,13 +75,12 @@ function HistoryRow({
 
       {showActions && (
         <MediaActions
-          className={cx('MediaListRow-actions', selectedClass)}
-          selection={selection}
+          className="MediaListRow-actions"
           media={media}
           makeActions={makeActions}
         />
       )}
-    </div>
+    </MediaRowBase>
   );
 }
 
@@ -113,8 +88,6 @@ HistoryRow.propTypes = {
   className: PropTypes.string,
   style: PropTypes.object, // for react-window
   media: PropTypes.object.isRequired,
-  selected: PropTypes.bool,
-  selection: PropTypes.arrayOf(PropTypes.object),
   onOpenPreviewMediaDialog: PropTypes.func.isRequired,
   onClick: PropTypes.func.isRequired,
   makeActions: PropTypes.func.isRequired,
