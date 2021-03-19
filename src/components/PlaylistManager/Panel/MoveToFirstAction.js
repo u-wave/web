@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import MoveToFirstIcon from '@material-ui/icons/KeyboardArrowUp';
 import { moveMedia } from '../../../actions/PlaylistActionCreators';
 import { useMediaListContext } from '../../MediaList/BaseMediaList';
-import Action from '../../MediaList/Actions/Action';
+import MediaAction from '../../MediaList/MediaAction';
 
 const {
   useCallback,
@@ -20,9 +20,9 @@ function MoveToFirstAction({ media }) {
   }, [dispatch, playlist, media, selection]);
 
   return (
-    <Action onAction={handleClick}>
+    <MediaAction onClick={handleClick}>
       <MoveToFirstIcon />
-    </Action>
+    </MediaAction>
   );
 }
 

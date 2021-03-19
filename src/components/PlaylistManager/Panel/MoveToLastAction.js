@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import MoveToLastIcon from '@material-ui/icons/KeyboardArrowDown';
 import { moveMedia } from '../../../actions/PlaylistActionCreators';
 import { useMediaListContext } from '../../MediaList/BaseMediaList';
-import Action from '../../MediaList/Actions/Action';
+import MediaAction from '../../MediaList/MediaAction';
 
 const {
   useCallback,
@@ -20,9 +20,9 @@ function MoveToLastAction({ media }) {
   }, [dispatch, playlist, media, selection]);
 
   return (
-    <Action onAction={handleClick}>
+    <MediaAction onClick={handleClick}>
       <MoveToLastIcon />
-    </Action>
+    </MediaAction>
   );
 }
 

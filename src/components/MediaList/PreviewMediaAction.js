@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import PreviewIcon from '@material-ui/icons/Preview';
 import { openPreviewMediaDialog } from '../../actions/DialogActionCreators';
-import Action from './Actions/Action';
+import MediaAction from './MediaAction';
 
 const {
   useCallback,
@@ -16,9 +16,9 @@ function PreviewMediaAction({ media }) {
   }, [dispatch, media]);
 
   return (
-    <Action onAction={handleClick}>
+    <MediaAction onClick={handleClick}>
       <PreviewIcon />
-    </Action>
+    </MediaAction>
   );
 }
 

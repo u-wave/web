@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import AddIcon from '@material-ui/icons/Add';
 import { addMediaMenu } from '../../actions/PlaylistActionCreators';
 import { useMediaListContext } from './BaseMediaList';
-import Action from './Actions/Action';
+import MediaAction from './MediaAction';
 
 const {
   useCallback,
@@ -25,9 +25,9 @@ function AddToPlaylistAction({ media }) {
   }, [dispatch, selection, media]);
 
   return (
-    <Action onAction={handleClick}>
+    <MediaAction onClick={handleClick}>
       <AddIcon />
-    </Action>
+    </MediaAction>
   );
 }
 

@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import EditMediaIcon from '@material-ui/icons/Edit';
 import { editMedia } from '../../../actions/PlaylistActionCreators';
 import { useMediaListContext } from '../../MediaList/BaseMediaList';
-import Action from '../../MediaList/Actions/Action';
+import MediaAction from '../../MediaList/MediaAction';
 
 const {
   useCallback,
@@ -18,9 +18,9 @@ function EditMediaAction({ media }) {
   }, [dispatch, playlist, media]);
 
   return (
-    <Action onAction={handleClick}>
+    <MediaAction onClick={handleClick}>
       <EditMediaIcon />
-    </Action>
+    </MediaAction>
   );
 }
 
