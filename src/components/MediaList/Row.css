@@ -18,6 +18,11 @@
   &.is-selected {
     background: var(--selected-media-row-color);
   }
+
+  &:focus {
+    box-shadow: inset 0 0 0 2px var(--highlight-color);
+    outline: none;
+  }
 }
 
 .MediaListRow-loader {
@@ -104,6 +109,12 @@
   display: none;
 }
 
-.MediaListRow:hover .MediaListRow-actions {
+.MediaListRow:hover .MediaListRow-actions,
+.MediaListRow:focus .MediaListRow-actions,
+.MediaListRow:focus-within .MediaListRow-actions {
   display: block;
+}
+
+.MediaListRow.is-selected .MediaListRow-actions {
+  background: var(--highlight-color);
 }
