@@ -69,6 +69,8 @@ function BaseMediaList({
       setSelection(selection.selectRange(index));
     } else if (event.ctrlKey) {
       setSelection(selection.selectToggle(index));
+    } else if (event.metaKey) {
+      setSelection(selection.selectToggle(index));
     } else {
       setSelection(selection.select(index));
     }
