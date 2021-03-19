@@ -5,14 +5,16 @@
   background: white;
   height: 3px;
   width: 100%;
+  position: absolute;
 }
 
+/* The height is 3px, but offsets are -2px because there is a 1px border
+ * between each playlist item row. */
+
 .PlaylistItemRow--dropAbove:before {
-  margin-top: -1px;
-  margin-bottom: -2px;
+  top: -2px;
 }
 
 .PlaylistItemRow--dropBelow:after {
-  margin-top: calc(var(--playlist-row-height) - 1px);
-  margin-bottom: -2px;
+  bottom: -2px;
 }
