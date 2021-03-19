@@ -30,7 +30,7 @@ function SearchResultRow({
       onClick={onClick}
     >
       <MediaThumbnail url={media.thumbnail} />
-      <div className={cx('MediaListRow-data', note && 'has-note')}>
+      <div className={cx('MediaListRow-data', 'SearchResultRow-data', note && 'has-note')}>
         <div className="MediaListRow-artist" title={media.artist}>
           {media.artist}
         </div>

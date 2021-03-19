@@ -82,12 +82,6 @@
   font-size: 75%;
 }
 
-.MediaListRow-data.has-note .MediaListRow-artist,
-.MediaListRow-data.has-note .MediaListRow-title {
-  height: calc(var(--unpadded-media-list-row-height) / 3 * 2);
-  line-height: calc(var(--unpadded-media-list-row-height) / 3 * 2);
-}
-
 .MediaListRow-duration {
   height: 100%;
   float: inline-start;
