@@ -3,11 +3,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useDrag } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
-import formatDuration from 'format-duration';
 import { MEDIA } from '../../constants/DDItemTypes';
+import MediaDuration from './MediaDuration';
 import MediaLoadingIndicator from './MediaLoadingIndicator';
-import MediaThumbnail from './MediaThumbnail';
 import MediaSourceIcon from './MediaSourceIcon';
+import MediaThumbnail from './MediaThumbnail';
 import Actions from './Actions';
 
 const {
@@ -51,11 +51,6 @@ function Row({
 
   const selectedClass = selected ? 'is-selected' : '';
   const loadingClass = media.loading ? 'is-loading' : '';
-  const duration = 'start' in media
-    // playlist item
-    ? media.end - media.start
-    // search result
-    : media.duration;
 
   return (
     // Bit uneasy about this, but turning the entire row into a button seems
@@ -89,7 +84,7 @@ function Row({
         ) : null}
       </div>
       <div className="MediaListRow-duration">
-        {formatDuration(duration * 1000)}
+        <MediaDuration media={media} />
       </div>
       <div className="MediaListRow-icon">
         <MediaSourceIcon sourceType={media.sourceType} />
