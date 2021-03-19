@@ -19,7 +19,6 @@ function HistoryRow({
   className,
   style,
   media: historyEntry,
-  onOpenPreviewMediaDialog,
   onClick,
 }) {
   const {
@@ -36,10 +35,6 @@ function HistoryRow({
     setShowActions(false);
   }, []);
 
-  const handleDoubleClick = useCallback(() => {
-    onOpenPreviewMediaDialog(media);
-  }, [onOpenPreviewMediaDialog, media]);
-
   return (
     <MediaRowBase
       dragType={HISTORY_ENTRY}
@@ -48,7 +43,6 @@ function HistoryRow({
       style={style}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      onDoubleClick={handleDoubleClick}
       onClick={onClick}
     >
       <MediaThumbnail url={media.thumbnail} />
@@ -83,7 +77,6 @@ HistoryRow.propTypes = {
   className: PropTypes.string,
   style: PropTypes.object, // for react-window
   media: PropTypes.object.isRequired,
-  onOpenPreviewMediaDialog: PropTypes.func.isRequired,
   onClick: PropTypes.func.isRequired,
 };
 

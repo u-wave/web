@@ -6,6 +6,7 @@ import { addMediaMenu } from '../../actions/PlaylistActionCreators';
 import { isLoggedInSelector } from '../../selectors/userSelectors';
 import { useMediaListContext } from '../MediaList/BaseMediaList';
 import AddToPlaylistAction from '../MediaList/Actions/AddToPlaylist';
+import PreviewMediaAction from '../MediaList/PreviewMediaAction';
 
 const {
   useCallback,
@@ -35,9 +36,8 @@ function HistoryActions({ className, historyEntry }) {
       className={cx('MediaActions', className)}
       onClick={dontBubble}
     >
-      <AddToPlaylistAction
-        onAdd={handleAdd}
-      />
+      <PreviewMediaAction media={historyEntry.media} />
+      <AddToPlaylistAction onAdd={handleAdd} />
     </div>
   );
 }
