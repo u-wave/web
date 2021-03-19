@@ -3,11 +3,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import BaseMediaList from '../../MediaList/BaseMediaList';
-import PlainItemRow from '../../MediaList/Row';
 import PlaylistMeta from './Meta';
 import PlaylistEmpty from './PlaylistEmpty';
 import PlaylistFilterEmpty from './PlaylistFilterEmpty';
 import PlaylistItemRow from './PlaylistItemRow';
+import DroppablePlaylistItemRow from './DroppablePlaylistItemRow';
 
 function PlaylistPanel(props) {
   const {
@@ -44,7 +44,7 @@ function PlaylistPanel(props) {
         size={media.length}
         media={media}
         listComponent="div"
-        rowComponent={isFiltered ? PlainItemRow : PlaylistItemRow}
+        rowComponent={isFiltered ? PlaylistItemRow : DroppablePlaylistItemRow}
         rowProps={{ onMoveMedia }}
         contextProps={{ playlist, isFiltered }}
         onRequestPage={onLoadPlaylistPage}
