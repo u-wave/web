@@ -10,10 +10,17 @@ import LoadingRow from './LoadingRow';
 
 const {
   useCallback,
+  useContext,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } = React;
+
+const MediaListContext = React.createContext();
+export function useMediaListContext() {
+  return useContext(MediaListContext);
+}
 
 /**
  * Check if two media lists are different, taking into account
@@ -44,6 +51,11 @@ function BaseMediaList({
   const [selection, setSelection] = useState(() => itemSelection(media));
   const inFlightPageRequests = useRef({});
   const direction = useDirection();
+
+  const context = useMemo(() => ({
+    media,
+    selection,
+  }), [media, selection]);
 
   const itemKey = useCallback((index) => {
     if (media[index]) {
@@ -176,9 +188,11 @@ function BaseMediaList({
   listRenderer = autoSizing(listRenderer);
 
   return (
-    <div className={cx('MediaList', className)}>
-      {listRenderer()}
-    </div>
+    <MediaListContext.Provider value={context}>
+      <div className={cx('MediaList', className)}>
+        {listRenderer()}
+      </div>
+    </MediaListContext.Provider>
   );
 }
 

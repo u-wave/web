@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { useDrag } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import { MEDIA } from '../../constants/DDItemTypes';
+import { useMediaListContext } from './BaseMediaList';
 import MediaDuration from './MediaDuration';
 import MediaLoadingIndicator from './MediaLoadingIndicator';
 import MediaSourceIcon from './MediaSourceIcon';
@@ -15,23 +16,21 @@ const {
   useEffect,
 } = React;
 
-const inSelection = (selection, media) => selection.some((item) => item._id === media._id);
-
 function Row({
   className,
   media,
   note,
   style,
   selected = false,
-  selection,
   onClick,
   onOpenPreviewMediaDialog,
   makeActions,
 }) {
+  const { selection } = useMediaListContext();
   const [, drag, connectDragPreview] = useDrag({
     type: MEDIA,
     item: () => ({
-      media: inSelection(selection, media) ? selection : [media],
+      media: selected ? selection : [media],
     }),
   });
 
@@ -105,7 +104,6 @@ Row.propTypes = {
   media: PropTypes.object,
   note: PropTypes.node,
   selected: PropTypes.bool,
-  selection: PropTypes.array,
   onOpenPreviewMediaDialog: PropTypes.func,
   onClick: PropTypes.func,
   makeActions: PropTypes.func,
