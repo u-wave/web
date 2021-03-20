@@ -13,7 +13,6 @@ import Position from './Position';
 
 const {
   useCallback,
-  useEffect,
   useRef,
   useState,
 } = React;
@@ -70,12 +69,6 @@ function ModRow({
     },
   }), [position]);
 
-  useEffect(() => {
-    if (userCard.refAnchor.current) {
-      connectDragPreview(userCard.refAnchor.current);
-    }
-  });
-
   connectDropTarget(userCard.refAnchor);
   connectDragSource(handleRef);
 
@@ -99,7 +92,9 @@ function ModRow({
         type="button"
         className="WaitlistRow-card"
         onClick={onOpenCard}
+        ref={connectDragPreview}
       >
+
         <Avatar
           className="UserRow-avatar"
           user={user}

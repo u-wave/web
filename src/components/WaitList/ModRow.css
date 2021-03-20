@@ -10,6 +10,15 @@
   text-overflow: ellipsis;
 }
 
+/* Set background colours so it looks OK while dragging. */
+.WaitlistRow-card {
+  background: var(--user-list-color);
+}
+
+.UserList-row--alternate .WaitlistRow-card {
+  background: var(--user-list-alternate-color);
+}
+
 .WaitlistRow-tools {
   float: right;
   height: 100%;
