@@ -1,8 +1,8 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import useMediaQuery from 'use-mediaquery';
 import { useTranslator } from '@u-wave/react-translate';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import FormGroup from '@material-ui/core/FormGroup';
 import Switch from '@material-ui/core/Switch';
 import Profile from './Profile';
@@ -22,7 +22,7 @@ function SettingsPanel({
   onLogout,
 }) {
   const { t } = useTranslator();
-  const isWide = useMediaQuery('(min-width: 1280px)');
+  const isWide = useMediaQuery((theme) => theme.breakpoints.up('lg'));
 
   const handleVideoEnabledChange = (event, value) => {
     onSettingChange('videoEnabled', value);
