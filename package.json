@@ -93,7 +93,6 @@
     "string.prototype.includes": "^2.0.0",
     "u-wave-parse-chat-markup": "^2.4.0",
     "url-polyfill": "^1.1.11",
-    "use-mediaquery": "^1.0.1",
     "whatwg-fetch": "^3.4.0"
   },
   "devDependencies": {
