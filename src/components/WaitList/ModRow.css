@@ -33,20 +33,13 @@
   cursor: pointer;
 }
 
-.WaitlistRow--dropAbove:before,
-.WaitlistRow--dropBelow:after {
-  content: ' ';
-  display: block;
-  background: white;
-  height: 3px;
-  width: 100%;
-  position: absolute;
+.WaitlistRow--dropAbove {
+  padding-top: 40px;
+  border-top: 3px solid #fff;
+  height: 80px;
 }
 
-.WaitlistRow--dropAbove:before {
-  top: -1px;
-}
-
-.WaitlistRow--dropBelow:after {
-  top: 38px;
+.WaitlistRow--dropBelow {
+  margin-bottom: 40px;
+  border-bottom: 3px solid #fff;
 }
