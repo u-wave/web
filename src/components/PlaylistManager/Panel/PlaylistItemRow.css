@@ -1,5 +1,20 @@
-.PlaylistItemRow-drop-indicator {
+.PlaylistItemRow--dropAbove:before,
+.PlaylistItemRow--dropBelow:after {
+  content: ' ';
+  display: block;
   background: white;
   height: 3px;
   width: 100%;
+  position: absolute;
+}
+
+/* The height is 3px, but offsets are -2px because there is a 1px border
+ * between each playlist item row. */
+
+.PlaylistItemRow--dropAbove:before {
+  top: -2px;
+}
+
+.PlaylistItemRow--dropBelow:after {
+  bottom: -2px;
 }

@@ -10,10 +10,17 @@ import LoadingRow from './LoadingRow';
 
 const {
   useCallback,
+  useContext,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } = React;
+
+const MediaListContext = React.createContext();
+export function useMediaListContext() {
+  return useContext(MediaListContext);
+}
 
 /**
  * Check if two media lists are different, taking into account
@@ -26,24 +33,27 @@ function didMediaChange(prev, next) {
   return prev.some((item, i) => item && next[i] && item._id !== next[i]._id);
 }
 
-const defaultMakeActions = () => null;
-
 function BaseMediaList({
   className,
   media,
   listComponent: ListComponent,
-  rowComponent: RowComponent,
+  rowComponent,
   rowProps = {},
+  contextProps,
   onRequestPage,
-  onOpenPreviewMediaDialog,
   // The `size` property is only necessary for lazy loading.
   size = null,
-  makeActions = defaultMakeActions,
 }) {
   const lastMediaRef = useRef(media);
   const [selection, setSelection] = useState(() => itemSelection(media));
   const inFlightPageRequests = useRef({});
   const direction = useDirection();
+
+  const context = useMemo(() => ({
+    media,
+    selection,
+    ...contextProps,
+  }), [media, selection, contextProps]);
 
   const itemKey = useCallback((index) => {
     if (media[index]) {
@@ -88,23 +98,23 @@ function BaseMediaList({
       );
     }
 
+    // Rename it here instead of in the parameter list,
+    // else the react-hooks/exhaustive-deps lint rule does not see
+    // that `RowComponent` is used in this effect.
+    const RowComponent = rowComponent;
     return (
       <RowComponent
         {...rowProps}
         style={style}
         className="MediaList-row"
+        index={index}
         media={media[index]}
         selected={selected}
         selection={selection.get()}
         onClick={(event) => selectItem(index, event)}
-        onOpenPreviewMediaDialog={onOpenPreviewMediaDialog}
-        makeActions={() => makeActions(media[index], selection, index)}
       />
     );
-    // `RowComponent` should really be in this list but then react-hooks/exhaustive-deps complains.
-    // We don't change it on the fly ever I think and shouldn't, but if we ever did have a reason
-    // to do it, this might break :)
-  }, [selection, media, rowProps, onOpenPreviewMediaDialog, makeActions, selectItem]);
+  }, [selection, media, rowComponent, rowProps, selectItem]);
 
   const mediaLength = media.length;
   const innerList = ({ height, onItemsRendered, ref }) => (
@@ -178,9 +188,11 @@ function BaseMediaList({
   listRenderer = autoSizing(listRenderer);
 
   return (
-    <div className={cx('MediaList', className)}>
-      {listRenderer()}
-    </div>
+    <MediaListContext.Provider value={context}>
+      <div className={cx('MediaList', className)}>
+        {listRenderer()}
+      </div>
+    </MediaListContext.Provider>
   );
 }
 
@@ -195,9 +207,7 @@ BaseMediaList.propTypes = {
   ]).isRequired,
   rowComponent: PropTypes.func.isRequired,
   rowProps: PropTypes.object,
-
-  onOpenPreviewMediaDialog: PropTypes.func,
-  makeActions: PropTypes.func,
+  contextProps: PropTypes.object,
 };
 
 export default BaseMediaList;

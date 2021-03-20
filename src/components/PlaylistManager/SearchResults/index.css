@@ -28,7 +28,7 @@
 }
 
 .SearchResultRow-data {
-  width: calc(100% - var(--media-list-spacing) - var(--media-list-thumb-width) - var(--media-list-duration-width));
+  width: calc(100% - var(--media-list-thumb-width) - var(--media-list-duration-width));
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

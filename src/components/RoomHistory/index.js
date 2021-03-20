@@ -6,13 +6,7 @@ import OverlayHeader from '../Overlay/Header';
 import OverlayContent from '../Overlay/Content';
 import HistoryList from './HistoryList';
 
-function RoomHistory({
-  className,
-  onCloseOverlay,
-  onOpenAddMediaMenu,
-  onOpenPreviewMediaDialog,
-  ...props
-}) {
+function RoomHistory({ className, onCloseOverlay, ...props }) {
   const { t } = useTranslator();
 
   return (
@@ -24,11 +18,7 @@ function RoomHistory({
         onCloseOverlay={onCloseOverlay}
       />
       <OverlayContent className="RoomHistory-body">
-        <HistoryList
-          onOpenAddMediaMenu={onOpenAddMediaMenu}
-          onOpenPreviewMediaDialog={onOpenPreviewMediaDialog}
-          {...props}
-        />
+        <HistoryList {...props} />
       </OverlayContent>
     </div>
   );
@@ -37,8 +27,6 @@ function RoomHistory({
 RoomHistory.propTypes = {
   className: PropTypes.string,
   onCloseOverlay: PropTypes.func.isRequired,
-  onOpenAddMediaMenu: PropTypes.func.isRequired,
-  onOpenPreviewMediaDialog: PropTypes.func.isRequired,
 };
 
 export default RoomHistory;

@@ -2,43 +2,14 @@ import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import MediaList from '../../MediaList';
+import BaseMediaList from '../../MediaList/BaseMediaList';
 import PlaylistMeta from './Meta';
 import PlaylistEmpty from './PlaylistEmpty';
 import PlaylistFilterEmpty from './PlaylistFilterEmpty';
-import PlainItemRow from '../../MediaList/Row';
 import PlaylistItemRow from './PlaylistItemRow';
-import AddToPlaylistAction from '../../MediaList/Actions/AddToPlaylist';
-import RemoveFromPlaylistAction from '../../MediaList/Actions/RemoveFromPlaylist';
-import EditMediaAction from '../../MediaList/Actions/EditMedia';
-import MoveToFirstAction from '../../MediaList/Actions/MoveToFirst';
-import MoveToLastAction from '../../MediaList/Actions/MoveToLast';
+import DroppablePlaylistItemRow from './DroppablePlaylistItemRow';
 
-const makeActions = ({
-  onOpenAddMediaMenu,
-  onMoveToFirst,
-  onMoveToLast,
-  onEditMedia,
-  onRemoveFromPlaylist,
-  isFiltered,
-}) => (media, selection, index) => (
-  <>
-    <AddToPlaylistAction onAdd={(position) => onOpenAddMediaMenu(position, media, selection)} />
-    {/* Don't show the "move to first" action on the first item in the playlist.
-      * If the playlist is filtered we don't know if the first item to show is
-      * also the first in the playlist, so just show it always in that case. */}
-    {(index > 0 || isFiltered) && (
-      <MoveToFirstAction onFirst={() => onMoveToFirst(media, selection)} />
-    )}
-    {(index !== (selection.items.length - 1) || isFiltered) && (
-      <MoveToLastAction onLast={() => onMoveToLast(media, selection)} />
-    )}
-    <EditMediaAction onEdit={() => onEditMedia(media)} />
-    <RemoveFromPlaylistAction onRemove={() => onRemoveFromPlaylist(media, selection)} />
-  </>
-);
-
-const PlaylistPanel = (props) => {
+function PlaylistPanel(props) {
   const {
     className,
     playlist,
@@ -53,7 +24,6 @@ const PlaylistPanel = (props) => {
     onLoadPlaylistPage,
     onFilterPlaylistItems,
     onMoveMedia,
-    onOpenPreviewMediaDialog,
   } = props;
 
   let list;
@@ -69,14 +39,14 @@ const PlaylistPanel = (props) => {
       : <PlaylistEmpty />;
   } else {
     list = (
-      <MediaList
+      <BaseMediaList
         className="PlaylistPanel-media"
         size={media.length}
         media={media}
-        rowComponent={isFiltered ? PlainItemRow : PlaylistItemRow}
+        listComponent="div"
+        rowComponent={isFiltered ? PlaylistItemRow : DroppablePlaylistItemRow}
         rowProps={{ onMoveMedia }}
-        onOpenPreviewMediaDialog={onOpenPreviewMediaDialog}
-        makeActions={makeActions(props)}
+        contextProps={{ playlist, isFiltered }}
         onRequestPage={onLoadPlaylistPage}
       />
     );
@@ -99,7 +69,7 @@ const PlaylistPanel = (props) => {
       {list}
     </div>
   );
-};
+}
 
 PlaylistPanel.propTypes = {
   className: PropTypes.string,
@@ -115,7 +85,6 @@ PlaylistPanel.propTypes = {
   onFilterPlaylistItems: PropTypes.func.isRequired,
   onNotDeletable: PropTypes.func.isRequired,
   onMoveMedia: PropTypes.func.isRequired,
-  onOpenPreviewMediaDialog: PropTypes.func.isRequired,
 };
 
 export default PlaylistPanel;

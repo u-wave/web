@@ -1,48 +1,31 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useDrag } from 'react-dnd';
-import { getEmptyImage } from 'react-dnd-html5-backend';
-import { MEDIA } from '../../constants/DDItemTypes';
-import { useMediaSources } from '../../context/MediaSourceContext';
-import Actions from '../MediaList/Actions';
+import { HISTORY_ENTRY } from '../../constants/DDItemTypes';
+import MediaRowBase from '../MediaList/MediaRowBase';
+import MediaSourceIcon from '../MediaList/MediaSourceIcon';
+import MediaThumbnail from '../MediaList/MediaThumbnail';
 import SongTitle from '../SongTitle';
 import TimeAgo from '../TimeAgo';
+import HistoryActions from './HistoryActions';
 import HistoryVotes from './Votes';
 
 const {
   useCallback,
-  useEffect,
   useState,
 } = React;
-
-const inSelection = (selection, media) => selection.some((item) => item._id === media._id);
 
 function HistoryRow({
   className,
   style,
   media: historyEntry,
-  selected = false,
-  selection,
-  onOpenPreviewMediaDialog,
   onClick,
-  makeActions,
 }) {
   const {
     media, timestamp, user, stats,
   } = historyEntry;
 
   const [showActions, setShowActions] = useState(false);
-  const [, drag, connectDragPreview] = useDrag({
-    type: MEDIA,
-    item: () => ({
-      media: inSelection(selection, media) ? selection : [media],
-    }),
-  });
-
-  useEffect(() => {
-    connectDragPreview(getEmptyImage());
-  }, [connectDragPreview]);
 
   const handleMouseEnter = useCallback(() => {
     setShowActions(true);
@@ -52,47 +35,17 @@ function HistoryRow({
     setShowActions(false);
   }, []);
 
-  const handleDoubleClick = useCallback(() => {
-    onOpenPreviewMediaDialog(media);
-  }, [onOpenPreviewMediaDialog, media]);
-
-  const handleKeyPress = useCallback((event) => {
-    if (event.key === 'Space') {
-      onClick();
-    }
-  }, [onClick]);
-  const { getMediaSource } = useMediaSources();
-  const sourceIcon = (
-    <img
-      height="20dp"
-      src={getMediaSource(media.sourceType).icon}
-      alt=""
-    />
-  );
-  const selectedClass = selected ? 'is-selected' : '';
-  const thumbnail = (
-    <div className="MediaListRow-thumb">
-      <img
-        className="MediaListRow-image"
-        src={media.thumbnail}
-        alt=""
-      />
-    </div>
-  );
   return (
-    // See PlaylistManager/Panel/Row.js
-    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-    <div
-      className={cx('MediaListRow', 'HistoryRow', className, selectedClass)}
+    <MediaRowBase
+      dragType={HISTORY_ENTRY}
+      media={historyEntry}
+      className={cx('HistoryRow', className)}
       style={style}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      onDoubleClick={handleDoubleClick}
-      onKeyPress={handleKeyPress}
       onClick={onClick}
-      ref={drag}
     >
-      {thumbnail}
+      <MediaThumbnail url={media.thumbnail} />
       <SongTitle
         className="HistoryRow-song"
         size="mediaRow"
@@ -110,18 +63,13 @@ function HistoryRow({
         <TimeAgo timestamp={timestamp} />
       </div>
       <div className="MediaListRow-icon HistoryRow-icon">
-        {sourceIcon}
+        <MediaSourceIcon sourceType={media.sourceType} />
       </div>
 
       {showActions && (
-        <Actions
-          className={cx('MediaListRow-actions', selectedClass)}
-          selection={selection}
-          media={media}
-          makeActions={makeActions}
-        />
+        <HistoryActions className="MediaListRow-actions" historyEntry={historyEntry} />
       )}
-    </div>
+    </MediaRowBase>
   );
 }
 
@@ -129,11 +77,7 @@ HistoryRow.propTypes = {
   className: PropTypes.string,
   style: PropTypes.object, // for react-window
   media: PropTypes.object.isRequired,
-  selected: PropTypes.bool,
-  selection: PropTypes.arrayOf(PropTypes.object),
-  onOpenPreviewMediaDialog: PropTypes.func.isRequired,
   onClick: PropTypes.func.isRequired,
-  makeActions: PropTypes.func.isRequired,
 };
 
 export default HistoryRow;

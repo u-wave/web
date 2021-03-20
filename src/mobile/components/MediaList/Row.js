@@ -7,8 +7,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 const noWrap = { noWrap: true };
 
-const MediaRow = ({ media }) => (
-  <ListItem className="MobileMediaRow">
+const MediaRow = ({ media, style }) => (
+  <ListItem className="MobileMediaRow" style={style}>
     <ListItemAvatar>
       <Avatar
         src={media.thumbnail}
@@ -25,6 +25,7 @@ const MediaRow = ({ media }) => (
 );
 
 MediaRow.propTypes = {
+  style: PropTypes.object, // from react-window
   media: PropTypes.object,
 };
 
