@@ -13,6 +13,8 @@ function NotificationSettings({ settings, onSettingChange }) {
   function useToggleSetting(name) {
     return useCallback((e, value) => {
       onSettingChange(name, value);
+      // `name` is a constant.
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [onSettingChange]);
   }
 

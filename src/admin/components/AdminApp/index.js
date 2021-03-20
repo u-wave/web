@@ -33,6 +33,13 @@ const AdminApp = ({
         >
           <ListItemText primary="Bans" />
         </ListItem>
+        <ListItem
+          selected={currentView === 'config'}
+          className="AdminApp-menuItem"
+          onClick={() => onTransition('config')}
+        >
+          <ListItemText primary="Server Config" />
+        </ListItem>
       </List>
     </div>
     <div className="AdminApp-page">

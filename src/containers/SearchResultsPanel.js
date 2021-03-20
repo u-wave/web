@@ -49,10 +49,10 @@ function SearchResultsContainer() {
 
   const onOpenAddMediaMenu = useCallback((position, media, selection) => (
     dispatch(addMediaMenu(selectionOrOne(media, selection), position))
-  ), []);
+  ), [dispatch]);
   const onOpenPreviewMediaDialog = useCallback(
     (media) => dispatch(openPreviewMediaDialog(media)),
-    [],
+    [dispatch],
   );
 
   return (

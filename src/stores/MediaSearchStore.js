@@ -31,7 +31,6 @@ function useStoreImplementation() {
     setState(LOADING);
 
     // Maybe this can be pulled into a useFetch hook of some kind?
-    // eslint-disable-next-line compat/compat
     const controller = new AbortController();
     const request = get(`/search/${encodeURIComponent(activeSource)}`, {
       qs: { query },
@@ -49,7 +48,7 @@ function useStoreImplementation() {
       controller.abort();
       setState(IDLE);
     };
-  }, [query, activeSource]);
+  }, [dispatch, query, activeSource]);
 
   const search = useCallback((newQuery) => {
     // For compatibility.
@@ -57,7 +56,7 @@ function useStoreImplementation() {
     dispatch(showSearchResults());
 
     setQuery(newQuery);
-  }, []);
+  }, [dispatch]);
 
   const context = useMemo(() => ({
     activeSource,

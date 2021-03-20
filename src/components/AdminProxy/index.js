@@ -19,7 +19,7 @@ const AdminProxy = ({ onCloseOverlay }) => (
       onCloseOverlay={onCloseOverlay}
       direction="top"
     />
-    <div className="AppRow AppRow--middle AdminPanel">
+    <div className="AdminPanel">
       <Suspense fallback={<Fallback />}>
         <AdminComponent />
       </Suspense>

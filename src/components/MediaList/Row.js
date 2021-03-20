@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { useDrag } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import formatDuration from 'format-duration';
+import { useMediaSources } from '../../context/MediaSourceContext';
 import { MEDIA } from '../../constants/DDItemTypes';
 import MediaLoadingIndicator from './MediaLoadingIndicator';
 import MediaThumbnail from './MediaThumbnail';
@@ -28,10 +29,10 @@ function Row({
   makeActions,
 }) {
   const [, drag, connectDragPreview] = useDrag({
-    item: {
-      type: MEDIA,
+    type: MEDIA,
+    item: () => ({
       media: inSelection(selection, media) ? selection : [media],
-    },
+    }),
   });
 
   const handleKeyPress = useCallback((event) => {
@@ -46,8 +47,16 @@ function Row({
 
   useEffect(() => {
     connectDragPreview(getEmptyImage());
-  }, []);
+  }, [connectDragPreview]);
 
+  const { getMediaSource } = useMediaSources();
+  const sourceIcon = (
+    <img
+      height="20dp"
+      src={getMediaSource(media.sourceType).icon}
+      alt={getMediaSource(media.sourceType).name}
+    />
+  );
   const selectedClass = selected ? 'is-selected' : '';
   const loadingClass = media.loading ? 'is-loading' : '';
   const duration = 'start' in media
@@ -89,6 +98,9 @@ function Row({
       </div>
       <div className="MediaListRow-duration">
         {formatDuration(duration * 1000)}
+      </div>
+      <div className="MediaListRow-icon">
+        {sourceIcon}
       </div>
       <Actions
         className={cx('MediaListRow-actions', selectedClass)}

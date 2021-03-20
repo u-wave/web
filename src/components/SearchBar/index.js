@@ -30,6 +30,8 @@ function SearchBar({
       inputRef.current.focus();
     }
     return () => null;
+    // `autoFocus` is only checked on mount on purpose.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -43,7 +45,8 @@ function SearchBar({
           ref={inputRef}
           className="SearchBar-input"
           type="text"
-          placeholder={focused ? '' : t('playlists.search.action')}
+          aria-label={t('playlists.search.action')}
+          placeholder={focused ? '' : t('playlists.search.placeholder')}
           onFocus={handleFocus}
           onBlur={handleBlur}
           onKeyDown={handleKeyDown}

@@ -11,7 +11,7 @@ const {
 function ErrorAreaContainer() {
   const error = useSelector(firstErrorSelector);
   const dispatch = useDispatch();
-  const onDismiss = useCallback(() => dispatch(dismiss()), []);
+  const onDismiss = useCallback(() => dispatch(dismiss()), [dispatch]);
 
   return <ErrorArea error={error} onDismiss={onDismiss} />;
 }

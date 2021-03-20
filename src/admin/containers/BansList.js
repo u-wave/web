@@ -18,7 +18,7 @@ function BansListContainer() {
 
   useEffect(() => {
     dispatch(loadBans());
-  }, []);
+  }, [dispatch]);
 
   return (
     <BansList

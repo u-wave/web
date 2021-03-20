@@ -1,4 +1,6 @@
 .AdminPanel {
   background: var(--background-color);
   overflow-y: auto;
+  flex-grow: 1;
+  margin-bottom: var(--footer-height);
 }

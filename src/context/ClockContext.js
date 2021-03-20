@@ -42,7 +42,7 @@ function ClockProvider({ children }) {
       callbacksRef.current.forEach((cb) => cb());
     }));
     return () => dispatch(stopTimer);
-  }, []);
+  }, [dispatch]);
 
   return (
     <ClockContext.Provider value={timerCallbacks}>

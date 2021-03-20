@@ -123,6 +123,7 @@ export default class PromptDialog extends React.Component {
                 icon={icon}
                 value={value}
                 onChange={this.handleInputChange}
+                onKeyDown={(e) => e.stopPropagation()}
               />
             </FormGroup>
             <FormGroup>

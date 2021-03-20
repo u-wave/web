@@ -1,0 +1,12 @@
+.ServerConfigGroupHeader-contents {
+  flex-grow: 1;
+}
+
+.ServerConfigGroupHeader-saveWarning {
+  color: #ff9800;
+  padding-inline-start: 12px;
+  padding-inline-end: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

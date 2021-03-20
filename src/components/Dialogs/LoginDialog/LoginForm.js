@@ -4,6 +4,7 @@ import { translate } from '@u-wave/react-translate';
 import EmailIcon from '@material-ui/icons/Email';
 import PasswordIcon from '@material-ui/icons/Lock';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Alert from '@material-ui/core/Alert';
 import Divider from '@material-ui/core/Divider';
 import Form from '../../Form';
 import FormGroup from '../../Form/Group';
@@ -62,7 +63,11 @@ class LoginForm extends React.Component {
 
     return (
       <Form className="LoginForm" onSubmit={this.handleSubmit}>
-        {error && <FormGroup>{error.message}</FormGroup>}
+        {error && (
+          <FormGroup>
+            <Alert severity="error">{error.message}</Alert>
+          </FormGroup>
+        )}
         {supportsSocialAuth && (
           <>
             <FormGroup>
@@ -72,24 +77,30 @@ class LoginForm extends React.Component {
           </>
         )}
         <FormGroup>
+          <label className="FormGroup-label" htmlFor="login-email">
+            {t('login.email')}
+          </label>
           <TextField
             ref={this.refEmail}
+            id="login-email"
             className="LoginForm-field"
             type="email"
             autoComplete="email"
-            placeholder={t('login.email')}
             icon={<EmailIcon htmlColor="#9f9d9e" />}
             autoFocus
           />
         </FormGroup>
 
         <FormGroup>
+          <label className="FormGroup-label" htmlFor="login-password">
+            {t('login.password')}
+          </label>
           <TextField
             ref={this.refPassword}
+            id="login-password"
             className="LoginForm-field"
             type="password"
             autoComplete="current-password"
-            placeholder={t('login.password')}
             icon={<PasswordIcon htmlColor="#9f9d9e" />}
           />
         </FormGroup>

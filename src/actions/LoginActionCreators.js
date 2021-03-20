@@ -102,7 +102,7 @@ export function login({ email, password }) {
     onComplete: (res) => (dispatch) => {
       Session.set(res.meta.jwt);
       dispatch(setSessionToken(res.meta.jwt));
-      dispatch(initState());
+      return dispatch(initState());
     },
     onError: (error) => ({
       type: LOGIN_COMPLETE,
@@ -110,6 +110,14 @@ export function login({ email, password }) {
       payload: error,
     }),
   });
+}
+
+export function registerCompleteError(error) {
+  return {
+    type: REGISTER_COMPLETE,
+    error: true,
+    payload: error,
+  };
 }
 
 export function register({
@@ -127,11 +135,7 @@ export function register({
       });
       dispatch(login({ email, password }));
     },
-    onError: (error) => ({
-      type: REGISTER_COMPLETE,
-      error: true,
-      payload: error,
-    }),
+    onError: registerCompleteError,
   });
 }
 

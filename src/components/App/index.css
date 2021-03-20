@@ -97,6 +97,7 @@ html:not([dir="rtl"]) .u-rtl-only {
 }
 
 .AppRow--middle {
+  flex-basis: 0;
   flex-grow: 1;
 }
 
@@ -105,6 +106,8 @@ html:not([dir="rtl"]) .u-rtl-only {
 }
 
 /* Make App-level overlays fit in an AppColumn--left */
-.Overlays .Overlay {
-  width: 75%;
+@media (min-width: 769px) {
+  .Overlays .Overlay {
+    width: 75%;
+  }
 }

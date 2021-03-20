@@ -2,7 +2,7 @@
 
 const path = require('path');
 
-module.exports = () => ({
+module.exports = {
   plugins: {
     'postcss-preset-env': {
       stage: 2,
@@ -20,4 +20,4 @@ module.exports = () => ({
       },
     },
   },
-});
+};

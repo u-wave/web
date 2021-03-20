@@ -8,6 +8,7 @@ async function prod() {
   const wpConfig = getConfig({
     production: process.env.NODE_ENV === 'production',
   }, {
+    profiling: process.env.PROFILING === '1',
     analyze: process.env.ANALYZE,
     demo: process.env.DEMO === '1',
     dualBundles: process.env.MODULES === '1',

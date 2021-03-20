@@ -26,7 +26,10 @@ function ModRowBase({
   onRemoveUser,
 }) {
   const [{ isDragging }, connectDragSource, connectDragPreview] = useDrag({
-    item: { type: WAITLIST_USER, user },
+    type: WAITLIST_USER,
+    item() {
+      return { user };
+    },
     end(item, monitor) {
       const result = monitor.getDropResult();
       if (item.user && result) {
@@ -41,7 +44,9 @@ function ModRowBase({
   const onOpenCard = useCallback((event) => {
     event.preventDefault();
     userCard.open();
-  });
+    // The `userCard.open` reference never changes.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (userCard.refAnchor.current) {

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from '@u-wave/react-translate';
+import Alert from '@material-ui/core/Alert';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import EmailIcon from '@material-ui/icons/Email';
 import Form from '../../Form';
@@ -67,14 +68,21 @@ class ResetPasswordForm extends React.Component {
 
     return (
       <Form className="ResetPasswordForm" onSubmit={this.handleSubmit}>
-        {error && <FormGroup>{error.message}</FormGroup>}
+        {error && (
+          <FormGroup>
+            <Alert severity="error">{error.message}</Alert>
+          </FormGroup>
+        )}
         <FormGroup>
+          <label className="FormGroup-label" htmlFor="reset-email">
+            {t('login.email')}
+          </label>
           <TextField
             ref={this.refEmail}
+            id="reset-email"
             className="ResetPasswordForm-field"
             type="email"
             autoComplete="email"
-            placeholder={t('login.email')}
             icon={<EmailIcon htmlColor="#9f9d9e" />}
           />
         </FormGroup>

@@ -10,6 +10,7 @@ uwave:
     nl: Nederlands (Dutch)
     pt: Português (Portuguese)
     zh: 繁體中文 (Traditional Mandarin)
+    ru: Русский (Russian)
 
   close: Close
   timeAgo:
@@ -112,6 +113,7 @@ uwave:
       title: Import
     search:
       action: Search
+      placeholder: Search query or URL
       results: "Search: {{query}}"
       noResults: No results found
       noResultsSub: Perhaps try another query?
@@ -204,6 +206,8 @@ uwave:
     username: Username
     email: E-mail
     password: Password
+    passwordConfirmation: Confirm Password
+    passwordMismatch: 'Your password does not match your confirmation.'
     forgotPassword: Forgot Password?
     requestPasswordReset: Reset Password
     passwordResetSent: "We've sent an email to that address with password reset instructions."
@@ -230,6 +234,12 @@ uwave:
       actions: Actions
       unban: Unban
       noReason: No reason given.
+    config:
+      save: Save
+      saved: Saved
+      unsavedChanges: Unsaved changes
+      array:
+        append: Add
 
   youtube:
     name: YouTube
