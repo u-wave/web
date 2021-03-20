@@ -1,6 +1,6 @@
 .WaitlistRow {
   &.is-dragging {
-    display: none;
+    visibility: hidden;
   }
 }
 

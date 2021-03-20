@@ -34,12 +34,9 @@
 }
 
 .WaitlistRow--dropAbove {
-  padding-top: 40px;
   border-top: 3px solid #fff;
-  height: 80px;
 }
 
 .WaitlistRow--dropBelow {
-  margin-bottom: 40px;
   border-bottom: 3px solid #fff;
 }
