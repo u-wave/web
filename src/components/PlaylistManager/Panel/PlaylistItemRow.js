@@ -8,6 +8,11 @@ import MediaSourceIcon from '../../MediaList/MediaSourceIcon';
 import MediaThumbnail from '../../MediaList/MediaThumbnail';
 import PlaylistItemActions from './PlaylistItemActions';
 
+const {
+  useCallback,
+  useState,
+} = React;
+
 function PlaylistItemRow({
   className,
   style,
@@ -17,16 +22,27 @@ function PlaylistItemRow({
   onClick,
 }) {
   const loadingClass = media.loading ? 'is-loading' : '';
+  const [showActions, setShowActions] = useState(false);
 
-  // Wrapper div to make sure that hovering the drop indicator
-  // does not change the hover state to a different element, which
-  // would cause thrashing.
+  // We need `onMouseOver` instead of `onMouseEnter` because we may enter
+  // a playlist item row because the one above it was deleted; in that case,
+  // `onMouseEnter` does not trigger, but `onMouseOver` does
+  const handleMouseOver = useCallback(() => {
+    setShowActions(true);
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    setShowActions(false);
+  }, []);
+
   return (
     <MediaRowBase
       className={cx(className, loadingClass)}
       style={style}
       containerRef={containerRef}
       media={media}
+      onMouseOver={handleMouseOver}
+      onMouseLeave={handleMouseLeave}
       onClick={onClick}
     >
       {media.loading ? (
@@ -48,11 +64,13 @@ function PlaylistItemRow({
       <div className="MediaListRow-icon">
         <MediaSourceIcon sourceType={media.sourceType} />
       </div>
-      <PlaylistItemActions
-        className="MediaListRow-actions"
-        index={index}
-        media={media}
-      />
+      {showActions ? (
+        <PlaylistItemActions
+          className="MediaListRow-actions"
+          index={index}
+          media={media}
+        />
+      ) : null}
     </MediaRowBase>
   );
 }
