@@ -1,6 +1,6 @@
 .WaitlistRow {
   &.is-dragging {
-    display: none;
+    visibility: hidden;
   }
 }
 
@@ -13,11 +13,4 @@
   background-color: transparent;
   color: var(--text-color);
   font-size: 12pt;
-}
-
-.WaitlistRow-drop-indicator {
-  border-top: 3px solid #fff;
-  background: transparent;
-  height: 37px;
-  width: 100%;
 }

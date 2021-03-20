@@ -10,6 +10,15 @@
   text-overflow: ellipsis;
 }
 
+/* Set background colours so it looks OK while dragging. */
+.WaitlistRow-card {
+  background: var(--user-list-color);
+}
+
+.UserList-row--alternate .WaitlistRow-card {
+  background: var(--user-list-alternate-color);
+}
+
 .WaitlistRow-tools {
   float: right;
   height: 100%;
@@ -31,4 +40,12 @@
 
 .WaitlistRow-remove {
   cursor: pointer;
+}
+
+.WaitlistRow--dropAbove {
+  border-top: 3px solid #fff;
+}
+
+.WaitlistRow--dropBelow {
+  border-bottom: 3px solid #fff;
 }
