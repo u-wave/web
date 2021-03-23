@@ -8,7 +8,7 @@ global.document = dom.window.document;
 global.navigator = dom.window.navigator;
 
 const enzyme = require('enzyme');
-const Adapter = require('enzyme-adapter-react-16');
+const Adapter = require('@eps1lon/enzyme-adapter-react-17');
 
 require('@babel/register');
 require('yaml-hook/register');
