@@ -67,7 +67,7 @@
     "qs-stringify": "^1.2.0",
     "raf": "^3.4.1",
     "react": "^17.0.2",
-    "react-abstract-autocomplete": "^2.0.0",
+    "react-abstract-autocomplete": "^2.0.2",
     "react-bus": "^3.0.0",
     "react-dnd": "^14.0.2",
     "react-dnd-html5-backend": "^14.0.0",
