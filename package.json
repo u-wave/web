@@ -24,7 +24,7 @@
     "@material-ui/utils": "5.0.0-alpha.27",
     "@openfonts/open-sans_all": "^1.44.2",
     "@u-wave/react-server-list": "5.0.0-alpha.6",
-    "@u-wave/react-translate": "^2.0.0",
+    "@u-wave/react-translate": "^2.0.1",
     "@u-wave/react-youtube": "^0.7.2",
     "@u-wave/translate": "^1.0.0",
     "abortcontroller-polyfill": "^1.7.1",
