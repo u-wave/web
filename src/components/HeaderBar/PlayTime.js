@@ -9,9 +9,9 @@ function PlayTime({ className, startTime, mediaDuration }) {
   const currentElapsed = currentTime - startTime;
   return (
     <span className={cx('Timer', className)}>
-       {formatDuration(currentElapsed)} / {formatDuration(mediaDuration*1000)}
-     </span>
-   );
+      {formatDuration(currentElapsed)} / {formatDuration(mediaDuration * 1000)}
+    </span>
+  );
 }
 
 PlayTime.propTypes = {
