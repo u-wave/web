@@ -7,6 +7,8 @@ import {
   mediaSelector,
   mediaProgressSelector,
   timeRemainingSelector,
+  startTimeSelector,
+  mediaDurationSelector,
 } from '../selectors/boothSelectors';
 import { volumeSelector, isMutedSelector } from '../selectors/settingSelectors';
 import HeaderBar from '../components/HeaderBar';
@@ -18,6 +20,8 @@ const mapStateToProps = createStructuredSelector({
   dj: djSelector,
   volume: volumeSelector,
   muted: isMutedSelector,
+  startTime: startTimeSelector,
+  mediaDuration: mediaDurationSelector,
 });
 
 const mapDispatchToProps = {

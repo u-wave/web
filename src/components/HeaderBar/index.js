@@ -17,6 +17,8 @@ const HeaderBar = ({
   mediaTimeRemaining,
   volume,
   muted,
+  startTime,
+  mediaDuration,
   onVolumeChange,
   onVolumeMute,
   onVolumeUnmute,
@@ -36,7 +38,7 @@ const HeaderBar = ({
     </AppTitle>
     <div className="HeaderBar-nowPlaying">
       <CurrentMedia className="HeaderBar-media" media={media} />
-      {dj && <CurrentDJ className="HeaderBar-dj" dj={dj} />}
+      {dj && <CurrentDJ className="HeaderBar-dj" dj={dj} startTime={startTime} mediaDuration={mediaDuration} />}
     </div>
     {media && (
       <Progress
