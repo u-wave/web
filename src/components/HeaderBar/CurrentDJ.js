@@ -15,6 +15,8 @@ CurrentDJ.propTypes = {
   dj: PropTypes.shape({
     username: PropTypes.string.isRequired,
   }),
+  startTime: PropTypes.number.isRequired,
+  mediaDuration: PropTypes.number.isRequired,
 };
 
 export default translate()(CurrentDJ);
