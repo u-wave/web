@@ -72,6 +72,8 @@ HeaderBar.propTypes = {
   mediaTimeRemaining: PropTypes.number.isRequired,
   volume: PropTypes.number,
   muted: PropTypes.bool,
+  startTime: PropTypes.number,
+  mediaDuration: PropTypes.number,
 
   onVolumeChange: PropTypes.func,
   onVolumeMute: PropTypes.func,
