@@ -10,8 +10,8 @@ import {
 import { muteUser, unmuteUser } from '../../actions/ModerationActionCreators';
 
 register(
-  'mute',
-  'Mute a user in chat, preventing them from chatting. Syntax: "/mute username duration"',
+  'muteuser',
+  'Mute a user in chat, preventing them from chatting. Syntax: "/muteuser username duration"',
   {
     guard: isModeratorSelector,
     action: (username, duration = '30m') => (dispatch, getState) => {
@@ -31,8 +31,8 @@ register(
 );
 
 register(
-  'unmute',
-  'Unmute a user in chat. Syntax: "/unmute username"',
+  'unmuteuser',
+  'Unmute a user in chat. Syntax: "/unmuteuser username"',
   {
     guard: isModeratorSelector,
     action: (username) => (dispatch, getState) => {
