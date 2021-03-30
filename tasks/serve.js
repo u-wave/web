@@ -22,8 +22,8 @@ function waitForBuild(devMiddleware) {
 }
 
 function serve(done) {
-  const port = env.port || 6041;
-  const serverPort = env.serverPort || 6042;
+  const port = 8081;
+  const serverPort = 8082;
   const watch = env.watch || false;
 
   console.log(chalk.grey('client'), `starting on port ${port}`);
@@ -37,7 +37,7 @@ function serve(done) {
   app.listen(port);
 
   const apiUrl = '/api';
-  const socketUrl = `ws://localhost:${serverPort}`;
+  const socketUrl = `ws://pluggo.duckdns.org:${serverPort}`;
 
   app.use(apiUrl, createProxyMiddleware({
     target: process.env.SERVER_URL || `http://localhost:${serverPort}/`,

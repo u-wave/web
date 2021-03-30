@@ -35,8 +35,8 @@ uwave:
     title: Chat
     placeholder: Click here to chat!
     label: Chat message
-    userJoin: "{{username}} joined the room"
-    userLeave: "{{username}} left the room"
+    userJoin: "ey es el {{username}}"
+    userLeave: "bai {{username}}"
     userNameChanged: "{{username}} changed their nickname to {{newUsername}}"
     modSkip: "{{username}} skipped {{djName}}'s turn"
     modSkipReason: "{{username}} skipped {{djName}}'s turn: {{reason}}"

@@ -14,8 +14,8 @@ uwave:
   chat:
     title: Chat
     placeholder: Haz click aquí para usar el chat!
-    userJoin: "{{username}} Entró a la sala"
-    userLeave: "{{username}} Salió de la sala"
+    userJoin: "ey es el {{username}}"
+    userLeave: "bai {{username}}"
     userNameChanged: "{{username}} cambió su apodo a {{newUsername}}"
 
   dialogs:
