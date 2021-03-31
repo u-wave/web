@@ -6,8 +6,8 @@
   "license": "MIT",
   "repository": "u-wave/web",
   "engines": {
-    "node": ">= 10",
-    "npm": ">= 5"
+    "node": ">= 12",
+    "npm": "7.x"
   },
   "dependencies": {
     "@babel/runtime": "^7.13.10",
