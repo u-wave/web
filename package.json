@@ -180,6 +180,7 @@
     "serve": "node tasks/serve",
     "start": "npm run dev",
     "prerelease": "npm run clean && npm test && npm run prod",
-    "postpublish": "npm publish packages/u-wave-web-middleware"
+    "postpublish": "npm publish packages/u-wave-web-middleware",
+    "deployar": "./deploy.sh"
   }
 }

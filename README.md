@@ -68,6 +68,14 @@ you can use the standalone `serve` script:
 npm run serve
 ```
 
+## Deploying to pluggo.duckdns.org
+
+Remember to have the ssh keys installed in your `.ssh` dir
+
+``` bash
+npm run deployar
+```
+
 ## Server API
 
 ```js
