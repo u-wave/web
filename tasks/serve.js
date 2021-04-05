@@ -3,8 +3,10 @@
 /* eslint-disable global-require */
 require('make-promises-safe');
 const path = require('path');
+const fs = require('fs');
 const chalk = require('chalk');
 const emojione = require('u-wave-web-emojione');
+const serveStatic = require('serve-static');
 const recaptchaTestKeys = require('recaptcha-test-keys');
 const express = require('express');
 const { createProxyMiddleware } = require('http-proxy-middleware');
@@ -42,7 +44,15 @@ function serve(done) {
   app.use(apiUrl, createProxyMiddleware({
     target: process.env.SERVER_URL || `http://localhost:${serverPort}/`,
   }));
-  app.use('/assets/emoji/', emojione.middleware());
+
+  app.use('/assets/emoji', serveStatic(path.join(__dirname, '../assets/fiesta')));
+  app.use('/assets/emoji', emojione.middleware());
+
+  const fiesta = {};
+
+  fs.readdirSync(path.join(__dirname, '../assets/fiesta')).forEach((file) => {
+    fiesta[file.replace(/\..*/, '')] = file;
+  });
 
   if (watch) {
     const compiler = webpack(wpConfig);
@@ -55,7 +65,7 @@ function serve(done) {
       webClient = createWebClient({
         apiUrl,
         socketUrl,
-        emoji: emojione.emoji,
+        emoji: { ...emojione.emoji, ...fiesta },
         title: 'üWave (Development)',
         basePath: path.join(__dirname, '../packages/u-wave-web-middleware/public'),
         publicPath: '/',
@@ -81,7 +91,7 @@ function serve(done) {
     const webClient = createWebClient({
       apiUrl,
       socketUrl,
-      emoji: emojione.emoji,
+      emoji: { ...emojione.emoji, ...fiesta },
       basePath: path.join(__dirname, '../packages/u-wave-web-middleware/public'),
       recaptcha: { key: recaptchaTestKeys.sitekey },
     });
