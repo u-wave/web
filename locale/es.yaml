@@ -15,6 +15,7 @@ uwave:
     title: Chat
     placeholder: Haz click aquí para usar el chat!
     userJoin: "ey es el {{username}}"
+    femaleUserJoin: "ey es la {{username}}"
     userLeave: "bai {{username}}"
     userNameChanged: "{{username}} cambió su apodo a {{newUsername}}"
 

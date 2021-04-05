@@ -9,7 +9,7 @@ const JoinMessage = ({
   <UserNotificationMessage
     type="userJoin"
     className="ChatMessage--userJoin"
-    i18nKey="chat.userJoin"
+    i18nKey={user.username === 'Huaygua' ? 'chat.femaleUserJoin' : 'chat.userJoin'}
     user={user}
     timestamp={timestamp}
   />
