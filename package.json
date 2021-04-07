@@ -6,8 +6,8 @@
   "license": "MIT",
   "repository": "u-wave/web",
   "engines": {
-    "node": ">= 10",
-    "npm": ">= 5"
+    "node": ">= 12",
+    "npm": "7.x"
   },
   "dependencies": {
     "@babel/runtime": "^7.13.10",
@@ -149,7 +149,7 @@
     "postcss-preset-env": "^6.7.0",
     "recaptcha-test-keys": "^1.0.0",
     "rimraf": "^3.0.0",
-    "sinon": "^9.2.4",
+    "sinon": "^10.0.0",
     "style-loader": "^2.0.0",
     "stylelint": "^13.11.0",
     "stylelint-config-standard": "^21.0.0",
