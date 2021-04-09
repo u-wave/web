@@ -30,7 +30,7 @@ function SkipMessage({
       i18nKey={getLangKey(!!moderator, !!reason)}
       user={moderator || user}
       djName={toUsername(user)}
-      reason={reason ? t(`booth.skip.reasons.${reason}`) : undefined}
+      reason={reason}
       timestamp={timestamp}
     />
   );
