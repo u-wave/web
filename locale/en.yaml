@@ -130,6 +130,7 @@ uwave:
     leave: Leave Waitlist
 
   votes:
+    sadvote: Sadvote
     upvote: Upvote
     downvote: Downvote
     favorite: Favorite

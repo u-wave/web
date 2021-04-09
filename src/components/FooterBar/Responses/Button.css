@@ -50,3 +50,7 @@
 .ResponseButton-icon--upvoted {
   color: #4bb64b;
 }
+
+.ResponseButton-icon--sadvoted {
+  color: #497bb5;
+}

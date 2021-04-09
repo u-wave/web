@@ -22,6 +22,7 @@ function RoomUserListContainer({ className }) {
         upvote: votes.upvotes.includes(user._id),
         downvote: votes.downvotes.includes(user._id),
         favorite: votes.favorites.includes(user._id),
+        sadvote: votes.sadvotes.includes(user._id),
       },
     }))
   ), [users, votes]);

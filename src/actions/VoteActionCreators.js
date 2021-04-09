@@ -4,9 +4,9 @@ import { playlistsSelector } from '../selectors/playlistSelectors';
 import {
   OPEN_ADD_MEDIA_MENU,
   LOAD_VOTES,
-  FAVORITE, UPVOTE, DOWNVOTE,
+  FAVORITE, UPVOTE, DOWNVOTE, SADVOTE,
   DO_FAVORITE_START, DO_FAVORITE_COMPLETE,
-  DO_UPVOTE, DO_DOWNVOTE,
+  DO_UPVOTE, DO_DOWNVOTE, DO_SADVOTE,
 } from '../constants/ActionTypes';
 import mergeIncludedModels from '../utils/mergeIncludedModels';
 import { flattenPlaylistItem } from './PlaylistActionCreators';
@@ -26,21 +26,28 @@ export function favorited({ userID, historyID }) {
 }
 
 export function receiveVote({ userID, vote: direction }) {
-  const type = direction > 0 ? UPVOTE : DOWNVOTE;
+  const type = { '-1': DOWNVOTE, 1: UPVOTE, 2: SADVOTE };
   return {
-    type,
+    type: type[direction],
     payload: { userID },
   };
 }
 
 export function vote({ historyID, direction }) {
-  const type = direction > 0 ? DO_UPVOTE : DO_DOWNVOTE;
+  const type = { '-1': DO_DOWNVOTE, 1: DO_UPVOTE, 2: DO_SADVOTE };
   return put(`/booth/${historyID}/vote`, { direction }, {
     onStart: () => ({
-      type,
+      type: type[direction],
       payload: { historyID },
     }),
   });
+}
+
+export function doSadvote() {
+  return (dispatch, getState) => {
+    const historyID = historyIDSelector(getState());
+    dispatch(vote({ historyID, direction: 2 }));
+  };
 }
 
 export function doUpvote() {

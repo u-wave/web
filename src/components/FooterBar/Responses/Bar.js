@@ -3,14 +3,22 @@ import PropTypes from 'prop-types';
 import Favorite from './Favorite';
 import Upvote from './Upvote';
 import Downvote from './Downvote';
+import Sadvote from './Sadvote';
 
 const ResponseBar = ({
   disabled = false,
+  isSadvote, sadvotesCount, onSadvote,
   isUpvote, upvotesCount, onUpvote,
   isDownvote, downvotesCount, onDownvote,
   isFavorite, favoritesCount, onFavorite,
 }) => (
   <div className="AudienceResponse">
+    <Sadvote
+      disabled={disabled}
+      onSadvote={onSadvote}
+      count={sadvotesCount}
+      active={isSadvote}
+    />
     <Upvote
       disabled={disabled}
       onUpvote={onUpvote}
@@ -34,14 +42,17 @@ const ResponseBar = ({
 
 ResponseBar.propTypes = {
   disabled: PropTypes.bool,
+  isSadvote: PropTypes.bool,
   isUpvote: PropTypes.bool,
   isFavorite: PropTypes.bool,
   isDownvote: PropTypes.bool,
 
+  sadvotesCount: PropTypes.number.isRequired,
   upvotesCount: PropTypes.number.isRequired,
   favoritesCount: PropTypes.number.isRequired,
   downvotesCount: PropTypes.number.isRequired,
 
+  onSadvote: PropTypes.func.isRequired,
   onUpvote: PropTypes.func.isRequired,
   onFavorite: PropTypes.func.isRequired,
   onDownvote: PropTypes.func.isRequired,

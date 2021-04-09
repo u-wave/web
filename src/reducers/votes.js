@@ -5,6 +5,7 @@ import {
   FAVORITE,
   UPVOTE,
   DOWNVOTE,
+  SADVOTE,
   DO_FAVORITE_START,
   DO_FAVORITE_COMPLETE,
 } from '../constants/ActionTypes';
@@ -12,6 +13,7 @@ import {
 const initialState = {
   upvotes: [],
   downvotes: [],
+  sadvotes: [],
   favorites: [],
 };
 
@@ -20,6 +22,7 @@ function setVotes(state, stats) {
     ...state,
     upvotes: stats.upvotes,
     downvotes: stats.downvotes,
+    sadvotes: stats.sadvotes,
     favorites: stats.favorites,
   };
 }
@@ -46,6 +49,7 @@ export default function reduce(state = initialState, action = {}) {
         ...state,
         upvotes: [...state.upvotes, payload.userID],
         downvotes: state.downvotes.filter((vote) => vote !== payload.userID),
+        sadvotes: state.sadvotes.filter((vote) => vote !== payload.userID),
       };
     case DOWNVOTE:
       if (state.downvotes.includes(payload.userID)) {
@@ -55,6 +59,17 @@ export default function reduce(state = initialState, action = {}) {
         ...state,
         upvotes: state.upvotes.filter((vote) => vote !== payload.userID),
         downvotes: [...state.downvotes, payload.userID],
+        sadvotes: state.sadvotes.filter((vote) => vote !== payload.userID),
+      };
+    case SADVOTE:
+      if (state.sadvotes.includes(payload.userID)) {
+        return state;
+      }
+      return {
+        ...state,
+        upvotes: state.upvotes.filter((vote) => vote !== payload.userID),
+        downvotes: state.downvotes.filter((vote) => vote !== payload.userID),
+        sadvotes: [...state.sadvotes, payload.userID],
       };
     case FAVORITE:
       if (state.favorites.includes(payload.userID)) {

@@ -6,7 +6,9 @@ import { skipSelf } from '../../actions/BoothActionCreators';
 import { skipCurrentDJ as modSkipCurrentDJ } from '../../actions/ModerationActionCreators';
 import { togglePlaylistManager, toggleSettings } from '../../actions/OverlayActionCreators';
 import { joinWaitlist, leaveWaitlist } from '../../actions/WaitlistActionCreators';
-import { openFavoriteMenu, doUpvote, doDownvote } from '../../actions/VoteActionCreators';
+import {
+  openFavoriteMenu, doSadvote, doUpvote, doDownvote,
+} from '../../actions/VoteActionCreators';
 import {
   djSelector,
   isCurrentDJSelector,
@@ -54,6 +56,9 @@ function UserFooterContent() {
   }, [dispatch]);
   const handleFavorite = useCallback((position) => {
     dispatch(openFavoriteMenu(position));
+  }, [dispatch]);
+  const handleSadvote = useCallback(() => {
+    dispatch(doSadvote());
   }, [dispatch]);
   const handleUpvote = useCallback(() => {
     dispatch(doUpvote());
@@ -112,6 +117,7 @@ function UserFooterContent() {
         <ResponseBar
           disabled={!canVote}
           onFavorite={handleFavorite}
+          onSadvote={handleSadvote}
           onUpvote={handleUpvote}
           onDownvote={handleDownvote}
           {...voteStats}
