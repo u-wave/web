@@ -1,10 +1,14 @@
 {
-  "name": "u-wave-web",
+  "name": "u-wave-web-build",
+  "private": true,
   "version": "1.11.6",
   "description": "Web client for üWave servers.",
   "author": "Renée Kooi <renee@kooi.me>",
   "license": "MIT",
-  "repository": "u-wave/web",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/u-wave/web"
+  },
   "engines": {
     "node": ">= 12",
     "npm": "7.x"
@@ -175,10 +179,10 @@
     "prod": "cross-env NODE_ENV=production node tasks/prod",
     "analyze": "cross-env ANALYZE=1 npm run prod",
     "dev": "cross-env DEBUG=uwave:* node tasks/serve --watch",
-    "clean": "rimraf packages/u-wave-web-middleware/public",
+    "clean": "rimraf npm/public",
     "serve": "node tasks/serve",
     "start": "npm run dev",
     "prerelease": "npm run clean && npm test && npm run prod",
-    "postpublish": "npm publish packages/u-wave-web-middleware"
+    "postpublish": "npm publish npm"
   }
 }

@@ -57,7 +57,7 @@ function serve(done) {
         socketUrl,
         emoji: emojione.emoji,
         title: 'üWave (Development)',
-        basePath: path.join(__dirname, '../packages/u-wave-web-middleware/public'),
+        basePath: path.join(__dirname, '../npm/public'),
         publicPath: '/',
         // Point u-wave-web middleware to the virtual webpack filesystem.
         fs: dev.context.outputFileSystem,
@@ -82,7 +82,7 @@ function serve(done) {
       apiUrl,
       socketUrl,
       emoji: emojione.emoji,
-      basePath: path.join(__dirname, '../packages/u-wave-web-middleware/public'),
+      basePath: path.join(__dirname, '../npm/public'),
       recaptcha: { key: recaptchaTestKeys.sitekey },
     });
 
