@@ -25,6 +25,7 @@ function ShuffleButton({ onShuffle }) {
       <IconButton
         className="PlaylistMeta-iconButton"
         onClick={onClick}
+        disabled={isLoading}
       >
         {isLoading ? (
           <CircularProgress size={HARDCODED_LOADING_SIZE} />

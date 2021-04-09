@@ -11,7 +11,6 @@ const es2015Deps = [
   /\/min-indent\//,
   /\/nanoid\//,
   /\/strip-indent\//,
-  /\/use-mediaquery\//,
   /\/@material-ui\/core\/modern\//,
   /\/@material-ui\/icons\/esm\//,
   /\/@material-ui\/styles\/modern\//,
