@@ -258,7 +258,7 @@ class UwaveSocket {
     }, () => {
       this.reconnectTimeout = setTimeout(
         this.attemptReconnect,
-        Math.min(1000 * this.reconnectAttempts, 10000),
+        2000
       );
     });
   };
