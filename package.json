@@ -122,7 +122,7 @@
     "copy-webpack-plugin": "^8.1.1",
     "cross-env": "^7.0.3",
     "css-loader": "^5.2.1",
-    "css-minimizer-webpack-plugin": "^1.2.0",
+    "css-minimizer-webpack-plugin": "^2.0.0",
     "ejs": "^3.1.5",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",
