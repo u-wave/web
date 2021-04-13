@@ -21,3 +21,7 @@
 .UserRow-voteIcon--upvote {
   color: #4bb64b;
 }
+
+.UserRow-voteIcon--sadvote {
+  color: #497bb5;
+}
