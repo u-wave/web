@@ -47,7 +47,7 @@ function getConfig(env, {
   analyze,
   dualBundles = false,
 }) {
-  const outputPackage = path.join(__dirname, 'packages/u-wave-web-middleware');
+  const outputPackage = path.join(__dirname, 'npm');
 
   const plugins = [];
 
