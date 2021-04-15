@@ -1,7 +1,7 @@
 {
   "name": "u-wave-web-build",
   "private": true,
-  "version": "1.11.6",
+  "version": "2.0.0-alpha.0",
   "description": "Web client for üWave servers.",
   "author": "Renée Kooi <renee@kooi.me>",
   "license": "MIT",
