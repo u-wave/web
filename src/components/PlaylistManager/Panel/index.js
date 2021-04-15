@@ -13,6 +13,7 @@ import RemoveFromPlaylistAction from '../../MediaList/Actions/RemoveFromPlaylist
 import EditMediaAction from '../../MediaList/Actions/EditMedia';
 import MoveToFirstAction from '../../MediaList/Actions/MoveToFirst';
 import MoveToLastAction from '../../MediaList/Actions/MoveToLast';
+import PreviewAction from '../../MediaList/Actions/Preview';
 
 const makeActions = ({
   onOpenAddMediaMenu,
@@ -20,9 +21,11 @@ const makeActions = ({
   onMoveToLast,
   onEditMedia,
   onRemoveFromPlaylist,
+  onOpenPreviewMediaDialog,
   isFiltered,
 }) => (media, selection, index) => (
   <>
+    <PreviewAction onPreview={() => onOpenPreviewMediaDialog(media)} />
     <AddToPlaylistAction onAdd={(position) => onOpenAddMediaMenu(position, media, selection)} />
     {/* Don't show the "move to first" action on the first item in the playlist.
       * If the playlist is filtered we don't know if the first item to show is

@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useTranslator } from '@u-wave/react-translate';
 import Username from '../../Username';
 import UserNotificationMessage from './UserNotificationMessage';
 
@@ -21,8 +20,6 @@ function SkipMessage({
   reason,
   timestamp,
 }) {
-  const { t } = useTranslator();
-
   return (
     <UserNotificationMessage
       type="skip"

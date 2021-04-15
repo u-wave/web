@@ -25,7 +25,6 @@ function Row({
   selected = false,
   selection,
   onClick,
-  onOpenPreviewMediaDialog,
   makeActions,
 }) {
   const [, drag, connectDragPreview] = useDrag({
@@ -40,10 +39,6 @@ function Row({
       onClick();
     }
   }, [onClick]);
-
-  const handleDoubleClick = useCallback(() => {
-    onOpenPreviewMediaDialog(media);
-  }, [onOpenPreviewMediaDialog, media]);
 
   useEffect(() => {
     connectDragPreview(getEmptyImage());
@@ -73,7 +68,6 @@ function Row({
     <div
       className={cx('MediaListRow', className, selectedClass, loadingClass)}
       style={style}
-      onDoubleClick={handleDoubleClick}
       onKeyPress={handleKeyPress}
       onClick={onClick}
       ref={drag}
@@ -119,7 +113,6 @@ Row.propTypes = {
   note: PropTypes.node,
   selected: PropTypes.bool,
   selection: PropTypes.array,
-  onOpenPreviewMediaDialog: PropTypes.func,
   onClick: PropTypes.func,
   makeActions: PropTypes.func,
 };
