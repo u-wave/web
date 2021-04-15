@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const createWebClient = require('../middleware');
+const createWebClient = require('..').default;
 const express = require('express');
 const argv = require('minimist')(process.argv.slice(2));
 const envSchema = require('env-schema');
