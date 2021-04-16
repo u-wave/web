@@ -55,6 +55,9 @@ class MiddlewarePackageJsonPlugin {
         },
         type: 'commonjs',
         main: './middleware/index.js',
+        bin: {
+          'u-wave-web': './bin/u-wave-web',
+        },
         engines: pkg.engines,
         dependencies,
       };

@@ -1,17 +1,10 @@
 {
   "name": "u-wave-web-build",
-  "private": true,
-  "version": "2.0.0-alpha.0",
   "description": "Web client for üWave servers.",
+  "version": "2.0.0-alpha.0",
   "author": "Renée Kooi <renee@kooi.me>",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/u-wave/web"
-  },
-  "engines": {
-    "node": ">= 12",
-    "npm": "7.x"
+  "bin": {
+    "u-wave-web": "bin/u-wave-web"
   },
   "dependencies": {
     "@babel/runtime": "^7.13.10",
@@ -171,19 +164,29 @@
     "yaml-hook": "^1.0.0",
     "yaml-loader": "^0.6.0"
   },
+  "engines": {
+    "node": ">= 12",
+    "npm": "7.x"
+  },
+  "license": "MIT",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/u-wave/web"
+  },
   "scripts": {
-    "lint": "eslint --cache . && stylelint --cache src/**/*.css",
-    "test:mocha": "cross-env NODE_ENV=testing mocha --require test/common.js src/**/__tests__/**/*.js",
-    "test:cov": "nyc npm run test:mocha",
-    "test": "npm run test:cov && npm run lint",
-    "test:check-coverage": "nyc report -r text && nyc check-coverage",
-    "prod": "cross-env NODE_ENV=production node tasks/prod",
     "analyze": "cross-env ANALYZE=1 npm run prod",
-    "dev": "cross-env DEBUG=uwave:* node tasks/serve --watch",
     "clean": "rimraf npm/public",
+    "dev": "cross-env DEBUG=uwave:* node tasks/serve --watch",
+    "lint": "eslint --cache . && stylelint --cache src/**/*.css",
+    "postpublish": "npm publish npm",
+    "prerelease": "npm run clean && npm test && npm run prod",
+    "prod": "cross-env NODE_ENV=production node tasks/prod",
     "serve": "node tasks/serve",
     "start": "npm run dev",
-    "prerelease": "npm run clean && npm test && npm run prod",
-    "postpublish": "npm publish npm"
+    "test": "npm run test:cov && npm run lint",
+    "test:check-coverage": "nyc report -r text && nyc check-coverage",
+    "test:cov": "nyc npm run test:mocha",
+    "test:mocha": "cross-env NODE_ENV=testing mocha --require test/common.js src/**/__tests__/**/*.js"
   }
 }
