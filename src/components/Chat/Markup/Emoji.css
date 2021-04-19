@@ -1,6 +1,6 @@
 .Emoji {
   /* Same size as the surrounding text */
-  height: 3em;
+  height: 10em;
   background-size: contain;
   background-position: center center;
   background-repeat: no-repeat;
