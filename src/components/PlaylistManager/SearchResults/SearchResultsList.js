@@ -2,22 +2,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import MediaList from '../../MediaList';
 import AddToPlaylistAction from '../../MediaList/Actions/AddToPlaylist';
+import PreviewAction from '../../MediaList/Actions/Preview';
 import SearchResultRow from './ResultRow';
-
-const {
-  useCallback,
-} = React;
 
 function SearchResultsList({
   results,
   onOpenAddMediaMenu,
   onOpenPreviewMediaDialog,
 }) {
-  const makeActions = useCallback((media, selection) => (
-    <AddToPlaylistAction
-      onAdd={(position) => onOpenAddMediaMenu(position, media, selection)}
-    />
-  ), [onOpenAddMediaMenu]);
+  const makeActions = (media, selection) => (
+    <>
+      <PreviewAction onPreview={() => onOpenPreviewMediaDialog(media)} />
+      <AddToPlaylistAction
+        onAdd={(position) => onOpenAddMediaMenu(position, media, selection)}
+      />
+    </>
+  );
 
   return (
     <MediaList
