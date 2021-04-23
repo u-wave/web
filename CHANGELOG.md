@@ -4,17 +4,29 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased
+## 2.0.0-alpha.0 / 15 Apr 2021
+While this is an alpha release, new servers should use this rather than an older "stable" version.
+
+Massive thanks to @eyes-0nly, @pledi and @uriell for their contributions to this release!
+
 Features:
  * **Breaking:** Create a separate u-wave-web-middleware package. (#1018)
  * **Breaking:** Remove `uw` argument from middleware API.
+ * Added Russian translation. (#1869)
  * Add intro screen if user has no playlists. (#1034)
  * Use Intl APIs for date and time formatting if available. (#1234)
  * New app loading screen. (#1285)
  * In search results, show playlists a song is already in. (#1363)
+ * Add runtime configuration panel. (#1659)
+ * Add an executable to run the web client without writing glue code. (#1998)
+ * Use proper labels in login/signup forms. (#1919)
+ * Support emojis specified as full URLs. (#1861)
+ * Add password confirmation during registration. (#1874)
 
 Bugfixes:
+ * **Breaking:** Changed `/mute` command to `/muteuser`. (#1958)
  * Fix default message for forced DJ skips. (#1336)
+ * Fix race condition in WebSocket authentication. (#1860)
 
 Internal:
  * Rewrite AddToPlaylistMenu using hooks. (#1233)
@@ -32,6 +44,8 @@ Internal:
  * **Breaking:** Implement votes using HTTP requests. (#1302)
  * Remove unused `.selected` property from playlists. (#1405)
  * Use mui FormControl components in the SettingsManager. (#1414)
+ * Self-host Open Sans font. (#1443)
+ * Hide elements that may overlay embedded players. (#1856)
 
 ## 1.11.6 / 01 Sep 2018
 Bugfixes:

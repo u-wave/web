@@ -1,17 +1,10 @@
 {
   "name": "u-wave-web-build",
-  "private": true,
-  "version": "1.11.6",
   "description": "Web client for üWave servers.",
+  "version": "2.0.0-alpha.0",
   "author": "Renée Kooi <renee@kooi.me>",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/u-wave/web"
-  },
-  "engines": {
-    "node": ">= 12",
-    "npm": "7.x"
+  "bin": {
+    "u-wave-web": "bin/u-wave-web"
   },
   "dependencies": {
     "@babel/runtime": "^7.13.10",
@@ -41,6 +34,7 @@
     "deepmerge": "^4.2.2",
     "dlv": "^1.1.3",
     "dset": "^3.0.0",
+    "env-schema": "^3.0.1",
     "es6-promise": "^4.2.8",
     "es6-symbol": "^3.1.3",
     "escape-string-regexp": "^4.0.0",
@@ -122,7 +116,7 @@
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^8.1.1",
     "cross-env": "^7.0.3",
-    "css-loader": "^5.2.1",
+    "css-loader": "^5.2.2",
     "css-minimizer-webpack-plugin": "^2.0.0",
     "ejs": "^3.1.5",
     "enzyme": "^3.11.0",
@@ -139,13 +133,13 @@
     "fetch-mock": "^9.11.0",
     "html-loader": "^2.0.0",
     "html-webpack-plugin": "^5.2.0",
-    "http-proxy-middleware": "^1.1.1",
+    "http-proxy-middleware": "^1.2.0",
     "image-webpack-loader": "^7.0.1",
     "jsdom": "^16.5.3",
     "lodash": "^4.17.19",
     "make-promises-safe": "^5.1.0",
-    "mini-css-extract-plugin": "^1.4.1",
-    "minimist": "^1.2.0",
+    "mini-css-extract-plugin": "^1.5.0",
+    "minimist": "^1.2.5",
     "mocha": "^8.2.0",
     "nyc": "^15.1.0",
     "postcss": "^8.2.10",
@@ -170,19 +164,29 @@
     "yaml-hook": "^1.0.0",
     "yaml-loader": "^0.6.0"
   },
+  "engines": {
+    "node": ">= 12",
+    "npm": "7.x"
+  },
+  "license": "MIT",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/u-wave/web"
+  },
   "scripts": {
-    "lint": "eslint --cache . && stylelint --cache src/**/*.css",
-    "test:mocha": "cross-env NODE_ENV=testing mocha --require test/common.js src/**/__tests__/**/*.js",
-    "test:cov": "nyc npm run test:mocha",
-    "test": "npm run test:cov && npm run lint",
-    "test:check-coverage": "nyc report -r text && nyc check-coverage",
-    "prod": "cross-env NODE_ENV=production node tasks/prod",
     "analyze": "cross-env ANALYZE=1 npm run prod",
-    "dev": "cross-env DEBUG=uwave:* node tasks/serve --watch",
     "clean": "rimraf npm/public",
+    "dev": "cross-env DEBUG=uwave:* node tasks/serve --watch",
+    "lint": "eslint --cache . && stylelint --cache src/**/*.css",
+    "postpublish": "npm publish npm",
+    "prerelease": "npm run clean && npm test && npm run prod",
+    "prod": "cross-env NODE_ENV=production node tasks/prod",
     "serve": "node tasks/serve",
     "start": "npm run dev",
-    "prerelease": "npm run clean && npm test && npm run prod",
-    "postpublish": "npm publish npm"
+    "test": "npm run test:cov && npm run lint",
+    "test:check-coverage": "nyc report -r text && nyc check-coverage",
+    "test:cov": "nyc npm run test:mocha",
+    "test:mocha": "cross-env NODE_ENV=testing mocha --require test/common.js src/**/__tests__/**/*.js"
   }
 }

@@ -1,0 +1,60 @@
+#!/usr/bin/env node
+
+const createWebClient = require('..').default;
+const express = require('express');
+const argv = require('minimist')(process.argv.slice(2));
+const envSchema = require('env-schema');
+const pkg = require('../package.json');
+
+if (argv.h || argv.help) {
+  console.log('u-wave-web');
+  console.log('Version', pkg.version);
+  console.log();
+  console.log('Environment Variables:');
+  console.log('  PORT');
+  console.log('    Port to listen on. Defaults to 6041.');
+  console.log('  CLIENT_TITLE');
+  console.log('    Name to use in the <title> HTML element. Defaults to "üWave".');
+  console.log('  API_URL');
+  console.log('    Public URL of the üWave HTTP API to connect to. Defaults to "/api".');
+  console.log('  SOCKET_URL');
+  console.log('    Public URL of the üWave WebSocket API to connect to. Defaults to "/".');
+  console.log();
+  process.exit(0);
+}
+
+const config = envSchema({
+  schema: {
+    type: 'object',
+    properties: {
+      PORT: {
+        type: 'number',
+        default: 6041,
+      },
+      API_URL: {
+        type: 'string',
+        default: '/api',
+      },
+      SOCKET_URL: {
+        type: 'string',
+        default: '/',
+      },
+      CLIENT_TITLE: {
+        type: 'string',
+        default: 'üWave',
+      },
+    },
+  },
+});
+
+const app = express();
+app.use(createWebClient({
+  apiUrl: config.API_URL,
+  socketUrl: config.SOCKET_URL,
+  title: config.CLIENT_TITLE,
+}));
+
+const server = app.listen(config.PORT, () => {
+  const { port, address } = server.address();
+  console.log(`Listening on ${address}:${port}`);
+});
