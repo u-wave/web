@@ -24,7 +24,7 @@ function waitForBuild(devMiddleware) {
 }
 
 function serve(done) {
-  const port = 8081;
+  const port = 80;
   const serverPort = 8082;
   const watch = env.watch || false;
 
