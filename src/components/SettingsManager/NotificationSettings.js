@@ -11,8 +11,8 @@ function NotificationSettings({ settings, onSettingChange }) {
   const { t } = useTranslator();
 
   function useToggleSetting(name) {
-    return useCallback((e, value) => {
-      onSettingChange(name, value);
+    return useCallback((event) => {
+      onSettingChange(name, event.target.checked);
       // `name` is a constant.
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [onSettingChange]);

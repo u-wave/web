@@ -24,14 +24,14 @@ function SettingsPanel({
   const { t } = useTranslator();
   const isWide = useMediaQuery((theme) => theme.breakpoints.up('lg'));
 
-  const handleVideoEnabledChange = (event, value) => {
-    onSettingChange('videoEnabled', value);
+  const handleVideoEnabledChange = (event) => {
+    onSettingChange('videoEnabled', event.target.checked);
   };
-  const handleVideoSizeChange = (event, value) => {
-    onSettingChange('videoSize', value ? 'large' : 'small');
+  const handleVideoSizeChange = (event) => {
+    onSettingChange('videoSize', event.target.checked ? 'large' : 'small');
   };
-  const handleMentionSoundChange = (event, value) => {
-    onSettingChange('mentionSound', value);
+  const handleMentionSoundChange = (event) => {
+    onSettingChange('mentionSound', event.target.checked);
   };
   const handleLanguageChange = (event) => {
     onChangeLanguage(event.target.value);
