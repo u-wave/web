@@ -77,7 +77,7 @@ function Section({
         <LoadingButton
           color="primary"
           variant="contained"
-          pending={busy}
+          loading={busy}
           disabled={!edited}
           startIcon={done ? <CheckIcon /> : null}
           onClick={handleSubmit}
