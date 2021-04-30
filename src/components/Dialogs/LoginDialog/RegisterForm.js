@@ -68,9 +68,9 @@ class RegisterForm extends React.Component {
     });
   };
 
-  handleTosCheckbox = (event, checked) => {
+  handleTosCheckbox = (event) => {
     this.setState({
-      agreed: checked,
+      agreed: event.target.checked,
     });
   };
 

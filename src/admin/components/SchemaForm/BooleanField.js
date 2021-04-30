@@ -11,7 +11,7 @@ function BooleanField({ schema, value, onChange }) {
         control={(
           <Checkbox
             checked={value}
-            onChange={(event, checked) => onChange(checked)}
+            onChange={(event) => onChange(event.target.checked)}
           />
         )}
         label={schema.title}

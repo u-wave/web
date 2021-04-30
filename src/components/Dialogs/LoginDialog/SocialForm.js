@@ -84,8 +84,8 @@ function SocialForm({
     });
   }, [avatar, service, onSocialFinish]);
 
-  const handleTosCheckbox = useCallback((event, checked) => {
-    setAgreed(checked);
+  const handleTosCheckbox = useCallback((event) => {
+    setAgreed(event.target.checked);
   }, []);
 
   const handleChangeAvatar = useCallback((name) => {
