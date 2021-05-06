@@ -7,7 +7,7 @@
     "u-wave-web": "bin/u-wave-web"
   },
   "dependencies": {
-    "@babel/runtime": "^7.13.10",
+    "@babel/runtime": "^7.14.0",
     "@emotion/cache": "^11.1.3",
     "@emotion/core": "^11.0.0",
     "@emotion/react": "^11.1.4",
