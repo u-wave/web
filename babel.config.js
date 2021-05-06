@@ -62,7 +62,6 @@ module.exports = (api, envOverride) => {
       }],
     ],
     plugins: [
-      '@babel/plugin-proposal-class-properties',
       ['@babel/plugin-transform-runtime', {
         version: pkg.dependencies['@babel/runtime'],
         // When targeting Node.js for any reason, dependencies are external to the webpack bundle,
