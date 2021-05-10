@@ -139,7 +139,7 @@
     "make-promises-safe": "^5.1.0",
     "mini-css-extract-plugin": "^1.6.0",
     "minimist": "^1.2.5",
-    "mocha": "^8.2.0",
+    "mocha": "^8.4.0",
     "nyc": "^15.1.0",
     "postcss": "^8.2.13",
     "postcss-loader": "^5.0.0",
