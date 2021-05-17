@@ -150,7 +150,7 @@
     "style-loader": "^2.0.0",
     "stylelint": "^13.13.1",
     "stylelint-config-standard": "^22.0.0",
-    "terser-webpack-plugin": "^5.1.1",
+    "terser-webpack-plugin": "^5.1.2",
     "u-wave-web-emojione": "^2.0.1",
     "webpack": "^5.37.0",
     "webpack-bundle-analyzer": "^4.4.0",
