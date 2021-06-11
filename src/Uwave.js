@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import StyledEngineProvider from '@material-ui/core/StyledEngineProvider';
+import { StyledEngineProvider } from '@material-ui/core/styles';
 import { CacheProvider } from '@emotion/react';
 import createCache from '@emotion/cache';
 import AppContainer from './containers/App';

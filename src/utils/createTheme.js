@@ -1,5 +1,5 @@
 import {
-  createMuiTheme,
+  createTheme as createMuiTheme,
   alpha,
   decomposeColor,
   recomposeColor,
