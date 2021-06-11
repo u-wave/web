@@ -35,9 +35,12 @@ module.exports = async function renderLoadingScreen(compilation) {
   new NodeTargetPlugin().apply(compiler);
   new LibraryTemplatePlugin(null, 'commonjs').apply(compiler);
   new LoaderTargetPlugin('node').apply(compiler);
-  const dependencies = Object.keys(pkg.dependencies);
+
+  // These are dependencies that must be loaded from the environment instead of from the
+  // bundle to make our prerendering work.
+  const sharedDependencies = ['react', 'react-dom', '@emotion'];
   new ExternalsPlugin('commonjs', ({ request }, callback) => {
-    if (dependencies.some((dep) => request === dep || request.startsWith(`${dep}/`))) {
+    if (sharedDependencies.some((dep) => request === dep || request.startsWith(`${dep}/`))) {
       callback(null, `commonjs ${request}`);
     } else {
       callback();

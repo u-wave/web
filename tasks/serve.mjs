@@ -1,4 +1,5 @@
 import 'make-promises-safe';
+import { createRequire } from 'module';
 import chalk from 'chalk';
 import emojione from 'u-wave-web-emojione';
 import recaptchaTestKeys from 'recaptcha-test-keys';
@@ -28,7 +29,11 @@ async function serve(done) {
   const wpConfig = getConfig({ production: !watch }, {
     watch,
   });
-  const { default: createWebClient } = await import('../src/middleware/index.js');
+  const require = createRequire(import.meta.url);
+  require('@babel/register').default({
+    plugins: ['@babel/plugin-transform-modules-commonjs'],
+  });
+  const createWebClient = require('../src/middleware').default;
 
   const app = express();
   app.listen(port);
@@ -54,7 +59,7 @@ async function serve(done) {
         socketUrl,
         emoji: emojione.emoji,
         title: 'üWave (Development)',
-        basePath: new URL('../npm/public', import.meta.url).pathname,
+        basePath: new URL('../npm/public/', import.meta.url).pathname,
         publicPath: '/',
         // Point u-wave-web middleware to the virtual webpack filesystem.
         fs: dev.context.outputFileSystem,
@@ -79,7 +84,7 @@ async function serve(done) {
       apiUrl,
       socketUrl,
       emoji: emojione.emoji,
-      basePath: new URL('../npm/public', import.meta.url).pathname,
+      basePath: new URL('../npm/public/', import.meta.url).pathname,
       recaptcha: { key: recaptchaTestKeys.sitekey },
     });
 
