@@ -9,7 +9,7 @@ const LoaderTargetPlugin = require('webpack/lib/LoaderTargetPlugin');
 const LibraryTemplatePlugin = require('webpack/lib/LibraryTemplatePlugin');
 const ExternalsPlugin = require('webpack/lib/ExternalsPlugin');
 const SingleEntryPlugin = require('webpack/lib/SingleEntryPlugin');
-const prerender = require('./prerender');
+const prerender = require('./prerender.cjs');
 const pkg = require('../../package.json');
 
 function evalModule(code) {

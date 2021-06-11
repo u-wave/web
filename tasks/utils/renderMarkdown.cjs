@@ -1,7 +1,7 @@
 'use strict';
 
 const h = require('react').createElement;
-const prerender = require('./prerender');
+const prerender = require('./prerender.cjs');
 
 module.exports = function renderMarkdown(source) {
   // eslint-disable-next-line global-require

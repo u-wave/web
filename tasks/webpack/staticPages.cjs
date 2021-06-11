@@ -3,11 +3,15 @@
 const path = require('path');
 const HtmlPlugin = require('html-webpack-plugin');
 const { merge } = require('webpack-merge');
-const htmlMinifierOptions = require('../utils/htmlMinifierOptions');
+const htmlMinifierOptions = require('../utils/htmlMinifierOptions.cjs');
 
 const context = path.join(__dirname, '../../src');
 
 module.exports = function staticPages(pages, production) {
+  require('@babel/register').default({
+    plugins: ['@babel/plugin-transform-modules-commonjs'],
+  });
+
   // Add static pages.
   const staticFiles = [];
 
@@ -34,8 +38,8 @@ module.exports = function staticPages(pages, production) {
             chunks: [name],
             filename: `${name}.html`,
             template: [
-              require.resolve('../utils/loadStaticHtmlTemplate'),
-              require.resolve('./extractLoader'),
+              require.resolve('../utils/loadStaticHtmlTemplate.cjs'),
+              require.resolve('./extractLoader.cjs'),
               fullPath,
             ].join('!'),
             inject: false,
@@ -62,13 +66,13 @@ module.exports = function staticPages(pages, production) {
         !production && {
           // Hot reload static pages in development mode.
           test: staticFiles,
-          use: require.resolve('../utils/insertHtml'),
+          use: require.resolve('../utils/insertHtml.cjs'),
         },
         {
           test: /\.md$/,
           use: [
             'html-loader',
-            require.resolve('../utils/renderMarkdown'),
+            require.resolve('../utils/renderMarkdown.cjs'),
           ],
         },
       ].filter(Boolean),

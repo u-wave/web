@@ -1,8 +1,6 @@
-'use strict';
-
-const { promisify } = require('util');
-const webpack = require('webpack');
-const getConfig = require('../webpack.config');
+import { promisify } from 'util';
+import webpack from 'webpack';
+import getConfig from '../webpack.config.mjs';
 
 async function prod() {
   const wpConfig = getConfig({

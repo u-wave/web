@@ -1,17 +1,13 @@
-'use strict';
-
-/* eslint-disable global-require */
-require('make-promises-safe');
-const path = require('path');
-const chalk = require('chalk');
-const emojione = require('u-wave-web-emojione');
-const recaptchaTestKeys = require('recaptcha-test-keys');
-const express = require('express');
-const { createProxyMiddleware } = require('http-proxy-middleware');
-const webpack = require('webpack');
-const webpackDevMiddleware = require('webpack-dev-middleware');
-const webpackHotMiddleware = require('webpack-hot-middleware');
-const env = require('./env');
+import 'make-promises-safe';
+import chalk from 'chalk';
+import emojione from 'u-wave-web-emojione';
+import recaptchaTestKeys from 'recaptcha-test-keys';
+import express from 'express';
+import { createProxyMiddleware } from 'http-proxy-middleware';
+import webpack from 'webpack';
+import webpackDevMiddleware from 'webpack-dev-middleware';
+import webpackHotMiddleware from 'webpack-hot-middleware';
+import env from './env.mjs';
 
 function waitForBuild(devMiddleware) {
   return (req, res, next) => {
@@ -21,17 +17,18 @@ function waitForBuild(devMiddleware) {
   };
 }
 
-function serve(done) {
+async function serve(done) {
   const port = env.port || 6041;
   const serverPort = env.serverPort || 6042;
   const watch = env.watch || false;
 
   console.log(chalk.grey('client'), `starting on port ${port}`);
 
-  const wpConfig = require('../webpack.config')({ production: !watch }, {
+  const { default: getConfig } = await import('../webpack.config.mjs')
+  const wpConfig = getConfig({ production: !watch }, {
     watch,
   });
-  const createWebClient = require('../src/middleware').default;
+  const { default: createWebClient } = await import('../src/middleware/index.js');
 
   const app = express();
   app.listen(port);
@@ -57,7 +54,7 @@ function serve(done) {
         socketUrl,
         emoji: emojione.emoji,
         title: 'üWave (Development)',
-        basePath: path.join(__dirname, '../npm/public'),
+        basePath: new URL('../npm/public', import.meta.url).pathname,
         publicPath: '/',
         // Point u-wave-web middleware to the virtual webpack filesystem.
         fs: dev.context.outputFileSystem,
@@ -82,7 +79,7 @@ function serve(done) {
       apiUrl,
       socketUrl,
       emoji: emojione.emoji,
-      basePath: path.join(__dirname, '../npm/public'),
+      basePath: new URL('../npm/public', import.meta.url).pathname,
       recaptcha: { key: recaptchaTestKeys.sitekey },
     });
 

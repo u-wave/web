@@ -1,31 +1,21 @@
-'use strict';
+import * as path from 'path';
+import escapeStringRegExp from 'escape-string-regexp';
+import webpack from 'webpack';
+import ReactRefreshPlugin from '@pmmmwh/react-refresh-webpack-plugin';
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
+import WebpackBar from 'webpackbar';
+import ExtractCssPlugin from 'mini-css-extract-plugin';
+import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
+import TerserPlugin from 'terser-webpack-plugin';
+import HtmlPlugin from 'html-webpack-plugin';
+import { SubresourceIntegrityPlugin } from 'webpack-subresource-integrity';
+import CopyPlugin from 'copy-webpack-plugin';
+import { merge } from 'webpack-merge';
+import htmlMinifierOptions from './tasks/utils/htmlMinifierOptions.cjs';
+import { MiddlewarePackageJsonPlugin } from './tasks/webpack/middleware.cjs';
+import renderLoadingScreen from './tasks/utils/renderLoadingScreen.cjs';
 
-const path = require('path');
-const escapeStringRegExp = require('escape-string-regexp');
-const { DefinePlugin, HotModuleReplacementPlugin, ProvidePlugin } = require('webpack');
-const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const WebpackBar = require('webpackbar');
-const ExtractCssPlugin = require('mini-css-extract-plugin');
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
-const HtmlPlugin = require('html-webpack-plugin');
-const { SubresourceIntegrityPlugin } = require('webpack-subresource-integrity');
-const CopyPlugin = require('copy-webpack-plugin');
-const { merge } = require('webpack-merge');
-const htmlMinifierOptions = require('./tasks/utils/htmlMinifierOptions');
-const { MiddlewarePackageJsonPlugin } = require('./tasks/webpack/middleware');
-const renderLoadingScreen = require('./tasks/utils/renderLoadingScreen');
-
-// Compile src/ on the fly so we can use components etc. during build time.
-require('@babel/register').default({
-  only: [
-    new RegExp(escapeStringRegExp(path.join(__dirname, 'src'))),
-  ],
-  plugins: [
-    ['@babel/plugin-transform-modules-commonjs', { lazy: true }],
-  ],
-});
+const { DefinePlugin, HotModuleReplacementPlugin, ProvidePlugin } = webpack;
 
 // Most webpack configuration is in this file. A few things are split up to make the
 // core stuff easier to grasp.
@@ -33,10 +23,10 @@ require('@babel/register').default({
 // Other parts of the build are in the ./tasks/webpack/ folder:
 //  - compileDependencies: Compiles dependencies that only ship ES2015+ to code that
 //    works in all our browser targets.
-const compileDependencies = require('./tasks/webpack/compileDependencies');
+import compileDependencies from './tasks/webpack/compileDependencies.cjs';
 //  - staticPages: Compiles static markdown pages to HTML.
-const staticPages = require('./tasks/webpack/staticPages');
-const getAnalysisConfig = require('./tasks/webpack/analyze');
+import staticPages from './tasks/webpack/staticPages.cjs';
+import getAnalysisConfig from './tasks/webpack/analyze.mjs';
 
 function unused() {}
 
@@ -47,7 +37,7 @@ function getConfig(env, {
   analyze,
   dualBundles = false,
 }) {
-  const outputPackage = path.join(__dirname, 'npm');
+  const outputPackage = new URL('./npm', import.meta.url).pathname;
 
   const plugins = [];
 
@@ -57,7 +47,7 @@ function getConfig(env, {
 
   const middlewareConfig = {
     name: 'middleware',
-    context: path.join(__dirname, 'src'),
+    context: new URL('./src', import.meta.url).pathname,
     mode: env.production ? 'production' : 'development',
     // Quit if there are errors.
     bail: env.production,
@@ -98,7 +88,7 @@ function getConfig(env, {
   };
 
   const baseConfig = merge({
-    context: path.join(__dirname, 'src'),
+    context: new URL('./src', import.meta.url).pathname,
     mode: env.production ? 'production' : 'development',
     // Quit if there are errors.
     bail: env.production,
@@ -127,7 +117,7 @@ function getConfig(env, {
 
         {
           test: /\.html$/,
-          use: require.resolve('./tasks/webpack/ejs-loader'),
+          use: new URL('./tasks/webpack/ejs-loader.cjs', import.meta.url).pathname,
         },
 
         // Locale files.
@@ -407,4 +397,4 @@ function getConfig(env, {
   return configs;
 }
 
-module.exports = getConfig;
+export default getConfig;
