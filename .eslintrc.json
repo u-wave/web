@@ -21,6 +21,7 @@
 
   "settings": {
     "polyfills": [
+      "Array.from",
       "Number.isFinite",
       "Number.isNaN",
       "Object.assign",
