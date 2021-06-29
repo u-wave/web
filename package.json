@@ -1,7 +1,7 @@
 {
   "name": "u-wave-web-build",
   "description": "Web client for üWave servers.",
-  "version": "2.0.0-alpha.0",
+  "version": "2.0.0-alpha.1",
   "author": "Renée Kooi <renee@kooi.me>",
   "bin": {
     "u-wave-web": "bin/u-wave-web"

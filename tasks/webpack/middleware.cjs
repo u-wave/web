@@ -55,6 +55,16 @@ class MiddlewarePackageJsonPlugin {
         },
         type: 'commonjs',
         main: './middleware/index.js',
+        exports: {
+          '.': {
+            import: './middleware.mjs',
+            default: './middleware/index.js',
+          },
+          './middleware': {
+            import: './middleware.mjs',
+            default: './middleware/index.js',
+          },
+        },
         bin: {
           'u-wave-web': './bin/u-wave-web',
         },
