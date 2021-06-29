@@ -4,3 +4,4 @@
 !.gitignore
 !.npmignore
 !README.md
+!middleware.mjs
