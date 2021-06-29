@@ -1,7 +1,7 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import ListItem from '@material-ui/core/ListItem';
+import ListItemButton from '@material-ui/core/ListItemButton';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import useUserCard from '../../hooks/useUserCard';
@@ -23,8 +23,7 @@ function RoomUserRow({ className, user }) {
   return (
     <>
       {userCard.card}
-      <ListItem
-        button
+      <ListItemButton
         className={cx('UserRow', 'UserRow--cardable', className)}
         onClick={onOpenCard}
         ref={userCard.refAnchor}
@@ -36,7 +35,7 @@ function RoomUserRow({ className, user }) {
           <Username className="UserRow-username" user={user} />
         </ListItemText>
         <Votes className="UserRow-votes" {...user.votes} />
-      </ListItem>
+      </ListItemButton>
     </>
   );
 }

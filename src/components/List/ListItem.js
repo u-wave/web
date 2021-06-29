@@ -1,7 +1,7 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import MuiListItem from '@material-ui/core/ListItem';
+import ListItemButton from '@material-ui/core/ListItemButton';
 import LtrSelectedIcon from '@material-ui/icons/ChevronRight';
 import RtlSelectedIcon from '@material-ui/icons/ChevronLeft';
 
@@ -16,8 +16,7 @@ const ListItem = ({
   selected,
   ...props
 }) => (
-  <MuiListItem
-    button
+  <ListItemButton
     {...props}
     className={cx(className, selected && 'is-selected')}
   >
@@ -28,7 +27,7 @@ const ListItem = ({
         <RtlSelectedIcon className="u-rtl-only" />
       </>
     )}
-  </MuiListItem>
+  </ListItemButton>
 );
 
 ListItem.propTypes = {

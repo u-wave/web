@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
+import ListItemButton from '@material-ui/core/ListItemButton';
 import ListItemText from '@material-ui/core/ListItemText';
 
 const SkipReasonsList = ({
@@ -10,13 +10,12 @@ const SkipReasonsList = ({
 }) => (
   <List className="SkipReasonsList">
     {reasons.map((reason) => (
-      <ListItem
+      <ListItemButton
         key={reason.name}
-        button
         onClick={() => onSelect(reason.name)}
       >
         <ListItemText className="SkipReasonsList-label" primary={reason.label} />
-      </ListItem>
+      </ListItemButton>
     ))}
   </List>
 );
