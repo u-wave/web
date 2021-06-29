@@ -4,6 +4,23 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.0-alpha.1 / 29 Jun 2021
+While this is an alpha release, new servers should use this rather than an older "stable" version.
+
+Thanks to @Mrcl1450 for their contributions to this release!
+
+Features:
+ * Added support for native ES module import on the server side. (#2078)
+   ```js
+   import createWebClient from 'u-wave-web/middleware';
+   ```
+Bugfixes:
+ * Fix youtube loading on mobile. (#2075)
+ * Add package.json "bin" key for the executable file that was added in 2.0.0-alpha.0.
+
+Internal:
+ * Dependency updates.
+
 ## 2.0.0-alpha.0 / 15 Apr 2021
 While this is an alpha release, new servers should use this rather than an older "stable" version.
 
