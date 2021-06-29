@@ -31,6 +31,10 @@ export default {
   },
   components: {
     MuiIconButton: {
+      defaultProps: {
+        // The default changed in material-ui v5, but our design relies on the old "large" size.
+        size: 'large',
+      },
       styleOverrides: {
         root: {
           '&:hover': {
