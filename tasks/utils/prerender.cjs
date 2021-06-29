@@ -3,7 +3,7 @@
 const h = require('react').createElement;
 const { renderToStaticMarkup } = require('react-dom/server');
 const { ServerStyleSheets, ThemeProvider, StylesProvider } = require('@material-ui/styles');
-const { createMuiTheme } = require('@material-ui/core/styles');
+const { createTheme } = require('@material-ui/core/styles');
 const { CacheProvider } = require('@emotion/react');
 const createCache = require('@emotion/cache').default;
 const createEmotionServer = require('@emotion/server/create-instance').default;
@@ -27,7 +27,7 @@ module.exports = function prerender(element) {
   const renderElement = sheets.collect(
     h(CacheProvider, { value: cache },
       h(StylesProvider, { generateClassName },
-        h(ThemeProvider, { theme: createMuiTheme(theme) }, element))),
+        h(ThemeProvider, { theme: createTheme(theme) }, element))),
   );
   const markup = renderToStaticMarkup(renderElement);
 
