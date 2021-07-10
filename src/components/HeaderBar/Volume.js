@@ -78,6 +78,7 @@ class Volume extends React.Component {
         </Tooltip>
         <div className="VolumeSlider-slider">
           <Slider
+            size="small"
             min={0}
             max={100}
             step={1}
