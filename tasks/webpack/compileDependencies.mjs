@@ -1,7 +1,8 @@
-'use strict';
+import { fileURLToPath } from 'url';
+import * as fs from 'fs/promises';
+import * as process from 'process';
 
-const path = require('path');
-const pkg = require('../../package.json');
+const pkg = JSON.parse(await fs.readFile(new URL('../../package.json', import.meta.url), 'utf8'));
 
 // List of dependency paths that need to be compiled.
 const es2015Deps = [
@@ -18,7 +19,7 @@ const es2015Deps = [
   /\/@material-ui\/utils\/modern\//,
 ];
 
-module.exports = function compileDependencies() {
+export default function compileDependencies() {
   const babelConfig = {
     cacheDirectory: true,
     babelrc: false,
@@ -59,10 +60,10 @@ module.exports = function compileDependencies() {
 
     resolve: {
       alias: {
-        '@material-ui/core': path.join(__dirname, '../../node_modules/@material-ui/core/modern/'),
-        '@material-ui/styles': path.join(__dirname, '../../node_modules/@material-ui/styles/modern/'),
-        '@material-ui/system': path.join(__dirname, '../../node_modules/@material-ui/system/modern/'),
-        '@material-ui/utils': path.join(__dirname, '../../node_modules/@material-ui/utils/modern/'),
+        '@material-ui/core': fileURLToPath(new URL('../../node_modules/@material-ui/core/modern/', import.meta.url)),
+        '@material-ui/styles': fileURLToPath(new URL('../../node_modules/@material-ui/styles/modern/', import.meta.url)),
+        '@material-ui/system': fileURLToPath(new URL('../../node_modules/@material-ui/system/modern/', import.meta.url)),
+        '@material-ui/utils': fileURLToPath(new URL('../../node_modules/@material-ui/utils/modern/', import.meta.url)),
       },
     },
   };

@@ -23,7 +23,7 @@ const { DefinePlugin, HotModuleReplacementPlugin, ProvidePlugin } = webpack;
 // Other parts of the build are in the ./tasks/webpack/ folder:
 //  - compileDependencies: Compiles dependencies that only ship ES2015+ to code that
 //    works in all our browser targets.
-import compileDependencies from './tasks/webpack/compileDependencies.cjs';
+import compileDependencies from './tasks/webpack/compileDependencies.mjs';
 //  - staticPages: Compiles static markdown pages to HTML.
 import staticPages from './tasks/webpack/staticPages.cjs';
 import getAnalysisConfig from './tasks/webpack/analyze.mjs';
