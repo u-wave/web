@@ -37,6 +37,7 @@ class MiddlewarePackageJsonPlugin {
       const dependencies = {
         // Used by the bin file.
         'env-schema': pkg.dependencies['env-schema'],
+        express: pkg.dependencies.express,
         minimist: pkg.dependencies.minimist,
       };
       externals.forEach((external) => {

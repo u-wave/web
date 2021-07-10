@@ -41,7 +41,7 @@ module.exports = (api, envOverride) => {
   if (callerIsNode) {
     targets = { node: 'current', browsers: '' };
   } else if (targetIsNode) {
-    targets = { node: '10.0.0', browsers: '' };
+    targets = { node: '12.0.0', browsers: '' };
   }
 
   if (targetIsModern) {
@@ -50,10 +50,16 @@ module.exports = (api, envOverride) => {
   }
 
   const preset = {
+    targets,
+    assumptions: {
+      constantSuper: true,
+      noClassCalls: true,
+      noDocumentAll: true,
+      noNewArrows: true,
+    },
     presets: [
       ['@babel/preset-env', {
         modules: false,
-        targets,
         bugfixes,
       }],
       ['@babel/preset-react', {
