@@ -3,14 +3,16 @@
 const vm = require('vm');
 const assert = require('assert');
 const h = require('react').createElement;
-const NodeTemplatePlugin = require('webpack/lib/node/NodeTemplatePlugin');
-const NodeTargetPlugin = require('webpack/lib/node/NodeTargetPlugin');
-const LoaderTargetPlugin = require('webpack/lib/LoaderTargetPlugin');
-const LibraryTemplatePlugin = require('webpack/lib/LibraryTemplatePlugin');
-const ExternalsPlugin = require('webpack/lib/ExternalsPlugin');
-const SingleEntryPlugin = require('webpack/lib/SingleEntryPlugin');
+const webpack = require('webpack');
 const prerender = require('./prerender.cjs');
-const pkg = require('../../package.json');
+
+const {
+  ExternalsPlugin,
+  LibraryTemplatePlugin,
+  LoaderTargetPlugin,
+  EntryPlugin,
+} = webpack;
+const { NodeTemplatePlugin, NodeTargetPlugin } = webpack.node;
 
 function evalModule(code) {
   const target = { exports: {} };
@@ -48,7 +50,7 @@ module.exports = async function renderLoadingScreen(compilation) {
   }).apply(compiler);
 
   const inputPath = require.resolve('../../src/components/LoadingScreen');
-  new SingleEntryPlugin(compiler.context, inputPath, 'LoadingScreen').apply(compiler);
+  new EntryPlugin(compiler.context, inputPath, 'LoadingScreen').apply(compiler);
 
   const [entries, childCompilation] = await new Promise((resolve, reject) => {
     compiler.runAsChild((err, ...results) => {
