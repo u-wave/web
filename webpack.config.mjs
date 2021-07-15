@@ -1,5 +1,4 @@
 import * as path from 'path';
-import escapeStringRegExp from 'escape-string-regexp';
 import webpack from 'webpack';
 import ReactRefreshPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
