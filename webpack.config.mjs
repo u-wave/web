@@ -61,7 +61,7 @@ function getConfig(env, {
         type: 'commonjs-module',
       },
     },
-    target: 'node10',
+    target: 'node12',
 
     optimization: {
       minimize: false,
@@ -351,7 +351,7 @@ function getConfig(env, {
     optimization: {
       minimize: false,
     },
-    target: 'node10',
+    target: 'node12',
   });
 
   let activeAppConfig = appConfig;
