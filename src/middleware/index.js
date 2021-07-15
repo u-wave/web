@@ -1,3 +1,5 @@
+import path from 'path';
+import { pathToFileURL } from 'url';
 import defaultFs from 'fs';
 import hstream from 'hstream';
 import router from 'router';
@@ -20,18 +22,18 @@ function createManifest({ title }) {
   };
 }
 
-const NativeURL = (0, URL);
+const defaultBasePath = path.join(__dirname, '../public/');
 
 export default function uwaveWebClient(options = {}) {
   const {
-    basePath = new NativeURL('../public/', import.meta.url).pathname,
+    basePath = defaultBasePath,
     fs = defaultFs, // Should only be used by the dev server.
     title = 'üWave',
     ...clientOptions
   } = options;
 
-  const indexHtml = fs.readFileSync(new NativeURL('./index.html', `file://${basePath}`), 'utf8');
-  const passwordResetHtml = fs.readFileSync(new NativeURL('./password-reset.html', `file://${basePath}`), 'utf8');
+  const indexHtml = fs.readFileSync(new URL('./index.html', pathToFileURL(basePath)), 'utf8');
+  const passwordResetHtml = fs.readFileSync(new URL('./password-reset.html', pathToFileURL(basePath)), 'utf8');
 
   const clientRouter = router();
   const manifest = createManifest({ title });
