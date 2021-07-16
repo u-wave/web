@@ -2,8 +2,8 @@
 
 const h = require('react').createElement;
 const { renderToStaticMarkup } = require('react-dom/server');
-const { ServerStyleSheets, ThemeProvider, StylesProvider } = require('@material-ui/styles');
-const { createTheme } = require('@material-ui/core/styles');
+const { ServerStyleSheets, StylesProvider } = require('@material-ui/styles');
+const { createTheme, ThemeProvider } = require('@material-ui/core/styles');
 const { CacheProvider } = require('@emotion/react');
 const createCache = require('@emotion/cache').default;
 const createEmotionServer = require('@emotion/server/create-instance').default;
