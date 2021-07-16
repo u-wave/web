@@ -14,7 +14,6 @@ const es2015Deps = [
   /\/strip-indent\//,
   /\/@material-ui\/core\/modern\//,
   /\/@material-ui\/icons\//,
-  /\/@material-ui\/styles\/modern\//,
   /\/@material-ui\/system\/modern\//,
   /\/@material-ui\/utils\/modern\//,
 ];
@@ -61,7 +60,6 @@ export default function compileDependencies() {
     resolve: {
       alias: {
         '@material-ui/core': fileURLToPath(new URL('../../node_modules/@material-ui/core/modern/', import.meta.url)),
-        '@material-ui/styles': fileURLToPath(new URL('../../node_modules/@material-ui/styles/modern/', import.meta.url)),
         '@material-ui/system': fileURLToPath(new URL('../../node_modules/@material-ui/system/modern/', import.meta.url)),
         '@material-ui/utils': fileURLToPath(new URL('../../node_modules/@material-ui/utils/modern/', import.meta.url)),
       },
