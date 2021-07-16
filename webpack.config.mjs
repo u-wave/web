@@ -1,7 +1,6 @@
 import * as path from 'path';
 import webpack from 'webpack';
 import ReactRefreshPlugin from '@pmmmwh/react-refresh-webpack-plugin';
-import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import WebpackBar from 'webpackbar';
 import ExtractCssPlugin from 'mini-css-extract-plugin';
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
@@ -57,6 +56,7 @@ function getConfig(env, {
       path: outputPackage,
       filename: './middleware/index.js',
       chunkFilename: './middleware/[name].js',
+      clean: true,
       library: {
         type: 'commonjs-module',
       },
@@ -92,6 +92,10 @@ function getConfig(env, {
     // Quit if there are errors.
     bail: env.production,
     devtool: env.production ? 'source-map' : 'inline-source-map',
+
+    output: {
+      clean: true,
+    },
 
     plugins: [
       new ProvidePlugin({
@@ -273,7 +277,6 @@ function getConfig(env, {
     },
 
     plugins: [
-      new CleanWebpackPlugin(),
       new ExtractCssPlugin({
         filename: 'static/[name]_[contenthash:7].css',
         chunkFilename: 'static/[name]_[contenthash:7].css',
