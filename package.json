@@ -178,7 +178,7 @@
   "scripts": {
     "analyze": "cross-env ANALYZE=1 npm run prod",
     "clean": "rimraf npm/public",
-    "dev": "cross-env DEBUG=uwave:* npm run serve -- --watch",
+    "dev": "npm run serve -- --watch",
     "lint": "eslint --cache . && stylelint --cache src/**/*.css",
     "postpublish": "npm publish npm",
     "prerelease": "npm run clean && npm test && npm run prod",
