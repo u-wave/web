@@ -53,9 +53,9 @@ function getConfig(env, {
 
     entry: './middleware/index.js',
     output: {
-      path: outputPackage,
-      filename: './middleware/index.js',
-      chunkFilename: './middleware/[name].js',
+      path: path.join(outputPackage, 'middleware'),
+      filename: './index.js',
+      chunkFilename: './[name].js',
       clean: true,
       library: {
         type: 'commonjs-module',
