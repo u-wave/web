@@ -2,7 +2,7 @@ const mentionSoundUrl = new URL('../../assets/audio/mention.mp3', import.meta.ur
 
 let mentionSound;
 if (typeof window !== 'undefined' && window.Audio) {
-  mentionSound = new window.Audio(mentionSoundUrl);
+  mentionSound = new window.Audio(mentionSoundUrl.toString());
 }
 
 export default function playMentionSound() {
