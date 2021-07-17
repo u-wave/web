@@ -11,7 +11,7 @@ describe('<ErrorArea />', () => {
         onDismiss={() => {}}
       />
     ));
-    expect(area.queryByRole('alert')).toBeNull();
+    expect(area.queryByRole('alert')).not.toBeInTheDocument();
   });
 
   it('should open if there is an error', () => {
