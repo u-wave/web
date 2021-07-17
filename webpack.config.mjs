@@ -13,8 +13,6 @@ import htmlMinifierOptions from './tasks/utils/htmlMinifierOptions.cjs';
 import { MiddlewarePackageJsonPlugin } from './tasks/webpack/middleware.cjs';
 import renderLoadingScreen from './tasks/utils/renderLoadingScreen.cjs';
 
-const { DefinePlugin, HotModuleReplacementPlugin, ProvidePlugin } = webpack;
-
 // Most webpack configuration is in this file. A few things are split up to make the
 // core stuff easier to grasp.
 //
@@ -23,8 +21,10 @@ const { DefinePlugin, HotModuleReplacementPlugin, ProvidePlugin } = webpack;
 //    works in all our browser targets.
 import compileDependencies from './tasks/webpack/compileDependencies.mjs';
 //  - staticPages: Compiles static markdown pages to HTML.
-import staticPages from './tasks/webpack/staticPages.cjs';
+import staticPages from './tasks/webpack/staticPages.mjs';
 import getAnalysisConfig from './tasks/webpack/analyze.mjs';
+
+const { DefinePlugin, HotModuleReplacementPlugin, ProvidePlugin } = webpack;
 
 function unused() {}
 
