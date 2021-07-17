@@ -38,11 +38,13 @@ async function serve(done) {
   const app = express();
   app.listen(port);
 
+  const serverUrl = new URL(process.env.SERVER_URL || `http://localhost:${serverPort}/`);
+
   const apiUrl = '/api';
-  const socketUrl = `ws://localhost:${serverPort}`;
+  const socketUrl = Object.assign(new URL(serverUrl.href), { protocol: 'ws:' }).href;
 
   app.use(apiUrl, createProxyMiddleware({
-    target: process.env.SERVER_URL || `http://localhost:${serverPort}/`,
+    target: serverUrl.href,
   }));
   app.use('/assets/emoji/', emojione.middleware());
 
