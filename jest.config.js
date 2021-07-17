@@ -6,4 +6,5 @@ module.exports = {
     '\\.ya?ml$': '<rootDir>/test/yaml-transform.js',
     '\\.js$': 'babel-jest',
   },
+  setupFilesAfterEnv: ['@testing-library/jest-dom'],
 };
