@@ -127,20 +127,19 @@
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "expect": "^27.0.2",
     "express": "^4.17.1",
     "fetch-mock": "^9.11.0",
     "html-loader": "^2.0.0",
     "html-webpack-plugin": "^5.2.0",
     "http-proxy-middleware": "^2.0.1",
     "image-webpack-loader": "^7.0.1",
+    "jest": "^27.0.6",
+    "js-yaml": "^3.14.1",
     "jsdom": "^16.5.3",
     "lodash": "^4.17.19",
     "make-promises-safe": "^5.1.0",
     "mini-css-extract-plugin": "^2.1.0",
     "minimist": "^1.2.5",
-    "mocha": "^9.0.2",
-    "nyc": "^15.1.0",
     "postcss": "^8.3.2",
     "postcss-loader": "^6.1.1",
     "postcss-preset-env": "^6.7.0",
@@ -159,8 +158,6 @@
     "webpack-merge": "^5.7.3",
     "webpack-subresource-integrity": "5.0.0-alpha.5",
     "webpackbar": "^5.0.0-3",
-    "why-is-node-running": "^2.2.0",
-    "yaml-hook": "^1.0.0",
     "yaml-loader": "^0.6.0"
   },
   "engines": {
@@ -183,9 +180,7 @@
     "prod": "cross-env NODE_ENV=production node tasks/prod.mjs",
     "serve": "node tasks/serve.mjs",
     "start": "npm run dev",
-    "test": "npm run test:cov && npm run lint",
-    "test:check-coverage": "nyc report -r text && nyc check-coverage",
-    "test:cov": "nyc npm run test:mocha",
-    "test:mocha": "cross-env NODE_ENV=testing mocha --require test/common.js src/**/__tests__/**/*.js"
+    "test": "npm run tests-only && npm run lint",
+    "tests-only": "cross-env NODE_ENV=testing jest src"
   }
 }

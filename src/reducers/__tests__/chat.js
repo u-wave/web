@@ -1,4 +1,3 @@
-import expect from 'expect';
 import sinon from 'sinon';
 import createStore from '../../redux/configureStore';
 import { setUsers } from '../../actions/UserActionCreators';

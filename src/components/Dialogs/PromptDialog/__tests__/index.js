@@ -1,6 +1,5 @@
 import React from 'react';
 import sinon from 'sinon';
-import expect from 'expect';
 import { mount } from 'enzyme';
 import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';

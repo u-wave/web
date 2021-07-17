@@ -1,6 +1,5 @@
 import React from 'react';
 import sinon from 'sinon';
-import expect from 'expect';
 import { shallow } from 'enzyme';
 import ErrorArea from '..';
 

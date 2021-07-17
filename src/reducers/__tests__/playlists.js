@@ -1,4 +1,3 @@
-import expect from 'expect';
 import fetch from 'fetch-mock';
 import createStore from '../../redux/configureStore';
 import * as a from '../../actions/PlaylistActionCreators';

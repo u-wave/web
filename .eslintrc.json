@@ -45,7 +45,7 @@
       }
     },
     {
-      "files": ["tasks/**/*.js", "*.config.js"],
+      "files": ["tasks/**/*.js", "*.config.js", "test/*.js"],
       "parserOptions": {
         "sourceType": "script"
       },
@@ -60,7 +60,7 @@
         "no-unused-expressions": "off"
       },
       "env": {
-        "mocha": true
+        "jest": true
       },
       "globals": {
         "testUtils": true

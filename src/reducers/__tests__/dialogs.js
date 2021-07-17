@@ -1,4 +1,3 @@
-import expect from 'expect';
 import {
   OPEN_EDIT_MEDIA_DIALOG, CLOSE_EDIT_MEDIA_DIALOG,
   OPEN_LOGIN_DIALOG, CLOSE_LOGIN_DIALOG,

@@ -40,7 +40,4 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Run tests
-        run: npm run test:cov
-      - name: Check coverage
-        # Don't fail the build bc of this yet.
-        run: npm run test:check-coverage || true
+        run: npm run tests-only -- --coverage

@@ -28,7 +28,7 @@ module.exports = (api, envOverride) => {
 
   // When the caller is @babel/register, we expect to immediately run the output, in the current
   // Node.js version.
-  const callerIsNode = api.caller((caller) => caller && caller.name === '@babel/register');
+  const callerIsNode = api.caller((caller) => caller && (caller.name === '@babel/register' || caller.name === 'babel-jest'));
   // When the target is `node`, we're doing a webpack build for server-side code. The output will
   // run in any Node.js version supported by our public API.
   const targetIsNode = api.caller((caller) => caller && caller.target === 'node');
