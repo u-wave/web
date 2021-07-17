@@ -1,12 +1,12 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import Video from '..';
 
 function noop() {}
 
 describe('mobile <Video />', () => {
   it('should show empty player when media is null', () => {
-    expect(() => shallow((
+    expect(() => render((
       <Video
         media={null}
         onUpvote={noop}

@@ -6,5 +6,4 @@ module.exports = {
     '\\.ya?ml$': '<rootDir>/test/yaml-transform.js',
     '\\.js$': 'babel-jest',
   },
-  setupFiles: ['<rootDir>/test/enzyme.js'],
 };

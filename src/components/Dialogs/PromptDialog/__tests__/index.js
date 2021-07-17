@@ -1,6 +1,7 @@
 import React from 'react';
 import sinon from 'sinon';
-import { mount } from 'enzyme';
+import { render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
 import PromptDialog from '..';
@@ -14,7 +15,7 @@ describe('<PromptDialog />', () => {
     });
     const onCancel = sinon.spy();
 
-    const dialog = mount((
+    const dialog = render((
       <CacheProvider value={cache}>
         <PromptDialog
           open
@@ -26,12 +27,11 @@ describe('<PromptDialog />', () => {
     ));
 
     // Type "test" into the prompt input
-    const input = dialog.find('input[type="text"]');
-    input.instance().value = 'test';
-    input.simulate('change', { target: input.instance() });
+    const input = dialog.getByRole('textbox');
+    userEvent.type(input, 'test');
 
-    const form = dialog.find('form');
-    form.simulate('submit');
+    const submit = dialog.getByRole('button');
+    userEvent.click(submit);
 
     expect(onSubmit.calledOnce).toEqual(true);
     expect(onCancel.called).toEqual(false);
