@@ -37,6 +37,8 @@ class LoginForm extends React.Component {
     onLogin({
       email: this.email.value,
       password: this.password.value,
+    }).catch(() => {
+      // ignore
     }).finally(() => {
       this.setState({ busy: false });
     });
