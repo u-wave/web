@@ -16,7 +16,7 @@ function UsersList({
   currentPage,
   totalUsers,
   users,
-  onChangePage,
+  onPageChange,
   onFilter,
 }) {
   const { t } = useTranslator();
@@ -47,7 +47,7 @@ function UsersList({
               rowsPerPage={pageSize}
               rowsPerPageOptions={[pageSize]}
               page={currentPage}
-              onChangePage={onChangePage}
+              onPageChange={onPageChange}
             />
           </TableRow>
         </TableFooter>
@@ -61,7 +61,7 @@ UsersList.propTypes = {
   currentPage: PropTypes.number.isRequired,
   totalUsers: PropTypes.number.isRequired,
   users: PropTypes.array.isRequired,
-  onChangePage: PropTypes.func.isRequired,
+  onPageChange: PropTypes.func.isRequired,
   onFilter: PropTypes.func.isRequired,
 };
 

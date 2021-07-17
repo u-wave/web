@@ -21,7 +21,7 @@ function UsersListContainer() {
   const users = useSelector(usersSelector);
   const dispatch = useDispatch();
 
-  const onChangePage = useCallback((event, page) => {
+  const onPageChange = useCallback((event, page) => {
     dispatch(loadUsers({ offset: page * pageSize, limit: pageSize }));
   }, [dispatch, pageSize]);
 
@@ -31,7 +31,7 @@ function UsersListContainer() {
   }, [dispatch, pageSize]);
 
   useEffect(() => {
-    onChangePage(null, 0);
+    onPageChange(null, 0);
     // Should happen on mount only.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -42,7 +42,7 @@ function UsersListContainer() {
       pageSize={pageSize}
       totalUsers={totalUsers}
       users={users}
-      onChangePage={onChangePage}
+      onPageChange={onPageChange}
       onFilter={onFilter}
     />
   );
