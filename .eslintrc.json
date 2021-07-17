@@ -61,9 +61,6 @@
       },
       "env": {
         "jest": true
-      },
-      "globals": {
-        "testUtils": true
       }
     }
   ]
