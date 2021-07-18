@@ -9,7 +9,7 @@ function HistoryButton({ onClick }) {
   const { t } = useTranslator();
 
   return (
-    <Tooltip title={t('history.title')} position="bottom">
+    <Tooltip title={t('history.title')} placement="bottom">
       <IconButton
         aria-label={t('history.title')}
         className="HistoryButton"

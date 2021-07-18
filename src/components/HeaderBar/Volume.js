@@ -37,7 +37,7 @@ function Volume({
 
   return (
     <div className={cx('VolumeSlider', className)}>
-      <Tooltip title={label} position="bottom">
+      <Tooltip title={label} placement="bottom">
         <IconButton
           aria-label={label}
           onClick={handleMuteClick}
