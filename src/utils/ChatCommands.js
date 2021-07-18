@@ -4,6 +4,11 @@ export function getCommands() {
   return commands;
 }
 
+/**
+ * @param {string} name
+ * @param {string} description
+ * @param {{ action: (...args: any[]) => void, guard?: (state: object) => boolean }} options
+ */
 export function register(name, description, { action, guard }) {
   commands[name] = { description, action, guard };
 }

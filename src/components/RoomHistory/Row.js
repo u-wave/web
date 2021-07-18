@@ -59,7 +59,7 @@ function HistoryRow({
       <div className="HistoryRow-user">
         {user.username}
       </div>
-      <div className="HistoryRow-time" dateTime={timestamp}>
+      <div className="HistoryRow-time">
         <TimeAgo timestamp={timestamp} />
       </div>
       <div className="MediaListRow-icon HistoryRow-icon">

@@ -18,7 +18,7 @@ function EmojiSuggestion({
       <ListItemAvatar>
         <span
           className="EmojiSuggestion-image"
-          style={{ backgroundImage: `url(${CSS.escape(url)})` }}
+          style={{ backgroundImage: `url(${CSS.escape(url.href)})` }}
         />
       </ListItemAvatar>
       <ListItemText primary={shortcode(emoji)} />

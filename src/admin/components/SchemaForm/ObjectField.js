@@ -10,7 +10,7 @@ function ObjectProperties({
   value,
   onChange,
 }) {
-  return Object.keys(schema.properties).map((key) => {
+  const fields = Object.keys(schema.properties).map((key) => {
     const subSchema = schema.properties[key];
     const subValue = value[key];
     const subChange = (newValue) => onChange({
@@ -32,6 +32,8 @@ function ObjectProperties({
       />
     );
   });
+
+  return <>{fields}</>;
 }
 
 ObjectProperties.propTypes = {

@@ -30,6 +30,7 @@
       "Promise",
       "AbortController",
       "fetch",
+      "Headers",
       "URL",
       "CSS.escape"
     ]

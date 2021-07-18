@@ -10,7 +10,7 @@ const Emoji = ({ name, image }) => (
     <span className="Emoji" data-emoji={name}>
       <img
         className="Emoji-img"
-        src={emojiUrl(image)}
+        src={emojiUrl(image).href}
         alt={shortcode(name)}
       />
     </span>

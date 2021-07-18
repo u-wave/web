@@ -18,6 +18,7 @@ function blend(a, b, weight) {
   const w1 = (w + 1) / 2.0;
   const w2 = 1 - w1;
 
+  /** @type {[number, number, number, number?]} */
   const values = [
     (w1 * aColor.values[0]) + (w2 * bColor.values[0]),
     (w1 * aColor.values[1]) + (w2 * bColor.values[1]),

@@ -13,6 +13,7 @@ const itemClasses = {
 };
 
 function PlaylistRow({
+  className,
   playlist,
   selected,
   onClick,
@@ -50,7 +51,7 @@ function PlaylistRow({
   return (
     <MenuItem
       selected={selected}
-      className={cx(activeClass, droppableClass)}
+      className={cx(className, activeClass, droppableClass)}
       classes={itemClasses}
       onClick={onClick}
       ref={drop}
@@ -65,6 +66,7 @@ function PlaylistRow({
 }
 
 PlaylistRow.propTypes = {
+  className: PropTypes.string,
   playlist: PropTypes.object,
   selected: PropTypes.bool,
   onClick: PropTypes.func,

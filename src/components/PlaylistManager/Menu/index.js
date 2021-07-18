@@ -7,13 +7,12 @@ import PlaylistCreateRow from './NewPlaylist';
 import SearchResultsRow from './SearchResultsRow';
 import PlaylistImportRow from './PlaylistImportRow';
 
-const PlaylistMenu = ({
+function PlaylistMenu({
   className,
   playlists,
   selected,
   searchQuery,
   showSearchResults,
-  searchResults,
   onCreatePlaylist,
   onSelectPlaylist,
   onSelectSearchResults,
@@ -21,7 +20,7 @@ const PlaylistMenu = ({
   onAddToPlaylist,
   showImportPanel,
   onShowImportPanel,
-}) => {
+}) {
   const searchIsSelected = showSearchResults ? 'is-selected' : '';
   const importIsSelected = showImportPanel ? 'is-selected' : '';
   const isSelectingPlaylist = selected && !showSearchResults && !showImportPanel;
@@ -35,7 +34,6 @@ const PlaylistMenu = ({
         <SearchResultsRow
           className={cx('PlaylistMenu-row', searchIsSelected)}
           query={searchQuery}
-          size={searchResults}
           onClick={onSelectSearchResults}
           onClose={onCloseSearchResults}
         />
@@ -56,7 +54,7 @@ const PlaylistMenu = ({
       />
     </MenuList>
   );
-};
+}
 
 PlaylistMenu.propTypes = {
   className: PropTypes.string,
@@ -65,7 +63,6 @@ PlaylistMenu.propTypes = {
   showSearchResults: PropTypes.bool.isRequired,
   showImportPanel: PropTypes.bool.isRequired,
   searchQuery: PropTypes.string,
-  searchResults: PropTypes.number,
   onCreatePlaylist: PropTypes.func.isRequired,
   onSelectPlaylist: PropTypes.func.isRequired,
   onSelectSearchResults: PropTypes.func.isRequired,

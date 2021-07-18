@@ -8,9 +8,9 @@ const {
 } = React;
 
 const TextField = React.forwardRef(({
-  className = null,
+  className,
   type = 'text',
-  icon = null,
+  icon,
   ...props
 }, ref) => {
   const refInput = useRef(null);

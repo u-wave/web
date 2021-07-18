@@ -196,7 +196,7 @@ class SoundCloudPlayer extends React.Component {
           >
             View on{' '}
             <img
-              src={soundcloudLogo}
+              src={soundcloudLogo.href}
               alt="SoundCloud"
             />
           </a>

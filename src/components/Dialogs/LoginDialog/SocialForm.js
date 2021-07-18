@@ -18,7 +18,6 @@ import Button from '../../Form/Button';
 
 const {
   useCallback,
-  useRef,
   useState,
 } = React;
 
@@ -70,19 +69,16 @@ function SocialForm({
   const [isBusy, setBusy] = useState(false);
   const [agreed, setAgreed] = useState(false);
   const [avatar, setAvatar] = useState('sigil');
-  const refUsername = useRef(null);
+  const [username, setUsername] = useState(suggestedName);
 
   const handleSubmit = useCallback((event) => {
     event.preventDefault();
     setBusy(true);
 
-    onSocialFinish(service, {
-      avatar,
-      username: refUsername.current.value,
-    }).finally(() => {
+    onSocialFinish(service, { avatar, username }).finally(() => {
       setBusy(false);
     });
-  }, [avatar, service, onSocialFinish]);
+  }, [avatar, username, service, onSocialFinish]);
 
   const handleTosCheckbox = useCallback((event) => {
     setAgreed(event.target.checked);
@@ -90,6 +86,10 @@ function SocialForm({
 
   const handleChangeAvatar = useCallback((name) => {
     setAvatar(name);
+  }, []);
+
+  const handleChangeUsername = useCallback((event) => {
+    setUsername(event.target.value);
   }, []);
 
   return (
@@ -101,13 +101,13 @@ function SocialForm({
       )}
       <FormGroup>
         <TextField
-          ref={refUsername}
           className="RegisterForm-field"
           autocomplete="nickname"
-          defaultValue={suggestedName}
           placeholder={t('login.username')}
           icon={<UserIcon nativeColor="#9f9d9e" />}
           autoFocus
+          value={username}
+          onChange={handleChangeUsername}
         />
       </FormGroup>
 
