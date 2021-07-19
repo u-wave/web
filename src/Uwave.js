@@ -15,30 +15,33 @@ import './utils/commands';
 export default class Uwave {
   options = {};
 
-  sources = {};
+  #sources = {};
 
-  sessionToken = null;
+  #sessionToken = null;
 
-  renderTarget = null;
+  #renderTarget = null;
 
-  aboutPageComponent = null;
+  #aboutPageComponent = null;
 
-  emotionCache = createCache({
+  #emotionCache = createCache({
     key: 'emc',
     prepend: true,
   });
 
+  #resolveReady;
+
+  ready = new Promise((resolve) => {
+    this.#resolveReady = resolve;
+  });
+
   constructor(options = {}, session = readSession()) {
     this.options = options;
-    this.sessionToken = session;
-    this.ready = new Promise((resolve) => {
-      this.resolveReady = resolve;
-    });
+    this.#sessionToken = session;
 
     if (module.hot) {
       const uw = this;
       module.hot.accept('./containers/App', () => {
-        if (uw.renderTarget) {
+        if (uw.#renderTarget) {
           uw.renderToDOM();
         }
       });
@@ -66,28 +69,28 @@ export default class Uwave {
       throw new TypeError('Source plugin did not provide a name');
     }
 
-    this.sources[source.name] = source;
+    this.#sources[source.name] = source;
 
     return source;
   }
 
   setAboutPageComponent(AboutPageComponent) {
-    this.aboutPageComponent = AboutPageComponent;
+    this.#aboutPageComponent = AboutPageComponent;
   }
 
   getAboutPageComponent() {
-    return this.aboutPageComponent;
+    return this.#aboutPageComponent;
   }
 
   build() {
     this.store = configureStore(
       { config: this.options },
-      { mediaSources: this.sources, socketUrl: this.options.socketUrl },
+      { mediaSources: this.#sources, socketUrl: this.options.socketUrl },
     );
 
-    if (this.sessionToken) {
-      this.store.dispatch(setSessionToken(this.sessionToken));
-      this.sessionToken = null;
+    if (this.#sessionToken) {
+      this.store.dispatch(setSessionToken(this.#sessionToken));
+      this.#sessionToken = null;
     }
 
     this.store.dispatch(socketConnect());
@@ -95,17 +98,17 @@ export default class Uwave {
       this.store.dispatch(loadCurrentLanguage()),
       this.store.dispatch(initState()),
     ]).then(() => {
-      this.resolveReady();
+      this.#resolveReady();
     });
   }
 
-  getComponent() {
+  #getComponent() {
     return (
       <Provider store={this.store}>
         <StyledEngineProvider injectFirst>
-          <CacheProvider value={this.emotionCache}>
+          <CacheProvider value={this.#emotionCache}>
             <AppContainer
-              mediaSources={this.sources}
+              mediaSources={this.#sources}
               uwave={this}
             />
           </CacheProvider>
@@ -118,18 +121,18 @@ export default class Uwave {
     if (!this.store) {
       this.build();
     }
-    if (!this.renderTarget) {
-      this.renderTarget = target;
+    if (!this.#renderTarget) {
+      this.#renderTarget = target;
     }
 
     const element = (
       <React.StrictMode>
-        {this.getComponent()}
+        {this.#getComponent()}
       </React.StrictMode>
     );
 
     return new Promise((resolve) => {
-      ReactDOM.render(element, this.renderTarget, resolve);
+      ReactDOM.render(element, this.#renderTarget, resolve);
     });
   }
 }

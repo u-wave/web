@@ -56,6 +56,7 @@ module.exports = (api, envOverride) => {
       noClassCalls: true,
       noDocumentAll: true,
       noNewArrows: true,
+      privateFieldsAsProperties: true,
     },
     presets: [
       ['@babel/preset-env', {
