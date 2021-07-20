@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = {
+export default {
   testEnvironment: 'jsdom',
   transform: {
     '\\.ya?ml$': '<rootDir>/test/yaml-transform.mjs',
