@@ -59,9 +59,6 @@
       "files": ["**/__tests__/**/*.js"],
       "plugins": ["eslint-plugin-jest", "eslint-plugin-jest-dom"],
       "extends": ["plugin:jest/recommended", "plugin:jest-dom/recommended"],
-      "rules": {
-        "no-unused-expressions": "off"
-      },
       "env": {
         "jest": true
       }
