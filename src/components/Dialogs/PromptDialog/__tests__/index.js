@@ -1,5 +1,4 @@
 import React from 'react';
-import sinon from 'sinon';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import createCache from '@emotion/cache';
@@ -10,10 +9,10 @@ const cache = createCache({ key: 'emc' });
 
 describe('<PromptDialog />', () => {
   it('should not show if there is no error', () => {
-    const onSubmit = sinon.spy((value) => {
+    const onSubmit = jest.fn((value) => {
       expect(value).toEqual('test');
     });
-    const onCancel = sinon.spy();
+    const onCancel = jest.fn();
 
     const dialog = render((
       <CacheProvider value={cache}>
@@ -33,8 +32,8 @@ describe('<PromptDialog />', () => {
     const submit = dialog.getByRole('button');
     userEvent.click(submit);
 
-    expect(onSubmit.calledOnce).toEqual(true);
-    expect(onCancel.called).toEqual(false);
+    expect(onSubmit).toHaveBeenCalledTimes(1);
+    expect(onCancel).not.toHaveBeenCalled();
 
     dialog.unmount();
   });

@@ -1,4 +1,3 @@
-import sinon from 'sinon';
 import createStore from '../../redux/configureStore';
 import { setUsers } from '../../actions/UserActionCreators';
 import * as a from '../../actions/ChatActionCreators';
@@ -57,7 +56,7 @@ describe('reducers/chat', () => {
         username: 'SendingUser',
       };
 
-      sinon.stub(userSelectors, 'currentUserSelector').returns(inFlightUser);
+      jest.spyOn(userSelectors, 'currentUserSelector').mockReturnValue(inFlightUser);
 
       const { dispatch, getState } = createStore();
       dispatch(setUsers([testUser, inFlightUser]));
@@ -82,8 +81,6 @@ describe('reducers/chat', () => {
 
       expect(s.messagesSelector(getState())).toHaveLength(2);
       expect(s.messagesSelector(getState())[1]).toHaveProperty('inFlight', false);
-
-      userSelectors.currentUserSelector.restore();
     });
   });
 
@@ -105,7 +102,7 @@ describe('reducers/chat', () => {
 
     it('should add an in-flight message to the messages list immediately', () => {
       const { dispatch, getState } = createStore();
-      sinon.stub(userSelectors, 'currentUserSelector').returns(testMessage.user);
+      jest.spyOn(userSelectors, 'currentUserSelector').mockReturnValue(testMessage.user);
 
       dispatch(a.sendChat(testMessage.message));
       expect(s.messagesSelector(getState())).toHaveLength(1);
@@ -118,8 +115,6 @@ describe('reducers/chat', () => {
       expect(message.parsedText).toEqual(testMessage.parsed);
       expect(message.timestamp).toBe(Date.now());
       expect(message.inFlight).toBe(true);
-
-      userSelectors.currentUserSelector.restore();
     });
   });
 
