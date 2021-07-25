@@ -34,23 +34,21 @@ module.exports = (api, envOverride) => {
   const targetIsNode = api.caller((caller) => caller && caller.target === 'node');
   // Check if our output should support older browsers.
   const targetIsLegacy = api.caller((caller) => caller && caller.compiler === 'app-legacy');
-  const targetIsModern = !targetIsLegacy;
 
-  let targets = {};
-  let bugfixes = false;
+  let browserslistEnv = 'default';
+  let targets;
   if (callerIsNode) {
     targets = { node: 'current', browsers: '' };
   } else if (targetIsNode) {
     targets = { node: '12.0.0', browsers: '' };
   }
 
-  if (targetIsModern) {
-    targets = { esmodules: true, browsers: '' };
-    bugfixes = true;
+  if (targetIsLegacy) {
+    browserslistEnv = 'legacy';
   }
 
   const preset = {
-    targets,
+    browserslistEnv,
     assumptions: {
       constantSuper: true,
       noClassCalls: true,
@@ -61,7 +59,7 @@ module.exports = (api, envOverride) => {
     presets: [
       ['@babel/preset-env', {
         modules: false,
-        bugfixes,
+        bugfixes: true,
       }],
       ['@babel/preset-react', {
         development: env === 'development',
@@ -78,6 +76,10 @@ module.exports = (api, envOverride) => {
       }],
     ],
   };
+
+  if (targets) {
+    preset.targets = targets;
+  }
 
   if (callerIsNode) {
     preset.plugins.push(

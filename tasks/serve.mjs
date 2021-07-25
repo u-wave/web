@@ -25,14 +25,16 @@ async function serve(done) {
 
   console.log(chalk.grey('client'), `starting on port ${port}`);
 
-  const { default: getConfig } = await import('../webpack.config.mjs')
+  const { default: getConfig } = await import('../webpack.config.mjs');
   const wpConfig = getConfig({ production: !watch }, {
     watch,
   });
-  const require = createRequire(import.meta.url);
-  require('@babel/register').default({
+
+  const { default: register } = await import('@babel/register');
+  register({
     plugins: ['@babel/plugin-transform-modules-commonjs'],
   });
+  const require = createRequire(import.meta.url);
   const createWebClient = require('../src/middleware').default;
 
   const app = express();
