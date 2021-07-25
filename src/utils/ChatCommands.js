@@ -9,11 +9,11 @@ export function getCommands() {
  * @param {string} description
  * @param {{ action: (...args: any[]) => void, guard?: (state: object) => boolean }} options
  */
-export function register(name, description, { action, guard }) {
+export function register(name, description, { action, guard = undefined }) {
   commands[name] = { description, action, guard };
 }
 
-export function canExecute(state, { guard } = {}) {
+export function canExecute(state, { guard = undefined } = {}) {
   return guard ? guard(state) : true;
 }
 

@@ -147,7 +147,7 @@ describe('reducers/chat', () => {
     const addTestMute = () => {
       dispatch(a.muteUser('1', {
         moderatorID: '4',
-        expires: Date.now() + 3000,
+        expiresAt: Date.now() + 3000,
       }));
     };
 
@@ -156,7 +156,7 @@ describe('reducers/chat', () => {
 
       dispatch(a.muteUser('1', {
         moderatorID: '4',
-        expires: Date.now() + 3000,
+        expiresAt: Date.now() + 3000,
       }));
 
       expect(s.mutedUsersSelector(getState())).toEqual([testUsers[0]]);
