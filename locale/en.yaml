@@ -143,6 +143,8 @@ uwave:
     currentDJ: "played by: {{user}}"
     mute: Mute audio
     unmute: Unmute audio
+    muteThis: Mute for this song
+    unmuteThis: Unmute for this song
     skip:
       self: Skip your turn
       other: "Skip {{user}}'s turn"

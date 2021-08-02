@@ -17,6 +17,14 @@ export function unmute() {
   return set('muted', false);
 }
 
+export function muteThis() {
+  return set('mutedThis', true);
+}
+
+export function unmuteThis() {
+  return set('mutedThis', false);
+}
+
 export function setVideoSize(size) {
   return set('videoSize', size);
 }

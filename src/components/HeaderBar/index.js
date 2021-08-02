@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import AppTitle from './AppTitle';
 import Progress from './Progress';
 import CurrentMedia from './CurrentMedia';
+import MuteThis from './MuteThis';
 import Volume from './Volume';
 import HistoryButton from './HistoryButton';
 import CurrentDJ from './CurrentDJ';
@@ -17,9 +18,12 @@ const HeaderBar = ({
   mediaTimeRemaining,
   volume,
   muted,
+  mutedThis,
   onVolumeChange,
   onVolumeMute,
   onVolumeUnmute,
+  onVolumeMuteThis,
+  onVolumeUnmuteThis,
   onToggleRoomHistory,
   onToggleAboutOverlay,
   ...attrs
@@ -45,6 +49,13 @@ const HeaderBar = ({
         timeRemaining={mediaTimeRemaining}
       />
     )}
+    <div className="HeaderBar-mutethis">
+      <MuteThis
+        muted={mutedThis}
+        onMute={onVolumeMuteThis}
+        onUnmute={onVolumeUnmuteThis}
+      />
+    </div>
     <div className="HeaderBar-volume">
       <Volume
         volume={volume}
@@ -70,10 +81,13 @@ HeaderBar.propTypes = {
   mediaTimeRemaining: PropTypes.number.isRequired,
   volume: PropTypes.number,
   muted: PropTypes.bool,
+  mutedThis: PropTypes.bool,
 
   onVolumeChange: PropTypes.func,
   onVolumeMute: PropTypes.func,
   onVolumeUnmute: PropTypes.func,
+  onVolumeMuteThis: PropTypes.func,
+  onVolumeUnmuteThis: PropTypes.func,
   onToggleRoomHistory: PropTypes.func,
   onToggleAboutOverlay: PropTypes.func,
 };

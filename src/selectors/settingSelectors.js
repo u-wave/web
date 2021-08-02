@@ -40,6 +40,11 @@ export const isMutedSelector = createSelector(
   (settings) => settings.muted,
 );
 
+export const isMutedThisSelector = createSelector(
+  settingsBaseSelector,
+  (settings) => settings.mutedThis,
+);
+
 export const languageSelector = createSelector(
   settingsBaseSelector,
   defaultLanguageSelector,

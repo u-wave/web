@@ -37,7 +37,7 @@ function App({
           <Video
             enabled={settings.videoEnabled}
             size={settings.videoSize}
-            isMuted={settings.muted}
+            isMuted={settings.muted || settings.mutedThis}
             volume={settings.volume}
           />
           <ErrorArea />

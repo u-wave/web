@@ -16,6 +16,12 @@
   flex-shrink: 0;
 }
 
+.HeaderBar-mutethis {
+  top: 0;
+  flex-shrink: 0;
+  padding-right: 12px;
+}
+
 .HeaderBar-volume {
   top: 0;
   flex-shrink: 0;

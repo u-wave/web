@@ -1,6 +1,12 @@
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { setVolume, mute, unmute } from '../actions/PlaybackActionCreators';
+import {
+  setVolume,
+  mute,
+  unmute,
+  muteThis,
+  unmuteThis,
+} from '../actions/PlaybackActionCreators';
 import { toggleRoomHistory, toggleAbout } from '../actions/OverlayActionCreators';
 import {
   djSelector,
@@ -8,7 +14,11 @@ import {
   mediaProgressSelector,
   timeRemainingSelector,
 } from '../selectors/boothSelectors';
-import { volumeSelector, isMutedSelector } from '../selectors/settingSelectors';
+import {
+  volumeSelector,
+  isMutedSelector,
+  isMutedThisSelector,
+} from '../selectors/settingSelectors';
 import HeaderBar from '../components/HeaderBar';
 
 const mapStateToProps = createStructuredSelector({
@@ -18,12 +28,15 @@ const mapStateToProps = createStructuredSelector({
   dj: djSelector,
   volume: volumeSelector,
   muted: isMutedSelector,
+  mutedThis: isMutedThisSelector,
 });
 
 const mapDispatchToProps = {
   onVolumeChange: setVolume,
   onVolumeMute: mute,
   onVolumeUnmute: unmute,
+  onVolumeMuteThis: muteThis,
+  onVolumeUnmuteThis: unmuteThis,
   onToggleRoomHistory: toggleRoomHistory,
   onToggleAboutOverlay: toggleAbout,
 };

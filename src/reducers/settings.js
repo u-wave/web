@@ -1,6 +1,7 @@
 import merge from 'deepmerge';
 import { compose } from 'redux';
 import {
+  ADVANCE,
   LOAD_SETTINGS,
   CHANGE_SETTING,
 } from '../constants/ActionTypes';
@@ -32,6 +33,11 @@ const initialState = {
 function reduce(state = initialState, action = {}) {
   const { type, payload } = action;
   switch (type) {
+    case ADVANCE:
+      return {
+        ...state,
+        mutedThis: false,
+      };
     case LOAD_SETTINGS:
     // Loading settings defaults to the initial state.
       return {
