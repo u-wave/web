@@ -40,7 +40,7 @@
     "escape-string-regexp": "^4.0.0",
     "event-source-polyfill": "^1.0.24",
     "flash-document-title": "^1.0.0",
-    "format-duration": "^1.3.1",
+    "format-duration": "^1.4.0",
     "hstream": "^3.0.0",
     "is-finite": "^1.0.2",
     "is-nan": "^1.3.2",
