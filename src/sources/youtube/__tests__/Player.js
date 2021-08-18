@@ -11,24 +11,29 @@ const fakeMedia = {
 
 describe('sources/youtube <Player />', () => {
   it('hides when the player is inactive', () => {
-    const player = render(<YouTubePlayer active={false} />);
-    expect(player.container.firstChild).not.toBeVisible();
-    player.rerender(<YouTubePlayer active />);
-    expect(player.container.firstChild).toBeVisible();
+    const { container, rerender } = render(<YouTubePlayer active={false} />);
+    // eslint-disable-next-line testing-library/no-node-access
+    expect(container.firstChild).not.toBeVisible();
+    rerender(<YouTubePlayer active />);
+    // eslint-disable-next-line testing-library/no-node-access
+    expect(container.firstChild).toBeVisible();
   });
 
   it('does not render an embed when video is disabled', () => {
-    const player = render(<YouTubePlayer active enabled={false} />);
-    expect(player.container.firstChild).toBeEmptyDOMElement();
+    const { container } = render(<YouTubePlayer active enabled={false} />);
+    // eslint-disable-next-line testing-library/no-node-access
+    expect(container.firstChild).toBeEmptyDOMElement();
   });
 
   it('does render an embed when video is enabled', () => {
-    const player = render(<YouTubePlayer active enabled media={fakeMedia} />);
-    expect(player.container.firstChild).not.toBeEmptyDOMElement();
+    const { container } = render(<YouTubePlayer active enabled media={fakeMedia} />);
+    // eslint-disable-next-line testing-library/no-node-access
+    expect(container.firstChild).not.toBeEmptyDOMElement();
   });
 
   it('still renders an embed when video is enabled, but YouTube is inactive', () => {
-    const player = render(<YouTubePlayer active={false} enabled media={fakeMedia} />);
-    expect(player.container.firstChild).not.toBeEmptyDOMElement();
+    const { container } = render(<YouTubePlayer active={false} enabled media={fakeMedia} />);
+    // eslint-disable-next-line testing-library/no-node-access
+    expect(container.firstChild).not.toBeEmptyDOMElement();
   });
 });

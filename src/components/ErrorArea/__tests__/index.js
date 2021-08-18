@@ -1,33 +1,33 @@
 import React from 'react';
-import { render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ErrorArea from '..';
 
 describe('<ErrorArea />', () => {
   it('should not show if there is no error', () => {
-    const area = render((
+    render((
       <ErrorArea
         error={null}
         onDismiss={() => {}}
       />
     ));
-    expect(area.queryByRole('alert')).not.toBeInTheDocument();
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument();
   });
 
   it('should open if there is an error', () => {
-    const area = render((
+    render((
       <ErrorArea
         error="Something is WRONG!"
         onDismiss={() => {}}
       />
     ));
-    expect(area.queryByRole('alert')).toBeInTheDocument();
+    expect(screen.queryByRole('alert')).toBeInTheDocument();
   });
 
   it('closes when user clicks anywhere on the page', async () => {
     const spy = jest.fn();
 
-    const area = render((
+    render((
       <main>
         <div data-testid="anywhere-else" />
         <ErrorArea
@@ -37,10 +37,10 @@ describe('<ErrorArea />', () => {
       </main>
     ));
 
-    const snackbar = area.getByRole('alert');
+    const snackbar = screen.getByRole('alert');
 
     expect(snackbar).toBeInTheDocument();
-    userEvent.click(area.getByTestId('anywhere-else'));
+    userEvent.click(screen.getByTestId('anywhere-else'));
 
     await waitFor(() => spy.mock.calls.length > 0);
   });

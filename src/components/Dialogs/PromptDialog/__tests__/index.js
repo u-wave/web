@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
@@ -14,7 +14,7 @@ describe('<PromptDialog />', () => {
     });
     const onCancel = jest.fn();
 
-    const dialog = render((
+    const { unmount } = render((
       <CacheProvider value={cache}>
         <PromptDialog
           open
@@ -26,15 +26,15 @@ describe('<PromptDialog />', () => {
     ));
 
     // Type "test" into the prompt input
-    const input = dialog.getByRole('textbox');
+    const input = screen.getByRole('textbox');
     userEvent.type(input, 'test');
 
-    const submit = dialog.getByRole('button');
+    const submit = screen.getByRole('button');
     userEvent.click(submit);
 
     expect(onSubmit).toHaveBeenCalledTimes(1);
     expect(onCancel).not.toHaveBeenCalled();
 
-    dialog.unmount();
+    unmount();
   });
 });
