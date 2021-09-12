@@ -39,7 +39,7 @@ function serve(done) {
   app.listen(port);
 
   const apiUrl = '/api';
-  const socketUrl = `wss://pluggo.duckdns.org/api`;
+  const socketUrl = `wss://bluggo.duckdns.org/api`;
 
   app.use(apiUrl, createProxyMiddleware({
     target: process.env.SERVER_URL || `http://localhost:${serverPort}/`,
