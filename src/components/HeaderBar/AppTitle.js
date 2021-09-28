@@ -1,8 +1,8 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import IconButton from '@material-ui/core/IconButton';
-import AboutIcon from '@material-ui/icons/ArrowDropDown';
+import IconButton from '@mui/material/IconButton';
+import AboutIcon from '@mui/icons-material/ArrowDropDown';
 
 const logo = new URL('../../../assets/img/logo-white.png', import.meta.url);
 

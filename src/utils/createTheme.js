@@ -3,7 +3,7 @@ import {
   alpha,
   decomposeColor,
   recomposeColor,
-} from '@material-ui/core/styles';
+} from '@mui/material/styles';
 
 const AVERAGE_COLOR = 'rgb(127, 127, 127)';
 

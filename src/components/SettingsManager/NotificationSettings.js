@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
-import FormGroup from '@material-ui/core/FormGroup';
-import Switch from '@material-ui/core/Switch';
+import FormGroup from '@mui/material/FormGroup';
+import Switch from '@mui/material/Switch';
 import SettingControl from './SettingControl';
 
 const { useCallback } = React;

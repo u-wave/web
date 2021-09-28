@@ -1,7 +1,7 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import MuiButton from '@material-ui/core/Button';
+import MuiButton from '@mui/material/Button';
 
 function Button({ children, className, ...props }) {
   return (

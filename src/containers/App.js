@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { ThemeProvider } from '@material-ui/core/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { ThemeProvider } from '@mui/material/styles';
 import { Provider as BusProvider } from 'react-bus';
 import { TranslateProvider } from '@u-wave/react-translate';
 import { closeAll } from '../actions/OverlayActionCreators';

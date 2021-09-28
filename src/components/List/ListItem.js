@@ -1,9 +1,9 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import ListItemButton from '@material-ui/core/ListItemButton';
-import LtrSelectedIcon from '@material-ui/icons/ChevronRight';
-import RtlSelectedIcon from '@material-ui/icons/ChevronLeft';
+import ListItemButton from '@mui/material/ListItemButton';
+import LtrSelectedIcon from '@mui/icons-material/ChevronRight';
+import RtlSelectedIcon from '@mui/icons-material/ChevronLeft';
 
 /**
  * A ListItem component wrapper around material-ui's ListItem,

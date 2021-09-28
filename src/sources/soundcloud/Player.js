@@ -2,10 +2,10 @@ import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from '@u-wave/react-translate';
-import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import ErrorIcon from '@material-ui/icons/Error';
+import Paper from '@mui/material/Paper';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import ErrorIcon from '@mui/icons-material/Error';
 import SongInfo from './SongInfo';
 
 const soundcloudLogo = new URL('../../../assets/img/soundcloud-inline.png', import.meta.url);

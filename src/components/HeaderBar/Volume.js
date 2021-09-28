@@ -2,13 +2,13 @@ import cx from 'clsx';
 import React from 'react';
 import { useTranslator } from '@u-wave/react-translate';
 import PropTypes from 'prop-types';
-import Tooltip from '@material-ui/core/Tooltip';
-import IconButton from '@material-ui/core/IconButton';
-import Slider from '@material-ui/core/Slider';
-import VolumeDownIcon from '@material-ui/icons/VolumeDown';
-import VolumeMuteIcon from '@material-ui/icons/VolumeMute';
-import VolumeOffIcon from '@material-ui/icons/VolumeOff';
-import VolumeUpIcon from '@material-ui/icons/VolumeUp';
+import Tooltip from '@mui/material/Tooltip';
+import IconButton from '@mui/material/IconButton';
+import Slider from '@mui/material/Slider';
+import VolumeDownIcon from '@mui/icons-material/VolumeDown';
+import VolumeMuteIcon from '@mui/icons-material/VolumeMute';
+import VolumeOffIcon from '@mui/icons-material/VolumeOff';
+import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 
 function Volume({
   className,

@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
-import Card from '@material-ui/core/Card/Card';
-import CardHeader from '@material-ui/core/CardHeader';
+import Card from '@mui/material/Card/Card';
+import CardHeader from '@mui/material/CardHeader';
 import OfflineIcon from './OfflineIcon';
 
 function ConnectionIndicator({ isConnected }) {

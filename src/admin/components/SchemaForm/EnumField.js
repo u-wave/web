@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Typography from '@material-ui/core/Typography';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
+import Typography from '@mui/material/Typography';
+import FormHelperText from '@mui/material/FormHelperText';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 
 function EnumField({
   className, schema, value, onChange,

@@ -1,8 +1,8 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import Popover from '@material-ui/core/Popover';
-import ArrowIcon from '@material-ui/icons/ArrowDropDown';
+import Popover from '@mui/material/Popover';
+import ArrowIcon from '@mui/icons-material/ArrowDropDown';
 import { useMediaSources } from '../../../context/MediaSourceContext';
 import SourcePickerElement from './SourcePickerElement';
 

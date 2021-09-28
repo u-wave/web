@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import MoveToFirstIcon from '@material-ui/icons/KeyboardArrowUp';
+import MoveToFirstIcon from '@mui/icons-material/KeyboardArrowUp';
 import { moveMedia } from '../../../actions/PlaylistActionCreators';
 import { useMediaListContext } from '../../MediaList/BaseMediaList';
 import MediaAction from '../../MediaList/MediaAction';

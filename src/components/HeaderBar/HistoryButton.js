@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
-import Tooltip from '@material-ui/core/Tooltip';
-import IconButton from '@material-ui/core/IconButton';
-import HistoryIcon from '@material-ui/icons/History';
+import Tooltip from '@mui/material/Tooltip';
+import IconButton from '@mui/material/IconButton';
+import HistoryIcon from '@mui/icons-material/History';
 
 function HistoryButton({ onClick }) {
   const { t } = useTranslator();

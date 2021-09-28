@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { TranslateProvider } from '@u-wave/react-translate';
 import { resetPassword } from '../actions';
 import ErrorArea from '../../containers/ErrorArea';
