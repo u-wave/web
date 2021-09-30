@@ -219,8 +219,8 @@ function getConfig(env, {
     output: {
       publicPath: '/',
       path: path.join(outputPackage, 'public'),
-      filename: env.production ? 'static/[name]_[chunkhash:7].js' : '[name]_dev.js',
-      chunkFilename: env.production ? 'static/[name]_[chunkhash:7].js' : '[name]_dev.js',
+      filename: env.production ? 'static/[name]_[contenthash:7].js' : '[name]_dev.js',
+      chunkFilename: env.production ? 'static/[name]_[contenthash:7].js' : '[name]_dev.js',
       assetModuleFilename: env.production ? 'static/[name]_[hash:7][ext]' : '[name][ext]',
       crossOriginLoading: 'anonymous',
     },
@@ -299,8 +299,8 @@ function getConfig(env, {
   const legacyConfigPatch = {
     name: 'app-legacy',
     output: {
-      filename: env.production ? 'static/l_[name]_[chunkhash:7].js' : 'l_[name]_dev.js',
-      chunkFilename: env.production ? 'static/l_[name]_[chunkhash:7].js' : 'l_[name]_dev.js',
+      filename: env.production ? 'static/l_[name]_[contenthash:7].js' : 'l_[name]_dev.js',
+      chunkFilename: env.production ? 'static/l_[name]_[contenthash:7].js' : 'l_[name]_dev.js',
     },
     target: ['web', 'es5'],
     resolve: {
