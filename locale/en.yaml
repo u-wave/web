@@ -254,3 +254,4 @@ uwave:
       network: Could not load this track.
       decode: This media file cannot be played because the format is incorrect.
       notFound: This track could not be found—it may be deleted.
+      other: "{{message}}"

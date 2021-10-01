@@ -24,7 +24,7 @@ function getErrorMessage(err) {
       return 'soundcloud.error.notFound';
     }
   }
-  return err.message;
+  return 'soundcloud.error.other';
 }
 
 const enhance = translate();
@@ -162,7 +162,7 @@ class SoundCloudPlayer extends React.Component {
             <ErrorIcon className="src-soundcloud-Player-errorIcon" />
             <Typography component="p">
               {t('soundcloud.error.template', {
-                error: t(getErrorMessage(error), { defaultValue: error.message }),
+                error: t(getErrorMessage(error), { message: error.message }),
               })}
             </Typography>
           </Paper>
