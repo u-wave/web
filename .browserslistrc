@@ -1,7 +1,7 @@
 # using the same settings as material-ui
 # https://github.com/mui-org/material-ui/blob/next/.browserslistrc
 
-[default]
+[production]
 last 1 chrome version
 last 1 edge version
 last 1 firefox version

@@ -35,7 +35,7 @@ module.exports = (api, envOverride) => {
   // Check if our output should support older browsers.
   const targetIsLegacy = api.caller((caller) => caller && caller.compiler === 'app-legacy');
 
-  let browserslistEnv = 'default';
+  let browserslistEnv = 'production';
   let targets;
   if (callerIsNode) {
     targets = { node: 'current', browsers: '' };
