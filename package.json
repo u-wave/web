@@ -14,7 +14,7 @@
     "@emotion/styled": "^11.3.0",
     "@f/cookies-enabled": "^1.1.1",
     "@mui/icons-material": "^5.0.0",
-    "@mui/lab": "5.0.0-alpha.48",
+    "@mui/lab": "5.0.0-alpha.50",
     "@mui/material": "^5.0.0",
     "@mui/system": "^5.0.0",
     "@mui/utils": "^5.0.0",
