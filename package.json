@@ -164,7 +164,7 @@
   },
   "engines": {
     "node": ">= 12",
-    "npm": "7.x"
+    "npm": "7.x || 8.x"
   },
   "license": "MIT",
   "private": true,
