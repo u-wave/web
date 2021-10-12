@@ -12,10 +12,9 @@ const es2015Deps = [
   /\/min-indent\//,
   /\/nanoid\//,
   /\/strip-indent\//,
-  /\/@material-ui\/core\/modern\//,
-  /\/@material-ui\/icons\//,
-  /\/@material-ui\/system\/modern\//,
-  /\/@material-ui\/utils\/modern\//,
+  /\/@mui\/icons-material\/esm\//,
+  /\/@mui\/system\/modern\//,
+  /\/@mui\/utils\/modern\//,
 ];
 
 export default function compileDependencies() {
@@ -59,9 +58,9 @@ export default function compileDependencies() {
 
     resolve: {
       alias: {
-        '@material-ui/core': fileURLToPath(new URL('../../node_modules/@material-ui/core/modern/', import.meta.url)),
-        '@material-ui/system': fileURLToPath(new URL('../../node_modules/@material-ui/system/modern/', import.meta.url)),
-        '@material-ui/utils': fileURLToPath(new URL('../../node_modules/@material-ui/utils/modern/', import.meta.url)),
+        '@mui/icons-material': fileURLToPath(new URL('../../node_modules/@mui/icons-material/esm/', import.meta.url)),
+        '@mui/system': fileURLToPath(new URL('../../node_modules/@mui/system/modern/', import.meta.url)),
+        '@mui/utils': fileURLToPath(new URL('../../node_modules/@mui/utils/modern/', import.meta.url)),
       },
     },
   };
