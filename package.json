@@ -152,7 +152,7 @@
     "stylelint-config-standard": "^22.0.0",
     "terser-webpack-plugin": "^5.1.3",
     "u-wave-web-emojione": "^2.0.1",
-    "webpack": "^5.44.0",
+    "webpack": "^5.58.2",
     "webpack-bundle-analyzer": "^4.4.0",
     "webpack-dev-middleware": "^5.0.0",
     "webpack-hot-middleware": "^2.25.0",
