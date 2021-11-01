@@ -133,7 +133,7 @@
     "eslint-plugin-testing-library": "^4.11.0",
     "express": "^4.17.1",
     "fetch-mock": "^9.11.0",
-    "html-loader": "^2.0.0",
+    "html-loader": "^3.0.0",
     "html-webpack-plugin": "^5.2.0",
     "http-proxy-middleware": "^2.0.1",
     "image-webpack-loader": "^8.0.1",
