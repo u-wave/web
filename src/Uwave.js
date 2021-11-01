@@ -12,7 +12,14 @@ import { loadCurrentLanguage } from './actions/LocaleActionCreators';
 // Register default chat commands.
 import './utils/commands';
 
+/**
+ * @typedef {object} UwaveOptions
+ * @prop {string} [apiBase]
+ * @prop {string} [socketUrl]
+ */
+
 export default class Uwave {
+  /** @type {UwaveOptions} */
   options = {};
 
   #sources = {};
@@ -34,6 +41,9 @@ export default class Uwave {
     this.#resolveReady = resolve;
   });
 
+  /**
+   * @param {UwaveOptions} [options]
+   */
   constructor(options = {}, session = readSession()) {
     this.options = options;
     this.#sessionToken = session;
