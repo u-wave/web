@@ -20,6 +20,7 @@ function FakeVolume() {
       </IconButton>
       <div className="VolumeSlider-slider">
         <Slider
+          size="small"
           min={0}
           max={100}
           step={1}
@@ -49,14 +50,14 @@ function FakeHeaderBar() {
         <div className="HeaderBar-dj">
           <Filler width={300} />
         </div>
-        <div className="HeaderBar-volume">
-          <FakeVolume />
-        </div>
-        <div className="HeaderBar-history">
-          <IconButton className="HistoryButton">
-            <HistoryIcon className="HistoryButton-icon" />
-          </IconButton>
-        </div>
+      </div>
+      <div className="HeaderBar-volume">
+        <FakeVolume />
+      </div>
+      <div className="HeaderBar-history">
+        <IconButton className="HistoryButton">
+          <HistoryIcon className="HistoryButton-icon" />
+        </IconButton>
       </div>
     </div>
   );
