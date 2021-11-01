@@ -21,7 +21,7 @@ describe('<ErrorArea />', () => {
         onDismiss={() => {}}
       />
     ));
-    expect(screen.queryByRole('alert')).toBeInTheDocument();
+    expect(screen.getByRole('alert')).toBeInTheDocument();
   });
 
   it('closes when user clicks anywhere on the page', async () => {
