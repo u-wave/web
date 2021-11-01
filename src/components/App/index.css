@@ -66,10 +66,6 @@ html:not([dir="rtl"]) .u-rtl-only {
   height: 100vh;
 }
 
-.App-middle {
-  flex-grow: 1;
-}
-
 .AppColumn {
   height: 100%;
   display: flex;
@@ -103,6 +99,10 @@ html:not([dir="rtl"]) .u-rtl-only {
 
 .AppRow--bottom {
   height: var(--footer-height);
+}
+
+.App-media {
+  position: relative;
 }
 
 /* Make App-level overlays fit in an AppColumn--left */
