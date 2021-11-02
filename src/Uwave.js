@@ -112,7 +112,8 @@ export default class Uwave {
     });
   }
 
-  #getComponent() {
+  /** @private */
+  getComponent() {
     return (
       <Provider store={this.store}>
         <StyledEngineProvider injectFirst>
@@ -137,7 +138,7 @@ export default class Uwave {
 
     const element = (
       <React.StrictMode>
-        {this.#getComponent()}
+        {this.getComponent()}
       </React.StrictMode>
     );
 
