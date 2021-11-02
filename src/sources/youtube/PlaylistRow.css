@@ -11,7 +11,7 @@
 }
 
 .src-youtube-PlaylistRow-name {
-  margin: 5px 0 3px 0;
+  margin: 5px 0 3px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

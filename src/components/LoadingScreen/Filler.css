@@ -1,7 +1,7 @@
 .Filler {
   display: inline-block;
   background: var(--text-color);
-  opacity: 0.1;
+  opacity: 10%;
   height: 1em;
   vertical-align: middle;
 }

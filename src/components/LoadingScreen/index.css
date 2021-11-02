@@ -1,9 +1,9 @@
 @import "./Filler.css";
 
-@keyframes initiallyHide {
-  0% { opacity: 0; }
-  80% { opacity: 0; }
-  100% { opacity: 1; }
+@keyframes initially-hide {
+  0% { opacity: 0%; }
+  80% { opacity: 0%; }
+  100% { opacity: 100%; }
 }
 
 .LoadingIndicator {
@@ -22,11 +22,11 @@
 }
 
 .LoadingIndicator-loader {
-  animation: 1s linear 0s 1 initiallyHide;
+  animation: 1s linear 0s 1 initially-hide;
 }
 
 .LoadingIndicator-notice {
-  animation: 1s linear 0s 1 initiallyHide;
+  animation: 1s linear 0s 1 initially-hide;
   color: var(--text-color);
   text-align: center;
 }
