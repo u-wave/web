@@ -1,8 +1,10 @@
-import fetch from 'fetch-mock';
+import fetch from 'jest-fetch-mock';
 import createStore from '../../redux/configureStore';
 import * as a from '../../actions/PlaylistActionCreators';
 import { favoriteMediaComplete } from '../../actions/VoteActionCreators';
 import * as s from '../../selectors/playlistSelectors';
+
+fetch.enableMocks();
 
 const initialiseStore = a.setPlaylists([
   { _id: 1, name: 'Playlist One', size: 5 },
@@ -27,13 +29,18 @@ const initialisePlaylist = (dispatch) => {
 
 describe('reducers/playlists', () => {
   beforeEach(() => {
-    fetch.mock(/\/api\/playlists\/\w+\/media/, {
-      meta: {},
-      data: [],
+    fetch.mockResponse(async (req) => {
+      if (/\/api\/playlists\/\w+\/media/.test(req.url)) {
+        return JSON.stringify({
+          meta: {},
+          data: [],
+        });
+      }
+      throw new Error('unexpected fetch call');
     });
   });
   afterEach(() => {
-    fetch.restore();
+    fetch.resetMocks();
   });
 
   it('should not respond to unrelated actions', () => {
@@ -69,18 +76,17 @@ describe('reducers/playlists', () => {
 
       dispatch(a.selectPlaylist(1));
 
-      expect(fetch.called()).toBe(true);
+      expect(fetch).toHaveBeenCalled();
     });
 
-    it('does not attempt to playlist items when deselecting a playlist', () => {
+    it('does not attempt to load playlist items when deselecting a playlist', () => {
       const { dispatch } = createStore();
       dispatch(initialiseStore);
 
       dispatch(a.selectPlaylist(1));
-      fetch.reset();
+      expect(fetch).toHaveBeenCalledTimes(1);
       dispatch(a.selectPlaylist(null));
-
-      expect(fetch.called()).toBe(false);
+      expect(fetch).toHaveBeenCalledTimes(1);
     });
   });
 
