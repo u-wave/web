@@ -1,5 +1,6 @@
 'use strict';
 
+const assert = require('assert');
 const { builtinModules } = require('module');
 const { Compilation } = require('webpack');
 const { RawSource } = require('webpack').sources;
@@ -37,9 +38,10 @@ class MiddlewarePackageJsonPlugin {
       const dependencies = {
         // Used by the bin file.
         'env-schema': pkg.dependencies['env-schema'],
-        express: pkg.dependencies.express,
-        minimist: pkg.dependencies.minimist,
+        express: pkg.devDependencies.express,
+        minimist: pkg.devDependencies.minimist,
       };
+      assert(dependencies.express && dependencies.minimist, 'missing dependencies, likely a MiddlewarePackageJsonPlugin bug');
       externals.forEach((external) => {
         dependencies[external] = pkg.dependencies[external];
       });
