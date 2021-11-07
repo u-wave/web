@@ -40,6 +40,7 @@ export function setPlaylists(playlists) {
   };
 }
 
+// TODO It would be good to get rid of this
 export function flattenPlaylistItem(item) {
   return {
     ...item.media,
