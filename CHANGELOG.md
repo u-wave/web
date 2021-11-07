@@ -4,6 +4,31 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.0-alpha.2 / 07 Oct 2021
+This release is basically [one big PR][#1955] upgrading the build system and many dependencies.
+A few bugfixes slipped in as well.
+
+[#1955]: https://github.com/u-wave/web/pull/1955
+
+Features:
+ * **Breaking:** Raised browser support floor to evergreen Firefox/Chrome/Edge versions.
+   The aim is to re-introduce support for IE 11 in a future release using a dual bundling strategy
+   but that may take a while.
+ * Update to React 17.
+ * Update to MUI 5.
+ * Improved SoundCloud error messages.
+
+Bugfixes:
+ * Closing search results no longer shows an infinite loading screen.
+ * A failing search no longer shows an infinite loading screen.
+ * Improved scroll performance in search results.
+
+Internal:
+ * **Breaking:** u-wave-web now requires Node.js 12.x or higher.
+ * Switch from enzyme to react-testing-library, which has React 17 support.
+ * Switch from mocha to jest, which has better react-testing-library support.
+ * Switch to native ES modules for most build scripts.
+
 ## 2.0.0-alpha.1 / 29 Jun 2021
 While this is an alpha release, new servers should use this rather than an older "stable" version.
 
