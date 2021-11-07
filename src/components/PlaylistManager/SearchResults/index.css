@@ -30,7 +30,8 @@
 .SearchResultRow-data {
   width: calc(100% - var(--media-list-thumb-width) - var(--media-list-duration-width));
   display: flex;
-  flex-direction: row wrap;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .SearchResultRow-data .MediaListRow-artist {
