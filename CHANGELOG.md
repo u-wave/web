@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.0-alpha.3 / 07 Oct 2021
+While this is an alpha release, new servers should use this rather than an older "stable" version.
+
+This release addresses a bunch of crashes introduced in the 2.0.0-alpha.2 release.
+
+Features:
+ * Add `RECAPTCHA_KEY` env variable to configure ReCaptcha verification at signup with the
+   included executable.
+
+Bugfixes:
+ * Fix crash due to different playlist item object shape.
+ * Fix crash when a user role has no locale string.
+ * Add an error boundary to overlays so they do not crash the whole app.
+ * Accept both UNIX and ISO timestamp formats for `booth.startTime`. This makes the client work
+   with üWave Core 0.5.0-alpha.5, which returns an unexpected value here.
+
 ## 2.0.0-alpha.2 / 07 Oct 2021
 This release is basically [one big PR][#1955] upgrading the build system and many dependencies.
 A few bugfixes slipped in as well.
