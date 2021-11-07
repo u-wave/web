@@ -16,16 +16,12 @@ function SearchResultsPanel({
   const { t } = useTranslator();
 
   let list;
-  if (loadingState === LOADED) {
-    list = results.length > 0 ? (
-      <SearchResultsList results={results} />
-    ) : (
-      <NoSearchResults />
-    );
+  if (loadingState === LOADED && results.length > 0) {
+    list = <SearchResultsList results={results} />;
+  } else if (loadingState === LOADING) {
+    list = <LoadingSearchResults />;
   } else {
-    list = (
-      <LoadingSearchResults />
-    );
+    list = <NoSearchResults />;
   }
 
   return (

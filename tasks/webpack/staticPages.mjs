@@ -1,18 +1,23 @@
-'use strict';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import HtmlPlugin from 'html-webpack-plugin';
+import { merge } from 'webpack-merge';
+import babel from '@babel/register';
+import htmlMinifierOptions from '../utils/htmlMinifierOptions.cjs';
 
-const path = require('path');
-const HtmlPlugin = require('html-webpack-plugin');
-const { merge } = require('webpack-merge');
-const htmlMinifierOptions = require('../utils/htmlMinifierOptions');
+const dirname = path.dirname(fileURLToPath(import.meta.url));
+const context = path.join(dirname, '../../src');
 
-const context = path.join(__dirname, '../../src');
+export default function staticPages(pages, production) {
+  babel({
+    plugins: ['@babel/plugin-transform-modules-commonjs'],
+  });
 
-module.exports = function staticPages(pages, production) {
   // Add static pages.
   const staticFiles = [];
 
   const pageConfigs = Object.entries(pages).map(([name, pathname]) => {
-    const fullPath = path.join(__dirname, '../../', pathname);
+    const fullPath = path.join(dirname, '../../', pathname);
     const config = {
       entry: {
         [name]: [
@@ -34,8 +39,8 @@ module.exports = function staticPages(pages, production) {
             chunks: [name],
             filename: `${name}.html`,
             template: [
-              require.resolve('../utils/loadStaticHtmlTemplate'),
-              require.resolve('./extractLoader'),
+              path.join(dirname, '../utils/loadStaticHtmlTemplate.cjs'),
+              path.join(dirname, './extractLoader.cjs'),
               fullPath,
             ].join('!'),
             inject: false,
@@ -62,13 +67,13 @@ module.exports = function staticPages(pages, production) {
         !production && {
           // Hot reload static pages in development mode.
           test: staticFiles,
-          use: require.resolve('../utils/insertHtml'),
+          use: path.join(dirname, '../utils/insertHtml.cjs'),
         },
         {
           test: /\.md$/,
           use: [
             'html-loader',
-            require.resolve('../utils/renderMarkdown'),
+            path.join(dirname, '../utils/renderMarkdown.cjs'),
           ],
         },
       ].filter(Boolean),

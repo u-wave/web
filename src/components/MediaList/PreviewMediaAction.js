@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import PreviewIcon from '@material-ui/icons/Preview';
+import PreviewIcon from '@mui/icons-material/Preview';
 import { openPreviewMediaDialog } from '../../actions/DialogActionCreators';
 import MediaAction from './MediaAction';
 

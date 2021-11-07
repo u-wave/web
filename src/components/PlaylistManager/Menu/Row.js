@@ -2,9 +2,9 @@ import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useDrop } from 'react-dnd';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import MenuItem from '@material-ui/core/MenuItem';
-import ActiveIcon from '@material-ui/icons/Check';
+import CircularProgress from '@mui/material/CircularProgress';
+import MenuItem from '@mui/material/MenuItem';
+import ActiveIcon from '@mui/icons-material/Check';
 import { MEDIA } from '../../../constants/DDItemTypes';
 
 const itemClasses = {
@@ -13,6 +13,7 @@ const itemClasses = {
 };
 
 function PlaylistRow({
+  className,
   playlist,
   selected,
   onClick,
@@ -50,7 +51,7 @@ function PlaylistRow({
   return (
     <MenuItem
       selected={selected}
-      className={cx(activeClass, droppableClass)}
+      className={cx(className, activeClass, droppableClass)}
       classes={itemClasses}
       onClick={onClick}
       ref={drop}
@@ -65,6 +66,7 @@ function PlaylistRow({
 }
 
 PlaylistRow.propTypes = {
+  className: PropTypes.string,
   playlist: PropTypes.object,
   selected: PropTypes.bool,
   onClick: PropTypes.func,

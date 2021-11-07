@@ -1,31 +1,17 @@
-'use strict';
-
-const path = require('path');
-const escapeStringRegExp = require('escape-string-regexp');
-const { DefinePlugin, HotModuleReplacementPlugin, ProvidePlugin } = require('webpack');
-const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const WebpackBar = require('webpackbar');
-const ExtractCssPlugin = require('mini-css-extract-plugin');
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
-const HtmlPlugin = require('html-webpack-plugin');
-const { SubresourceIntegrityPlugin } = require('webpack-subresource-integrity');
-const CopyPlugin = require('copy-webpack-plugin');
-const { merge } = require('webpack-merge');
-const htmlMinifierOptions = require('./tasks/utils/htmlMinifierOptions');
-const { MiddlewarePackageJsonPlugin } = require('./tasks/webpack/middleware');
-const renderLoadingScreen = require('./tasks/utils/renderLoadingScreen');
-
-// Compile src/ on the fly so we can use components etc. during build time.
-require('@babel/register').default({
-  only: [
-    new RegExp(escapeStringRegExp(path.join(__dirname, 'src'))),
-  ],
-  plugins: [
-    ['@babel/plugin-transform-modules-commonjs', { lazy: true }],
-  ],
-});
+import * as path from 'path';
+import webpack from 'webpack';
+import ReactRefreshPlugin from '@pmmmwh/react-refresh-webpack-plugin';
+import WebpackBar from 'webpackbar';
+import ExtractCssPlugin from 'mini-css-extract-plugin';
+import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
+import TerserPlugin from 'terser-webpack-plugin';
+import HtmlPlugin from 'html-webpack-plugin';
+import { SubresourceIntegrityPlugin } from 'webpack-subresource-integrity';
+import CopyPlugin from 'copy-webpack-plugin';
+import { merge } from 'webpack-merge';
+import htmlMinifierOptions from './tasks/utils/htmlMinifierOptions.cjs';
+import { MiddlewarePackageJsonPlugin } from './tasks/webpack/middleware.cjs';
+import renderLoadingScreen from './tasks/utils/renderLoadingScreen.cjs';
 
 // Most webpack configuration is in this file. A few things are split up to make the
 // core stuff easier to grasp.
@@ -33,10 +19,12 @@ require('@babel/register').default({
 // Other parts of the build are in the ./tasks/webpack/ folder:
 //  - compileDependencies: Compiles dependencies that only ship ES2015+ to code that
 //    works in all our browser targets.
-const compileDependencies = require('./tasks/webpack/compileDependencies');
+import compileDependencies from './tasks/webpack/compileDependencies.mjs';
 //  - staticPages: Compiles static markdown pages to HTML.
-const staticPages = require('./tasks/webpack/staticPages');
-const getAnalysisConfig = require('./tasks/webpack/analyze');
+import staticPages from './tasks/webpack/staticPages.mjs';
+import getAnalysisConfig from './tasks/webpack/analyze.mjs';
+
+const { DefinePlugin, HotModuleReplacementPlugin, ProvidePlugin } = webpack;
 
 function unused() {}
 
@@ -47,7 +35,7 @@ function getConfig(env, {
   analyze,
   dualBundles = false,
 }) {
-  const outputPackage = path.join(__dirname, 'npm');
+  const outputPackage = new URL('./npm', import.meta.url).pathname;
 
   const plugins = [];
 
@@ -57,7 +45,7 @@ function getConfig(env, {
 
   const middlewareConfig = {
     name: 'middleware',
-    context: path.join(__dirname, 'src'),
+    context: new URL('./src', import.meta.url).pathname,
     mode: env.production ? 'production' : 'development',
     // Quit if there are errors.
     bail: env.production,
@@ -65,14 +53,15 @@ function getConfig(env, {
 
     entry: './middleware/index.js',
     output: {
-      path: outputPackage,
-      filename: './middleware/index.js',
-      chunkFilename: './middleware/[name].js',
+      path: path.join(outputPackage, 'middleware'),
+      filename: './index.js',
+      chunkFilename: './[name].js',
+      clean: true,
       library: {
         type: 'commonjs-module',
       },
     },
-    target: 'node10',
+    target: 'node12',
 
     optimization: {
       minimize: false,
@@ -98,11 +87,15 @@ function getConfig(env, {
   };
 
   const baseConfig = merge({
-    context: path.join(__dirname, 'src'),
+    context: new URL('./src', import.meta.url).pathname,
     mode: env.production ? 'production' : 'development',
     // Quit if there are errors.
     bail: env.production,
     devtool: env.production ? 'source-map' : 'inline-source-map',
+
+    output: {
+      clean: true,
+    },
 
     plugins: [
       new ProvidePlugin({
@@ -127,7 +120,7 @@ function getConfig(env, {
 
         {
           test: /\.html$/,
-          use: require.resolve('./tasks/webpack/ejs-loader'),
+          use: new URL('./tasks/webpack/ejs-loader.cjs', import.meta.url).pathname,
         },
 
         // Locale files.
@@ -226,11 +219,12 @@ function getConfig(env, {
     output: {
       publicPath: '/',
       path: path.join(outputPackage, 'public'),
-      filename: env.production ? 'static/[name]_[chunkhash:7].mjs' : '[name]_dev.mjs',
-      chunkFilename: env.production ? 'static/[name]_[chunkhash:7].mjs' : '[name]_dev.mjs',
+      filename: env.production ? 'static/[name]_[contenthash:7].js' : '[name]_dev.js',
+      chunkFilename: env.production ? 'static/[name]_[contenthash:7].js' : '[name]_dev.js',
       assetModuleFilename: env.production ? 'static/[name]_[hash:7][ext]' : '[name][ext]',
       crossOriginLoading: 'anonymous',
     },
+    target: ['web'],
 
     plugins: plugins.filter(Boolean),
 
@@ -284,7 +278,6 @@ function getConfig(env, {
     },
 
     plugins: [
-      new CleanWebpackPlugin(),
       new ExtractCssPlugin({
         filename: 'static/[name]_[contenthash:7].css',
         chunkFilename: 'static/[name]_[contenthash:7].css',
@@ -306,8 +299,8 @@ function getConfig(env, {
   const legacyConfigPatch = {
     name: 'app-legacy',
     output: {
-      filename: env.production ? 'static/[name]_[chunkhash:7].js' : '[name]_dev.js',
-      chunkFilename: env.production ? 'static/[name]_[chunkhash:7].js' : '[name]_dev.js',
+      filename: env.production ? 'static/l_[name]_[contenthash:7].js' : 'l_[name]_dev.js',
+      chunkFilename: env.production ? 'static/l_[name]_[contenthash:7].js' : 'l_[name]_dev.js',
     },
     target: ['web', 'es5'],
     resolve: {
@@ -362,7 +355,7 @@ function getConfig(env, {
     optimization: {
       minimize: false,
     },
-    target: 'node10',
+    target: 'node12',
   });
 
   let activeAppConfig = appConfig;
@@ -384,7 +377,7 @@ function getConfig(env, {
     activeAppConfig = merge(activeAppConfig, productionConfigPatch);
   }
   if (!dualBundles) {
-    activeAppConfig = merge(activeAppConfig, legacyConfigPatch);
+    // activeAppConfig = merge(activeAppConfig, legacyConfigPatch);
   }
   if (demo) {
     activeAppConfig = merge(activeAppConfig, demoConfigPatch);
@@ -407,4 +400,4 @@ function getConfig(env, {
   return configs;
 }
 
-module.exports = getConfig;
+export default getConfig;

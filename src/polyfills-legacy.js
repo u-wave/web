@@ -17,7 +17,4 @@ import 'abortcontroller-polyfill/src/polyfill';
 import 'event-source-polyfill';
 import numberIsFinite from 'is-finite';
 
-if (!Number.isFinite) {
-  // eslint-disable-next-line no-extend-native
-  Number.isFinite = numberIsFinite;
-}
+Number.isFinite ??= numberIsFinite;

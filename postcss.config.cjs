@@ -3,8 +3,8 @@
 const path = require('path');
 
 module.exports = {
-  plugins: {
-    'postcss-preset-env': {
+  plugins: [
+    ['postcss-preset-env', {
       stage: 2,
       features: {
         'nesting-rules': true,
@@ -18,6 +18,6 @@ module.exports = {
           unresolved: 'warn',
         },
       },
-    },
-  },
+    }],
+  ],
 };

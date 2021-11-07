@@ -2,9 +2,9 @@ import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import FormGroup from '@material-ui/core/FormGroup';
-import Switch from '@material-ui/core/Switch';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import FormGroup from '@mui/material/FormGroup';
+import Switch from '@mui/material/Switch';
 import Profile from './Profile';
 import SettingControl from './SettingControl';
 import LanguagePicker from './LanguagePicker';
@@ -24,14 +24,14 @@ function SettingsPanel({
   const { t } = useTranslator();
   const isWide = useMediaQuery((theme) => theme.breakpoints.up('lg'));
 
-  const handleVideoEnabledChange = (event, value) => {
-    onSettingChange('videoEnabled', value);
+  const handleVideoEnabledChange = (event) => {
+    onSettingChange('videoEnabled', event.target.checked);
   };
-  const handleVideoSizeChange = (event, value) => {
-    onSettingChange('videoSize', value ? 'large' : 'small');
+  const handleVideoSizeChange = (event) => {
+    onSettingChange('videoSize', event.target.checked ? 'large' : 'small');
   };
-  const handleMentionSoundChange = (event, value) => {
-    onSettingChange('mentionSound', value);
+  const handleMentionSoundChange = (event) => {
+    onSettingChange('mentionSound', event.target.checked);
   };
   const handleLanguageChange = (event) => {
     onChangeLanguage(event.target.value);

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { useTranslator } from '@u-wave/react-translate';
-import PlaylistIcon from '@material-ui/icons/PlaylistPlay';
+import PlaylistIcon from '@mui/icons-material/PlaylistPlay';
 import ImportSourceBlock from '../../components/PlaylistManager/Import/ImportSourceBlock';
 import Form from '../../components/Form';
 import FormGroup from '../../components/Form/Group';

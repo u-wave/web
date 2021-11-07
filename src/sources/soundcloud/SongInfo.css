@@ -15,3 +15,8 @@
 .src-soundcloud-SongInfo-link--track {
   font-weight: bold;
 }
+
+.src-soundcloud-SongInfo-icon {
+  float: inline-start;
+  margin-right: 3px;
+}

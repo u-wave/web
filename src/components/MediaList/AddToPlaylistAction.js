@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import AddIcon from '@material-ui/icons/Add';
+import AddIcon from '@mui/icons-material/Add';
 import { addMediaMenu } from '../../actions/PlaylistActionCreators';
 import { useMediaListContext } from './BaseMediaList';
 import MediaAction from './MediaAction';

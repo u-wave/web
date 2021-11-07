@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from '@u-wave/react-translate';
-import IconButton from '@material-ui/core/IconButton';
-import EditIcon from '@material-ui/icons/Edit';
+import IconButton from '@mui/material/IconButton';
+import EditIcon from '@mui/icons-material/Edit';
 import PromptDialog from '../Dialogs/PromptDialog';
 import DialogCloseAnimation from '../DialogCloseAnimation';
 

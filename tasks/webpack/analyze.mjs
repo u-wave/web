@@ -1,8 +1,6 @@
-'use strict';
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-
-module.exports = function getAnalysisConfig(mode) {
+export default function getAnalysisConfig(mode) {
   const openOptions = {
     analyzerMode: 'server',
   };
@@ -16,4 +14,4 @@ module.exports = function getAnalysisConfig(mode) {
       new BundleAnalyzerPlugin(mode === 'open' ? openOptions : staticOptions),
     ],
   };
-};
+}

@@ -288,7 +288,10 @@ export default function middleware({ url = defaultUrl() } = {}) {
           socket.attemptReconnect();
           break;
         case SOCKET_CONNECT:
-          socket.connect();
+          socket.connect().catch(() => {
+            // Start attempting reconnects
+            socket.attemptReconnect();
+          });
           break;
         case SEND_MESSAGE:
           socket.send('sendChat', payload.message);

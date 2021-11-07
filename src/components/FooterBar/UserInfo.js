@@ -1,7 +1,7 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import SettingsIcon from '@material-ui/icons/SettingsRounded';
+import SettingsIcon from '@mui/icons-material/SettingsRounded';
 
 import Avatar from '../Avatar';
 

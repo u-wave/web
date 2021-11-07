@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from '@u-wave/react-translate';
-import Button from '@material-ui/core/Button';
-import LogoutIcon from '@material-ui/icons/PowerSettingsNew';
+import Button from '@mui/material/Button';
+import LogoutIcon from '@mui/icons-material/PowerSettingsNew';
 import ConfirmDialog from '../Dialogs/ConfirmDialog';
 import FormGroup from '../Form/Group';
 

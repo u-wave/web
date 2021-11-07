@@ -28,8 +28,9 @@
   }
 }
 
-/* Makes the element wrap tightly around its content, so we can put a <span /> around buttons that may be `[disabled]`,
- * and attach material-ui Tooltips to those spans instead. Without this, the tooltip offsets would be calculated differently. */
+/* Makes the element wrap tightly around its content, so we can put a <span /> around buttons that
+ * may be `[disabled]`, and attach material-ui Tooltips to those spans instead. Without this, the
+ * tooltip offsets would be calculated differently. */
 .PlaylistMeta-possiblyDisabledButtonWrapper {
   display: flex;
 }

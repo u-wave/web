@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
-import CreatePlaylistIcon from '@material-ui/icons/Add';
+import CreatePlaylistIcon from '@mui/icons-material/Add';
 import PromptDialog from '../Dialogs/PromptDialog';
 import PlaylistsMenu from './PlaylistsMenu';
 

@@ -21,6 +21,7 @@
 
   "settings": {
     "polyfills": [
+      "Array.from",
       "Number.isFinite",
       "Number.isNaN",
       "Object.assign",
@@ -29,6 +30,7 @@
       "Promise",
       "AbortController",
       "fetch",
+      "Headers",
       "URL",
       "CSS.escape"
     ]
@@ -44,7 +46,7 @@
       }
     },
     {
-      "files": ["tasks/**/*.js", "*.config.js"],
+      "files": ["tasks/**/*.js", "*.config.js", "test/*.js"],
       "parserOptions": {
         "sourceType": "script"
       },
@@ -55,14 +57,10 @@
     },
     {
       "files": ["**/__tests__/**/*.js"],
-      "rules": {
-        "no-unused-expressions": "off"
-      },
+      "plugins": ["eslint-plugin-jest", "eslint-plugin-jest-dom", "eslint-plugin-testing-library"],
+      "extends": ["plugin:jest/recommended", "plugin:jest-dom/recommended", "plugin:testing-library/react"],
       "env": {
-        "mocha": true
-      },
-      "globals": {
-        "testUtils": true
+        "jest": true
       }
     }
   ]

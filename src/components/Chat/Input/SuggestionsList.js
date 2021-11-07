@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Paper from '@material-ui/core/Paper';
-import List from '@material-ui/core/List';
+import Paper from '@mui/material/Paper';
+import List from '@mui/material/List';
 
 const SuggestionsList = ({
   children,

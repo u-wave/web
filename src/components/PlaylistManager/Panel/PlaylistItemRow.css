@@ -1,6 +1,6 @@
-.PlaylistItemRow--dropAbove:before,
-.PlaylistItemRow--dropBelow:after {
-  content: ' ';
+.PlaylistItemRow--dropAbove::before,
+.PlaylistItemRow--dropBelow::after {
+  content: " ";
   display: block;
   background: white;
   height: 3px;
@@ -11,10 +11,10 @@
 /* The height is 3px, but offsets are -2px because there is a 1px border
  * between each playlist item row. */
 
-.PlaylistItemRow--dropAbove:before {
+.PlaylistItemRow--dropAbove::before {
   top: -2px;
 }
 
-.PlaylistItemRow--dropBelow:after {
+.PlaylistItemRow--dropBelow::after {
   bottom: -2px;
 }

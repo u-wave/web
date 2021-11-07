@@ -57,7 +57,8 @@ function BaseMediaList({
 
   const itemKey = useCallback((index) => {
     if (media[index]) {
-      return media[index]._id;
+      const { _id: id, sourceType, sourceID } = media[index];
+      return id ?? `${sourceType}:${sourceID}`;
     }
     return `unloaded_${index}`;
   }, [media]);

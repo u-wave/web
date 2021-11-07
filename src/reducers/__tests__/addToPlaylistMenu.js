@@ -1,4 +1,3 @@
-import expect from 'expect';
 import createStore from '../../redux/configureStore';
 import { addMediaMenu, closeAddMediaMenu } from '../../actions/PlaylistActionCreators';
 import * as s from '../../selectors/addToPlaylistMenuSelectors';

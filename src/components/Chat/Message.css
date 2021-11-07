@@ -67,7 +67,7 @@
 }
 
 .ChatMessage--loading {
-  opacity: 0.7;
+  opacity: 70%;
 }
 
 .ChatMention {

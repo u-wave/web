@@ -26,7 +26,9 @@ const TextField = React.forwardRef(({
         type={type}
         {...props}
       />
-      <div className="TextField-icon">{icon}</div>
+      {icon ? (
+        <div className="TextField-icon">{icon}</div>
+      ) : null}
     </div>
   );
 });
@@ -34,7 +36,7 @@ const TextField = React.forwardRef(({
 TextField.propTypes = {
   className: PropTypes.string,
   type: PropTypes.string,
-  icon: PropTypes.node.isRequired,
+  icon: PropTypes.node,
 };
 
 export default TextField;

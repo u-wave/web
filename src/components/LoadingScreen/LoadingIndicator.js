@@ -1,6 +1,6 @@
 import React from 'react';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import WarningIcon from '@material-ui/icons/Warning';
+import CircularProgress from '@mui/material/CircularProgress';
+import WarningIcon from '@mui/icons-material/Warning';
 
 function LoadingIndicator() {
   return (

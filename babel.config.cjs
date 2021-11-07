@@ -28,39 +28,38 @@ module.exports = (api, envOverride) => {
 
   // When the caller is @babel/register, we expect to immediately run the output, in the current
   // Node.js version.
-  const callerIsNode = api.caller((caller) => caller && caller.name === '@babel/register');
+  const callerIsNode = api.caller((caller) => caller && (caller.name === '@babel/register' || caller.name === 'babel-jest'));
   // When the target is `node`, we're doing a webpack build for server-side code. The output will
   // run in any Node.js version supported by our public API.
   const targetIsNode = api.caller((caller) => caller && caller.target === 'node');
   // Check if our output should support older browsers.
   const targetIsLegacy = api.caller((caller) => caller && caller.compiler === 'app-legacy');
-  const targetIsModern = !targetIsLegacy;
 
-  let targets = {};
-  let bugfixes = false;
+  let browserslistEnv = 'production';
+  let targets;
   if (callerIsNode) {
     targets = { node: 'current', browsers: '' };
   } else if (targetIsNode) {
     targets = { node: '12.0.0', browsers: '' };
   }
 
-  if (targetIsModern) {
-    targets = { esmodules: true, browsers: '' };
-    bugfixes = true;
+  if (targetIsLegacy) {
+    browserslistEnv = 'legacy';
   }
 
   const preset = {
-    targets,
+    browserslistEnv,
     assumptions: {
       constantSuper: true,
       noClassCalls: true,
       noDocumentAll: true,
       noNewArrows: true,
+      privateFieldsAsProperties: true,
     },
     presets: [
       ['@babel/preset-env', {
         modules: false,
-        bugfixes,
+        bugfixes: true,
       }],
       ['@babel/preset-react', {
         development: env === 'development',
@@ -77,6 +76,10 @@ module.exports = (api, envOverride) => {
       }],
     ],
   };
+
+  if (targets) {
+    preset.targets = targets;
+  }
 
   if (callerIsNode) {
     preset.plugins.push(

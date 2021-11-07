@@ -1,8 +1,8 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
 import { translate } from '@u-wave/react-translate';
 
 const GuestsRow = ({ t, className, guests }) => (

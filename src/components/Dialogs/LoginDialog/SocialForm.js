@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslator, Interpolate } from '@u-wave/react-translate';
-import Alert from '@material-ui/core/Alert';
-import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import Radio from '@material-ui/core/Radio';
-import UserIcon from '@material-ui/icons/Person';
+import Alert from '@mui/material/Alert';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import CircularProgress from '@mui/material/CircularProgress';
+import RadioGroup from '@mui/material/RadioGroup';
+import Radio from '@mui/material/Radio';
+import UserIcon from '@mui/icons-material/Person';
 import upperCaseFirst from '../../../utils/upperCaseFirst';
 import Form from '../../Form';
 import FormGroup from '../../Form/Group';
@@ -18,7 +18,6 @@ import Button from '../../Form/Button';
 
 const {
   useCallback,
-  useRef,
   useState,
 } = React;
 
@@ -70,26 +69,27 @@ function SocialForm({
   const [isBusy, setBusy] = useState(false);
   const [agreed, setAgreed] = useState(false);
   const [avatar, setAvatar] = useState('sigil');
-  const refUsername = useRef(null);
+  const [username, setUsername] = useState(suggestedName);
 
   const handleSubmit = useCallback((event) => {
     event.preventDefault();
     setBusy(true);
 
-    onSocialFinish(service, {
-      avatar,
-      username: refUsername.current.value,
-    }).finally(() => {
+    onSocialFinish(service, { avatar, username }).finally(() => {
       setBusy(false);
     });
-  }, [avatar, service, onSocialFinish]);
+  }, [avatar, username, service, onSocialFinish]);
 
-  const handleTosCheckbox = useCallback((event, checked) => {
-    setAgreed(checked);
+  const handleTosCheckbox = useCallback((event) => {
+    setAgreed(event.target.checked);
   }, []);
 
   const handleChangeAvatar = useCallback((name) => {
     setAvatar(name);
+  }, []);
+
+  const handleChangeUsername = useCallback((event) => {
+    setUsername(event.target.value);
   }, []);
 
   return (
@@ -101,13 +101,13 @@ function SocialForm({
       )}
       <FormGroup>
         <TextField
-          ref={refUsername}
           className="RegisterForm-field"
           autocomplete="nickname"
-          defaultValue={suggestedName}
           placeholder={t('login.username')}
           icon={<UserIcon nativeColor="#9f9d9e" />}
           autoFocus
+          value={username}
+          onChange={handleChangeUsername}
         />
       </FormGroup>
 
