@@ -6,6 +6,7 @@ import Overlay from '../Overlay';
 import OverlayContent from '../Overlay/Content';
 import OverlayHeader from '../Overlay/Header';
 import { closeAll } from '../../actions/OverlayActionCreators';
+import ErrorBoundary from './ErrorBoundary';
 
 const {
   useEffect,
@@ -54,9 +55,11 @@ export default function createLazyOverlay({
   function LazyOverlay(props) {
     return (
       <OverlayComponent {...props}>
-        <React.Suspense fallback={<LoadingOverlay {...props} />}>
-          <RealOverlay {...props} />
-        </React.Suspense>
+        <ErrorBoundary>
+          <React.Suspense fallback={<LoadingOverlay {...props} />}>
+            <RealOverlay {...props} />
+          </React.Suspense>
+        </ErrorBoundary>
       </OverlayComponent>
     );
   }

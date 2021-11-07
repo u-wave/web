@@ -10,36 +10,38 @@ function reload() {
   window.location.reload();
 }
 
-const FatalError = ({ error }) => (
-  <div className="FatalError">
-    <Card
-      raised
-      className="FatalError-paper"
-    >
-      <CardContent>
-        <Typography variant="headline">üWave Crashed</Typography>
-        <Typography component="p">
-          {error.message}
-        </Typography>
-        <Typography component="p">
-          The admins have been made aware of this issue.
-          Please reload the page.
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button
-          variant="contained"
-          color="secondary"
-          className="FatalError-reload"
-          onClick={reload}
-          autoFocus
-        >
-          Reload
-        </Button>
-      </CardActions>
-    </Card>
-  </div>
-);
+function FatalError({ error }) {
+  return (
+    <div className="FatalError">
+      <Card
+        raised
+        className="FatalError-paper"
+      >
+        <CardContent>
+          <Typography variant="headline">üWave Crashed</Typography>
+          <Typography component="p">
+            {error.message}
+          </Typography>
+          <Typography component="p">
+            The admins have been made aware of this issue.
+            Please reload the page.
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <Button
+            variant="contained"
+            color="secondary"
+            className="FatalError-reload"
+            onClick={reload}
+            autoFocus
+          >
+            Reload
+          </Button>
+        </CardActions>
+      </Card>
+    </div>
+  );
+}
 
 FatalError.propTypes = {
   error: PropTypes.object.isRequired,
