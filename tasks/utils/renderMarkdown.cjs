@@ -5,9 +5,9 @@ const prerender = require('./prerender.cjs');
 
 module.exports = function renderMarkdown(source) {
   // eslint-disable-next-line global-require
-  const Markdown = require('../../src/components/Markdown').default;
+  const MarkdownWithHtml = require('../../src/components/Markdown/WithHtml').default;
 
-  const { html, css } = prerender(h(Markdown, { source }));
+  const { html, css } = prerender(h(MarkdownWithHtml, { source }));
   if (css === '') {
     return html;
   }
