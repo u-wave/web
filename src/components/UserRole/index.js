@@ -7,9 +7,17 @@ import RoleColor from '../RoleColor';
 function UserRole({ roleName }) {
   const { t } = useTranslator();
 
+  let name;
+  // TODO(goto-bus-stop) this should not throw in the first place.
+  try {
+    name = t(`roles.${roleName}`, { defaultValue: upperCaseFirst(roleName) });
+  } catch {
+    name = upperCaseFirst(roleName);
+  }
+
   return (
     <RoleColor component="div" className="UserRole" role={roleName}>
-      {t(`roles.${roleName}`, { defaultValue: upperCaseFirst(roleName) })}
+      {name}
     </RoleColor>
   );
 }
