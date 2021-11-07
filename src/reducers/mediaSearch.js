@@ -1,6 +1,7 @@
 import {
-  SHOW_IMPORT_PANEL,
+  HIDE_SEARCH_RESULTS,
   SELECT_PLAYLIST,
+  SHOW_IMPORT_PANEL,
   SHOW_SEARCH_RESULTS,
 } from '../constants/ActionTypes';
 
@@ -13,6 +14,7 @@ export default function reduce(state = initialState, action = {}) {
       return { showResults: true };
     case SELECT_PLAYLIST:
     case SHOW_IMPORT_PANEL:
+    case HIDE_SEARCH_RESULTS:
       return { showResults: false };
     default:
       return state;

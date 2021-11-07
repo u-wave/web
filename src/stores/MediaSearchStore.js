@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import { showSearchResults } from '../actions/SearchActionCreators';
+import { hideSearchResults, showSearchResults } from '../actions/SearchActionCreators';
 import { get } from '../actions/RequestActionCreators';
 import { IDLE, LOADING, LOADED } from '../constants/LoadingStates';
 
@@ -53,7 +53,11 @@ function useStoreImplementation() {
   const search = useCallback((newQuery) => {
     // For compatibility.
     // TODO do this elsewhere.
-    dispatch(showSearchResults());
+    if (newQuery != null) {
+      dispatch(showSearchResults());
+    } else {
+      dispatch(hideSearchResults());
+    }
 
     setQuery(newQuery);
   }, [dispatch]);
