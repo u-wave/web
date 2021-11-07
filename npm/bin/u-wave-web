@@ -19,6 +19,9 @@ if (argv.h || argv.help) {
   console.log('    Public URL of the üWave HTTP API to connect to. Defaults to "/api".');
   console.log('  SOCKET_URL');
   console.log('    Public URL of the üWave WebSocket API to connect to. Defaults to "/".');
+  console.log('  RECAPTCHA_KEY [optional]');
+  console.log('    ReCaptcha site key to confirm new registrations.');
+  console.log('    The secret key must also be configured on the server side.');
   console.log();
   process.exit(0);
 }
@@ -43,6 +46,9 @@ const config = envSchema({
         type: 'string',
         default: 'üWave',
       },
+      RECAPTCHA_KEY: {
+        type: 'string',
+      },
     },
   },
 });
@@ -52,6 +58,9 @@ app.use(createWebClient({
   apiUrl: config.API_URL,
   socketUrl: config.SOCKET_URL,
   title: config.CLIENT_TITLE,
+  recaptcha: config.RECAPTCHA_KEY ? {
+    key: config.RECAPTCHA_KEY,
+  } : null,
 }));
 
 const server = app.listen(config.PORT, () => {
