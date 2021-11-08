@@ -15,7 +15,7 @@
     "@f/cookies-enabled": "^1.1.1",
     "@mui/icons-material": "^5.0.0",
     "@mui/lab": "5.0.0-alpha.53",
-    "@mui/material": "^5.0.0",
+    "@mui/material": "^5.1.0",
     "@mui/system": "^5.0.0",
     "@mui/utils": "^5.0.0",
     "@openfonts/open-sans_all": "^1.44.2",
