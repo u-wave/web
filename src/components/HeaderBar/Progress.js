@@ -1,43 +1,43 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import transformStyle from '../../utils/transformStyle';
+import { useStore } from 'react-redux';
+import { currentTimeSelector } from '../../selectors/timeSelectors';
 
-function forceReflow(el) {
-  // Hopefully the minifier won't optimise this away!
-  el.getBoundingClientRect();
+const { useEffect, useRef } = React;
+
+function clamp(val, min, max) {
+  return Math.max(min, Math.min(val, max));
 }
 
-const Progress = ({ className, currentProgress, timeRemaining }) => {
-  function animate(el) {
-    if (!el) return;
+function Progress({ className, startTime, duration }) {
+  const animateRef = useRef();
+  const store = useStore();
 
-    // Set the width to the current progress without animating
-    Object.assign(el.style, {
-      transitionDuration: '0s',
-    }, transformStyle(`scaleX(${currentProgress})`));
+  useEffect(() => {
+    let frame;
+    function animate() {
+      const currentTime = currentTimeSelector(store.getState());
+      const width = Math.round(((currentTime - startTime) / duration) * 100) / 1000;
+      animateRef.current.style.width = `${clamp(width, 0, 100)}%`;
+      frame = requestAnimationFrame(animate);
+    }
 
-    // Force browser to rerender the bar immediately
-    forceReflow(el);
-
-    // Set up the actual animation. Progress bar goes to 100% full
-    // in $timeRemaining seconds.
-    Object.assign(el.style, {
-      transitionDuration: `${timeRemaining}s`,
-    }, transformStyle('scaleX(1)'));
-  }
+    frame = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(frame);
+  }, [store, startTime, duration]);
 
   return (
     <div className={cx('Progress', className)}>
-      <div className="Progress-fill" ref={animate} />
+      <div className="Progress-fill" ref={animateRef} />
     </div>
   );
-};
+}
 
 Progress.propTypes = {
   className: PropTypes.string,
-  currentProgress: PropTypes.number.isRequired,
-  timeRemaining: PropTypes.number.isRequired,
+  startTime: PropTypes.number.isRequired,
+  duration: PropTypes.number.isRequired,
 };
 
 export default Progress;
