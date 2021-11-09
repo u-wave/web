@@ -33,7 +33,7 @@ function useStoreImplementation() {
     // Maybe this can be pulled into a useFetch hook of some kind?
     const controller = new AbortController();
     const request = get(`/search/${encodeURIComponent(activeSource)}`, {
-      qs: { query },
+      qs: { query, include: 'playlists' },
       signal: controller.signal,
     });
 
