@@ -1,5 +1,6 @@
 import path from 'path';
 import { pathToFileURL } from 'url';
+import { pipeline } from 'stream';
 import defaultFs from 'fs';
 import hstream from 'hstream';
 import router from 'router';
@@ -32,14 +33,14 @@ export default function uwaveWebClient(options = {}) {
     ...clientOptions
   } = options;
 
-  const indexHtml = fs.readFileSync(new URL('./index.html', pathToFileURL(basePath)), 'utf8');
-  const passwordResetHtml = fs.readFileSync(new URL('./password-reset.html', pathToFileURL(basePath)), 'utf8');
+  const indexHtml = new URL('./index.html', pathToFileURL(basePath));
+  const passwordResetHtml = new URL('./password-reset.html', pathToFileURL(basePath));
 
   const clientRouter = router();
   const manifest = createManifest({ title });
 
   return clientRouter
-    .get('/', (req, res) => {
+    .get('/', (req, res, next) => {
       res.setHeader('content-type', 'text/html');
 
       const transform = hstream({
@@ -47,10 +48,13 @@ export default function uwaveWebClient(options = {}) {
         '#u-wave-config': JSON.stringify(clientOptions),
       });
 
-      transform.pipe(res);
-      transform.end(indexHtml);
+      pipeline(fs.createReadStream(indexHtml), transform, res, (err) => {
+        if (err) {
+          next(err);
+        }
+      });
     })
-    .get('/reset/:key', (req, res) => {
+    .get('/reset/:key', (req, res, next) => {
       res.setHeader('content-type', 'text/html');
 
       const transform = hstream({
@@ -59,8 +63,11 @@ export default function uwaveWebClient(options = {}) {
         '#reset-data': req.params.key,
       });
 
-      transform.pipe(res);
-      transform.end(passwordResetHtml);
+      pipeline(fs.createReadStream(passwordResetHtml), transform, res, (err) => {
+        if (err) {
+          next(err);
+        }
+      });
     })
     .get('/manifest.json', (req, res) => {
       res.json(manifest);
