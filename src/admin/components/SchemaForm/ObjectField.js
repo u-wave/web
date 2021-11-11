@@ -33,7 +33,7 @@ function ObjectProperties({
     );
   });
 
-  return <>{fields}</>;
+  return fields;
 }
 
 ObjectProperties.propTypes = {

@@ -32,10 +32,6 @@ export default class ConfirmDialog extends React.Component {
     };
   }
 
-  handleSubmit = (event) => {
-    event.preventDefault();
-  };
-
   handleConfirm = (event) => {
     const { onConfirm } = this.props;
 
@@ -67,6 +63,10 @@ export default class ConfirmDialog extends React.Component {
     } = this.props;
     const { busy } = this.state;
 
+    const handleSubmit = (event) => {
+      event.preventDefault();
+    };
+
     return (
       <Dialog
         className={cx('Dialog', className)}
@@ -74,7 +74,7 @@ export default class ConfirmDialog extends React.Component {
         open
       >
         <DialogContent className="Dialog-body">
-          <Form onSubmit={this.handleSubmit}>
+          <Form onSubmit={handleSubmit}>
             {children}
             <FormGroup className="ConfirmDialog-buttons FormGroup--noSpacing">
               <div className="ConfirmDialog-button">

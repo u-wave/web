@@ -48,9 +48,9 @@ export default class Uwave {
     this.options = options;
     this.#sessionToken = session;
 
-    if (module.hot) {
+    if (import.meta.webpackHot) {
       const uw = this;
-      module.hot.accept('./containers/App', () => {
+      import.meta.webpackHot.accept('./containers/App', () => {
         if (uw.#renderTarget) {
           uw.renderToDOM();
         }

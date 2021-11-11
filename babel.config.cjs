@@ -2,6 +2,7 @@
 
 const pkg = require('./package.json');
 
+// Replaces import.meta.url with a CommonJS equivalent, and import.meta.* with `undefined`.
 function importMetaToCommonJs() {
   return {
     visitor: {
@@ -10,10 +11,15 @@ function importMetaToCommonJs() {
           return;
         }
         const parent = path.parentPath;
-        if (!parent.isMemberExpression() || parent.node.property.name !== 'url') {
+        if (!parent.isMemberExpression()) {
           return;
         }
-        parent.replaceWithSourceString('require("url").pathToFileURL(__filename)');
+
+        if (parent.node.property.name === 'url') {
+          parent.replaceWithSourceString('require("url").pathToFileURL(__filename)');
+        } else {
+          parent.replaceWithSourceString('undefined');
+        }
       },
     },
   };

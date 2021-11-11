@@ -12,8 +12,8 @@ function YouTubeImportPlaylistPanel({
   onImportPlaylist,
   onClosePanel,
 }) {
-  const handleImportFull = () => onImportPlaylist(
-    importingPlaylist.sourceID, importingPlaylist.name,
+  const handleImportFull = () => (
+    onImportPlaylist(importingPlaylist.sourceID, importingPlaylist.name)
   );
 
   return (

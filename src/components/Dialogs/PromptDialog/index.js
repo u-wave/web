@@ -72,10 +72,6 @@ export default class PromptDialog extends React.Component {
     this.setState({ value: event.target.value });
   };
 
-  refInput = (input) => {
-    this.input = input;
-  };
-
   render() {
     const {
       children,
@@ -116,7 +112,6 @@ export default class PromptDialog extends React.Component {
             {children}
             <FormGroup>
               <TextField
-                ref={this.refInput}
                 autoFocus
                 type={inputType}
                 placeholder={placeholder}

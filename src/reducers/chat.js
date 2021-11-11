@@ -39,7 +39,7 @@ function removeInFlightMessage(messages, remove) {
   ));
 }
 
-export default function reduce(state = initialState, action) {
+export default function reduce(state = initialState, action = undefined) {
   const { type, payload } = action;
   const { messages } = state;
   switch (type) {

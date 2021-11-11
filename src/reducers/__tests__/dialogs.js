@@ -46,26 +46,30 @@ describe('reducers/dialogs', () => {
 
   describe('action: OPEN_EDIT_MEDIA_DIALOG', () => {
     testDialogOpen(
-      OPEN_EDIT_MEDIA_DIALOG, 'editMedia',
+      OPEN_EDIT_MEDIA_DIALOG,
+      'editMedia',
       'should open the media edit dialog w/ the given payload',
     );
   });
   describe('action: CLOSE_EDIT_MEDIA_DIALOG', () => {
     testDialogClose(
-      CLOSE_EDIT_MEDIA_DIALOG, 'editMedia',
+      CLOSE_EDIT_MEDIA_DIALOG,
+      'editMedia',
       'should close the media edit dialog w/ the given payload',
     );
   });
 
   describe('action: OPEN_LOGIN_DIALOG', () => {
     testDialogOpen(
-      OPEN_LOGIN_DIALOG, 'login',
+      OPEN_LOGIN_DIALOG,
+      'login',
       'should open the login dialog w/ the given payload',
     );
   });
   describe('action: CLOSE_LOGIN_DIALOG', () => {
     testDialogClose(
-      CLOSE_LOGIN_DIALOG, 'login',
+      CLOSE_LOGIN_DIALOG,
+      'login',
       'should close the login dialog w/ the given payload',
     );
   });
