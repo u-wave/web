@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { createMuiTheme } from '@material-ui/core/styles';
-import { ThemeProvider } from '@material-ui/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { TranslateProvider } from '@u-wave/react-translate';
 import { resetPassword } from '../actions';
 import ErrorArea from '../../containers/ErrorArea';
@@ -21,7 +20,7 @@ const mapDispatchToProps = {
 
 const enhance = connect(mapStateToProps, mapDispatchToProps);
 
-const muiTheme = createMuiTheme(theme);
+const muiTheme = createTheme(theme);
 
 const PasswordResetApp = ({
   translator, success, ...props

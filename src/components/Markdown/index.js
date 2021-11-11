@@ -2,12 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import BaseMarkdown from 'react-markdown';
 
-const Markdown = ({ source }) => (
-  <BaseMarkdown
-    escapeHtml={false}
-    source={source}
-  />
-);
+function Markdown({ source }) {
+  return (
+    <BaseMarkdown>{source}</BaseMarkdown>
+  );
+}
 
 Markdown.propTypes = {
   source: PropTypes.string.isRequired,

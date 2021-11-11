@@ -37,11 +37,7 @@ function ImportBlock() {
     }
   });
 
-  return (
-    <>
-      {forms}
-    </>
-  );
+  return forms;
 }
 
 export default ImportBlock;

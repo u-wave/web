@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslator } from '@u-wave/react-translate';
-import Typography from '@material-ui/core/Typography';
-import EmptyIcon from '@material-ui/icons/PlaylistAdd';
+import Typography from '@mui/material/Typography';
+import EmptyIcon from '@mui/icons-material/PlaylistAdd';
 
 function PlaylistEmpty() {
   const { t } = useTranslator();

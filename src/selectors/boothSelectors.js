@@ -39,19 +39,6 @@ export const timeRemainingSelector = createSelector(
   (duration, elapsed) => (duration > 0 ? duration - elapsed : 0),
 );
 
-export const mediaProgressSelector = createSelector(
-  mediaDurationSelector,
-  timeElapsedSelector,
-  (duration, elapsed) => (
-    duration
-      // Ensure that the result is between 0 and 1
-      // It can be outside this range if a network or server hiccup
-      // results in an advance event getting delayed.
-      ? Math.max(0, Math.min(1, elapsed / duration))
-      : 0
-  ),
-);
-
 export const djSelector = createSelector(
   baseSelector,
   usersSelector,

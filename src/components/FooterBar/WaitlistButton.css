@@ -35,5 +35,5 @@
 
 .WaitlistButton-icon--locked {
   color: var(--text-color);
-  opacity: 0.7;
+  opacity: 70%;
 }

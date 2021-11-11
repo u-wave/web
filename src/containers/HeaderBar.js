@@ -5,8 +5,6 @@ import { toggleRoomHistory, toggleAbout } from '../actions/OverlayActionCreators
 import {
   djSelector,
   mediaSelector,
-  mediaProgressSelector,
-  timeRemainingSelector,
   startTimeSelector,
   mediaDurationSelector,
 } from '../selectors/boothSelectors';
@@ -14,8 +12,7 @@ import { volumeSelector, isMutedSelector } from '../selectors/settingSelectors';
 import HeaderBar from '../components/HeaderBar';
 
 const mapStateToProps = createStructuredSelector({
-  mediaProgress: mediaProgressSelector,
-  mediaTimeRemaining: timeRemainingSelector,
+  mediaStartTime: startTimeSelector,
   media: mediaSelector,
   dj: djSelector,
   volume: volumeSelector,

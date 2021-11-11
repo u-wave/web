@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormHelperText from '@mui/material/FormHelperText';
+import Checkbox from '@mui/material/Checkbox';
 
 function BooleanField({ schema, value, onChange }) {
   return (
@@ -11,7 +11,7 @@ function BooleanField({ schema, value, onChange }) {
         control={(
           <Checkbox
             checked={value}
-            onChange={(event, checked) => onChange(checked)}
+            onChange={(event) => onChange(event.target.checked)}
           />
         )}
         label={schema.title}

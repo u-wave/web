@@ -1,34 +1,31 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import styled from '@emotion/styled';
 import DesktopSkeleton from './DesktopSkeleton';
 import MobileSkeleton from './MobileSkeleton';
 
-const useStyles = makeStyles({
-  desktop: {
-    display: 'none',
-    '@media (min-width: 769px)': {
-      display: 'block',
-    },
-  },
-  mobile: {
+const DesktopOnly = styled.div({
+  display: 'none',
+  '@media (min-width: 769px)': {
     display: 'block',
-    '@media (min-width: 769px)': {
-      display: 'none',
-    },
+  },
+});
+
+const MobileOnly = styled.div({
+  display: 'block',
+  '@media (min-width: 769px)': {
+    display: 'none',
   },
 });
 
 export default function LoadingScreen() {
-  const { desktop, mobile } = useStyles();
-
   return (
     <>
-      <div className={desktop}>
+      <DesktopOnly>
         <DesktopSkeleton />
-      </div>
-      <div className={mobile}>
+      </DesktopOnly>
+      <MobileOnly>
         <MobileSkeleton />
-      </div>
+      </MobileOnly>
     </>
   );
 }

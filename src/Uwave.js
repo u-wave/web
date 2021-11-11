@@ -1,48 +1,57 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { StylesProvider } from '@material-ui/styles';
-import StyledEngineProvider from '@material-ui/core/StyledEngineProvider';
+import { StyledEngineProvider } from '@mui/material/styles';
 import { CacheProvider } from '@emotion/react';
 import createCache from '@emotion/cache';
 import AppContainer from './containers/App';
 import { get as readSession } from './utils/Session';
-import createGenerateClassName from './utils/createGenerateClassName';
 import configureStore from './redux/configureStore';
 import { initState, socketConnect, setSessionToken } from './actions/LoginActionCreators';
 import { loadCurrentLanguage } from './actions/LocaleActionCreators';
 // Register default chat commands.
 import './utils/commands';
 
+/**
+ * @typedef {object} UwaveOptions
+ * @prop {string} [apiBase]
+ * @prop {string} [socketUrl]
+ */
+
 export default class Uwave {
+  /** @type {UwaveOptions} */
   options = {};
 
-  sources = {};
+  #sources = {};
 
-  sessionToken = null;
+  #sessionToken = null;
 
-  renderTarget = null;
+  #renderTarget = null;
 
-  aboutPageComponent = null;
+  #aboutPageComponent = null;
 
-  generateClassName = createGenerateClassName();
-
-  emotionCache = createCache({
+  #emotionCache = createCache({
     key: 'emc',
     prepend: true,
   });
 
+  #resolveReady;
+
+  ready = new Promise((resolve) => {
+    this.#resolveReady = resolve;
+  });
+
+  /**
+   * @param {UwaveOptions} [options]
+   */
   constructor(options = {}, session = readSession()) {
     this.options = options;
-    this.sessionToken = session;
-    this.ready = new Promise((resolve) => {
-      this.resolveReady = resolve;
-    });
+    this.#sessionToken = session;
 
-    if (module.hot) {
+    if (import.meta.webpackHot) {
       const uw = this;
-      module.hot.accept('./containers/App', () => {
-        if (uw.renderTarget) {
+      import.meta.webpackHot.accept('./containers/App', () => {
+        if (uw.#renderTarget) {
           uw.renderToDOM();
         }
       });
@@ -70,28 +79,28 @@ export default class Uwave {
       throw new TypeError('Source plugin did not provide a name');
     }
 
-    this.sources[source.name] = source;
+    this.#sources[source.name] = source;
 
     return source;
   }
 
   setAboutPageComponent(AboutPageComponent) {
-    this.aboutPageComponent = AboutPageComponent;
+    this.#aboutPageComponent = AboutPageComponent;
   }
 
   getAboutPageComponent() {
-    return this.aboutPageComponent;
+    return this.#aboutPageComponent;
   }
 
   build() {
     this.store = configureStore(
       { config: this.options },
-      { mediaSources: this.sources, socketUrl: this.options.socketUrl },
+      { mediaSources: this.#sources, socketUrl: this.options.socketUrl },
     );
 
-    if (this.sessionToken) {
-      this.store.dispatch(setSessionToken(this.sessionToken));
-      this.sessionToken = null;
+    if (this.#sessionToken) {
+      this.store.dispatch(setSessionToken(this.#sessionToken));
+      this.#sessionToken = null;
     }
 
     this.store.dispatch(socketConnect());
@@ -99,21 +108,20 @@ export default class Uwave {
       this.store.dispatch(loadCurrentLanguage()),
       this.store.dispatch(initState()),
     ]).then(() => {
-      this.resolveReady();
+      this.#resolveReady();
     });
   }
 
+  /** @private */
   getComponent() {
     return (
       <Provider store={this.store}>
         <StyledEngineProvider injectFirst>
-          <CacheProvider value={this.emotionCache}>
-            <StylesProvider injectFirst generateClassName={this.generateClassName}>
-              <AppContainer
-                mediaSources={this.sources}
-                uwave={this}
-              />
-            </StylesProvider>
+          <CacheProvider value={this.#emotionCache}>
+            <AppContainer
+              mediaSources={this.#sources}
+              uwave={this}
+            />
           </CacheProvider>
         </StyledEngineProvider>
       </Provider>
@@ -124,8 +132,8 @@ export default class Uwave {
     if (!this.store) {
       this.build();
     }
-    if (!this.renderTarget) {
-      this.renderTarget = target;
+    if (!this.#renderTarget) {
+      this.#renderTarget = target;
     }
 
     const element = (
@@ -135,7 +143,7 @@ export default class Uwave {
     );
 
     return new Promise((resolve) => {
-      ReactDOM.render(element, this.renderTarget, resolve);
+      ReactDOM.render(element, this.#renderTarget, resolve);
     });
   }
 }

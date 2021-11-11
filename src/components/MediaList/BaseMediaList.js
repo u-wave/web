@@ -57,7 +57,8 @@ function BaseMediaList({
 
   const itemKey = useCallback((index) => {
     if (media[index]) {
-      return media[index]._id;
+      const { _id: id, sourceType, sourceID } = media[index];
+      return id ?? `${sourceType}:${sourceID}`;
     }
     return `unloaded_${index}`;
   }, [media]);
@@ -133,8 +134,8 @@ function BaseMediaList({
     </FixedSizeList>
   );
 
-  // This is not used as a real React component.
-  // eslint-disable-next-line react/prop-types
+  // This is not used as a real React component. TODO(goto-bus-stop): should it be?
+  // eslint-disable-next-line react/prop-types, react/no-unstable-nested-components
   const lazyLoading = (makeList) => ({ height }) => {
     const isItemLoaded = (index) => media[index] != null;
     const loadMoreItems = (start) => {
@@ -165,12 +166,16 @@ function BaseMediaList({
     );
   };
 
+  // This is not used as a real React component. TODO(goto-bus-stop): should it be?
+  // eslint-disable-next-line react/prop-types, react/no-unstable-nested-components
   const customWrapper = (makeList) => (props) => (
     <ListComponent>
       {makeList(props)}
     </ListComponent>
   );
 
+  // This is not used as a real React component. TODO(goto-bus-stop): should it be?
+  // eslint-disable-next-line react/prop-types, react/no-unstable-nested-components
   const autoSizing = (makeList) => () => {
     const inner = ({ height }) => makeList({ height });
     return (

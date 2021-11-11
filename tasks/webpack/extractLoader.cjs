@@ -2,14 +2,17 @@
 
 const vm = require('vm');
 const assert = require('assert');
-const NodeTemplatePlugin = require('webpack/lib/node/NodeTemplatePlugin');
-const NodeTargetPlugin = require('webpack/lib/node/NodeTargetPlugin');
-const LoaderTargetPlugin = require('webpack/lib/LoaderTargetPlugin');
-const LibraryTemplatePlugin = require('webpack/lib/LibraryTemplatePlugin');
-const ExternalsPlugin = require('webpack/lib/ExternalsPlugin');
-const EntryPlugin = require('webpack/lib/EntryPlugin');
+const webpack = require('webpack');
 const deepmerge = require('deepmerge');
 const pkg = require('../../package.json');
+
+const {
+  ExternalsPlugin,
+  LibraryTemplatePlugin,
+  LoaderTargetPlugin,
+  EntryPlugin,
+} = webpack;
+const { NodeTemplatePlugin, NodeTargetPlugin } = webpack.node;
 
 function evalModule(code, { filename }) {
   const target = { exports: {} };

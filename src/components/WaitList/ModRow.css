@@ -8,10 +8,8 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
 
-/* Set background colours so it looks OK while dragging. */
-.WaitlistRow-card {
+  /* Set background colours so it looks OK while dragging. */
   background: var(--user-list-color);
 }
 

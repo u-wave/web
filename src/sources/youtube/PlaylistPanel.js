@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Tooltip from '@material-ui/core/Tooltip';
-import IconButton from '@material-ui/core/IconButton';
-import ImportIcon from '@material-ui/icons/PlaylistAdd';
+import Tooltip from '@mui/material/Tooltip';
+import IconButton from '@mui/material/IconButton';
+import ImportIcon from '@mui/icons-material/PlaylistAdd';
 import MediaList from '../../components/MediaList';
 import ImportPanelHeader from '../../components/PlaylistManager/Import/ImportPanelHeader';
 
@@ -12,8 +12,8 @@ function YouTubeImportPlaylistPanel({
   onImportPlaylist,
   onClosePanel,
 }) {
-  const handleImportFull = () => onImportPlaylist(
-    importingPlaylist.sourceID, importingPlaylist.name,
+  const handleImportFull = () => (
+    onImportPlaylist(importingPlaylist.sourceID, importingPlaylist.name)
   );
 
   return (

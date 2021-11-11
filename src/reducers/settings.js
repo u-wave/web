@@ -1,5 +1,4 @@
 import merge from 'deepmerge';
-import { compose } from 'redux';
 import {
   LOAD_SETTINGS,
   CHANGE_SETTING,
@@ -29,7 +28,7 @@ const initialState = {
   },
 };
 
-function reduce(state = initialState, action = {}) {
+function reduce(state = initialState, action = undefined) {
   const { type, payload } = action;
   switch (type) {
     case LOAD_SETTINGS:
@@ -52,4 +51,4 @@ function reduce(state = initialState, action = {}) {
   }
 }
 
-export default compose(fixVolume, reduce);
+export default (state, action) => fixVolume(reduce(state, action));

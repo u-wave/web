@@ -43,7 +43,9 @@ export default function reduce(state = initialState, action = {}) {
             ...payload.booth.media.media,
           },
           djID: payload.booth.userID,
-          startTime: payload.booth.playedAt,
+          // Depending on the server version, `playedAt` may be a string or a number
+          // This is what we call "not ideal"…
+          startTime: new Date(payload.booth.playedAt).getTime(),
         };
       }
       return {

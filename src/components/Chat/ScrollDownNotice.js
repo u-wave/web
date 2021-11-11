@@ -2,8 +2,8 @@ import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
-import Fab from '@material-ui/core/Fab';
-import ScrollDownIcon from '@material-ui/icons/ArrowDownward';
+import Fab from '@mui/material/Fab';
+import ScrollDownIcon from '@mui/icons-material/ArrowDownward';
 
 function ScrollDownNotice({ show, onClick }) {
   const { t } = useTranslator();

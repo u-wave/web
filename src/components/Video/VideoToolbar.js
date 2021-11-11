@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from '@u-wave/react-translate';
-import Tooltip from '@material-ui/core/Tooltip';
-import IconButton from '@material-ui/core/IconButton';
-import EnterFullscreenIcon from '@material-ui/icons/Fullscreen';
-import ExitFullscreenIcon from '@material-ui/icons/FullscreenExit';
+import Tooltip from '@mui/material/Tooltip';
+import IconButton from '@mui/material/IconButton';
+import EnterFullscreenIcon from '@mui/icons-material/Fullscreen';
+import ExitFullscreenIcon from '@mui/icons-material/FullscreenExit';
 
 import VideoSizeButton from './VideoSizeButton';
 

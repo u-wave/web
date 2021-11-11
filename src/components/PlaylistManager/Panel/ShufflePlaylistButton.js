@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Tooltip from '@material-ui/core/Tooltip';
-import IconButton from '@material-ui/core/IconButton';
-import ShuffleIcon from '@material-ui/icons/Shuffle';
+import CircularProgress from '@mui/material/CircularProgress';
+import Tooltip from '@mui/material/Tooltip';
+import IconButton from '@mui/material/IconButton';
+import ShuffleIcon from '@mui/icons-material/Shuffle';
 
 const { useCallback, useState } = React;
 const HARDCODED_LOADING_SIZE = 24; // FIXME derive this from some mui property?

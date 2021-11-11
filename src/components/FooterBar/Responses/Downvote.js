@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
-import DownvoteIcon from '@material-ui/icons/ThumbDown';
+import DownvoteIcon from '@mui/icons-material/ThumbDown';
 import Button from './Button';
 
 function Downvote({

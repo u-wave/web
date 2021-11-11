@@ -3,14 +3,16 @@
 const vm = require('vm');
 const assert = require('assert');
 const h = require('react').createElement;
-const NodeTemplatePlugin = require('webpack/lib/node/NodeTemplatePlugin');
-const NodeTargetPlugin = require('webpack/lib/node/NodeTargetPlugin');
-const LoaderTargetPlugin = require('webpack/lib/LoaderTargetPlugin');
-const LibraryTemplatePlugin = require('webpack/lib/LibraryTemplatePlugin');
-const ExternalsPlugin = require('webpack/lib/ExternalsPlugin');
-const SingleEntryPlugin = require('webpack/lib/SingleEntryPlugin');
-const prerender = require('./prerender');
-const pkg = require('../../package.json');
+const webpack = require('webpack');
+const prerender = require('./prerender.cjs');
+
+const {
+  ExternalsPlugin,
+  LibraryTemplatePlugin,
+  LoaderTargetPlugin,
+  EntryPlugin,
+} = webpack;
+const { NodeTemplatePlugin, NodeTargetPlugin } = webpack.node;
 
 function evalModule(code) {
   const target = { exports: {} };
@@ -35,9 +37,12 @@ module.exports = async function renderLoadingScreen(compilation) {
   new NodeTargetPlugin().apply(compiler);
   new LibraryTemplatePlugin(null, 'commonjs').apply(compiler);
   new LoaderTargetPlugin('node').apply(compiler);
-  const dependencies = Object.keys(pkg.dependencies);
+
+  // These are dependencies that must be loaded from the environment instead of from the
+  // bundle to make our prerendering work.
+  const sharedDependencies = ['react', 'react-dom', '@emotion'];
   new ExternalsPlugin('commonjs', ({ request }, callback) => {
-    if (dependencies.some((dep) => request === dep || request.startsWith(`${dep}/`))) {
+    if (sharedDependencies.some((dep) => request === dep || request.startsWith(`${dep}/`))) {
       callback(null, `commonjs ${request}`);
     } else {
       callback();
@@ -45,7 +50,7 @@ module.exports = async function renderLoadingScreen(compilation) {
   }).apply(compiler);
 
   const inputPath = require.resolve('../../src/components/LoadingScreen');
-  new SingleEntryPlugin(compiler.context, inputPath, 'LoadingScreen').apply(compiler);
+  new EntryPlugin(compiler.context, inputPath, 'LoadingScreen').apply(compiler);
 
   const [entries, childCompilation] = await new Promise((resolve, reject) => {
     compiler.runAsChild((err, ...results) => {

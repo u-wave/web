@@ -85,25 +85,25 @@ export default function middleware(middlewareOptions = {}) {
 
     const requestUrl = makeUrl(opts.apiUrl + url, qs);
 
-    const requestOptions = {
-      method,
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      credentials: 'same-origin',
-    };
+    const headers = new Headers({
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    });
 
     if (token && token !== 'cookie') {
-      requestOptions.headers.Authorization = `JWT ${token}`;
+      headers.append('Authorization', `JWT ${token}`);
     }
+
+    /** @type {RequestInit} */
+    const requestOptions = {
+      method,
+      headers,
+      credentials: 'same-origin',
+      signal,
+    };
 
     if (method !== 'get') {
       requestOptions.body = JSON.stringify(data);
-    }
-
-    if (signal) {
-      requestOptions.signal = signal;
     }
 
     if (onStart) {

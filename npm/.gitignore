@@ -1,4 +1,7 @@
 *
+!bin
+!bin/**
 !.gitignore
 !.npmignore
 !README.md
+!middleware.mjs

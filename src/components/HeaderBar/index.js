@@ -13,8 +13,7 @@ const HeaderBar = ({
   title,
   dj,
   media,
-  mediaProgress,
-  mediaTimeRemaining,
+  mediaStartTime,
   volume,
   muted,
   startTime,
@@ -43,8 +42,8 @@ const HeaderBar = ({
     {media && (
       <Progress
         className="HeaderBar-progress"
-        currentProgress={mediaProgress}
-        timeRemaining={mediaTimeRemaining}
+        duration={media.duration}
+        startTime={mediaStartTime}
       />
     )}
     <div className="HeaderBar-volume">
@@ -68,8 +67,7 @@ HeaderBar.propTypes = {
 
   dj: PropTypes.object,
   media: PropTypes.object,
-  mediaProgress: PropTypes.number.isRequired,
-  mediaTimeRemaining: PropTypes.number.isRequired,
+  mediaStartTime: PropTypes.number,
   volume: PropTypes.number,
   muted: PropTypes.bool,
   startTime: PropTypes.number,

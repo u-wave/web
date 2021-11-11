@@ -1,7 +1,6 @@
 import React from 'react';
-import sinon from 'sinon';
-import expect from 'expect';
-import { mount } from 'enzyme';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
 import PromptDialog from '..';
@@ -10,12 +9,12 @@ const cache = createCache({ key: 'emc' });
 
 describe('<PromptDialog />', () => {
   it('should not show if there is no error', () => {
-    const onSubmit = sinon.spy((value) => {
+    const onSubmit = jest.fn((value) => {
       expect(value).toEqual('test');
     });
-    const onCancel = sinon.spy();
+    const onCancel = jest.fn();
 
-    const dialog = mount((
+    const { unmount } = render((
       <CacheProvider value={cache}>
         <PromptDialog
           open
@@ -27,16 +26,15 @@ describe('<PromptDialog />', () => {
     ));
 
     // Type "test" into the prompt input
-    const input = dialog.find('input[type="text"]');
-    input.instance().value = 'test';
-    input.simulate('change', { target: input.instance() });
+    const input = screen.getByRole('textbox');
+    userEvent.type(input, 'test');
 
-    const form = dialog.find('form');
-    form.simulate('submit');
+    const submit = screen.getByRole('button');
+    userEvent.click(submit);
 
-    expect(onSubmit.calledOnce).toEqual(true);
-    expect(onCancel.called).toEqual(false);
+    expect(onSubmit).toHaveBeenCalledTimes(1);
+    expect(onCancel).not.toHaveBeenCalled();
 
-    dialog.unmount();
+    unmount();
   });
 });

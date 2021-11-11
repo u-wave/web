@@ -1,5 +1,6 @@
 'use strict';
 
+const assert = require('assert');
 const { builtinModules } = require('module');
 const { Compilation } = require('webpack');
 const { RawSource } = require('webpack').sources;
@@ -34,7 +35,13 @@ class MiddlewarePackageJsonPlugin {
         })
         .filter((name) => !builtinModules.includes(name));
 
-      const dependencies = {};
+      const dependencies = {
+        // Used by the bin file.
+        'env-schema': pkg.dependencies['env-schema'],
+        express: pkg.devDependencies.express,
+        minimist: pkg.devDependencies.minimist,
+      };
+      assert(dependencies.express && dependencies.minimist, 'missing dependencies, likely a MiddlewarePackageJsonPlugin bug');
       externals.forEach((external) => {
         dependencies[external] = pkg.dependencies[external];
       });
@@ -51,6 +58,19 @@ class MiddlewarePackageJsonPlugin {
         },
         type: 'commonjs',
         main: './middleware/index.js',
+        exports: {
+          '.': {
+            import: './middleware.mjs',
+            default: './middleware/index.js',
+          },
+          './middleware': {
+            import: './middleware.mjs',
+            default: './middleware/index.js',
+          },
+        },
+        bin: {
+          'u-wave-web': './bin/u-wave-web',
+        },
         engines: pkg.engines,
         dependencies,
       };

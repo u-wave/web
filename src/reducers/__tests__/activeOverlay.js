@@ -1,4 +1,3 @@
-import expect from 'expect';
 import { openOverlay, closeAll, toggleOverlay } from '../../actions/OverlayActionCreators';
 import createStore from '../../redux/configureStore';
 

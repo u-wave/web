@@ -41,7 +41,9 @@ function ClockProvider({ children }) {
     dispatch(createTimer(() => {
       callbacksRef.current.forEach((cb) => cb());
     }));
-    return () => dispatch(stopTimer);
+    return () => {
+      dispatch(stopTimer);
+    };
   }, [dispatch]);
 
   return (

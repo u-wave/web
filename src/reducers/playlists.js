@@ -2,7 +2,7 @@ import escapeStringRegExp from 'escape-string-regexp';
 import indexBy from 'just-index';
 import mapValues from 'just-map-values';
 import omit from 'just-omit';
-
+import { flattenPlaylistItem } from '../actions/PlaylistActionCreators';
 import {
   INIT_STATE,
 
@@ -167,7 +167,7 @@ export default function reduce(state = initialState, action = {}) {
         // for a moment.
         playlistItems: payload.activePlaylist && payload.firstActivePlaylistItem ? {
           ...state.playlistItems,
-          [payload.activePlaylist]: [payload.firstActivePlaylistItem],
+          [payload.activePlaylist]: [flattenPlaylistItem(payload.firstActivePlaylistItem)],
         } : state.playlistItems,
         activePlaylistID: payload.activePlaylist,
         selectedPlaylistID: payload.activePlaylist,
