@@ -43,6 +43,9 @@ export default function uwaveWebClient(options = {}) {
     .get('/', (req, res, next) => {
       res.setHeader('content-type', 'text/html');
 
+      // Note we can NOT change how the options injection works without consequence.
+      // This middleware explicitly should be forwards compatible with static files
+      // within the same major version. That simplifies the upgrade process for users.
       const transform = hstream({
         title,
         '#u-wave-config': JSON.stringify(clientOptions),

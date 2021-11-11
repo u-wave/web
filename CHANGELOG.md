@@ -4,7 +4,23 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## 2.0.0-alpha.3 / 07 Oct 2021
+## 2.0.0-alpha.4 / 11 Nov 2021
+While this is an alpha release, new servers should use this rather than an older "stable" version.
+
+This release re-introduces the search results feature that shows the playlists each result is
+already part of. This **requires üWave Core 0.5.0-alpha.8 or higher**. In older server versions, the
+feature is far too slow to be used.
+
+Features:
+ * Request related playlists in search queries.
+
+Internal:
+ * Reimplement media progress bar in JS. (#2140)
+ * Read HTML from filesystem on each request. If you upgrade the static files for the web client at
+   runtime it will no longer cause hash mismatches. You should still restart the web client's web
+   server to pick up server-side changes.
+
+## 2.0.0-alpha.3 / 07 Nov 2021
 While this is an alpha release, new servers should use this rather than an older "stable" version.
 
 This release addresses a bunch of crashes introduced in the 2.0.0-alpha.2 release.
@@ -20,7 +36,7 @@ Bugfixes:
  * Accept both UNIX and ISO timestamp formats for `booth.startTime`. This makes the client work
    with üWave Core 0.5.0-alpha.5, which returns an unexpected value here.
 
-## 2.0.0-alpha.2 / 07 Oct 2021
+## 2.0.0-alpha.2 / 07 Nov 2021
 This release is basically [one big PR][#1955] upgrading the build system and many dependencies.
 A few bugfixes slipped in as well.
 
