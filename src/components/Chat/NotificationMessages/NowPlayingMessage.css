@@ -1,5 +1,3 @@
-@import "../../../vars.css";
-
 .NowPlayingMessage {
   color: var(--muted-text-color);
   position: relative;
