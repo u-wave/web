@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.0-alpha.5 / 11 Nov 2021
+While this is an alpha release, new servers should use this rather than an older "stable" version.
+
+This is just a re-release of 2.0.0-alpha.4, which (ironically) included mismatching hashes in the
+build output.
+
 ## 2.0.0-alpha.4 / 11 Nov 2021
 While this is an alpha release, new servers should use this rather than an older "stable" version.
 
