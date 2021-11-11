@@ -111,6 +111,12 @@ function getConfig(env, {
           type: 'asset/resource',
         },
         {
+          test: /twemoji-emojis/,
+          generator: {
+            filename: 'static/emoji/[contenthash:7][ext]',
+          },
+        },
+        {
           test: /\.(gif|jpe?g|png|svg)$/,
           type: 'asset/resource',
           use: [
@@ -130,7 +136,7 @@ function getConfig(env, {
           use: { loader: 'yaml-loader', options: { asJSON: true } },
           type: 'asset/resource',
           generator: {
-            filename: env.production ? 'static/[name]_[hash:7].json' : '[name].json',
+            filename: env.production ? 'static/[name]_[contenthash:7].json' : '[name].json',
           },
         },
         //  English is embedded in the bundle, we always need it as a fallback.
@@ -216,7 +222,7 @@ function getConfig(env, {
       path: path.join(outputPackage, 'public'),
       filename: env.production ? 'static/[name]_[contenthash:7].js' : '[name]_dev.js',
       chunkFilename: env.production ? 'static/[name]_[contenthash:7].js' : '[name]_dev.js',
-      assetModuleFilename: env.production ? 'static/[name]_[hash:7][ext]' : '[name][ext]',
+      assetModuleFilename: env.production ? 'static/[name]_[contenthash:7][ext]' : '[name][ext]',
       crossOriginLoading: 'anonymous',
     },
     target: ['web'],
@@ -313,6 +319,7 @@ function getConfig(env, {
           patterns: [
             { from: '../assets/favicon.ico', to: 'favicon.ico' },
             { from: '../assets/icon-white.png', to: 'icon-white.png' },
+            // { from: '../assets/emoji/', to: 'static/emoji/' },
           ],
         }),
         new HtmlPlugin({
