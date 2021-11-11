@@ -1,4 +1,3 @@
-import expect from 'expect';
 import mergeIncludedModels from '../mergeIncludedModels';
 
 describe('utils/mergeIncludedModels()', () => {

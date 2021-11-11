@@ -6,14 +6,14 @@ const createEmbedUrl = (sourceID) => (
   `https://w.soundcloud.com/player/?${qsStringify({
     url: `https://api.soundcloud.com/tracks/${sourceID}`,
     color: '55B9FF',
-    auto_play: true,
-    hide_related: true,
-    buying: false,
-    liking: false,
-    download: false,
-    sharing: false,
-    show_comments: false,
-    visual: true,
+    auto_play: 'true',
+    hide_related: 'true',
+    buying: 'false',
+    liking: 'false',
+    download: 'false',
+    sharing: 'false',
+    show_comments: 'false',
+    visual: 'true',
   })} `
 );
 

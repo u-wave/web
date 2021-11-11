@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import EmailIcon from '@material-ui/icons/Email';
-import PasswordIcon from '@material-ui/icons/Lock';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
+import EmailIcon from '@mui/icons-material/Email';
+import PasswordIcon from '@mui/icons-material/Lock';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
 import { translate } from '@u-wave/react-translate';
 import Form from '../../../components/Form';
 import FormGroup from '../../../components/Form/Group';

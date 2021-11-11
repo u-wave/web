@@ -1,9 +1,9 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import IconButton from '@material-ui/core/IconButton';
-import CloseBottomIcon from '@material-ui/icons/KeyboardArrowDown';
-import CloseTopIcon from '@material-ui/icons/KeyboardArrowUp';
+import IconButton from '@mui/material/IconButton';
+import CloseBottomIcon from '@mui/icons-material/KeyboardArrowDown';
+import CloseTopIcon from '@mui/icons-material/KeyboardArrowUp';
 
 const icons = {
   bottom: CloseBottomIcon,

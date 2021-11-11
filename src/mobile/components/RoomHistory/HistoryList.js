@@ -1,5 +1,5 @@
 import React from 'react';
-import List from '@material-ui/core/List';
+import List from '@mui/material/List';
 import Base from '../../../components/MediaList/BaseMediaList';
 import HistoryRow from './Row';
 

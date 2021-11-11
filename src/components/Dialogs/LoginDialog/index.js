@@ -2,13 +2,12 @@ import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
-import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogContent from '@material-ui/core/DialogContent';
-import { useTheme } from '@material-ui/core/styles';
-import useMediaQuery from 'use-mediaquery';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 import DialogCloseAnimation from '../../DialogCloseAnimation';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
@@ -18,8 +17,7 @@ import ResetPasswordForm from './ResetPasswordForm';
 /* eslint-disable react/jsx-props-no-spreading */
 function LoginDialog(props) {
   const { t } = useTranslator();
-  const theme = useTheme();
-  const isFullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const isFullScreen = useMediaQuery((theme) => theme.breakpoints.down('sm'));
 
   const {
     open,

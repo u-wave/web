@@ -14,7 +14,7 @@
 }
 
 .SettingsPanel-header {
-  margin: 0 0 20px 0;
+  margin: 0 0 20px;
   font-weight: 400;
 }
 
@@ -24,7 +24,7 @@
 }
 
 .SettingsPanel-toggle {
-  margin: 0 0 20px 0;
+  margin: 0 0 20px;
 }
 
 .SettingsPanel.is-wide {

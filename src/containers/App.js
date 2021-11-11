@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import { ThemeProvider } from '@material-ui/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { ThemeProvider } from '@mui/material/styles';
 import { Provider as BusProvider } from 'react-bus';
 import { TranslateProvider } from '@u-wave/react-translate';
-import useMediaQuery from 'use-mediaquery';
 import { closeAll } from '../actions/OverlayActionCreators';
 import { settingsSelector, themeSelector } from '../selectors/settingSelectors';
 import { translatorSelector } from '../selectors/localeSelectors';

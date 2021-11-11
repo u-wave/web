@@ -1,30 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import MediaList from '../../MediaList';
-import AddToPlaylistAction from '../../MediaList/Actions/AddToPlaylist';
-import SearchResultRow from './ResultRow';
+import MediaListBase from '../../MediaList/BaseMediaList';
+import SearchResultRow from './SearchResultRow';
 
-const {
-  useCallback,
-} = React;
-
-function SearchResultsList({
-  results,
-  onOpenAddMediaMenu,
-  onOpenPreviewMediaDialog,
-}) {
-  const makeActions = useCallback((media, selection) => (
-    <AddToPlaylistAction
-      onAdd={(position) => onOpenAddMediaMenu(position, media, selection)}
-    />
-  ), [onOpenAddMediaMenu]);
-
+function SearchResultsList({ results }) {
   return (
-    <MediaList
+    <MediaListBase
       className="PlaylistPanel-media"
       media={results}
-      onOpenPreviewMediaDialog={onOpenPreviewMediaDialog}
-      makeActions={makeActions}
+      listComponent="div"
       rowComponent={SearchResultRow}
     />
   );
@@ -32,8 +16,6 @@ function SearchResultsList({
 
 SearchResultsList.propTypes = {
   results: PropTypes.array.isRequired,
-  onOpenAddMediaMenu: PropTypes.func.isRequired,
-  onOpenPreviewMediaDialog: PropTypes.func.isRequired,
 };
 
 export default SearchResultsList;

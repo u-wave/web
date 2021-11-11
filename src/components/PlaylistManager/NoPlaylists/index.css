@@ -20,7 +20,7 @@
 }
 
 .NoPlaylists-icon {
-  color: rgba(255, 255, 255, 0.2);
+  color: rgb(255 255 255 / 20%);
   display: block;
   width: 240px;
   height: 240px;

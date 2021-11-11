@@ -1,68 +1,87 @@
+import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useDrop } from 'react-dnd';
-import { MEDIA } from '../../../constants/DDItemTypes';
-import isDraggingNearTopOfRow from '../../../utils/isDraggingNearTopOfRow';
-import MediaRow from '../../MediaList/Row';
+import MediaDuration from '../../MediaList/MediaDuration';
+import MediaLoadingIndicator from '../../MediaList/MediaLoadingIndicator';
+import MediaRowBase from '../../MediaList/MediaRowBase';
+import MediaSourceIcon from '../../MediaList/MediaSourceIcon';
+import MediaThumbnail from '../../MediaList/MediaThumbnail';
+import PlaylistItemActions from './PlaylistItemActions';
 
 const {
-  useEffect,
-  useRef,
+  useCallback,
   useState,
 } = React;
 
 function PlaylistItemRow({
-  onMoveMedia, style, media, ...props
+  className,
+  style,
+  containerRef,
+  index,
+  media,
+  onClick,
 }) {
-  const [insertingAbove, setInsertAbove] = useState(false);
-  const refWrapper = useRef(null);
-  const [{ isOver }, connectDropTarget] = useDrop(() => ({
-    accept: MEDIA,
-    drop(item, monitor) {
-      const { media: droppedItems } = monitor.getItem();
-      if (droppedItems) {
-        // Do not attempt to move when the selection is dropped on top of an item
-        // that is in the selection.
-        if (droppedItems.some((playlistItem) => playlistItem._id === media._id)) {
-          return;
-        }
-        const insertBefore = isDraggingNearTopOfRow(monitor, refWrapper.current);
-        onMoveMedia(
-          droppedItems,
-          insertBefore ? { before: media._id } : { after: media._id },
-        );
-      }
-    },
-    hover(item, monitor) {
-      setInsertAbove(isDraggingNearTopOfRow(monitor, refWrapper.current));
-    },
-    collect(monitor) {
-      return { isOver: monitor.isOver() };
-    },
-  }), [media]);
+  const loadingClass = media.loading ? 'is-loading' : '';
+  const [showActions, setShowActions] = useState(false);
 
-  useEffect(() => {
-    connectDropTarget(refWrapper.current);
-  });
+  // We need `onMouseOver` instead of `onMouseEnter` because we may enter
+  // a playlist item row because the one above it was deleted; in that case,
+  // `onMouseEnter` does not trigger, but `onMouseOver` does
+  const handleMouseOver = useCallback(() => {
+    setShowActions(true);
+  }, []);
 
-  const dropIndicator = <div className="PlaylistItemRow-drop-indicator" />;
+  const handleMouseLeave = useCallback(() => {
+    setShowActions(false);
+  }, []);
 
-  // Wrapper div to make sure that hovering the drop indicator
-  // does not change the hover state to a different element, which
-  // would cause thrashing.
   return (
-    <div className="PlaylistItemRow" style={style} ref={refWrapper}>
-      {isOver && insertingAbove && dropIndicator}
-      <MediaRow {...props} media={media} />
-      {isOver && !insertingAbove && dropIndicator}
-    </div>
+    <MediaRowBase
+      className={cx(className, loadingClass)}
+      style={style}
+      containerRef={containerRef}
+      media={media}
+      onMouseOver={handleMouseOver}
+      onMouseLeave={handleMouseLeave}
+      onClick={onClick}
+    >
+      {media.loading ? (
+        <MediaLoadingIndicator className="MediaListRow-loader" />
+      ) : (
+        <MediaThumbnail url={media.thumbnail} />
+      )}
+      <div className="MediaListRow-data">
+        <div className="MediaListRow-artist" title={media.artist}>
+          {media.artist}
+        </div>
+        <div className="MediaListRow-title" title={media.title}>
+          {media.title}
+        </div>
+      </div>
+      <div className="MediaListRow-duration">
+        <MediaDuration media={media} />
+      </div>
+      <div className="MediaListRow-icon">
+        <MediaSourceIcon sourceType={media.sourceType} />
+      </div>
+      {showActions ? (
+        <PlaylistItemActions
+          className="MediaListRow-actions"
+          index={index}
+          media={media}
+        />
+      ) : null}
+    </MediaRowBase>
   );
 }
 
 PlaylistItemRow.propTypes = {
+  className: PropTypes.string,
   style: PropTypes.object, // from react-window
-  media: PropTypes.object,
-  onMoveMedia: PropTypes.func.isRequired,
+  index: PropTypes.number.isRequired,
+  containerRef: PropTypes.any,
+  media: PropTypes.object.isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default PlaylistItemRow;

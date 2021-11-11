@@ -1,0 +1,10 @@
+.MediaActions {
+  height: 54px;
+  text-align: inline-end;
+  background: var(--background-color);
+}
+
+.MediaActions-action {
+  height: 54px;
+  width: 54px;
+}

@@ -1,4 +1,3 @@
-import expect from 'expect';
 import {
   LOAD_SETTINGS,
   CHANGE_SETTING,

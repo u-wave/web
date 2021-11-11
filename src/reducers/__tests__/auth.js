@@ -1,4 +1,3 @@
-import expect from 'expect';
 import { LOGIN_COMPLETE } from '../../constants/ActionTypes';
 import createStore from '../../redux/configureStore';
 import * as s from '../../selectors/userSelectors';

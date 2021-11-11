@@ -1,10 +1,10 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import DownvoteIcon from '@material-ui/icons/ThumbDown';
-import UpvoteIcon from '@material-ui/icons/ThumbUp';
-import FavoritedIcon from '@material-ui/icons/Favorite';
-import FavoriteIcon from '@material-ui/icons/FavoriteBorder';
+import DownvoteIcon from '@mui/icons-material/ThumbDown';
+import UpvoteIcon from '@mui/icons-material/ThumbUp';
+import FavoritedIcon from '@mui/icons-material/Favorite';
+import FavoriteIcon from '@mui/icons-material/FavoriteBorder';
 
 const Votes = ({
   upvotes, downvotes, favorites, isUpvote, isDownvote, isFavorite,

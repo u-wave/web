@@ -6,12 +6,8 @@ import {
   isSelectedPlaylistLoadingSelector,
   isFilteredSelector,
 } from '../selectors/playlistSelectors';
-import { openPreviewMediaDialog } from '../actions/DialogActionCreators';
 import {
-  addMediaMenu,
-  editMedia,
   moveMedia,
-  removeMedia,
   filterPlaylistItems,
   renamePlaylist,
   deletePlaylist,
@@ -24,13 +20,6 @@ import {
 import PlaylistPanel from '../components/PlaylistManager/Panel';
 
 const { useCallback } = React;
-
-const selectionOrOne = (media, selection) => {
-  if (selection.isSelected(media)) {
-    return selection.get();
-  }
-  return [media];
-};
 
 function PlaylistPanelContainer() {
   const playlist = useSelector(selectedPlaylistSelector);
@@ -60,29 +49,10 @@ function PlaylistPanelContainer() {
     [dispatch, playlist],
   );
 
-  const onOpenAddMediaMenu = useCallback((position, media, selection) => (
-    dispatch(addMediaMenu(selectionOrOne(media, selection), position))
-  ), [dispatch]);
-  const onOpenPreviewMediaDialog = useCallback((media) => {
-    dispatch(openPreviewMediaDialog(media));
-  }, [dispatch]);
-  const onMoveToFirst = useCallback((media, selection) => (
-    dispatch(moveMedia(playlist._id, selectionOrOne(media, selection), { at: 'start' }))
-  ), [dispatch, playlist]);
-  const onMoveToLast = useCallback((media, selection) => (
-    dispatch(moveMedia(playlist._id, selectionOrOne(media, selection), { at: 'end' }))
-  ), [dispatch, playlist]);
   const onMoveMedia = useCallback(
     (media, opts) => dispatch(moveMedia(playlist._id, media, opts)),
     [dispatch, playlist],
   );
-  const onEditMedia = useCallback(
-    (media) => dispatch(editMedia(playlist._id, media)),
-    [dispatch, playlist],
-  );
-  const onRemoveFromPlaylist = useCallback((media, selection) => (
-    dispatch(removeMedia(playlist._id, selectionOrOne(media, selection)))
-  ), [dispatch, playlist]);
   const onLoadPlaylistPage = useCallback((page) => {
     if (isFiltered) {
       return dispatch(loadFilteredPlaylistItems(playlist._id, page));
@@ -105,13 +75,7 @@ function PlaylistPanelContainer() {
       onRenamePlaylist={onRenamePlaylist}
       onDeletePlaylist={onDeletePlaylist}
       onNotDeletable={onNotDeletable}
-      onOpenAddMediaMenu={onOpenAddMediaMenu}
-      onOpenPreviewMediaDialog={onOpenPreviewMediaDialog}
-      onMoveToFirst={onMoveToFirst}
-      onMoveToLast={onMoveToLast}
       onMoveMedia={onMoveMedia}
-      onEditMedia={onEditMedia}
-      onRemoveFromPlaylist={onRemoveFromPlaylist}
       onLoadPlaylistPage={onLoadPlaylistPage}
       onFilterPlaylistItems={onFilterPlaylistItems}
     />

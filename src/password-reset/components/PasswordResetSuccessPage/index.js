@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslator } from '@u-wave/react-translate';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
 
 function PasswordResetSuccessPage() {
   const { t } = useTranslator();

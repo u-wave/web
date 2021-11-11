@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
-import FavoritedIcon from '@material-ui/icons/Favorite';
-import FavoriteIcon from '@material-ui/icons/FavoriteBorder';
+import FavoritedIcon from '@mui/icons-material/Favorite';
+import FavoriteIcon from '@mui/icons-material/FavoriteBorder';
 import Button from './Button';
 
 function Favorite({

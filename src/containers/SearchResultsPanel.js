@@ -1,22 +1,10 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { openPreviewMediaDialog } from '../actions/DialogActionCreators';
-import { addMediaMenu } from '../actions/PlaylistActionCreators';
+import { useSelector } from 'react-redux';
 import { useMediaSearchStore } from '../stores/MediaSearchStore';
 import { playlistsByIDSelector } from '../selectors/playlistSelectors';
 import SearchResults from '../components/PlaylistManager/SearchResults';
 
-const {
-  useCallback,
-  useMemo,
-} = React;
-
-const selectionOrOne = (media, selection) => {
-  if (selection.isSelected(media)) {
-    return selection.get();
-  }
-  return [media];
-};
+const { useMemo } = React;
 
 function SearchResultsContainer() {
   const {
@@ -26,7 +14,6 @@ function SearchResultsContainer() {
   } = useMediaSearchStore();
 
   const playlistsByID = useSelector(playlistsByIDSelector);
-  const dispatch = useDispatch();
 
   const resultsWithPlaylists = useMemo(() => {
     if (!results) {
@@ -47,21 +34,11 @@ function SearchResultsContainer() {
     });
   }, [results, playlistsByID]);
 
-  const onOpenAddMediaMenu = useCallback((position, media, selection) => (
-    dispatch(addMediaMenu(selectionOrOne(media, selection), position))
-  ), [dispatch]);
-  const onOpenPreviewMediaDialog = useCallback(
-    (media) => dispatch(openPreviewMediaDialog(media)),
-    [dispatch],
-  );
-
   return (
     <SearchResults
       query={query}
       results={resultsWithPlaylists}
       loadingState={state}
-      onOpenAddMediaMenu={onOpenAddMediaMenu}
-      onOpenPreviewMediaDialog={onOpenPreviewMediaDialog}
     />
   );
 }

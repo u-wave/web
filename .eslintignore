@@ -2,5 +2,5 @@ coverage/
 es/
 lib/
 dist/
-packages/u-wave-web-middleware/public
-packages/u-wave-web-middleware/middleware
+npm/public
+npm/middleware

@@ -2,7 +2,7 @@ import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Mention = ({ className, user, ...props }) => (
+const Mention = ({ className = undefined, user, ...props }) => (
   <span className={cx('ChatMention', className)} {...props}>
     @{user.username}
   </span>

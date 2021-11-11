@@ -2,8 +2,8 @@ import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from '@u-wave/react-translate';
-import MenuItem from '@material-ui/core/MenuItem';
-import CreatePlaylistIcon from '@material-ui/icons/Add';
+import MenuItem from '@mui/material/MenuItem';
+import CreatePlaylistIcon from '@mui/icons-material/Add';
 
 import PromptDialog from '../../Dialogs/PromptDialog';
 

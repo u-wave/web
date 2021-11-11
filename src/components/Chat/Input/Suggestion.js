@@ -1,7 +1,7 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import ListItem from '@material-ui/core/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
 
 const Suggestion = ({
   children,
@@ -10,14 +10,13 @@ const Suggestion = ({
   selected,
   ...props
 }) => (
-  <ListItem
-    button
+  <ListItemButton
     onClick={select}
     className={cx('SuggestionItem', selected && 'is-focused', className)}
     {...props}
   >
     {children}
-  </ListItem>
+  </ListItemButton>
 );
 
 Suggestion.propTypes = {

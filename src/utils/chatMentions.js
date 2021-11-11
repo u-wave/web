@@ -6,7 +6,7 @@ export { groupMentions };
 /**
  * Get a list of group names that can be mentioned by a user.
  *
- * @param {function(role: string): boolean} canMention
+ * @param {(group: string) => boolean} canMention
  */
 export function getAvailableGroupMentions(canMention) {
   if (canMention) {
@@ -19,7 +19,7 @@ export function getAvailableGroupMentions(canMention) {
  * Attach user objects to mentions in a parsed chat message.
  *
  * @param {Array} tree Parsed message.
- * @param {Array.<{username: string}>} users List of users.
+ * @param {{username: string}[]} state
  */
 export function resolveMentions(tree, state) {
   const users = userListSelector(state);
@@ -44,7 +44,7 @@ export function resolveMentions(tree, state) {
  * nodes to have User data, added by `resolveMentions()`.
  *
  * @param {Array} tree Parsed message.
- * @param {String} id User ID.
+ * @param {string} id User ID.
  */
 export function hasMention(tree, id) {
   return tree.some((node) => {
