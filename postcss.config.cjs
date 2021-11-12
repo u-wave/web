@@ -19,5 +19,7 @@ module.exports = {
         },
       },
     }],
+    // TODO remove after postcss-preset-env upgrade
+    'postcss-logical',
   ],
 };
