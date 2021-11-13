@@ -111,12 +111,6 @@ function getConfig(env, {
           type: 'asset/resource',
         },
         {
-          test: /twemoji-emojis/,
-          generator: {
-            filename: 'static/emoji/[contenthash:7][ext]',
-          },
-        },
-        {
           test: /\.(gif|jpe?g|png|svg)$/,
           type: 'asset/resource',
           use: [
@@ -319,7 +313,7 @@ function getConfig(env, {
           patterns: [
             { from: '../assets/favicon.ico', to: 'favicon.ico' },
             { from: '../assets/icon-white.png', to: 'icon-white.png' },
-            // { from: '../assets/emoji/', to: 'static/emoji/' },
+            { from: '../assets/emoji/', to: 'static/emoji/' },
           ],
         }),
         new HtmlPlugin({
