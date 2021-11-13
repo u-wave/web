@@ -1,7 +1,7 @@
 {
   "name": "u-wave-web-build",
   "description": "Web client for üWave servers.",
-  "version": "2.0.0-alpha.3",
+  "version": "2.0.0-alpha.5",
   "author": "Renée Kooi <renee@kooi.me>",
   "bin": {
     "u-wave-web": "bin/u-wave-web"
@@ -121,7 +121,6 @@
     "ejs": "^3.1.5",
     "eslint": "^8.2.0",
     "eslint-config-airbnb": "^19.0.0",
-    "eslint-loader": "^4.0.2",
     "eslint-plugin-compat": "^3.9.0",
     "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-jest": "^25.2.4",
@@ -143,8 +142,11 @@
     "mini-css-extract-plugin": "^2.1.0",
     "minimist": "^1.2.5",
     "postcss": "^8.3.2",
+    "postcss-color-mod-function": "^3.0.3",
+    "postcss-dir-pseudo-class": "^6.0.0",
     "postcss-loader": "^6.1.1",
-    "postcss-preset-env": "^6.7.0",
+    "postcss-logical": "^5.0.0",
+    "postcss-nesting": "^9.0.0",
     "recaptcha-test-keys": "^1.0.0",
     "rimraf": "^3.0.0",
     "style-loader": "^3.0.0",

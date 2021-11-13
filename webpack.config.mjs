@@ -164,22 +164,16 @@ function getConfig(env, {
         {
           test: /\.js$/,
           exclude: /node_modules/,
-          use: [
-            (info) => ({
-              loader: 'babel-loader',
-              options: {
-                caller: {
-                  // Name of the compiler config: 'app' for modern JS,
-                  // 'legacy' for IE11 support.
-                  compiler: info.compiler,
-                },
+          use: (info) => ({
+            loader: 'babel-loader',
+            options: {
+              caller: {
+                // Name of the compiler config: 'app' for modern JS,
+                // 'legacy' for IE11 support.
+                compiler: info.compiler,
               },
-            }),
-            !env.production && {
-              loader: 'eslint-loader',
-              options: { cache: true },
             },
-          ].filter(Boolean),
+          }),
         },
       ],
     },
