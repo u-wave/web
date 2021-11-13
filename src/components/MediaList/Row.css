@@ -1,12 +1,19 @@
 :root {
-  --media-list-row-height: 56px;
-  --media-list-row-icon-width: 50px;
-  --unpadded-media-list-row-height: calc(var(--media-list-row-height) - 14px);
+  --media-row-height: 56px;
+  --media-row-thumb-width: 55px;
+  --media-row-duration-width: 70px;
+  --media-row-icon-width: 50px;
+  --unpadded-media-row-height: calc(var(--media-row-height) - 14px);
 }
 
 .MediaListRow {
-  height: var(--media-list-row-height);
-  line-height: var(--media-list-row-height);
+  display: grid;
+  grid-template-columns: var(--media-row-thumb-width) auto var(--media-row-duration-width) var(--media-row-icon-width);
+  grid-template-rows: var(--media-row-height);
+  grid-gap: 15px;
+  padding: 0 15px;
+  height: var(--media-row-height);
+  line-height: var(--media-row-height);
   position: relative;
   background: var(--media-list-color);
   border-bottom: 1px solid var(--divider-color);
@@ -26,15 +33,11 @@
 }
 
 .MediaListRow-loader {
-  margin: 0 15px;
 }
 
 .MediaListRow-thumb {
   height: 100%;
-  width: 55px;
-  margin: 0 15px;
   padding: 7px 0;
-  float: inline-start;
 }
 
 .MediaListRow-image {
@@ -44,15 +47,8 @@
 }
 
 .MediaListRow-data {
-  height: 100%;
   padding: 7px 0;
-  line-height: var(--unpadded-media-list-row-height);
-  width:
-    calc(
-      100% - var(--media-list-thumb-width) - var(--media-list-row-icon-width)
-      - var(--media-list-duration-width)
-    );
-  float: inline-start;
+  line-height: var(--unpadded-media-row-height);
 }
 
 .MediaListRow-artist {
@@ -77,8 +73,8 @@
 }
 
 .MediaListRow-note {
-  height: calc(var(--unpadded-media-list-row-height) / 3);
-  line-height: calc(var(--unpadded-media-list-row-height) / 3);
+  height: calc(var(--unpadded-media-row-height) / 3);
+  line-height: calc(var(--unpadded-media-row-height) / 3);
   width: calc(100% - var(--media-list-spacing));
   margin-inline-end: var(--media-list-spacing);
   overflow: hidden;
@@ -89,14 +85,10 @@
 
 .MediaListRow-duration {
   height: 100%;
-  float: inline-start;
-  width: var(--media-list-duration-width);
 }
 
 .MediaListRow-icon {
   height: 100%;
-  width: var(--media-list-row-icon-width);
-  float: inline-start;
   display: flex;
   align-items: center;
 }
