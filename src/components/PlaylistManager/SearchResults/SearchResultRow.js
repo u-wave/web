@@ -25,7 +25,7 @@ function SearchResultRow({
   return (
     <MediaRowBase
       media={media}
-      className={className}
+      className={cx(className, 'SearchResultRow')}
       style={style}
       onClick={onClick}
     >

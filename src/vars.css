@@ -37,8 +37,6 @@
 
   /* Playlist colours & sizing */
   --media-list-spacing: 3%;
-  --media-list-thumb-width: 85px;
-  --media-list-duration-width: 70px;
   --media-list-color: transparent;
 
   /* TODO Name this in some other way. It's used as the menu item focus colour

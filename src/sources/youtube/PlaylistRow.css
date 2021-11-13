@@ -2,12 +2,12 @@
   --yt-import-button-width: 54px;
 }
 
+.src-youtube-PlaylistRow {
+  grid-template-columns: var(--media-row-thumb-width) auto var(--yt-import-button-width);
+}
+
 .src-youtube-PlaylistRow-info {
-  height: 100%;
   line-height: 1.4;
-  float: left;
-  width: calc(100% - var(--media-list-thumb-width) - var(--media-list-spacing) - var(--yt-import-button-width));
-  margin-right: var(--media-list-spacing);
 }
 
 .src-youtube-PlaylistRow-name {
@@ -20,12 +20,9 @@
 .src-youtube-PlaylistRow-size {
   font-size: 85%;
   color: #777;
-  float: left;
 }
 
 .src-youtube-PlaylistRow-import {
   height: 100%;
   line-height: 1; /* .MediaListRow sets this to 54px but we don't need that */
-  float: left;
-  width: var(--yt-import-button-width);
 }
