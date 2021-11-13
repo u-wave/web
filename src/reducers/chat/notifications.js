@@ -1,4 +1,5 @@
 import {
+  ADVANCE,
   BOOTH_SKIP,
   USER_JOIN,
   USER_LEAVE,
@@ -41,6 +42,18 @@ export default function reduceNotifications(state, { type, payload }) {
         roles: payload.roles,
         timestamp: payload.timestamp,
       }]);
+    case ADVANCE: {
+      if (payload === null) {
+        return state;
+      }
+
+      return state.concat([{
+        type: 'nowPlaying',
+        _id: `nowPlaying-${payload.historyID}`,
+        entry: payload.media,
+        timestamp: payload.timestamp,
+      }]);
+    }
     case BOOTH_SKIP:
       return state.concat([{
         type: 'skip',
