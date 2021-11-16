@@ -147,7 +147,7 @@
     "recaptcha-test-keys": "^1.0.0",
     "rimraf": "^3.0.0",
     "style-loader": "^3.0.0",
-    "stylelint": "^14.0.1",
+    "stylelint": "^14.1.0",
     "stylelint-config-standard": "^24.0.0",
     "terser-webpack-plugin": "^5.2.5",
     "u-wave-web-emojione": "^2.0.1",
