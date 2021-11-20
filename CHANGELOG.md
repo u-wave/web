@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.0-alpha.6 / 20 Nov 2021
+While this is an alpha release, new servers should use this rather than an older "stable" version.
+
+Features:
+ * Show advance messages in the chat. (#1666)
+   Now you can see during which media a message was sent.
+
+Bugfixes:
+ * Fix history display in Chrome. It used to use `float: inline-start`, which Chrome does not
+   support. Now it uses CSS grids.
+
+Internal:
+ * Use CSS grids for media lists. (#2148)
+
 ## 2.0.0-alpha.5 / 11 Nov 2021
 While this is an alpha release, new servers should use this rather than an older "stable" version.
 
