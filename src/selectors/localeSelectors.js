@@ -67,12 +67,12 @@ export const relativeTimeFormatterSelector = createSelector(
   },
 );
 
-/** @type {Intl.TimeFormatOptions} */
+/** @type {Intl.DateTimeFormatOptions} */
 const timeFormatOptions = {
   hour: 'numeric',
   minute: 'numeric',
 };
-/** @type {Intl.DateFormatOptions} */
+/** @type {Intl.DateTimeFormatOptions} */
 const dateFormatOptions = {
   year: 'numeric',
   month: 'numeric',
