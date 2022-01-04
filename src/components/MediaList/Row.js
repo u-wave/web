@@ -57,4 +57,4 @@ MediaRow.propTypes = {
   onClick: PropTypes.func,
 };
 
-export default MediaRow;
+export default React.memo(MediaRow);

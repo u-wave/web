@@ -6,9 +6,9 @@ import UpvoteIcon from '@mui/icons-material/ThumbUp';
 import FavoritedIcon from '@mui/icons-material/Favorite';
 import FavoriteIcon from '@mui/icons-material/FavoriteBorder';
 
-const Votes = ({
+function Votes({
   upvotes, downvotes, favorites, isUpvote, isDownvote, isFavorite,
-}) => {
+}) {
   const CurrentFavoriteIcon = isFavorite ? FavoritedIcon : FavoriteIcon;
   return (
     <div className="HistoryVotes AudienceResponse">
@@ -32,7 +32,7 @@ const Votes = ({
       </div>
     </div>
   );
-};
+}
 
 Votes.propTypes = {
   upvotes: PropTypes.array.isRequired,
@@ -43,4 +43,4 @@ Votes.propTypes = {
   isDownvote: PropTypes.bool.isRequired,
 };
 
-export default Votes;
+export default React.memo(Votes);

@@ -19,4 +19,4 @@ MediaSourceIcon.propTypes = {
   sourceType: PropTypes.string.isRequired,
 };
 
-export default MediaSourceIcon;
+export default React.memo(MediaSourceIcon);
