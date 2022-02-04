@@ -1,39 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ListIcon from '@mui/icons-material/List';
-import transformStyle from '../../utils/transformStyle';
 
-const getItemStyles = (offset) => (
-  offset ? ({
-    display: 'inline-block',
-    ...transformStyle(`translate(${offset.x}px, ${offset.y}px)`),
-  }) : { display: 'none' }
-);
-
-const MediaDragPreview = ({
-  items,
-  currentOffset,
-}) => {
+function MediaDragPreview({ items }) {
   if (!items || !items.media) {
     return null;
   }
   return (
-    <div
-      className="MediaDragPreview"
-      style={getItemStyles(currentOffset)}
-    >
+    <div className="MediaDragPreview">
       <ListIcon className="MediaDragPreview-icon" />
       {items.media.length}
     </div>
   );
-};
+}
 
 MediaDragPreview.propTypes = {
   items: PropTypes.object,
-  currentOffset: PropTypes.shape({
-    x: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired,
-  }),
 };
 
 export default MediaDragPreview;

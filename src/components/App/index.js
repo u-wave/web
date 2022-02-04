@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { DndContext, useSensor, useSensors, MouseSensor, TouchSensor, KeyboardSensor } from '@dnd-kit/core';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import FooterBar from '../FooterBar';
@@ -16,7 +17,6 @@ import ConnectionIndicator from '../ConnectionIndicator';
 import SidePanels from '../SidePanels';
 import Dialogs from '../Dialogs';
 import AddToPlaylistMenu from '../../containers/AddToPlaylistMenu';
-import DragLayer from '../../containers/DragLayer';
 
 function App({
   activeOverlay,
@@ -24,6 +24,19 @@ function App({
   settings,
   onCloseOverlay,
 }) {
+  const mouseSensor = useSensor(MouseSensor, {
+    activationConstraint: {
+      distance: 16,
+    },
+  });
+  const touchSensor = useSensor(TouchSensor, {
+    activationConstraint: {
+      distance: 16,
+    },
+  });
+  const keyboardSensor = useSensor(KeyboardSensor, {});
+  const sensors = useSensors(mouseSensor, touchSensor, keyboardSensor);
+
   const el = (
     <div className="App">
       <div className="AppColumn AppColumn--left">
@@ -60,13 +73,14 @@ function App({
       <Dialogs />
 
       <AddToPlaylistMenu />
-      <DragLayer />
     </div>
   );
 
   return (
     <DndProvider backend={HTML5Backend}>
-      {el}
+      <DndContext sensors={sensors}>
+        {el}
+      </DndContext>
     </DndProvider>
   );
 }

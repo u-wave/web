@@ -1,13 +1,24 @@
 import cx from 'clsx';
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
+import { DragOverlay, useDndMonitor } from '@dnd-kit/core';
+import { SortableContext, verticalListSortingStrategy, arrayMove } from '@dnd-kit/sortable';
+import { restrictToWindowEdges, snapCenterToCursor } from '@dnd-kit/modifiers';
 import CircularProgress from '@mui/material/CircularProgress';
 import BaseMediaList from '../../MediaList/BaseMediaList';
+import MediaDragPreview from '../../MediaList/MediaDragPreview';
 import PlaylistMeta from './Meta';
 import PlaylistEmpty from './PlaylistEmpty';
 import PlaylistFilterEmpty from './PlaylistFilterEmpty';
 import PlaylistItemRow from './PlaylistItemRow';
 import DroppablePlaylistItemRow from './DroppablePlaylistItemRow';
+
+const {
+  useMemo,
+  useState,
+} = React;
+const { createPortal } = ReactDOM;
 
 function PlaylistPanel(props) {
   const {
@@ -26,6 +37,44 @@ function PlaylistPanel(props) {
     onMoveMedia,
   } = props;
 
+  const [dragging, setDragging] = useState(null);
+  const [optimisticDragResult, setOptimisticDragResult] = useState(null);
+  useDndMonitor({
+    onDragStart({ active }) {
+      setDragging(active.data.current.media);
+    },
+    onDragEnd({ active, over }) {
+      setDragging(null);
+      if (!over || over.id === active.id) {
+        return;
+      }
+
+      const activeIndex = media.findIndex((item) => item._id === active.id);
+      const overIndex = media.findIndex((item) => item._id === over.id);
+
+      // The `overIndex` is the index where the item WILL end up. To move the item there,
+      // it needs to either come move before or after the `over` item, knowing that the indices
+      // will all change by 1 after the item is moved. When moving an item up in the playlist,
+      // it needs to be placed before the item it is dropped on, and the other way around when
+      // moving it down.
+      const moveOpts = activeIndex > overIndex
+        ? { before: over.id }
+        : { after: over.id };
+      setOptimisticDragResult([activeIndex, overIndex]);
+      onMoveMedia([active.data.current.media], moveOpts).finally(() => {
+        setOptimisticDragResult(null);
+      });
+    },
+    onDragCancel() {
+      setDragging(null);
+    },
+  });
+
+  const mediaIDs = useMemo(() => media.map((item) => item._id), [media]);
+  const optimisticItems = useMemo(() => (
+    optimisticDragResult ? arrayMove(media, ...optimisticDragResult) : media
+  ), [media, optimisticDragResult]);
+
   let list;
   if (loading) {
     list = (
@@ -41,14 +90,25 @@ function PlaylistPanel(props) {
     list = (
       <BaseMediaList
         className="PlaylistPanel-media"
-        size={media.length}
-        media={media}
+        size={optimisticItems.length}
+        media={optimisticItems}
         listComponent="div"
         rowComponent={isFiltered ? PlaylistItemRow : DroppablePlaylistItemRow}
-        rowProps={{ onMoveMedia }}
+        rowProps={{ isDragging: dragging !== null }}
         contextProps={{ playlist, isFiltered }}
         onRequestPage={onLoadPlaylistPage}
       />
+    );
+  }
+
+  if (!isFiltered) {
+    list = (
+      <SortableContext
+        items={mediaIDs}
+        strategy={verticalListSortingStrategy}
+      >
+        {list}
+      </SortableContext>
     );
   }
 
@@ -67,6 +127,14 @@ function PlaylistPanel(props) {
         onFilter={onFilterPlaylistItems}
       />
       {list}
+      {createPortal(
+        <div className="DragLayerContainer">
+          <DragOverlay modifiers={[restrictToWindowEdges, snapCenterToCursor]}>
+            {dragging ? <MediaDragPreview items={{ media: [dragging] }} /> : null}
+          </DragOverlay>
+        </div>,
+        document.body,
+      )}
     </div>
   );
 }

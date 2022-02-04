@@ -1,21 +1,16 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useDrag } from 'react-dnd';
-import { getEmptyImage } from 'react-dnd-html5-backend';
-import { MEDIA } from '../../constants/DDItemTypes';
 import { useMediaListContext } from './BaseMediaList';
 
 const {
   useCallback,
-  useEffect,
   useRef,
 } = React;
 
 function MediaRowBase({
   className,
   style,
-  dragType = MEDIA,
   media,
   onClick,
   children,
@@ -28,24 +23,12 @@ function MediaRowBase({
   const localRef = useRef();
   const ref = containerRef || localRef;
 
-  const [, drag, connectDragPreview] = useDrag({
-    type: dragType,
-    item: () => ({
-      media: selected ? selection.get() : [media],
-    }),
-  });
-
-  useEffect(() => {
-    connectDragPreview(getEmptyImage());
-  }, [connectDragPreview]);
-
   const handleKeyPress = useCallback((event) => {
     if (event.code === 'Space') {
       onClick();
     }
   }, [onClick]);
 
-  drag(ref);
   return (
     <div
       role="checkbox"

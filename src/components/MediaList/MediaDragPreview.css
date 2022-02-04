@@ -3,8 +3,8 @@
   color: var(--text-color);
   font-weight: bold;
   padding: 7px 15px 7px 20px;
-  display: block;
   line-height: 24px;
+  width: max-content;
 }
 
 .MediaDragPreview-icon {

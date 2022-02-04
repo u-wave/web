@@ -529,6 +529,10 @@ export function moveMediaComplete(playlistID, items, location) {
   };
 }
 
+/**
+ * @param {Array<{ _id: string }>} [playlist]
+ * @param {{ after: string } | { before: string } | { at: 'start' } | { at: 'end' }} [opts]
+ */
 function resolveMoveOptions(playlist = [], opts = {}) {
   if (opts.after) {
     return { after: opts.after };
@@ -549,6 +553,11 @@ function resolveMoveOptions(playlist = [], opts = {}) {
   return null;
 }
 
+/**
+ * @param {string} playlistID
+ * @param {Array<object>} medias
+ * @param {{ after: string } | { before: string } | { at: 'start' } | { at: 'end' }} opts
+ */
 export function moveMedia(playlistID, medias, opts) {
   return (dispatch, getState) => {
     const playlistItems = playlistItemsSelector(getState())[playlistID];

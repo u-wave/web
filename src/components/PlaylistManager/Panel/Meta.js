@@ -73,4 +73,4 @@ PlaylistMeta.propTypes = {
   onFilter: PropTypes.func.isRequired,
 };
 
-export default PlaylistMeta;
+export default React.memo(PlaylistMeta);

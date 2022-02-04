@@ -22,6 +22,10 @@
     opacity: 0.75;
   }
 
+  &.is-dragging {
+    opacity: 50%;
+  }
+
   &.is-selected {
     background: var(--selected-media-row-color);
   }

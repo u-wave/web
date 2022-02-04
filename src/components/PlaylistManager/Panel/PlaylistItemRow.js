@@ -16,34 +16,38 @@ const {
 function PlaylistItemRow({
   className,
   style,
-  containerRef,
   index,
+  containerRef,
   media,
-  onClick,
+  isDragging,
+  ...props
 }) {
-  const loadingClass = media.loading ? 'is-loading' : '';
   const [showActions, setShowActions] = useState(false);
 
   // We need `onMouseOver` instead of `onMouseEnter` because we may enter
   // a playlist item row because the one above it was deleted; in that case,
   // `onMouseEnter` does not trigger, but `onMouseOver` does
   const handleMouseOver = useCallback(() => {
-    setShowActions(true);
-  }, []);
+    if (!isDragging) {
+      setShowActions(true);
+    }
+  }, [isDragging]);
 
   const handleMouseLeave = useCallback(() => {
-    setShowActions(false);
-  }, []);
+    if (!isDragging) {
+      setShowActions(false);
+    }
+  }, [isDragging]);
 
   return (
     <MediaRowBase
-      className={cx(className, loadingClass)}
+      className={cx(className, media.loading && 'is-loading')}
       style={style}
       containerRef={containerRef}
       media={media}
       onMouseOver={handleMouseOver}
       onMouseLeave={handleMouseLeave}
-      onClick={onClick}
+      {...props}
     >
       {media.loading ? (
         <MediaLoadingIndicator className="MediaListRow-loader" />
@@ -82,6 +86,7 @@ PlaylistItemRow.propTypes = {
   containerRef: PropTypes.any,
   media: PropTypes.object.isRequired,
   onClick: PropTypes.func.isRequired,
+  isDragging: PropTypes.bool,
 };
 
 export default PlaylistItemRow;
