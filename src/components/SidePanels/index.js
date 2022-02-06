@@ -19,6 +19,11 @@ const subHeaderStyle = {
   fontSize: '125%',
 };
 
+const tabWrapperClasses = {
+  root: 'AppRow--top SidePanel-tabs',
+  indicator: 'SidePanel-indicator',
+};
+
 const tabClasses = {
   root: 'SidePanel-tab',
   wrapper: 'SidePanel-tabLabel',
@@ -63,10 +68,7 @@ function SidePanels() {
         value={selected}
         onChange={handleChange}
         variant="fullWidth"
-        classes={{
-          root: 'AppRow--top SidePanel-tabs',
-          indicator: 'SidePanel-indicator',
-        }}
+        classes={tabWrapperClasses}
       >
         <Tab
           classes={tabClasses}

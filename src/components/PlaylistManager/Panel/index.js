@@ -77,6 +77,10 @@ function PlaylistPanel(props) {
   const contextProps = useMemo(() => ({ playlist, isFiltered }), [playlist, isFiltered]);
   const rowProps = useMemo(() => ({ isDragging: dragging !== null }), [dragging]);
 
+  const dragPreview = useMemo(() => (
+    dragging ? <MediaDragPreview items={{ media: [dragging] }} /> : null
+  ), [dragging]);
+
   let list;
   if (loading) {
     list = (
@@ -132,7 +136,7 @@ function PlaylistPanel(props) {
       {createPortal(
         <div className="DragLayerContainer">
           <DragOverlay modifiers={[restrictToWindowEdges, snapCenterToCursor]}>
-            {dragging ? <MediaDragPreview items={{ media: [dragging] }} /> : null}
+            {dragPreview}
           </DragOverlay>
         </div>,
         document.body,
