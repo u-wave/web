@@ -70,10 +70,12 @@ function PlaylistPanel(props) {
     },
   });
 
-  const mediaIDs = useMemo(() => media.map((item) => item._id), [media]);
+  const mediaIDs = useMemo(() => media.map((item, index) => (item ? item._id : `pseudo${index}`)), [media]);
   const optimisticItems = useMemo(() => (
     optimisticDragResult ? arrayMove(media, ...optimisticDragResult) : media
   ), [media, optimisticDragResult]);
+  const contextProps = useMemo(() => ({ playlist, isFiltered }), [playlist, isFiltered]);
+  const rowProps = useMemo(() => ({ isDragging: dragging !== null }), [dragging]);
 
   let list;
   if (loading) {
@@ -94,8 +96,8 @@ function PlaylistPanel(props) {
         media={optimisticItems}
         listComponent="div"
         rowComponent={isFiltered ? PlaylistItemRow : DroppablePlaylistItemRow}
-        rowProps={{ isDragging: dragging !== null }}
-        contextProps={{ playlist, isFiltered }}
+        rowProps={rowProps}
+        contextProps={contextProps}
         onRequestPage={onLoadPlaylistPage}
       />
     );

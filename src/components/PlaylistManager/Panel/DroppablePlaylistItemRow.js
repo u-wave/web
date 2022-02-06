@@ -12,6 +12,7 @@ const {
 } = React;
 
 function DroppablePlaylistItemRow({
+  className,
   style,
   media,
   ...props
@@ -43,7 +44,7 @@ function DroppablePlaylistItemRow({
 
   return (
     <PlaylistItemRow
-      className={cx({ 'is-dragging': isDragging })}
+      className={cx(className, { 'is-dragging': isDragging })}
       style={draggableStyle}
       media={media}
       containerRef={droppableRef}
@@ -55,6 +56,7 @@ function DroppablePlaylistItemRow({
 }
 
 DroppablePlaylistItemRow.propTypes = {
+  className: PropTypes.string,
   style: PropTypes.object, // from react-window
   media: PropTypes.object.isRequired,
 };
