@@ -1,8 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { DndContext, useSensor, useSensors, MouseSensor, TouchSensor, KeyboardSensor } from '@dnd-kit/core';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
+import {
+  DndContext,
+  useSensor,
+  useSensors,
+  MouseSensor,
+  TouchSensor,
+  KeyboardSensor,
+} from '@dnd-kit/core';
 import FooterBar from '../FooterBar';
 import HeaderBar from '../../containers/HeaderBar';
 import Video from '../../containers/Video';
@@ -79,11 +84,9 @@ function App({
   );
 
   return (
-    <DndProvider backend={HTML5Backend}>
-      <DndContext sensors={sensors}>
-        {el}
-      </DndContext>
-    </DndProvider>
+    <DndContext sensors={sensors}>
+      {el}
+    </DndContext>
   );
 }
 

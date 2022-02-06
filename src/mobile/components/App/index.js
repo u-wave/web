@@ -1,8 +1,14 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
+import {
+  DndContext,
+  useSensor,
+  useSensors,
+  MouseSensor,
+  TouchSensor,
+  KeyboardSensor,
+} from '@dnd-kit/core';
 import Snackbar from '@mui/material/Snackbar';
 import ErrorArea from '../../../containers/ErrorArea';
 import PlaylistManager from '../../containers/PlaylistManager';
@@ -25,8 +31,21 @@ function MobileApp({
 }) {
   const [dismissedWarning, dismissWarning] = useState(false);
 
+  const mouseSensor = useSensor(MouseSensor, {
+    activationConstraint: {
+      distance: 16,
+    },
+  });
+  const touchSensor = useSensor(TouchSensor, {
+    activationConstraint: {
+      distance: 16,
+    },
+  });
+  const keyboardSensor = useSensor(KeyboardSensor, {});
+  const sensors = useSensors(mouseSensor, touchSensor, keyboardSensor);
+
   return (
-    <DndProvider backend={HTML5Backend}>
+    <DndContext sensors={sensors}>
       <div className={cx('App', 'MobileApp', 'is-mobile', settings.videoEnabled && 'MobileApp--videoEnabled')}>
         <MainView />
 
@@ -51,7 +70,7 @@ function MobileApp({
         <AddToPlaylistMenu />
         <DragLayer />
       </div>
-    </DndProvider>
+    </DndContext>
   );
 }
 
