@@ -8,6 +8,7 @@ import {
 } from '../selectors/playlistSelectors';
 import {
   moveMedia,
+  addMedia,
   filterPlaylistItems,
   renamePlaylist,
   deletePlaylist,
@@ -53,6 +54,10 @@ function PlaylistPanelContainer() {
     (media, opts) => dispatch(moveMedia(playlist._id, media, opts)),
     [dispatch, playlist],
   );
+  const onAddToPlaylist = useCallback(
+    (target, items) => dispatch(addMedia(target, items)),
+    [dispatch],
+  );
   const onLoadPlaylistPage = useCallback((page) => {
     if (isFiltered) {
       return dispatch(loadFilteredPlaylistItems(playlist._id, page));
@@ -76,6 +81,7 @@ function PlaylistPanelContainer() {
       onDeletePlaylist={onDeletePlaylist}
       onNotDeletable={onNotDeletable}
       onMoveMedia={onMoveMedia}
+      onAddToPlaylist={onAddToPlaylist}
       onLoadPlaylistPage={onLoadPlaylistPage}
       onFilterPlaylistItems={onFilterPlaylistItems}
     />

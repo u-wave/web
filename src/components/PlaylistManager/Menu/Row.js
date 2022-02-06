@@ -1,11 +1,11 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useDrop } from 'react-dnd';
+import { useDroppable } from '@dnd-kit/core';
 import CircularProgress from '@mui/material/CircularProgress';
 import MenuItem from '@mui/material/MenuItem';
 import ActiveIcon from '@mui/icons-material/Check';
-import { MEDIA } from '../../../constants/DDItemTypes';
+import { PLAYLIST } from '../../../constants/DDItemTypes';
 
 const itemClasses = {
   root: 'PlaylistMenuRow',
@@ -17,18 +17,19 @@ function PlaylistRow({
   playlist,
   selected,
   onClick,
-  onAddToPlaylist,
 }) {
-  const [{ isOver }, drop] = useDrop(() => ({
-    accept: MEDIA,
-    drop(item, monitor) {
-      const { media } = monitor.getItem();
-      onAddToPlaylist(playlist, media);
+  const {
+    attributes,
+    listeners,
+    isOver,
+    setNodeRef,
+  } = useDroppable({
+    id: playlist._id,
+    data: {
+      type: PLAYLIST,
+      playlist,
     },
-    collect(monitor) {
-      return { isOver: monitor.isOver() };
-    },
-  }), [playlist]);
+  });
 
   const activeClass = playlist.active && 'is-active';
   const droppableClass = isOver && 'is-droppable';
@@ -54,7 +55,9 @@ function PlaylistRow({
       className={cx(className, activeClass, droppableClass)}
       classes={itemClasses}
       onClick={onClick}
-      ref={drop}
+      ref={setNodeRef}
+      {...attributes}
+      {...listeners}
     >
       <div className="PlaylistMenuRow-title">
         {icon}

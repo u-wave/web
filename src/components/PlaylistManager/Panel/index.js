@@ -10,6 +10,7 @@ import PlaylistEmpty from './PlaylistEmpty';
 import PlaylistFilterEmpty from './PlaylistFilterEmpty';
 import PlaylistItemRow from './PlaylistItemRow';
 import DroppablePlaylistItemRow from './DroppablePlaylistItemRow';
+import { MEDIA, PLAYLIST } from '../../../constants/DDItemTypes';
 
 const {
   useMemo,
@@ -30,6 +31,7 @@ function PlaylistPanel(props) {
     onNotDeletable,
     onLoadPlaylistPage,
     onFilterPlaylistItems,
+    onAddToPlaylist,
     onMoveMedia,
   } = props;
 
@@ -45,21 +47,29 @@ function PlaylistPanel(props) {
         return;
       }
 
-      const activeIndex = media.findIndex((item) => item._id === active.id);
-      const overIndex = media.findIndex((item) => item._id === over.id);
+      const item = active.data.current;
+      const target = over.data.current;
 
-      // The `overIndex` is the index where the item WILL end up. To move the item there,
-      // it needs to either come move before or after the `over` item, knowing that the indices
-      // will all change by 1 after the item is moved. When moving an item up in the playlist,
-      // it needs to be placed before the item it is dropped on, and the other way around when
-      // moving it down.
-      const moveOpts = activeIndex > overIndex
-        ? { before: over.id }
-        : { after: over.id };
-      setOptimisticDragResult([activeIndex, overIndex]);
-      onMoveMedia(active.data.current.media, moveOpts).finally(() => {
-        setOptimisticDragResult(null);
-      });
+      if (target.type === PLAYLIST) {
+        onAddToPlaylist(target.playlist, item.media);
+      } else if (target.type === MEDIA) {
+        const activeIndex = media.findIndex((m) => m._id === active.id);
+        const overIndex = media.findIndex((m) => m._id === over.id);
+
+        // The `overIndex` is the index where the item WILL end up. To move the item there,
+        // it needs to either come move before or after the `over` item, knowing that the indices
+        // will all change by 1 after the item is moved. When moving an item up in the playlist,
+        // it needs to be placed before the item it is dropped on, and the other way around when
+        // moving it down.
+        const moveOpts = activeIndex > overIndex
+          ? { before: over.id }
+          : { after: over.id };
+        setOptimisticDragResult([activeIndex, overIndex]);
+
+        onMoveMedia(item.media, moveOpts).finally(() => {
+          setOptimisticDragResult(null);
+        });
+      }
     },
     onDragCancel() {
       setIsDragging(false);
@@ -146,6 +156,7 @@ PlaylistPanel.propTypes = {
   onLoadPlaylistPage: PropTypes.func.isRequired,
   onFilterPlaylistItems: PropTypes.func.isRequired,
   onNotDeletable: PropTypes.func.isRequired,
+  onAddToPlaylist: PropTypes.func.isRequired,
   onMoveMedia: PropTypes.func.isRequired,
 };
 

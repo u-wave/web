@@ -18,6 +18,7 @@
 
   &.is-droppable {
     background: var(--media-list-alternate-color);
+    cursor: copy;
   }
 }
 
