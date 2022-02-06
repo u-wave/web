@@ -29,7 +29,7 @@ function DroppablePlaylistItemRow({
     id: media._id,
     data: {
       type: MEDIA,
-      media,
+      media: [media],
     },
   });
   useEffect(() => {

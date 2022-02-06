@@ -1,13 +1,10 @@
 import cx from 'clsx';
 import React from 'react';
-import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import { DragOverlay, useDndMonitor } from '@dnd-kit/core';
+import { useDndMonitor } from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy, arrayMove } from '@dnd-kit/sortable';
-import { restrictToWindowEdges, snapCenterToCursor } from '@dnd-kit/modifiers';
 import CircularProgress from '@mui/material/CircularProgress';
 import BaseMediaList from '../../MediaList/BaseMediaList';
-import MediaDragPreview from '../../MediaList/MediaDragPreview';
 import PlaylistMeta from './Meta';
 import PlaylistEmpty from './PlaylistEmpty';
 import PlaylistFilterEmpty from './PlaylistFilterEmpty';
@@ -18,7 +15,6 @@ const {
   useMemo,
   useState,
 } = React;
-const { createPortal } = ReactDOM;
 
 function PlaylistPanel(props) {
   const {
@@ -37,14 +33,14 @@ function PlaylistPanel(props) {
     onMoveMedia,
   } = props;
 
-  const [dragging, setDragging] = useState(null);
+  const [isDragging, setIsDragging] = useState(false);
   const [optimisticDragResult, setOptimisticDragResult] = useState(null);
   useDndMonitor({
-    onDragStart({ active }) {
-      setDragging(active.data.current.media);
+    onDragStart() {
+      setIsDragging(true);
     },
     onDragEnd({ active, over }) {
-      setDragging(null);
+      setIsDragging(false);
       if (!over || over.id === active.id) {
         return;
       }
@@ -61,25 +57,25 @@ function PlaylistPanel(props) {
         ? { before: over.id }
         : { after: over.id };
       setOptimisticDragResult([activeIndex, overIndex]);
-      onMoveMedia([active.data.current.media], moveOpts).finally(() => {
+      onMoveMedia(active.data.current.media, moveOpts).finally(() => {
         setOptimisticDragResult(null);
       });
     },
     onDragCancel() {
-      setDragging(null);
+      setIsDragging(false);
     },
   });
 
   const mediaIDs = useMemo(() => media.map((item, index) => (item ? item._id : `pseudo${index}`)), [media]);
+  const contextProps = useMemo(() => ({ playlist, isFiltered }), [playlist, isFiltered]);
+  const rowProps = useMemo(() => ({ isDragging }), [isDragging]);
+
+  const optimisticMediaIDs = useMemo(() => (
+    optimisticDragResult ? arrayMove(mediaIDs, ...optimisticDragResult) : mediaIDs
+  ), [mediaIDs, optimisticDragResult]);
   const optimisticItems = useMemo(() => (
     optimisticDragResult ? arrayMove(media, ...optimisticDragResult) : media
   ), [media, optimisticDragResult]);
-  const contextProps = useMemo(() => ({ playlist, isFiltered }), [playlist, isFiltered]);
-  const rowProps = useMemo(() => ({ isDragging: dragging !== null }), [dragging]);
-
-  const dragPreview = useMemo(() => (
-    dragging ? <MediaDragPreview items={{ media: [dragging] }} /> : null
-  ), [dragging]);
 
   let list;
   if (loading) {
@@ -110,7 +106,7 @@ function PlaylistPanel(props) {
   if (!isFiltered) {
     list = (
       <SortableContext
-        items={mediaIDs}
+        items={optimisticMediaIDs}
         strategy={verticalListSortingStrategy}
       >
         {list}
@@ -133,14 +129,6 @@ function PlaylistPanel(props) {
         onFilter={onFilterPlaylistItems}
       />
       {list}
-      {createPortal(
-        <div className="DragLayerContainer">
-          <DragOverlay modifiers={[restrictToWindowEdges, snapCenterToCursor]}>
-            {dragPreview}
-          </DragOverlay>
-        </div>,
-        document.body,
-      )}
     </div>
   );
 }
