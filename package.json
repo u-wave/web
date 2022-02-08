@@ -153,7 +153,7 @@
     "u-wave-web-emojione": "^2.0.1",
     "webpack": "^5.65.0",
     "webpack-bundle-analyzer": "^4.4.0",
-    "webpack-dev-middleware": "^5.0.0",
+    "webpack-dev-middleware": "^5.3.1",
     "webpack-hot-middleware": "^2.25.0",
     "webpack-merge": "^5.7.3",
     "webpack-subresource-integrity": "^5.0.0",
