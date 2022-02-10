@@ -33,6 +33,37 @@ function didMediaChange(prev, next) {
   return prev.some((item, i) => item && next[i] && item._id !== next[i]._id);
 }
 
+function useMediaSelection(media) {
+  const lastMediaRef = useRef(media);
+  const [selection, setSelection] = useState(() => itemSelection(media));
+
+  useEffect(() => {
+    const lastMedia = lastMediaRef.current;
+    if (lastMedia !== media) {
+      lastMediaRef.current = media;
+      const selectedIndices = selection.getIndices();
+      const mediaChanged = didMediaChange(lastMedia, media);
+      setSelection(mediaChanged ? itemSelection(media) : itemSelection(media, selectedIndices));
+    }
+  }, [media, selection]);
+
+  const handleSelectIndex = useCallback((index, event) => {
+    event.preventDefault();
+
+    if (event.shiftKey) {
+      setSelection(selection.selectRange(index));
+    } else if (event.ctrlKey) {
+      setSelection(selection.selectToggle(index));
+    } else if (event.metaKey) {
+      setSelection(selection.selectToggle(index));
+    } else {
+      setSelection(selection.select(index));
+    }
+  }, [selection]);
+
+  return [selection, handleSelectIndex];
+}
+
 function BaseMediaList({
   className,
   media,
@@ -44,10 +75,9 @@ function BaseMediaList({
   // The `size` property is only necessary for lazy loading.
   size = null,
 }) {
-  const lastMediaRef = useRef(media);
-  const [selection, setSelection] = useState(() => itemSelection(media));
   const inFlightPageRequests = useRef({});
   const direction = useDirection();
+  const [selection, selectItem] = useMediaSelection(media);
 
   const context = useMemo(() => ({
     media,
@@ -62,30 +92,6 @@ function BaseMediaList({
     }
     return `unloaded_${index}`;
   }, [media]);
-
-  useEffect(() => {
-    const lastMedia = lastMediaRef.current;
-    if (lastMedia !== media) {
-      lastMediaRef.current = media;
-      const selectedIndices = selection.getIndices();
-      const mediaChanged = didMediaChange(lastMedia, media);
-      setSelection(mediaChanged ? itemSelection(media) : itemSelection(media, selectedIndices));
-    }
-  }, [media, selection]);
-
-  const selectItem = useCallback((index, event) => {
-    event.preventDefault();
-
-    if (event.shiftKey) {
-      setSelection(selection.selectRange(index));
-    } else if (event.ctrlKey) {
-      setSelection(selection.selectToggle(index));
-    } else if (event.metaKey) {
-      setSelection(selection.selectToggle(index));
-    } else {
-      setSelection(selection.select(index));
-    }
-  }, [selection]);
 
   const renderRow = useCallback(({ index, style }) => {
     const selected = selection.isSelectedIndex(index);
