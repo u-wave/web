@@ -33,8 +33,7 @@
 
 .SearchResultRow-data {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-flow: row wrap;
 }
 
 .SearchResultRow-data .MediaListRow-artist {

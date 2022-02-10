@@ -25,10 +25,10 @@
 
 .SidePanel-panel {
   visibility: hidden;
-  opacity: 0%;
+  opacity: 0;
 
   &.is-selected {
     visibility: visible;
-    opacity: 100%;
+    opacity: 1;
   }
 }

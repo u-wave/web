@@ -24,15 +24,16 @@
   flex-direction: row;
   align-items: center;
 
-  &:before, &:after {
-    content: ' ';
+  &::before,
+  &::after {
+    content: " ";
     background: var(--muted-text-color);
     height: 1px;
     flex-grow: 1;
   }
 
-  &:before { margin-right: 6px; }
-  &:after { margin-left: 6px; }
+  &::before { margin-right: 6px; }
+  &::after { margin-left: 6px; }
 }
 
 .NowPlayingMessage-media {

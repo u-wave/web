@@ -19,7 +19,7 @@
   border-bottom: 1px solid var(--divider-color);
 
   &.is-loading {
-    opacity: 75%;
+    opacity: 0.75;
   }
 
   &.is-selected {
@@ -30,9 +30,6 @@
     box-shadow: inset 0 0 0 2px var(--highlight-color);
     outline: none;
   }
-}
-
-.MediaListRow-loader {
 }
 
 .MediaListRow-thumb {
