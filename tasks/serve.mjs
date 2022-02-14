@@ -1,6 +1,5 @@
 import 'make-promises-safe';
 import { createRequire } from 'module';
-import chalk from 'chalk';
 import emojione from 'u-wave-web-emojione';
 import recaptchaTestKeys from 'recaptcha-test-keys';
 import express from 'express';
@@ -10,6 +9,8 @@ import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import env from './env.mjs';
 import getConfig from '../webpack.config.mjs';
+
+const CLIENT_TAG = '\x1B[90mclient\x1B[39m';
 
 function waitForBuild(devMiddleware) {
   return (req, res, next) => {
@@ -23,7 +24,7 @@ const port = env.port || 6041;
 const serverPort = env.serverPort || 6042;
 const watch = env.watch || false;
 
-console.log(chalk.grey('client'), `starting on port ${port}`);
+console.log(CLIENT_TAG, `starting on port ${port}`);
 
 const wpConfig = getConfig({ production: !watch }, {
   watch,
@@ -80,7 +81,7 @@ if (watch) {
   }));
 
   await valid;
-  console.log(chalk.grey('client'), 'ready');
+  console.log(CLIENT_TAG, 'ready');
 } else {
   const webClient = createWebClient({
     apiUrl,
@@ -91,5 +92,5 @@ if (watch) {
   });
 
   app.use(webClient);
-  console.log(chalk.grey('client'), 'ready');
+  console.log(CLIENT_TAG, 'ready');
 }
