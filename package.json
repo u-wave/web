@@ -130,7 +130,7 @@
     "express": "^4.17.1",
     "html-loader": "^3.0.0",
     "html-webpack-plugin": "^5.2.0",
-    "http-proxy-middleware": "^2.0.1",
+    "http-proxy-middleware": "^2.0.4",
     "image-webpack-loader": "^8.0.1",
     "jest": "^27.5.0",
     "jest-fetch-mock": "^3.0.3",
