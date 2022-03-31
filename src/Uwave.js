@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { StyledEngineProvider } from '@mui/material/styles';
 import { CacheProvider } from '@emotion/react';
@@ -136,14 +136,12 @@ export default class Uwave {
       this.#renderTarget = target;
     }
 
-    const element = (
+    const root = createRoot(this.#renderTarget);
+
+    root.render((
       <React.StrictMode>
         {this.getComponent()}
       </React.StrictMode>
-    );
-
-    return new Promise((resolve) => {
-      ReactDOM.render(element, this.#renderTarget, resolve);
-    });
+    ));
   }
 }
