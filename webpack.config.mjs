@@ -187,6 +187,8 @@ function getConfig(env, {
       alias: {
         // Node.js shims
         path: 'path-browserify',
+        'react/jsx-runtime.js': 'react/jsx-runtime',
+        'react/jsx-dev-runtime.js': 'react/jsx-dev-runtime',
       },
       mainFields: [
         'browser',
