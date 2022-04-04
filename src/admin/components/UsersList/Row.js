@@ -1,7 +1,6 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { nanoid } from 'nanoid/non-secure';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -12,6 +11,12 @@ import useIntl from '../../../hooks/useIntl';
 import Avatar from '../../../components/Avatar';
 import Username from '../../../components/Username/WithCard';
 import UserRole from '../../../components/UserRole';
+
+const {
+  useCallback,
+  useId,
+  useState,
+} = React;
 
 function TableCell({ className, ...props }) {
   return (
@@ -38,69 +43,62 @@ const actionsStyle = {
   paddingRight: 0,
 };
 
-export default class UserRow extends React.Component {
-  ariaMenu = nanoid();
+function UserRow({ user }) {
+  const ariaMenu = useId();
+  const [open, setOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(false);
 
-  static propTypes = {
-    user: PropTypes.object.isRequired,
-  };
+  const handleOpenMenu = useCallback((event) => {
+    setOpen(true);
+    setAnchorEl(event.currentTarget);
+  }, []);
 
-  constructor(props) {
-    super(props);
+  const handleCloseMenu = useCallback(() => {
+    setOpen(false);
+    setAnchorEl(null);
+  }, []);
 
-    this.state = {
-      open: false,
-      anchorEl: null,
-    };
-  }
-
-  handleOpenMenu = (event) => {
-    this.setState({ open: true, anchorEl: event.currentTarget });
-  };
-
-  handleCloseMenu = () => {
-    this.setState({ open: false, anchorEl: null });
-  };
-
-  render() {
-    const { user } = this.props;
-    const { open, anchorEl } = this.state;
-    return (
-      <TableRow className="AdminUserRow">
-        <TableCell className="AdminUserRow-avatar">
-          <Avatar user={user} />
-        </TableCell>
-        <TableCell>
-          <Username user={user} />
-        </TableCell>
-        <TableCell>
-          <JoinDate date={new Date(user.createdAt)} />
-        </TableCell>
-        <TableCell>Email</TableCell>
-        <TableCell>
-          {user.roles.length > 0 && (
-            /* Only show the primary role here for space reasons. */
-            <UserRole roleName={user.roles[0]} />
-          )}
-        </TableCell>
-        <TableCell style={actionsStyle}>
-          <IconButton
-            onClick={this.handleOpenMenu}
-            aria-haspopup="true"
-            aria-owns={open ? this.ariaMenu : null}
-          >
-            <MoreVertIcon />
-          </IconButton>
-          <Menu
-            id={this.ariaMenu}
-            open={open}
-            anchorEl={anchorEl}
-            onClose={this.handleCloseMenu}
-          >
-            <MenuItem>Ban</MenuItem>
-          </Menu>
-        </TableCell>
-      </TableRow>
-    );
-  }
+  return (
+    <TableRow className="AdminUserRow">
+      <TableCell className="AdminUserRow-avatar">
+        <Avatar user={user} />
+      </TableCell>
+      <TableCell>
+        <Username user={user} />
+      </TableCell>
+      <TableCell>
+        <JoinDate date={new Date(user.createdAt)} />
+      </TableCell>
+      <TableCell>Email</TableCell>
+      <TableCell>
+        {user.roles.length > 0 && (
+          /* Only show the primary role here for space reasons. */
+          <UserRole roleName={user.roles[0]} />
+        )}
+      </TableCell>
+      <TableCell style={actionsStyle}>
+        <IconButton
+          onClick={handleOpenMenu}
+          aria-haspopup="true"
+          aria-owns={open ? ariaMenu : null}
+        >
+          <MoreVertIcon />
+        </IconButton>
+        <Menu
+          id={ariaMenu}
+          open={open}
+          anchorEl={anchorEl}
+          onClose={handleCloseMenu}
+        >
+          <MenuItem>Ban</MenuItem>
+        </Menu>
+      </TableCell>
+    </TableRow>
+  );
 }
+
+UserRow.propTypes = {
+  user: PropTypes.object.isRequired,
+};
+
+export default UserRow;
