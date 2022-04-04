@@ -71,7 +71,7 @@
     "react-dom": "^18.0.0",
     "react-google-button": "^0.7.2",
     "react-markdown": "^6.0.2",
-    "react-redux": "8.0.0-beta.3",
+    "react-redux": "8.0.0-beta.4",
     "react-refresh": "^0.12.0",
     "react-transition-group": "^4.4.2",
     "react-virtualized-auto-sizer": "^1.0.2",
