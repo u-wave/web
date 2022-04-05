@@ -41,7 +41,7 @@ function RenamePlaylistButton({ initialName, onRename }) {
           title={t('dialogs.renamePlaylist.nameInputTitle')}
           submitLabel={t('dialogs.renamePlaylist.action')}
           icon={<EditIcon htmlColor="#777" />}
-          value={initialName}
+          defaultValue={initialName}
           onSubmit={handleSubmit}
           onCancel={handleClose}
         />
