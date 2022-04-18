@@ -6,11 +6,9 @@
  */
 import crypto from 'crypto';
 import fs from 'fs/promises';
-import { createRequire } from 'module';
 
-const require = createRequire(import.meta.url);
-const emojibase = require('emojibase-data/en/data.json');
-const joypixelShortcodes = require('emojibase-data/en/shortcodes/joypixels.json');
+const joypixelShortcodesPath = new URL('../node_modules/emojibase-data/en/shortcodes/joypixels.json', import.meta.url);
+const joypixelShortcodes = JSON.parse(await fs.readFile(joypixelShortcodesPath, { encoding: 'utf8' }));
 
 const twemojiDir = new URL('../node_modules/twemoji-emojis/vendor/svg/', import.meta.url);
 const twemojis = await fs.readdir(twemojiDir);
