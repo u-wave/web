@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import defaultEmoji from '../utils/emojiShortcodes';
 
 export const configSelector = (state) => state.config;
 
@@ -15,12 +16,22 @@ export const requestOptionsSelector = createSelector(
 
 export const availableEmojiImagesSelector = createSelector(
   configSelector,
-  (config) => config.emoji || {},
+  (config) => ({ ...defaultEmoji, ...config.emoji }),
 );
 
 export const availableEmojiNamesSelector = createSelector(
   availableEmojiImagesSelector,
-  (emoji) => Object.keys(emoji),
+  (emoji) => new Set(Object.keys(emoji)),
+);
+
+// This is slightly hacky: custom emoji will be hosted on
+// a different URL so we have to mark them.
+// TODO(goto-bus-stop) I think builtins and custom emoji
+// should be separated entirely so that we can interpret
+// unicode emoji as builtin ones.
+export const customEmojiNamesSelector = createSelector(
+  configSelector,
+  (config) => new Set(Object.keys(config.emoji ?? {})),
 );
 
 const reCaptchaSelector = createSelector(
