@@ -27,7 +27,7 @@
     "array-includes": "^3.1.1",
     "array.from": "^1.1.0",
     "array.prototype.find": "^2.2.0",
-    "array.prototype.findindex": "^2.1.1",
+    "array.prototype.findindex": "^2.2.0",
     "clsx": "^1.0.4",
     "css.escape": "^1.5.1",
     "deepmerge": "^4.2.2",
