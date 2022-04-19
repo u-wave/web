@@ -27,6 +27,7 @@ function RoomUserList({ className, users, guests }) {
     size: length,
     parentRef,
     estimateSize,
+    overscan: 12, // not that expensive to render
   });
 
   return (
