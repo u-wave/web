@@ -2,6 +2,10 @@
   --tab-text-color: #fff;
 }
 
+.SidePanels {
+  position: relative;
+}
+
 .SidePanel-indicator {
   background-color: var(--tab-text-color);
 }
@@ -24,11 +28,14 @@
 }
 
 .SidePanel-panel {
+  position: absolute;
   visibility: hidden;
   opacity: 0;
   /* FIXME Ideally this should just be done correctly with the AppRow--middle flexbox styles,
    * but for long users lists, that doesn't appear to work correctly… */
   height: calc(100vh - var(--header-height));
+  top: var(--header-height);
+  width: 100%;
 
   &.is-selected {
     visibility: visible;
