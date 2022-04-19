@@ -1,14 +1,20 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FixedSizeList } from 'react-window';
-import AutoSizer from 'react-virtualized-auto-sizer';
-import useDirection from '../../hooks/useDirection';
+import { useVirtual } from 'react-virtual';
 import RoomUserRow from './Row';
 import GuestsRow from './GuestsRow';
 
-const RoomUserList = ({ className, users, guests }) => {
-  const direction = useDirection();
+const {
+  useRef,
+} = React;
+
+function estimateSize() {
+  return 40;
+}
+
+function RoomUserList({ className, users, guests }) {
+  const parentRef = useRef();
 
   const showGuests = guests > 0;
   // The "and X guests" row is implemented somewhat hackily as an extra user
@@ -17,57 +23,50 @@ const RoomUserList = ({ className, users, guests }) => {
   // when th guests row is shown.
   const length = users.length + (showGuests ? 1 : 0);
 
-  // these are not components
-  /* eslint-disable react/prop-types */
-
-  function itemRenderer({ index, style }) {
-    const rowClass = cx(
-      'UserList-row',
-      (index % 2 === 0) && 'UserList-row--alternate',
-    );
-    // The very last row is the guests row
-    if (index === users.length) {
-      return (
-        <GuestsRow
-          key="guests"
-          className={rowClass}
-          guests={guests}
-        />
-      );
-    }
-    return (
-      <RoomUserRow
-        key={users[index]._id}
-        className={rowClass}
-        style={style}
-        user={users[index]}
-      />
-    );
-  }
-
-  function listRenderer({ height }) {
-    return (
-      <FixedSizeList
-        height={height}
-        itemCount={length}
-        itemSize={40}
-        direction={direction}
-      >
-        {itemRenderer}
-      </FixedSizeList>
-    );
-  }
-
-  /* eslint-enable react/prop-types */
+  const { virtualItems, totalSize } = useVirtual({
+    size: length,
+    parentRef,
+    estimateSize,
+  });
 
   return (
-    <div className={cx('UserList', 'UserList--online', className)}>
-      <AutoSizer disableWidth>
-        {listRenderer}
-      </AutoSizer>
+    <div className={cx('UserList', 'UserList--online', className)} ref={parentRef}>
+      <div style={{ height: `${totalSize}px`, width: '100%', position: 'relative' }}>
+        {virtualItems.map(({ index, start, size }) => {
+          const rowClass = cx(
+            'UserList-row',
+            (index % 2 === 0) && 'UserList-row--alternate',
+          );
+          const style = {
+            position: 'absolute',
+            top: 0,
+            height: size,
+            transform: `translateY(${start}px)`,
+          };
+          // The very last row is the guests row
+          if (index === users.length) {
+            return (
+              <GuestsRow
+                key="guests"
+                className={rowClass}
+                style={style}
+                guests={guests}
+              />
+            );
+          }
+          return (
+            <RoomUserRow
+              key={users[index]._id}
+              className={rowClass}
+              style={style}
+              user={users[index]}
+            />
+          );
+        })}
+      </div>
     </div>
   );
-};
+}
 
 RoomUserList.propTypes = {
   className: PropTypes.string,
