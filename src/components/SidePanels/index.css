@@ -26,6 +26,9 @@
 .SidePanel-panel {
   visibility: hidden;
   opacity: 0;
+  /* FIXME Ideally this should just be done correctly with the AppRow--middle flexbox styles,
+   * but for long users lists, that doesn't appear to work correctly… */
+  height: calc(100vh - var(--header-height));
 
   &.is-selected {
     visibility: visible;
