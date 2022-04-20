@@ -27,7 +27,7 @@ const HistoryRow = ({ media, style }) => (
 );
 
 HistoryRow.propTypes = {
-  style: PropTypes.object, // from react-window
+  style: PropTypes.object, // from virtual list positioning
   media: PropTypes.object,
 };
 

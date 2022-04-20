@@ -62,7 +62,7 @@ function DroppablePlaylistItemRow({
 }
 
 DroppablePlaylistItemRow.propTypes = {
-  style: PropTypes.object, // from react-window
+  style: PropTypes.object, // from virtual list positioning
   index: PropTypes.number.isRequired,
   media: PropTypes.object.isRequired,
   onClick: PropTypes.func.isRequired,
