@@ -1,10 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FixedSizeList } from 'react-window';
-import AutoSizer from 'react-virtualized-auto-sizer';
-import useDirection from '../../hooks/useDirection';
+import { useVirtual } from 'react-virtual';
 import ImportPanelHeader from '../../components/PlaylistManager/Import/ImportPanelHeader';
 import PlaylistRow from './PlaylistRow';
+
+const {
+  useRef,
+} = React;
+
+function estimateSize() {
+  return 56;
+}
 
 function ChannelPanel({
   importingChannelTitle,
@@ -12,19 +18,30 @@ function ChannelPanel({
   onImportPlaylist,
   onClosePanel,
 }) {
-  const direction = useDirection();
+  const parentRef = useRef();
 
-  const body = (
-    <AutoSizer disableWidth>
-      {({ height }) => (
-        <FixedSizeList
-          height={height}
-          itemCount={importablePlaylists.length}
-          itemSize={56}
-          direction={direction}
-        >
-          {({ index, style }) => {
+  const { virtualItems, totalSize } = useVirtual({
+    size: importablePlaylists.length,
+    parentRef,
+    estimateSize,
+    overscan: 6,
+  });
+
+  return (
+    <div className="ImportPanel ChannelPanel">
+      <ImportPanelHeader onClosePanel={onClosePanel}>
+        {`${importingChannelTitle}'s Playlists`}
+      </ImportPanelHeader>
+      <div className="MediaList ImportPanel-body">
+        <div style={{ height: `${totalSize}px`, width: '100%', position: 'relative' }}>
+          {virtualItems.map(({ index, start, size }) => {
             const playlist = importablePlaylists[index];
+            const style = {
+              position: 'absolute',
+              top: 0,
+              height: size,
+              transform: `translateY(${start}px)`,
+            };
             return (
               <PlaylistRow
                 key={playlist.sourceID}
@@ -34,19 +51,8 @@ function ChannelPanel({
                 onImport={() => onImportPlaylist(playlist.sourceID, playlist.name)}
               />
             );
-          }}
-        </FixedSizeList>
-      )}
-    </AutoSizer>
-  );
-
-  return (
-    <div className="ImportPanel ChannelPanel">
-      <ImportPanelHeader onClosePanel={onClosePanel}>
-        {`${importingChannelTitle}'s Playlists`}
-      </ImportPanelHeader>
-      <div className="MediaList ImportPanel-body">
-        {body}
+          })}
+        </div>
       </div>
     </div>
   );
