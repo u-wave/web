@@ -30,8 +30,8 @@ function YouTubePlayerEmbed({
       showRelatedVideos={false}
       showInfo={false}
       annotations={false}
-      startSeconds={(seek || 0) + (media.start || 0)}
-      endSeconds={media.end || media.duration}
+      startSeconds={(seek ?? 0) + (media.start ?? 0)}
+      endSeconds={media.end ?? media.duration}
       onPause={handlePause}
       onPlaying={onPlay}
     />

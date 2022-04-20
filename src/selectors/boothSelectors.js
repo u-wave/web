@@ -13,7 +13,7 @@ const baseSelector = (state) => state.booth;
 
 export const historyIDSelector = createSelector(baseSelector, (booth) => booth.historyID);
 export const mediaSelector = createSelector(baseSelector, (booth) => booth.media);
-export const startTimeSelector = createSelector(baseSelector, (booth) => booth.startTime || 0);
+export const startTimeSelector = createSelector(baseSelector, (booth) => booth.startTime ?? 0);
 
 export const mediaDurationSelector = createSelector(
   mediaSelector,

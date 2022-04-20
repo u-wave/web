@@ -51,7 +51,7 @@ function PlaylistsMenu({
             <ListItemText disableTypography className="AddToPlaylistMenu-playlistName">
               <Typography noWrap variant="subtitle1">{playlist.name}</Typography>
             </ListItemText>
-            <ListItemText className="AddToPlaylistMenu-smallIcon" primary={String(playlist.size || 0)} />
+            <ListItemText className="AddToPlaylistMenu-smallIcon" primary={String(playlist.size ?? 0)} />
           </MenuItem>
         ))}
       </MenuList>

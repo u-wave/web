@@ -13,7 +13,7 @@ const UserRow = ({
 }) => (
   <ListItem>
     <ListItemAvatar>
-      <Avatar className="Avatar" src={user.avatar || `https://sigil.u-wave.net/${user._id}`} />
+      <Avatar className="Avatar" src={user.avatar ?? `https://sigil.u-wave.net/${user._id}`} />
     </ListItemAvatar>
     <ListItemText>
       <Username user={user} />

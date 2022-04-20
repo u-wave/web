@@ -26,7 +26,7 @@ function MediaRowBase({
   const selected = selection.isSelected(media);
 
   const localRef = useRef();
-  const ref = containerRef || localRef;
+  const ref = containerRef ?? localRef;
 
   const [, drag, connectDragPreview] = useDrag({
     type: dragType,
