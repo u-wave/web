@@ -159,7 +159,6 @@ function BaseMediaList({
             index={index}
             media={media[index]}
             selected={selected}
-            selection={selection.get()}
             onClick={(event) => selectItem(index, event)}
           />
         );
