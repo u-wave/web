@@ -28,7 +28,7 @@ function BanRow({ ban, onUnbanUser }) {
         {ms(ban.duration, { long: true })}
       </TableCell>
       <TableCell>
-        {ban.reason || (
+        {ban.reason ?? (
           <em>{t('admin.bans.noReason')}</em>
         )}
       </TableCell>

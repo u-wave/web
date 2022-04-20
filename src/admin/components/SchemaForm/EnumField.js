@@ -14,7 +14,7 @@ function EnumField({
       <Select
         value={value}
         disabled={schema.readOnly}
-        onChange={(event) => onChange(event.target.value || undefined)}
+        onChange={(event) => onChange(event.target.value ?? undefined)}
       >
         {schema.enum.map((possibleValue) => (
           <MenuItem key={possibleValue} value={possibleValue}>

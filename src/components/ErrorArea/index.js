@@ -8,7 +8,7 @@ function ErrorArea({ error, onDismiss }) {
       <Snackbar
         ContentProps={{ className: 'ErrorArea-snackbar' }}
         open={!!error}
-        message={error || ''}
+        message={error ?? ''}
         onClose={onDismiss}
       />
     </div>

@@ -43,7 +43,7 @@ export const isMutedSelector = createSelector(
 export const languageSelector = createSelector(
   settingsBaseSelector,
   defaultLanguageSelector,
-  (settings, defaultLanguage) => settings.language || defaultLanguage,
+  (settings, defaultLanguage) => settings.language ?? defaultLanguage,
 );
 
 export const videoSizeSelector = createSelector(
