@@ -1,11 +1,8 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FixedSizeList } from 'react-window';
-import InfiniteLoader from 'react-window-infinite-loader';
-import AutoSizer from 'react-virtualized-auto-sizer';
+import { useVirtual } from 'react-virtual';
 import itemSelection from 'item-selection/immutable';
-import useDirection from '../../hooks/useDirection';
 import LoadingRow from './LoadingRow';
 
 const {
@@ -33,21 +30,25 @@ function didMediaChange(prev, next) {
   return prev.some((item, i) => item && next[i] && item._id !== next[i]._id);
 }
 
+function estimateSize() {
+  return 56;
+}
+
 function BaseMediaList({
   className,
   media,
   listComponent: ListComponent,
-  rowComponent,
+  rowComponent: RowComponent,
   rowProps = {},
   contextProps,
   onRequestPage,
   // The `size` property is only necessary for lazy loading.
-  size = null,
+  size = media.length,
 }) {
+  const parentRef = useRef();
   const lastMediaRef = useRef(media);
   const [selection, setSelection] = useState(() => itemSelection(media));
   const inFlightPageRequests = useRef({});
-  const direction = useDirection();
 
   const context = useMemo(() => ({
     media,
@@ -87,56 +88,17 @@ function BaseMediaList({
     }
   }, [selection]);
 
-  const renderRow = useCallback(({ index, style }) => {
-    const selected = selection.isSelectedIndex(index);
-    if (!media[index]) {
-      return (
-        <LoadingRow
-          className="MediaList-row"
-          style={style}
-          selected={selected}
-        />
-      );
-    }
+  // Potentially interesting to explore is to virtualize entire PAGES at a time.
+  // Then we render in batches of 50, which should be acceptable, and don't
+  // rerender as frequently as now.
+  const { virtualItems, totalSize } = useVirtual({
+    size,
+    parentRef,
+    estimateSize,
+    oversan: 6,
+  });
 
-    // Rename it here instead of in the parameter list,
-    // else the react-hooks/exhaustive-deps lint rule does not see
-    // that `RowComponent` is used in this effect.
-    const RowComponent = rowComponent;
-    return (
-      <RowComponent
-        {...rowProps}
-        style={style}
-        className="MediaList-row"
-        index={index}
-        media={media[index]}
-        selected={selected}
-        selection={selection.get()}
-        onClick={(event) => selectItem(index, event)}
-      />
-    );
-  }, [selection, media, rowComponent, rowProps, selectItem]);
-
-  const mediaLength = media.length;
-  const innerList = ({ height, onItemsRendered, ref }) => (
-    <FixedSizeList
-      itemCount={size ?? mediaLength}
-      itemSize={56}
-      itemKey={itemKey}
-      height={height}
-      onItemsRendered={onItemsRendered}
-      ref={ref}
-      width="100%"
-      direction={direction}
-      rerenderOnUpdate={selection}
-    >
-      {renderRow}
-    </FixedSizeList>
-  );
-
-  // This is not used as a real React component. TODO(goto-bus-stop): should it be?
-  // eslint-disable-next-line react/prop-types, react/no-unstable-nested-components
-  const lazyLoading = (makeList) => ({ height }) => {
+  useEffect(() => {
     const isItemLoaded = (index) => media[index] != null;
     const loadMoreItems = (start) => {
       const page = Math.floor(start / 50);
@@ -154,48 +116,54 @@ function BaseMediaList({
       });
     };
 
-    const inner = ({ onItemsRendered, ref }) => makeList({ onItemsRendered, ref, height });
-    return (
-      <InfiniteLoader
-        isItemLoaded={isItemLoaded}
-        itemCount={size ?? mediaLength}
-        loadMoreItems={loadMoreItems}
-      >
-        {inner}
-      </InfiniteLoader>
-    );
-  };
+    const unloadedItem = virtualItems.find(({ index }) => !isItemLoaded(index));
+    if (unloadedItem) {
+      loadMoreItems(unloadedItem.index);
+    }
+  }, [virtualItems, media, onRequestPage]);
 
-  // This is not used as a real React component. TODO(goto-bus-stop): should it be?
-  // eslint-disable-next-line react/prop-types, react/no-unstable-nested-components
-  const customWrapper = (makeList) => (props) => (
-    <ListComponent>
-      {makeList(props)}
+  const list = (
+    <ListComponent style={{ height: `${totalSize}px`, width: '100%', position: 'relative' }}>
+      {virtualItems.map(({ index, start, size: height }) => {
+        const style = {
+          position: 'absolute',
+          top: 0,
+          height,
+          transform: `translateY(${start}px)`,
+        };
+        const selected = selection.isSelectedIndex(index);
+        if (!media[index]) {
+          return (
+            <LoadingRow
+              key={itemKey(index)}
+              className="MediaList-row"
+              style={style}
+              selected={selected}
+            />
+          );
+        }
+
+        return (
+          <RowComponent
+            {...rowProps}
+            key={itemKey(index)}
+            style={style}
+            className="MediaList-row"
+            index={index}
+            media={media[index]}
+            selected={selected}
+            selection={selection.get()}
+            onClick={(event) => selectItem(index, event)}
+          />
+        );
+      })}
     </ListComponent>
   );
 
-  // This is not used as a real React component. TODO(goto-bus-stop): should it be?
-  // eslint-disable-next-line react/prop-types, react/no-unstable-nested-components
-  const autoSizing = (makeList) => () => {
-    const inner = ({ height }) => makeList({ height });
-    return (
-      <AutoSizer disableWidth>
-        {inner}
-      </AutoSizer>
-    );
-  };
-
-  let listRenderer = innerList;
-  if (onRequestPage) {
-    listRenderer = lazyLoading(listRenderer);
-  }
-  listRenderer = customWrapper(listRenderer);
-  listRenderer = autoSizing(listRenderer);
-
   return (
     <MediaListContext.Provider value={context}>
-      <div className={cx('MediaList', className)}>
-        {listRenderer()}
+      <div className={cx('MediaList', className)} ref={parentRef}>
+        {list}
       </div>
     </MediaListContext.Provider>
   );

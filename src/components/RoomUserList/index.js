@@ -28,7 +28,6 @@ function RoomUserList({ className, users, guests }) {
     parentRef,
     estimateSize,
     overscan: 12, // not that expensive to render
-    initialRect: { width: 0, height: window.innerHeight - 56 },
   });
 
   return (
