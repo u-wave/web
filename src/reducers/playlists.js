@@ -90,14 +90,14 @@ function updatePlaylistItems(state, playlistID, modify) {
     if (state.selectedPlaylistID === playlistID && nextFilter) {
       nextFilter = {
         ...nextFilter,
-        items: modify(nextFilter.items || [], playlist),
+        items: modify(nextFilter.items ?? [], playlist),
       };
     }
     return {
       ...state,
       playlistItems: {
         ...state.playlistItems,
-        [playlistID]: modify(media || [], playlist),
+        [playlistID]: modify(media ?? [], playlist),
       },
       currentFilter: nextFilter,
     };
@@ -215,7 +215,7 @@ export default function reduce(state = initialState, action = {}) {
         state,
         payload.playlistID,
         (items, playlist) => fill(Array(playlist.size), null)
-          .map((item, i) => items[i] || item),
+          .map((item, i) => items[i] ?? item),
       );
     }
     case LOAD_PLAYLIST_COMPLETE:

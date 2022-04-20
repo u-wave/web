@@ -104,7 +104,7 @@ export function filterPlaylistItemsComplete(playlistID, media, pagination) {
 
 export function loadFilteredPlaylistItems(playlistID, page = 0) {
   return (dispatch, getState) => {
-    const filter = playlistItemFilterSelector(getState()) || '';
+    const filter = playlistItemFilterSelector(getState()) ?? '';
     return dispatch(get(`/playlists/${playlistID}/media`, {
       qs: { filter, page, limit: MEDIA_PAGE_SIZE },
       onStart: () => filterPlaylistItemsStart(playlistID, page, filter),

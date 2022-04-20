@@ -120,7 +120,7 @@ function BaseMediaList({
   const mediaLength = media.length;
   const innerList = ({ height, onItemsRendered, ref }) => (
     <FixedSizeList
-      itemCount={size || mediaLength}
+      itemCount={size ?? mediaLength}
       itemSize={56}
       itemKey={itemKey}
       height={height}
@@ -158,7 +158,7 @@ function BaseMediaList({
     return (
       <InfiniteLoader
         isItemLoaded={isItemLoaded}
-        itemCount={size || mediaLength}
+        itemCount={size ?? mediaLength}
         loadMoreItems={loadMoreItems}
       >
         {inner}

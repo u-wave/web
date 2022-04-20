@@ -16,7 +16,7 @@ function RoleColor({
     : colors[roles.find((r) => colors[r])];
 
   const style = {
-    color: roleColor || colors.default,
+    color: roleColor ?? colors.default,
   };
 
   const Component = component;
