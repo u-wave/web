@@ -140,7 +140,6 @@
     "mini-css-extract-plugin": "^2.1.0",
     "minimist": "^1.2.5",
     "postcss": "^8.4.4",
-    "postcss-color-mod-function": "^3.0.3",
     "postcss-loader": "^6.2.1",
     "postcss-preset-env": "^7.4.1",
     "recaptcha-test-keys": "^1.0.0",
