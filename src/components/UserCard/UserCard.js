@@ -1,19 +1,44 @@
 import React from 'react';
 import cx from 'clsx';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import Typography from '@mui/material/Typography';
 import Card from '@mui/material/Card/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import useIntl from '../../hooks/useIntl';
+import useHasRole from '../../hooks/useHasRole';
+import { djSelector } from '../../selectors/boothSelectors';
+import { waitlistUsersSelector } from '../../selectors/waitlistSelectors';
 import Avatar from '../Avatar';
 import UserRoles from './UserRoles';
+import AddToWaitlistButton from './AddToWaitlistButton';
+import RemoveFromWaitlistButton from './RemoveFromWaitlistButton';
+import BanButton from './BanButton';
+
+const allWaitlistUsersSelector = (state) => [
+  djSelector(state),
+  ...waitlistUsersSelector(state),
+].filter(Boolean);
 
 function UserCard({ className, user }) {
   const { dateTimeFormatter } = useIntl();
+  const waitlistUsers = useSelector(allWaitlistUsersSelector);
+  const canAddToWaitlist = useHasRole('waitlist.add');
+  const canRemoveFromWaitlist = useHasRole('waitlist.remove');
+  const isInWaitlist = waitlistUsers.includes(user);
+  const canBan = useHasRole('users.bans.add') && !user.roles.includes('users.bans.add');
 
   const joinDate = new Date(user.createdAt);
+
+  const actions = (
+    <>
+      {!isInWaitlist && canAddToWaitlist ? <AddToWaitlistButton user={user} /> : null}
+      {isInWaitlist && canRemoveFromWaitlist ? <RemoveFromWaitlistButton user={user} /> : null}
+      {canBan ? <BanButton user={user} /> : null}
+    </>
+  );
 
   return (
     <Card className={cx('UserCard', className)}>
@@ -29,7 +54,7 @@ function UserCard({ className, user }) {
         </Typography>
       </CardContent>
       <CardActions className="UserCard-actions">
-        {/* Currently empty */}
+        {actions}
       </CardActions>
     </Card>
   );
