@@ -99,6 +99,10 @@ function BaseMediaList({
   });
 
   useEffect(() => {
+    if (!onRequestPage) {
+      return;
+    }
+
     const isItemLoaded = (index) => media[index] != null;
     const loadMoreItems = (start) => {
       const page = Math.floor(start / 50);
@@ -116,6 +120,9 @@ function BaseMediaList({
       });
     };
 
+    // This ends up only loading one page at a time, while we might have multiple pages visible.
+    // For now this should be OK. Once the first page loads, we rerender, so this code is ran
+    // again and the second page will be loaded at that point.
     const unloadedItem = virtualItems.find(({ index }) => !isItemLoaded(index));
     if (unloadedItem) {
       loadMoreItems(unloadedItem.index);
