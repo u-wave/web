@@ -6,3 +6,8 @@
 .MediaList {
   overflow-y: auto;
 }
+
+.MediaList-row {
+  position: absolute;
+  top: 0;
+}

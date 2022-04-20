@@ -41,13 +41,8 @@ function WaitList({
       ref={parentRef}
     >
       <div style={{ height: `${totalSize}px`, width: '100%', position: 'relative' }}>
-        {virtualItems.map(({ index, start, size }) => {
-          const style = {
-            position: 'absolute',
-            top: 0,
-            height: size,
-            transform: `translateY(${start}px)`,
-          };
+        {virtualItems.map(({ index, start }) => {
+          const style = { transform: `translateY(${start}px)` };
 
           return (
             <Row

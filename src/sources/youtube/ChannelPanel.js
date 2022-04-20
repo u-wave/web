@@ -1,3 +1,4 @@
+import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useVirtual } from 'react-virtual';
@@ -34,18 +35,13 @@ function ChannelPanel({
       </ImportPanelHeader>
       <div className="MediaList ImportPanel-body">
         <div style={{ height: `${totalSize}px`, width: '100%', position: 'relative' }}>
-          {virtualItems.map(({ index, start, size }) => {
+          {virtualItems.map(({ index, start }) => {
             const playlist = importablePlaylists[index];
-            const style = {
-              position: 'absolute',
-              top: 0,
-              height: size,
-              transform: `translateY(${start}px)`,
-            };
+            const style = { transform: `translateY(${start}px)` };
             return (
               <PlaylistRow
                 key={playlist.sourceID}
-                className={index % 2 === 0 ? 'MediaListRow--alternate' : ''}
+                className={cx('MediaList-row', index % 2 === 0 ? 'MediaListRow--alternate' : null)}
                 style={style}
                 playlist={playlist}
                 onImport={() => onImportPlaylist(playlist.sourceID, playlist.name)}

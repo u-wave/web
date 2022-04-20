@@ -33,17 +33,12 @@ function RoomUserList({ className, users, guests }) {
   return (
     <div className={cx('UserList', 'UserList--online', className)} ref={parentRef}>
       <div style={{ height: `${totalSize}px`, width: '100%', position: 'relative' }}>
-        {virtualItems.map(({ index, start, size }) => {
+        {virtualItems.map(({ index, start }) => {
           const rowClass = cx(
             'UserList-row',
             (index % 2 === 0) && 'UserList-row--alternate',
           );
-          const style = {
-            position: 'absolute',
-            top: 0,
-            height: size,
-            transform: `translateY(${start}px)`,
-          };
+          const style = { transform: `translateY(${start}px)` };
           // The very last row is the guests row
           if (index === users.length) {
             return (
