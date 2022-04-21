@@ -90,6 +90,7 @@ html:not([dir="rtl"]) .u-rtl-only {
 
 .AppRow--top {
   height: var(--header-height);
+  flex-shrink: 0;
 }
 
 .AppRow--middle {

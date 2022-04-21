@@ -53,7 +53,7 @@ function SearchResultRow({
 
 SearchResultRow.propTypes = {
   className: PropTypes.string,
-  style: PropTypes.object, // from react-window
+  style: PropTypes.object, // from virtual list positioning
   media: PropTypes.object,
   onClick: PropTypes.func,
 };

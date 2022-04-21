@@ -14,7 +14,7 @@
   padding: 0 15px;
   height: var(--media-row-height);
   line-height: var(--media-row-height);
-  position: relative;
+  width: 100%;
   background: var(--media-list-color);
   border-bottom: 1px solid var(--divider-color);
 

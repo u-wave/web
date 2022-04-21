@@ -1,11 +1,17 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FixedSizeList } from 'react-window';
-import AutoSizer from 'react-virtualized-auto-sizer';
-import useDirection from '../../hooks/useDirection';
+import { useVirtual } from 'react-virtual';
 import ModRow from './ModRow';
 import SimpleRow from './SimpleRow';
+
+const {
+  useRef,
+} = React;
+
+function estimateSize() {
+  return 40;
+}
 
 function WaitList({
   className,
@@ -14,34 +20,15 @@ function WaitList({
   onRemoveUser,
   canMoveUsers,
 }) {
-  const direction = useDirection();
   const Row = canMoveUsers ? ModRow : SimpleRow;
+  const parentRef = useRef();
 
-  // these are not components
-  /* eslint-disable react/prop-types */
-  const renderRow = ({ index, style }) => (
-    <Row
-      key={users[index]._id}
-      className={cx('UserList-row', index % 2 === 0 && 'UserList-row--alternate')}
-      style={style}
-      position={index}
-      user={users[index]}
-      onMoveUser={(position) => onMoveUser(users[index], position)}
-      onRemoveUser={() => onRemoveUser(users[index])}
-    />
-  );
-
-  const renderList = ({ height }) => (
-    <FixedSizeList
-      height={height}
-      itemCount={users.length}
-      itemSize={40}
-      direction={direction}
-    >
-      {renderRow}
-    </FixedSizeList>
-  );
-  /* eslint-enable react/prop-types */
+  const { virtualItems, totalSize } = useVirtual({
+    size: users.length,
+    parentRef,
+    estimateSize,
+    overscan: 12, // not that expensive to render
+  });
 
   return (
     <div
@@ -51,10 +38,25 @@ function WaitList({
         'WaitList',
         className,
       )}
+      ref={parentRef}
     >
-      <AutoSizer disableWidth>
-        {renderList}
-      </AutoSizer>
+      <div style={{ height: `${totalSize}px`, width: '100%', position: 'relative' }}>
+        {virtualItems.map(({ index, start }) => {
+          const style = { transform: `translateY(${start}px)` };
+
+          return (
+            <Row
+              key={users[index]._id}
+              className={cx('UserList-row', index % 2 === 0 && 'UserList-row--alternate')}
+              style={style}
+              position={index}
+              user={users[index]}
+              onMoveUser={(position) => onMoveUser(users[index], position)}
+              onRemoveUser={() => onRemoveUser(users[index])}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 }
