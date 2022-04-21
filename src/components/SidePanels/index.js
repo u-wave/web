@@ -20,7 +20,7 @@ const subHeaderStyle = {
 };
 
 const tabWrapperClasses = {
-  root: 'AppRow--top SidePanel-tabs',
+  root: 'SidePanel-tabs',
   indicator: 'SidePanel-indicator',
 };
 
@@ -63,7 +63,7 @@ function SidePanels() {
   const listenerCount = useSelector(listenerCountSelector);
 
   return (
-    <>
+    <div className="SidePanels">
       <Tabs
         value={selected}
         onChange={handleChange}
@@ -92,7 +92,7 @@ function SidePanels() {
       <PanelContainer selected={selected === 2}>
         <WaitList />
       </PanelContainer>
-    </>
+    </div>
   );
 }
 

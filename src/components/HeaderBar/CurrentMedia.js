@@ -1,18 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate } from '@u-wave/react-translate';
+import { useTranslator } from '@u-wave/react-translate';
 import SongTitle from '../SongTitle';
 
-const CurrentMedia = ({ t, className, media }) => (
-  <div className={className}>
-    {media
-      ? <SongTitle artist={media.artist} title={media.title} />
-      : t('booth.empty')}
-  </div>
-);
+function CurrentMedia({ className, media }) {
+  const { t } = useTranslator();
+
+  return (
+    <div className={className}>
+      {media
+        ? <SongTitle artist={media.artist} title={media.title} />
+        : t('booth.empty')}
+    </div>
+  );
+}
 
 CurrentMedia.propTypes = {
-  t: PropTypes.func.isRequired,
   className: PropTypes.string,
   media: PropTypes.shape({
     artist: PropTypes.string.isRequired,
@@ -20,4 +23,4 @@ CurrentMedia.propTypes = {
   }),
 };
 
-export default translate()(CurrentMedia);
+export default CurrentMedia;

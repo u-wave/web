@@ -104,7 +104,7 @@ class SoundCloudPlayer extends React.Component {
       // seeking.
       // http://stackoverflow.com/a/34970444
       const doSeek = () => {
-        this.audio.currentTime = seek + (media.start || 0);
+        this.audio.currentTime = seek + (media.start ?? 0);
         this.audio.volume = volume / 100;
         this.audio.removeEventListener('canplaythrough', doSeek, false);
       };

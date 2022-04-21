@@ -3,9 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { DndContext, closestCenter } from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy, arrayMove } from '@dnd-kit/sortable';
-import { FixedSizeList } from 'react-window';
-import AutoSizer from 'react-virtualized-auto-sizer';
-import useDirection from '../../hooks/useDirection';
+import { useVirtual } from 'react-virtual';
 import ModRow from './ModRow';
 import SimpleRow from './SimpleRow';
 
@@ -13,8 +11,13 @@ const {
   useCallback,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } = React;
+
+function estimateSize() {
+  return 40;
+}
 
 function WaitList({
   className,
@@ -23,7 +26,8 @@ function WaitList({
   onRemoveUser,
   canMoveUsers,
 }) {
-  const direction = useDirection();
+  const Row = canMoveUsers ? ModRow : SimpleRow;
+  const parentRef = useRef();
   const [activeID, setActiveID] = useState(null);
   const [overID, setOverID] = useState(null);
   const userIDs = useMemo(() => users.map((user) => user._id), [users]);
@@ -34,7 +38,6 @@ function WaitList({
     return arrayMove(users, activeIndex, overIndex);
   }, [activeID, overID, users, userIDs]);
   const [optimisticUsers, setOptimisticUsers] = useState(users);
-  const Row = canMoveUsers ? ModRow : SimpleRow;
 
   // `optimisticUsers` contains changes from the most recent drag operation. If
   // we get a new `users` array, we assume it has those changes applied, so we
@@ -46,30 +49,12 @@ function WaitList({
   // The `optimisticUsers` and `users` use below is a bit wonky. It's the result of
   // some trial and error. Maybe it can be improved in the future…
 
-  // These are not components, so they do not have prop types.
-  /* eslint-disable react/prop-types */
-  const renderRow = ({ index, style }) => (
-    <Row
-      key={optimisticUsers[index]._id}
-      className={cx('UserList-row', index % 2 === 0 && 'UserList-row--alternate')}
-      style={style}
-      position={sortedUsers.indexOf(users[index])}
-      user={optimisticUsers[index]}
-      onRemoveUser={() => onRemoveUser(optimisticUsers[index])}
-    />
-  );
-
-  const renderList = ({ height }) => (
-    <FixedSizeList
-      height={height}
-      itemCount={optimisticUsers.length}
-      itemSize={40}
-      direction={direction}
-    >
-      {renderRow}
-    </FixedSizeList>
-  );
-  /* eslint-enable react/prop-types */
+  const { virtualItems, totalSize } = useVirtual({
+    size: optimisticUsers.length,
+    parentRef,
+    estimateSize,
+    overscan: 12, // not that expensive to render
+  });
 
   const list = (
     <div
@@ -79,10 +64,25 @@ function WaitList({
         'WaitList',
         className,
       )}
+      ref={parentRef}
     >
-      <AutoSizer disableWidth>
-        {renderList}
-      </AutoSizer>
+      <div style={{ height: `${totalSize}px`, width: '100%', position: 'relative' }}>
+        {virtualItems.map(({ index, start }) => {
+          const style = { transform: `translateY(${start}px)` };
+
+          return (
+            <Row
+              key={optimisticUsers[index]._id}
+              className={cx('UserList-row', index % 2 === 0 && 'UserList-row--alternate')}
+              style={style}
+              position={sortedUsers.indexOf(users[index])}
+              user={optimisticUsers[index]}
+              onMoveUser={(position) => onMoveUser(optimisticUsers[index], position)}
+              onRemoveUser={() => onRemoveUser(optimisticUsers[index])}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 

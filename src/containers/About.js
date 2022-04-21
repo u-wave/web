@@ -4,7 +4,7 @@ import Overlay from '../components/Overlay';
 import About from '../components/About';
 
 function renderAboutPage(props, uwave) {
-  const component = uwave.getAboutPageComponent() || null;
+  const component = uwave.getAboutPageComponent() ?? null;
 
   return (
     <About

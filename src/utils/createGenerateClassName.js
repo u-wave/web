@@ -7,7 +7,7 @@ export default function createGenerateClassName() {
   }
 
   function generateClassName(rule, styleSheet) {
-    const componentName = styleSheet.options.name || getNextUnknownName();
+    const componentName = styleSheet.options.name ?? getNextUnknownName();
     if (rule.key === 'root') {
       return componentName;
     }

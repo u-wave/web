@@ -4,6 +4,7 @@
   line-height: 24px;
   margin-bottom: 16px;
   color: var(--text-color);
+  text-transform: none;
 
   &:visited {
     color: var(--text-color);

@@ -1,11 +1,11 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import mapValues from 'just-map-values';
 import parseChatMarkup from 'u-wave-parse-chat-markup';
-
 import { getAvailableGroupMentions } from '../utils/chatMentions';
 import {
   availableEmojiNamesSelector,
   availableEmojiImagesSelector,
+  customEmojiNamesSelector,
 } from './configSelectors';
 import {
   usersSelector,
@@ -54,6 +54,7 @@ export const messagesSelector = createSelector(
 export const markupCompilerOptionsSelector = createStructuredSelector({
   availableEmoji: availableEmojiNamesSelector,
   emojiImages: availableEmojiImagesSelector,
+  customEmojiNames: customEmojiNamesSelector,
 });
 
 const mutesSelector = createSelector(baseSelector, (chat) => chat.mutedUsers);

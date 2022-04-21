@@ -25,7 +25,7 @@ const MediaRow = ({ media, style }) => (
 );
 
 MediaRow.propTypes = {
-  style: PropTypes.object, // from react-window
+  style: PropTypes.object, // from virtual list positioning
   media: PropTypes.object,
 };
 

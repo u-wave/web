@@ -90,7 +90,6 @@ module.exports = (api, envOverride) => {
   if (callerIsNode) {
     preset.plugins.push(
       '@babel/plugin-transform-modules-commonjs',
-      'module:babel-plugin-dynamic-import-node',
     );
   }
 

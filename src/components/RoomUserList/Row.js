@@ -11,7 +11,7 @@ import Votes from './Votes';
 
 const { useCallback } = React;
 
-function RoomUserRow({ className, user }) {
+function RoomUserRow({ className, user, style }) {
   const userCard = useUserCard(user);
   const onOpenCard = useCallback((event) => {
     event.preventDefault();
@@ -25,6 +25,7 @@ function RoomUserRow({ className, user }) {
       {userCard.card}
       <ListItemButton
         className={cx('UserRow', 'UserRow--cardable', className)}
+        style={style}
         onClick={onOpenCard}
         ref={userCard.refAnchor}
       >
@@ -43,6 +44,7 @@ function RoomUserRow({ className, user }) {
 RoomUserRow.propTypes = {
   className: PropTypes.string,
   user: PropTypes.object.isRequired,
+  style: PropTypes.object,
 };
 
 export default RoomUserRow;

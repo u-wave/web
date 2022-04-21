@@ -48,7 +48,7 @@ export function updatedWaitlist(waitlist) {
 // into two different actions.
 export function joinWaitlist(otherUser) {
   return (dispatch, getState) => {
-    const user = otherUser || currentUserSelector(getState());
+    const user = otherUser ?? currentUserSelector(getState());
 
     return dispatch(post('/waitlist', { userID: user._id }, {
       onStart: () => ({ type: DO_JOIN_START }),
@@ -74,7 +74,7 @@ export function joinedWaitlist({ userID, waitlist }) {
 
 export function leaveWaitlist(otherUser) {
   return (dispatch, getState) => {
-    const user = otherUser || currentUserSelector(getState());
+    const user = otherUser ?? currentUserSelector(getState());
 
     return dispatch(del(`/waitlist/${user._id}`, {}, {
       onStart: () => ({ type: DO_LEAVE_START }),

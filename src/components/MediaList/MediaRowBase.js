@@ -21,7 +21,7 @@ function MediaRowBase({
   const selected = selection.isSelected(media);
 
   const localRef = useRef();
-  const ref = containerRef || localRef;
+  const ref = containerRef ?? localRef;
 
   const handleKeyPress = useCallback((event) => {
     if (event.code === 'Space') {
@@ -48,7 +48,7 @@ function MediaRowBase({
 
 MediaRowBase.propTypes = {
   className: PropTypes.string,
-  style: PropTypes.object, // from react-window
+  style: PropTypes.object, // from virtual list positioning
   dragType: PropTypes.string,
   media: PropTypes.object.isRequired,
   onClick: PropTypes.func,

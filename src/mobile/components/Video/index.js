@@ -32,7 +32,7 @@ class Video extends React.Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    const { sourceType } = nextProps.media || {};
+    const sourceType = nextProps.media?.sourceType;
     // Switching to a different source type may require an autoplay tap again.
     // Disable the vote buttons until the media source reports playback started.
     if (sourceType !== prevState.sourceType) {

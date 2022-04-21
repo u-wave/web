@@ -14,7 +14,7 @@ function StringField({
         type={schema.writeOnly ? 'password' : 'text'}
         value={value}
         disabled={schema.readOnly}
-        onChange={(event) => onChange(event.target.value || undefined)}
+        onChange={(event) => onChange(event.target.value ?? undefined)}
       />
       {schema.description && <FormHelperText>{schema.description}</FormHelperText>}
     </div>

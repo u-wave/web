@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import { parse as parseQS } from 'querystring';
@@ -9,9 +9,8 @@ import webApiRequest from '../redux/request';
 import readApplicationConfig from '../utils/readApplicationConfig';
 import * as reducers from './reducers';
 import { setResetKey } from './actions';
-import App from './containers/PasswordResetApp';
+import PasswordResetApp from './containers/PasswordResetApp';
 import english from '../../locale/en.yaml';
-
 import './app.css';
 
 const config = readApplicationConfig();
@@ -31,10 +30,9 @@ store.dispatch(setResetKey(key || qs.key));
 
 const translator = new Translator(english.uwave);
 
-ReactDOM.render(
-  (
-    <Provider store={store}>
-      <App translator={translator} />
-    </Provider>
-  ), document.querySelector('#app'),
-);
+const root = createRoot(document.querySelector('#app'));
+root.render((
+  <Provider store={store}>
+    <PasswordResetApp translator={translator} />
+  </Provider>
+));

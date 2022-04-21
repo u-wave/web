@@ -28,7 +28,7 @@ export const activePlaylistIDSelector = createSelector(
 const activeMediaSelector = createSelector(
   playlistItemsSelector,
   activePlaylistIDSelector,
-  (playlistItems, activePlaylist) => playlistItems[activePlaylist] || [],
+  (playlistItems, activePlaylist) => playlistItems[activePlaylist] ?? [],
 );
 
 function mergePlaylistItems(playlist, playlistItems) {
@@ -58,7 +58,7 @@ export const selectedPlaylistIDSelector = createSelector(
 const selectedMediaSelector = createSelector(
   playlistItemsSelector,
   selectedPlaylistIDSelector,
-  (playlistItems, selectedPlaylist) => playlistItems[selectedPlaylist] || [],
+  (playlistItems, selectedPlaylist) => playlistItems[selectedPlaylist] ?? [],
 );
 
 const filterSelector = createSelector(

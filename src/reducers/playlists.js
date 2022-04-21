@@ -90,14 +90,14 @@ function updatePlaylistItems(state, playlistID, modify) {
     if (state.selectedPlaylistID === playlistID && nextFilter) {
       nextFilter = {
         ...nextFilter,
-        items: modify(nextFilter.items || [], playlist),
+        items: modify(nextFilter.items ?? [], playlist),
       };
     }
     return {
       ...state,
       playlistItems: {
         ...state.playlistItems,
-        [playlistID]: modify(media || [], playlist),
+        [playlistID]: modify(media ?? [], playlist),
       },
       currentFilter: nextFilter,
     };
@@ -117,15 +117,8 @@ function setPlaylistLoading(state, id, loading = true) {
   }));
 }
 
-function fill(array, value) {
-  for (let i = 0, l = array.length; i < l; i += 1) {
-    array[i] = value; // eslint-disable-line no-param-reassign
-  }
-  return array;
-}
-
 function mergePlaylistPage(size, oldMedia, newMedia, { page, pageSize }) {
-  const media = fill(Array(size), null);
+  const media = Array(size).fill(null);
   oldMedia.forEach((item, i) => {
     media[i] = item;
   });
@@ -214,8 +207,8 @@ export default function reduce(state = initialState, action = {}) {
       return updatePlaylistItems(
         state,
         payload.playlistID,
-        (items, playlist) => fill(Array(playlist.size), null)
-          .map((item, i) => items[i] || item),
+        (items, playlist) => Array(playlist.size).fill(null)
+          .map((item, i) => items[i] ?? item),
       );
     }
     case LOAD_PLAYLIST_COMPLETE:

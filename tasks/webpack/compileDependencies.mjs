@@ -10,7 +10,6 @@ const es2015Deps = [
   /\/escape-string-regexp\//,
   /\/is-plain-obj\//,
   /\/min-indent\//,
-  /\/nanoid\//,
   /\/strip-indent\//,
   /\/@mui\/icons-material\/esm\//,
   /\/@mui\/system\/modern\//,

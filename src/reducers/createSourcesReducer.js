@@ -15,7 +15,7 @@ function reduceSources(state = initialState, action = undefined, sources = {}) {
 }
 
 export default function createSourcesReducer(options) {
-  const mediaSources = options.mediaSources || {};
+  const mediaSources = options.mediaSources ?? {};
   return function reducer(state, action) {
     return reduceSources(state, action, mediaSources);
   };

@@ -23,7 +23,7 @@ function blend(a, b, weight) {
     (w1 * aColor.values[0]) + (w2 * bColor.values[0]),
     (w1 * aColor.values[1]) + (w2 * bColor.values[1]),
     (w1 * aColor.values[2]) + (w2 * bColor.values[2]),
-    aColor.values[3] || 1,
+    aColor.values[3] ?? 1,
   ];
 
   return recomposeColor({ type: 'rgba', values });

@@ -8,6 +8,9 @@
 
 .UserList-row {
   background: var(--user-list-color);
+  height: 40px;
+  position: absolute;
+  top: 0;
 }
 
 .UserList-row--alternate {

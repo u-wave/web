@@ -72,6 +72,6 @@ export default class DialogCloseAnimation extends React.Component {
   render() {
     const { cachedChildren } = this.state;
 
-    return cachedChildren || null;
+    return cachedChildren;
   }
 }

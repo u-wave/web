@@ -1,10 +1,17 @@
+import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FixedSizeList } from 'react-window';
-import AutoSizer from 'react-virtualized-auto-sizer';
-import useDirection from '../../hooks/useDirection';
+import { useVirtual } from 'react-virtual';
 import ImportPanelHeader from '../../components/PlaylistManager/Import/ImportPanelHeader';
 import PlaylistRow from './PlaylistRow';
+
+const {
+  useRef,
+} = React;
+
+function estimateSize() {
+  return 56;
+}
 
 function ChannelPanel({
   importingChannelTitle,
@@ -12,33 +19,14 @@ function ChannelPanel({
   onImportPlaylist,
   onClosePanel,
 }) {
-  const direction = useDirection();
+  const parentRef = useRef();
 
-  const body = (
-    <AutoSizer disableWidth>
-      {({ height }) => (
-        <FixedSizeList
-          height={height}
-          itemCount={importablePlaylists.length}
-          itemSize={56}
-          direction={direction}
-        >
-          {({ index, style }) => {
-            const playlist = importablePlaylists[index];
-            return (
-              <PlaylistRow
-                key={playlist.sourceID}
-                className={index % 2 === 0 ? 'MediaListRow--alternate' : ''}
-                style={style}
-                playlist={playlist}
-                onImport={() => onImportPlaylist(playlist.sourceID, playlist.name)}
-              />
-            );
-          }}
-        </FixedSizeList>
-      )}
-    </AutoSizer>
-  );
+  const { virtualItems, totalSize } = useVirtual({
+    size: importablePlaylists.length,
+    parentRef,
+    estimateSize,
+    overscan: 6,
+  });
 
   return (
     <div className="ImportPanel ChannelPanel">
@@ -46,7 +34,21 @@ function ChannelPanel({
         {`${importingChannelTitle}'s Playlists`}
       </ImportPanelHeader>
       <div className="MediaList ImportPanel-body">
-        {body}
+        <div style={{ height: `${totalSize}px`, width: '100%', position: 'relative' }}>
+          {virtualItems.map(({ index, start }) => {
+            const playlist = importablePlaylists[index];
+            const style = { transform: `translateY(${start}px)` };
+            return (
+              <PlaylistRow
+                key={playlist.sourceID}
+                className={cx('MediaList-row', index % 2 === 0 ? 'MediaListRow--alternate' : null)}
+                style={style}
+                playlist={playlist}
+                onImport={() => onImportPlaylist(playlist.sourceID, playlist.name)}
+              />
+            );
+          })}
+        </div>
       </div>
     </div>
   );

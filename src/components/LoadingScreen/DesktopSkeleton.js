@@ -87,31 +87,33 @@ function DesktopSkeleton() {
         </div>
       </div>
       <div className="AppColumn AppColumn--right">
-        <Tabs
-          value={0}
-          variant="fullWidth"
-          classes={{
-            root: 'SidePanel-tabs',
-            indicator: 'SidePanel-indicator',
-          }}
-        >
-          <Tab classes={tabClasses} label={<Filler width={70} />} />
-          <Tab classes={tabClasses} label={<Filler width={70} />} />
-          <Tab classes={tabClasses} label={<Filler width={100} />} />
-        </Tabs>
+        <div className="SidePanels">
+          <Tabs
+            value={0}
+            variant="fullWidth"
+            classes={{
+              root: 'SidePanel-tabs',
+              indicator: 'SidePanel-indicator',
+            }}
+          >
+            <Tab classes={tabClasses} label={<Filler width={70} />} />
+            <Tab classes={tabClasses} label={<Filler width={70} />} />
+            <Tab classes={tabClasses} label={<Filler width={100} />} />
+          </Tabs>
 
-        <div className="SidePanel-panel is-selected">
-          <div className="ChatContainer">
-            <div className="ChatContainer-messages">
-              <div className="ChatMessage ChatMessage--motd">
-                <div className="ChatMessage-content">
-                  <Filler width={400} />
+          <div className="SidePanel-panel is-selected">
+            <div className="ChatContainer">
+              <div className="ChatContainer-messages">
+                <div className="ChatMessage ChatMessage--motd">
+                  <div className="ChatMessage-content">
+                    <Filler width={400} />
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="ChatContainer-input ChatInputWrapper">
-              <div className="ChatInput">
-                <input className="ChatInput-input" type="text" disabled />
+              <div className="ChatContainer-input ChatInputWrapper">
+                <div className="ChatInput">
+                  <input className="ChatInput-input" type="text" disabled />
+                </div>
               </div>
             </div>
           </div>

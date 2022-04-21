@@ -15,6 +15,7 @@ function DroppablePlaylistItemRow({
   className,
   style,
   media,
+  index,
   ...props
 }) {
   const droppableRef = useRef(null);
@@ -46,6 +47,7 @@ function DroppablePlaylistItemRow({
     <PlaylistItemRow
       className={cx(className, { 'is-dragging': isDragging })}
       style={draggableStyle}
+      index={index}
       media={media}
       containerRef={droppableRef}
       {...props}
@@ -57,7 +59,8 @@ function DroppablePlaylistItemRow({
 
 DroppablePlaylistItemRow.propTypes = {
   className: PropTypes.string,
-  style: PropTypes.object, // from react-window
+  style: PropTypes.object, // from virtual list positioning
+  index: PropTypes.number.isRequired,
   media: PropTypes.object.isRequired,
 };
 

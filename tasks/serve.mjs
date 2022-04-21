@@ -1,6 +1,5 @@
 import 'make-promises-safe';
 import { createRequire } from 'module';
-import emojione from 'u-wave-web-emojione';
 import recaptchaTestKeys from 'recaptcha-test-keys';
 import express from 'express';
 import { createProxyMiddleware } from 'http-proxy-middleware';
@@ -48,7 +47,6 @@ const socketUrl = Object.assign(new URL(serverUrl.href), { protocol: 'ws:' }).hr
 app.use(apiUrl, createProxyMiddleware({
   target: serverUrl.href,
 }));
-app.use('/assets/emoji/', emojione.middleware());
 
 if (watch) {
   const compiler = webpack(wpConfig);
@@ -61,7 +59,6 @@ if (watch) {
     webClient = createWebClient({
       apiUrl,
       socketUrl,
-      emoji: emojione.emoji,
       title: 'üWave (Development)',
       basePath: new URL('../npm/public/', import.meta.url).pathname,
       publicPath: '/',
@@ -86,7 +83,6 @@ if (watch) {
   const webClient = createWebClient({
     apiUrl,
     socketUrl,
-    emoji: emojione.emoji,
     basePath: new URL('../npm/public/', import.meta.url).pathname,
     recaptcha: { key: recaptchaTestKeys.sitekey },
   });
