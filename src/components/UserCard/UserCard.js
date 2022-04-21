@@ -11,6 +11,7 @@ import useIntl from '../../hooks/useIntl';
 import useHasRole from '../../hooks/useHasRole';
 import { djSelector } from '../../selectors/boothSelectors';
 import { waitlistUsersSelector } from '../../selectors/waitlistSelectors';
+import { userHasRoleSelector } from '../../selectors/userSelectors';
 import Avatar from '../Avatar';
 import UserRoles from './UserRoles';
 import AddToWaitlistButton from './AddToWaitlistButton';
@@ -25,10 +26,11 @@ const allWaitlistUsersSelector = (state) => [
 function UserCard({ className, user }) {
   const { dateTimeFormatter } = useIntl();
   const waitlistUsers = useSelector(allWaitlistUsersSelector);
+  const userHasRole = useSelector(userHasRoleSelector);
   const canAddToWaitlist = useHasRole('waitlist.add');
   const canRemoveFromWaitlist = useHasRole('waitlist.remove');
   const isInWaitlist = waitlistUsers.includes(user);
-  const canBan = useHasRole('users.bans.add') && !user.roles.includes('users.bans.add');
+  const canBan = useHasRole('users.bans.add') && !userHasRole(user)('users.bans.add');
 
   const joinDate = new Date(user.createdAt);
 
