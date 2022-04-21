@@ -139,7 +139,7 @@ function BaseMediaList({
   const list = (
     <ListComponent style={{ height: `${totalSize}px`, width: '100%', position: 'relative' }}>
       {virtualItems.map(({ index, start }) => {
-        const style = { transform: `translateY(${start}px)` };
+        const style = { top: start };
         const selected = selection.isSelectedIndex(index);
         if (!media[index]) {
           return (
