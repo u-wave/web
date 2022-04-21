@@ -1,4 +1,5 @@
 import omit from 'just-omit';
+import { v4 as randomUUID } from 'uuid';
 import {
   INIT_STATE,
   RECEIVE_MOTD,
@@ -55,7 +56,7 @@ export default function reduce(state = initialState, action = undefined) {
       };
     case SEND_MESSAGE: {
       const inFlightMessage = {
-        _id: `inflight${Date.now()}`,
+        _id: randomUUID(),
         type: 'chat',
         user: payload.user,
         userID: payload.user._id,
@@ -88,7 +89,7 @@ export default function reduce(state = initialState, action = undefined) {
     case LOG: {
       const logMessage = {
         type: 'log',
-        _id: `log-${payload._id}`,
+        _id: payload._id,
         text: payload.text,
       };
       return {
