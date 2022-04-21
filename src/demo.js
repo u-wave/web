@@ -7,8 +7,8 @@ import soundCloudSource from './sources/soundcloud';
 
 // eslint-disable-next-line compat/compat
 const url = new URL(window.location.href);
-const apiUrl = url.searchParams.get('apiUrl') || 'https://u-wave-demo.fly.dev/api';
-const socketUrl = url.searchParams.get('socketUrl') || 'wss://u-wave-demo.fly.dev';
+const apiUrl = url.searchParams.get('apiUrl') ?? 'https://u-wave-demo.fly.dev/api';
+const socketUrl = url.searchParams.get('socketUrl') ?? 'wss://u-wave-demo.fly.dev';
 
 const uw = new Uwave({
   apiUrl,

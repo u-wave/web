@@ -75,7 +75,7 @@ function HistoryRow({
 
 HistoryRow.propTypes = {
   className: PropTypes.string,
-  style: PropTypes.object, // for react-window
+  style: PropTypes.object, // for virtual list positioning
   media: PropTypes.object.isRequired,
   onClick: PropTypes.func.isRequired,
 };

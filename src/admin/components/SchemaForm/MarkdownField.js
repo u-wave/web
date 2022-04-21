@@ -15,7 +15,7 @@ function MarkdownField({
           className="TextField-input"
           value={value}
           disabled={schema.readOnly}
-          onChange={(event) => onChange(event.target.value || undefined)}
+          onChange={(event) => onChange(event.target.value ?? undefined)}
         />
       </div>
       {schema.description && <FormHelperText>{schema.description}</FormHelperText>}

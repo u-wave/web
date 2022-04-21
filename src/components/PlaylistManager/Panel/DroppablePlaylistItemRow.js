@@ -12,6 +12,7 @@ const {
 } = React;
 
 function DroppablePlaylistItemRow({
+  className,
   style,
   index,
   media,
@@ -48,7 +49,7 @@ function DroppablePlaylistItemRow({
   drop(droppableRef);
   return (
     <PlaylistItemRow
-      className={cx({
+      className={cx(className, {
         'PlaylistItemRow--dropAbove': isOver && insertingAbove,
         'PlaylistItemRow--dropBelow': isOver && !insertingAbove,
       })}
@@ -62,7 +63,8 @@ function DroppablePlaylistItemRow({
 }
 
 DroppablePlaylistItemRow.propTypes = {
-  style: PropTypes.object, // from react-window
+  className: PropTypes.string,
+  style: PropTypes.object, // from virtual list positioning
   index: PropTypes.number.isRequired,
   media: PropTypes.object.isRequired,
   onClick: PropTypes.func.isRequired,

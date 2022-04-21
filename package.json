@@ -73,9 +73,7 @@
     "react-redux": "^8.0.0",
     "react-refresh": "^0.12.0",
     "react-transition-group": "^4.4.2",
-    "react-virtualized-auto-sizer": "^1.0.2",
-    "react-window": "^1.8.5",
-    "react-window-infinite-loader": "^1.0.5",
+    "react-virtual": "^2.10.4",
     "redux": "^4.1.0",
     "redux-batched-subscribe": "^0.1.6",
     "redux-logger": "^3.0.0",
@@ -90,6 +88,7 @@
     "string.prototype.includes": "^2.0.0",
     "u-wave-parse-chat-markup": "^2.4.0",
     "url-polyfill": "^1.1.11",
+    "uuid": "^8.3.2",
     "whatwg-fetch": "^3.4.0"
   },
   "devDependencies": {
@@ -139,7 +138,6 @@
     "mini-css-extract-plugin": "^2.1.0",
     "minimist": "^1.2.5",
     "postcss": "^8.4.4",
-    "postcss-color-mod-function": "^3.0.3",
     "postcss-loader": "^6.2.1",
     "postcss-preset-env": "^7.4.1",
     "recaptcha-test-keys": "^1.0.0",

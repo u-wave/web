@@ -77,7 +77,7 @@ function PlaylistItemRow({
 
 PlaylistItemRow.propTypes = {
   className: PropTypes.string,
-  style: PropTypes.object, // from react-window
+  style: PropTypes.object, // from virtual list positioning
   index: PropTypes.number.isRequired,
   containerRef: PropTypes.any,
   media: PropTypes.object.isRequired,

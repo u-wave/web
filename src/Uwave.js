@@ -64,7 +64,7 @@ export default class Uwave {
   }
 
   source(sourcePlugin, opts = {}) {
-    const sourceFactory = sourcePlugin.default || sourcePlugin;
+    const sourceFactory = sourcePlugin.default ?? sourcePlugin;
 
     const type = typeof sourceFactory;
     if (type !== 'function' && type !== 'object') {

@@ -108,7 +108,7 @@ function EditMediaDialog({
   const artistInput = (
     <TextField
       className="EditMediaDialogGroup-field"
-      placeholder={t('dialogs.editMedia.artistLabel') || t('media.artist')}
+      placeholder={t('dialogs.editMedia.artistLabel') ?? t('media.artist')}
       value={artist}
       onChange={handleChangeArtist}
       icon={<ArtistIcon htmlColor="#9f9d9e" />}
@@ -126,7 +126,7 @@ function EditMediaDialog({
   const titleInput = (
     <TextField
       className="EditMediaDialogGroup-field"
-      placeholder={t('dialogs.editMedia.titleLabel') || t('media.title')}
+      placeholder={t('dialogs.editMedia.titleLabel') ?? t('media.title')}
       value={title}
       onChange={handleChangeTitle}
       icon={<TitleIcon htmlColor="#9f9d9e" />}
