@@ -19,7 +19,7 @@ describe('reducers/chat', () => {
 
   describe('action: chat/RECEIVE_MESSAGE', () => {
     const testMessage = {
-      _id: '643abc235-1449941591374',
+      _id: 'd88be1a7-38fa-4a58-b5fe-a34b54a279ad',
       userID: '643abc235',
       text: 'Message text',
       timestamp: 1449941591374,
@@ -73,7 +73,7 @@ describe('reducers/chat', () => {
       // actual test: RECEIVE-ing a sent message should replace that message in
       // the messages list.
       dispatch(a.receive({
-        _id: 'a user id-1449941591374',
+        _id: 'e0e4522a-522b-42bc-af13-86e8fff909b0',
         userID: inFlightUser._id,
         text: messageText,
         timestamp: 1449941591374,
