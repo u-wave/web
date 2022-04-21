@@ -57,10 +57,8 @@ ClockProvider.propTypes = {
   children: PropTypes.element.isRequired,
 };
 
-export default {
-  Consumer: ClockContext.Consumer,
-  Provider: ClockProvider,
-};
-export function useClock() {
+function useClock() {
   return useContext(ClockContext);
 }
+
+export { ClockProvider, useClock };

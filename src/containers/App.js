@@ -13,7 +13,7 @@ import DesktopApp from '../components/App';
 import MobileApp from '../mobile/components/App';
 import FatalError from '../components/FatalError';
 import UwaveContext from '../context/UwaveContext';
-import ClockContext from '../context/ClockContext';
+import { ClockProvider } from '../context/ClockContext';
 import MediaSourceContext from '../context/MediaSourceContext';
 import { AllStoresProvider } from '../stores';
 
@@ -89,7 +89,7 @@ function AppContainer({ uwave, mediaSources }) {
       <ErrorWrapper>
         <TranslateProvider translator={translator}>
           <BusProvider>
-            <ClockContext.Provider>
+            <ClockProvider>
               <UwaveContext.Provider value={uwave}>
                 <MediaSourceContext.Provider mediaSources={mediaSources}>
                   <AllStoresProvider>
@@ -97,7 +97,7 @@ function AppContainer({ uwave, mediaSources }) {
                   </AllStoresProvider>
                 </MediaSourceContext.Provider>
               </UwaveContext.Provider>
-            </ClockContext.Provider>
+            </ClockProvider>
           </BusProvider>
         </TranslateProvider>
       </ErrorWrapper>
