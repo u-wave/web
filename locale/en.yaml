@@ -159,6 +159,7 @@ uwave:
     title: Play History
 
   users:
+    ban: Ban user
     title: Room
     listeners: Listeners
     guests: "and {{count}} guest"
