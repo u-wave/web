@@ -17,7 +17,7 @@ import {
   MUTE_USER,
   UNMUTE_USER,
 } from '../constants/ActionTypes';
-import { put } from './RequestActionCreators';
+import { put, post } from './RequestActionCreators';
 import { execute } from '../utils/ChatCommands';
 import {
   muteTimeoutsSelector,
@@ -56,15 +56,14 @@ export function log(text) {
 }
 
 export function prepareMessage(state, user, text, parseOpts = {}) {
+  const id = randomUUID();
   const parsed = parseChatMarkup(text, parseOpts);
   resolveMentions(parsed, state);
   return {
-    type: SEND_MESSAGE,
-    payload: {
-      user,
-      message: text,
-      parsed,
-    },
+    _id: id,
+    user,
+    message: text,
+    parsed,
   };
 }
 
@@ -87,7 +86,16 @@ export function sendChat(text) {
         ...getAvailableGroupMentions(hasRole),
       ],
     });
-    dispatch(message);
+
+    dispatch(post('/chat', {
+      message: message.message,
+      tags: { id: message._id },
+    }, {
+      onStart: () => ({
+        type: SEND_MESSAGE,
+        payload: message,
+      }),
+    }));
   };
 }
 

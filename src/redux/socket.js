@@ -5,7 +5,6 @@ import {
   SOCKET_RECONNECT,
   SOCKET_DISCONNECTED,
   SOCKET_CONNECTED,
-  SEND_MESSAGE,
 } from '../constants/ActionTypes';
 import { initState } from '../actions/LoginActionCreators';
 import {
@@ -48,13 +47,14 @@ function defaultUrl() {
 
 const actions = {
   chatMessage({
-    id, userID, message, timestamp,
+    id, userID, message, timestamp, tags,
   }) {
     return chatReceive({
       _id: id,
       userID,
       text: message,
       timestamp,
+      tags,
     });
   },
   chatDelete() {
@@ -292,9 +292,6 @@ export default function middleware({ url = defaultUrl() } = {}) {
             // Start attempting reconnects
             socket.attemptReconnect();
           });
-          break;
-        case SEND_MESSAGE:
-          socket.send('sendChat', payload.message);
           break;
         case LOGIN_COMPLETE:
           if (!socket.sentAuthToken) {

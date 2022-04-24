@@ -1,5 +1,4 @@
 import omit from 'just-omit';
-import { v4 as randomUUID } from 'uuid';
 import {
   INIT_STATE,
   RECEIVE_MOTD,
@@ -31,13 +30,20 @@ const initialState = {
 };
 
 function removeInFlightMessage(messages, remove) {
-  return messages.filter((message) => (
-    // keep if this message is not in flight
-    !message.inFlight
-    // or is not the message we're looking for
-    || message.userID !== remove.userID
-    || message.text !== remove.text
-  ));
+  return messages.filter((message) => {
+    if (!message.inFlight) {
+      return true;
+    }
+    if (message.userID !== remove.userID) {
+      return true;
+    }
+
+    // Compare messages by user-generated ID if possible, else fall back to contents
+    if (remove.tags?.id) {
+      return message._id !== remove.tags?.id;
+    }
+    return message.text !== remove.text;
+  });
 }
 
 export default function reduce(state = initialState, action = undefined) {
@@ -56,7 +62,7 @@ export default function reduce(state = initialState, action = undefined) {
       };
     case SEND_MESSAGE: {
       const inFlightMessage = {
-        _id: randomUUID(),
+        _id: payload._id,
         type: 'chat',
         user: payload.user,
         userID: payload.user._id,
