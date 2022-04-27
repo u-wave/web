@@ -1,3 +1,4 @@
+import { v4 as randomUUID } from 'uuid';
 import {
   ADVANCE,
   BOOTH_SKIP,
@@ -13,21 +14,21 @@ export default function reduceNotifications(state, { type, payload }) {
     case USER_JOIN:
       return state.concat([{
         type: 'userJoin',
-        _id: `userJoin-${payload.user._id}-${payload.timestamp}`,
+        _id: randomUUID(),
         user: payload.user,
         timestamp: payload.timestamp,
       }]);
     case USER_LEAVE:
       return state.concat([{
         type: 'userLeave',
-        _id: `userLeave-${payload.user._id}-${payload.timestamp}`,
+        _id: randomUUID(),
         user: payload.user,
         timestamp: payload.timestamp,
       }]);
     case CHANGE_USERNAME:
       return state.concat([{
         type: 'userNameChanged',
-        _id: `userNameChanged-${payload.userID}-${payload.timestamp}`,
+        _id: randomUUID(),
         user: payload.user,
         newUsername: payload.username,
         timestamp: payload.timestamp,
@@ -36,7 +37,7 @@ export default function reduceNotifications(state, { type, payload }) {
     case USER_REMOVE_ROLES:
       return state.concat([{
         type: 'roleUpdate',
-        _id: `roleUpdate-${payload.timestamp}`,
+        _id: randomUUID(),
         user: payload.user,
         updateType: type === USER_ADD_ROLES ? 'add' : 'remove',
         roles: payload.roles,
@@ -49,7 +50,7 @@ export default function reduceNotifications(state, { type, payload }) {
 
       return state.concat([{
         type: 'nowPlaying',
-        _id: `nowPlaying-${payload.historyID}`,
+        _id: randomUUID(),
         entry: payload.media,
         timestamp: payload.timestamp,
       }]);
@@ -57,7 +58,7 @@ export default function reduceNotifications(state, { type, payload }) {
     case BOOTH_SKIP:
       return state.concat([{
         type: 'skip',
-        _id: `skip-${payload.timestamp}`,
+        _id: randomUUID(),
         user: payload.user,
         moderator: payload.moderator,
         reason: payload.reason,
