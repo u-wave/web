@@ -62,7 +62,7 @@
     "prop-types": "^15.6.2",
     "qs-stringify": "^1.2.0",
     "raf": "^3.4.1",
-    "react": "^18.0.0",
+    "react": "^18.1.0",
     "react-abstract-autocomplete": "^2.0.3",
     "react-bus": "^3.0.0",
     "react-dnd": "^16.0.0",
@@ -155,7 +155,7 @@
     "webpack-merge": "^5.7.3",
     "webpack-subresource-integrity": "^5.0.0",
     "webpackbar": "^5.0.0-3",
-    "yaml-loader": "^0.7.0"
+    "yaml-loader": "^0.8.0"
   },
   "engines": {
     "node": ">= 12",
