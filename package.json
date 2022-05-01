@@ -138,7 +138,7 @@
     "mini-css-extract-plugin": "^2.1.0",
     "minimist": "^1.2.5",
     "p-map": "^5.3.0",
-    "postcss": "^8.4.4",
+    "postcss": "^8.4.13",
     "postcss-loader": "^6.2.1",
     "postcss-preset-env": "^7.4.1",
     "recaptcha-test-keys": "^1.0.0",
