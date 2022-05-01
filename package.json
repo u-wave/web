@@ -155,7 +155,7 @@
     "webpack-merge": "^5.7.3",
     "webpack-subresource-integrity": "^5.0.0",
     "webpackbar": "^5.0.0-3",
-    "yaml-loader": "^0.7.0"
+    "yaml-loader": "^0.8.0"
   },
   "engines": {
     "node": ">= 12",
