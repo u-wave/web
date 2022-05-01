@@ -35,15 +35,17 @@ for (const [hex, shortcode] of Object.entries(joypixelShortcodes)) {
 
 console.log('generating', Object.keys(shortcodes).length, 'emoji...');
 
-const shortcodeHashes = {};
 await fs.rm(outputDir, { force: true, recursive: true });
 await fs.mkdir(outputDir, { recursive: true });
-await pMap(Object.entries(shortcodes), async ([shortcode, filename]) => {
-  const bytes = await fs.readFile(new URL(filename, twemojiDir));
-  const hash = crypto.createHash('sha1').update(bytes).digest('hex').slice(0, 7);
-  shortcodeHashes[shortcode] = `${hash}.svg`;
-  await fs.writeFile(new URL(`${hash}.svg`, outputDir), bytes);
-});
+const shortcodeHashes = Object.fromEntries(
+  await pMap(Object.entries(shortcodes), async ([shortcode, filename]) => {
+    const bytes = await fs.readFile(new URL(filename, twemojiDir));
+    const hash = crypto.createHash('sha1').update(bytes).digest('hex').slice(0, 7);
+    const outName = `${hash}.svg`;
+    await fs.writeFile(new URL(outName, outputDir), bytes);
+    return [shortcode, outName];
+  }),
+);
 await fs.writeFile(new URL('../src/utils/emojiShortcodes.js', import.meta.url), `
 // GENERATED FILE: run \`npm run emoji\`
 /* eslint-disable */
