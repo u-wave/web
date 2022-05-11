@@ -1,5 +1,7 @@
 'use strict';
 
+const fs = require('fs/promises');
+const path = require('path');
 const assert = require('assert');
 const { builtinModules } = require('module');
 const { Compilation } = require('webpack');
@@ -75,6 +77,8 @@ class MiddlewarePackageJsonPlugin {
         dependencies,
       };
 
+      const license = await fs.readFile(path.join(__dirname, '../../LICENSE'));
+      compilation.emitAsset('LICENSE', new RawSource(license));
       compilation.emitAsset('package.json', new RawSource(
         JSON.stringify(middlewarePkg, null, 2),
       ));
