@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import { showSearchResults } from '../actions/SearchActionCreators';
+import { hideSearchResults, showSearchResults } from '../actions/SearchActionCreators';
 import { get } from '../actions/RequestActionCreators';
 import { IDLE, LOADING, LOADED } from '../constants/LoadingStates';
 
@@ -33,7 +33,7 @@ function useStoreImplementation() {
     // Maybe this can be pulled into a useFetch hook of some kind?
     const controller = new AbortController();
     const request = get(`/search/${encodeURIComponent(activeSource)}`, {
-      qs: { query },
+      qs: { query, include: 'playlists' },
       signal: controller.signal,
     });
 
@@ -53,7 +53,11 @@ function useStoreImplementation() {
   const search = useCallback((newQuery) => {
     // For compatibility.
     // TODO do this elsewhere.
-    dispatch(showSearchResults());
+    if (newQuery != null) {
+      dispatch(showSearchResults());
+    } else {
+      dispatch(hideSearchResults());
+    }
 
     setQuery(newQuery);
   }, [dispatch]);

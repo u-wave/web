@@ -3,17 +3,17 @@ import { ADVANCE, LOAD_HISTORY_COMPLETE } from '../constants/ActionTypes';
 const initialState = [];
 
 const normalize = (entry) => ({
-  _id: entry._id || entry.historyID,
+  _id: entry._id ?? entry.historyID,
   user: entry.user,
   media: {
     ...entry.media.media,
     ...entry.media,
   },
-  timestamp: new Date(entry.timestamp || entry.playedAt).getTime(),
-  stats: entry.stats || {
-    upvotes: entry.upvotes || [],
-    downvotes: entry.downvotes || [],
-    favorites: entry.favorites || [],
+  timestamp: new Date(entry.timestamp ?? entry.playedAt).getTime(),
+  stats: entry.stats ?? {
+    upvotes: entry.upvotes ?? [],
+    downvotes: entry.downvotes ?? [],
+    favorites: entry.favorites ?? [],
   },
 });
 

@@ -1,11 +1,12 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useTranslator } from '@u-wave/react-translate';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import CircularProgress from '@mui/material/CircularProgress';
 import Overlay from '../Overlay';
 import OverlayContent from '../Overlay/Content';
 import OverlayHeader from '../Overlay/Header';
 import { closeAll } from '../../actions/OverlayActionCreators';
+import ErrorBoundary from './ErrorBoundary';
 
 const {
   useEffect,
@@ -54,9 +55,11 @@ export default function createLazyOverlay({
   function LazyOverlay(props) {
     return (
       <OverlayComponent {...props}>
-        <React.Suspense fallback={<LoadingOverlay {...props} />}>
-          <RealOverlay {...props} />
-        </React.Suspense>
+        <ErrorBoundary>
+          <React.Suspense fallback={<LoadingOverlay {...props} />}>
+            <RealOverlay {...props} />
+          </React.Suspense>
+        </ErrorBoundary>
       </OverlayComponent>
     );
   }

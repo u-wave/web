@@ -1,4 +1,3 @@
-import expect from 'expect';
 import { ADVANCE } from '../../constants/ActionTypes';
 import { advanceToEmpty } from '../../actions/BoothActionCreators';
 import booth from '../booth';

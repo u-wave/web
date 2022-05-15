@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Avatar from '@material-ui/core/Avatar';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
+import Avatar from '@mui/material/Avatar';
+import ListItem from '@mui/material/ListItem';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemIcon from '@mui/material/ListItemIcon';
 import Username from '../../../components/Username';
 
 const UserRow = ({
@@ -13,7 +13,7 @@ const UserRow = ({
 }) => (
   <ListItem>
     <ListItemAvatar>
-      <Avatar className="Avatar" src={user.avatar || `https://sigil.u-wave.net/${user._id}`} />
+      <Avatar className="Avatar" src={user.avatar ?? `https://sigil.u-wave.net/${user._id}`} />
     </ListItemAvatar>
     <ListItemText>
       <Username user={user} />

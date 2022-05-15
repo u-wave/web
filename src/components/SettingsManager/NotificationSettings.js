@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
-import FormGroup from '@material-ui/core/FormGroup';
-import Switch from '@material-ui/core/Switch';
+import FormGroup from '@mui/material/FormGroup';
+import Switch from '@mui/material/Switch';
 import SettingControl from './SettingControl';
 
 const { useCallback } = React;
@@ -11,8 +11,8 @@ function NotificationSettings({ settings, onSettingChange }) {
   const { t } = useTranslator();
 
   function useToggleSetting(name) {
-    return useCallback((e, value) => {
-      onSettingChange(name, value);
+    return useCallback((event) => {
+      onSettingChange(name, event.target.checked);
       // `name` is a constant.
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [onSettingChange]);

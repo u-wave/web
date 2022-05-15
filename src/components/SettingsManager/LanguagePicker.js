@@ -1,6 +1,6 @@
 import React from 'react';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 import { useTranslator } from '@u-wave/react-translate';
 import { useSelector } from 'react-redux';
 import { availableLanguagesSelector } from '../../selectors/localeSelectors';
@@ -10,7 +10,7 @@ function LanguagePicker(props) {
   const availableLanguages = useSelector(availableLanguagesSelector);
 
   return (
-    <Select className="LanguagePicker" {...props}>
+    <Select variant="standard" className="LanguagePicker" {...props}>
       {availableLanguages.map((lang) => (
         <MenuItem key={lang} value={lang}>
           {t(`locales.${lang}`)}

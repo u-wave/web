@@ -1,10 +1,10 @@
 import React from 'react';
-import IconButton from '@material-ui/core/IconButton';
-import Slider from '@material-ui/core/Slider';
-import Tab from '@material-ui/core/Tab';
-import Tabs from '@material-ui/core/Tabs';
-import HistoryIcon from '@material-ui/icons/History';
-import VolumeOffIcon from '@material-ui/icons/VolumeOff';
+import IconButton from '@mui/material/IconButton';
+import Slider from '@mui/material/Slider';
+import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
+import HistoryIcon from '@mui/icons-material/History';
+import VolumeOffIcon from '@mui/icons-material/VolumeOff';
 import AppTitle from '../HeaderBar/AppTitle';
 import SongTitle from '../SongTitle';
 import LoadingIndicator from './LoadingIndicator';
@@ -20,6 +20,7 @@ function FakeVolume() {
       </IconButton>
       <div className="VolumeSlider-slider">
         <Slider
+          size="small"
           min={0}
           max={100}
           step={1}
@@ -49,14 +50,14 @@ function FakeHeaderBar() {
         <div className="HeaderBar-dj">
           <Filler width={300} />
         </div>
-        <div className="HeaderBar-volume">
-          <FakeVolume />
-        </div>
-        <div className="HeaderBar-history">
-          <IconButton className="HistoryButton">
-            <HistoryIcon className="HistoryButton-icon" />
-          </IconButton>
-        </div>
+      </div>
+      <div className="HeaderBar-volume">
+        <FakeVolume />
+      </div>
+      <div className="HeaderBar-history">
+        <IconButton className="HistoryButton">
+          <HistoryIcon className="HistoryButton-icon" />
+        </IconButton>
       </div>
     </div>
   );
@@ -86,31 +87,33 @@ function DesktopSkeleton() {
         </div>
       </div>
       <div className="AppColumn AppColumn--right">
-        <Tabs
-          value={0}
-          variant="fullWidth"
-          classes={{
-            root: 'SidePanel-tabs',
-            indicator: 'SidePanel-indicator',
-          }}
-        >
-          <Tab classes={tabClasses} label={<Filler width={70} />} />
-          <Tab classes={tabClasses} label={<Filler width={70} />} />
-          <Tab classes={tabClasses} label={<Filler width={100} />} />
-        </Tabs>
+        <div className="SidePanels">
+          <Tabs
+            value={0}
+            variant="fullWidth"
+            classes={{
+              root: 'SidePanel-tabs',
+              indicator: 'SidePanel-indicator',
+            }}
+          >
+            <Tab classes={tabClasses} label={<Filler width={70} />} />
+            <Tab classes={tabClasses} label={<Filler width={70} />} />
+            <Tab classes={tabClasses} label={<Filler width={100} />} />
+          </Tabs>
 
-        <div className="SidePanel-panel is-selected">
-          <div className="ChatContainer">
-            <div className="ChatContainer-messages">
-              <div className="ChatMessage ChatMessage--motd">
-                <div className="ChatMessage-content">
-                  <Filler width={400} />
+          <div className="SidePanel-panel is-selected">
+            <div className="ChatContainer">
+              <div className="ChatContainer-messages">
+                <div className="ChatMessage ChatMessage--motd">
+                  <div className="ChatMessage-content">
+                    <Filler width={400} />
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="ChatContainer-input ChatInputWrapper">
-              <div className="ChatInput">
-                <input className="ChatInput-input" type="text" disabled />
+              <div className="ChatContainer-input ChatInputWrapper">
+                <div className="ChatInput">
+                  <input className="ChatInput-input" type="text" disabled />
+                </div>
               </div>
             </div>
           </div>

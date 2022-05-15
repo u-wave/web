@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
-import SadvoteIcon from '@material-ui/icons/SentimentVeryDissatisfied';
+import SadvoteIcon from '@mui/icons-material/SentimentVeryDissatisfied';
 import Button from './Button';
 
 function Sadvote({

@@ -1,5 +1,3 @@
-import expect from 'expect';
-import sinon from 'sinon';
 import createStore from '../../redux/configureStore';
 import { setUsers } from '../../actions/UserActionCreators';
 import * as a from '../../actions/ChatActionCreators';
@@ -21,7 +19,7 @@ describe('reducers/chat', () => {
 
   describe('action: chat/RECEIVE_MESSAGE', () => {
     const testMessage = {
-      _id: '643abc235-1449941591374',
+      _id: 'd88be1a7-38fa-4a58-b5fe-a34b54a279ad',
       userID: '643abc235',
       text: 'Message text',
       timestamp: 1449941591374,
@@ -58,7 +56,7 @@ describe('reducers/chat', () => {
         username: 'SendingUser',
       };
 
-      sinon.stub(userSelectors, 'currentUserSelector').returns(inFlightUser);
+      jest.spyOn(userSelectors, 'currentUserSelector').mockReturnValue(inFlightUser);
 
       const { dispatch, getState } = createStore();
       dispatch(setUsers([testUser, inFlightUser]));
@@ -75,7 +73,7 @@ describe('reducers/chat', () => {
       // actual test: RECEIVE-ing a sent message should replace that message in
       // the messages list.
       dispatch(a.receive({
-        _id: 'a user id-1449941591374',
+        _id: 'e0e4522a-522b-42bc-af13-86e8fff909b0',
         userID: inFlightUser._id,
         text: messageText,
         timestamp: 1449941591374,
@@ -83,8 +81,6 @@ describe('reducers/chat', () => {
 
       expect(s.messagesSelector(getState())).toHaveLength(2);
       expect(s.messagesSelector(getState())[1]).toHaveProperty('inFlight', false);
-
-      userSelectors.currentUserSelector.restore();
     });
   });
 
@@ -106,7 +102,7 @@ describe('reducers/chat', () => {
 
     it('should add an in-flight message to the messages list immediately', () => {
       const { dispatch, getState } = createStore();
-      sinon.stub(userSelectors, 'currentUserSelector').returns(testMessage.user);
+      jest.spyOn(userSelectors, 'currentUserSelector').mockReturnValue(testMessage.user);
 
       dispatch(a.sendChat(testMessage.message));
       expect(s.messagesSelector(getState())).toHaveLength(1);
@@ -119,8 +115,6 @@ describe('reducers/chat', () => {
       expect(message.parsedText).toEqual(testMessage.parsed);
       expect(message.timestamp).toBe(Date.now());
       expect(message.inFlight).toBe(true);
-
-      userSelectors.currentUserSelector.restore();
     });
   });
 
@@ -153,7 +147,7 @@ describe('reducers/chat', () => {
     const addTestMute = () => {
       dispatch(a.muteUser('1', {
         moderatorID: '4',
-        expires: Date.now() + 3000,
+        expiresAt: Date.now() + 3000,
       }));
     };
 
@@ -162,7 +156,7 @@ describe('reducers/chat', () => {
 
       dispatch(a.muteUser('1', {
         moderatorID: '4',
-        expires: Date.now() + 3000,
+        expiresAt: Date.now() + 3000,
       }));
 
       expect(s.mutedUsersSelector(getState())).toEqual([testUsers[0]]);

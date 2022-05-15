@@ -1,15 +1,15 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import DownvoteIcon from '@material-ui/icons/ThumbDown';
-import UpvoteIcon from '@material-ui/icons/ThumbUp';
-import SadvoteIcon from '@material-ui/icons/SentimentVeryDissatisfied';
-import FavoritedIcon from '@material-ui/icons/Favorite';
-import FavoriteIcon from '@material-ui/icons/FavoriteBorder';
+import SadvoteIcon from '@mui/icons-material/SentimentVeryDissatisfied';
+import DownvoteIcon from '@mui/icons-material/ThumbDown';
+import UpvoteIcon from '@mui/icons-material/ThumbUp';
+import FavoritedIcon from '@mui/icons-material/Favorite';
+import FavoriteIcon from '@mui/icons-material/FavoriteBorder';
 
-const Votes = ({
+function Votes({
   upvotes, downvotes, sadvotes, favorites, isUpvote, isDownvote, isSadvote, isFavorite,
-}) => {
+}) {
   const CurrentFavoriteIcon = isFavorite ? FavoritedIcon : FavoriteIcon;
   return (
     <div className="HistoryVotes AudienceResponse">
@@ -39,7 +39,7 @@ const Votes = ({
       </div>
     </div>
   );
-};
+}
 
 Votes.defaultProps = {
   sadvotes: [],
@@ -56,4 +56,4 @@ Votes.propTypes = {
   isSadvote: PropTypes.bool.isRequired,
 };
 
-export default Votes;
+export default React.memo(Votes);

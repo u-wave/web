@@ -12,7 +12,7 @@ const initialState = {
   users: [],
 };
 
-export default function reducer(state = initialState, action) {
+export default function reducer(state = initialState, action = undefined) {
   switch (action.type) {
     case SET_USERS_FILTER:
       return {

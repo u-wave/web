@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
  */
 function supportsBlur() {
   // Be conservative if we're not in the browser.
-  if (typeof window === 'undefined' || !window.CSS) {
+  if (typeof window === 'undefined' || !window.CSS || !window.CSS.supports) {
     return false;
   }
 

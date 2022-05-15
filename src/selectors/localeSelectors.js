@@ -41,6 +41,7 @@ export const loadedLanguagesSelector = createSelector(
   (loaded) => new Set(Object.keys(loaded)),
 );
 
+/** @type {Intl.RelativeTimeFormatOptions} */
 const relativeTimeFormatOptions = {
   numeric: 'auto',
   style: 'long',
@@ -59,17 +60,19 @@ export const relativeTimeFormatterSelector = createSelector(
   currentLanguageSelector,
   (current) => {
     if (supportsRelativeTimeFormat) {
-    // eslint-disable-next-line compat/compat
+      // eslint-disable-next-line compat/compat
       return new Intl.RelativeTimeFormat(current, relativeTimeFormatOptions);
     }
     return null;
   },
 );
 
+/** @type {Intl.DateTimeFormatOptions} */
 const timeFormatOptions = {
   hour: 'numeric',
   minute: 'numeric',
 };
+/** @type {Intl.DateTimeFormatOptions} */
 const dateFormatOptions = {
   year: 'numeric',
   month: 'numeric',

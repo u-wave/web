@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
-import List from '@material-ui/core/List';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import Divider from '@material-ui/core/Divider';
-import Button from '@material-ui/core/Button';
-import CurrentDJIcon from '@material-ui/icons/PlayArrow';
+import List from '@mui/material/List';
+import ListSubheader from '@mui/material/ListSubheader';
+import Divider from '@mui/material/Divider';
+import Button from '@mui/material/Button';
+import CurrentDJIcon from '@mui/icons-material/PlayArrow';
 import UserRow from './UserRow';
 import WaitlistPosition from './WaitlistPosition';
 

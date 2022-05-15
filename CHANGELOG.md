@@ -4,17 +4,135 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased
+## 2.0.0-alpha.7 / 01 May 2022
+While this is an alpha release, new servers should use this rather than an older "stable" version.
+
+Features:
+ * Add twitter emoji. (#2149)
+
+Internal:
+ * Upgrade React to version 18. (#2271)
+ * Use UUIDs for chat message IDs. (#2311)
+ * Use react-virtual instead of react-window. (#2306)
+ * And many dependency updates.
+
+## 2.0.0-alpha.6 / 20 Nov 2021
+While this is an alpha release, new servers should use this rather than an older "stable" version.
+
+Features:
+ * Show advance messages in the chat. (#1666)
+   Now you can see during which media a message was sent.
+
+Bugfixes:
+ * Fix history display in Chrome. It used to use `float: inline-start`, which Chrome does not
+   support. Now it uses CSS grids.
+
+Internal:
+ * Use CSS grids for media lists. (#2148)
+
+## 2.0.0-alpha.5 / 11 Nov 2021
+While this is an alpha release, new servers should use this rather than an older "stable" version.
+
+This is just a re-release of 2.0.0-alpha.4, which (ironically) included mismatching hashes in the
+build output.
+
+## 2.0.0-alpha.4 / 11 Nov 2021
+While this is an alpha release, new servers should use this rather than an older "stable" version.
+
+This release re-introduces the search results feature that shows the playlists each result is
+already part of. This **requires üWave Core 0.5.0-alpha.8 or higher**. In older server versions, the
+feature is far too slow to be used.
+
+Features:
+ * Request related playlists in search queries.
+
+Internal:
+ * Reimplement media progress bar in JS. (#2140)
+ * Read HTML from filesystem on each request. If you upgrade the static files for the web client at
+   runtime it will no longer cause hash mismatches. You should still restart the web client's web
+   server to pick up server-side changes.
+
+## 2.0.0-alpha.3 / 07 Nov 2021
+While this is an alpha release, new servers should use this rather than an older "stable" version.
+
+This release addresses a bunch of crashes introduced in the 2.0.0-alpha.2 release.
+
+Features:
+ * Add `RECAPTCHA_KEY` env variable to configure ReCaptcha verification at signup with the
+   included executable.
+
+Bugfixes:
+ * Fix crash due to different playlist item object shape.
+ * Fix crash when a user role has no locale string.
+ * Add an error boundary to overlays so they do not crash the whole app.
+ * Accept both UNIX and ISO timestamp formats for `booth.startTime`. This makes the client work
+   with üWave Core 0.5.0-alpha.5, which returns an unexpected value here.
+
+## 2.0.0-alpha.2 / 07 Nov 2021
+This release is basically [one big PR][#1955] upgrading the build system and many dependencies.
+A few bugfixes slipped in as well.
+
+[#1955]: https://github.com/u-wave/web/pull/1955
+
+Features:
+ * **Breaking:** Raised browser support floor to evergreen Firefox/Chrome/Edge versions.
+   The aim is to re-introduce support for IE 11 in a future release using a dual bundling strategy
+   but that may take a while.
+ * Update to React 17.
+ * Update to MUI 5.
+ * Improved SoundCloud error messages.
+
+Bugfixes:
+ * Closing search results no longer shows an infinite loading screen.
+ * A failing search no longer shows an infinite loading screen.
+ * Improved scroll performance in search results.
+
+Internal:
+ * **Breaking:** u-wave-web now requires Node.js 12.x or higher.
+ * Switch from enzyme to react-testing-library, which has React 17 support.
+ * Switch from mocha to jest, which has better react-testing-library support.
+ * Switch to native ES modules for most build scripts.
+
+## 2.0.0-alpha.1 / 29 Jun 2021
+While this is an alpha release, new servers should use this rather than an older "stable" version.
+
+Thanks to @Mrcl1450 for their contributions to this release!
+
+Features:
+ * Added support for native ES module import on the server side. (#2078)
+   ```js
+   import createWebClient from 'u-wave-web/middleware';
+   ```
+Bugfixes:
+ * Fix youtube loading on mobile. (#2075)
+ * Add package.json "bin" key for the executable file that was added in 2.0.0-alpha.0.
+
+Internal:
+ * Dependency updates.
+
+## 2.0.0-alpha.0 / 15 Apr 2021
+While this is an alpha release, new servers should use this rather than an older "stable" version.
+
+Massive thanks to @eyes-0nly, @pledi and @uriell for their contributions to this release!
+
 Features:
  * **Breaking:** Create a separate u-wave-web-middleware package. (#1018)
  * **Breaking:** Remove `uw` argument from middleware API.
+ * Added Russian translation. (#1869)
  * Add intro screen if user has no playlists. (#1034)
  * Use Intl APIs for date and time formatting if available. (#1234)
  * New app loading screen. (#1285)
  * In search results, show playlists a song is already in. (#1363)
+ * Add runtime configuration panel. (#1659)
+ * Add an executable to run the web client without writing glue code. (#1998)
+ * Use proper labels in login/signup forms. (#1919)
+ * Support emojis specified as full URLs. (#1861)
+ * Add password confirmation during registration. (#1874)
 
 Bugfixes:
+ * **Breaking:** Changed `/mute` command to `/muteuser`. (#1958)
  * Fix default message for forced DJ skips. (#1336)
+ * Fix race condition in WebSocket authentication. (#1860)
 
 Internal:
  * Rewrite AddToPlaylistMenu using hooks. (#1233)
@@ -32,6 +150,8 @@ Internal:
  * **Breaking:** Implement votes using HTTP requests. (#1302)
  * Remove unused `.selected` property from playlists. (#1405)
  * Use mui FormControl components in the SettingsManager. (#1414)
+ * Self-host Open Sans font. (#1443)
+ * Hide elements that may overlay embedded players. (#1856)
 
 ## 1.11.6 / 01 Sep 2018
 Bugfixes:

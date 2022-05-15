@@ -1,4 +1,3 @@
-import expect from 'expect';
 import {
   OPEN_EDIT_MEDIA_DIALOG, CLOSE_EDIT_MEDIA_DIALOG,
   OPEN_LOGIN_DIALOG, CLOSE_LOGIN_DIALOG,
@@ -13,7 +12,7 @@ const closedDialog = {
 const initialState = () => dialogs(undefined, { type: '@@redux/INIT' });
 
 const testDialogOpen = (type, prop, text) => {
-  it(text, () => {
+  it(`${text}`, () => {
     let state = initialState();
     const testPayload = { test: 'payload' };
     state = dialogs(state, { type, payload: testPayload });
@@ -25,7 +24,7 @@ const testDialogOpen = (type, prop, text) => {
 };
 
 const testDialogClose = (type, prop, text) => {
-  it(text, () => {
+  it(`${text}`, () => {
     let state = initialState();
     state = dialogs(state, { type });
     expect(state[prop]).toEqual({
@@ -47,26 +46,30 @@ describe('reducers/dialogs', () => {
 
   describe('action: OPEN_EDIT_MEDIA_DIALOG', () => {
     testDialogOpen(
-      OPEN_EDIT_MEDIA_DIALOG, 'editMedia',
+      OPEN_EDIT_MEDIA_DIALOG,
+      'editMedia',
       'should open the media edit dialog w/ the given payload',
     );
   });
   describe('action: CLOSE_EDIT_MEDIA_DIALOG', () => {
     testDialogClose(
-      CLOSE_EDIT_MEDIA_DIALOG, 'editMedia',
+      CLOSE_EDIT_MEDIA_DIALOG,
+      'editMedia',
       'should close the media edit dialog w/ the given payload',
     );
   });
 
   describe('action: OPEN_LOGIN_DIALOG', () => {
     testDialogOpen(
-      OPEN_LOGIN_DIALOG, 'login',
+      OPEN_LOGIN_DIALOG,
+      'login',
       'should open the login dialog w/ the given payload',
     );
   });
   describe('action: CLOSE_LOGIN_DIALOG', () => {
     testDialogClose(
-      CLOSE_LOGIN_DIALOG, 'login',
+      CLOSE_LOGIN_DIALOG,
+      'login',
       'should close the login dialog w/ the given payload',
     );
   });

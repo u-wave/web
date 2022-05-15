@@ -1,5 +1,5 @@
 import React from 'react';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const ServerListContainer = React.lazy(() => Promise.all([
   import('@u-wave/react-server-list/dist/u-wave-react-server-list.css'),

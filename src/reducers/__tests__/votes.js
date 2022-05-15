@@ -1,4 +1,3 @@
-import expect from 'expect';
 import { INIT_STATE, ADVANCE } from '../../constants/ActionTypes';
 import votes from '../votes';
 

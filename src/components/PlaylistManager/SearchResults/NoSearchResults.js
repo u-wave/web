@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslator } from '@u-wave/react-translate';
-import Typography from '@material-ui/core/Typography';
-import NoResultsIcon from '@material-ui/icons/Search';
+import Typography from '@mui/material/Typography';
+import NoResultsIcon from '@mui/icons-material/Search';
 
 function NoResults() {
   const { t } = useTranslator();

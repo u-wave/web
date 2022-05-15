@@ -75,7 +75,9 @@ function UserFooterContent() {
   }, [userIsDJ, dispatch]);
 
   const handleJoinWaitlist = useCallback(() => {
-    dispatch(joinWaitlist(currentUser));
+    dispatch(joinWaitlist(currentUser)).catch(() => {
+      // error is already reported
+    });
   }, [dispatch, currentUser]);
   const handleLeaveWaitlist = useCallback(() => {
     if (userIsDJ) {

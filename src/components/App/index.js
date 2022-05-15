@@ -33,7 +33,7 @@ function App({
             title="üWave"
           />
         </div>
-        <div className="AppRow AppRow--middle">
+        <div className="AppRow AppRow--middle App-media">
           <Video
             enabled={settings.videoEnabled}
             size={settings.videoSize}

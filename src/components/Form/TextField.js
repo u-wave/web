@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const {
+  useEffect,
   useImperativeHandle,
   useRef,
 } = React;
@@ -11,12 +12,18 @@ const TextField = React.forwardRef(({
   className,
   type = 'text',
   icon,
+  autoFocus,
   ...props
 }, ref) => {
   const refInput = useRef(null);
   useImperativeHandle(ref, () => ({
     get value() { return refInput.current.value; },
   }));
+  useEffect(() => {
+    if (autoFocus) {
+      refInput.current?.focus();
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className={cx('TextField', className)}>
@@ -26,7 +33,9 @@ const TextField = React.forwardRef(({
         type={type}
         {...props}
       />
-      <div className="TextField-icon">{icon}</div>
+      {icon ? (
+        <div className="TextField-icon">{icon}</div>
+      ) : null}
     </div>
   );
 });
@@ -34,7 +43,8 @@ const TextField = React.forwardRef(({
 TextField.propTypes = {
   className: PropTypes.string,
   type: PropTypes.string,
-  icon: PropTypes.node.isRequired,
+  icon: PropTypes.node,
+  autoFocus: PropTypes.bool,
 };
 
 export default TextField;

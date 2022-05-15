@@ -1,1 +1,3 @@
-export { default } from './mobile';
+import mobile from './mobile';
+
+export default mobile;

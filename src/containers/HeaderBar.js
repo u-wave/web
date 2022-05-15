@@ -8,22 +8,12 @@ import {
   unmuteThis,
 } from '../actions/PlaybackActionCreators';
 import { toggleRoomHistory, toggleAbout } from '../actions/OverlayActionCreators';
-import {
-  djSelector,
-  mediaSelector,
-  mediaProgressSelector,
-  timeRemainingSelector,
-} from '../selectors/boothSelectors';
-import {
-  volumeSelector,
-  isMutedSelector,
-  isMutedThisSelector,
-} from '../selectors/settingSelectors';
+import { djSelector, mediaSelector, startTimeSelector } from '../selectors/boothSelectors';
+import { volumeSelector, isMutedSelector, isMutedThisSelector } from '../selectors/settingSelectors';
 import HeaderBar from '../components/HeaderBar';
 
 const mapStateToProps = createStructuredSelector({
-  mediaProgress: mediaProgressSelector,
-  mediaTimeRemaining: timeRemainingSelector,
+  mediaStartTime: startTimeSelector,
   media: mediaSelector,
   dj: djSelector,
   volume: volumeSelector,

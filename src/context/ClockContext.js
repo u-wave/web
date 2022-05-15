@@ -41,7 +41,9 @@ function ClockProvider({ children }) {
     dispatch(createTimer(() => {
       callbacksRef.current.forEach((cb) => cb());
     }));
-    return () => dispatch(stopTimer);
+    return () => {
+      dispatch(stopTimer);
+    };
   }, [dispatch]);
 
   return (
@@ -55,10 +57,8 @@ ClockProvider.propTypes = {
   children: PropTypes.element.isRequired,
 };
 
-export default {
-  Consumer: ClockContext.Consumer,
-  Provider: ClockProvider,
-};
-export function useClock() {
+function useClock() {
   return useContext(ClockContext);
 }
+
+export { ClockProvider, useClock };

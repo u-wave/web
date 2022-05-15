@@ -17,7 +17,7 @@
 }
 
 .ChatInput-input {
-  margin: 15px 15px 16px 15px;
+  margin: 15px 15px 16px;
   height: 28px;
   width: calc(100% - 32px);
   padding: 0 6px;

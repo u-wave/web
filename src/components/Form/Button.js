@@ -1,25 +1,24 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import MuiButton from '@material-ui/core/Button';
+import MuiButton from '@mui/material/Button';
 
-const Button = ({
-  children, className, text, ...props
-}) => (
-  <MuiButton
-    variant="contained"
-    color="primary"
-    className={cx('Button', className)}
-    type="submit"
-    {...props}
-  >
-    {text || children}
-  </MuiButton>
-);
+function Button({ children, className, ...props }) {
+  return (
+    <MuiButton
+      variant="contained"
+      color="primary"
+      className={cx('Button', className)}
+      type="submit"
+      {...props}
+    >
+      {children}
+    </MuiButton>
+  );
+}
 
 Button.propTypes = {
   className: PropTypes.string,
-  text: PropTypes.string,
   children: PropTypes.node,
 };
 

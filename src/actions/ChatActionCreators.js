@@ -2,6 +2,7 @@ import ms from 'ms';
 import splitargs from 'splitargs';
 import parseChatMarkup from 'u-wave-parse-chat-markup';
 import flashDocumentTitle from 'flash-document-title';
+import { v4 as randomUUID } from 'uuid';
 import playMentionSound from '../utils/playMentionSound';
 import {
   RECEIVE_MOTD,
@@ -44,13 +45,11 @@ export function receiveMotd(text) {
   };
 }
 
-let logIdx = Date.now();
 export function log(text) {
-  logIdx += 1;
   return {
     type: LOG,
     payload: {
-      _id: logIdx,
+      _id: randomUUID(),
       text,
     },
   };

@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import Button from '@material-ui/core/Button';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import RemoveIcon from '@material-ui/icons/Close';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import Button from '@mui/material/Button';
+import FormHelperText from '@mui/material/FormHelperText';
+import RemoveIcon from '@mui/icons-material/Close';
 import Field from './Field';
 
 function ArrayField({ schema, value, onChange }) {

@@ -16,8 +16,8 @@ import createSourcesReducer from '../reducers/createSourcesReducer';
 // things coming together in one place. Luckily, we don't have _that_ much going
 // on in üWave, so it's kind of manageable.
 
-export default function createUwaveStore(initialState = {}, options = {}) {
-  const isTesting = process.env.NODE_ENV === 'testing';
+function createUwaveStore(initialState = {}, options = {}) {
+  const isTesting = typeof jest !== 'undefined';
   const enableLogging = process.env.NODE_ENV !== 'production' && !isTesting;
 
   const rerender = nanoraf((notify) => {
@@ -63,11 +63,11 @@ export default function createUwaveStore(initialState = {}, options = {}) {
     ),
   );
 
-  if (process.env.NODE_ENV === 'development' && module.hot) {
+  if (process.env.NODE_ENV === 'development' && import.meta.webpackHot) {
     // Update the store's reducer function when the reducer source code has
     // changed. See /tasks/watch.js for more on Hot Reloading!
     // This is only used when debugging, not in a deployed app.
-    module.hot.accept('../reducers', () => {
+    import.meta.webpackHot.accept('../reducers', () => {
       store.replaceReducer(combineReducers({
         ...reducers,
         sources: createSourcesReducer(options),
@@ -85,3 +85,5 @@ export default function createUwaveStore(initialState = {}, options = {}) {
 
   return store;
 }
+
+export default createUwaveStore;

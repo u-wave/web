@@ -3,24 +3,23 @@ import UwaveContext from '../context/UwaveContext';
 import Overlay from '../components/Overlay';
 import About from '../components/About';
 
-function renderAboutPage(props, uwave) {
-  const component = uwave.getAboutPageComponent() || null;
+const {
+  useContext,
+} = React;
+
+function AboutContainer(props) {
+  const uwave = useContext(UwaveContext);
+  const component = uwave.getAboutPageComponent() ?? null;
 
   return (
-    <About
-      {...props}
-      hasAboutPage={!!component}
-      render={component}
-    />
+    <Overlay direction="top">
+      <About
+        {...props}
+        hasAboutPage={!!component}
+        render={component}
+      />
+    </Overlay>
   );
 }
-
-const AboutContainer = (props) => (
-  <Overlay direction="top">
-    <UwaveContext.Consumer>
-      {(uwave) => renderAboutPage(props, uwave)}
-    </UwaveContext.Consumer>
-  </Overlay>
-);
 
 export default AboutContainer;

@@ -2,9 +2,9 @@ import cx from 'clsx';
 import React from 'react';
 import { translate } from '@u-wave/react-translate';
 import PropTypes from 'prop-types';
-import Tooltip from '@material-ui/core/Tooltip';
-import CancelOutlined from '@material-ui/icons/CancelOutlined';
-import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+import CancelOutlined from '@mui/icons-material/CancelOutlined';
+import IconButton from '@mui/material/IconButton';
 
 const enhance = translate();
 

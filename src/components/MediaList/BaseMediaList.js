@@ -1,19 +1,23 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FixedSizeList } from 'react-window';
-import InfiniteLoader from 'react-window-infinite-loader';
-import AutoSizer from 'react-virtualized-auto-sizer';
+import { useVirtual } from 'react-virtual';
 import itemSelection from 'item-selection/immutable';
-import useDirection from '../../hooks/useDirection';
 import LoadingRow from './LoadingRow';
 
 const {
   useCallback,
+  useContext,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } = React;
+
+const MediaListContext = React.createContext();
+export function useMediaListContext() {
+  return useContext(MediaListContext);
+}
 
 /**
  * Check if two media lists are different, taking into account
@@ -26,7 +30,9 @@ function didMediaChange(prev, next) {
   return prev.some((item, i) => item && next[i] && item._id !== next[i]._id);
 }
 
-const defaultMakeActions = () => null;
+function estimateSize() {
+  return 56;
+}
 
 function BaseMediaList({
   className,
@@ -34,20 +40,26 @@ function BaseMediaList({
   listComponent: ListComponent,
   rowComponent: RowComponent,
   rowProps = {},
+  contextProps,
   onRequestPage,
-  onOpenPreviewMediaDialog,
   // The `size` property is only necessary for lazy loading.
-  size = null,
-  makeActions = defaultMakeActions,
+  size = media.length,
 }) {
+  const parentRef = useRef();
   const lastMediaRef = useRef(media);
   const [selection, setSelection] = useState(() => itemSelection(media));
   const inFlightPageRequests = useRef({});
-  const direction = useDirection();
+
+  const context = useMemo(() => ({
+    media,
+    selection,
+    ...contextProps,
+  }), [media, selection, contextProps]);
 
   const itemKey = useCallback((index) => {
     if (media[index]) {
-      return media[index]._id;
+      const { _id: id, sourceType, sourceID } = media[index];
+      return id ?? `${sourceType}:${sourceID}`;
     }
     return `unloaded_${index}`;
   }, [media]);
@@ -69,61 +81,28 @@ function BaseMediaList({
       setSelection(selection.selectRange(index));
     } else if (event.ctrlKey) {
       setSelection(selection.selectToggle(index));
+    } else if (event.metaKey) {
+      setSelection(selection.selectToggle(index));
     } else {
       setSelection(selection.select(index));
     }
   }, [selection]);
 
-  const renderRow = useCallback(({ index, style }) => {
-    const selected = selection.isSelectedIndex(index);
-    if (!media[index]) {
-      return (
-        <LoadingRow
-          className="MediaList-row"
-          style={style}
-          selected={selected}
-        />
-      );
+  // Potentially interesting to explore is to virtualize entire PAGES at a time.
+  // Then we render in batches of 50, which should be acceptable, and don't
+  // rerender as frequently as now.
+  const { virtualItems, totalSize } = useVirtual({
+    size,
+    parentRef,
+    estimateSize,
+    oversan: 6,
+  });
+
+  useEffect(() => {
+    if (!onRequestPage) {
+      return;
     }
 
-    return (
-      <RowComponent
-        {...rowProps}
-        style={style}
-        className="MediaList-row"
-        media={media[index]}
-        selected={selected}
-        selection={selection.get()}
-        onClick={(event) => selectItem(index, event)}
-        onOpenPreviewMediaDialog={onOpenPreviewMediaDialog}
-        makeActions={() => makeActions(media[index], selection, index)}
-      />
-    );
-    // `RowComponent` should really be in this list but then react-hooks/exhaustive-deps complains.
-    // We don't change it on the fly ever I think and shouldn't, but if we ever did have a reason
-    // to do it, this might break :)
-  }, [selection, media, rowProps, onOpenPreviewMediaDialog, makeActions, selectItem]);
-
-  const mediaLength = media.length;
-  const innerList = ({ height, onItemsRendered, ref }) => (
-    <FixedSizeList
-      itemCount={size || mediaLength}
-      itemSize={56}
-      itemKey={itemKey}
-      height={height}
-      onItemsRendered={onItemsRendered}
-      ref={ref}
-      width="100%"
-      direction={direction}
-      rerenderOnUpdate={selection}
-    >
-      {renderRow}
-    </FixedSizeList>
-  );
-
-  // This is not used as a real React component.
-  // eslint-disable-next-line react/prop-types
-  const lazyLoading = (makeList) => ({ height }) => {
     const isItemLoaded = (index) => media[index] != null;
     const loadMoreItems = (start) => {
       const page = Math.floor(start / 50);
@@ -141,44 +120,53 @@ function BaseMediaList({
       });
     };
 
-    const inner = ({ onItemsRendered, ref }) => makeList({ onItemsRendered, ref, height });
-    return (
-      <InfiniteLoader
-        isItemLoaded={isItemLoaded}
-        itemCount={size || mediaLength}
-        loadMoreItems={loadMoreItems}
-      >
-        {inner}
-      </InfiniteLoader>
-    );
-  };
+    // This ends up only loading one page at a time, while we might have multiple pages visible.
+    // For now this should be OK. Once the first page loads, we rerender, so this code is ran
+    // again and the second page will be loaded at that point.
+    const unloadedItem = virtualItems.find(({ index }) => !isItemLoaded(index));
+    if (unloadedItem) {
+      loadMoreItems(unloadedItem.index);
+    }
+  }, [virtualItems, media, onRequestPage]);
 
-  const customWrapper = (makeList) => (props) => (
-    <ListComponent>
-      {makeList(props)}
+  const list = (
+    <ListComponent style={{ height: `${totalSize}px`, width: '100%', position: 'relative' }}>
+      {virtualItems.map(({ index, start }) => {
+        const style = { transform: `translateY(${start}px)` };
+        const selected = selection.isSelectedIndex(index);
+        if (!media[index]) {
+          return (
+            <LoadingRow
+              key={itemKey(index)}
+              className="MediaList-row"
+              style={style}
+              selected={selected}
+            />
+          );
+        }
+
+        return (
+          <RowComponent
+            {...rowProps}
+            key={itemKey(index)}
+            style={style}
+            className="MediaList-row"
+            index={index}
+            media={media[index]}
+            selected={selected}
+            onClick={(event) => selectItem(index, event)}
+          />
+        );
+      })}
     </ListComponent>
   );
 
-  const autoSizing = (makeList) => () => {
-    const inner = ({ height }) => makeList({ height });
-    return (
-      <AutoSizer disableWidth>
-        {inner}
-      </AutoSizer>
-    );
-  };
-
-  let listRenderer = innerList;
-  if (onRequestPage) {
-    listRenderer = lazyLoading(listRenderer);
-  }
-  listRenderer = customWrapper(listRenderer);
-  listRenderer = autoSizing(listRenderer);
-
   return (
-    <div className={cx('MediaList', className)}>
-      {listRenderer()}
-    </div>
+    <MediaListContext.Provider value={context}>
+      <div className={cx('MediaList', className)} ref={parentRef}>
+        {list}
+      </div>
+    </MediaListContext.Provider>
   );
 }
 
@@ -193,9 +181,7 @@ BaseMediaList.propTypes = {
   ]).isRequired,
   rowComponent: PropTypes.func.isRequired,
   rowProps: PropTypes.object,
-
-  onOpenPreviewMediaDialog: PropTypes.func,
-  makeActions: PropTypes.func,
+  contextProps: PropTypes.object,
 };
 
 export default BaseMediaList;

@@ -13,7 +13,7 @@ const baseSelector = (state) => state.booth;
 
 export const historyIDSelector = createSelector(baseSelector, (booth) => booth.historyID);
 export const mediaSelector = createSelector(baseSelector, (booth) => booth.media);
-export const startTimeSelector = createSelector(baseSelector, (booth) => booth.startTime || 0);
+export const startTimeSelector = createSelector(baseSelector, (booth) => booth.startTime ?? 0);
 
 export const mediaDurationSelector = createSelector(
   mediaSelector,
@@ -37,19 +37,6 @@ export const timeRemainingSelector = createSelector(
   mediaDurationSelector,
   timeElapsedSelector,
   (duration, elapsed) => (duration > 0 ? duration - elapsed : 0),
-);
-
-export const mediaProgressSelector = createSelector(
-  mediaDurationSelector,
-  timeElapsedSelector,
-  (duration, elapsed) => (
-    duration
-      // Ensure that the result is between 0 and 1
-      // It can be outside this range if a network or server hiccup
-      // results in an advance event getting delayed.
-      ? Math.max(0, Math.min(1, elapsed / duration))
-      : 0
-  ),
 );
 
 export const djSelector = createSelector(

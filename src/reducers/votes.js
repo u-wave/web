@@ -31,7 +31,7 @@ export default function reduce(state = initialState, action = {}) {
   const { type, payload } = action;
   switch (type) {
     case INIT_STATE: {
-      const { stats } = payload.booth || {};
+      const { stats } = payload.booth ?? {};
       if (stats) {
         return setVotes(state, stats);
       }

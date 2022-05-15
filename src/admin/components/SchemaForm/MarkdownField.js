@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Typography from '@material-ui/core/Typography';
-import FormHelperText from '@material-ui/core/FormHelperText';
+import Typography from '@mui/material/Typography';
+import FormHelperText from '@mui/material/FormHelperText';
 import Markdown from '../../../components/Markdown';
 
 function MarkdownField({
@@ -15,7 +15,7 @@ function MarkdownField({
           className="TextField-input"
           value={value}
           disabled={schema.readOnly}
-          onChange={(event) => onChange(event.target.value || undefined)}
+          onChange={(event) => onChange(event.target.value ?? undefined)}
         />
       </div>
       {schema.description && <FormHelperText>{schema.description}</FormHelperText>}

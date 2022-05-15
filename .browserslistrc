@@ -1,3 +1,27 @@
-> 0.25%
-not op_mini all
-not safari 5.1
+# using the same settings as material-ui
+# https://github.com/mui-org/material-ui/blob/next/.browserslistrc
+
+[production]
+last 1 chrome version
+last 1 edge version
+last 1 firefox version
+last 1 safari version
+
+[legacy]
+IE 11
+and_chr 85
+and_ff 80
+and_qq 10.4
+and_uc 12.12
+android 85
+baidu 7.12
+chrome 84
+edge 85
+firefox 78
+ios_saf 12.2
+kaios 2.5
+op_mini all
+op_mob 70
+opera 70
+safari 13.1
+samsung 11.1-11.2

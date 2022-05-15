@@ -1,5 +1,5 @@
 import React from 'react';
-import Alert from '@material-ui/core/Alert';
+import Alert from '@mui/material/Alert';
 import Motd from '../../containers/Motd';
 
 const Main = () => (

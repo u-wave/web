@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import DownvoteIcon from '@material-ui/icons/ThumbDown';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import UpvoteIcon from '@material-ui/icons/ThumbUp';
-import SadvoteIcon from '@material-ui/icons/SentimentVeryDissatisfied';
+import SadvoteIcon from '@mui/icons-material/SentimentVeryDissatisfied';
+import DownvoteIcon from '@mui/icons-material/ThumbDown';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import UpvoteIcon from '@mui/icons-material/ThumbUp';
 
 const Votes = ({
   upvote, downvote, sadvote, favorite, ...props

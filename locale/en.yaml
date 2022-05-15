@@ -201,7 +201,8 @@ uwave:
       title: Links
       website: üWave
       source: üWave Web Client Source Code
-      license: License
+      license: üWave Web Client License, MIT
+      twemojiLicense: Emoji by Twitter, CC-BY 4.0
 
   login:
     message: You have to sign in if you want to play!
@@ -258,3 +259,4 @@ uwave:
       network: Could not load this track.
       decode: This media file cannot be played because the format is incorrect.
       notFound: This track could not be found—it may be deleted.
+      other: "{{message}}"

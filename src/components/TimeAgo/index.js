@@ -11,7 +11,7 @@ function translateMs(str) {
   // `ms` output of the form "3 hours"
   const [count, key] = str.split(' ');
   return {
-    key: `${key.replace(/s$/, '')}s`,
+    key: key.replace(/s$/, ''),
     count: parseInt(count, 10),
   };
 }

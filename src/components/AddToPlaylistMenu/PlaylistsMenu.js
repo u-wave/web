@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
-import Popover from '@material-ui/core/Popover';
-import Typography from '@material-ui/core/Typography';
-import MenuList from '@material-ui/core/MenuList';
-import MenuItem from '@material-ui/core/MenuItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import CreatePlaylistIcon from '@material-ui/icons/Add';
-import ActiveIcon from '@material-ui/icons/Check';
+import Popover from '@mui/material/Popover';
+import Typography from '@mui/material/Typography';
+import MenuList from '@mui/material/MenuList';
+import MenuItem from '@mui/material/MenuItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import CreatePlaylistIcon from '@mui/icons-material/Add';
+import ActiveIcon from '@mui/icons-material/Check';
 
 const { useCallback } = React;
 
@@ -51,7 +51,7 @@ function PlaylistsMenu({
             <ListItemText disableTypography className="AddToPlaylistMenu-playlistName">
               <Typography noWrap variant="subtitle1">{playlist.name}</Typography>
             </ListItemText>
-            <ListItemText className="AddToPlaylistMenu-smallIcon" primary={String(playlist.size || 0)} />
+            <ListItemText className="AddToPlaylistMenu-smallIcon" primary={String(playlist.size ?? 0)} />
           </MenuItem>
         ))}
       </MenuList>

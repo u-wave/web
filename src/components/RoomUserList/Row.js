@@ -1,9 +1,9 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemText from '@material-ui/core/ListItemText';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import ListItemText from '@mui/material/ListItemText';
 import useUserCard from '../../hooks/useUserCard';
 import Avatar from '../Avatar';
 import Username from '../Username';
@@ -11,7 +11,7 @@ import Votes from './Votes';
 
 const { useCallback } = React;
 
-function RoomUserRow({ className, user }) {
+function RoomUserRow({ className, user, style }) {
   const userCard = useUserCard(user);
   const onOpenCard = useCallback((event) => {
     event.preventDefault();
@@ -23,9 +23,9 @@ function RoomUserRow({ className, user }) {
   return (
     <>
       {userCard.card}
-      <ListItem
-        button
+      <ListItemButton
         className={cx('UserRow', 'UserRow--cardable', className)}
+        style={style}
         onClick={onOpenCard}
         ref={userCard.refAnchor}
       >
@@ -36,7 +36,7 @@ function RoomUserRow({ className, user }) {
           <Username className="UserRow-username" user={user} />
         </ListItemText>
         <Votes className="UserRow-votes" {...user.votes} />
-      </ListItem>
+      </ListItemButton>
     </>
   );
 }
@@ -44,6 +44,7 @@ function RoomUserRow({ className, user }) {
 RoomUserRow.propTypes = {
   className: PropTypes.string,
   user: PropTypes.object.isRequired,
+  style: PropTypes.object,
 };
 
 export default RoomUserRow;

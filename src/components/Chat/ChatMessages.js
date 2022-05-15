@@ -22,6 +22,11 @@ function checkIsScrolledToBottom(el) {
   return true;
 }
 
+/**
+ * @param {React.RefObject<HTMLElement>} ref
+ * @param {boolean} [initialValue]
+ * @returns {[boolean, () => void]}
+ */
 function useScrolledToBottom(ref, initialValue = true) {
   const [isScrolledToBottom, setScrolledToBottom] = useState(initialValue);
 

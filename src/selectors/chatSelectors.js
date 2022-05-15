@@ -1,11 +1,11 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import mapValues from 'just-map-values';
 import parseChatMarkup from 'u-wave-parse-chat-markup';
-
 import { getAvailableGroupMentions } from '../utils/chatMentions';
 import {
   availableEmojiNamesSelector,
   availableEmojiImagesSelector,
+  customEmojiNamesSelector,
 } from './configSelectors';
 import {
   usersSelector,
@@ -25,16 +25,26 @@ export const motdSelector = createSelector(
 
 const MAX_MESSAGES = 500;
 const allMessagesSelector = createSelector(baseSelector, (chat) => chat.messages);
+// Hide notifications that are disabled.
+const applyNotificationSettings = (messages, notificationSettings) => messages.filter((message) => {
+  if (message.type === 'userJoin') return notificationSettings.userJoin;
+  if (message.type === 'userLeave') return notificationSettings.userLeave;
+  if (message.type === 'userNameChanged') return notificationSettings.userNameChanged;
+  if (message.type === 'skip') return notificationSettings.skip;
+  return true;
+});
+// Only show the most recent now playing notification.
+const collapseNowPlayingNotifications = (messages) => messages.filter((message, i) => {
+  if (message.type !== 'nowPlaying') return true;
+  const nextMessage = messages[i + 1];
+  return nextMessage && nextMessage.type !== 'nowPlaying';
+});
 const filteredMessagesSelector = createSelector(
   allMessagesSelector,
   notificationSettingsSelector,
-  (messages, notificationSettings) => messages.filter((message) => {
-    if (message.type === 'userJoin') return notificationSettings.userJoin;
-    if (message.type === 'userLeave') return notificationSettings.userLeave;
-    if (message.type === 'userNameChanged') return notificationSettings.userNameChanged;
-    if (message.type === 'skip') return notificationSettings.skip;
-    return true;
-  }),
+  (messages, notificationSettings) => collapseNowPlayingNotifications(
+    applyNotificationSettings(messages, notificationSettings),
+  ),
 );
 export const messagesSelector = createSelector(
   filteredMessagesSelector,
@@ -44,6 +54,7 @@ export const messagesSelector = createSelector(
 export const markupCompilerOptionsSelector = createStructuredSelector({
   availableEmoji: availableEmojiNamesSelector,
   emojiImages: availableEmojiImagesSelector,
+  customEmojiNames: customEmojiNamesSelector,
 });
 
 const mutesSelector = createSelector(baseSelector, (chat) => chat.mutedUsers);

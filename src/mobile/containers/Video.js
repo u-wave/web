@@ -18,7 +18,7 @@ const {
   useCallback,
 } = React;
 
-function VideoContainer() {
+function VideoContainer(props) {
   // Update `seek` every tick.
   useClock();
 
@@ -40,6 +40,7 @@ function VideoContainer() {
 
   return (
     <Video
+      {...props}
       historyID={historyID}
       media={media}
       seek={seek}

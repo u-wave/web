@@ -1,3 +1,5 @@
+/* not sure why it flags this? */
+/* stylelint-disable-next-line selector-class-pattern */
 .DragLayerContainer {
   position: fixed;
   pointer-events: none;

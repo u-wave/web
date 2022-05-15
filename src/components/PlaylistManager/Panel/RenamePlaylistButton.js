@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
-import Tooltip from '@material-ui/core/Tooltip';
-import IconButton from '@material-ui/core/IconButton';
-import EditIcon from '@material-ui/icons/Edit';
+import Tooltip from '@mui/material/Tooltip';
+import IconButton from '@mui/material/IconButton';
+import EditIcon from '@mui/icons-material/Edit';
 import PromptDialog from '../../Dialogs/PromptDialog';
 
 const {
@@ -41,7 +41,7 @@ function RenamePlaylistButton({ initialName, onRename }) {
           title={t('dialogs.renamePlaylist.nameInputTitle')}
           submitLabel={t('dialogs.renamePlaylist.action')}
           icon={<EditIcon htmlColor="#777" />}
-          value={initialName}
+          defaultValue={initialName}
           onSubmit={handleSubmit}
           onCancel={handleClose}
         />

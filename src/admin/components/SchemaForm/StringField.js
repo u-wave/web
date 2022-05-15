@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Typography from '@material-ui/core/Typography';
-import FormHelperText from '@material-ui/core/FormHelperText';
+import Typography from '@mui/material/Typography';
+import FormHelperText from '@mui/material/FormHelperText';
 import TextField from '../../../components/Form/TextField';
 
 function StringField({
@@ -14,7 +14,7 @@ function StringField({
         type={schema.writeOnly ? 'password' : 'text'}
         value={value}
         disabled={schema.readOnly}
-        onChange={(event) => onChange(event.target.value || undefined)}
+        onChange={(event) => onChange(event.target.value ?? undefined)}
       />
       {schema.description && <FormHelperText>{schema.description}</FormHelperText>}
     </div>
