@@ -28,13 +28,9 @@ function Links() {
         <GithubIcon className="SettingsPanel-linkIcon" />
         {t('settings.links.source')}
       </Link>
-      <Link href="https://github.com/u-wave/web/tree/default/LICENSE">
+      <Link href="https://github.com/u-wave/web/tree/master/LICENSE">
         <LicenseIcon className="SettingsPanel-linkIcon" />
         {t('settings.links.license')}
-      </Link>
-      <Link href="https://github.com/twitter/twemoji/blob/master/LICENSE-GRAPHICS">
-        <LicenseIcon className="SettingsPanel-linkIcon" />
-        {t('settings.links.twemojiLicense')}
       </Link>
     </div>
   );

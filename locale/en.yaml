@@ -201,8 +201,7 @@ uwave:
       title: Links
       website: üWave
       source: üWave Web Client Source Code
-      license: üWave Web Client License, MIT
-      twemojiLicense: Emoji by Twitter, CC-BY 4.0
+      license: License
 
   login:
     message: You have to sign in if you want to play!

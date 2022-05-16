@@ -2,6 +2,8 @@ import 'make-promises-safe';
 import fs from 'fs';
 import path from 'path';
 import { createRequire } from 'module';
+import emojione from 'u-wave-web-emojione';
+import serveStatic from 'serve-static';
 import recaptchaTestKeys from 'recaptcha-test-keys';
 import express from 'express';
 import { createProxyMiddleware } from 'http-proxy-middleware';
@@ -50,6 +52,15 @@ app.use(apiUrl, createProxyMiddleware({
   target: serverUrl.href,
 }));
 
+app.use('/assets/emoji/', serveStatic(new URL('../assets/fiesta', import.meta.url).pathname));
+app.use('/assets/emoji/', emojione.middleware());
+
+const fiesta = {};
+
+fs.readdirSync(new URL('../assets/fiesta', import.meta.url).pathname).forEach((file) => {
+  fiesta[file.replace(/\..*/, '')] = file;
+});
+
 if (watch) {
   const compiler = webpack(wpConfig);
   const dev = webpackDevMiddleware(compiler, {
@@ -66,6 +77,7 @@ if (watch) {
     webClient = createWebClient({
       apiUrl,
       socketUrl,
+      emoji: { ...emojione.emoji, ...fiesta },
       title: 'üWave (Development)',
       basePath: new URL('../npm/public/', import.meta.url).pathname,
       publicPath: '/',
@@ -90,6 +102,7 @@ if (watch) {
   const webClient = createWebClient({
     apiUrl,
     socketUrl,
+    emoji: { ...emojione.emoji, ...fiesta },
     basePath: new URL('../npm/public/', import.meta.url).pathname,
     recaptcha: { key: recaptchaTestKeys.sitekey },
   });

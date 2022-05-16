@@ -11,7 +11,6 @@ import Emoji from './Emoji';
 export default function compile(tree, opts = {}) {
   const {
     availableEmoji = [],
-    customEmojiNames = [],
     emojiImages = {},
   } = opts;
 
@@ -29,13 +28,12 @@ export default function compile(tree, opts = {}) {
       case 'link':
         return <Link key={i} href={node.href}>{node.text}</Link>;
       case 'emoji':
-        if (availableEmoji.has(node.name) && node.name in emojiImages) {
+        if (availableEmoji.includes(node.name) && node.name in emojiImages) {
           return (
             <Emoji
               key={i}
               name={node.name}
               image={emojiImages[node.name]}
-              isCustom={customEmojiNames.has(node.name)}
             />
           );
         }

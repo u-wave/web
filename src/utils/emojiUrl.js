@@ -1,6 +1,5 @@
 // URL, relative to the web client, where emoji can be found.
-const CUSTOM_EMOJI_BASE_PATH = '/assets/emoji/';
-const BUILTIN_EMOJI_BASE_PATH = '/static/emoji/';
+const EMOJI_BASE_PATH = '/assets/emoji/';
 
 /**
  * Get the full URL for an emoji.
@@ -13,12 +12,10 @@ const BUILTIN_EMOJI_BASE_PATH = '/static/emoji/';
  * // → 'https://example.com/my-emote.png'
  *
  * @param {string} filenameOrUrl - The file name for a local emoji or a full URL to a remote one.
- * @param {boolean} isCustom
  */
-function emojiUrl(filenameOrUrl, isCustom) {
-  const basePath = isCustom ? CUSTOM_EMOJI_BASE_PATH : BUILTIN_EMOJI_BASE_PATH;
-  const baseUrl = new URL(basePath, window.location.href);
-  return new URL(filenameOrUrl, baseUrl);
+function emojiUrl(filenameOrUrl) {
+  const dirname = new URL(EMOJI_BASE_PATH, window.location.href);
+  return new URL(filenameOrUrl, dirname);
 }
 
 export default emojiUrl;

@@ -22,9 +22,9 @@ Create a Web client middleware for use with express-style server libraries.
    * `options.apiBase` - Base URL to the mount point of the
      [üWave Web API][u-wave-core] to talk to.
      Defaults to `/api`, but it's recommended to set this explicitly.
-   * `options.emoji` - An object describing the custom emoji that will be
-     available in the chat. Keys are emoji shortcodes (without `:`), and values
-     are image filenames.
+   * `options.emoji` - An object describing the emoji that will be available in
+     the chat. Keys are emoji shortcodes (without `:`), and values are image
+     filenames.
    * `options.recaptcha` - An object containing ReCaptcha options used to ensure
      new user registrations are human. This option should only be passed if the
      [HTTP API][u-wave-core] is configured to check for ReCaptcha entries.
@@ -37,19 +37,23 @@ Create a Web client middleware for use with express-style server libraries.
 
 **Example**
 
-This is a small example üWave server on top of Express.
+This is a small example üWave server on top of Express, using ReCaptcha and
+[EmojiOne][] emoji from [u-wave-web-emojione][].
 
 ```js
 import express from 'express';
 import createWebClient from 'u-wave-web/middleware';
+import emojione from 'u-wave-web-emojione';
 
 const app = express();
 
 app.listen(6041);
 
+app.use('/assets/emoji', emojione.middleware());
 app.use('/', createWebClient({
   // Use nginx to send this traffic to the API server.
   apiBase: 'https://example.com/api',
+  emoji: emojione.emoji,
   recaptcha: { key: 'my ReCaptcha site key' },
 }));
 ```
@@ -62,4 +66,6 @@ app.use('/', createWebClient({
 [u-wave-web]: https://npmjs.com/package/u-wave-web
 [MIT]: ./LICENSE
 
+[u-wave-web-emojione]: https://github.com/u-wave/u-wave-web-emojione
 [recaptcha]: https://www.google.com/recaptcha/admin#list
+[EmojiOne]: https://github.com/Ranks/emojione
