@@ -100,7 +100,7 @@ function ModRow({
         <Avatar
           className="UserRow-avatar"
           user={user}
-          />
+        />
         <Username className="UserRow-username" user={user} />
       </button>
       <div className="WaitlistRow-tools">
