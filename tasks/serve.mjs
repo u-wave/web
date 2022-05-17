@@ -1,4 +1,6 @@
 import 'make-promises-safe';
+import fs from 'fs';
+import path from 'path';
 import { createRequire } from 'module';
 import recaptchaTestKeys from 'recaptcha-test-keys';
 import express from 'express';
@@ -52,6 +54,11 @@ if (watch) {
   const compiler = webpack(wpConfig);
   const dev = webpackDevMiddleware(compiler, {
     serverSideRender: true,
+    outputFileSystem: {
+      ...fs,
+      join: path.join,
+      mkdirp: (dirPath, cb) => fs.mkdir(dirPath, { recursive: true }, cb),
+    },
   });
 
   let webClient = (req, res, next) => next(new Error('Build not complete'));

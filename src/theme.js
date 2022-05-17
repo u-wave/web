@@ -9,6 +9,9 @@ export default {
     background: {
       paper: '#303030',
     },
+    white: {
+      main: '#fff',
+    },
   },
   typography: {
     fontFamily: '"Open Sans", Roboto, Arial, sans-serif',

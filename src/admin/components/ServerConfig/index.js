@@ -6,7 +6,8 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionActions from '@mui/material/AccordionActions';
-import LoadingButton from '@mui/lab/LoadingButton';
+import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CheckIcon from '@mui/icons-material/Check';
 import WarningIcon from '@mui/icons-material/Warning';
@@ -39,14 +40,24 @@ function Section({
 
     setBusy(true);
     onSave(value).then(() => {
-      setDone(true);
-      setEdited(false);
-      setBusy(false);
+      setTimeout(() => {
+        setDone(true);
+        setEdited(false);
+        setBusy(false);
+      }, 2_000);
     }, () => {
       // Error is reported in the snackbar, enable the save button again
       setBusy(false);
     });
   }, [value, onSave]);
+
+  let startIcon = null;
+  if (busy) {
+    startIcon = <CircularProgress color="white" size={16} />;
+  }
+  if (done) {
+    startIcon = <CheckIcon />;
+  }
 
   return (
     <Accordion>
@@ -74,16 +85,15 @@ function Section({
         />
       </AccordionDetails>
       <AccordionActions>
-        <LoadingButton
+        <Button
           color="primary"
           variant="contained"
-          loading={busy}
-          disabled={!edited}
-          startIcon={done ? <CheckIcon /> : null}
+          disabled={!edited || busy}
+          startIcon={startIcon}
           onClick={handleSubmit}
         >
           {done ? t('admin.config.saved') : t('admin.config.save')}
-        </LoadingButton>
+        </Button>
       </AccordionActions>
     </Accordion>
   );

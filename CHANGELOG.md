@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.0-alpha.7 / 01 May 2022
+While this is an alpha release, new servers should use this rather than an older "stable" version.
+
+Features:
+ * Add twitter emoji. (#2149)
+
+Internal:
+ * Upgrade React to version 18. (#2271)
+ * Use UUIDs for chat message IDs. (#2311)
+ * Use react-virtual instead of react-window. (#2306)
+ * And many dependency updates.
+
 ## 2.0.0-alpha.6 / 20 Nov 2021
 While this is an alpha release, new servers should use this rather than an older "stable" version.
 
