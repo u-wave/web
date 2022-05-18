@@ -31,6 +31,7 @@ function MediaRowBase({
   const [, drag, connectDragPreview] = useDrag({
     type: dragType,
     item: () => ({
+      type: dragType,
       media: selected ? selection.get() : [media],
     }),
   });

@@ -1,11 +1,12 @@
 import cx from 'clsx';
+import omit from 'just-omit';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useDrop } from 'react-dnd';
 import CircularProgress from '@mui/material/CircularProgress';
 import MenuItem from '@mui/material/MenuItem';
 import ActiveIcon from '@mui/icons-material/Check';
-import { MEDIA } from '../../../constants/DDItemTypes';
+import { MEDIA, SEARCH_RESULT } from '../../../constants/DDItemTypes';
 
 const itemClasses = {
   root: 'PlaylistMenuRow',
@@ -20,10 +21,14 @@ function PlaylistRow({
   onAddToPlaylist,
 }) {
   const [{ isOver }, drop] = useDrop(() => ({
-    accept: MEDIA,
-    drop(item, monitor) {
-      const { media } = monitor.getItem();
-      onAddToPlaylist(playlist, media);
+    accept: [MEDIA, SEARCH_RESULT],
+    drop(_item, monitor) {
+      const { media, type } = monitor.getItem();
+      if (type === SEARCH_RESULT) {
+        onAddToPlaylist(playlist, media.map((item) => omit(item, ['artist', 'title'])));
+      } else {
+        onAddToPlaylist(playlist, media);
+      }
     },
     collect(monitor) {
       return { isOver: monitor.isOver() };
