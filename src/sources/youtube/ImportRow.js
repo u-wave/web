@@ -50,4 +50,3 @@ ImportRow.propTypes = {
 };
 
 export default ImportRow;
-
