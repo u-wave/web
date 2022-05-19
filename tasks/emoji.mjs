@@ -8,6 +8,9 @@ import crypto from 'crypto';
 import fs from 'fs/promises';
 import pMap from 'p-map';
 
+const emojibaseShortcodesPath = new URL('../node_modules/emojibase-data/en/shortcodes/emojibase.json', import.meta.url);
+const emojibaseShortcodes = JSON.parse(await fs.readFile(emojibaseShortcodesPath, { encoding: 'utf8' }));
+
 const joypixelShortcodesPath = new URL('../node_modules/emojibase-data/en/shortcodes/joypixels.json', import.meta.url);
 const joypixelShortcodes = JSON.parse(await fs.readFile(joypixelShortcodesPath, { encoding: 'utf8' }));
 
@@ -18,11 +21,7 @@ const twemojiNames = twemojis.map((basename) => basename.replace(/\.\w+$/, ''));
 const outputDir = new URL('../assets/emoji/', import.meta.url);
 
 const shortcodes = {};
-for (const [hex, shortcode] of Object.entries(joypixelShortcodes)) {
-  if (!twemojiNames.includes(hex.toLowerCase())) {
-    continue;
-  }
-
+function appendShortcode(hex, shortcode) {
   const imageName = `${hex.toLowerCase()}.svg`
   if (Array.isArray(shortcode)) {
     for (const c of shortcode) {
@@ -31,6 +30,27 @@ for (const [hex, shortcode] of Object.entries(joypixelShortcodes)) {
   } else {
     shortcodes[shortcode] = imageName;
   }
+}
+
+// Not all emoji have a joypixel shortcode. Track which ones are left over so
+// we can use a different shortcode for those.
+const remainingTwemoji = new Set(twemojiNames);
+for (const [hex, shortcode] of Object.entries(joypixelShortcodes)) {
+  if (!twemojiNames.includes(hex.toLowerCase())) {
+    continue;
+  }
+
+  appendShortcode(hex, shortcode);
+  remainingTwemoji.delete(hex.toLowerCase());
+}
+
+for (const hex of remainingTwemoji) {
+  const shortcode = emojibaseShortcodes[hex.toUpperCase()];
+  if (!shortcode) {
+    continue;
+  }
+
+  appendShortcode(hex, shortcode);
 }
 
 console.log('generating', Object.keys(shortcodes).length, 'emoji...');
