@@ -3,7 +3,6 @@
 module.exports = {
   plugins: [
     ['postcss-preset-env', {
-      importFrom: './src/vars.css',
       features: {
         'nesting-rules': true,
         // For `float: inline-start` support in chrome

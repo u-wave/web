@@ -76,8 +76,12 @@ uwave:
       save: Save
       artistLabel: Artist
       titleLabel: Title
+      swapArtistTitle: Swap
       playFromLabel: "Play from:"
       playToLabel: "to:"
+      chapterLabel: "Or pick a chapter:"
+      chapterCount: "{{count}} chapter"
+      chapterCount_plural: "{{count}} chapters"
       errors:
         invalidStartTime: That start time is invalid.
         invalidEndTime: That end time is invalid.

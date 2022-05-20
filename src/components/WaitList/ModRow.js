@@ -22,6 +22,7 @@ const {
  */
 function ModRow({
   className,
+  style,
   position,
   user,
   onMoveUser,
@@ -84,6 +85,7 @@ function ModRow({
   return (
     <div
       className={rowClassName}
+      style={style}
       ref={userCard.refAnchor}
     >
       {userCard.card}
@@ -119,6 +121,7 @@ function ModRow({
 
 ModRow.propTypes = {
   className: PropTypes.string,
+  style: PropTypes.object.isRequired, // from virtual list positioning
   position: PropTypes.number.isRequired,
   user: PropTypes.object.isRequired,
   onMoveUser: PropTypes.func.isRequired,
