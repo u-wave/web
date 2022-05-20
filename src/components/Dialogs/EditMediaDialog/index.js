@@ -125,9 +125,11 @@ function EditMediaDialog({
   );
   const artistTitleLabel = (
     <div className="EditMediaDialogGroup-label">
-      <IconButton onClick={handleSwapArtistTitle} tabIndex={BASE_TAB_INDEX + 1}>
-        <SwapArtistTitleIcon htmlColor="#9f9d9e" />
-      </IconButton>
+      <Tooltip title={t('dialogs.editMedia.swapArtistTitle')} placement="top">
+        <IconButton onClick={handleSwapArtistTitle} tabIndex={BASE_TAB_INDEX + 1}>
+          <SwapArtistTitleIcon htmlColor="#9f9d9e" />
+        </IconButton>
+      </Tooltip>
     </div>
   );
   const titleInput = (
