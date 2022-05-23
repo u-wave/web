@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import ImportIcon from '@mui/icons-material/PlaylistAdd';
-import MediaList from '../../components/MediaList';
+import MediaListBase from '../../components/MediaList/BaseMediaList';
 import ImportPanelHeader from '../../components/PlaylistManager/Import/ImportPanelHeader';
+import ImportRow from './ImportRow';
 
 function YouTubeImportPlaylistPanel({
   importingPlaylist,
@@ -30,9 +31,11 @@ function YouTubeImportPlaylistPanel({
           </Tooltip>
         </div>
       </ImportPanelHeader>
-      <MediaList
+      <MediaListBase
         className="ImportPanel-body"
         media={importingPlaylistItems}
+        listComponent="div"
+        rowComponent={ImportRow}
       />
     </div>
   );

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDragLayer } from 'react-dnd';
-import { MEDIA, WAITLIST_USER } from '../constants/DDItemTypes';
+import { MEDIA, SEARCH_RESULT, WAITLIST_USER } from '../constants/DDItemTypes';
 import MediaDragPreview from '../components/MediaList/MediaDragPreview';
 
 function DragLayerContainer() {
@@ -20,6 +20,7 @@ function DragLayerContainer() {
   function renderPreview() {
     switch (type) {
       case MEDIA:
+      case SEARCH_RESULT:
         return <MediaDragPreview items={items} currentOffset={currentOffset} />;
       case WAITLIST_USER:
         return null;
