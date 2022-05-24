@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 import LockedIcon from '@mui/icons-material/Lock';
 
 function WaitlistButton({
+  userIsDJ,
   userInWaitlist,
   isLocked,
   onClick,
@@ -26,6 +27,15 @@ function WaitlistButton({
     );
   }
 
+  let label;
+  if (userIsDJ) {
+    label = t('waitlist.leaveBooth');
+  } else if (userInWaitlist) {
+    label = t('waitlist.leave');
+  } else {
+    label = t('waitlist.join');
+  }
+
   return (
     <Button
       classes={{
@@ -37,12 +47,13 @@ function WaitlistButton({
     >
       {icon}
       {isLocked && ' '}
-      {userInWaitlist ? t('waitlist.leave') : t('waitlist.join')}
+      {label}
     </Button>
   );
 }
 
 WaitlistButton.propTypes = {
+  userIsDJ: PropTypes.bool,
   userInWaitlist: PropTypes.bool,
   isLocked: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
