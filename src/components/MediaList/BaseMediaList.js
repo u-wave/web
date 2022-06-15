@@ -1,7 +1,7 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useVirtual } from 'react-virtual';
+import { useVirtualizer } from '@tanstack/react-virtual';
 import itemSelection from 'item-selection/immutable';
 import LoadingRow from './LoadingRow';
 
@@ -91,12 +91,13 @@ function BaseMediaList({
   // Potentially interesting to explore is to virtualize entire PAGES at a time.
   // Then we render in batches of 50, which should be acceptable, and don't
   // rerender as frequently as now.
-  const { virtualItems, totalSize } = useVirtual({
-    size,
-    parentRef,
+  const virtualizer = useVirtualizer({
+    count: size,
+    getScrollElement: () => parentRef.current,
     estimateSize,
     oversan: 6,
   });
+  const virtualItems = virtualizer.getVirtualItems();
 
   useEffect(() => {
     if (!onRequestPage) {
@@ -130,7 +131,7 @@ function BaseMediaList({
   }, [virtualItems, media, onRequestPage]);
 
   const list = (
-    <ListComponent style={{ height: `${totalSize}px`, width: '100%', position: 'relative' }}>
+    <ListComponent style={{ height: `${virtualizer.getTotalSize()}px`, width: '100%', position: 'relative' }}>
       {virtualItems.map(({ index, start }) => {
         const style = { transform: `translateY(${start}px)` };
         const selected = selection.isSelectedIndex(index);

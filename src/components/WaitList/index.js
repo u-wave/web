@@ -1,7 +1,7 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useVirtual } from 'react-virtual';
+import { useVirtualizer } from '@tanstack/react-virtual';
 import ModRow from './ModRow';
 import SimpleRow from './SimpleRow';
 
@@ -23,9 +23,9 @@ function WaitList({
   const Row = canMoveUsers ? ModRow : SimpleRow;
   const parentRef = useRef();
 
-  const { virtualItems, totalSize } = useVirtual({
-    size: users.length,
-    parentRef,
+  const virtualizer = useVirtualizer({
+    count: users.length,
+    getScrollElement: () => parentRef.current,
     estimateSize,
     overscan: 12, // not that expensive to render
   });
@@ -40,8 +40,8 @@ function WaitList({
       )}
       ref={parentRef}
     >
-      <div style={{ height: `${totalSize}px`, width: '100%', position: 'relative' }}>
-        {virtualItems.map(({ index, start }) => {
+      <div style={{ height: `${virtualizer.getTotalSize()}px`, width: '100%', position: 'relative' }}>
+        {virtualizer.getVirtualItems().map(({ index, start }) => {
           const style = { transform: `translateY(${start}px)` };
 
           return (
