@@ -95,7 +95,7 @@ function BaseMediaList({
     count: size,
     getScrollElement: () => parentRef.current,
     estimateSize,
-    oversan: 6,
+    overscan: 6,
   });
   const virtualItems = virtualizer.getVirtualItems();
 
