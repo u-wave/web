@@ -134,7 +134,7 @@
     "js-yaml": "^4.1.0",
     "lodash": "^4.17.19",
     "make-promises-safe": "^5.1.0",
-    "mini-css-extract-plugin": "^2.1.0",
+    "mini-css-extract-plugin": "^2.6.1",
     "minimist": "^1.2.5",
     "p-map": "^5.4.0",
     "postcss": "^8.4.4",
