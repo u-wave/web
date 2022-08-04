@@ -20,7 +20,7 @@ const {
  */
 function ModRow({
   className,
-  style,
+  style: parentStyle,
   position,
   user,
   onRemoveUser,
@@ -48,6 +48,7 @@ function ModRow({
   }, [setNodeRef, userCard.refAnchor]);
 
   const style = {
+    ...parentStyle,
     transform: CSS.Transform.toString(transform),
     transition,
   };
@@ -61,7 +62,6 @@ function ModRow({
   return (
     <div
       className={rowClassName}
-      style={style}
       ref={userCard.refAnchor}
       style={style}
       {...attributes}
