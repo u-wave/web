@@ -17,7 +17,7 @@ function SearchResultActions({ className, media }) {
       onClick={dontBubble}
     >
       <PreviewMediaAction media={media} />
-      <AddToPlaylistAction media={media} />
+      <AddToPlaylistAction media={media} withCustomMeta={false} />
     </div>
   );
 }

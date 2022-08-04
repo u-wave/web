@@ -1,33 +1,27 @@
 import React from 'react';
 import { DragOverlay, useDndMonitor } from '@dnd-kit/core';
 import { restrictToWindowEdges, snapCenterToCursor } from '@dnd-kit/modifiers';
-import { MEDIA } from '../constants/DDItemTypes';
+import { MEDIA, SEARCH_RESULT } from '../constants/DDItemTypes';
 import MediaDragPreview from '../components/MediaList/MediaDragPreview';
 
-const {
-  useMemo,
-  useState,
-} = React;
+const { useState } = React;
 
 function DragLayerContainer() {
-  const [draggingMedia, setDraggingMedia] = useState(null);
+  const [dragPreview, setDragPreview] = useState(null);
   useDndMonitor({
     onDragStart({ active }) {
-      if (active.data.current.type === MEDIA) {
-        setDraggingMedia(active.data.current.media);
+      const { type } = active.data.current;
+      if (type === MEDIA || type === SEARCH_RESULT) {
+        setDragPreview(<MediaDragPreview items={{ media: active.data.current.media }} />)
       }
     },
     onDragEnd() {
-      setDraggingMedia(null);
+      setDragPreview(null);
     },
     onDragCancel() {
-      setDraggingMedia(null);
+      setDragPreview(null);
     },
   });
-
-  const dragPreview = useMemo(() => (
-    draggingMedia ? <MediaDragPreview items={{ media: draggingMedia }} /> : null
-  ), [draggingMedia]);
 
   return (
     <div className="DragLayerContainer">

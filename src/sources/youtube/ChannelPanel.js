@@ -1,7 +1,7 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useVirtual } from 'react-virtual';
+import { useVirtualizer } from '@tanstack/react-virtual';
 import ImportPanelHeader from '../../components/PlaylistManager/Import/ImportPanelHeader';
 import PlaylistRow from './PlaylistRow';
 
@@ -21,9 +21,9 @@ function ChannelPanel({
 }) {
   const parentRef = useRef();
 
-  const { virtualItems, totalSize } = useVirtual({
-    size: importablePlaylists.length,
-    parentRef,
+  const virtualizer = useVirtualizer({
+    count: importablePlaylists.length,
+    getScrollElement: () => parentRef.current,
     estimateSize,
     overscan: 6,
   });
@@ -34,8 +34,8 @@ function ChannelPanel({
         {`${importingChannelTitle}'s Playlists`}
       </ImportPanelHeader>
       <div className="MediaList ImportPanel-body">
-        <div style={{ height: `${totalSize}px`, width: '100%', position: 'relative' }}>
-          {virtualItems.map(({ index, start }) => {
+        <div style={{ height: `${virtualizer.getTotalSize()}px`, width: '100%', position: 'relative' }}>
+          {virtualizer.getVirtualItems().map(({ index, start }) => {
             const playlist = importablePlaylists[index];
             const style = { transform: `translateY(${start}px)` };
             return (

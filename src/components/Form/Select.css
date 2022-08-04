@@ -1,0 +1,32 @@
+@import "../../vars.css";
+
+.Select {
+  border-radius: 0;
+  background: #383838;
+  border: 1px solid #2c2c2c;
+  border-top-color: #3e3e3e;
+  border-right-color: #3e3e3e;
+  height: var(--forms-textfield-size);
+  font-size: 12pt;
+}
+
+.Select:hover, .Select.is-focused {
+  background: #383838;
+}
+
+.Select.is-focused {
+  /* TODO We should have some focus indicator */
+  /* border: 1px solid var(--highbright-color); */
+}
+
+.SelectInner {
+  background: none;
+}
+
+.SelectInner-select {
+  padding: 12px 32px 12px 10px;
+}
+
+.SelectInner-select:focus {
+  background: none;
+}

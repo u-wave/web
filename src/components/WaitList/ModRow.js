@@ -20,6 +20,7 @@ const {
  */
 function ModRow({
   className,
+  style,
   position,
   user,
   onRemoveUser,
@@ -60,6 +61,7 @@ function ModRow({
   return (
     <div
       className={rowClassName}
+      style={style}
       ref={userCard.refAnchor}
       style={style}
       {...attributes}
@@ -95,6 +97,7 @@ function ModRow({
 
 ModRow.propTypes = {
   className: PropTypes.string,
+  style: PropTypes.object.isRequired, // from virtual list positioning
   position: PropTypes.number.isRequired,
   user: PropTypes.object.isRequired,
   onRemoveUser: PropTypes.func.isRequired,

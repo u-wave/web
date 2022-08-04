@@ -1,6 +1,7 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
+import { SEARCH_RESULT } from '../../../constants/DDItemTypes';
 import MediaRowBase from '../../MediaList/MediaRowBase';
 import MediaDuration from '../../MediaList/MediaDuration';
 import MediaThumbnail from '../../MediaList/MediaThumbnail';
@@ -28,6 +29,7 @@ function SearchResultRow({
       className={cx(className, 'SearchResultRow')}
       style={style}
       onClick={onClick}
+      dragType={SEARCH_RESULT}
     >
       <MediaThumbnail url={media.thumbnail} />
       <div className={cx('MediaListRow-data', 'SearchResultRow-data', note && 'has-note')}>

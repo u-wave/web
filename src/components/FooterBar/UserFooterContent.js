@@ -131,6 +131,7 @@ function UserFooterContent() {
       <div className="FooterBar-join">
         <WaitlistButton
           isLocked={waitlistIsLocked}
+          userIsDJ={userIsDJ}
           userInWaitlist={userInWaitlist}
           onClick={userInWaitlist ? handleLeaveWaitlist : handleJoinWaitlist}
         />

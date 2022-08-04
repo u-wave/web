@@ -29,6 +29,8 @@ function ServerConfigContainer() {
     dispatch(request).then(({ data, meta }) => {
       setConfig(data);
       setConfigSchema(meta.schema);
+    }, (error) => {
+      if (error.name !== 'AbortError') throw error;
     });
 
     return () => {

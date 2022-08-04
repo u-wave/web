@@ -2,11 +2,12 @@ import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
+import formatDuration from 'format-duration';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import IconButton from '@mui/material/IconButton';
-import formatDuration from 'format-duration';
+import Tooltip from '@mui/material/Tooltip';
 import ArtistIcon from '@mui/icons-material/Headset';
 import TitleIcon from '@mui/icons-material/MusicNote';
 import StartIcon from '@mui/icons-material/PlayArrow';
@@ -17,6 +18,7 @@ import Form from '../../Form';
 import FormGroup from '../../Form/Group';
 import Button from '../../Form/Button';
 import TextField from '../../Form/TextField';
+import Chapters from './Chapters';
 
 const {
   useCallback,
@@ -100,6 +102,11 @@ function EditMediaDialog({
     setEnd(event.target.value);
   }, []);
 
+  const handleChangeChapter = useCallback((chapter) => {
+    setStart(formatDuration(chapter.start * 1000));
+    setEnd(formatDuration(chapter.end * 1000));
+  }, []);
+
   const handleSwapArtistTitle = useCallback(() => {
     setArtist(title);
     setTitle(artist);
@@ -118,9 +125,11 @@ function EditMediaDialog({
   );
   const artistTitleLabel = (
     <div className="EditMediaDialogGroup-label">
-      <IconButton onClick={handleSwapArtistTitle}>
-        <SwapArtistTitleIcon htmlColor="#9f9d9e" />
-      </IconButton>
+      <Tooltip title={t('dialogs.editMedia.swapArtistTitle')} placement="top">
+        <IconButton onClick={handleSwapArtistTitle} tabIndex={BASE_TAB_INDEX + 1}>
+          <SwapArtistTitleIcon htmlColor="#9f9d9e" />
+        </IconButton>
+      </Tooltip>
     </div>
   );
   const titleInput = (
@@ -130,7 +139,7 @@ function EditMediaDialog({
       value={title}
       onChange={handleChangeTitle}
       icon={<TitleIcon htmlColor="#9f9d9e" />}
-      tabIndex={BASE_TAB_INDEX + 1}
+      tabIndex={BASE_TAB_INDEX + 2}
     />
   );
 
@@ -148,7 +157,7 @@ function EditMediaDialog({
       value={start}
       onChange={handleChangeStart}
       icon={<StartIcon htmlColor="#9f9d9e" />}
-      tabIndex={BASE_TAB_INDEX + 2}
+      tabIndex={BASE_TAB_INDEX + 3}
     />
   );
   const toLabel = (
@@ -161,13 +170,30 @@ function EditMediaDialog({
     <TextField
       id={endFieldId}
       className="EditMediaDialogGroup-field"
-      placeholder={formatDuration(media.duration)}
+      placeholder={formatDuration(media.duration * 1000)}
       value={end}
       onChange={handleChangeEnd}
       icon={<EndIcon htmlColor="#9f9d9e" />}
-      tabIndex={BASE_TAB_INDEX + 3}
+      tabIndex={BASE_TAB_INDEX + 4}
     />
   );
+
+  const chapterCount = media.sourceData?.chapters?.length ?? 0;
+  const chapters = chapterCount > 0 ? (
+    <FormGroup className="FormGroup--noSpacing EditMediaDialog-chapters">
+      <p className="EditMediaDialog-chaptersLabel">
+        {t('dialogs.editMedia.chapterLabel')}
+      </p>
+      <Chapters
+        className="EditMediaDialog-chaptersList"
+        available={media.sourceData.chapters}
+        start={parseDuration(start)}
+        end={parseDuration(end)}
+        onChange={handleChangeChapter}
+        tabIndex={BASE_TAB_INDEX + 5}
+      />
+    </FormGroup>
+  ) : null;
 
   const form = (
     <Form onSubmit={handleSubmit}>
@@ -176,6 +202,7 @@ function EditMediaDialog({
           {errors.map((error) => (
             <div>{t(`dialogs.editMedia.errors.${error}`)}</div>
           ))}
+
         </FormGroup>
       )}
 
@@ -207,8 +234,10 @@ function EditMediaDialog({
         </div>
       </div>
 
-      <FormGroup className="FormGroup--noSpacing">
-        <Button className="EditMediaDialog-submit">
+      {chapters}
+
+      <FormGroup>
+        <Button className="EditMediaDialog-submit" tabIndex={BASE_TAB_INDEX + 6}>
           {t('dialogs.editMedia.save')}
         </Button>
       </FormGroup>

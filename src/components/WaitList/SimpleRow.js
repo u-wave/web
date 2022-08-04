@@ -10,6 +10,7 @@ const { useCallback } = React;
 
 function SimpleRow({
   className,
+  style,
   position,
   user,
 }) {
@@ -32,6 +33,7 @@ function SimpleRow({
           'UserRow--cardable',
           className,
         )}
+        style={style}
         onClick={onOpenCard}
         ref={userCard.refAnchor}
       >
@@ -47,6 +49,7 @@ function SimpleRow({
 
 SimpleRow.propTypes = {
   className: PropTypes.string,
+  style: PropTypes.object.isRequired, // from virtual list positioning
   position: PropTypes.number.isRequired,
   user: PropTypes.object.isRequired,
 };

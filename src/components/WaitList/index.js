@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { DndContext, closestCenter } from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy, arrayMove } from '@dnd-kit/sortable';
-import { useVirtual } from 'react-virtual';
+import { useVirtualizer } from '@tanstack/react-virtual';
 import ModRow from './ModRow';
 import SimpleRow from './SimpleRow';
 
@@ -49,9 +49,9 @@ function WaitList({
   // The `optimisticUsers` and `users` use below is a bit wonky. It's the result of
   // some trial and error. Maybe it can be improved in the future…
 
-  const { virtualItems, totalSize } = useVirtual({
-    size: optimisticUsers.length,
-    parentRef,
+  const virtualizer = useVirtualizer({
+    count: optimisticUsers.length,
+    getScrollElement: () => parentRef.current,
     estimateSize,
     overscan: 12, // not that expensive to render
   });
@@ -66,8 +66,8 @@ function WaitList({
       )}
       ref={parentRef}
     >
-      <div style={{ height: `${totalSize}px`, width: '100%', position: 'relative' }}>
-        {virtualItems.map(({ index, start }) => {
+      <div style={{ height: `${virtualizer.getTotalSize()}px`, width: '100%', position: 'relative' }}>
+        {virtualizer.getVirtualItems().map(({ index, start }) => {
           const style = { transform: `translateY(${start}px)` };
 
           return (

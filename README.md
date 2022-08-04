@@ -13,7 +13,7 @@ For running in the browser: something modern. The aim is to support ~IE11+ and
 other modern browsers (recent Chromes and Firefoxes, at least). If you use
 something reasonably recent and üWave doesn't work, [file a bug][]!
 
-The server parts of üWave require Node version >= 12.0.0.
+The server parts of üWave require Node version >= 14.0.0.
 
 ## Getting Things Working
 

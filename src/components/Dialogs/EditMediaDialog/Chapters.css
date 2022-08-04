@@ -1,0 +1,21 @@
+@import "../../../vars.css";
+
+.Chapters-placeholder {
+  color: var(--muted-text-color);
+}
+
+.Chapters-select {
+  padding-top: 8px;
+  display: flex;
+}
+
+.ChapterItem-title {
+  /* Push the duration to the edge */
+  flex-grow: 1;
+}
+
+.ChapterItem-duration {
+  color: var(--muted-text-color);
+  margin-right: 5px;
+  margin-left: 7px;
+}

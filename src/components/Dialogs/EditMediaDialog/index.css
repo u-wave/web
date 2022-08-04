@@ -1,6 +1,22 @@
+@import "./Chapters.css";
+
 .EditMediaDialog {
   width: 75%;
   max-width: 768px;
+}
+
+.EditMediaDialog-chapters {
+  display: flex;
+}
+
+.EditMediaDialog-chaptersLabel {
+  line-height: 50px;
+  padding: 0 20px;
+  margin: 0;
+}
+
+.EditMediaDialog-chaptersList {
+  flex-grow: 1;
 }
 
 .EditMediaDialogForm {
