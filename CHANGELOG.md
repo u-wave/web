@@ -4,11 +4,12 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased
+## 2.0.0-alpha.9 / 27 Jun 2022
 This release requires a server using üWave Core 0.5.0-alpha.8 or higher.
 
 Features:
  * **Breaking:** Use the server-default artist/title when adding search results. (#2359)
+ * Change waitlist button label to "Stop playing" while user is DJ. (#2373)
 
 ## 2.0.0-alpha.8 / 23 May 2022
 While this is an alpha release, new servers should use this rather than an older "stable" version.
