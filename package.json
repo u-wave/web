@@ -91,7 +91,7 @@
     "whatwg-fetch": "^3.4.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.14.0",
+    "@babel/core": "^7.18.13",
     "@babel/eslint-parser": "^7.13.14",
     "@babel/eslint-plugin": "^7.13.16",
     "@babel/plugin-transform-modules-commonjs": "^7.14.0",
@@ -140,7 +140,7 @@
     "p-map": "^5.4.0",
     "postcss": "^8.4.16",
     "postcss-loader": "^7.0.0",
-    "postcss-preset-env": "^7.4.1",
+    "postcss-preset-env": "^7.8.0",
     "recaptcha-test-keys": "^1.0.0",
     "rimraf": "^3.0.0",
     "style-loader": "^3.0.0",
