@@ -18,10 +18,11 @@ import AddToWaitlistButton from './AddToWaitlistButton';
 import RemoveFromWaitlistButton from './RemoveFromWaitlistButton';
 import BanButton from './BanButton';
 
-const allWaitlistUsersSelector = (state) => [
-  djSelector(state),
-  ...waitlistUsersSelector(state),
-].filter(Boolean);
+const allWaitlistUsersSelector = (state) => new Set(
+  [djSelector(state), ...waitlistUsersSelector(state)]
+    .filter(Boolean)
+    .map((user) => user._id),
+);
 
 function UserCard({ className, user }) {
   const { dateTimeFormatter } = useIntl();
@@ -29,7 +30,7 @@ function UserCard({ className, user }) {
   const userHasRole = useSelector(userHasRoleSelector);
   const canAddToWaitlist = useHasRole('waitlist.add');
   const canRemoveFromWaitlist = useHasRole('waitlist.remove');
-  const isInWaitlist = waitlistUsers.includes(user);
+  const isInWaitlist = waitlistUsers.has(user._id);
   const canBan = useHasRole('users.bans.add') && !userHasRole(user)('users.bans.add');
 
   const joinDate = new Date(user.createdAt);
