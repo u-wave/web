@@ -4,6 +4,7 @@ import ReactRefreshPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import WebpackBar from 'webpackbar';
 import ExtractCssPlugin from 'mini-css-extract-plugin';
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
+import ImageMinimizerPlugin from 'image-minimizer-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
 import HtmlPlugin from 'html-webpack-plugin';
 import { SubresourceIntegrityPlugin } from 'webpack-subresource-integrity';
@@ -113,9 +114,6 @@ function getConfig(env, {
         {
           test: /\.(gif|jpe?g|png|svg)$/,
           type: 'asset/resource',
-          use: [
-            !env.production && { loader: 'image-webpack-loader' },
-          ].filter(Boolean),
         },
 
         {
@@ -265,6 +263,11 @@ function getConfig(env, {
           },
         }),
         new CssMinimizerPlugin(),
+        new ImageMinimizerPlugin({
+          minimizer: {
+            implementation: ImageMinimizerPlugin.sharpMinify,
+          },
+        }),
       ],
     },
 
