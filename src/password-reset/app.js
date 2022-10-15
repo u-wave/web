@@ -2,7 +2,6 @@ import React from 'react';
 import { createRoot } from 'react-dom';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
-import { parse as parseQS } from 'querystring';
 import thunk from 'redux-thunk';
 import Translator from '@u-wave/translate';
 import webApiRequest from '../redux/request';
@@ -25,8 +24,8 @@ const store = createStore(
   ),
 );
 
-const qs = parseQS(window.location.search.slice(1));
-store.dispatch(setResetKey(key || qs.key));
+const qs = new URL(window.location.href).searchParams;
+store.dispatch(setResetKey(key || qs.get('key')));
 
 const translator = new Translator(english.uwave);
 

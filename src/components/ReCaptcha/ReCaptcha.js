@@ -16,11 +16,15 @@ export default class ReCaptcha extends React.Component {
   componentDidMount() {
     const { grecaptcha, sitekey, theme } = this.props;
 
-    grecaptcha.render(this.container, {
-      sitekey,
-      theme,
-      callback: this.handleResponse,
-    });
+    try {
+      grecaptcha.render(this.container, {
+        sitekey,
+        theme,
+        callback: this.handleResponse,
+      });
+    } catch {
+      // If it threw an error, it's probably because of double-mounting in development mode.
+    }
   }
 
   handleResponse = (res) => {

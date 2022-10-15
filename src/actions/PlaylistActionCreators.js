@@ -372,6 +372,10 @@ export function deletePlaylist(playlistID) {
   };
 }
 
+/**
+ * @param {PlaylistItemDesc[]} items - The items to add.
+ * @param {{ x: number, y: number }} position - Where to show the menu.
+ */
 export function addMediaMenu(items, position) {
   return (dispatch, getState) => {
     const playlists = playlistsSelector(getState());
@@ -413,10 +417,22 @@ export function addMediaComplete(playlistID, newSize, insert) {
 }
 
 /**
- * Keep only the playlist item properties that are necessary to add an item to
- * a playlist. The rest ("thumbnail" etc) is left out for smaller payloads.
+ * @typedef {{
+ *   sourceType: string,
+ *   sourceID: string,
+ *   artist?: string,
+ *   title?: string,
+ *   start?: number,
+ *   end?: number,
+ * }} PlaylistItemDesc
  */
 
+/**
+ * Keep only the playlist item properties that are necessary to add an item to
+ * a playlist. The rest ("thumbnail" etc) is left out for smaller payloads.
+ *
+ * @param {PlaylistItemDesc} item
+ */
 function minimizePlaylistItem(item) {
   return {
     sourceType: item.sourceType,
@@ -428,6 +444,11 @@ function minimizePlaylistItem(item) {
   };
 }
 
+/**
+ * @param {{ _id: string }} playlist
+ * @param {PlaylistItemDesc[]} items
+ * @param {string|null} [afterID]
+ */
 export function addMedia(playlist, items, afterID = null) {
   const payload = {
     items: items.map(minimizePlaylistItem),

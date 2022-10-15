@@ -1,7 +1,7 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useVirtual } from 'react-virtual';
+import { useVirtualizer } from '@tanstack/react-virtual';
 import RoomUserRow from './Row';
 import GuestsRow from './GuestsRow';
 
@@ -23,17 +23,17 @@ function RoomUserList({ className, users, guests }) {
   // when th guests row is shown.
   const length = users.length + (showGuests ? 1 : 0);
 
-  const { virtualItems, totalSize } = useVirtual({
-    size: length,
-    parentRef,
+  const virtualizer = useVirtualizer({
+    count: length,
+    getScrollElement: () => parentRef.current,
     estimateSize,
     overscan: 12, // not that expensive to render
   });
 
   return (
     <div className={cx('UserList', 'UserList--online', className)} ref={parentRef}>
-      <div style={{ height: `${totalSize}px`, width: '100%', position: 'relative' }}>
-        {virtualItems.map(({ index, start }) => {
+      <div style={{ height: `${virtualizer.getTotalSize()}px`, width: '100%', position: 'relative' }}>
+        {virtualizer.getVirtualItems().map(({ index, start }) => {
           const rowClass = cx(
             'UserList-row',
             (index % 2 === 0) && 'UserList-row--alternate',

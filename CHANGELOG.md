@@ -4,6 +4,24 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.0-alpha.9 / 27 Jun 2022
+This release requires a server using üWave Core 0.5.0-alpha.8 or higher.
+
+Features:
+ * **Breaking:** Use the server-default artist/title when adding search results. (#2359)
+ * Change waitlist button label to "Stop playing" while user is DJ. (#2373)
+
+## 2.0.0-alpha.8 / 23 May 2022
+While this is an alpha release, new servers should use this rather than an older "stable" version.
+
+Features:
+ * Pick chapters in the Edit Media dialog. (#1677)
+ * Support new emoji that do not have joypixel shortcodes yet. (#2360)
+
+Bugfixes:
+ * Fix waitlist row positioning. (a19f25ab)
+ * Fix a crash when disabling video playback. (e148be55)
+
 ## 2.0.0-alpha.7 / 01 May 2022
 While this is an alpha release, new servers should use this rather than an older "stable" version.
 
