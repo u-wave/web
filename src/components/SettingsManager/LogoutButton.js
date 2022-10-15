@@ -1,68 +1,52 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate } from '@u-wave/react-translate';
+import { useTranslator } from '@u-wave/react-translate';
 import Button from '@mui/material/Button';
 import LogoutIcon from '@mui/icons-material/PowerSettingsNew';
 import ConfirmDialog from '../Dialogs/ConfirmDialog';
 import FormGroup from '../Form/Group';
 
-const enhance = translate();
+const { useState } = React;
 
-class LogoutButton extends React.Component {
-  static propTypes = {
-    t: PropTypes.func.isRequired,
-    onLogout: PropTypes.func.isRequired,
+function LogoutButton({ onLogout }) {
+  const { t } = useTranslator();
+  const [showDialog, setShowDialog] = useState(false);
+
+  const handleOpen = () => {
+    setShowDialog(true);
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      showDialog: false,
-    };
-  }
-
-  handleOpen = () => {
-    this.setState({ showDialog: true });
+  const handleClose = () => {
+    setShowDialog(false);
   };
 
-  handleClose = () => {
-    this.closeDialog();
-  };
-
-  handleConfirm = () => {
-    const { onLogout } = this.props;
-
+  const handleConfirm = () => {
     onLogout();
-    this.closeDialog();
+    setShowDialog(false);
   };
 
-  closeDialog() {
-    this.setState({ showDialog: false });
-  }
-
-  render() {
-    const { t } = this.props;
-    const { showDialog } = this.state;
-
-    return (
-      <>
-        <Button color="inherit" className="LogoutButton" onClick={this.handleOpen}>
-          <LogoutIcon className="LogoutButton-icon" />
-          {t('settings.logout')}
-        </Button>
-        {showDialog && (
-          <ConfirmDialog
-            title=""
-            confirmLabel={t('dialogs.logout.action')}
-            onConfirm={this.handleConfirm}
-            onCancel={this.handleClose}
-          >
-            <FormGroup>{t('dialogs.logout.confirm')}</FormGroup>
-          </ConfirmDialog>
-        )}
-      </>
-    );
-  }
+  return (
+    <>
+      <Button color="inherit" className="LogoutButton" onClick={handleOpen}>
+        <LogoutIcon className="LogoutButton-icon" />
+        {t('settings.logout')}
+      </Button>
+      {showDialog && (
+        <ConfirmDialog
+          title=""
+          confirmLabel={t('dialogs.logout.action')}
+          onConfirm={handleConfirm}
+          onCancel={handleClose}
+        >
+          <FormGroup>{t('dialogs.logout.confirm')}</FormGroup>
+        </ConfirmDialog>
+      )}
+    </>
+  );
 }
 
-export default enhance(LogoutButton);
+LogoutButton.propTypes = {
+  onLogout: PropTypes.func.isRequired,
+};
+
+export default LogoutButton;
