@@ -1,9 +1,13 @@
 #!/usr/bin/env node
+/* eslint-disable no-console */
 
-const createWebClient = require('..').default;
 const express = require('express');
+const serveStatic = require('serve-static');
 const argv = require('minimist')(process.argv.slice(2));
 const envSchema = require('env-schema');
+const fs = require('fs');
+const path = require('path');
+const createWebClient = require('..').default;
 const pkg = require('../package.json');
 
 if (argv.h || argv.help) {
@@ -19,9 +23,14 @@ if (argv.h || argv.help) {
   console.log('    Public URL of the üWave HTTP API to connect to. Defaults to "/api".');
   console.log('  SOCKET_URL');
   console.log('    Public URL of the üWave WebSocket API to connect to. Defaults to "/".');
+  console.log();
   console.log('  RECAPTCHA_KEY [optional]');
   console.log('    ReCaptcha site key to confirm new registrations.');
   console.log('    The secret key must also be configured on the server side.');
+  console.log('  EMOJI_DIR [optional]');
+  console.log('    A directory with image files to use as custom emoji.');
+  console.log('    File names are used as shortcodes. For example, smile.png');
+  console.log('    will be available as :smile:.');
   console.log();
   process.exit(0);
 }
@@ -54,6 +63,17 @@ const config = envSchema({
 });
 
 const app = express();
+
+const customEmoji = {};
+if (process.env.EMOJI_DIR) {
+  for (const filename of fs.readdirSync(process.env.EMOJI_DIR)) {
+    const { name } = path.parse(filename);
+    customEmoji[name] = filename;
+  }
+
+  app.use('/assets/emoji', serveStatic(process.env.EMOJI_DIR));
+}
+
 app.use(createWebClient({
   apiUrl: config.API_URL,
   socketUrl: config.SOCKET_URL,
@@ -61,6 +81,7 @@ app.use(createWebClient({
   recaptcha: config.RECAPTCHA_KEY ? {
     key: config.RECAPTCHA_KEY,
   } : null,
+  emoji: customEmoji,
 }));
 
 const server = app.listen(config.PORT, () => {
