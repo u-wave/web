@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.0-alpha.10 / 16 Oct 2022
+While this is an alpha release, new servers should use this rather than an older "stable" version.
+
+Features:
+ * Custom emoji support for the provided executable. (#2515)
+   Provide an environment variable `EMOJI_DIR` pointing to a directory with images to use as
+   custom emoji, on top of the included Twitter emoji.
+
+Internal:
+ * Dependency updates.
+
 ## 2.0.0-alpha.9 / 27 Jun 2022
 This release requires a server using üWave Core 0.5.0-alpha.8 or higher.
 
