@@ -1,5 +1,4 @@
 import * as path from 'path';
-import * as fs from 'fs';
 import webpack from 'webpack';
 import ReactRefreshPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import WebpackBar from 'webpackbar';
@@ -10,7 +9,6 @@ import TerserPlugin from 'terser-webpack-plugin';
 import HtmlPlugin from 'html-webpack-plugin';
 import { SubresourceIntegrityPlugin } from 'webpack-subresource-integrity';
 import CopyPlugin from 'copy-webpack-plugin';
-import GeneratePackageJsonPlugin from 'generate-package-json-webpack-plugin';
 import { merge } from 'webpack-merge';
 import htmlMinifierOptions from './tasks/utils/htmlMinifierOptions.cjs';
 import renderLoadingScreen from './tasks/utils/renderLoadingScreen.cjs';
@@ -25,10 +23,9 @@ import compileDependencies from './tasks/webpack/compileDependencies.mjs';
 //  - staticPages: Compiles static markdown pages to HTML.
 import staticPages from './tasks/webpack/staticPages.mjs';
 import getAnalysisConfig from './tasks/webpack/analyze.mjs';
+import getNpmConfig from './tasks/webpack/npm.mjs';
 
 const { DefinePlugin, HotModuleReplacementPlugin, ProvidePlugin } = webpack;
-
-const pkg = JSON.parse(fs.readFileSync(new URL('./package.json', import.meta.url), 'utf8'));
 
 function unused() {}
 
@@ -47,87 +44,7 @@ function getConfig(env, {
 
   const outputPackage = new URL('./npm', import.meta.url).pathname;
 
-  const npmBasePkg = {
-    name: 'u-wave-web',
-    version: pkg.version,
-    description: pkg.description,
-    author: pkg.author,
-    license: pkg.license,
-    repository: {
-      ...pkg.repository,
-      directory: 'npm',
-    },
-    type: 'commonjs',
-    main: './server/middleware.js',
-    exports: {
-      '.': {
-        import: './middleware.mjs',
-        default: './server/middleware.js',
-      },
-      './middleware': {
-        import: './middleware.mjs',
-        default: './server/middleware.js',
-      },
-    },
-    bin: {
-      'u-wave-web': './bin/u-wave-web',
-    },
-    engines: pkg.engines,
-  };
-
-  const npmConfig = {
-    name: 'npm',
-    context: new URL('./src', import.meta.url).pathname,
-    mode: env.production ? 'production' : 'development',
-    // Quit if there are errors.
-    bail: env.production,
-    devtool: 'source-map',
-
-    entry: {
-      middleware: './middleware/index.js',
-      bin: './bin.js',
-    },
-    output: {
-      path: outputPackage,
-      filename: './server/[name].js',
-      clean: false,
-      library: {
-        type: 'commonjs-module',
-      },
-    },
-    target: 'node12',
-
-    optimization: {
-      minimize: false,
-    },
-
-    externals({ request }, callback) {
-      if (request.startsWith('./') || request.startsWith('../')) {
-        callback();
-      } else {
-        callback(null, `commonjs ${request}`);
-      }
-    },
-
-    module: {
-      rules: [
-        { test: /\.js$/, use: 'babel-loader' },
-      ],
-    },
-
-    plugins: [
-      new GeneratePackageJsonPlugin(npmBasePkg, {
-        sourcePackageFilenames:  [new URL('./package.json', import.meta.url).pathname],
-        // Do not pin dependency versions
-        useInstalledVersions: false,
-      }),
-      new CopyPlugin({
-        patterns: [
-          { from: new URL('./LICENSE', import.meta.url).pathname, to: './' },
-        ],
-      })
-    ],
-  };
+  const npmConfig = getNpmConfig(env, outputPackage);
 
   const baseConfig = merge({
     context: new URL('./src', import.meta.url).pathname,
