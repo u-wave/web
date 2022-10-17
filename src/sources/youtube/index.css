@@ -1,6 +1,6 @@
-@import "./Player.css";
-@import "./PlaylistPanel.css";
-@import "./PlaylistRow.css";
+@import url("./Player.css");
+@import url("./PlaylistPanel.css");
+@import url("./PlaylistRow.css");
 
 /* TODO this should be a shared style */
 .ImportRow {

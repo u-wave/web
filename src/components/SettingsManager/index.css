@@ -1,10 +1,10 @@
-@import "./ChangeUsernameButton.css";
-@import "./LanguagePicker.css";
-@import "./Links.css";
-@import "./LogoutButton.css";
-@import "./Profile.css";
-@import "./SettingControl.css";
-@import "./SettingsPanel.css";
+@import url("./ChangeUsernameButton.css");
+@import url("./LanguagePicker.css");
+@import url("./Links.css");
+@import url("./LogoutButton.css");
+@import url("./Profile.css");
+@import url("./SettingControl.css");
+@import url("./SettingsPanel.css");
 
 .SettingsManager {
   z-index: 10;

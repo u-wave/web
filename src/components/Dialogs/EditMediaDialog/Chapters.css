@@ -1,4 +1,4 @@
-@import "../../../vars.css";
+@import url("../../../vars.css");
 
 .Chapters-placeholder {
   color: var(--muted-text-color);

@@ -1,8 +1,8 @@
-@import "./Dialog.css";
-@import "./ConfirmDialog/index.css";
-@import "./EditMediaDialog/index.css";
-@import "./LoginDialog/index.css";
-@import "./PreviewMediaDialog/index.css";
+@import url("./Dialog.css");
+@import url("./ConfirmDialog/index.css");
+@import url("./EditMediaDialog/index.css");
+@import url("./LoginDialog/index.css");
+@import url("./PreviewMediaDialog/index.css");
 
 .Dialogs {
   z-index: 100;

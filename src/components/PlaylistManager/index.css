@@ -1,9 +1,9 @@
-@import "./Header/index.css";
-@import "./Import/index.css";
-@import "./Menu/index.css";
-@import "./NoPlaylists/index.css";
-@import "./Panel/index.css";
-@import "./SearchResults/index.css";
+@import url("./Header/index.css");
+@import url("./Import/index.css");
+@import url("./Menu/index.css");
+@import url("./NoPlaylists/index.css");
+@import url("./Panel/index.css");
+@import url("./SearchResults/index.css");
 
 .PlaylistManager {
   z-index: 10;
