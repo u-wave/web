@@ -1,4 +1,5 @@
 import * as fs from 'fs';
+import { fileURLToPath } from 'url';
 import CopyPlugin from 'copy-webpack-plugin';
 import GeneratePackageJsonPlugin from 'generate-package-json-webpack-plugin';
 
@@ -36,7 +37,7 @@ export default function getNpmConfig(env, outputPackage) {
 
   return {
     name: 'npm',
-    context: new URL('./src', pkgRoot).pathname,
+    context: fileURLToPath(new URL('./src', pkgRoot)),
     mode: env.production ? 'production' : 'development',
     // Quit if there are errors.
     bail: env.production,
@@ -76,13 +77,13 @@ export default function getNpmConfig(env, outputPackage) {
 
     plugins: [
       new GeneratePackageJsonPlugin(npmBasePkg, {
-        sourcePackageFilenames:  [new URL('./package.json', pkgRoot).pathname],
+        sourcePackageFilenames:  [fileURLToPath(new URL('./package.json', pkgRoot))],
         // Do not pin dependency versions
         useInstalledVersions: false,
       }),
       new CopyPlugin({
         patterns: [
-          { from: new URL('./LICENSE', pkgRoot).pathname, to: './' },
+          { from: fileURLToPath(new URL('./LICENSE', pkgRoot)), to: './' },
         ],
       })
     ],

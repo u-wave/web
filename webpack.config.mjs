@@ -1,4 +1,5 @@
 import * as path from 'path';
+import { fileURLToPath } from 'url';
 import webpack from 'webpack';
 import ReactRefreshPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import WebpackBar from 'webpackbar';
@@ -42,12 +43,12 @@ function getConfig(env, {
     plugins.push(new WebpackBar());
   }
 
-  const outputPackage = new URL('./npm', import.meta.url).pathname;
+  const outputPackage = fileURLToPath(new URL('./npm', import.meta.url));
 
   const npmConfig = getNpmConfig(env, outputPackage);
 
   const baseConfig = merge({
-    context: new URL('./src', import.meta.url).pathname,
+    context: fileURLToPath(new URL('./src', import.meta.url)),
     mode: env.production ? 'production' : 'development',
     // Quit if there are errors.
     bail: env.production,
@@ -77,7 +78,7 @@ function getConfig(env, {
 
         {
           test: /\.html$/,
-          use: new URL('./tasks/webpack/ejs-loader.cjs', import.meta.url).pathname,
+          use: fileURLToPath(new URL('./tasks/webpack/ejs-loader.cjs', import.meta.url)),
         },
 
         // Locale files.
