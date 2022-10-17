@@ -1,2 +1,2 @@
-@import "./soundcloud/index.css";
-@import "./youtube/index.css";
+@import url("./soundcloud/index.css");
+@import url("./youtube/index.css");

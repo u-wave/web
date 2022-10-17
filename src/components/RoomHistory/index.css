@@ -1,5 +1,5 @@
-@import "./Row.css";
-@import "./Votes.css";
+@import url("./Row.css");
+@import url("./Votes.css");
 
 .RoomHistory {
   z-index: 10;

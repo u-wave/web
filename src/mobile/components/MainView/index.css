@@ -1,4 +1,4 @@
-@import "./VideoDisabledMessage.css";
+@import url("./VideoDisabledMessage.css");
 
 .MainView {
   --app-bar-height: 56px;

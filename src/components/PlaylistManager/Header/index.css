@@ -1,2 +1,2 @@
-@import "./SearchBar.css";
-@import "./SourcePicker.css";
+@import url("./SearchBar.css");
+@import url("./SourcePicker.css");

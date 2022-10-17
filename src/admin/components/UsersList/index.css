@@ -1,2 +1,2 @@
-@import "./Header.css";
-@import "./Row.css";
+@import url("./Header.css");
+@import url("./Row.css");

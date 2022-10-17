@@ -1,2 +1,2 @@
-@import "./Bar.css";
-@import "./Button.css";
+@import url("./Bar.css");
+@import url("./Button.css");

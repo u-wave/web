@@ -1,4 +1,4 @@
-@import "./Overlays.css";
+@import url("./Overlays.css");
 
 .MobileApp {
   width: 100%;
