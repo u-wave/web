@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
+import { useAsyncCallback } from 'react-async-hook';
 import Typography from '@mui/material/Typography';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -25,37 +26,26 @@ function Section({
 }) {
   const { t } = useTranslator();
   const [value, setValue] = useState(defaultValue);
-  const [busy, setBusy] = useState(false);
   const [edited, setEdited] = useState(false);
-  const [done, setDone] = useState(false);
+
+  const save = useAsyncCallback(async (event) => {
+    event.preventDefault();
+
+    await onSave(value);
+    setEdited(false);
+  });
 
   const handleChange = useCallback((newValue) => {
     setValue(newValue);
     setEdited(true);
-    setDone(false);
-  }, []);
-
-  const handleSubmit = useCallback((event) => {
-    event.preventDefault();
-
-    setBusy(true);
-    onSave(value).then(() => {
-      setTimeout(() => {
-        setDone(true);
-        setEdited(false);
-        setBusy(false);
-      }, 2_000);
-    }, () => {
-      // Error is reported in the snackbar, enable the save button again
-      setBusy(false);
-    });
-  }, [value, onSave]);
+    save.reset();
+  }, [save]);
 
   let startIcon = null;
-  if (busy) {
+  if (save.loading) {
     startIcon = <CircularProgress color="white" size={16} />;
   }
-  if (done) {
+  if (save.status === 'success') {
     startIcon = <CheckIcon />;
   }
 
@@ -88,11 +78,11 @@ function Section({
         <Button
           color="primary"
           variant="contained"
-          disabled={!edited || busy}
+          disabled={!edited || save.loading}
           startIcon={startIcon}
-          onClick={handleSubmit}
+          onClick={save.execute}
         >
-          {done ? t('admin.config.saved') : t('admin.config.save')}
+          {save.status === 'success' ? t('admin.config.saved') : t('admin.config.save')}
         </Button>
       </AccordionActions>
     </Accordion>
