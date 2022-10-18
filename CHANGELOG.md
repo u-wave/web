@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.0-alpha.12 / 18 Oct 2022
+While this is an alpha release, new servers should use this rather than an older "stable" version.
+
+Bugfixes:
+ * Fix missing `express` dependency in published package.
+
 ## 2.0.0-alpha.11 / 18 Oct 2022
 While this is an alpha release, new servers should use this rather than an older "stable" version.
 
