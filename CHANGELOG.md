@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.0-alpha.11 / 18 Oct 2022
+While this is an alpha release, new servers should use this rather than an older "stable" version.
+
+Bugfixes:
+ * Fix custom emoji display in suggestions. (#2519)
+
+Internal:
+ * Use React Suspense when loading ReCaptcha. (#2520)
+ * Replace custom package.json generation by a webpack plugin. (#2517)
+
 ## 2.0.0-alpha.10 / 16 Oct 2022
 While this is an alpha release, new servers should use this rather than an older "stable" version.
 
