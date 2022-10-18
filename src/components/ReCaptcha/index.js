@@ -1,59 +1,76 @@
 import React from 'react';
-import loadScript from 'load-script2';
-import CircularProgress from '@mui/material/CircularProgress';
-import InternalCaptcha from './ReCaptcha';
+import PropTypes from 'prop-types';
 
-const GRECAPTCHA_API = 'https://www.google.com/recaptcha/api.js';
+const {
+  useEffect,
+  useLayoutEffect,
+  useRef,
+} = React;
+
 const onloadCallbackName = 'grecaptchaOnload__$';
-const onloadCallbacks = [];
 
-function loadReCaptcha(cb) {
-  loadScript(`${GRECAPTCHA_API}?onload=${onloadCallbackName}&render=explicit`);
-  onloadCallbacks.push(cb);
-}
-
-function onload() {
-  onloadCallbacks.forEach((fn) => fn(window.grecaptcha));
-}
-
-export default class ReCaptcha extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      grecaptcha: window.grecaptcha,
+function loadGrecaptcha() {
+  return new Promise((resolve, reject) => {
+    window[onloadCallbackName] = () => {
+      setTimeout(() => resolve(window.grecaptcha), 20_000);
+      delete window[onloadCallbackName];
     };
-  }
 
-  componentDidMount() {
-    const { grecaptcha } = this.state;
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = `https://www.google.com/recaptcha/api.js?onload=${onloadCallbackName}&render=explicit`;
+    script.onload = () => {
+      script.onerror = null;
+      script.onload = null;
+    };
+    script.onerror = () => {
+      script.onerror = null;
+      script.onload = null;
+      reject(new Error('Could not load ReCaptcha SDK'));
+      delete window[onloadCallbackName];
+    };
 
-    if (!grecaptcha) {
-      this.load();
-    }
-  }
-
-  load() {
-    if (typeof window[onloadCallbackName] !== 'function') {
-      window[onloadCallbackName] = onload;
-    }
-
-    loadReCaptcha((grecaptcha) => {
-      this.setState({ grecaptcha });
-    });
-  }
-
-  render() {
-    const { grecaptcha } = this.state;
-
-    if (!grecaptcha) {
-      return <CircularProgress className="ReCaptcha-spinner" />;
-    }
-
-    return (
-      <InternalCaptcha
-        {...this.props}
-        grecaptcha={grecaptcha}
-      />
-    );
-  }
+    document.head.appendChild(script);
+  });
 }
+
+let grecaptchaPromise = null;
+function getGrecaptcha() {
+  if (typeof window.grecaptcha === 'object') {
+    return window.grecaptcha;
+  }
+
+  grecaptchaPromise ??= loadGrecaptcha();
+  return grecaptchaPromise;
+}
+
+function ReCaptcha({ sitekey, theme = 'light', onResponse }) {
+  const refContainer = useRef(null);
+  const onResponseRef = useRef(onResponse);
+
+  useEffect(() => {
+    onResponseRef.current = onResponse;
+  });
+
+  useLayoutEffect(() => {
+    try {
+      window.grecaptcha.render(refContainer.current, {
+        sitekey,
+        theme,
+        callback: (response) => onResponseRef.current?.(response),
+      });
+    } catch {
+      // If it threw an error, it's probably because of double-mounting in development mode.
+    }
+  }, [sitekey, theme]);
+
+  return <div ref={refContainer} />;
+}
+
+ReCaptcha.propTypes = {
+  sitekey: PropTypes.string.isRequired,
+  theme: PropTypes.string,
+  onResponse: PropTypes.func.isRequired,
+};
+
+export default React.lazy(() => getGrecaptcha().then(() => ({ default: ReCaptcha })));

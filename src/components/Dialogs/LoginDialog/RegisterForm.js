@@ -98,11 +98,13 @@ class RegisterForm extends React.Component {
     }
     return (
       <FormGroup>
-        <ReCaptcha
-          sitekey={reCaptchaSiteKey}
-          onResponse={this.handleCaptchaResponse}
-          theme="dark"
-        />
+        <React.Suspense fallback={<CircularProgress className="ReCaptcha-spinner" />}>
+          <ReCaptcha
+            sitekey={reCaptchaSiteKey}
+            onResponse={this.handleCaptchaResponse}
+            theme="dark"
+          />
+        </React.Suspense>
       </FormGroup>
     );
   }
