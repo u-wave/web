@@ -12,7 +12,7 @@ const onloadCallbackName = 'grecaptchaOnload__$';
 function loadGrecaptcha() {
   return new Promise((resolve, reject) => {
     window[onloadCallbackName] = () => {
-      setTimeout(() => resolve(window.grecaptcha), 20_000);
+      resolve(window.grecaptcha);
       delete window[onloadCallbackName];
     };
 
