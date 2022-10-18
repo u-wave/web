@@ -37,7 +37,7 @@ function loadGrecaptcha() {
 let grecaptchaPromise = null;
 function getGrecaptcha() {
   if (typeof window.grecaptcha === 'object') {
-    return window.grecaptcha;
+    return Promise.resolve(window.grecaptcha);
   }
 
   grecaptchaPromise ??= loadGrecaptcha();
