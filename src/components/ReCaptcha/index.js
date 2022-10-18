@@ -1,59 +1,15 @@
 import React from 'react';
-import loadScript from 'load-script2';
 import CircularProgress from '@mui/material/CircularProgress';
 import InternalCaptcha from './ReCaptcha';
 
-const GRECAPTCHA_API = 'https://www.google.com/recaptcha/api.js';
-const onloadCallbackName = 'grecaptchaOnload__$';
-const onloadCallbacks = [];
-
-function loadReCaptcha(cb) {
-  loadScript(`${GRECAPTCHA_API}?onload=${onloadCallbackName}&render=explicit`);
-  onloadCallbacks.push(cb);
+function ReCaptcha(props) {
+  return (
+    <React.Suspense fallback={<CircularProgress className="ReCaptcha-spinner" />}>
+      <InternalCaptcha {...props} />
+    </React.Suspense>
+  );
 }
 
-function onload() {
-  onloadCallbacks.forEach((fn) => fn(window.grecaptcha));
-}
+ReCaptcha.propTypes = InternalCaptcha.propTypes;
 
-export default class ReCaptcha extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      grecaptcha: window.grecaptcha,
-    };
-  }
-
-  componentDidMount() {
-    const { grecaptcha } = this.state;
-
-    if (!grecaptcha) {
-      this.load();
-    }
-  }
-
-  load() {
-    if (typeof window[onloadCallbackName] !== 'function') {
-      window[onloadCallbackName] = onload;
-    }
-
-    loadReCaptcha((grecaptcha) => {
-      this.setState({ grecaptcha });
-    });
-  }
-
-  render() {
-    const { grecaptcha } = this.state;
-
-    if (!grecaptcha) {
-      return <CircularProgress className="ReCaptcha-spinner" />;
-    }
-
-    return (
-      <InternalCaptcha
-        {...this.props}
-        grecaptcha={grecaptcha}
-      />
-    );
-  }
-}
+export default ReCaptcha;

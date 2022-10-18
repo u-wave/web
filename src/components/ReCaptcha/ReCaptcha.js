@@ -1,45 +1,76 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default class ReCaptcha extends React.Component {
-  static propTypes = {
-    grecaptcha: PropTypes.object.isRequired,
-    sitekey: PropTypes.string.isRequired,
-    theme: PropTypes.string,
-    onResponse: PropTypes.func.isRequired,
-  };
+const {
+  useEffect,
+  useLayoutEffect,
+  useRef,
+} = React;
 
-  static defaultProps = {
-    theme: 'light',
-  };
+const onloadCallbackName = 'grecaptchaOnload__$';
 
-  componentDidMount() {
-    const { grecaptcha, sitekey, theme } = this.props;
+function loadGrecaptcha() {
+  return new Promise((resolve, reject) => {
+    window[onloadCallbackName] = () => {
+      resolve(window.grecaptcha);
+      delete window[onloadCallbackName];
+    };
 
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = `https://www.google.com/recaptcha/api.js?onload=${onloadCallbackName}&render=explicit`;
+    script.onload = () => {
+      script.onerror = null;
+      script.onload = null;
+    };
+    script.onerror = () => {
+      script.onerror = null;
+      script.onload = null;
+      reject(new Error('Could not load ReCaptcha SDK'));
+      delete window[onloadCallbackName];
+    };
+
+    document.head.appendChild(script);
+  });
+}
+
+let grecaptchaPromise = null;
+function getGrecaptcha() {
+  if (typeof window.grecaptcha === 'object') {
+    return window.grecaptcha;
+  }
+
+  grecaptchaPromise ??= loadGrecaptcha();
+  return grecaptchaPromise;
+}
+
+function ReCaptcha({ sitekey, theme = 'light', onResponse }) {
+  const refContainer = useRef(null);
+  const onResponseRef = useRef(onResponse);
+
+  useEffect(() => {
+    onResponseRef.current = onResponse;
+  });
+
+  useLayoutEffect(() => {
     try {
-      grecaptcha.render(this.container, {
+      window.grecaptcha.render(refContainer.current, {
         sitekey,
         theme,
-        callback: this.handleResponse,
+        callback: (response) => onResponseRef.current?.(response),
       });
     } catch {
       // If it threw an error, it's probably because of double-mounting in development mode.
     }
-  }
+  }, [sitekey, theme]);
 
-  handleResponse = (res) => {
-    const { onResponse } = this.props;
-
-    if (onResponse) {
-      onResponse(res);
-    }
-  };
-
-  refContainer = (container) => {
-    this.container = container;
-  };
-
-  render() {
-    return <div ref={this.refContainer} />;
-  }
+  return <div ref={refContainer} />;
 }
+
+ReCaptcha.propTypes = {
+  sitekey: PropTypes.string.isRequired,
+  theme: PropTypes.string,
+  onResponse: PropTypes.func.isRequired,
+};
+
+export default React.lazy(() => getGrecaptcha().then(() => ({ default: ReCaptcha })));
