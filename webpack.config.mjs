@@ -26,7 +26,7 @@ import staticPages from './tasks/webpack/staticPages.mjs';
 import getAnalysisConfig from './tasks/webpack/analyze.mjs';
 import getNpmConfig from './tasks/webpack/npm.mjs';
 
-const { DefinePlugin, HotModuleReplacementPlugin, ProvidePlugin } = webpack;
+const { DefinePlugin, HotModuleReplacementPlugin } = webpack;
 
 function unused() {}
 
@@ -57,12 +57,6 @@ function getConfig(env, {
     output: {
       clean: true,
     },
-
-    plugins: [
-      new ProvidePlugin({
-        process: 'process',
-      }),
-    ],
 
     module: {
       rules: [
@@ -142,8 +136,6 @@ function getConfig(env, {
         '.wasm',
       ],
       alias: {
-        // Node.js shims
-        path: 'path-browserify',
         'react/jsx-runtime.js': 'react/jsx-runtime',
         'react/jsx-dev-runtime.js': 'react/jsx-dev-runtime',
       },
