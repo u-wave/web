@@ -124,6 +124,8 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-testing-library": "^5.7.0",
     "generate-package-json-webpack-plugin": "^2.6.0",
+    "hast-util-from-html": "^1.0.0",
+    "hast-util-to-text": "^3.1.1",
     "html-loader": "^4.2.0",
     "html-webpack-plugin": "^5.2.0",
     "http-proxy-middleware": "^2.0.1",
