@@ -1,5 +1,5 @@
 import {
-  createTheme as createMuiTheme,
+  experimental_extendTheme as createMuiTheme,
   alpha,
   decomposeColor,
   recomposeColor,
@@ -32,10 +32,10 @@ function blend(a, b, weight) {
 export default function createTheme(base) {
   const muiTheme = createMuiTheme(base);
 
-  const { palette, typography, uwave } = muiTheme;
+  const { typography, uwave } = muiTheme;
+  const { palette } = muiTheme.colorSchemes.light;
 
-  return {
-    ...muiTheme,
+  return Object.assign(muiTheme, {
     cssProperties: {
       '--font-family': typography.fontFamily,
 
@@ -83,5 +83,5 @@ export default function createTheme(base) {
       '--selected-media-row-color': alpha(palette.primary.main, 0.7),
       '--chat-timestamp-text-color': blend(palette.text.primary, AVERAGE_COLOR, 0.7),
     },
-  };
+  });
 }
