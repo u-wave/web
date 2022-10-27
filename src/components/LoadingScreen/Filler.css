@@ -1,6 +1,6 @@
 .Filler {
   display: inline-block;
-  background: var(--text-color);
+  background: var(--mui-palette-text-primary);
   opacity: 0.1;
   height: 1em;
   vertical-align: middle;

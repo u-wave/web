@@ -16,7 +16,7 @@
   line-height: var(--media-row-height);
   width: 100%;
   background: var(--media-list-color);
-  border-bottom: 1px solid var(--divider-color);
+  border-bottom: 1px solid var(--mui-palette-divider);
 
   &.is-loading {
     opacity: 0.75;
@@ -27,7 +27,7 @@
   }
 
   &:focus {
-    box-shadow: inset 0 0 0 2px var(--highlight-color);
+    box-shadow: inset 0 0 0 2px var(--mui-palette-primary-main);
     outline: none;
   }
 }
@@ -64,7 +64,7 @@
   width: calc(60% - var(--media-list-spacing));
   margin-inline-end: var(--media-list-spacing);
   overflow: hidden;
-  color: var(--secondary-text-color);
+  color: var(--mui-palette-text-secondary);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -104,5 +104,5 @@
 }
 
 .MediaListRow.is-selected .MediaListRow-actions {
-  background: var(--highlight-color);
+  background: var(--mui-palette-primary-main);
 }

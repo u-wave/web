@@ -4,7 +4,7 @@
 
 .PlaylistImport {
   height: 100%;
-  background: var(--background-color);
+  background: var(--mui-palette-background-default);
   overflow: auto;
 }
 

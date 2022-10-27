@@ -4,7 +4,7 @@
 }
 
 .AboutPanel {
-  background-color: var(--background-color);
+  background-color: var(--mui-palette-background-default);
   display: flex;
 }
 
@@ -14,7 +14,7 @@
 
 .AboutPanel-menuItem {
   &.is-selected {
-    background-color: var(--highlight-color);
+    background-color: var(--mui-palette-primary-main);
   }
 }
 

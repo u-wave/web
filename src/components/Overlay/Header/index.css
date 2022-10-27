@@ -1,5 +1,5 @@
 .OverlayHeader {
-  background: var(--background-color);
+  background: var(--mui-palette-background-default);
   height: var(--header-height);
   display: flex;
   justify-content: space-between;

@@ -5,7 +5,7 @@
 .AdminMotd-field {
   border: 1px solid var(--chat-border-color);
   background: #222;
-  color: var(--text-color);
+  color: var(--mui-palette-text-primary);
   width: 100%;
   padding: 4px;
   margin: -5px;

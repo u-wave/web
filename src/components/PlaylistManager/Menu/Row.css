@@ -51,7 +51,7 @@
 
 .PlaylistMenuRow-count {
   align-self: flex-end;
-  color: var(--highlight-color);
+  color: var(--mui-palette-primary-main);
   margin-inline-end: 5px;
   margin-inline-start: 7px;
 }
@@ -64,10 +64,10 @@
 }
 
 .PlaylistMenuRow--create {
-  background-color: var(--highlight-color);
+  background-color: var(--mui-palette-primary-main);
 
   &:hover {
-    background-color: var(--highbright-color);
+    background-color: var(--mui-palette-primary-light);
   }
 }
 

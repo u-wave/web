@@ -7,8 +7,8 @@
 
 body {
   font-family: var(--font-family);
-  background: var(--background-color);
-  color: var(--text-color);
+  background: var(--mui-palette-background-default);
+  color: var(--mui-palette-text-primary);
 }
 
 #app {

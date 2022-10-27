@@ -1,6 +1,6 @@
 .MediaDragPreview {
-  background: var(--highbright-color);
-  color: var(--text-color);
+  background: var(--mui-palette-primary-light);
+  color: var(--mui-palette-text-primary);
   font-weight: bold;
   padding: 7px 15px 7px 20px;
   display: block;

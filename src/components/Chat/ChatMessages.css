@@ -9,7 +9,7 @@
    * TODO fix that^ in src/components/Tooltip. Should resize(?) the positioning
    * wrapper if it's close to the edge of the screen. */
   overflow-x: hidden;
-  background: var(--background-color);
+  background: var(--mui-palette-background-default);
 }
 
 .ChatMessages-scrollDown {

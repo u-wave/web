@@ -2,15 +2,9 @@
   --font-family: "Open Sans", roboto, arial, sans-serif;
 
   /* Global colours */
-  --text-color: #fff;
-  --secondary-text-color: rgba(255 255 255 / 70%);
-  --muted-text-color: rgba(255 255 255 / 50%);
-  --background-color: #151515;
+  --muted-text-color: var(--mui-palette-text-disabled);
   --background-hover-color: #111;
-  --highlight-color: #9d2053;
-  --highbright-color: #b20062;
   --scrollbar-color: #5f5f5f;
-  --canvas-color: #303030;
   --divider-color: rgba(255 255 255 / 12%);
 
   /* Link colors */

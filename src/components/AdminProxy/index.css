@@ -1,5 +1,5 @@
 .AdminPanel {
-  background: var(--background-color);
+  background: var(--mui-palette-background-default);
   overflow-y: auto;
   flex-grow: 1;
   margin-bottom: var(--footer-height);

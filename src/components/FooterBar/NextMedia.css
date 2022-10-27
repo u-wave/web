@@ -15,5 +15,5 @@
 }
 
 .NextMedia-playlist {
-  color: var(--text-color);
+  color: var(--mui-palette-text-primary);
 }

@@ -8,7 +8,7 @@
   margin: 8px 0;
 
   &.is-focused {
-    border-color: var(--highlight-color);
+    border-color: var(--mui-palette-primary-main);
   }
 }
 
@@ -33,7 +33,7 @@
   height: 100%;
   border: none;
   padding: 0;
-  color: var(--text-color);
+  color: var(--mui-palette-text-primary);
   font-size: 14pt;
 
   &:focus {

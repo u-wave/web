@@ -85,7 +85,7 @@ function AppContainer({ uwave, mediaSources }) {
     : <DesktopApp {...props} />;
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider defaultColorScheme="dark" theme={theme}>
       <ErrorWrapper>
         <TranslateProvider translator={translator}>
           <BusProvider>

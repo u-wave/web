@@ -8,7 +8,7 @@
   position: absolute;
   top: 0;
   right: 0;
-  background: var(--background-color);
+  background: var(--mui-palette-background-default);
   padding: 0 6px;
   height: 100%;
   display: none;

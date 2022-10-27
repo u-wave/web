@@ -1,5 +1,5 @@
 .AdminUserRow {
-  background-color: var(--background-color);
+  background-color: var(--mui-palette-background-default);
 
   &:nth-child(2n) {
     background-color: #242424;

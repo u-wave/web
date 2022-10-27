@@ -3,11 +3,11 @@
   height: 24px;
   line-height: 24px;
   margin-bottom: 16px;
-  color: var(--text-color);
+  color: var(--mui-palette-text-primary);
   text-transform: none;
 
   &:visited {
-    color: var(--text-color);
+    color: var(--mui-palette-text-primary);
   }
 }
 

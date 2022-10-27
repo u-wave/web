@@ -1,5 +1,5 @@
 .AdminUserHeader {
-  background: var(--highlight-color);
+  background: var(--mui-palette-primary-main);
   padding: 12px 24px;
   line-height: 35px;
   display: flex;

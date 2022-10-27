@@ -10,7 +10,7 @@ body {
 }
 
 #app {
-  background: var(--background-color);
+  background: var(--mui-palette-background-default);
   position: fixed;
   top: 0;
   left: 0;

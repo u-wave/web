@@ -1,5 +1,5 @@
 .Dialog {
-  color: var(--text-color);
+  color: var(--mui-palette-text-primary);
 }
 
 .Dialog-close {

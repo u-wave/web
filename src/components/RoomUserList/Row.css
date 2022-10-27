@@ -11,7 +11,7 @@
 }
 
 .UserRow-voteIcon--favorite {
-  color: var(--highlight-color);
+  color: var(--mui-palette-primary-main);
 }
 
 .UserRow-voteIcon--downvote {

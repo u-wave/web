@@ -40,7 +40,7 @@
 }
 
 .ResponseButton-icon--favorite {
-  color: var(--highlight-color);
+  color: var(--mui-palette-primary-main);
 }
 
 .ResponseButton-icon--downvoted {

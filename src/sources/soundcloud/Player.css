@@ -55,7 +55,7 @@
 .src-soundcloud-Player-permalink {
   display: block;
   font: 14pt;
-  color: var(--text-color);
+  color: var(--mui-palette-text-primary);
   text-align: right;
   text-decoration: none;
 }

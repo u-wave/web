@@ -5,8 +5,8 @@
   justify-content: center;
   height: 100%;
   width: 125px;
-  background: var(--highlight-color);
-  color: var(--text-color);
+  background: var(--mui-palette-primary-main);
+  color: var(--mui-palette-text-primary);
   cursor: pointer;
   font-size: 11pt;
   text-transform: uppercase;
@@ -17,7 +17,7 @@
   padding: 8px 4px;
 
   &:hover {
-    background: var(--highbright-color);
+    background: var(--mui-palette-primary-light);
   }
 }
 
@@ -30,10 +30,10 @@
   width: 1em;
   height: 1em;
   margin-right: 6px;
-  color: var(--text-color);
+  color: var(--mui-palette-text-primary);
 }
 
 .WaitlistButton-icon--locked {
-  color: var(--text-color);
+  color: var(--mui-palette-text-primary);
   opacity: 0.7;
 }

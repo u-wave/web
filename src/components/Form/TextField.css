@@ -18,7 +18,7 @@
   padding: 0 var(--forms-element-margin);
   padding-right: var(--forms-textfield-size);
   font-size: 12pt;
-  color: var(--text-color);
+  color: var(--mui-palette-text-primary);
 
   &::placeholder {
     color: #9f9d9e;

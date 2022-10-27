@@ -6,11 +6,11 @@
 }
 
 .ChatMessage--mention {
-  box-shadow: 5px 0 0 var(--highlight-color) inset;
+  box-shadow: 5px 0 0 var(--mui-palette-primary-main) inset;
 }
 
 .ChatMessage-hover {
-  background: var(--background-color);
+  background: var(--mui-palette-background-default);
   position: absolute;
   top: 0;
   inset-inline-end: 0;
@@ -71,5 +71,5 @@
 }
 
 .ChatMention {
-  color: var(--highlight-color);
+  color: var(--mui-palette-primary-main);
 }

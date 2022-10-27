@@ -27,7 +27,7 @@
 }
 
 .Video-toolbar {
-  background-color: var(--background-color);
+  background-color: var(--mui-palette-background-default);
   top: 0;
   right: 0;
   visibility: hidden;

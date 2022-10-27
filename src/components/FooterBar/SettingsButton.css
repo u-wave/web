@@ -1,5 +1,5 @@
 .SettingsButton {
-  color: var(--text-color);
+  color: var(--mui-palette-text-primary);
 
   /* -1 because the footer has a 1px border */
   height: calc(var(--footer-height) - 1px);

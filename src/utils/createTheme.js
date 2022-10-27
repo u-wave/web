@@ -39,17 +39,9 @@ export default function createTheme(base) {
     cssProperties: {
       '--font-family': typography.fontFamily,
 
-      '--text-color': palette.text.primary,
-      '--secondary-text-color': palette.text.secondary,
       // TODO rename to hint-text-color? it's not always used as a hint text though…
-      '--muted-text-color': palette.text.disabled,
-      '--background-color': uwave.background,
       '--background-hover-color': uwave.backgroundHover,
-      '--highlight-color': palette.primary.main,
-      '--highbright-color': palette.primary.light,
       '--scrollbar-color': uwave.scrollbar,
-      '--canvas-color': palette.background.paper,
-      '--divider-color': palette.divider,
 
       // Link colors
       '--link-color': uwave.link,

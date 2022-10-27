@@ -1,16 +1,28 @@
 export default {
-  palette: {
-    mode: 'dark',
-    primary: {
-      light: '#b20062',
-      main: '#9d2053',
-      contrastText: '#fff',
+  colorSchemes: {
+    dark: {
+      palette: {
+        primary: {
+          light: '#b20062',
+          main: '#9d2053',
+          contrastText: '#fff',
+        },
+        background: {
+          default: '#151515',
+          paper: '#303030',
+        },
+        white: {
+          main: '#fff',
+        },
+      },
     },
-    background: {
-      paper: '#303030',
-    },
-    white: {
-      main: '#fff',
+    light: {
+      palette: {
+        primary: {
+          light: '#b20062',
+          main: '#9d2053',
+        },
+      },
     },
   },
   typography: {

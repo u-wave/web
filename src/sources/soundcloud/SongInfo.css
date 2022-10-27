@@ -1,6 +1,6 @@
 .src-soundcloud-SongInfo-link {
   font: 14pt;
-  color: var(--text-color);
+  color: var(--mui-palette-text-primary);
   display: block;
   height: 25px;
   overflow: hidden;
@@ -8,7 +8,7 @@
   text-overflow: ellipsis;
 
   &:visited {
-    color: var(--text-color);
+    color: var(--mui-palette-text-primary);
   }
 }
 

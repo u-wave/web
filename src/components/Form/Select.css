@@ -18,7 +18,7 @@
 .Select.is-focused {
   /* TODO We should have some focus indicator */
 
-  /* border: 1px solid var(--highbright-color); */
+  /* border: 1px solid var(--mui-palette-primary-light); */
 }
 
 .SelectInner {

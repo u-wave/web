@@ -1,5 +1,5 @@
 .SongTitle {
-  color: var(--text-color);
+  color: var(--mui-palette-text-primary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -14,5 +14,5 @@
 }
 
 .SongTitle-title {
-  color: var(--secondary-text-color);
+  color: var(--mui-palette-text-secondary);
 }

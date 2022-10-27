@@ -11,6 +11,6 @@
   width: 30px;
   height: 30px;
   background-color: transparent;
-  color: var(--text-color);
+  color: var(--mui-palette-text-primary);
   font-size: 12pt;
 }

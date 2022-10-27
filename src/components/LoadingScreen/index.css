@@ -27,6 +27,6 @@
 
 .LoadingIndicator-notice {
   animation: 1s linear 0s 1 initially-hide;
-  color: var(--text-color);
+  color: var(--mui-palette-text-primary);
   text-align: center;
 }

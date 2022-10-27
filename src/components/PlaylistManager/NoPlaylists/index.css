@@ -1,5 +1,5 @@
 .NoPlaylists {
-  background: var(--background-color);
+  background: var(--mui-palette-background-default);
   display: flex;
   align-items: center;
   flex-direction: column;

@@ -9,7 +9,7 @@
   display: flex;
   justify-content: space-between;
   z-index: 20; /* on top of overlays */
-  background: var(--background-color);
+  background: var(--mui-palette-background-default);
 }
 
 .FooterBar-guest {
@@ -59,12 +59,12 @@
 .FooterAuthButton {
   width: 125px;
   height: 100%;
-  color: var(--text-color);
+  color: var(--mui-palette-text-primary);
   font-size: 12pt;
 }
 
 .FooterAuthButton--register {
-  background: var(--background-color);
+  background: var(--mui-palette-background-default);
 
   &:hover {
     background: var(--background-hover-color);

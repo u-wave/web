@@ -2,7 +2,7 @@
   width: 100%;
   height: var(--forms-textfield-size);
   cursor: pointer;
-  color: var(--text-color);
+  color: var(--mui-palette-text-primary);
   text-align: center;
   text-transform: uppercase;
   font-size: 12pt;

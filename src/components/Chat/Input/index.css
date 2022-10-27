@@ -23,11 +23,11 @@
   padding: 0 6px;
   border: 1px solid var(--chat-border-color);
   background: #222;
-  color: var(--text-color);
+  color: var(--mui-palette-text-primary);
   font-size: 10pt;
 
   &.is-focused {
-    border-color: var(--highlight-color);
+    border-color: var(--mui-palette-primary-main);
     outline: none;
   }
 }
