@@ -20,12 +20,13 @@ jobs:
         run: npm ci
       - name: Check code style
         run: npm run lint
+
   test:
     name: Tests
     strategy:
       fail-fast: false
       matrix:
-        node-version: [14.x, 16.x, 18.x]
+        node-version: [14.x, 16.x, 18.x, 19.x]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout sources

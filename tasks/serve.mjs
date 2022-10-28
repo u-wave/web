@@ -1,6 +1,7 @@
 import 'make-promises-safe';
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import { createRequire } from 'module';
 import recaptchaTestKeys from 'recaptcha-test-keys';
 import express from 'express';
@@ -67,7 +68,7 @@ if (watch) {
       apiUrl,
       socketUrl,
       title: 'üWave (Development)',
-      basePath: new URL('../npm/public/', import.meta.url).pathname,
+      basePath: fileURLToPath(new URL('../npm/public/', import.meta.url)),
       publicPath: '/',
       // Point u-wave-web middleware to the virtual webpack filesystem.
       fs: dev.context.outputFileSystem,
@@ -90,7 +91,7 @@ if (watch) {
   const webClient = createWebClient({
     apiUrl,
     socketUrl,
-    basePath: new URL('../npm/public/', import.meta.url).pathname,
+    basePath: fileURLToPath(new URL('../npm/public/', import.meta.url)),
     recaptcha: { key: recaptchaTestKeys.sitekey },
   });
 

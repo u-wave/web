@@ -1,2 +1,2 @@
-@import "./NowPlayingMessage.css";
-@import "./UserNotificationMessage.css";
+@import url("./NowPlayingMessage.css");
+@import url("./UserNotificationMessage.css");

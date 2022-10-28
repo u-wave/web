@@ -1,7 +1,7 @@
-@import "./Meta.css";
-@import "./PlaylistEmpty.css";
-@import "./PlaylistFilter.css";
-@import "./PlaylistItemRow.css";
+@import url("./Meta.css");
+@import url("./PlaylistEmpty.css");
+@import url("./PlaylistFilter.css");
+@import url("./PlaylistItemRow.css");
 
 .PlaylistPanel {
   background: var(--overlay-background);

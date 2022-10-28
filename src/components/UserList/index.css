@@ -1,4 +1,4 @@
-@import "./UserRow.css";
+@import url("./UserRow.css");
 
 .UserList {
   width: 100%;

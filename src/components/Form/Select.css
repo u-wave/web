@@ -1,4 +1,4 @@
-@import "../../vars.css";
+@import url("../../vars.css");
 
 .Select {
   border-radius: 0;
@@ -10,12 +10,14 @@
   font-size: 12pt;
 }
 
-.Select:hover, .Select.is-focused {
+.Select:hover,
+.Select.is-focused {
   background: #383838;
 }
 
 .Select.is-focused {
   /* TODO We should have some focus indicator */
+
   /* border: 1px solid var(--highbright-color); */
 }
 

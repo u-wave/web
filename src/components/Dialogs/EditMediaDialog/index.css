@@ -1,4 +1,4 @@
-@import "./Chapters.css";
+@import url("./Chapters.css");
 
 .EditMediaDialog {
   width: 75%;

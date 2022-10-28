@@ -1,4 +1,4 @@
-@import "./Row.css";
+@import url("./Row.css");
 
 .PlaylistMenu {
   background: var(--overlay-background);
