@@ -2,7 +2,6 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useAsyncAbortable } from 'react-async-hook';
 import PropTypes from 'prop-types';
-import { hideSearchResults, showSearchResults } from '../actions/SearchActionCreators';
 import { get } from '../actions/RequestActionCreators';
 import { IDLE, LOADING, LOADED } from '../constants/LoadingStates';
 
@@ -21,7 +20,7 @@ function useStoreImplementation() {
   const dispatch = useDispatch();
 
   const results = useAsyncAbortable(async (signal) => {
-    if (query == null) {
+    if (!query) {
       return null;
     }
 
@@ -35,17 +34,9 @@ function useStoreImplementation() {
     return data;
   }, [dispatch, query, activeSource]);
 
-  const search = useCallback((newQuery) => {
-    // For compatibility.
-    // TODO do this elsewhere.
-    if (newQuery != null) {
-      dispatch(showSearchResults());
-    } else {
-      dispatch(hideSearchResults());
-    }
-
-    setQuery(newQuery);
-  }, [dispatch]);
+  const reset = useCallback(() => {
+    setQuery(null);
+  }, []);
 
   let state = IDLE;
   if (results.loading) {
@@ -61,9 +52,10 @@ function useStoreImplementation() {
     resultsCount: results.result ? results.result.length : 0,
     state,
 
-    search,
+    search: setQuery,
+    reset,
     setSource: setActiveSource,
-  }), [activeSource, query, results, state, search, setActiveSource]);
+  }), [activeSource, query, results, state, setQuery, reset, setActiveSource]);
 
   return context;
 }
