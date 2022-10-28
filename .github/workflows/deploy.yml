@@ -26,7 +26,7 @@ jobs:
         DEMO: 1
         ANALYZE: 1
     - name: Deploy to Netlify
-      uses: nwtgck/actions-netlify@v1.1
+      uses: nwtgck/actions-netlify@v1.2
       with:
         publish-dir: './npm/public'
         production-branch: 'default'

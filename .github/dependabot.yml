@@ -1,12 +1,16 @@
 version: 2
 updates:
+- package-ecosystem: github-actions
+  directory: "/"
+  schedule:
+    interval: weekly
+  open-pull-requests-limit: 10
+  commit-message:
+    prefix: "ci"
 - package-ecosystem: npm
   directory: "/"
   schedule:
     interval: weekly
   open-pull-requests-limit: 10
-  ignore:
-  - dependency-name: load-script2
-    versions:
-    - ">= 2.a"
-    - "< 3"
+  commit-message:
+    prefix: "deps"
