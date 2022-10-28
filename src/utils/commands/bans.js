@@ -13,7 +13,7 @@ register(
   'Ban a user. Syntax: "/ban username duration" or "/ban username perma"',
   {
     guard: isModeratorSelector,
-    action: (username, duration = '24h') => (dispatch, getState) => {
+    action: (username, duration = 'perma') => (dispatch, getState) => {
       if (!username) {
         return dispatch(log('Provide a user to ban.'));
       }
@@ -26,7 +26,7 @@ register(
       }
       const permanent = duration === 'perma';
       return dispatch(banUser(user, {
-        duration: ms(`${duration}`),
+        duration: permanent ? undefined : ms(`${duration}`),
         permanent,
       }));
     },
