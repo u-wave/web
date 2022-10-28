@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { useAsyncAbortable } from 'react-async-hook';
 import PropTypes from 'prop-types';
 import { hideSearchResults, showSearchResults } from '../actions/SearchActionCreators';
 import { get } from '../actions/RequestActionCreators';
@@ -8,7 +9,6 @@ import { IDLE, LOADING, LOADED } from '../constants/LoadingStates';
 const {
   useCallback,
   useContext,
-  useEffect,
   useMemo,
   useState,
 } = React;
@@ -17,37 +17,22 @@ const MediaSearchStoreContext = React.createContext(null);
 
 function useStoreImplementation() {
   const [query, setQuery] = useState(null);
-  const [state, setState] = useState(IDLE);
   const [activeSource, setActiveSource] = useState('youtube');
-  const [results, setResults] = useState(null);
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  const results = useAsyncAbortable(async (signal) => {
     if (query == null) {
-      setResults(null);
-      return () => {};
+      return null;
     }
 
-    setState(LOADING);
-
-    // Maybe this can be pulled into a useFetch hook of some kind?
-    const controller = new AbortController();
     const request = get(`/search/${encodeURIComponent(activeSource)}`, {
       qs: { query, include: 'playlists' },
-      signal: controller.signal,
+      signal,
     });
 
-    dispatch(request).then(({ data }) => {
-      setResults(data);
-      setState(LOADED);
-    }, () => {
-      setState(IDLE);
-    });
+    const { data } = await dispatch(request);
 
-    return () => {
-      controller.abort();
-      setState(IDLE);
-    };
+    return data;
   }, [dispatch, query, activeSource]);
 
   const search = useCallback((newQuery) => {
@@ -62,11 +47,18 @@ function useStoreImplementation() {
     setQuery(newQuery);
   }, [dispatch]);
 
+  let state = IDLE;
+  if (results.loading) {
+    state = LOADING;
+  } else if (results.result) {
+    state = LOADED;
+  }
+
   const context = useMemo(() => ({
     activeSource,
     query,
-    results,
-    resultsCount: results ? results.length : 0,
+    results: results.result,
+    resultsCount: results.result ? results.result.length : 0,
     state,
 
     search,
