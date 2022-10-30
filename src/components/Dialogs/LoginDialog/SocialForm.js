@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslator, Interpolate } from '@u-wave/react-translate';
+import { useAsyncCallback } from 'react-async-hook';
 import Alert from '@mui/material/Alert';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
@@ -59,25 +60,19 @@ AvatarList.propTypes = {
 };
 
 function SocialForm({
-  error,
   service,
   avatars,
   suggestedName = '',
   onSocialFinish,
 }) {
   const { t } = useTranslator();
-  const [isBusy, setBusy] = useState(false);
   const [agreed, setAgreed] = useState(false);
   const [avatar, setAvatar] = useState('sigil');
   const [username, setUsername] = useState(suggestedName);
 
-  const handleSubmit = useCallback((event) => {
+  const handleSubmit = useAsyncCallback(async (event) => {
     event.preventDefault();
-    setBusy(true);
-
-    onSocialFinish(service, { avatar, username }).finally(() => {
-      setBusy(false);
-    });
+    await onSocialFinish(service, { avatar, username });
   }, [avatar, username, service, onSocialFinish]);
 
   const handleTosCheckbox = useCallback((event) => {
@@ -93,10 +88,10 @@ function SocialForm({
   }, []);
 
   return (
-    <Form className="RegisterForm" onSubmit={handleSubmit}>
-      {error && (
+    <Form className="RegisterForm" onSubmit={handleSubmit.execute}>
+      {handleSubmit.error && (
         <FormGroup>
-          <Alert severity="error">{error.message}</Alert>
+          <Alert severity="error">{handleSubmit.error.message}</Alert>
         </FormGroup>
       )}
       <FormGroup>
@@ -146,9 +141,9 @@ function SocialForm({
       <FormGroup>
         <Button
           className="RegisterForm-submit"
-          disabled={isBusy || !agreed}
+          disabled={handleSubmit.loading || !agreed}
         >
-          {isBusy
+          {handleSubmit.loading
             ? <div className="Button-loading"><CircularProgress size="100%" /></div>
             : t('login.register')}
         </Button>
@@ -158,7 +153,6 @@ function SocialForm({
 }
 
 SocialForm.propTypes = {
-  error: PropTypes.object,
   service: PropTypes.string.isRequired,
   avatars: PropTypes.objectOf(PropTypes.string).isRequired,
   suggestedName: PropTypes.string,

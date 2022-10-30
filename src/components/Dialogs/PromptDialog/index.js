@@ -1,6 +1,7 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useAsyncCallback } from 'react-async-hook';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
@@ -33,18 +34,11 @@ function PromptDialog({
   ...props
 }) {
   const ariaTitle = useId();
-  const [busy, setBusy] = useState(false);
   const [value, setValue] = useState(defaultValue);
 
-  const handleSubmit = useCallback((event) => {
+  const handleSubmit = useAsyncCallback(async (event) => {
     event.preventDefault();
-    const promise = onSubmit(value);
-    if (promise && promise.finally) {
-      setBusy(true);
-      promise.finally(() => {
-        setBusy(false);
-      });
-    }
+    await onSubmit(value);
   }, [value, onSubmit]);
 
   const handleClose = useCallback(() => {
@@ -70,7 +64,7 @@ function PromptDialog({
         {title}
       </DialogTitle>
       <DialogContent className={cx('Dialog-body', bodyClassName)}>
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit.execute}>
           {children}
           <FormGroup>
             <TextField
@@ -84,8 +78,8 @@ function PromptDialog({
             />
           </FormGroup>
           <FormGroup>
-            <Button disabled={busy}>
-              {busy ? <div className="Button-loading"><CircularProgress size="100%" /></div> : submitLabel}
+            <Button disabled={handleSubmit.loading}>
+              {handleSubmit.loading ? <div className="Button-loading"><CircularProgress size="100%" /></div> : submitLabel}
             </Button>
           </FormGroup>
         </Form>

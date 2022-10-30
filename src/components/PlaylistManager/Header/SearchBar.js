@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 import BaseSearchBar from '../../SearchBar';
 import SourcePicker from './SourcePicker';
+import { showSearchResults } from '../../../actions/SearchActionCreators';
 import { useMediaSearchStore } from '../../../stores/MediaSearchStore';
 
 function MediaSearchBar({ className }) {
@@ -10,8 +12,12 @@ function MediaSearchBar({ className }) {
     search,
     setSource,
   } = useMediaSearchStore();
+  const dispatch = useDispatch();
 
-  const handleSubmit = (query) => search(query);
+  const handleSubmit = (query) => {
+    search(query);
+    dispatch(showSearchResults());
+  };
   const handleSourceChange = (newSource) => setSource(newSource);
 
   return (
