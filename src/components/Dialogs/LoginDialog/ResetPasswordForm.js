@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
+import { useAsyncCallback } from 'react-async-hook';
 import Alert from '@mui/material/Alert';
 import CircularProgress from '@mui/material/CircularProgress';
 import EmailIcon from '@mui/icons-material/Email';
@@ -10,28 +11,19 @@ import TextField from '../../Form/TextField';
 import Button from '../../Form/Button';
 
 const {
-  useCallback,
   useState,
 } = React;
 
-function ResetPasswordForm({ error, onResetPassword, onCloseDialog }) {
+function ResetPasswordForm({ onResetPassword, onCloseDialog }) {
   const { t } = useTranslator();
-  const [busy, setBusy] = useState(false);
-  const [done, setDone] = useState(false);
   const [email, setEmail] = useState('');
 
-  const handleSubmit = useCallback((event) => {
+  const handleSubmit = useAsyncCallback(async (event) => {
     event.preventDefault();
-    setBusy(true);
-    Promise.resolve(onResetPassword({ email })).then(() => {
-      setBusy(false);
-      setDone(true);
-    }, () => {
-      setBusy(false);
-    });
+    await onResetPassword({ email });
   }, [onResetPassword, email]);
 
-  if (done) {
+  if (handleSubmit.status === 'success') {
     return (
       <div>
         <p>{t('login.passwordResetSent')}</p>
@@ -45,10 +37,10 @@ function ResetPasswordForm({ error, onResetPassword, onCloseDialog }) {
   }
 
   return (
-    <Form className="ResetPasswordForm" onSubmit={handleSubmit}>
-      {error && (
+    <Form className="ResetPasswordForm" onSubmit={handleSubmit.execute}>
+      {handleSubmit.error && (
         <FormGroup>
-          <Alert severity="error">{error.message}</Alert>
+          <Alert severity="error">{handleSubmit.error.message}</Alert>
         </FormGroup>
       )}
       <FormGroup>
@@ -69,9 +61,9 @@ function ResetPasswordForm({ error, onResetPassword, onCloseDialog }) {
       <FormGroup>
         <Button
           className="ResetPasswordForm-submit"
-          disabled={busy}
+          disabled={handleSubmit.loading}
         >
-          {busy ? (
+          {handleSubmit.loading ? (
             <div className="Button-loading"><CircularProgress size="100%" /></div>
           ) : t('login.requestPasswordReset')}
         </Button>
@@ -81,7 +73,6 @@ function ResetPasswordForm({ error, onResetPassword, onCloseDialog }) {
 }
 
 ResetPasswordForm.propTypes = {
-  error: PropTypes.object,
   onResetPassword: PropTypes.func.isRequired,
   onCloseDialog: PropTypes.func.isRequired,
 };
