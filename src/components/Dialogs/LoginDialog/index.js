@@ -13,6 +13,7 @@ import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 import SocialForm from './SocialForm';
 import ResetPasswordForm from './ResetPasswordForm';
+import HeightTransition from './HeightTransition';
 
 /* eslint-disable react/jsx-props-no-spreading */
 function LoginDialog(props) {
@@ -62,7 +63,9 @@ function LoginDialog(props) {
             )}
           </DialogTitle>
           <DialogContent className="Dialog-body">
-            {form}
+            <HeightTransition>
+              {form}
+            </HeightTransition>
           </DialogContent>
         </Dialog>
       ) : null}
