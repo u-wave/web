@@ -16,7 +16,6 @@ import SocialLogin from './SocialLogin';
 const { useCallback, useState } = React;
 
 function LoginForm({
-  error,
   supportsSocialAuth,
   onLogin,
   onOpenResetPasswordDialog,
@@ -44,9 +43,9 @@ function LoginForm({
 
   return (
     <Form className="LoginForm" onSubmit={handleSubmit.execute}>
-      {error && (
+      {handleSubmit.error && (
         <FormGroup>
-          <Alert severity="error">{error.message}</Alert>
+          <Alert severity="error">{handleSubmit.error.message}</Alert>
         </FormGroup>
       )}
       {supportsSocialAuth && (
@@ -115,7 +114,6 @@ function LoginForm({
 }
 
 LoginForm.propTypes = {
-  error: PropTypes.object,
   supportsSocialAuth: PropTypes.bool,
   onLogin: PropTypes.func,
   onOpenResetPasswordDialog: PropTypes.func,
