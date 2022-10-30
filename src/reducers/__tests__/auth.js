@@ -15,7 +15,6 @@ describe('reducers/auth', () => {
     const { getState } = createStore();
     expect(s.tokenSelector(getState())).toBeNull();
     expect(s.currentUserSelector(getState())).toBeNull();
-    expect(s.authErrorSelector(getState())).toBeNull();
   });
 
   describe('action: auth/SET_TOKEN', () => {
@@ -34,7 +33,6 @@ describe('reducers/auth', () => {
       dispatch(loginComplete({ token: 'test token', user: userObj }));
       expect(s.tokenSelector(getState())).toBe('test token');
       expect(s.currentUserSelector(getState())).toEqual(userObj);
-      expect(s.authErrorSelector(getState())).toBeNull();
     });
 
     it('should save the error if unsuccessful', () => {
@@ -45,8 +43,6 @@ describe('reducers/auth', () => {
       });
       expect(s.tokenSelector(getState())).toBeNull();
       expect(s.currentUserSelector(getState())).toBeNull();
-      expect(s.authErrorSelector(getState())).toBeInstanceOf(Error);
-      expect(s.authErrorSelector(getState())).toHaveProperty('message', 'failed');
     });
   });
 });
