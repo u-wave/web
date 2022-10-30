@@ -17,6 +17,10 @@ function getControlName(schema) {
     return 'enum';
   }
 
+  if (schema.type === 'string' && schema.format === 'asset') {
+    return 'asset';
+  }
+
   return schema.type;
 }
 
