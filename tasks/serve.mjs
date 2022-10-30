@@ -50,6 +50,10 @@ const socketUrl = Object.assign(new URL(serverUrl.href), { protocol: 'ws:' }).hr
 app.use(apiUrl, createProxyMiddleware({
   target: serverUrl.href,
 }));
+app.use('/assets', createProxyMiddleware({
+  target: serverUrl.href,
+}));
+
 
 if (watch) {
   const compiler = webpack(wpConfig);
