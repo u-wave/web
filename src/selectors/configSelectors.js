@@ -11,7 +11,7 @@ export const serverLogoSelector = createSelector(configSelector, (config) => {
     const ASSET_BASE_URL = new URL('/assets/', window.location.href);
     return new URL(config.logo.replace(/^\//, ''), ASSET_BASE_URL);
   }
-  return null;
+  return undefined;
 });
 
 export const requestOptionsSelector = createSelector(
