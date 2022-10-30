@@ -301,11 +301,9 @@ export default function reduce(state = initialState, action = {}) {
         selectedPlaylistID: payload.playlist._id,
       };
 
-    case RENAME_PLAYLIST_START:
-      return setPlaylistLoading(state, payload.playlistID);
     case RENAME_PLAYLIST_COMPLETE: {
       if (error) {
-        return setPlaylistLoading(state, meta.playlistID, false);
+        return state;
       }
 
       const renamedPlaylist = state.playlists[payload.playlistID];
