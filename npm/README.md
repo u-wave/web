@@ -19,7 +19,7 @@ Create a Web client middleware for use with express-style server libraries.
 **Parameters**
 
  * `options`
-   * `options.apiBase` - Base URL to the mount point of the
+   * `options.apiUrl` - Base URL to the mount point of the
      [üWave Web API][u-wave-core] to talk to.
      Defaults to `/api`, but it's recommended to set this explicitly.
    * `options.emoji` - An object describing the custom emoji that will be
@@ -49,7 +49,7 @@ app.listen(6041);
 
 app.use('/', createWebClient({
   // Use nginx to send this traffic to the API server.
-  apiBase: 'https://example.com/api',
+  apiUrl: 'https://example.com/api',
   recaptcha: { key: 'my ReCaptcha site key' },
 }));
 ```

@@ -3,6 +3,17 @@ import defaultEmoji from '../utils/emojiShortcodes';
 
 export const configSelector = (state) => state.config;
 
+export const serverNameSelector = createSelector(configSelector, (config) => {
+  return config.name ?? 'üWave';
+});
+export const serverLogoSelector = createSelector(configSelector, (config) => {
+  if (config.logo) {
+    const ASSET_BASE_URL = new URL('/assets/', window.location.href);
+    return new URL(config.logo.replace(/^\//, ''), ASSET_BASE_URL);
+  }
+  return null;
+});
+
 export const requestOptionsSelector = createSelector(
   configSelector,
   (config) => {
