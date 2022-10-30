@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate } from '@u-wave/react-translate';
+import { useTranslator } from '@u-wave/react-translate';
 import Alert from '@mui/material/Alert';
 import CircularProgress from '@mui/material/CircularProgress';
 import EmailIcon from '@mui/icons-material/Email';
@@ -9,97 +9,81 @@ import FormGroup from '../../Form/Group';
 import TextField from '../../Form/TextField';
 import Button from '../../Form/Button';
 
-const enhance = translate();
+const {
+  useCallback,
+  useState,
+} = React;
 
-class ResetPasswordForm extends React.Component {
-  static propTypes = {
-    t: PropTypes.func.isRequired,
-    error: PropTypes.object,
-    onResetPassword: PropTypes.func.isRequired,
-    onCloseDialog: PropTypes.func.isRequired,
-  };
+function ResetPasswordForm({ error, onResetPassword, onCloseDialog }) {
+  const { t } = useTranslator();
+  const [busy, setBusy] = useState(false);
+  const [done, setDone] = useState(false);
+  const [email, setEmail] = useState('');
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      busy: false,
-      done: false,
-    };
-  }
-
-  handleSubmit = (event) => {
-    const { onResetPassword } = this.props;
-
+  const handleSubmit = useCallback((event) => {
     event.preventDefault();
-    this.setState({ busy: true });
-    Promise.resolve(onResetPassword({
-      email: this.email.value,
-    })).then(() => {
-      this.setState({
-        busy: false,
-        done: true,
-      });
+    setBusy(true);
+    Promise.resolve(onResetPassword({ email })).then(() => {
+      setBusy(false);
+      setDone(true);
     }, () => {
-      this.setState({ busy: false });
+      setBusy(false);
     });
-  };
+  }, [onResetPassword, email]);
 
-  refEmail = (email) => {
-    this.email = email;
-  };
-
-  render() {
-    const { t, error, onCloseDialog } = this.props;
-    const { busy, done } = this.state;
-
-    if (done) {
-      return (
-        <div>
-          <p>{t('login.passwordResetSent')}</p>
-          <p>
-            <Button className="ResetPasswordForm-submit" onClick={onCloseDialog}>
-              {t('close')}
-            </Button>
-          </p>
-        </div>
-      );
-    }
-
+  if (done) {
     return (
-      <Form className="ResetPasswordForm" onSubmit={this.handleSubmit}>
-        {error && (
-          <FormGroup>
-            <Alert severity="error">{error.message}</Alert>
-          </FormGroup>
-        )}
-        <FormGroup>
-          <label className="FormGroup-label" htmlFor="reset-email">
-            {t('login.email')}
-          </label>
-          <TextField
-            ref={this.refEmail}
-            id="reset-email"
-            className="ResetPasswordForm-field"
-            type="email"
-            autoComplete="email"
-            icon={<EmailIcon htmlColor="#9f9d9e" />}
-          />
-        </FormGroup>
-
-        <FormGroup>
-          <Button
-            className="ResetPasswordForm-submit"
-            disabled={busy}
-          >
-            {busy ? (
-              <div className="Button-loading"><CircularProgress size="100%" /></div>
-            ) : t('login.requestPasswordReset')}
+      <div>
+        <p>{t('login.passwordResetSent')}</p>
+        <p>
+          <Button className="ResetPasswordForm-submit" onClick={onCloseDialog}>
+            {t('close')}
           </Button>
-        </FormGroup>
-      </Form>
+        </p>
+      </div>
     );
   }
+
+  return (
+    <Form className="ResetPasswordForm" onSubmit={handleSubmit}>
+      {error && (
+        <FormGroup>
+          <Alert severity="error">{error.message}</Alert>
+        </FormGroup>
+      )}
+      <FormGroup>
+        <label className="FormGroup-label" htmlFor="reset-email">
+          {t('login.email')}
+        </label>
+        <TextField
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
+          id="reset-email"
+          className="ResetPasswordForm-field"
+          type="email"
+          autoComplete="email"
+          icon={<EmailIcon htmlColor="#9f9d9e" />}
+        />
+      </FormGroup>
+
+      <FormGroup>
+        <Button
+          className="ResetPasswordForm-submit"
+          disabled={busy}
+        >
+          {busy ? (
+            <div className="Button-loading"><CircularProgress size="100%" /></div>
+          ) : t('login.requestPasswordReset')}
+        </Button>
+      </FormGroup>
+    </Form>
+  );
 }
 
-export default enhance(ResetPasswordForm);
+ResetPasswordForm.propTypes = {
+  error: PropTypes.object,
+  onResetPassword: PropTypes.func.isRequired,
+  onCloseDialog: PropTypes.func.isRequired,
+};
+
+export default ResetPasswordForm;
