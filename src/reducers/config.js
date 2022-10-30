@@ -10,8 +10,8 @@ export default function reduce(state = initialState, action = {}) {
       if (payload.roles) {
         patch.roles = payload.roles;
       }
-      if (payload.baseConfig) {
-        Object.assign(patch, payload.baseConfig);
+      if (payload.config?.['u-wave:base']) {
+        Object.assign(patch, payload.config['u-wave:base']);
       }
       if (Object.keys(patch).length === 0) {
         return state;
