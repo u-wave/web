@@ -11,10 +11,6 @@ const dontBubble = (event) => event.stopPropagation();
 function HistoryActions({ className, historyEntry }) {
   const isLoggedIn = useSelector(isLoggedInSelector);
 
-  if (!isLoggedIn) {
-    return null;
-  }
-
   return (
     // eslint-disable-next-line max-len
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
@@ -23,7 +19,7 @@ function HistoryActions({ className, historyEntry }) {
       onClick={dontBubble}
     >
       <PreviewMediaAction media={historyEntry.media} />
-      <AddToPlaylistAction historyEntry={historyEntry} />
+      {isLoggedIn && <AddToPlaylistAction historyEntry={historyEntry} />}
     </div>
   );
 }
