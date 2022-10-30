@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate, Interpolate } from '@u-wave/react-translate';
+import { useTranslator, Interpolate } from '@u-wave/react-translate';
+import { useAsyncCallback } from 'react-async-hook';
 import Alert from '@mui/material/Alert';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
@@ -16,210 +17,172 @@ import Button from '../../Form/Button';
 import ReCaptcha from '../../ReCaptcha';
 import SocialLogin from './SocialLogin';
 
-const enhance = translate();
+const {
+  useState,
+} = React;
 
-class RegisterForm extends React.Component {
-  static propTypes = {
-    t: PropTypes.func.isRequired,
-    useReCaptcha: PropTypes.bool,
-    reCaptchaSiteKey: PropTypes.string,
-    supportsSocialAuth: PropTypes.bool,
-    error: PropTypes.object,
+function RegisterForm({
+  useReCaptcha,
+  reCaptchaSiteKey,
+  supportsSocialAuth,
+  onRegister,
+}) {
+  const { t } = useTranslator();
+  const [agreed, setAgreed] = useState(false);
+  const [captchaResponse, setCaptchaResponse] = useState(null);
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
-    onRegister: PropTypes.func,
-    onRegisterError: PropTypes.func,
-  };
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      busy: false,
-      agreed: false,
-      captchaResponse: null,
-    };
-  }
-
-  handleSubmit = (event) => {
-    const { t, onRegister, onRegisterError } = this.props;
-    const { captchaResponse } = this.state;
-
+  const handleSubmit = useAsyncCallback(async (event) => {
     event.preventDefault();
 
-    if (this.password.value !== this.passwordConfirmation.value) {
-      onRegisterError(new Error(t('login.passwordMismatch')));
-      return;
+    if (password !== passwordConfirmation) {
+      throw new Error(t('login.passwordMismatch'));
     }
 
-    this.setState({ busy: true });
-    onRegister({
-      username: this.username.value,
-      email: this.email.value,
-      password: this.password.value,
+    await onRegister({
+      username,
+      email,
+      password,
       grecaptcha: captchaResponse,
-    }).finally(() => {
-      this.setState({ busy: false });
     });
+  }, [
+    t, onRegister,
+    username, email, password, passwordConfirmation, captchaResponse,
+  ]);
+
+  const handleTosCheckbox = (event) => {
+    setAgreed(event.target.checked);
   };
 
-  handleCaptchaResponse = (response) => {
-    this.setState({
-      captchaResponse: response,
-    });
-  };
+  const captchaOk = !useReCaptcha || !!captchaResponse;
 
-  handleTosCheckbox = (event) => {
-    this.setState({
-      agreed: event.target.checked,
-    });
-  };
-
-  refUsername = (username) => {
-    this.username = username;
-  };
-
-  refEmail = (email) => {
-    this.email = email;
-  };
-
-  refPassword = (password) => {
-    this.password = password;
-  };
-
-  refPasswordConfirmation = (password) => {
-    this.passwordConfirmation = password;
-  };
-
-  renderCaptcha() {
-    const { useReCaptcha, reCaptchaSiteKey } = this.props;
-
-    if (!useReCaptcha) {
-      return null;
-    }
-    return (
-      <FormGroup>
-        <React.Suspense fallback={<CircularProgress className="ReCaptcha-spinner" />}>
-          <ReCaptcha
-            sitekey={reCaptchaSiteKey}
-            onResponse={this.handleCaptchaResponse}
-            theme="dark"
-          />
-        </React.Suspense>
-      </FormGroup>
-    );
-  }
-
-  render() {
-    const {
-      t, error, supportsSocialAuth, useReCaptcha,
-    } = this.props;
-    const { agreed, busy, captchaResponse } = this.state;
-    const captchaOk = !useReCaptcha || !!captchaResponse;
-
-    return (
-      <Form className="RegisterForm" onSubmit={this.handleSubmit}>
-        {error && (
+  return (
+    <Form className="RegisterForm" onSubmit={handleSubmit.execute}>
+      {handleSubmit.error && (
+        <FormGroup>
+          <Alert severity="error">{handleSubmit.error.message}</Alert>
+        </FormGroup>
+      )}
+      {supportsSocialAuth && (
+        <>
           <FormGroup>
-            <Alert severity="error">{error.message}</Alert>
+            <SocialLogin />
           </FormGroup>
-        )}
-        {supportsSocialAuth && (
-          <>
-            <FormGroup>
-              <SocialLogin />
-            </FormGroup>
-            <Divider>or</Divider>
-          </>
-        )}
-        <FormGroup>
-          <label className="FormGroup-label" htmlFor="register-username">
-            {t('login.username')}
-          </label>
-          <TextField
-            ref={this.refUsername}
-            id="register-username"
-            className="RegisterForm-field"
-            autoComplete="nickname"
-            icon={<UserIcon htmlColor="#9f9d9e" />}
-            autoFocus
-          />
-        </FormGroup>
-        <FormGroup>
-          <label className="FormGroup-label" htmlFor="register-email">
-            {t('login.email')}
-          </label>
-          <TextField
-            ref={this.refEmail}
-            id="register-email"
-            className="RegisterForm-field"
-            type="email"
-            autoComplete="email"
-            icon={<EmailIcon htmlColor="#9f9d9e" />}
-          />
-        </FormGroup>
-        <FormGroup>
-          <label className="FormGroup-label" htmlFor="register-password">
-            {t('login.password')}
-          </label>
-          <TextField
-            ref={this.refPassword}
-            id="register-password"
-            className="RegisterForm-field"
-            type="password"
-            autoComplete="new-password"
-            icon={<PasswordIcon htmlColor="#9f9d9e" />}
-          />
-        </FormGroup>
-        <FormGroup>
-          <label className="FormGroup-label" htmlFor="register-confirm">
-            {t('login.passwordConfirmation')}
-          </label>
-          <TextField
-            ref={this.refPasswordConfirmation}
-            id="register-confirm"
-            className="RegisterForm-field"
-            type="password"
-            autoComplete="new-password"
-            icon={<PasswordIcon htmlColor="#9f9d9e" />}
-          />
-        </FormGroup>
+          <Divider>or</Divider>
+        </>
+      )}
+      <FormGroup>
+        <label className="FormGroup-label" htmlFor="register-username">
+          {t('login.username')}
+        </label>
+        <TextField
+          value={username}
+          onChange={(event) => setUsername(event.target.value)}
+          id="register-username"
+          className="RegisterForm-field"
+          autoComplete="nickname"
+          icon={<UserIcon htmlColor="#9f9d9e" />}
+          autoFocus
+        />
+      </FormGroup>
+      <FormGroup>
+        <label className="FormGroup-label" htmlFor="register-email">
+          {t('login.email')}
+        </label>
+        <TextField
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
+          id="register-email"
+          className="RegisterForm-field"
+          type="email"
+          autoComplete="email"
+          icon={<EmailIcon htmlColor="#9f9d9e" />}
+        />
+      </FormGroup>
+      <FormGroup>
+        <label className="FormGroup-label" htmlFor="register-password">
+          {t('login.password')}
+        </label>
+        <TextField
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
+          id="register-password"
+          className="RegisterForm-field"
+          type="password"
+          autoComplete="new-password"
+          icon={<PasswordIcon htmlColor="#9f9d9e" />}
+        />
+      </FormGroup>
+      <FormGroup>
+        <label className="FormGroup-label" htmlFor="register-confirm">
+          {t('login.passwordConfirmation')}
+        </label>
+        <TextField
+          value={passwordConfirmation}
+          onChange={(event) => setPasswordConfirmation(event.target.value)}
+          id="register-confirm"
+          className="RegisterForm-field"
+          type="password"
+          autoComplete="new-password"
+          icon={<PasswordIcon htmlColor="#9f9d9e" />}
+        />
+      </FormGroup>
 
-        {this.renderCaptcha()}
-
+      {useReCaptcha ? (
         <FormGroup>
-          <FormControlLabel
-            control={(
-              <Checkbox
-                checked={agreed}
-                onChange={this.handleTosCheckbox}
-              />
-            )}
-            label={(
-              <Interpolate
-                i18nKey="login.agree"
-                privacyPolicy={(
-                  <a target="_blank" rel="noreferrer noopener" href="/privacy.html">
-                    {t('login.privacyPolicy')}
-                  </a>
-                )}
-              />
-            )}
-          />
+          <React.Suspense fallback={<CircularProgress className="ReCaptcha-spinner" />}>
+            <ReCaptcha
+              sitekey={reCaptchaSiteKey}
+              onResponse={setCaptchaResponse}
+              theme="dark"
+            />
+          </React.Suspense>
         </FormGroup>
+      ) : null}
 
-        <FormGroup>
-          <Button
-            className="RegisterForm-submit"
-            disabled={busy || !agreed || !captchaOk}
-          >
-            {busy
-              ? <div className="Button-loading"><CircularProgress size="100%" /></div>
-              : t('login.register')}
-          </Button>
-        </FormGroup>
-      </Form>
-    );
-  }
+      <FormGroup>
+        <FormControlLabel
+          control={(
+            <Checkbox
+              checked={agreed}
+              onChange={handleTosCheckbox}
+            />
+          )}
+          label={(
+            <Interpolate
+              i18nKey="login.agree"
+              privacyPolicy={(
+                <a target="_blank" rel="noreferrer noopener" href="/privacy.html">
+                  {t('login.privacyPolicy')}
+                </a>
+              )}
+            />
+          )}
+        />
+      </FormGroup>
+
+      <FormGroup>
+        <Button
+          className="RegisterForm-submit"
+          disabled={handleSubmit.loading || !agreed || !captchaOk}
+        >
+          {handleSubmit.loading
+            ? <div className="Button-loading"><CircularProgress size="100%" /></div>
+            : t('login.register')}
+        </Button>
+      </FormGroup>
+    </Form>
+  );
 }
 
-export default enhance(RegisterForm);
+RegisterForm.propTypes = {
+  useReCaptcha: PropTypes.bool,
+  reCaptchaSiteKey: PropTypes.string,
+  supportsSocialAuth: PropTypes.bool,
+  onRegister: PropTypes.func,
+};
+
+export default RegisterForm;
