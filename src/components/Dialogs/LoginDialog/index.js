@@ -14,9 +14,14 @@ import SocialForm from './SocialForm';
 import ResetPasswordForm from './ResetPasswordForm';
 import HeightTransition from './HeightTransition';
 
+const {
+  useId,
+} = React;
+
 /* eslint-disable react/jsx-props-no-spreading */
 function LoginDialog(props) {
   const { t } = useTranslator();
+  const titleId = useId();
   const isFullScreen = useMediaQuery((theme) => theme.breakpoints.down('sm'));
 
   const {
@@ -48,10 +53,10 @@ function LoginDialog(props) {
       }}
       fullScreen={isFullScreen}
       onClose={onCloseDialog}
-      aria-labelledby="uw-login-title"
+      aria-labelledby={titleId}
       open={open}
     >
-      <DialogTitle className="Dialog-title" id="uw-login-title">
+      <DialogTitle className="Dialog-title" id={titleId}>
         {title}
         {isFullScreen && (
           <IconButton className="Dialog-close" onClick={onCloseDialog}>
