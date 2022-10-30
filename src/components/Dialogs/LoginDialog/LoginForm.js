@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
+import { useAsyncCallback } from 'react-async-hook';
 import EmailIcon from '@mui/icons-material/Email';
 import PasswordIcon from '@mui/icons-material/Lock';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -21,18 +22,12 @@ function LoginForm({
   onOpenResetPasswordDialog,
 }) {
   const { t } = useTranslator();
-  const [busy, setBusy] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = useCallback((event) => {
+  const handleSubmit = useAsyncCallback(async (event) => {
     event.preventDefault();
-    setBusy(true);
-    onLogin({ email, password }).catch(() => {
-      // ignore
-    }).finally(() => {
-      setBusy(false);
-    });
+    await onLogin({ email, password });
   }, [onLogin, email, password]);
 
   const handleResetPassword = useCallback((event) => {
@@ -48,7 +43,7 @@ function LoginForm({
   }, []);
 
   return (
-    <Form className="LoginForm" onSubmit={handleSubmit}>
+    <Form className="LoginForm" onSubmit={handleSubmit.execute}>
       {error && (
         <FormGroup>
           <Alert severity="error">{error.message}</Alert>
@@ -96,9 +91,9 @@ function LoginForm({
       <FormGroup>
         <Button
           className="LoginForm-submit"
-          disabled={busy}
+          disabled={handleSubmit.loading}
         >
-          {busy ? (
+          {handleSubmit.loading ? (
             <div className="Button-loading">
               <CircularProgress size="100%" />
             </div>
