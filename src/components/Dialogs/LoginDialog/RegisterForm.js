@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslator, Interpolate } from '@u-wave/react-translate';
+import { useAsyncCallback } from 'react-async-hook';
 import Alert from '@mui/material/Alert';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
@@ -24,12 +25,9 @@ function RegisterForm({
   useReCaptcha,
   reCaptchaSiteKey,
   supportsSocialAuth,
-  error,
   onRegister,
-  onRegisterError,
 }) {
   const { t } = useTranslator();
-  const [busy, setBusy] = useState(false);
   const [agreed, setAgreed] = useState(false);
   const [captchaResponse, setCaptchaResponse] = useState(null);
   const [username, setUsername] = useState('');
@@ -37,24 +35,23 @@ function RegisterForm({
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
-  const handleSubmit = (event) => {
+  const handleSubmit = useAsyncCallback(async (event) => {
     event.preventDefault();
 
     if (password !== passwordConfirmation) {
-      onRegisterError(new Error(t('login.passwordMismatch')));
-      return;
+      throw new Error(t('login.passwordMismatch'));
     }
 
-    setBusy(true);
-    onRegister({
+    await onRegister({
       username,
       email,
       password,
       grecaptcha: captchaResponse,
-    }).finally(() => {
-      setBusy(false);
     });
-  };
+  }, [
+    t, onRegister,
+    username, email, password, passwordConfirmation, captchaResponse,
+  ]);
 
   const handleTosCheckbox = (event) => {
     setAgreed(event.target.checked);
@@ -63,10 +60,10 @@ function RegisterForm({
   const captchaOk = !useReCaptcha || !!captchaResponse;
 
   return (
-    <Form className="RegisterForm" onSubmit={handleSubmit}>
-      {error && (
+    <Form className="RegisterForm" onSubmit={handleSubmit.execute}>
+      {handleSubmit.error && (
         <FormGroup>
-          <Alert severity="error">{error.message}</Alert>
+          <Alert severity="error">{handleSubmit.error.message}</Alert>
         </FormGroup>
       )}
       {supportsSocialAuth && (
@@ -170,9 +167,9 @@ function RegisterForm({
       <FormGroup>
         <Button
           className="RegisterForm-submit"
-          disabled={busy || !agreed || !captchaOk}
+          disabled={handleSubmit.loading || !agreed || !captchaOk}
         >
-          {busy
+          {handleSubmit.loading
             ? <div className="Button-loading"><CircularProgress size="100%" /></div>
             : t('login.register')}
         </Button>
@@ -185,10 +182,7 @@ RegisterForm.propTypes = {
   useReCaptcha: PropTypes.bool,
   reCaptchaSiteKey: PropTypes.string,
   supportsSocialAuth: PropTypes.bool,
-  error: PropTypes.object,
-
   onRegister: PropTypes.func,
-  onRegisterError: PropTypes.func,
 };
 
 export default RegisterForm;
