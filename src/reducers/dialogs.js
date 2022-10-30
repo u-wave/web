@@ -26,7 +26,13 @@ const openDialog = (state, name, payload, open = true) => ({
     payload,
   },
 });
-const closeDialog = (state, name) => openDialog(state, name, {}, false);
+const closeDialog = (state, name) => ({
+  ...state,
+  [name]: {
+    open: false,
+    payload: state[name].payload,
+  },
+});
 
 export default function reduce(state = initialState, action = {}) {
   const { type, payload } = action;

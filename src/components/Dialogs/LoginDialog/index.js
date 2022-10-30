@@ -8,7 +8,6 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import DialogCloseAnimation from '../../DialogCloseAnimation';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 import SocialForm from './SocialForm';
@@ -43,33 +42,29 @@ function LoginDialog(props) {
   }
 
   return (
-    <DialogCloseAnimation delay={450}>
-      {open ? (
-        <Dialog
-          classes={{
-            paper: cx('Dialog', 'LoginDialog', isFullScreen && 'LoginDialog--mobile'),
-          }}
-          fullScreen={isFullScreen}
-          onClose={onCloseDialog}
-          aria-labelledby="uw-login-title"
-          open
-        >
-          <DialogTitle className="Dialog-title" id="uw-login-title">
-            {title}
-            {isFullScreen && (
-              <IconButton className="Dialog-close" onClick={onCloseDialog}>
-                <CloseIcon />
-              </IconButton>
-            )}
-          </DialogTitle>
-          <DialogContent className="Dialog-body">
-            <HeightTransition>
-              {form}
-            </HeightTransition>
-          </DialogContent>
-        </Dialog>
-      ) : null}
-    </DialogCloseAnimation>
+    <Dialog
+      classes={{
+        paper: cx('Dialog', 'LoginDialog', isFullScreen && 'LoginDialog--mobile'),
+      }}
+      fullScreen={isFullScreen}
+      onClose={onCloseDialog}
+      aria-labelledby="uw-login-title"
+      open={open}
+    >
+      <DialogTitle className="Dialog-title" id="uw-login-title">
+        {title}
+        {isFullScreen && (
+          <IconButton className="Dialog-close" onClick={onCloseDialog}>
+            <CloseIcon />
+          </IconButton>
+        )}
+      </DialogTitle>
+      <DialogContent className="Dialog-body">
+        <HeightTransition>
+          {form}
+        </HeightTransition>
+      </DialogContent>
+    </Dialog>
   );
 }
 

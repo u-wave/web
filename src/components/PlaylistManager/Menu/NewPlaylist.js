@@ -23,10 +23,12 @@ function NewPlaylist({ className, onCreatePlaylist }) {
     setCreating(false);
   }, []);
 
-  const handleSubmit = useCallback((playlistName) => {
-    return Promise.resolve(onCreatePlaylist(playlistName)).finally(() => {
+  const handleSubmit = useCallback(async (playlistName) => {
+    try {
+      await onCreatePlaylist(playlistName);
+    } finally {
       setCreating(false);
-    });
+    }
   }, [onCreatePlaylist]);
 
   return (
@@ -42,15 +44,14 @@ function NewPlaylist({ className, onCreatePlaylist }) {
           {t('playlists.new')}
         </div>
       </MenuItem>
-      {creating && (
-        <PromptDialog
-          title={t('dialogs.createPlaylist.nameInputTitle')}
-          icon={<CreatePlaylistIcon htmlColor="#777" />}
-          submitLabel={t('dialogs.createPlaylist.action')}
-          onSubmit={handleSubmit}
-          onCancel={handleClose}
-        />
-      )}
+      <PromptDialog
+        open={creating}
+        title={t('dialogs.createPlaylist.nameInputTitle')}
+        icon={<CreatePlaylistIcon htmlColor="#777" />}
+        submitLabel={t('dialogs.createPlaylist.action')}
+        onSubmit={handleSubmit}
+        onCancel={handleClose}
+      />
     </>
   );
 }

@@ -29,7 +29,7 @@ function PromptDialog({
   titleClassName,
   onSubmit,
   onCancel,
-  open = true,
+  open,
   defaultValue = '',
   ...props
 }) {
@@ -96,7 +96,7 @@ PromptDialog.propTypes = {
   icon: PropTypes.node,
   defaultValue: PropTypes.string,
   title: PropTypes.string,
-  open: PropTypes.bool,
+  open: PropTypes.bool.isRequired,
   bodyClassName: PropTypes.string,
   contentClassName: PropTypes.string,
   titleClassName: PropTypes.string,
