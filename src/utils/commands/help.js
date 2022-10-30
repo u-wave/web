@@ -1,7 +1,9 @@
-import { getCommands, register, canExecute } from '../ChatCommands';
+import { getCommands, canExecute } from '../ChatCommands';
 import { log } from '../../actions/ChatActionCreators';
 
-register('help', 'List available commands.', {
+export default [{
+  name: 'help',
+  description: 'List available commands.',
   action: () => (dispatch, getState) => {
     const available = getCommands();
     dispatch(log('Available commands:'));
@@ -12,4 +14,4 @@ register('help', 'List available commands.', {
       }
     });
   },
-});
+}];

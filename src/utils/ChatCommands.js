@@ -1,16 +1,9 @@
-const commands = {};
+import commandList from './commands';
+
+const commands = Object.fromEntries(commandList.map(({ name, ...command }) => [name, command]));
 
 export function getCommands() {
   return commands;
-}
-
-/**
- * @param {string} name
- * @param {string} description
- * @param {{ action: (...args: any[]) => void, guard?: (state: object) => boolean }} options
- */
-export function register(name, description, { action, guard = undefined }) {
-  commands[name] = { description, action, guard };
 }
 
 export function canExecute(state, { guard = undefined } = {}) {

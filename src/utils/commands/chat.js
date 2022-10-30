@@ -1,5 +1,4 @@
-import { register, findUser } from '../ChatCommands';
-
+import { findUser } from '../ChatCommands';
 import {
   userListSelector,
   isModeratorSelector,
@@ -14,23 +13,20 @@ import {
   setMotd,
 } from '../../actions/ChatActionCreators';
 
-register(
-  'motd',
-  'Set the Message of the Day, displayed at the very top of the chat.',
+export default [
   {
+    name: 'motd',
+    description: 'Set the Message of the Day, displayed at the very top of the chat.',
     guard: isManagerSelector,
     action: (...args) => {
       const motd = args.join(' ');
       return setMotd(motd);
     },
   },
-);
-
-register(
-  'clearchat',
-  'Delete all chat messages. '
-  + 'Pass a username ("/clearchat kool_panda") to only delete messages by that user.',
   {
+    name: 'clearchat',
+    description: 'Delete all chat messages. '
+      + 'Pass a username ("/clearchat kool_panda") to only delete messages by that user.',
     guard: isModeratorSelector,
     action: (...args) => (dispatch, getState) => {
       const username = args.join(' ').trim();
@@ -44,4 +40,4 @@ register(
       return dispatch(deleteAllChatMessages());
     },
   },
-);
+];

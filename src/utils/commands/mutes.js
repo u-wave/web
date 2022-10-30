@@ -1,7 +1,6 @@
 import ms from 'ms';
-import { register, findUser } from '../ChatCommands';
+import { findUser } from '../ChatCommands';
 import { log } from '../../actions/ChatActionCreators';
-
 import { mutedUsersSelector } from '../../selectors/chatSelectors';
 import {
   userListSelector,
@@ -9,10 +8,10 @@ import {
 } from '../../selectors/userSelectors';
 import { muteUser, unmuteUser } from '../../actions/ModerationActionCreators';
 
-register(
-  'muteuser',
-  'Mute a user in chat, preventing them from chatting. Syntax: "/muteuser username duration"',
+export default [
   {
+    name: 'muteuser',
+    description: 'Mute a user in chat, preventing them from chatting. Syntax: "/muteuser username duration"',
     guard: isModeratorSelector,
     action: (username, duration = '30m') => (dispatch, getState) => {
       if (!username) {
@@ -28,12 +27,9 @@ register(
       return dispatch(muteUser(user, ms(`${duration}`)));
     },
   },
-);
-
-register(
-  'unmuteuser',
-  'Unmute a user in chat. Syntax: "/unmuteuser username"',
   {
+    name: 'unmuteuser',
+    description: 'Unmute a user in chat. Syntax: "/unmuteuser username"',
     guard: isModeratorSelector,
     action: (username) => (dispatch, getState) => {
       if (!username) {
@@ -46,4 +42,4 @@ register(
       return dispatch(unmuteUser(user));
     },
   },
-);
+];
