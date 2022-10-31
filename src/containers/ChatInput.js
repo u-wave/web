@@ -2,7 +2,7 @@ import React from 'react';
 import { useStore, useSelector } from 'react-redux';
 import { useBus } from 'react-bus';
 import splitargs from 'splitargs';
-import { inputMessage } from '../actions/ChatActionCreators';
+import { sendChat } from '../actions/ChatActionCreators';
 import {
   availableGroupMentionsSelector,
   emojiCompletionsSelector,
@@ -49,7 +49,7 @@ function ChatInputContainer() {
         return;
       }
     }
-    dispatch(inputMessage(message));
+    dispatch(sendChat(message));
   }, [commander, dispatch]);
 
   const bus = useBus();
