@@ -2,6 +2,9 @@
   "extends": ["airbnb", "airbnb/hooks"],
 
   "plugins": ["compat", "react-hooks"],
+  "parserOptions": {
+    "ecmaVersion": 2022
+  },
 
   "rules": {
     "arrow-body-style": "off",
@@ -40,8 +43,6 @@
   "overrides": [
     {
       "files": ["src/**/*.js"],
-      "parser": "@babel/eslint-parser",
-      "plugins": ["@babel/eslint-plugin"],
       "rules": {
         "compat/compat": "error"
       }
