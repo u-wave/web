@@ -1,7 +1,8 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useStore, useSelector } from 'react-redux';
 import { useBus } from 'react-bus';
-import { inputMessage } from '../actions/ChatActionCreators';
+import splitargs from 'splitargs';
+import { sendChat } from '../actions/ChatActionCreators';
 import {
   availableGroupMentionsSelector,
   emojiCompletionsSelector,
@@ -10,6 +11,8 @@ import {
   userListSelector,
   isLoggedInSelector,
 } from '../selectors/userSelectors';
+import commandList from '../utils/commands';
+import ChatCommands from '../utils/ChatCommands';
 
 const ChatInput = React.lazy(() => (
   import(/* webpackPreload: true */ '../components/Chat/Input')
@@ -17,6 +20,7 @@ const ChatInput = React.lazy(() => (
 
 const {
   useCallback,
+  useMemo,
   Suspense,
 } = React;
 
@@ -31,8 +35,22 @@ function ChatInputContainer() {
   const mentionableUsers = useSelector(userListSelector);
   const mentionableGroups = useSelector(availableGroupMentionsSelector);
   const availableEmoji = useSelector(emojiCompletionsSelector);
-  const dispatch = useDispatch();
-  const onSend = useCallback((message) => dispatch(inputMessage(message)), [dispatch]);
+  const store = useStore();
+  const { dispatch } = store;
+  const commander = useMemo(() => new ChatCommands(store, commandList), [store]);
+  const onSend = useCallback((message) => {
+    if (message.startsWith('/')) {
+      const [command, ...params] = splitargs(message.slice(1));
+      if (command) {
+        const result = commander.execute(command, params);
+        if (result) {
+          dispatch(result);
+        }
+        return;
+      }
+    }
+    dispatch(sendChat(message));
+  }, [commander, dispatch]);
 
   const bus = useBus();
   const onScroll = useCallback((direction) => {
