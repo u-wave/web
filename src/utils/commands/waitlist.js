@@ -25,14 +25,14 @@ export default [
     name: 'skip',
     description: 'Skip the current DJ.',
     guard: isModeratorSelector,
-    action: (...args) => skipCurrentDJ(args.length > 0 ? args.join(' ') : '[No reason given]'),
+    action: (_commander, ...args) => skipCurrentDJ(args.length > 0 ? args.join(' ') : '[No reason given]'),
   },
 
   {
     name: 'wladd',
     description: 'Add a user to the waitlist. Syntax: "/wladd username"',
     guard: isModeratorSelector,
-    action: (username) => (dispatch, getState) => {
+    action: (_commander, username) => (dispatch, getState) => {
       if (!username) {
         return dispatch(log('Provide a user to add to the waitlist. Syntax: "/wladd username"'));
       }
@@ -49,7 +49,7 @@ export default [
     name: 'wlremove',
     description: 'Remove a user from the waitlist. Syntax: "/wlremove username"',
     guard: isModeratorSelector,
-    action: (username) => (dispatch, getState) => {
+    action: (_commander, username) => (dispatch, getState) => {
       if (!username) {
         return dispatch(log('Provide a user to remove from the waitlist. Syntax: "/wlremove username"'));
       }
@@ -69,21 +69,21 @@ export default [
     name: 'wlclear',
     description: 'Remove everyone from the waitlist.',
     guard: isModeratorSelector,
-    action: modClearWaitlist,
+    action: () => modClearWaitlist(),
   },
 
   {
     name: 'wllock',
     description: 'Lock the waitlist.',
     guard: isModeratorSelector,
-    action: modLockWaitlist,
+    action: () => modLockWaitlist(),
   },
 
   {
     name: 'wlunlock',
     description: 'Unlock the waitlist.',
     guard: isModeratorSelector,
-    action: modUnlockWaitlist,
+    action: () => modUnlockWaitlist(),
   },
 
   {
@@ -91,7 +91,7 @@ export default [
     description: 'Move a user to a different position in the waitlist. '
       + 'Syntax: "/wlmove username position"',
     guard: isModeratorSelector,
-    action: (username, posStr) => (dispatch, getState) => {
+    action: (_commander, username, posStr) => (dispatch, getState) => {
       if (!username) {
         return dispatch(log('Provide a user to move in the waitlist. Syntax: "/wlmove username position"'));
       }

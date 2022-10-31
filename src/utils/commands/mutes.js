@@ -13,7 +13,7 @@ export default [
     name: 'muteuser',
     description: 'Mute a user in chat, preventing them from chatting. Syntax: "/muteuser username duration"',
     guard: isModeratorSelector,
-    action: (username, duration = '30m') => (dispatch, getState) => {
+    action: (_commander, username, duration = '30m') => (dispatch, getState) => {
       if (!username) {
         return dispatch(log('Provide a user to mute.'));
       }
@@ -31,7 +31,7 @@ export default [
     name: 'unmuteuser',
     description: 'Unmute a user in chat. Syntax: "/unmuteuser username"',
     guard: isModeratorSelector,
-    action: (username) => (dispatch, getState) => {
+    action: (_commander, username) => (dispatch, getState) => {
       if (!username) {
         return dispatch(log('Provide a user to unmute.'));
       }

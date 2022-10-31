@@ -11,7 +11,7 @@ export default [{
   name: 'ban',
   description: 'Ban a user. Syntax: "/ban username duration" or "/ban username perma"',
   guard: isModeratorSelector,
-  action: (username, duration = 'perma') => (dispatch, getState) => {
+  action: (_commander, username, duration = 'perma') => (dispatch, getState) => {
     if (!username) {
       return dispatch(log('Provide a user to ban.'));
     }

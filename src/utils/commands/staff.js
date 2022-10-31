@@ -29,7 +29,7 @@ export default [
     name: 'addrole',
     description: 'Assign a role to a user. Syntax: "/addrole username role"',
     guard: isManagerSelector,
-    action: (username, role) => (dispatch, getState) => {
+    action: (_commander, username, role) => (dispatch, getState) => {
       if (!username) {
         return dispatch(log('Provide a user to promote or demote.'));
       }
@@ -47,7 +47,7 @@ export default [
     name: 'removerole',
     description: 'Remove a role from a user. Syntax: "/removerole username role"',
     guard: isManagerSelector,
-    action: (username, role) => (dispatch, getState) => {
+    action: (_commander, username, role) => (dispatch, getState) => {
       if (!username) {
         return dispatch(log('Provide a user to promote or demote.'));
       }
@@ -65,6 +65,6 @@ export default [
     name: 'admin',
     description: 'Open the administration panel.',
     guard: isModeratorSelector,
-    action: toggleAdmin,
+    action: () => toggleAdmin(),
   },
 ];

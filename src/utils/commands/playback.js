@@ -7,7 +7,7 @@ export default [
   {
     name: 'volume',
     description: 'Set the current volume.',
-    action: (value) => {
+    action: (_commander, value) => {
       const volume = parseInt(value, 10);
       if (!Number.isFinite(volume) || volume < 0 || volume > 100) {
         return log('Volume must be a number between 0 and 100.');
@@ -42,7 +42,7 @@ export default [
   {
     name: 'playback',
     description: 'Enable or disable playback. Syntax: "/playback on|off"',
-    action: (type) => {
+    action: (_commander, type) => {
       if (type.toLowerCase() === 'on') {
         return setSetting('videoEnabled', true);
       }

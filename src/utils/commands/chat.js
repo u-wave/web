@@ -18,7 +18,7 @@ export default [
     name: 'motd',
     description: 'Set the Message of the Day, displayed at the very top of the chat.',
     guard: isManagerSelector,
-    action: (...args) => {
+    action: (_commander, ...args) => {
       const motd = args.join(' ');
       return setMotd(motd);
     },
@@ -28,7 +28,7 @@ export default [
     description: 'Delete all chat messages. '
       + 'Pass a username ("/clearchat kool_panda") to only delete messages by that user.',
     guard: isModeratorSelector,
-    action: (...args) => (dispatch, getState) => {
+    action: (_commander, ...args) => (dispatch, getState) => {
       const username = args.join(' ').trim();
       if (username) {
         const user = findUser(userListSelector(getState()), username);
