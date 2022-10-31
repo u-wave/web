@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.0-alpha.14 / 31 Oct 2022
+While this is an alpha release, new servers should use this rather than an older "stable" version.
+
+Bugfixes:
+ * Fix preview media dialog backdrop size.
+ * Show preview button in history when not logged in.
+ * Tweak TextField outlines.
+
+Internal:
+ * Use react-async-hook for async operations. (#2537)
+ * Setup chat commands in a more declarative way. (#2539)
+ * Mount dialogs as MUI intends. (#2540)
+
 ## 2.0.0-alpha.13 / 30 Oct 2022
 While this is an alpha release, new servers should use this rather than an older "stable" version.
 
