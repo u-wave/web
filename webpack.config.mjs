@@ -47,7 +47,7 @@ function getConfig(env, {
 
   const npmConfig = getNpmConfig(env, outputPackage);
 
-  const baseConfig = merge({
+  const baseConfig = {
     context: fileURLToPath(new URL('./src', import.meta.url)),
     mode: env.production ? 'production' : 'development',
     // Quit if there are errors.
@@ -146,7 +146,7 @@ function getConfig(env, {
         'main',
       ],
     },
-  }, compileDependencies());
+  };
 
   const appConfig = merge(baseConfig, {
     name: 'app',
@@ -246,7 +246,7 @@ function getConfig(env, {
     ],
   };
 
-  const legacyConfigPatch = {
+  const legacyConfigPatch = merge({
     name: 'app-legacy',
     output: {
       filename: env.production ? 'static/l_[name]_[contenthash:7].js' : 'l_[name]_dev.js',
@@ -258,7 +258,7 @@ function getConfig(env, {
         'triage-polyfills': './polyfills-legacy.js',
       },
     },
-  };
+  }, compileDependencies());
 
   // Must be used together with an app config to work correctly.
   const staticPagesConfigPatch = merge(
