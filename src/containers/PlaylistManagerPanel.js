@@ -27,41 +27,42 @@ function PlaylistPanelContainer() {
   const loading = useSelector(isSelectedPlaylistLoadingSelector);
   const isFiltered = useSelector(isFilteredSelector);
   const dispatch = useDispatch();
+  const playlistID = playlist._id;
 
   const onShufflePlaylist = useCallback(
-    () => dispatch(shufflePlaylist(playlist._id)),
-    [dispatch, playlist],
+    () => dispatch(shufflePlaylist(playlistID)),
+    [dispatch, playlistID],
   );
   const onActivatePlaylist = useCallback(
-    () => dispatch(activatePlaylist(playlist._id)),
-    [dispatch, playlist],
+    () => dispatch(activatePlaylist(playlistID)),
+    [dispatch, playlistID],
   );
   const onRenamePlaylist = useCallback(
-    (name) => dispatch(renamePlaylist(playlist._id, name)),
-    [dispatch, playlist],
+    (name) => dispatch(renamePlaylist(playlistID, name)),
+    [dispatch, playlistID],
   );
   const onDeletePlaylist = useCallback(
-    () => dispatch(deletePlaylist(playlist._id)),
-    [dispatch, playlist],
+    () => dispatch(deletePlaylist(playlistID)),
+    [dispatch, playlistID],
   );
   const onNotDeletable = useCallback(
-    () => dispatch(cannotDeleteActivePlaylist(playlist._id)),
-    [dispatch, playlist],
+    () => dispatch(cannotDeleteActivePlaylist(playlistID)),
+    [dispatch, playlistID],
   );
 
   const onMoveMedia = useCallback(
-    (media, opts) => dispatch(moveMedia(playlist._id, media, opts)),
-    [dispatch, playlist],
+    (media, opts) => dispatch(moveMedia(playlistID, media, opts)),
+    [dispatch, playlistID],
   );
   const onLoadPlaylistPage = useCallback((page) => {
     if (isFiltered) {
-      return dispatch(loadFilteredPlaylistItems(playlist._id, page));
+      return dispatch(loadFilteredPlaylistItems(playlistID, page));
     }
-    return dispatch(loadPlaylist(playlist._id, page));
-  }, [dispatch, isFiltered, playlist]);
+    return dispatch(loadPlaylist(playlistID, page));
+  }, [dispatch, isFiltered, playlistID]);
   const onFilterPlaylistItems = useCallback(
-    (filter) => dispatch(filterPlaylistItems(playlist._id, filter)),
-    [dispatch, playlist],
+    (filter) => dispatch(filterPlaylistItems(playlistID, filter)),
+    [dispatch, playlistID],
   );
 
   return (
