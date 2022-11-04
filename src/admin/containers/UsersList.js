@@ -1,8 +1,10 @@
 import React from 'react';
 import useSWR from 'swr';
 import UsersList from '../components/UsersList';
+import mergeIncludedModels from '../../utils/mergeIncludedModels';
 
 const {
+  useMemo,
   useState,
 } = React;
 
@@ -17,10 +19,8 @@ function UsersListContainer() {
     ['filter', filter],
   ]);
   const { data } = useSWR(`/users?${params}`, { suspense: true });
-  const {
-    data: users,
-    meta: { results: totalUsers },
-  } = data;
+  const users = useMemo(() => mergeIncludedModels(data), [data]);
+  const totalUsers = data.meta.results;
 
   return (
     <UsersList
