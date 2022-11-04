@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import CircularProgress from '@mui/material/CircularProgress';
 import List, { ListItem, ListItemText } from '../../../components/List';
 import CurrentPage from './CurrentPage';
-
 import '../../index.css';
+
+const Fallback = () => <CircularProgress size="100%" />;
 
 const AdminApp = ({
   currentView,
@@ -43,7 +45,9 @@ const AdminApp = ({
       </List>
     </div>
     <div className="AdminApp-page">
-      <CurrentPage page={currentView} />
+      <React.Suspense fallback={<Fallback />}>
+        <CurrentPage page={currentView} />
+      </React.Suspense>
     </div>
   </div>
 );
