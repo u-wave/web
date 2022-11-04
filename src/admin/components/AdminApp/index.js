@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import CircularProgress from '@mui/material/CircularProgress';
+import ListItemIcon from '@mui/material/ListItemIcon';
 import List, { ListItem, ListItemText } from '../../../components/List';
 import CurrentPage from './CurrentPage';
 import '../../index.css';
@@ -8,17 +9,24 @@ import '../../index.css';
 const Fallback = () => <CircularProgress size="100%" />;
 
 const {
+  useEffect,
+  useState,
   useTransition,
 } = React;
 
 function AdminApp({ currentView, onTransition }) {
-  const [_isPending, startTransition] = useTransition();
+  const [nextView, setNextView] = useState(currentView);
+  const [isPending, startTransition] = useTransition();
 
-  const onClick = (nextView) => {
+  useEffect(() => {
+    if (currentView === nextView) {
+      return;
+    }
+
     startTransition(() => {
       onTransition(nextView);
     });
-  };
+  }, [onTransition, currentView, nextView]);
 
   return (
     <div className="AdminApp">
@@ -27,30 +35,50 @@ function AdminApp({ currentView, onTransition }) {
           <ListItem
             selected={currentView === 'main'}
             className="AdminApp-menuItem"
-            onClick={() => onClick('main')}
+            onClick={() => setNextView('main')}
           >
             <ListItemText primary="Main" />
+            {nextView === 'main' && isPending ? (
+              <ListItemIcon>
+                <CircularProgress color="inherit" size={24} />
+              </ListItemIcon>
+            ) : null}
           </ListItem>
           <ListItem
             selected={currentView === 'users'}
             className="AdminApp-menuItem"
-            onClick={() => onClick('users')}
+            onClick={() => setNextView('users')}
           >
             <ListItemText primary="Users" />
+            {nextView === 'users' && isPending ? (
+              <ListItemIcon>
+                <CircularProgress color="inherit" size={24} />
+              </ListItemIcon>
+            ) : null}
           </ListItem>
           <ListItem
             selected={currentView === 'bans'}
             className="AdminApp-menuItem"
-            onClick={() => onClick('bans')}
+            onClick={() => setNextView('bans')}
           >
             <ListItemText primary="Bans" />
+            {nextView === 'bans' && isPending ? (
+              <ListItemIcon>
+                <CircularProgress color="inherit" size={24} />
+              </ListItemIcon>
+            ) : null}
           </ListItem>
           <ListItem
             selected={currentView === 'config'}
             className="AdminApp-menuItem"
-            onClick={() => onClick('config')}
+            onClick={() => setNextView('config')}
           >
             <ListItemText primary="Server Config" />
+            {nextView === 'config' && isPending ? (
+              <ListItemIcon>
+                <CircularProgress color="inherit" size={24} />
+              </ListItemIcon>
+            ) : null}
           </ListItem>
         </List>
       </div>
