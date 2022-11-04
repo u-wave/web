@@ -30,7 +30,7 @@ TableCell.propTypes = {
 
 function JoinDate({ date }) {
   const { dateFormatter } = useIntl();
-  return dateFormatter.format(date);
+  return Number.isNaN(date.getTime()) ? 'Invalid Date' : dateFormatter.format(date);
 }
 
 JoinDate.propTypes = {
