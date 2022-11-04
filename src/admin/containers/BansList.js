@@ -1,29 +1,37 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { loadBans, unbanUserAndReload } from '../actions/bans';
+import useSWR from 'swr';
+import { useAsyncCallback } from 'react-async-hook';
+import { useDispatch } from 'react-redux';
+import { unbanUser } from '../actions/bans';
 import BansList from '../components/BansList';
 
 const {
-  useCallback,
-  useEffect,
+  useState,
 } = React;
 
+const PAGE_SIZE = 25;
+
 function BansListContainer() {
-  const bans = useSelector((state) => state.admin.bans.bans);
+  const [currentPage, _setCurrentPage] = useState(0);
+  const [filter, _setFilter] = useState('');
+  const params = new URLSearchParams([
+    ['page[offset]', currentPage * PAGE_SIZE],
+    ['page[limit]', PAGE_SIZE],
+    ['filter', filter],
+  ]);
+  const { data, mutate } = useSWR(`/bans?${params}`, { suspense: true });
+  const { data: bans } = data;
+
   const dispatch = useDispatch();
-
-  const onUnbanUser = useCallback((user) => {
-    dispatch(unbanUserAndReload(user));
-  }, [dispatch]);
-
-  useEffect(() => {
-    dispatch(loadBans());
-  }, [dispatch]);
+  const onUnbanUser = useAsyncCallback(async (user) => {
+    await dispatch(unbanUser(user));
+    mutate();
+  }, [dispatch, mutate]);
 
   return (
     <BansList
       bans={bans}
-      onUnbanUser={onUnbanUser}
+      onUnbanUser={onUnbanUser.execute}
     />
   );
 }
