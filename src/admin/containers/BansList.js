@@ -12,15 +12,18 @@ const {
 const PAGE_SIZE = 25;
 
 function BansListContainer() {
-  const [currentPage, _setCurrentPage] = useState(0);
-  const [filter, _setFilter] = useState('');
+  const [currentPage, setCurrentPage] = useState(0);
+  const [filter, setFilter] = useState('');
   const params = new URLSearchParams([
     ['page[offset]', currentPage * PAGE_SIZE],
     ['page[limit]', PAGE_SIZE],
     ['filter', filter],
   ]);
   const { data, mutate } = useSWR(`/bans?${params}`, { suspense: true });
-  const { data: bans } = data;
+  const {
+    data: bans,
+    meta: { results: count },
+  } = data;
 
   const dispatch = useDispatch();
   const onUnbanUser = useAsyncCallback(async (user) => {
@@ -31,7 +34,12 @@ function BansListContainer() {
   return (
     <BansList
       bans={bans}
+      count={count}
+      pageSize={PAGE_SIZE}
+      currentPage={currentPage}
       onUnbanUser={onUnbanUser.execute}
+      onPageChange={setCurrentPage}
+      onFilter={setFilter}
     />
   );
 }
