@@ -1,12 +1,15 @@
 import React from 'react';
-import { useDispatch, useSelector, useStore } from 'react-redux';
+import { useSelector, useStore } from 'react-redux';
+import { SWRConfig } from 'swr';
 import AdminApp from '../components/AdminApp';
 import adminReducer from '../reducers';
 import { transition } from '../actions/view';
 import { currentViewSelector } from '../selectors/viewSelectors';
+import { get } from '../../actions/RequestActionCreators';
 
 const {
   useCallback,
+  useMemo,
 } = React;
 
 function hasAdminState(store) {
@@ -30,17 +33,26 @@ function AdminAppContainer() {
   mountAdminReducerOnce(store);
 
   const currentView = useSelector(currentViewSelector);
-  const dispatch = useDispatch();
+  const { dispatch } = store;
 
   const onTransition = useCallback((target) => {
     dispatch(transition(target));
   }, [dispatch]);
 
+  const swrConfig = useMemo(() => ({
+    fetcher: (resource, init) => {
+      console.log(resource, init);
+      return dispatch(get(resource));
+    },
+  }), [dispatch]);
+
   return (
-    <AdminApp
-      currentView={currentView}
-      onTransition={onTransition}
-    />
+    <SWRConfig value={swrConfig}>
+      <AdminApp
+        currentView={currentView}
+        onTransition={onTransition}
+      />
+    </SWRConfig>
   );
 }
 
