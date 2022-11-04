@@ -6,13 +6,10 @@ import { get } from '../../actions/RequestActionCreators';
 
 const {
   useMemo,
-  useState,
 } = React;
 
 function AdminAppContainer() {
-  const [view, setView] = useState('main');
   const dispatch = useDispatch();
-
   const swrConfig = useMemo(() => ({
     fetcher: (resource) => {
       return dispatch(get(resource));
@@ -21,10 +18,7 @@ function AdminAppContainer() {
 
   return (
     <SWRConfig value={swrConfig}>
-      <AdminApp
-        currentView={view}
-        onTransition={setView}
-      />
+      <AdminApp />
     </SWRConfig>
   );
 }

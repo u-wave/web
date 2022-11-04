@@ -1,12 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import CircularProgress from '@mui/material/CircularProgress';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import List, { ListItem, ListItemText } from '../../../components/List';
 import CurrentPage from './CurrentPage';
 import '../../index.css';
-
-const Fallback = () => <CircularProgress size="100%" />;
 
 const {
   useEffect,
@@ -14,7 +11,15 @@ const {
   useTransition,
 } = React;
 
-function AdminApp({ currentView, onTransition }) {
+const Fallback = () => <CircularProgress size="100%" />;
+const Pending = () => (
+  <ListItemIcon>
+    <CircularProgress color="inherit" size={24} />
+  </ListItemIcon>
+);
+
+function AdminApp() {
+  const [currentView, setCurrentView] = useState('main');
   const [nextView, setNextView] = useState(currentView);
   const [isPending, startTransition] = useTransition();
 
@@ -24,9 +29,9 @@ function AdminApp({ currentView, onTransition }) {
     }
 
     startTransition(() => {
-      onTransition(nextView);
+      setCurrentView(nextView);
     });
-  }, [onTransition, currentView, nextView]);
+  }, [currentView, nextView]);
 
   return (
     <div className="AdminApp">
@@ -38,11 +43,7 @@ function AdminApp({ currentView, onTransition }) {
             onClick={() => setNextView('main')}
           >
             <ListItemText primary="Main" />
-            {nextView === 'main' && isPending ? (
-              <ListItemIcon>
-                <CircularProgress color="inherit" size={24} />
-              </ListItemIcon>
-            ) : null}
+            {nextView === 'main' && isPending ? <Pending /> : null}
           </ListItem>
           <ListItem
             selected={currentView === 'users'}
@@ -50,11 +51,7 @@ function AdminApp({ currentView, onTransition }) {
             onClick={() => setNextView('users')}
           >
             <ListItemText primary="Users" />
-            {nextView === 'users' && isPending ? (
-              <ListItemIcon>
-                <CircularProgress color="inherit" size={24} />
-              </ListItemIcon>
-            ) : null}
+            {nextView === 'users' && isPending ? <Pending /> : null}
           </ListItem>
           <ListItem
             selected={currentView === 'bans'}
@@ -62,11 +59,7 @@ function AdminApp({ currentView, onTransition }) {
             onClick={() => setNextView('bans')}
           >
             <ListItemText primary="Bans" />
-            {nextView === 'bans' && isPending ? (
-              <ListItemIcon>
-                <CircularProgress color="inherit" size={24} />
-              </ListItemIcon>
-            ) : null}
+            {nextView === 'bans' && isPending ? <Pending /> : null}
           </ListItem>
           <ListItem
             selected={currentView === 'config'}
@@ -74,11 +67,7 @@ function AdminApp({ currentView, onTransition }) {
             onClick={() => setNextView('config')}
           >
             <ListItemText primary="Server Config" />
-            {nextView === 'config' && isPending ? (
-              <ListItemIcon>
-                <CircularProgress color="inherit" size={24} />
-              </ListItemIcon>
-            ) : null}
+            {nextView === 'config' && isPending ? <Pending /> : null}
           </ListItem>
         </List>
       </div>
@@ -90,10 +79,5 @@ function AdminApp({ currentView, onTransition }) {
     </div>
   );
 }
-
-AdminApp.propTypes = {
-  currentView: PropTypes.string.isRequired,
-  onTransition: PropTypes.func.isRequired,
-};
 
 export default AdminApp;
