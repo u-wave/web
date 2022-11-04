@@ -87,6 +87,7 @@
     "string.prototype.includes": "^2.0.0",
     "u-wave-parse-chat-markup": "^2.4.0",
     "url-polyfill": "^1.1.11",
+    "use-debounce": "^8.0.4",
     "uuid": "^9.0.0",
     "whatwg-fetch": "^3.4.0"
   },
