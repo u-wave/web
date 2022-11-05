@@ -19,7 +19,7 @@ function UsersListContainer() {
   if (filter) {
     qs.filter = filter;
   }
-  const { data } = useSWR(['/users', { qs }], { suspense: true });
+  const { data } = useSWR(['/users', { qs }], { suspense: true, revalidateOnFocus: false });
   const users = useMemo(() => mergeIncludedModels(data), [data]);
   const totalUsers = data.meta.results;
 
