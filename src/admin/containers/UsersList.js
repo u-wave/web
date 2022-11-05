@@ -28,7 +28,7 @@ function UsersListContainer() {
       pageSize={PAGE_SIZE}
       totalUsers={totalUsers}
       users={users}
-      onPageChange={setCurrentPage}
+      onPageChange={(_event, page) => setCurrentPage(page)}
       onFilter={setFilter}
     />
   );

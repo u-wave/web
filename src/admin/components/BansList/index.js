@@ -79,7 +79,7 @@ function BansList({
               rowsPerPage={pageSize}
               rowsPerPageOptions={[pageSize]}
               page={currentPage}
-              onPageChange={onPageChange}
+              onPageChange={(_event, page) => onPageChange(page)}
             />
           </TableRow>
         </TableFooter>
