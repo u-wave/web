@@ -1,4 +1,5 @@
 import * as path from 'path';
+import yaml from 'js-yaml';
 import { fileURLToPath } from 'url';
 import webpack from 'webpack';
 import ReactRefreshPlugin from '@pmmmwh/react-refresh-webpack-plugin';
@@ -88,7 +89,10 @@ function getConfig(env, {
         //  English is embedded in the bundle, we always need it as a fallback.
         {
           test: /en\.yaml$/,
-          use: 'yaml-loader',
+          type: 'json',
+          parser: {
+            parse: yaml.load,
+          },
         },
 
         // Stylesheets.
