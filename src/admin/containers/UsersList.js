@@ -8,7 +8,7 @@ const {
   useState,
 } = React;
 
-const PAGE_SIZE = 25;
+const PAGE_SIZE = 50;
 
 function UsersListContainer() {
   const [currentPage, setCurrentPage] = useState(0);
