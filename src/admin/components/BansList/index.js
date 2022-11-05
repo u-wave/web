@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
 import Table from '@mui/material/Table';
+import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableBody from '@mui/material/TableBody';
 import TableFooter from '@mui/material/TableFooter';
@@ -43,7 +44,7 @@ function BansList({
   const { t } = useTranslator();
 
   return (
-    <>
+    <TableContainer>
       <Header>
         <span>Managing Bans:</span>
         <span style={{ float: 'right' }}>
@@ -51,7 +52,7 @@ function BansList({
           <Filter onFilter={onFilter} />
         </span>
       </Header>
-      <Table>
+      <Table size="small">
         <TableHead>
           <TableRow>
             <TableCell />
@@ -83,7 +84,7 @@ function BansList({
           </TableRow>
         </TableFooter>
       </Table>
-    </>
+    </TableContainer>
   );
 }
 

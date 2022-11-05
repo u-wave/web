@@ -81,6 +81,7 @@ function UserRow({ user }) {
           onClick={handleOpenMenu}
           aria-haspopup="true"
           aria-owns={open ? ariaMenu : null}
+          size="small"
         >
           <MoreVertIcon />
         </IconButton>
