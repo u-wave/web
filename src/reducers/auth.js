@@ -12,7 +12,6 @@ const initialState = {
   strategies: ['local'],
   token: null,
   user: null,
-  error: null,
 };
 
 export default function reduce(state = initialState, action = {}) {
@@ -29,42 +28,32 @@ export default function reduce(state = initialState, action = {}) {
         strategies: payload.strategies,
       };
     case RESET_PASSWORD_COMPLETE:
-      return isError ? {
+      return {
         ...state,
         token: payload.token,
         user: null,
-        error: payload,
-      } : {
-        ...state,
-        token: payload.token,
-        user: null,
-        error: null,
       };
     case SET_TOKEN:
       return {
         ...state,
         token: payload.token,
         user: null,
-        error: null,
       };
     case LOGIN_COMPLETE:
       return isError ? {
         ...state,
         token: null,
         user: null,
-        error: payload,
       } : {
         ...state,
         token: payload.token,
         user: payload.user._id,
-        error: null,
       };
     case REGISTER_COMPLETE:
       return {
         ...state,
         token: null,
         user: null,
-        error: payload,
       };
     case LOGOUT_COMPLETE:
       return initialState;

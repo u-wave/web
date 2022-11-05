@@ -1,7 +1,7 @@
-@import "./App/index.css";
-@import "./DrawerMenu/index.css";
-@import "./MainView/index.css";
-@import "./MediaList/index.css";
-@import "./RoomHistory/index.css";
-@import "./UsersDrawer/index.css";
-@import "./Video/index.css";
+@import url("./App/index.css");
+@import url("./DrawerMenu/index.css");
+@import url("./MainView/index.css");
+@import url("./MediaList/index.css");
+@import url("./RoomHistory/index.css");
+@import url("./UsersDrawer/index.css");
+@import url("./Video/index.css");

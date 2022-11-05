@@ -1,4 +1,4 @@
-@import "./LoginForm.css";
+@import url("./LoginForm.css");
 
 .LoginDialog {
   max-width: 350px;

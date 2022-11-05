@@ -2,8 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
+import { useSelector } from 'react-redux';
 import Suggestion from './Suggestion';
 import emojiUrl from '../../../utils/emojiUrl';
+import { customEmojiNamesSelector } from '../../../selectors/configSelectors';
 
 const shortcode = (emoji) => `:${emoji.shortcode}:`;
 
@@ -11,7 +13,9 @@ function EmojiSuggestion({
   value: emoji,
   ...props
 }) {
-  const url = emojiUrl(emoji.image);
+  const customEmojiNames = useSelector(customEmojiNamesSelector);
+  const isCustom = customEmojiNames.has(emoji.shortcode);
+  const url = emojiUrl(emoji.image, isCustom);
 
   return (
     <Suggestion {...props}>

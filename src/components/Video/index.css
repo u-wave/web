@@ -1,4 +1,4 @@
-@import "./VideoBackdrop.css";
+@import url("./VideoBackdrop.css");
 
 .Video {
   position: relative;

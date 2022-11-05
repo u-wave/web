@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
 import Table from '@mui/material/Table';
+import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableBody from '@mui/material/TableBody';
 import TableFooter from '@mui/material/TableFooter';
@@ -22,9 +23,9 @@ function UsersList({
   const { t } = useTranslator();
 
   return (
-    <>
+    <TableContainer>
       <Header onFilter={onFilter} />
-      <Table>
+      <Table size="small">
         <TableHead>
           <TableRow className="AdminUserRow">
             <TableCell className="AdminUserRow-avatar" />
@@ -52,7 +53,7 @@ function UsersList({
           </TableRow>
         </TableFooter>
       </Table>
-    </>
+    </TableContainer>
   );
 }
 

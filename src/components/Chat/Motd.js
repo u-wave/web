@@ -13,7 +13,7 @@ const Motd = ({ children, compileOptions }) => (
 Motd.propTypes = {
   children: PropTypes.array.isRequired,
   compileOptions: PropTypes.shape({
-    availableEmoji: PropTypes.array,
+    availableEmoji: PropTypes.instanceOf(Set),
     emojiImages: PropTypes.object,
   }),
 };

@@ -7,7 +7,6 @@ const authSelector = (state) => state.auth;
 const usersBaseSelector = (state) => state.users;
 export const usersSelector = createSelector(usersBaseSelector, (base) => base.users);
 
-export const authErrorSelector = createSelector(authSelector, (auth) => auth.error);
 const currentUserIDSelector = createSelector(authSelector, (auth) => auth.user);
 export const currentUserSelector = createSelector(
   usersSelector,

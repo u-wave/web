@@ -1,10 +1,10 @@
-@import "./ChatMessages.css";
-@import "./Input/index.css";
-@import "./Markup/index.css";
-@import "./NotificationMessages/index.css";
-@import "./LogMessage.css";
-@import "./Message.css";
-@import "./Motd.css";
+@import url("./ChatMessages.css");
+@import url("./Input/index.css");
+@import url("./Markup/index.css");
+@import url("./NotificationMessages/index.css");
+@import url("./LogMessage.css");
+@import url("./Message.css");
+@import url("./Motd.css");
 
 .ChatContainer {
   position: relative;

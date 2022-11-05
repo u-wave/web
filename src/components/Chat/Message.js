@@ -91,7 +91,7 @@ Message.propTypes = {
   deletable: PropTypes.bool.isRequired,
   onDelete: PropTypes.func.isRequired,
   compileOptions: PropTypes.shape({
-    availableEmoji: PropTypes.array,
+    availableEmoji: PropTypes.instanceOf(Set),
     emojiImages: PropTypes.object,
   }),
 };

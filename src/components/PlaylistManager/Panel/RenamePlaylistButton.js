@@ -23,10 +23,9 @@ function RenamePlaylistButton({ initialName, onRename }) {
     setRenaming(false);
   }, []);
 
-  const handleSubmit = useCallback((name) => {
-    return onRename(name).then(() => {
-      setRenaming(false);
-    });
+  const handleSubmit = useCallback(async (name) => {
+    await onRename(name);
+    setRenaming(false);
   }, [onRename]);
 
   return (
@@ -36,16 +35,15 @@ function RenamePlaylistButton({ initialName, onRename }) {
           <EditIcon />
         </IconButton>
       </Tooltip>
-      {renaming && (
-        <PromptDialog
-          title={t('dialogs.renamePlaylist.nameInputTitle')}
-          submitLabel={t('dialogs.renamePlaylist.action')}
-          icon={<EditIcon htmlColor="#777" />}
-          defaultValue={initialName}
-          onSubmit={handleSubmit}
-          onCancel={handleClose}
-        />
-      )}
+      <PromptDialog
+        open={renaming}
+        title={t('dialogs.renamePlaylist.nameInputTitle')}
+        submitLabel={t('dialogs.renamePlaylist.action')}
+        icon={<EditIcon htmlColor="#777" />}
+        defaultValue={initialName}
+        onSubmit={handleSubmit}
+        onCancel={handleClose}
+      />
     </>
   );
 }

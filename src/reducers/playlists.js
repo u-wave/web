@@ -15,7 +15,6 @@ import {
   ACTIVATE_PLAYLIST_COMPLETE,
   CREATE_PLAYLIST_START,
   CREATE_PLAYLIST_COMPLETE,
-  RENAME_PLAYLIST_START,
   RENAME_PLAYLIST_COMPLETE,
   DELETE_PLAYLIST_START,
   DELETE_PLAYLIST_COMPLETE,
@@ -301,11 +300,9 @@ export default function reduce(state = initialState, action = {}) {
         selectedPlaylistID: payload.playlist._id,
       };
 
-    case RENAME_PLAYLIST_START:
-      return setPlaylistLoading(state, payload.playlistID);
     case RENAME_PLAYLIST_COMPLETE: {
       if (error) {
-        return setPlaylistLoading(state, meta.playlistID, false);
+        return state;
       }
 
       const renamedPlaylist = state.playlists[payload.playlistID];
@@ -313,7 +310,6 @@ export default function reduce(state = initialState, action = {}) {
         return updatePlaylist(state, payload.playlistID, (playlist) => ({
           ...playlist,
           name: payload.name,
-          loading: false,
         }));
       }
       return state;

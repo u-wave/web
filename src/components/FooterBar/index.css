@@ -1,9 +1,9 @@
-@import "./NextMedia.css";
-@import "./SettingsButton.css";
-@import "./SkipButton.css";
-@import "./UserInfo.css";
-@import "./Responses/index.css";
-@import "./WaitlistButton.css";
+@import url("./NextMedia.css");
+@import url("./SettingsButton.css");
+@import url("./SkipButton.css");
+@import url("./UserInfo.css");
+@import url("./Responses/index.css");
+@import url("./WaitlistButton.css");
 
 .FooterBar {
   display: flex;

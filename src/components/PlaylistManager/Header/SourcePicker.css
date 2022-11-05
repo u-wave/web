@@ -1,4 +1,4 @@
-@import "./SourcePickerElement.css";
+@import url("./SourcePickerElement.css");
 
 :root {
   --source-picker-width: calc(48px + 24px);

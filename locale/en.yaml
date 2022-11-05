@@ -132,6 +132,8 @@ uwave:
     join: Join Waitlist
     leave: Leave Waitlist
     leaveBooth: Stop playing
+    add: Add to waitlist
+    remove: Remove from waitlist
 
   votes:
     upvote: Upvote
@@ -162,6 +164,7 @@ uwave:
     title: Play History
 
   users:
+    ban: Ban user
     title: Room
     listeners: Listeners
     guests: "and {{count}} guest"

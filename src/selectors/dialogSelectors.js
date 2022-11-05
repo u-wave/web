@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 import { reCaptchaSiteKeySelector } from './configSelectors';
 import { volumeSelector } from './settingSelectors';
-import { authErrorSelector, supportsSocialAuthSelector } from './userSelectors';
+import { supportsSocialAuthSelector } from './userSelectors';
 
 const baseSelector = (state) => state.dialogs;
 
@@ -9,11 +9,9 @@ const merge = (dialog) => ({ ...dialog.payload, open: dialog.open });
 
 export const loginDialogSelector = createSelector(
   baseSelector,
-  authErrorSelector,
   reCaptchaSiteKeySelector,
   supportsSocialAuthSelector,
-  (dialogs, error, siteKey, supportsSocialAuth) => Object.assign(merge(dialogs.login), {
-    error,
+  (dialogs, siteKey, supportsSocialAuth) => Object.assign(merge(dialogs.login), {
     useReCaptcha: !!siteKey,
     reCaptchaSiteKey: siteKey ?? null,
     supportsSocialAuth,

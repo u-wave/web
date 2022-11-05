@@ -1,9 +1,9 @@
-@import "normalize.css";
-@import "@openfonts/open-sans_all";
-@import "../vars.css";
-@import "../components/App/index.css";
-@import "../components/Form/index.css";
-@import "./components/PasswordResetPage/index.css";
+@import url("normalize.css");
+@import url("@openfonts/open-sans_all");
+@import url("../vars.css");
+@import url("../components/App/index.css");
+@import url("../components/Form/index.css");
+@import url("./components/PasswordResetPage/index.css");
 
 body {
   margin: 0;

@@ -20,7 +20,7 @@ function PreviewDialogWrapper(props) {
         paper: 'Dialog PreviewMediaDialog',
       }}
       BackdropProps={{
-        className: 'AppColumn AppColumn--full',
+        className: 'AppColumn AppColumn--left',
       }}
     />
   );

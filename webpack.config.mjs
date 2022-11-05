@@ -1,16 +1,17 @@
 import * as path from 'path';
+import { fileURLToPath } from 'url';
 import webpack from 'webpack';
 import ReactRefreshPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import WebpackBar from 'webpackbar';
 import ExtractCssPlugin from 'mini-css-extract-plugin';
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
+import ImageMinimizerPlugin from 'image-minimizer-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
 import HtmlPlugin from 'html-webpack-plugin';
 import { SubresourceIntegrityPlugin } from 'webpack-subresource-integrity';
 import CopyPlugin from 'copy-webpack-plugin';
 import { merge } from 'webpack-merge';
 import htmlMinifierOptions from './tasks/utils/htmlMinifierOptions.cjs';
-import { MiddlewarePackageJsonPlugin } from './tasks/webpack/middleware.cjs';
 import renderLoadingScreen from './tasks/utils/renderLoadingScreen.cjs';
 
 // Most webpack configuration is in this file. A few things are split up to make the
@@ -23,8 +24,9 @@ import compileDependencies from './tasks/webpack/compileDependencies.mjs';
 //  - staticPages: Compiles static markdown pages to HTML.
 import staticPages from './tasks/webpack/staticPages.mjs';
 import getAnalysisConfig from './tasks/webpack/analyze.mjs';
+import getNpmConfig from './tasks/webpack/npm.mjs';
 
-const { DefinePlugin, HotModuleReplacementPlugin, ProvidePlugin } = webpack;
+const { DefinePlugin, HotModuleReplacementPlugin } = webpack;
 
 function unused() {}
 
@@ -35,59 +37,18 @@ function getConfig(env, {
   analyze,
   dualBundles = false,
 }) {
-  const outputPackage = new URL('./npm', import.meta.url).pathname;
-
   const plugins = [];
 
   if (!demo) {
     plugins.push(new WebpackBar());
   }
 
-  const middlewareConfig = {
-    name: 'middleware',
-    context: new URL('./src', import.meta.url).pathname,
-    mode: env.production ? 'production' : 'development',
-    // Quit if there are errors.
-    bail: env.production,
-    devtool: 'source-map',
+  const outputPackage = fileURLToPath(new URL('./npm', import.meta.url));
 
-    entry: './middleware/index.js',
-    output: {
-      path: outputPackage,
-      filename: './middleware/index.js',
-      chunkFilename: './middleware/[name].js',
-      clean: false,
-      library: {
-        type: 'commonjs-module',
-      },
-    },
-    target: 'node12',
+  const npmConfig = getNpmConfig(env, outputPackage);
 
-    optimization: {
-      minimize: false,
-    },
-
-    externals({ request }, callback) {
-      if (request.startsWith('./') || request.startsWith('../')) {
-        callback();
-      } else {
-        callback(null, `commonjs ${request}`);
-      }
-    },
-
-    module: {
-      rules: [
-        { test: /\.js$/, use: 'babel-loader' },
-      ],
-    },
-
-    plugins: [
-      new MiddlewarePackageJsonPlugin(),
-    ],
-  };
-
-  const baseConfig = merge({
-    context: new URL('./src', import.meta.url).pathname,
+  const baseConfig = {
+    context: fileURLToPath(new URL('./src', import.meta.url)),
     mode: env.production ? 'production' : 'development',
     // Quit if there are errors.
     bail: env.production,
@@ -96,12 +57,6 @@ function getConfig(env, {
     output: {
       clean: true,
     },
-
-    plugins: [
-      new ProvidePlugin({
-        process: 'process',
-      }),
-    ],
 
     module: {
       rules: [
@@ -113,14 +68,11 @@ function getConfig(env, {
         {
           test: /\.(gif|jpe?g|png|svg)$/,
           type: 'asset/resource',
-          use: [
-            !env.production && { loader: 'image-webpack-loader' },
-          ].filter(Boolean),
         },
 
         {
           test: /\.html$/,
-          use: new URL('./tasks/webpack/ejs-loader.cjs', import.meta.url).pathname,
+          use: fileURLToPath(new URL('./tasks/webpack/ejs-loader.cjs', import.meta.url)),
         },
 
         // Locale files.
@@ -184,8 +136,6 @@ function getConfig(env, {
         '.wasm',
       ],
       alias: {
-        // Node.js shims
-        path: 'path-browserify',
         'react/jsx-runtime.js': 'react/jsx-runtime',
         'react/jsx-dev-runtime.js': 'react/jsx-dev-runtime',
       },
@@ -196,7 +146,7 @@ function getConfig(env, {
         'main',
       ],
     },
-  }, compileDependencies());
+  };
 
   const appConfig = merge(baseConfig, {
     name: 'app',
@@ -265,6 +215,11 @@ function getConfig(env, {
           },
         }),
         new CssMinimizerPlugin(),
+        new ImageMinimizerPlugin({
+          minimizer: {
+            implementation: ImageMinimizerPlugin.sharpMinify,
+          },
+        }),
       ],
     },
 
@@ -291,7 +246,7 @@ function getConfig(env, {
     ],
   };
 
-  const legacyConfigPatch = {
+  const legacyConfigPatch = merge({
     name: 'app-legacy',
     output: {
       filename: env.production ? 'static/l_[name]_[contenthash:7].js' : 'l_[name]_dev.js',
@@ -303,7 +258,7 @@ function getConfig(env, {
         'triage-polyfills': './polyfills-legacy.js',
       },
     },
-  };
+  }, compileDependencies());
 
   // Must be used together with an app config to work correctly.
   const staticPagesConfigPatch = merge(
@@ -386,7 +341,7 @@ function getConfig(env, {
 
   unused(loadingScreenConfig);
 
-  const configs = [middlewareConfig, siteConfig];
+  const configs = [npmConfig, siteConfig];
 
   if (dualBundles) {
     const legacyAppConfig = merge(activeAppConfig, legacyConfigPatch);

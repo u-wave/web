@@ -1,6 +1,5 @@
-import { register, findUser } from '../ChatCommands';
+import { findUser } from '../ChatCommands';
 import { log } from '../../actions/ChatActionCreators';
-
 import {
   joinWaitlist,
   modClearWaitlist,
@@ -21,17 +20,19 @@ import {
   djAndWaitlistUsersSelector,
 } from '../../selectors/waitlistSelectors';
 
-register('skip', 'Skip the current DJ.', {
-  guard: isModeratorSelector,
-  action: (...args) => skipCurrentDJ(args.length > 0 ? args.join(' ') : '[No reason given]'),
-});
-
-register(
-  'wladd',
-  'Add a user to the waitlist. Syntax: "/wladd username"',
+export default [
   {
+    name: 'skip',
+    description: 'Skip the current DJ.',
     guard: isModeratorSelector,
-    action: (username) => (dispatch, getState) => {
+    action: (_commander, ...args) => skipCurrentDJ(args.length > 0 ? args.join(' ') : '[No reason given]'),
+  },
+
+  {
+    name: 'wladd',
+    description: 'Add a user to the waitlist. Syntax: "/wladd username"',
+    guard: isModeratorSelector,
+    action: (_commander, username) => (dispatch, getState) => {
       if (!username) {
         return dispatch(log('Provide a user to add to the waitlist. Syntax: "/wladd username"'));
       }
@@ -43,14 +44,12 @@ register(
       return dispatch(log(`User ${username} is not online right now.`));
     },
   },
-);
 
-register(
-  'wlremove',
-  'Remove a user from the waitlist. Syntax: "/wlremove username"',
   {
+    name: 'wlremove',
+    description: 'Remove a user from the waitlist. Syntax: "/wlremove username"',
     guard: isModeratorSelector,
-    action: (username) => (dispatch, getState) => {
+    action: (_commander, username) => (dispatch, getState) => {
       if (!username) {
         return dispatch(log('Provide a user to remove from the waitlist. Syntax: "/wlremove username"'));
       }
@@ -65,33 +64,34 @@ register(
       return dispatch(log(`User ${username} is not in the waitlist.`));
     },
   },
-);
 
-register(
-  'wlclear',
-  'Remove everyone from the waitlist.',
-  { guard: isModeratorSelector, action: modClearWaitlist },
-);
-
-register(
-  'wllock',
-  'Lock the waitlist.',
-  { guard: isModeratorSelector, action: modLockWaitlist },
-);
-
-register(
-  'wlunlock',
-  'Unlock the waitlist.',
-  { guard: isModeratorSelector, action: modUnlockWaitlist },
-);
-
-register(
-  'wlmove',
-  'Move a user to a different position in the waitlist. '
-  + 'Syntax: "/wlmove username position"',
   {
+    name: 'wlclear',
+    description: 'Remove everyone from the waitlist.',
     guard: isModeratorSelector,
-    action: (username, posStr) => (dispatch, getState) => {
+    action: () => modClearWaitlist(),
+  },
+
+  {
+    name: 'wllock',
+    description: 'Lock the waitlist.',
+    guard: isModeratorSelector,
+    action: () => modLockWaitlist(),
+  },
+
+  {
+    name: 'wlunlock',
+    description: 'Unlock the waitlist.',
+    guard: isModeratorSelector,
+    action: () => modUnlockWaitlist(),
+  },
+
+  {
+    name: 'wlmove',
+    description: 'Move a user to a different position in the waitlist. '
+      + 'Syntax: "/wlmove username position"',
+    guard: isModeratorSelector,
+    action: (_commander, username, posStr) => (dispatch, getState) => {
       if (!username) {
         return dispatch(log('Provide a user to move in the waitlist. Syntax: "/wlmove username position"'));
       }
@@ -110,4 +110,4 @@ register(
       return dispatch(log(`User ${username} is not in the waitlist.`));
     },
   },
-);
+];

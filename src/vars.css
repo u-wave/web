@@ -49,11 +49,10 @@
   /* Form colours & sizes */
   --forms-element-margin: 16px;
   --forms-textfield-size: 50px;
-
   --selected-media-row-color: #9d2053b3;
   --chat-suggestion-selected: rgba(255 255 255 / 10%);
   --overlay-background: #151515b3;
   --soundcloud-meta-background: #1515154c;
   --waitlist-locked-text-color: rgba(255 255 255 / 70%);
-  --chat-timestamp-text-color: rgb(216, 216, 216);
+  --chat-timestamp-text-color: rgb(216 216 216);
 }

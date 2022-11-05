@@ -6,6 +6,7 @@ import 'array-includes/auto';
 import 'object.assign/auto';
 import 'object-is/auto';
 import 'object.values/auto';
+import 'number.isfinite/auto';
 import 'is-nan/auto';
 import 'string.prototype.includes/auto';
 import 'es6-promise/auto';
@@ -15,6 +16,3 @@ import 'url-polyfill';
 import 'whatwg-fetch';
 import 'abortcontroller-polyfill/src/polyfill';
 import 'event-source-polyfill';
-import numberIsFinite from 'is-finite';
-
-Number.isFinite ??= numberIsFinite;

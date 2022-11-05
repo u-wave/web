@@ -4,6 +4,65 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.0-alpha.15 / 04 Nov 2022
+While this is an alpha release, new servers should use this rather than an older "stable" version.
+
+Features:
+ * Rework the admin panel with SWR. (#2544)
+
+Bugfixes:
+ * Fix a crash in the admin user list when a user has an invalid join date.
+
+Internal:
+ * Reduce unnecessary callback invalidation.
+ * Do not compile dependencies to ES2015 when targeting modern browsers.
+
+## 2.0.0-alpha.14 / 31 Oct 2022
+While this is an alpha release, new servers should use this rather than an older "stable" version.
+
+Bugfixes:
+ * Fix preview media dialog backdrop size.
+ * Show preview button in history when not logged in.
+ * Tweak TextField outlines.
+
+Internal:
+ * Use react-async-hook for async operations. (#2537)
+ * Setup chat commands in a more declarative way. (#2539)
+ * Mount dialogs as MUI intends. (#2540)
+
+## 2.0.0-alpha.13 / 30 Oct 2022
+While this is an alpha release, new servers should use this rather than an older "stable" version.
+
+Features:
+ * Add waitlist and ban buttons to user cards. (#2309)
+
+## 2.0.0-alpha.12 / 18 Oct 2022
+While this is an alpha release, new servers should use this rather than an older "stable" version.
+
+Bugfixes:
+ * Fix missing `express` dependency in published package.
+
+## 2.0.0-alpha.11 / 18 Oct 2022
+While this is an alpha release, new servers should use this rather than an older "stable" version.
+
+Bugfixes:
+ * Fix custom emoji display in suggestions. (#2519)
+
+Internal:
+ * Use React Suspense when loading ReCaptcha. (#2520)
+ * Replace custom package.json generation by a webpack plugin. (#2517)
+
+## 2.0.0-alpha.10 / 16 Oct 2022
+While this is an alpha release, new servers should use this rather than an older "stable" version.
+
+Features:
+ * Custom emoji support for the provided executable. (#2515)
+   Provide an environment variable `EMOJI_DIR` pointing to a directory with images to use as
+   custom emoji, on top of the included Twitter emoji.
+
+Internal:
+ * Dependency updates.
+
 ## 2.0.0-alpha.9 / 27 Jun 2022
 This release requires a server using üWave Core 0.5.0-alpha.8 or higher.
 

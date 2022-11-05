@@ -1,7 +1,7 @@
-@import "./AppTitle.css";
-@import "./HistoryButton.css";
-@import "./Progress.css";
-@import "./Volume.css";
+@import url("./AppTitle.css");
+@import url("./HistoryButton.css");
+@import url("./Progress.css");
+@import url("./Volume.css");
 
 .HeaderBar {
   position: relative;

@@ -139,7 +139,7 @@ ChatMessages.propTypes = {
   canDeleteMessages: PropTypes.bool,
   onDeleteMessage: PropTypes.func,
   compileOptions: PropTypes.shape({
-    availableEmoji: PropTypes.array,
+    availableEmoji: PropTypes.instanceOf(Set),
     emojiImages: PropTypes.object,
   }),
 };

@@ -1,4 +1,4 @@
-@import "./VoteButtons.css";
+@import url("./VoteButtons.css");
 
 .Video {
   position: relative;

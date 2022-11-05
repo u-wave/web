@@ -21,11 +21,11 @@ function AddToPlaylistMenu(props) {
   const [creating, setCreating] = useState(false);
   const handleOpen = useCallback(() => setCreating(true), []);
   const handleClose = useCallback(() => setCreating(false), []);
-  const handleSubmit = useCallback((playlistName) => (
-    Promise.resolve(onCreatePlaylist(playlistName))
-      .then((playlist) => onSelect(playlist))
-      .then(() => onClose())
-  ), [onCreatePlaylist, onSelect, onClose]);
+  const handleSubmit = useCallback(async (playlistName) => {
+    const playlist = await onCreatePlaylist(playlistName);
+    onSelect(playlist);
+    onClose();
+  }, [onCreatePlaylist, onSelect, onClose]);
 
   return (
     <>
@@ -35,15 +35,14 @@ function AddToPlaylistMenu(props) {
           onCreatePlaylist={handleOpen}
         />
       )}
-      {creating && (
-        <PromptDialog
-          title={t('dialogs.createPlaylist.nameInputTitle')}
-          icon={<CreatePlaylistIcon htmlColor="#777" />}
-          submitLabel={t('dialogs.createPlaylist.action')}
-          onSubmit={handleSubmit}
-          onCancel={handleClose}
-        />
-      )}
+      <PromptDialog
+        open={creating}
+        title={t('dialogs.createPlaylist.nameInputTitle')}
+        icon={<CreatePlaylistIcon htmlColor="#777" />}
+        submitLabel={t('dialogs.createPlaylist.action')}
+        onSubmit={handleSubmit}
+        onCancel={handleClose}
+      />
     </>
   );
 }

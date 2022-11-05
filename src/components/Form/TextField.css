@@ -23,6 +23,10 @@
   &::placeholder {
     color: #9f9d9e;
   }
+
+  &:focus-visible {
+    outline: 1px solid var(--highlight-color);
+  }
 }
 
 .TextField-icon {

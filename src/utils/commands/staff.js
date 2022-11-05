@@ -1,6 +1,5 @@
-import { register, findUser } from '../ChatCommands';
+import { findUser } from '../ChatCommands';
 import { log } from '../../actions/ChatActionCreators';
-
 import { rolesSelector } from '../../selectors/configSelectors';
 import {
   userListSelector,
@@ -13,10 +12,10 @@ import {
 } from '../../actions/ModerationActionCreators';
 import { toggleAdmin } from '../../actions/OverlayActionCreators';
 
-register(
-  'roles',
-  'List roles.',
+export default [
   {
+    name: 'roles',
+    description: 'List roles.',
     action: () => (dispatch, getState) => {
       const allRoles = Object.keys(rolesSelector(getState()));
       const roles = allRoles.filter((role) => !role.includes('.'));
@@ -26,14 +25,11 @@ register(
       return dispatch(log(`Permissions: ${permissions.join(', ')}`));
     },
   },
-);
-
-register(
-  'addrole',
-  'Assign a role to a user. Syntax: "/addrole username role"',
   {
+    name: 'addrole',
+    description: 'Assign a role to a user. Syntax: "/addrole username role"',
     guard: isManagerSelector,
-    action: (username, role) => (dispatch, getState) => {
+    action: (_commander, username, role) => (dispatch, getState) => {
       if (!username) {
         return dispatch(log('Provide a user to promote or demote.'));
       }
@@ -47,14 +43,11 @@ register(
       return dispatch(addUserRole(user, role));
     },
   },
-);
-
-register(
-  'removerole',
-  'Remove a role from a user. Syntax: "/removerole username role"',
   {
+    name: 'removerole',
+    description: 'Remove a role from a user. Syntax: "/removerole username role"',
     guard: isManagerSelector,
-    action: (username, role) => (dispatch, getState) => {
+    action: (_commander, username, role) => (dispatch, getState) => {
       if (!username) {
         return dispatch(log('Provide a user to promote or demote.'));
       }
@@ -68,13 +61,10 @@ register(
       return dispatch(removeUserRole(user, role));
     },
   },
-);
-
-register(
-  'admin',
-  'Open the administration panel.',
   {
+    name: 'admin',
+    description: 'Open the administration panel.',
     guard: isModeratorSelector,
-    action: toggleAdmin,
+    action: () => toggleAdmin(),
   },
-);
+];

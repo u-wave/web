@@ -1,7 +1,7 @@
-@import "./MediaActions.css";
-@import "./MediaDragPreview.css";
-@import "./MediaLoadingIndicator.css";
-@import "./Row.css";
+@import url("./MediaActions.css");
+@import url("./MediaDragPreview.css");
+@import url("./MediaLoadingIndicator.css");
+@import url("./Row.css");
 
 .MediaList {
   overflow-y: auto;

@@ -1,4 +1,4 @@
-@import "./Filler.css";
+@import url("./Filler.css");
 
 @keyframes initially-hide {
   0% { opacity: 0; }

@@ -1,5 +1,5 @@
-@import "./AdminApp/index.css";
-@import "./Motd/index.css";
-@import "./SchemaForm/index.css";
-@import "./ServerConfig/index.css";
-@import "./UsersList/index.css";
+@import url("./AdminApp/index.css");
+@import url("./Motd/index.css");
+@import url("./SchemaForm/index.css");
+@import url("./ServerConfig/index.css");
+@import url("./UsersList/index.css");

@@ -9,8 +9,6 @@ import { get as readSession } from './utils/Session';
 import configureStore from './redux/configureStore';
 import { initState, socketConnect, setSessionToken } from './actions/LoginActionCreators';
 import { loadCurrentLanguage } from './actions/LocaleActionCreators';
-// Register default chat commands.
-import './utils/commands';
 
 /**
  * @typedef {object} UwaveOptions

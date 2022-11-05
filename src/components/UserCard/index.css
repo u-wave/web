@@ -1,5 +1,5 @@
-@import "./UserRoles.css";
-@import "./UserCard.css";
+@import url("./UserRoles.css");
+@import url("./UserCard.css");
 
 .UserCardWrapper {
   position: absolute;

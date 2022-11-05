@@ -1,9 +1,9 @@
-@import "normalize.css";
-@import "@openfonts/open-sans_all";
-@import "./vars.css";
+@import url("normalize.css");
+@import url("@openfonts/open-sans_all");
+@import url("./vars.css");
 
 /* Include some of the app base styles.  */
-@import "./components/App/index.css";
+@import url("./components/App/index.css");
 
 body {
   font-family: var(--font-family);

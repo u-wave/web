@@ -250,9 +250,9 @@ export function banUserComplete(ban) {
 }
 
 /**
- * Ban a user. Defaults to 24 hours.
+ * Ban a user. Defaults to a permanent ban.
  */
-export function banUser(user, { duration = 24 * 60 * 60 * 1000, permanent = false }) {
+export function banUser(user, { duration = undefined, permanent = true }) {
   const userID = typeof user === 'object' ? user._id : user;
   return post('/bans', { userID, duration, permanent }, {
     onStart: () => banUserStart(userID, duration, permanent),

@@ -1,2 +1,2 @@
-@import "./Player.css";
-@import "./SongInfo.css";
+@import url("./Player.css");
+@import url("./SongInfo.css");

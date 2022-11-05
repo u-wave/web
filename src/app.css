@@ -1,10 +1,10 @@
-@import "normalize.css";
-@import "@openfonts/open-sans_all";
-@import "./vars.css";
-@import "./components/index.css";
-@import "./sources/index.css";
-@import "./containers/DragLayer.css";
-@import "./mobile" (max-width: 768px);
+@import url("normalize.css");
+@import url("@openfonts/open-sans_all");
+@import url("./vars.css");
+@import url("./components/index.css");
+@import url("./sources/index.css");
+@import url("./containers/DragLayer.css");
+@import url("./mobile") (max-width: 768px);
 
 /* None of our buttons have a use for browser defaults! */
 button {

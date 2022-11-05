@@ -7,7 +7,7 @@ import {
   selectPlaylist,
 } from '../actions/PlaylistActionCreators';
 import { showImportPanel } from '../actions/ImportActionCreators';
-import { showSearchResults } from '../actions/SearchActionCreators';
+import { showSearchResults, hideSearchResults } from '../actions/SearchActionCreators';
 import {
   playlistsSelector,
   selectedPlaylistSelector,
@@ -35,10 +35,11 @@ function PlaylistsMenuContainer({ className }) {
   const onSelectPlaylist = useCallback((id) => dispatch(selectPlaylist(id)), [dispatch]);
   const onSelectSearchResults = useCallback(() => dispatch(showSearchResults()), [dispatch]);
   const onCloseSearchResults = useCallback(() => {
-    mediaSearch.search(null);
-    // The `mediaSearch.search` reference never changes.
+    mediaSearch.reset();
+    dispatch(hideSearchResults());
+    // The `mediaSearch.reset` reference never changes.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch]);
   const onShowImportPanel = useCallback(() => dispatch(showImportPanel()), [dispatch]);
 
   return (

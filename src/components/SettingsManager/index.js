@@ -1,51 +1,43 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate } from '@u-wave/react-translate';
+import { useTranslator } from '@u-wave/react-translate';
 import OverlayHeader from '../Overlay/Header';
 import OverlayContent from '../Overlay/Content';
 import SettingsPanel from './SettingsPanel';
 
-const enhance = translate();
-
-class SettingsManager extends React.Component {
-  static propTypes = {
-    t: PropTypes.func.isRequired,
-    className: PropTypes.string,
-    onCloseOverlay: PropTypes.func.isRequired,
-    onLogout: PropTypes.func.isRequired,
-  };
-
-  handleLogout = () => {
-    const { onCloseOverlay, onLogout } = this.props;
-
+function SettingsManager({
+  className,
+  onCloseOverlay,
+  onLogout,
+  ...props
+}) {
+  const { t } = useTranslator();
+  const handleLogout = () => {
     onCloseOverlay();
     onLogout();
   };
 
-  render() {
-    const {
-      t,
-      className,
-      onCloseOverlay,
-      ...props
-    } = this.props;
-
-    return (
-      <div className={cx('SettingsManager', className)}>
-        <OverlayHeader
-          title={t('settings.title')}
-          onCloseOverlay={onCloseOverlay}
+  return (
+    <div className={cx('SettingsManager', className)}>
+      <OverlayHeader
+        title={t('settings.title')}
+        onCloseOverlay={onCloseOverlay}
+      />
+      <OverlayContent className="SettingsManager-body">
+        <SettingsPanel
+          {...props}
+          onLogout={handleLogout}
         />
-        <OverlayContent className="SettingsManager-body">
-          <SettingsPanel
-            {...props}
-            onLogout={this.handleLogout}
-          />
-        </OverlayContent>
-      </div>
-    );
-  }
+      </OverlayContent>
+    </div>
+  );
 }
 
-export default enhance(SettingsManager);
+SettingsManager.propTypes = {
+  className: PropTypes.string,
+  onCloseOverlay: PropTypes.func.isRequired,
+  onLogout: PropTypes.func.isRequired,
+};
+
+export default SettingsManager;

@@ -1,6 +1,6 @@
-@import "./Button.css";
-@import "./Select.css";
-@import "./TextField.css";
+@import url("./Button.css");
+@import url("./Select.css");
+@import url("./TextField.css");
 
 .FormGroup {
   margin: var(--forms-element-margin) 0;

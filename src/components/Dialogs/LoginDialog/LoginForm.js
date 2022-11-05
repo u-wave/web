@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
+import { useAsyncCallback } from 'react-async-hook';
 import EmailIcon from '@mui/icons-material/Email';
 import PasswordIcon from '@mui/icons-material/Lock';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -15,24 +16,17 @@ import SocialLogin from './SocialLogin';
 const { useCallback, useState } = React;
 
 function LoginForm({
-  error,
   supportsSocialAuth,
   onLogin,
   onOpenResetPasswordDialog,
 }) {
   const { t } = useTranslator();
-  const [busy, setBusy] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = useCallback((event) => {
+  const handleSubmit = useAsyncCallback(async (event) => {
     event.preventDefault();
-    setBusy(true);
-    onLogin({ email, password }).catch(() => {
-      // ignore
-    }).finally(() => {
-      setBusy(false);
-    });
+    await onLogin({ email, password });
   }, [onLogin, email, password]);
 
   const handleResetPassword = useCallback((event) => {
@@ -48,10 +42,10 @@ function LoginForm({
   }, []);
 
   return (
-    <Form className="LoginForm" onSubmit={handleSubmit}>
-      {error && (
+    <Form className="LoginForm" onSubmit={handleSubmit.execute}>
+      {handleSubmit.error && (
         <FormGroup>
-          <Alert severity="error">{error.message}</Alert>
+          <Alert severity="error">{handleSubmit.error.message}</Alert>
         </FormGroup>
       )}
       {supportsSocialAuth && (
@@ -96,9 +90,9 @@ function LoginForm({
       <FormGroup>
         <Button
           className="LoginForm-submit"
-          disabled={busy}
+          disabled={handleSubmit.loading}
         >
-          {busy ? (
+          {handleSubmit.loading ? (
             <div className="Button-loading">
               <CircularProgress size="100%" />
             </div>
@@ -120,7 +114,6 @@ function LoginForm({
 }
 
 LoginForm.propTypes = {
-  error: PropTypes.object,
   supportsSocialAuth: PropTypes.bool,
   onLogin: PropTypes.func,
   onOpenResetPasswordDialog: PropTypes.func,

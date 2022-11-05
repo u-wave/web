@@ -12,12 +12,13 @@ const {
 
 function RemoveFromPlaylistAction({ media }) {
   const { playlist, selection } = useMediaListContext();
+  const playlistID = playlist._id;
   const dispatch = useDispatch();
   const handleClick = useCallback(() => {
     const selectedItems = selection.isSelected(media) ? selection.get() : [media];
 
-    dispatch(removeMedia(playlist._id, selectedItems));
-  }, [dispatch, playlist, media, selection]);
+    dispatch(removeMedia(playlistID, selectedItems));
+  }, [dispatch, playlistID, media, selection]);
 
   return (
     <MediaAction onClick={handleClick}>

@@ -1,6 +1,6 @@
-@import "./ImportPanel.css";
-@import "./ImportPanelHeader.css";
-@import "./ImportSourceBlock.css";
+@import url("./ImportPanel.css");
+@import url("./ImportPanelHeader.css");
+@import url("./ImportSourceBlock.css");
 
 .PlaylistImport {
   height: 100%;
