@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.0-alpha.16 / 05 Nov 2022
+While this is an alpha release, new servers should use this rather than an older "stable" version.
+
+Features:
+ * Style admin user lists more densely. (#2545)
+
+Bugfixes:
+ * Fix admin user list pagination.
+
+Internal:
+ * Use webpack builtin JSON parser instead of yaml-loader.
+ * Fix prop types in several places.
+
 ## 2.0.0-alpha.15 / 04 Nov 2022
 While this is an alpha release, new servers should use this rather than an older "stable" version.
 
