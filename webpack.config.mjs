@@ -5,7 +5,7 @@ import webpack from 'webpack';
 import ReactRefreshPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import WebpackBar from 'webpackbar';
 import ExtractCssPlugin from 'mini-css-extract-plugin';
-import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
+import { LightningCssMinifyPlugin } from 'lightningcss-loader';
 import ImageMinimizerPlugin from 'image-minimizer-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
 import HtmlPlugin from 'html-webpack-plugin';
@@ -100,8 +100,16 @@ function getConfig(env, {
           test: /\.css$/,
           use: [
             env.production ? ExtractCssPlugin.loader : 'style-loader',
-            { loader: 'css-loader', options: { importLoaders: 1 } },
-            'postcss-loader',
+            {
+              loader: 'css-loader',
+              options: { importLoaders: 1 },
+            },
+            {
+              loader: 'lightningcss-loader',
+              options: {
+                drafts: { nesting: true },
+              },
+            },
           ],
         },
 
@@ -218,7 +226,7 @@ function getConfig(env, {
             },
           },
         }),
-        new CssMinimizerPlugin(),
+        new LightningCssMinifyPlugin(),
         new ImageMinimizerPlugin({
           minimizer: {
             implementation: ImageMinimizerPlugin.sharpMinify,
