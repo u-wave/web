@@ -6,7 +6,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { Provider as BusProvider } from 'react-bus';
 import { TranslateProvider } from '@u-wave/react-translate';
 import { closeAll } from '../actions/OverlayActionCreators';
-import { settingsSelector, themeSelector } from '../selectors/settingSelectors';
+import { themeSelector } from '../selectors/settingSelectors';
 import { translatorSelector } from '../selectors/localeSelectors';
 import { isConnectedSelector } from '../selectors/serverSelectors';
 import DesktopApp from '../components/App';
@@ -57,7 +57,6 @@ function AppContainer({ uwave, mediaSources }) {
   const isMobile = useMediaQuery('(max-width: 767px)');
   const activeOverlay = useSelector((state) => state.activeOverlay);
   const isConnected = useSelector(isConnectedSelector);
-  const settings = useSelector(settingsSelector);
   const theme = useSelector(themeSelector);
   const translator = useSelector(translatorSelector);
   const dispatch = useDispatch();
@@ -76,7 +75,6 @@ function AppContainer({ uwave, mediaSources }) {
   const props = {
     activeOverlay,
     isConnected,
-    settings,
     onCloseOverlay,
   };
 

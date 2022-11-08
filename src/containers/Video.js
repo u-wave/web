@@ -8,19 +8,27 @@ import {
   playbackVolumeSelector,
   timeElapsedSelector,
 } from '../selectors/boothSelectors';
+import {
+  isMutedSelector,
+  videoSizeSelector,
+  videoEnabledSelector,
+} from '../selectors/settingSelectors';
 import Video from '../components/Video';
 
 const {
   useCallback,
 } = React;
 
-function VideoContainer(props) {
+function VideoContainer() {
   // Make it rerender every second.
   useClock();
 
+  const videoEnabled = useSelector(videoEnabledSelector);
+  const videoSize = useSelector(videoSizeSelector);
   const historyID = useSelector(historyIDSelector);
   const media = useSelector(mediaSelector);
   const seek = useSelector((s) => timeElapsedSelector(s));
+  const isMuted = useSelector(isMutedSelector);
   const volume = useSelector(playbackVolumeSelector);
   const isFullscreen = useSelector((state) => state.booth.isFullscreen);
   const dispatch = useDispatch();
@@ -30,10 +38,12 @@ function VideoContainer(props) {
 
   return (
     <Video
-      {...props}
+      enabled={videoEnabled}
+      size={videoSize}
       historyID={historyID}
       media={media}
       seek={seek}
+      isMuted={isMuted}
       volume={volume}
       isFullscreen={isFullscreen}
       onFullscreenEnter={onFullscreenEnter}
