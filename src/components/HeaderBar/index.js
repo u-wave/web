@@ -11,6 +11,7 @@ import CurrentDJ from './CurrentDJ';
 const HeaderBar = ({
   className,
   title,
+  logo,
   dj,
   media,
   mediaStartTime,
@@ -29,6 +30,7 @@ const HeaderBar = ({
   >
     <AppTitle
       className="HeaderBar-title"
+      logo={logo}
       onClick={onToggleAboutOverlay}
     >
       {title}
@@ -62,6 +64,7 @@ const HeaderBar = ({
 HeaderBar.propTypes = {
   className: PropTypes.string,
   title: PropTypes.string,
+  logo: PropTypes.string,
 
   dj: PropTypes.object,
   media: PropTypes.object,

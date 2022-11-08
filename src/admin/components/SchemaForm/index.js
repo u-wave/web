@@ -8,6 +8,7 @@ import NumberField from './NumberField';
 import ObjectField, { ObjectProperties } from './ObjectField';
 import StringField from './StringField';
 import MarkdownField from './MarkdownField';
+import AssetField from './AssetField';
 import EnumField from './EnumField';
 
 const controls = new Map([
@@ -18,6 +19,7 @@ const controls = new Map([
   ['string', StringField],
   ['enum', EnumField],
   ['markdown', MarkdownField],
+  ['asset', AssetField],
 ]);
 
 function SchemaForm({
