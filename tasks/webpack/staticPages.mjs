@@ -46,6 +46,7 @@ export default function staticPages(pages, production) {
           })
         ) : (
           new HtmlPlugin({
+            minify: false,
             chunks: [name],
             template: './markdown.dev.html',
             filename: `${name}.html`,

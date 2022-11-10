@@ -288,6 +288,7 @@ function getConfig(env, {
           ],
         }),
         new HtmlPlugin({
+          minify: false,
           chunks: ['polyfills', 'app'],
           template: './index.html',
           title: 'üWave',
@@ -295,6 +296,7 @@ function getConfig(env, {
           loadingScreen: (...args) => renderLoadingScreen(...args),
         }),
         new HtmlPlugin({
+          minify: false,
           chunks: ['polyfills', 'passwordReset'],
           template: './password-reset.html',
           filename: 'password-reset.html',
