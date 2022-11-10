@@ -128,6 +128,7 @@
     "hast-util-from-html": "^1.0.0",
     "hast-util-to-text": "^3.1.1",
     "html-loader": "^4.2.0",
+    "html-minimizer-webpack-plugin": "^4.3.0",
     "html-webpack-plugin": "^5.2.0",
     "http-proxy-middleware": "^2.0.1",
     "image-minimizer-webpack-plugin": "^3.6.1",
@@ -160,8 +161,8 @@
     "yaml-loader": "^0.8.0"
   },
   "engines": {
-    "node": ">= 12",
-    "npm": "7.x || 8.x"
+    "node": ">= 14",
+    "npm": ">= 7"
   },
   "license": "MIT",
   "private": true,

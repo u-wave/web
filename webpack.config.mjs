@@ -5,14 +5,14 @@ import webpack from 'webpack';
 import ReactRefreshPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import WebpackBar from 'webpackbar';
 import ExtractCssPlugin from 'mini-css-extract-plugin';
-import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
-import ImageMinimizerPlugin from 'image-minimizer-webpack-plugin';
-import TerserPlugin from 'terser-webpack-plugin';
 import HtmlPlugin from 'html-webpack-plugin';
 import { SubresourceIntegrityPlugin } from 'webpack-subresource-integrity';
 import CopyPlugin from 'copy-webpack-plugin';
+import TerserPlugin from 'terser-webpack-plugin';
+import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
+import HtmlMinimizerPlugin from 'html-minimizer-webpack-plugin';
+import ImageMinimizerPlugin from 'image-minimizer-webpack-plugin';
 import { merge } from 'webpack-merge';
-import htmlMinifierOptions from './tasks/utils/htmlMinifierOptions.cjs';
 import renderLoadingScreen from './tasks/utils/renderLoadingScreen.cjs';
 
 // Most webpack configuration is in this file. A few things are split up to make the
@@ -219,6 +219,18 @@ function getConfig(env, {
           },
         }),
         new CssMinimizerPlugin(),
+        new HtmlMinimizerPlugin({
+          minimizerOptions: {
+            removeComments: true,
+            collapseWhitespace: true,
+            collapseBooleanAttributes: true,
+            removeTagWhitespace: true,
+            removeAttributeQuotes: true,
+            removeRedundantAttributes: true,
+            removeScriptTypeAttributes: true,
+            removeStyleLinkTypeAttributes: true,
+          },
+        }),
         new ImageMinimizerPlugin({
           minimizer: {
             implementation: ImageMinimizerPlugin.sharpMinify,
@@ -277,19 +289,19 @@ function getConfig(env, {
           ],
         }),
         new HtmlPlugin({
+          minify: false,
           chunks: ['polyfills', 'app'],
           template: './index.html',
           title: 'üWave',
-          minify: env.production ? htmlMinifierOptions : false,
           scriptLoading: 'defer',
           loadingScreen: (...args) => renderLoadingScreen(...args),
         }),
         new HtmlPlugin({
+          minify: false,
           chunks: ['polyfills', 'passwordReset'],
           template: './password-reset.html',
           filename: 'password-reset.html',
           title: 'Reset Password',
-          minify: env.production ? htmlMinifierOptions : false,
           scriptLoading: 'defer',
         }),
       ],
