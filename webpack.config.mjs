@@ -294,7 +294,7 @@ function getConfig(env, {
           template: './index.html',
           title: 'üWave',
           scriptLoading: 'defer',
-          loadingScreen: (...args) => renderLoadingScreen(...args),
+          loadingScreen: env.production ? renderLoadingScreen : undefined,
         }),
         new HtmlPlugin({
           minify: false,
