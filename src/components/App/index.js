@@ -21,7 +21,6 @@ import DragLayer from '../../containers/DragLayer';
 function App({
   activeOverlay,
   isConnected,
-  settings,
   onCloseOverlay,
 }) {
   const el = (
@@ -34,12 +33,7 @@ function App({
           />
         </div>
         <div className="AppRow AppRow--middle App-media">
-          <Video
-            enabled={settings.videoEnabled}
-            size={settings.videoSize}
-            isMuted={settings.muted}
-            volume={settings.volume}
-          />
+          <Video />
           <ErrorArea />
           <ConnectionIndicator isConnected={isConnected} />
         </div>
@@ -74,7 +68,6 @@ function App({
 App.propTypes = {
   activeOverlay: PropTypes.string,
   isConnected: PropTypes.bool.isRequired,
-  settings: PropTypes.object.isRequired,
   onCloseOverlay: PropTypes.func.isRequired,
 };
 

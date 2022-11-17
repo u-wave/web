@@ -1,7 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const { createContext, useContext } = React;
+const {
+  createContext,
+  useContext,
+  useMemo,
+} = React;
 
 const InternalContext = createContext(null);
 const { Consumer } = InternalContext;
@@ -22,11 +26,14 @@ function sourcesApi(sources) {
   return { getMediaSource, getAllMediaSources };
 }
 
-const Provider = ({ mediaSources, children }) => (
-  <InternalContext.Provider value={sourcesApi(mediaSources)}>
-    {children}
-  </InternalContext.Provider>
-);
+function Provider({ mediaSources, children }) {
+  const value = useMemo(() => sourcesApi(mediaSources), [mediaSources]);
+  return (
+    <InternalContext.Provider value={value}>
+      {children}
+    </InternalContext.Provider>
+  );
+}
 
 Provider.propTypes = {
   mediaSources: PropTypes.object.isRequired,
