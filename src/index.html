@@ -1,6 +1,5 @@
 <%
-  const loading = htmlWebpackPlugin.options.loadingScreen &&
-    await htmlWebpackPlugin.options.loadingScreen(compilation);
+  const loading = await htmlWebpackPlugin.options.loadingScreen?.(compilation);
 %>
 <!DOCTYPE html>
 <!-- lang/dir will be overwritten with user configuration at runtime. -->

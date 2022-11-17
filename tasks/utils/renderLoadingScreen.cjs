@@ -8,10 +8,10 @@ const prerender = require('./prerender.cjs');
 
 const {
   ExternalsPlugin,
-  LibraryTemplatePlugin,
   LoaderTargetPlugin,
   EntryPlugin,
 } = webpack;
+const { EnableLibraryPlugin } = webpack.library;
 const { NodeTemplatePlugin, NodeTargetPlugin } = webpack.node;
 
 function evalModule(code) {
@@ -27,30 +27,33 @@ function evalModule(code) {
   return target.exports;
 }
 
+/** @param {import('webpack').Compilation} compilation */
 module.exports = async function renderLoadingScreen(compilation) {
-  const compiler = compilation.createChildCompiler('PrerenderLoadingScreen', {
-    filename: '__loading-[name].js',
-  });
-
-  // Compile the template to nodejs javascript
-  new NodeTemplatePlugin().apply(compiler);
-  new NodeTargetPlugin().apply(compiler);
-  new LibraryTemplatePlugin(null, 'commonjs').apply(compiler);
-  new LoaderTargetPlugin('node').apply(compiler);
-
-  // These are dependencies that must be loaded from the environment instead of from the
-  // bundle to make our prerendering work.
-  const sharedDependencies = ['react', 'react-dom', '@emotion'];
-  new ExternalsPlugin('commonjs', ({ request }, callback) => {
-    if (sharedDependencies.some((dep) => request === dep || request.startsWith(`${dep}/`))) {
-      callback(null, `commonjs ${request}`);
-    } else {
-      callback();
-    }
-  }).apply(compiler);
+  const externalDependencies = ['react', 'react-dom', '@emotion', '@mui'];
 
   const inputPath = require.resolve('../../src/components/LoadingScreen');
-  new EntryPlugin(compiler.context, inputPath, 'LoadingScreen').apply(compiler);
+  const compiler = compilation.createChildCompiler('PrerenderLoadingScreen', {
+    filename: '__loading-[name].js',
+    library: {
+      type: 'commonjs-module',
+    },
+  }, [
+    new EntryPlugin(compilation.compiler.context, inputPath, 'LoadingScreen'),
+
+    // Compile the template to nodejs javascript
+    new NodeTemplatePlugin(),
+    new NodeTargetPlugin(),
+    new EnableLibraryPlugin('commonjs-module'),
+    new LoaderTargetPlugin('node'),
+
+    new ExternalsPlugin('commonjs', ({ request }, callback) => {
+      if (externalDependencies.some((dep) => request === dep || request.startsWith(`${dep}/`))) {
+        callback(null, `commonjs ${request}`);
+      } else {
+        callback();
+      }
+    }),
+  ]);
 
   const [entries, childCompilation] = await new Promise((resolve, reject) => {
     compiler.runAsChild((err, ...results) => {

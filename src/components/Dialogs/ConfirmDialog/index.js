@@ -12,6 +12,7 @@ import Button from '../../Form/Button';
 function ConfirmDialog({
   className,
   children,
+  open,
   cancelLabel = 'Cancel',
   confirmLabel = 'OK',
   onConfirm,
@@ -35,7 +36,7 @@ function ConfirmDialog({
     <Dialog
       className={cx('Dialog', className)}
       onClose={onCancel}
-      open
+      open={open}
     >
       <DialogContent className="Dialog-body">
         <Form onSubmit={handleSubmit}>
@@ -61,6 +62,7 @@ function ConfirmDialog({
 
 ConfirmDialog.propTypes = {
   children: PropTypes.node,
+  open: PropTypes.bool.isRequired,
   className: PropTypes.string,
   confirmLabel: PropTypes.string,
   cancelLabel: PropTypes.string,

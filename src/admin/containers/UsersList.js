@@ -1,49 +1,36 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import useSWR from 'swr';
 import UsersList from '../components/UsersList';
-import { loadUsers, setUsersFilter } from '../actions/users';
-import {
-  pageSelector,
-  pageSizeSelector,
-  totalUsersSelector,
-  usersSelector,
-} from '../selectors/userSelectors';
+import mergeIncludedModels from '../../utils/mergeIncludedModels';
 
 const {
-  useCallback,
-  useEffect,
+  useMemo,
+  useState,
 } = React;
 
+const PAGE_SIZE = 50;
+
 function UsersListContainer() {
-  const currentPage = useSelector(pageSelector);
-  const pageSize = useSelector(pageSizeSelector);
-  const totalUsers = useSelector(totalUsersSelector);
-  const users = useSelector(usersSelector);
-  const dispatch = useDispatch();
-
-  const onPageChange = useCallback((event, page) => {
-    dispatch(loadUsers({ offset: page * pageSize, limit: pageSize }));
-  }, [dispatch, pageSize]);
-
-  const onFilter = useCallback((filter) => {
-    dispatch(setUsersFilter(filter));
-    dispatch(loadUsers({ offset: 0, limit: pageSize }));
-  }, [dispatch, pageSize]);
-
-  useEffect(() => {
-    onPageChange(null, 0);
-    // Should happen on mount only.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [filter, setFilter] = useState('');
+  const qs = {
+    page: { offset: currentPage * PAGE_SIZE, limit: PAGE_SIZE },
+  };
+  if (filter) {
+    qs.filter = filter;
+  }
+  const { data } = useSWR(['/users', { qs }], { suspense: true, revalidateOnFocus: false });
+  const users = useMemo(() => mergeIncludedModels(data), [data]);
+  const totalUsers = data.meta.results;
 
   return (
     <UsersList
       currentPage={currentPage}
-      pageSize={pageSize}
+      pageSize={PAGE_SIZE}
       totalUsers={totalUsers}
       users={users}
-      onPageChange={onPageChange}
-      onFilter={onFilter}
+      onPageChange={(_event, page) => setCurrentPage(page)}
+      onFilter={setFilter}
     />
   );
 }

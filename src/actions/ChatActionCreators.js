@@ -1,5 +1,4 @@
 import ms from 'ms';
-import splitargs from 'splitargs';
 import parseChatMarkup from 'u-wave-parse-chat-markup';
 import flashDocumentTitle from 'flash-document-title';
 import { v4 as randomUUID } from 'uuid';
@@ -18,7 +17,6 @@ import {
   UNMUTE_USER,
 } from '../constants/ActionTypes';
 import { put } from './RequestActionCreators';
-import { execute } from '../utils/ChatCommands';
 import {
   muteTimeoutsSelector,
   mutedUserIDsSelector,
@@ -88,22 +86,6 @@ export function sendChat(text) {
       ],
     });
     dispatch(message);
-  };
-}
-
-export function inputMessage(text) {
-  return (dispatch, getState) => {
-    if (text[0] === '/') {
-      const [command, ...params] = splitargs(text.slice(1));
-      if (command) {
-        const result = execute(getState(), command, params);
-        if (result) {
-          dispatch(result);
-        }
-        return;
-      }
-    }
-    dispatch(sendChat(text));
   };
 }
 

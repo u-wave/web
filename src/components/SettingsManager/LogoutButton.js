@@ -20,8 +20,8 @@ function LogoutButton({ onLogout }) {
     setShowDialog(false);
   };
 
-  const handleConfirm = () => {
-    onLogout();
+  const handleConfirm = async () => {
+    await onLogout();
     setShowDialog(false);
   };
 
@@ -31,16 +31,15 @@ function LogoutButton({ onLogout }) {
         <LogoutIcon className="LogoutButton-icon" />
         {t('settings.logout')}
       </Button>
-      {showDialog && (
-        <ConfirmDialog
-          title=""
-          confirmLabel={t('dialogs.logout.action')}
-          onConfirm={handleConfirm}
-          onCancel={handleClose}
-        >
-          <FormGroup>{t('dialogs.logout.confirm')}</FormGroup>
-        </ConfirmDialog>
-      )}
+      <ConfirmDialog
+        open={showDialog}
+        title=""
+        confirmLabel={t('dialogs.logout.action')}
+        onConfirm={handleConfirm}
+        onCancel={handleClose}
+      >
+        <FormGroup>{t('dialogs.logout.confirm')}</FormGroup>
+      </ConfirmDialog>
     </>
   );
 }

@@ -10,8 +10,8 @@ import Emoji from './Emoji';
 
 export default function compile(tree, opts = {}) {
   const {
-    availableEmoji = [],
-    customEmojiNames = [],
+    availableEmoji = new Set(),
+    customEmojiNames = new Set(),
     emojiImages = {},
   } = opts;
 

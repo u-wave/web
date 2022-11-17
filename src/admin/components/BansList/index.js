@@ -2,8 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
 import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
+import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
+import TableBody from '@mui/material/TableBody';
+import TableFooter from '@mui/material/TableFooter';
+import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 import BanRow from './Row';
@@ -29,18 +32,27 @@ function Filter(props) {
   return <input type="text" style={filterStyle} {...props} />;
 }
 
-function BansList({ bans, onUnbanUser }) {
+function BansList({
+  bans,
+  count,
+  pageSize,
+  currentPage,
+  onUnbanUser,
+  onPageChange,
+  onFilter,
+}) {
   const { t } = useTranslator();
+
   return (
-    <>
+    <TableContainer>
       <Header>
         <span>Managing Bans:</span>
         <span style={{ float: 'right' }}>
           Filter User:
-          <Filter />
+          <Filter onFilter={onFilter} />
         </span>
       </Header>
-      <Table>
+      <Table size="small">
         <TableHead>
           <TableRow>
             <TableCell />
@@ -60,14 +72,30 @@ function BansList({ bans, onUnbanUser }) {
             />
           ))}
         </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TablePagination
+              count={count}
+              rowsPerPage={pageSize}
+              rowsPerPageOptions={[pageSize]}
+              page={currentPage}
+              onPageChange={(_event, page) => onPageChange(page)}
+            />
+          </TableRow>
+        </TableFooter>
       </Table>
-    </>
+    </TableContainer>
   );
 }
 
 BansList.propTypes = {
   bans: PropTypes.array.isRequired,
+  count: PropTypes.number.isRequired,
+  pageSize: PropTypes.number.isRequired,
+  currentPage: PropTypes.number.isRequired,
   onUnbanUser: PropTypes.func.isRequired,
+  onPageChange: PropTypes.func.isRequired,
+  onFilter: PropTypes.func.isRequired,
 };
 
 export default BansList;

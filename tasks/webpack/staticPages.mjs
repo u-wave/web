@@ -3,7 +3,6 @@ import { fileURLToPath } from 'url';
 import HtmlPlugin from 'html-webpack-plugin';
 import { merge } from 'webpack-merge';
 import babel from '@babel/register';
-import htmlMinifierOptions from '../utils/htmlMinifierOptions.cjs';
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 const context = path.join(dirname, '../../src');
@@ -44,10 +43,10 @@ export default function staticPages(pages, production) {
               fullPath,
             ].join('!'),
             inject: false,
-            minify: htmlMinifierOptions,
           })
         ) : (
           new HtmlPlugin({
+            minify: false,
             chunks: [name],
             template: './markdown.dev.html',
             filename: `${name}.html`,

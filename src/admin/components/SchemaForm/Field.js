@@ -51,7 +51,7 @@ function Field({
 
 Field.propTypes = {
   schema: PropTypes.object.isRequired,
-  value: PropTypes.object.isRequired,
+  value: PropTypes.any,
   onChange: PropTypes.func.isRequired,
 };
 

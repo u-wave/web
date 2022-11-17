@@ -26,6 +26,7 @@ function ObjectProperties({
 
     return (
       <Field
+        key={key}
         schema={subSchema}
         value={subValue}
         onChange={subChange}
