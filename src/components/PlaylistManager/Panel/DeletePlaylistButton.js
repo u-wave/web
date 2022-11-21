@@ -51,16 +51,15 @@ function DeletePlaylistButton({
           </IconButton>
         </span>
       </Tooltip>
-      {deleting && (
-        <ConfirmDialog
-          title={t('dialogs.deletePlaylist.title')}
-          confirmLabel={t('dialogs.deletePlaylist.action')}
-          onConfirm={handleConfirm}
-          onCancel={handleClose}
-        >
-          <FormGroup>{t('dialogs.deletePlaylist.confirm')}</FormGroup>
-        </ConfirmDialog>
-      )}
+      <ConfirmDialog
+        open={deleting}
+        title={t('dialogs.deletePlaylist.title')}
+        confirmLabel={t('dialogs.deletePlaylist.action')}
+        onConfirm={handleConfirm}
+        onCancel={handleClose}
+      >
+        <FormGroup>{t('dialogs.deletePlaylist.confirm')}</FormGroup>
+      </ConfirmDialog>
     </>
   );
 }
