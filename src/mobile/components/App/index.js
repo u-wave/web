@@ -1,6 +1,7 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import Snackbar from '@mui/material/Snackbar';
@@ -14,20 +15,21 @@ import DragLayer from '../../../containers/DragLayer';
 import MainView from '../../containers/MainView';
 import About from '../../containers/About';
 import ServerList from '../../containers/ServerList';
+import { videoEnabledSelector } from '../../../selectors/settingSelectors';
 import Overlays from './Overlays';
 
 const { useState } = React;
 
 function MobileApp({
-  settings,
   activeOverlay,
   onCloseOverlay,
 }) {
   const [dismissedWarning, dismissWarning] = useState(false);
+  const videoEnabled = useSelector(videoEnabledSelector);
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <div className={cx('App', 'MobileApp', 'is-mobile', settings.videoEnabled && 'MobileApp--videoEnabled')}>
+      <div className={cx('App', 'MobileApp', 'is-mobile', videoEnabled && 'MobileApp--videoEnabled')}>
         <MainView />
 
         <Snackbar
@@ -56,9 +58,6 @@ function MobileApp({
 }
 
 MobileApp.propTypes = {
-  settings: PropTypes.shape({
-    videoEnabled: PropTypes.bool.isRequired,
-  }).isRequired,
   activeOverlay: PropTypes.string,
   onCloseOverlay: PropTypes.func.isRequired,
 };
