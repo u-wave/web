@@ -2,8 +2,8 @@ import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
 import ListItem from '@mui/material/ListItem';
+import IconButton from '@mui/material/IconButton';
 import { mdiClose, mdiMagnify } from '@mdi/js';
-import IconButton from '../../IconButton';
 import SvgIcon from '../../SvgIcon';
 
 const SearchResultsRow = ({

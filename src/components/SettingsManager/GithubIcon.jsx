@@ -1,5 +1,5 @@
 import React from 'react';
-import SvgIcon from '@mui/material/SvgIcon';
+import SvgIcon from '../SvgIcon';
 
 /* eslint-disable max-len */
 const GithubIcon = (props) => (

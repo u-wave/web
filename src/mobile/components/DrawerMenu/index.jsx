@@ -8,8 +8,9 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import ListSubheader from '@mui/material/ListSubheader';
 import Divider from '@mui/material/Divider';
-import ActiveIcon from '@mui/icons-material/Check';
+import { mdiCheck } from '@mdi/js';
 import UserCard from '../../../components/UserCard/UserCard';
+import SvgIcon from '../../../components/SvgIcon';
 
 const {
   useCallback,
@@ -42,7 +43,7 @@ function Playlists({
         >
           {playlist.active && (
             <ListItemIcon>
-              <ActiveIcon />
+              <SvgIcon path={mdiCheck} />
             </ListItemIcon>
           )}
           <ListItemText primaryTypographyProps={{ noWrap: true }}>

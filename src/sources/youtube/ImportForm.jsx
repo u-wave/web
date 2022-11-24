@@ -2,12 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { useTranslator } from '@u-wave/react-translate';
-import PlaylistIcon from '@mui/icons-material/PlaylistPlay';
+import { mdiPlaylistPlay } from '@mdi/js';
 import ImportSourceBlock from '../../components/PlaylistManager/Import/ImportSourceBlock';
 import Form from '../../components/Form';
 import FormGroup from '../../components/Form/Group';
 import TextField from '../../components/Form/TextField';
 import Button from '../../components/Form/Button';
+import SvgIcon from '../../components/SvgIcon';
 import {
   getChannelPlaylists,
   getImportablePlaylist,
@@ -56,7 +57,7 @@ function YoutubeImportForm({
           <TextField
             ref={refChannel}
             placeholder={t('youtube.channelUrl')}
-            icon={<PlaylistIcon htmlColor="#9f9d9e" />}
+            icon={<SvgIcon path={mdiPlaylistPlay} />}
           />
         </FormGroup>
         <FormGroup>
@@ -68,7 +69,7 @@ function YoutubeImportForm({
           <TextField
             ref={refPlaylist}
             placeholder={t('youtube.playlistUrl')}
-            icon={<PlaylistIcon htmlColor="#9f9d9e" />}
+            icon={<SvgIcon path={mdiPlaylistPlay} />}
           />
         </FormGroup>
         <FormGroup>

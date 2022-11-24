@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
 import Button from '@mui/material/Button';
-import LogoutIcon from '@mui/icons-material/PowerSettingsNew';
+import { mdiPower } from '@mdi/js';
+import SvgIcon from '../SvgIcon';
 import ConfirmDialog from '../Dialogs/ConfirmDialog';
 import FormGroup from '../Form/Group';
 
@@ -28,7 +29,7 @@ function LogoutButton({ onLogout }) {
   return (
     <>
       <Button color="inherit" className="LogoutButton" onClick={handleOpen}>
-        <LogoutIcon className="LogoutButton-icon" />
+        <SvgIcon path={mdiPower} className="LogoutButton-icon" />
         {t('settings.logout')}
       </Button>
       <ConfirmDialog

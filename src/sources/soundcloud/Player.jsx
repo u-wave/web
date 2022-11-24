@@ -5,7 +5,8 @@ import { translate } from '@u-wave/react-translate';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import ErrorIcon from '@mui/icons-material/Error';
+import { mdiAlertCircle } from '@mdi/js';
+import SvgIcon from '../../components/SvgIcon';
 import SongInfo from './SongInfo';
 
 const soundcloudLogo = new URL('../../../assets/img/soundcloud-inline.png', import.meta.url);
@@ -159,7 +160,7 @@ class SoundCloudPlayer extends React.Component {
       return (
         <div className={cx('src-soundcloud-Player', className)}>
           <Paper className="src-soundcloud-Player-error">
-            <ErrorIcon className="src-soundcloud-Player-errorIcon" />
+            <SvgIcon path={mdiAlertCircle} className="src-soundcloud-Player-errorIcon" />
             <Typography component="p">
               {t('soundcloud.error.template', {
                 error: t(getErrorMessage(error), { message: error.message }),

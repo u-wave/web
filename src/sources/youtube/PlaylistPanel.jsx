@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
-import ImportIcon from '@mui/icons-material/PlaylistAdd';
+import { mdiPlaylistPlus } from '@mdi/js';
+import SvgIcon from '../../components/SvgIcon';
 import MediaListBase from '../../components/MediaList/BaseMediaList';
 import ImportPanelHeader from '../../components/PlaylistManager/Import/ImportPanelHeader';
 import ImportRow from './ImportRow';
@@ -26,7 +27,7 @@ function YouTubeImportPlaylistPanel({
           </div>
           <Tooltip title={`Import All (${importingPlaylistItems.length})`} placement="top">
             <IconButton onClick={handleImportFull}>
-              <ImportIcon className="src-youtube-PlaylistPanel-importIcon" />
+              <SvgIcon path={mdiPlaylistPlus} className="src-youtube-PlaylistPanel-importIcon" />
             </IconButton>
           </Tooltip>
         </div>

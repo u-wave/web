@@ -7,13 +7,12 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import CircularProgress from '@mui/material/CircularProgress';
 import Divider from '@mui/material/Divider';
-import EmailIcon from '@mui/icons-material/Email';
-import PasswordIcon from '@mui/icons-material/Lock';
-import UserIcon from '@mui/icons-material/Person';
+import { mdiEmail, mdiLock, mdiAccount } from '@mdi/js';
 import Form from '../../Form';
 import FormGroup from '../../Form/Group';
 import TextField from '../../Form/TextField';
 import Button from '../../Form/Button';
+import SvgIcon from '../../SvgIcon';
 import ReCaptcha from '../../ReCaptcha';
 import SocialLogin from './SocialLogin';
 
@@ -84,7 +83,7 @@ function RegisterForm({
           id="register-username"
           className="RegisterForm-field"
           autoComplete="nickname"
-          icon={<UserIcon htmlColor="#9f9d9e" />}
+          icon={<SvgIcon path={mdiAccount} />}
           autoFocus
         />
       </FormGroup>
@@ -99,7 +98,7 @@ function RegisterForm({
           className="RegisterForm-field"
           type="email"
           autoComplete="email"
-          icon={<EmailIcon htmlColor="#9f9d9e" />}
+          icon={<SvgIcon path={mdiEmail} />}
         />
       </FormGroup>
       <FormGroup>
@@ -113,7 +112,7 @@ function RegisterForm({
           className="RegisterForm-field"
           type="password"
           autoComplete="new-password"
-          icon={<PasswordIcon htmlColor="#9f9d9e" />}
+          icon={<SvgIcon path={mdiLock} />}
         />
       </FormGroup>
       <FormGroup>
@@ -127,7 +126,7 @@ function RegisterForm({
           className="RegisterForm-field"
           type="password"
           autoComplete="new-password"
-          icon={<PasswordIcon htmlColor="#9f9d9e" />}
+          icon={<SvgIcon path={mdiLock} />}
         />
       </FormGroup>
 

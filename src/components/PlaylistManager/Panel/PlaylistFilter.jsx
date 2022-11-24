@@ -5,7 +5,8 @@ import { useTranslator } from '@u-wave/react-translate';
 import { useDebounce } from 'use-debounce';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
-import FilterIcon from '@mui/icons-material/Search';
+import { mdiMagnify } from '@mdi/js';
+import SvgIcon from '../../SvgIcon';
 
 const {
   useEffect,
@@ -68,8 +69,9 @@ function PlaylistFilter({ onFilter }) {
         <IconButton
           className="PlaylistMeta-iconButton"
           onClick={handleClick}
+          style={isOpen ? { color: '#fff' } : null}
         >
-          <FilterIcon htmlColor={isOpen ? '#fff' : null} />
+          <SvgIcon path={mdiMagnify} />
         </IconButton>
       </Tooltip>
       <input

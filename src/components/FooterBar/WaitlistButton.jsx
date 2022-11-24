@@ -3,7 +3,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
 import Button from '@mui/material/Button';
-import LockedIcon from '@mui/icons-material/Lock';
+import { mdiLock } from '@mdi/js';
+import SvgIcon from '../SvgIcon';
 
 function WaitlistButton({
   userIsDJ,
@@ -16,7 +17,8 @@ function WaitlistButton({
   let icon;
   if (isLocked) {
     icon = (
-      <LockedIcon
+      <SvgIcon
+        path={mdiLock}
         className={cx(
           'WaitlistButton-icon',
           // The user can still leave the waitlist, if it's locked,

@@ -3,10 +3,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
 import Typography from '@mui/material/Typography';
-import PlaylistIcon from '@mui/icons-material/PlaylistAdd';
+import { mdiPlaylistPlus } from '@mdi/js';
 import Form from '../../Form';
 import FormGroup from '../../Form/Group';
 import Button from '../../Form/Button';
+import SvgIcon from '../../SvgIcon';
 import ImportBlock from './ImportBlock';
 
 const { useCallback } = React;
@@ -29,7 +30,7 @@ function NoPlaylists({ className, onCreatePlaylist }) {
           onSubmit={handleCreatePlaylist}
         >
           <FormGroup>
-            <PlaylistIcon className="NoPlaylists-icon" />
+            <SvgIcon path={mdiPlaylistPlus} className="NoPlaylists-icon" style={{ width: '240px', height: '240px' }} />
           </FormGroup>
           <FormGroup>
             <Button>{t('playlists.new')}</Button>

@@ -30,7 +30,7 @@
 }
 
 .TextField-icon {
-  color: #777;
+  color: #9f9d9e;
   width: var(--forms-textfield-size);
   height: var(--forms-textfield-size);
   margin-left: calc(var(--forms-textfield-size) * -1);

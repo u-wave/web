@@ -8,11 +8,14 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import ArtistIcon from '@mui/icons-material/Headset';
-import TitleIcon from '@mui/icons-material/MusicNote';
-import StartIcon from '@mui/icons-material/PlayArrow';
-import EndIcon from '@mui/icons-material/Stop';
-import SwapArtistTitleIcon from '@mui/icons-material/SwapHoriz';
+import {
+  mdiHeadphones,
+  mdiMusicNote,
+  mdiPlay,
+  mdiStop,
+  mdiSwapHorizontal,
+} from '@mdi/js';
+import SvgIcon from '../../SvgIcon';
 import DialogCloseAnimation from '../../DialogCloseAnimation';
 import Form from '../../Form';
 import FormGroup from '../../Form/Group';
@@ -118,7 +121,7 @@ function EditMediaDialog({
       placeholder={t('dialogs.editMedia.artistLabel') ?? t('media.artist')}
       value={artist}
       onChange={handleChangeArtist}
-      icon={<ArtistIcon htmlColor="#9f9d9e" />}
+      icon={<SvgIcon path={mdiHeadphones} />}
       tabIndex={BASE_TAB_INDEX}
       autoFocus
     />
@@ -126,8 +129,8 @@ function EditMediaDialog({
   const artistTitleLabel = (
     <div className="EditMediaDialogGroup-label">
       <Tooltip title={t('dialogs.editMedia.swapArtistTitle')} placement="top">
-        <IconButton onClick={handleSwapArtistTitle} tabIndex={BASE_TAB_INDEX + 1}>
-          <SwapArtistTitleIcon htmlColor="#9f9d9e" />
+        <IconButton onClick={handleSwapArtistTitle} tabIndex={BASE_TAB_INDEX + 1} style={{ color: '#9f9d9e' }}>
+          <SvgIcon path={mdiSwapHorizontal} />
         </IconButton>
       </Tooltip>
     </div>
@@ -138,7 +141,7 @@ function EditMediaDialog({
       placeholder={t('dialogs.editMedia.titleLabel') ?? t('media.title')}
       value={title}
       onChange={handleChangeTitle}
-      icon={<TitleIcon htmlColor="#9f9d9e" />}
+      icon={<SvgIcon path={mdiMusicNote} />}
       tabIndex={BASE_TAB_INDEX + 2}
     />
   );
@@ -156,7 +159,7 @@ function EditMediaDialog({
       placeholder="0:00"
       value={start}
       onChange={handleChangeStart}
-      icon={<StartIcon htmlColor="#9f9d9e" />}
+      icon={<SvgIcon path={mdiPlay} />}
       tabIndex={BASE_TAB_INDEX + 3}
     />
   );
@@ -173,7 +176,7 @@ function EditMediaDialog({
       placeholder={formatDuration(media.duration * 1000)}
       value={end}
       onChange={handleChangeEnd}
-      icon={<EndIcon htmlColor="#9f9d9e" />}
+      icon={<SvgIcon path={mdiStop} />}
       tabIndex={BASE_TAB_INDEX + 4}
     />
   );

@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import EmailIcon from '@mui/icons-material/Email';
-import PasswordIcon from '@mui/icons-material/Lock';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import { translate } from '@u-wave/react-translate';
+import { mdiEmail, mdiLock } from '@mdi/js';
 import Form from '../../../components/Form';
 import FormGroup from '../../../components/Form/Group';
 import TextField from '../../../components/Form/TextField';
 import Button from '../../../components/Form/Button';
+import SvgIcon from '../../../components/SvgIcon';
 
 const enhance = translate();
 
@@ -80,7 +80,7 @@ class PasswordResetPage extends React.Component {
                 disabled
                 value={email}
                 placeholder={t('login.email')}
-                icon={<EmailIcon htmlColor="#9f9d9e" />}
+                icon={<SvgIcon path={mdiEmail} />}
               />
             </FormGroup>
           )}
@@ -91,7 +91,7 @@ class PasswordResetPage extends React.Component {
               value={newPassword}
               onChange={this.handlePasswordChange}
               placeholder={t('login.password')}
-              icon={<PasswordIcon htmlColor="#9f9d9e" />}
+              icon={<SvgIcon path={mdiLock} />}
             />
           </FormGroup>
           <FormGroup>
@@ -101,7 +101,7 @@ class PasswordResetPage extends React.Component {
               value={newPasswordConfirm}
               onChange={this.handlePasswordConfirmChange}
               placeholder={t('login.password')}
-              icon={<PasswordIcon htmlColor="#9f9d9e" />}
+              icon={<SvgIcon path={mdiLock} />}
             />
           </FormGroup>
           <FormGroup>

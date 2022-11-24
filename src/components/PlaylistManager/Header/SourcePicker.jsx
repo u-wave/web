@@ -2,8 +2,9 @@ import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
 import Popover from '@mui/material/Popover';
-import ArrowIcon from '@mui/icons-material/ArrowDropDown';
+import { mdiMenuDown } from '@mdi/js';
 import { useMediaSources } from '../../../context/MediaSourceContext';
+import SvgIcon from '../../SvgIcon';
 import SourcePickerElement from './SourcePickerElement';
 
 const {
@@ -66,7 +67,7 @@ function SourcePicker({ className, selected, onChange }) {
           source={getMediaSource(selected)}
           active
         />
-        <ArrowIcon className="SourcePicker-arrow" />
+        <SvgIcon path={mdiMenuDown} className="SourcePicker-arrow" />
       </button>
       <Popover
         classes={{ paper: 'SourcePicker-list' }}
