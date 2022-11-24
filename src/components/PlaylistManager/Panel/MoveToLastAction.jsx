@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import MoveToLastIcon from '@mui/icons-material/KeyboardArrowDown';
 import { moveMedia } from '../../../actions/PlaylistActionCreators';
 import { useMediaListContext } from '../../MediaList/BaseMediaList';
+import SvgIcon from '../../SvgIcon';
 import MediaAction from '../../MediaList/MediaAction';
 
 const {
@@ -21,7 +21,9 @@ function MoveToLastAction({ media }) {
 
   return (
     <MediaAction onClick={handleClick}>
-      <MoveToLastIcon />
+      <SvgIcon>
+        <path d="M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z" />
+      </SvgIcon>
     </MediaAction>
   );
 }

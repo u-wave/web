@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import MoveToFirstIcon from '@mui/icons-material/KeyboardArrowUp';
 import { moveMedia } from '../../../actions/PlaylistActionCreators';
 import { useMediaListContext } from '../../MediaList/BaseMediaList';
+import SvgIcon from '../../SvgIcon';
 import MediaAction from '../../MediaList/MediaAction';
 
 const {
@@ -21,7 +21,9 @@ function MoveToFirstAction({ media }) {
 
   return (
     <MediaAction onClick={handleClick}>
-      <MoveToFirstIcon />
+      <SvgIcon>
+        <path d="M7.41 15.41 12 10.83l4.59 4.58L18 14l-6-6-6 6z" />
+      </SvgIcon>
     </MediaAction>
   );
 }

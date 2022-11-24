@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import IconButton from '@mui/material/IconButton';
+import IconButton from '../IconButton';
 
 const Action = ({ children, ...props }) => (
   <IconButton className="MediaActions-action" {...props}>
