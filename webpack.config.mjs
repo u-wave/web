@@ -335,7 +335,8 @@ function getConfig(env, {
     activeAppConfig = merge(appConfig, {
       resolve: {
         alias: {
-          'react-dom': 'react-dom/profiling',
+          'react-dom$': 'react-dom/profiling',
+          'react-dom/client': 'react-dom/profiling',
           'scheduler/tracing': 'scheduler/tracing-profiling',
         },
       },
