@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
+import { mdiPlus, mdiCheck } from '@mdi/js';
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import CreatePlaylistIcon from '@mui/icons-material/Add';
-import ActiveIcon from '@mui/icons-material/Check';
+import SvgIcon from '../SvgIcon';
 
 const { useCallback } = React;
 
@@ -35,7 +35,9 @@ function PlaylistsMenu({
       <MenuList>
         <MenuItem onClick={onCreatePlaylist}>
           <ListItemText primary={t('playlists.new')} />
-          <ListItemIcon><CreatePlaylistIcon /></ListItemIcon>
+          <ListItemIcon>
+            <SvgIcon path={mdiPlus} />
+          </ListItemIcon>
         </MenuItem>
         {playlists.map((playlist) => (
           <MenuItem
@@ -45,7 +47,7 @@ function PlaylistsMenu({
           >
             {!!playlist.active && (
               <ListItemIcon>
-                <ActiveIcon />
+                <SvgIcon path={mdiCheck} />
               </ListItemIcon>
             )}
             <ListItemText disableTypography className="AddToPlaylistMenu-playlistName">

@@ -9,17 +9,18 @@ const style = {
   fontSize: '1.5rem',
 };
 
-function SvgIcon({ className, path }) {
+function SvgIcon({ className, children, path }) {
   return (
     <svg viewBox="0 0 24 24" className={className} style={style}>
-      <path d={path} />
+      {children ?? <path d={path} />}
     </svg>
   );
 }
 
 SvgIcon.propTypes = {
   className: PropTypes.string,
-  path: PropTypes.string.isRequired,
+  path: PropTypes.string,
+  children: PropTypes.node,
 };
 
 export default React.memo(SvgIcon);

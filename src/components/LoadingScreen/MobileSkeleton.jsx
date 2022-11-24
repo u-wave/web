@@ -1,10 +1,10 @@
 import React from 'react';
 import AppBar from '@mui/material/AppBar';
-import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import HistoryIcon from '@mui/icons-material/History';
-import MenuIcon from '@mui/icons-material/Menu';
+import { mdiHistory, mdiMenu } from '@mdi/js';
+import IconButton from '../IconButton';
+import SvgIcon from '../SvgIcon';
 import LoadingIndicator from './LoadingIndicator';
 import Filler from './Filler';
 
@@ -20,13 +20,13 @@ function MobileSkeleton() {
         <AppBar position="static" className="MainView-appBar">
           <Toolbar>
             <IconButton>
-              <MenuIcon />
+              <SvgIcon path={mdiMenu} />
             </IconButton>
             <Typography variant="h6" className="MainView-title">
               <Filler width={200} />
             </Typography>
             <IconButton>
-              <HistoryIcon />
+              <SvgIcon path={mdiHistory} />
             </IconButton>
             <IconButton style={waitlistIconStyle}>
               <Filler width={20} />

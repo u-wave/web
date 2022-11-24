@@ -2,7 +2,8 @@ import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
-import SearchIcon from '@mui/icons-material/Search';
+import { mdiMagnify } from '@mdi/js';
+import SvgIcon from '../SvgIcon';
 
 const {
   useCallback,
@@ -37,7 +38,7 @@ function SearchBar({
   return (
     <div className={cx('SearchBar', focused ? 'is-focused' : '', className)}>
       <div className="SearchBar-icon">
-        <SearchIcon />
+        <SvgIcon path={mdiMagnify} />
       </div>
       {children}
       <div className="SearchBar-query">

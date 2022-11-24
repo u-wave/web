@@ -5,7 +5,8 @@ import PropTypes from 'prop-types';
 import { useDrop } from 'react-dnd';
 import CircularProgress from '@mui/material/CircularProgress';
 import MenuItem from '@mui/material/MenuItem';
-import ActiveIcon from '@mui/icons-material/Check';
+import { mdiCheck } from '@mdi/js';
+import SvgIcon from '../../SvgIcon';
 import { MEDIA, SEARCH_RESULT } from '../../../constants/DDItemTypes';
 
 const itemClasses = {
@@ -48,7 +49,7 @@ function PlaylistRow({
   } else if (playlist.active) {
     icon = (
       <div className="PlaylistMenuRow-active-icon">
-        <ActiveIcon />
+        <SvgIcon path={mdiCheck} />
       </div>
     );
   }

@@ -2,12 +2,12 @@ import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useDrag, useDrop } from 'react-dnd';
-import DragIcon from '@mui/icons-material/DragHandle';
-import RemoveIcon from '@mui/icons-material/Close';
+import { mdiClose, mdiDragHorizontalVariant } from '@mdi/js';
 import { WAITLIST_USER } from '../../constants/DDItemTypes';
 import isDraggingNearTopOfRow from '../../utils/isDraggingNearTopOfRow';
 import useUserCard from '../../hooks/useUserCard';
 import Avatar from '../Avatar';
+import SvgIcon from '../SvgIcon';
 import Username from '../Username';
 import Position from './Position';
 
@@ -105,14 +105,14 @@ function ModRow({
       </button>
       <div className="WaitlistRow-tools">
         <div ref={handleRef} className="WaitlistRow-tool WaitlistRow-handle">
-          <DragIcon />
+          <SvgIcon path={mdiDragHorizontalVariant} />
         </div>
         <button
           type="button"
           className="WaitlistRow-tool WaitlistRow-remove"
           onClick={onRemoveUser}
         >
-          <RemoveIcon />
+          <SvgIcon path={mdiClose} />
         </button>
       </div>
     </div>

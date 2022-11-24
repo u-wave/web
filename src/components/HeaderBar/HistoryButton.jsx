@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
-import HistoryIcon from '@mui/icons-material/History';
+import { mdiHistory } from '@mdi/js';
+import SvgIcon from '../SvgIcon';
 
 function HistoryButton({ onClick }) {
   const { t } = useTranslator();
@@ -15,7 +16,7 @@ function HistoryButton({ onClick }) {
         className="HistoryButton"
         onClick={onClick}
       >
-        <HistoryIcon className="HistoryButton-icon" />
+        <SvgIcon className="HistoryButton-icon" path={mdiHistory} />
       </IconButton>
     </Tooltip>
   );

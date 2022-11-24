@@ -5,7 +5,8 @@ import Popover from '@mui/material/Popover';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import CircularProgress from '@mui/material/CircularProgress';
-import SkipIcon from '@mui/icons-material/SkipNext';
+import { mdiSkipNext } from '@mdi/js';
+import SvgIcon from '../SvgIcon';
 import SkipReasonsList from './SkipReasonsList';
 
 const {
@@ -80,7 +81,7 @@ function SkipButton({ userIsDJ, currentDJ, onSkip }) {
           className="SkipButton"
           onClick={userIsDJ ? handleSelfSkip : handleOpen}
         >
-          <SkipIcon />
+          <SvgIcon path={mdiSkipNext} />
         </IconButton>
       </Tooltip>
       <Popover

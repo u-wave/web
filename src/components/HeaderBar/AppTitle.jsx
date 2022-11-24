@@ -1,8 +1,9 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import IconButton from '@mui/material/IconButton';
-import AboutIcon from '@mui/icons-material/ArrowDropDown';
+import { mdiMenuDown } from '@mdi/js';
+import IconButton from '../IconButton';
+import SvgIcon from '../SvgIcon';
 import logo from '../../../assets/img/logo-white.png';
 
 const AppTitle = ({
@@ -19,7 +20,7 @@ const AppTitle = ({
       />
     </h1>
     <IconButton className="AppTitle-button" onClick={onClick}>
-      <AboutIcon />
+      <SvgIcon path={mdiMenuDown} />
     </IconButton>
   </div>
 );
