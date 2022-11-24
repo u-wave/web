@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
+import { mdiChevronUp } from '@mdi/js';
 import { moveMedia } from '../../../actions/PlaylistActionCreators';
 import { useMediaListContext } from '../../MediaList/BaseMediaList';
 import SvgIcon from '../../SvgIcon';
@@ -21,9 +22,7 @@ function MoveToFirstAction({ media }) {
 
   return (
     <MediaAction onClick={handleClick}>
-      <SvgIcon>
-        <path d="M7.41 15.41 12 10.83l4.59 4.58L18 14l-6-6-6 6z" />
-      </SvgIcon>
+      <SvgIcon path={mdiChevronUp} />
     </MediaAction>
   );
 }
