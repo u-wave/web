@@ -1,0 +1,35 @@
+.IconButton {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes spawnRipple {
+  0% {
+    background-size: 0% 0%;
+  }
+  100% {
+    background-size: 100% 100%;
+  }
+}
+
+@keyframes pulsateRipple {
+  0% {
+    background-size: 100% 100%;
+  }
+  50% {
+    background-size: 93% 93%;
+  }
+  100% {
+    background-size: 100% 100%;
+  }
+}
+
+.IconButton:focus-visible {
+  animation: spawnRipple 200ms ease-out 0ms 1,
+    pulsateRipple 2500ms ease-in-out 200ms infinite;
+  background-image: radial-gradient(circle at center, rgba(255, 255, 255, 0.2) 0, rgba(255, 255, 255, 0.2) 70%, transparent 70%);
+  background-repeat: no-repeat;
+  background-position: center center;
+}
