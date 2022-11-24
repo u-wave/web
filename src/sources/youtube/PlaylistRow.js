@@ -17,6 +17,7 @@ const PlaylistRow = ({
         className="MediaListRow-image"
         key={playlist.id}
         src={playlist.thumbnail}
+        loading="lazy"
         alt=""
       />
     </div>

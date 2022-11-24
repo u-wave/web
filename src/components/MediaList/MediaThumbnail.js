@@ -8,6 +8,7 @@ function MediaThumbnail({ url }) {
         className="MediaListRow-image"
         src={url}
         alt=""
+        loading="lazy"
       />
     </div>
   );
