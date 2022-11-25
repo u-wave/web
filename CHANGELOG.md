@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.0-alpha.18 / 25 Nov 2022
+While this is an alpha release, new servers should use this rather than an older "stable" version.
+
+Bugfixes:
+ * Fix a crash in the mobile version. (#2558)
+
+Internal:
+ * Fix the profiling build. (#2559)
+ * Use `loading=lazy` on thumbnails in lists. (#2560)
+
 ## 2.0.0-alpha.17 / 22 Nov 2022
 While this is an alpha release, new servers should use this rather than an older "stable" version.
 
