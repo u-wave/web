@@ -1,5 +1,8 @@
 name: Deploy demo
 
+permissions:
+  contents: read
+
 on:
   push:
     branches: [default]
@@ -38,3 +41,6 @@ jobs:
         NETLIFY_AUTH_TOKEN: ${{secrets.NETLIFY_AUTH_TOKEN}}
         NETLIFY_SITE_ID: ${{secrets.NETLIFY_SITE_ID}}
       timeout-minutes: 1
+      permissions:
+        checks: write
+        statuses: write
