@@ -25,7 +25,7 @@ describe('<ErrorArea />', () => {
   });
 
   it('closes when user clicks anywhere on the page', async () => {
-    const spy = jest.fn();
+    const spy = vi.fn();
 
     render((
       <main>

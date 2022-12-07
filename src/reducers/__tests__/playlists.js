@@ -1,10 +1,7 @@
-import fetch from 'jest-fetch-mock';
 import createStore from '../../redux/configureStore';
 import * as a from '../../actions/PlaylistActionCreators';
 import { favoriteMediaComplete } from '../../actions/VoteActionCreators';
 import * as s from '../../selectors/playlistSelectors';
-
-fetch.enableMocks();
 
 const initialiseStore = a.setPlaylists([
   { _id: 1, name: 'Playlist One', size: 5 },

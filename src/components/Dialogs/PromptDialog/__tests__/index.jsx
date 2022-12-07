@@ -9,10 +9,10 @@ const cache = createCache({ key: 'emc' });
 
 describe('<PromptDialog />', () => {
   it('should not show if there is no error', async () => {
-    const onSubmit = jest.fn((value) => {
+    const onSubmit = vi.fn((value) => {
       expect(value).toEqual('test');
     });
-    const onCancel = jest.fn();
+    const onCancel = vi.fn();
 
     render((
       <CacheProvider value={cache}>

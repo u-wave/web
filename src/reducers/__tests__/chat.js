@@ -56,7 +56,7 @@ describe('reducers/chat', () => {
         username: 'SendingUser',
       };
 
-      jest.spyOn(userSelectors, 'currentUserSelector').mockReturnValue(inFlightUser);
+      vi.spyOn(userSelectors, 'currentUserSelector').mockReturnValue(inFlightUser);
 
       const { dispatch, getState } = createStore();
       dispatch(setUsers([testUser, inFlightUser]));
@@ -102,7 +102,7 @@ describe('reducers/chat', () => {
 
     it('should add an in-flight message to the messages list immediately', () => {
       const { dispatch, getState } = createStore();
-      jest.spyOn(userSelectors, 'currentUserSelector').mockReturnValue(testMessage.user);
+      vi.spyOn(userSelectors, 'currentUserSelector').mockReturnValue(testMessage.user);
 
       dispatch(a.sendChat(testMessage.message));
       expect(s.messagesSelector(getState())).toHaveLength(1);
