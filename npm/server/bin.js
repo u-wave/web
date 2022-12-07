@@ -1,12 +1,13 @@
 /* eslint-disable no-console */
+import fs from 'node:fs';
+import path from 'node:path';
 import express from 'express';
 import serveStatic from 'serve-static';
 import minimist from 'minimist';
 import envSchema from 'env-schema';
-import fs from 'fs';
-import path from 'path';
-import createWebClient from './middleware';
-import pkg from '../package.json';
+import createWebClient from './middleware.js';
+
+const pkg = JSON.parse(fs.readFileSync(new URL('../package.json', import.meta.url), 'utf8'));
 
 const argv = minimist(process.argv.slice(2));
 

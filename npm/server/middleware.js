@@ -1,18 +1,16 @@
-import path from 'path';
-import { pathToFileURL } from 'url';
-import { pipeline } from 'stream';
-import defaultFs from 'fs';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import { pipeline } from 'node:stream';
+import defaultFs from 'node:fs';
 import hstream from 'hstream';
 import router from 'router';
 import serveStatic from 'serve-static';
-import theme from '../theme';
 
 function createManifest({ title }) {
   return {
     name: title,
     short_name: title,
     start_url: '.',
-    theme_color: theme.palette.main,
+    theme_color: '#9d2053',
     background_color: '#151515',
     display: 'standalone',
     icons: [{
@@ -23,7 +21,7 @@ function createManifest({ title }) {
   };
 }
 
-const defaultBasePath = path.join(__dirname, '../public/');
+const defaultBasePath = fileURLToPath(new URL('../public/', import.meta.url));
 
 export default function uwaveWebClient(options = {}) {
   const {
