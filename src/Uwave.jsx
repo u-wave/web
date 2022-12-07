@@ -45,15 +45,6 @@ export default class Uwave {
   constructor(options = {}, session = readSession()) {
     this.options = options;
     this.#sessionToken = session;
-
-    if (import.meta.webpackHot) {
-      const uw = this;
-      import.meta.webpackHot.accept('./containers/App', () => {
-        if (uw.#renderTarget) {
-          uw.renderToDOM();
-        }
-      });
-    }
   }
 
   use(plugin) {
@@ -90,7 +81,7 @@ export default class Uwave {
     return this.#aboutPageComponent;
   }
 
-  build() {
+  async build() {
     this.store = configureStore(
       { config: this.options },
       { mediaSources: this.#sources, socketUrl: this.options.socketUrl },
@@ -102,12 +93,11 @@ export default class Uwave {
     }
 
     this.store.dispatch(socketConnect());
-    return Promise.all([
+    await Promise.all([
       this.store.dispatch(loadCurrentLanguage()),
       this.store.dispatch(initState()),
-    ]).then(() => {
-      this.#resolveReady();
-    });
+    ]);
+    this.#resolveReady();
   }
 
   /** @private */
