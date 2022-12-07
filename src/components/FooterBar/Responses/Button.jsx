@@ -3,7 +3,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Tooltip from '@mui/material/Tooltip';
 
-/* eslint-disable */
 const Button = ({
   onClick,
   disabled,
@@ -15,6 +14,7 @@ const Button = ({
   <Tooltip title={tooltip} placement="top">
     <div className="ResponseButton-wrap">
       <button
+        type="button"
         className={cx('ResponseButton', disabled && 'ResponseButton--disabled')}
         disabled={disabled}
         onClick={onClick}
