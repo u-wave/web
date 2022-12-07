@@ -4,9 +4,6 @@
   "version": "2.0.0-alpha.18",
   "author": "Renée Kooi <renee@kooi.me>",
   "type": "module",
-  "bin": {
-    "u-wave-web": "bin/u-wave-web"
-  },
   "dependencies": {
     "@babel/runtime": "^7.14.0",
     "@emotion/cache": "^11.6.0",
@@ -107,7 +104,6 @@
     "@vitejs/plugin-react": "^2.2.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "cross-env": "^7.0.3",
-    "ejs": "^3.1.7",
     "emojibase-data": "^7.0.0",
     "eslint": "^8.29.0",
     "eslint-config-airbnb": "^19.0.4",
@@ -149,17 +145,22 @@
     "url": "https://github.com/u-wave/web"
   },
   "scripts": {
-    "analyze": "cross-env ANALYZE=1 npm run prod",
     "clean": "rimraf npm/public",
     "dev": "vite",
     "lint": "eslint --cache . && stylelint --cache src/**/*.css",
-    "postpublish": "npm publish ./npm",
+    "postpublish": "npm publish -w ./npm",
     "prepare": "node tasks/emoji.mjs",
     "prerelease": "npm run clean && npm test && npm run prod",
     "prod": "vite build",
-    "serve": "node tasks/serve.mjs",
+    "serve": "u-wave-web",
     "start": "npm run dev",
     "test": "npm run tests-only && npm run lint",
     "tests-only": "jest src"
+  },
+  "workspaces": {
+    "packages": [
+      ".",
+      "./npm"
+    ]
   }
 }
