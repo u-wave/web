@@ -1,3 +1,4 @@
+import { fileURLToPath } from 'node:url';
 import { defineConfig, splitVendorChunkPlugin } from 'vite';
 import react from '@vitejs/plugin-react';
 import yaml from '@rollup/plugin-yaml';
@@ -7,6 +8,13 @@ export default defineConfig({
   build: {
     outDir: 'npm/public/',
     assetsDir: 'static',
+    manifest: true,
+    rollupOptions: {
+      input: {
+        main: fileURLToPath(new URL('./index.html', import.meta.url)),
+        passwordReset: fileURLToPath(new URL('./src/password-reset/index.html', import.meta.url)),
+      },
+    },
   },
   server: {
     port: 6041,

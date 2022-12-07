@@ -34,7 +34,7 @@ export default function uwaveWebClient(options = {}) {
   } = options;
 
   const indexHtml = new URL('./index.html', pathToFileURL(basePath));
-  const passwordResetHtml = new URL('./password-reset.html', pathToFileURL(basePath));
+  const passwordResetHtml = new URL('./src/password-reset/index.html', pathToFileURL(basePath));
 
   const clientRouter = router();
   const manifest = createManifest({ title });
