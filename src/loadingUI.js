@@ -20,7 +20,6 @@ export default function load(uw) {
     return uw.renderToDOM(document.querySelector('#app'));
   }).then(() => {
     document.querySelector('#app-loading').innerHTML = '';
-    document.querySelector('#jss').textContent = '';
   }).catch((err) => {
     clearTimeout(longBuildTimer);
 
