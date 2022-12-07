@@ -12,7 +12,6 @@ module.exports = {
     'arrow-body-style': 'off',
     'no-underscore-dangle': ['error', { allow: ['_id'] }],
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
-    'react/jsx-filename-extension': 'off',
     'react/no-unused-prop-types': ['error', { skipShapeProps: true }],
     'react/forbid-prop-types': 'off',
     'react/jsx-props-no-spreading': 'off',
