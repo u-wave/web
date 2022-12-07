@@ -6,6 +6,7 @@ export default defineConfig({
   clearScreen: false,
   build: {
     outDir: 'npm/public/',
+    assetsDir: 'static',
   },
   server: {
     port: 6041,
