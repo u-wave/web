@@ -6,7 +6,7 @@ import soundCloudSource from './sources/soundcloud';
 import readApplicationConfig from './utils/readApplicationConfig';
 
 const clientOptions = readApplicationConfig();
-if (import.meta.env.DEMO) {
+if (import.meta.env.VITE_DEMO) {
   const url = new URL(window.location.href);
   clientOptions.apiUrl = url.searchParams.get('apiUrl') ?? 'https://u-wave-demo.fly.dev/api';
   clientOptions.socketUrl = url.searchParams.get('socketUrl') ?? 'wss://u-wave-demo.fly.dev';
