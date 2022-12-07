@@ -117,7 +117,7 @@ function getConfig(env, {
 
         // JS loader for our own code:
         {
-          test: /\.js$/,
+          test: /\.jsx?$/,
           exclude: /node_modules/,
           use: (info) => ({
             loader: 'babel-loader',
@@ -136,6 +136,7 @@ function getConfig(env, {
       extensions: [
         '.mjs',
         '.js',
+        '.jsx',
         '.json',
         '.wasm',
       ],
@@ -157,11 +158,11 @@ function getConfig(env, {
     entry: {
       polyfills: 'triage-polyfills',
       app: {
-        import: [demo ? './demo.js' : './app.js', './app.css'],
+        import: [demo ? './demo.jsx' : './app.js', './app.css'],
         dependOn: 'polyfills',
       },
       passwordReset: {
-        import: ['./password-reset/app.js'],
+        import: ['./password-reset/app.jsx'],
         dependOn: 'polyfills',
       },
     },

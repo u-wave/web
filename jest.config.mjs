@@ -2,7 +2,7 @@ export default {
   testEnvironment: 'jsdom',
   transform: {
     '\\.ya?ml$': '<rootDir>/test/yaml-transform.mjs',
-    '\\.js$': 'babel-jest',
+    '\\.jsx?$': 'babel-jest',
   },
   moduleNameMapper: {
     // Prevent jest from picking up the ESM version.
