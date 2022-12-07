@@ -53,7 +53,18 @@ module.exports = (api, envOverride) => {
     browserslistEnv = 'legacy';
   }
 
-  const preset = {
+  const reactConfig = {
+    test: /\.jsx$/,
+    presets: [
+      ['@babel/preset-react', {
+        development: env === 'development',
+        runtime: 'automatic',
+      }],
+    ],
+    plugins: [],
+  };
+
+  const config = {
     browserslistEnv,
     assumptions: {
       constantSuper: true,
@@ -67,10 +78,6 @@ module.exports = (api, envOverride) => {
         modules: false,
         bugfixes: true,
       }],
-      ['@babel/preset-react', {
-        development: env === 'development',
-        runtime: 'automatic',
-      }],
     ],
     plugins: [
       ['@babel/plugin-transform-runtime', {
@@ -81,20 +88,22 @@ module.exports = (api, envOverride) => {
         corejs: false,
       }],
     ],
+
+    overrides: [reactConfig],
   };
 
   if (targets) {
-    preset.targets = targets;
+    config.targets = targets;
   }
 
   if (callerIsNode) {
-    preset.plugins.push(
+    config.plugins.push(
       '@babel/plugin-transform-modules-commonjs',
     );
   }
 
   if (env === 'production') {
-    preset.plugins.push(
+    reactConfig.plugins.push(
       '@babel/plugin-transform-react-constant-elements',
       '@babel/plugin-transform-react-inline-elements',
       ['transform-react-remove-prop-types', { mode: 'remove' }],
@@ -102,14 +111,14 @@ module.exports = (api, envOverride) => {
   }
 
   if (env === 'development' && !targetIsNode && !callerIsNode) {
-    preset.plugins.push(
+    reactConfig.plugins.push(
       'module:react-refresh/babel',
     );
   }
 
   if (callerIsNode) {
-    preset.plugins.push(importMetaToCommonJs);
+    config.plugins.push(importMetaToCommonJs);
   }
 
-  return preset;
+  return config;
 };
