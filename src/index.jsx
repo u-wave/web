@@ -1,4 +1,5 @@
 import React from 'react';
+import favicon from '../assets/favicon.ico';
 import LoadingScreen from './components/LoadingScreen';
 
 function Index() {
@@ -9,7 +10,7 @@ function Index() {
         <meta httpEquiv="x-ua-compatible" content="ie=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>üWave</title>
-        <link rel="shortcut icon" href="../assets/favicon.ico" />
+        <link rel="shortcut icon" href={favicon} />
         <link rel="dns-prefetch" href="https://www.youtube.com" />
         <link rel="dns-prefetch" href="https://i.ytimg.com" />
         <link rel="stylesheet" href="./src/app.css" />
