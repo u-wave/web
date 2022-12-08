@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.0-alpha.19 / 08 Dec 2022
+While this is an alpha release, new servers should use this rather than an older "stable" version.
+
+Bugfixes:
+ * Fix lingering state in the edit media dialog. (#2581)
+
+Internal:
+ * Use `.jsx` extension for files that use JSX. (#2579)
+
 ## 2.0.0-alpha.18 / 25 Nov 2022
 While this is an alpha release, new servers should use this rather than an older "stable" version.
 
