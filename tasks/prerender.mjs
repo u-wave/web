@@ -25,7 +25,7 @@ function renderToHtmlThemed(element) {
     createElement(ThemeProvider, { theme: createTheme(theme) }, element),
   );
   const html = renderToStaticMarkup(wrapped);
-  const { css } = extractCritical();
+  const { css } = extractCritical(html);
   return html.replace('</head>', `<style id="critical">${css}</style></head>`);
 }
 
