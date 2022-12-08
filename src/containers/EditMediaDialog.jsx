@@ -17,6 +17,7 @@ function EditMediaDialogContainer() {
     <DialogCloseAnimation delay={DIALOG_ANIMATION_DURATION}>
       {media && (
         <EditMediaDialog
+          key={media._id}
           open={open}
           media={media}
           onEditedMedia={onEditedMedia}
