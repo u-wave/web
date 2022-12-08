@@ -32,6 +32,21 @@ function renderToHtmlThemed(element) {
 function prerender(options) {
   return /** @type {import('vite').Plugin} */ ({
     name: 'u-wave-prerender',
+    // Add the file to the build config so it will be output
+    // as a separate page.
+    config(config) {
+      const { rollupOptions } = config.build;
+      rollupOptions.input ??= {};
+      const name = options.file.replace(/\.\w+$/, '');
+      rollupOptions.input[name] = options.file;
+    },
+    resolveId(id) {
+      // Make sure our virtual file resolves to something (itself).
+      if (id === options.file) {
+        return id;
+      }
+      return null;
+    },
     configureServer(server) {
       server.watcher.add(options.source);
       server.watcher.on('all', async (_, filename) => {

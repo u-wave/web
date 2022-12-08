@@ -1,4 +1,3 @@
-import { fileURLToPath } from 'node:url';
 import { defineConfig, splitVendorChunkPlugin } from 'vite';
 import react from '@vitejs/plugin-react';
 import yaml from '@rollup/plugin-yaml';
@@ -10,12 +9,8 @@ export default defineConfig({
     outDir: 'npm/public/',
     assetsDir: 'static',
     manifest: true,
-    rollupOptions: {
-      input: {
-        main: fileURLToPath(new URL('./index.html', import.meta.url)),
-        passwordReset: fileURLToPath(new URL('./src/password-reset/index.html', import.meta.url)),
-      },
-    },
+    // This will be filled in by the `prerender` plugin.
+    input: {},
   },
   server: {
     port: 6041,
@@ -34,6 +29,7 @@ export default defineConfig({
     react(),
     yaml(),
     prerender({ file: 'index.html', source: 'src/index.jsx' }),
+    prerender({ file: 'password-reset.html', source: 'src/password-reset/index.jsx' }),
     prerender({ file: 'privacy.html', source: 'src/markdown.jsx', props: { path: 'static/privacy.md' } }),
   ],
 });
