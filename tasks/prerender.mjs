@@ -1,0 +1,87 @@
+import { createRequire } from 'node:module';
+import { createServer } from 'vite';
+import { createElement } from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import theme from '../src/theme.js';
+
+const require = createRequire(import.meta.url);
+
+const createCache = require('@emotion/cache').default;
+const createEmotionServer = require('@emotion/server/create-instance').default;
+const { CacheProvider } = require('@emotion/react');
+
+function renderToHtmlThemed(element) {
+  const cache = createCache({
+    key: 'emc',
+    prepend: true,
+  });
+  const { extractCritical } = createEmotionServer(cache);
+
+  const wrapped = createElement(
+    CacheProvider,
+    { value: cache },
+    createElement(ThemeProvider, { theme: createTheme(theme) }, element),
+  );
+  const html = renderToStaticMarkup(wrapped);
+  const { css } = extractCritical();
+  return html.replace('</head>', `<style id="critical">${css}</style></head>`);
+}
+
+function prerender(options) {
+  return /** @type {import('vite').Plugin} */ ({
+    name: 'u-wave-prerender',
+    configureServer(server) {
+      server.watcher.add(options.source);
+      server.watcher.on('all', async (_, filename) => {
+        if (filename === options.source) {
+          const module = server.moduleGraph.getModuleById(options.file);
+          if (module) {
+            server.moduleGraph.invalidateModule(module);
+          }
+          if (server.ws) {
+            server.ws.send({
+              type: 'full-reload',
+              path: '*',
+            });
+          }
+        }
+      });
+      return () => {
+        server.middlewares.use(async (req, res, next) => {
+          if (!res.writableEnded && req.url.replace(/^\//, '') === options.file) {
+            const { default: Root } = await server.ssrLoadModule(options.source);
+            const content = `<!DOCTYPE html>${renderToHtmlThemed(createElement(Root))}`;
+            const transformed = await server.transformIndexHtml(
+              req.originalUrl,
+              content,
+              req.originalUrl,
+            );
+            res.writeHead(200, { 'content-type': 'text/html' });
+            res.end(transformed);
+          } else {
+            next();
+          }
+        });
+      };
+    },
+    async load(id) {
+      // in build mode, vite will try to load `index.html`
+      if (id === options.file) {
+        const server = await createServer({
+          server: {
+            middlewareMode: true,
+          },
+          mode: 'production',
+        });
+        const { default: Root } = await server.ssrLoadModule(options.source);
+        const code = `<!DOCTYPE html>${renderToHtmlThemed(createElement(Root))}`;
+        server.close();
+        return { code };
+      }
+      return null;
+    },
+  });
+}
+
+export default prerender;

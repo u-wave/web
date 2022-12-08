@@ -1,6 +1,5 @@
 import React from 'react';
 import LoadingScreen from './components/LoadingScreen';
-import theme from './theme';
 
 function Index() {
   return (

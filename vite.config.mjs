@@ -2,7 +2,7 @@ import { fileURLToPath } from 'node:url';
 import { defineConfig, splitVendorChunkPlugin } from 'vite';
 import react from '@vitejs/plugin-react';
 import yaml from '@rollup/plugin-yaml';
-import { VitePluginDocument as document } from 'vite-plugin-document';
+import prerender from './tasks/prerender.mjs';
 
 export default defineConfig({
   clearScreen: false,
@@ -33,6 +33,6 @@ export default defineConfig({
     splitVendorChunkPlugin(),
     react(),
     yaml(),
-    document({ documentFilePath: 'src/index.jsx' }),
+    prerender({ file: 'index.html', source: 'src/index.jsx' }),
   ],
 });
