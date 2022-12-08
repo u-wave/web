@@ -11,6 +11,7 @@ const createCache = require('@emotion/cache').default;
 const createEmotionServer = require('@emotion/server/create-instance').default;
 const { CacheProvider } = require('@emotion/react');
 
+/** Render a React element to plain HTML, with mui theming. */
 function renderToHtmlThemed(element) {
   const cache = createCache({
     key: 'emc',
@@ -51,7 +52,7 @@ function prerender(options) {
         server.middlewares.use(async (req, res, next) => {
           if (!res.writableEnded && req.url.replace(/^\//, '') === options.file) {
             const { default: Root } = await server.ssrLoadModule(options.source);
-            const content = `<!DOCTYPE html>${renderToHtmlThemed(createElement(Root))}`;
+            const content = `<!DOCTYPE html>${renderToHtmlThemed(createElement(Root, options.props ?? {}))}`;
             const transformed = await server.transformIndexHtml(
               req.originalUrl,
               content,
@@ -74,10 +75,13 @@ function prerender(options) {
           },
           mode: 'production',
         });
-        const { default: Root } = await server.ssrLoadModule(options.source);
-        const code = `<!DOCTYPE html>${renderToHtmlThemed(createElement(Root))}`;
-        server.close();
-        return { code };
+        try {
+          const { default: Root } = await server.ssrLoadModule(options.source);
+          const code = `<!DOCTYPE html>${renderToHtmlThemed(createElement(Root, options.props ?? {}))}`;
+          return { code };
+        } finally {
+          server.close();
+        }
       }
       return null;
     },

@@ -34,5 +34,6 @@ export default defineConfig({
     react(),
     yaml(),
     prerender({ file: 'index.html', source: 'src/index.jsx' }),
+    prerender({ file: 'privacy.html', source: 'src/markdown.jsx', props: { path: 'static/privacy.md' } }),
   ],
 });
