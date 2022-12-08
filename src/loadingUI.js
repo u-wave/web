@@ -19,7 +19,10 @@ export default function load(uw) {
     clearTimeout(longBuildTimer);
     return uw.renderToDOM(document.querySelector('#app'));
   }).then(() => {
-    document.querySelector('#app-loading').innerHTML = '';
+    Object.assign(document.querySelector('#app-loading'), {
+      innerHTML: '',
+      hidden: true,
+    });
   }).catch((err) => {
     clearTimeout(longBuildTimer);
 
