@@ -1,6 +1,6 @@
 /**
- * Create emoji image files in assets/emoji.
- * webpack will copy these to the /static/emoji folder in the build output.
+ * Create emoji image files in public/static/emoji.
+ * vite will copy these to the /static/emoji folder in the build output.
  * TODO this could maybe be a webpack plugin? we need to be able to generate
  * a file with shortcode to filename mappings that we can import in the web client code.
  */
@@ -18,7 +18,7 @@ const twemojiDir = new URL('../node_modules/twemoji-emojis/vendor/svg/', import.
 const twemojis = await fs.readdir(twemojiDir);
 const twemojiNames = twemojis.map((basename) => basename.replace(/\.\w+$/, ''));
 
-const outputDir = new URL('../assets/emoji/', import.meta.url);
+const outputDir = new URL('../public/static/emoji/', import.meta.url);
 
 const shortcodes = {};
 function appendShortcode(hex, shortcode) {
