@@ -34,15 +34,13 @@ function createUwaveStore(initialState = {}, options = {}) {
     enableLogging && logger,
   ].filter(Boolean);
 
-  let currentReducers = {
-    ...reducers,
-    sources: createSourcesReducer(options),
-  };
-
   const store = createStore(
     // Finish up the reducer function by combining all the different reducers
     // into one big reducer that works on one big state object.
-    combineReducers(currentReducers),
+    combineReducers({
+      ...reducers,
+      sources: createSourcesReducer(options),
+    }),
     initialState,
     compose(
       // Adds all of the above ☝ middleware features to the store.
@@ -55,25 +53,15 @@ function createUwaveStore(initialState = {}, options = {}) {
     ),
   );
 
-  if (process.env.NODE_ENV === 'development' && import.meta.webpackHot) {
-    // Update the store's reducer function when the reducer source code has
-    // changed. See /tasks/watch.js for more on Hot Reloading!
-    // This is only used when debugging, not in a deployed app.
-    import.meta.webpackHot.accept('../reducers', () => {
+  if (import.meta.hot) {
+    // Update the store's reducer function when the reducer source code has changed.
+    import.meta.hot.accept('../reducers', () => {
       store.replaceReducer(combineReducers({
         ...reducers,
         sources: createSourcesReducer(options),
       }));
     });
   }
-
-  store.mount = (name, reducer) => {
-    currentReducers = {
-      ...currentReducers,
-      [name]: reducer,
-    };
-    store.replaceReducer(combineReducers(currentReducers));
-  };
 
   return store;
 }
