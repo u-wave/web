@@ -5,6 +5,16 @@ import prerender from './tasks/prerender.mjs';
 
 export default defineConfig({
   clearScreen: false,
+  resolve: {
+    alias: {
+      '@mui/base': '@mui/base/modern',
+      '@mui/icons-material': '@mui/icons-material/esm',
+      '@mui/material': '@mui/material/modern',
+      '@mui/styled-engine': '@mui/styled-engine/modern',
+      '@mui/system': '@mui/system/modern',
+      '@mui/utils': '@mui/utils/modern',
+    },
+  },
   build: {
     outDir: 'npm/public/',
     assetsDir: 'static',
