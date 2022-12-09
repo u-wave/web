@@ -2,10 +2,6 @@ import {
   applyMiddleware, combineReducers, compose, createStore,
 } from 'redux';
 import thunk from 'redux-thunk';
-import logger from 'redux-logger';
-import { batchedSubscribe } from 'redux-batched-subscribe';
-import nanoraf from 'nanoraf';
-import raf from 'raf';
 import persistSettings from './persistSettings';
 import webApiRequest from './request';
 import webApiSocket from './socket';
@@ -18,11 +14,6 @@ import createSourcesReducer from '../reducers/createSourcesReducer';
 
 function createUwaveStore(initialState = {}, options = {}) {
   const isTesting = typeof jest !== 'undefined';
-  const enableLogging = process.env.NODE_ENV !== 'production' && !isTesting;
-
-  const rerender = nanoraf((notify) => {
-    notify();
-  }, raf);
 
   const middleware = [
     // Redux-Thunk allows dispatching a function to the store instead of an
@@ -35,21 +26,15 @@ function createUwaveStore(initialState = {}, options = {}) {
     // then be executed and handled as HTTP requests by the middleware.
     webApiRequest(),
     !isTesting && webApiSocket({ url: options.socketUrl }),
-    // Redux-Logger logs state changes to the console, including the
-    // Before-state, the Action object, and the After-state. Invaluable for
-    // debugging :)
-    enableLogging && logger,
   ].filter(Boolean);
-
-  let currentReducers = {
-    ...reducers,
-    sources: createSourcesReducer(options),
-  };
 
   const store = createStore(
     // Finish up the reducer function by combining all the different reducers
     // into one big reducer that works on one big state object.
-    combineReducers(currentReducers),
+    combineReducers({
+      ...reducers,
+      sources: createSourcesReducer(options),
+    }),
     initialState,
     compose(
       // Adds all of the above ☝ middleware features to the store.
@@ -59,29 +44,18 @@ function createUwaveStore(initialState = {}, options = {}) {
       // This is done separately from the Middleware features, because it changes
       // the _initial_ `settings` state, something that Middleware can't do.
       persistSettings,
-      batchedSubscribe(rerender),
     ),
   );
 
-  if (process.env.NODE_ENV === 'development' && import.meta.webpackHot) {
-    // Update the store's reducer function when the reducer source code has
-    // changed. See /tasks/watch.js for more on Hot Reloading!
-    // This is only used when debugging, not in a deployed app.
-    import.meta.webpackHot.accept('../reducers', () => {
+  if (import.meta.hot) {
+    // Update the store's reducer function when the reducer source code has changed.
+    import.meta.hot.accept('../reducers', () => {
       store.replaceReducer(combineReducers({
         ...reducers,
         sources: createSourcesReducer(options),
       }));
     });
   }
-
-  store.mount = (name, reducer) => {
-    currentReducers = {
-      ...currentReducers,
-      [name]: reducer,
-    };
-    store.replaceReducer(combineReducers(currentReducers));
-  };
 
   return store;
 }

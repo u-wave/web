@@ -28,8 +28,7 @@ jobs:
     - name: Build
       run: npm run prod
       env:
-        DEMO: 1
-        ANALYZE: 1
+        VITE_DEMO: 1
     - name: Deploy to Netlify
       uses: nwtgck/actions-netlify@v1.2
       with:

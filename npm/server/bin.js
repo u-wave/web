@@ -1,12 +1,14 @@
+#!/usr/bin/env node
 /* eslint-disable no-console */
+import fs from 'node:fs';
+import path from 'node:path';
 import express from 'express';
 import serveStatic from 'serve-static';
 import minimist from 'minimist';
 import envSchema from 'env-schema';
-import fs from 'fs';
-import path from 'path';
-import createWebClient from './middleware';
-import pkg from '../package.json';
+import createWebClient from './middleware.js';
+
+const pkg = JSON.parse(fs.readFileSync(new URL('../package.json', import.meta.url), 'utf8'));
 
 const argv = minimist(process.argv.slice(2));
 
@@ -58,6 +60,9 @@ const config = envSchema({
       RECAPTCHA_KEY: {
         type: 'string',
       },
+      EMOJI_DIR: {
+        type: 'string',
+      },
     },
   },
 });
@@ -65,13 +70,13 @@ const config = envSchema({
 const app = express();
 
 const customEmoji = {};
-if (process.env.EMOJI_DIR) {
-  fs.readdirSync(process.env.EMOJI_DIR).forEach((filename) => {
+if (config.EMOJI_DIR) {
+  fs.readdirSync(config.EMOJI_DIR).forEach((filename) => {
     const { name } = path.parse(filename);
     customEmoji[name] = filename;
   });
 
-  app.use('/assets/emoji', serveStatic(process.env.EMOJI_DIR));
+  app.use('/assets/emoji', serveStatic(config.EMOJI_DIR));
 }
 
 app.use(createWebClient({

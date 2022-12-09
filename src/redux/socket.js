@@ -43,7 +43,7 @@ function defaultUrl() {
   const loc = window.location;
   const port = loc.port ?? (loc.protocol === 'https:' ? 443 : 80);
   const protocol = loc.protocol === 'https:' ? 'wss:' : 'ws:';
-  return `${protocol}//${loc.hostname}:${port}`;
+  return `${protocol}//${loc.hostname}:${port}/api/socket`;
 }
 
 const actions = {
