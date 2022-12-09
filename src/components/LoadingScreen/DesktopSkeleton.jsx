@@ -42,7 +42,7 @@ const fakeSongTitle = (
 function FakeHeaderBar() {
   return (
     <div className="HeaderBar App-header">
-      <AppTitle className="HeaderBar-title">...</AppTitle>
+      <AppTitle className="HeaderBar-title" onClick={() => {}}>...</AppTitle>
       <div className="HeaderBar-nowPlaying">
         <div className="HeaderBar-media">
           {fakeSongTitle}
