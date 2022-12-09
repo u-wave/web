@@ -9,24 +9,23 @@ function setLoadingText(text) {
   });
 }
 
-export default function load(uw) {
+export default async function load(uw) {
   setLoadingText('Loading üWave...');
   const longBuildTimer = setTimeout(() => {
     setLoadingText('Loading is taking a long time, stand by...');
   }, 5000);
 
-  return uw.build().then(() => {
-    clearTimeout(longBuildTimer);
-    return uw.renderToDOM(document.querySelector('#app'));
-  }).then(() => {
+  try {
+    await uw.build();
+
+    uw.renderToDOM(document.querySelector('#app'));
+
     document.querySelector('#critical')?.remove();
     Object.assign(document.querySelector('#app-loading'), {
       innerHTML: '',
       hidden: true,
     });
-  }).catch((err) => {
-    clearTimeout(longBuildTimer);
-
+  } catch (err) {
     setLoadingText(`Error: ${err.message}`);
     Array.from(document.querySelectorAll('.LoadingIndicator-loader')).forEach((el) => {
       // eslint-disable-next-line no-param-reassign
@@ -36,7 +35,7 @@ export default function load(uw) {
       // eslint-disable-next-line no-param-reassign
       el.hidden = false;
     });
-
-    throw err;
-  });
+  } finally {
+    clearTimeout(longBuildTimer);
+  }
 }
