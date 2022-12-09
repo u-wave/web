@@ -2,7 +2,6 @@ import {
   applyMiddleware, combineReducers, compose, createStore,
 } from 'redux';
 import thunk from 'redux-thunk';
-import logger from 'redux-logger';
 import persistSettings from './persistSettings';
 import webApiRequest from './request';
 import webApiSocket from './socket';
@@ -15,7 +14,6 @@ import createSourcesReducer from '../reducers/createSourcesReducer';
 
 function createUwaveStore(initialState = {}, options = {}) {
   const isTesting = typeof jest !== 'undefined';
-  const enableLogging = process.env.NODE_ENV !== 'production' && !isTesting;
 
   const middleware = [
     // Redux-Thunk allows dispatching a function to the store instead of an
@@ -28,10 +26,6 @@ function createUwaveStore(initialState = {}, options = {}) {
     // then be executed and handled as HTTP requests by the middleware.
     webApiRequest(),
     !isTesting && webApiSocket({ url: options.socketUrl }),
-    // Redux-Logger logs state changes to the console, including the
-    // Before-state, the Action object, and the After-state. Invaluable for
-    // debugging :)
-    enableLogging && logger,
   ].filter(Boolean);
 
   const store = createStore(
