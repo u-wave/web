@@ -96,7 +96,7 @@ function prerender(options) {
           const code = `<!DOCTYPE html>${renderToHtmlThemed(createElement(Root, options.props ?? {}))}`;
           return { code };
         } finally {
-          server.close();
+          await server.close();
         }
       }
       return null;
