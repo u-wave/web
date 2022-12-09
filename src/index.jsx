@@ -22,7 +22,7 @@ function Index() {
         </div>
         <script id="u-wave-config" type="application/json">{}</script>
         <script>global=window</script>
-        <script type="module" src="./src/app.js" />
+        <script type="module" src="./src/app.js" async defer />
       </body>
     </html>
   );
