@@ -12,6 +12,7 @@ const preset = presetEnv({
 
 function skipIfHtmlProxy(plugin) {
   return {
+    postcssPlugin: `conditional-${plugin.postcssPlugin}`,
     prepare(result) {
       // CSS inside HTML files is prerendered by emotion,
       // so it is already transpiled.
