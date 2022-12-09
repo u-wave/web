@@ -3,6 +3,7 @@ import { createServer } from 'vite';
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import getPort from 'get-port';
 import theme from '../src/theme.js';
 
 const require = createRequire(import.meta.url);
@@ -84,8 +85,12 @@ function prerender(options) {
     async load(id) {
       // in build mode, vite will try to load `index.html`
       if (id === options.file) {
+        // We can't prevent the HMR server from starting up,
+        // so just make sure it picks a unique port to avoid collisions.
+        const port = await getPort();
         const server = await createServer({
           server: {
+            hmr: { port },
             middlewareMode: true,
           },
           mode: 'production',
