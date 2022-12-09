@@ -30,3 +30,10 @@
   color: var(--text-color);
   text-align: center;
 }
+
+.desktop-only { display: none; }
+.mobile-only { display: block; }
+@media (min-width: 769px) {
+  .desktop-only { display: block; }
+  .mobile-only { display: none; }
+}

@@ -1,31 +1,16 @@
 import React from 'react';
-import styled from '@emotion/styled';
 import DesktopSkeleton from './DesktopSkeleton';
 import MobileSkeleton from './MobileSkeleton';
-
-const DesktopOnly = styled.div({
-  display: 'none',
-  '@media (min-width: 769px)': {
-    display: 'block',
-  },
-});
-
-const MobileOnly = styled.div({
-  display: 'block',
-  '@media (min-width: 769px)': {
-    display: 'none',
-  },
-});
 
 export default function LoadingScreen() {
   return (
     <>
-      <DesktopOnly>
+      <div className="desktop-only">
         <DesktopSkeleton />
-      </DesktopOnly>
-      <MobileOnly>
+      </div>
+      <div className="mobile-only">
         <MobileSkeleton />
-      </MobileOnly>
+      </div>
     </>
   );
 }

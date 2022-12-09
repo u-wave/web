@@ -89,6 +89,7 @@ function prerender(options) {
             middlewareMode: true,
           },
           mode: 'production',
+          appType: 'custom',
         });
         try {
           const { default: Root } = await server.ssrLoadModule(options.source);
