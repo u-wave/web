@@ -65,7 +65,11 @@ function SkipButton({ userIsDJ, currentDJ, onSkip }) {
 
   let message = t('booth.skip.self');
   if (!userIsDJ) {
-    message = t('booth.skip.other', { user: currentDJ.username });
+    message = t('booth.skip.other', {
+      // Technically `currentDJ` is not inherently bound to `historyID`,
+      // though it should be. In error cases it may be absent.
+      user: currentDJ?.username ?? '…',
+    });
   }
 
   return (
