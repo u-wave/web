@@ -42,7 +42,7 @@
     "item-selection": "^1.2.2",
     "just-debounce": "^1.0.0",
     "just-index": "^4.1.2",
-    "just-map-values": "^3.1.1",
+    "just-map-values": "^3.2.0",
     "just-omit": "^2.2.0",
     "minimist": "^1.2.7",
     "ms": "^2.1.2",
