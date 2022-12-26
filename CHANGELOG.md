@@ -7,6 +7,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## 2.0.0-alpha.20 / 26 Dec 2022
 While this is an alpha release, new servers should use this rather than an older "stable" version.
 
+Features:
+ * **Breaking**: The `u-wave-web` npm package now only provides an ES Modules entry point and an
+   executable entry point. The CommonJS entry point is removed. (#2580)
+
 Bugfixes:
  * Fix a crash when `currentDJ` object is spuriously empty while media is still being played. (7e679e)
 
