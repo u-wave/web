@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.0-alpha.20 / 26 Dec 2022
+While this is an alpha release, new servers should use this rather than an older "stable" version.
+
+Bugfixes:
+ * Fix a crash when `currentDJ` object is spuriously empty while media is still being played. (7e679e)
+
+   This shouldn't happen typically, but if the whole app crashes it's also very hard to diagnose,
+   so having this case be handled is an improvement.
+
+Internal:
+ * Use Vite to build the project. (#2580)
+
 ## 2.0.0-alpha.19 / 08 Dec 2022
 While this is an alpha release, new servers should use this rather than an older "stable" version.
 
