@@ -11,8 +11,12 @@ const {
 function AdminAppContainer() {
   const dispatch = useDispatch();
   const swrConfig = useMemo(() => ({
-    fetcher: (resource, options = {}) => {
-      return dispatch(get(resource, options));
+    fetcher: (arg) => {
+      if (Array.isArray(arg)) {
+        const [resource, options = {}] = arg;
+        return dispatch(get(resource, options));
+      }
+      return dispatch(get(arg));
     },
   }), [dispatch]);
 
