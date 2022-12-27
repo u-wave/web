@@ -1,6 +1,8 @@
 import en from '../locale/en.yaml';
 
-const modules = import.meta.glob(['../locale/*.yaml', '!../locale/en.yaml']);
+const modules = process.env.NODE_ENV === 'test'
+  ? {}
+  : import.meta.glob(['../locale/*.yaml', '!../locale/en.yaml']);
 
 export const resources = Object.fromEntries(
   Object.entries(modules)
