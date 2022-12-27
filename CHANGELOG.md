@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.0-alpha.21 / 27 Dec 2022
+While this is an alpha release, new servers should use this rather than an older "stable" version.
+
+Bugfixes:
+ * Fix loading non-English translations. (#2602)
+
 ## 2.0.0-alpha.20 / 26 Dec 2022
 While this is an alpha release, new servers should use this rather than an older "stable" version.
 
