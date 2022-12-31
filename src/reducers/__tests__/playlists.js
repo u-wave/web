@@ -1,7 +1,15 @@
+import { rest } from 'msw';
+import { setupServer } from 'msw/node';
 import createStore from '../../redux/configureStore';
 import * as a from '../../actions/PlaylistActionCreators';
 import { favoriteMediaComplete } from '../../actions/VoteActionCreators';
 import * as s from '../../selectors/playlistSelectors';
+
+const server = setupServer(
+  rest.get('/api/playlists/:id/meda', (req, res, ctx) => {
+    return res(ctx.json({ meta: {}, data: [] }));
+  }),
+);
 
 const initialiseStore = a.setPlaylists([
   { _id: 1, name: 'Playlist One', size: 5 },
@@ -24,20 +32,12 @@ const initialisePlaylist = (dispatch) => {
   return { items, playlistID };
 };
 
+beforeAll(() => server.listen());
+afterAll(() => server.close());
+
 describe('reducers/playlists', () => {
-  beforeEach(() => {
-    fetch.mockResponse(async (req) => {
-      if (/\/api\/playlists\/\w+\/media/.test(req.url)) {
-        return JSON.stringify({
-          meta: {},
-          data: [],
-        });
-      }
-      throw new Error('unexpected fetch call');
-    });
-  });
   afterEach(() => {
-    fetch.resetMocks();
+    server.resetHandlers();
   });
 
   it('should not respond to unrelated actions', () => {
