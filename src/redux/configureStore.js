@@ -49,7 +49,7 @@ function createUwaveStore(initialState = {}, options = {}) {
 
   if (import.meta.hot) {
     // Update the store's reducer function when the reducer source code has changed.
-    import.meta.hot.accept('../reducers', () => {
+    import.meta.hot.accept('../reducers/index.js', () => {
       store.replaceReducer(combineReducers({
         ...reducers,
         sources: createSourcesReducer(options),
