@@ -37,7 +37,7 @@
     "event-source-polyfill": "^1.0.24",
     "express": "^4.18.2",
     "flash-document-title": "^1.0.0",
-    "format-duration": "^3.0.1",
+    "format-duration": "^3.0.2",
     "is-nan": "^1.3.2",
     "item-selection": "^1.2.2",
     "just-debounce": "^1.0.0",
