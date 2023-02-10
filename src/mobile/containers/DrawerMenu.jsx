@@ -7,15 +7,14 @@ import { drawerIsOpenSelector } from '../selectors/drawerSelectors';
 import { setDrawer } from '../actions/DrawerActionCreators';
 import { toggleServerList, openPlaylist } from '../actions/OverlayActionCreators';
 import DrawerMenu from '../components/DrawerMenu';
-import UwaveContext from '../../context/UwaveContext';
+import { useUwave } from '../../context/UwaveContext';
 
 const {
   useCallback,
-  useContext,
 } = React;
 
 function DrawerMenuContainer() {
-  const uwave = useContext(UwaveContext);
+  const uwave = useUwave();
   const hasAboutPage = !!(uwave && uwave.getAboutPageComponent());
   const user = useSelector(currentUserSelector);
   const playlists = useSelector(playlistsSelector);

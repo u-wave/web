@@ -29,7 +29,7 @@ function Field({
   const controls = useContext(ControlsContext);
 
   const controlName = getControlName(schema);
-  const Control = controls.get(controlName);
+  const Control = controls.get(controlName); // eslint-disable-line react/destructuring-assignment
   if (Control) {
     return (
       <Control

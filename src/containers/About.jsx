@@ -1,14 +1,10 @@
 import React from 'react';
-import UwaveContext from '../context/UwaveContext';
+import { useUwave } from '../context/UwaveContext';
 import Overlay from '../components/Overlay';
 import About from '../components/About';
 
-const {
-  useContext,
-} = React;
-
 function AboutContainer(props) {
-  const uwave = useContext(UwaveContext);
+  const uwave = useUwave();
   const component = uwave.getAboutPageComponent() ?? null;
 
   return (

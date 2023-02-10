@@ -1,3 +1,14 @@
 import React from 'react';
 
-export default React.createContext(null);
+const {
+  createContext,
+  useContext,
+} = React;
+
+const UwaveContext = createContext(null);
+
+export function useUwave() {
+  return useContext(UwaveContext);
+}
+
+export default UwaveContext;
