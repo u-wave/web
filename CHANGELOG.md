@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.0-alpha.22 / 08 Mar 2023
+While this is an alpha release, new servers should use this rather than an older "stable" version.
+
+This client version requires `u-wave-core` server version 0.5.0-alpha.15 or higher.
+
+Features:
+ * Experimental support for runtime-configurable emotes. (#2669)
+
+Internal:
+ * Fix reducer hot reloading. (#2607)
+
 ## 2.0.0-alpha.21 / 27 Dec 2022
 While this is an alpha release, new servers should use this rather than an older "stable" version.
 
