@@ -1,12 +1,15 @@
 .Emoji {
   /* Same size as the surrounding text */
-  height: 1.875rem;
+  height: 1.5rem;
   margin: -.5rem 0;
   background-size: contain;
   background-position: center center;
   background-repeat: no-repeat;
   display: inline-block;
   position: relative;
+}
+.Emoji--large {
+  height: 2rem;
 }
 
 .Emoji-img {

@@ -36,11 +36,11 @@
 
 .ChatMessage-avatar {
   position: absolute;
-  width: 24px;
-  height: 24px;
+  width: 1.5rem;
+  height: 1.5rem;
   top: 0;
   inset-inline-start: 12px;
-  margin: 4px 0;
+  margin: .25rem 0;
 }
 
 .ChatMessage-content {
@@ -50,8 +50,9 @@
   width: 100%;
   display: inline-block;
   word-wrap: break-word;
-  margin: 4px 0;
+  margin: .25rem 0;
   line-height: 1.25rem;
+  min-height: 1.5rem;
 }
 
 .ChatMessage-cardable {

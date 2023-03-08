@@ -15,6 +15,11 @@ export default function compile(tree, opts = {}) {
     emojiImages = {},
   } = opts;
 
+  // Display large emoji if a message only contains emoji and separating whitespace
+  const useLargeEmoji = tree.length < 10 && tree.every((node) => (
+    (typeof node === 'string' && /^\s*$/.test(node)) || node.type === 'emoji'
+  ));
+
   return tree.map((node, i) => {
     if (typeof node === 'string') {
       return node;
@@ -36,6 +41,7 @@ export default function compile(tree, opts = {}) {
               name={node.name}
               image={emojiImages[node.name]}
               isCustom={customEmojiNames.has(node.name)}
+              isLarge={useLargeEmoji}
             />
           );
         }
