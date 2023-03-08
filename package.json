@@ -44,6 +44,7 @@
     "just-index": "^4.1.2",
     "just-map-values": "^3.2.0",
     "just-omit": "^2.2.0",
+    "match-sorter": "^6.3.1",
     "minimist": "^1.2.7",
     "ms": "^2.1.2",
     "natural-compare": "^1.2.2",
