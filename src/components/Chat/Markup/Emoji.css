@@ -1,7 +1,6 @@
 .Emoji {
   /* Same size as the surrounding text */
   height: 1.3em;
-  width: 1.3em;
   background-size: contain;
   background-position: center center;
   background-repeat: no-repeat;
@@ -10,7 +9,7 @@
 }
 
 .Emoji-img {
-  max-width: 100%;
+  max-width: 200px;
   max-height: 100%;
   vertical-align: middle;
 }
