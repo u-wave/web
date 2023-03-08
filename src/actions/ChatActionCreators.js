@@ -15,8 +15,9 @@ import {
   REMOVE_ALL_MESSAGES,
   MUTE_USER,
   UNMUTE_USER,
+  LOAD_EMOTES,
 } from '../constants/ActionTypes';
-import { put } from './RequestActionCreators';
+import { get, put } from './RequestActionCreators';
 import {
   muteTimeoutsSelector,
   mutedUserIDsSelector,
@@ -221,4 +222,14 @@ export function setMotd(text) {
       payload: error,
     }),
   });
+}
+
+export function loadEmotes() {
+  return async (dispatch) => {
+    const emotes = await dispatch(get('/emotes'));
+    dispatch({
+      type: LOAD_EMOTES,
+      payload: { emotes: emotes.data },
+    });
+  };
 }

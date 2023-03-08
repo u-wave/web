@@ -14,6 +14,8 @@ import { loadCurrentLanguage } from './actions/LocaleActionCreators';
  * @typedef {object} UwaveOptions
  * @prop {string} [apiBase]
  * @prop {string} [socketUrl]
+ * @prop {Record<string, string>} [emoji]
+ * @prop {{ name: string, url: string }[]} [serverEmotes]
  */
 
 export default class Uwave {

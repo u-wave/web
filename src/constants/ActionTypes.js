@@ -17,3 +17,4 @@ export * from './actionTypes/time';
 export * from './actionTypes/users';
 export * from './actionTypes/votes';
 export * from './actionTypes/waitlist';
+export const LOAD_EMOTES = 'emotes/LOAD';
