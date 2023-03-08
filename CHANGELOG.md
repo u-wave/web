@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.0-alpha.23 / 08 Mar 2023
+While this is an alpha release, new servers should use this rather than an older "stable" version.
+
+Features:
+ * Increased size of emotes to make them more distinguishable. (#2670)
+ * Made autocomplete of usernames and emotes a bit more forgiving to typos. (#2671)
+
 ## 2.0.0-alpha.22 / 08 Mar 2023
 While this is an alpha release, new servers should use this rather than an older "stable" version.
 
