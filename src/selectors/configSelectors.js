@@ -16,7 +16,14 @@ export const requestOptionsSelector = createSelector(
 
 export const availableEmojiImagesSelector = createSelector(
   configSelector,
-  (config) => ({ ...defaultEmoji, ...config.emoji }),
+  (config) => {
+    const serverEmotes = config.serverEmotes.map(({ name, url }) => [name, url]);
+    return {
+      ...defaultEmoji,
+      ...config.emoji,
+      ...Object.fromEntries(serverEmotes),
+    };
+  },
 );
 
 export const availableEmojiNamesSelector = createSelector(
@@ -26,6 +33,8 @@ export const availableEmojiNamesSelector = createSelector(
 
 // This is slightly hacky: custom emoji will be hosted on
 // a different URL so we have to mark them.
+// Note server emotes do not need to be added here as they
+// use full URLs.
 // TODO(goto-bus-stop) I think builtins and custom emoji
 // should be separated entirely so that we can interpret
 // unicode emoji as builtin ones.

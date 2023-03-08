@@ -19,6 +19,7 @@ import {
   removeAllMessages,
   muteUser as chatMute,
   unmuteUser as chatUnmute,
+  loadEmotes,
 } from '../actions/ChatActionCreators';
 import { cyclePlaylist } from '../actions/PlaylistActionCreators';
 import {
@@ -129,6 +130,7 @@ const actions = {
   guests: receiveGuestCount,
   'acl:allow': ({ userID, roles }) => addUserRoles(userID, roles),
   'acl:disallow': ({ userID, roles }) => removeUserRoles(userID, roles),
+  reloadEmotes: loadEmotes,
 };
 
 // WebSocket wrapper with reconnection and message parsing.

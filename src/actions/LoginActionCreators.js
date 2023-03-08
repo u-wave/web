@@ -19,6 +19,7 @@ import { loadHistory } from './BoothActionCreators';
 import { setPlaylists, loadPlaylist } from './PlaylistActionCreators';
 import { syncTimestamps } from './TickerActionCreators';
 import { closeLoginDialog } from './DialogActionCreators';
+import { loadEmotes } from './ChatActionCreators';
 import { tokenSelector } from '../selectors/userSelectors';
 
 export function socketConnect() {
@@ -79,6 +80,7 @@ export function initState() {
       dispatch(syncTimestamps(beforeTime, state.time));
       dispatch(loadedState(state));
       dispatch(loadHistory());
+      dispatch(loadEmotes());
       return state;
     },
   });

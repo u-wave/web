@@ -1,6 +1,10 @@
-import { INIT_STATE } from '../constants/ActionTypes';
+import { INIT_STATE, LOAD_EMOTES } from '../constants/ActionTypes';
 
-const initialState = {};
+export const initialState = {
+  roles: undefined,
+  emoji: {},
+  serverEmotes: [],
+};
 
 export default function reduce(state = initialState, action = {}) {
   const { type, payload } = action;
@@ -13,6 +17,11 @@ export default function reduce(state = initialState, action = {}) {
         };
       }
       return state;
+    case LOAD_EMOTES:
+      return {
+        ...state,
+        serverEmotes: payload.emotes,
+      };
     default:
       return state;
   }
