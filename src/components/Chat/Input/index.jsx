@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from '@u-wave/react-translate';
 import AutoComplete, { Completion } from 'react-abstract-autocomplete';
+import { matchSorter } from 'match-sorter';
 import SuggestionsList from './SuggestionsList';
 import EmojiSuggestion from './EmojiSuggestion';
 import GroupSuggestion from './GroupSuggestion';
@@ -34,10 +35,8 @@ const renderSuggestions = (children) => (
 
 // User suggestions:
 const getUserCompletions = (value, { trigger, completions }) => {
-  const compare = value.substr(trigger.length).toLowerCase();
-  return completions.filter((user) => (
-    user.username.substr(0, compare.length).toLowerCase() === compare
-  ));
+  const compare = value.substr(trigger.length);
+  return matchSorter(completions, compare, { keys: ['username'] });
 };
 const getUserText = (user, { trigger }) => `${trigger}${user.username} `;
 const renderUser = (props) => <UserSuggestion {...props} />;
@@ -48,12 +47,12 @@ const renderGroup = (props) => <GroupSuggestion {...props} />;
 // Emoji suggestions:
 const getEmojiCompletions = (value, { trigger, completions }) => {
   const compare = value.substr(trigger.length).toLowerCase();
-  const results = completions.filter((emoji) => (
-    emoji.shortcode.substr(0, compare.length).toLowerCase() === compare
-  ));
+  const results = matchSorter(completions, compare, {
+    keys: ['shortcode'],
+    baseSort: (a, b) => a.rankedValue.length - b.rankedValue.length,
+  });
 
-  const uniqueResults = uniqBy(results, (emoji) => emoji.image);
-  return uniqueResults.sort((a, b) => a.shortcode.length - b.shortcode.length);
+  return uniqBy(results, (emoji) => emoji.image);
 };
 const getEmojiText = (value) => `:${value.shortcode}: `;
 const renderEmoji = (props) => <EmojiSuggestion {...props} />;
