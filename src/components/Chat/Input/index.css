@@ -6,28 +6,37 @@
 }
 
 .ChatInput {
+  font-size: .875rem;
   height: 100%;
+  width: 100%;
+  padding: 0 1rem;
+  display: grid;
+  align-content: center;
+  justify-content: stretch;
+}
+
+/* Awkward wrapper */
+.ChatInput > span {
   width: 100%;
 }
 
 .ChatInput-suggestions {
   position: absolute;
   bottom: 100%;
-  width: 100%;
+  inset-inline: 0;
 }
 
 .ChatInput-input {
-  margin: 15px 15px 16px;
-  height: 28px;
-  width: calc(100% - 32px);
-  padding: 0 6px;
+  height: 2rem;
+  padding: 0 .5rem;
   border: 1px solid var(--chat-border-color);
   background: #222;
   color: var(--text-color);
-  font-size: 10pt;
+  font-size: .875rem;
+  width: 100%;
+}
 
-  &.is-focused {
-    border-color: var(--highlight-color);
-    outline: none;
-  }
+.ChatInput-input.is-focused {
+  border-color: var(--highlight-color);
+  outline: none;
 }
