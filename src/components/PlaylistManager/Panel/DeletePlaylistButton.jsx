@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { mdiDelete } from '@mdi/js';
+import SvgIcon from '../../SvgIcon';
 import ConfirmDialog from '../../Dialogs/ConfirmDialog';
 import FormGroup from '../../Form/Group';
 
@@ -47,7 +48,7 @@ function DeletePlaylistButton({
             className="PlaylistMeta-iconButton"
             onClick={handleOpen}
           >
-            <DeleteIcon />
+            <SvgIcon path={mdiDelete} />
           </IconButton>
         </span>
       </Tooltip>

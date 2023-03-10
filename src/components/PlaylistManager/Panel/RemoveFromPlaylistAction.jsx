@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { mdiDelete } from '@mdi/js';
 import { removeMedia } from '../../../actions/PlaylistActionCreators';
 import { useMediaListContext } from '../../MediaList/BaseMediaList';
+import SvgIcon from '../../SvgIcon';
 import MediaAction from '../../MediaList/MediaAction';
 
 const {
@@ -22,7 +23,7 @@ function RemoveFromPlaylistAction({ media }) {
 
   return (
     <MediaAction onClick={handleClick}>
-      <DeleteIcon />
+      <SvgIcon path={mdiDelete} />
     </MediaAction>
   );
 }

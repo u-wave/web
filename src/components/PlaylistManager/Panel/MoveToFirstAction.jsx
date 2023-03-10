@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import MoveToFirstIcon from '@mui/icons-material/KeyboardArrowUp';
+import { mdiChevronUp } from '@mdi/js';
 import { moveMedia } from '../../../actions/PlaylistActionCreators';
 import { useMediaListContext } from '../../MediaList/BaseMediaList';
+import SvgIcon from '../../SvgIcon';
 import MediaAction from '../../MediaList/MediaAction';
 
 const {
@@ -21,7 +22,7 @@ function MoveToFirstAction({ media }) {
 
   return (
     <MediaAction onClick={handleClick}>
-      <MoveToFirstIcon />
+      <SvgIcon path={mdiChevronUp} />
     </MediaAction>
   );
 }

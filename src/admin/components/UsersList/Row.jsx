@@ -4,13 +4,14 @@ import PropTypes from 'prop-types';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import TableRow from '@mui/material/TableRow';
 import MuiTableCell from '@mui/material/TableCell';
+import { mdiDotsVertical } from '@mdi/js';
 import useIntl from '../../../hooks/useIntl';
 import Avatar from '../../../components/Avatar';
 import Username from '../../../components/Username/WithCard';
 import UserRole from '../../../components/UserRole';
+import SvgIcon from '../../../components/SvgIcon';
 
 const {
   useCallback,
@@ -83,7 +84,7 @@ function UserRow({ user }) {
           aria-owns={open ? ariaMenu : null}
           size="small"
         >
-          <MoreVertIcon />
+          <SvgIcon path={mdiDotsVertical} />
         </IconButton>
         <Menu
           id={ariaMenu}

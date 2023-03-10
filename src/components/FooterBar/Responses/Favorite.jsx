@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
-import FavoritedIcon from '@mui/icons-material/Favorite';
-import FavoriteIcon from '@mui/icons-material/FavoriteBorder';
+import { mdiHeart, mdiHeartOutline } from '@mdi/js';
+import SvgIcon from '../../SvgIcon';
 import Button from './Button';
 
 function Favorite({
@@ -13,7 +13,6 @@ function Favorite({
 }) {
   const { t } = useTranslator();
 
-  const CurrentIcon = active ? FavoritedIcon : FavoriteIcon;
   const handleFavorite = (event) => {
     const pos = event.target.getBoundingClientRect();
     onFavorite({
@@ -29,7 +28,10 @@ function Favorite({
       onClick={handleFavorite}
       count={count}
     >
-      <CurrentIcon className="ResponseButton-icon--favorite" />
+      <SvgIcon
+        path={active ? mdiHeart : mdiHeartOutline}
+        className="ResponseButton-icon--favorite"
+      />
     </Button>
   );
 }

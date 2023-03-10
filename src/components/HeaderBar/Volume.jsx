@@ -5,10 +5,13 @@ import PropTypes from 'prop-types';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import Slider from '@mui/material/Slider';
-import VolumeDownIcon from '@mui/icons-material/VolumeDown';
-import VolumeMuteIcon from '@mui/icons-material/VolumeMute';
-import VolumeOffIcon from '@mui/icons-material/VolumeOff';
-import VolumeUpIcon from '@mui/icons-material/VolumeUp';
+import {
+  mdiVolumeOff,
+  mdiVolumeLow,
+  mdiVolumeMedium,
+  mdiVolumeHigh,
+} from '@mdi/js';
+import SvgIcon from '../SvgIcon';
 
 function Volume({
   className,
@@ -20,13 +23,13 @@ function Volume({
 }) {
   const { t } = useTranslator();
 
-  let volumeIcon = <VolumeUpIcon />;
+  let volumeIcon = mdiVolumeHigh;
   if (muted) {
-    volumeIcon = <VolumeOffIcon />;
+    volumeIcon = mdiVolumeOff;
   } else if (volume === 0) {
-    volumeIcon = <VolumeMuteIcon />;
+    volumeIcon = mdiVolumeLow;
   } else if (volume < 50) {
-    volumeIcon = <VolumeDownIcon />;
+    volumeIcon = mdiVolumeMedium;
   }
 
   const label = muted ? t('booth.unmute') : t('booth.mute');
@@ -42,7 +45,7 @@ function Volume({
           aria-label={label}
           onClick={handleMuteClick}
         >
-          {volumeIcon}
+          <SvgIcon path={volumeIcon} />
         </IconButton>
       </Tooltip>
       <div className="VolumeSlider-slider">

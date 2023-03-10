@@ -10,12 +10,13 @@ import Checkbox from '@mui/material/Checkbox';
 import CircularProgress from '@mui/material/CircularProgress';
 import RadioGroup from '@mui/material/RadioGroup';
 import Radio from '@mui/material/Radio';
-import UserIcon from '@mui/icons-material/Person';
+import { mdiAccount } from '@mdi/js';
 import upperCaseFirst from '../../../utils/upperCaseFirst';
 import Form from '../../Form';
 import FormGroup from '../../Form/Group';
 import TextField from '../../Form/TextField';
 import Button from '../../Form/Button';
+import SvgIcon from '../../SvgIcon';
 
 const {
   useCallback,
@@ -99,7 +100,7 @@ function SocialForm({
           className="RegisterForm-field"
           autocomplete="nickname"
           placeholder={t('login.username')}
-          icon={<UserIcon nativeColor="#9f9d9e" />}
+          icon={<SvgIcon path={mdiAccount} />}
           autoFocus
           value={username}
           onChange={handleChangeUsername}

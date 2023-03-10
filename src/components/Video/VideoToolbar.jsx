@@ -3,14 +3,9 @@ import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
-import EnterFullscreenIcon from '@mui/icons-material/Fullscreen';
-import ExitFullscreenIcon from '@mui/icons-material/FullscreenExit';
-
+import { mdiFullscreen, mdiFullscreenExit } from '@mdi/js';
+import SvgIcon from '../SvgIcon';
 import VideoSizeButton from './VideoSizeButton';
-
-const renderFullscreenIcon = (isFullscreen) => (
-  isFullscreen ? <ExitFullscreenIcon /> : <EnterFullscreenIcon />
-);
 
 function VideoToolbar({
   children,
@@ -31,7 +26,7 @@ function VideoToolbar({
         placement="bottom-end"
       >
         <IconButton onClick={isFullscreen ? onFullscreenExit : onFullscreenEnter}>
-          {renderFullscreenIcon(isFullscreen)}
+          <SvgIcon path={isFullscreen ? mdiFullscreenExit : mdiFullscreen} />
         </IconButton>
       </Tooltip>
     </div>

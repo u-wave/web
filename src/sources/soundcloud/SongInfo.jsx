@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ArtistIcon from '@mui/icons-material/Headset';
-import TitleIcon from '@mui/icons-material/MusicNote';
+import { mdiHeadphones, mdiMusicNote } from '@mdi/js';
+import SvgIcon from '../../components/SvgIcon';
 
 function SongInfo({
   artist, title, artistUrl, trackUrl,
@@ -15,7 +15,7 @@ function SongInfo({
         href={artistUrl}
         title={artist}
       >
-        <ArtistIcon className="src-soundcloud-SongInfo-icon" />
+        <SvgIcon path={mdiHeadphones} className="src-soundcloud-SongInfo-icon" />
         {artist}
       </a>
       <a
@@ -25,7 +25,7 @@ function SongInfo({
         href={trackUrl}
         title={title}
       >
-        <TitleIcon className="src-soundcloud-SongInfo-icon" />
+        <SvgIcon path={mdiMusicNote} className="src-soundcloud-SongInfo-icon" />
         {title}
       </a>
     </div>

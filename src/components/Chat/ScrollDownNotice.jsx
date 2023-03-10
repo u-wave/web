@@ -2,8 +2,9 @@ import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
+import { mdiArrowDown } from '@mdi/js';
 import Fab from '@mui/material/Fab';
-import ScrollDownIcon from '@mui/icons-material/ArrowDownward';
+import SvgIcon from '../SvgIcon';
 
 function ScrollDownNotice({ show, onClick }) {
   const { t } = useTranslator();
@@ -18,7 +19,7 @@ function ScrollDownNotice({ show, onClick }) {
         aria-label={t('chat.scrollDown')}
         onClick={onClick}
       >
-        <ScrollDownIcon />
+        <SvgIcon path={mdiArrowDown} />
       </Fab>
     </div>
   );

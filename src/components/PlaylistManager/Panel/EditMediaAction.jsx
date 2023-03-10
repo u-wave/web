@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import EditMediaIcon from '@mui/icons-material/Edit';
+import { mdiPencil } from '@mdi/js';
+import SvgIcon from '../../SvgIcon';
 import { editMedia } from '../../../actions/PlaylistActionCreators';
 import { useMediaListContext } from '../../MediaList/BaseMediaList';
 import MediaAction from '../../MediaList/MediaAction';
@@ -19,7 +20,7 @@ function EditMediaAction({ media }) {
 
   return (
     <MediaAction onClick={handleClick}>
-      <EditMediaIcon />
+      <SvgIcon path={mdiPencil} />
     </MediaAction>
   );
 }

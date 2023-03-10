@@ -4,10 +4,11 @@ import { useTranslator } from '@u-wave/react-translate';
 import { useAsyncCallback } from 'react-async-hook';
 import Alert from '@mui/material/Alert';
 import CircularProgress from '@mui/material/CircularProgress';
-import EmailIcon from '@mui/icons-material/Email';
+import { mdiEmail } from '@mdi/js';
 import Form from '../../Form';
 import FormGroup from '../../Form/Group';
 import TextField from '../../Form/TextField';
+import SvgIcon from '../../SvgIcon';
 import Button from '../../Form/Button';
 
 const {
@@ -54,7 +55,7 @@ function ResetPasswordForm({ onResetPassword, onCloseDialog }) {
           className="ResetPasswordForm-field"
           type="email"
           autoComplete="email"
-          icon={<EmailIcon htmlColor="#9f9d9e" />}
+          icon={<SvgIcon path={mdiEmail} />}
         />
       </FormGroup>
 

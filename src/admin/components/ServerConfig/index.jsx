@@ -9,9 +9,8 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionActions from '@mui/material/AccordionActions';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import CheckIcon from '@mui/icons-material/Check';
-import WarningIcon from '@mui/icons-material/Warning';
+import { mdiCheck, mdiAlert, mdiUnfoldMoreHorizontal } from '@mdi/js';
+import SvgIcon from '../../../components/SvgIcon';
 import SchemaForm from '../SchemaForm';
 
 const {
@@ -46,14 +45,14 @@ function Section({
     startIcon = <CircularProgress color="white" size={16} />;
   }
   if (save.status === 'success') {
-    startIcon = <CheckIcon />;
+    startIcon = <SvgIcon path={mdiCheck} />;
   }
 
   return (
     <Accordion>
       <AccordionSummary
         className="ServerConfigGroupHeader"
-        expandIcon={<ExpandMoreIcon />}
+        expandIcon={<SvgIcon path={mdiUnfoldMoreHorizontal} />}
       >
         <div className="ServerConfigGroupHeader-contents">
           <Typography>{schema.title}</Typography>
@@ -61,7 +60,7 @@ function Section({
         </div>
         {edited ? (
           <div className="ServerConfigGroupHeader-saveWarning">
-            <WarningIcon sx={{ marginRight: 1 }} />
+            <SvgIcon path={mdiAlert} style={{ marginRight: '.25rem' }} />
             {t('admin.config.unsavedChanges')}
           </div>
         ) : null}

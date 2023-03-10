@@ -38,7 +38,7 @@
 .PlaylistMeta-iconButton {
   color: #555;
 
-  &:hover {
+  &:hover:not(:disabled) {
     color: #fff;
   }
 }

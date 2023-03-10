@@ -5,8 +5,8 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import HistoryIcon from '@mui/icons-material/History';
-import MenuIcon from '@mui/icons-material/Menu';
+import { mdiHistory, mdiMenu } from '@mdi/js';
+import SvgIcon from '../../../components/SvgIcon';
 import SongTitle from '../../../components/SongTitle';
 import Video from '../../containers/Video';
 import Chat from '../../containers/Chat';
@@ -52,13 +52,13 @@ function MainView({
       <AppBar position="static" className="MainView-appBar">
         <Toolbar>
           <IconButton aria-label="Menu" onClick={onOpenDrawer}>
-            <MenuIcon />
+            <SvgIcon path={mdiMenu} />
           </IconButton>
           <Typography variant="h6" className="MainView-title">
             {title}
           </Typography>
           <IconButton onClick={onOpenRoomHistory}>
-            <HistoryIcon />
+            <SvgIcon path={mdiHistory} />
           </IconButton>
           <IconButton style={waitlistIconStyle} onClick={onOpenWaitlist}>
             {getWaitlistLabel(waitlistSize, waitlistPosition)}

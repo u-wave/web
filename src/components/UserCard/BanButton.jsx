@@ -4,7 +4,8 @@ import { useDispatch } from 'react-redux';
 import { useTranslator } from '@u-wave/react-translate';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
-import BlockIcon from '@mui/icons-material/Block';
+import { mdiCancel } from '@mdi/js';
+import SvgIcon from '../SvgIcon';
 import { banUser } from '../../actions/ModerationActionCreators';
 
 const { useCallback } = React;
@@ -17,7 +18,7 @@ function BanButton({ user }) {
   return (
     <Tooltip title={t('users.ban')}>
       <IconButton onClick={onClick}>
-        <BlockIcon />
+        <SvgIcon path={mdiCancel} />
       </IconButton>
     </Tooltip>
   );

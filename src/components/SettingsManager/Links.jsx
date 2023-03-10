@@ -1,7 +1,8 @@
 import React from 'react';
 import { useTranslator } from '@u-wave/react-translate';
 import Button from '@mui/material/Button';
-import LicenseIcon from '@mui/icons-material/Copyright';
+import { mdiCopyright } from '@mdi/js';
+import SvgIcon from '../SvgIcon';
 import GithubIcon from './GithubIcon';
 
 function Link(props) {
@@ -29,11 +30,11 @@ function Links() {
         {t('settings.links.source')}
       </Link>
       <Link href="https://github.com/u-wave/web/tree/default/LICENSE">
-        <LicenseIcon className="SettingsPanel-linkIcon" />
+        <SvgIcon path={mdiCopyright} className="SettingsPanel-linkIcon" />
         {t('settings.links.license')}
       </Link>
       <Link href="https://github.com/twitter/twemoji/blob/master/LICENSE-GRAPHICS">
-        <LicenseIcon className="SettingsPanel-linkIcon" />
+        <SvgIcon path={mdiCopyright} className="SettingsPanel-linkIcon" />
         {t('settings.links.twemojiLicense')}
       </Link>
     </div>

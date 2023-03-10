@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
-import CreatePlaylistIcon from '@mui/icons-material/Add';
+import { mdiPlus } from '@mdi/js';
 import PromptDialog from '../Dialogs/PromptDialog';
+import SvgIcon from '../SvgIcon';
 import PlaylistsMenu from './PlaylistsMenu';
 
 const {
@@ -38,7 +39,7 @@ function AddToPlaylistMenu(props) {
       <PromptDialog
         open={creating}
         title={t('dialogs.createPlaylist.nameInputTitle')}
-        icon={<CreatePlaylistIcon htmlColor="#777" />}
+        icon={<SvgIcon path={mdiPlus} />}
         submitLabel={t('dialogs.createPlaylist.action')}
         onSubmit={handleSubmit}
         onCancel={handleClose}

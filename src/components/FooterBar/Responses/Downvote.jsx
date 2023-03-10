@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
-import DownvoteIcon from '@mui/icons-material/ThumbDown';
+import { mdiThumbDown } from '@mdi/js';
+import SvgIcon from '../../SvgIcon';
 import Button from './Button';
 
 function Downvote({
@@ -19,7 +20,10 @@ function Downvote({
       onClick={onDownvote}
       count={count}
     >
-      <DownvoteIcon className={active ? 'ResponseButton-icon--downvoted' : ''} />
+      <SvgIcon
+        path={mdiThumbDown}
+        className={active ? 'ResponseButton-icon--downvoted' : ''}
+      />
     </Button>
   );
 }

@@ -25,6 +25,11 @@
   animation: 1s linear 0s 1 initially-hide;
 }
 
+.LoadingIndicator-warning {
+  color: #f44336;
+  font-size: 2rem;
+}
+
 .LoadingIndicator-notice {
   animation: 1s linear 0s 1 initially-hide;
   color: var(--text-color);

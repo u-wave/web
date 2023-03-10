@@ -2,15 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
 import { useAsyncCallback } from 'react-async-hook';
-import EmailIcon from '@mui/icons-material/Email';
-import PasswordIcon from '@mui/icons-material/Lock';
 import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
 import Divider from '@mui/material/Divider';
+import { mdiEmail, mdiLock } from '@mdi/js';
 import Form from '../../Form';
 import FormGroup from '../../Form/Group';
 import TextField from '../../Form/TextField';
 import Button from '../../Form/Button';
+import SvgIcon from '../../SvgIcon';
 import SocialLogin from './SocialLogin';
 
 const { useCallback, useState } = React;
@@ -65,7 +65,7 @@ function LoginForm({
           className="LoginForm-field"
           type="email"
           autoComplete="email"
-          icon={<EmailIcon htmlColor="#9f9d9e" />}
+          icon={<SvgIcon path={mdiEmail} />}
           autoFocus
           value={email}
           onChange={handleEmailChange}
@@ -81,7 +81,7 @@ function LoginForm({
           className="LoginForm-field"
           type="password"
           autoComplete="current-password"
-          icon={<PasswordIcon htmlColor="#9f9d9e" />}
+          icon={<SvgIcon path={mdiLock} />}
           value={password}
           onChange={handlePasswordChange}
         />

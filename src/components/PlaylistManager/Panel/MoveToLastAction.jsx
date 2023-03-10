@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import MoveToLastIcon from '@mui/icons-material/KeyboardArrowDown';
+import { mdiChevronDown } from '@mdi/js';
 import { moveMedia } from '../../../actions/PlaylistActionCreators';
 import { useMediaListContext } from '../../MediaList/BaseMediaList';
+import SvgIcon from '../../SvgIcon';
 import MediaAction from '../../MediaList/MediaAction';
 
 const {
@@ -21,7 +22,7 @@ function MoveToLastAction({ media }) {
 
   return (
     <MediaAction onClick={handleClick}>
-      <MoveToLastIcon />
+      <SvgIcon path={mdiChevronDown} />
     </MediaAction>
   );
 }

@@ -1,10 +1,10 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import IconButton from '@mui/material/IconButton';
 import ListItem from '@mui/material/ListItem';
-import SearchIcon from '@mui/icons-material/Search';
-import CloseIcon from '@mui/icons-material/Close';
+import IconButton from '@mui/material/IconButton';
+import { mdiClose, mdiMagnify } from '@mdi/js';
+import SvgIcon from '../../SvgIcon';
 
 const SearchResultsRow = ({
   className,
@@ -19,13 +19,13 @@ const SearchResultsRow = ({
       onClick={onClick}
     >
       <div className="PlaylistMenuRow-active-icon">
-        <SearchIcon />
+        <SvgIcon path={mdiMagnify} />
       </div>
       &quot;{query}&quot;
     </button>
     <div className="PlaylistMenuRow-count">
       <IconButton className="PlaylistMenuRow-closeButton" onClick={onClose}>
-        <CloseIcon htmlColor="#777" />
+        <SvgIcon path={mdiClose} />
       </IconButton>
     </div>
   </ListItem>

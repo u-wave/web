@@ -57,9 +57,11 @@
 }
 
 .PlaylistMenuRow-closeButton {
+  color: #777;
   width: var(--playlist-row-height);
   height: var(--playlist-row-height);
-  padding: 10px;
+  display: block;
+  padding: 6px 12px;
   margin-inline-end: -10px;
 }
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ListIcon from '@mui/icons-material/List';
+import { mdiFormatListBulleted } from '@mdi/js';
+import SvgIcon from '../SvgIcon';
 import transformStyle from '../../utils/transformStyle';
 
 const getItemStyles = (offset) => (
@@ -10,10 +11,10 @@ const getItemStyles = (offset) => (
   }) : { display: 'none' }
 );
 
-const MediaDragPreview = ({
+function MediaDragPreview({
   items,
   currentOffset,
-}) => {
+}) {
   if (!items || !items.media) {
     return null;
   }
@@ -22,11 +23,11 @@ const MediaDragPreview = ({
       className="MediaDragPreview"
       style={getItemStyles(currentOffset)}
     >
-      <ListIcon className="MediaDragPreview-icon" />
+      <SvgIcon path={mdiFormatListBulleted} className="MediaDragPreview-icon" />
       {items.media.length}
     </div>
   );
-};
+}
 
 MediaDragPreview.propTypes = {
   items: PropTypes.object,

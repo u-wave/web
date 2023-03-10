@@ -3,8 +3,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
 import MenuItem from '@mui/material/MenuItem';
-import CreatePlaylistIcon from '@mui/icons-material/Add';
+import { mdiPlus } from '@mdi/js';
 import PromptDialog from '../../Dialogs/PromptDialog';
+import SvgIcon from '../../SvgIcon';
 
 const {
   useCallback,
@@ -39,7 +40,7 @@ function NewPlaylist({ className, onCreatePlaylist }) {
       >
         <div className="PlaylistMenuRow-title">
           <div className="PlaylistMenuRow-active-icon">
-            <CreatePlaylistIcon />
+            <SvgIcon path={mdiPlus} />
           </div>
           {t('playlists.new')}
         </div>
@@ -47,7 +48,7 @@ function NewPlaylist({ className, onCreatePlaylist }) {
       <PromptDialog
         open={creating}
         title={t('dialogs.createPlaylist.nameInputTitle')}
-        icon={<CreatePlaylistIcon htmlColor="#777" />}
+        icon={<SvgIcon path={mdiPlus} />}
         submitLabel={t('dialogs.createPlaylist.action')}
         onSubmit={handleSubmit}
         onCancel={handleClose}

@@ -2,8 +2,8 @@ import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
 import ListItemButton from '@mui/material/ListItemButton';
-import LtrSelectedIcon from '@mui/icons-material/ChevronRight';
-import RtlSelectedIcon from '@mui/icons-material/ChevronLeft';
+import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
+import SvgIcon from '../SvgIcon';
 
 /**
  * A ListItem component wrapper around material-ui's ListItem,
@@ -23,8 +23,8 @@ const ListItem = ({
     {children}
     {selected && (
       <>
-        <LtrSelectedIcon className="u-rtl-hidden" />
-        <RtlSelectedIcon className="u-rtl-only" />
+        <SvgIcon path={mdiChevronRight} className="u-rtl-hidden" />
+        <SvgIcon path={mdiChevronLeft} className="u-rtl-only" />
       </>
     )}
   </ListItemButton>

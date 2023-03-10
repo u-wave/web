@@ -4,7 +4,8 @@ import { useTranslator } from '@u-wave/react-translate';
 import CircularProgress from '@mui/material/CircularProgress';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
-import ShuffleIcon from '@mui/icons-material/Shuffle';
+import { mdiShuffle } from '@mdi/js';
+import SvgIcon from '../../SvgIcon';
 
 const { useCallback, useState } = React;
 const HARDCODED_LOADING_SIZE = 24; // FIXME derive this from some mui property?
@@ -30,7 +31,7 @@ function ShuffleButton({ onShuffle }) {
         {isLoading ? (
           <CircularProgress size={HARDCODED_LOADING_SIZE} />
         ) : (
-          <ShuffleIcon />
+          <SvgIcon path={mdiShuffle} />
         )}
       </IconButton>
     </Tooltip>

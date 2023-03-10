@@ -7,8 +7,9 @@ import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import Collapse from '@mui/material/Collapse';
-import EditIcon from '@mui/icons-material/Edit';
+import { mdiPencil } from '@mdi/js';
 import parse from 'u-wave-parse-chat-markup';
+import SvgIcon from '../../../components/SvgIcon';
 import compile from '../../../components/Chat/Markup/compile';
 
 const {
@@ -60,7 +61,7 @@ function Motd({
         title="Message of the Day"
         action={canChangeMotd && (
           <IconButton onClick={onExpand}>
-            <EditIcon />
+            <SvgIcon path={mdiPencil} />
           </IconButton>
         )}
       />

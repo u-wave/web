@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
+import { mdiClose } from '@mdi/js';
+import SvgIcon from '../../SvgIcon';
 
 function ImportPanelHeader({
   className,
@@ -20,7 +21,7 @@ function ImportPanelHeader({
       </div>
       <Tooltip title={t('close')} placement="top">
         <IconButton onClick={onClosePanel}>
-          <CloseIcon />
+          <SvgIcon path={mdiClose} />
         </IconButton>
       </Tooltip>
     </div>

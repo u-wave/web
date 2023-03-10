@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
 import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
 import FormHelperText from '@mui/material/FormHelperText';
-import RemoveIcon from '@mui/icons-material/Close';
+import { mdiClose } from '@mdi/js';
+import SvgIcon from '../../../components/SvgIcon';
 import Field from './Field';
 
 function ArrayField({ schema, value, onChange }) {
@@ -44,7 +45,7 @@ function ArrayField({ schema, value, onChange }) {
             onChange={(newValue) => replace(index, newValue)}
           />
           <IconButton onClick={() => remove(index)}>
-            <RemoveIcon />
+            <SvgIcon path={mdiClose} />
           </IconButton>
         </div>
       ))}

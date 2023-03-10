@@ -1,9 +1,9 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import SettingsIcon from '@mui/icons-material/SettingsRounded';
-
+import { mdiCog } from '@mdi/js';
 import Avatar from '../Avatar';
+import SvgIcon from '../SvgIcon';
 
 const UserInfo = ({ className, user, onClick }) => (
   <button
@@ -16,7 +16,7 @@ const UserInfo = ({ className, user, onClick }) => (
       user={user}
     />
     <div className="UserInfo-settings">
-      <SettingsIcon className="UserInfo-settingsIcon" />
+      <SvgIcon path={mdiCog} className="UserInfo-settingsIcon" />
     </div>
   </button>
 );

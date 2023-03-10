@@ -1,11 +1,11 @@
 import React from 'react';
-import IconButton from '@mui/material/IconButton';
 import Slider from '@mui/material/Slider';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
-import HistoryIcon from '@mui/icons-material/History';
-import VolumeOffIcon from '@mui/icons-material/VolumeOff';
+import IconButton from '@mui/material/IconButton';
+import { mdiHistory, mdiVolumeOff } from '@mdi/js';
 import AppTitle from '../HeaderBar/AppTitle';
+import SvgIcon from '../SvgIcon';
 import SongTitle from '../SongTitle';
 import LoadingIndicator from './LoadingIndicator';
 import Filler from './Filler';
@@ -16,7 +16,7 @@ function FakeVolume() {
   return (
     <div className="VolumeSlider">
       <IconButton onClick={noop}>
-        <VolumeOffIcon />
+        <SvgIcon path={mdiVolumeOff} />
       </IconButton>
       <div className="VolumeSlider-slider">
         <Slider
@@ -56,7 +56,7 @@ function FakeHeaderBar() {
       </div>
       <div className="HeaderBar-history">
         <IconButton className="HistoryButton">
-          <HistoryIcon className="HistoryButton-icon" />
+          <SvgIcon path={mdiHistory} className="HistoryButton-icon" />
         </IconButton>
       </div>
     </div>

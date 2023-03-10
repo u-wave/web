@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import AddIcon from '@mui/icons-material/Add';
+import { mdiPlus } from '@mdi/js';
 import { addMediaMenu } from '../../actions/PlaylistActionCreators';
 import { useMediaListContext } from '../MediaList/BaseMediaList';
 import MediaAction from '../MediaList/MediaAction';
+import SvgIcon from '../SvgIcon';
 
 const {
   useCallback,
@@ -32,7 +33,7 @@ function AddToPlaylistAction({ historyEntry }) {
 
   return (
     <MediaAction onClick={handleClick}>
-      <AddIcon />
+      <SvgIcon path={mdiPlus} />
     </MediaAction>
   );
 }

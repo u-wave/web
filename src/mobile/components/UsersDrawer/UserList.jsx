@@ -5,7 +5,8 @@ import List from '@mui/material/List';
 import ListSubheader from '@mui/material/ListSubheader';
 import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
-import CurrentDJIcon from '@mui/icons-material/PlayArrow';
+import { mdiPlay } from '@mdi/js';
+import SvgIcon from '../../../components/SvgIcon';
 import UserRow from './UserRow';
 import WaitlistPosition from './WaitlistPosition';
 
@@ -40,7 +41,7 @@ function UserList({
         {currentDJ && (
           <UserRow
             user={currentDJ}
-            icon={<CurrentDJIcon style={{ margin: 5 }} />}
+            icon={<SvgIcon path={mdiPlay} style={{ margin: 5 }} />}
           />
         )}
         {waitlist.map((user, position) => (

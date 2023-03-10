@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
-import SettingsIcon from '@mui/icons-material/SettingsRounded';
+import { mdiCog } from '@mdi/js';
+import SvgIcon from '../SvgIcon';
 
 function SettingsButton({ onClick }) {
   const { t } = useTranslator();
@@ -12,7 +13,7 @@ function SettingsButton({ onClick }) {
     <span>
       <Tooltip title={t('settings.title')}>
         <IconButton className="SettingsButton" onClick={onClick}>
-          <SettingsIcon />
+          <SvgIcon path={mdiCog} />
         </IconButton>
       </Tooltip>
     </span>

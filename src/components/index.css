@@ -1,7 +1,12 @@
+/* vaguely ordered by specificity */
+@import url("./App/index.css");
+@import url("./SvgIcon/index.css");
+@import url("./Form/index.css");
+@import url("./MediaList/index.css");
+@import url("./SongTitle/index.css");
 @import url("./About/index.css");
 @import url("./AddToPlaylistMenu/index.css");
 @import url("./AdminProxy/index.css");
-@import url("./App/index.css");
 @import url("./Avatar/index.css");
 @import url("./Chat/index.css");
 @import url("./ConnectionIndicator/index.css");
@@ -9,11 +14,9 @@
 @import url("./ErrorArea/index.css");
 @import url("./FatalError/index.css");
 @import url("./FooterBar/index.css");
-@import url("./Form/index.css");
 @import url("./HeaderBar/index.css");
 @import url("./LazyOverlay/index.css");
 @import url("./LoadingScreen/index.css");
-@import url("./MediaList/index.css");
 @import url("./Overlay/index.css");
 @import url("./Player/index.css");
 @import url("./ReCaptcha/index.css");
@@ -22,7 +25,6 @@
 @import url("./ServerList/index.css");
 @import url("./SettingsManager/index.css");
 @import url("./SidePanels/index.css");
-@import url("./SongTitle/index.css");
 @import url("./UserCard/index.css");
 @import url("./UserRole/index.css");
 @import url("./Video/index.css");

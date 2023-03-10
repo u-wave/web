@@ -11,7 +11,7 @@
     "@emotion/react": "^11.7.0",
     "@emotion/styled": "^11.6.0",
     "@f/cookies-enabled": "^1.1.1",
-    "@mui/icons-material": "^5.2.0",
+    "@mdi/js": "^7.0.96",
     "@mui/material": "^5.11.5",
     "@mui/system": "^5.11.5",
     "@mui/utils": "^5.2.2",

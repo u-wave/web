@@ -2,7 +2,8 @@ import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
 import IconButton from '@mui/material/IconButton';
-import ImportIcon from '@mui/icons-material/PlaylistAdd';
+import { mdiPlaylistPlus } from '@mdi/js';
+import SvgIcon from '../../components/SvgIcon';
 
 const PlaylistRow = ({
   className,
@@ -38,7 +39,7 @@ const PlaylistRow = ({
         </div>
       </div>
       <IconButton className="src-youtube-PlaylistRow-import" onClick={onImport}>
-        <ImportIcon />
+        <SvgIcon path={mdiPlaylistPlus} />
       </IconButton>
     </div>
   );

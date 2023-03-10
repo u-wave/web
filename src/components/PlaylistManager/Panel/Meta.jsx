@@ -4,8 +4,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
 import Checkbox from '@mui/material/Checkbox';
-import ActiveIcon from '@mui/icons-material/CheckBox';
-import ActivateIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+import { mdiCheckboxMarked, mdiCheckboxBlankOutline } from '@mdi/js';
+import SvgIcon from '../../SvgIcon';
 import RenamePlaylistButton from './RenamePlaylistButton';
 import DeletePlaylistButton from './DeletePlaylistButton';
 import ShufflePlaylistButton from './ShufflePlaylistButton';
@@ -37,8 +37,9 @@ function PlaylistMeta({
           checked={active}
           disabled={active}
           onChange={active ? null : onActivatePlaylist}
-          icon={<ActivateIcon />}
-          checkedIcon={<ActiveIcon htmlColor="#fff" />}
+          icon={<SvgIcon path={mdiCheckboxBlankOutline} />}
+          checkedIcon={<SvgIcon path={mdiCheckboxMarked} />}
+          style={active ? { color: 'white' } : null}
         />
         <span>
           {active ? t('playlists.active') : t('playlists.activate')}

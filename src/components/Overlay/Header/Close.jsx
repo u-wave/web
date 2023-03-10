@@ -2,25 +2,24 @@ import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
 import IconButton from '@mui/material/IconButton';
-import CloseBottomIcon from '@mui/icons-material/KeyboardArrowDown';
-import CloseTopIcon from '@mui/icons-material/KeyboardArrowUp';
+import { mdiChevronDown, mdiChevronUp } from '@mdi/js';
+import SvgIcon from '../../SvgIcon';
 
 const icons = {
-  bottom: CloseBottomIcon,
-  top: CloseTopIcon,
+  bottom: mdiChevronDown,
+  top: mdiChevronUp,
 };
 
-const Close = ({ className, onClose, direction }) => {
-  const CloseIcon = icons[direction];
+function Close({ className, onClose, direction }) {
   return (
     <IconButton
       className={cx('OverlayHeaderClose', className)}
       onClick={onClose}
     >
-      <CloseIcon className="OverlayHeaderClose-icon" />
+      <SvgIcon path={icons[direction]} className="OverlayHeaderClose-icon" />
     </IconButton>
   );
-};
+}
 
 Close.propTypes = {
   className: PropTypes.string,

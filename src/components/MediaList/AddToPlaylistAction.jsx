@@ -2,9 +2,10 @@ import omit from 'just-omit';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import AddIcon from '@mui/icons-material/Add';
+import { mdiPlus } from '@mdi/js';
 import { addMediaMenu } from '../../actions/PlaylistActionCreators';
 import { useMediaListContext } from './BaseMediaList';
+import SvgIcon from '../SvgIcon';
 import MediaAction from './MediaAction';
 
 const {
@@ -37,7 +38,7 @@ function AddToPlaylistAction({ media, withCustomMeta = true }) {
 
   return (
     <MediaAction onClick={handleClick}>
-      <AddIcon />
+      <SvgIcon path={mdiPlus} />
     </MediaAction>
   );
 }

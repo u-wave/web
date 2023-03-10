@@ -3,7 +3,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import FilledInput from '@mui/material/FilledInput';
 import SelectInput from '@mui/material/Select/SelectInput';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import { mdiMenuDown } from '@mdi/js';
+import SvgIcon from '../SvgIcon';
 
 const outerClasses = {
   focused: 'is-focused',
@@ -25,7 +26,8 @@ function Select({
       {...props}
       inputProps={{
         children,
-        IconComponent: ArrowDropDownIcon,
+        IconComponent: SvgIcon,
+        iconProps: { path: mdiMenuDown },
         classes,
         autoWidth: false,
         multiple: false,
