@@ -1,6 +1,3 @@
-.SuggestionItem {
-  &:hover,
-  &.is-focused {
-    background-color: var(--chat-suggestion-selected);
-  }
+.SuggestionItem:where(:hover, .is-focused) {
+  background-color: var(--chat-suggestion-selected);
 }

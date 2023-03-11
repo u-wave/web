@@ -3,6 +3,7 @@
   border: 1px solid #2c2c2c;
   border-top-color: #3e3e3e;
   border-right-color: #3e3e3e;
+  border-radius: .25rem;
   height: var(--forms-textfield-size);
   font-size: 12pt;
 }
@@ -19,6 +20,7 @@
   padding-right: var(--forms-textfield-size);
   font-size: 12pt;
   color: var(--text-color);
+  border-radius: .25rem;
 
   &::placeholder {
     color: #9f9d9e;
@@ -34,8 +36,8 @@
   width: var(--forms-textfield-size);
   height: var(--forms-textfield-size);
   margin-left: calc(var(--forms-textfield-size) * -1);
-  padding: 13px;
-  display: block;
   float: left;
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
