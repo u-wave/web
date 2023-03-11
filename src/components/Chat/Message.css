@@ -15,7 +15,7 @@
   position: absolute;
   top: 0;
   inset-inline-end: 0;
-  padding: 0 6px;
+  padding: 0 .25rem;
   display: none;
   font-size: 80%;
   z-index: 2;
@@ -39,14 +39,14 @@
   width: 1.5rem;
   height: 1.5rem;
   top: 0;
-  inset-inline-start: 12px;
+  inset-inline-start: .75rem;
   margin: .25rem 0;
 }
 
 .ChatMessage-content {
   position: relative;
-  padding-inline-start: 48px;
-  padding-inline-end: 3px;
+  padding-inline-start: 3rem;
+  padding-inline-end: .25rem;
   width: 100%;
   display: inline-block;
   word-wrap: break-word;
@@ -66,7 +66,7 @@
 }
 
 .ChatMessage-text {
-  margin-inline-start: 5px;
+  margin-inline-start: .25rem;
 }
 
 .ChatMessage--loading {

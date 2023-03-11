@@ -9,7 +9,7 @@
   top: 0;
   right: 0;
   background: var(--background-color);
-  padding: 0 6px;
+  padding: 0 .25rem;
   height: 100%;
   display: none;
 
@@ -32,8 +32,8 @@
     flex-grow: 1;
   }
 
-  &::before { margin-right: 6px; }
-  &::after { margin-left: 6px; }
+  &::before { margin-right: .5rem; }
+  &::after { margin-left: .5rem; }
 }
 
 .NowPlayingMessage-media {
