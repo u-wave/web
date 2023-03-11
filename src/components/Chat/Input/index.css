@@ -30,6 +30,7 @@
   height: 2rem;
   padding: 0 .5rem;
   border: 1px solid var(--chat-border-color);
+  border-radius: .25rem;
   background: #222;
   color: var(--text-color);
   font-size: .875rem;
