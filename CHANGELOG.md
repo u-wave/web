@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.0-alpha.24 / 13 Mar 2023
+While this is an alpha release, new servers should use this rather than an older "stable" version.
+
+Features:
+ * Small UI tweaks, changing some paddings, rounding some borders. (#2673)
+
+Internal:
+ * Use lighter weight SVG icons. (#2672)
+
 ## 2.0.0-alpha.23 / 08 Mar 2023
 While this is an alpha release, new servers should use this rather than an older "stable" version.
 
