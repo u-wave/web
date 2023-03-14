@@ -6,11 +6,6 @@ module.exports = {
   plugins: ['compat', 'react-hooks'],
   parserOptions: {
     ecmaVersion: 2022,
-    ecmaFeatures: {
-      // Ideally this would only be done for .jsx files, but eslint-plugin-import
-      // has trouble with the overrides?
-      jsx: true,
-    },
   },
 
   rules: {
@@ -47,6 +42,13 @@ module.exports = {
   },
 
   overrides: [
+    {
+      files: ['**/*.{ts,tsx}'],
+      parser: '@typescript-eslint/parser',
+      plugins: ['@typescript-eslint'],
+      extends: ['plugin:@typescript-eslint/recommended'],
+    },
+
     {
       files: ['src/**/*.{js,jsx}'],
       rules: {
