@@ -137,6 +137,7 @@ class ChatInput extends React.Component {
 
     const focusClass = focused ? 'is-focused' : '';
 
+    // TODO(@goto-bus-stop) Use downshift for accessibility
     return (
       <div className={cx('ChatInput', focusClass)}>
         <AutoComplete

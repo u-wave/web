@@ -1,23 +1,22 @@
+import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import ListItemText from '@mui/material/ListItemText';
 import Avatar from '../../Avatar';
-import Suggestion from './Suggestion';
 
-const UserSuggestion = ({
-  value: user,
-  ...props
-}) => (
-  <Suggestion {...props}>
-    <ListItemAvatar>
-      <div style={{ display: 'inline-block' }}>
-        <Avatar user={user} />
-      </div>
-    </ListItemAvatar>
-    <ListItemText primary={user.username} />
-  </Suggestion>
-);
+function UserSuggestion({ value, select, selected }) {
+  return (
+    <button
+      type="button"
+      onClick={select}
+      className={cx('SuggestionItem', selected && 'is-focused')}
+    >
+      <span className="SuggestionItem-icon">
+        <Avatar user={value} />
+      </span>
+      <span className="SuggestionItem-label">{value.username}</span>
+    </button>
+  );
+}
 
 UserSuggestion.propTypes = {
   value: PropTypes.shape({
@@ -25,6 +24,8 @@ UserSuggestion.propTypes = {
     username: PropTypes.string.isRequired,
     avatar: PropTypes.string,
   }).isRequired,
+  select: PropTypes.func.isRequired,
+  selected: PropTypes.bool.isRequired,
 };
 
 export default UserSuggestion;
