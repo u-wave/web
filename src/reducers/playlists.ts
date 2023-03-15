@@ -1,3 +1,4 @@
+import type { AnyAction } from 'redux';
 import escapeStringRegExp from 'escape-string-regexp';
 import indexBy from 'just-index';
 import mapValues from 'just-map-values';
@@ -31,16 +32,50 @@ import {
 
   DO_FAVORITE_COMPLETE,
 } from '../constants/ActionTypes';
+import type { Media } from './booth';
 
-const initialState = {
+interface Playlist {
+  _id: string;
+  name: string;
+  loading: boolean;
+  active: boolean;
+  size: number;
+}
+
+interface PlaylistItem extends Media {
+  createdAt: string;
+  updatedAt: string;
+  loading?: boolean;
+}
+
+type PlaylistItemList = (PlaylistItem | null)[];
+
+interface State {
+  playlists: Record<string, Playlist>;
+  playlistItems: Record<string, PlaylistItemList>;
+  activePlaylistID: string | null;
+  selectedPlaylistID: string | null;
+  currentFilter: {
+    playlistID: string,
+    filter: string,
+    items: PlaylistItemList,
+  } | null;
+}
+
+const initialState: State = {
   playlists: {},
   playlistItems: {},
   activePlaylistID: null,
   selectedPlaylistID: null,
-  currentFilter: {},
+  currentFilter: null,
 };
 
-function processInsert(list, insert, position) {
+type InsertPosition =
+  | { at: 'start', after?: undefined }
+  | { at: 'end', after?: undefined }
+  | { at?: undefined, after: null | -1 | string }
+
+function processInsert(list: PlaylistItemList, insert: PlaylistItem[], position: InsertPosition) {
   let insertIdx = 0;
   if (position.at === 'end') {
     insertIdx = list.length;
@@ -57,7 +92,7 @@ function processInsert(list, insert, position) {
 }
 
 // Moves a list of media items to a given position in the playlist.
-function processMove(list, movedMedia, location) {
+function processMove(list: PlaylistItemList, movedMedia: PlaylistItem[], location: InsertPosition) {
   // Take all moved media items out of the playlist…
   const wasMoved = indexBy(movedMedia, '_id');
   const newPlaylist = list.filter((media) => media === null || !wasMoved[media._id]);
@@ -65,7 +100,11 @@ function processMove(list, movedMedia, location) {
   return processInsert(newPlaylist, movedMedia, location);
 }
 
-function updatePlaylist(state, playlistID, modify) {
+function updatePlaylist(
+  state: State,
+  playlistID: string,
+  modify: (playlist: Playlist) => Playlist,
+) {
   const playlist = state.playlists[playlistID];
   if (playlist) {
     return {
@@ -81,7 +120,11 @@ function updatePlaylist(state, playlistID, modify) {
 
 // Applies a function to the media list belonging to `playlistID` if it is found
 // locally, i.e. in either the active or the selected playlist.
-function updatePlaylistItems(state, playlistID, modify) {
+function updatePlaylistItems(
+  state: State,
+  playlistID: string,
+  modify: (items: PlaylistItemList, playlist: Playlist) => PlaylistItemList,
+) {
   const playlist = state.playlists[playlistID];
   const media = state.playlistItems[playlistID];
   if (playlist) {
@@ -104,20 +147,30 @@ function updatePlaylistItems(state, playlistID, modify) {
   return state;
 }
 
-function updatePlaylistAndItems(state, playlistID, modifyPlaylist, modifyItems) {
+function updatePlaylistAndItems(
+  state: State,
+  playlistID: string,
+  modifyPlaylist: (playlist: Playlist) => Playlist,
+  modifyItems: (items: PlaylistItemList, playlist: Playlist) => PlaylistItemList,
+) {
   const newState = updatePlaylist(state, playlistID, modifyPlaylist);
   return updatePlaylistItems(newState, playlistID, modifyItems);
 }
 
-function setPlaylistLoading(state, id, loading = true) {
+function setPlaylistLoading(state: State, id: string, loading = true) {
   return updatePlaylist(state, id, (playlist) => ({
     ...playlist,
     loading,
   }));
 }
 
-function mergePlaylistPage(size, oldMedia, newMedia, { page, pageSize }) {
-  const media = Array(size).fill(null);
+function mergePlaylistPage(
+  size: number,
+  oldMedia: PlaylistItemList,
+  newMedia: PlaylistItem[],
+  { page, pageSize }: { page: number, pageSize: number },
+) {
+  const media: PlaylistItemList = Array(size).fill(null);
   oldMedia.forEach((item, i) => {
     media[i] = item;
   });
@@ -127,7 +180,7 @@ function mergePlaylistPage(size, oldMedia, newMedia, { page, pageSize }) {
   return media;
 }
 
-function filterCachedPlaylistItems(state, playlistID, filter) {
+function filterCachedPlaylistItems(state: State, playlistID: string, filter: string) {
   const rx = new RegExp(escapeStringRegExp(filter), 'i');
   const playlist = state.playlistItems[playlistID];
   if (playlist) {
@@ -138,7 +191,7 @@ function filterCachedPlaylistItems(state, playlistID, filter) {
   return [];
 }
 
-export default function reduce(state = initialState, action) {
+export default function reduce(state = initialState, action: AnyAction): State {
   const {
     type, payload, meta, error,
   } = action;
@@ -150,7 +203,7 @@ export default function reduce(state = initialState, action) {
 
       return {
         ...state,
-        playlists: indexBy(payload.playlists.map((playlist) => ({
+        playlists: indexBy(payload.playlists.map((playlist: Playlist) => ({
           ...playlist,
           active: playlist._id === payload.activePlaylist,
         })), '_id'),
@@ -193,7 +246,7 @@ export default function reduce(state = initialState, action) {
       const shouldClearFilter = currentFilter && currentFilter.playlistID !== payload.playlistID;
       return {
         ...state,
-        currentFilter: shouldClearFilter ? {} : currentFilter,
+        currentFilter: shouldClearFilter ? null : currentFilter,
         selectedPlaylistID: payload.playlistID,
       };
     }
@@ -242,11 +295,11 @@ export default function reduce(state = initialState, action) {
         },
       };
     case FILTER_PLAYLIST_ITEMS_COMPLETE: {
-    // Only the selected playlist can be filtered.
-      if (payload.playlistID !== state.selectedPlaylistID) {
+      const { currentFilter } = state;
+      // Only the selected playlist can be filtered.
+      if (payload.playlistID !== state.selectedPlaylistID || !currentFilter) {
         return state;
       }
-      const { currentFilter } = state;
       const items = mergePlaylistPage(meta.size, currentFilter.items, payload.media, meta);
       return {
         ...state,
@@ -380,7 +433,7 @@ export default function reduce(state = initialState, action) {
       return updatePlaylistItems(state, payload.playlistID, (items) => (
         items.map((media) => media && ({
           ...media,
-          loading: isMovingMedia[media._id] || media.loading,
+          loading: Boolean(isMovingMedia[media._id] || media.loading),
         }))
       ));
     }
@@ -394,7 +447,7 @@ export default function reduce(state = initialState, action) {
       return updatePlaylistItems(state, payload.playlistID, (items) => (
         items.map((media) => media && ({
           ...media,
-          loading: isRemovingMedia[media._id] || media.loading,
+          loading: Boolean(isRemovingMedia[media._id] || media.loading),
         }))
       ));
     }
