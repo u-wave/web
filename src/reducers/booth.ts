@@ -1,3 +1,4 @@
+import { AnyAction } from 'redux';
 import {
   ADVANCE,
   INIT_STATE,
@@ -5,7 +6,38 @@ import {
   EXIT_FULLSCREEN,
 } from '../constants/ActionTypes';
 
-const initialState = {
+export interface Media {
+  _id: string,
+  sourceType: string,
+  sourceID: string,
+  sourceData: object,
+  artist: string,
+  title: string,
+  thumbnail: string,
+  duration: number,
+  start: number,
+  end: number,
+}
+
+interface PlayingState {
+  historyID: string,
+  djID: string,
+  media: Media,
+  startTime: number,
+}
+
+interface EmptyState {
+  historyID: null,
+  djID: null,
+  media: null,
+  startTime: null,
+}
+
+type State = (PlayingState | EmptyState) & {
+  isFullscreen: boolean,
+}
+
+const initialState: State = {
   historyID: null,
   media: null,
   djID: null,
@@ -13,7 +45,7 @@ const initialState = {
   isFullscreen: false,
 };
 
-export default function reduce(state = initialState, action) {
+export default function reduce(state = initialState, action: AnyAction): State {
   const { type, payload } = action;
   switch (type) {
     case ADVANCE:

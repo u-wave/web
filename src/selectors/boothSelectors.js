@@ -1,5 +1,4 @@
 import { createSelector } from 'reselect';
-
 import { isPreviewMediaDialogOpenSelector } from './dialogSelectors';
 import { isMutedSelector, volumeSelector } from './settingSelectors';
 import { currentTimeSelector } from './timeSelectors';
@@ -43,7 +42,12 @@ export const timeRemainingSelector = createSelector(
 export const djSelector = createSelector(
   baseSelector,
   usersSelector,
-  (booth, users) => users[booth.djID],
+  (booth, users) => {
+    if (booth.djID && booth.djID in users) {
+      return users[booth.djID];
+    }
+    return null;
+  },
 );
 
 export const isCurrentDJSelector = createSelector(

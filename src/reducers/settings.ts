@@ -1,20 +1,12 @@
 import merge from 'deepmerge';
+import { AnyAction } from 'redux';
 import {
   LOAD_SETTINGS,
   CHANGE_SETTING,
 } from '../constants/ActionTypes';
 
-// Some people have >100% volumes stored in their localStorage settings
-// because of a bug in üWave 1.4. This ensures that _everyone's_ volume
-// is between 0 and 100.
-function fixVolume(state) {
-  if (state.volume < 0) return { ...state, volume: 0 };
-  if (state.volume > 100) return { ...state, volume: 100 };
-  return state;
-}
-
 const initialState = {
-  language: null,
+  language: null as null | string,
   mentionSound: true,
   muted: false,
   videoEnabled: true,
@@ -28,7 +20,18 @@ const initialState = {
   },
 };
 
-function reduce(state = initialState, action) {
+type State = typeof initialState
+
+// Some people have >100% volumes stored in their localStorage settings
+// because of a bug in üWave 1.4. This ensures that _everyone's_ volume
+// is between 0 and 100.
+function fixVolume(state: State) {
+  if (state.volume < 0) return { ...state, volume: 0 };
+  if (state.volume > 100) return { ...state, volume: 100 };
+  return state;
+}
+
+function reduce(state = initialState, action: AnyAction): State {
   const { type, payload } = action;
   switch (type) {
     case LOAD_SETTINGS:
@@ -51,4 +54,4 @@ function reduce(state = initialState, action) {
   }
 }
 
-export default (state, action) => fixVolume(reduce(state, action));
+export default (state: State, action: AnyAction) => fixVolume(reduce(state, action));

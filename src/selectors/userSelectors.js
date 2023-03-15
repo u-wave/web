@@ -13,11 +13,12 @@ const currentUserIDSelector = createSelector(authSelector, (auth) => auth.user);
 export const currentUserSelector = createSelector(
   usersSelector,
   currentUserIDSelector,
-  (users, userID) => (
-    userID in users
-      ? users[userID]
-      : null
-  ),
+  (users, userID) => {
+    if (userID && userID in users) {
+      return users[userID];
+    }
+    return null;
+  },
 );
 export const isLoggedInSelector = createSelector(currentUserSelector, Boolean);
 export const tokenSelector = createSelector(authSelector, (auth) => auth.token);

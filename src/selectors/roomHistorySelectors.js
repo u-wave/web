@@ -15,6 +15,10 @@ export const roomHistorySelector = createSelector(
   (history) => history.slice().sort(byTimestamp),
 );
 
+/**
+* @param {string|null} id
+* @returns {<T extends { stats: { downvotes: string[], upvotes: string[], favorites: string[] } }>(entry: T) => T}
+*/
 const addOwnVoteProps = (id) => (entry) => ({
   ...entry,
   stats: {

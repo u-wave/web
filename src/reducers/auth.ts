@@ -1,3 +1,4 @@
+import type { AnyAction } from 'redux';
 import {
   INIT_STATE,
   AUTH_STRATEGIES,
@@ -8,13 +9,19 @@ import {
   LOGOUT_COMPLETE,
 } from '../constants/ActionTypes';
 
-const initialState = {
+interface State {
+  strategies: string[];
+  token: string | null;
+  user: string | null;
+}
+
+const initialState: State = {
   strategies: ['local'],
   token: null,
   user: null,
 };
 
-export default function reduce(state = initialState, action) {
+export default function reduce(state = initialState, action: AnyAction): State {
   const { type, payload, error: isError } = action;
   switch (type) {
     case INIT_STATE:

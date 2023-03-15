@@ -4,7 +4,6 @@ import { currentUserSelector } from './userSelectors';
 /** @param {import('../redux/configureStore').StoreState} state */
 const baseSelector = (state) => state.votes;
 
-const createPropSelector = (base, prop) => createSelector(base, (obj) => obj[prop]);
 const createIsSelector = (type) => createSelector(
   type,
   currentUserSelector,
@@ -15,9 +14,9 @@ const createCountSelector = (type) => createSelector(
   (array) => array.length,
 );
 
-export const favoritesSelector = createPropSelector(baseSelector, 'favorites');
-export const upvotesSelector = createPropSelector(baseSelector, 'upvotes');
-export const downvotesSelector = createPropSelector(baseSelector, 'downvotes');
+export const favoritesSelector = createSelector(baseSelector, (votes) => votes.favorites);
+export const upvotesSelector = createSelector(baseSelector, (votes) => votes.upvotes);
+export const downvotesSelector = createSelector(baseSelector, (votes) => votes.downvotes);
 
 export const currentVotesSelector = createStructuredSelector({
   favorites: favoritesSelector,

@@ -1,5 +1,5 @@
 import omit from 'just-omit';
-import { combineReducers } from 'redux';
+import { AnyAction, combineReducers } from 'redux';
 import indexBy from 'just-index';
 import {
   INIT_STATE,
@@ -12,7 +12,17 @@ import {
   RECEIVE_GUEST_COUNT,
 } from '../constants/ActionTypes';
 
-function updateUser(state, userID, update) {
+export interface User {
+  _id: string;
+  username: string;
+  avatar: string;
+  roles: string[];
+}
+
+type State = Record<string, User>;
+const initialState: State = {};
+
+function updateUser(state: State, userID: string, update: (user: User) => User) {
   if (state[userID]) {
     return {
       ...state,
@@ -22,7 +32,7 @@ function updateUser(state, userID, update) {
   return state;
 }
 
-function guestsReducer(state = 0, action) {
+function guestsReducer(state = 0, action: AnyAction): number {
   if (action.type === INIT_STATE) {
     return action.payload.guests;
   }
@@ -32,7 +42,7 @@ function guestsReducer(state = 0, action) {
   return state;
 }
 
-function usersReducer(state = {}, action) {
+function usersReducer(state = initialState, action: AnyAction): State {
   const { type, payload } = action;
   switch (type) {
     case INIT_STATE: // fall through
