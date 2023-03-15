@@ -1,3 +1,4 @@
+import type { Dispatch, AnyAction, Middleware } from 'redux';
 import {
   LOGIN_COMPLETE,
   LOGOUT_START,
@@ -47,7 +48,122 @@ function defaultUrl() {
   return `${protocol}//${loc.hostname}:${port}/api/socket`;
 }
 
-const actions = {
+type SocketMessages = {
+  join: object,
+  leave: string,
+  guests: number,
+
+  advance: {
+    historyID: string,
+    userID: string,
+    itemID: string,
+    media: {
+      artist: string,
+      title: string,
+      start: number,
+      end: number,
+      media: {
+        sourceType: string,
+        sourceID: string,
+        artist: string,
+        title: string,
+        sourceData: object,
+      },
+    },
+    playedAt: number,
+  } | null,
+  skip: {
+    userID: string,
+    moderatorID: string,
+    reason: string,
+  },
+
+  chatMessage: {
+    id: string,
+    userID: string,
+    message: string,
+    timestamp: number,
+  },
+  chatDelete: {
+    moderatorID: string,
+  },
+  chatDeleteByID: {
+    moderatorID: string,
+    _id: string,
+  },
+  chatDeleteByUser: {
+    moderatorID: string,
+    userID: string,
+  },
+  chatMute: {
+    userID: string,
+    moderatorID: string,
+    expiresAt: number,
+  },
+  chatUnmute: {
+    userID: string,
+    moderatorID: string,
+  },
+  vote: {
+    _id: string,
+    value: -1 | 1,
+  },
+  favorite: {
+    userID: string,
+  },
+  playlistCycle: {
+    playlistID: string,
+  },
+  waitlistUpdate: string[],
+  waitlistJoin: {
+    userID: string,
+    waitlist: string[],
+  },
+  waitlistLeave: {
+    userID: string,
+    waitlist: string[],
+  },
+  waitlistAdd: {
+    userID: string,
+    waitlist: string[],
+  },
+  waitlistMove: {
+    userID: string,
+    moderatorID: string,
+    position: number,
+    waitlist: string[],
+  },
+  waitlistRemove: {
+    userID: string,
+    waitlist: string[],
+  },
+  waitlistClear: {
+    moderatorID: string,
+  },
+  waitlistLock: {
+    moderatorID: string,
+    locked: boolean,
+  },
+
+  nameChange: {
+    userID: string,
+    username: string,
+  },
+  'acl:allow': {
+    userID: string,
+    roles: string[],
+  },
+  'acl:disallow': {
+    userID: string,
+    roles: string[],
+  },
+
+  reloadEmotes: void,
+}
+
+const actions: {
+  [K in keyof SocketMessages]: (data: SocketMessages[K]) => unknown
+} = {
   chatMessage({
     id, userID, message, timestamp,
   }) {
@@ -79,8 +195,8 @@ const actions = {
   skip({ userID, moderatorID, reason }) {
     return skipped({ userID, moderatorID, reason });
   },
-  favorite({ userID, historyID }) {
-    return favorited({ userID, historyID });
+  favorite({ userID }) {
+    return favorited({ userID });
   },
   vote({ _id, value }) {
     return receiveVote({ userID: _id, vote: value });
@@ -139,24 +255,37 @@ const actions = {
 // This should be refactored to move the message handling out of the class,
 // and probably move the dispatch() calls to events using `mitt` or options.
 class UwaveSocket {
-  constructor({ url, dispatch, getState }) {
+  socket: WebSocket | null = null;
+
+  queue: { command: string, data: object | null }[] = [];
+
+  sentAuthToken = false;
+
+  authToken: string | null = null;
+
+  opened = false;
+
+  reconnectAttempts = 0;
+
+  reconnectTimeout: ReturnType<typeof setTimeout> | null = null;
+
+  url: string;
+
+  dispatch: (action: import('redux').AnyAction) => void;
+
+  constructor({ url, dispatch }: {
+    url: string,
+    dispatch: Dispatch<AnyAction>,
+  }) {
     this.url = url;
-    this.socket = null;
-    this.queue = [];
-    this.sentAuthToken = false;
-    this.authToken = null;
-    this.opened = false;
-    this.reconnectAttempts = 0;
-    this.reconnectTimeout = null;
     this.dispatch = dispatch;
-    this.getState = getState;
   }
 
-  isOpen() {
-    return this.socket && this.opened;
+  isOpen(): this is { socket: WebSocket } {
+    return this.socket != null && this.opened;
   }
 
-  sendAuthToken(token) {
+  sendAuthToken(token: string) {
     if (this.isOpen()) {
       this.socket.send(token);
       this.sentAuthToken = true;
@@ -165,7 +294,7 @@ class UwaveSocket {
     }
   }
 
-  send(command, data) {
+  send(command: string, data: object | null) {
     if (this.isOpen()) {
       this.socket.send(JSON.stringify({ command, data }));
     } else {
@@ -183,6 +312,10 @@ class UwaveSocket {
 
   onOpen = () => {
     this.opened = true;
+    if (!this.isOpen()) {
+      return; // Just to help typescript
+    }
+
     if (this.authToken) {
       this.socket.send(this.authToken);
       this.authToken = null;
@@ -199,18 +332,21 @@ class UwaveSocket {
     }
   };
 
-  onMessage = (pack) => {
+  onMessage = (pack: MessageEvent) => {
     // Ignore keepalive messages.
     if (pack.data === '-') return;
 
     const { command, data } = JSON.parse(pack.data);
+    if (typeof command !== 'string') {
+      return;
+    }
 
     if (command === 'authenticated') {
       this.drainQueuedMessages();
       return;
     }
 
-    if (typeof actions[command] === 'function') {
+    if (command in actions && typeof actions[command] === 'function') {
       const action = actions[command](data);
       if (action) {
         this.dispatch(action);
@@ -219,7 +355,7 @@ class UwaveSocket {
   };
 
   connect() {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       this.socket = new WebSocket(this.url);
       this.socket.addEventListener('message', this.onMessage);
       this.socket.addEventListener('open', () => {
@@ -232,6 +368,10 @@ class UwaveSocket {
   }
 
   disconnect() {
+    if (!this.isOpen()) {
+      return;
+    }
+
     this.socket.removeEventListener('close', this.onClose);
     this.socket.addEventListener('close', () => {
       this.opened = false;
@@ -266,15 +406,12 @@ class UwaveSocket {
   };
 }
 
-export default function middleware({ url = defaultUrl() } = {}) {
-  return ({ dispatch, getState }) => {
+export default function middleware({ url = defaultUrl() } = {}): Middleware {
+  return ({ dispatch }) => {
     const socket = new UwaveSocket({
       url,
       dispatch,
-      getState,
     });
-
-    window.soc = socket; // eslint-disable-line
 
     return (next) => (action) => {
       const { type, payload, error } = action;

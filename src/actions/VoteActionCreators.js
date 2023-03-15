@@ -18,10 +18,10 @@ export function setVoteStats(voteStats) {
   };
 }
 
-export function favorited({ userID, historyID }) {
+export function favorited({ userID }) {
   return {
     type: FAVORITE,
-    payload: { userID, historyID },
+    payload: { userID },
   };
 }
 
