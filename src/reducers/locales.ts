@@ -1,3 +1,4 @@
+import { AnyAction } from 'redux';
 import {
   CHANGE_LANGUAGE,
   LOAD_LANGUAGE_START,
@@ -5,13 +6,19 @@ import {
 } from '../constants/ActionTypes';
 import en from '../../locale/en.yaml';
 
-const initialState = {
+interface State {
+  current: string;
+  loading: string[];
+  loaded: Record<string, object>;
+}
+
+const initialState: State = {
   current: 'en',
   loading: [],
   loaded: { en },
 };
 
-export default function reduce(state = initialState, action) {
+export default function reduce(state = initialState, action: AnyAction): State {
   switch (action.type) {
     case LOAD_LANGUAGE_START:
       return {

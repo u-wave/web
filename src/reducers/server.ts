@@ -1,10 +1,15 @@
+import { AnyAction } from 'redux';
 import { SOCKET_CONNECTED, SOCKET_DISCONNECTED } from '../constants/ActionTypes';
 
-const initialState = {
+interface State {
+  connected: boolean;
+}
+
+const initialState: State = {
   connected: false,
 };
 
-export default function serverReducer(state = initialState, action) {
+export default function serverReducer(state = initialState, action: AnyAction): State {
   const { type } = action;
 
   switch (type) {

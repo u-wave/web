@@ -1,3 +1,4 @@
+import { AnyAction } from 'redux';
 import {
   INIT_STATE,
   WAITLIST_LOAD,
@@ -8,23 +9,26 @@ import {
   WAITLIST_LEAVE,
 } from '../constants/ActionTypes';
 
-const initialState = {
+interface State {
+  waitlist: string[];
+  locked: boolean;
+}
+
+const initialState: State = {
   waitlist: [],
   locked: false,
 };
 
-export default function reduce(state = initialState, action) {
+export default function reduce(state = initialState, action: AnyAction): State {
   const { type, payload } = action;
   switch (type) {
     case INIT_STATE:
       return {
-        ...state,
         waitlist: payload.waitlist,
         locked: payload.waitlistLocked,
       };
     case WAITLIST_LOAD:
       return {
-        ...state,
         waitlist: payload.waitlist,
         locked: payload.locked,
       };

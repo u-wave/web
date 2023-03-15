@@ -1,3 +1,4 @@
+import { AnyAction } from 'redux';
 import {
   INIT_STATE,
   LOAD_VOTES,
@@ -5,39 +6,29 @@ import {
   FAVORITE,
   UPVOTE,
   DOWNVOTE,
-  DO_FAVORITE_START,
-  DO_FAVORITE_COMPLETE,
 } from '../constants/ActionTypes';
 
-const initialState = {
+export interface VoteStats {
+  upvotes: string[];
+  downvotes: string[];
+  favorites: string[];
+}
+
+const initialState: VoteStats = {
   upvotes: [],
   downvotes: [],
   favorites: [],
 };
 
-function setVotes(state, stats) {
-  return {
-    ...state,
-    upvotes: stats.upvotes,
-    downvotes: stats.downvotes,
-    favorites: stats.favorites,
-  };
-}
-
-export default function reduce(state = initialState, action) {
+export default function reduce(state = initialState, action: AnyAction): VoteStats {
   const { type, payload } = action;
   switch (type) {
-    case INIT_STATE: {
-      const { stats } = payload.booth ?? {};
-      if (stats) {
-        return setVotes(state, stats);
-      }
-      return initialState;
-    }
+    case INIT_STATE:
+      return payload.booth?.stats ?? initialState;
     case ADVANCE:
       return initialState;
     case LOAD_VOTES:
-      return setVotes(state, payload);
+      return payload;
     case UPVOTE:
       if (state.upvotes.includes(payload.userID)) {
         return state;
@@ -64,10 +55,6 @@ export default function reduce(state = initialState, action) {
         ...state,
         favorites: [...state.favorites, payload.userID],
       };
-    case DO_FAVORITE_START:
-      return state;
-    case DO_FAVORITE_COMPLETE:
-      return state;
     default:
       return state;
   }

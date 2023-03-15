@@ -1,11 +1,17 @@
+import { AnyAction } from 'redux';
 import { SET_TIMER, OFFSET } from '../constants/ActionTypes';
 
-const initialState = {
-  timer: 0,
+interface State {
+  timer: ReturnType<typeof setTimeout> | null,
+  offset: number,
+}
+
+const initialState: State = {
+  timer: null,
   offset: 0,
 };
 
-export default function reduce(state = initialState, action) {
+export default function reduce(state = initialState, action: AnyAction): State {
   switch (action.type) {
     case SET_TIMER:
       return { ...state, timer: action.payload };
