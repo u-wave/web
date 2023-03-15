@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../hooks/useRedux';
 import { useMediaSearchStore } from '../stores/MediaSearchStore';
 import { playlistsByIDSelector } from '../selectors/playlistSelectors';
 import SearchResults from '../components/PlaylistManager/SearchResults';

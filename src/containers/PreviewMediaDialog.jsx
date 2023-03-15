@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../hooks/useRedux';
 import { closePreviewMediaDialog } from '../actions/DialogActionCreators';
 import { previewMediaDialogSelector } from '../selectors/dialogSelectors';
 import PreviewMediaDialog from '../components/Dialogs/PreviewMediaDialog';

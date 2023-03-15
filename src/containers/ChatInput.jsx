@@ -1,7 +1,7 @@
 import React from 'react';
-import { useStore, useSelector } from 'react-redux';
 import { useBus } from 'react-bus';
 import splitargs from 'splitargs';
+import { useStore, useSelector } from '../hooks/useRedux';
 import { sendChat } from '../actions/ChatActionCreators';
 import {
   availableGroupMentionsSelector,

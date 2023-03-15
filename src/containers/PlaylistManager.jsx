@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
 import { useTranslator } from '@u-wave/react-translate';
+import { useDispatch, useSelector } from '../hooks/useRedux';
 import { selectedPlaylistSelector } from '../selectors/playlistSelectors';
 import { showSearchResultsSelector } from '../selectors/searchSelectors';
 import { showImportPanelSelector } from '../selectors/importSelectors';

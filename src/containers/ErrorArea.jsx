@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../hooks/useRedux';
 import { dismiss } from '../actions/ErrorActionCreators';
 import { firstErrorSelector } from '../selectors/errorSelectors';
 import ErrorArea from '../components/ErrorArea';
