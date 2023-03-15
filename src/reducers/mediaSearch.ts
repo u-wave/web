@@ -1,3 +1,4 @@
+import type { AnyAction } from 'redux';
 import {
   HIDE_SEARCH_RESULTS,
   SELECT_PLAYLIST,
@@ -5,9 +6,15 @@ import {
   SHOW_SEARCH_RESULTS,
 } from '../constants/ActionTypes';
 
-const initialState = { showResults: false };
+interface State {
+  showResults: boolean;
+}
 
-export default function reduce(state = initialState, action) {
+const initialState: State = {
+  showResults: false,
+};
+
+export default function reduce(state = initialState, action: AnyAction): State {
   const { type } = action;
   switch (type) {
     case SHOW_SEARCH_RESULTS:

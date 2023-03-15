@@ -27,6 +27,7 @@ const defaultLanguageSelector = createSelector(
 const settingsBaseSelector = (state) => state.settings;
 
 export const themeSelector = createSelector(
+  /** @param {import('../redux/configureStore').StoreState} state */
   (state) => state.theme,
   (base) => createTheme(base),
 );

@@ -1,4 +1,8 @@
-export default function reduce(state = [], action) {
+import type { AnyAction } from 'redux';
+
+type State = string[];
+
+export default function reduce(state: State = [], action: AnyAction): State {
   const { type, payload, error } = action;
   if (error) {
     // Avoid adding the same error over and over
