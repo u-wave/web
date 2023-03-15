@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from '../../hooks/useRedux';
-import { toggleRoomHistory } from '../../actions/OverlayActionCreators';
+import { toggleOverlay } from '../../reducers/activeOverlay';
 import { set } from '../../actions/SettingsActionCreators';
 import {
   mediaSelector,
@@ -27,7 +27,7 @@ function MainViewContainer() {
   const waitlistSize = useSelector(waitlistSizeSelector);
   const playlists = useSelector(playlistsSelector);
   const dispatch = useDispatch();
-  const onOpenRoomHistory = useCallback(() => dispatch(toggleRoomHistory()), [dispatch]);
+  const onOpenRoomHistory = useCallback(() => dispatch(toggleOverlay('roomHistory')), [dispatch]);
   const onOpenDrawer = useCallback(() => dispatch(openDrawer()), [dispatch]);
   const onOpenWaitlist = useCallback(() => dispatch(openUsersDrawer()), [dispatch]);
   const onEnableVideo = useCallback(() => dispatch(set('videoEnabled', true)), [dispatch]);

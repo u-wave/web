@@ -1,9 +1,9 @@
-import { toggleOverlay, togglePlaylistManager } from '../../actions/OverlayActionCreators';
+import { toggleOverlay } from '../../reducers/activeOverlay';
 import { selectPlaylist } from '../../actions/PlaylistActionCreators';
 
 export function openPlaylist(playlistID) {
   return (dispatch) => {
-    dispatch(togglePlaylistManager());
+    dispatch(toggleOverlay('playlistManager'));
     dispatch(selectPlaylist(playlistID));
   };
 }

@@ -5,7 +5,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { Provider as BusProvider } from 'react-bus';
 import { TranslateProvider } from '@u-wave/react-translate';
 import { useSelector, useDispatch } from '../hooks/useRedux';
-import { closeAll } from '../actions/OverlayActionCreators';
+import { closeOverlay, selectOverlay } from '../reducers/activeOverlay';
 import { themeSelector } from '../selectors/settingSelectors';
 import { translatorSelector } from '../selectors/localeSelectors';
 import { isConnectedSelector } from '../selectors/serverSelectors';
@@ -55,12 +55,12 @@ class ErrorWrapper extends React.Component {
 
 function AppContainer({ uwave, mediaSources }) {
   const isMobile = useMediaQuery('(max-width: 767px)');
-  const activeOverlay = useSelector((state) => state.activeOverlay);
+  const activeOverlay = useSelector(selectOverlay);
   const isConnected = useSelector(isConnectedSelector);
   const theme = useSelector(themeSelector);
   const translator = useSelector(translatorSelector);
   const dispatch = useDispatch();
-  const onCloseOverlay = useCallback(() => dispatch(closeAll()), [dispatch]);
+  const onCloseOverlay = useCallback(() => dispatch(closeOverlay()), [dispatch]);
 
   useEffect(() => {
     const html = document.documentElement;

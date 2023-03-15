@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import { toggleOverlay } from '../reducers/activeOverlay';
 import { setVolume, mute, unmute } from '../actions/PlaybackActionCreators';
-import { toggleRoomHistory, toggleAbout } from '../actions/OverlayActionCreators';
 import { djSelector, mediaSelector, startTimeSelector } from '../selectors/boothSelectors';
 import { volumeSelector, isMutedSelector } from '../selectors/settingSelectors';
 import HeaderBar from '../components/HeaderBar';
@@ -18,8 +18,8 @@ const mapDispatchToProps = {
   onVolumeChange: setVolume,
   onVolumeMute: mute,
   onVolumeUnmute: unmute,
-  onToggleRoomHistory: toggleRoomHistory,
-  onToggleAboutOverlay: toggleAbout,
+  onToggleRoomHistory: () => toggleOverlay('roomHistory'),
+  onToggleAboutOverlay: () => toggleOverlay('about'),
 };
 
 const enhance = connect(mapStateToProps, mapDispatchToProps);

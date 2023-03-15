@@ -9,6 +9,7 @@ import VideoProgressBar from './VideoProgressBar';
 import VideoToolbar from './VideoToolbar';
 import MouseMoveCapture from './VideoMouseMoveCapture';
 import Player from '../Player';
+import { selectOverlay } from '../../reducers/activeOverlay';
 
 // Overlays over the video (even tiny in the corner like ours) violate TOS,
 // so we can not show them. Toggling it off with a conditional for now until
@@ -39,7 +40,7 @@ function Video(props) {
 
   const { getMediaSource } = useMediaSources();
   const [shouldShowToolbar, setShowToolbar] = useState(false);
-  const activeOverlay = useSelector((state) => state.activeOverlay);
+  const activeOverlay = useSelector(selectOverlay);
   const container = useRef(null);
   const timer = useRef(null);
 

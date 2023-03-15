@@ -1,18 +1,35 @@
-import type { AnyAction } from 'redux';
-import { OPEN_OVERLAY, CLOSE_OVERLAY, TOGGLE_OVERLAY } from '../constants/ActionTypes';
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import { StoreState } from '../redux/configureStore';
 
-const initialState: string | null = null;
+type OverlayName = 'about' | 'admin' | 'playlistManager' | 'roomHistory' | 'settings';
+const initialState: {
+  current: OverlayName | null,
+} = {
+  current: null,
+};
 
-export default function reduce(state = initialState, action: AnyAction) {
-  const { type, payload } = action;
-  switch (type) {
-    case OPEN_OVERLAY:
-      return payload.overlay;
-    case TOGGLE_OVERLAY:
-      return state === payload.overlay ? null : payload.overlay;
-    case CLOSE_OVERLAY:
-      return null;
-    default:
-      return state;
-  }
-}
+const slice = createSlice({
+  name: 'activeOverlay',
+  initialState,
+  reducers: {
+    openOverlay(state, action: PayloadAction<OverlayName>) {
+      state.current = action.payload;
+    },
+    toggleOverlay(state, action: PayloadAction<OverlayName>) {
+      state.current = state.current === action.payload ? null : action.payload;
+    },
+    closeOverlay: (state) => {
+      state.current = null;
+    },
+  },
+});
+
+export const {
+  openOverlay,
+  toggleOverlay,
+  closeOverlay,
+} = slice.actions;
+
+export const selectOverlay = (state: StoreState) => state.activeOverlay.current;
+
+export default slice.reducer;

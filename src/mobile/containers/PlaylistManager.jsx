@@ -7,7 +7,7 @@ import {
 import { showSearchResultsSelector } from '../../selectors/searchSelectors';
 import { showImportPanelSelector } from '../../selectors/importSelectors';
 import createLazyOverlay from '../../components/LazyOverlay';
-import { closeAll } from '../../actions/OverlayActionCreators';
+import { closeOverlay } from '../../reducers/activeOverlay';
 
 const {
   useCallback,
@@ -24,7 +24,7 @@ function PlaylistManagerContainer() {
   const showImportPanel = useSelector(showImportPanelSelector);
   const showSearchResults = useSelector(showSearchResultsSelector);
   const dispatch = useDispatch();
-  const onCloseOverlay = useCallback(() => dispatch(closeAll()), [dispatch]);
+  const onCloseOverlay = useCallback(() => dispatch(closeOverlay()), [dispatch]);
 
   return (
     <PlaylistManager

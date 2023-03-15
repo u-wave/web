@@ -5,7 +5,7 @@ import { useDispatch } from '../../hooks/useRedux';
 import Overlay from '../Overlay';
 import OverlayContent from '../Overlay/Content';
 import OverlayHeader from '../Overlay/Header';
-import { closeAll } from '../../actions/OverlayActionCreators';
+import { closeOverlay } from '../../reducers/activeOverlay';
 import ErrorBoundary from './ErrorBoundary';
 
 const {
@@ -23,7 +23,7 @@ export default function createLazyOverlay({
   function LoadingOverlay() {
     const { t } = useTranslator();
     const dispatch = useDispatch();
-    const onCloseOverlay = () => dispatch(closeAll());
+    const onCloseOverlay = () => dispatch(closeOverlay());
 
     // Simulate `pastDelay` from react-loadable
     const [pastDelay, setPastDelay] = useState(false);

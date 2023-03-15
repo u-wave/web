@@ -64,6 +64,10 @@ module.exports = {
       rules: {
         // Reducers use default params differently
         'default-param-last': 'off',
+        'no-param-reassign': ['error', {
+          props: true,
+          ignorePropertyModificationsFor: ['state'],
+        }],
       },
     },
 
