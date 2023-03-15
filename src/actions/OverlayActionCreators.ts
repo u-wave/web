@@ -1,17 +1,21 @@
 import { OPEN_OVERLAY, CLOSE_OVERLAY, TOGGLE_OVERLAY } from '../constants/ActionTypes';
 
-export function openOverlay(overlay) {
+export function openOverlay(overlay: string) {
   return {
     type: OPEN_OVERLAY,
     payload: { overlay },
-  };
+  } as const;
 }
 
-export function toggleOverlay(overlay) {
+export function toggleOverlay(overlay: string) {
   return {
     type: TOGGLE_OVERLAY,
     payload: { overlay },
-  };
+  } as const;
+}
+
+export function closeAll() {
+  return { type: CLOSE_OVERLAY } as const;
 }
 
 export function toggleRoomHistory() {
@@ -32,8 +36,4 @@ export function toggleAbout() {
 
 export function toggleAdmin() {
   return toggleOverlay('admin');
-}
-
-export function closeAll() {
-  return { type: CLOSE_OVERLAY };
 }
