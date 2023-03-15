@@ -7,6 +7,7 @@ import { currentVotesSelector } from './voteSelectors';
 
 const byTimestamp = (a, b) => (a.timestamp < b.timestamp ? 1 : -1);
 
+/** @param {import('../redux/configureStore').StoreState} state */
 const baseSelector = (state) => state.roomHistory;
 
 export const roomHistorySelector = createSelector(

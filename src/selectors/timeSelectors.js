@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 
+/** @param {import('../redux/configureStore').StoreState} state */
 const baseSelector = (state) => state.time;
 
 const offsetSelector = createSelector(baseSelector, (time) => time.offset);

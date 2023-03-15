@@ -3,6 +3,7 @@ import { reCaptchaSiteKeySelector } from './configSelectors';
 import { volumeSelector } from './settingSelectors';
 import { supportsSocialAuthSelector } from './userSelectors';
 
+/** @param {import('../redux/configureStore').StoreState} state */
 const baseSelector = (state) => state.dialogs;
 
 const merge = (dialog) => ({ ...dialog.payload, open: dialog.open });

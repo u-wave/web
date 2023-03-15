@@ -5,6 +5,7 @@ import { availableLanguages } from '../locales';
 import { languageSelector as currentLanguageSelector } from './settingSelectors';
 
 const defaultLanguageSelector = () => 'en';
+/** @param {import('../redux/configureStore').StoreState} state */
 const baseSelector = (state) => state.locales;
 const loadedSelector = createSelector(baseSelector, (base) => base.loaded);
 

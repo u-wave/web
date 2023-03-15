@@ -1,6 +1,7 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { currentUserSelector } from './userSelectors';
 
+/** @param {import('../redux/configureStore').StoreState} state */
 const baseSelector = (state) => state.votes;
 
 const createPropSelector = (base, prop) => createSelector(base, (obj) => obj[prop]);

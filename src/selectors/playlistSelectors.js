@@ -3,6 +3,7 @@ import naturalCmp from 'natural-compare';
 
 const byName = (a, b) => naturalCmp(a.name.toLowerCase(), b.name.toLowerCase());
 
+/** @param {import('../redux/configureStore').StoreState} state */
 const baseSelector = (state) => state.playlists;
 
 export const playlistsByIDSelector = createSelector(

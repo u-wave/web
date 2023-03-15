@@ -9,6 +9,7 @@ import {
   usersSelector,
 } from './userSelectors';
 
+/** @param {import('../redux/configureStore').StoreState} state */
 const baseSelector = (state) => state.booth;
 
 export const historyIDSelector = createSelector(baseSelector, (booth) => booth.historyID);

@@ -1,6 +1,7 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { playlistsSelector } from './playlistSelectors';
 
+/** @param {import('../redux/configureStore').StoreState} state */
 const baseSelector = (state) => state.addToPlaylistMenu;
 export const isOpenSelector = createSelector(baseSelector, (menu) => menu.open);
 export const positionSelector = createSelector(baseSelector, (menu) => menu.position);

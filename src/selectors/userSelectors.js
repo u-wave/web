@@ -2,8 +2,10 @@ import { createSelector } from 'reselect';
 import naturalCmp from 'natural-compare';
 import { rolesSelector } from './configSelectors';
 
+/** @param {import('../redux/configureStore').StoreState} state */
 const authSelector = (state) => state.auth;
 
+/** @param {import('../redux/configureStore').StoreState} state */
 const usersBaseSelector = (state) => state.users;
 export const usersSelector = createSelector(usersBaseSelector, (base) => base.users);
 

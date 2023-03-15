@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 import defaultEmoji from '../utils/emojiShortcodes';
 
+/** @param {import('../redux/configureStore').StoreState} state */
 export const configSelector = (state) => state.config;
 
 export const requestOptionsSelector = createSelector(
