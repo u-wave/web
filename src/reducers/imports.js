@@ -11,7 +11,7 @@ const initialState = {
   sourceType: null,
 };
 
-export default function reduce(state = initialState, action = {}) {
+export default function reduce(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
     case SHOW_IMPORT_PANEL:

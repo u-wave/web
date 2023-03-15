@@ -1,7 +1,7 @@
 const initialState = {};
 
 // A reducer that calls each known Media Source's reducer.
-function reduceSources(state = initialState, action = undefined, sources = {}) {
+function reduceSources(state = initialState, action, sources = {}) {
   return Object.keys(sources).reduce((newState, sourceName) => {
     const source = sources[sourceName];
     if (!source.reducer) {

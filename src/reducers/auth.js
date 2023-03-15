@@ -14,7 +14,7 @@ const initialState = {
   user: null,
 };
 
-export default function reduce(state = initialState, action = {}) {
+export default function reduce(state = initialState, action) {
   const { type, payload, error: isError } = action;
   switch (type) {
     case INIT_STATE:

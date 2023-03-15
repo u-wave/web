@@ -34,7 +34,7 @@ const closeDialog = (state, name) => ({
   },
 });
 
-export default function reduce(state = initialState, action = {}) {
+export default function reduce(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
     case OPEN_EDIT_MEDIA_DIALOG:

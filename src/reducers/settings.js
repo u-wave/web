@@ -28,7 +28,7 @@ const initialState = {
   },
 };
 
-function reduce(state = initialState, action = undefined) {
+function reduce(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
     case LOAD_SETTINGS:

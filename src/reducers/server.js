@@ -4,7 +4,7 @@ const initialState = {
   connected: false,
 };
 
-export default function serverReducer(state = initialState, action = {}) {
+export default function serverReducer(state = initialState, action) {
   const { type } = action;
 
   switch (type) {

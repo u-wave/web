@@ -2,7 +2,7 @@ import merge from 'deepmerge';
 import { RESET_THEME, APPLY_THEME } from '../constants/ActionTypes';
 import initialState from '../theme';
 
-export default function reduce(state = initialState, action = {}) {
+export default function reduce(state = initialState, action) {
   switch (action.type) {
     case RESET_THEME:
       return initialState;

@@ -13,7 +13,7 @@ const initialState = {
   isFullscreen: false,
 };
 
-export default function reduce(state = initialState, action = {}) {
+export default function reduce(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
     case ADVANCE:

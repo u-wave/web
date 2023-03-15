@@ -22,7 +22,7 @@ function updateUser(state, userID, update) {
   return state;
 }
 
-function guestsReducer(state = 0, action = {}) {
+function guestsReducer(state = 0, action) {
   if (action.type === INIT_STATE) {
     return action.payload.guests;
   }
@@ -32,7 +32,7 @@ function guestsReducer(state = 0, action = {}) {
   return state;
 }
 
-function usersReducer(state = {}, action = {}) {
+function usersReducer(state = {}, action) {
   const { type, payload } = action;
   switch (type) {
     case INIT_STATE: // fall through

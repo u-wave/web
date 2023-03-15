@@ -24,7 +24,7 @@ function setVotes(state, stats) {
   };
 }
 
-export default function reduce(state = initialState, action = {}) {
+export default function reduce(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
     case INIT_STATE: {

@@ -2,7 +2,7 @@ import { OPEN_OVERLAY, CLOSE_OVERLAY, TOGGLE_OVERLAY } from '../constants/Action
 
 const initialState = null;
 
-export default function reduce(state = initialState, action = {}) {
+export default function reduce(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
     case OPEN_OVERLAY:

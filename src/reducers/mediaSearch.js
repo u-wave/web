@@ -7,7 +7,7 @@ import {
 
 const initialState = { showResults: false };
 
-export default function reduce(state = initialState, action = {}) {
+export default function reduce(state = initialState, action) {
   const { type } = action;
   switch (type) {
     case SHOW_SEARCH_RESULTS:

@@ -5,7 +5,7 @@ const initialState = {
   offset: 0,
 };
 
-export default function reduce(state = initialState, action = {}) {
+export default function reduce(state = initialState, action) {
   switch (action.type) {
     case SET_TIMER:
       return { ...state, timer: action.payload };

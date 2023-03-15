@@ -11,7 +11,7 @@ const initialState = {
   loaded: { en },
 };
 
-export default function reduce(state = initialState, action = undefined) {
+export default function reduce(state = initialState, action) {
   switch (action.type) {
     case LOAD_LANGUAGE_START:
       return {

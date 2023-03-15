@@ -60,6 +60,14 @@ module.exports = {
     },
 
     {
+      files: ['src/reducers/*'],
+      rules: {
+        // Reducers use default params differently
+        'default-param-last': 'off',
+      },
+    },
+
+    {
       files: ['src/**/*.{js,jsx}'],
       rules: {
         'compat/compat': 'error',

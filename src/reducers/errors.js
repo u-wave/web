@@ -1,4 +1,4 @@
-export default function reduce(state = [], action = {}) {
+export default function reduce(state = [], action) {
   const { type, payload, error } = action;
   if (error) {
     // Avoid adding the same error over and over

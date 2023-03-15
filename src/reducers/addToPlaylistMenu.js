@@ -8,7 +8,7 @@ const initialState = {
   data: null,
 };
 
-export default function reduce(state = initialState, action = {}) {
+export default function reduce(state = initialState, action) {
   const { type, payload, meta } = action;
   switch (type) {
     case OPEN_ADD_MEDIA_MENU:
