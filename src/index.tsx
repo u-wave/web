@@ -1,4 +1,3 @@
-import React from 'react';
 import favicon from '../assets/favicon.ico';
 import LoadingScreen from './components/LoadingScreen';
 

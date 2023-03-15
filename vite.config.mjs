@@ -45,7 +45,7 @@ export default defineConfig({
     splitVendorChunkPlugin(),
     react(),
     yaml(),
-    prerender({ file: 'index.html', source: 'src/index.jsx' }),
+    prerender({ file: 'index.html', source: 'src/index.tsx' }),
     prerender({ file: 'password-reset.html', source: 'src/password-reset/index.jsx' }),
     prerender({ file: 'privacy.html', source: 'src/markdown.jsx', props: { path: 'static/privacy.md' } }),
     {

@@ -3,6 +3,7 @@ export default {
   transform: {
     '\\.ya?ml$': '<rootDir>/test/yaml-transform.mjs',
     '\\.jsx?$': 'babel-jest',
+    '\\.tsx?$': 'babel-jest',
   },
   moduleNameMapper: {
     // Prevent jest from picking up the ESM version.

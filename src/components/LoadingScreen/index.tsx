@@ -1,4 +1,3 @@
-import React from 'react';
 import DesktopSkeleton from './DesktopSkeleton';
 import MobileSkeleton from './MobileSkeleton';
 

@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-  extends: ['airbnb', 'airbnb/hooks'],
+  extends: ['airbnb', 'airbnb/hooks', 'plugin:import/typescript'],
 
   plugins: ['compat', 'react-hooks'],
   parserOptions: {
@@ -12,6 +12,15 @@ module.exports = {
     'arrow-body-style': 'off',
     'no-underscore-dangle': ['error', { allow: ['_id'] }],
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+    'import/extensions': ['error', 'ignorePackages', {
+      js: 'never',
+      mjs: 'never',
+      jsx: 'never',
+      ts: 'never',
+      tsx: 'never',
+    }],
+    // Not true anymore
+    'react/react-in-jsx-scope': 'off',
     'react/no-unused-prop-types': ['error', { skipShapeProps: true }],
     'react/forbid-prop-types': 'off',
     'react/jsx-props-no-spreading': 'off',
@@ -22,6 +31,7 @@ module.exports = {
       namedComponents: 'function-declaration',
       unnamedComponents: 'arrow-function',
     }],
+    'react/jsx-filename-extension': ['error', { extensions: ['.jsx', '.tsx'] }],
   },
 
   settings: {

@@ -1,4 +1,3 @@
-import React from 'react';
 import Slider from '@mui/material/Slider';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
@@ -10,12 +9,10 @@ import SongTitle from '../SongTitle';
 import LoadingIndicator from './LoadingIndicator';
 import Filler from './Filler';
 
-function noop() {}
-
 function FakeVolume() {
   return (
     <div className="VolumeSlider">
-      <IconButton onClick={noop}>
+      <IconButton>
         <SvgIcon path={mdiVolumeOff} />
       </IconButton>
       <div className="VolumeSlider-slider">
@@ -25,7 +22,6 @@ function FakeVolume() {
           max={100}
           step={1}
           value={0}
-          onChange={noop}
         />
       </div>
     </div>
@@ -42,7 +38,7 @@ const fakeSongTitle = (
 function FakeHeaderBar() {
   return (
     <div className="HeaderBar App-header">
-      <AppTitle className="HeaderBar-title" onClick={() => {}}>...</AppTitle>
+      <AppTitle className="HeaderBar-title">...</AppTitle>
       <div className="HeaderBar-nowPlaying">
         <div className="HeaderBar-media">
           {fakeSongTitle}

@@ -90,6 +90,7 @@
     "@babel/plugin-transform-runtime": "^7.17.0",
     "@babel/preset-env": "^7.14.0",
     "@babel/preset-react": "^7.13.13",
+    "@babel/preset-typescript": "^7.21.0",
     "@babel/register": "^7.13.8",
     "@emotion/css": "^11.10.5",
     "@emotion/server": "^11.0.0",

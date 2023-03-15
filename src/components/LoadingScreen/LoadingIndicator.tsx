@@ -1,4 +1,3 @@
-import React from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
 import { mdiAlert } from '@mdi/js';
 import SvgIcon from '../SvgIcon';

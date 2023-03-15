@@ -53,8 +53,16 @@ module.exports = (api, envOverride) => {
     browserslistEnv = 'legacy';
   }
 
+  const tsConfig = {
+    test: /\.tsx?$/,
+    presets: [
+      '@babel/preset-typescript',
+    ],
+    plugins: [],
+  };
+
   const reactConfig = {
-    test: /\.jsx$/,
+    test: /\.[jt]sx$/,
     presets: [
       ['@babel/preset-react', {
         development: env === 'development',
@@ -89,7 +97,7 @@ module.exports = (api, envOverride) => {
       }],
     ],
 
-    overrides: [reactConfig],
+    overrides: [tsConfig, reactConfig],
   };
 
   if (targets) {

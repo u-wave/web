@@ -1,4 +1,3 @@
-import React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -28,7 +27,7 @@ function MobileSkeleton() {
             <IconButton>
               <SvgIcon path={mdiHistory} />
             </IconButton>
-            <IconButton style={waitlistIconStyle}>
+            <IconButton sx={waitlistIconStyle}>
               <Filler width={20} />
             </IconButton>
           </Toolbar>
