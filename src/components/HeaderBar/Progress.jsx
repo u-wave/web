@@ -1,7 +1,7 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useStore } from 'react-redux';
+import { useStore } from '../../hooks/useRedux';
 import { currentTimeSelector } from '../../selectors/timeSelectors';
 
 const { useEffect, useRef } = React;

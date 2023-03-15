@@ -1,5 +1,5 @@
-import { useSelector } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import { useSelector } from './useRedux';
 import {
   relativeTimeFormatterSelector,
   timeFormatterSelector,

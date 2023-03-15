@@ -1,7 +1,7 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { useTranslator } from '@u-wave/react-translate';
 import Button from '@mui/material/Button';
+import { useDispatch } from '../../hooks/useRedux';
 import { openLoginDialog, openRegisterDialog } from '../../actions/DialogActionCreators';
 import { toggleSettings } from '../../actions/OverlayActionCreators';
 import SettingsButton from './SettingsButton';

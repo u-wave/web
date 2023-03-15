@@ -1,7 +1,7 @@
 import React from 'react';
-import { useStore } from 'react-redux';
 import { useClock as useClockCallbacks } from '../context/ClockContext';
 import { currentTimeSelector } from '../selectors/timeSelectors';
+import { useStore } from './useRedux';
 
 const {
   useEffect,

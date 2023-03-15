@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../hooks/useRedux';
 import { toggleRoomHistory } from '../../actions/OverlayActionCreators';
 import { set } from '../../actions/SettingsActionCreators';
 import {

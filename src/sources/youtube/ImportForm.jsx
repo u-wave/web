@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
 import { useTranslator } from '@u-wave/react-translate';
 import { mdiPlaylistPlay } from '@mdi/js';
+import { useDispatch } from '../../hooks/useRedux';
 import ImportSourceBlock from '../../components/PlaylistManager/Import/ImportSourceBlock';
 import Form from '../../components/Form';
 import FormGroup from '../../components/Form/Group';

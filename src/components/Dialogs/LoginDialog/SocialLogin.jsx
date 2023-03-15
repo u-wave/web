@@ -1,6 +1,6 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { useTranslator } from '@u-wave/react-translate';
+import { useDispatch } from '../../../hooks/useRedux';
 import { loginWithGoogle } from '../../../actions/LoginActionCreators';
 
 const GoogleButton = React.lazy(() => (

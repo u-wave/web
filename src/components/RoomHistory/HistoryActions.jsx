@@ -1,7 +1,7 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../hooks/useRedux';
 import { isLoggedInSelector } from '../../selectors/userSelectors';
 import PreviewMediaAction from '../MediaList/PreviewMediaAction';
 import AddToPlaylistAction from './AddToPlaylistAction';

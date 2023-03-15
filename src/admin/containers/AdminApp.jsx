@@ -1,6 +1,6 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { SWRConfig } from 'swr';
+import { useDispatch } from '../../hooks/useRedux';
 import AdminApp from '../components/AdminApp';
 import { get } from '../../actions/RequestActionCreators';
 

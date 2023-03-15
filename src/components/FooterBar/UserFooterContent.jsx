@@ -1,6 +1,6 @@
 import cx from 'clsx';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../hooks/useRedux';
 import useCurrentUser from '../../hooks/useCurrentUser';
 import { skipSelf } from '../../actions/BoothActionCreators';
 import { skipCurrentDJ as modSkipCurrentDJ } from '../../actions/ModerationActionCreators';

@@ -1,6 +1,6 @@
 import React from 'react';
 import useSWR from 'swr';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../hooks/useRedux';
 import { put } from '../../actions/RequestActionCreators';
 import ServerConfig from '../components/ServerConfig';
 

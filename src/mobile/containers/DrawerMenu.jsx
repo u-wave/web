@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../hooks/useRedux';
 import { currentUserSelector } from '../../selectors/userSelectors';
 import { playlistsSelector } from '../../selectors/playlistSelectors';
 import { toggleSettings, toggleAbout } from '../../actions/OverlayActionCreators';

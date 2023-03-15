@@ -1,7 +1,6 @@
 import cx from 'clsx';
-import React from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../../hooks/useRedux';
 import emojiUrl from '../../../utils/emojiUrl';
 import { customEmojiNamesSelector } from '../../../selectors/configSelectors';
 

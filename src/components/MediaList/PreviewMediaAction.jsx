@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../hooks/useRedux';
 import { openPreviewMediaDialog } from '../../actions/DialogActionCreators';
 import SvgIcon from '../SvgIcon';
 import MediaAction from './MediaAction';

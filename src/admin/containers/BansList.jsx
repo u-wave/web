@@ -1,7 +1,7 @@
 import React from 'react';
 import useSWR from 'swr';
 import { useAsyncCallback } from 'react-async-hook';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../hooks/useRedux';
 import { unbanUser } from '../actions/bans';
 import BansList from '../components/BansList';
 import mergeIncludedModels from '../../utils/mergeIncludedModels';

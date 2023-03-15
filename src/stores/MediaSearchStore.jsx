@@ -1,7 +1,7 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { useAsyncAbortable } from 'react-async-hook';
 import PropTypes from 'prop-types';
+import { useDispatch } from '../hooks/useRedux';
 import { get } from '../actions/RequestActionCreators';
 import { IDLE, LOADING, LOADED } from '../constants/LoadingStates';
 

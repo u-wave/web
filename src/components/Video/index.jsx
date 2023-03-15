@@ -1,8 +1,8 @@
 import cx from 'clsx';
 import React from 'react';
-import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import screenfull from 'screenfull';
+import { useSelector } from '../../hooks/useRedux';
 import { useMediaSources } from '../../context/MediaSourceContext';
 import VideoBackdrop from './VideoBackdrop';
 import VideoProgressBar from './VideoProgressBar';

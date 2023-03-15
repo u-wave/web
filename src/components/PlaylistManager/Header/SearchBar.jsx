@@ -1,6 +1,5 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../../hooks/useRedux';
 import BaseSearchBar from '../../SearchBar';
 import SourcePicker from './SourcePicker';
 import { showSearchResults } from '../../../actions/SearchActionCreators';
