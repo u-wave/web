@@ -6,7 +6,7 @@ import dialogs from '../dialogs';
 
 const closedDialog = {
   open: false,
-  payload: {},
+  payload: null,
 };
 
 const initialState = () => dialogs(undefined, { type: '@@redux/INIT' });
@@ -29,7 +29,7 @@ const testDialogClose = (type, prop, text) => {
     state = dialogs(state, { type });
     expect(state[prop]).toEqual({
       open: false,
-      payload: {},
+      payload: null,
     });
   });
 };

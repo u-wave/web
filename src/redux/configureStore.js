@@ -31,5 +31,6 @@ function createUwaveStore(initialState = {}, options = {}) {
 }
 
 /** @typedef {ReturnType<ReturnType<typeof createUwaveStore>['getState']>} StoreState */
+/** @typedef {ReturnType<typeof configureStore>['dispatch']} AppDispatch */
 
 export default createUwaveStore;

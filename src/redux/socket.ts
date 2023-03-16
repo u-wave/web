@@ -1,4 +1,5 @@
-import type { Dispatch, AnyAction, Middleware } from 'redux';
+import type { Middleware } from 'redux';
+import type { AppDispatch } from './configureStore';
 import {
   LOGIN_COMPLETE,
   LOGOUT_START,
@@ -271,11 +272,11 @@ class UwaveSocket {
 
   url: string;
 
-  dispatch: (action: import('redux').AnyAction) => void;
+  dispatch: AppDispatch;
 
   constructor({ url, dispatch }: {
     url: string,
-    dispatch: Dispatch<AnyAction>,
+    dispatch: AppDispatch,
   }) {
     this.url = url;
     this.dispatch = dispatch;
@@ -406,7 +407,8 @@ class UwaveSocket {
   };
 }
 
-export default function middleware({ url = defaultUrl() } = {}): Middleware {
+export default function middleware({ url = defaultUrl() } = {}):
+    Middleware<void, unknown, AppDispatch> {
   return ({ dispatch }) => {
     const socket = new UwaveSocket({
       url,

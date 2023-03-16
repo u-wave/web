@@ -1,3 +1,4 @@
+import type { AnyAction } from 'redux';
 import {
   SHOW_IMPORT_PANEL,
   SHOW_IMPORT_SOURCE_PANEL,
@@ -6,12 +7,17 @@ import {
   SHOW_SEARCH_RESULTS,
 } from '../constants/ActionTypes';
 
-const initialState = {
+interface State {
+  showPanel: boolean;
+  sourceType: string | null;
+}
+
+const initialState: State = {
   showPanel: false,
   sourceType: null,
 };
 
-export default function reduce(state = initialState, action) {
+export default function reduce(state = initialState, action: AnyAction): State {
   const { type, payload } = action;
   switch (type) {
     case SHOW_IMPORT_PANEL:

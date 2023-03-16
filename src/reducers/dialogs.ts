@@ -1,32 +1,57 @@
+import type { AnyAction } from 'redux';
+import type { Media } from './booth';
 import {
   OPEN_EDIT_MEDIA_DIALOG, CLOSE_EDIT_MEDIA_DIALOG,
   OPEN_PREVIEW_MEDIA_DIALOG, CLOSE_PREVIEW_MEDIA_DIALOG,
   OPEN_LOGIN_DIALOG, CLOSE_LOGIN_DIALOG,
 } from '../constants/ActionTypes';
 
-const initialState = {
+interface EditMediaState {
+  playlistID: string;
+  media: Media,
+}
+
+interface PreviewMediaState {
+  media: Media,
+}
+
+interface LoginState {
+  show: 'login' | 'register' | 'reset',
+}
+
+type DialogState<T> =
+  | { open: false, payload: null | T }
+  | { open: true, payload: T };
+
+interface State {
+  editMedia: DialogState<EditMediaState>,
+  previewMedia: DialogState<PreviewMediaState>,
+  login: DialogState<LoginState>,
+}
+
+const initialState: State = {
   editMedia: {
     open: false,
-    payload: {},
+    payload: null,
   },
   previewMedia: {
     open: false,
-    payload: {},
+    payload: null,
   },
   login: {
     open: false,
-    payload: {},
+    payload: null,
   },
 };
 
-const openDialog = (state, name, payload, open = true) => ({
+const openDialog = <K extends keyof State>(state: State, name: K, payload: State[K]['payload'], open = true) => ({
   ...state,
   [name]: {
     open,
     payload,
   },
 });
-const closeDialog = (state, name) => ({
+const closeDialog = (state: State, name: keyof State) => ({
   ...state,
   [name]: {
     open: false,
@@ -34,7 +59,7 @@ const closeDialog = (state, name) => ({
   },
 });
 
-export default function reduce(state = initialState, action) {
+export default function reduce(state = initialState, action: AnyAction) {
   const { type, payload } = action;
   switch (type) {
     case OPEN_EDIT_MEDIA_DIALOG:

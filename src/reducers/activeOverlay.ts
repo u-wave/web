@@ -1,5 +1,5 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import { StoreState } from '../redux/configureStore';
+import type { StoreState } from '../redux/configureStore';
 
 type OverlayName = 'about' | 'admin' | 'playlistManager' | 'roomHistory' | 'settings';
 const initialState: {
