@@ -1,28 +1,32 @@
 import cx from 'clsx';
-import React from 'react';
-import PropTypes from 'prop-types';
-import { useTranslator } from '@u-wave/react-translate';
-import { mdiMagnify } from '@mdi/js';
-import SvgIcon from '../SvgIcon';
-
-const {
+import {
   useCallback,
   useEffect,
   useRef,
   useState,
-} = React;
+} from 'react';
+import { useTranslator } from '@u-wave/react-translate';
+import { mdiMagnify } from '@mdi/js';
+import SvgIcon from '../SvgIcon';
+
+type SearchBarProps = {
+  children: React.ReactNode,
+  className?: string,
+  autoFocus?: boolean,
+  onSubmit: (value: string) => void,
+};
 
 function SearchBar({
   children, className, autoFocus, onSubmit,
-}) {
+}: SearchBarProps) {
   const { t } = useTranslator();
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const [focused, setFocused] = useState(false);
   const handleFocus = useCallback(() => setFocused(true), [setFocused]);
   const handleBlur = useCallback(() => setFocused(false), [setFocused]);
-  const handleKeyDown = useCallback((event) => {
+  const handleKeyDown = useCallback((event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
-      onSubmit(event.target.value);
+      onSubmit(event.currentTarget.value);
     }
   }, [onSubmit]);
 
@@ -30,7 +34,6 @@ function SearchBar({
     if (autoFocus && inputRef.current) {
       inputRef.current.focus();
     }
-    return () => null;
     // `autoFocus` is only checked on mount on purpose.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -56,12 +59,5 @@ function SearchBar({
     </div>
   );
 }
-
-SearchBar.propTypes = {
-  className: PropTypes.string,
-  children: PropTypes.node,
-  autoFocus: PropTypes.bool,
-  onSubmit: PropTypes.func.isRequired,
-};
 
 export default SearchBar;
