@@ -1,10 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useListener } from 'react-bus';
 import Message from './Message';
 import Motd from './Motd';
 import ScrollDownNotice from './ScrollDownNotice';
 import specialMessages from './specialMessages';
+import type { Message as TMessage } from '../../reducers/chat';
+import { CompileOptions } from './Markup';
+import { MarkupNode } from 'u-wave-parse-chat-markup';
 
 const {
   useCallback,
@@ -13,43 +15,47 @@ const {
   useState,
 } = React;
 
-function checkIsScrolledToBottom(el) {
+function checkIsScrolledToBottom(el: HTMLElement) {
   const lastMessage = el.lastElementChild;
-  if (lastMessage) {
+  if (lastMessage instanceof HTMLElement) {
     const neededSize = el.scrollTop + el.offsetHeight + lastMessage.offsetHeight;
     return neededSize >= el.scrollHeight - 20;
   }
   return true;
 }
 
-/**
- * @param {React.RefObject<HTMLElement>} ref
- * @param {boolean} [initialValue]
- * @returns {[boolean, () => void]}
- */
-function useScrolledToBottom(ref, initialValue = true) {
+function useScrolledToBottom(ref: React.RefObject<HTMLElement>, initialValue = true) {
   const [isScrolledToBottom, setScrolledToBottom] = useState(initialValue);
 
   const update = useCallback(() => {
-    setScrolledToBottom(checkIsScrolledToBottom(ref.current));
+    if (ref.current) {
+      setScrolledToBottom(checkIsScrolledToBottom(ref.current));
+    }
   }, [ref]);
 
-  return [isScrolledToBottom, update];
+  return [isScrolledToBottom, update] satisfies [unknown, unknown];
 }
 
-function scrollToBottom(el) {
+function scrollToBottom(el: HTMLElement) {
   // eslint-disable-next-line no-param-reassign
   el.scrollTop = el.scrollHeight;
 }
 
+type ChatMessagesProps = {
+  motd: MarkupNode[] | null,
+  messages: TMessage[],
+  canDeleteMessages?: boolean,
+  onDeleteMessage?: (id: string) => void,
+  compileOptions: CompileOptions,
+};
 function ChatMessages({
   messages,
   motd,
-  canDeleteMessages,
+  canDeleteMessages = false,
   onDeleteMessage,
   compileOptions,
-}) {
-  const container = useRef(null);
+}: ChatMessagesProps) {
+  const container = useRef<HTMLDivElement>(null);
   const [isScrolledToBottom, updateScroll] = useScrolledToBottom(container, true);
 
   // Scroll to bottom on window resizes, if we were scrolled to bottom before.
@@ -57,7 +63,7 @@ function ChatMessages({
     if (typeof window === 'undefined') return undefined;
 
     const handleResize = () => {
-      if (isScrolledToBottom) {
+      if (isScrolledToBottom && container.current) {
         scrollToBottom(container.current);
       }
     };
@@ -68,7 +74,7 @@ function ChatMessages({
   // Scroll to bottom again if the last message changes.
   const lastMessage = messages.length > 0 ? messages[messages.length - 1] : undefined;
   useEffect(() => {
-    if (isScrolledToBottom) {
+    if (isScrolledToBottom && container.current) {
       scrollToBottom(container.current);
     }
     // We need to scroll to the bottom only if a new message comes in, not when the scroll-to-bottom
@@ -78,8 +84,12 @@ function ChatMessages({
 
   // Accept externally controlled scrolling using the global event bus, so the chat input box
   // can tell us to scroll up or down.
-  const handleExternalScroll = useCallback((direction) => {
-    const el = container.ref;
+  const handleExternalScroll = useCallback((direction?: number | 'start' | 'end') => {
+    const el = container.current;
+    if (!el || direction == null) {
+      return;
+    }
+
     if (direction === 'start') {
       el.scrollTop = 0;
     } else if (direction === 'end') {
@@ -91,9 +101,10 @@ function ChatMessages({
 
   useListener('chat:scroll', handleExternalScroll);
 
-  function renderMessage(msg) {
-    const SpecialMessage = specialMessages[msg.type];
-    if (SpecialMessage) {
+  function renderMessage(msg: TMessage) {
+    if (msg.type !== 'chat') {
+      // TODO this could just use a switch
+      const SpecialMessage = specialMessages[msg.type] as React.FC<unknown>;
       return (
         <SpecialMessage
           key={msg._id}
@@ -105,10 +116,16 @@ function ChatMessages({
     return (
       <Message
         key={msg._id}
+        _id={msg._id}
+        user={msg.user}
+        text={msg.text}
+        parsedText={msg.parsedText}
+        inFlight={msg.inFlight}
+        isMention={msg.isMention}
+        timestamp={msg.timestamp}
         compileOptions={compileOptions}
         deletable={canDeleteMessages}
         onDelete={onDeleteMessage}
-        {...msg}
       />
     );
   }
@@ -121,7 +138,7 @@ function ChatMessages({
     >
       <ScrollDownNotice
         show={!isScrolledToBottom}
-        onClick={() => scrollToBottom(container.current)}
+        onClick={() => container.current && scrollToBottom(container.current)}
       />
       {motd ? (
         <Motd compileOptions={compileOptions}>
@@ -132,16 +149,5 @@ function ChatMessages({
     </div>
   );
 }
-
-ChatMessages.propTypes = {
-  messages: PropTypes.array,
-  motd: PropTypes.array,
-  canDeleteMessages: PropTypes.bool,
-  onDeleteMessage: PropTypes.func,
-  compileOptions: PropTypes.shape({
-    availableEmoji: PropTypes.instanceOf(Set),
-    emojiImages: PropTypes.object,
-  }),
-};
 
 export default ChatMessages;

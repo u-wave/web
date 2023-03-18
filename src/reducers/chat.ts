@@ -21,6 +21,7 @@ import {
   USER_REMOVE_ROLES,
 } from '../constants/ActionTypes';
 import type { User } from './users';
+import { MarkupNode } from 'u-wave-parse-chat-markup';
 
 export interface ChatMessage {
   _id: string;
@@ -28,7 +29,7 @@ export interface ChatMessage {
   user: User;
   userID: string;
   text: string;
-  parsedText: unknown;
+  parsedText?: MarkupNode[];
   timestamp: number;
   inFlight: boolean;
   isMention: boolean;

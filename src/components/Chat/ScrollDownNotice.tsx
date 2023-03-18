@@ -1,12 +1,14 @@
 import cx from 'clsx';
-import React from 'react';
-import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
 import { mdiArrowDown } from '@mdi/js';
 import Fab from '@mui/material/Fab';
 import SvgIcon from '../SvgIcon';
 
-function ScrollDownNotice({ show, onClick }) {
+type ScrollDownNoticeProps = {
+  show: boolean,
+  onClick: () => void,
+};
+function ScrollDownNotice({ show, onClick }: ScrollDownNoticeProps) {
   const { t } = useTranslator();
 
   return (
@@ -24,10 +26,5 @@ function ScrollDownNotice({ show, onClick }) {
     </div>
   );
 }
-
-ScrollDownNotice.propTypes = {
-  show: PropTypes.bool.isRequired,
-  onClick: PropTypes.func.isRequired,
-};
 
 export default ScrollDownNotice;
