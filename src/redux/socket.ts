@@ -1,4 +1,4 @@
-import type { Middleware } from 'redux';
+import type { AnyAction, Middleware } from 'redux';
 import type { AppDispatch } from './configureStore';
 import {
   LOGIN_COMPLETE,
@@ -347,10 +347,11 @@ class UwaveSocket {
       return;
     }
 
-    if (command in actions && typeof actions[command] === 'function') {
-      const action = actions[command](data);
+    if (command in actions && typeof actions[command as keyof SocketMessages] === 'function') {
+      const handler = actions[command as keyof SocketMessages] as (_data: unknown) => unknown;
+      const action = handler(data);
       if (action) {
-        this.dispatch(action);
+        this.dispatch(action as AnyAction);
       }
     }
   };
@@ -383,6 +384,7 @@ class UwaveSocket {
   }
 
   async reconnect() {
+    // @ts-expect-error TS2339: hard to type correctly at the moment
     const { socketToken } = await this.dispatch(initState());
     await this.connect();
     this.sendAuthToken(socketToken);
