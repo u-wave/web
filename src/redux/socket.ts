@@ -382,16 +382,11 @@ class UwaveSocket {
     this.socket.close();
   }
 
-  reconnect() {
-    return this.dispatch(initState())
-      .then(({ socketToken }) => (
-        this.connect().then(() => {
-          this.sendAuthToken(socketToken);
-        })
-      ))
-      .then(() => {
-        this.drainQueuedMessages();
-      });
+  async reconnect() {
+    const { socketToken } = await this.dispatch(initState());
+    await this.connect();
+    this.sendAuthToken(socketToken);
+    this.drainQueuedMessages();
   }
 
   attemptReconnect = () => {
