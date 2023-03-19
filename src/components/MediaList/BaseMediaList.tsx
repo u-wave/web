@@ -1,9 +1,9 @@
 import cx from 'clsx';
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useVirtualizer } from '@tanstack/react-virtual';
-import itemSelection from 'item-selection/immutable';
+import itemSelection, { ItemSelection } from 'item-selection/immutable';
 import LoadingRow from './LoadingRow';
+import { Media } from '../../reducers/booth';
 
 const {
   useCallback,
@@ -14,9 +14,17 @@ const {
   useState,
 } = React;
 
-const MediaListContext = React.createContext();
-export function useMediaListContext() {
-  return useContext(MediaListContext);
+type ContextType = {
+  media: (Media | null)[],
+  selection: ItemSelection<Media | null>,
+}
+const MediaListContext = React.createContext<ContextType | null>(null);
+export function useMediaListContext<T extends ContextType = ContextType>() {
+  const context = useContext(MediaListContext);
+  if (!context) {
+    throw new Error('Missing MediaListContext');
+  }
+  return context as T;
 }
 
 /**
@@ -26,14 +34,32 @@ export function useMediaListContext() {
  * the new list has just loaded a page that wasn't loaded in the
  * previous one, and decide that the list is not really different.
  */
-function didMediaChange(prev, next) {
-  return prev.some((item, i) => item && next[i] && item._id !== next[i]._id);
+function didMediaChange(prev: (Media | null)[], next: (Media | null)[]) {
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  return prev.some((item, i) => item && next[i] && item._id !== next[i]!._id);
 }
 
 function estimateSize() {
   return 56;
 }
 
+export type BaseMediaListProps<RowProps extends object = Record<never, never>> = {
+  className?: string,
+  media: (Media | null)[],
+  listComponent: React.ComponentType<{ style: React.CSSProperties, children: React.ReactNode }>,
+  rowComponent: React.ComponentType<{
+    style: React.CSSProperties,
+    className: string,
+    index: number,
+    media: Media,
+    selected: boolean,
+    onClick: (event: React.MouseEvent) => void,
+  } & RowProps>,
+  rowProps?: RowProps,
+  contextProps?: object,
+  onRequestPage?: (page: number) => Promise<void>,
+  size?: number,
+};
 function BaseMediaList({
   className,
   media,
@@ -44,11 +70,11 @@ function BaseMediaList({
   onRequestPage,
   // The `size` property is only necessary for lazy loading.
   size = media.length,
-}) {
-  const parentRef = useRef();
+}: BaseMediaListProps) {
+  const parentRef = useRef<HTMLDivElement>(null);
   const lastMediaRef = useRef(media);
   const [selection, setSelection] = useState(() => itemSelection(media));
-  const inFlightPageRequests = useRef({});
+  const inFlightPageRequests = useRef<Record<string, 1>>({});
 
   const context = useMemo(() => ({
     media,
@@ -56,9 +82,10 @@ function BaseMediaList({
     ...contextProps,
   }), [media, selection, contextProps]);
 
-  const itemKey = useCallback((index) => {
-    if (media[index]) {
-      const { _id: id, sourceType, sourceID } = media[index];
+  const itemKey = useCallback((index: number) => {
+    const item = media[index];
+    if (item) {
+      const { _id: id, sourceType, sourceID } = item;
       return id ?? `${sourceType}:${sourceID}`;
     }
     return `unloaded_${index}`;
@@ -74,7 +101,7 @@ function BaseMediaList({
     }
   }, [media, selection]);
 
-  const selectItem = useCallback((index, event) => {
+  const selectItem = useCallback((index: number, event: React.MouseEvent) => {
     event.preventDefault();
 
     if (event.shiftKey) {
@@ -104,8 +131,8 @@ function BaseMediaList({
       return;
     }
 
-    const isItemLoaded = (index) => media[index] != null;
-    const loadMoreItems = (start) => {
+    const isItemLoaded = (index: number) => media[index] != null;
+    const loadMoreItems = (start: number) => {
       const page = Math.floor(start / 50);
       if (inFlightPageRequests.current[page]) return Promise.resolve(null);
       inFlightPageRequests.current[page] = 1;
@@ -133,15 +160,15 @@ function BaseMediaList({
   const list = (
     <ListComponent style={{ height: `${virtualizer.getTotalSize()}px`, width: '100%', position: 'relative' }}>
       {virtualItems.map(({ index, start }) => {
+        const item = media[index];
         const style = { transform: `translateY(${start}px)` };
         const selected = selection.isSelectedIndex(index);
-        if (!media[index]) {
+        if (!item) {
           return (
             <LoadingRow
               key={itemKey(index)}
               className="MediaList-row"
               style={style}
-              selected={selected}
             />
           );
         }
@@ -153,7 +180,7 @@ function BaseMediaList({
             style={style}
             className="MediaList-row"
             index={index}
-            media={media[index]}
+            media={item}
             selected={selected}
             onClick={(event) => selectItem(index, event)}
           />
@@ -170,19 +197,5 @@ function BaseMediaList({
     </MediaListContext.Provider>
   );
 }
-
-BaseMediaList.propTypes = {
-  className: PropTypes.string,
-  media: PropTypes.array,
-  size: PropTypes.number,
-  onRequestPage: PropTypes.func,
-  listComponent: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.func,
-  ]).isRequired,
-  rowComponent: PropTypes.func.isRequired,
-  rowProps: PropTypes.object,
-  contextProps: PropTypes.object,
-};
 
 export default BaseMediaList;

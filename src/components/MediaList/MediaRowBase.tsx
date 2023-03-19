@@ -1,10 +1,10 @@
 import cx from 'clsx';
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useDrag } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import { MEDIA } from '../../constants/DDItemTypes';
 import { useMediaListContext } from './BaseMediaList';
+import type { Media } from '../../reducers/booth';
 
 const {
   useCallback,
@@ -12,6 +12,15 @@ const {
   useRef,
 } = React;
 
+type MediaRowBaseProps = {
+  className?: string,
+  style?: React.CSSProperties,
+  dragType?: string,
+  media: Media,
+  children: React.ReactNode,
+  onClick?: () => void,
+  containerRef?: React.RefObject<HTMLDivElement>,
+}
 function MediaRowBase({
   className,
   style,
@@ -21,11 +30,11 @@ function MediaRowBase({
   children,
   containerRef,
   ...props
-}) {
+}: MediaRowBaseProps) {
   const { selection } = useMediaListContext();
   const selected = selection.isSelected(media);
 
-  const localRef = useRef();
+  const localRef = useRef<HTMLDivElement>(null);
   const ref = containerRef ?? localRef;
 
   const [, drag, connectDragPreview] = useDrag({
@@ -40,9 +49,9 @@ function MediaRowBase({
     connectDragPreview(getEmptyImage());
   }, [connectDragPreview]);
 
-  const handleKeyPress = useCallback((event) => {
+  const handleKeyPress = useCallback((event: React.KeyboardEvent) => {
     if (event.code === 'Space') {
-      onClick();
+      onClick?.();
     }
   }, [onClick]);
 
@@ -63,15 +72,5 @@ function MediaRowBase({
     </div>
   );
 }
-
-MediaRowBase.propTypes = {
-  className: PropTypes.string,
-  style: PropTypes.object, // from virtual list positioning
-  dragType: PropTypes.string,
-  media: PropTypes.object.isRequired,
-  onClick: PropTypes.func,
-  children: PropTypes.node.isRequired,
-  containerRef: PropTypes.any,
-};
 
 export default MediaRowBase;

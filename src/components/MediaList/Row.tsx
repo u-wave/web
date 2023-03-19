@@ -1,29 +1,35 @@
 import cx from 'clsx';
 import React from 'react';
-import PropTypes from 'prop-types';
 import MediaRowBase from './MediaRowBase';
 import MediaDuration from './MediaDuration';
 import MediaLoadingIndicator from './MediaLoadingIndicator';
 import MediaSourceIcon from './MediaSourceIcon';
 import MediaThumbnail from './MediaThumbnail';
 import MediaActions from './MediaActions';
+import { Media } from '../../reducers/booth';
 
+type MediaRowProps = {
+  className?: string,
+  media: Media,
+  style: React.CSSProperties,
+  onClick: () => void,
+};
 function MediaRow({
   className,
   media,
   style,
   onClick,
-}) {
-  const loadingClass = media.loading ? 'is-loading' : '';
+}: MediaRowProps) {
+  const isLoading = 'loading' in media && typeof media.loading === 'boolean' && media.loading;
 
   return (
     <MediaRowBase
       media={media}
-      className={cx(className, loadingClass)}
+      className={cx(className, isLoading ? 'is-loading' : '')}
       style={style}
       onClick={onClick}
     >
-      {media.loading ? (
+      {isLoading ? (
         <MediaLoadingIndicator className="MediaListRow-loader" />
       ) : (
         <MediaThumbnail url={media.thumbnail} />
@@ -49,12 +55,5 @@ function MediaRow({
     </MediaRowBase>
   );
 }
-
-MediaRow.propTypes = {
-  className: PropTypes.string,
-  style: PropTypes.object, // from virtual list positioning
-  media: PropTypes.object,
-  onClick: PropTypes.func,
-};
 
 export default React.memo(MediaRow);

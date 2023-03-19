@@ -1,9 +1,8 @@
 import cx from 'clsx';
-import React from 'react';
-import PropTypes from 'prop-types';
 import MediaLoadingIndicator from './MediaLoadingIndicator';
 
-function LoadingRow({ className, ...attrs }) {
+type LoadingRowProps = React.ComponentProps<'div'>;
+function LoadingRow({ className, ...attrs }: LoadingRowProps) {
   return (
     <div className={cx('MediaListRow', 'is-loading', className)} {...attrs}>
       <MediaLoadingIndicator className="MediaListRow-loader" />
@@ -22,10 +21,5 @@ function LoadingRow({ className, ...attrs }) {
     </div>
   );
 }
-
-LoadingRow.propTypes = {
-  className: PropTypes.string,
-  selected: PropTypes.bool,
-};
 
 export default LoadingRow;

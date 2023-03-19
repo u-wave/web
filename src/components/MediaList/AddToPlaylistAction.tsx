@@ -1,34 +1,32 @@
 import omit from 'just-omit';
-import React from 'react';
-import PropTypes from 'prop-types';
+import { useCallback } from 'react';
 import { mdiPlus } from '@mdi/js';
 import { useDispatch } from '../../hooks/useRedux';
 import { addMediaMenu } from '../../actions/PlaylistActionCreators';
 import { useMediaListContext } from './BaseMediaList';
 import SvgIcon from '../SvgIcon';
 import MediaAction from './MediaAction';
+import { Media } from '../../reducers/booth';
 
-const {
-  useCallback,
-} = React;
-
-/**
- * @param {object} props
- * @param {object} props.media
- * @param {boolean} [props.withCustomMeta] - Use the artist/title that is stored on this item.
- *   Set to false when dealing with eg. search results, to make the server look up a default
- *   artist/title for this media.
- */
-function AddToPlaylistAction({ media, withCustomMeta = true }) {
+export type AddToPlaylistActionProps = {
+  media: Media,
+  /**
+   * Use the artist/title that is stored on this item.
+   * Set to false when dealing with eg. search results, to make the server look up a default
+   * artist/title for this media.
+   */
+  withCustomMeta?: boolean,
+};
+function AddToPlaylistAction({ media, withCustomMeta = true }: AddToPlaylistActionProps) {
   const { selection } = useMediaListContext();
 
   const dispatch = useDispatch();
-  const handleClick = useCallback((event) => {
+  const handleClick = useCallback((event: React.MouseEvent) => {
     let selectedItems = selection.isSelected(media) ? selection.get() : [media];
     if (!withCustomMeta) {
-      selectedItems = selectedItems.map((item) => omit(item, ['artist', 'title']));
+      selectedItems = selectedItems.map((item) => item && omit(item, ['artist', 'title']));
     }
-    const rect = event.target.getBoundingClientRect();
+    const rect = event.currentTarget.getBoundingClientRect();
 
     dispatch(addMediaMenu(selectedItems, {
       x: rect.left,
@@ -42,10 +40,5 @@ function AddToPlaylistAction({ media, withCustomMeta = true }) {
     </MediaAction>
   );
 }
-
-AddToPlaylistAction.propTypes = {
-  media: PropTypes.object.isRequired,
-  withCustomMeta: PropTypes.bool,
-};
 
 export default AddToPlaylistAction;
