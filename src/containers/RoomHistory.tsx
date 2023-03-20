@@ -1,6 +1,3 @@
-import React from 'react';
-import { useSelector } from '../hooks/useRedux';
-import { roomHistoryWithVotesSelector } from '../selectors/roomHistorySelectors';
 import Overlay from '../components/Overlay';
 import createLazyOverlay from '../components/LazyOverlay';
 
@@ -15,9 +12,7 @@ const RoomHistory = createLazyOverlay({
 });
 
 function RoomHistoryContainer(props) {
-  const media = useSelector(roomHistoryWithVotesSelector);
-
-  return <RoomHistory {...props} media={media} />;
+  return <RoomHistory {...props} />;
 }
 
 export default RoomHistoryContainer;

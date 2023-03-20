@@ -12,7 +12,7 @@ type MediaRowProps = {
   className?: string,
   media: Media,
   style: React.CSSProperties,
-  onClick: () => void,
+  onClick: (event?: React.MouseEvent) => void,
 };
 function MediaRow({
   className,

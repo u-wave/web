@@ -18,9 +18,9 @@ const {
 
 type HistoryRowProps = {
   className?: string,
-  style?: React.CSSProperties,
+  style: React.CSSProperties,
   media: HistoryEntry,
-  onClick?: () => void,
+  onClick?: (event?: React.MouseEvent) => void,
 };
 function HistoryRow({
   className,

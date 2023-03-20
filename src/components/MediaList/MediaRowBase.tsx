@@ -18,7 +18,7 @@ type MediaRowBaseProps = {
   dragType?: string,
   media: Media,
   children: React.ReactNode,
-  onClick?: () => void,
+  onClick?: (event?: React.MouseEvent) => void,
   containerRef?: React.RefObject<HTMLDivElement>,
 }
 function MediaRowBase({

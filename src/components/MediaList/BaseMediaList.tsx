@@ -53,7 +53,7 @@ export type BaseMediaListProps<RowProps extends object = Record<never, never>> =
     index: number,
     media: Media,
     selected: boolean,
-    onClick: (event: React.MouseEvent) => void,
+    onClick: (event?: React.MouseEvent) => void,
   } & RowProps>,
   rowProps?: RowProps,
   contextProps?: object,
@@ -182,7 +182,7 @@ function BaseMediaList({
             index={index}
             media={item}
             selected={selected}
-            onClick={(event) => selectItem(index, event)}
+            onClick={(event?: React.MouseEvent) => event && selectItem(index, event)}
           />
         );
       })}

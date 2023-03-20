@@ -1,8 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import { memo } from 'react';
 import { useMediaSources } from '../../context/MediaSourceContext';
 
-function MediaSourceIcon({ sourceType }) {
+type MediaSourceIconProps = {
+  sourceType: string,
+};
+function MediaSourceIcon({ sourceType }: MediaSourceIconProps) {
   const { getMediaSource } = useMediaSources();
   const { icon, name } = getMediaSource(sourceType);
 
@@ -15,8 +17,4 @@ function MediaSourceIcon({ sourceType }) {
   );
 }
 
-MediaSourceIcon.propTypes = {
-  sourceType: PropTypes.string.isRequired,
-};
-
-export default React.memo(MediaSourceIcon);
+export default memo(MediaSourceIcon);
