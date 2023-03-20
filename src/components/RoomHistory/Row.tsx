@@ -9,18 +9,25 @@ import SongTitle from '../SongTitle';
 import TimeAgo from '../TimeAgo';
 import HistoryActions from './HistoryActions';
 import HistoryVotes from './Votes';
+import { HistoryEntry } from '../../reducers/roomHistory';
 
 const {
   useCallback,
   useState,
 } = React;
 
+type HistoryRowProps = {
+  className?: string,
+  style?: React.CSSProperties,
+  media: HistoryEntry,
+  onClick?: () => void,
+};
 function HistoryRow({
   className,
   style,
   media: historyEntry,
   onClick,
-}) {
+}: HistoryRowProps) {
   const {
     media, timestamp, user, stats,
   } = historyEntry;
@@ -38,7 +45,7 @@ function HistoryRow({
   return (
     <MediaRowBase
       dragType={HISTORY_ENTRY}
-      media={historyEntry}
+      media={{ ...media, _id: historyEntry._id }}
       className={cx('HistoryRow', className)}
       style={style}
       onMouseEnter={handleMouseEnter}

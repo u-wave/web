@@ -1,3 +1,4 @@
+import { mutate } from 'swr';
 import {
   INIT_STATE,
   SOCKET_CONNECT,
@@ -15,7 +16,6 @@ import {
 } from '../constants/ActionTypes';
 import * as Session from '../utils/Session';
 import { get, post, del } from './RequestActionCreators';
-import { loadHistory } from './BoothActionCreators';
 import { setPlaylists, loadPlaylist } from './PlaylistActionCreators';
 import { syncTimestamps } from './TickerActionCreators';
 import { closeLoginDialog } from './DialogActionCreators';
@@ -77,9 +77,9 @@ export function initState() {
   return get('/now', {
     onStart: () => ({ type: LOAD_ALL_PLAYLISTS_START }),
     onComplete: (state) => (dispatch) => {
+      mutate('/booth/history');
       dispatch(syncTimestamps(beforeTime, state.time));
       dispatch(loadedState(state));
-      dispatch(loadHistory());
       dispatch(loadEmotes());
       return state;
     },

@@ -52,7 +52,7 @@ export interface HistoryEntry {
 
 const initialState: HistoryEntry[] = [];
 
-function normalizeFromApi(entry: ApiHistoryEntry) {
+export function normalizeFromApi(entry: ApiHistoryEntry) {
   return {
     _id: entry._id,
     user: entry.user,

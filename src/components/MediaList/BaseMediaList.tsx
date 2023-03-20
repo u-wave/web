@@ -46,8 +46,8 @@ function estimateSize() {
 export type BaseMediaListProps<RowProps extends object = Record<never, never>> = {
   className?: string,
   media: (Media | null)[],
-  listComponent: React.ComponentType<{ style: React.CSSProperties, children: React.ReactNode }>,
-  rowComponent: React.ComponentType<{
+  listComponent: React.ElementType<{ style: React.CSSProperties, children: React.ReactNode }>,
+  rowComponent: React.ElementType<{
     style: React.CSSProperties,
     className: string,
     index: number,

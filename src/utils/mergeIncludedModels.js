@@ -1,7 +1,8 @@
 import dlv from 'dlv';
 import { dset } from 'dset';
 
-function mergeIncludedModels({ data, meta, included }) {
+function mergeIncludedModels({ data: input, meta, included }) {
+  const data = structuredClone(input);
   Object.keys(meta.included ?? {}).forEach((type) => {
     meta.included[type].forEach((path) => {
       data.forEach((item) => {

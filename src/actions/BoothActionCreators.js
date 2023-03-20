@@ -1,17 +1,17 @@
+import { mutate } from 'swr';
 import {
   ADVANCE,
   BOOTH_SKIP,
-  LOAD_HISTORY_START, LOAD_HISTORY_COMPLETE,
 } from '../constants/ActionTypes';
 import { flattenPlaylistItem } from './PlaylistActionCreators';
-import { get, post } from './RequestActionCreators';
-import { historyIDSelector, isCurrentDJSelector } from '../selectors/boothSelectors';
+import { post } from './RequestActionCreators';
+import { isCurrentDJSelector } from '../selectors/boothSelectors';
 import { currentPlaySelector } from '../selectors/roomHistorySelectors';
 import { usersSelector } from '../selectors/userSelectors';
-import mergeIncludedModels from '../utils/mergeIncludedModels';
 
 export function advanceToEmpty() {
   return (dispatch, getState) => {
+    mutate('/booth/history');
     dispatch({
       type: ADVANCE,
       payload: null,
@@ -32,6 +32,7 @@ export function advance(nextBooth) {
   } = nextBooth;
   return (dispatch, getState) => {
     const user = usersSelector(getState())[userID];
+    mutate('/booth/history');
     dispatch({
       type: ADVANCE,
       payload: {
@@ -72,34 +73,4 @@ export function skipped({ userID, moderatorID, reason }) {
       },
     });
   };
-}
-
-export function loadHistoryStart() {
-  return { type: LOAD_HISTORY_START };
-}
-
-export function loadHistoryComplete(response) {
-  return (dispatch, getState) => {
-    const currentHistoryID = historyIDSelector(getState());
-    const { meta } = response;
-    let playHistory = mergeIncludedModels(response);
-    if (playHistory[0] && playHistory[0]._id === currentHistoryID) {
-      playHistory = playHistory.slice(1);
-    }
-    dispatch({
-      type: LOAD_HISTORY_COMPLETE,
-      payload: playHistory,
-      meta: {
-        page: Math.floor(meta.offset / meta.pageSize),
-        size: meta.pageSize,
-      },
-    });
-  };
-}
-
-export function loadHistory() {
-  return get('/booth/history', {
-    onStart: loadHistoryStart,
-    onComplete: loadHistoryComplete,
-  });
 }
