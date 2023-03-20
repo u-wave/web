@@ -16,7 +16,7 @@ import {
 } from '../constants/ActionTypes';
 import * as Session from '../utils/Session';
 import { get, post, del } from './RequestActionCreators';
-import { setPlaylists, loadPlaylist } from './PlaylistActionCreators';
+import { setPlaylists } from './PlaylistActionCreators';
 import { syncTimestamps } from './TickerActionCreators';
 import { closeLoginDialog } from './DialogActionCreators';
 import { loadEmotes } from './ChatActionCreators';
@@ -64,9 +64,6 @@ export function loadedState(state) {
         socketToken: state.socketToken,
         user: state.user,
       }));
-    }
-    if (state.activePlaylist) {
-      dispatch(loadPlaylist(state.activePlaylist));
     }
   };
 }
