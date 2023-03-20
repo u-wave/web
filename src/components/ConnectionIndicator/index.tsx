@@ -1,11 +1,30 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
 import Card from '@mui/material/Card/Card';
 import CardHeader from '@mui/material/CardHeader';
-import OfflineIcon from './OfflineIcon';
+import CircularProgress from '@mui/material/CircularProgress';
 
-function ConnectionIndicator({ isConnected }) {
+type OfflineIconProps = {
+  style?: React.CSSProperties,
+};
+function OfflineIcon({ style }: OfflineIconProps) {
+  return (
+    <div
+      style={{
+        ...style,
+        width: 32,
+        height: 32,
+        display: 'inline-block',
+      }}
+    >
+      <CircularProgress size={32} />
+    </div>
+  );
+}
+
+type ConnectionIndicatorProps = {
+  isConnected: boolean,
+};
+function ConnectionIndicator({ isConnected }: ConnectionIndicatorProps) {
   const { t } = useTranslator();
 
   if (isConnected) {
@@ -24,9 +43,5 @@ function ConnectionIndicator({ isConnected }) {
     </div>
   );
 }
-
-ConnectionIndicator.propTypes = {
-  isConnected: PropTypes.bool.isRequired,
-};
 
 export default ConnectionIndicator;
