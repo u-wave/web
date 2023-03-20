@@ -5,7 +5,7 @@ import HistoryRow from './Row';
 import { normalizeFromApi } from '../../reducers/roomHistory';
 import mergeIncludedModels from '../../utils/mergeIncludedModels';
 import { useSelector } from '../../hooks/useRedux';
-import { currentPlaySelector } from '../../selectors/roomHistorySelectors';
+import { currentPlaySelector } from '../../selectors/boothSelectors';
 
 async function fetchJSON(url: string) {
   const res = await fetch(`/api${url}`);

@@ -1,10 +1,5 @@
-import type { AnyAction } from 'redux';
-import { ADVANCE, LOAD_HISTORY_COMPLETE } from '../constants/ActionTypes';
-import type { currentPlaySelector } from '../selectors/roomHistorySelectors';
 import type { Media } from './booth';
 import type { User } from './users';
-
-type BoothHistoryEntry = NonNullable<ReturnType<typeof currentPlaySelector>>;
 
 interface ApiMedia {
   _id: string
@@ -50,8 +45,6 @@ export interface HistoryEntry {
   },
 }
 
-const initialState: HistoryEntry[] = [];
-
 export function normalizeFromApi(entry: ApiHistoryEntry) {
   return {
     _id: entry._id,
@@ -67,35 +60,4 @@ export function normalizeFromApi(entry: ApiHistoryEntry) {
       favorites: entry.favorites ?? [],
     },
   };
-}
-
-const normalizeFromBooth = (entry: BoothHistoryEntry) => ({
-  _id: entry._id,
-  user: entry.user!, // eslint-disable-line @typescript-eslint/no-non-null-assertion
-  media: entry.media!, // eslint-disable-line @typescript-eslint/no-non-null-assertion
-  timestamp: new Date(entry.timestamp).getTime(),
-  stats: entry.stats,
-});
-
-export default function reduce(state = initialState, action: AnyAction): HistoryEntry[] {
-  const { type, payload, meta } = action;
-  switch (type) {
-    case LOAD_HISTORY_COMPLETE:
-      return (payload as ApiHistoryEntry[]).map(normalizeFromApi);
-    case ADVANCE: {
-      const mostRecent = state[0];
-      // If the currently playing track is already in the history, remove it--
-      // it'll be added back on the next advance, and will be handled by the
-      // roomHistorySelector in the mean time.
-      if (mostRecent && payload && mostRecent._id === payload.historyID) {
-        return state.slice(1);
-      }
-      if (!meta || !meta.previous) {
-        return state;
-      }
-      return [normalizeFromBooth(meta.previous), ...state];
-    }
-    default:
-      return state;
-  }
 }

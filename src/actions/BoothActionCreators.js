@@ -5,8 +5,7 @@ import {
 } from '../constants/ActionTypes';
 import { flattenPlaylistItem } from './PlaylistActionCreators';
 import { post } from './RequestActionCreators';
-import { isCurrentDJSelector } from '../selectors/boothSelectors';
-import { currentPlaySelector } from '../selectors/roomHistorySelectors';
+import { isCurrentDJSelector, currentPlaySelector } from '../selectors/boothSelectors';
 import { usersSelector } from '../selectors/userSelectors';
 
 export function advanceToEmpty() {

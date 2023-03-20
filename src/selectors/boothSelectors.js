@@ -2,6 +2,7 @@ import { createSelector } from 'reselect';
 import { isPreviewMediaDialogOpenSelector } from './dialogSelectors';
 import { isMutedSelector, volumeSelector } from './settingSelectors';
 import { currentTimeSelector } from './timeSelectors';
+import { currentVotesSelector } from './voteSelectors';
 import {
   currentUserSelector,
   currentUserHasRoleSelector,
@@ -87,4 +88,24 @@ export const playbackVolumeSelector = createSelector(
 export const mobilePlaybackVolumeSelector = createSelector(
   playbackMutedSelector,
   (isMuted) => (isMuted ? 0 : 100),
+);
+
+export const currentPlaySelector = createSelector(
+  historyIDSelector,
+  mediaSelector,
+  startTimeSelector,
+  djSelector,
+  currentVotesSelector,
+  (historyID, media, timestamp, dj, stats) => {
+    if (!historyID) {
+      return null;
+    }
+    return {
+      _id: historyID,
+      user: dj,
+      media,
+      timestamp,
+      stats,
+    };
+  },
 );

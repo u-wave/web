@@ -10,7 +10,6 @@ import imports from './imports';
 import locales from './locales';
 import mediaSearch from './mediaSearch';
 import playlists from './playlists';
-import roomHistory from './roomHistory';
 import server from './server';
 import settings from './settings';
 import theme from './theme';
@@ -33,7 +32,6 @@ export {
   locales,
   mediaSearch,
   playlists,
-  roomHistory,
   server,
   settings,
   theme,
