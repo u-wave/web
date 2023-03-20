@@ -1,4 +1,5 @@
 import React from 'react';
+import useSWRImmutable from 'swr/immutable';
 import { useSelector } from '../hooks/useRedux';
 import { useMediaSearchStore } from '../stores/MediaSearchStore';
 import { playlistsByIDSelector } from '../selectors/playlistSelectors';
@@ -8,15 +9,35 @@ const { useMemo } = React;
 
 function SearchResultsContainer() {
   const {
+    activeSource,
     query,
-    results,
-    state,
   } = useMediaSearchStore();
+
+  // Technically this is not immutable but we want to avoid frequent
+  // search queries that cost a lot of quota
+  const { data: results, error, isValidating } = useSWRImmutable(() => {
+    if (!query) {
+      return null;
+    }
+
+    const qs = new URLSearchParams({
+      query,
+      include: 'playlists',
+    });
+    return `/search/${encodeURIComponent(activeSource)}?${qs}`;
+  }, async (url) => {
+    const res = await fetch(`/api${url}`);
+    const { data, errors } = await res.json();
+    if (errors) {
+      throw new Error(errors[0].title);
+    }
+    return data;
+  });
 
   const playlistsByID = useSelector(playlistsByIDSelector);
 
   const resultsWithPlaylists = useMemo(() => {
-    if (!results) {
+    if (!Array.isArray(results)) {
       return [];
     }
     return results.map((result) => {
@@ -33,6 +54,10 @@ function SearchResultsContainer() {
       };
     });
   }, [results, playlistsByID]);
+
+  const state = !results && !error ? (
+    isValidating ? 'loadingState/LOADING' : 'loadingState/IDLE'
+  ) : 'loadingState/LOADED';
 
   return (
     <SearchResults
