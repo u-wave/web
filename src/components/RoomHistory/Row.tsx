@@ -9,7 +9,7 @@ import SongTitle from '../SongTitle';
 import TimeAgo from '../TimeAgo';
 import HistoryActions from './HistoryActions';
 import HistoryVotes from './Votes';
-import { HistoryEntry } from '../../reducers/roomHistory';
+import { HistoryEntry } from '../../hooks/useRoomHistory';
 
 const {
   useCallback,
