@@ -1,7 +1,5 @@
 import React from 'react';
 import { useSelector, useDispatch } from '../../hooks/useRedux';
-import { currentUserSelector } from '../../selectors/userSelectors';
-import { playlistsSelector } from '../../selectors/playlistSelectors';
 import { toggleOverlay } from '../../reducers/activeOverlay';
 import { drawerIsOpenSelector } from '../selectors/drawerSelectors';
 import { setDrawer } from '../actions/DrawerActionCreators';
@@ -16,8 +14,6 @@ const {
 function DrawerMenuContainer() {
   const uwave = useUwave();
   const hasAboutPage = !!(uwave && uwave.getAboutPageComponent());
-  const user = useSelector(currentUserSelector);
-  const playlists = useSelector(playlistsSelector);
   const open = useSelector(drawerIsOpenSelector);
   const dispatch = useDispatch();
   const onShowAbout = useCallback(() => dispatch(toggleOverlay('about')), [dispatch]);
@@ -32,8 +28,6 @@ function DrawerMenuContainer() {
   return (
     <DrawerMenu
       hasAboutPage={hasAboutPage}
-      user={user}
-      playlists={playlists}
       open={open}
       onShowAbout={onShowAbout}
       onShowServerList={onShowServerList}

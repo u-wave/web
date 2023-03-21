@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import { useCallback, useMemo } from 'react';
+import useSWR from 'swr';
 import { useTranslator } from '@u-wave/react-translate';
 import Drawer from '@mui/material/Drawer';
 import MenuList from '@mui/material/MenuList';
@@ -11,20 +11,40 @@ import Divider from '@mui/material/Divider';
 import { mdiCheck } from '@mdi/js';
 import UserCard from '../../../components/UserCard/UserCard';
 import SvgIcon from '../../../components/SvgIcon';
-
-const {
-  useCallback,
-} = React;
+import { useSelector } from '../../../hooks/useRedux';
+import { activePlaylistIDSelector } from '../../../selectors/playlistSelectors';
+import useCurrentUser from '../../../hooks/useCurrentUser';
 
 const classes = {
   paper: 'DrawerMenu',
 };
 
+type PlaylistsProps = {
+  title: React.ReactNode,
+  onShowPlaylist: (id: string) => void,
+};
 function Playlists({
   title,
-  playlists,
   onShowPlaylist,
-}) {
+}: PlaylistsProps) {
+  const { data: playlistsFromApi } = useSWR<{ _id: string, name: string, size: number }[]>('/playlists', async (url: string) => {
+    const response = await fetch(`/api${url}`);
+    const { data } = await response.json();
+    return data;
+  });
+  const activePlaylistID = useSelector(activePlaylistIDSelector);
+  const playlists = useMemo(() => {
+    return playlistsFromApi?.map((playlist) => {
+      if (playlist._id === activePlaylistID) {
+        return {
+          ...playlist,
+          active: true,
+        };
+      }
+      return playlist as (typeof playlist & { active?: boolean });
+    });
+  }, [playlistsFromApi, activePlaylistID]);
+
   const header = (
     <ListSubheader>
       {title}
@@ -33,7 +53,7 @@ function Playlists({
 
   return (
     <MenuList subheader={header}>
-      {playlists.map((playlist) => (
+      {playlists?.map((playlist) => (
         <MenuItem
           key={playlist._id}
           onClick={(event) => {
@@ -55,15 +75,16 @@ function Playlists({
   );
 }
 
-Playlists.propTypes = {
-  title: PropTypes.string.isRequired,
-  playlists: PropTypes.arrayOf(PropTypes.shape({ name: PropTypes.string.isRequired })).isRequired,
-  onShowPlaylist: PropTypes.func.isRequired,
+type DrawerMenuProps = {
+  open: boolean,
+  hasAboutPage: boolean,
+  onShowAbout: () => void,
+  onShowServerList: () => void,
+  onShowSettings: () => void,
+  onShowPlaylist: (id: string) => void,
+  onDrawerClose: () => void,
 };
-
 function DrawerMenu({
-  user,
-  playlists,
   open,
   hasAboutPage,
   onShowAbout,
@@ -71,7 +92,8 @@ function DrawerMenu({
   onShowSettings,
   onShowPlaylist,
   onDrawerClose,
-}) {
+}: DrawerMenuProps) {
+  const user = useCurrentUser();
   const { t } = useTranslator();
 
   const handleShowAbout = useCallback(() => {
@@ -86,7 +108,7 @@ function DrawerMenu({
     onShowSettings();
     onDrawerClose();
   }, [onShowSettings, onDrawerClose]);
-  const handleShowPlaylist = useCallback((id) => {
+  const handleShowPlaylist = useCallback((id: string) => {
     onShowPlaylist(id);
     onDrawerClose();
   }, [onShowPlaylist, onDrawerClose]);
@@ -112,7 +134,6 @@ function DrawerMenu({
           <Divider />
           <Playlists
             title={t('playlists.title')}
-            playlists={playlists}
             onShowPlaylist={handleShowPlaylist}
           />
         </>
@@ -120,17 +141,5 @@ function DrawerMenu({
     </Drawer>
   );
 }
-
-DrawerMenu.propTypes = {
-  user: PropTypes.object,
-  playlists: PropTypes.arrayOf(PropTypes.shape({ name: PropTypes.string.isRequired })),
-  open: PropTypes.bool.isRequired,
-  hasAboutPage: PropTypes.bool.isRequired,
-  onShowAbout: PropTypes.func.isRequired,
-  onShowServerList: PropTypes.func.isRequired,
-  onShowSettings: PropTypes.func.isRequired,
-  onShowPlaylist: PropTypes.func.isRequired,
-  onDrawerClose: PropTypes.func.isRequired,
-};
 
 export default DrawerMenu;
