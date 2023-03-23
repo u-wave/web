@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from '../../hooks/useRedux';
 import { toggleOverlay } from '../../reducers/activeOverlay';
-import { set } from '../../actions/SettingsActionCreators';
+import { set } from '../../reducers/settings';
 import {
   mediaSelector,
   startTimeSelector,

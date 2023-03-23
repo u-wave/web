@@ -1,7 +1,7 @@
 import { log } from '../../actions/ChatActionCreators';
 import { setVolume, mute, unmute } from '../../actions/PlaybackActionCreators';
 import { doUpvote, doDownvote } from '../../actions/VoteActionCreators';
-import { set as setSetting } from '../../actions/SettingsActionCreators';
+import { set as setSetting } from '../../reducers/settings';
 
 export default [
   {

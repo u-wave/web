@@ -1,4 +1,4 @@
-import { set } from './SettingsActionCreators';
+import { set } from '../reducers/settings';
 import { settingsSelector } from '../selectors/settingSelectors';
 import {
   ENTER_FULLSCREEN,

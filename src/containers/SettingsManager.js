@@ -4,7 +4,7 @@ import { createStructuredSelector } from 'reselect';
 import {
   set as setSetting,
   setLanguage,
-} from '../actions/SettingsActionCreators';
+} from '../reducers/settings';
 import { changeLanguage } from '../actions/LocaleActionCreators';
 import { doChangeUsername } from '../actions/UserActionCreators';
 import { logout } from '../actions/LoginActionCreators';

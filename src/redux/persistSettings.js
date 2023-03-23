@@ -1,4 +1,4 @@
-import { loadSettings } from '../actions/SettingsActionCreators';
+import { load as loadSettings } from '../reducers/settings';
 
 const SETTINGS_KEY = 'uwaveSettings';
 
