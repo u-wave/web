@@ -1,11 +1,12 @@
 import dlv from 'dlv';
 import { dset } from 'dset';
+import merge from 'deepmerge';
 
 /**
  * @param {{ data: any[], meta: object, included: object }} response
  */
 function mergeIncludedModels({ data: input, meta, included }) {
-  const data = structuredClone(input);
+  const data = merge({}, input, { clone: true });
   Object.keys(meta.included ?? {}).forEach((type) => {
     meta.included[type].forEach((path) => {
       data.forEach((item) => {
