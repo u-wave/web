@@ -51,21 +51,23 @@ function estimateSize() {
   return 56;
 }
 
+type BaseRowProps<MediaType extends Item = Media> = {
+  style: React.CSSProperties,
+  className: string,
+  index: number,
+  media: MediaType,
+  selected: boolean,
+  onClick: (event?: React.MouseEvent) => void,
+}
+
 export type BaseMediaListProps<
   MediaType extends Item = Media,
-  RowProps extends object = Record<never, never>,
+  RowProps = Record<never, never>,
 > = {
   className?: string,
   media: (MediaType | null)[],
   listComponent: React.ElementType<{ style: React.CSSProperties, children: React.ReactNode }>,
-  rowComponent: React.ElementType<{
-    style: React.CSSProperties,
-    className: string,
-    index: number,
-    media: MediaType,
-    selected: boolean,
-    onClick: (event?: React.MouseEvent) => void,
-  } & RowProps>,
+  rowComponent: React.ComponentType<BaseRowProps<MediaType> & RowProps>,
   rowProps?: RowProps,
   contextProps?: object,
   onRequestPage?: (page: number) => Promise<void>,
