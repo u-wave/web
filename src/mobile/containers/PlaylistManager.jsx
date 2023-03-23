@@ -14,7 +14,7 @@ const {
 } = React;
 
 const PlaylistManager = createLazyOverlay({
-  loader: () => import('../components/PlaylistManager'),
+  Component: React.lazy(() => import('../components/PlaylistManager')),
   title: (t) => t('playlists.title'),
 });
 

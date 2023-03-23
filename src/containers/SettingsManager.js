@@ -1,3 +1,4 @@
+import React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import {
@@ -35,7 +36,7 @@ const mapDispatchToProps = {
 const enhance = connect(mapStateToProps, mapDispatchToProps);
 
 const SettingsManager = createLazyOverlay({
-  loader: () => import('../components/SettingsManager'),
+  Component: React.lazy(() => import('../components/SettingsManager')),
   title: (t) => t('settings.title'),
 });
 

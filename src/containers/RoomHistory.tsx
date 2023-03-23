@@ -1,22 +1,18 @@
+import { lazy } from 'react';
 import Overlay from '../components/Overlay';
 import createLazyOverlay from '../components/LazyOverlay';
 
-type OverlayProps = {
-  onCloseOverlay: () => void,
-  children: React.ReactNode,
-};
-
-function RoomHistoryOverlay(props: OverlayProps) {
+function RoomHistoryOverlay(props: { children: React.ReactNode }) {
   return <Overlay {...props} direction="top" />;
 }
 
 const RoomHistory = createLazyOverlay({
-  loader: () => import('../components/RoomHistory'),
   title: (t) => t('history.title'),
   OverlayComponent: RoomHistoryOverlay,
+  Component: lazy(() => import('../components/RoomHistory')),
 });
 
-function RoomHistoryContainer(props: OverlayProps) {
+function RoomHistoryContainer(props: { onCloseOverlay: () => void }) {
   return <RoomHistory {...props} />;
 }
 

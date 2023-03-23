@@ -1,3 +1,4 @@
+import React from 'react';
 import Overlay from '../../components/Overlay';
 import createLazyOverlay from '../../components/LazyOverlay';
 
@@ -6,7 +7,7 @@ function RoomHistoryOverlay(props) {
 }
 
 const RoomHistory = createLazyOverlay({
-  loader: () => import('../components/RoomHistory'),
+  loader: React.lazy(() => import('../components/RoomHistory')),
   title: (t) => t('history.title'),
   OverlayComponent: RoomHistoryOverlay,
 });
