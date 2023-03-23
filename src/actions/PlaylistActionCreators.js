@@ -375,6 +375,7 @@ export function deletePlaylist(playlistID) {
 /**
  * @param {PlaylistItemDesc[]} items - The items to add.
  * @param {{ x: number, y: number }} position - Where to show the menu.
+ * @returns {import('redux-thunk').ThunkAction}
  */
 export function addMediaMenu(items, position) {
   return (dispatch, getState) => {
