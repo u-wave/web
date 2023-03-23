@@ -329,10 +329,10 @@ export default function reduce(state = initialState, action: AnyAction): State {
       };
       return {
         ...state,
-        playlists: Object.assign(
-          state.playlists,
-          { [meta.tempId]: newPlaylist },
-        ),
+        playlists: {
+          ...state.playlists,
+          [meta.tempId]: newPlaylist,
+        },
         selectedPlaylistID: meta.tempId,
       };
     }
