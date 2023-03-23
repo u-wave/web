@@ -1,28 +1,38 @@
 import cx from 'clsx';
-import React from 'react';
-import PropTypes from 'prop-types';
+import useSWRImmutable from 'swr/immutable';
+import { useRef } from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import ImportPanelHeader from '../../components/PlaylistManager/Import/ImportPanelHeader';
-import PlaylistRow from './PlaylistRow';
-
-const {
-  useRef,
-} = React;
+import PlaylistRow, { YouTubePlaylist } from './PlaylistRow';
 
 function estimateSize() {
   return 56;
 }
 
+type ChannelPanelProps = {
+  url: string,
+  onImportPlaylist: (sourceID: string, name: string) => void,
+  onClosePanel: () => void,
+};
 function ChannelPanel({
-  importingChannelTitle,
-  importablePlaylists,
+  url,
   onImportPlaylist,
   onClosePanel,
-}) {
-  const parentRef = useRef();
+}: ChannelPanelProps) {
+  const { data } = useSWRImmutable(url, async (playlistUrl: string) => {
+    const apiUrl = new URL('/api/import/youtube/channel', window.location.href);
+    apiUrl.searchParams.set('url', playlistUrl);
+    const response = await fetch(apiUrl);
+    const json: {
+      channel: { id: string, title: string },
+      playlists: YouTubePlaylist[],
+    } = await response.json();
+    return json;
+  }, { suspense: true });
+  const parentRef = useRef<HTMLDivElement>(null);
 
   const virtualizer = useVirtualizer({
-    count: importablePlaylists.length,
+    count: data.playlists.length,
     getScrollElement: () => parentRef.current,
     estimateSize,
     overscan: 6,
@@ -31,12 +41,12 @@ function ChannelPanel({
   return (
     <div className="ImportPanel ChannelPanel">
       <ImportPanelHeader onClosePanel={onClosePanel}>
-        {`${importingChannelTitle}'s Playlists`}
+        {`${data.channel.title}'s Playlists`}
       </ImportPanelHeader>
-      <div className="MediaList ImportPanel-body">
+      <div className="MediaList ImportPanel-body" ref={parentRef}>
         <div style={{ height: `${virtualizer.getTotalSize()}px`, width: '100%', position: 'relative' }}>
           {virtualizer.getVirtualItems().map(({ index, start }) => {
-            const playlist = importablePlaylists[index];
+            const playlist = data.playlists[index];
             const style = { transform: `translateY(${start}px)` };
             return (
               <PlaylistRow
@@ -53,12 +63,5 @@ function ChannelPanel({
     </div>
   );
 }
-
-ChannelPanel.propTypes = {
-  importingChannelTitle: PropTypes.string.isRequired,
-  importablePlaylists: PropTypes.arrayOf(PropTypes.object).isRequired,
-  onImportPlaylist: PropTypes.func.isRequired,
-  onClosePanel: PropTypes.func.isRequired,
-};
 
 export default ChannelPanel;

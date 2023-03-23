@@ -1,22 +1,34 @@
 import cx from 'clsx';
-import React from 'react';
-import PropTypes from 'prop-types';
 import IconButton from '@mui/material/IconButton';
 import { mdiPlaylistPlus } from '@mdi/js';
 import SvgIcon from '../../components/SvgIcon';
 
-const PlaylistRow = ({
+export interface YouTubePlaylist {
+  sourceID: string;
+  name: string;
+  description: string;
+  size: number;
+  thumbnail: string;
+}
+
+type PlaylistRowProps = {
+  className?: string,
+  style?: React.CSSProperties,
+  playlist: YouTubePlaylist,
+  onImport: () => void,
+}
+function PlaylistRow({
   className,
+  style,
   playlist,
   onImport,
   // etc
-  ...attrs
-}) => {
+}: PlaylistRowProps) {
   const thumbnail = (
     <div className="MediaListRow-thumb">
       <img
         className="MediaListRow-image"
-        key={playlist.id}
+        key={playlist.sourceID}
         src={playlist.thumbnail}
         loading="lazy"
         alt=""
@@ -25,10 +37,7 @@ const PlaylistRow = ({
   );
 
   return (
-    <div
-      className={cx('MediaListRow', 'src-youtube-PlaylistRow', className)}
-      {...attrs}
-    >
+    <div className={cx('MediaListRow', 'src-youtube-PlaylistRow', className)} style={style}>
       {thumbnail}
       <div className="src-youtube-PlaylistRow-info" title={playlist.description}>
         <div className="src-youtube-PlaylistRow-name">
@@ -43,12 +52,6 @@ const PlaylistRow = ({
       </IconButton>
     </div>
   );
-};
-
-PlaylistRow.propTypes = {
-  className: PropTypes.string,
-  playlist: PropTypes.object.isRequired,
-  onImport: PropTypes.func.isRequired,
-};
+}
 
 export default PlaylistRow;

@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import { useRef, useTransition } from 'react';
 import { useTranslator } from '@u-wave/react-translate';
 import { mdiPlaylistPlay } from '@mdi/js';
 import { useDispatch } from '../../hooks/useRedux';
@@ -9,42 +8,39 @@ import FormGroup from '../../components/Form/Group';
 import TextField from '../../components/Form/TextField';
 import Button from '../../components/Form/Button';
 import SvgIcon from '../../components/SvgIcon';
-import {
-  getChannelPlaylists,
-  getImportablePlaylist,
-} from './actions';
+import { importFromChannel, importFromPlaylist } from './reducer';
 
-const {
-  useRef,
-} = React;
-
+type YoutubeImportFormProps = {
+  onHideImportPanel: () => void,
+  onShowImportPanel: () => void,
+}
 function YoutubeImportForm({
   onHideImportPanel,
   onShowImportPanel,
-}) {
+}: YoutubeImportFormProps) {
   const { t } = useTranslator();
   const dispatch = useDispatch();
+  const [isPending, startTransition] = useTransition();
 
-  const refChannel = useRef(null);
-  const refPlaylist = useRef(null);
+  const refChannel = useRef<HTMLInputElement>(null);
+  const refPlaylist = useRef<HTMLInputElement>(null);
 
-  const handleImportChannel = (event) => {
+  const handleImportChannel = (event: React.FormEvent) => {
     event.preventDefault();
     const url = refChannel.current.value;
-    dispatch(getChannelPlaylists(url)).catch(() => {
-      onHideImportPanel();
+    startTransition(() => {
+      onShowImportPanel();
+      dispatch(importFromChannel({ url }));
     });
-    onShowImportPanel();
   };
 
-  const handleImportPlaylist = (event) => {
+  const handleImportPlaylist = (event: React.FormEvent) => {
     event.preventDefault();
     const url = refPlaylist.current.value;
-
-    dispatch(getImportablePlaylist(url)).catch(() => {
-      onHideImportPanel();
+    startTransition(() => {
+      onShowImportPanel();
+      dispatch(importFromPlaylist({ url }));
     });
-    onShowImportPanel();
   };
 
   return (
@@ -79,10 +75,5 @@ function YoutubeImportForm({
     </ImportSourceBlock>
   );
 }
-
-YoutubeImportForm.propTypes = {
-  onShowImportPanel: PropTypes.func.isRequired,
-  onHideImportPanel: PropTypes.func.isRequired,
-};
 
 export default YoutubeImportForm;

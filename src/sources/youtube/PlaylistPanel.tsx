@@ -1,21 +1,35 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import useSWRImmutable from 'swr/immutable';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import { mdiPlaylistPlus } from '@mdi/js';
 import SvgIcon from '../../components/SvgIcon';
 import MediaListBase from '../../components/MediaList/BaseMediaList';
 import ImportPanelHeader from '../../components/PlaylistManager/Import/ImportPanelHeader';
-import ImportRow from './ImportRow';
+import ImportRow, { YouTubeMedia } from './ImportRow';
 
+type YouTubeImportPlaylistPanelProps = {
+  url: string,
+  onImportPlaylist: (sourceID: string, name: string) => void,
+  onClosePanel: () => void,
+};
 function YouTubeImportPlaylistPanel({
-  importingPlaylist,
-  importingPlaylistItems,
+  url,
   onImportPlaylist,
   onClosePanel,
-}) {
+}: YouTubeImportPlaylistPanelProps) {
+  const { data } = useSWRImmutable(url, async (playlistUrl: string) => {
+    const apiUrl = new URL('/api/import/youtube/playlist', window.location.href);
+    apiUrl.searchParams.set('url', playlistUrl);
+    const response = await fetch(apiUrl);
+    const json: {
+      playlist: { sourceID: string, name: string },
+      items: YouTubeMedia[],
+    } = await response.json();
+    return json;
+  }, { suspense: true });
+
   const handleImportFull = () => (
-    onImportPlaylist(importingPlaylist.sourceID, importingPlaylist.name)
+    onImportPlaylist(data.playlist.sourceID, data.playlist.name)
   );
 
   return (
@@ -23,9 +37,9 @@ function YouTubeImportPlaylistPanel({
       <ImportPanelHeader onClosePanel={onClosePanel}>
         <div className="src-youtube-PlaylistPanel-header">
           <div className="src-youtube-PlaylistPanel-name">
-            {importingPlaylist.name}
+            {data.playlist.name}
           </div>
-          <Tooltip title={`Import All (${importingPlaylistItems.length})`} placement="top">
+          <Tooltip title={`Import All (${data.items.length})`} placement="top">
             <IconButton onClick={handleImportFull}>
               <SvgIcon path={mdiPlaylistPlus} className="src-youtube-PlaylistPanel-importIcon" />
             </IconButton>
@@ -34,22 +48,12 @@ function YouTubeImportPlaylistPanel({
       </ImportPanelHeader>
       <MediaListBase
         className="ImportPanel-body"
-        media={importingPlaylistItems}
+        media={data.items}
         listComponent="div"
         rowComponent={ImportRow}
       />
     </div>
   );
 }
-
-YouTubeImportPlaylistPanel.propTypes = {
-  importingPlaylist: PropTypes.shape({
-    sourceID: PropTypes.string,
-    name: PropTypes.string,
-  }).isRequired,
-  importingPlaylistItems: PropTypes.arrayOf(PropTypes.object).isRequired,
-  onImportPlaylist: PropTypes.func.isRequired,
-  onClosePanel: PropTypes.func.isRequired,
-};
 
 export default YouTubeImportPlaylistPanel;

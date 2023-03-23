@@ -1,46 +1,6 @@
-import { get, post } from '../../actions/RequestActionCreators';
-
-import {
-  createPlaylistStart,
-  createPlaylistComplete,
-} from '../../actions/PlaylistActionCreators';
-
-import {
-  GET_IMPORTABLE_PLAYLIST_START,
-  GET_IMPORTABLE_PLAYLIST_COMPLETE,
-  GET_CHANNEL_PLAYLISTS_START,
-  GET_CHANNEL_PLAYLISTS_COMPLETE,
-  IMPORT_PLAYLIST_START,
-  IMPORT_PLAYLIST_COMPLETE,
-} from './constants';
-
-function getImportablePlaylistStart(url) {
-  return {
-    type: GET_IMPORTABLE_PLAYLIST_START,
-    payload: { url },
-  };
-}
-
-function getImportablePlaylistComplete(url, playlist, items) {
-  return {
-    type: GET_IMPORTABLE_PLAYLIST_COMPLETE,
-    payload: { url, playlist, items },
-  };
-}
-
-export function getImportablePlaylist(url) {
-  return get('/import/youtube/playlist', {
-    qs: { url },
-    onStart: () => getImportablePlaylistStart(url),
-    onComplete: ({ playlist, items }) => getImportablePlaylistComplete(url, playlist, items),
-    onError: (error) => ({
-      type: GET_IMPORTABLE_PLAYLIST_COMPLETE,
-      error: true,
-      payload: error,
-      meta: { url },
-    }),
-  });
-}
+import { post } from '../../actions/RequestActionCreators';
+import { createPlaylistStart, createPlaylistComplete } from '../../actions/PlaylistActionCreators';
+import { IMPORT_PLAYLIST_START, IMPORT_PLAYLIST_COMPLETE } from './constants';
 
 function importPlaylistStart(id, name) {
   return (dispatch) => {
@@ -72,37 +32,6 @@ export function importPlaylist(id, name) {
       error: true,
       payload: error,
       meta: { id },
-    }),
-  });
-}
-
-function getChannelPlaylistsStart(url) {
-  return {
-    type: GET_CHANNEL_PLAYLISTS_START,
-    payload: { url },
-  };
-}
-
-function getChannelPlaylistsComplete(channel, playlists) {
-  return {
-    type: GET_CHANNEL_PLAYLISTS_COMPLETE,
-    payload: {
-      channel,
-      playlists,
-    },
-  };
-}
-
-export function getChannelPlaylists(url) {
-  return get('/import/youtube/channel', {
-    qs: { url },
-    onStart: () => getChannelPlaylistsStart(url),
-    onComplete: ({ channel, playlists }) => getChannelPlaylistsComplete(channel, playlists),
-    onError: (error) => ({
-      type: GET_CHANNEL_PLAYLISTS_COMPLETE,
-      error: true,
-      payload: error,
-      meta: { url },
     }),
   });
 }

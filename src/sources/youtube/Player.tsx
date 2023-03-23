@@ -1,11 +1,20 @@
 import cx from 'clsx';
-import React from 'react';
-import PropTypes from 'prop-types';
 import YouTube from '@u-wave/react-youtube';
+import { useCallback } from 'react';
+import { Media } from '../../reducers/booth';
 
-const { useCallback } = React;
+type YouTubePlayerProps = {
+  active: boolean,
+  className?: string,
+  enabled: boolean,
+  mode: 'small' | 'large' | 'preview',
+  media: Media | null,
+  seek: number,
+  volume: number,
+  onPlay: () => void,
+};
 
-const YouTubePlayer = ({
+function YouTubePlayer({
   active,
   className,
   enabled,
@@ -14,11 +23,11 @@ const YouTubePlayer = ({
   seek,
   volume,
   onPlay,
-}) => {
+}: YouTubePlayerProps) {
   const modeClass = `src-youtube-Player--${mode}`;
   const controllable = mode === 'preview';
 
-  const handlePause = useCallback((event) => {
+  const handlePause = useCallback((event: YT.OnStateChangeEvent) => {
     if (active && !controllable) {
       event.target.playVideo();
     }
@@ -47,17 +56,6 @@ const YouTubePlayer = ({
       )}
     </div>
   );
-};
-
-YouTubePlayer.propTypes = {
-  className: PropTypes.string,
-  mode: PropTypes.oneOf(['small', 'large', 'preview']),
-  active: PropTypes.bool.isRequired,
-  enabled: PropTypes.bool,
-  media: PropTypes.object,
-  seek: PropTypes.number,
-  volume: PropTypes.number,
-  onPlay: PropTypes.func,
-};
+}
 
 export default YouTubePlayer;
