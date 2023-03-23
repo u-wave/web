@@ -10,6 +10,7 @@ import VideoToolbar from './VideoToolbar';
 import MouseMoveCapture from './VideoMouseMoveCapture';
 import Player from '../Player';
 import { selectOverlay } from '../../reducers/activeOverlay';
+import { Media } from '../../reducers/booth';
 
 // Overlays over the video (even tiny in the corner like ours) violate TOS,
 // so we can not show them. Toggling it off with a conditional for now until
@@ -23,9 +24,18 @@ const {
   useState,
 } = React;
 
-const defaultSourceTools = () => null;
-
-function Video(props) {
+type VideoProps = {
+  isFullscreen: boolean,
+  enabled: boolean,
+  size: string,
+  volume: number,
+  isMuted: boolean,
+  media: Media,
+  seek: number,
+  onFullscreenEnter: () => void,
+  onFullscreenExit: () => void,
+}
+function Video(props: VideoProps) {
   const {
     isFullscreen,
     enabled,
@@ -38,14 +48,13 @@ function Video(props) {
     onFullscreenExit,
   } = props;
 
-  const { getMediaSource } = useMediaSources();
   const [shouldShowToolbar, setShowToolbar] = useState(false);
   const activeOverlay = useSelector(selectOverlay);
-  const container = useRef(null);
-  const timer = useRef(null);
+  const container = useRef<HTMLDivElement>(null);
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleRequestFullscreenEnter = useCallback(() => {
-    if (screenfull.isEnabled) {
+    if (screenfull.isEnabled && container.current) {
       screenfull.request(container.current);
     }
     onFullscreenEnter();
@@ -58,7 +67,9 @@ function Video(props) {
   }, [onFullscreenExit]);
 
   const handleMouseMoveEnd = useCallback(() => {
-    clearTimeout(timer.current);
+    if (timer.current) {
+      clearTimeout(timer.current);
+    }
     timer.current = null;
     setShowToolbar(false);
   }, []);
@@ -98,11 +109,6 @@ function Video(props) {
     return <div className="Video" />;
   }
 
-  const currentSource = getMediaSource(media.sourceType);
-  const MediaSourceTools = (currentSource && currentSource.VideoTools)
-    ? currentSource.VideoTools
-    : defaultSourceTools;
-
   return (
     <div
       ref={container}
@@ -137,9 +143,7 @@ function Video(props) {
               isFullscreen={isFullscreen}
               onFullscreenEnter={handleRequestFullscreenEnter}
               onFullscreenExit={onFullscreenExit}
-            >
-              <MediaSourceTools media={media} />
-            </VideoToolbar>
+            />
           )}
         </>
       )}

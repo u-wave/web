@@ -1,12 +1,20 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { useMediaSources } from '../../context/MediaSourceContext';
+import { Media } from '../../reducers/booth';
 
-const PreviewPlayer = ({
+type PreviewPlayerProps = {
+  media: Media,
+  seek?: number,
+  volume: number,
+  isMuted: boolean,
+  size?: string,
+};
+function PreviewPlayer({
   media,
   seek = 0,
-  ...props
-}) => {
+  size = 'preview',
+  volume,
+  isMuted,
+}: PreviewPlayerProps) {
   const { getMediaSource } = useMediaSources();
 
   const { Player } = getMediaSource(media.sourceType);
@@ -16,14 +24,10 @@ const PreviewPlayer = ({
       active
       seek={seek}
       media={media}
-      {...props}
+      volume={isMuted ? 0 : volume}
+      size={size}
     />
   );
-};
-
-PreviewPlayer.propTypes = {
-  media: PropTypes.object.isRequired,
-  seek: PropTypes.number,
-};
+}
 
 export default PreviewPlayer;

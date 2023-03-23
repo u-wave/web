@@ -11,7 +11,7 @@ function MediaSourceIcon({ sourceType }: MediaSourceIconProps) {
   return (
     <img
       height="20dp"
-      src={icon}
+      src={icon.toString()}
       alt={name}
     />
   );

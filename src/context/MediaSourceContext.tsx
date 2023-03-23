@@ -1,4 +1,6 @@
 import React from 'react';
+import type { AnyAction } from 'redux';
+import { Media } from '../reducers/booth';
 
 const {
   createContext,
@@ -6,12 +8,36 @@ const {
   useMemo,
 } = React;
 
-interface SourcesApi {
-  getMediaSource(name: string): { icon: string, name: string };
-  getAllMediaSources(): Record<string, { icon: string, name: string }>;
+export interface MediaSource<State extends object = Record<never, never>> {
+  name: string;
+  icon: URL;
+  logo: URL;
+  Player: React.ComponentType<{
+    active: boolean,
+    enabled: boolean,
+    size: string,
+    mode?: 'preview' | undefined,
+    volume: number,
+    media: Media,
+    seek: number,
+    onPlay?: () => void,
+  }>;
+  ImportForm?: React.ComponentType<{
+    onShowImportPanel: () => void,
+    onHideImportPanel: () => void,
+  }>;
+  ImportPanel?: React.ComponentType<{
+    onClosePanel: () => void,
+  } & State>;
+  reducer?: (state: State, action: AnyAction) => State;
 }
 
-const InternalContext = createContext<SourcesApi | null>(null);
+interface MediaSourceContextApi {
+  getMediaSource(name: string): MediaSource;
+  getAllMediaSources(): Record<string, MediaSource>;
+}
+
+const InternalContext = createContext<MediaSourceContextApi | null>(null);
 const { Consumer } = InternalContext;
 
 function useMediaSources() {
@@ -22,7 +48,7 @@ function useMediaSources() {
   return ctx;
 }
 
-function sourcesApi(sources: Record<string, { icon: string, name: string }>): SourcesApi {
+function sourcesApi(sources: Record<string, MediaSource>): MediaSourceContextApi {
   function getMediaSource(name: string) {
     return sources[name];
   }
@@ -35,7 +61,7 @@ function sourcesApi(sources: Record<string, { icon: string, name: string }>): So
 }
 
 type ProviderProps = {
-  mediaSources: Record<string, { icon: string, name: string }>,
+  mediaSources: Record<string, MediaSource>,
   children: React.ReactNode,
 };
 function Provider({ mediaSources, children }: ProviderProps) {

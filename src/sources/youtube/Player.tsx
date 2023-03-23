@@ -7,11 +7,11 @@ type YouTubePlayerProps = {
   active: boolean,
   className?: string,
   enabled: boolean,
-  mode: 'small' | 'large' | 'preview',
+  mode?: 'preview' | undefined,
   media: Media | null,
   seek: number,
   volume: number,
-  onPlay: () => void,
+  onPlay?: () => void,
 };
 
 function YouTubePlayer({
@@ -24,7 +24,6 @@ function YouTubePlayer({
   volume,
   onPlay,
 }: YouTubePlayerProps) {
-  const modeClass = `src-youtube-Player--${mode}`;
   const controllable = mode === 'preview';
 
   const handlePause = useCallback((event: YT.OnStateChangeEvent) => {
@@ -34,10 +33,10 @@ function YouTubePlayer({
   }, [active, controllable]);
 
   return (
-    <div className={cx('src-youtube-Player', modeClass, className)} hidden={!active}>
-      {enabled && (
+    <div className={cx('src-youtube-Player', mode && `src-youtube-Player--${mode}`, className)} hidden={!active}>
+      {enabled && media && (
         <YouTube
-          video={active ? media.sourceID : null}
+          video={active ? media.sourceID : undefined}
           width="100%"
           height="100%"
           autoplay

@@ -1,19 +1,30 @@
 import cx from 'clsx';
-import React from 'react';
-import PropTypes from 'prop-types';
 import { useMediaSources } from '../../context/MediaSourceContext';
+import { Media } from '../../reducers/booth';
 
+type PlayerProps = {
+  enabled: boolean,
+  size: string,
+  mode?: 'preview' | undefined,
+  volume: number,
+  isMuted: boolean,
+  media: Media,
+  seek: number,
+  onPlay?: () => void,
+};
 function Player({
   enabled,
   size,
+  mode,
   volume,
   isMuted,
   media,
   seek,
   onPlay,
-}) {
+}: PlayerProps) {
   const { getAllMediaSources } = useMediaSources();
 
+  // TODO we can probably bail out here if `enabled` is false also
   if (!media) {
     return <div className="Player" />;
   }
@@ -22,9 +33,10 @@ function Player({
     enabled,
     media,
     seek,
-    mode: size,
+    mode,
     volume: isMuted ? 0 : volume,
     onPlay,
+    size,
   };
 
   const sources = getAllMediaSources();
@@ -48,15 +60,5 @@ function Player({
     </div>
   );
 }
-
-Player.propTypes = {
-  enabled: PropTypes.bool,
-  size: PropTypes.string,
-  volume: PropTypes.number,
-  isMuted: PropTypes.bool,
-  media: PropTypes.object,
-  seek: PropTypes.number,
-  onPlay: PropTypes.func,
-};
 
 export default Player;

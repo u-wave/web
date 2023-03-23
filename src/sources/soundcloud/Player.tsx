@@ -1,6 +1,5 @@
 import cx from 'clsx';
 import React from 'react';
-import PropTypes from 'prop-types';
 import { translate } from '@u-wave/react-translate';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
@@ -8,20 +7,22 @@ import Typography from '@mui/material/Typography';
 import { mdiAlertCircle } from '@mdi/js';
 import SvgIcon from '../../components/SvgIcon';
 import SongInfo from './SongInfo';
+import { Media } from '../../reducers/booth';
 
 const soundcloudLogo = new URL('../../../assets/img/soundcloud-inline.png', import.meta.url);
 
 const CLIENT_ID = '9d883cdd4c3c54c6dddda2a5b3a11200';
 
-function getErrorMessage(err) {
+function getErrorMessage(err: Error) {
   if (err.name === 'MediaError') {
-    if (err.code === 2) {
+    const { code } = err as MediaError & { name: 'MediaError' };
+    if (code === 2) {
       return 'soundcloud.error.network';
     }
-    if (err.code === 3) {
+    if (code === 3) {
       return 'soundcloud.error.decode';
     }
-    if (err.code === 4 && /404|not found/i.test(err.message)) {
+    if (code === 4 && /404|not found/i.test(err.message)) {
       return 'soundcloud.error.notFound';
     }
   }
@@ -30,19 +31,22 @@ function getErrorMessage(err) {
 
 const enhance = translate();
 
-class SoundCloudPlayer extends React.Component {
-  static propTypes = {
-    t: PropTypes.func.isRequired,
-    className: PropTypes.string,
-    active: PropTypes.bool.isRequired,
-    enabled: PropTypes.bool,
-    media: PropTypes.object,
-    seek: PropTypes.number,
-    volume: PropTypes.number,
-    onPlay: PropTypes.func,
-  };
+type SoundCloudPlayerProps = {
+  t: (key: string, params?: object) => string,
+  className?: string,
+  active: boolean,
+  enabled: boolean,
+  media: Media,
+  seek: number,
+  volume: number,
+  onPlay?: () => void,
+};
 
-  constructor(props) {
+type SoundCloudPlayerState = { error: Error | null, needsTap: boolean };
+class SoundCloudPlayer extends React.Component<SoundCloudPlayerProps, SoundCloudPlayerState> {
+  audio = new Audio();
+
+  constructor(props: SoundCloudPlayerProps) {
     super(props);
 
     this.state = {
@@ -52,15 +56,18 @@ class SoundCloudPlayer extends React.Component {
   }
 
   componentDidMount() {
-    this.audio = new Audio();
     this.audio.addEventListener('error', () => {
-      this.handleError(this.audio.error);
+      if (this.audio.error) {
+        this.handleError(Object.assign(this.audio.error, { name: 'MediaError' }));
+      } else {
+        this.handleError(new Error('Unknown error'));
+      }
     });
     this.audio.autoplay = true;
     this.play();
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: SoundCloudPlayerProps) {
     const {
       volume, active, enabled, media,
     } = this.props;
@@ -83,7 +90,7 @@ class SoundCloudPlayer extends React.Component {
     this.stop();
   }
 
-  handleError = (error) => {
+  handleError = (error: Error) => {
     this.setState({
       error,
       needsTap: error.name === 'NotAllowedError',
@@ -110,13 +117,16 @@ class SoundCloudPlayer extends React.Component {
         this.audio.removeEventListener('canplaythrough', doSeek, false);
       };
 
-      const { streamUrl } = media.sourceData;
-      this.audio.src = `${streamUrl}?client_id=${CLIENT_ID}`;
-      const res = this.audio.play();
-      if (res && res.then) res.catch(this.handleError);
-      this.audio.addEventListener('canplaythrough', doSeek, false);
-      if (onPlay) {
-        this.audio.addEventListener('play', onPlay, false);
+      if ('streamUrl' in media.sourceData && typeof media.sourceData.streamUrl === 'string') {
+        const { streamUrl } = media.sourceData;
+        this.audio.src = `${streamUrl}?client_id=${CLIENT_ID}`;
+        this.audio.play().catch(this.handleError);
+        this.audio.addEventListener('canplaythrough', doSeek, false);
+        if (onPlay) {
+          this.audio.addEventListener('play', onPlay, false);
+        }
+      } else {
+        this.handleError(new Error('Server did not send a stream URL'));
       }
     } else {
       this.stop();
@@ -136,7 +146,12 @@ class SoundCloudPlayer extends React.Component {
 
     const { t, media, className } = this.props;
     const { error, needsTap } = this.state;
-    const { sourceData } = media;
+    const sourceData = media.sourceData as undefined | {
+      username: string,
+      fullTitle: string,
+      artistUrl: string,
+      permalinkUrl: string,
+    };
     if (!sourceData) {
       return <div className={cx('src-soundcloud-Player', className)} />;
     }
