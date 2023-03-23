@@ -8,7 +8,6 @@ import {
   SET_MOTD_START,
   SET_MOTD_COMPLETE,
   SEND_MESSAGE,
-  RECEIVE_MESSAGE,
   LOG,
   REMOVE_MESSAGE,
   REMOVE_USER_MESSAGES,
@@ -36,6 +35,7 @@ import {
   resolveMentions,
   hasMention,
 } from '../utils/chatMentions';
+import * as actions from '../reducers/chat';
 
 export function receiveMotd(text) {
   return {
@@ -116,17 +116,14 @@ export function receive(message) {
 
     const isMention = currentUser ? hasMention(parsed, currentUser._id) : false;
 
-    dispatch({
-      type: RECEIVE_MESSAGE,
-      payload: {
-        message: {
-          ...message,
-          user: sender,
-        },
-        isMention,
-        parsed,
+    dispatch(actions.receiveMessage({
+      message: {
+        ...message,
+        user: sender,
       },
-    });
+      isMention,
+      parsed,
+    }));
 
     if (isMention) {
       if (settings.mentionSound) {

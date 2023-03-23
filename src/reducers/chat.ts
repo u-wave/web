@@ -22,6 +22,7 @@ import {
 } from '../constants/ActionTypes';
 import type { User } from './users';
 import { MarkupNode } from 'u-wave-parse-chat-markup';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 export interface ChatMessage {
   _id: string;
@@ -125,44 +126,27 @@ interface State {
    */
   mutedUsers: Record<string, {
     mutedBy: string,
-    expiresAt: string,
+    expiresAt: number,
     expirationTimer: ReturnType<typeof setTimeout> | null,
   }>;
 }
 
-const initialState: State = {
+const initialState = {
   motd: null,
   messages: [],
   mutedUsers: {},
-};
+} as State;
 
-function removeInFlightMessage(messages: Message[], remove: ChatMessage) {
-  return messages.filter((message) => (
-    message.type !== 'chat'
-    // keep if this message is not in flight
-    || !message.inFlight
-    // or is not the message we're looking for
-    || message.userID !== remove.userID
-    || message.text !== remove.text
-  ));
-}
-
-export default function reduce(state = initialState, action: AnyAction) {
-  const { type, payload } = action;
-  const { messages } = state;
-  switch (type) {
-    case INIT_STATE:
-      return {
-        ...state,
-        motd: payload.motd,
-      };
-    case RECEIVE_MOTD:
-      return {
-        ...state,
-        motd: payload,
-      };
-    case SEND_MESSAGE: {
-      const inFlightMessage = {
+const slice = createSlice({
+  name: 'chat',
+  initialState,
+  reducers: {
+    sendMessage(state, { payload }: PayloadAction<{
+      user: User,
+      message: string,
+      parsed: MarkupNode[],
+    }>) {
+      state.messages.push({
         _id: randomUUID(),
         type: 'chat',
         user: payload.user,
@@ -173,72 +157,99 @@ export default function reduce(state = initialState, action: AnyAction) {
         inFlight: true,
         // Will be resolved when the message is received instead.
         isMention: false,
-      };
-      return {
-        ...state,
-        messages: [...messages, inFlightMessage],
-      };
-    }
-    case RECEIVE_MESSAGE: {
-      const message = {
-        ...payload.message,
+      });
+    },
+    receiveMessage(state, action: PayloadAction<{
+      message: {
+        _id: string,
+        user: User,
+        userID: string,
+        text: string,
+        timestamp: number,
+      },
+      isMention: boolean,
+      parsed: MarkupNode[],
+    }>) {
+      const index = state.messages.findIndex((message) => {
+        return message.type === 'chat'
+          && message.inFlight
+          // or is not the message we're looking for
+          && message.userID === action.payload.message.userID
+          && message.text === action.payload.message.text;
+      });
+      if (index !== -1) {
+        state.messages.splice(index, 1);
+      }
+
+      state.messages.push({
+        ...action.payload.message,
         type: 'chat',
         inFlight: false,
-        parsedText: payload.parsed,
-        isMention: payload.isMention,
-      };
-
-      return {
-        ...state,
-        messages: removeInFlightMessage(messages, message).concat([message]),
-      };
-    }
-    case LOG: {
-      const logMessage = {
+        parsedText: action.payload.parsed,
+        isMention: action.payload.isMention,
+      });
+    },
+    log(state, { payload }: PayloadAction<{ _id: string, text: string }>) {
+      state.messages.push({
         type: 'log',
         _id: payload._id,
         text: payload.text,
+      });
+    },
+    deleteMessageByID(state, { payload }: PayloadAction<{ _id: string }>) {
+      const index = state.messages.findIndex((message) => message._id === payload._id);
+      if (index !== -1) {
+        state.messages.splice(index, 1);
+      }
+    },
+    deleteMessagesByUser(state, { payload }: PayloadAction<{ userID: string }>) {
+      state.messages = state.messages.filter((message) => message.type !== 'chat' || message.userID !== payload.userID);
+    },
+    deleteAllMessages(state) {
+      state.messages = [];
+    },
+    muteUser(state, { payload }: PayloadAction<{
+      moderatorID: string,
+      userID: string,
+      expiresAt: number,
+      expirationTimer: null | ReturnType<typeof setTimeout>,
+    }>) {
+      state.mutedUsers[payload.userID] = {
+        mutedBy: payload.moderatorID,
+        expiresAt: payload.expiresAt,
+        expirationTimer: payload.expirationTimer,
       };
-      return {
-        ...state,
-        messages: [...messages, logMessage],
-      };
-    }
+    },
+    unmuteUser(state, { payload }: PayloadAction<{ userID: string, moderatorID?: string }>) {
+      const muted = state.mutedUsers[payload.userID];
+      if (muted?.expirationTimer) {
+        clearTimeout(muted.expirationTimer);
+      }
+      delete state.mutedUsers[payload.userID];
+    },
+  },
+  extraReducers(builder) {
+    builder.addCase(INIT_STATE, (state, action: AnyAction) => {
+      state.motd = action.payload.motd;
+    });
+  },
+});
 
-    case REMOVE_MESSAGE:
-      return {
-        ...state,
-        messages: state.messages.filter((msg) => msg._id !== payload._id),
-      };
-    case REMOVE_USER_MESSAGES:
-      return {
-        ...state,
-        messages: state.messages.filter((msg) => msg.type !== 'chat' || msg.userID !== payload.userID),
-      };
-    case REMOVE_ALL_MESSAGES:
-      return {
-        ...state,
-        messages: [],
-      };
+export const {
+  sendMessage,
+  receiveMessage,
+  log,
+  deleteMessageByID,
+  deleteMessagesByUser,
+  deleteAllMessages,
+  muteUser,
+  unmuteUser,
+} = slice.actions;
 
-    case MUTE_USER:
-      return {
-        ...state,
-        mutedUsers: {
-          ...state.mutedUsers,
-          [payload.userID]: {
-            mutedBy: payload.moderatorID,
-            expiresAt: payload.expiresAt,
-            expirationTimer: payload.expirationTimer,
-          },
-        },
-      };
-    case UNMUTE_USER:
-      return {
-        ...state,
-        mutedUsers: omit(state.mutedUsers, payload.userID),
-      };
-
+export default function reduce(state_ = initialState, action: AnyAction) {
+  const state = slice.reducer(state_, action);
+  const { type, payload } = action;
+  switch (type) {
     case USER_JOIN:
       return {
         ...state,

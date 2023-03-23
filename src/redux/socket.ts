@@ -1,5 +1,5 @@
 import type { AnyAction, Middleware } from 'redux';
-import type { AppDispatch } from './configureStore';
+import type { AppDispatch, StoreState } from './configureStore';
 import {
   LOGIN_COMPLETE,
   LOGOUT_START,
@@ -15,12 +15,15 @@ import {
   skipped,
 } from '../actions/BoothActionCreators';
 import {
-  receive as chatReceive,
-  removeMessage,
-  removeMessagesByUser,
-  removeAllMessages,
-  muteUser as chatMute,
-  unmuteUser as chatUnmute,
+  sendMessage,
+  deleteMessageByID,
+  deleteMessagesByUser,
+  deleteAllMessages,
+  muteUser,
+  unmuteUser,
+} from '../reducers/chat';
+import {
+  receive as receiveMessage,
   loadEmotes,
 } from '../actions/ChatActionCreators';
 import { cyclePlaylist } from '../actions/PlaylistActionCreators';
@@ -41,6 +44,8 @@ import {
   setLocked as setWaitlistLocked,
 } from '../actions/WaitlistActionCreators';
 import { favorited, receiveVote } from '../actions/VoteActionCreators';
+import { currentTimeSelector } from '../selectors/timeSelectors';
+import { ThunkAction } from 'redux-thunk';
 
 function defaultUrl() {
   const loc = window.location;
@@ -163,12 +168,13 @@ type SocketMessages = {
 }
 
 const actions: {
-  [K in keyof SocketMessages]: (data: SocketMessages[K]) => unknown
+  [K in keyof SocketMessages]: (data: SocketMessages[K]) =>
+    (AnyAction | ThunkAction<unknown, StoreState, never, AnyAction>)
 } = {
   chatMessage({
     id, userID, message, timestamp,
   }) {
-    return chatReceive({
+    return receiveMessage({
       _id: id,
       userID,
       text: message,
@@ -176,19 +182,31 @@ const actions: {
     });
   },
   chatDelete() {
-    return removeAllMessages();
+    return deleteAllMessages();
   },
   chatDeleteByID({ _id }) {
-    return removeMessage(_id);
+    return deleteMessageByID({ _id });
   },
   chatDeleteByUser({ userID }) {
-    return removeMessagesByUser(userID);
+    return deleteMessagesByUser({ userID });
   },
   chatMute({ userID, expiresAt, moderatorID }) {
-    return chatMute(userID, { moderatorID, expiresAt });
+    return (dispatch, getState) => {
+      const currentTime = currentTimeSelector(getState());
+      const expireIn = expiresAt - currentTime;
+      const expirationTimer = expireIn > 0
+        ? setTimeout(() => dispatch(unmuteUser({ userID })), expireIn)
+        : null;
+      muteUser({
+        userID,
+        moderatorID,
+        expiresAt,
+        expirationTimer,
+      });
+    };
   },
   chatUnmute({ userID, moderatorID }) {
-    return chatUnmute(userID, { moderatorID });
+    return unmuteUser({ userID, moderatorID });
   },
   advance(booth) {
     return advance(booth);
@@ -431,7 +449,7 @@ export default function middleware({ url = defaultUrl() } = {}):
             socket.attemptReconnect();
           });
           break;
-        case SEND_MESSAGE:
+        case sendMessage.type:
           socket.send('sendChat', payload.message);
           break;
         case LOGIN_COMPLETE:

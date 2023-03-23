@@ -97,7 +97,7 @@ export const currentPlaySelector = createSelector(
   djSelector,
   currentVotesSelector,
   (historyID, media, timestamp, dj, stats) => {
-    if (!historyID) {
+    if (!historyID || !media || !dj || !timestamp || !stats) {
       return null;
     }
     return {
