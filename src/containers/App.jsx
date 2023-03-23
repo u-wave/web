@@ -1,4 +1,4 @@
-import React from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { ThemeProvider } from '@mui/material/styles';
@@ -16,11 +16,7 @@ import UwaveContext from '../context/UwaveContext';
 import { ClockProvider } from '../context/ClockContext';
 import MediaSourceContext from '../context/MediaSourceContext';
 import { AllStoresProvider } from '../stores';
-
-const {
-  useCallback,
-  useEffect,
-} = React;
+import { initState } from '../actions/LoginActionCreators';
 
 class ErrorWrapper extends React.Component {
   static propTypes = {
@@ -53,6 +49,18 @@ class ErrorWrapper extends React.Component {
   }
 }
 
+function usePageVisibility(fn) {
+  useEffect(() => {
+    const handler = () => {
+      fn(!document.hidden);
+    };
+    window.addEventListener('visibilitychange', handler);
+    return () => {
+      window.removeEventListener('visibilitychange', handler);
+    };
+  }, [fn]);
+}
+
 function AppContainer({ uwave, mediaSources }) {
   const isMobile = useMediaQuery('(max-width: 767px)');
   const activeOverlay = useSelector(selectOverlay);
@@ -71,6 +79,15 @@ function AppContainer({ uwave, mediaSources }) {
       root.style.setProperty(prop, theme.cssProperties[prop]);
     });
   }, [theme]);
+
+  const hiddenTime = useRef(0);
+  usePageVisibility((visible) => {
+    if (visible && (Date.now() - hiddenTime.current) > 60_000) {
+      dispatch(initState());
+    } else {
+      hiddenTime.current = Date.now();
+    }
+  });
 
   const props = {
     activeOverlay,
