@@ -13,10 +13,17 @@ const {
   useState,
 } = React;
 
-export default function createLazyOverlay({
+function createLazyOverlay<
+  ContentProps,
+  OverlayProps extends { children: React.ReactNode } = React.ComponentProps<typeof Overlay>
+>({
   loader,
   title,
   OverlayComponent = Overlay,
+}: {
+  loader: () => Promise<{ default: React.ComponentType<ContentProps> }>,
+  title: (t: (key: string) => string) => string,
+  OverlayComponent: React.ComponentType<OverlayProps>,
 }) {
   if (typeof loader !== 'function') throw new TypeError('loader must be a function');
 
@@ -52,11 +59,11 @@ export default function createLazyOverlay({
 
   const RealOverlay = React.lazy(loader);
 
-  function LazyOverlay(props) {
+  function LazyOverlay(props: React.ComponentProps<typeof RealOverlay>) {
     return (
-      <OverlayComponent {...props}>
+      <OverlayComponent>
         <ErrorBoundary>
-          <React.Suspense fallback={<LoadingOverlay {...props} />}>
+          <React.Suspense fallback={<LoadingOverlay />}>
             <RealOverlay {...props} />
           </React.Suspense>
         </ErrorBoundary>
@@ -66,3 +73,5 @@ export default function createLazyOverlay({
 
   return LazyOverlay;
 }
+
+export default createLazyOverlay;

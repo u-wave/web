@@ -14,11 +14,19 @@ const {
   useState,
 } = React;
 
-type ContextType = {
-  media: (Media | null)[],
-  selection: ItemSelection<Media | null>,
+interface Item {
+  _id: string;
+  sourceType?: string;
+  sourceID?: string;
 }
-const MediaListContext = React.createContext<ContextType | null>(null);
+
+type ContextType<
+  MediaType extends Item = Media,
+> = {
+  media: (MediaType | null)[],
+  selection: ItemSelection<MediaType | null>,
+}
+const MediaListContext = React.createContext<ContextType<Item> | null>(null);
 export function useMediaListContext<T extends ContextType = ContextType>() {
   const context = useContext(MediaListContext);
   if (!context) {
@@ -34,7 +42,7 @@ export function useMediaListContext<T extends ContextType = ContextType>() {
  * the new list has just loaded a page that wasn't loaded in the
  * previous one, and decide that the list is not really different.
  */
-function didMediaChange(prev: (Media | null)[], next: (Media | null)[]) {
+function didMediaChange(prev: (Item | null)[], next: (Item | null)[]) {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   return prev.some((item, i) => item && next[i] && item._id !== next[i]!._id);
 }
@@ -43,15 +51,18 @@ function estimateSize() {
   return 56;
 }
 
-export type BaseMediaListProps<RowProps extends object = Record<never, never>> = {
+export type BaseMediaListProps<
+  MediaType extends Item = Media,
+  RowProps extends object = Record<never, never>,
+> = {
   className?: string,
-  media: (Media | null)[],
+  media: (MediaType | null)[],
   listComponent: React.ElementType<{ style: React.CSSProperties, children: React.ReactNode }>,
   rowComponent: React.ElementType<{
     style: React.CSSProperties,
     className: string,
     index: number,
-    media: Media,
+    media: MediaType,
     selected: boolean,
     onClick: (event?: React.MouseEvent) => void,
   } & RowProps>,
@@ -60,17 +71,20 @@ export type BaseMediaListProps<RowProps extends object = Record<never, never>> =
   onRequestPage?: (page: number) => Promise<void>,
   size?: number,
 };
-function BaseMediaList({
+function BaseMediaList<
+  MediaType extends Item = Media,
+  RowProps extends object = Record<never, never>,
+>({
   className,
   media,
   listComponent: ListComponent,
   rowComponent: RowComponent,
-  rowProps = {},
+  rowProps,
   contextProps,
   onRequestPage,
   // The `size` property is only necessary for lazy loading.
   size = media.length,
-}: BaseMediaListProps) {
+}: BaseMediaListProps<MediaType, RowProps>) {
   const parentRef = useRef<HTMLDivElement>(null);
   const lastMediaRef = useRef(media);
   const [selection, setSelection] = useState(() => itemSelection(media));

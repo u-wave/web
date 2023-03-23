@@ -12,7 +12,7 @@ const {
   useRef,
 } = React;
 
-type MediaRowBaseProps = {
+interface MediaRowBaseProps extends React.ComponentProps<'div'> {
   className?: string,
   style?: React.CSSProperties,
   dragType?: string,

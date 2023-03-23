@@ -1,6 +1,5 @@
 import cx from 'clsx';
 import React from 'react';
-import PropTypes from 'prop-types';
 import { HISTORY_ENTRY } from '../../constants/DDItemTypes';
 import MediaRowBase from '../MediaList/MediaRowBase';
 import MediaSourceIcon from '../MediaList/MediaSourceIcon';
@@ -18,7 +17,7 @@ const {
 
 type HistoryRowProps = {
   className?: string,
-  style: React.CSSProperties,
+  style?: React.CSSProperties,
   media: HistoryEntry,
   onClick?: (event?: React.MouseEvent) => void,
 };
@@ -79,12 +78,5 @@ function HistoryRow({
     </MediaRowBase>
   );
 }
-
-HistoryRow.propTypes = {
-  className: PropTypes.string,
-  style: PropTypes.object, // for virtual list positioning
-  media: PropTypes.object.isRequired,
-  onClick: PropTypes.func.isRequired,
-};
 
 export default HistoryRow;

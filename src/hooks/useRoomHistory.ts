@@ -81,7 +81,7 @@ type ListResponse<Data> = {
     results: number,
     total: number,
   },
-  included?: Record<string, object[]>,
+  included: Record<string, object[]>,
   links: {
     self: string,
     next?: string,
