@@ -11,11 +11,9 @@ import SvgIcon from '../../components/SvgIcon';
 import { importFromChannel, importFromPlaylist } from './reducer';
 
 type YoutubeImportFormProps = {
-  onHideImportPanel: () => void,
   onShowImportPanel: () => void,
 }
 function YoutubeImportForm({
-  onHideImportPanel,
   onShowImportPanel,
 }: YoutubeImportFormProps) {
   const { t } = useTranslator();
@@ -27,19 +25,19 @@ function YoutubeImportForm({
 
   const handleImportChannel = (event: React.FormEvent) => {
     event.preventDefault();
-    const url = refChannel.current.value;
+    const url = refChannel.current!.value;
     startTransition(() => {
-      onShowImportPanel();
       dispatch(importFromChannel({ url }));
+      onShowImportPanel();
     });
   };
 
   const handleImportPlaylist = (event: React.FormEvent) => {
     event.preventDefault();
-    const url = refPlaylist.current.value;
+    const url = refPlaylist.current!.value;
     startTransition(() => {
-      onShowImportPanel();
       dispatch(importFromPlaylist({ url }));
+      onShowImportPanel();
     });
   };
 
@@ -57,7 +55,9 @@ function YoutubeImportForm({
           />
         </FormGroup>
         <FormGroup>
-          <Button>{t('youtube.importChannel')}</Button>
+          <Button>
+            {isPending ? '...' : t('youtube.importChannel')}
+          </Button>
         </FormGroup>
       </Form>
       <Form onSubmit={handleImportPlaylist}>

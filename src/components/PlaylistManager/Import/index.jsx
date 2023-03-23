@@ -44,7 +44,9 @@ const PlaylistImport = ({
 
   return (
     <div className="PlaylistImport">
-      {forms}
+      <Suspense fallback={<LoadingPanel />}>
+        {forms}
+      </Suspense>
     </div>
   );
 };
