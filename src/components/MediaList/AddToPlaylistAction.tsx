@@ -8,6 +8,10 @@ import SvgIcon from '../SvgIcon';
 import MediaAction from './MediaAction';
 import { Media } from '../../reducers/booth';
 
+function filterNulls<T>(array: (T|null)[]): T[] {
+  return array.filter((item) => item != null) as T[];
+}
+
 export type AddToPlaylistActionProps = {
   media: Media,
   /**
@@ -22,9 +26,10 @@ function AddToPlaylistAction({ media, withCustomMeta = true }: AddToPlaylistActi
 
   const dispatch = useDispatch();
   const handleClick = useCallback((event: React.MouseEvent) => {
-    let selectedItems = selection.isSelected(media) ? selection.get() : [media];
+    let selectedItems: Parameters<typeof addMediaMenu>[0] = selection.isSelected(media)
+      ? filterNulls(selection.get()) : [media];
     if (!withCustomMeta) {
-      selectedItems = selectedItems.map((item) => item && omit(item, ['artist', 'title']));
+      selectedItems = selectedItems.map((item) => omit(item, ['artist', 'title']));
     }
     const rect = event.currentTarget.getBoundingClientRect();
 
