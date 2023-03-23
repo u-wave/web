@@ -1,6 +1,5 @@
 import cx from 'clsx';
 import React from 'react';
-import PropTypes from 'prop-types';
 
 const {
   useEffect,
@@ -8,16 +7,22 @@ const {
   useRef,
 } = React;
 
+interface TextFieldProps extends React.ComponentProps<'input'> {
+  className?: string,
+  type?: string,
+  icon?: React.ReactNode,
+  autoFocus?: boolean,
+}
 const TextField = React.forwardRef(({
   className,
   type = 'text',
   icon,
   autoFocus,
   ...props
-}, ref) => {
-  const refInput = useRef(null);
+}: TextFieldProps, ref) => {
+  const refInput = useRef<HTMLInputElement>(null);
   useImperativeHandle(ref, () => ({
-    get value() { return refInput.current.value; },
+    get value() { return refInput.current?.value; },
   }));
   useEffect(() => {
     if (autoFocus) {
@@ -39,12 +44,5 @@ const TextField = React.forwardRef(({
     </div>
   );
 });
-
-TextField.propTypes = {
-  className: PropTypes.string,
-  type: PropTypes.string,
-  icon: PropTypes.node,
-  autoFocus: PropTypes.bool,
-};
 
 export default TextField;

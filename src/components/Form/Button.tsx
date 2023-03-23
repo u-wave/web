@@ -1,9 +1,7 @@
 import cx from 'clsx';
-import React from 'react';
-import PropTypes from 'prop-types';
-import MuiButton from '@mui/material/Button';
+import MuiButton, { ButtonProps } from '@mui/material/Button';
 
-function Button({ children, className, ...props }) {
+function Button({ children, className, ...props }: ButtonProps) {
   return (
     <MuiButton
       variant="contained"
@@ -16,10 +14,5 @@ function Button({ children, className, ...props }) {
     </MuiButton>
   );
 }
-
-Button.propTypes = {
-  className: PropTypes.string,
-  children: PropTypes.node,
-};
 
 export default Button;
