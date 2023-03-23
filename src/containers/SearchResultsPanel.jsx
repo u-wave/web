@@ -55,9 +55,12 @@ function SearchResultsContainer() {
     });
   }, [results, playlistsByID]);
 
-  const state = !results && !error ? (
-    isValidating ? 'loadingState/LOADING' : 'loadingState/IDLE'
-  ) : 'loadingState/LOADED';
+  let state = 'loadingState/IDLE';
+  if (results || error) {
+    state = 'loadingState/LOADED';
+  } else if (isValidating) {
+    state = 'loadingState/LOADING';
+  }
 
   return (
     <SearchResults

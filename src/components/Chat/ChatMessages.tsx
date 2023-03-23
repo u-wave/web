@@ -1,12 +1,12 @@
 import React from 'react';
 import { useListener } from 'react-bus';
+import type { MarkupNode } from 'u-wave-parse-chat-markup';
 import Message from './Message';
 import Motd from './Motd';
 import ScrollDownNotice from './ScrollDownNotice';
 import specialMessages from './specialMessages';
 import type { Message as TMessage } from '../../reducers/chat';
-import { CompileOptions } from './Markup';
-import { MarkupNode } from 'u-wave-parse-chat-markup';
+import type { CompileOptions } from './Markup';
 
 const {
   useCallback,

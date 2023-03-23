@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { ThemeProvider } from '@mui/material/styles';
@@ -17,6 +17,8 @@ import { ClockProvider } from '../context/ClockContext';
 import MediaSourceContext from '../context/MediaSourceContext';
 import { AllStoresProvider } from '../stores';
 import { initState } from '../actions/LoginActionCreators';
+
+const { useCallback, useEffect, useRef } = React;
 
 class ErrorWrapper extends React.Component {
   static propTypes = {

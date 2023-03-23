@@ -1,4 +1,5 @@
 import type { AnyAction, Middleware } from 'redux';
+import { ThunkAction } from 'redux-thunk';
 import type { AppDispatch, StoreState } from './configureStore';
 import {
   LOGIN_COMPLETE,
@@ -7,7 +8,6 @@ import {
   SOCKET_RECONNECT,
   SOCKET_DISCONNECTED,
   SOCKET_CONNECTED,
-  SEND_MESSAGE,
 } from '../constants/ActionTypes';
 import { initState } from '../actions/LoginActionCreators';
 import {
@@ -45,7 +45,6 @@ import {
 } from '../actions/WaitlistActionCreators';
 import { favorited, receiveVote } from '../actions/VoteActionCreators';
 import { currentTimeSelector } from '../selectors/timeSelectors';
-import { ThunkAction } from 'redux-thunk';
 
 function defaultUrl() {
   const loc = window.location;

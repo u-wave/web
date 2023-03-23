@@ -1,17 +1,9 @@
-import omit from 'just-omit';
 import { AnyAction } from 'redux';
 import { v4 as randomUUID } from 'uuid';
+import { MarkupNode } from 'u-wave-parse-chat-markup';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import {
   INIT_STATE,
-  RECEIVE_MOTD,
-  RECEIVE_MESSAGE,
-  SEND_MESSAGE,
-  LOG,
-  REMOVE_MESSAGE,
-  REMOVE_USER_MESSAGES,
-  REMOVE_ALL_MESSAGES,
-  MUTE_USER,
-  UNMUTE_USER,
   ADVANCE,
   BOOTH_SKIP,
   USER_JOIN,
@@ -21,8 +13,6 @@ import {
   USER_REMOVE_ROLES,
 } from '../constants/ActionTypes';
 import type { User } from './users';
-import { MarkupNode } from 'u-wave-parse-chat-markup';
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 export interface ChatMessage {
   _id: string;
