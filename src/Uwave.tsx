@@ -9,62 +9,59 @@ import { get as readSession } from './utils/Session';
 import configureStore from './redux/configureStore';
 import { initState, socketConnect, setSessionToken } from './actions/LoginActionCreators';
 import { loadCurrentLanguage } from './actions/LocaleActionCreators';
+import { MediaSource } from './context/MediaSourceContext';
 
-/**
- * @typedef {object} UwaveOptions
- * @prop {string} [apiBase]
- * @prop {string} [socketUrl]
- * @prop {Record<string, string>} [emoji]
- * @prop {{ name: string, url: string }[]} [serverEmotes]
- */
+interface UwaveOptions {
+  apiUrl?: string;
+  socketUrl?: string;
+  emoji?: Record<string, string>;
+  serverEmotes?: { name: string, url: string }[];
+}
 
 export default class Uwave {
-  /** @type {UwaveOptions} */
-  options = {};
+  options: UwaveOptions = {};
 
-  #sources = {};
+  #sources: Record<string, MediaSource<Record<string, unknown>>> = {};
 
-  #sessionToken = null;
+  #sessionToken: string | null = null;
 
-  #renderTarget = null;
+  #renderTarget: Element | null = null;
 
-  #aboutPageComponent = null;
+  #aboutPageComponent: React.ComponentType | null = null;
 
   #emotionCache = createCache({
     key: 'emc',
     prepend: true,
   });
 
-  #resolveReady;
+  #resolveReady = () => {
+    // Replaced immediately by the `ready` Promise
+  };
 
-  ready = new Promise((resolve) => {
+  store?: ReturnType<typeof configureStore>;
+
+  ready = new Promise<void>((resolve) => {
     this.#resolveReady = resolve;
   });
 
-  /**
-   * @param {UwaveOptions} [options]
-   */
-  constructor(options = {}, session = readSession()) {
+  constructor(options: UwaveOptions = {}, session = readSession()) {
     this.options = options;
     this.#sessionToken = session;
   }
 
-  use(plugin) {
+  use(plugin: (uw: this) => void) {
     plugin(this);
     return this;
   }
 
-  source(sourcePlugin, opts = {}) {
-    const sourceFactory = sourcePlugin.default ?? sourcePlugin;
-
-    const type = typeof sourceFactory;
-    if (type !== 'function' && type !== 'object') {
-      throw new TypeError(`Source plugin should be a function, got ${type}`);
+  source(sourcePlugin: MediaSource | ((uw: this, opts: object) => MediaSource), opts = {}) {
+    if (typeof sourcePlugin !== 'function' && typeof sourcePlugin !== 'object') {
+      throw new TypeError(`Source plugin should be a function, got ${typeof sourcePlugin}`);
     }
 
-    const source = type === 'function'
-      ? sourceFactory(this, opts)
-      : sourceFactory;
+    const source = typeof sourcePlugin === 'function'
+      ? sourcePlugin(this, opts)
+      : sourcePlugin;
 
     if (typeof source.name !== 'string') {
       throw new TypeError('Source plugin did not provide a name');
@@ -75,7 +72,7 @@ export default class Uwave {
     return source;
   }
 
-  setAboutPageComponent(AboutPageComponent) {
+  setAboutPageComponent(AboutPageComponent: React.ComponentType) {
     this.#aboutPageComponent = AboutPageComponent;
   }
 
@@ -99,11 +96,14 @@ export default class Uwave {
       this.store.dispatch(loadCurrentLanguage()),
       this.store.dispatch(initState()),
     ]);
-    this.#resolveReady();
+    this.#resolveReady?.();
   }
 
-  /** @private */
-  getComponent() {
+  private getComponent() {
+    if (!this.store) {
+      throw new Error('Uwave not initialized');
+    }
+
     return (
       <Provider store={this.store}>
         <StyledEngineProvider injectFirst>
@@ -118,7 +118,7 @@ export default class Uwave {
     );
   }
 
-  renderToDOM(target) {
+  renderToDOM(target: Element) {
     if (!this.store) {
       this.build();
     }
