@@ -45,8 +45,7 @@ function PlaylistPanel(props) {
         media={media}
         listComponent="div"
         rowComponent={isFiltered ? PlaylistItemRow : DroppablePlaylistItemRow}
-        rowProps={{ onMoveMedia }}
-        contextProps={{ playlist, isFiltered }}
+        contextProps={{ playlist, isFiltered, onMoveMedia }}
         onRequestPage={onLoadPlaylistPage}
       />
     );

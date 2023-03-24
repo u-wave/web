@@ -5,6 +5,7 @@ import { useDrop } from 'react-dnd';
 import { MEDIA } from '../../../constants/DDItemTypes';
 import isDraggingNearTopOfRow from '../../../utils/isDraggingNearTopOfRow';
 import PlaylistItemRow from './PlaylistItemRow';
+import { useMediaListContext } from '../../MediaList/BaseMediaList';
 
 const {
   useRef,
@@ -17,13 +18,13 @@ function DroppablePlaylistItemRow({
   index,
   media,
   onClick,
-  onMoveMedia,
 }) {
+  const { onMoveMedia } = useMediaListContext();
   const [insertingAbove, setInsertAbove] = useState(false);
   const droppableRef = useRef(null);
   const [{ isOver }, drop] = useDrop(() => ({
     accept: MEDIA,
-    drop(item, monitor) {
+    drop(_item, monitor) {
       const { media: droppedItems } = monitor.getItem();
       if (droppedItems) {
         // Do not attempt to move when the selection is dropped on top of an item
@@ -38,7 +39,7 @@ function DroppablePlaylistItemRow({
         );
       }
     },
-    hover(item, monitor) {
+    hover(_item, monitor) {
       setInsertAbove(isDraggingNearTopOfRow(monitor, droppableRef.current));
     },
     collect(monitor) {

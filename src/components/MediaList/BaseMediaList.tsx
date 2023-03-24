@@ -51,7 +51,7 @@ function estimateSize() {
   return 56;
 }
 
-type BaseRowProps<MediaType extends Item = Media> = {
+type RowProps<MediaType extends Item = Media> = {
   style: React.CSSProperties,
   className: string,
   index: number,
@@ -60,33 +60,25 @@ type BaseRowProps<MediaType extends Item = Media> = {
   onClick: (event?: React.MouseEvent) => void,
 }
 
-export type BaseMediaListProps<
-  MediaType extends Item = Media,
-  RowProps = Record<never, never>,
-> = {
+export type BaseMediaListProps<MediaType extends Item = Media> = {
   className?: string,
   media: (MediaType | null)[],
   listComponent: React.ElementType<{ style: React.CSSProperties, children: React.ReactNode }>,
-  rowComponent: React.ComponentType<BaseRowProps<MediaType> & RowProps>,
-  rowProps?: RowProps,
+  rowComponent: React.ComponentType<RowProps<MediaType>>,
   contextProps?: object,
   onRequestPage?: (page: number) => Promise<void>,
   size?: number,
 };
-function BaseMediaList<
-  MediaType extends Item = Media,
-  RowProps extends object = Record<never, never>,
->({
+function BaseMediaList<MediaType extends Item = Media>({
   className,
   media,
   listComponent: ListComponent,
   rowComponent: RowComponent,
-  rowProps,
   contextProps,
   onRequestPage,
   // The `size` property is only necessary for lazy loading.
   size = media.length,
-}: BaseMediaListProps<MediaType, RowProps>) {
+}: BaseMediaListProps<MediaType>) {
   const parentRef = useRef<HTMLDivElement>(null);
   const lastMediaRef = useRef(media);
   const [selection, setSelection] = useState(() => itemSelection(media));
@@ -191,7 +183,6 @@ function BaseMediaList<
 
         return (
           <RowComponent
-            {...rowProps}
             key={itemKey(index)}
             style={style}
             className="MediaList-row"
