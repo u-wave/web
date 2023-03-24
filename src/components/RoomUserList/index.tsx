@@ -1,26 +1,26 @@
 import cx from 'clsx';
-import React from 'react';
-import PropTypes from 'prop-types';
+import { useRef } from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
-import RoomUserRow from './Row';
+import RoomUserRow, { RoomUser } from './Row';
 import GuestsRow from './GuestsRow';
-
-const {
-  useRef,
-} = React;
 
 function estimateSize() {
   return 40;
 }
 
-function RoomUserList({ className, users, guests }) {
-  const parentRef = useRef();
+type RoomUserListProps = {
+  className?: string,
+  users: RoomUser[],
+  guests: number,
+};
+function RoomUserList({ className, users, guests }: RoomUserListProps) {
+  const parentRef = useRef<HTMLDivElement>(null);
 
   const showGuests = guests > 0;
   // The "and X guests" row is implemented somewhat hackily as an extra user
   // row. To render properly at the end of the list, it needs to be rendered as
-  // an element of the list--so we tell react-list that we have an extra row
-  // when th guests row is shown.
+  // an element of the list--so we tell react-virtual that we have an extra row
+  // when the guests row is shown.
   const length = users.length + (showGuests ? 1 : 0);
 
   const virtualizer = useVirtualizer({
@@ -63,11 +63,5 @@ function RoomUserList({ className, users, guests }) {
     </div>
   );
 }
-
-RoomUserList.propTypes = {
-  className: PropTypes.string,
-  users: PropTypes.arrayOf(PropTypes.object).isRequired,
-  guests: PropTypes.number.isRequired,
-};
 
 export default RoomUserList;

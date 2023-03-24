@@ -1,16 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import { useMemo } from 'react';
 import { useSelector } from '../hooks/useRedux';
-import {
-  userListSelector,
-  guestCountSelector,
-} from '../selectors/userSelectors';
+import { userListSelector, guestCountSelector } from '../selectors/userSelectors';
 import { currentVotesSelector } from '../selectors/voteSelectors';
 import RoomUserList from '../components/RoomUserList';
 
-const { useMemo } = React;
-
-function RoomUserListContainer({ className }) {
+type RoomUserListContainerProps = {
+  className?: string,
+};
+function RoomUserListContainer({ className }: RoomUserListContainerProps) {
   const users = useSelector(userListSelector);
   const votes = useSelector(currentVotesSelector);
   const guestCount = useSelector(guestCountSelector);
@@ -34,9 +31,5 @@ function RoomUserListContainer({ className }) {
     />
   );
 }
-
-RoomUserListContainer.propTypes = {
-  className: PropTypes.string,
-};
 
 export default RoomUserListContainer;
