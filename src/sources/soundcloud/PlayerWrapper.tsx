@@ -8,7 +8,7 @@ function PlayerWrapper({ mode, ...props }: PlayerWrapperProps) {
   if (mode === 'preview') {
     return <PreviewPlayer {...props} />;
   }
-  return <Player {...props} mode={mode} />;
+  return <Player {...props} />;
 }
 
 export default PlayerWrapper;
