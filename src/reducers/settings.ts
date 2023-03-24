@@ -27,7 +27,7 @@ const slice = createSlice({
       return deepmerge(initialState, payload);
     },
     apply(state, { payload }: PayloadAction<Partial<State>>) {
-      deepmerge(state, payload);
+      return deepmerge(state, payload);
     },
   },
 });
