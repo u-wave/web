@@ -1,6 +1,5 @@
 import cx from 'clsx';
-import React from 'react';
-import PropTypes from 'prop-types';
+import { useCallback, useRef, useState } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { mdiClose, mdiDragHorizontalVariant } from '@mdi/js';
 import { WAITLIST_USER } from '../../constants/DDItemTypes';
@@ -10,12 +9,18 @@ import Avatar from '../Avatar';
 import SvgIcon from '../SvgIcon';
 import Username from '../Username';
 import Position from './Position';
+import { User } from '../../reducers/users';
 
-const {
-  useCallback,
-  useRef,
-  useState,
-} = React;
+type DropResult = { position: number };
+
+type ModRowProps = {
+  className?: string,
+  style?: React.CSSProperties,
+  position: number,
+  user: User,
+  onMoveUser: (position: number) => void,
+  onRemoveUser: () => void,
+};
 
 /**
  * A Draggable waitlist user row with moderation tools.
@@ -27,9 +32,9 @@ function ModRow({
   user,
   onMoveUser,
   onRemoveUser,
-}) {
+}: ModRowProps) {
   const userCard = useUserCard(user);
-  const onOpenCard = useCallback((event) => {
+  const onOpenCard = useCallback((event: React.MouseEvent) => {
     event.preventDefault();
     userCard.open();
     // The `userCard.open` reference never changes.
@@ -37,7 +42,7 @@ function ModRow({
   }, []);
 
   // Drag-drop interactions
-  const handleRef = useRef();
+  const handleRef = useRef<HTMLDivElement>(null);
   const [insertAbove, setInsertAbove] = useState(false);
   const [{ isDragging }, connectDragSource, connectDragPreview] = useDrag({
     type: WAITLIST_USER,
@@ -45,7 +50,7 @@ function ModRow({
       return { user };
     },
     end(item, monitor) {
-      const result = monitor.getDropResult();
+      const result = monitor.getDropResult<DropResult>();
       if (item.user && result) {
         onMoveUser(result.position);
       }
@@ -56,10 +61,10 @@ function ModRow({
   });
   const [{ isOver }, connectDropTarget] = useDrop(() => ({
     accept: WAITLIST_USER,
-    hover(item, monitor) {
+    hover(_item, monitor) {
       setInsertAbove(isDraggingNearTopOfRow(monitor, userCard.refAnchor.current));
     },
-    drop(item, monitor) {
+    drop(_item, monitor): DropResult {
       const insertAfter = !isDraggingNearTopOfRow(monitor, userCard.refAnchor.current);
       return {
         position: insertAfter ? position + 1 : position,
@@ -118,14 +123,5 @@ function ModRow({
     </div>
   );
 }
-
-ModRow.propTypes = {
-  className: PropTypes.string,
-  style: PropTypes.object.isRequired, // from virtual list positioning
-  position: PropTypes.number.isRequired,
-  user: PropTypes.object.isRequired,
-  onMoveUser: PropTypes.func.isRequired,
-  onRemoveUser: PropTypes.func.isRequired,
-};
 
 export default ModRow;

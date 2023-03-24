@@ -1,27 +1,30 @@
 import cx from 'clsx';
-import React from 'react';
-import PropTypes from 'prop-types';
+import { useRef } from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import ModRow from './ModRow';
 import SimpleRow from './SimpleRow';
-
-const {
-  useRef,
-} = React;
+import { User } from '../../reducers/users';
 
 function estimateSize() {
   return 40;
 }
 
+type WaitListProps = {
+  className?: string,
+  users: User[],
+  onMoveUser: (user: User, position: number) => void,
+  onRemoveUser: (user: User) => void,
+  canMoveUsers: boolean,
+};
 function WaitList({
   className,
   users,
   onMoveUser,
   onRemoveUser,
   canMoveUsers,
-}) {
+}: WaitListProps) {
   const Row = canMoveUsers ? ModRow : SimpleRow;
-  const parentRef = useRef();
+  const parentRef = useRef<HTMLDivElement>(null);
 
   const virtualizer = useVirtualizer({
     count: users.length,
@@ -60,13 +63,5 @@ function WaitList({
     </div>
   );
 }
-
-WaitList.propTypes = {
-  className: PropTypes.string,
-  users: PropTypes.arrayOf(PropTypes.object).isRequired,
-  canMoveUsers: PropTypes.bool.isRequired,
-  onMoveUser: PropTypes.func.isRequired,
-  onRemoveUser: PropTypes.func.isRequired,
-};
 
 export default WaitList;

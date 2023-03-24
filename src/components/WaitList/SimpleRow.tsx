@@ -1,21 +1,25 @@
 import cx from 'clsx';
-import React from 'react';
-import PropTypes from 'prop-types';
+import { useCallback } from 'react';
 import useUserCard from '../../hooks/useUserCard';
+import { User } from '../../reducers/users';
 import Avatar from '../Avatar';
 import Username from '../Username';
 import Position from './Position';
 
-const { useCallback } = React;
-
+type SimpleRowProps = {
+  className?: string,
+  style?: React.CSSProperties,
+  position: number,
+  user: User,
+};
 function SimpleRow({
   className,
   style,
   position,
   user,
-}) {
+}: SimpleRowProps) {
   const userCard = useUserCard(user);
-  const onOpenCard = useCallback((event) => {
+  const onOpenCard = useCallback((event: React.MouseEvent) => {
     event.preventDefault();
     userCard.open();
     // The `userCard.open` reference never changes.
@@ -46,12 +50,5 @@ function SimpleRow({
     </>
   );
 }
-
-SimpleRow.propTypes = {
-  className: PropTypes.string,
-  style: PropTypes.object.isRequired, // from virtual list positioning
-  position: PropTypes.number.isRequired,
-  user: PropTypes.object.isRequired,
-};
 
 export default SimpleRow;
