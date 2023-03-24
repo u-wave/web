@@ -1,8 +1,4 @@
-import {
-  LOAD_SETTINGS,
-  CHANGE_SETTING,
-} from '../../constants/ActionTypes';
-import settings from '../settings';
+import settings, { load, apply } from '../settings';
 
 describe('reducers/settings', () => {
   const initialState = () => settings(undefined, { type: '@@redux/INIT' });
@@ -19,13 +15,10 @@ describe('reducers/settings', () => {
 
   describe('action: settings/LOAD_SETTINGS', () => {
     it('should load all passed in settings', () => {
-      const state = settings(initialState(), {
-        type: LOAD_SETTINGS,
-        payload: {
-          setting: 'value',
-          volume: 20,
-        },
-      });
+      const state = settings(initialState(), load({
+        setting: 'value',
+        volume: 20,
+      }));
       expect(state.setting).toBe('value');
       expect(state.volume).toBe(20);
     });
@@ -33,10 +26,7 @@ describe('reducers/settings', () => {
 
   describe('action: settings/CHANGE_SETTING', () => {
     it('should set a value', () => {
-      const state = settings(initialState(), {
-        type: CHANGE_SETTING,
-        payload: { volume: 54 },
-      });
+      const state = settings(initialState(), apply({ volume: 54 }));
       expect(state.volume).toBe(54);
     });
   });
