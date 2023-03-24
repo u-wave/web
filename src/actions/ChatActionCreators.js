@@ -57,14 +57,11 @@ export function log(text) {
 export function prepareMessage(state, user, text, parseOpts = {}) {
   const parsed = parseChatMarkup(text, parseOpts);
   resolveMentions(parsed, state);
-  return {
-    type: SEND_MESSAGE,
-    payload: {
-      user,
-      message: text,
-      parsed,
-    },
-  };
+  return actions.sendMessage({
+    user,
+    message: text,
+    parsed,
+  });
 }
 
 export function sendChat(text) {

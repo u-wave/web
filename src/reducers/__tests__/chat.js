@@ -1,5 +1,6 @@
 import createStore from '../../redux/configureStore';
 import { setUsers } from '../../actions/UserActionCreators';
+import * as actions from '../chat';
 import * as a from '../../actions/ChatActionCreators';
 import * as s from '../../selectors/chatSelectors';
 import * as userSelectors from '../../selectors/userSelectors';
@@ -123,7 +124,7 @@ describe('reducers/chat', () => {
       const MESSAGES = 100;
       const { dispatch, getState } = createStore();
       for (let i = 0; i < MESSAGES; i += 1) {
-        dispatch(a.log(`Test message ${i}`));
+        dispatch(actions.log(`Test message ${i}`));
       }
       expect(s.messagesSelector(getState())).toHaveLength(MESSAGES);
     });
@@ -145,7 +146,8 @@ describe('reducers/chat', () => {
     });
 
     const addTestMute = () => {
-      dispatch(a.muteUser('1', {
+      dispatch(actions.muteUser({
+        userID: '1',
         moderatorID: '4',
         expiresAt: Date.now() + 3000,
       }));
@@ -154,7 +156,8 @@ describe('reducers/chat', () => {
     it('chat/MUTE_USER should register muted users', () => {
       expect(s.mutedUsersSelector(getState())).toHaveLength(0);
 
-      dispatch(a.muteUser('1', {
+      dispatch(actions.muteUser({
+        userID: '1',
         moderatorID: '4',
         expiresAt: Date.now() + 3000,
       }));
@@ -179,7 +182,7 @@ describe('reducers/chat', () => {
       addTestMute();
 
       expect(s.mutedUsersSelector(getState())).toHaveLength(1);
-      dispatch(a.unmuteUser('1', { moderatorID: '3' }));
+      dispatch(actions.unmuteUser({ userID: '1', moderatorID: '3' }));
       expect(s.mutedUsersSelector(getState())).toHaveLength(0);
 
       expect(s.messagesSelector(getState())).toHaveLength(0);
