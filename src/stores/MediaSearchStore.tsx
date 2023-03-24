@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 const {
   useCallback,
@@ -8,10 +7,17 @@ const {
   useState,
 } = React;
 
-const MediaSearchStoreContext = React.createContext(null);
+interface MediaSearchStore {
+  activeSource: string;
+  query: string | null;
+  search: (query: string | null) => void;
+  reset: () => void;
+  setSource: (source: string) => void;
+}
+const MediaSearchStoreContext = React.createContext<MediaSearchStore | null>(null);
 
 function useStoreImplementation() {
-  const [query, setQuery] = useState(null);
+  const [query, setQuery] = useState<string | null>(null);
   const [activeSource, setActiveSource] = useState('youtube');
 
   const reset = useCallback(() => {
@@ -30,7 +36,10 @@ function useStoreImplementation() {
   return context;
 }
 
-export function MediaSearchStoreProvider({ children }) {
+type MediaSearchStoreProviderProps = {
+  children: React.ReactNode,
+};
+export function MediaSearchStoreProvider({ children }: MediaSearchStoreProviderProps) {
   const context = useStoreImplementation();
 
   return (
@@ -40,10 +49,10 @@ export function MediaSearchStoreProvider({ children }) {
   );
 }
 
-MediaSearchStoreProvider.propTypes = {
-  children: PropTypes.element.isRequired,
-};
-
 export function useMediaSearchStore() {
-  return useContext(MediaSearchStoreContext);
+  const store = useContext(MediaSearchStoreContext);
+  if (!store) {
+    throw new Error('Cannot call `useMediaSearchStore` outside of a `MediaSearchStoreProvider`');
+  }
+  return store;
 }

@@ -4,8 +4,13 @@ import { useSelector } from '../hooks/useRedux';
 import { useMediaSearchStore } from '../stores/MediaSearchStore';
 import { playlistsByIDSelector } from '../selectors/playlistSelectors';
 import SearchResults from '../components/PlaylistManager/SearchResults';
+import { Media } from '../reducers/booth';
 
 const { useMemo } = React;
+
+interface SearchResult extends Media {
+  inPlaylists?: string[];
+}
 
 function SearchResultsContainer() {
   const {
@@ -15,7 +20,7 @@ function SearchResultsContainer() {
 
   // Technically this is not immutable but we want to avoid frequent
   // search queries that cost a lot of quota
-  const { data: results, error, isValidating } = useSWRImmutable(() => {
+  const { data: results, error, isValidating } = useSWRImmutable<SearchResult[]>(() => {
     if (!query) {
       return null;
     }
@@ -64,7 +69,7 @@ function SearchResultsContainer() {
 
   return (
     <SearchResults
-      query={query}
+      query={query ?? ''}
       results={resultsWithPlaylists}
       loadingState={state}
     />
