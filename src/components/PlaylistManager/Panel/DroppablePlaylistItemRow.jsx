@@ -69,7 +69,6 @@ DroppablePlaylistItemRow.propTypes = {
   index: PropTypes.number.isRequired,
   media: PropTypes.object.isRequired,
   onClick: PropTypes.func.isRequired,
-  onMoveMedia: PropTypes.func.isRequired,
 };
 
 export default DroppablePlaylistItemRow;

@@ -1,7 +1,7 @@
+import { useMemo } from 'react';
 import useSWR from 'swr';
 import { useSelector } from './useRedux';
 import defaultEmoji from '../utils/emojiShortcodes';
-import { useMemo } from 'react';
 
 type ServerEmote = {
   name: string,
