@@ -10,7 +10,7 @@ type ServerEmote = {
 
 function useEmotes() {
   const { data: serverEmotes } = useSWR<ServerEmote[]>('/emotes', async (url: string) => {
-    const response = await fetch(url);
+    const response = await fetch(`/api${url}`);
     const { data } = await response.json();
     return data;
   }, {
