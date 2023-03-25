@@ -3,7 +3,6 @@ import {
   INIT_STATE,
   SOCKET_CONNECT,
   SOCKET_RECONNECT,
-  AUTH_STRATEGIES,
   REGISTER_START,
   REGISTER_COMPLETE,
   LOGIN_START,
@@ -19,7 +18,6 @@ import { get, post, del } from './RequestActionCreators';
 import { setPlaylists } from './PlaylistActionCreators';
 import { syncTimestamps } from './TickerActionCreators';
 import { closeLoginDialog } from './DialogActionCreators';
-import { tokenSelector } from '../selectors/userSelectors';
 
 export function socketConnect() {
   return { type: SOCKET_CONNECT };
@@ -29,40 +27,14 @@ export function socketReconnect() {
   return { type: SOCKET_RECONNECT };
 }
 
-export function setAuthenticationStrategies(strategies) {
-  return {
-    type: AUTH_STRATEGIES,
-    payload: { strategies },
-  };
-}
-
-export function loginComplete({ token, socketToken, user }) {
-  return (dispatch) => {
-    dispatch({
-      type: LOGIN_COMPLETE,
-      payload: {
-        token,
-        socketToken,
-        user,
-      },
-    });
-    dispatch(closeLoginDialog());
-  };
-}
-
 export function loadedState(state) {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch({
       type: INIT_STATE,
       payload: state,
     });
     if (state.user) {
-      const token = tokenSelector(getState());
-      dispatch(loginComplete({
-        token,
-        socketToken: state.socketToken,
-        user: state.user,
-      }));
+      dispatch(closeLoginDialog());
     }
   };
 }

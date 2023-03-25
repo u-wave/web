@@ -3,7 +3,7 @@ import type { ThunkAction } from 'redux-thunk';
 import { mutate } from 'swr';
 import type { AppDispatch, StoreState } from './configureStore';
 import {
-  LOGIN_COMPLETE,
+  INIT_STATE,
   LOGOUT_START,
   SOCKET_CONNECT,
   SOCKET_RECONNECT,
@@ -43,6 +43,7 @@ import {
 } from '../actions/WaitlistActionCreators';
 import { favorited, receiveVote } from '../actions/VoteActionCreators';
 import { currentTimeSelector } from '../selectors/timeSelectors';
+import { login } from '../reducers/auth';
 
 function defaultUrl() {
   const loc = window.location;
@@ -454,7 +455,8 @@ export default function middleware({ url = defaultUrl() } = {}):
         case sendMessage.type:
           socket.send('sendChat', payload.message);
           break;
-        case LOGIN_COMPLETE:
+        case login.fulfilled.type:
+        case INIT_STATE:
           if (!socket.sentAuthToken) {
             socket.sendAuthToken(payload.socketToken);
           }
