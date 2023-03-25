@@ -14,10 +14,17 @@ import SvgIcon from '../../../components/SvgIcon';
 import { useSelector } from '../../../hooks/useRedux';
 import { activePlaylistIDSelector } from '../../../selectors/playlistSelectors';
 import useCurrentUser from '../../../hooks/useCurrentUser';
+import uwFetch, { ListResponse } from '../../../utils/fetch';
 
 const classes = {
   paper: 'DrawerMenu',
 };
+
+interface PlaylistMeta {
+  _id: string;
+  name: string;
+  size: number;
+}
 
 type PlaylistsProps = {
   title: React.ReactNode,
@@ -27,14 +34,10 @@ function Playlists({
   title,
   onShowPlaylist,
 }: PlaylistsProps) {
-  const { data: playlistsFromApi } = useSWR<{ _id: string, name: string, size: number }[]>('/playlists', async (url: string) => {
-    const response = await fetch(`/api${url}`);
-    const { data } = await response.json();
-    return data;
-  });
+  const { data: playlistsFromApi } = useSWR<ListResponse<PlaylistMeta>>('/playlists', uwFetch);
   const activePlaylistID = useSelector(activePlaylistIDSelector);
   const playlists = useMemo(() => {
-    return playlistsFromApi?.map((playlist) => {
+    return playlistsFromApi?.data.map((playlist) => {
       if (playlist._id === activePlaylistID) {
         return {
           ...playlist,

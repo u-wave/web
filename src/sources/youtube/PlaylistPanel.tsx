@@ -6,6 +6,7 @@ import SvgIcon from '../../components/SvgIcon';
 import MediaListBase from '../../components/MediaList/BaseMediaList';
 import ImportPanelHeader from '../../components/PlaylistManager/Import/ImportPanelHeader';
 import ImportRow, { YouTubeMedia } from './ImportRow';
+import uwFetch from '../../utils/fetch';
 
 type YouTubeImportPlaylistPanelProps = {
   url: string,
@@ -17,16 +18,14 @@ function YouTubeImportPlaylistPanel({
   onImportPlaylist,
   onClosePanel,
 }: YouTubeImportPlaylistPanelProps) {
-  const { data } = useSWRImmutable(url, async (playlistUrl: string) => {
-    const apiUrl = new URL('/api/import/youtube/playlist', window.location.href);
-    apiUrl.searchParams.set('url', playlistUrl);
-    const response = await fetch(apiUrl);
-    const json: {
-      playlist: { sourceID: string, name: string },
-      items: YouTubeMedia[],
-    } = await response.json();
-    return json;
-  }, { suspense: true });
+  const { data } = useSWRImmutable<{
+    playlist: { sourceID: string, name: string },
+    items: YouTubeMedia[],
+  }>(
+    ['/import/youtube/playlist', { qs: { url } }],
+    uwFetch,
+    { suspense: true },
+  );
 
   const handleImportFull = () => (
     onImportPlaylist(data.playlist.sourceID, data.playlist.name)

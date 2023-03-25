@@ -4,6 +4,7 @@ import { useRef } from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import ImportPanelHeader from '../../components/PlaylistManager/Import/ImportPanelHeader';
 import PlaylistRow, { YouTubePlaylist } from './PlaylistRow';
+import uwFetch from '../../utils/fetch';
 
 function estimateSize() {
   return 56;
@@ -19,16 +20,14 @@ function ChannelPanel({
   onImportPlaylist,
   onClosePanel,
 }: ChannelPanelProps) {
-  const { data } = useSWRImmutable(url, async (playlistUrl: string) => {
-    const apiUrl = new URL('/api/import/youtube/channel', window.location.href);
-    apiUrl.searchParams.set('url', playlistUrl);
-    const response = await fetch(apiUrl);
-    const json: {
-      channel: { id: string, title: string },
-      playlists: YouTubePlaylist[],
-    } = await response.json();
-    return json;
-  }, { suspense: true });
+  const { data } = useSWRImmutable<{
+    channel: { id: string, title: string },
+    playlists: YouTubePlaylist[],
+  }>(
+    ['/import/youtube/channel', { qs: { url } }],
+    uwFetch,
+    { suspense: true },
+  );
   const parentRef = useRef<HTMLDivElement>(null);
 
   const virtualizer = useVirtualizer({

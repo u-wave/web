@@ -5,6 +5,7 @@ import mergeIncludedModels from '../utils/mergeIncludedModels';
 import { currentPlaySelector } from '../selectors/boothSelectors';
 import type { Media } from '../reducers/booth';
 import type { User } from '../reducers/users';
+import uwFetch, { ListResponse } from '../utils/fetch';
 
 interface ApiMedia {
   _id: string
@@ -67,30 +68,8 @@ export function normalizeFromApi(entry: ApiHistoryEntry) {
   };
 }
 
-async function fetchJSON<T>(url: string): Promise<T> {
-  const res = await fetch(`/api${url}`);
-  const data = await res.json();
-  return data;
-}
-
-type ListResponse<Data> = {
-  data: Data[],
-  meta: {
-    offset: number,
-    pageSize: number,
-    results: number,
-    total: number,
-  },
-  included: Record<string, object[]>,
-  links: {
-    self: string,
-    next?: string,
-    prev?: string,
-  },
-}
-
 function useRoomHistory() {
-  const { data } = useSWR('/booth/history', fetchJSON<ListResponse<ApiHistoryEntry>>, {
+  const { data } = useSWR('/booth/history', uwFetch<ListResponse<ApiHistoryEntry>>, {
     suspense: true,
   });
 

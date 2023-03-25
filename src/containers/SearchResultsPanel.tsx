@@ -5,6 +5,7 @@ import { useMediaSearchStore } from '../stores/MediaSearchStore';
 import { playlistsByIDSelector } from '../selectors/playlistSelectors';
 import SearchResults from '../components/PlaylistManager/SearchResults';
 import { Media } from '../reducers/booth';
+import uwFetch, { ListResponse } from '../utils/fetch';
 
 const { useMemo } = React;
 
@@ -20,32 +21,23 @@ function SearchResultsContainer() {
 
   // Technically this is not immutable but we want to avoid frequent
   // search queries that cost a lot of quota
-  const { data: results, error, isValidating } = useSWRImmutable<SearchResult[]>(() => {
+  const { data: results, error, isValidating } = useSWRImmutable<ListResponse<SearchResult>>(() => {
     if (!query) {
       return null;
     }
 
-    const qs = new URLSearchParams({
-      query,
-      include: 'playlists',
-    });
-    return `/search/${encodeURIComponent(activeSource)}?${qs}`;
-  }, async (url) => {
-    const res = await fetch(`/api${url}`);
-    const { data, errors } = await res.json();
-    if (errors) {
-      throw new Error(errors[0].title);
-    }
-    return data;
-  });
+    return [`/search/${encodeURIComponent(activeSource)}`, {
+      qs: { query, include: 'playlists' },
+    }];
+  }, uwFetch);
 
   const playlistsByID = useSelector(playlistsByIDSelector);
 
   const resultsWithPlaylists = useMemo(() => {
-    if (!Array.isArray(results)) {
+    if (!results || !Array.isArray(results.data)) {
       return [];
     }
-    return results.map((result) => {
+    return results.data.map((result) => {
       if (!Array.isArray(result.inPlaylists)) {
         return result;
       }

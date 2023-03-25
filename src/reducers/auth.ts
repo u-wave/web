@@ -3,6 +3,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { INIT_STATE, SET_TOKEN } from '../constants/ActionTypes';
 import type { User } from './users';
 import { initState } from '../actions/LoginActionCreators';
+import uwFetch from '../utils/fetch';
 
 interface State {
   strategies: string[];
@@ -18,22 +19,15 @@ const initialState: State = {
 
 type LoginPayload = { email: string, password: string };
 export const login = createAsyncThunk('auth/login', async (payload: LoginPayload, api) => {
-  const response = await fetch('/api/auth/login?session=cookie', {
-    method: 'post',
-    headers: {
-      'content-type': 'application/json',
-    },
-    body: JSON.stringify(payload),
-    signal: api.signal,
-  });
-  if (!response.ok) {
-    throw new Error('login failed');
-  }
-
-  const { data, meta }: {
+  const { data, meta } = await uwFetch<{
     data: User,
     meta: { jwt: string },
-  } = await response.json();
+  }>(['/auth/login', {
+    method: 'post',
+    qs: { session: 'cookie' },
+    data: payload,
+    signal: api.signal,
+  }]);
 
   const { socketToken } = await api.dispatch(initState());
 

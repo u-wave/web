@@ -9,9 +9,8 @@ import {
   RECEIVE_MOTD,
   SET_MOTD_START,
   SET_MOTD_COMPLETE,
-  LOAD_EMOTES,
 } from '../constants/ActionTypes';
-import { get, put } from './RequestActionCreators';
+import { put } from './RequestActionCreators';
 import {
   mutedUserIDsSelector,
   currentUserMuteSelector,
