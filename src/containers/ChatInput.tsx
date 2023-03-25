@@ -1,22 +1,18 @@
 import React from 'react';
 import { useBus } from 'react-bus';
 import splitargs from 'splitargs';
-import { useStore, useSelector } from '../hooks/useRedux';
+import { useDispatch, useStore, useSelector } from '../hooks/useRedux';
 import { sendChat } from '../actions/ChatActionCreators';
-import {
-  availableGroupMentionsSelector,
-  emojiCompletionsSelector,
-} from '../selectors/chatSelectors';
+import { availableGroupMentionsSelector } from '../selectors/chatSelectors';
 import {
   userListSelector,
   isLoggedInSelector,
 } from '../selectors/userSelectors';
 import commandList from '../utils/commands';
 import ChatCommands from '../utils/ChatCommands';
+import useEmotes from '../hooks/useEmotes';
 
-const ChatInput = React.lazy(() => (
-  import(/* webpackPreload: true */ '../components/Chat/Input')
-));
+const ChatInput = React.lazy(() => import('../components/Chat/Input'));
 
 const {
   useCallback,
@@ -34,11 +30,17 @@ function ChatInputContainer() {
   const isLoggedIn = useSelector(isLoggedInSelector);
   const mentionableUsers = useSelector(userListSelector);
   const mentionableGroups = useSelector(availableGroupMentionsSelector);
-  const availableEmoji = useSelector(emojiCompletionsSelector);
+  const emotes = useEmotes();
+  const availableEmoji = useMemo(() => {
+    return Object.entries(emotes).map(([shortcode, url]) => ({
+      shortcode,
+      image: url,
+    }));
+  }, [emotes]);
+  const dispatch = useDispatch();
   const store = useStore();
-  const { dispatch } = store;
   const commander = useMemo(() => new ChatCommands(store, commandList), [store]);
-  const onSend = useCallback((message) => {
+  const onSend = useCallback((message: string) => {
     if (message.startsWith('/')) {
       const [command, ...params] = splitargs(message.slice(1));
       if (command) {
@@ -53,7 +55,7 @@ function ChatInputContainer() {
   }, [commander, dispatch]);
 
   const bus = useBus();
-  const onScroll = useCallback((direction) => {
+  const onScroll = useCallback((direction: unknown) => {
     bus.emit('chat:scroll', direction);
   }, [bus]);
 

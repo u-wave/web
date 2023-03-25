@@ -19,7 +19,7 @@ export function getAvailableGroupMentions(canMention) {
  * Attach user objects to mentions in a parsed chat message.
  *
  * @param {Array} tree Parsed message.
- * @param {{username: string}[]} state
+ * @param {import('../redux/configureStore').StoreState} state
  */
 export function resolveMentions(tree, state) {
   const users = userListSelector(state);

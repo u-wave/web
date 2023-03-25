@@ -19,7 +19,6 @@ import { get, post, del } from './RequestActionCreators';
 import { setPlaylists } from './PlaylistActionCreators';
 import { syncTimestamps } from './TickerActionCreators';
 import { closeLoginDialog } from './DialogActionCreators';
-import { loadEmotes } from './ChatActionCreators';
 import { tokenSelector } from '../selectors/userSelectors';
 
 export function socketConnect() {
@@ -77,7 +76,6 @@ export function initState() {
       mutate('/booth/history');
       dispatch(syncTimestamps(beforeTime, state.time));
       dispatch(loadedState(state));
-      dispatch(loadEmotes());
       return state;
     },
   });

@@ -37,3 +37,13 @@ declare module 'item-selection/immutable' {
   }
   export default function itemSelection<T>(items: T[], selection?: number[]): ItemSelection<T>;
 }
+
+declare module 'splitargs' {
+  function splitargs(input: string, sep?: RegExp, keepQuotes?: boolean): string[];
+  export = splitargs;
+}
+
+declare module 'flash-document-title' {
+  function flashDocumentTitle(input: string): void;
+  export = flashDocumentTitle;
+}

@@ -1,5 +1,6 @@
 import type { AnyAction, Middleware } from 'redux';
-import { ThunkAction } from 'redux-thunk';
+import type { ThunkAction } from 'redux-thunk';
+import { mutate } from 'swr';
 import type { AppDispatch, StoreState } from './configureStore';
 import {
   LOGIN_COMPLETE,
@@ -22,10 +23,7 @@ import {
   muteUser,
   unmuteUser,
 } from '../reducers/chat';
-import {
-  receive as receiveMessage,
-  loadEmotes,
-} from '../actions/ChatActionCreators';
+import { receive as receiveMessage } from '../actions/ChatActionCreators';
 import { cyclePlaylist } from '../actions/PlaylistActionCreators';
 import {
   join as userJoin,
@@ -264,7 +262,12 @@ const actions: {
   guests: receiveGuestCount,
   'acl:allow': ({ userID, roles }) => addUserRoles(userID, roles),
   'acl:disallow': ({ userID, roles }) => removeUserRoles(userID, roles),
-  reloadEmotes: loadEmotes,
+
+  reloadEmotes: () => {
+    return () => {
+      mutate('/emotes');
+    };
+  },
 };
 
 // WebSocket wrapper with reconnection and message parsing.
