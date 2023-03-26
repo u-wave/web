@@ -1,9 +1,7 @@
 import cx from 'clsx';
 import React from 'react';
-import PropTypes from 'prop-types';
 import screenfull from 'screenfull';
 import { useSelector } from '../../hooks/useRedux';
-import { useMediaSources } from '../../context/MediaSourceContext';
 import VideoBackdrop from './VideoBackdrop';
 import VideoProgressBar from './VideoProgressBar';
 import VideoToolbar from './VideoToolbar';
@@ -35,6 +33,8 @@ type VideoProps = {
   onFullscreenEnter: () => void,
   onFullscreenExit: () => void,
 }
+// TODO the split between this and Player is a bit weird
+// could use a rethink (and a rename)
 function Video(props: VideoProps) {
   const {
     isFullscreen,
@@ -150,17 +150,5 @@ function Video(props: VideoProps) {
     </div>
   );
 }
-
-Video.propTypes = {
-  isFullscreen: PropTypes.bool,
-  enabled: PropTypes.bool,
-  size: PropTypes.string,
-  volume: PropTypes.number,
-  isMuted: PropTypes.bool,
-  media: PropTypes.object,
-  seek: PropTypes.number,
-  onFullscreenEnter: PropTypes.func.isRequired,
-  onFullscreenExit: PropTypes.func.isRequired,
-};
 
 export default Video;
