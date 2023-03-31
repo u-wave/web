@@ -1,18 +1,16 @@
 import { AnyAction } from 'redux';
-import { INIT_STATE, LOAD_EMOTES } from '../constants/ActionTypes';
+import { INIT_STATE } from '../constants/ActionTypes';
 
 interface State {
   roles: undefined | Record<string, string[]>;
   apiUrl?: string,
   socketUrl?: string,
   emoji: Record<string, string>,
-  serverEmotes: { name: string, url: string }[],
 }
 
 export const initialState: State = {
   roles: undefined,
   emoji: {},
-  serverEmotes: [],
 };
 
 export default function reduce(state = initialState, action: AnyAction): State {
@@ -26,11 +24,6 @@ export default function reduce(state = initialState, action: AnyAction): State {
         };
       }
       return state;
-    case LOAD_EMOTES:
-      return {
-        ...state,
-        serverEmotes: payload.emotes,
-      };
     default:
       return state;
   }
