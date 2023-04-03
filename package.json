@@ -83,7 +83,7 @@
     "whatwg-fetch": "^3.4.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.12",
+    "@babel/core": "^7.21.4",
     "@babel/plugin-transform-modules-commonjs": "^7.14.0",
     "@babel/plugin-transform-react-constant-elements": "^7.13.13",
     "@babel/plugin-transform-react-inline-elements": "^7.12.13",
