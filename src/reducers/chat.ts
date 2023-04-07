@@ -258,7 +258,7 @@ const slice = createSlice({
           timestamp: action.payload.timestamp,
         });
       })
-      .addCase(advance.type, (state, action: AnyAction) => {
+      .addCase(advance, (state, action) => {
         if (action.payload === null) {
           return;
         }

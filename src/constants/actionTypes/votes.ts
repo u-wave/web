@@ -1,4 +1,3 @@
-export const LOAD_VOTES = 'votes/LOAD_VOTES';
 export const UPVOTE = 'votes/UPVOTE';
 export const DOWNVOTE = 'votes/DOWNVOTE';
 export const FAVORITE = 'votes/FAVORITE';

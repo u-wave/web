@@ -1,7 +1,6 @@
 import { AnyAction } from 'redux';
 import {
   INIT_STATE,
-  LOAD_VOTES,
   FAVORITE,
   UPVOTE,
   DOWNVOTE,
@@ -27,8 +26,6 @@ export default function reduce(state = initialState, action: AnyAction): VoteSta
       return payload.booth?.stats ?? initialState;
     case advance.type:
       return initialState;
-    case LOAD_VOTES:
-      return payload;
     case UPVOTE:
       if (state.upvotes.includes(payload.userID)) {
         return state;

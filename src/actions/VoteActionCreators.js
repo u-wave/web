@@ -3,20 +3,12 @@ import { historyIDSelector } from '../selectors/boothSelectors';
 import { playlistsSelector } from '../selectors/playlistSelectors';
 import {
   OPEN_ADD_MEDIA_MENU,
-  LOAD_VOTES,
   FAVORITE, UPVOTE, DOWNVOTE,
   DO_FAVORITE_START, DO_FAVORITE_COMPLETE,
   DO_UPVOTE, DO_DOWNVOTE,
 } from '../constants/ActionTypes';
 import mergeIncludedModels from '../utils/mergeIncludedModels';
 import { flattenPlaylistItem } from './PlaylistActionCreators';
-
-export function setVoteStats(voteStats) {
-  return {
-    type: LOAD_VOTES,
-    payload: voteStats,
-  };
-}
 
 export function favorited({ userID }) {
   return {
