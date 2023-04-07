@@ -1,11 +1,5 @@
 import { del, post, put } from './RequestActionCreators';
 import {
-  WAITLIST_LOAD,
-  WAITLIST_LOCK,
-  WAITLIST_CLEAR,
-  WAITLIST_UPDATE,
-  WAITLIST_JOIN,
-  WAITLIST_LEAVE,
   WAITLIST_MOVE,
   DO_JOIN_START, DO_JOIN_COMPLETE,
   DO_LEAVE_START, DO_LEAVE_COMPLETE,
@@ -13,36 +7,7 @@ import {
   DO_CLEAR_START, DO_CLEAR_COMPLETE,
 } from '../constants/ActionTypes';
 import { currentUserSelector } from '../selectors/userSelectors';
-
-export function setWaitList(data) {
-  return {
-    type: WAITLIST_LOAD,
-    payload: {
-      waitlist: data.waitlist,
-      locked: data.locked,
-    },
-  };
-}
-
-export function setLocked(lock) {
-  return {
-    type: WAITLIST_LOCK,
-    payload: {
-      locked: lock,
-    },
-  };
-}
-
-export function clearWaitlist() {
-  return { type: WAITLIST_CLEAR };
-}
-
-export function updatedWaitlist(waitlist) {
-  return {
-    type: WAITLIST_UPDATE,
-    payload: { waitlist },
-  };
-}
+import { update } from '../reducers/waitlist';
 
 // TODO split joining the waitlist and adding another user to the waitlist
 // into two different actions.
@@ -65,13 +30,6 @@ export function joinWaitlist(otherUser) {
   };
 }
 
-export function joinedWaitlist({ userID, waitlist }) {
-  return {
-    type: WAITLIST_JOIN,
-    payload: { userID, waitlist },
-  };
-}
-
 export function leaveWaitlist(otherUser) {
   return (dispatch, getState) => {
     const user = otherUser ?? currentUserSelector(getState());
@@ -91,13 +49,6 @@ export function leaveWaitlist(otherUser) {
   };
 }
 
-export function leftWaitlist({ userID, waitlist }) {
-  return {
-    type: WAITLIST_LEAVE,
-    payload: { userID, waitlist },
-  };
-}
-
 export function movedInWaitlist({
   userID, moderatorID, position, waitlist,
 }) {
@@ -107,7 +58,7 @@ export function movedInWaitlist({
       payload: { userID, position },
       meta: { moderatorID },
     });
-    dispatch(updatedWaitlist(waitlist));
+    dispatch(update(waitlist));
   };
 }
 

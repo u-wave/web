@@ -23,6 +23,7 @@ import {
   muteUser,
   unmuteUser,
 } from '../reducers/chat';
+import * as waitlistActions from '../reducers/waitlist';
 import { receive as receiveMessage } from '../actions/ChatActionCreators';
 import { cyclePlaylist } from '../actions/PlaylistActionCreators';
 import {
@@ -33,14 +34,7 @@ import {
   removeUserRoles,
   receiveGuestCount,
 } from '../actions/UserActionCreators';
-import {
-  clearWaitlist,
-  joinedWaitlist,
-  leftWaitlist,
-  updatedWaitlist,
-  movedInWaitlist,
-  setLocked as setWaitlistLocked,
-} from '../actions/WaitlistActionCreators';
+import { movedInWaitlist } from '../actions/WaitlistActionCreators';
 import { favorited, receiveVote } from '../actions/VoteActionCreators';
 import { currentTimeSelector } from '../selectors/timeSelectors';
 import { login } from '../reducers/auth';
@@ -219,16 +213,16 @@ const actions: {
     return receiveVote({ userID: _id, vote: value });
   },
   waitlistJoin({ userID, waitlist }) {
-    return joinedWaitlist({ userID, waitlist });
+    return waitlistActions.join({ userID, waitlist });
   },
   waitlistLeave({ userID, waitlist }) {
-    return leftWaitlist({ userID, waitlist });
+    return waitlistActions.leave({ userID, waitlist });
   },
   waitlistUpdate(waitlist) {
-    return updatedWaitlist(waitlist);
+    return waitlistActions.update({ waitlist });
   },
   waitlistLock({ locked }) {
-    return setWaitlistLocked(locked);
+    return waitlistActions.lock({ locked });
   },
   waitlistMove({
     userID, moderatorID, position, waitlist,
@@ -240,13 +234,13 @@ const actions: {
   // TODO Treat moderator force-add and force-remove differently from voluntary
   // joins and leaves.
   waitlistAdd({ userID, waitlist }) {
-    return joinedWaitlist({ userID, waitlist });
+    return waitlistActions.join({ userID, waitlist });
   },
   waitlistRemove({ userID, waitlist }) {
-    return leftWaitlist({ userID, waitlist });
+    return waitlistActions.leave({ userID, waitlist });
   },
   waitlistClear() {
-    return clearWaitlist();
+    return waitlistActions.clear();
   },
   playlistCycle({ playlistID }) {
     return cyclePlaylist(playlistID);

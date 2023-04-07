@@ -1,11 +1,3 @@
-export const WAITLIST_LOAD = 'waitlist/LOAD';
-
-export const WAITLIST_LOCK = 'waitlist/LOCK';
-export const WAITLIST_CLEAR = 'waitlist/CLEAR';
-
-export const WAITLIST_UPDATE = 'waitlist/UPDATE';
-export const WAITLIST_JOIN = 'waitlist/JOIN';
-export const WAITLIST_LEAVE = 'waitlist/LEAVE';
 export const WAITLIST_MOVE = 'waitlist/MOVE';
 
 export const DO_JOIN_START = 'waitlist/DO_JOIN_START';

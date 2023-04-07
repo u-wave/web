@@ -1,13 +1,6 @@
-import { AnyAction } from 'redux';
-import {
-  INIT_STATE,
-  WAITLIST_LOAD,
-  WAITLIST_LOCK,
-  WAITLIST_CLEAR,
-  WAITLIST_UPDATE,
-  WAITLIST_JOIN,
-  WAITLIST_LEAVE,
-} from '../constants/ActionTypes';
+import type { AnyAction } from 'redux';
+import { type PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { INIT_STATE } from '../constants/ActionTypes';
 
 interface State {
   waitlist: string[];
@@ -19,37 +12,40 @@ const initialState: State = {
   locked: false,
 };
 
-export default function reduce(state = initialState, action: AnyAction): State {
-  const { type, payload } = action;
-  switch (type) {
-    case INIT_STATE:
-      return {
-        waitlist: payload.waitlist,
-        locked: payload.waitlistLocked,
-      };
-    case WAITLIST_LOAD:
-      return {
-        waitlist: payload.waitlist,
-        locked: payload.locked,
-      };
-    case WAITLIST_LOCK:
-      return {
-        ...state,
-        locked: payload.locked,
-      };
-    case WAITLIST_CLEAR:
-      return {
-        ...state,
-        waitlist: [],
-      };
-    case WAITLIST_JOIN:
-    case WAITLIST_LEAVE:
-    case WAITLIST_UPDATE:
-      return {
-        ...state,
-        waitlist: payload.waitlist,
-      };
-    default:
-      return state;
-  }
-}
+const slice = createSlice({
+  name: 'waitlist',
+  initialState,
+  reducers: {
+    lock(state, action: PayloadAction<{ locked: boolean }>) {
+      state.locked = action.payload.locked;
+    },
+    clear(state) {
+      state.waitlist = [];
+    },
+    join(state, action: PayloadAction<{ userID: string, waitlist: string[] }>) {
+      state.waitlist = action.payload.waitlist;
+    },
+    leave(state, action: PayloadAction<{ userID: string, waitlist: string[] }>) {
+      state.waitlist = action.payload.waitlist;
+    },
+    update(state, action: PayloadAction<{ waitlist: string[] }>) {
+      state.waitlist = action.payload.waitlist;
+    },
+  },
+  extraReducers(builder) {
+    builder.addCase(INIT_STATE, (state, action: AnyAction) => {
+      state.waitlist = action.payload.waitlist;
+      state.locked = action.payload.waitlistLocked;
+    });
+  },
+});
+
+export const {
+  lock,
+  clear,
+  join,
+  leave,
+  update,
+} = slice.actions;
+
+export default slice.reducer;
