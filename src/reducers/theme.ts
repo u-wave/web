@@ -1,16 +1,23 @@
-import type { AnyAction } from 'redux';
+import { type PayloadAction, createSlice } from '@reduxjs/toolkit';
 import type { ThemeOptions } from '@mui/material/styles';
 import merge from 'deepmerge';
-import { RESET_THEME, APPLY_THEME } from '../constants/ActionTypes';
 import initialState from '../theme';
 
-export default function reduce(state = initialState, action: AnyAction): ThemeOptions {
-  switch (action.type) {
-    case RESET_THEME:
+const slice = createSlice({
+  name: 'theme',
+  initialState,
+  reducers: {
+    reset() {
       return initialState;
-    case APPLY_THEME:
+    },
+    apply(state, action: PayloadAction<ThemeOptions>) {
       return merge(state, action.payload);
-    default:
-      return state;
-  }
-}
+    },
+  },
+});
+
+export const {
+  reset,
+  apply,
+} = slice.actions;
+export default slice.reducer;

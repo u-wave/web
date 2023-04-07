@@ -8,6 +8,7 @@ import {
 } from '../constants/ActionTypes';
 
 interface State {
+  /** TODO move this to playlist manager state? */
   showPanel: boolean;
   sourceType: string | null;
 }
