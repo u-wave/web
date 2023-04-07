@@ -8,7 +8,6 @@ import dialogs from './dialogs';
 import errors from './errors';
 import imports from './imports';
 import locales from './locales';
-import mediaSearch from './mediaSearch';
 import playlists from './playlists';
 import server from './server';
 import settings from './settings';
@@ -30,7 +29,6 @@ export {
   errors,
   imports,
   locales,
-  mediaSearch,
   playlists,
   server,
   settings,

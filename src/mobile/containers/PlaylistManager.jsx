@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from '../../hooks/useRedux';
 import {
   selectedPlaylistSelector,
   filteredSelectedPlaylistItemsSelector,
+  selectedPlaylistIDSelector,
 } from '../../selectors/playlistSelectors';
-import { showSearchResultsSelector } from '../../selectors/searchSelectors';
-import { showImportPanelSelector } from '../../selectors/importSelectors';
 import createLazyOverlay from '../../components/LazyOverlay';
 import { closeOverlay } from '../../reducers/activeOverlay';
+import { importPanelSymbol, searchPanelSymbol } from '../../reducers/playlists';
 
 const {
   useCallback,
@@ -19,10 +19,9 @@ const PlaylistManager = createLazyOverlay({
 });
 
 function PlaylistManagerContainer() {
+  const selectedPlaylistID = useSelector(selectedPlaylistIDSelector);
   const selectedPlaylist = useSelector(selectedPlaylistSelector);
   const selectedItems = useSelector(filteredSelectedPlaylistItemsSelector);
-  const showImportPanel = useSelector(showImportPanelSelector);
-  const showSearchResults = useSelector(showSearchResultsSelector);
   const dispatch = useDispatch();
   const onCloseOverlay = useCallback(() => dispatch(closeOverlay()), [dispatch]);
 
@@ -30,8 +29,8 @@ function PlaylistManagerContainer() {
     <PlaylistManager
       selectedPlaylist={selectedPlaylist}
       selectedItems={selectedItems}
-      showImportPanel={showImportPanel}
-      showSearchResults={showSearchResults}
+      showImportPanel={selectedPlaylistID === importPanelSymbol}
+      showSearchResults={selectedPlaylistID === searchPanelSymbol}
       onCloseOverlay={onCloseOverlay}
     />
   );

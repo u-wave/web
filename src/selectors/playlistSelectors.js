@@ -109,7 +109,9 @@ export const selectedPlaylistSelector = createSelector(
   selectedPlaylistIDSelector,
   selectedMediaSelector,
   (playlists, selectedID, selectedMedia) => (
-    mergePlaylistItems(playlists.playlists[selectedID], selectedMedia)
+    typeof selectedID === 'string'
+      ? mergePlaylistItems(playlists.playlists[selectedID], selectedMedia)
+      : null
   ),
 );
 

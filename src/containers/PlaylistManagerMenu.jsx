@@ -10,10 +10,8 @@ import { showImportPanel } from '../actions/ImportActionCreators';
 import { showSearchResults, hideSearchResults } from '../actions/SearchActionCreators';
 import {
   playlistsSelector,
-  selectedPlaylistSelector,
+  selectedPlaylistIDSelector,
 } from '../selectors/playlistSelectors';
-import { showSearchResultsSelector } from '../selectors/searchSelectors';
-import { showImportPanelSelector } from '../selectors/importSelectors';
 import { useMediaSearchStore } from '../stores/MediaSearchStore';
 import PlaylistsMenu from '../components/PlaylistManager/Menu';
 
@@ -21,10 +19,8 @@ const { useCallback } = React;
 
 function PlaylistsMenuContainer({ className }) {
   const playlists = useSelector(playlistsSelector);
-  const selected = useSelector(selectedPlaylistSelector);
+  const selected = useSelector(selectedPlaylistIDSelector);
   const mediaSearch = useMediaSearchStore();
-  const isShowSearchResults = useSelector(showSearchResultsSelector);
-  const isShowImportPanel = useSelector(showImportPanelSelector);
   const dispatch = useDispatch();
 
   const onAddToPlaylist = useCallback(
@@ -48,9 +44,7 @@ function PlaylistsMenuContainer({ className }) {
       playlists={playlists}
       selected={selected}
       searchQuery={mediaSearch.query}
-      showSearchResults={isShowSearchResults}
       searchResults={mediaSearch.resultsCount}
-      showImportPanel={isShowImportPanel}
       onAddToPlaylist={onAddToPlaylist}
       onCreatePlaylist={onCreatePlaylist}
       onSelectPlaylist={onSelectPlaylist}

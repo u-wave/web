@@ -1,6 +1,6 @@
 import cx from 'clsx';
-import React from 'react';
-import PropTypes from 'prop-types';
+import { useCallback } from 'react';
+import { useTranslator } from '@u-wave/react-translate';
 import OverlayContent from '../Overlay/Content';
 import PlaylistMenu from '../../containers/PlaylistManagerMenu';
 import PlaylistPanel from '../../containers/PlaylistManagerPanel';
@@ -9,37 +9,45 @@ import SearchResults from '../../containers/SearchResultsPanel';
 import MediaSearchBar from './Header/SearchBar';
 import PlaylistHeader from './Header';
 import NoPlaylists from './NoPlaylists';
+import { useDispatch, useSelector } from '../../hooks/useRedux';
+import { importPanelSymbol, searchPanelSymbol } from '../../reducers/playlists';
+import { createPlaylist } from '../../actions/PlaylistActionCreators';
 import './index.css';
 
-const PlaylistManager = ({
+type PlaylistManagerProps = {
+  className?: string,
+  onCloseOverlay: () => void,
+};
+function PlaylistManager({
   className,
-  selectedPlaylist,
-  showSearchResults,
-  showImportPanel,
-  onCreatePlaylist,
   onCloseOverlay,
-}) => {
+}: PlaylistManagerProps) {
+  const showPanel = useSelector((state) => state.playlists.selectedPlaylistID);
+
+  const { t } = useTranslator();
+  const dispatch = useDispatch();
+  const onCreatePlaylist = useCallback(() => (
+    dispatch(createPlaylist(t('playlists.defaultName')))
+  ), [dispatch, t]);
+
   let panel;
   let empty = false;
 
-  if (showImportPanel) {
+  if (showPanel === importPanelSymbol) {
     panel = (
       <div className="PlaylistPanel">
         <PlaylistImport />
       </div>
     );
-  } else if (showSearchResults) {
+  } else if (showPanel === searchPanelSymbol) {
     panel = <SearchResults />;
-  } else if (selectedPlaylist) {
-    // HACK Give this a key so it's remounted when you switch playlists.
+  } else if (typeof showPanel === 'string') {
+    // Give this a key so it's remounted when you switch playlists.
     // This is because there is some statefulness down the tree, especially
     // in playlist filters and scroll position.
     // By forcing a remount using a key we throw away all state and keep it
     // consistent.
-    // TODO To *actually* fix playlist filters bleeding across playlist lines,
-    // we should reset the playlist filter state alone somehow when the
-    // selected playlist changes.
-    panel = <PlaylistPanel key={selectedPlaylist._id} />;
+    panel = <PlaylistPanel key={showPanel} />;
   } else {
     empty = true;
   }
@@ -67,15 +75,6 @@ const PlaylistManager = ({
       </OverlayContent>
     </div>
   );
-};
-
-PlaylistManager.propTypes = {
-  className: PropTypes.string,
-  selectedPlaylist: PropTypes.object,
-  showSearchResults: PropTypes.bool.isRequired,
-  showImportPanel: PropTypes.bool.isRequired,
-  onCreatePlaylist: PropTypes.func.isRequired,
-  onCloseOverlay: PropTypes.func,
-};
+}
 
 export default PlaylistManager;

@@ -29,8 +29,10 @@ import {
   UPDATE_MEDIA_COMPLETE,
   FILTER_PLAYLIST_ITEMS,
   FILTER_PLAYLIST_ITEMS_COMPLETE,
-
   DO_FAVORITE_COMPLETE,
+
+  SHOW_IMPORT_PANEL,
+  SHOW_SEARCH_RESULTS,
 } from '../constants/ActionTypes';
 import type { Media } from './booth';
 
@@ -50,11 +52,13 @@ interface PlaylistItem extends Media {
 
 type PlaylistItemList = (PlaylistItem | null)[];
 
+export const importPanelSymbol = Symbol('import panel');
+export const searchPanelSymbol = Symbol('search panel');
 interface State {
   playlists: Record<string, Playlist>;
   playlistItems: Record<string, PlaylistItemList>;
   activePlaylistID: string | null;
-  selectedPlaylistID: string | null;
+  selectedPlaylistID: (typeof importPanelSymbol) | (typeof searchPanelSymbol) | string | null;
   currentFilter: {
     playlistID: string,
     filter: string,
@@ -460,6 +464,10 @@ export default function reduce(state = initialState, action: AnyAction): State {
         (items) => items.filter((media) => media === null || !isRemovedMedia[media._id]),
       );
     }
+    case SHOW_IMPORT_PANEL:
+      return { ...state, selectedPlaylistID: importPanelSymbol };
+    case SHOW_SEARCH_RESULTS:
+      return { ...state, selectedPlaylistID: searchPanelSymbol };
     default:
       return state;
   }

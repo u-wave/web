@@ -1,29 +1,24 @@
 import cx from 'clsx';
-import React from 'react';
 import PropTypes from 'prop-types';
 import MenuList from '@mui/material/MenuList';
 import PlaylistRow from './Row';
 import PlaylistCreateRow from './NewPlaylist';
 import SearchResultsRow from './SearchResultsRow';
 import PlaylistImportRow from './PlaylistImportRow';
+import { importPanelSymbol, searchPanelSymbol } from '../../../reducers/playlists';
 
 function PlaylistMenu({
   className,
   playlists,
   selected,
   searchQuery,
-  showSearchResults,
   onCreatePlaylist,
   onSelectPlaylist,
   onSelectSearchResults,
   onCloseSearchResults,
   onAddToPlaylist,
-  showImportPanel,
   onShowImportPanel,
 }) {
-  const searchIsSelected = showSearchResults ? 'is-selected' : '';
-  const importIsSelected = showImportPanel ? 'is-selected' : '';
-  const isSelectingPlaylist = selected && !showSearchResults && !showImportPanel;
   return (
     <MenuList className={cx('PlaylistMenu', className)} disablePadding>
       <PlaylistCreateRow
@@ -32,7 +27,7 @@ function PlaylistMenu({
       />
       {searchQuery && (
         <SearchResultsRow
-          className={cx('PlaylistMenu-row', searchIsSelected)}
+          className={cx('PlaylistMenu-row', selected === searchPanelSymbol && 'is-selected')}
           query={searchQuery}
           onClick={onSelectSearchResults}
           onClose={onCloseSearchResults}
@@ -43,13 +38,13 @@ function PlaylistMenu({
           key={pl._id}
           className="PlaylistMenu-row"
           playlist={pl}
-          selected={isSelectingPlaylist && selected._id === pl._id}
+          selected={selected === pl._id}
           onClick={() => onSelectPlaylist(pl._id)}
           onAddToPlaylist={onAddToPlaylist}
         />
       ))}
       <PlaylistImportRow
-        className={cx('PlaylistMenu-row', importIsSelected)}
+        className={cx('PlaylistMenu-row', selected === importPanelSymbol && 'is-selected')}
         onClick={onShowImportPanel}
       />
     </MenuList>
@@ -59,9 +54,10 @@ function PlaylistMenu({
 PlaylistMenu.propTypes = {
   className: PropTypes.string,
   playlists: PropTypes.arrayOf(PropTypes.object).isRequired,
-  selected: PropTypes.object,
-  showSearchResults: PropTypes.bool.isRequired,
-  showImportPanel: PropTypes.bool.isRequired,
+  selected: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.symbol,
+  ]),
   searchQuery: PropTypes.string,
   onCreatePlaylist: PropTypes.func.isRequired,
   onSelectPlaylist: PropTypes.func.isRequired,

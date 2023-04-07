@@ -1,4 +1,3 @@
-import React from 'react';
 import { useDispatch } from '../../../hooks/useRedux';
 import { useMediaSources } from '../../../context/MediaSourceContext';
 import {
