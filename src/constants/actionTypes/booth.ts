@@ -1,4 +1,3 @@
-export const ADVANCE = 'booth/ADVANCE';
 export const BOOTH_SKIP = 'booth/SKIP';
 
 export const ENTER_FULLSCREEN = 'playback/ENTER_FULLSCREEN';

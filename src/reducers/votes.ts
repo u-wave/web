@@ -2,11 +2,11 @@ import { AnyAction } from 'redux';
 import {
   INIT_STATE,
   LOAD_VOTES,
-  ADVANCE,
   FAVORITE,
   UPVOTE,
   DOWNVOTE,
 } from '../constants/ActionTypes';
+import { advance } from './booth';
 
 export interface VoteStats {
   upvotes: string[];
@@ -25,7 +25,7 @@ export default function reduce(state = initialState, action: AnyAction): VoteSta
   switch (type) {
     case INIT_STATE:
       return payload.booth?.stats ?? initialState;
-    case ADVANCE:
+    case advance.type:
       return initialState;
     case LOAD_VOTES:
       return payload;

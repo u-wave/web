@@ -4,7 +4,6 @@ import { MarkupNode } from 'u-wave-parse-chat-markup';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import {
   INIT_STATE,
-  ADVANCE,
   BOOTH_SKIP,
   USER_JOIN,
   USER_LEAVE,
@@ -13,6 +12,7 @@ import {
   USER_REMOVE_ROLES,
 } from '../constants/ActionTypes';
 import type { User } from './users';
+import { advance } from './booth';
 
 export interface ChatMessage {
   _id: string;
@@ -258,7 +258,7 @@ const slice = createSlice({
           timestamp: action.payload.timestamp,
         });
       })
-      .addCase(ADVANCE, (state, action: AnyAction) => {
+      .addCase(advance.type, (state, action: AnyAction) => {
         if (action.payload === null) {
           return;
         }
