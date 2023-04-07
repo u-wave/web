@@ -3,10 +3,8 @@ import type { ThunkAction } from 'redux-thunk';
 import ms from 'ms';
 import parseChatMarkup from 'u-wave-parse-chat-markup';
 import flashDocumentTitle from 'flash-document-title';
-import { v4 as randomUUID } from 'uuid';
 import playMentionSound from '../utils/playMentionSound';
 import {
-  RECEIVE_MOTD,
   SET_MOTD_START,
   SET_MOTD_COMPLETE,
 } from '../constants/ActionTypes';
@@ -33,18 +31,8 @@ import { User } from '../reducers/users';
 
 type Thunk = ThunkAction<unknown, StoreState, never, AnyAction>;
 
-export function receiveMotd(text: string) {
-  return {
-    type: RECEIVE_MOTD,
-    payload: text,
-  };
-}
-
 export function log(text: string) {
-  return actions.log({
-    _id: randomUUID(),
-    text,
-  });
+  return actions.log(text);
 }
 
 export function prepareMessage(state: StoreState, user: User, text: string, parseOpts = {}) {

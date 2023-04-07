@@ -179,12 +179,22 @@ const slice = createSlice({
         isMention: action.payload.isMention,
       });
     },
-    log(state, { payload }: PayloadAction<{ _id: string, text: string }>) {
-      state.messages.push({
-        type: 'log',
-        _id: payload._id,
-        text: payload.text,
-      });
+    log: {
+      reducer(state, { payload }: PayloadAction<{ _id: string, text: string }>) {
+        state.messages.push({
+          type: 'log',
+          _id: payload._id,
+          text: payload.text,
+        });
+      },
+      prepare(text: string) {
+        return {
+          payload: {
+            _id: randomUUID(),
+            text,
+          },
+        };
+      },
     },
     deleteMessageByID(state, { payload }: PayloadAction<{ _id: string }>) {
       const index = state.messages.findIndex((message) => message._id === payload._id);
@@ -219,9 +229,70 @@ const slice = createSlice({
     },
   },
   extraReducers(builder) {
-    builder.addCase(INIT_STATE, (state, action: AnyAction) => {
-      state.motd = action.payload.motd;
-    });
+    builder
+      .addCase(INIT_STATE, (state, action: AnyAction) => {
+        state.motd = action.payload.motd;
+      })
+      .addCase(USER_JOIN, (state, action: AnyAction) => {
+        state.messages.push({
+          type: 'userJoin',
+          _id: randomUUID(),
+          user: action.payload.user,
+          timestamp: action.payload.timestamp,
+        });
+      })
+      .addCase(USER_LEAVE, (state, action: AnyAction) => {
+        state.messages.push({
+          type: 'userLeave',
+          _id: randomUUID(),
+          user: action.payload.user,
+          timestamp: action.payload.timestamp,
+        });
+      })
+      .addCase(CHANGE_USERNAME, (state, action: AnyAction) => {
+        state.messages.push({
+          type: 'userNameChanged',
+          _id: randomUUID(),
+          user: action.payload.user,
+          newUsername: action.payload.username,
+          timestamp: action.payload.timestamp,
+        });
+      })
+      .addCase(ADVANCE, (state, action: AnyAction) => {
+        if (action.payload === null) {
+          return;
+        }
+
+        state.messages.push({
+          type: 'nowPlaying',
+          _id: randomUUID(),
+          entry: action.payload.media,
+          timestamp: action.payload.timestamp,
+        });
+      })
+      .addCase(BOOTH_SKIP, (state, action: AnyAction) => {
+        state.messages.push({
+          type: 'skip',
+          _id: randomUUID(),
+          user: action.payload.user,
+          moderator: action.payload.moderator,
+          reason: action.payload.reason,
+          timestamp: action.payload.timestamp,
+        });
+      })
+      .addMatcher(
+        (action) => [USER_ADD_ROLES, USER_REMOVE_ROLES].includes(action.type),
+        (state, action: AnyAction) => {
+          state.messages.push({
+            type: 'roleUpdate',
+            _id: randomUUID(),
+            user: action.payload.user,
+            updateType: action.type === USER_ADD_ROLES ? 'add' : 'remove',
+            roles: action.payload.roles,
+            timestamp: action.payload.timestamp,
+          });
+        },
+      );
   },
 });
 
@@ -236,83 +307,4 @@ export const {
   unmuteUser,
 } = slice.actions;
 
-export default function reduce(state_ = initialState, action: AnyAction) {
-  const state = slice.reducer(state_, action);
-  const { type, payload } = action;
-  switch (type) {
-    case USER_JOIN:
-      return {
-        ...state,
-        messages: state.messages.concat([{
-          type: 'userJoin',
-          _id: randomUUID(),
-          user: payload.user,
-          timestamp: payload.timestamp,
-        }]),
-      };
-    case USER_LEAVE:
-      return {
-        ...state,
-        messages: state.messages.concat([{
-          type: 'userLeave',
-          _id: randomUUID(),
-          user: payload.user,
-          timestamp: payload.timestamp,
-        }]),
-      };
-    case CHANGE_USERNAME:
-      return {
-        ...state,
-        messages: state.messages.concat([{
-          type: 'userNameChanged',
-          _id: randomUUID(),
-          user: payload.user,
-          newUsername: payload.username,
-          timestamp: payload.timestamp,
-        }]),
-      };
-    case USER_ADD_ROLES: // fall through
-    case USER_REMOVE_ROLES:
-      return {
-        ...state,
-        messages: state.messages.concat([{
-          type: 'roleUpdate',
-          _id: randomUUID(),
-          user: payload.user,
-          updateType: type === USER_ADD_ROLES ? 'add' : 'remove',
-          roles: payload.roles,
-          timestamp: payload.timestamp,
-        }]),
-      };
-    case ADVANCE: {
-      if (payload === null) {
-        return state;
-      }
-
-      return {
-        ...state,
-        messages: state.messages.concat([{
-          type: 'nowPlaying',
-          _id: randomUUID(),
-          entry: payload.media,
-          timestamp: payload.timestamp,
-        }]),
-      };
-    }
-    case BOOTH_SKIP:
-      return {
-        ...state,
-        messages: state.messages.concat([{
-          type: 'skip',
-          _id: randomUUID(),
-          user: payload.user,
-          moderator: payload.moderator,
-          reason: payload.reason,
-          timestamp: payload.timestamp,
-        }]),
-      };
-
-    default:
-      return state;
-  }
-}
+export default slice.reducer;
