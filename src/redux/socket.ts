@@ -408,7 +408,9 @@ class UwaveSocket {
     // @ts-expect-error TS2339: hard to type correctly at the moment
     const { socketToken } = await this.dispatch(initState());
     await this.connect();
-    this.sendAuthToken(socketToken);
+    if (socketToken) {
+      this.sendAuthToken(socketToken);
+    }
     this.drainQueuedMessages();
   }
 
@@ -457,7 +459,7 @@ export default function middleware({ url = defaultUrl() } = {}):
           break;
         case login.fulfilled.type:
         case INIT_STATE:
-          if (!socket.sentAuthToken) {
+          if (!socket.sentAuthToken && payload.socketToken) {
             socket.sendAuthToken(payload.socketToken);
           }
           break;
