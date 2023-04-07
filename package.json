@@ -151,6 +151,7 @@
     "serve": "u-wave-web",
     "start": "npm run dev",
     "test": "npm run tests-only && npm run lint",
+    "typecheck": "tsc",
     "tests-only": "jest src"
   },
   "workspaces": {
