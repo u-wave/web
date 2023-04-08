@@ -1,6 +1,5 @@
 import { del, post, put } from './RequestActionCreators';
 import {
-  WAITLIST_MOVE,
   DO_JOIN_START, DO_JOIN_COMPLETE,
   DO_LEAVE_START, DO_LEAVE_COMPLETE,
   DO_LOCK_START, DO_LOCK_COMPLETE,
@@ -53,11 +52,11 @@ export function movedInWaitlist({
   userID, moderatorID, position, waitlist,
 }) {
   return (dispatch) => {
-    dispatch({
-      type: WAITLIST_MOVE,
-      payload: { userID, position },
-      meta: { moderatorID },
-    });
+    // dispatch({
+    //   type: WAITLIST_MOVE,
+    //   payload: { userID, position },
+    //   meta: { moderatorID },
+    // });
     dispatch(update(waitlist));
   };
 }

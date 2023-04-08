@@ -4,6 +4,7 @@ import { INIT_STATE, SET_TOKEN } from '../constants/ActionTypes';
 import type { User } from './users';
 import { initState } from '../actions/LoginActionCreators';
 import uwFetch from '../utils/fetch';
+import { currentUserSelector } from '../selectors/userSelectors';
 
 interface State {
   strategies: string[];
@@ -35,6 +36,23 @@ export const login = createAsyncThunk('auth/login', async (payload: LoginPayload
     user: data,
     socketToken: socketToken as string,
     token: meta.jwt,
+  };
+});
+
+export const changeUsername = createAsyncThunk('auth/changeUsername', async (username: string, api) => {
+  const user = currentUserSelector(api.getState());
+  if (!user) {
+    throw new Error('Not logged in');
+  }
+
+  const { data } = await uwFetch<{ data: User }>([`/users/${user._id}/username/`, {
+    method: 'put',
+    data: { username },
+    signal: api.signal,
+  }]);
+
+  return {
+    user: data,
   };
 });
 

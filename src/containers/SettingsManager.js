@@ -6,8 +6,8 @@ import {
   setLanguage,
 } from '../reducers/settings';
 import { changeLanguage } from '../actions/LocaleActionCreators';
-import { doChangeUsername } from '../actions/UserActionCreators';
 import { logout } from '../actions/LoginActionCreators';
+import { changeUsername } from '../reducers/auth';
 import { currentUserSelector } from '../selectors/userSelectors';
 import { settingsSelector } from '../selectors/settingSelectors';
 import createLazyOverlay from '../components/LazyOverlay';
@@ -28,7 +28,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = {
   onSettingChange: setSetting,
-  onChangeUsername: doChangeUsername,
+  onChangeUsername: changeUsername,
   onChangeLanguage: changeAndSaveLanguage,
   onLogout: logout,
 };
