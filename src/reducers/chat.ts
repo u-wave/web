@@ -60,13 +60,11 @@ export interface NowPlayingMessage {
   type: 'nowPlaying',
   _id: string,
   entry: {
-    media: {
-      _id: string,
-      sourceType: string,
-      sourceID: string,
-      thumbnail: string,
-      duration: number,
-    },
+    _id: string,
+    sourceType: string,
+    sourceID: string,
+    thumbnail: string,
+    duration: number,
     artist: string,
     title: string,
     start: number,

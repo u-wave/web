@@ -1,6 +1,5 @@
-import { AnyAction } from 'redux';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { User } from './users';
+import type { User } from './users';
 import { initState } from './auth';
 
 export interface Media {
