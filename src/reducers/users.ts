@@ -1,8 +1,8 @@
 import type { AnyAction } from 'redux';
 import { type PayloadAction, createSlice, ThunkAction } from '@reduxjs/toolkit';
 import indexBy from 'just-index';
-import { INIT_STATE } from '../constants/ActionTypes';
 import { StoreState } from '../redux/configureStore';
+import { initState } from './auth';
 
 export interface User {
   _id: string;
@@ -59,7 +59,7 @@ const slice = createSlice({
     },
   },
   extraReducers(builder) {
-    builder.addCase(INIT_STATE, (state, action: AnyAction) => {
+    builder.addCase(initState.fulfilled, (state, action) => {
       state.guests = action.payload.guests;
       // this is merged in instead of replacing the state, because sometimes the
       // JOIN event from the current user comes in before the LOAD event, and then

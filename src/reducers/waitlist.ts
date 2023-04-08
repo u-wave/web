@@ -1,6 +1,5 @@
-import type { AnyAction } from 'redux';
 import { type PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { INIT_STATE } from '../constants/ActionTypes';
+import { initState } from './auth';
 
 interface State {
   waitlist: string[];
@@ -33,7 +32,7 @@ const slice = createSlice({
     },
   },
   extraReducers(builder) {
-    builder.addCase(INIT_STATE, (state, action: AnyAction) => {
+    builder.addCase(initState.fulfilled, (state, action) => {
       state.waitlist = action.payload.waitlist;
       state.locked = action.payload.waitlistLocked;
     });

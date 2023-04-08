@@ -1,6 +1,5 @@
 import { mutate } from 'swr';
 import {
-  INIT_STATE,
   SOCKET_CONNECT,
   SOCKET_RECONNECT,
   REGISTER_START,
@@ -11,13 +10,11 @@ import {
   LOGOUT_START,
   LOGOUT_COMPLETE,
   RESET_PASSWORD_COMPLETE,
-  LOAD_ALL_PLAYLISTS_START,
 } from '../constants/ActionTypes';
 import * as Session from '../utils/Session';
 import { get, post, del } from './RequestActionCreators';
 import { setPlaylists } from './PlaylistActionCreators';
-import { syncTimestamps } from './TickerActionCreators';
-import { closeLoginDialog } from './DialogActionCreators';
+import { initState } from '../reducers/auth';
 
 export function socketConnect() {
   return { type: SOCKET_CONNECT };
@@ -25,32 +22,6 @@ export function socketConnect() {
 
 export function socketReconnect() {
   return { type: SOCKET_RECONNECT };
-}
-
-export function loadedState(state) {
-  return (dispatch) => {
-    dispatch({
-      type: INIT_STATE,
-      payload: state,
-    });
-    if (state.user) {
-      dispatch(closeLoginDialog());
-    }
-  };
-}
-
-export function initState() {
-  const beforeTime = Date.now();
-
-  return get('/now', {
-    onStart: () => ({ type: LOAD_ALL_PLAYLISTS_START }),
-    onComplete: (state) => (dispatch) => {
-      mutate('/booth/history');
-      dispatch(syncTimestamps(beforeTime, state.time));
-      dispatch(loadedState(state));
-      return state;
-    },
-  });
 }
 
 export function setSessionToken(token) {

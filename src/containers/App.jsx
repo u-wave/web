@@ -16,7 +16,7 @@ import UwaveContext from '../context/UwaveContext';
 import { ClockProvider } from '../context/ClockContext';
 import MediaSourceContext from '../context/MediaSourceContext';
 import { AllStoresProvider } from '../stores';
-import { initState } from '../actions/LoginActionCreators';
+import { initState } from '../reducers/auth';
 
 const { useCallback, useEffect, useRef } = React;
 

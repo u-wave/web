@@ -3,14 +3,12 @@ import type { ThunkAction } from 'redux-thunk';
 import { mutate } from 'swr';
 import type { AppDispatch, StoreState } from './configureStore';
 import {
-  INIT_STATE,
   LOGOUT_START,
   SOCKET_CONNECT,
   SOCKET_RECONNECT,
   SOCKET_DISCONNECTED,
   SOCKET_CONNECTED,
 } from '../constants/ActionTypes';
-import { initState } from '../actions/LoginActionCreators';
 import {
   advance,
   skipped,
@@ -29,7 +27,7 @@ import { cyclePlaylist } from '../actions/PlaylistActionCreators';
 import { movedInWaitlist } from '../actions/WaitlistActionCreators';
 import { favorited, receiveVote } from '../actions/VoteActionCreators';
 import { currentTimeSelector } from '../selectors/timeSelectors';
-import { login } from '../reducers/auth';
+import { initState, login } from '../reducers/auth';
 import {
   addRoles,
   receiveGuestCount,
@@ -410,7 +408,6 @@ class UwaveSocket {
   }
 
   async reconnect() {
-    // @ts-expect-error TS2339: hard to type correctly at the moment
     const { socketToken } = await this.dispatch(initState());
     await this.connect();
     if (socketToken) {
@@ -463,7 +460,7 @@ export default function middleware({ url = defaultUrl() } = {}):
           socket.send('sendChat', payload.message);
           break;
         case login.fulfilled.type:
-        case INIT_STATE:
+        case initState.fulfilled.type:
           if (!socket.sentAuthToken && payload.socketToken) {
             socket.sendAuthToken(payload.socketToken);
           }

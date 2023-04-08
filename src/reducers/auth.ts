@@ -1,10 +1,29 @@
 import type { AnyAction } from 'redux';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { INIT_STATE, SET_TOKEN } from '../constants/ActionTypes';
+import { mutate } from 'swr';
+import { SET_TOKEN } from '../constants/ActionTypes';
+import type { Playlist, PlaylistItem } from './playlists';
 import type { User } from './users';
-import { initState } from '../actions/LoginActionCreators';
 import uwFetch from '../utils/fetch';
 import { currentUserSelector } from '../selectors/userSelectors';
+import { syncTimestamps } from '../actions/TickerActionCreators';
+
+interface Media {
+  media: {
+    _id: string,
+    sourceType: string,
+    sourceID: string,
+    sourceData: object,
+    artist: string,
+    title: string,
+    duration: number,
+    thumbnail: string,
+  },
+  artist: string,
+  title: string,
+  start: number,
+  end: number,
+}
 
 interface State {
   strategies: string[];
@@ -17,6 +36,37 @@ const initialState: State = {
   token: null,
   user: null,
 };
+
+export const initState = createAsyncThunk('auth/now', async (_payload: void, api) => {
+  const beforeTime = Date.now();
+
+  const state = await uwFetch<{
+    motd: string | null,
+    user: User | null,
+    users: User[],
+    guests: number,
+    roles: Record<string, string[]>,
+    booth: {
+      historyID: string,
+      media: Media,
+      userID: string,
+      playedAt: number,
+    } | null,
+    waitlist: string[],
+    waitlistLocked: boolean,
+    activePlaylist: string | null,
+    firstActivePlaylistItem: PlaylistItem | null,
+    playlists: Playlist[] | null,
+    socketToken: string | null,
+    authStrategies: string[],
+    time: number,
+  }>(['/now', { signal: api.signal }]);
+
+  mutate('/booth/history');
+  api.dispatch(syncTimestamps(beforeTime, state.time));
+
+  return state;
+});
 
 type LoginPayload = { email: string, password: string };
 export const login = createAsyncThunk('auth/login', async (payload: LoginPayload, api) => {
@@ -63,10 +113,10 @@ const slice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(INIT_STATE, (state, action: AnyAction) => {
+      .addCase(initState.fulfilled, (state, action) => {
         const { payload } = action;
         state.strategies = payload.authStrategies;
-        state.user = payload.user?._id;
+        state.user = payload.user?._id ?? null;
       })
       .addCase(SET_TOKEN, (state, action: AnyAction) => {
         const { payload } = action;

@@ -1,7 +1,7 @@
 import { AnyAction } from 'redux';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { INIT_STATE } from '../constants/ActionTypes';
 import { User } from './users';
+import { initState } from './auth';
 
 export interface Media {
   _id: string,
@@ -89,7 +89,7 @@ const slice = createSlice({
     },
   },
   extraReducers(builder) {
-    builder.addCase(INIT_STATE, (state, action: AnyAction) => {
+    builder.addCase(initState.fulfilled, (state, action) => {
       const { payload } = action;
       if (payload.booth) {
         Object.assign(state, {

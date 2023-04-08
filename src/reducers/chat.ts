@@ -2,9 +2,10 @@ import { AnyAction } from 'redux';
 import { v4 as randomUUID } from 'uuid';
 import { MarkupNode } from 'u-wave-parse-chat-markup';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { INIT_STATE, BOOTH_SKIP } from '../constants/ActionTypes';
+import { BOOTH_SKIP } from '../constants/ActionTypes';
 import { type User, actions as userActions } from './users';
 import { advance } from './booth';
+import { initState } from './auth';
 
 export interface ChatMessage {
   _id: string;
@@ -222,7 +223,7 @@ const slice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(INIT_STATE, (state, action: AnyAction) => {
+      .addCase(initState.fulfilled, (state, action) => {
         state.motd = action.payload.motd;
       })
       .addCase(userActions.userJoin, (state, action) => {

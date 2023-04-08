@@ -5,8 +5,6 @@ import mapValues from 'just-map-values';
 import omit from 'just-omit';
 import { flattenPlaylistItem } from '../actions/PlaylistActionCreators';
 import {
-  INIT_STATE,
-
   LOAD_ALL_PLAYLISTS_COMPLETE,
   LOAD_PLAYLIST_START,
   LOAD_PLAYLIST_COMPLETE,
@@ -35,8 +33,9 @@ import {
   SHOW_SEARCH_RESULTS,
 } from '../constants/ActionTypes';
 import type { Media } from './booth';
+import { initState } from './auth';
 
-interface Playlist {
+export interface Playlist {
   _id: string;
   name: string;
   loading: boolean;
@@ -44,7 +43,7 @@ interface Playlist {
   size: number;
 }
 
-interface PlaylistItem extends Media {
+export interface PlaylistItem extends Media {
   createdAt: string;
   updatedAt: string;
   loading?: boolean;
@@ -201,7 +200,7 @@ export default function reduce(state = initialState, action: AnyAction): State {
   } = action;
 
   switch (type) {
-    case INIT_STATE:
+    case initState.fulfilled.type:
       // Probably not signed in.
       if (!payload.playlists) return state;
 

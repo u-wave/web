@@ -1,4 +1,3 @@
-export const INIT_STATE = 'auth/INIT_STATE';
 export const SOCKET_CONNECT = 'auth/SOCKET_CONNECT';
 export const SOCKET_RECONNECT = 'auth/SOCKET_RECONNECT';
 export const SOCKET_CONNECTED = 'auth/SOCKET_CONNECTED';
