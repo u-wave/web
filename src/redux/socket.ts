@@ -408,10 +408,10 @@ class UwaveSocket {
   }
 
   async reconnect() {
-    const { socketToken } = await this.dispatch(initState());
+    const { payload } = await this.dispatch(initState());
     await this.connect();
-    if (socketToken) {
-      this.sendAuthToken(socketToken);
+    if (payload.socketToken) {
+      this.sendAuthToken(payload.socketToken);
     }
     this.drainQueuedMessages();
   }

@@ -80,11 +80,12 @@ export const login = createAsyncThunk('auth/login', async (payload: LoginPayload
     signal: api.signal,
   }]);
 
-  const { socketToken } = await api.dispatch(initState());
+  const now = await api.dispatch(initState());
+  const { socketToken } = now.payload as { socketToken: string };
 
   return {
     user: data,
-    socketToken: socketToken as string,
+    socketToken,
     token: meta.jwt,
   };
 });
