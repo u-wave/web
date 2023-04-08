@@ -1,4 +1,5 @@
 import qsStringify from 'qs-stringify';
+import type { DocWithErrors, Errors } from 'jsonapi-typescript';
 
 export type ListResponse<Data> = {
   data: Data[],
@@ -14,6 +15,12 @@ export type ListResponse<Data> = {
     next?: string,
     prev?: string,
   },
+}
+
+class FetchError extends Error {
+  response?: Response;
+
+  errors?: Errors;
 }
 
 type FetchOptions = {
@@ -46,8 +53,8 @@ async function uwFetch<T = object>(args: [path: string, options?: FetchOptions] 
     if (!('errors' in data)) {
       throw new Error('An unknown error occurred.');
     }
-    const { errors } = data;
-    const error = new Error(errors.map((err) => err.title).join(', '));
+    const { errors } = data as DocWithErrors;
+    const error = new FetchError(errors.map((err) => err.title).join(', '));
     error.response = response;
     error.errors = errors;
     throw error;
