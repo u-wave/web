@@ -2,16 +2,8 @@ import { AnyAction } from 'redux';
 import { v4 as randomUUID } from 'uuid';
 import { MarkupNode } from 'u-wave-parse-chat-markup';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import {
-  INIT_STATE,
-  BOOTH_SKIP,
-  USER_JOIN,
-  USER_LEAVE,
-  CHANGE_USERNAME,
-  USER_ADD_ROLES,
-  USER_REMOVE_ROLES,
-} from '../constants/ActionTypes';
-import type { User } from './users';
+import { INIT_STATE, BOOTH_SKIP } from '../constants/ActionTypes';
+import { type User, actions as userActions } from './users';
 import { advance } from './booth';
 
 export interface ChatMessage {
@@ -233,29 +225,49 @@ const slice = createSlice({
       .addCase(INIT_STATE, (state, action: AnyAction) => {
         state.motd = action.payload.motd;
       })
-      .addCase(USER_JOIN, (state, action: AnyAction) => {
+      .addCase(userActions.userJoin, (state, action) => {
         state.messages.push({
           type: 'userJoin',
           _id: randomUUID(),
           user: action.payload.user,
-          timestamp: action.payload.timestamp,
+          timestamp: Date.now(),
         });
       })
-      .addCase(USER_LEAVE, (state, action: AnyAction) => {
+      .addCase(userActions.userLeave, (state, action) => {
         state.messages.push({
           type: 'userLeave',
           _id: randomUUID(),
           user: action.payload.user,
-          timestamp: action.payload.timestamp,
+          timestamp: Date.now(),
         });
       })
-      .addCase(CHANGE_USERNAME, (state, action: AnyAction) => {
+      .addCase(userActions.usernameChanged, (state, action) => {
         state.messages.push({
           type: 'userNameChanged',
           _id: randomUUID(),
           user: action.payload.user,
           newUsername: action.payload.username,
-          timestamp: action.payload.timestamp,
+          timestamp: Date.now(),
+        });
+      })
+      .addCase(userActions.addRoles, (state, action) => {
+        state.messages.push({
+          type: 'roleUpdate',
+          _id: randomUUID(),
+          user: action.payload.user,
+          updateType: 'add',
+          roles: action.payload.roles,
+          timestamp: Date.now(),
+        });
+      })
+      .addCase(userActions.removeRoles, (state, action) => {
+        state.messages.push({
+          type: 'roleUpdate',
+          _id: randomUUID(),
+          user: action.payload.user,
+          updateType: 'remove',
+          roles: action.payload.roles,
+          timestamp: Date.now(),
         });
       })
       .addCase(advance, (state, action) => {
@@ -279,20 +291,7 @@ const slice = createSlice({
           reason: action.payload.reason,
           timestamp: action.payload.timestamp,
         });
-      })
-      .addMatcher(
-        (action) => [USER_ADD_ROLES, USER_REMOVE_ROLES].includes(action.type),
-        (state, action: AnyAction) => {
-          state.messages.push({
-            type: 'roleUpdate',
-            _id: randomUUID(),
-            user: action.payload.user,
-            updateType: action.type === USER_ADD_ROLES ? 'add' : 'remove',
-            roles: action.payload.roles,
-            timestamp: action.payload.timestamp,
-          });
-        },
-      );
+      });
   },
 });
 

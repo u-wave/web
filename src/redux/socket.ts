@@ -26,18 +26,18 @@ import {
 import * as waitlistActions from '../reducers/waitlist';
 import { receive as receiveMessage } from '../actions/ChatActionCreators';
 import { cyclePlaylist } from '../actions/PlaylistActionCreators';
-import {
-  join as userJoin,
-  leave as userLeave,
-  changeUsername,
-  addUserRoles,
-  removeUserRoles,
-  receiveGuestCount,
-} from '../actions/UserActionCreators';
 import { movedInWaitlist } from '../actions/WaitlistActionCreators';
 import { favorited, receiveVote } from '../actions/VoteActionCreators';
 import { currentTimeSelector } from '../selectors/timeSelectors';
 import { login } from '../reducers/auth';
+import {
+  addRoles,
+  receiveGuestCount,
+  removeRoles,
+  userJoin,
+  userLeave,
+  usernameChanged,
+} from '../reducers/users';
 
 function defaultUrl() {
   const loc = window.location;
@@ -47,7 +47,16 @@ function defaultUrl() {
 }
 
 type SocketMessages = {
-  join: object,
+  join: {
+    _id: string,
+    username: string,
+    slug: string,
+    roles: string[],
+    avatar: string,
+    createdAt: string,
+    updatedAt: string,
+    lastSeenAt: string,
+  },
   leave: string,
   guests: number,
 
@@ -246,17 +255,19 @@ const actions: {
     return cyclePlaylist(playlistID);
   },
   join(user) {
-    return userJoin(user);
+    return userJoin({ user });
   },
   leave(userID) {
-    return userLeave(userID);
+    return userLeave({ userID });
   },
-  nameChange({ userID, username }) {
-    return changeUsername(userID, username);
+  nameChange(payload) {
+    return usernameChanged(payload);
   },
-  guests: receiveGuestCount,
-  'acl:allow': ({ userID, roles }) => addUserRoles(userID, roles),
-  'acl:disallow': ({ userID, roles }) => removeUserRoles(userID, roles),
+  guests(count) {
+    return receiveGuestCount({ guests: count });
+  },
+  'acl:allow': addRoles,
+  'acl:disallow': removeRoles,
 
   reloadEmotes: () => {
     return () => {

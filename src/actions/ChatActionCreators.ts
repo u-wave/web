@@ -57,6 +57,11 @@ export function sendChat(text: string): Thunk {
       return;
     }
 
+    // Shouldn't really happen
+    if (!sender) {
+      return;
+    }
+
     const users = userListSelector(state);
     const message = prepareMessage(state, sender, text, {
       mentions: [
