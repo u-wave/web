@@ -1,7 +1,6 @@
 import type { AnyAction, Middleware } from 'redux';
-import type { ThunkAction } from 'redux-thunk';
-import { mutate } from 'swr';
-import type { AppDispatch, StoreState } from './configureStore';
+import { createAction } from '@reduxjs/toolkit';
+import type { AppDispatch } from './configureStore';
 import {
   LOGOUT_START,
   SOCKET_CONNECT,
@@ -9,33 +8,8 @@ import {
   SOCKET_DISCONNECTED,
   SOCKET_CONNECTED,
 } from '../constants/ActionTypes';
-import {
-  advance,
-  skipped,
-} from '../actions/BoothActionCreators';
-import {
-  sendMessage,
-  deleteMessageByID,
-  deleteMessagesByUser,
-  deleteAllMessages,
-  muteUser,
-  unmuteUser,
-} from '../reducers/chat';
-import * as waitlistActions from '../reducers/waitlist';
-import { receive as receiveMessage } from '../actions/ChatActionCreators';
-import { cyclePlaylist } from '../actions/PlaylistActionCreators';
-import { movedInWaitlist } from '../actions/WaitlistActionCreators';
-import { favorited, receiveVote } from '../actions/VoteActionCreators';
-import { currentTimeSelector } from '../selectors/timeSelectors';
+import { sendMessage } from '../reducers/chat';
 import { initState, login } from '../reducers/auth';
-import {
-  addRoles,
-  receiveGuestCount,
-  removeRoles,
-  userJoin,
-  userLeave,
-  usernameChanged,
-} from '../reducers/users';
 
 function defaultUrl() {
   const loc = window.location;
@@ -44,7 +18,7 @@ function defaultUrl() {
   return `${protocol}//${loc.hostname}:${port}/api/socket`;
 }
 
-type SocketMessages = {
+export type SocketMessageParams = {
   join: {
     _id: string,
     username: string,
@@ -166,113 +140,14 @@ type SocketMessages = {
   reloadEmotes: void,
 }
 
-const actions: {
-  [K in keyof SocketMessages]: (data: SocketMessages[K]) =>
-    (AnyAction | ThunkAction<unknown, StoreState, never, AnyAction>)
-} = {
-  chatMessage({
-    id, userID, message, timestamp,
-  }) {
-    return receiveMessage({
-      _id: id,
-      userID,
-      text: message,
-      timestamp,
-    });
-  },
-  chatDelete() {
-    return deleteAllMessages();
-  },
-  chatDeleteByID({ _id }) {
-    return deleteMessageByID({ _id });
-  },
-  chatDeleteByUser({ userID }) {
-    return deleteMessagesByUser({ userID });
-  },
-  chatMute({ userID, expiresAt, moderatorID }) {
-    return (dispatch, getState) => {
-      const currentTime = currentTimeSelector(getState());
-      const expireIn = expiresAt - currentTime;
-      const expirationTimer = expireIn > 0
-        ? setTimeout(() => dispatch(unmuteUser({ userID })), expireIn)
-        : null;
-      muteUser({
-        userID,
-        moderatorID,
-        expiresAt,
-        expirationTimer,
-      });
-    };
-  },
-  chatUnmute({ userID, moderatorID }) {
-    return unmuteUser({ userID, moderatorID });
-  },
-  advance(booth) {
-    return advance(booth);
-  },
-  skip({ userID, moderatorID, reason }) {
-    return skipped({ userID, moderatorID, reason });
-  },
-  favorite({ userID }) {
-    return favorited({ userID });
-  },
-  vote({ _id, value }) {
-    return receiveVote({ userID: _id, vote: value });
-  },
-  waitlistJoin({ userID, waitlist }) {
-    return waitlistActions.join({ userID, waitlist });
-  },
-  waitlistLeave({ userID, waitlist }) {
-    return waitlistActions.leave({ userID, waitlist });
-  },
-  waitlistUpdate(waitlist) {
-    return waitlistActions.update({ waitlist });
-  },
-  waitlistLock({ locked }) {
-    return waitlistActions.lock({ locked });
-  },
-  waitlistMove({
-    userID, moderatorID, position, waitlist,
-  }) {
-    return movedInWaitlist({
-      userID, moderatorID, position, waitlist,
-    });
-  },
-  // TODO Treat moderator force-add and force-remove differently from voluntary
-  // joins and leaves.
-  waitlistAdd({ userID, waitlist }) {
-    return waitlistActions.join({ userID, waitlist });
-  },
-  waitlistRemove({ userID, waitlist }) {
-    return waitlistActions.leave({ userID, waitlist });
-  },
-  waitlistClear() {
-    return waitlistActions.clear();
-  },
-  playlistCycle({ playlistID }) {
-    return cyclePlaylist(playlistID);
-  },
-  join(user) {
-    return userJoin({ user });
-  },
-  leave(userID) {
-    return userLeave({ userID });
-  },
-  nameChange(payload) {
-    return usernameChanged(payload);
-  },
-  guests(count) {
-    return receiveGuestCount({ guests: count });
-  },
-  'acl:allow': addRoles,
-  'acl:disallow': removeRoles,
+export type SocketMessage = {
+  [K in keyof SocketMessageParams]: {
+    command: K,
+    data: SocketMessageParams[K],
+  };
+}[keyof SocketMessageParams];
 
-  reloadEmotes: () => {
-    return () => {
-      mutate('/emotes');
-    };
-  },
-};
+export const socketMessage = createAction('websocket/receive', (payload: SocketMessage) => ({ payload }));
 
 // WebSocket wrapper with reconnection and message parsing.
 // This is quite ugly, based on an older version which used reconnecting-websocket
@@ -371,13 +246,10 @@ class UwaveSocket {
       return;
     }
 
-    if (command in actions && typeof actions[command as keyof SocketMessages] === 'function') {
-      const handler = actions[command as keyof SocketMessages] as (_data: unknown) => unknown;
-      const action = handler(data);
-      if (action) {
-        this.dispatch(action as AnyAction);
-      }
-    }
+    this.dispatch(socketMessage({
+      command,
+      data,
+    } as SocketMessage));
   };
 
   connect() {
