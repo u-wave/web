@@ -1,10 +1,12 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import persistSettings from './persistSettings';
 import webApiRequest from './request';
 import webApiSocket from './socket';
 import webApiSocketHandler from './socketHandler';
 import * as reducers from '../reducers';
 import createSourcesReducer from '../reducers/createSourcesReducer';
+
+const reducer = combineReducers(reducers);
 
 function createUwaveStore(initialState = {}, options = {}) {
   const store = configureStore({
@@ -26,7 +28,7 @@ function createUwaveStore(initialState = {}, options = {}) {
   return store;
 }
 
-/** @typedef {ReturnType<ReturnType<typeof createUwaveStore>['getState']>} StoreState */
-/** @typedef {ReturnType<typeof createUwaveStore>['dispatch']} AppDispatch */
+/** @typedef {ReturnType<typeof reducer>} StoreState */
+/** @typedef {import('redux').Dispatch & import('@reduxjs/toolkit').ThunkDispatch<StoreState, void>} AppDispatch */
 
 export default createUwaveStore;

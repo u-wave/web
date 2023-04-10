@@ -301,8 +301,7 @@ class UwaveSocket {
   };
 }
 
-export default function middleware({ url = defaultUrl() } = {}):
-    Middleware<void, unknown, AppDispatch> {
+export default function middleware({ url = defaultUrl() } = {}): Middleware {
   return ({ dispatch }) => {
     const socket = new UwaveSocket({
       url,

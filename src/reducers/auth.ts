@@ -1,10 +1,11 @@
 import type { AnyAction } from 'redux';
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { mutate } from 'swr';
 import { SET_TOKEN } from '../constants/ActionTypes';
 import type { Playlist, PlaylistItem } from './playlists';
 import type { User } from './users';
 import uwFetch from '../utils/fetch';
+import { createAsyncThunk } from '../redux/api';
 import { currentUserSelector } from '../selectors/userSelectors';
 import { syncTimestamps } from '../actions/TickerActionCreators';
 
@@ -90,7 +91,7 @@ export const login = createAsyncThunk('auth/login', async (payload: LoginPayload
   };
 });
 
-export const changeUsername = createAsyncThunk('auth/changeUsername', async (username: string, api) => {
+export const changeUsername = createAsyncThunk('auth/changeUsername', async (username, api) => {
   const user = currentUserSelector(api.getState());
   if (!user) {
     throw new Error('Not logged in');
@@ -110,8 +111,7 @@ export const changeUsername = createAsyncThunk('auth/changeUsername', async (use
 const slice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(initState.fulfilled, (state, action) => {
