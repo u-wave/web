@@ -31,11 +31,15 @@ function ChannelPanel({
   const parentRef = useRef<HTMLDivElement>(null);
 
   const virtualizer = useVirtualizer({
-    count: data.playlists.length,
+    count: data?.playlists.length ?? 0,
     getScrollElement: () => parentRef.current,
     estimateSize,
     overscan: 6,
   });
+
+  if (!data) {
+    return null;
+  }
 
   return (
     <div className="ImportPanel ChannelPanel">

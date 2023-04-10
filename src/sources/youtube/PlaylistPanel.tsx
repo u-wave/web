@@ -27,6 +27,10 @@ function YouTubeImportPlaylistPanel({
     { suspense: true },
   );
 
+  if (!data) {
+    return null;
+  }
+
   const handleImportFull = () => (
     onImportPlaylist(data.playlist.sourceID, data.playlist.name)
   );
