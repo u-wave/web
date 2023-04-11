@@ -11,7 +11,7 @@ import {
 import {
   log,
   setMotd,
-} from '../../actions/ChatActionCreators';
+} from '../../reducers/chat';
 
 export default [
   {

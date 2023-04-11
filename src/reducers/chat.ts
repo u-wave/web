@@ -6,6 +6,8 @@ import { BOOTH_SKIP } from '../constants/ActionTypes';
 import { type User, actions as userActions } from './users';
 import { advance } from './booth';
 import { initState } from './auth';
+import { createAsyncThunk } from '../redux/api';
+import uwFetch from '../utils/fetch';
 
 export interface ChatMessage {
   _id: string;
@@ -304,5 +306,16 @@ export const {
   muteUser,
   unmuteUser,
 } = slice.actions;
+
+export const setMotd = createAsyncThunk('chat/setMotd', async (text: string, api) => {
+  const { data } = await uwFetch<{
+    data: { motd: string },
+  }>(['/motd', {
+    method: 'put',
+    data: { motd: text },
+  }]);
+
+  api.dispatch(log(`Message of the Day is now: ${data.motd}`));
+});
 
 export default slice.reducer;

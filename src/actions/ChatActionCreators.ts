@@ -5,11 +5,6 @@ import parseChatMarkup from 'u-wave-parse-chat-markup';
 import flashDocumentTitle from 'flash-document-title';
 import playMentionSound from '../utils/playMentionSound';
 import {
-  SET_MOTD_START,
-  SET_MOTD_COMPLETE,
-} from '../constants/ActionTypes';
-import { put } from './RequestActionCreators';
-import {
   mutedUserIDsSelector,
   currentUserMuteSelector,
 } from '../selectors/chatSelectors';
@@ -124,33 +119,4 @@ export function receive(message: {
       flashDocumentTitle(`💬 ${sender.username}`);
     }
   };
-}
-
-export function setMotdStart(motd: string) {
-  return {
-    type: SET_MOTD_START,
-    payload: motd,
-  };
-}
-
-export function setMotdComplete(motd: string) {
-  return {
-    type: SET_MOTD_COMPLETE,
-    payload: motd,
-  };
-}
-
-export function setMotd(text: string) {
-  return put('/motd', { motd: text }, {
-    onStart: () => setMotdStart(text),
-    onComplete: ({ data }: { data: { motd: string } }): Thunk => (dispatch) => {
-      dispatch(setMotdComplete(data.motd));
-      dispatch(log(`Message of the Day is now: ${data.motd}`));
-    },
-    onError: (error) => ({
-      type: SET_MOTD_COMPLETE,
-      error: true,
-      payload: error,
-    }),
-  });
 }
