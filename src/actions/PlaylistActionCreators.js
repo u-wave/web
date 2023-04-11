@@ -142,15 +142,9 @@ export function filterPlaylistItems(playlistID, filter) {
 }
 
 export function selectPlaylist(playlistID) {
-  return (dispatch) => {
-    dispatch({
-      type: SELECT_PLAYLIST,
-      payload: { playlistID },
-    });
-
-    if (playlistID) {
-      dispatch(loadPlaylist(playlistID));
-    }
+  return {
+    type: SELECT_PLAYLIST,
+    payload: { playlistID },
   };
 }
 

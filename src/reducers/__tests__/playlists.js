@@ -7,21 +7,21 @@ import * as s from '../../selectors/playlistSelectors';
 fetch.enableMocks();
 
 const initialiseStore = a.setPlaylists([
-  { _id: 1, name: 'Playlist One', size: 5 },
-  { _id: 2, name: 'Playlist Two', size: 0 },
-  { _id: 3, name: 'Playlist Three', size: 500 },
-  { _id: 4, name: 'Playlist Four', size: 120 },
+  { _id: 'ZcU_8-UyI10Tx79R4CjRv', name: 'Playlist One', size: 5 },
+  { _id: 'rOIrcr6zD06gVH-fg4G4k', name: 'Playlist Two', size: 0 },
+  { _id: 'Kzy3kUckOgAV7iwrekHSE', name: 'Playlist Three', size: 500 },
+  { _id: 'pKOr6JXTznTa1Y5g99LKH', name: 'Playlist Four', size: 120 },
 ]);
 
 const initialisePlaylist = (dispatch) => {
   const items = [
-    { _id: 5, artist: 'Taylor Swift', title: 'New Romantics' },
-    { _id: 6, artist: 'Swiimers', title: 'Polaris' },
-    { _id: 7, artist: 'of Montreal', title: 'Gronlandic Edit' },
-    { _id: 8, artist: 'Angel Haze', title: 'A Tribe Called Red' },
-    { _id: 9, artist: 'tricot', title: '99.974°C' },
+    { _id: 'Cnun9zo6oNr1wMCFRhnaO', artist: 'Taylor Swift', title: 'New Romantics' },
+    { _id: 'PD_n42XxNCdQjDy5VB_SE', artist: 'Swiimers', title: 'Polaris' },
+    { _id: '66Z6y6JA4m5WmmNF3O7Ii', artist: 'of Montreal', title: 'Gronlandic Edit' },
+    { _id: 'NkwUIwNmraSZ4A4eiC3GQ', artist: 'Angel Haze', title: 'A Tribe Called Red' },
+    { _id: 'BeevKCM1NnNeW91leyLZu', artist: 'tricot', title: '99.974°C' },
   ];
-  const playlistID = 1;
+  const playlistID = 'ZcU_8-UyI10Tx79R4CjRv';
   dispatch(a.loadPlaylistComplete(playlistID, items, { page: 0, pageSize: 5 }));
   dispatch(a.selectPlaylist(playlistID));
   return { items, playlistID };
@@ -57,36 +57,17 @@ describe('reducers/playlists', () => {
 
       expect(s.selectedPlaylistIDSelector(getState())).toBeNull();
 
-      dispatch(a.selectPlaylist(1));
-      expect(s.selectedPlaylistIDSelector(getState())).toBe(1);
-      expect(s.selectedPlaylistSelector(getState())).toHaveProperty('_id', 1);
+      dispatch(a.selectPlaylist('ZcU_8-UyI10Tx79R4CjRv'));
+      expect(s.selectedPlaylistIDSelector(getState())).toBe('ZcU_8-UyI10Tx79R4CjRv');
+      expect(s.selectedPlaylistSelector(getState())).toHaveProperty('_id', 'ZcU_8-UyI10Tx79R4CjRv');
 
-      dispatch(a.selectPlaylist(3));
-      expect(s.selectedPlaylistIDSelector(getState())).toBe(3);
-      expect(s.selectedPlaylistSelector(getState())).toHaveProperty('_id', 3);
+      dispatch(a.selectPlaylist('Kzy3kUckOgAV7iwrekHSE'));
+      expect(s.selectedPlaylistIDSelector(getState())).toBe('Kzy3kUckOgAV7iwrekHSE');
+      expect(s.selectedPlaylistSelector(getState())).toHaveProperty('_id', 'Kzy3kUckOgAV7iwrekHSE');
 
       dispatch(a.selectPlaylist(null));
       expect(s.selectedPlaylistIDSelector(getState())).toBeNull();
       expect(s.selectedPlaylistSelector(getState())).toBeNull();
-    });
-
-    it('loads playlist items for a newly selected playlist', () => {
-      const { dispatch } = createStore();
-      dispatch(initialiseStore);
-
-      dispatch(a.selectPlaylist(1));
-
-      expect(fetch).toHaveBeenCalled();
-    });
-
-    it('does not attempt to load playlist items when deselecting a playlist', () => {
-      const { dispatch } = createStore();
-      dispatch(initialiseStore);
-
-      dispatch(a.selectPlaylist(1));
-      expect(fetch).toHaveBeenCalledTimes(1);
-      dispatch(a.selectPlaylist(null));
-      expect(fetch).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -102,18 +83,18 @@ describe('reducers/playlists', () => {
 
       expect(s.selectedPlaylistSelector(getState()).media).toHaveLength(5);
 
-      dispatch(a.addMediaComplete(1, 7, {
-        afterID: 8,
+      dispatch(a.addMediaComplete('ZcU_8-UyI10Tx79R4CjRv', '66Z6y6JA4m5WmmNF3O7Ii', {
+        afterID: 'NkwUIwNmraSZ4A4eiC3GQ',
         media: [
-          { _id: 347, artist: 'The Microphones', title: 'I Want Wind To Blow' },
-          { _id: 764, artist: 'Bikini Kill', title: 'Rebel Girl' },
+          { _id: 'VlaaQAxk_Qy5orK1Vcr2C', artist: 'The Microphones', title: 'I Want Wind To Blow' },
+          { _id: 'T9sdCu_-3o70qWk0YeDxJ', artist: 'Bikini Kill', title: 'Rebel Girl' },
         ],
       }));
 
       const { media } = s.selectedPlaylistSelector(getState());
       expect(media).toHaveLength(7);
       expect(media.map((playlistItem) => playlistItem._id)).toEqual([
-        5, 6, 7, 8, 347, 764, 9,
+        'Cnun9zo6oNr1wMCFRhnaO', 'PD_n42XxNCdQjDy5VB_SE', '66Z6y6JA4m5WmmNF3O7Ii', 'NkwUIwNmraSZ4A4eiC3GQ', 'VlaaQAxk_Qy5orK1Vcr2C', 'T9sdCu_-3o70qWk0YeDxJ', 'BeevKCM1NnNeW91leyLZu',
       ]);
     });
 
@@ -127,16 +108,16 @@ describe('reducers/playlists', () => {
 
       expect(s.activePlaylistSelector(getState()).media).toHaveLength(5);
 
-      dispatch(a.addMediaComplete(1, 7, {
+      dispatch(a.addMediaComplete('ZcU_8-UyI10Tx79R4CjRv', '66Z6y6JA4m5WmmNF3O7Ii', {
         afterID: null,
         media: [
-          { _id: 347, artist: 'The Microphones', title: 'I Want Wind To Blow' },
-          { _id: 764, artist: 'Bikini Kill', title: 'Rebel Girl' },
+          { _id: 'VlaaQAxk_Qy5orK1Vcr2C', artist: 'The Microphones', title: 'I Want Wind To Blow' },
+          { _id: 'T9sdCu_-3o70qWk0YeDxJ', artist: 'Bikini Kill', title: 'Rebel Girl' },
         ],
       }));
 
       expect(s.activePlaylistSelector(getState()).media).toHaveLength(7);
-      expect(s.nextMediaSelector(getState())._id).toEqual(347);
+      expect(s.nextMediaSelector(getState())._id).toEqual('VlaaQAxk_Qy5orK1Vcr2C');
     });
 
     it('appends favourited items to the end of the playlist', () => {
@@ -146,17 +127,17 @@ describe('reducers/playlists', () => {
 
       expect(s.selectedPlaylistSelector(getState()).media).toHaveLength(5);
 
-      dispatch(favoriteMediaComplete(playlistID, 36425, {
+      dispatch(favoriteMediaComplete(playlistID, 'vGA5mxhJpYkrsHSfxPcqX', {
         playlistSize: 6,
         added: [
-          { _id: 1338, artist: 'SHINee', title: 'Odd Eye' },
+          { _id: 'RDeVBExmCGXvmT0mN0P3n', artist: 'SHINee', title: 'Odd Eye' },
         ],
       }));
 
       const { size, media } = s.selectedPlaylistSelector(getState());
       expect(size).toEqual(6);
       expect(media).toHaveLength(6);
-      expect(media[5]._id).toEqual(1338);
+      expect(media[5]._id).toEqual('RDeVBExmCGXvmT0mN0P3n');
     });
   });
 
@@ -169,40 +150,40 @@ describe('reducers/playlists', () => {
       expect(s.selectedPlaylistSelector(getState()).media).toHaveLength(5);
 
       dispatch(a.moveMediaComplete(
-        1,
+        'ZcU_8-UyI10Tx79R4CjRv',
         [items[1], items[2]],
-        { after: 8 },
+        { after: 'NkwUIwNmraSZ4A4eiC3GQ' },
       ));
 
       const selectedItemIDs = s.selectedPlaylistSelector(getState()).media
         .map((playlistItem) => playlistItem._id);
-      expect(selectedItemIDs).toEqual([5, 8, 6, 7, 9]);
+      expect(selectedItemIDs).toEqual(['Cnun9zo6oNr1wMCFRhnaO', 'NkwUIwNmraSZ4A4eiC3GQ', 'PD_n42XxNCdQjDy5VB_SE', '66Z6y6JA4m5WmmNF3O7Ii', 'BeevKCM1NnNeW91leyLZu']);
     });
 
     it('should move playlist items in a sparse playlist', () => {
       const { dispatch, getState } = createStore();
       dispatch(initialiseStore);
       const items = [
-        { _id: 5, artist: 'Taylor Swift', title: 'New Romantics' },
-        { _id: 6, artist: 'Swiimers', title: 'Polaris' },
+        { _id: 'Cnun9zo6oNr1wMCFRhnaO', artist: 'Taylor Swift', title: 'New Romantics' },
+        { _id: 'PD_n42XxNCdQjDy5VB_SE', artist: 'Swiimers', title: 'Polaris' },
         null,
-        { _id: 8, artist: 'Angel Haze', title: 'A Tribe Called Red' },
-        { _id: 9, artist: 'tricot', title: '99.974°C' },
+        { _id: 'NkwUIwNmraSZ4A4eiC3GQ', artist: 'Angel Haze', title: 'A Tribe Called Red' },
+        { _id: 'BeevKCM1NnNeW91leyLZu', artist: 'tricot', title: '99.974°C' },
       ];
-      dispatch(a.loadPlaylistComplete(1, items, { page: 0, pageSize: 5 }));
-      dispatch(a.selectPlaylist(1));
+      dispatch(a.loadPlaylistComplete('ZcU_8-UyI10Tx79R4CjRv', items, { page: 0, pageSize: 5 }));
+      dispatch(a.selectPlaylist('ZcU_8-UyI10Tx79R4CjRv'));
 
       expect(s.selectedPlaylistSelector(getState()).media).toHaveLength(5);
 
       dispatch(a.moveMediaComplete(
-        1,
+        'ZcU_8-UyI10Tx79R4CjRv',
         [items[0], items[4]],
-        { after: 8 },
+        { after: 'NkwUIwNmraSZ4A4eiC3GQ' },
       ));
 
       const getID = (item) => (item ? item._id : null);
       expect(s.selectedPlaylistSelector(getState()).media.map(getID)).toEqual([
-        6, null, 8, 5, 9,
+        'PD_n42XxNCdQjDy5VB_SE', null, 'NkwUIwNmraSZ4A4eiC3GQ', 'Cnun9zo6oNr1wMCFRhnaO', 'BeevKCM1NnNeW91leyLZu',
       ]);
     });
   });
