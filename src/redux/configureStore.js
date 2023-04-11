@@ -8,7 +8,7 @@ import createSourcesReducer from '../reducers/createSourcesReducer';
 
 const reducer = combineReducers(reducers);
 
-function createUwaveStore(initialState = {}, options = {}) {
+function createUwaveStore(preloadedState = {}, options = {}) {
   const store = configureStore({
     reducer: {
       ...reducers,
@@ -22,7 +22,7 @@ function createUwaveStore(initialState = {}, options = {}) {
       webApiSocketHandler.middleware,
     ),
     enhancers: [persistSettings],
-    initialState,
+    preloadedState,
   });
 
   return store;

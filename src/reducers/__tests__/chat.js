@@ -1,9 +1,16 @@
 import createStore from '../../redux/configureStore';
-import { setUsers } from '../../actions/UserActionCreators';
 import * as actions from '../chat';
 import * as a from '../../actions/ChatActionCreators';
 import * as s from '../../selectors/chatSelectors';
 import * as userSelectors from '../../selectors/userSelectors';
+
+function preloadUsers (users) {
+  return {
+    users: {
+      users: Object.fromEntries(users.map((user) => [user._id, user])),
+    },
+  };
+}
 
 describe('reducers/chat', () => {
   it('should not respond to unrelated actions', () => {
@@ -31,14 +38,13 @@ describe('reducers/chat', () => {
     };
 
     it('should add a message to the messages list', () => {
-      const { dispatch, getState } = createStore();
-      dispatch(setUsers([testUser]));
+      const store = createStore(preloadUsers([testUser]));
 
-      expect(s.messagesSelector(getState())).toHaveLength(0);
+      expect(s.messagesSelector(store.getState())).toHaveLength(0);
 
-      dispatch(a.receive(testMessage));
+      store.dispatch(a.receive(testMessage));
 
-      expect(s.messagesSelector(getState())[0]).toEqual({
+      expect(s.messagesSelector(store.getState())[0]).toEqual({
         _id: testMessage._id,
         type: 'chat',
         userID: testMessage.userID,
@@ -59,8 +65,7 @@ describe('reducers/chat', () => {
 
       jest.spyOn(userSelectors, 'currentUserSelector').mockReturnValue(inFlightUser);
 
-      const { dispatch, getState } = createStore();
-      dispatch(setUsers([testUser, inFlightUser]));
+      const { dispatch, getState } = createStore(preloadUsers([testUser, inFlightUser]));
 
       // test setup: start w/ one received message and one that's been sent but
       // is pending.
@@ -141,8 +146,7 @@ describe('reducers/chat', () => {
     ];
 
     beforeEach(() => {
-      ({ dispatch, getState } = createStore());
-      dispatch(setUsers(testUsers));
+      ({ dispatch, getState } = createStore(preloadUsers(testUsers)));
     });
 
     const addTestMute = () => {
