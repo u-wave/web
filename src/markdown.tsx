@@ -1,10 +1,12 @@
 import { readFileSync } from 'node:fs';
 import React from 'react';
-import PropTypes from 'prop-types';
 import Markdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 
-function MarkdownPage({ path }) {
+type MarkdownPageProps = {
+  path: string,
+};
+function MarkdownPage({ path }: MarkdownPageProps) {
   const source = readFileSync(path, 'utf8');
 
   return (
@@ -25,9 +27,5 @@ function MarkdownPage({ path }) {
     </html>
   );
 }
-
-MarkdownPage.propTypes = {
-  path: PropTypes.string.isRequired,
-};
 
 export default MarkdownPage;

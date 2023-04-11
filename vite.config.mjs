@@ -47,7 +47,7 @@ export default defineConfig({
     yaml(),
     prerender({ file: 'index.html', source: 'src/index.tsx' }),
     prerender({ file: 'password-reset.html', source: 'src/password-reset/index.jsx' }),
-    prerender({ file: 'privacy.html', source: 'src/markdown.jsx', props: { path: 'static/privacy.md' } }),
+    prerender({ file: 'privacy.html', source: 'src/markdown.tsx', props: { path: 'static/privacy.md' } }),
     {
       name: 'u-wave-write-package-version',
       apply: 'build',
