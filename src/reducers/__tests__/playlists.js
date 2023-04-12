@@ -53,10 +53,6 @@ describe('reducers/playlists', () => {
     });
   });
 
-  describe('action: playlists/LOAD_PLAYLIST', () => {
-    // Nothing yet
-  });
-
   describe('action: playlists/ADD_MEDIA', () => {
     it('should insert playlist items in the correct place', () => {
       const { dispatch, getState } = createStore();

@@ -59,4 +59,10 @@ export default defineConfig({
       },
     },
   ],
+  test: {
+    include: ['**/__tests__/*.js'],
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './test/setup.mjs',
+  },
 });
