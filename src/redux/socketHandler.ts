@@ -15,7 +15,6 @@ import {
 import * as waitlistActions from '../reducers/waitlist';
 import { receive as receiveMessage } from '../actions/ChatActionCreators';
 import { cyclePlaylist } from '../actions/PlaylistActionCreators';
-import { movedInWaitlist } from '../actions/WaitlistActionCreators';
 import { favorited, receiveVote } from '../actions/VoteActionCreators';
 import { currentTimeSelector } from '../selectors/timeSelectors';
 import {
@@ -118,7 +117,7 @@ middleware.startListening({
         api.dispatch(waitlistActions.lock(data));
         break;
       case 'waitlistMove':
-        api.dispatch(movedInWaitlist(data));
+        api.dispatch(waitlistActions.moved(data));
         break;
       // TODO Treat moderator force-add and force-remove differently from voluntary
       // joins and leaves.

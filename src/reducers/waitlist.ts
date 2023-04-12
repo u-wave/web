@@ -27,6 +27,14 @@ const slice = createSlice({
     leave(state, action: PayloadAction<{ userID: string, waitlist: string[] }>) {
       state.waitlist = action.payload.waitlist;
     },
+    moved(state, action: PayloadAction<{
+      userID: string,
+      moderatorID: string,
+      position: number,
+      waitlist: string[],
+    }>) {
+      state.waitlist = action.payload.waitlist;
+    },
     update(state, action: PayloadAction<{ waitlist: string[] }>) {
       state.waitlist = action.payload.waitlist;
     },
@@ -44,6 +52,7 @@ export const {
   clear,
   join,
   leave,
+  moved,
   update,
 } = slice.actions;
 

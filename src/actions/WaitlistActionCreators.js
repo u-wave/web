@@ -6,7 +6,6 @@ import {
   DO_CLEAR_START, DO_CLEAR_COMPLETE,
 } from '../constants/ActionTypes';
 import { currentUserSelector } from '../selectors/userSelectors';
-import { update } from '../reducers/waitlist';
 
 // TODO split joining the waitlist and adding another user to the waitlist
 // into two different actions.
@@ -45,19 +44,6 @@ export function leaveWaitlist(otherUser) {
         payload: error,
       }),
     }));
-  };
-}
-
-export function movedInWaitlist({
-  userID, moderatorID, position, waitlist,
-}) {
-  return (dispatch) => {
-    // dispatch({
-    //   type: WAITLIST_MOVE,
-    //   payload: { userID, position },
-    //   meta: { moderatorID },
-    // });
-    dispatch(update(waitlist));
   };
 }
 
