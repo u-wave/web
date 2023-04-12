@@ -1,10 +1,7 @@
-import fetch from 'jest-fetch-mock';
 import createStore from '../../redux/configureStore';
 import * as a from '../../actions/PlaylistActionCreators';
 import { favoriteMediaComplete } from '../../actions/VoteActionCreators';
 import * as s from '../../selectors/playlistSelectors';
-
-fetch.enableMocks();
 
 const initialiseStore = a.setPlaylists([
   { _id: 'ZcU_8-UyI10Tx79R4CjRv', name: 'Playlist One', size: 5 },
@@ -28,21 +25,6 @@ const initialisePlaylist = (dispatch) => {
 };
 
 describe('reducers/playlists', () => {
-  beforeEach(() => {
-    fetch.mockResponse(async (req) => {
-      if (/\/api\/playlists\/\w+\/media/.test(req.url)) {
-        return JSON.stringify({
-          meta: {},
-          data: [],
-        });
-      }
-      throw new Error('unexpected fetch call');
-    });
-  });
-  afterEach(() => {
-    fetch.resetMocks();
-  });
-
   it('should not respond to unrelated actions', () => {
     const { dispatch, getState } = createStore();
     expect(s.playlistsSelector(getState())).toEqual([]);
