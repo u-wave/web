@@ -1,4 +1,4 @@
-import React from 'react';
+import { vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import createCache from '@emotion/cache';
@@ -9,10 +9,10 @@ const cache = createCache({ key: 'emc' });
 
 describe('<PromptDialog />', () => {
   it('should not show if there is no error', async () => {
-    const onSubmit = jest.fn((value) => {
+    const onSubmit = vi.fn((value) => {
       expect(value).toBe('test');
     });
-    const onCancel = jest.fn();
+    const onCancel = vi.fn();
 
     render((
       <CacheProvider value={cache}>

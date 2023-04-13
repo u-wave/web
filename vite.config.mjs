@@ -60,7 +60,7 @@ export default defineConfig({
     },
   ],
   test: {
-    include: ['**/__tests__/*.js'],
+    include: ['**/__tests__/*.{js,jsx,ts,tsx}'],
     globals: true,
     environment: 'jsdom',
     setupFiles: './test/setup.mjs',

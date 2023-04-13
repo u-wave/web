@@ -1,4 +1,4 @@
-import React from 'react';
+import { vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ErrorArea from '..';
@@ -25,7 +25,7 @@ describe('<ErrorArea />', () => {
   });
 
   it('closes when user clicks anywhere on the page', async () => {
-    const spy = jest.fn();
+    const spy = vi.fn();
 
     render((
       <main>
