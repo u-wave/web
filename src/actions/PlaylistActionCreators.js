@@ -9,7 +9,6 @@ import {
   CREATE_PLAYLIST_START, CREATE_PLAYLIST_COMPLETE,
   RENAME_PLAYLIST_START, RENAME_PLAYLIST_COMPLETE,
   DELETE_PLAYLIST_START, DELETE_PLAYLIST_COMPLETE,
-  OPEN_ADD_MEDIA_MENU, CLOSE_ADD_MEDIA_MENU,
   ADD_MEDIA_START, ADD_MEDIA_COMPLETE,
   REMOVE_MEDIA_START, REMOVE_MEDIA_COMPLETE,
   MOVE_MEDIA_START, MOVE_MEDIA_COMPLETE,
@@ -364,32 +363,6 @@ export function deletePlaylist(playlistID) {
       }),
     }));
   };
-}
-
-/**
- * @param {PlaylistItemDesc[]} items - The items to add.
- * @param {{ x: number, y: number }} position - Where to show the menu.
- * @returns {import('redux-thunk').ThunkAction}
- */
-export function addMediaMenu(items, position) {
-  return (dispatch, getState) => {
-    const playlists = playlistsSelector(getState());
-    dispatch({
-      type: OPEN_ADD_MEDIA_MENU,
-      payload: {
-        media: items,
-      },
-      meta: {
-        playlists,
-        position,
-        type: 'add',
-      },
-    });
-  };
-}
-
-export function closeAddMediaMenu() {
-  return { type: CLOSE_ADD_MEDIA_MENU };
 }
 
 export function addMediaStart(playlistID, media, location) {

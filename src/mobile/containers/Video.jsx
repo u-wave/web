@@ -2,9 +2,9 @@ import React from 'react';
 import { useSelector, useDispatch } from '../../hooks/useRedux';
 import useClock from '../../hooks/useClock';
 import {
-  openFavoriteMenu,
   vote,
 } from '../../actions/VoteActionCreators';
+import { openFavoriteMenu } from '../../reducers/addToPlaylistMenu';
 import {
   historyIDSelector,
   mediaSelector,
@@ -28,15 +28,15 @@ function VideoContainer(props) {
   const volume = useSelector(mobilePlaybackVolumeSelector);
   const voteStats = useSelector(currentVoteStatsSelector);
   const dispatch = useDispatch();
-  const onUpvote = useCallback(() => dispatch(vote({
-    historyID,
-    direction: 1,
-  })), [dispatch, historyID]);
-  const onDownvote = useCallback(() => dispatch(vote({
-    historyID,
-    direction: -1,
-  })), [dispatch, historyID]);
-  const onFavorite = useCallback((...args) => dispatch(openFavoriteMenu(...args)), [dispatch]);
+  const onUpvote = useCallback(() => {
+    dispatch(vote({ historyID, direction: 1 }));
+  }, [dispatch, historyID]);
+  const onDownvote = useCallback(() => {
+    dispatch(vote({ historyID, direction: -1 }));
+  }, [dispatch, historyID]);
+  const onFavorite = useCallback((position) => {
+    dispatch(openFavoriteMenu(historyID, position));
+  }, [historyID, dispatch]);
 
   return (
     <Video

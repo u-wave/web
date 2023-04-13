@@ -22,8 +22,6 @@ export const RENAME_PLAYLIST_COMPLETE = 'playlists/RENAME_PLAYLIST_COMPLETE';
 export const DELETE_PLAYLIST_START = 'playlists/DELETE_PLAYLIST_START';
 export const DELETE_PLAYLIST_COMPLETE = 'playlists/DELETE_PLAYLIST_COMPLETE';
 
-export const OPEN_ADD_MEDIA_MENU = 'playlists/OPEN_ADD_MEDIA_MENU';
-export const CLOSE_ADD_MEDIA_MENU = 'playlists/CLOSE_ADD_MEDIA_MENU';
 export const ADD_MEDIA_START = 'playlists/ADD_MEDIA_START';
 export const ADD_MEDIA_COMPLETE = 'playlists/ADD_MEDIA_COMPLETE';
 

@@ -2,11 +2,11 @@ import omit from 'just-omit';
 import { useCallback } from 'react';
 import { mdiPlus } from '@mdi/js';
 import { useDispatch } from '../../hooks/useRedux';
-import { addMediaMenu } from '../../actions/PlaylistActionCreators';
 import { useMediaListContext } from './BaseMediaList';
 import SvgIcon from '../SvgIcon';
 import MediaAction from './MediaAction';
 import { Media } from '../../reducers/booth';
+import { open as addMediaMenu } from '../../reducers/addToPlaylistMenu';
 
 function filterNulls<T>(array: (T|null)[]): T[] {
   return array.filter((item) => item != null) as T[];
@@ -33,9 +33,10 @@ function AddToPlaylistAction({ media, withCustomMeta = true }: AddToPlaylistActi
     }
     const rect = event.currentTarget.getBoundingClientRect();
 
-    dispatch(addMediaMenu(selectedItems, {
-      x: rect.left,
-      y: rect.top,
+    dispatch(addMediaMenu({
+      type: 'add',
+      position: { x: rect.left, y: rect.top },
+      data: { media: selectedItems },
     }));
   }, [dispatch, selection, media, withCustomMeta]);
 

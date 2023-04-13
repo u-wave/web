@@ -1,5 +1,5 @@
 import createStore from '../../redux/configureStore';
-import { addMediaMenu, closeAddMediaMenu } from '../../actions/PlaylistActionCreators';
+import { open, close } from '../addToPlaylistMenu';
 import * as s from '../../selectors/addToPlaylistMenuSelectors';
 
 describe('reducers/addToPlaylistMenu', () => {
@@ -13,13 +13,14 @@ describe('reducers/addToPlaylistMenu', () => {
     });
   });
 
-  describe('action: playlists/OPEN_ADD_MEDIA_MENU', () => {
+  describe('action: open', () => {
     const { dispatch, getState } = createStore();
     it('should open the menu at the given position with the given media', () => {
-      dispatch(addMediaMenu(
-        [{ _id: 'mmedia' }],
-        { x: 800, y: 300 },
-      ));
+      dispatch(open({
+        type: 'add',
+        position: { x: 800, y: 300 },
+        data: { media: [{ _id: 'mmedia' }] },
+      }));
       expect(s.mediaSelector(getState())).toEqual([{ _id: 'mmedia' }]);
       expect(s.isOpenSelector(getState())).toBe(true);
       expect(s.isFavoriteSelector(getState())).toBe(false);
@@ -27,16 +28,16 @@ describe('reducers/addToPlaylistMenu', () => {
     });
   });
 
-  describe('action: playlists/CLOSE_ADD_MEDIA_MENU', () => {
+  describe('action: close', () => {
     const { dispatch, getState } = createStore();
     it('should close the menu', () => {
-      dispatch(addMediaMenu(
+      dispatch(open(
         [{ _id: 'mmedia' }],
         { x: 800, y: 300 },
       ));
       expect(s.isOpenSelector(getState())).toBe(true);
 
-      dispatch(closeAddMediaMenu());
+      dispatch(close());
       expect(s.isOpenSelector(getState())).toBe(false);
     });
   });

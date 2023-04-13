@@ -2,7 +2,6 @@ import { put, post } from './RequestActionCreators';
 import { historyIDSelector } from '../selectors/boothSelectors';
 import { playlistsSelector } from '../selectors/playlistSelectors';
 import {
-  OPEN_ADD_MEDIA_MENU,
   FAVORITE, UPVOTE, DOWNVOTE,
   DO_FAVORITE_START, DO_FAVORITE_COMPLETE,
   DO_UPVOTE, DO_DOWNVOTE,
@@ -46,22 +45,6 @@ export function doDownvote() {
   return (dispatch, getState) => {
     const historyID = historyIDSelector(getState());
     dispatch(vote({ historyID, direction: -1 }));
-  };
-}
-
-export function openFavoriteMenu(position) {
-  return (dispatch, getState) => {
-    const playlists = playlistsSelector(getState());
-    const historyID = historyIDSelector(getState());
-    dispatch({
-      type: OPEN_ADD_MEDIA_MENU,
-      payload: { historyID },
-      meta: {
-        playlists,
-        position,
-        type: 'favorite',
-      },
-    });
   };
 }
 
