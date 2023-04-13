@@ -8,7 +8,6 @@ import {
   mutedUserIDsSelector,
   currentUserMuteSelector,
 } from '../selectors/chatSelectors';
-import { settingsSelector } from '../selectors/settingSelectors';
 import {
   currentUserSelector,
   userListSelector,
@@ -21,6 +20,7 @@ import {
   hasMention,
 } from '../utils/chatMentions';
 import * as actions from '../reducers/chat';
+import { mentionSoundEnabledSelector } from '../reducers/settings';
 import type { StoreState } from '../redux/configureStore';
 import type { User } from '../reducers/users';
 
@@ -80,7 +80,7 @@ export function receive(message: {
 }): Thunk {
   return (dispatch, getState) => {
     const state = getState();
-    const settings = settingsSelector(state);
+    const mentionSoundEnabled = mentionSoundEnabledSelector(state);
     const currentUser = currentUserSelector(state);
     const users = userListSelector(state);
     const sender = users.find((user) => user._id === message.userID);
@@ -113,7 +113,7 @@ export function receive(message: {
     }));
 
     if (isMention) {
-      if (settings.mentionSound) {
+      if (mentionSoundEnabled) {
         playMentionSound();
       }
       flashDocumentTitle(`💬 ${sender.username}`);

@@ -12,7 +12,7 @@ import {
   isMutedSelector,
   videoSizeSelector,
   videoEnabledSelector,
-} from '../selectors/settingSelectors';
+} from '../reducers/settings';
 import Video from '../components/Video';
 
 const {

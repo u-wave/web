@@ -15,7 +15,7 @@ import DragLayer from '../../../containers/DragLayer';
 import MainView from '../../containers/MainView';
 import About from '../../containers/About';
 import ServerList from '../../containers/ServerList';
-import { videoEnabledSelector } from '../../../selectors/settingSelectors';
+import { videoEnabledSelector } from '../../../reducers/settings';
 import Overlays from './Overlays';
 
 const { useState } = React;

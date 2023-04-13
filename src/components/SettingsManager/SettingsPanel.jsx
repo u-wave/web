@@ -1,5 +1,4 @@
 import cx from 'clsx';
-import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -11,32 +10,46 @@ import LanguagePicker from './LanguagePicker';
 import LogoutButton from './LogoutButton';
 import NotificationSettings from './NotificationSettings';
 import Links from './Links';
+import { useDispatch, useSelector } from '../../hooks/useRedux';
+import {
+  languageSelector,
+  mentionSoundEnabledSelector,
+  videoEnabledSelector,
+  videoSizeSelector,
+  setVideoEnabled,
+  setVideoSize,
+  setMentionSoundEnabled,
+  setLanguage,
+} from '../../reducers/settings';
+import useCurrentUser from '../../hooks/useCurrentUser';
 
 function SettingsPanel({
   className,
-  settings,
-  user,
-  onSettingChange,
   onChangeUsername,
-  onChangeLanguage,
   onLogout,
 }) {
   const { t } = useTranslator();
   const isWide = useMediaQuery((theme) => theme.breakpoints.up('lg'));
 
+  const user = useCurrentUser();
+  const dispatch = useDispatch();
+  const videoEnabled = useSelector(videoEnabledSelector);
+  const videoSize = useSelector(videoSizeSelector);
+  const mentionSoundEnabled = useSelector(mentionSoundEnabledSelector);
+  const language = useSelector(languageSelector);
+
   const handleVideoEnabledChange = (event) => {
-    onSettingChange('videoEnabled', event.target.checked);
+    dispatch(setVideoEnabled(event.target.checked));
   };
   const handleVideoSizeChange = (event) => {
-    onSettingChange('videoSize', event.target.checked ? 'large' : 'small');
+    dispatch(setVideoSize(event.target.checked ? 'large' : 'small'));
   };
   const handleMentionSoundChange = (event) => {
-    onSettingChange('mentionSound', event.target.checked);
+    dispatch(setMentionSoundEnabled(event.target.checked));
   };
   const handleLanguageChange = (event) => {
-    onChangeLanguage(event.target.value);
+    dispatch(setLanguage(event.target.value));
   };
-
   const profileSection = user && (
     <div key="profile" className="SettingsPanel-section SettingsPanel-user">
       <Profile user={user} onChangeUsername={onChangeUsername} />
@@ -53,27 +66,27 @@ function SettingsPanel({
         >
           <Switch
             color="primary"
-            checked={settings.videoEnabled}
+            checked={videoEnabled}
             onChange={handleVideoEnabledChange}
           />
         </SettingControl>
         <SettingControl label={t('settings.videoSize')}>
           <Switch
             color="primary"
-            checked={settings.videoSize === 'large'}
+            checked={videoSize === 'large'}
             onChange={handleVideoSizeChange}
           />
         </SettingControl>
         <SettingControl label={t('settings.mentionSound')}>
           <Switch
             color="primary"
-            checked={settings.mentionSound}
+            checked={mentionSoundEnabled}
             onChange={handleMentionSoundChange}
           />
         </SettingControl>
         <SettingControl label={t('settings.language')}>
           <LanguagePicker
-            value={settings.language}
+            value={language}
             onChange={handleLanguageChange}
           />
         </SettingControl>
@@ -95,7 +108,7 @@ function SettingsPanel({
 
   const notificationsSection = (
     <div key="notifications" className="SettingsPanel-section SettingsPanel-notificationSettings">
-      <NotificationSettings settings={settings} onSettingChange={onSettingChange} />
+      <NotificationSettings />
     </div>
   );
 
@@ -130,11 +143,7 @@ function SettingsPanel({
 
 SettingsPanel.propTypes = {
   className: PropTypes.string,
-  settings: PropTypes.object.isRequired,
-  user: PropTypes.object,
-  onSettingChange: PropTypes.func.isRequired,
   onChangeUsername: PropTypes.func.isRequired,
-  onChangeLanguage: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,
 };
 

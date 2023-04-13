@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 import { isPreviewMediaDialogOpenSelector } from './dialogSelectors';
-import { isMutedSelector, volumeSelector } from './settingSelectors';
+import { isMutedSelector, volumeSelector } from '../reducers/settings';
 import { currentTimeSelector } from './timeSelectors';
 import { currentVotesSelector } from './voteSelectors';
 import {

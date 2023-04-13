@@ -1,6 +1,8 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { dset } from 'dset';
 import deepmerge from 'deepmerge';
+import type { StoreState } from '../redux/configureStore';
+import { availableLanguages } from '../locales';
 
 const initialState = {
   language: null as null | string,
@@ -29,21 +31,87 @@ const slice = createSlice({
     apply(state, { payload }: PayloadAction<Partial<State>>) {
       return deepmerge(state, payload);
     },
+    setLanguage(state, action: PayloadAction<string>) {
+      state.language = action.payload;
+    },
+    setVolume(state, action: PayloadAction<number>) {
+      state.volume = action.payload;
+    },
+    mute(state) {
+      state.muted = true;
+    },
+    unmute(state) {
+      state.muted = false;
+    },
+    setVideoEnabled(state, action: PayloadAction<boolean>) {
+      state.videoEnabled = action.payload;
+    },
+    setVideoSize(state, action: PayloadAction<'small' | 'large'>) {
+      state.videoSize = action.payload;
+    },
+    toggleVideoSize(state) {
+      state.videoSize = state.videoSize === 'large' ? 'small' : 'large';
+    },
   },
 });
 
 export const {
   load,
   apply,
+  setLanguage,
+  setVolume,
+  mute,
+  unmute,
+  setVideoSize,
+  toggleVideoSize,
 } = slice.actions;
-export function setLanguage(language: string) {
-  return slice.actions.apply({ language });
-}
 // This is quite type-unsafe…
 export function set(key: string, value: unknown) {
   const changeset = {};
   dset(changeset, key, value);
   return slice.actions.apply(changeset);
+}
+
+export function volumeSelector(state: StoreState) {
+  return state.settings.volume;
+}
+
+export function isMutedSelector(state: StoreState) {
+  return state.settings.muted;
+}
+
+function getDefaultLanguage() {
+  if (typeof window === 'object' && window.navigator?.languages) {
+    const browserLanguage = availableLanguages.find((lang) => {
+      return window.navigator.languages.includes(lang);
+    });
+    if (browserLanguage) {
+      return browserLanguage;
+    }
+  }
+  return 'en';
+}
+
+let defaultLanguage: string | null = null;
+export function languageSelector(state: StoreState) {
+  if (state.settings.language) {
+    return state.settings.language;
+  }
+
+  defaultLanguage ??= getDefaultLanguage();
+  return defaultLanguage;
+}
+
+export function videoSizeSelector(state: StoreState) {
+  return state.settings.videoSize;
+}
+
+export function videoEnabledSelector(state: StoreState) {
+  return state.settings.videoEnabled;
+}
+
+export function mentionSoundEnabledSelector(state: StoreState) {
+  return state.settings.mentionSound;
 }
 
 export default slice.reducer;

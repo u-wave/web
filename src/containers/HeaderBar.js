@@ -1,9 +1,14 @@
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { toggleOverlay } from '../reducers/activeOverlay';
-import { setVolume, mute, unmute } from '../actions/PlaybackActionCreators';
 import { djSelector, mediaSelector, startTimeSelector } from '../selectors/boothSelectors';
-import { volumeSelector, isMutedSelector } from '../selectors/settingSelectors';
+import {
+  setVolume,
+  mute,
+  unmute,
+  volumeSelector,
+  isMutedSelector,
+} from '../reducers/settings';
 import HeaderBar from '../components/HeaderBar';
 
 const mapStateToProps = createStructuredSelector({

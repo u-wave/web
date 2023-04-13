@@ -1,7 +1,11 @@
 import { log } from '../../actions/ChatActionCreators';
-import { setVolume, mute, unmute } from '../../actions/PlaybackActionCreators';
 import { doUpvote, doDownvote } from '../../actions/VoteActionCreators';
-import { set as setSetting } from '../../reducers/settings';
+import {
+  setVolume,
+  mute,
+  unmute,
+  setVideoEnabled,
+} from '../../reducers/settings';
 
 export default [
   {
@@ -44,10 +48,10 @@ export default [
     description: 'Enable or disable playback. Syntax: "/playback on|off"',
     action: (_commander, type) => {
       if (type.toLowerCase() === 'on') {
-        return setSetting('videoEnabled', true);
+        return setVideoEnabled(true);
       }
       if (type.toLowerCase() === 'off') {
-        return setSetting('videoEnabled', false);
+        return setVideoEnabled(false);
       }
       return log('Use "/playback on" to enable media playback or "/playback off" to disable it.');
     },

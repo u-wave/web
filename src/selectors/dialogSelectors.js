@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 import { reCaptchaSiteKeySelector } from './configSelectors';
-import { volumeSelector } from './settingSelectors';
+import { volumeSelector } from '../reducers/settings';
 import { supportsSocialAuthSelector } from './userSelectors';
 
 /** @param {import('../redux/configureStore').StoreState} state */

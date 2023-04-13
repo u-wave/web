@@ -1,4 +1,5 @@
 import { type PayloadAction, createSlice } from '@reduxjs/toolkit';
+import type { StoreState } from '../redux/configureStore';
 import { initState } from './auth';
 
 interface State {
@@ -55,5 +56,17 @@ export const {
   moved,
   update,
 } = slice.actions;
+
+export function isLockedSelector(state: StoreState) {
+  return state.waitlist.locked;
+}
+
+export function sizeSelector(state: StoreState) {
+  return state.waitlist.waitlist.length;
+}
+
+export function waitlistIDsSelector(state: StoreState) {
+  return state.waitlist.waitlist;
+}
 
 export default slice.reducer;

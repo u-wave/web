@@ -4,8 +4,7 @@ import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import SvgIcon from '@mui/material/SvgIcon';
 import { useDispatch, useSelector } from '../../hooks/useRedux';
-import { videoSizeSelector } from '../../selectors/settingSelectors';
-import { toggleVideoSize } from '../../actions/PlaybackActionCreators';
+import { toggleVideoSize, videoSizeSelector } from '../../reducers/settings';
 
 // Stolen from YouTube
 const paths = {
