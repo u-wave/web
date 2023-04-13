@@ -10,7 +10,7 @@ const cache = createCache({ key: 'emc' });
 describe('<PromptDialog />', () => {
   it('should not show if there is no error', async () => {
     const onSubmit = jest.fn((value) => {
-      expect(value).toEqual('test');
+      expect(value).toBe('test');
     });
     const onCancel = jest.fn();
 

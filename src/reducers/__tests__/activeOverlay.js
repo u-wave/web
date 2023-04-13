@@ -18,9 +18,9 @@ describe('reducers/activeOverlay', () => {
     it('should set the current overlay', () => {
       const { dispatch, getState } = createStore();
       dispatch(openOverlay('playlistManager'));
-      expect(selectOverlay(getState())).toEqual('playlistManager');
+      expect(selectOverlay(getState())).toBe('playlistManager');
       dispatch(openOverlay('settings'));
-      expect(selectOverlay(getState())).toEqual('settings');
+      expect(selectOverlay(getState())).toBe('settings');
     });
   });
 
@@ -28,7 +28,7 @@ describe('reducers/activeOverlay', () => {
     it('should close the current overlay', () => {
       const { dispatch, getState } = createStore();
       dispatch(openOverlay('playlistManager'));
-      expect(selectOverlay(getState())).toEqual('playlistManager');
+      expect(selectOverlay(getState())).toBe('playlistManager');
       dispatch(closeOverlay());
       expect(selectOverlay(getState())).toBeNull();
     });
@@ -40,21 +40,21 @@ describe('reducers/activeOverlay', () => {
     it('should open the given overlay if no overlay is open', () => {
       expect(selectOverlay(getState())).toBeNull();
       dispatch(toggleOverlay('playlistManager'));
-      expect(selectOverlay(getState())).toEqual('playlistManager');
+      expect(selectOverlay(getState())).toBe('playlistManager');
     });
 
     it('should close the given overlay if it is currently open', () => {
-      expect(selectOverlay(getState())).toEqual('playlistManager');
+      expect(selectOverlay(getState())).toBe('playlistManager');
       dispatch(toggleOverlay('playlistManager'));
       expect(selectOverlay(getState())).toBeNull();
     });
 
     it('should switch to the given overlay if another overlay is already open', () => {
       dispatch(openOverlay('playlistManager'));
-      expect(selectOverlay(getState())).toEqual('playlistManager');
+      expect(selectOverlay(getState())).toBe('playlistManager');
 
       dispatch(toggleOverlay('settings'));
-      expect(selectOverlay(getState())).toEqual('settings');
+      expect(selectOverlay(getState())).toBe('settings');
     });
   });
 });

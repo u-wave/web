@@ -95,7 +95,7 @@ describe('reducers/playlists', () => {
       }));
 
       expect(s.activePlaylistSelector(getState()).media).toHaveLength(7);
-      expect(s.nextMediaSelector(getState())._id).toEqual('VlaaQAxk_Qy5orK1Vcr2C');
+      expect(s.nextMediaSelector(getState())._id).toBe('VlaaQAxk_Qy5orK1Vcr2C');
     });
 
     it('appends favourited items to the end of the playlist', () => {
@@ -113,9 +113,9 @@ describe('reducers/playlists', () => {
       }));
 
       const { size, media } = s.selectedPlaylistSelector(getState());
-      expect(size).toEqual(6);
+      expect(size).toBe(6);
       expect(media).toHaveLength(6);
-      expect(media[5]._id).toEqual('RDeVBExmCGXvmT0mN0P3n');
+      expect(media[5]._id).toBe('RDeVBExmCGXvmT0mN0P3n');
     });
   });
 
