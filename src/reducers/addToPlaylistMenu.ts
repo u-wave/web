@@ -1,5 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { PlaylistItemDesc } from '../actions/PlaylistActionCreators';
+import type { StoreState } from '../redux/configureStore';
 
 interface ClosedState {
   type: null,
@@ -26,7 +27,7 @@ const initialState: State = {
   position: { x: 0, y: 0 },
   type: null,
   data: null,
-};
+} as State;
 
 const slice = createSlice({
   name: 'addToPlaylistMenu',
@@ -54,6 +55,28 @@ export function openFavoriteMenu(historyID: string, position: { x: number, y: nu
     position,
     data: { historyID },
   });
+}
+
+export function isOpenSelector(state: StoreState) {
+  return state.addToPlaylistMenu.open;
+}
+
+export function positionSelector(state: StoreState) {
+  return state.addToPlaylistMenu.position;
+}
+
+export function isFavoriteSelector(state: StoreState) {
+  return state.addToPlaylistMenu.type === 'favorite';
+}
+
+export function mediaSelector(state: StoreState) {
+  const { open: isOpen, type, data } = state.addToPlaylistMenu;
+  return isOpen && type === 'add' ? data.media : null;
+}
+
+export function historyIDSelector(state: StoreState) {
+  const { open: isOpen, type, data } = state.addToPlaylistMenu;
+  return isOpen && type === 'favorite' ? data.historyID : null;
 }
 
 export default slice.reducer;

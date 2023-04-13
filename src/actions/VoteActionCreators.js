@@ -1,6 +1,5 @@
 import { put, post } from './RequestActionCreators';
 import { historyIDSelector } from '../selectors/boothSelectors';
-import { playlistsSelector } from '../selectors/playlistSelectors';
 import {
   FAVORITE, UPVOTE, DOWNVOTE,
   DO_FAVORITE_START, DO_FAVORITE_COMPLETE,

@@ -20,7 +20,6 @@ import {
   del, get, post, put,
 } from './RequestActionCreators';
 import {
-  playlistsSelector,
   playlistItemsSelector,
   playlistItemFilterSelector,
   activePlaylistIDSelector,

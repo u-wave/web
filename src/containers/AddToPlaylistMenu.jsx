@@ -12,7 +12,7 @@ import {
   positionSelector,
   mediaSelector,
   historyIDSelector,
-} from '../selectors/addToPlaylistMenuSelectors';
+} from '../reducers/addToPlaylistMenu';
 import { playlistsSelector } from '../selectors/playlistSelectors';
 import AddToPlaylistMenu from '../components/AddToPlaylistMenu';
 
