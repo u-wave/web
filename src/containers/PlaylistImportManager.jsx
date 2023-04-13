@@ -4,7 +4,7 @@ import {
   showImportSourcePanel,
   hideImportSourcePanel,
 } from '../actions/ImportActionCreators';
-import { selectedSourceTypeSelector } from '../selectors/importSelectors';
+import { selectedSourceTypeSelector } from '../reducers/imports';
 import PlaylistImport from '../components/PlaylistManager/Import';
 
 const { useCallback } = React;

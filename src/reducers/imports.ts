@@ -3,6 +3,7 @@ import {
   SHOW_IMPORT_SOURCE_PANEL,
   HIDE_IMPORT_SOURCE_PANEL,
 } from '../constants/ActionTypes';
+import type { StoreState } from '../redux/configureStore';
 
 interface State {
   sourceType: string | null;
@@ -12,7 +13,7 @@ const initialState: State = {
   sourceType: null,
 };
 
-export default function reduce(state = initialState, action: AnyAction): State {
+function reduce(state = initialState, action: AnyAction): State {
   const { type, payload } = action;
   switch (type) {
     case SHOW_IMPORT_SOURCE_PANEL:
@@ -29,3 +30,9 @@ export default function reduce(state = initialState, action: AnyAction): State {
       return state;
   }
 }
+
+export function selectedSourceTypeSelector(state: StoreState) {
+  return state.imports.sourceType;
+};
+
+export default reduce;
