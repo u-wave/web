@@ -89,8 +89,8 @@ module.exports = {
     },
     {
       files: ['**/__tests__/**/*.{js,jsx}'],
-      plugins: ['eslint-plugin-jest', 'eslint-plugin-jest-dom', 'eslint-plugin-testing-library'],
-      extends: ['plugin:jest/recommended', 'plugin:jest-dom/recommended', 'plugin:testing-library/react'],
+      plugins: ['eslint-plugin-vitest', 'eslint-plugin-jest-dom', 'eslint-plugin-testing-library'],
+      extends: ['plugin:vitest/recommended', 'plugin:jest-dom/recommended', 'plugin:testing-library/react'],
       env: {
         jest: true,
       },
