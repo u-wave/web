@@ -1,7 +1,7 @@
 import type { AnyAction } from 'redux';
 import { type PayloadAction, createSlice, ThunkAction } from '@reduxjs/toolkit';
 import indexBy from 'just-index';
-import { StoreState } from '../redux/configureStore';
+import type { StoreState } from '../redux/configureStore';
 import { initState } from './auth';
 
 export interface User {

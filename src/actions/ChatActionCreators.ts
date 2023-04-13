@@ -21,8 +21,8 @@ import {
   hasMention,
 } from '../utils/chatMentions';
 import * as actions from '../reducers/chat';
-import { StoreState } from '../redux/configureStore';
-import { User } from '../reducers/users';
+import type { StoreState } from '../redux/configureStore';
+import type { User } from '../reducers/users';
 
 type Thunk = ThunkAction<unknown, StoreState, never, AnyAction>;
 

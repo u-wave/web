@@ -1,10 +1,7 @@
 import { createListenerMiddleware } from '@reduxjs/toolkit';
 import { mutate } from 'swr';
 import type { AppDispatch, StoreState } from './configureStore';
-import {
-  advance,
-  skipped,
-} from '../actions/BoothActionCreators';
+import { advance, skipped } from '../actions/BoothActionCreators';
 import {
   deleteMessageByID,
   deleteMessagesByUser,
@@ -26,6 +23,10 @@ import {
   usernameChanged,
 } from '../reducers/users';
 import { socketMessage } from './socket';
+
+function expectType<T>(_param: T) {
+  // type-only function
+}
 
 const middleware = createListenerMiddleware<StoreState, AppDispatch>();
 middleware.startListening({
@@ -130,6 +131,9 @@ middleware.startListening({
       case 'waitlistClear':
         api.dispatch(waitlistActions.clear());
         break;
+      default:
+        // Never happens
+        expectType<never>(command);
     }
   },
 });

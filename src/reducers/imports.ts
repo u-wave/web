@@ -33,6 +33,6 @@ function reduce(state = initialState, action: AnyAction): State {
 
 export function selectedSourceTypeSelector(state: StoreState) {
   return state.imports.sourceType;
-};
+}
 
 export default reduce;

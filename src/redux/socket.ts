@@ -1,4 +1,4 @@
-import type { AnyAction, Middleware } from 'redux';
+import type { Middleware } from 'redux';
 import { createAction } from '@reduxjs/toolkit';
 import type { AppDispatch } from './configureStore';
 import {

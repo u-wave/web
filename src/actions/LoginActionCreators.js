@@ -1,4 +1,3 @@
-import { mutate } from 'swr';
 import {
   SOCKET_CONNECT,
   SOCKET_RECONNECT,
