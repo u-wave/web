@@ -1,9 +1,8 @@
 import { useCallback } from 'react';
 import { useDispatch } from '../../hooks/useRedux';
-import { importPlaylist } from './actions';
+import { importPlaylist, type State } from './reducer';
 import ChannelPanel from './ChannelPanel';
 import PlaylistPanel from './PlaylistPanel';
-import { State } from './reducer';
 import LoadingPanel from './LoadingPanel';
 
 type YouTubeImportPanelProps = State & {
@@ -12,7 +11,7 @@ type YouTubeImportPanelProps = State & {
 function YouTubeImportPanel(props: YouTubeImportPanelProps) {
   const dispatch = useDispatch();
   const onImportPlaylist = useCallback((sourceID: string, name: string) => {
-    return dispatch(importPlaylist(sourceID, name));
+    return dispatch(importPlaylist({ sourceID, name }));
   }, [dispatch]);
 
   const { type } = props;

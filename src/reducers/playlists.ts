@@ -38,8 +38,8 @@ import { initState } from './auth';
 export interface Playlist {
   _id: string;
   name: string;
-  loading: boolean;
-  active: boolean;
+  loading?: boolean;
+  active?: boolean;
   size: number;
 }
 

@@ -1,2 +1,0 @@
-export const IMPORT_PLAYLIST_START = 'youtube/import/IMPORT_PLAYLIST_START';
-export const IMPORT_PLAYLIST_COMPLETE = 'youtube/import/IMPORT_PLAYLIST_COMPLETE';
