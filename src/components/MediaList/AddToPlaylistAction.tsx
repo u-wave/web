@@ -7,6 +7,7 @@ import SvgIcon from '../SvgIcon';
 import MediaAction from './MediaAction';
 import { Media } from '../../reducers/booth';
 import { open as addMediaMenu } from '../../reducers/addToPlaylistMenu';
+import { PlaylistItemDesc } from '../../actions/PlaylistActionCreators';
 
 function filterNulls<T>(array: (T|null)[]): T[] {
   return array.filter((item) => item != null) as T[];
@@ -26,7 +27,7 @@ function AddToPlaylistAction({ media, withCustomMeta = true }: AddToPlaylistActi
 
   const dispatch = useDispatch();
   const handleClick = useCallback((event: React.MouseEvent) => {
-    let selectedItems: Parameters<typeof addMediaMenu>[0] = selection.isSelected(media)
+    let selectedItems: PlaylistItemDesc[] = selection.isSelected(media)
       ? filterNulls(selection.get()) : [media];
     if (!withCustomMeta) {
       selectedItems = selectedItems.map((item) => omit(item, ['artist', 'title']));
