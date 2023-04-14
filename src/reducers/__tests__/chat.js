@@ -1,3 +1,4 @@
+import { vi } from 'vitest';
 import createStore from '../../redux/configureStore';
 import * as actions from '../chat';
 import * as a from '../../actions/ChatActionCreators';
