@@ -9,17 +9,19 @@ import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import SvgIcon from '../SvgIcon';
+import { useSelector } from '../../hooks/useRedux';
+import { playlistsSelector } from '../../selectors/playlistSelectors';
 
 const { useCallback } = React;
 
 function PlaylistsMenu({
-  playlists,
   position,
   onClose,
   onCreatePlaylist,
   onSelect,
 }) {
   const { t } = useTranslator();
+  const playlists = useSelector(playlistsSelector);
   const handleSelect = useCallback((e, playlistID) => {
     onClose();
     onSelect(playlists.find((pl) => pl._id === playlistID));
@@ -65,7 +67,6 @@ PlaylistsMenu.propTypes = {
   onClose: PropTypes.func.isRequired,
   onSelect: PropTypes.func.isRequired,
   onCreatePlaylist: PropTypes.func.isRequired,
-  playlists: PropTypes.arrayOf(PropTypes.object),
   position: PropTypes.shape({
     x: PropTypes.number,
     y: PropTypes.number,

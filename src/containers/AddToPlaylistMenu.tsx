@@ -1,39 +1,37 @@
-import React from 'react';
+import { useCallback } from 'react';
 import { useSelector, useDispatch } from '../hooks/useRedux';
-import {
-  createPlaylist,
-  addMedia,
-  closeAddMediaMenu,
-} from '../actions/PlaylistActionCreators';
+import { createPlaylist, addMedia } from '../actions/PlaylistActionCreators';
 import { favoriteMedia } from '../actions/VoteActionCreators';
 import {
+  close,
   isFavoriteSelector,
   isOpenSelector,
   positionSelector,
   mediaSelector,
   historyIDSelector,
 } from '../reducers/addToPlaylistMenu';
-import { playlistsSelector } from '../selectors/playlistSelectors';
 import AddToPlaylistMenu from '../components/AddToPlaylistMenu';
-
-const { useCallback } = React;
+import type { Playlist } from '../reducers/playlists';
 
 function AddToPlaylistMenuContainer() {
   const dispatch = useDispatch();
   const isFavorite = useSelector(isFavoriteSelector);
   const isOpen = useSelector(isOpenSelector);
   const position = useSelector(positionSelector);
-  const playlists = useSelector(playlistsSelector);
   const media = useSelector(mediaSelector);
   const historyID = useSelector(historyIDSelector);
 
-  const onClose = useCallback(() => dispatch(closeAddMediaMenu()), [dispatch]);
-  const onCreatePlaylist = useCallback((name) => dispatch(createPlaylist(name)), [dispatch]);
-  const onSelect = useCallback((playlist) => {
+  const onClose = useCallback(() => {
+    dispatch(close());
+  }, [dispatch]);
+  const onCreatePlaylist = useCallback((name: string) => {
+    dispatch(createPlaylist(name));
+  }, [dispatch]);
+  const onSelect = useCallback((playlist: Playlist) => {
     if (isFavorite) {
-      return dispatch(favoriteMedia(playlist, historyID));
+      return dispatch(favoriteMedia(playlist, historyID!));
     }
-    return dispatch(addMedia(playlist, media));
+    return dispatch(addMedia(playlist, media!));
   }, [dispatch, isFavorite, historyID, media]);
 
   if (!isOpen) {
@@ -42,9 +40,7 @@ function AddToPlaylistMenuContainer() {
 
   return (
     <AddToPlaylistMenu
-      open={isOpen}
       position={position}
-      playlists={playlists}
       onClose={onClose}
       onCreatePlaylist={onCreatePlaylist}
       onSelect={onSelect}

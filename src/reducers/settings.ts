@@ -43,6 +43,9 @@ const slice = createSlice({
     unmute(state) {
       state.muted = false;
     },
+    setMentionSoundEnabled(state, action: PayloadAction<boolean>) {
+      state.mentionSound = action.payload;
+    },
     setVideoEnabled(state, action: PayloadAction<boolean>) {
       state.videoEnabled = action.payload;
     },
@@ -62,6 +65,8 @@ export const {
   setVolume,
   mute,
   unmute,
+  setMentionSoundEnabled,
+  setVideoEnabled,
   setVideoSize,
   toggleVideoSize,
 } = slice.actions;
