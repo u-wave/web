@@ -4,16 +4,18 @@ import webApiRequest from './request';
 import webApiSocket from './socket';
 import webApiSocketHandler from './socketHandler';
 import * as reducers from '../reducers';
-import createSourcesReducer from '../reducers/createSourcesReducer';
+import youtubeSourceReducer from '../sources/youtube/reducer';
 
-const reducer = combineReducers(reducers);
+const reducer = combineReducers({
+  ...reducers,
+  mediaSources: combineReducers({
+    youtube: youtubeSourceReducer,
+  }),
+});
 
 function createUwaveStore(preloadedState = {}, options = {}) {
   const store = configureStore({
-    reducer: {
-      ...reducers,
-      sources: createSourcesReducer(options),
-    },
+    reducer,
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(
       // This allows dispatching REQUEST_START actions to the store, which will
       // then be executed and handled as HTTP requests by the middleware.
@@ -29,6 +31,7 @@ function createUwaveStore(preloadedState = {}, options = {}) {
 }
 
 /** @typedef {ReturnType<typeof reducer>} StoreState */
-/** @typedef {import('redux').Dispatch & import('@reduxjs/toolkit').ThunkDispatch<StoreState, void>} AppDispatch */
+/** @typedef {import('redux').Dispatch &
+ *     import('@reduxjs/toolkit').ThunkDispatch<StoreState, void>} AppDispatch */
 
 export default createUwaveStore;

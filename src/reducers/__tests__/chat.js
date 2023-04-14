@@ -4,7 +4,7 @@ import * as a from '../../actions/ChatActionCreators';
 import * as s from '../../selectors/chatSelectors';
 import * as userSelectors from '../../selectors/userSelectors';
 
-function preloadUsers (users) {
+function preloadUsers(users) {
   return {
     users: {
       users: Object.fromEntries(users.map((user) => [user._id, user])),
