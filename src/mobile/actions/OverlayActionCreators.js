@@ -1,5 +1,5 @@
 import { toggleOverlay } from '../../reducers/activeOverlay';
-import { selectPlaylist } from '../../actions/PlaylistActionCreators';
+import { selectPlaylist } from '../../reducers/playlists';
 
 export function openPlaylist(playlistID) {
   return (dispatch) => {

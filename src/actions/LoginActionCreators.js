@@ -12,7 +12,6 @@ import {
 } from '../constants/ActionTypes';
 import * as Session from '../utils/Session';
 import { get, post, del } from './RequestActionCreators';
-import { setPlaylists } from './PlaylistActionCreators';
 import { initState } from '../reducers/auth';
 
 export function socketConnect() {
@@ -83,10 +82,7 @@ function logoutStart() {
 }
 
 function logoutComplete() {
-  return (dispatch) => {
-    dispatch({ type: LOGOUT_COMPLETE });
-    dispatch(setPlaylists([]));
-  };
+  return { type: LOGOUT_COMPLETE };
 }
 
 export function logout() {

@@ -2,8 +2,8 @@ import PropTypes from 'prop-types';
 import { useDispatch } from '../../../hooks/useRedux';
 import BaseSearchBar from '../../SearchBar';
 import SourcePicker from './SourcePicker';
-import { showSearchResults } from '../../../actions/SearchActionCreators';
 import { useMediaSearchStore } from '../../../stores/MediaSearchStore';
+import { showSearchResults } from '../../../reducers/playlists';
 
 function MediaSearchBar({ className }) {
   const {

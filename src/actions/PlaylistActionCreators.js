@@ -1,17 +1,12 @@
 import {
-  LOAD_ALL_PLAYLISTS_START, LOAD_ALL_PLAYLISTS_COMPLETE,
   LOAD_PLAYLIST_START, LOAD_PLAYLIST_COMPLETE,
   FILTER_PLAYLIST_ITEMS,
   FILTER_PLAYLIST_ITEMS_START, FILTER_PLAYLIST_ITEMS_COMPLETE,
   PLAYLIST_CYCLED,
-  SELECT_PLAYLIST,
-  ACTIVATE_PLAYLIST_START, ACTIVATE_PLAYLIST_COMPLETE,
   CREATE_PLAYLIST_START, CREATE_PLAYLIST_COMPLETE,
   RENAME_PLAYLIST_START, RENAME_PLAYLIST_COMPLETE,
   DELETE_PLAYLIST_START, DELETE_PLAYLIST_COMPLETE,
   ADD_MEDIA_START, ADD_MEDIA_COMPLETE,
-  REMOVE_MEDIA_START, REMOVE_MEDIA_COMPLETE,
-  MOVE_MEDIA_START, MOVE_MEDIA_COMPLETE,
   UPDATE_MEDIA_START, UPDATE_MEDIA_COMPLETE,
   SHUFFLE_PLAYLIST_START, SHUFFLE_PLAYLIST_COMPLETE,
 } from '../constants/ActionTypes';
@@ -20,7 +15,6 @@ import {
   del, get, post, put,
 } from './RequestActionCreators';
 import {
-  playlistItemsSelector,
   playlistItemFilterSelector,
   activePlaylistIDSelector,
   selectedPlaylistIDSelector,
@@ -28,15 +22,9 @@ import {
   selectedPlaylistSelector,
 } from '../selectors/playlistSelectors';
 import mergeIncludedModels from '../utils/mergeIncludedModels';
+import { selectPlaylist } from '../reducers/playlists';
 
 const MEDIA_PAGE_SIZE = 50;
-
-export function setPlaylists(playlists) {
-  return {
-    type: LOAD_ALL_PLAYLISTS_COMPLETE,
-    payload: { playlists },
-  };
-}
 
 // TODO It would be good to get rid of this
 export function flattenPlaylistItem(item) {
@@ -139,13 +127,6 @@ export function filterPlaylistItems(playlistID, filter) {
   };
 }
 
-export function selectPlaylist(playlistID) {
-  return {
-    type: SELECT_PLAYLIST,
-    payload: { playlistID },
-  };
-}
-
 export function playlistCycled(playlistID) {
   return {
     type: PLAYLIST_CYCLED,
@@ -191,56 +172,6 @@ export function cyclePlaylist(playlistID) {
   };
 }
 
-export function activatePlaylistStart(playlistID) {
-  return {
-    type: ACTIVATE_PLAYLIST_START,
-    payload: { playlistID },
-  };
-}
-
-export function activatePlaylistComplete(playlistID) {
-  return {
-    type: ACTIVATE_PLAYLIST_COMPLETE,
-    payload: { playlistID },
-  };
-}
-
-export function activatePlaylist(playlistID) {
-  return put(`/playlists/${playlistID}/activate`, {}, {
-    onStart: () => activatePlaylistStart(playlistID),
-    onComplete: () => activatePlaylistComplete(playlistID),
-    onError: (error) => ({
-      type: ACTIVATE_PLAYLIST_COMPLETE,
-      error: true,
-      payload: error,
-      meta: { playlistID },
-    }),
-  });
-}
-
-export function loadPlaylistsStart() {
-  return { type: LOAD_ALL_PLAYLISTS_START };
-}
-
-export function loadPlaylistsComplete(playlists) {
-  return {
-    type: LOAD_ALL_PLAYLISTS_COMPLETE,
-    payload: { playlists },
-  };
-}
-
-export function loadPlaylists() {
-  return get('/playlists', {
-    onStart: loadPlaylistsStart,
-    onComplete: (res) => loadPlaylistsComplete(res.data),
-    onError: (error) => ({
-      type: LOAD_ALL_PLAYLISTS_COMPLETE,
-      error: true,
-      payload: error,
-    }),
-  });
-}
-
 export function createPlaylistStart(props, tempId) {
   return {
     type: CREATE_PLAYLIST_START,
@@ -266,11 +197,8 @@ export function createPlaylist(name) {
     onStart: () => createPlaylistStart({ name, description, shared }, tempId),
     onComplete: (res) => (dispatch) => {
       const playlist = res.data;
-      const { active } = res.meta;
+      // TODO handle res.meta.active
       dispatch(createPlaylistComplete(playlist, tempId));
-      if (active) {
-        dispatch(activatePlaylistComplete(playlist._id));
-      }
       return playlist;
     },
     onError: (error) => ({
@@ -466,95 +394,6 @@ export function updateMedia(playlistID, mediaID, props) {
       meta: { playlistID, mediaID, props },
     }),
   });
-}
-
-export function removeMediaStart(playlistID, items) {
-  return {
-    type: REMOVE_MEDIA_START,
-    payload: { playlistID, medias: items },
-  };
-}
-
-export function removeMediaComplete(playlistID, newSize, removedMedia) {
-  return {
-    type: REMOVE_MEDIA_COMPLETE,
-    payload: {
-      playlistID,
-      newSize,
-      removedMedia,
-    },
-  };
-}
-
-export function removeMedia(playlistID, items) {
-  const itemIDs = items.map((media) => media._id);
-  return del(`/playlists/${playlistID}/media`, { items: itemIDs }, {
-    onStart: () => removeMediaStart(playlistID, items),
-    onComplete: ({ meta }) => removeMediaComplete(
-      playlistID,
-      meta.playlistSize,
-      items,
-    ),
-    onError: (error) => ({
-      type: REMOVE_MEDIA_COMPLETE,
-      error: true,
-      payload: error,
-    }),
-  });
-}
-
-export function moveMediaStart(playlistID, items, location) {
-  return {
-    type: MOVE_MEDIA_START,
-    payload: { playlistID, location, medias: items },
-  };
-}
-
-export function moveMediaComplete(playlistID, items, location) {
-  return {
-    type: MOVE_MEDIA_COMPLETE,
-    payload: { playlistID, location, medias: items },
-  };
-}
-
-function resolveMoveOptions(playlist = [], opts = {}) {
-  if (opts.after) {
-    return { after: opts.after };
-  }
-  if (opts.before) {
-    for (let i = 0, l = playlist.length; i < l; i += 1) {
-      if (playlist[i] && playlist[i]._id === opts.before) {
-        if (i === 0) {
-          return { at: 'start' };
-        }
-        return { after: playlist[i - 1]._id };
-      }
-    }
-  }
-  if (opts.at) {
-    return { at: opts.at };
-  }
-  return null;
-}
-
-export function moveMedia(playlistID, medias, opts) {
-  return (dispatch, getState) => {
-    const playlistItems = playlistItemsSelector(getState())[playlistID];
-    const location = resolveMoveOptions(playlistItems, opts);
-
-    const items = medias.map((media) => media._id);
-
-    return dispatch(put(`/playlists/${playlistID}/move`, { items, ...location }, {
-      onStart: () => moveMediaStart(playlistID, medias, location),
-      onComplete: () => moveMediaComplete(playlistID, medias, location),
-      onError: (error) => ({
-        type: MOVE_MEDIA_COMPLETE,
-        error: true,
-        payload: error,
-        meta: { playlistID, medias, location },
-      }),
-    }));
-  };
 }
 
 export function shufflePlaylistStart(playlistID) {

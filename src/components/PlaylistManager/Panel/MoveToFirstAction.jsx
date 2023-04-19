@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { mdiChevronUp } from '@mdi/js';
 import { useDispatch } from '../../../hooks/useRedux';
-import { moveMedia } from '../../../actions/PlaylistActionCreators';
 import { useMediaListContext } from '../../MediaList/BaseMediaList';
 import SvgIcon from '../../SvgIcon';
 import MediaAction from '../../MediaList/MediaAction';
+import { movePlaylistItems } from '../../../reducers/playlists';
 
 const {
   useCallback,
@@ -17,7 +17,11 @@ function MoveToFirstAction({ media }) {
   const handleClick = useCallback(() => {
     const selectedItems = selection.isSelected(media) ? selection.get() : [media];
 
-    dispatch(moveMedia(playlist._id, selectedItems, { at: 'start' }));
+    dispatch(movePlaylistItems({
+      playlistID: playlist._id,
+      medias: selectedItems,
+      target: { at: 'start' },
+    }));
   }, [dispatch, playlist, media, selection]);
 
   return (

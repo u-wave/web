@@ -7,17 +7,16 @@ import {
   isFilteredSelector,
 } from '../selectors/playlistSelectors';
 import {
-  moveMedia,
   filterPlaylistItems,
   renamePlaylist,
   deletePlaylist,
   cannotDeleteActivePlaylist,
   shufflePlaylist,
-  activatePlaylist,
   loadPlaylist,
   loadFilteredPlaylistItems,
 } from '../actions/PlaylistActionCreators';
 import PlaylistPanel from '../components/PlaylistManager/Panel';
+import { activatePlaylist, movePlaylistItems } from '../reducers/playlists';
 
 const { useCallback } = React;
 
@@ -51,7 +50,11 @@ function PlaylistPanelContainer() {
   );
 
   const onMoveMedia = useCallback(
-    (media, opts) => dispatch(moveMedia(playlistID, media, opts)),
+    (media, opts) => dispatch(movePlaylistItems({
+      playlistID,
+      medias: media,
+      target: opts,
+    })),
     [dispatch, playlistID],
   );
   const onLoadPlaylistPage = useCallback((page) => {

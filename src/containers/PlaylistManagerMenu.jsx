@@ -4,16 +4,15 @@ import { useSelector, useDispatch } from '../hooks/useRedux';
 import {
   addMedia as addToPlaylist,
   createPlaylist,
-  selectPlaylist,
 } from '../actions/PlaylistActionCreators';
-import { showImportPanel } from '../actions/ImportActionCreators';
-import { showSearchResults, hideSearchResults } from '../actions/SearchActionCreators';
+import { hideSearchResults } from '../actions/SearchActionCreators';
 import {
   playlistsSelector,
   selectedPlaylistIDSelector,
 } from '../selectors/playlistSelectors';
 import { useMediaSearchStore } from '../stores/MediaSearchStore';
 import PlaylistsMenu from '../components/PlaylistManager/Menu';
+import { selectPlaylist, showImportPanel, showSearchResults } from '../reducers/playlists';
 
 const { useCallback } = React;
 

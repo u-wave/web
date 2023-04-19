@@ -2,7 +2,7 @@ import type { AnyAction } from 'redux';
 import { createSlice } from '@reduxjs/toolkit';
 import { mutate } from 'swr';
 import { SET_TOKEN } from '../constants/ActionTypes';
-import type { Playlist, PlaylistItem } from './playlists';
+import type { Playlist } from './playlists';
 import type { User } from './users';
 import uwFetch from '../utils/fetch';
 import { createAsyncThunk } from '../redux/api';
@@ -24,6 +24,11 @@ interface Media {
   title: string,
   start: number,
   end: number,
+}
+interface PlaylistItem extends Media {
+  _id: string,
+  createdAt: string,
+  updatedAt: string,
 }
 
 interface State {
