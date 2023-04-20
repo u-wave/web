@@ -9,7 +9,6 @@ import {
 } from '../../selectors/playlistSelectors';
 import {
   filterPlaylistItems,
-  renamePlaylist,
   deletePlaylist,
   cannotDeleteActivePlaylist,
   shufflePlaylist,
@@ -17,7 +16,11 @@ import {
   loadFilteredPlaylistItems,
 } from '../../actions/PlaylistActionCreators';
 import PlaylistPanel from '../components/PlaylistManager/PlaylistPanel';
-import { activatePlaylist, movePlaylistItems } from '../../reducers/playlists';
+import {
+  renamePlaylist,
+  activatePlaylist,
+  movePlaylistItems,
+} from '../../reducers/playlists';
 
 const mapStateToProps = createStructuredSelector({
   playlist: selectedPlaylistSelector,
@@ -50,7 +53,7 @@ const mergeProps = (state, { dispatch }, props) => ({
   ...bindActionCreators({
     onShufflePlaylist: shufflePlaylist.bind(null, state.playlist._id),
     onActivatePlaylist: activatePlaylist.bind(null, state.playlist._id),
-    onRenamePlaylist: renamePlaylist.bind(null, state.playlist._id),
+    onRenamePlaylist: (name) => renamePlaylist({ playlistID: state.playlist._id, name }),
     onDeletePlaylist: deletePlaylist.bind(null, state.playlist._id),
     onNotDeletable: cannotDeleteActivePlaylist,
     onMoveMedia: onMoveMedia(state.playlist._id),

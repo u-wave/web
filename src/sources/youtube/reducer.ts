@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { createAsyncThunk } from '../../redux/api';
 import uwFetch from '../../utils/fetch';
-import { createPlaylistStart, createPlaylistComplete } from '../../actions/PlaylistActionCreators';
+import { createPlaylist } from '../../reducers/playlists';
 
 export type State =
   | { type: null, url: null }
@@ -17,7 +17,7 @@ const importPlaylist = createAsyncThunk('youtube/importPlaylist', async (
   { name, sourceID }: { name: string, sourceID: string },
   api,
 ) => {
-  api.dispatch(createPlaylistStart({ name }, `yt:${sourceID}`));
+  api.dispatch(createPlaylist.pending(api.requestId, name));
 
   const playlist = await uwFetch<{
       _id: string,
@@ -28,7 +28,7 @@ const importPlaylist = createAsyncThunk('youtube/importPlaylist', async (
     data: { id: sourceID, name },
   }]);
 
-  api.dispatch(createPlaylistComplete(playlist, `yt:${sourceID}`));
+  api.dispatch(createPlaylist.fulfilled(playlist, api.requestId, name));
 });
 
 const slice = createSlice({

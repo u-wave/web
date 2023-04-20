@@ -10,8 +10,7 @@ import MediaSearchBar from './Header/SearchBar';
 import PlaylistHeader from './Header';
 import NoPlaylists from './NoPlaylists';
 import { useDispatch, useSelector } from '../../hooks/useRedux';
-import { importPanelSymbol, searchPanelSymbol } from '../../reducers/playlists';
-import { createPlaylist } from '../../actions/PlaylistActionCreators';
+import { createPlaylist, importPanelSymbol, searchPanelSymbol } from '../../reducers/playlists';
 import './index.css';
 
 type PlaylistManagerProps = {

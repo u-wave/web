@@ -8,7 +8,6 @@ import {
 } from '../selectors/playlistSelectors';
 import {
   filterPlaylistItems,
-  renamePlaylist,
   deletePlaylist,
   cannotDeleteActivePlaylist,
   shufflePlaylist,
@@ -16,7 +15,11 @@ import {
   loadFilteredPlaylistItems,
 } from '../actions/PlaylistActionCreators';
 import PlaylistPanel from '../components/PlaylistManager/Panel';
-import { activatePlaylist, movePlaylistItems } from '../reducers/playlists';
+import {
+  renamePlaylist,
+  activatePlaylist,
+  movePlaylistItems,
+} from '../reducers/playlists';
 
 const { useCallback } = React;
 
@@ -37,7 +40,7 @@ function PlaylistPanelContainer() {
     [dispatch, playlistID],
   );
   const onRenamePlaylist = useCallback(
-    (name) => dispatch(renamePlaylist(playlistID, name)),
+    (name) => dispatch(renamePlaylist({ playlistID, name })),
     [dispatch, playlistID],
   );
   const onDeletePlaylist = useCallback(

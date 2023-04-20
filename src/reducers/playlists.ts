@@ -1,17 +1,13 @@
 import type { AnyAction } from 'redux';
-import { type PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import escapeStringRegExp from 'escape-string-regexp';
 import indexBy from 'just-index';
 import { createAsyncThunk } from '../redux/api';
 import uwFetch from '../utils/fetch';
 import {
-  LOAD_ALL_PLAYLISTS_COMPLETE,
   LOAD_PLAYLIST_START,
   LOAD_PLAYLIST_COMPLETE,
   PLAYLIST_CYCLED,
-  CREATE_PLAYLIST_START,
-  CREATE_PLAYLIST_COMPLETE,
-  RENAME_PLAYLIST_COMPLETE,
   DELETE_PLAYLIST_START,
   DELETE_PLAYLIST_COMPLETE,
   ADD_MEDIA_START,
@@ -121,6 +117,43 @@ function filterCachedPlaylistItems(state: State, playlistID: string, filter: str
   return [];
 }
 
+const createPlaylist = createAsyncThunk('playlists/create', async (name: string) => {
+  const response = await uwFetch<{
+    data: {
+      _id: string,
+      name: string,
+      author: string,
+      createdAt: string,
+      size: number,
+    },
+  }>(['/playlists', {
+    method: 'post',
+    data: { name },
+  }]);
+
+  return response.data;
+});
+
+const renamePlaylist = createAsyncThunk('playlists/rename', async ({ playlistID, name }: {
+  playlistID: string,
+  name: string,
+}) => {
+  const response = await uwFetch<{
+    data: {
+      _id: string,
+      name: string,
+      author: string,
+      createdAt: string,
+      size: number,
+    },
+  }>([`/playlists/${playlistID}/rename`, {
+    method: 'put',
+    data: { name },
+  }]);
+
+  return response.data;
+});
+
 const activatePlaylist = createAsyncThunk('playlists/activate', async (playlistID: string) => {
   await uwFetch([`/playlists/${playlistID}/activate`, {
     method: 'put',
@@ -221,9 +254,6 @@ const slice = createSlice({
       .addCase(LOGOUT_COMPLETE, () => {
         return initialState;
       })
-      .addCase(LOAD_ALL_PLAYLISTS_COMPLETE, (state, action: AnyAction) => {
-        state.playlists = indexBy(action.payload.playlists, '_id');
-      })
       .addCase(activatePlaylist.pending, (state, action) => {
         // TODO use a different property here so we can show a loading icon on
         // the "Active" button only, instead of on top of the entire playlist
@@ -297,38 +327,32 @@ const slice = createSlice({
         newItems[playlist.size - 1] = items[0]; // eslint-disable-line prefer-destructuring
         state.playlistItems[payload.playlistID] = newItems;
       })
-      .addCase(CREATE_PLAYLIST_START, (state, { payload, meta }: AnyAction) => {
-        // TODO find a simpler way to store this stuff, that doesn't involve keeping
-        // millions of properties (six properties to be precise) in sync
-        // Playlists that are being created have a temporary ID that is used until the
-        // real ID comes back from the server.
-        const newPlaylist = {
-          _id: meta.tempId,
-          name: payload.name,
-          description: payload.description,
-          shared: payload.shared,
-          creating: true,
+      .addCase(createPlaylist.pending, (state, action) => {
+        const id = action.meta.requestId;
+        const name = action.meta.arg;
+
+        state.playlists[id] = {
+          _id: id,
+          name,
           size: 0,
         };
-        state.playlists[meta.tempId] = newPlaylist;
-        state.selectedPlaylistID = meta.tempId;
       })
-      .addCase(CREATE_PLAYLIST_COMPLETE, (state, { payload, meta, error }: AnyAction) => {
-        if (error) {
-          delete state.playlists[meta.tempId];
-          state.selectedPlaylistID = state.activePlaylistID;
-          return;
-        }
+      .addCase(createPlaylist.rejected, (state, action) => {
+        delete state.playlists[action.meta.requestId];
+      })
+      .addCase(createPlaylist.fulfilled, (state, action) => {
+        delete state.playlists[action.meta.requestId];
 
-        state.playlists[payload.playlist._id] = payload.playlist;
-        if (state.selectedPlaylistID === meta.tempId) {
-          state.selectedPlaylistID = payload.playlist._id;
+        const playlist = action.payload;
+        state.playlists[playlist._id] = playlist;
+        if (state.selectedPlaylistID === action.meta.requestId) {
+          state.selectedPlaylistID = playlist._id;
         }
       })
-      .addCase(RENAME_PLAYLIST_COMPLETE, (state, { payload }: AnyAction) => {
-        const playlist = state.playlists[payload.playlistID];
+      .addCase(renamePlaylist.fulfilled, (state, action) => {
+        const playlist = state.playlists[action.payload._id];
         if (playlist) {
-          playlist.name = payload.name;
+          playlist.name = action.payload.name;
         }
       })
       .addCase(DELETE_PLAYLIST_START, (state, { payload }: AnyAction) => {
@@ -426,6 +450,8 @@ const slice = createSlice({
 });
 
 export {
+  createPlaylist,
+  renamePlaylist,
   activatePlaylist,
   movePlaylistItems,
   removePlaylistItems,

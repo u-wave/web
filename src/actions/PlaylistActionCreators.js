@@ -3,8 +3,6 @@ import {
   FILTER_PLAYLIST_ITEMS,
   FILTER_PLAYLIST_ITEMS_START, FILTER_PLAYLIST_ITEMS_COMPLETE,
   PLAYLIST_CYCLED,
-  CREATE_PLAYLIST_START, CREATE_PLAYLIST_COMPLETE,
-  RENAME_PLAYLIST_START, RENAME_PLAYLIST_COMPLETE,
   DELETE_PLAYLIST_START, DELETE_PLAYLIST_COMPLETE,
   ADD_MEDIA_START, ADD_MEDIA_COMPLETE,
   UPDATE_MEDIA_START, UPDATE_MEDIA_COMPLETE,
@@ -170,63 +168,6 @@ export function cyclePlaylist(playlistID) {
       dispatch(loadPlaylist(playlistID, 0));
     }
   };
-}
-
-export function createPlaylistStart(props, tempId) {
-  return {
-    type: CREATE_PLAYLIST_START,
-    payload: props,
-    meta: { tempId },
-  };
-}
-
-export function createPlaylistComplete(playlist, tempId) {
-  return {
-    type: CREATE_PLAYLIST_COMPLETE,
-    payload: { playlist },
-    meta: { tempId },
-  };
-}
-
-export function createPlaylist(name) {
-  const tempId = -Date.now();
-  const description = '';
-  const shared = false;
-
-  return post('/playlists', { name, description, shared }, {
-    onStart: () => createPlaylistStart({ name, description, shared }, tempId),
-    onComplete: (res) => (dispatch) => {
-      const playlist = res.data;
-      // TODO handle res.meta.active
-      dispatch(createPlaylistComplete(playlist, tempId));
-      return playlist;
-    },
-    onError: (error) => ({
-      type: CREATE_PLAYLIST_COMPLETE,
-      error: true,
-      payload: error,
-      meta: { tempId },
-    }),
-  });
-}
-
-export function renamePlaylist(playlistID, name) {
-  return put(`/playlists/${playlistID}/rename`, { name }, {
-    onStart: () => ({
-      type: RENAME_PLAYLIST_START,
-      payload: { playlistID, name },
-    }),
-    onComplete: ({ data }) => ({
-      type: RENAME_PLAYLIST_COMPLETE,
-      payload: { playlistID, name: data.name },
-    }),
-    onError: (error) => ({
-      type: RENAME_PLAYLIST_COMPLETE,
-      error: true,
-      payload: error,
-      meta: { playlistID, name },
-    }),
-  });
 }
 
 /**

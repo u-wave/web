@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from '../hooks/useRedux';
 import {
   addMedia as addToPlaylist,
-  createPlaylist,
 } from '../actions/PlaylistActionCreators';
 import { hideSearchResults } from '../actions/SearchActionCreators';
 import {
@@ -12,7 +11,12 @@ import {
 } from '../selectors/playlistSelectors';
 import { useMediaSearchStore } from '../stores/MediaSearchStore';
 import PlaylistsMenu from '../components/PlaylistManager/Menu';
-import { selectPlaylist, showImportPanel, showSearchResults } from '../reducers/playlists';
+import {
+  createPlaylist,
+  selectPlaylist,
+  showImportPanel,
+  showSearchResults,
+} from '../reducers/playlists';
 
 const { useCallback } = React;
 
