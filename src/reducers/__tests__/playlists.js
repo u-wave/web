@@ -2,7 +2,12 @@ import createStore from '../../redux/configureStore';
 import * as a from '../../actions/PlaylistActionCreators';
 import { favoriteMediaComplete } from '../../actions/VoteActionCreators';
 import * as s from '../../selectors/playlistSelectors';
-import { activatePlaylist, movePlaylistItems, selectPlaylist } from '../playlists';
+import {
+  activatePlaylist,
+  addPlaylistItems,
+  movePlaylistItems,
+  selectPlaylist,
+} from '../playlists';
 
 function preloadPlaylists(playlists) {
   return {
@@ -71,12 +76,16 @@ describe('reducers/playlists', () => {
 
       expect(s.selectedPlaylistSelector(getState()).media).toHaveLength(5);
 
-      dispatch(a.addMediaComplete('ZcU_8-UyI10Tx79R4CjRv', '66Z6y6JA4m5WmmNF3O7Ii', {
-        afterID: 'NkwUIwNmraSZ4A4eiC3GQ',
-        media: [
+      dispatch(addPlaylistItems.fulfilled({
+        playlistSize: 7,
+        items: [
           { _id: 'VlaaQAxk_Qy5orK1Vcr2C', artist: 'The Microphones', title: 'I Want Wind To Blow' },
           { _id: 'T9sdCu_-3o70qWk0YeDxJ', artist: 'Bikini Kill', title: 'Rebel Girl' },
         ],
+      }, '66Z6y6JA4m5WmmNF3O7Ii', {
+        playlistID: 'ZcU_8-UyI10Tx79R4CjRv',
+        afterID: 'NkwUIwNmraSZ4A4eiC3GQ',
+        items: [],
       }));
 
       const { media } = s.selectedPlaylistSelector(getState());
@@ -95,12 +104,16 @@ describe('reducers/playlists', () => {
 
       expect(s.activePlaylistSelector(getState()).media).toHaveLength(5);
 
-      dispatch(a.addMediaComplete('ZcU_8-UyI10Tx79R4CjRv', '66Z6y6JA4m5WmmNF3O7Ii', {
-        afterID: null,
-        media: [
+      dispatch(addPlaylistItems.fulfilled({
+        playlistSize: 7,
+        items: [
           { _id: 'VlaaQAxk_Qy5orK1Vcr2C', artist: 'The Microphones', title: 'I Want Wind To Blow' },
           { _id: 'T9sdCu_-3o70qWk0YeDxJ', artist: 'Bikini Kill', title: 'Rebel Girl' },
         ],
+      }, '66Z6y6JA4m5WmmNF3O7Ii', {
+        playlistID: 'ZcU_8-UyI10Tx79R4CjRv',
+        afterID: null,
+        items: [],
       }));
 
       expect(s.activePlaylistSelector(getState()).media).toHaveLength(7);

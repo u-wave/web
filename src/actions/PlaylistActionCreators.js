@@ -4,7 +4,6 @@ import {
   FILTER_PLAYLIST_ITEMS_START, FILTER_PLAYLIST_ITEMS_COMPLETE,
   PLAYLIST_CYCLED,
   DELETE_PLAYLIST_START, DELETE_PLAYLIST_COMPLETE,
-  ADD_MEDIA_START, ADD_MEDIA_COMPLETE,
   UPDATE_MEDIA_START, UPDATE_MEDIA_COMPLETE,
   SHUFFLE_PLAYLIST_START, SHUFFLE_PLAYLIST_COMPLETE,
 } from '../constants/ActionTypes';
@@ -231,79 +230,6 @@ export function deletePlaylist(playlistID) {
       }),
     }));
   };
-}
-
-export function addMediaStart(playlistID, media, location) {
-  return {
-    type: ADD_MEDIA_START,
-    payload: { playlistID, media, location },
-  };
-}
-
-export function addMediaComplete(playlistID, newSize, insert) {
-  return {
-    type: ADD_MEDIA_COMPLETE,
-    payload: {
-      playlistID,
-      newSize,
-      afterID: insert.afterID,
-      appendedMedia: insert.media,
-    },
-  };
-}
-
-/**
- * @typedef {{
- *   sourceType: string,
- *   sourceID: string,
- *   artist?: string,
- *   title?: string,
- *   start?: number,
- *   end?: number,
- * }} PlaylistItemDesc
- */
-
-/**
- * Keep only the playlist item properties that are necessary to add an item to
- * a playlist. The rest ("thumbnail" etc) is left out for smaller payloads.
- *
- * @param {PlaylistItemDesc} item
- */
-function minimizePlaylistItem(item) {
-  return {
-    sourceType: item.sourceType,
-    sourceID: item.sourceID,
-    artist: item.artist,
-    title: item.title,
-    start: item.start,
-    end: item.end,
-  };
-}
-
-/**
- * @param {{ _id: string }} playlist
- * @param {PlaylistItemDesc[]} items
- * @param {string|null} [afterID]
- */
-export function addMedia(playlist, items, afterID = null) {
-  const payload = {
-    items: items.map(minimizePlaylistItem),
-    after: afterID,
-  };
-
-  return post(`/playlists/${playlist._id}/media`, payload, {
-    onStart: () => addMediaStart(playlist._id, items, afterID),
-    onComplete: (res) => addMediaComplete(
-      playlist._id,
-      res.meta.playlistSize,
-      { afterID, media: mergeIncludedModels(res).map(flattenPlaylistItem) },
-    ),
-    onError: (error) => ({
-      type: ADD_MEDIA_COMPLETE,
-      error: true,
-      payload: error,
-    }),
-  });
 }
 
 export function editMedia(playlistID, media) {

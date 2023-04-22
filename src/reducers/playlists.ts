@@ -3,15 +3,14 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import escapeStringRegExp from 'escape-string-regexp';
 import indexBy from 'just-index';
 import { createAsyncThunk } from '../redux/api';
-import uwFetch from '../utils/fetch';
+import uwFetch, { ListResponse } from '../utils/fetch';
+import mergeIncludedModels from '../utils/mergeIncludedModels';
 import {
   LOAD_PLAYLIST_START,
   LOAD_PLAYLIST_COMPLETE,
   PLAYLIST_CYCLED,
   DELETE_PLAYLIST_START,
   DELETE_PLAYLIST_COMPLETE,
-  ADD_MEDIA_START,
-  ADD_MEDIA_COMPLETE,
   UPDATE_MEDIA_START,
   UPDATE_MEDIA_COMPLETE,
   FILTER_PLAYLIST_ITEMS,
@@ -182,6 +181,61 @@ function resolveMoveOptions(
   }
   return { at: opts.at };
 }
+
+interface NewPlaylistItem {
+  sourceType: string;
+  sourceID: string;
+  /** Leave empty to use global default for this media. */
+  artist?: string | undefined;
+  /** Leave empty to use global default for this media. */
+  title?: string | undefined;
+  start: number;
+  end: number;
+}
+
+/**
+ * Keep only the playlist item properties that are necessary to add an item to
+ * a playlist. The rest ("thumbnail" etc) is left out for smaller payloads.
+ */
+function minimizePlaylistItem(item: NewPlaylistItem) {
+  return {
+    sourceType: item.sourceType,
+    sourceID: item.sourceID,
+    artist: item.artist,
+    title: item.title,
+    start: item.start,
+    end: item.end,
+  };
+}
+
+const addPlaylistItems = createAsyncThunk('playlists/addPlaylistItems', async ({
+  playlistID,
+  items,
+  afterID = null,
+}: {
+  playlistID: string,
+  items: NewPlaylistItem[],
+  afterID?: string | null,
+}) => {
+  const payload = {
+    items: items.map(minimizePlaylistItem),
+    after: afterID,
+  };
+
+  const res = await uwFetch<ListResponse<PlaylistItem> & {
+    meta: {
+      playlistSize: number,
+    },
+  }>([`/playlists/${playlistID}/media`, {
+    method: 'post',
+    data: payload,
+  }]);
+
+  return {
+    playlistSize: res.meta.playlistSize,
+    items: mergeIncludedModels(res),
+  };
+});
 
 const movePlaylistItems = createAsyncThunk('playlists/movePlaylistItems', async ({ playlistID, medias, target }: {
   playlistID: string,
@@ -375,21 +429,20 @@ const slice = createSlice({
           state.selectedPlaylistID = state.activePlaylistID;
         }
       })
-      .addCase(ADD_MEDIA_START, (state, { payload }: AnyAction) => {
-        state.playlists[payload.playlistID].loading = true;
+      .addCase(addPlaylistItems.pending, (state, action) => {
+        const { playlistID } = action.meta.arg;
+        state.playlists[playlistID].loading = true;
       })
-      .addCase(ADD_MEDIA_COMPLETE, (state, { payload, meta, error }: AnyAction) => {
-        if (error) {
-          state.playlists[meta.playlistID].loading = false;
-          return;
-        }
+      .addCase(addPlaylistItems.fulfilled, (state, action) => {
+        const { playlistID, afterID = null } = action.meta.arg;
+        const { playlistSize, items } = action.payload;
 
-        state.playlists[payload.playlistID].loading = false;
-        state.playlists[payload.playlistID].size = payload.newSize;
-        state.playlistItems[payload.playlistID] = processInsert(
-          state.playlistItems[payload.playlistID],
-          payload.appendedMedia,
-          { after: payload.afterID },
+        state.playlists[playlistID].loading = false;
+        state.playlists[playlistID].size = playlistSize;
+        state.playlistItems[playlistID] = processInsert(
+          state.playlistItems[playlistID],
+          items,
+          { after: afterID },
         );
       })
       .addCase(DO_FAVORITE_COMPLETE, (state, { payload }: AnyAction) => {
@@ -457,6 +510,7 @@ export {
   createPlaylist,
   renamePlaylist,
   activatePlaylist,
+  addPlaylistItems,
   movePlaylistItems,
   removePlaylistItems,
 };

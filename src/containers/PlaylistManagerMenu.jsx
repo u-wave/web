@@ -1,9 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from '../hooks/useRedux';
-import {
-  addMedia as addToPlaylist,
-} from '../actions/PlaylistActionCreators';
 import { hideSearchResults } from '../actions/SearchActionCreators';
 import {
   playlistsSelector,
@@ -12,6 +9,7 @@ import {
 import { useMediaSearchStore } from '../stores/MediaSearchStore';
 import PlaylistsMenu from '../components/PlaylistManager/Menu';
 import {
+  addPlaylistItems,
   createPlaylist,
   selectPlaylist,
   showImportPanel,
@@ -27,7 +25,7 @@ function PlaylistsMenuContainer({ className }) {
   const dispatch = useDispatch();
 
   const onAddToPlaylist = useCallback(
-    (playlist, items, afterID) => dispatch(addToPlaylist(playlist, items, afterID)),
+    (playlist, items, afterID) => dispatch(addPlaylistItems({ playlistID: playlist._id, items, afterID })),
     [dispatch],
   );
   const onCreatePlaylist = useCallback((name) => dispatch(createPlaylist(name)), [dispatch]);
