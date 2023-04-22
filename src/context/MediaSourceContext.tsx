@@ -33,7 +33,7 @@ export interface MediaSource<State extends object = Record<never, never>> {
 }
 
 interface MediaSourceContextApi {
-  getMediaSource(name: string): MediaSource;
+  getMediaSource(name: string): MediaSource | undefined;
   getAllMediaSources(): Record<string, MediaSource>;
 }
 
