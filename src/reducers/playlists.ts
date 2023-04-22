@@ -178,7 +178,7 @@ function resolveMoveOptions(
         return { after: items[i - 1]?._id ?? null };
       }
     }
-    return { at: 'end' };
+    return { at: 'end' as const };
   }
   return { at: opts.at };
 }
@@ -245,7 +245,11 @@ const slice = createSlice({
           // the footer bar immediately. Else it would flash "This playlist is empty"
           // for a moment.
           if (payload.activePlaylist && payload.firstActivePlaylistItem) {
-            state.playlistItems[payload.activePlaylist] = [payload.firstActivePlaylistItem];
+            const item = {
+              ...payload.firstActivePlaylistItem.media,
+              ...payload.firstActivePlaylistItem,
+            };
+            state.playlistItems[payload.activePlaylist] = [item];
           }
           state.activePlaylistID = payload.activePlaylist;
           state.selectedPlaylistID ??= payload.activePlaylist;
