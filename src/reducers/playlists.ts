@@ -182,7 +182,7 @@ function resolveMoveOptions(
   return { at: opts.at };
 }
 
-interface NewPlaylistItem {
+export interface NewPlaylistItem {
   sourceType: string;
   sourceID: string;
   /** Leave empty to use global default for this media. */

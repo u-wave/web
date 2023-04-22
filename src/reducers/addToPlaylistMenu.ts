@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { PlaylistItemDesc } from '../actions/PlaylistActionCreators';
 import type { StoreState } from '../redux/configureStore';
+import type { NewPlaylistItem } from './playlists';
 
 interface ClosedState {
   type: null,
@@ -9,7 +9,7 @@ interface ClosedState {
 interface AddState {
   type: 'add',
   data: {
-    media: PlaylistItemDesc[],
+    media: NewPlaylistItem[],
   },
 }
 interface FavoriteState {
