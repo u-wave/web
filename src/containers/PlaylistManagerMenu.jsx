@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from '../hooks/useRedux';
-import { hideSearchResults } from '../actions/SearchActionCreators';
 import {
   playlistsSelector,
   selectedPlaylistIDSelector,
@@ -11,6 +10,7 @@ import PlaylistsMenu from '../components/PlaylistManager/Menu';
 import {
   addPlaylistItems,
   createPlaylist,
+  selectActivePlaylist,
   selectPlaylist,
   showImportPanel,
   showSearchResults,
@@ -33,7 +33,7 @@ function PlaylistsMenuContainer({ className }) {
   const onSelectSearchResults = useCallback(() => dispatch(showSearchResults()), [dispatch]);
   const onCloseSearchResults = useCallback(() => {
     mediaSearch.reset();
-    dispatch(hideSearchResults());
+    dispatch(selectActivePlaylist());
     // The `mediaSearch.reset` reference never changes.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);

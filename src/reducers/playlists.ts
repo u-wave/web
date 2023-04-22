@@ -274,6 +274,12 @@ const slice = createSlice({
   name: 'playlists',
   initialState,
   reducers: {
+    selectActivePlaylist(state) {
+      if (state.activePlaylistID !== state.selectedPlaylistID) {
+        state.currentFilter = null;
+        state.selectedPlaylistID = state.activePlaylistID;
+      }
+    },
     selectPlaylist(state, action: PayloadAction<string>) {
       if (state.currentFilter && state.currentFilter.playlistID !== action.payload) {
         state.currentFilter = null;
@@ -516,6 +522,7 @@ export {
 };
 export const {
   selectPlaylist,
+  selectActivePlaylist,
   showImportPanel,
   showSearchResults,
 } = slice.actions;

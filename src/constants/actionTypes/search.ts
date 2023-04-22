@@ -1,1 +1,0 @@
-export const HIDE_SEARCH_RESULTS = 'search/HIDE_SEARCH_RESULTS';

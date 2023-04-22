@@ -8,7 +8,6 @@ export * from './actionTypes/locales';
 export * from './actionTypes/moderation';
 export * from './actionTypes/playlists';
 export * from './actionTypes/request';
-export * from './actionTypes/search';
 export * from './actionTypes/time';
 export * from './actionTypes/users';
 export * from './actionTypes/votes';
