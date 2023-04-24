@@ -35,9 +35,7 @@ export default class Uwave {
     prepend: true,
   });
 
-  #resolveReady = () => {
-    // Replaced immediately by the `ready` Promise
-  };
+  #resolveReady: null | (() => void) = null;
 
   store?: ReturnType<typeof configureStore>;
 
