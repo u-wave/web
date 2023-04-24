@@ -24,20 +24,27 @@ function PlaylistsMenuContainer({ className }) {
   const mediaSearch = useMediaSearchStore();
   const dispatch = useDispatch();
 
-  const onAddToPlaylist = useCallback(
-    (playlist, items, afterID) => dispatch(addPlaylistItems({ playlistID: playlist._id, items, afterID })),
-    [dispatch],
-  );
-  const onCreatePlaylist = useCallback((name) => dispatch(createPlaylist(name)), [dispatch]);
-  const onSelectPlaylist = useCallback((id) => dispatch(selectPlaylist(id)), [dispatch]);
-  const onSelectSearchResults = useCallback(() => dispatch(showSearchResults()), [dispatch]);
+  const onAddToPlaylist = useCallback((playlist, items, afterID) => {
+    dispatch(addPlaylistItems({ playlistID: playlist._id, items, afterID }));
+  }, [dispatch]);
+  const onCreatePlaylist = useCallback((name) => {
+    dispatch(createPlaylist(name));
+  }, [dispatch]);
+  const onSelectPlaylist = useCallback((id) => {
+    dispatch(selectPlaylist(id));
+  }, [dispatch]);
+  const onSelectSearchResults = useCallback(() => {
+    dispatch(showSearchResults());
+  }, [dispatch]);
   const onCloseSearchResults = useCallback(() => {
     mediaSearch.reset();
     dispatch(selectActivePlaylist());
     // The `mediaSearch.reset` reference never changes.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
-  const onShowImportPanel = useCallback(() => dispatch(showImportPanel()), [dispatch]);
+  const onShowImportPanel = useCallback(() => {
+    dispatch(showImportPanel());
+  }, [dispatch]);
 
   return (
     <PlaylistsMenu
