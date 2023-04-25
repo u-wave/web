@@ -32,12 +32,9 @@
 
 .Overlay-content {
   position: absolute;
-  top: var(--header-height);
-  bottom: var(--footer-height);
-  left: 0;
-  right: 0;
+  inset: var(--header-height) 0 var(--footer-height) 0;
 
-  @media (max-width: 768px) {
+  @media (width <= 768px) {
     bottom: 0;
   }
 }
