@@ -12,7 +12,7 @@
     "@emotion/styled": "^11.6.0",
     "@f/cookies-enabled": "^1.1.1",
     "@mdi/js": "^7.0.96",
-    "@mui/material": "^5.11.5",
+    "@mui/material": "^5.12.2",
     "@mui/system": "^5.11.5",
     "@mui/utils": "^5.2.2",
     "@openfonts/open-sans_all": "^1.44.2",
