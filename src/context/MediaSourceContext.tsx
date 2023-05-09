@@ -15,7 +15,6 @@ export interface MediaSource<State extends object = Record<never, never>> {
   Player: React.ComponentType<{
     active: boolean,
     enabled: boolean,
-    size: string,
     mode?: 'preview' | undefined,
     volume: number,
     media: Media,

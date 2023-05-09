@@ -14,8 +14,13 @@ function PreviewPlayer({
   isMuted,
 }: PreviewPlayerProps) {
   const { getMediaSource } = useMediaSources();
+  const source = getMediaSource(media.sourceType);
+  if (!source) {
+    return <p>Player for {media.sourceType} unavailable</p>;
+  }
 
-  const { Player } = getMediaSource(media.sourceType);
+  const { Player } = source;
+
   return (
     <Player
       enabled

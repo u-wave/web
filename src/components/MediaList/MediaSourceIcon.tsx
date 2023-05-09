@@ -6,7 +6,12 @@ type MediaSourceIconProps = {
 };
 function MediaSourceIcon({ sourceType }: MediaSourceIconProps) {
   const { getMediaSource } = useMediaSources();
-  const { icon, name } = getMediaSource(sourceType);
+  const source = getMediaSource(sourceType);
+  if (!source) {
+    return null;
+  }
+
+  const { icon, name } = source;
 
   return (
     <img
