@@ -20,6 +20,7 @@ import {
   setVideoSize,
   setMentionSoundEnabled,
   setLanguage,
+  set,
 } from '../../reducers/settings';
 import useCurrentUser from '../../hooks/useCurrentUser';
 
@@ -50,6 +51,10 @@ function SettingsPanel({
   const handleLanguageChange = (event) => {
     dispatch(setLanguage(event.target.value));
   };
+  const handleSettingChange = (name, value) => {
+    dispatch(set(name, value));
+  };
+
   const profileSection = user && (
     <div key="profile" className="SettingsPanel-section SettingsPanel-user">
       <Profile user={user} onChangeUsername={onChangeUsername} />
@@ -108,7 +113,7 @@ function SettingsPanel({
 
   const notificationsSection = (
     <div key="notifications" className="SettingsPanel-section SettingsPanel-notificationSettings">
-      <NotificationSettings />
+      <NotificationSettings onSettingChange={handleSettingChange} />
     </div>
   );
 
