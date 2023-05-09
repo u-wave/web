@@ -96,7 +96,7 @@ export const login = createAsyncThunk('auth/login', async (payload: LoginPayload
   };
 });
 
-export const changeUsername = createAsyncThunk('auth/changeUsername', async (username, api) => {
+export const changeUsername = createAsyncThunk('auth/changeUsername', async (username: string, api) => {
   const user = currentUserSelector(api.getState());
   if (!user) {
     throw new Error('Not logged in');
