@@ -6,12 +6,10 @@ type PreviewPlayerProps = {
   seek?: number,
   volume: number,
   isMuted: boolean,
-  size?: string,
 };
 function PreviewPlayer({
   media,
   seek = 0,
-  size = 'preview',
   volume,
   isMuted,
 }: PreviewPlayerProps) {
@@ -25,7 +23,7 @@ function PreviewPlayer({
       seek={seek}
       media={media}
       volume={isMuted ? 0 : volume}
-      size={size}
+      mode="preview"
     />
   );
 }
