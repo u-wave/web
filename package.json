@@ -117,7 +117,7 @@
     "twemoji-emojis": "^14.1.0",
     "typescript": "^5.0.2",
     "vite": "^4.0.4",
-    "vitest": "^0.31.0"
+    "vitest": "^0.32.0"
   },
   "engines": {
     "node": ">= 14",
