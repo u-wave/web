@@ -30,7 +30,7 @@
   visibility: hidden;
 
   /* Only show the toolbar on hover. */
-  @nest .Video:hover & {
+  .Video:hover & {
     visibility: visible;
   }
 }
