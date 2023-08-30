@@ -14,3 +14,24 @@ updates:
   open-pull-requests-limit: 10
   commit-message:
     prefix: "deps"
+  groups:
+    vitest:
+      patterns:
+      - "@vitest/*"
+      - "vitest"
+    react:
+      patterns:
+      - "react"
+      - "react-dom"
+      - "@types/react"
+      - "@types/react-dom"
+    mui:
+      patterns:
+      - "@mui/*"
+    babel:
+      patterns:
+      - "@babel/*"
+    stylelint:
+      patterns:
+      - "stylelint"
+      - "stylelint-config-*"
