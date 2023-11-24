@@ -9,6 +9,10 @@ const outputPkg = new URL('./npm/package.json', import.meta.url);
 
 export default defineConfig({
   clearScreen: false,
+  legacy: {
+    // For the prerender plugin
+    proxySsrExternalModules: true,
+  },
   resolve: {
     alias: {
       '@mui/base': '@mui/base/modern',
