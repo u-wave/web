@@ -1,5 +1,8 @@
 import qsStringify from 'qs-stringify';
 import type { DocWithErrors, Errors } from 'jsonapi-typescript';
+import readApplicationConfig from './readApplicationConfig';
+
+const clientOptions = readApplicationConfig();
 
 export type ListResponse<Data> = {
   data: Data[],
@@ -33,7 +36,7 @@ async function uwFetch<T = object>(args: [path: string, options?: FetchOptions] 
   const path = typeof args === 'string' ? args : args[0];
   const options = (typeof args === 'string' ? undefined : args[1]) ?? {};
 
-  const url = new URL(`/api${path}`, window.location.href);
+  const url = new URL(`/api${path}`, clientOptions?.apiUrl ?? window.location.href);
   if (options.qs) {
     url.search = qsStringify(options.qs);
   }

@@ -20,9 +20,12 @@ const importPlaylist = createAsyncThunk('youtube/importPlaylist', async (
   api.dispatch(createPlaylist.pending(api.requestId, name));
 
   const playlist = await uwFetch<{
-      _id: string,
-      name: string,
-      size: number,
+    _id: string,
+    name: string,
+    size: number,
+    author: string,
+    createdAt: string,
+    updatedAt: string,
   }>(['/import/youtube/importplaylist', {
     method: 'post',
     data: { id: sourceID, name },

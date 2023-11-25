@@ -9,12 +9,12 @@ function translateMs(str: string) {
   // `ms` output of the form "3 hours"
   const [count, key] = str.split(' ');
   return {
-    key: key.replace(/s$/, ''),
+    key: key.replace(/s$/, '') as 'day' | 'hour' | 'minute' | 'second',
     count: parseInt(count, 10),
   };
 }
 
-const now = { key: 'seconds', count: 0 };
+const now = { key: 'second' as const, count: 0 };
 
 type TimeAgoProps = {
   timestamp: number,

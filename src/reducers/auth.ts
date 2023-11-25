@@ -43,30 +43,31 @@ const initialState: State = {
   user: null,
 };
 
+export type InitialStatePayload = {
+  motd: string | null,
+  user: User | null,
+  users: User[],
+  guests: number,
+  roles: Record<string, string[]>,
+  booth: {
+    historyID: string,
+    media: Media,
+    userID: string,
+    playedAt: number,
+  } | null,
+  waitlist: string[],
+  waitlistLocked: boolean,
+  activePlaylist: string | null,
+  firstActivePlaylistItem: PlaylistItem | null,
+  playlists: Playlist[] | null,
+  socketToken: string | null,
+  authStrategies: string[],
+  time: number,
+};
 export const initState = createAsyncThunk('auth/now', async (_payload: void, api) => {
   const beforeTime = Date.now();
 
-  const state = await uwFetch<{
-    motd: string | null,
-    user: User | null,
-    users: User[],
-    guests: number,
-    roles: Record<string, string[]>,
-    booth: {
-      historyID: string,
-      media: Media,
-      userID: string,
-      playedAt: number,
-    } | null,
-    waitlist: string[],
-    waitlistLocked: boolean,
-    activePlaylist: string | null,
-    firstActivePlaylistItem: PlaylistItem | null,
-    playlists: Playlist[] | null,
-    socketToken: string | null,
-    authStrategies: string[],
-    time: number,
-  }>(['/now', { signal: api.signal }]);
+  const state = await uwFetch<InitialStatePayload>(['/now', { signal: api.signal }]);
 
   mutate('/booth/history');
   api.dispatch(syncTimestamps(beforeTime, state.time));

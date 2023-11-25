@@ -9,7 +9,7 @@ import {
   SOCKET_CONNECTED,
 } from '../constants/ActionTypes';
 import { sendMessage } from '../reducers/chat';
-import { initState, login } from '../reducers/auth';
+import { type InitialStatePayload, initState, login } from '../reducers/auth';
 
 function defaultUrl() {
   const loc = window.location;
@@ -274,13 +274,12 @@ class UwaveSocket {
     this.socket.addEventListener('close', () => {
       this.opened = false;
       this.dispatch({ type: SOCKET_DISCONNECTED });
-      this.socket = null;
     });
     this.socket.close();
   }
 
   async reconnect() {
-    const { payload } = await this.dispatch(initState());
+    const payload = (await this.dispatch(initState())).payload as InitialStatePayload;
     await this.connect();
     if (payload.socketToken) {
       this.sendAuthToken(payload.socketToken);
