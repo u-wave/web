@@ -309,7 +309,12 @@ const slice = createSlice({
               ...payload.firstActivePlaylistItem.media,
               ...payload.firstActivePlaylistItem,
             };
-            state.playlistItems[payload.activePlaylist] = [item];
+            const activePlaylist = state.playlists[payload.activePlaylist];
+            // Probably overly defensive, but avoid a crash if we got inconsistent data
+            const size = activePlaylist ? activePlaylist.size : 1;
+            const playlistItems = Array(size).fill(null);
+            playlistItems[0] = item
+            state.playlistItems[payload.activePlaylist] = playlistItems;
           }
           state.activePlaylistID = payload.activePlaylist;
           state.selectedPlaylistID ??= payload.activePlaylist;
@@ -339,7 +344,7 @@ const slice = createSlice({
         }
 
         const playlist = state.playlists[payload.playlistID];
-        const items = state.playlistItems[payload.playlistID];
+        const items = state.playlistItems[payload.playlistID] ?? [];
         state.playlistItems[payload.playlistID] = Array(playlist.size).fill(null)
           .map((item, index) => items[index] ?? item);
       })
