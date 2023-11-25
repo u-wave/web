@@ -91,11 +91,14 @@ export default class Uwave {
     }
 
     this.store.dispatch(socketConnect());
-    await Promise.all([
+    const [_, initResult] = await Promise.all([
       this.store.dispatch(loadCurrentLanguage()),
       this.store.dispatch(initState()),
     ]);
     this.#resolveReady?.();
+    if ('error' in initResult) {
+      throw Object.assign(new Error(initResult.error.message), initResult.error);
+    }
   }
 
   private getComponent() {
