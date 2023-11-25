@@ -18,11 +18,9 @@ export const requestOptionsSelector = createSelector(
 export const availableEmojiImagesSelector = createSelector(
   configSelector,
   (config) => {
-    const serverEmotes = config.serverEmotes.map(({ name, url }) => [name, url]);
     return {
       ...defaultEmoji,
       ...config.emoji,
-      ...Object.fromEntries(serverEmotes),
     };
   },
 );

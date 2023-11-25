@@ -16,7 +16,6 @@ interface UwaveOptions {
   apiUrl?: string;
   socketUrl?: string;
   emoji?: Record<string, string>;
-  serverEmotes?: { name: string, url: string }[];
 }
 
 export default class Uwave {
