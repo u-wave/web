@@ -6,7 +6,6 @@ import LoadingRow from './LoadingRow';
 import { Media } from '../../reducers/booth';
 
 const {
-  useCallback,
   useContext,
   useEffect,
   useMemo,
@@ -90,14 +89,14 @@ function BaseMediaList<MediaType extends Item = Media>({
     ...contextProps,
   }), [media, selection, contextProps]);
 
-  const itemKey = useCallback((index: number) => {
+  const itemKey = (index: number) => {
     const item = media[index];
     if (item) {
       const { _id: id, sourceType, sourceID } = item;
       return id ?? `${sourceType}:${sourceID}`;
     }
     return `unloaded_${index}`;
-  }, [media]);
+  };
 
   useEffect(() => {
     const lastMedia = lastMediaRef.current;
@@ -109,7 +108,7 @@ function BaseMediaList<MediaType extends Item = Media>({
     }
   }, [media, selection]);
 
-  const selectItem = useCallback((index: number, event: React.MouseEvent) => {
+  const selectItem = (index: number, event: React.MouseEvent) => {
     event.preventDefault();
 
     if (event.shiftKey) {
@@ -121,7 +120,7 @@ function BaseMediaList<MediaType extends Item = Media>({
     } else {
       setSelection(selection.select(index));
     }
-  }, [selection]);
+  };
 
   // Potentially interesting to explore is to virtualize entire PAGES at a time.
   // Then we render in batches of 50, which should be acceptable, and don't

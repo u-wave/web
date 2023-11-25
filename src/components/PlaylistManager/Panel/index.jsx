@@ -26,6 +26,8 @@ function PlaylistPanel(props) {
     onMoveMedia,
   } = props;
 
+  const size = playlist.size;
+
   let list;
   if (loading) {
     list = (
@@ -33,15 +35,15 @@ function PlaylistPanel(props) {
         <CircularProgress size="100%" />
       </div>
     );
-  } else if (media.length === 0) {
-    list = isFiltered
-      ? <PlaylistFilterEmpty />
-      : <PlaylistEmpty />;
+  } else if (isFiltered && media.length === 0) {
+    list = <PlaylistFilterEmpty />;
+  } else if (size === 0) {
+    list = <PlaylistEmpty />;
   } else {
     list = (
       <BaseMediaList
         className="PlaylistPanel-media"
-        size={media.length}
+        size={size}
         media={media}
         listComponent="div"
         rowComponent={isFiltered ? PlaylistItemRow : DroppablePlaylistItemRow}
