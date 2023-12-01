@@ -76,7 +76,7 @@
     "splitargs": "0.0.7",
     "string.prototype.includes": "^2.0.0",
     "swr": "^2.1.0",
-    "u-wave-parse-chat-markup": "^2.4.0",
+    "u-wave-parse-chat-markup": "^2.5.0",
     "url-polyfill": "^1.1.11",
     "use-debounce": "^9.0.3",
     "uuid": "^9.0.0",
