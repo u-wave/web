@@ -36,7 +36,7 @@ const initialisePlaylist = (dispatch) => {
     { _id: 'BeevKCM1NnNeW91leyLZu', artist: 'tricot', title: '99.974°C' },
   ];
   const playlistID = 'ZcU_8-UyI10Tx79R4CjRv';
-  dispatch(a.loadPlaylistComplete(playlistID, items, { page: 0, pageSize: 5 }));
+  dispatch(a.loadPlaylistComplete(playlistID, items, { page: 0, pageSize: 5, total: 5 }));
   dispatch(selectPlaylist(playlistID));
   return { items, playlistID };
 };
@@ -168,7 +168,7 @@ describe('reducers/playlists', () => {
         { _id: 'NkwUIwNmraSZ4A4eiC3GQ', artist: 'Angel Haze', title: 'A Tribe Called Red' },
         { _id: 'BeevKCM1NnNeW91leyLZu', artist: 'tricot', title: '99.974°C' },
       ];
-      dispatch(a.loadPlaylistComplete('ZcU_8-UyI10Tx79R4CjRv', items, { page: 0, pageSize: 5 }));
+      dispatch(a.loadPlaylistComplete('ZcU_8-UyI10Tx79R4CjRv', items, { page: 0, pageSize: 5, total: 5 }));
       dispatch(selectPlaylist('ZcU_8-UyI10Tx79R4CjRv'));
 
       expect(s.selectedPlaylistSelector(getState()).media).toHaveLength(5);

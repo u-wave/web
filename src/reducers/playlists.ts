@@ -359,7 +359,7 @@ const slice = createSlice({
           .map((item, index) => items[index] ?? item);
       })
       .addCase(LOAD_PLAYLIST_COMPLETE, (state, { payload, meta, error }: AnyAction) => {
-        const playlist = state.playlists[meta.playlistID];
+        const playlist = state.playlists[payload.playlistID];
 
         if (playlist == null) {
           return;
@@ -372,7 +372,7 @@ const slice = createSlice({
 
         playlist.loading = false;
         state.playlistItems[payload.playlistID] = mergePlaylistPage(
-          meta.size,
+          meta.size ?? playlist.size,
           state.playlistItems[payload.playlistID],
           payload.media,
           meta,
