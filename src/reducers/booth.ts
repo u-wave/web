@@ -94,8 +94,8 @@ const slice = createSlice({
         Object.assign(state, {
           historyID: payload.booth.historyID,
           media: {
-            ...payload.booth.media,
             ...payload.booth.media.media,
+            ...payload.booth.media,
           },
           djID: payload.booth.userID,
           // Depending on the server version, `playedAt` may be a string or a number
