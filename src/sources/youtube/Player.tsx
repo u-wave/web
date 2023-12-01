@@ -41,10 +41,10 @@ function YouTubePlayer({
           height="100%"
           autoplay
           modestBranding
-          disableKeyboard
           volume={volume / 100}
           playbackRate={1}
           controls={controllable}
+          disableKeyboard={!controllable}
           showRelatedVideos={false}
           annotations={false}
           startSeconds={Math.round(seek + (media.start ?? 0))}
