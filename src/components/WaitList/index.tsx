@@ -11,7 +11,7 @@ function estimateSize() {
 
 type WaitListProps = {
   className?: string,
-  users: User[],
+  users: (User | undefined)[],
   onMoveUser: (user: User, position: number) => void,
   onRemoveUser: (user: User) => void,
   canMoveUsers: boolean,
@@ -46,16 +46,22 @@ function WaitList({
       <div style={{ height: `${virtualizer.getTotalSize()}px`, width: '100%', position: 'relative' }}>
         {virtualizer.getVirtualItems().map(({ index, start }) => {
           const style = { transform: `translateY(${start}px)` };
+          const user = users[index]!;
+          if (user == null) {
+            // FIXME this means the waitlist is out of sync with online users state
+            // Returning null avoids a crash but isn't pretty
+            return null;
+          }
 
           return (
             <Row
-              key={users[index]._id}
+              key={user._id}
               className={cx('UserList-row', index % 2 === 0 && 'UserList-row--alternate')}
               style={style}
               position={index}
-              user={users[index]}
-              onMoveUser={(position) => onMoveUser(users[index], position)}
-              onRemoveUser={() => onRemoveUser(users[index])}
+              user={user}
+              onMoveUser={(position) => onMoveUser(user, position)}
+              onRemoveUser={() => onRemoveUser(user)}
             />
           );
         })}

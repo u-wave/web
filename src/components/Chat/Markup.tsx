@@ -74,18 +74,20 @@ function RenderMarkup({ tree, compileOptions, useLargeEmoji }: RenderMarkupProps
                 {shortenUrl(node.text, 60)}
               </a>
             );
-          case 'emoji':
-            if (availableEmoji.has(node.name) && node.name in emojiImages) {
+          case 'emoji': {
+            const image = emojiImages[node.name];
+            if (availableEmoji.has(node.name) && image != null) {
               return (
                 <Emote
                   name={node.name}
-                  image={emojiImages[node.name]}
+                  image={image}
                   isCustom={customEmojiNames.has(node.name)}
                   isLarge={useLargeEmoji}
                 />
               );
             }
             return `:${node.name}:`;
+          }
           case 'italic':
             return (
               <em>

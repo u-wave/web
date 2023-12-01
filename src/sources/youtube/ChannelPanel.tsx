@@ -49,7 +49,7 @@ function ChannelPanel({
       <div className="MediaList ImportPanel-body" ref={parentRef}>
         <div style={{ height: `${virtualizer.getTotalSize()}px`, width: '100%', position: 'relative' }}>
           {virtualizer.getVirtualItems().map(({ index, start }) => {
-            const playlist = data.playlists[index];
+            const playlist = data.playlists[index]!;
             const style = { transform: `translateY(${start}px)` };
             return (
               <PlaylistRow

@@ -41,8 +41,8 @@ function Player({
 
   const sources = getAllMediaSources();
   const players = Object.keys(sources).map((sourceType) => {
-    const SourcePlayer = sources[sourceType].Player;
-    if (!SourcePlayer) {
+    const SourcePlayer = sources[sourceType]?.Player;
+    if (SourcePlayer == null) {
       return null;
     }
     return (

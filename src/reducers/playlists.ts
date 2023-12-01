@@ -242,7 +242,7 @@ const movePlaylistItems = createAsyncThunk('playlists/movePlaylistItems', async 
   medias: PlaylistItem[],
   target: InsertTarget,
 }, api) => {
-  const playlistItems = api.getState().playlists.playlistItems[playlistID];
+  const playlistItems = api.getState().playlists.playlistItems[playlistID] ?? [];
   const location = resolveMoveOptions(playlistItems, target);
   const items = medias.map((media) => media._id);
 
@@ -327,35 +327,50 @@ const slice = createSlice({
       .addCase(activatePlaylist.pending, (state, action) => {
         // TODO use a different property here so we can show a loading icon on
         // the "Active" button only, instead of on top of the entire playlist
-        state.playlists[action.meta.arg].loading = true;
+        const playlist = state.playlists[action.meta.arg];
+        if (playlist != null) {
+          playlist.loading = true;
+        }
       })
       .addCase(activatePlaylist.rejected, (state, action) => {
-        state.playlists[action.meta.arg].loading = false;
+        const playlist = state.playlists[action.meta.arg];
+        if (playlist != null) {
+          playlist.loading = false;
+        }
       })
       .addCase(activatePlaylist.fulfilled, (state, action) => {
         // TODO use a different property here so we can show a loading icon on
         // the "Active" button only, instead of on top of the entire playlist
-        state.playlists[action.meta.arg].loading = false;
-        state.playlists[action.meta.arg].active = true;
-        state.activePlaylistID = action.meta.arg;
+        const playlist = state.playlists[action.meta.arg];
+        if (playlist != null) {
+          playlist.loading = false;
+          playlist.active = true;
+          state.activePlaylistID = action.meta.arg;
+        }
       })
       .addCase(LOAD_PLAYLIST_START, (state, { payload, meta }: AnyAction) => {
-        if (meta.sneaky || meta.page !== 0 || state.playlistItems[payload.playlistID]) {
+        const playlist = state.playlists[payload.playlistID];
+        if (meta.sneaky || meta.page !== 0 || state.playlistItems[payload.playlistID] || playlist == null) {
           return;
         }
 
-        const playlist = state.playlists[payload.playlistID];
         const items = state.playlistItems[payload.playlistID] ?? [];
         state.playlistItems[payload.playlistID] = Array(playlist.size).fill(null)
           .map((item, index) => items[index] ?? item);
       })
       .addCase(LOAD_PLAYLIST_COMPLETE, (state, { payload, meta, error }: AnyAction) => {
-        if (error) {
-          state.playlists[meta.playlistID].loading = false;
+        const playlist = state.playlists[meta.playlistID];
+
+        if (playlist == null) {
           return;
         }
 
-        state.playlists[payload.playlistID].loading = false;
+        if (error) {
+          playlist.loading = false;
+          return;
+        }
+
+        playlist.loading = false;
         state.playlistItems[payload.playlistID] = mergePlaylistPage(
           meta.size,
           state.playlistItems[payload.playlistID],
@@ -392,10 +407,16 @@ const slice = createSlice({
       })
       .addCase(PLAYLIST_CYCLED, (state, { payload }: AnyAction) => {
         const playlist = state.playlists[payload.playlistID];
-        const items = state.playlistItems[payload.playlistID];
-        const newItems = items.slice(1);
-        newItems[playlist.size - 1] = items[0]; // eslint-disable-line prefer-destructuring
-        state.playlistItems[payload.playlistID] = newItems;
+        if (playlist == null) {
+          return;
+        }
+
+        const items = state.playlistItems[payload.playlistID] ?? [];
+        if (items.length > 0) {
+          const newItems = items.slice(1);
+          newItems[playlist.size - 1] = items[0] ?? null; // eslint-disable-line prefer-destructuring
+          state.playlistItems[payload.playlistID] = newItems;
+        }
       })
       .addCase(createPlaylist.pending, (state, action) => {
         const id = action.meta.requestId;
@@ -426,15 +447,24 @@ const slice = createSlice({
         }
       })
       .addCase(DELETE_PLAYLIST_START, (state, { payload }: AnyAction) => {
-        state.playlists[payload.playlistID].loading = true;
+        const playlist = state.playlists[payload.playlistID];
+
+        if (playlist != null) {
+          playlist.loading = true;
+        }
       })
       .addCase(DELETE_PLAYLIST_COMPLETE, (state, { payload, meta, error }: AnyAction) => {
-        if (error) {
-          state.playlists[meta.playlistID].loading = false;
+        const playlist = state.playlists[payload.playlistID];
+        if (playlist == null) {
           return;
         }
 
-        state.playlists[payload.playlistID].loading = false;
+        if (error) {
+          playlist.loading = false;
+          return;
+        }
+
+        playlist.loading = false;
         delete state.playlists[payload.playlistID];
         delete state.playlistItems[payload.playlistID];
         if (state.selectedPlaylistID === payload.playlistID) {
@@ -443,37 +473,51 @@ const slice = createSlice({
       })
       .addCase(addPlaylistItems.pending, (state, action) => {
         const { playlistID } = action.meta.arg;
-        state.playlists[playlistID].loading = true;
+        const playlist = state.playlists[playlistID];
+
+        if (playlist != null) {
+          playlist.loading = true;
+        }
       })
       .addCase(addPlaylistItems.fulfilled, (state, action) => {
         const { playlistID, afterID = null } = action.meta.arg;
         const { playlistSize, items } = action.payload;
 
-        state.playlists[playlistID].loading = false;
-        state.playlists[playlistID].size = playlistSize;
+        const playlist = state.playlists[playlistID];
+        if (playlist == null) {
+          return;
+        }
+
+        playlist.loading = false;
+        playlist.size = playlistSize;
         state.playlistItems[playlistID] = processInsert(
-          state.playlistItems[playlistID],
+          state.playlistItems[playlistID] ?? [],
           items,
           { after: afterID },
         );
       })
       .addCase(DO_FAVORITE_COMPLETE, (state, { payload }: AnyAction) => {
-        state.playlists[payload.playlistID].size = payload.newSize;
+        const playlist = state.playlists[payload.playlistID];
+        if (playlist == null) {
+          return;
+        }
+
+        playlist.size = payload.newSize;
         state.playlistItems[payload.playlistID] = processInsert(
-          state.playlistItems[payload.playlistID],
+          state.playlistItems[payload.playlistID] ?? [],
           payload.added,
           { at: 'end' },
         );
       })
       .addCase(UPDATE_MEDIA_START, (state, { payload }: AnyAction) => {
-        for (const item of state.playlistItems[payload.playlistID]) {
+        for (const item of state.playlistItems[payload.playlistID] ?? []) {
           if (item != null && item._id === payload.mediaID) {
             item.loading = true;
           }
         }
       })
       .addCase(UPDATE_MEDIA_COMPLETE, (state, { payload }: AnyAction) => {
-        for (const item of state.playlistItems[payload.playlistID]) {
+        for (const item of state.playlistItems[payload.playlistID] ?? []) {
           if (item != null && item._id === payload.mediaID) {
             item.loading = false;
             Object.assign(item, payload.media);
@@ -483,7 +527,7 @@ const slice = createSlice({
       .addCase(movePlaylistItems.pending, (state, action) => {
         const { playlistID, medias } = action.meta.arg;
         const ids = new Set(medias.map((media) => media._id));
-        for (const item of state.playlistItems[playlistID]) {
+        for (const item of state.playlistItems[playlistID] ?? []) {
           if (item != null && ids.has(item._id)) {
             item.loading = true;
           }
@@ -493,7 +537,7 @@ const slice = createSlice({
         const { playlistID, medias } = action.meta.arg;
         const { location } = action.payload;
         state.playlistItems[playlistID] = processMove(
-          state.playlistItems[playlistID],
+          state.playlistItems[playlistID] ?? [],
           medias,
           location,
         );
@@ -501,7 +545,7 @@ const slice = createSlice({
       .addCase(removePlaylistItems.pending, (state, action) => {
         const { playlistID, medias } = action.meta.arg;
         const ids = new Set(medias.map((media) => media._id));
-        for (const item of state.playlistItems[playlistID]) {
+        for (const item of state.playlistItems[playlistID] ?? []) {
           if (item != null && ids.has(item._id)) {
             item.loading = true;
           }
@@ -510,9 +554,14 @@ const slice = createSlice({
       .addCase(removePlaylistItems.fulfilled, (state, action) => {
         const { playlistID, medias } = action.meta.arg;
         const { newSize } = action.payload;
+        const playlist = state.playlists[playlistID];
+        if (playlist == null) {
+          return;
+        }
+
         const ids = new Set(medias.map((media) => media._id));
-        state.playlists[playlistID].size = newSize;
-        state.playlistItems[playlistID] = state.playlistItems[playlistID]
+        playlist.size = newSize;
+        state.playlistItems[playlistID] = (state.playlistItems[playlistID] ?? [])
           .filter((media) => media === null || !ids.has(media._id));
       });
   },

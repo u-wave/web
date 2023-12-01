@@ -6,8 +6,8 @@ import useIntl from '../../hooks/useIntl';
 // Bit weird to do it like this perhaps, convert to an english string first and
 // then translate afterwards.
 function translateMs(str: string) {
-  // `ms` output of the form "3 hours"
-  const [count, key] = str.split(' ');
+  // `ms` output always of the form "3 hours"
+  const [count, key] = str.split(' ') as [string, string];
   return {
     key: key.replace(/s$/, '') as 'day' | 'hour' | 'minute' | 'second',
     count: parseInt(count, 10),

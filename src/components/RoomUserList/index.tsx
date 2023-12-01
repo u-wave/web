@@ -50,12 +50,14 @@ function RoomUserList({ className, users, guests }: RoomUserListProps) {
               />
             );
           }
+
+          const user = users[index]!;
           return (
             <RoomUserRow
-              key={users[index]._id}
+              key={user._id}
               className={rowClass}
               style={style}
-              user={users[index]}
+              user={user}
             />
           );
         })}
