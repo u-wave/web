@@ -317,7 +317,8 @@ const slice = createSlice({
             state.playlistItems[payload.activePlaylist] = playlistItems;
           }
           state.activePlaylistID = payload.activePlaylist;
-          state.selectedPlaylistID ??= payload.activePlaylist;
+          // Select the first playlist by default if there is no active playlist.
+          state.selectedPlaylistID ??= payload.activePlaylist ?? payload.playlists[0]?._id ?? null;
         }
       })
       .addCase(LOGOUT_COMPLETE, () => {
