@@ -4,11 +4,13 @@ import { useTranslator } from '@u-wave/react-translate';
 import FormGroup from '@mui/material/FormGroup';
 import Switch from '@mui/material/Switch';
 import SettingControl from './SettingControl';
+import { useSelector } from '../../hooks/useRedux';
 
 const { useCallback } = React;
 
-function NotificationSettings({ settings, onSettingChange }) {
+function NotificationSettings({ onSettingChange }) {
   const { t } = useTranslator();
+  const notifications = useSelector((state) => state.settings.notifications);
 
   function useToggleSetting(name) {
     return useCallback((event) => {
@@ -31,28 +33,28 @@ function NotificationSettings({ settings, onSettingChange }) {
         <SettingControl label={t('settings.notifications.userJoin')}>
           <Switch
             color="primary"
-            checked={settings.notifications.userJoin}
+            checked={notifications.userJoin}
             onChange={onToggleUserJoin}
           />
         </SettingControl>
         <SettingControl label={t('settings.notifications.userLeave')}>
           <Switch
             color="primary"
-            checked={settings.notifications.userLeave}
+            checked={notifications.userLeave}
             onChange={onToggleUserLeave}
           />
         </SettingControl>
         <SettingControl label={t('settings.notifications.userNameChanged')}>
           <Switch
             color="primary"
-            checked={settings.notifications.userNameChanged}
+            checked={notifications.userNameChanged}
             onChange={onToggleUserNameChanged}
           />
         </SettingControl>
         <SettingControl label={t('settings.notifications.skip')}>
           <Switch
             color="primary"
-            checked={settings.notifications.skip}
+            checked={notifications.skip}
             onChange={onToggleSkip}
           />
         </SettingControl>
@@ -62,7 +64,6 @@ function NotificationSettings({ settings, onSettingChange }) {
 }
 
 NotificationSettings.propTypes = {
-  settings: PropTypes.object.isRequired,
   onSettingChange: PropTypes.func.isRequired,
 };
 

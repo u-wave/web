@@ -1,8 +1,8 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { useTranslator } from '@u-wave/react-translate';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import { useSelector } from '../../hooks/useRedux';
 import Chat from '../Chat';
 import RoomUserList from '../../containers/RoomUserList';
 import WaitList from '../../containers/WaitList';

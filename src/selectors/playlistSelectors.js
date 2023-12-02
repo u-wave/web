@@ -3,6 +3,7 @@ import naturalCmp from 'natural-compare';
 
 const byName = (a, b) => naturalCmp(a.name.toLowerCase(), b.name.toLowerCase());
 
+/** @param {import('../redux/configureStore').StoreState} state */
 const baseSelector = (state) => state.playlists;
 
 export const playlistsByIDSelector = createSelector(
@@ -28,7 +29,12 @@ export const activePlaylistIDSelector = createSelector(
 const activeMediaSelector = createSelector(
   playlistItemsSelector,
   activePlaylistIDSelector,
-  (playlistItems, activePlaylist) => playlistItems[activePlaylist] ?? [],
+  (playlistItems, activePlaylist) => {
+    if (activePlaylist && activePlaylist in playlistItems) {
+      return playlistItems[activePlaylist];
+    }
+    return [];
+  },
 );
 
 function mergePlaylistItems(playlist, playlistItems) {
@@ -58,7 +64,12 @@ export const selectedPlaylistIDSelector = createSelector(
 const selectedMediaSelector = createSelector(
   playlistItemsSelector,
   selectedPlaylistIDSelector,
-  (playlistItems, selectedPlaylist) => playlistItems[selectedPlaylist] ?? [],
+  (playlistItems, selectedPlaylist) => {
+    if (selectedPlaylist && selectedPlaylist in playlistItems) {
+      return playlistItems[selectedPlaylist];
+    }
+    return [];
+  },
 );
 
 const filterSelector = createSelector(
@@ -83,10 +94,9 @@ export const playlistItemFilterSelector = createSelector(
 );
 
 export const filteredSelectedPlaylistItemsSelector = createSelector(
-  selectedPlaylistIDSelector,
   selectedMediaSelector,
   currentFilterSelector,
-  (selectedID, selectedItems, filter) => {
+  (selectedItems, filter) => {
     if (filter) {
       return filter.items;
     }
@@ -99,7 +109,9 @@ export const selectedPlaylistSelector = createSelector(
   selectedPlaylistIDSelector,
   selectedMediaSelector,
   (playlists, selectedID, selectedMedia) => (
-    mergePlaylistItems(playlists.playlists[selectedID], selectedMedia)
+    typeof selectedID === 'string'
+      ? mergePlaylistItems(playlists.playlists[selectedID], selectedMedia)
+      : null
   ),
 );
 

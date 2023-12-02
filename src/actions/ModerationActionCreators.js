@@ -10,7 +10,6 @@ import {
   ADD_USER_ROLES_START, ADD_USER_ROLES_COMPLETE,
   REMOVE_USER_ROLES_START, REMOVE_USER_ROLES_COMPLETE,
 } from '../constants/ActionTypes';
-import { removeMessage, removeMessagesByUser, removeAllMessages } from './ChatActionCreators';
 
 export function skipCurrentDJ(reason = '', shouldRemove = false) {
   return (dispatch, getState) => {
@@ -145,7 +144,6 @@ export function removeUserRole(user, role) {
 
 export function deleteChatMessage(id) {
   return del(`/chat/${id}`, {}, {
-    onStart: () => removeMessage(id),
     onError: (error) => ({
       type: undefined,
       error: true,
@@ -157,7 +155,6 @@ export function deleteChatMessage(id) {
 
 export function deleteChatMessagesByUser(userID) {
   return del(`/chat/user/${userID}`, {}, {
-    onComplete: () => removeMessagesByUser(userID),
     onError: (error) => ({
       type: undefined,
       error: true,
@@ -169,7 +166,6 @@ export function deleteChatMessagesByUser(userID) {
 
 export function deleteAllChatMessages() {
   return del('/chat', {}, {
-    onComplete: removeAllMessages,
     onError: (error) => ({
       type: undefined,
       error: true,

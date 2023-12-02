@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
 import { mdiPlus } from '@mdi/js';
-import { addMediaMenu } from '../../actions/PlaylistActionCreators';
+import { useDispatch } from '../../hooks/useRedux';
+import { open as addMediaMenu } from '../../reducers/addToPlaylistMenu';
 import { useMediaListContext } from '../MediaList/BaseMediaList';
 import MediaAction from '../MediaList/MediaAction';
 import SvgIcon from '../SvgIcon';
@@ -25,9 +25,10 @@ function AddToPlaylistAction({ historyEntry }) {
     const selectedItems = selection.isSelected(historyEntry) ? selection.get() : [historyEntry];
     const rect = event.target.getBoundingClientRect();
 
-    dispatch(addMediaMenu(selectedItems.map((entry) => entry.media), {
-      x: rect.left,
-      y: rect.top,
+    dispatch(addMediaMenu({
+      type: 'add',
+      position: { x: rect.left, y: rect.top },
+      data: { media: selectedItems.map((entry) => entry.media) },
     }));
   }, [dispatch, selection, historyEntry]);
 

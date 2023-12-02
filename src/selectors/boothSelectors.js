@@ -1,14 +1,15 @@
 import { createSelector } from 'reselect';
-
 import { isPreviewMediaDialogOpenSelector } from './dialogSelectors';
-import { isMutedSelector, volumeSelector } from './settingSelectors';
+import { isMutedSelector, volumeSelector } from '../reducers/settings';
 import { currentTimeSelector } from './timeSelectors';
+import { currentVotesSelector } from './voteSelectors';
 import {
   currentUserSelector,
   currentUserHasRoleSelector,
   usersSelector,
 } from './userSelectors';
 
+/** @param {import('../redux/configureStore').StoreState} state */
 const baseSelector = (state) => state.booth;
 
 export const historyIDSelector = createSelector(baseSelector, (booth) => booth.historyID);
@@ -42,7 +43,12 @@ export const timeRemainingSelector = createSelector(
 export const djSelector = createSelector(
   baseSelector,
   usersSelector,
-  (booth, users) => users[booth.djID],
+  (booth, users) => {
+    if (booth.djID && booth.djID in users) {
+      return users[booth.djID];
+    }
+    return null;
+  },
 );
 
 export const isCurrentDJSelector = createSelector(
@@ -82,4 +88,24 @@ export const playbackVolumeSelector = createSelector(
 export const mobilePlaybackVolumeSelector = createSelector(
   playbackMutedSelector,
   (isMuted) => (isMuted ? 0 : 100),
+);
+
+export const currentPlaySelector = createSelector(
+  historyIDSelector,
+  mediaSelector,
+  startTimeSelector,
+  djSelector,
+  currentVotesSelector,
+  (historyID, media, timestamp, dj, stats) => {
+    if (!historyID || !media || !dj || !timestamp || !stats) {
+      return null;
+    }
+    return {
+      _id: historyID,
+      user: dj,
+      media,
+      timestamp,
+      stats,
+    };
+  },
 );

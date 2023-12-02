@@ -10,7 +10,7 @@ import Collapse from '@mui/material/Collapse';
 import { mdiPencil } from '@mdi/js';
 import parse from 'u-wave-parse-chat-markup';
 import SvgIcon from '../../../components/SvgIcon';
-import compile from '../../../components/Chat/Markup/compile';
+import Markup from '../../../components/Chat/Markup';
 
 const {
   useCallback,
@@ -28,15 +28,12 @@ function Motd({
 }) {
   const [newMotd, setMotd] = useState(initialMotd);
   const [expanded, setExpanded] = useState(false);
-  const parsedMotd = useMemo(
-    () => {
-      if (newMotd == null) {
-        return null;
-      }
-      return compile(parse(newMotd), compileOptions);
-    },
-    [newMotd, compileOptions],
-  );
+  const parsedMotd = useMemo(() => {
+    if (newMotd == null) {
+      return null;
+    }
+    return parse(newMotd);
+  }, [newMotd]);
   const onExpand = useCallback(() => {
     setExpanded(!expanded);
   }, [expanded]);
@@ -65,7 +62,9 @@ function Motd({
           </IconButton>
         )}
       />
-      <CardContent>{parsedMotd}</CardContent>
+      <CardContent>
+        {parsedMotd ? <Markup tree={parsedMotd} compileOptions={compileOptions} /> : null}
+      </CardContent>
       <Collapse in={expanded} unmountOnExit>
         <form onSubmit={onSubmit}>
           <CardContent style={{ paddingTop: 0 }}>

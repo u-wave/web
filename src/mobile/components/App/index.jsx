@@ -1,10 +1,10 @@
 import cx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import Snackbar from '@mui/material/Snackbar';
+import { useSelector } from '../../../hooks/useRedux';
 import ErrorArea from '../../../containers/ErrorArea';
 import PlaylistManager from '../../containers/PlaylistManager';
 import RoomHistory from '../../containers/RoomHistory';
@@ -15,7 +15,7 @@ import DragLayer from '../../../containers/DragLayer';
 import MainView from '../../containers/MainView';
 import About from '../../containers/About';
 import ServerList from '../../containers/ServerList';
-import { videoEnabledSelector } from '../../../selectors/settingSelectors';
+import { videoEnabledSelector } from '../../../reducers/settings';
 import Overlays from './Overlays';
 
 const { useState } = React;

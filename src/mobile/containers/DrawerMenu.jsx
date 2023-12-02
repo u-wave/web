@@ -1,8 +1,6 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { currentUserSelector } from '../../selectors/userSelectors';
-import { playlistsSelector } from '../../selectors/playlistSelectors';
-import { toggleSettings, toggleAbout } from '../../actions/OverlayActionCreators';
+import { useSelector, useDispatch } from '../../hooks/useRedux';
+import { toggleOverlay } from '../../reducers/activeOverlay';
 import { drawerIsOpenSelector } from '../selectors/drawerSelectors';
 import { setDrawer } from '../actions/DrawerActionCreators';
 import { toggleServerList, openPlaylist } from '../actions/OverlayActionCreators';
@@ -16,13 +14,11 @@ const {
 function DrawerMenuContainer() {
   const uwave = useUwave();
   const hasAboutPage = !!(uwave && uwave.getAboutPageComponent());
-  const user = useSelector(currentUserSelector);
-  const playlists = useSelector(playlistsSelector);
   const open = useSelector(drawerIsOpenSelector);
   const dispatch = useDispatch();
-  const onShowAbout = useCallback(() => dispatch(toggleAbout()), [dispatch]);
+  const onShowAbout = useCallback(() => dispatch(toggleOverlay('about')), [dispatch]);
   const onShowServerList = useCallback(() => dispatch(toggleServerList()), [dispatch]);
-  const onShowSettings = useCallback(() => dispatch(toggleSettings()), [dispatch]);
+  const onShowSettings = useCallback(() => dispatch(toggleOverlay('settings')), [dispatch]);
   const onShowPlaylist = useCallback(
     (playlistID) => dispatch(openPlaylist(playlistID)),
     [dispatch],
@@ -32,8 +28,6 @@ function DrawerMenuContainer() {
   return (
     <DrawerMenu
       hasAboutPage={hasAboutPage}
-      user={user}
-      playlists={playlists}
       open={open}
       onShowAbout={onShowAbout}
       onShowServerList={onShowServerList}

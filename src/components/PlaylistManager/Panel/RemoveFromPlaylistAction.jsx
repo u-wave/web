@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
 import { mdiDelete } from '@mdi/js';
-import { removeMedia } from '../../../actions/PlaylistActionCreators';
+import { useDispatch } from '../../../hooks/useRedux';
 import { useMediaListContext } from '../../MediaList/BaseMediaList';
 import SvgIcon from '../../SvgIcon';
 import MediaAction from '../../MediaList/MediaAction';
+import { removePlaylistItems } from '../../../reducers/playlists';
 
 const {
   useCallback,
@@ -18,7 +18,10 @@ function RemoveFromPlaylistAction({ media }) {
   const handleClick = useCallback(() => {
     const selectedItems = selection.isSelected(media) ? selection.get() : [media];
 
-    dispatch(removeMedia(playlistID, selectedItems));
+    dispatch(removePlaylistItems({
+      playlistID,
+      medias: selectedItems,
+    }));
   }, [dispatch, playlistID, media, selection]);
 
   return (

@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
+import { useDispatch } from '../../hooks/useRedux';
 import OverlayContent from '../Overlay/Content';
 import OverlayHeader from '../Overlay/Header';
-import { closeAll } from '../../actions/OverlayActionCreators';
+import { closeOverlay } from '../../reducers/activeOverlay';
 
 function ErrorOverlay({ error }) {
   const dispatch = useDispatch();
-  const onCloseOverlay = () => dispatch(closeAll());
+  const onCloseOverlay = () => dispatch(closeOverlay());
 
   return (
     <>

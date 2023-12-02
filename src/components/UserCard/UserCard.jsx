@@ -1,12 +1,12 @@
 import React from 'react';
 import cx from 'clsx';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
 import Typography from '@mui/material/Typography';
 import Card from '@mui/material/Card/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
+import { useSelector } from '../../hooks/useRedux';
 import useIntl from '../../hooks/useIntl';
 import useHasRole from '../../hooks/useHasRole';
 import { djSelector } from '../../selectors/boothSelectors';

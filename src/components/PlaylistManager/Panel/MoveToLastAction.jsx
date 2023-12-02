@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
 import { mdiChevronDown } from '@mdi/js';
-import { moveMedia } from '../../../actions/PlaylistActionCreators';
+import { useDispatch } from '../../../hooks/useRedux';
+import { movePlaylistItems } from '../../../reducers/playlists';
 import { useMediaListContext } from '../../MediaList/BaseMediaList';
 import SvgIcon from '../../SvgIcon';
 import MediaAction from '../../MediaList/MediaAction';
@@ -17,7 +17,11 @@ function MoveToLastAction({ media }) {
   const handleClick = useCallback(() => {
     const selectedItems = selection.isSelected(media) ? selection.get() : [media];
 
-    dispatch(moveMedia(playlist._id, selectedItems, { at: 'end' }));
+    dispatch(movePlaylistItems({
+      playlistID: playlist._id,
+      medias: selectedItems,
+      target: { at: 'end' },
+    }));
   }, [dispatch, playlist, media, selection]);
 
   return (

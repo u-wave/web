@@ -1,12 +1,11 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../../hooks/useRedux';
 import { useMediaSources } from '../../../context/MediaSourceContext';
 import {
-  showImportPanel,
   hideImportPanel,
   showImportSourcePanel,
   hideImportSourcePanel,
 } from '../../../actions/ImportActionCreators';
+import { showImportPanel } from '../../../reducers/playlists';
 
 function ImportBlock() {
   const { getAllMediaSources } = useMediaSources();

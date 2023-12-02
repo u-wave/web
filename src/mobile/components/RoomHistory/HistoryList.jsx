@@ -1,15 +1,17 @@
-import React from 'react';
 import List from '@mui/material/List';
-import Base from '../../../components/MediaList/BaseMediaList';
+import MediaListBase from '../../../components/MediaList/BaseMediaList';
 import HistoryRow from './Row';
+import useRoomHistory from '../../../hooks/useRoomHistory';
 
-function HistoryList(props) {
+function HistoryList() {
+  const media = useRoomHistory();
+
   return (
-    <Base
+    <MediaListBase
       className="RoomHistory-list"
       listComponent={List}
       rowComponent={HistoryRow}
-      {...props}
+      media={media}
     />
   );
 }

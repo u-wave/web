@@ -1,10 +1,10 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../hooks/useRedux';
 import {
   showImportSourcePanel,
   hideImportSourcePanel,
 } from '../actions/ImportActionCreators';
-import { selectedSourceTypeSelector } from '../selectors/importSelectors';
+import { selectedSourceTypeSelector } from '../reducers/imports';
 import PlaylistImport from '../components/PlaylistManager/Import';
 
 const { useCallback } = React;

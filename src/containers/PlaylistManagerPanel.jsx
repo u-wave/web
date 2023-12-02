@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../hooks/useRedux';
 import {
   selectedPlaylistSelector,
   filteredSelectedPlaylistItemsSelector,
@@ -7,17 +7,19 @@ import {
   isFilteredSelector,
 } from '../selectors/playlistSelectors';
 import {
-  moveMedia,
   filterPlaylistItems,
-  renamePlaylist,
   deletePlaylist,
   cannotDeleteActivePlaylist,
   shufflePlaylist,
-  activatePlaylist,
   loadPlaylist,
   loadFilteredPlaylistItems,
 } from '../actions/PlaylistActionCreators';
 import PlaylistPanel from '../components/PlaylistManager/Panel';
+import {
+  renamePlaylist,
+  activatePlaylist,
+  movePlaylistItems,
+} from '../reducers/playlists';
 
 const { useCallback } = React;
 
@@ -38,7 +40,7 @@ function PlaylistPanelContainer() {
     [dispatch, playlistID],
   );
   const onRenamePlaylist = useCallback(
-    (name) => dispatch(renamePlaylist(playlistID, name)),
+    (name) => dispatch(renamePlaylist({ playlistID, name })),
     [dispatch, playlistID],
   );
   const onDeletePlaylist = useCallback(
@@ -51,7 +53,11 @@ function PlaylistPanelContainer() {
   );
 
   const onMoveMedia = useCallback(
-    (media, opts) => dispatch(moveMedia(playlistID, media, opts)),
+    (media, opts) => dispatch(movePlaylistItems({
+      playlistID,
+      medias: media,
+      target: opts,
+    })),
     [dispatch, playlistID],
   );
   const onLoadPlaylistPage = useCallback((page) => {

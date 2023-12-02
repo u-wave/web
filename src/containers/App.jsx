@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useSelector, useDispatch } from 'react-redux';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { ThemeProvider } from '@mui/material/styles';
 import { Provider as BusProvider } from 'react-bus';
 import { TranslateProvider } from '@u-wave/react-translate';
-import { closeAll } from '../actions/OverlayActionCreators';
+import { useSelector, useDispatch } from '../hooks/useRedux';
+import { closeOverlay, selectOverlay } from '../reducers/activeOverlay';
 import { themeSelector } from '../selectors/settingSelectors';
 import { translatorSelector } from '../selectors/localeSelectors';
 import { isConnectedSelector } from '../selectors/serverSelectors';
@@ -16,11 +16,9 @@ import UwaveContext from '../context/UwaveContext';
 import { ClockProvider } from '../context/ClockContext';
 import MediaSourceContext from '../context/MediaSourceContext';
 import { AllStoresProvider } from '../stores';
+import { initState } from '../reducers/auth';
 
-const {
-  useCallback,
-  useEffect,
-} = React;
+const { useCallback, useEffect, useRef } = React;
 
 class ErrorWrapper extends React.Component {
   static propTypes = {
@@ -53,14 +51,26 @@ class ErrorWrapper extends React.Component {
   }
 }
 
+function usePageVisibility(fn) {
+  useEffect(() => {
+    const handler = () => {
+      fn(!document.hidden);
+    };
+    window.addEventListener('visibilitychange', handler);
+    return () => {
+      window.removeEventListener('visibilitychange', handler);
+    };
+  }, [fn]);
+}
+
 function AppContainer({ uwave, mediaSources }) {
   const isMobile = useMediaQuery('(max-width: 767px)');
-  const activeOverlay = useSelector((state) => state.activeOverlay);
+  const activeOverlay = useSelector(selectOverlay);
   const isConnected = useSelector(isConnectedSelector);
   const theme = useSelector(themeSelector);
   const translator = useSelector(translatorSelector);
   const dispatch = useDispatch();
-  const onCloseOverlay = useCallback(() => dispatch(closeAll()), [dispatch]);
+  const onCloseOverlay = useCallback(() => dispatch(closeOverlay()), [dispatch]);
 
   useEffect(() => {
     const html = document.documentElement;
@@ -71,6 +81,15 @@ function AppContainer({ uwave, mediaSources }) {
       root.style.setProperty(prop, theme.cssProperties[prop]);
     });
   }, [theme]);
+
+  const hiddenTime = useRef(0);
+  usePageVisibility((visible) => {
+    if (visible && (Date.now() - hiddenTime.current) > 60_000) {
+      dispatch(initState());
+    } else {
+      hiddenTime.current = Date.now();
+    }
+  });
 
   const props = {
     activeOverlay,

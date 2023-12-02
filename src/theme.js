@@ -1,3 +1,4 @@
+/** @type {import('@mui/material/styles').ThemeOptions} */
 export default {
   palette: {
     mode: 'dark',

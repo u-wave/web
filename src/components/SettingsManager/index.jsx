@@ -7,7 +7,7 @@ import OverlayContent from '../Overlay/Content';
 import SettingsPanel from './SettingsPanel';
 
 function SettingsManager({
-  className,
+  className = null,
   onCloseOverlay,
   onLogout,
   ...props

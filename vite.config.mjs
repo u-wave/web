@@ -9,6 +9,10 @@ const outputPkg = new URL('./npm/package.json', import.meta.url);
 
 export default defineConfig({
   clearScreen: false,
+  legacy: {
+    // For the prerender plugin
+    proxySsrExternalModules: true,
+  },
   resolve: {
     alias: {
       '@mui/base': '@mui/base/modern',
@@ -45,9 +49,9 @@ export default defineConfig({
     splitVendorChunkPlugin(),
     react(),
     yaml(),
-    prerender({ file: 'index.html', source: 'src/index.jsx' }),
+    prerender({ file: 'index.html', source: 'src/index.tsx' }),
     prerender({ file: 'password-reset.html', source: 'src/password-reset/index.jsx' }),
-    prerender({ file: 'privacy.html', source: 'src/markdown.jsx', props: { path: 'static/privacy.md' } }),
+    prerender({ file: 'privacy.html', source: 'src/markdown.tsx', props: { path: 'static/privacy.md' } }),
     {
       name: 'u-wave-write-package-version',
       apply: 'build',
@@ -59,4 +63,10 @@ export default defineConfig({
       },
     },
   ],
+  test: {
+    include: ['**/__tests__/*.{js,jsx,ts,tsx}'],
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './test/setup.mjs',
+  },
 });

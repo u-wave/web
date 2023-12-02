@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../hooks/useRedux';
 import { updateMedia } from '../actions/PlaylistActionCreators';
 import { closeEditMediaDialog } from '../actions/DialogActionCreators';
 import { editMediaDialogSelector } from '../selectors/dialogSelectors';

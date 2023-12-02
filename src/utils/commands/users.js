@@ -1,5 +1,5 @@
 import { log } from '../../actions/ChatActionCreators';
-import { doChangeUsername } from '../../actions/UserActionCreators';
+import { changeUsername } from '../../reducers/auth';
 
 export default [{
   name: 'nick',
@@ -9,6 +9,6 @@ export default [{
       return log('Username must be between 3 and 32 characters long.');
     }
 
-    return doChangeUsername(name);
+    return changeUsername(name);
   },
 }];

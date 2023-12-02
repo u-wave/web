@@ -11,13 +11,12 @@ const {
   useState,
 } = React;
 
-function AddToPlaylistMenu(props) {
-  const {
-    onClose,
-    onSelect,
-    onCreatePlaylist,
-  } = props;
-
+function AddToPlaylistMenu({
+  onClose,
+  onSelect,
+  onCreatePlaylist,
+  position,
+}) {
   const { t } = useTranslator();
   const [creating, setCreating] = useState(false);
   const handleOpen = useCallback(() => setCreating(true), []);
@@ -32,8 +31,10 @@ function AddToPlaylistMenu(props) {
     <>
       {!creating && (
         <PlaylistsMenu
-          {...props}
+          position={position}
+          onClose={onClose}
           onCreatePlaylist={handleOpen}
+          onSelect={onSelect}
         />
       )}
       <PromptDialog
@@ -52,6 +53,10 @@ AddToPlaylistMenu.propTypes = {
   onClose: PropTypes.func.isRequired,
   onSelect: PropTypes.func.isRequired,
   onCreatePlaylist: PropTypes.func.isRequired,
+  position: PropTypes.shape({
+    x: PropTypes.number,
+    y: PropTypes.number,
+  }),
 };
 
 export default AddToPlaylistMenu;

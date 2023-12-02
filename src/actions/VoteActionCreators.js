@@ -1,9 +1,6 @@
 import { put, post } from './RequestActionCreators';
 import { historyIDSelector } from '../selectors/boothSelectors';
-import { playlistsSelector } from '../selectors/playlistSelectors';
 import {
-  OPEN_ADD_MEDIA_MENU,
-  LOAD_VOTES,
   FAVORITE, UPVOTE, DOWNVOTE,
   DO_FAVORITE_START, DO_FAVORITE_COMPLETE,
   DO_UPVOTE, DO_DOWNVOTE,
@@ -11,17 +8,10 @@ import {
 import mergeIncludedModels from '../utils/mergeIncludedModels';
 import { flattenPlaylistItem } from './PlaylistActionCreators';
 
-export function setVoteStats(voteStats) {
-  return {
-    type: LOAD_VOTES,
-    payload: voteStats,
-  };
-}
-
-export function favorited({ userID, historyID }) {
+export function favorited({ userID }) {
   return {
     type: FAVORITE,
-    payload: { userID, historyID },
+    payload: { userID },
   };
 }
 
@@ -54,22 +44,6 @@ export function doDownvote() {
   return (dispatch, getState) => {
     const historyID = historyIDSelector(getState());
     dispatch(vote({ historyID, direction: -1 }));
-  };
-}
-
-export function openFavoriteMenu(position) {
-  return (dispatch, getState) => {
-    const playlists = playlistsSelector(getState());
-    const historyID = historyIDSelector(getState());
-    dispatch({
-      type: OPEN_ADD_MEDIA_MENU,
-      payload: { historyID },
-      meta: {
-        playlists,
-        position,
-        type: 'favorite',
-      },
-    });
   };
 }
 

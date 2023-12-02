@@ -2,9 +2,10 @@ import { createSelector } from 'reselect';
 import Translator from '@u-wave/translate';
 import * as plurals from '@u-wave/translate/plurals';
 import { availableLanguages } from '../locales';
-import { languageSelector as currentLanguageSelector } from './settingSelectors';
+import { languageSelector as currentLanguageSelector } from '../reducers/settings';
 
 const defaultLanguageSelector = () => 'en';
+/** @param {import('../redux/configureStore').StoreState} state */
 const baseSelector = (state) => state.locales;
 const loadedSelector = createSelector(baseSelector, (base) => base.loaded);
 

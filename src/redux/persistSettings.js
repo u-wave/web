@@ -1,4 +1,4 @@
-import { loadSettings } from '../actions/SettingsActionCreators';
+import { load as loadSettings } from '../reducers/settings';
 
 const SETTINGS_KEY = 'uwaveSettings';
 
@@ -19,7 +19,9 @@ const persistSettings = (next) => (reducer, initialState) => {
 
   const store = next(reducer, initialState);
 
-  store.dispatch(loadSettings(settings));
+  if (settings) {
+    store.dispatch(loadSettings(settings));
+  }
 
   let prevSettings = settings;
   store.subscribe(() => {

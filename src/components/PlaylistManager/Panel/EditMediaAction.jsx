@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
 import { mdiPencil } from '@mdi/js';
+import { useDispatch } from '../../../hooks/useRedux';
 import SvgIcon from '../../SvgIcon';
 import { editMedia } from '../../../actions/PlaylistActionCreators';
 import { useMediaListContext } from '../../MediaList/BaseMediaList';

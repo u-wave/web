@@ -1,6 +1,4 @@
-import { ADVANCE } from '../../constants/ActionTypes';
-import { advanceToEmpty } from '../../actions/BoothActionCreators';
-import booth from '../booth';
+import booth, { advance } from '../booth';
 
 describe('reducers/booth', () => {
   const initialState = () => booth(undefined, { type: '@@redux/INIT' });
@@ -26,15 +24,12 @@ describe('reducers/booth', () => {
       // Weirdly, there are two different advance object formats in use
       // client-side.
       // TODO fix that? :P
-      const state = booth(initialState(), {
-        type: ADVANCE,
-        payload: {
-          historyID: 'someRandomID',
-          userID: 'seventeen',
-          media: { artist: 'about tess', title: 'Imaginedit' },
-          timestamp: 1449767164107,
-        },
-      });
+      const state = booth(initialState(), advance({
+        historyID: 'someRandomID',
+        userID: 'seventeen',
+        media: { artist: 'about tess', title: 'Imaginedit' },
+        timestamp: 1449767164107,
+      }));
       expect(state).toEqual({
         historyID: 'someRandomID',
         djID: 'seventeen',
@@ -45,7 +40,7 @@ describe('reducers/booth', () => {
     });
 
     it('should stop playing if there is no next song', () => {
-      const state = booth(initialState(), advanceToEmpty());
+      const state = booth(initialState(), advance(null));
       expect(state).toEqual({
         historyID: null,
         djID: null,

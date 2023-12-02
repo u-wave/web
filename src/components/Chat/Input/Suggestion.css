@@ -18,6 +18,7 @@
 .SuggestionItem-icon {
   grid-area: icon;
 }
+
 .SuggestionItem-label {
   grid-area: label;
   white-space: nowrap;

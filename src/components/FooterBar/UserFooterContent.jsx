@@ -1,17 +1,19 @@
 import cx from 'clsx';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../hooks/useRedux';
 import useCurrentUser from '../../hooks/useCurrentUser';
 import { skipSelf } from '../../actions/BoothActionCreators';
 import { skipCurrentDJ as modSkipCurrentDJ } from '../../actions/ModerationActionCreators';
-import { togglePlaylistManager, toggleSettings } from '../../actions/OverlayActionCreators';
+import { toggleOverlay } from '../../reducers/activeOverlay';
 import { joinWaitlist, leaveWaitlist } from '../../actions/WaitlistActionCreators';
-import { openFavoriteMenu, doUpvote, doDownvote } from '../../actions/VoteActionCreators';
+import { doUpvote, doDownvote } from '../../actions/VoteActionCreators';
+import { openFavoriteMenu } from '../../reducers/addToPlaylistMenu';
 import {
   djSelector,
   isCurrentDJSelector,
   canSkipSelector,
   endTimeSelector,
+  historyIDSelector,
 } from '../../selectors/boothSelectors';
 import {
   activePlaylistSelector,
@@ -42,19 +44,20 @@ function UserFooterContent() {
   const userInWaitlist = useSelector(userInWaitlistSelector);
   const userIsDJ = useSelector(isCurrentDJSelector);
   const currentDJ = useSelector(djSelector);
+  const historyID = useSelector(historyIDSelector);
   const showSkip = useSelector(canSkipSelector);
   const waitlistIsLocked = useSelector(isLockedSelector);
   const voteStats = useSelector(currentVoteStatsSelector);
   const dispatch = useDispatch();
   const handleTogglePlaylistManager = useCallback(() => {
-    dispatch(togglePlaylistManager());
+    dispatch(toggleOverlay('playlistManager'));
   }, [dispatch]);
   const handleToggleSettings = useCallback(() => {
-    dispatch(toggleSettings());
+    dispatch(toggleOverlay('settings'));
   }, [dispatch]);
   const handleFavorite = useCallback((position) => {
-    dispatch(openFavoriteMenu(position));
-  }, [dispatch]);
+    dispatch(openFavoriteMenu(historyID, position));
+  }, [historyID, dispatch]);
   const handleUpvote = useCallback(() => {
     dispatch(doUpvote());
   }, [dispatch]);

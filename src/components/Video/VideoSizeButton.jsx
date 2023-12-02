@@ -1,11 +1,10 @@
 import React from 'react';
 import { useTranslator } from '@u-wave/react-translate';
-import { useDispatch, useSelector } from 'react-redux';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import SvgIcon from '@mui/material/SvgIcon';
-import { videoSizeSelector } from '../../selectors/settingSelectors';
-import { toggleVideoSize } from '../../actions/PlaybackActionCreators';
+import { useDispatch, useSelector } from '../../hooks/useRedux';
+import { toggleVideoSize, videoSizeSelector } from '../../reducers/settings';
 
 // Stolen from YouTube
 const paths = {

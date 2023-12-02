@@ -1,8 +1,6 @@
 import {
-  INIT_STATE,
   SOCKET_CONNECT,
   SOCKET_RECONNECT,
-  AUTH_STRATEGIES,
   REGISTER_START,
   REGISTER_COMPLETE,
   LOGIN_START,
@@ -11,16 +9,10 @@ import {
   LOGOUT_START,
   LOGOUT_COMPLETE,
   RESET_PASSWORD_COMPLETE,
-  LOAD_ALL_PLAYLISTS_START,
 } from '../constants/ActionTypes';
 import * as Session from '../utils/Session';
 import { get, post, del } from './RequestActionCreators';
-import { loadHistory } from './BoothActionCreators';
-import { setPlaylists, loadPlaylist } from './PlaylistActionCreators';
-import { syncTimestamps } from './TickerActionCreators';
-import { closeLoginDialog } from './DialogActionCreators';
-import { loadEmotes } from './ChatActionCreators';
-import { tokenSelector } from '../selectors/userSelectors';
+import { initState } from '../reducers/auth';
 
 export function socketConnect() {
   return { type: SOCKET_CONNECT };
@@ -28,62 +20,6 @@ export function socketConnect() {
 
 export function socketReconnect() {
   return { type: SOCKET_RECONNECT };
-}
-
-export function setAuthenticationStrategies(strategies) {
-  return {
-    type: AUTH_STRATEGIES,
-    payload: { strategies },
-  };
-}
-
-export function loginComplete({ token, socketToken, user }) {
-  return (dispatch) => {
-    dispatch({
-      type: LOGIN_COMPLETE,
-      payload: {
-        token,
-        socketToken,
-        user,
-      },
-    });
-    dispatch(closeLoginDialog());
-  };
-}
-
-export function loadedState(state) {
-  return (dispatch, getState) => {
-    dispatch({
-      type: INIT_STATE,
-      payload: state,
-    });
-    if (state.user) {
-      const token = tokenSelector(getState());
-      dispatch(loginComplete({
-        token,
-        socketToken: state.socketToken,
-        user: state.user,
-      }));
-    }
-    if (state.activePlaylist) {
-      dispatch(loadPlaylist(state.activePlaylist));
-    }
-  };
-}
-
-export function initState() {
-  const beforeTime = Date.now();
-
-  return get('/now', {
-    onStart: () => ({ type: LOAD_ALL_PLAYLISTS_START }),
-    onComplete: (state) => (dispatch) => {
-      dispatch(syncTimestamps(beforeTime, state.time));
-      dispatch(loadedState(state));
-      dispatch(loadHistory());
-      dispatch(loadEmotes());
-      return state;
-    },
-  });
 }
 
 export function setSessionToken(token) {
@@ -146,10 +82,7 @@ function logoutStart() {
 }
 
 function logoutComplete() {
-  return (dispatch) => {
-    dispatch({ type: LOGOUT_COMPLETE });
-    dispatch(setPlaylists([]));
-  };
+  return { type: LOGOUT_COMPLETE };
 }
 
 export function logout() {

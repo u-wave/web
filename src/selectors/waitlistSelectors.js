@@ -2,6 +2,7 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import { timeRemainingSelector, djSelector, isCurrentDJSelector } from './boothSelectors';
 import { currentUserSelector, usersSelector } from './userSelectors';
 
+/** @param {import('../redux/configureStore').StoreState} state */
 const baseSelector = (state) => state.waitlist;
 
 export const isLockedSelector = createSelector(baseSelector, (wl) => !!wl.locked);

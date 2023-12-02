@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
 import { useTranslator } from '@u-wave/react-translate';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import { mdiCancel } from '@mdi/js';
+import { useDispatch } from '../../hooks/useRedux';
 import SvgIcon from '../SvgIcon';
 import { banUser } from '../../actions/ModerationActionCreators';
 

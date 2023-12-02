@@ -15,6 +15,7 @@ import {
 } from './userSelectors';
 import { notificationSettingsSelector } from './settingSelectors';
 
+/** @param {import('../redux/configureStore').StoreState} state */
 const baseSelector = (state) => state.chat;
 
 export const rawMotdSelector = createSelector(baseSelector, (chat) => chat.motd);

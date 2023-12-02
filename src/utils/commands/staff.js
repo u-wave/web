@@ -10,7 +10,7 @@ import {
   addUserRole,
   removeUserRole,
 } from '../../actions/ModerationActionCreators';
-import { toggleAdmin } from '../../actions/OverlayActionCreators';
+import { toggleOverlay } from '../../reducers/activeOverlay';
 
 export default [
   {
@@ -65,6 +65,6 @@ export default [
     name: 'admin',
     description: 'Open the administration panel.',
     guard: isModeratorSelector,
-    action: () => toggleAdmin(),
+    action: () => toggleOverlay('admin'),
   },
 ];

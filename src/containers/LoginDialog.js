@@ -1,8 +1,9 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import {
-  resetPassword, login, register, finishSocialLogin, registerCompleteError,
+  resetPassword, register, finishSocialLogin, registerCompleteError,
 } from '../actions/LoginActionCreators';
+import { login } from '../reducers/auth';
 import { openResetPasswordDialog, closeLoginDialog } from '../actions/DialogActionCreators';
 import { loginDialogSelector } from '../selectors/dialogSelectors';
 import LoginDialog from '../components/Dialogs/LoginDialog';

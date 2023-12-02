@@ -1,9 +1,9 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { useTranslator } from '@u-wave/react-translate';
 import Button from '@mui/material/Button';
+import { useDispatch } from '../../hooks/useRedux';
 import { openLoginDialog, openRegisterDialog } from '../../actions/DialogActionCreators';
-import { toggleSettings } from '../../actions/OverlayActionCreators';
+import { toggleOverlay } from '../../reducers/activeOverlay';
 import SettingsButton from './SettingsButton';
 
 const {
@@ -14,7 +14,7 @@ function GuestFooterContent() {
   const { t } = useTranslator();
   const dispatch = useDispatch();
   const handleToggleSettings = useCallback(() => {
-    dispatch(toggleSettings());
+    dispatch(toggleOverlay('settings'));
   }, [dispatch]);
   const handleOpenLoginDialog = useCallback(() => {
     dispatch(openLoginDialog());

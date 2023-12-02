@@ -16,7 +16,7 @@ function UserRole({ roleName }) {
   }
 
   return (
-    <RoleColor component="div" className="UserRole" role={roleName}>
+    <RoleColor component="div" className="UserRole" roles={[roleName]}>
       {name}
     </RoleColor>
   );

@@ -1,7 +1,7 @@
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import Motd from '../components/Motd';
-import { setMotd } from '../../actions/ChatActionCreators';
+import { setMotd } from '../../reducers/chat';
 import {
   rawMotdSelector,
   markupCompilerOptionsSelector,

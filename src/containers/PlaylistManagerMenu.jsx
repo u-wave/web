@@ -1,46 +1,50 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useSelector, useDispatch } from 'react-redux';
-import {
-  addMedia as addToPlaylist,
-  createPlaylist,
-  selectPlaylist,
-} from '../actions/PlaylistActionCreators';
-import { showImportPanel } from '../actions/ImportActionCreators';
-import { showSearchResults, hideSearchResults } from '../actions/SearchActionCreators';
+import { useSelector, useDispatch } from '../hooks/useRedux';
 import {
   playlistsSelector,
-  selectedPlaylistSelector,
+  selectedPlaylistIDSelector,
 } from '../selectors/playlistSelectors';
-import { showSearchResultsSelector } from '../selectors/searchSelectors';
-import { showImportPanelSelector } from '../selectors/importSelectors';
 import { useMediaSearchStore } from '../stores/MediaSearchStore';
 import PlaylistsMenu from '../components/PlaylistManager/Menu';
+import {
+  addPlaylistItems,
+  createPlaylist,
+  selectActivePlaylist,
+  selectPlaylist,
+  showImportPanel,
+  showSearchResults,
+} from '../reducers/playlists';
 
 const { useCallback } = React;
 
 function PlaylistsMenuContainer({ className }) {
   const playlists = useSelector(playlistsSelector);
-  const selected = useSelector(selectedPlaylistSelector);
+  const selected = useSelector(selectedPlaylistIDSelector);
   const mediaSearch = useMediaSearchStore();
-  const isShowSearchResults = useSelector(showSearchResultsSelector);
-  const isShowImportPanel = useSelector(showImportPanelSelector);
   const dispatch = useDispatch();
 
-  const onAddToPlaylist = useCallback(
-    (playlist, items, afterID) => dispatch(addToPlaylist(playlist, items, afterID)),
-    [dispatch],
-  );
-  const onCreatePlaylist = useCallback((name) => dispatch(createPlaylist(name)), [dispatch]);
-  const onSelectPlaylist = useCallback((id) => dispatch(selectPlaylist(id)), [dispatch]);
-  const onSelectSearchResults = useCallback(() => dispatch(showSearchResults()), [dispatch]);
+  const onAddToPlaylist = useCallback((playlist, items, afterID) => {
+    dispatch(addPlaylistItems({ playlistID: playlist._id, items, afterID }));
+  }, [dispatch]);
+  const onCreatePlaylist = useCallback((name) => {
+    dispatch(createPlaylist(name));
+  }, [dispatch]);
+  const onSelectPlaylist = useCallback((id) => {
+    dispatch(selectPlaylist(id));
+  }, [dispatch]);
+  const onSelectSearchResults = useCallback(() => {
+    dispatch(showSearchResults());
+  }, [dispatch]);
   const onCloseSearchResults = useCallback(() => {
     mediaSearch.reset();
-    dispatch(hideSearchResults());
+    dispatch(selectActivePlaylist());
     // The `mediaSearch.reset` reference never changes.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
-  const onShowImportPanel = useCallback(() => dispatch(showImportPanel()), [dispatch]);
+  const onShowImportPanel = useCallback(() => {
+    dispatch(showImportPanel());
+  }, [dispatch]);
 
   return (
     <PlaylistsMenu
@@ -48,9 +52,7 @@ function PlaylistsMenuContainer({ className }) {
       playlists={playlists}
       selected={selected}
       searchQuery={mediaSearch.query}
-      showSearchResults={isShowSearchResults}
       searchResults={mediaSearch.resultsCount}
-      showImportPanel={isShowImportPanel}
       onAddToPlaylist={onAddToPlaylist}
       onCreatePlaylist={onCreatePlaylist}
       onSelectPlaylist={onSelectPlaylist}

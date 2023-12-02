@@ -1,18 +1,9 @@
 import {
-  LOAD_ALL_PLAYLISTS_START, LOAD_ALL_PLAYLISTS_COMPLETE,
   LOAD_PLAYLIST_START, LOAD_PLAYLIST_COMPLETE,
   FILTER_PLAYLIST_ITEMS,
   FILTER_PLAYLIST_ITEMS_START, FILTER_PLAYLIST_ITEMS_COMPLETE,
   PLAYLIST_CYCLED,
-  SELECT_PLAYLIST,
-  ACTIVATE_PLAYLIST_START, ACTIVATE_PLAYLIST_COMPLETE,
-  CREATE_PLAYLIST_START, CREATE_PLAYLIST_COMPLETE,
-  RENAME_PLAYLIST_START, RENAME_PLAYLIST_COMPLETE,
   DELETE_PLAYLIST_START, DELETE_PLAYLIST_COMPLETE,
-  OPEN_ADD_MEDIA_MENU, CLOSE_ADD_MEDIA_MENU,
-  ADD_MEDIA_START, ADD_MEDIA_COMPLETE,
-  REMOVE_MEDIA_START, REMOVE_MEDIA_COMPLETE,
-  MOVE_MEDIA_START, MOVE_MEDIA_COMPLETE,
   UPDATE_MEDIA_START, UPDATE_MEDIA_COMPLETE,
   SHUFFLE_PLAYLIST_START, SHUFFLE_PLAYLIST_COMPLETE,
 } from '../constants/ActionTypes';
@@ -21,8 +12,6 @@ import {
   del, get, post, put,
 } from './RequestActionCreators';
 import {
-  playlistsSelector,
-  playlistItemsSelector,
   playlistItemFilterSelector,
   activePlaylistIDSelector,
   selectedPlaylistIDSelector,
@@ -30,15 +19,9 @@ import {
   selectedPlaylistSelector,
 } from '../selectors/playlistSelectors';
 import mergeIncludedModels from '../utils/mergeIncludedModels';
+import { selectPlaylist } from '../reducers/playlists';
 
 const MEDIA_PAGE_SIZE = 50;
-
-export function setPlaylists(playlists) {
-  return {
-    type: LOAD_ALL_PLAYLISTS_COMPLETE,
-    payload: { playlists },
-  };
-}
 
 // TODO It would be good to get rid of this
 export function flattenPlaylistItem(item) {
@@ -141,19 +124,6 @@ export function filterPlaylistItems(playlistID, filter) {
   };
 }
 
-export function selectPlaylist(playlistID) {
-  return (dispatch) => {
-    dispatch({
-      type: SELECT_PLAYLIST,
-      payload: { playlistID },
-    });
-
-    if (playlistID) {
-      dispatch(loadPlaylist(playlistID));
-    }
-  };
-}
-
 export function playlistCycled(playlistID) {
   return {
     type: PLAYLIST_CYCLED,
@@ -197,116 +167,6 @@ export function cyclePlaylist(playlistID) {
       dispatch(loadPlaylist(playlistID, 0));
     }
   };
-}
-
-export function activatePlaylistStart(playlistID) {
-  return {
-    type: ACTIVATE_PLAYLIST_START,
-    payload: { playlistID },
-  };
-}
-
-export function activatePlaylistComplete(playlistID) {
-  return {
-    type: ACTIVATE_PLAYLIST_COMPLETE,
-    payload: { playlistID },
-  };
-}
-
-export function activatePlaylist(playlistID) {
-  return put(`/playlists/${playlistID}/activate`, {}, {
-    onStart: () => activatePlaylistStart(playlistID),
-    onComplete: () => activatePlaylistComplete(playlistID),
-    onError: (error) => ({
-      type: ACTIVATE_PLAYLIST_COMPLETE,
-      error: true,
-      payload: error,
-      meta: { playlistID },
-    }),
-  });
-}
-
-export function loadPlaylistsStart() {
-  return { type: LOAD_ALL_PLAYLISTS_START };
-}
-
-export function loadPlaylistsComplete(playlists) {
-  return {
-    type: LOAD_ALL_PLAYLISTS_COMPLETE,
-    payload: { playlists },
-  };
-}
-
-export function loadPlaylists() {
-  return get('/playlists', {
-    onStart: loadPlaylistsStart,
-    onComplete: (res) => loadPlaylistsComplete(res.data),
-    onError: (error) => ({
-      type: LOAD_ALL_PLAYLISTS_COMPLETE,
-      error: true,
-      payload: error,
-    }),
-  });
-}
-
-export function createPlaylistStart(props, tempId) {
-  return {
-    type: CREATE_PLAYLIST_START,
-    payload: props,
-    meta: { tempId },
-  };
-}
-
-export function createPlaylistComplete(playlist, tempId) {
-  return {
-    type: CREATE_PLAYLIST_COMPLETE,
-    payload: { playlist },
-    meta: { tempId },
-  };
-}
-
-export function createPlaylist(name) {
-  const tempId = -Date.now();
-  const description = '';
-  const shared = false;
-
-  return post('/playlists', { name, description, shared }, {
-    onStart: () => createPlaylistStart({ name, description, shared }, tempId),
-    onComplete: (res) => (dispatch) => {
-      const playlist = res.data;
-      const { active } = res.meta;
-      dispatch(createPlaylistComplete(playlist, tempId));
-      if (active) {
-        dispatch(activatePlaylistComplete(playlist._id));
-      }
-      return playlist;
-    },
-    onError: (error) => ({
-      type: CREATE_PLAYLIST_COMPLETE,
-      error: true,
-      payload: error,
-      meta: { tempId },
-    }),
-  });
-}
-
-export function renamePlaylist(playlistID, name) {
-  return put(`/playlists/${playlistID}/rename`, { name }, {
-    onStart: () => ({
-      type: RENAME_PLAYLIST_START,
-      payload: { playlistID, name },
-    }),
-    onComplete: ({ data }) => ({
-      type: RENAME_PLAYLIST_COMPLETE,
-      payload: { playlistID, name: data.name },
-    }),
-    onError: (error) => ({
-      type: RENAME_PLAYLIST_COMPLETE,
-      error: true,
-      payload: error,
-      meta: { playlistID, name },
-    }),
-  });
 }
 
 /**
@@ -372,104 +232,6 @@ export function deletePlaylist(playlistID) {
   };
 }
 
-/**
- * @param {PlaylistItemDesc[]} items - The items to add.
- * @param {{ x: number, y: number }} position - Where to show the menu.
- */
-export function addMediaMenu(items, position) {
-  return (dispatch, getState) => {
-    const playlists = playlistsSelector(getState());
-    dispatch({
-      type: OPEN_ADD_MEDIA_MENU,
-      payload: {
-        media: items,
-      },
-      meta: {
-        playlists,
-        position,
-        type: 'add',
-      },
-    });
-  };
-}
-
-export function closeAddMediaMenu() {
-  return { type: CLOSE_ADD_MEDIA_MENU };
-}
-
-export function addMediaStart(playlistID, media, location) {
-  return {
-    type: ADD_MEDIA_START,
-    payload: { playlistID, media, location },
-  };
-}
-
-export function addMediaComplete(playlistID, newSize, insert) {
-  return {
-    type: ADD_MEDIA_COMPLETE,
-    payload: {
-      playlistID,
-      newSize,
-      afterID: insert.afterID,
-      appendedMedia: insert.media,
-    },
-  };
-}
-
-/**
- * @typedef {{
- *   sourceType: string,
- *   sourceID: string,
- *   artist?: string,
- *   title?: string,
- *   start?: number,
- *   end?: number,
- * }} PlaylistItemDesc
- */
-
-/**
- * Keep only the playlist item properties that are necessary to add an item to
- * a playlist. The rest ("thumbnail" etc) is left out for smaller payloads.
- *
- * @param {PlaylistItemDesc} item
- */
-function minimizePlaylistItem(item) {
-  return {
-    sourceType: item.sourceType,
-    sourceID: item.sourceID,
-    artist: item.artist,
-    title: item.title,
-    start: item.start,
-    end: item.end,
-  };
-}
-
-/**
- * @param {{ _id: string }} playlist
- * @param {PlaylistItemDesc[]} items
- * @param {string|null} [afterID]
- */
-export function addMedia(playlist, items, afterID = null) {
-  const payload = {
-    items: items.map(minimizePlaylistItem),
-    after: afterID,
-  };
-
-  return post(`/playlists/${playlist._id}/media`, payload, {
-    onStart: () => addMediaStart(playlist._id, items, afterID),
-    onComplete: (res) => addMediaComplete(
-      playlist._id,
-      res.meta.playlistSize,
-      { afterID, media: mergeIncludedModels(res).map(flattenPlaylistItem) },
-    ),
-    onError: (error) => ({
-      type: ADD_MEDIA_COMPLETE,
-      error: true,
-      payload: error,
-    }),
-  });
-}
-
 export function editMedia(playlistID, media) {
   return openEditMediaDialog(playlistID, media);
 }
@@ -499,95 +261,6 @@ export function updateMedia(playlistID, mediaID, props) {
       meta: { playlistID, mediaID, props },
     }),
   });
-}
-
-export function removeMediaStart(playlistID, items) {
-  return {
-    type: REMOVE_MEDIA_START,
-    payload: { playlistID, medias: items },
-  };
-}
-
-export function removeMediaComplete(playlistID, newSize, removedMedia) {
-  return {
-    type: REMOVE_MEDIA_COMPLETE,
-    payload: {
-      playlistID,
-      newSize,
-      removedMedia,
-    },
-  };
-}
-
-export function removeMedia(playlistID, items) {
-  const itemIDs = items.map((media) => media._id);
-  return del(`/playlists/${playlistID}/media`, { items: itemIDs }, {
-    onStart: () => removeMediaStart(playlistID, items),
-    onComplete: ({ meta }) => removeMediaComplete(
-      playlistID,
-      meta.playlistSize,
-      items,
-    ),
-    onError: (error) => ({
-      type: REMOVE_MEDIA_COMPLETE,
-      error: true,
-      payload: error,
-    }),
-  });
-}
-
-export function moveMediaStart(playlistID, items, location) {
-  return {
-    type: MOVE_MEDIA_START,
-    payload: { playlistID, location, medias: items },
-  };
-}
-
-export function moveMediaComplete(playlistID, items, location) {
-  return {
-    type: MOVE_MEDIA_COMPLETE,
-    payload: { playlistID, location, medias: items },
-  };
-}
-
-function resolveMoveOptions(playlist = [], opts = {}) {
-  if (opts.after) {
-    return { after: opts.after };
-  }
-  if (opts.before) {
-    for (let i = 0, l = playlist.length; i < l; i += 1) {
-      if (playlist[i] && playlist[i]._id === opts.before) {
-        if (i === 0) {
-          return { at: 'start' };
-        }
-        return { after: playlist[i - 1]._id };
-      }
-    }
-  }
-  if (opts.at) {
-    return { at: opts.at };
-  }
-  return null;
-}
-
-export function moveMedia(playlistID, medias, opts) {
-  return (dispatch, getState) => {
-    const playlistItems = playlistItemsSelector(getState())[playlistID];
-    const location = resolveMoveOptions(playlistItems, opts);
-
-    const items = medias.map((media) => media._id);
-
-    return dispatch(put(`/playlists/${playlistID}/move`, { items, ...location }, {
-      onStart: () => moveMediaStart(playlistID, medias, location),
-      onComplete: () => moveMediaComplete(playlistID, medias, location),
-      onError: (error) => ({
-        type: MOVE_MEDIA_COMPLETE,
-        error: true,
-        payload: error,
-        meta: { playlistID, medias, location },
-      }),
-    }));
-  };
 }
 
 export function shufflePlaylistStart(playlistID) {

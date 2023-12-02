@@ -29,7 +29,7 @@
   margin: auto;
   margin-top: 55px;
 
-  @nest .ChatMessages-scrollDown.is-visible & {
+  .ChatMessages-scrollDown.is-visible & {
     transition: margin-top 140ms ease-out;
     margin-top: 0;
   }

@@ -35,6 +35,7 @@ export default async function load(uw) {
       // eslint-disable-next-line no-param-reassign
       el.hidden = false;
     });
+    throw err;
   } finally {
     clearTimeout(longBuildTimer);
   }

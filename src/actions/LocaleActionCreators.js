@@ -4,7 +4,7 @@ import {
   LOAD_LANGUAGE_COMPLETE,
 } from '../constants/ActionTypes';
 import { loadedLanguagesSelector } from '../selectors/localeSelectors';
-import { languageSelector as currentLanguageSelector } from '../selectors/settingSelectors';
+import { languageSelector as currentLanguageSelector } from '../reducers/settings';
 import { resources } from '../locales';
 
 const inFlight = {};

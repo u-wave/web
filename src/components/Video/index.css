@@ -14,10 +14,7 @@
 }
 
 .Video-capture {
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
+  inset: 0;
 }
 
 .Video-progress {
@@ -33,7 +30,7 @@
   visibility: hidden;
 
   /* Only show the toolbar on hover. */
-  @nest .Video:hover & {
+  .Video:hover & {
     visibility: visible;
   }
 }
