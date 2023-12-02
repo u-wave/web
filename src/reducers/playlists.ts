@@ -313,7 +313,7 @@ const slice = createSlice({
             // Probably overly defensive, but avoid a crash if we got inconsistent data
             const size = activePlaylist ? activePlaylist.size : 1;
             const playlistItems = Array(size).fill(null);
-            playlistItems[0] = item
+            playlistItems[0] = item;
             state.playlistItems[payload.activePlaylist] = playlistItems;
           }
           state.activePlaylistID = payload.activePlaylist;
@@ -350,7 +350,11 @@ const slice = createSlice({
       })
       .addCase(LOAD_PLAYLIST_START, (state, { payload, meta }: AnyAction) => {
         const playlist = state.playlists[payload.playlistID];
-        if (meta.sneaky || meta.page !== 0 || state.playlistItems[payload.playlistID] || playlist == null) {
+        if (playlist == null) {
+          return;
+        }
+        // Cases where we don't show a loading anymation
+        if (meta.sneaky || meta.page !== 0 || state.playlistItems[payload.playlistID]) {
           return;
         }
 
@@ -414,7 +418,8 @@ const slice = createSlice({
         const items = state.playlistItems[payload.playlistID] ?? [];
         if (items.length > 0) {
           const newItems = items.slice(1);
-          newItems[playlist.size - 1] = items[0] ?? null; // eslint-disable-line prefer-destructuring
+          // eslint-disable-next-line prefer-destructuring
+          newItems[playlist.size - 1] = items[0] ?? null;
           state.playlistItems[payload.playlistID] = newItems;
         }
       })
@@ -453,7 +458,7 @@ const slice = createSlice({
           playlist.loading = true;
         }
       })
-      .addCase(DELETE_PLAYLIST_COMPLETE, (state, { payload, meta, error }: AnyAction) => {
+      .addCase(DELETE_PLAYLIST_COMPLETE, (state, { payload, error }: AnyAction) => {
         const playlist = state.playlists[payload.playlistID];
         if (playlist == null) {
           return;

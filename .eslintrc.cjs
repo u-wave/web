@@ -49,6 +49,12 @@ module.exports = {
       unnamedComponents: 'arrow-function',
     }],
     'react/jsx-filename-extension': ['error', { extensions: ['.jsx', '.tsx'] }],
+
+    'jsx-a11y/control-has-associated-label': [
+      'warn',
+      require('eslint-config-airbnb/rules/react-a11y')
+        .rules['jsx-a11y/control-has-associated-label'][1],
+    ],
   },
 
   settings: {

@@ -1,7 +1,7 @@
 import { AnyAction } from 'redux';
 import { initState } from './auth';
 
-interface State {
+export interface State {
   roles: undefined | Record<string, string[]>;
   apiUrl?: string,
   socketUrl?: string,

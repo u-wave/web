@@ -90,9 +90,9 @@ export default class Uwave {
     }
 
     this.store.dispatch(socketConnect());
-    const [_, initResult] = await Promise.all([
-      this.store.dispatch(loadCurrentLanguage()),
+    const [initResult] = await Promise.all([
       this.store.dispatch(initState()),
+      this.store.dispatch(loadCurrentLanguage()),
     ]);
     this.#resolveReady?.();
     if ('error' in initResult) {

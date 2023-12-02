@@ -24,7 +24,9 @@ import {
 } from '../reducers/users';
 import { socketMessage } from './socket';
 
-function expectType<T>(_param: T) {
+function expectType<T>(
+  _param: T, // eslint-disable-line @typescript-eslint/no-unused-vars
+) {
   // type-only function
 }
 

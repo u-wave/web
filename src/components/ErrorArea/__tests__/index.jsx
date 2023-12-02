@@ -40,7 +40,7 @@ describe('<ErrorArea />', () => {
     const snackbar = screen.getByRole('alert');
 
     expect(snackbar).toBeInTheDocument();
-    userEvent.click(screen.getByTestId('anywhere-else'));
+    await userEvent.click(screen.getByTestId('anywhere-else'));
 
     await waitFor(() => spy.mock.calls.length > 0);
   });
