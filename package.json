@@ -16,7 +16,7 @@
     "@mui/utils": "^5.2.2",
     "@openfonts/open-sans_all": "^1.44.2",
     "@reduxjs/toolkit": "^2.0.1",
-    "@tanstack/react-virtual": "3.0.0-beta.68",
+    "@tanstack/react-virtual": "3.0.0",
     "@u-wave/react-server-list": "5.0.0-beta.3",
     "@u-wave/react-translate": "^2.0.2",
     "@u-wave/react-youtube": "^1.0.0-alpha.3",
