@@ -23,7 +23,7 @@ function createUwaveStore(preloadedState = {}, options = {}) {
       webApiSocket({ url: options.socketUrl }),
       webApiSocketHandler.middleware,
     ),
-    enhancers: [persistSettings],
+    enhancers: (getDefaultEnhancers) => getDefaultEnhancers().concat(persistSettings),
     preloadedState,
   });
 
