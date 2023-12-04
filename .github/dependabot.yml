@@ -25,6 +25,13 @@ updates:
       - "react-dom"
       - "@types/react"
       - "@types/react-dom"
+    redux:
+      patterns:
+      - "redux"
+      - "redux-thunk"
+      - "react-redux"
+      - "@reduxjs/*"
+      - "reselect"
     mui:
       patterns:
       - "@mui/*"
