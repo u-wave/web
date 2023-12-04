@@ -28,7 +28,7 @@ const slice = createSlice({
     load(_state, { payload }: PayloadAction<Partial<State>>) {
       return deepmerge(initialState, payload);
     },
-    apply(state, { payload }: PayloadAction<Partial<State>>) {
+    applySettings(state, { payload }: PayloadAction<Partial<State>>) {
       return deepmerge(state, payload);
     },
     setLanguage(state, action: PayloadAction<string>) {
@@ -60,7 +60,7 @@ const slice = createSlice({
 
 export const {
   load,
-  apply,
+  applySettings: apply,
   setLanguage,
   setVolume,
   mute,
@@ -74,7 +74,7 @@ export const {
 export function set(key: string, value: unknown) {
   const changeset = {};
   dset(changeset, key, value);
-  return slice.actions.apply(changeset);
+  return slice.actions.applySettings(changeset);
 }
 
 export function volumeSelector(state: StoreState) {

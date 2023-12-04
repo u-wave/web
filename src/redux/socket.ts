@@ -1,4 +1,4 @@
-import type { Middleware } from 'redux';
+import type { AnyAction, Middleware } from 'redux';
 import { createAction } from '@reduxjs/toolkit';
 import type { AppDispatch } from './configureStore';
 import {
@@ -308,7 +308,7 @@ export default function middleware({ url = defaultUrl() } = {}): Middleware {
     });
 
     return (next) => (action) => {
-      const { type, payload, error } = action;
+      const { type, payload, error } = action as AnyAction;
 
       if (error) {
         next(action);

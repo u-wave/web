@@ -10,7 +10,7 @@ const slice = createSlice({
     reset() {
       return initialState;
     },
-    apply(state, action: PayloadAction<ThemeOptions>) {
+    applyTheme(state, action: PayloadAction<ThemeOptions>) {
       return merge(state, action.payload);
     },
   },
@@ -18,6 +18,6 @@ const slice = createSlice({
 
 export const {
   reset,
-  apply,
+  applyTheme: apply,
 } = slice.actions;
 export default slice.reducer;

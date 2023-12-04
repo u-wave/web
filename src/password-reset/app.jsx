@@ -2,7 +2,7 @@ import React from 'react';
 import { createRoot } from 'react-dom';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
-import thunk from 'redux-thunk';
+import { thunk } from 'redux-thunk';
 import Translator from '@u-wave/translate';
 import webApiRequest from '../redux/request';
 import readApplicationConfig from '../utils/readApplicationConfig';
