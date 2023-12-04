@@ -90,7 +90,7 @@
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",
     "@types/uuid": "^9.0.1",
-    "@typescript-eslint/eslint-plugin": "^6.12.0",
+    "@typescript-eslint/eslint-plugin": "^6.13.2",
     "@typescript-eslint/parser": "^6.12.0",
     "@vitejs/plugin-react": "^4.0.0",
     "@vitest/coverage-v8": "^1.0.0",
