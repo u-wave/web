@@ -2,6 +2,7 @@ import { readFile, writeFile } from 'node:fs/promises';
 import { defineConfig, splitVendorChunkPlugin } from 'vite';
 import react from '@vitejs/plugin-react';
 import yaml from '@rollup/plugin-yaml';
+import emoji from './tasks/emoji.mjs';
 import prerender from './tasks/prerender.mjs';
 
 const inputPkg = new URL('./package.json', import.meta.url);
@@ -52,6 +53,7 @@ export default defineConfig({
     prerender({ file: 'index.html', source: 'src/index.tsx' }),
     prerender({ file: 'password-reset.html', source: 'src/password-reset/index.jsx' }),
     prerender({ file: 'privacy.html', source: 'src/markdown.tsx', props: { path: 'static/privacy.md' } }),
+    emoji(),
     {
       name: 'u-wave-write-package-version',
       apply: 'build',

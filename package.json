@@ -134,7 +134,6 @@
     "dev": "vite",
     "lint": "eslint --cache . && stylelint --cache src/**/*.css",
     "postpublish": "npm publish -w ./npm",
-    "prepare": "node tasks/emoji.mjs",
     "prerelease": "npm run clean && npm test && npm run prod",
     "prod": "vite build",
     "serve": "u-wave-web",
