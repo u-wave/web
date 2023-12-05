@@ -24,7 +24,7 @@ export default function emojiPlugin () {
   return {
     name: 'emoji',
     async configureServer (server) {
-      server.middlewares.use(serveStatic(fileURLToPath(twemojiDir)));
+      server.middlewares.use('/static/emoji', serveStatic(fileURLToPath(twemojiDir)));
     },
     async buildStart () {
       const emojibaseShortcodes = JSON.parse(await fs.readFile(emojibaseShortcodesPath, { encoding: 'utf8' }));
