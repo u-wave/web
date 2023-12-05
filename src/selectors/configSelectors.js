@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import defaultEmoji from '../utils/emojiShortcodes';
+import defaultEmoji from 'virtual:emoji-shortcodes';
 
 /** @param {import('../redux/configureStore').StoreState} state */
 export const configSelector = (state) => state.config;

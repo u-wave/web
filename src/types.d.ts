@@ -13,6 +13,11 @@ declare module '*.yaml' {
   export default data;
 }
 
+declare module 'virtual:emoji-shortcodes' {
+  const emojiShortcodes: Record<string, string>;
+  export default emojiShortcodes;
+}
+
 declare module '@u-wave/react-translate' {
   import { Translator } from '@u-wave/translate';
 

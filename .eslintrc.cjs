@@ -72,6 +72,9 @@ module.exports = {
       'URL',
       'CSS.escape',
     ],
+    'import/core-modules': [
+      'virtual:emoji-shortcodes',
+    ],
   },
 
   overrides: [
