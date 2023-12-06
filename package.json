@@ -127,7 +127,7 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/u-wave/web"
+    "url": "git+https://github.com/u-wave/web.git"
   },
   "scripts": {
     "clean": "rimraf npm/public",
