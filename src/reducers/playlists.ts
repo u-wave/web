@@ -6,7 +6,6 @@ import { createAsyncThunk } from '../redux/api';
 import uwFetch, { ListResponse } from '../utils/fetch';
 import mergeIncludedModels from '../utils/mergeIncludedModels';
 import {
-  PLAYLIST_CYCLED,
   DELETE_PLAYLIST_START,
   DELETE_PLAYLIST_COMPLETE,
   UPDATE_MEDIA_START,
@@ -175,6 +174,33 @@ const loadPlaylist = createAsyncThunk('playlists/media', async ({
   getPendingMeta({ arg }) {
     return { sneaky: arg.sneaky };
   },
+});
+
+function shouldLoadAfterCycle(playlist: Playlist, items: PlaylistItemList) {
+  // If the playlist was fully loaded, we can cycle naively
+  if (items.length === playlist.size && items.every(Boolean)) {
+    return false;
+  }
+  // If the first page _after_ cycle is fully loaded, we also don't need to do
+  // anything.
+  if (items.length > MEDIA_PAGE_SIZE
+      && items.slice(1, 1 + MEDIA_PAGE_SIZE).every(Boolean)) {
+    return false;
+  }
+  // Otherwise, there will be unloaded items on the first page after cycling,
+  // so we want to eagerly load the page again.
+  return true;
+}
+
+const cyclePlaylist = createAsyncThunk('playlists/cycle', async (playlistID: string, api) => {
+  const { playlists: state } = api.getState();
+  if (playlistID === state.activePlaylistID || playlistID === state.selectedPlaylistID) {
+    const playlist = state.playlists[playlistID];
+    const items = state.playlistItems[playlistID];
+    if (playlist && items && shouldLoadAfterCycle(playlist, items)) {
+      await api.dispatch(loadPlaylist({ playlistID, page: 0 }));
+    }
+  }
 });
 
 const renamePlaylist = createAsyncThunk('playlists/rename', async ({ playlistID, name }: {
@@ -452,18 +478,18 @@ const slice = createSlice({
           meta,
         );
       })
-      .addCase(PLAYLIST_CYCLED, (state, { payload }: AnyAction) => {
-        const playlist = state.playlists[payload.playlistID];
+      .addCase(cyclePlaylist.pending, (state, { meta }) => {
+        const playlist = state.playlists[meta.arg];
         if (playlist == null) {
           return;
         }
 
-        const items = state.playlistItems[payload.playlistID] ?? [];
+        const items = state.playlistItems[meta.arg] ?? [];
         if (items.length > 0) {
           const newItems = items.slice(1);
           // eslint-disable-next-line prefer-destructuring
           newItems[playlist.size - 1] = items[0] ?? null;
-          state.playlistItems[payload.playlistID] = newItems;
+          state.playlistItems[meta.arg] = newItems;
         }
       })
       .addCase(createPlaylist.pending, (state, action) => {
@@ -618,6 +644,7 @@ const slice = createSlice({
 export {
   createPlaylist,
   loadPlaylist,
+  cyclePlaylist,
   renamePlaylist,
   activatePlaylist,
   addPlaylistItems,

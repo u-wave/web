@@ -1,7 +1,6 @@
 import {
   FILTER_PLAYLIST_ITEMS,
   FILTER_PLAYLIST_ITEMS_START, FILTER_PLAYLIST_ITEMS_COMPLETE,
-  PLAYLIST_CYCLED,
   DELETE_PLAYLIST_START, DELETE_PLAYLIST_COMPLETE,
   UPDATE_MEDIA_START, UPDATE_MEDIA_COMPLETE,
   SHUFFLE_PLAYLIST_START, SHUFFLE_PLAYLIST_COMPLETE,
@@ -14,8 +13,6 @@ import {
   playlistItemFilterSelector,
   activePlaylistIDSelector,
   selectedPlaylistIDSelector,
-  activePlaylistSelector,
-  selectedPlaylistSelector,
 } from '../selectors/playlistSelectors';
 import mergeIncludedModels from '../utils/mergeIncludedModels';
 import { selectPlaylist, loadPlaylist } from '../reducers/playlists';
@@ -82,51 +79,6 @@ export function filterPlaylistItems(playlistID, filter) {
     const loadAll = loadPlaylist({ playlistID, page: 0 });
     const loadFiltered = loadFilteredPlaylistItems(playlistID, 0);
     dispatch(filter === '' ? loadAll : loadFiltered);
-  };
-}
-
-export function playlistCycled(playlistID) {
-  return {
-    type: PLAYLIST_CYCLED,
-    payload: { playlistID },
-  };
-}
-
-function shouldLoadAfterCycle(playlist) {
-  const { media } = playlist;
-  // If the playlist was fully loaded, we can cycle naively
-  if (media.length === playlist.size && media.every(Boolean)) {
-    return false;
-  }
-  // If the first page _after_ cycle is fully loaded, we also don't need to do
-  // anything.
-  if (media.length > MEDIA_PAGE_SIZE
-      && media.slice(1, 1 + MEDIA_PAGE_SIZE).every(Boolean)) {
-    return false;
-  }
-  // Otherwise, there will be unloaded items on the first page after cycling,
-  // so we want to eagerly load the page again.
-  return true;
-}
-
-export function cyclePlaylist(playlistID) {
-  return (dispatch, getState) => {
-    const activePlaylist = activePlaylistSelector(getState());
-    const selectedPlaylist = selectedPlaylistSelector(getState());
-
-    let playlist;
-
-    if (playlistID === activePlaylist._id) {
-      playlist = activePlaylist;
-    } else if (playlistID === selectedPlaylist._id) {
-      playlist = selectedPlaylist;
-    }
-
-    dispatch(playlistCycled(playlistID));
-
-    if (playlist && shouldLoadAfterCycle(playlist)) {
-      dispatch(loadPlaylist({ playlistID, page: 0 }));
-    }
   };
 }
 
