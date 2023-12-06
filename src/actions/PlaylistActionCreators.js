@@ -1,5 +1,4 @@
 import {
-  FILTER_PLAYLIST_ITEMS,
   DELETE_PLAYLIST_START, DELETE_PLAYLIST_COMPLETE,
   SHUFFLE_PLAYLIST_START, SHUFFLE_PLAYLIST_COMPLETE,
 } from '../constants/ActionTypes';
@@ -9,7 +8,7 @@ import {
   activePlaylistIDSelector,
   selectedPlaylistIDSelector,
 } from '../selectors/playlistSelectors';
-import { selectPlaylist, loadPlaylist } from '../reducers/playlists';
+import { selectPlaylist, setPlaylistFilter, loadPlaylist } from '../reducers/playlists';
 
 // TODO It would be good to get rid of this
 export function flattenPlaylistItem(item) {
@@ -21,11 +20,7 @@ export function flattenPlaylistItem(item) {
 
 export function filterPlaylistItems(playlistID, filter) {
   return (dispatch) => {
-    dispatch({
-      type: FILTER_PLAYLIST_ITEMS,
-      payload: { playlistID, filter },
-    });
-
+    dispatch(setPlaylistFilter({ playlistID, filter }));
     dispatch(loadPlaylist({ playlistID, page: 0, filter }));
   };
 }

@@ -8,7 +8,6 @@ import mergeIncludedModels from '../utils/mergeIncludedModels';
 import {
   DELETE_PLAYLIST_START,
   DELETE_PLAYLIST_COMPLETE,
-  FILTER_PLAYLIST_ITEMS,
   DO_FAVORITE_COMPLETE,
   LOGOUT_COMPLETE,
 } from '../constants/ActionTypes';
@@ -385,6 +384,22 @@ const slice = createSlice({
       }
       state.selectedPlaylistID = action.payload;
     },
+    setPlaylistFilter(state, action: PayloadAction<{ playlistID: string, filter: string | null }>) {
+      const { payload } = action;
+      // Only the selected playlist can be filtered.
+      if (payload.playlistID !== state.selectedPlaylistID) {
+        return;
+      }
+      if (!payload.filter) {
+        state.currentFilter = null;
+        return;
+      }
+      state.currentFilter = {
+        playlistID: payload.playlistID,
+        filter: payload.filter,
+        items: filterCachedPlaylistItems(state, payload.playlistID, payload.filter),
+      };
+    },
     showImportPanel(state) {
       state.selectedPlaylistID = importPanelSymbol;
     },
@@ -495,21 +510,6 @@ const slice = createSlice({
             { page, pageSize },
           );
         }
-      })
-      .addCase(FILTER_PLAYLIST_ITEMS, (state, { payload }: AnyAction) => {
-        // Only the selected playlist can be filtered.
-        if (payload.playlistID !== state.selectedPlaylistID) {
-          return;
-        }
-        if (!payload.filter) {
-          state.currentFilter = null;
-          return;
-        }
-        state.currentFilter = {
-          playlistID: payload.playlistID,
-          filter: payload.filter,
-          items: filterCachedPlaylistItems(state, payload.playlistID, payload.filter),
-        };
       })
       .addCase(cyclePlaylist.pending, (state, { meta }) => {
         const playlist = state.playlists[meta.arg];
@@ -696,6 +696,7 @@ export {
 export const {
   selectPlaylist,
   selectActivePlaylist,
+  setPlaylistFilter,
   showImportPanel,
   showSearchResults,
 } = slice.actions;
