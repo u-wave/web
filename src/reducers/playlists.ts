@@ -312,9 +312,8 @@ const slice = createSlice({
             const activePlaylist = state.playlists[payload.activePlaylist];
             // Probably overly defensive, but avoid a crash if we got inconsistent data
             const size = activePlaylist ? activePlaylist.size : 1;
-            const playlistItems = Array(size).fill(null);
-            playlistItems[0] = item;
-            state.playlistItems[payload.activePlaylist] = playlistItems;
+            state.playlistItems[payload.activePlaylist] ??= Array(size).fill(null);
+            state.playlistItems[payload.activePlaylist]![0] = item;
           }
           state.activePlaylistID = payload.activePlaylist;
           // Select the first playlist by default if there is no active playlist.
