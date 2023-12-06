@@ -8,12 +8,12 @@ import {
 } from '../selectors/playlistSelectors';
 import {
   filterPlaylistItems,
-  deletePlaylist,
   cannotDeleteActivePlaylist,
   shufflePlaylist,
 } from '../actions/PlaylistActionCreators';
 import PlaylistPanel from '../components/PlaylistManager/Panel';
 import {
+  deletePlaylist,
   loadPlaylist,
   renamePlaylist,
   activatePlaylist,

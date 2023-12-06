@@ -1,14 +1,7 @@
-import {
-  DELETE_PLAYLIST_START, DELETE_PLAYLIST_COMPLETE,
-  SHUFFLE_PLAYLIST_START, SHUFFLE_PLAYLIST_COMPLETE,
-} from '../constants/ActionTypes';
+import { SHUFFLE_PLAYLIST_START, SHUFFLE_PLAYLIST_COMPLETE } from '../constants/ActionTypes';
 import { openEditMediaDialog } from './DialogActionCreators';
-import { del, post } from './RequestActionCreators';
-import {
-  activePlaylistIDSelector,
-  selectedPlaylistIDSelector,
-} from '../selectors/playlistSelectors';
-import { selectPlaylist, setPlaylistFilter, loadPlaylist } from '../reducers/playlists';
+import { post } from './RequestActionCreators';
+import { setPlaylistFilter, loadPlaylist } from '../reducers/playlists';
 
 // TODO It would be good to get rid of this
 export function flattenPlaylistItem(item) {
@@ -25,66 +18,13 @@ export function filterPlaylistItems(playlistID, filter) {
   };
 }
 
-/**
- * Select or activate a different playlist than the one given.
- * @return Promise
- */
-
-export function deselectPlaylist(playlistID) {
-  return (dispatch, getState) => {
-    const selectedID = selectedPlaylistIDSelector(getState());
-    const activeID = activePlaylistIDSelector(getState());
-    if (playlistID === selectedID) {
-      dispatch(selectPlaylist(activeID));
-    }
-  };
-}
-
-export function deletePlaylistStart(playlistID) {
-  return {
-    type: DELETE_PLAYLIST_START,
-    payload: { playlistID },
-  };
-}
-
-export function deletePlaylistComplete(playlistID) {
-  return {
-    type: DELETE_PLAYLIST_COMPLETE,
-    payload: { playlistID },
-  };
-}
-
 export function cannotDeleteActivePlaylist(playlistID) {
   return {
-    type: DELETE_PLAYLIST_COMPLETE,
+    type: 'cannotDeleteActivePlaylist',
     error: true,
     payload: new Error('The active playlist cannot be deleted. '
       + 'Activate a different playlist first, before deleting this one.'),
     meta: { playlistID },
-  };
-}
-
-export function deletePlaylist(playlistID) {
-  return (dispatch, getState) => {
-    const activeID = activePlaylistIDSelector(getState());
-
-    if (playlistID === activeID) {
-      dispatch(cannotDeleteActivePlaylist(playlistID));
-      return null;
-    }
-
-    dispatch(deselectPlaylist(playlistID));
-
-    return dispatch(del(`/playlists/${playlistID}`, {}, {
-      onStart: () => deletePlaylistStart(playlistID),
-      onComplete: () => deletePlaylistComplete(playlistID),
-      onError: (error) => ({
-        type: DELETE_PLAYLIST_COMPLETE,
-        error: true,
-        payload: error,
-        meta: { playlistID },
-      }),
-    }));
   };
 }
 

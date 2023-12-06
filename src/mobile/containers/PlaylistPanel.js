@@ -9,7 +9,6 @@ import {
 } from '../../selectors/playlistSelectors';
 import {
   filterPlaylistItems,
-  deletePlaylist,
   cannotDeleteActivePlaylist,
   shufflePlaylist,
   loadPlaylist,
@@ -17,6 +16,7 @@ import {
 } from '../../actions/PlaylistActionCreators';
 import PlaylistPanel from '../components/PlaylistManager/PlaylistPanel';
 import {
+  deletePlaylist,
   renamePlaylist,
   activatePlaylist,
   movePlaylistItems,

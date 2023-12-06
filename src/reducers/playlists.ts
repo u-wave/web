@@ -5,12 +5,7 @@ import indexBy from 'just-index';
 import { createAsyncThunk } from '../redux/api';
 import uwFetch, { ListResponse } from '../utils/fetch';
 import mergeIncludedModels from '../utils/mergeIncludedModels';
-import {
-  DELETE_PLAYLIST_START,
-  DELETE_PLAYLIST_COMPLETE,
-  DO_FAVORITE_COMPLETE,
-  LOGOUT_COMPLETE,
-} from '../constants/ActionTypes';
+import { DO_FAVORITE_COMPLETE, LOGOUT_COMPLETE } from '../constants/ActionTypes';
 import type { Media } from './booth';
 import { initState } from './auth';
 
@@ -124,6 +119,12 @@ const createPlaylist = createAsyncThunk('playlists/create', async (name: string)
   }]);
 
   return response.data;
+});
+
+const deletePlaylist = createAsyncThunk('playlists/delete', async (playlistID: string) => {
+  await uwFetch([`/playlists/${playlistID}`, {
+    method: 'delete',
+  }]);
 });
 
 const MEDIA_PAGE_SIZE = 50;
@@ -553,29 +554,32 @@ const slice = createSlice({
           playlist.name = action.payload.name;
         }
       })
-      .addCase(DELETE_PLAYLIST_START, (state, { payload }: AnyAction) => {
-        const playlist = state.playlists[payload.playlistID];
+      .addCase(deletePlaylist.pending, (state, { meta }) => {
+        const playlist = state.playlists[meta.arg];
 
         if (playlist != null) {
           playlist.loading = true;
         }
       })
-      .addCase(DELETE_PLAYLIST_COMPLETE, (state, { payload, error }: AnyAction) => {
-        const playlist = state.playlists[payload.playlistID];
+      .addCase(deletePlaylist.fulfilled, (state, { meta }) => {
+        const playlistID = meta.arg;
+        const playlist = state.playlists[playlistID];
         if (playlist == null) {
           return;
         }
 
-        if (error) {
-          playlist.loading = false;
-          return;
-        }
-
         playlist.loading = false;
-        delete state.playlists[payload.playlistID];
-        delete state.playlistItems[payload.playlistID];
-        if (state.selectedPlaylistID === payload.playlistID) {
+        delete state.playlists[playlistID];
+        delete state.playlistItems[playlistID];
+
+        if (state.selectedPlaylistID === playlistID) {
           state.selectedPlaylistID = state.activePlaylistID;
+        }
+      })
+      .addCase(deletePlaylist.rejected, (state, { meta }) => {
+        const playlist = state.playlists[meta.arg];
+        if (playlist != null) {
+          playlist.loading = false;
         }
       })
       .addCase(addPlaylistItems.pending, (state, action) => {
@@ -684,6 +688,7 @@ const slice = createSlice({
 
 export {
   createPlaylist,
+  deletePlaylist,
   loadPlaylist,
   cyclePlaylist,
   renamePlaylist,
