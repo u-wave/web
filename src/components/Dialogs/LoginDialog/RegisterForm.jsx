@@ -24,6 +24,7 @@ function RegisterForm({
   useReCaptcha,
   reCaptchaSiteKey,
   supportsSocialAuth,
+  onCloseDialog,
   onRegister,
 }) {
   const { t } = useTranslator();
@@ -47,8 +48,9 @@ function RegisterForm({
       password,
       grecaptcha: captchaResponse,
     });
+    onCloseDialog();
   }, [
-    t, onRegister,
+    t, onRegister, onCloseDialog,
     username, email, password, passwordConfirmation, captchaResponse,
   ]);
 
@@ -181,6 +183,7 @@ RegisterForm.propTypes = {
   useReCaptcha: PropTypes.bool,
   reCaptchaSiteKey: PropTypes.string,
   supportsSocialAuth: PropTypes.bool,
+  onCloseDialog: PropTypes.func,
   onRegister: PropTypes.func,
 };
 
