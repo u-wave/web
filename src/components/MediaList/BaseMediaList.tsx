@@ -19,14 +19,14 @@ interface Item {
   sourceID?: string;
 }
 
-type ContextType<
+export type ContextType<
   MediaType extends Item = Media,
 > = {
   media: (MediaType | null)[],
   selection: ItemSelection<MediaType | null>,
 }
 const MediaListContext = React.createContext<ContextType<Item> | null>(null);
-export function useMediaListContext<T extends ContextType = ContextType>() {
+export function useMediaListContext<T extends ContextType<any> = ContextType<Media>>() {
   const context = useContext(MediaListContext);
   if (!context) {
     throw new Error('Missing MediaListContext');

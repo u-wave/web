@@ -1,15 +1,37 @@
 import cx from 'clsx';
-import React from 'react';
-import PropTypes from 'prop-types';
 import CircularProgress from '@mui/material/CircularProgress';
-import BaseMediaList from '../../MediaList/BaseMediaList';
+import BaseMediaList, { useMediaListContext, type ContextType } from '../../MediaList/BaseMediaList';
 import PlaylistMeta from './Meta';
 import PlaylistEmpty from './PlaylistEmpty';
 import PlaylistFilterEmpty from './PlaylistFilterEmpty';
 import PlaylistItemRow from './PlaylistItemRow';
 import DroppablePlaylistItemRow from './DroppablePlaylistItemRow';
+import type { InsertTarget, Playlist, PlaylistItem } from '../../../reducers/playlists';
 
-function PlaylistPanel(props) {
+interface PlaylistContextProps extends ContextType<PlaylistItem> {
+  playlist: Playlist,
+  isFiltered: boolean,
+  onMoveMedia: PlaylistPanelProps['onMoveMedia'],
+}
+
+export const usePlaylistContext = useMediaListContext<PlaylistContextProps>;
+
+type PlaylistPanelProps = {
+  className?: string,
+  playlist: Playlist,
+  media: (PlaylistItem | null)[],
+  loading: boolean,
+  isFiltered: boolean,
+  onShufflePlaylist: () => Promise<void>,
+  onActivatePlaylist: () => Promise<void>,
+  onRenamePlaylist: (newName: string) => Promise<void>,
+  onDeletePlaylist: (confirmName: string) => Promise<void>,
+  onNotDeletable: () => Promise<void>,
+  onLoadPlaylistPage: (page: number) => Promise<void>,
+  onFilterPlaylistItems: (filter: string | null) => void,
+  onMoveMedia: (items: PlaylistItem[], target: InsertTarget) => Promise<void>,
+};
+function PlaylistPanel(props: PlaylistPanelProps) {
   const {
     className,
     playlist,
@@ -57,9 +79,8 @@ function PlaylistPanel(props) {
     <div className={cx('PlaylistPanel', className)}>
       <PlaylistMeta
         className="PlaylistPanel-meta"
-        id={playlist._id}
         name={playlist.name}
-        active={playlist.active}
+        active={playlist.active ?? false}
         onShufflePlaylist={onShufflePlaylist}
         onActivatePlaylist={onActivatePlaylist}
         onRenamePlaylist={onRenamePlaylist}
@@ -71,21 +92,5 @@ function PlaylistPanel(props) {
     </div>
   );
 }
-
-PlaylistPanel.propTypes = {
-  className: PropTypes.string,
-  playlist: PropTypes.object.isRequired,
-  media: PropTypes.array.isRequired,
-  loading: PropTypes.bool.isRequired,
-  isFiltered: PropTypes.bool.isRequired,
-  onShufflePlaylist: PropTypes.func.isRequired,
-  onActivatePlaylist: PropTypes.func.isRequired,
-  onRenamePlaylist: PropTypes.func.isRequired,
-  onDeletePlaylist: PropTypes.func.isRequired,
-  onLoadPlaylistPage: PropTypes.func.isRequired,
-  onFilterPlaylistItems: PropTypes.func.isRequired,
-  onNotDeletable: PropTypes.func.isRequired,
-  onMoveMedia: PropTypes.func.isRequired,
-};
 
 export default PlaylistPanel;

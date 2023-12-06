@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import { useCallback, useState } from 'react';
 import { useTranslator } from '@u-wave/react-translate';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
@@ -8,16 +7,16 @@ import SvgIcon from '../../SvgIcon';
 import ConfirmDialog from '../../Dialogs/ConfirmDialog';
 import FormGroup from '../../Form/Group';
 
-const {
-  useCallback,
-  useState,
-} = React;
-
+type DeletePlaylistButtonProps = {
+  onDelete: (confirmName: string) => Promise<void>,
+  onNotDeletable: () => void,
+  active: boolean,
+};
 function DeletePlaylistButton({
   onDelete,
   onNotDeletable,
   active,
-}) {
+}: DeletePlaylistButtonProps) {
   const { t } = useTranslator();
   const [deleting, setDeleting] = useState(false);
 
@@ -33,7 +32,7 @@ function DeletePlaylistButton({
     setDeleting(false);
   }, []);
 
-  const handleConfirm = useCallback((name) => (
+  const handleConfirm = useCallback((name: string) => (
     onDelete(name).then(() => {
       setDeleting(false);
     })
@@ -64,11 +63,5 @@ function DeletePlaylistButton({
     </>
   );
 }
-
-DeletePlaylistButton.propTypes = {
-  onDelete: PropTypes.func.isRequired,
-  onNotDeletable: PropTypes.func.isRequired,
-  active: PropTypes.bool.isRequired,
-};
 
 export default DeletePlaylistButton;

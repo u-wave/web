@@ -1,25 +1,24 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import { useCallback } from 'react';
 import { mdiChevronUp } from '@mdi/js';
 import { useDispatch } from '../../../hooks/useRedux';
-import { useMediaListContext } from '../../MediaList/BaseMediaList';
 import SvgIcon from '../../SvgIcon';
 import MediaAction from '../../MediaList/MediaAction';
-import { movePlaylistItems } from '../../../reducers/playlists';
+import { type PlaylistItem, movePlaylistItems } from '../../../reducers/playlists';
+import { usePlaylistContext } from '.';
 
-const {
-  useCallback,
-} = React;
-
-function MoveToFirstAction({ media }) {
-  const { playlist, selection } = useMediaListContext();
+type MoveToFirstActionProps = {
+  media: PlaylistItem,
+}
+function MoveToFirstAction({ media }: MoveToFirstActionProps) {
+  const { playlist, selection } = usePlaylistContext();
   const dispatch = useDispatch();
   const handleClick = useCallback(() => {
     const selectedItems = selection.isSelected(media) ? selection.get() : [media];
 
     dispatch(movePlaylistItems({
       playlistID: playlist._id,
-      medias: selectedItems,
+      // If an item is not loaded, you would not be able to select it
+      medias: selectedItems as PlaylistItem[],
       target: { at: 'start' },
     }));
   }, [dispatch, playlist, media, selection]);
@@ -30,9 +29,5 @@ function MoveToFirstAction({ media }) {
     </MediaAction>
   );
 }
-
-MoveToFirstAction.propTypes = {
-  media: PropTypes.object.isRequired,
-};
 
 export default MoveToFirstAction;

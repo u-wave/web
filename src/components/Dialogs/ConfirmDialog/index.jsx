@@ -10,7 +10,7 @@ import FormGroup from '../../Form/Group';
 import Button from '../../Form/Button';
 
 function ConfirmDialog({
-  className,
+  className = undefined,
   children,
   open,
   cancelLabel = 'Cancel',

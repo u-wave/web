@@ -1,18 +1,16 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { mdiDelete } from '@mdi/js';
 import { useDispatch } from '../../../hooks/useRedux';
-import { useMediaListContext } from '../../MediaList/BaseMediaList';
 import SvgIcon from '../../SvgIcon';
 import MediaAction from '../../MediaList/MediaAction';
-import { removePlaylistItems } from '../../../reducers/playlists';
+import { type PlaylistItem, removePlaylistItems } from '../../../reducers/playlists';
+import { usePlaylistContext } from '.';
+import { useCallback } from 'react';
 
-const {
-  useCallback,
-} = React;
-
-function RemoveFromPlaylistAction({ media }) {
-  const { playlist, selection } = useMediaListContext();
+type RemoveFromPlaylistActionProps = {
+  media: PlaylistItem,
+};
+function RemoveFromPlaylistAction({ media }: RemoveFromPlaylistActionProps) {
+  const { playlist, selection } = usePlaylistContext();
   const playlistID = playlist._id;
   const dispatch = useDispatch();
   const handleClick = useCallback(() => {
@@ -20,7 +18,7 @@ function RemoveFromPlaylistAction({ media }) {
 
     dispatch(removePlaylistItems({
       playlistID,
-      medias: selectedItems,
+      medias: selectedItems as PlaylistItem[],
     }));
   }, [dispatch, playlistID, media, selection]);
 
@@ -30,9 +28,5 @@ function RemoveFromPlaylistAction({ media }) {
     </MediaAction>
   );
 }
-
-RemoveFromPlaylistAction.propTypes = {
-  media: PropTypes.object.isRequired,
-};
 
 export default RemoveFromPlaylistAction;

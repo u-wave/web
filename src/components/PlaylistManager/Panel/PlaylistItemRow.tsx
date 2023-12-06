@@ -1,18 +1,22 @@
 import cx from 'clsx';
-import React from 'react';
-import PropTypes from 'prop-types';
+import { useCallback, useState } from 'react';
 import MediaDuration from '../../MediaList/MediaDuration';
 import MediaLoadingIndicator from '../../MediaList/MediaLoadingIndicator';
 import MediaRowBase from '../../MediaList/MediaRowBase';
 import MediaSourceIcon from '../../MediaList/MediaSourceIcon';
 import MediaThumbnail from '../../MediaList/MediaThumbnail';
 import PlaylistItemActions from './PlaylistItemActions';
+import type { PlaylistItem } from '../../../reducers/playlists';
 
-const {
-  useCallback,
-  useState,
-} = React;
-
+type PlaylistItemRowProps = {
+  className?: string,
+  // For virtual list positioning
+  style?: React.CSSProperties,
+  containerRef?: React.RefObject<HTMLDivElement>,
+  index: number,
+  media: PlaylistItem,
+  onClick: () => void,
+};
 function PlaylistItemRow({
   className,
   style,
@@ -20,7 +24,7 @@ function PlaylistItemRow({
   index,
   media,
   onClick,
-}) {
+}: PlaylistItemRowProps) {
   const loadingClass = media.loading ? 'is-loading' : '';
   const [showActions, setShowActions] = useState(false);
 
@@ -74,14 +78,5 @@ function PlaylistItemRow({
     </MediaRowBase>
   );
 }
-
-PlaylistItemRow.propTypes = {
-  className: PropTypes.string,
-  style: PropTypes.object, // from virtual list positioning
-  index: PropTypes.number.isRequired,
-  containerRef: PropTypes.any,
-  media: PropTypes.object.isRequired,
-  onClick: PropTypes.func.isRequired,
-};
 
 export default PlaylistItemRow;

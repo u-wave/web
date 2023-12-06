@@ -1,18 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import { useCallback } from 'react';
 import { mdiPencil } from '@mdi/js';
 import { useDispatch } from '../../../hooks/useRedux';
 import SvgIcon from '../../SvgIcon';
 import { editMedia } from '../../../actions/PlaylistActionCreators';
-import { useMediaListContext } from '../../MediaList/BaseMediaList';
+import type { PlaylistItem } from '../../../reducers/playlists';
 import MediaAction from '../../MediaList/MediaAction';
+import { usePlaylistContext } from '.';
 
-const {
-  useCallback,
-} = React;
-
-function EditMediaAction({ media }) {
-  const { playlist } = useMediaListContext();
+type EditMediaActionProps = {
+  media: PlaylistItem,
+};
+function EditMediaAction({ media }: EditMediaActionProps) {
+  const { playlist } = usePlaylistContext();
   const dispatch = useDispatch();
   const handleClick = useCallback(() => {
     dispatch(editMedia(playlist._id, media));
@@ -24,9 +23,5 @@ function EditMediaAction({ media }) {
     </MediaAction>
   );
 }
-
-EditMediaAction.propTypes = {
-  media: PropTypes.object.isRequired,
-};
 
 export default EditMediaAction;

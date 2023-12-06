@@ -18,15 +18,15 @@ const {
 } = React;
 
 function PromptDialog({
-  children,
-  icon,
+  children = undefined,
+  icon = undefined,
   inputType = 'text',
-  placeholder,
+  placeholder = undefined,
   submitLabel = 'OK',
   title,
-  bodyClassName,
-  contentClassName,
-  titleClassName,
+  bodyClassName = undefined,
+  contentClassName = undefined,
+  titleClassName = undefined,
   onSubmit,
   onCancel,
   open,

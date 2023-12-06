@@ -1,31 +1,40 @@
 import cx from 'clsx';
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useDrop } from 'react-dnd';
 import { MEDIA } from '../../../constants/DDItemTypes';
 import isDraggingNearTopOfRow from '../../../utils/isDraggingNearTopOfRow';
 import PlaylistItemRow from './PlaylistItemRow';
-import { useMediaListContext } from '../../MediaList/BaseMediaList';
+import { usePlaylistContext } from '.';
+import type { PlaylistItem } from '../../../reducers/playlists';
 
 const {
   useRef,
   useState,
 } = React;
 
+type PlaylistItemRowProps = {
+  className?: string,
+  // For virtual list positioning
+  style?: React.CSSProperties,
+  containerRef?: React.RefObject<HTMLDivElement>,
+  index: number,
+  media: PlaylistItem,
+  onClick: () => void,
+};
 function DroppablePlaylistItemRow({
   className,
   style,
   index,
   media,
   onClick,
-}) {
-  const { onMoveMedia } = useMediaListContext();
+}: PlaylistItemRowProps) {
+  const { onMoveMedia } = usePlaylistContext();
   const [insertingAbove, setInsertAbove] = useState(false);
   const droppableRef = useRef(null);
   const [{ isOver }, drop] = useDrop(() => ({
     accept: MEDIA,
     drop(_item, monitor) {
-      const { media: droppedItems } = monitor.getItem();
+      const { media: droppedItems } = monitor.getItem<{ media: PlaylistItem[] }>();
       if (droppedItems) {
         // Do not attempt to move when the selection is dropped on top of an item
         // that is in the selection.
@@ -62,13 +71,5 @@ function DroppablePlaylistItemRow({
     />
   );
 }
-
-DroppablePlaylistItemRow.propTypes = {
-  className: PropTypes.string,
-  style: PropTypes.object, // from virtual list positioning
-  index: PropTypes.number.isRequired,
-  media: PropTypes.object.isRequired,
-  onClick: PropTypes.func.isRequired,
-};
 
 export default DroppablePlaylistItemRow;

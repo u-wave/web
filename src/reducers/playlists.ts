@@ -234,7 +234,7 @@ const activatePlaylist = createAsyncThunk('playlists/activate', async (playlistI
   }]);
 });
 
-type InsertTarget = { before: string } | { after: string } | { at: 'start' | 'end' };
+export type InsertTarget = { before: string } | { after: string } | { at: 'start' | 'end' };
 function resolveMoveOptions(
   items: (null | { _id: string })[],
   opts: InsertTarget,

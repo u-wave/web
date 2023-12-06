@@ -1,6 +1,5 @@
 import cx from 'clsx';
-import React from 'react';
-import PropTypes from 'prop-types';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslator } from '@u-wave/react-translate';
 import { useDebounce } from 'use-debounce';
 import Tooltip from '@mui/material/Tooltip';
@@ -8,15 +7,12 @@ import IconButton from '@mui/material/IconButton';
 import { mdiMagnify } from '@mdi/js';
 import SvgIcon from '../../SvgIcon';
 
-const {
-  useEffect,
-  useRef,
-  useState,
-} = React;
-
-function PlaylistFilter({ onFilter }) {
+type PlaylistFilterProps = {
+  onFilter: (filter: string | null) => void,
+};
+function PlaylistFilter({ onFilter }: PlaylistFilterProps) {
   const { t } = useTranslator();
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [value, setValue] = useState('');
   const [deferredValue] = useDebounce(value, 200);
@@ -34,7 +30,7 @@ function PlaylistFilter({ onFilter }) {
 
   useEffect(() => {
     if (isOpen) {
-      inputRef.current.focus();
+      inputRef.current?.focus();
     }
   }, [isOpen]);
 
@@ -44,11 +40,11 @@ function PlaylistFilter({ onFilter }) {
     setIsOpen(shouldOpen);
     setValue('');
     if (isOpen && value) {
-      onFilter('');
+      onFilter(null);
     }
   };
 
-  const handleKeyDown = (event) => {
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Escape') {
       if (value) {
         event.preventDefault();
@@ -59,8 +55,8 @@ function PlaylistFilter({ onFilter }) {
     }
   };
 
-  const handleChange = (event) => {
-    setValue(event.target.value);
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(event.currentTarget.value);
   };
 
   return (
@@ -69,7 +65,7 @@ function PlaylistFilter({ onFilter }) {
         <IconButton
           className="PlaylistMeta-iconButton"
           onClick={handleClick}
-          style={isOpen ? { color: '#fff' } : null}
+          style={isOpen ? { color: '#fff' } : undefined}
         >
           <SvgIcon path={mdiMagnify} />
         </IconButton>
@@ -85,9 +81,5 @@ function PlaylistFilter({ onFilter }) {
     </div>
   );
 }
-
-PlaylistFilter.propTypes = {
-  onFilter: PropTypes.func.isRequired,
-};
 
 export default PlaylistFilter;

@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import { useCallback, useState } from 'react';
 import { useTranslator } from '@u-wave/react-translate';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
@@ -7,12 +6,11 @@ import { mdiPencil } from '@mdi/js';
 import SvgIcon from '../../SvgIcon';
 import PromptDialog from '../../Dialogs/PromptDialog';
 
-const {
-  useCallback,
-  useState,
-} = React;
-
-function RenamePlaylistButton({ initialName, onRename }) {
+type RenamePlaylistButtonProps = {
+  initialName: string,
+  onRename: (newName: string) => Promise<void>,
+};
+function RenamePlaylistButton({ initialName, onRename }: RenamePlaylistButtonProps) {
   const { t } = useTranslator();
   const [renaming, setRenaming] = useState(false);
 
@@ -24,7 +22,7 @@ function RenamePlaylistButton({ initialName, onRename }) {
     setRenaming(false);
   }, []);
 
-  const handleSubmit = useCallback(async (name) => {
+  const handleSubmit = useCallback(async (name: string) => {
     await onRename(name);
     setRenaming(false);
   }, [onRename]);
@@ -47,10 +45,5 @@ function RenamePlaylistButton({ initialName, onRename }) {
     </>
   );
 }
-
-RenamePlaylistButton.propTypes = {
-  onRename: PropTypes.func.isRequired,
-  initialName: PropTypes.string,
-};
 
 export default RenamePlaylistButton;
