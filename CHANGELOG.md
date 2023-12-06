@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.0-alpha.29 / 06 Dec 2023
+While this is an alpha release, new servers should use this rather than an older "stable" version.
+
+Features:
+ * Typescript refactor. (#2685)
+
+Fixes:
+ * Fix overflows in autocomplete with long emote names. (#2674)
+
+Internal:
+ * Build emoji files and shortcodes map in a vite plugin. (#2789)
+
 ## 2.0.0-alpha.24 / 13 Mar 2023
 While this is an alpha release, new servers should use this rather than an older "stable" version.
 
