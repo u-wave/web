@@ -8,8 +8,6 @@ import mergeIncludedModels from '../utils/mergeIncludedModels';
 import {
   DELETE_PLAYLIST_START,
   DELETE_PLAYLIST_COMPLETE,
-  UPDATE_MEDIA_START,
-  UPDATE_MEDIA_COMPLETE,
   FILTER_PLAYLIST_ITEMS,
   FILTER_PLAYLIST_ITEMS_COMPLETE,
   DO_FAVORITE_COMPLETE,
@@ -340,6 +338,31 @@ const removePlaylistItems = createAsyncThunk('playlists/removePlaylistItems', as
   return { newSize: meta.playlistSize };
 });
 
+type PlaylistItemUpdate = {
+    artist: string,
+    title: string,
+    start: number,
+    end: number,
+}
+const updatePlaylistItem = createAsyncThunk('playlists/updatePlaylistItem', async ({
+  playlistID,
+  mediaID,
+  props,
+}: {
+  playlistID: string,
+  mediaID: string,
+  props: PlaylistItemUpdate,
+}) => {
+  const { data } = await uwFetch<{
+    data: PlaylistItemUpdate,
+  }>([`/playlists/${playlistID}/media/${mediaID}`, {
+    method: 'put',
+    data: props,
+  }]);
+
+  return data;
+});
+
 const slice = createSlice({
   name: 'playlists',
   initialState,
@@ -583,18 +606,26 @@ const slice = createSlice({
           { at: 'end' },
         );
       })
-      .addCase(UPDATE_MEDIA_START, (state, { payload }: AnyAction) => {
-        for (const item of state.playlistItems[payload.playlistID] ?? []) {
-          if (item != null && item._id === payload.mediaID) {
+      .addCase(updatePlaylistItem.pending, (state, { meta }) => {
+        for (const item of state.playlistItems[meta.arg.playlistID] ?? []) {
+          if (item != null && item._id === meta.arg.mediaID) {
             item.loading = true;
           }
         }
       })
-      .addCase(UPDATE_MEDIA_COMPLETE, (state, { payload }: AnyAction) => {
-        for (const item of state.playlistItems[payload.playlistID] ?? []) {
-          if (item != null && item._id === payload.mediaID) {
+      .addCase(updatePlaylistItem.fulfilled, (state, { payload, meta }) => {
+        for (const item of state.playlistItems[meta.arg.playlistID] ?? []) {
+          if (item != null && item._id === meta.arg.mediaID) {
             item.loading = false;
-            Object.assign(item, payload.media);
+            Object.assign(item, payload);
+          }
+        }
+      })
+      .addCase(updatePlaylistItem.rejected, (state, { meta }) => {
+        // Just remove the loading state
+        for (const item of state.playlistItems[meta.arg.playlistID] ?? []) {
+          if (item != null && item._id === meta.arg.mediaID) {
+            item.loading = false;
           }
         }
       })
@@ -650,6 +681,7 @@ export {
   addPlaylistItems,
   movePlaylistItems,
   removePlaylistItems,
+  updatePlaylistItem,
 };
 export const {
   selectPlaylist,

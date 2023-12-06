@@ -2,13 +2,10 @@ import {
   FILTER_PLAYLIST_ITEMS,
   FILTER_PLAYLIST_ITEMS_START, FILTER_PLAYLIST_ITEMS_COMPLETE,
   DELETE_PLAYLIST_START, DELETE_PLAYLIST_COMPLETE,
-  UPDATE_MEDIA_START, UPDATE_MEDIA_COMPLETE,
   SHUFFLE_PLAYLIST_START, SHUFFLE_PLAYLIST_COMPLETE,
 } from '../constants/ActionTypes';
 import { openEditMediaDialog } from './DialogActionCreators';
-import {
-  del, get, post, put,
-} from './RequestActionCreators';
+import { del, get, post } from './RequestActionCreators';
 import {
   playlistItemFilterSelector,
   activePlaylistIDSelector,
@@ -147,33 +144,6 @@ export function deletePlaylist(playlistID) {
 
 export function editMedia(playlistID, media) {
   return openEditMediaDialog(playlistID, media);
-}
-
-export function updateMediaStart(playlistID, mediaID, props) {
-  return {
-    type: UPDATE_MEDIA_START,
-    payload: { playlistID, mediaID, props },
-  };
-}
-
-export function updateMediaComplete(playlistID, mediaID, media) {
-  return {
-    type: UPDATE_MEDIA_COMPLETE,
-    payload: { playlistID, mediaID, media },
-  };
-}
-
-export function updateMedia(playlistID, mediaID, props) {
-  return put(`/playlists/${playlistID}/media/${mediaID}`, props, {
-    onStart: () => updateMediaStart(playlistID, mediaID, props),
-    onComplete: (res) => updateMediaComplete(playlistID, mediaID, res.data),
-    onError: (error) => ({
-      type: UPDATE_MEDIA_COMPLETE,
-      payload: error,
-      error: true,
-      meta: { playlistID, mediaID, props },
-    }),
-  });
 }
 
 export function shufflePlaylistStart(playlistID) {
