@@ -71,7 +71,7 @@ export function register({
         type: REGISTER_COMPLETE,
         payload: { user },
       });
-      dispatch(login({ email, password }));
+      return dispatch(login({ email, password }));
     },
     onError: registerCompleteError,
   });
