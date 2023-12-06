@@ -26,7 +26,7 @@ function PlaylistPanel(props) {
     onMoveMedia,
   } = props;
 
-  const { size } = playlist;
+  const size = media.length;
 
   let list;
   if (loading) {

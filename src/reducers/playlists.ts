@@ -9,7 +9,6 @@ import {
   DELETE_PLAYLIST_START,
   DELETE_PLAYLIST_COMPLETE,
   FILTER_PLAYLIST_ITEMS,
-  FILTER_PLAYLIST_ITEMS_COMPLETE,
   DO_FAVORITE_COMPLETE,
   LOGOUT_COMPLETE,
 } from '../constants/ActionTypes';
@@ -133,9 +132,11 @@ const MEDIA_PAGE_SIZE = 50;
 const loadPlaylist = createAsyncThunk('playlists/media', async ({
   playlistID,
   page = 0,
+  filter = null,
 }: {
   playlistID: string,
   page?: number,
+  filter?: string | null,
   sneaky?: boolean,
 }) => {
   const response = await uwFetch<{
@@ -143,13 +144,18 @@ const loadPlaylist = createAsyncThunk('playlists/media', async ({
     meta: {
       offset: number,
       pageSize: number,
-      filtered?: number,
+      results?: number,
       total: number,
     },
     included: object,
   }>([`/playlists/${playlistID}/media`, {
     method: 'get',
-    qs: { page, limit: MEDIA_PAGE_SIZE },
+    qs: {
+      // Empty string should not actually filter.
+      filter: filter || null,
+      page,
+      limit: MEDIA_PAGE_SIZE,
+    },
   }]);
 
   // TODO specific type
@@ -166,7 +172,7 @@ const loadPlaylist = createAsyncThunk('playlists/media', async ({
     items: items.map(flattenPlaylistItem),
     page: response.meta.offset / response.meta.pageSize,
     pageSize: response.meta.pageSize,
-    size: response.meta.total,
+    size: response.meta.results ?? response.meta.total,
   };
 }, {
   getPendingMeta({ arg }) {
@@ -441,13 +447,15 @@ const slice = createSlice({
         }
       })
       .addCase(loadPlaylist.pending, (state, action) => {
-        const { playlistID, page = 0, sneaky = false } = action.meta.arg;
+        const {
+          playlistID, page = 0, sneaky = false, filter,
+        } = action.meta.arg;
         const playlist = state.playlists[playlistID];
         if (playlist == null) {
           return;
         }
-        // Cases where we don't show a loading anymation
-        if (sneaky || page !== 0 || state.playlistItems[playlistID]) {
+        // Cases where we don't show the whole playlist as loading
+        if (sneaky || page !== 0 || filter || state.playlistItems[playlistID]) {
           return;
         }
 
@@ -459,20 +467,34 @@ const slice = createSlice({
         const {
           items, size, page, pageSize,
         } = action.payload;
-        const { playlistID } = action.meta.arg;
+        const { playlistID, filter } = action.meta.arg;
         const playlist = state.playlists[playlistID];
 
         if (playlist == null) {
           return;
         }
 
+        // A response came in for an outdated filter
+        if (filter && (state.currentFilter == null || state.currentFilter.filter !== filter)) {
+          return;
+        }
+
         playlist.loading = false;
-        state.playlistItems[playlistID] = mergePlaylistPage(
-          size ?? playlist.size,
-          state.playlistItems[playlistID],
-          items,
-          { page, pageSize },
-        );
+        if (filter && state.currentFilter) {
+          state.currentFilter.items = mergePlaylistPage(
+            size,
+            state.currentFilter.items,
+            items,
+            { page, pageSize },
+          );
+        } else {
+          state.playlistItems[playlistID] = mergePlaylistPage(
+            size,
+            state.playlistItems[playlistID],
+            items,
+            { page, pageSize },
+          );
+        }
       })
       .addCase(FILTER_PLAYLIST_ITEMS, (state, { payload }: AnyAction) => {
         // Only the selected playlist can be filtered.
@@ -488,18 +510,6 @@ const slice = createSlice({
           filter: payload.filter,
           items: filterCachedPlaylistItems(state, payload.playlistID, payload.filter),
         };
-      })
-      .addCase(FILTER_PLAYLIST_ITEMS_COMPLETE, (state, { payload, meta }: AnyAction) => {
-        // Only the selected playlist can be filtered.
-        if (payload.playlistID !== state.selectedPlaylistID || !state.currentFilter) {
-          return;
-        }
-        state.currentFilter.items = mergePlaylistPage(
-          meta.size,
-          state.currentFilter.items,
-          payload.media,
-          meta,
-        );
       })
       .addCase(cyclePlaylist.pending, (state, { meta }) => {
         const playlist = state.playlists[meta.arg];

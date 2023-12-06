@@ -4,14 +4,13 @@ import {
   selectedPlaylistSelector,
   filteredSelectedPlaylistItemsSelector,
   isSelectedPlaylistLoadingSelector,
-  isFilteredSelector,
+  playlistItemFilterSelector,
 } from '../selectors/playlistSelectors';
 import {
   filterPlaylistItems,
   deletePlaylist,
   cannotDeleteActivePlaylist,
   shufflePlaylist,
-  loadFilteredPlaylistItems,
 } from '../actions/PlaylistActionCreators';
 import PlaylistPanel from '../components/PlaylistManager/Panel';
 import {
@@ -27,7 +26,7 @@ function PlaylistPanelContainer() {
   const playlist = useSelector(selectedPlaylistSelector);
   const playlistItems = useSelector(filteredSelectedPlaylistItemsSelector);
   const loading = useSelector(isSelectedPlaylistLoadingSelector);
-  const isFiltered = useSelector(isFilteredSelector);
+  const filter = useSelector(playlistItemFilterSelector);
   const dispatch = useDispatch();
   const playlistID = playlist._id;
 
@@ -61,13 +60,10 @@ function PlaylistPanelContainer() {
     [dispatch, playlistID],
   );
   const onLoadPlaylistPage = useCallback((page) => {
-    if (isFiltered) {
-      return dispatch(loadFilteredPlaylistItems(playlistID, page));
-    }
-    return dispatch(loadPlaylist({ playlistID, page }));
-  }, [dispatch, isFiltered, playlistID]);
+    return dispatch(loadPlaylist({ playlistID, page, filter }));
+  }, [dispatch, filter, playlistID]);
   const onFilterPlaylistItems = useCallback(
-    (filter) => dispatch(filterPlaylistItems(playlistID, filter)),
+    (newFilter) => dispatch(filterPlaylistItems(playlistID, newFilter)),
     [dispatch, playlistID],
   );
 
@@ -76,7 +72,7 @@ function PlaylistPanelContainer() {
       playlist={playlist}
       media={playlistItems}
       loading={loading}
-      isFiltered={isFiltered}
+      isFiltered={Boolean(filter)}
       onShufflePlaylist={onShufflePlaylist}
       onActivatePlaylist={onActivatePlaylist}
       onRenamePlaylist={onRenamePlaylist}

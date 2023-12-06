@@ -1,68 +1,21 @@
 import {
   FILTER_PLAYLIST_ITEMS,
-  FILTER_PLAYLIST_ITEMS_START, FILTER_PLAYLIST_ITEMS_COMPLETE,
   DELETE_PLAYLIST_START, DELETE_PLAYLIST_COMPLETE,
   SHUFFLE_PLAYLIST_START, SHUFFLE_PLAYLIST_COMPLETE,
 } from '../constants/ActionTypes';
 import { openEditMediaDialog } from './DialogActionCreators';
-import { del, get, post } from './RequestActionCreators';
+import { del, post } from './RequestActionCreators';
 import {
-  playlistItemFilterSelector,
   activePlaylistIDSelector,
   selectedPlaylistIDSelector,
 } from '../selectors/playlistSelectors';
-import mergeIncludedModels from '../utils/mergeIncludedModels';
 import { selectPlaylist, loadPlaylist } from '../reducers/playlists';
-
-const MEDIA_PAGE_SIZE = 50;
 
 // TODO It would be good to get rid of this
 export function flattenPlaylistItem(item) {
   return {
     ...item.media,
     ...item,
-  };
-}
-
-export function filterPlaylistItemsStart(playlistID, page, filter) {
-  return {
-    type: FILTER_PLAYLIST_ITEMS_START,
-    payload: { playlistID, filter },
-    meta: { page },
-  };
-}
-
-export function filterPlaylistItemsComplete(playlistID, media, pagination) {
-  return {
-    type: FILTER_PLAYLIST_ITEMS_COMPLETE,
-    payload: { playlistID, media },
-    meta: pagination,
-  };
-}
-
-export function loadFilteredPlaylistItems(playlistID, page = 0) {
-  return (dispatch, getState) => {
-    const filter = playlistItemFilterSelector(getState()) ?? '';
-    return dispatch(get(`/playlists/${playlistID}/media`, {
-      qs: { filter, page, limit: MEDIA_PAGE_SIZE },
-      onStart: () => filterPlaylistItemsStart(playlistID, page, filter),
-      onComplete: (res) => filterPlaylistItemsComplete(
-        playlistID,
-        mergeIncludedModels(res).map(flattenPlaylistItem),
-        {
-          page: res.meta.offset / res.meta.pageSize,
-          pageSize: res.meta.pageSize,
-          size: res.meta.results,
-          filter,
-        },
-      ),
-      onError: (error) => ({
-        type: FILTER_PLAYLIST_ITEMS_COMPLETE,
-        error: true,
-        payload: error,
-        meta: { page },
-      }),
-    }));
   };
 }
 
@@ -73,9 +26,7 @@ export function filterPlaylistItems(playlistID, filter) {
       payload: { playlistID, filter },
     });
 
-    const loadAll = loadPlaylist({ playlistID, page: 0 });
-    const loadFiltered = loadFilteredPlaylistItems(playlistID, 0);
-    dispatch(filter === '' ? loadAll : loadFiltered);
+    dispatch(loadPlaylist({ playlistID, page: 0, filter }));
   };
 }
 
