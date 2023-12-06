@@ -6,8 +6,6 @@ import { createAsyncThunk } from '../redux/api';
 import uwFetch, { ListResponse } from '../utils/fetch';
 import mergeIncludedModels from '../utils/mergeIncludedModels';
 import {
-  LOAD_PLAYLIST_START,
-  LOAD_PLAYLIST_COMPLETE,
   PLAYLIST_CYCLED,
   DELETE_PLAYLIST_START,
   DELETE_PLAYLIST_COMPLETE,
@@ -131,6 +129,52 @@ const createPlaylist = createAsyncThunk('playlists/create', async (name: string)
   }]);
 
   return response.data;
+});
+
+const MEDIA_PAGE_SIZE = 50;
+// `sneaky` disables loading indicators.
+const loadPlaylist = createAsyncThunk('playlists/media', async ({
+  playlistID,
+  page = 0,
+}: {
+  playlistID: string,
+  page?: number,
+  sneaky?: boolean,
+}) => {
+  const response = await uwFetch<{
+    data: object[],
+    meta: {
+      offset: number,
+      pageSize: number,
+      filtered?: number,
+      total: number,
+    },
+    included: object,
+  }>([`/playlists/${playlistID}/media`, {
+    method: 'get',
+    qs: { page, limit: MEDIA_PAGE_SIZE },
+  }]);
+
+  // TODO specific type
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  function flattenPlaylistItem(item: any): PlaylistItem {
+    return {
+      ...item.media,
+      ...item,
+    };
+  }
+
+  const items: unknown[] = mergeIncludedModels(response);
+  return {
+    items: items.map(flattenPlaylistItem),
+    page: response.meta.offset / response.meta.pageSize,
+    pageSize: response.meta.pageSize,
+    size: response.meta.total,
+  };
+}, {
+  getPendingMeta({ arg }) {
+    return { sneaky: arg.sneaky };
+  },
 });
 
 const renamePlaylist = createAsyncThunk('playlists/rename', async ({ playlistID, name }: {
@@ -347,38 +391,38 @@ const slice = createSlice({
           state.activePlaylistID = action.meta.arg;
         }
       })
-      .addCase(LOAD_PLAYLIST_START, (state, { payload, meta }: AnyAction) => {
-        const playlist = state.playlists[payload.playlistID];
+      .addCase(loadPlaylist.pending, (state, action) => {
+        const { playlistID, page = 0, sneaky = false } = action.meta.arg;
+        const playlist = state.playlists[playlistID];
         if (playlist == null) {
           return;
         }
         // Cases where we don't show a loading anymation
-        if (meta.sneaky || meta.page !== 0 || state.playlistItems[payload.playlistID]) {
+        if (sneaky || page !== 0 || state.playlistItems[playlistID]) {
           return;
         }
 
-        const items = state.playlistItems[payload.playlistID] ?? [];
-        state.playlistItems[payload.playlistID] = Array(playlist.size).fill(null)
+        const items = state.playlistItems[playlistID] ?? [];
+        state.playlistItems[playlistID] = Array(playlist.size).fill(null)
           .map((item, index) => items[index] ?? item);
       })
-      .addCase(LOAD_PLAYLIST_COMPLETE, (state, { payload, meta, error }: AnyAction) => {
-        const playlist = state.playlists[payload.playlistID];
+      .addCase(loadPlaylist.fulfilled, (state, action) => {
+        const {
+          items, size, page, pageSize,
+        } = action.payload;
+        const { playlistID } = action.meta.arg;
+        const playlist = state.playlists[playlistID];
 
         if (playlist == null) {
           return;
         }
 
-        if (error) {
-          playlist.loading = false;
-          return;
-        }
-
         playlist.loading = false;
-        state.playlistItems[payload.playlistID] = mergePlaylistPage(
-          meta.size ?? playlist.size,
-          state.playlistItems[payload.playlistID],
-          payload.media,
-          meta,
+        state.playlistItems[playlistID] = mergePlaylistPage(
+          size ?? playlist.size,
+          state.playlistItems[playlistID],
+          items,
+          { page, pageSize },
         );
       })
       .addCase(FILTER_PLAYLIST_ITEMS, (state, { payload }: AnyAction) => {
@@ -573,6 +617,7 @@ const slice = createSlice({
 
 export {
   createPlaylist,
+  loadPlaylist,
   renamePlaylist,
   activatePlaylist,
   addPlaylistItems,

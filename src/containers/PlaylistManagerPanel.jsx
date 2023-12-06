@@ -11,11 +11,11 @@ import {
   deletePlaylist,
   cannotDeleteActivePlaylist,
   shufflePlaylist,
-  loadPlaylist,
   loadFilteredPlaylistItems,
 } from '../actions/PlaylistActionCreators';
 import PlaylistPanel from '../components/PlaylistManager/Panel';
 import {
+  loadPlaylist,
   renamePlaylist,
   activatePlaylist,
   movePlaylistItems,
@@ -64,7 +64,7 @@ function PlaylistPanelContainer() {
     if (isFiltered) {
       return dispatch(loadFilteredPlaylistItems(playlistID, page));
     }
-    return dispatch(loadPlaylist(playlistID, page));
+    return dispatch(loadPlaylist({ playlistID, page }));
   }, [dispatch, isFiltered, playlistID]);
   const onFilterPlaylistItems = useCallback(
     (filter) => dispatch(filterPlaylistItems(playlistID, filter)),

@@ -1,5 +1,4 @@
 import {
-  LOAD_PLAYLIST_START, LOAD_PLAYLIST_COMPLETE,
   FILTER_PLAYLIST_ITEMS,
   FILTER_PLAYLIST_ITEMS_START, FILTER_PLAYLIST_ITEMS_COMPLETE,
   PLAYLIST_CYCLED,
@@ -19,7 +18,7 @@ import {
   selectedPlaylistSelector,
 } from '../selectors/playlistSelectors';
 import mergeIncludedModels from '../utils/mergeIncludedModels';
-import { selectPlaylist } from '../reducers/playlists';
+import { selectPlaylist, loadPlaylist } from '../reducers/playlists';
 
 const MEDIA_PAGE_SIZE = 50;
 
@@ -29,44 +28,6 @@ export function flattenPlaylistItem(item) {
     ...item.media,
     ...item,
   };
-}
-
-export function loadPlaylistStart(playlistID, page, { sneaky = false } = {}) {
-  return {
-    type: LOAD_PLAYLIST_START,
-    payload: { playlistID },
-    meta: { page, sneaky },
-  };
-}
-
-export function loadPlaylistComplete(playlistID, media, pagination) {
-  return {
-    type: LOAD_PLAYLIST_COMPLETE,
-    payload: { playlistID, media },
-    meta: pagination,
-  };
-}
-
-export function loadPlaylist(playlistID, page = 0, meta = {}) {
-  return get(`/playlists/${playlistID}/media`, {
-    qs: { page, limit: MEDIA_PAGE_SIZE },
-    onStart: () => loadPlaylistStart(playlistID, page, meta),
-    onComplete: (res) => loadPlaylistComplete(
-      playlistID,
-      mergeIncludedModels(res).map(flattenPlaylistItem),
-      {
-        page: res.meta.offset / res.meta.pageSize,
-        pageSize: res.meta.pageSize,
-        size: res.meta.total,
-      },
-    ),
-    onError: (error) => ({
-      type: LOAD_PLAYLIST_COMPLETE,
-      error: true,
-      payload: error,
-      meta: { page },
-    }),
-  });
 }
 
 export function filterPlaylistItemsStart(playlistID, page, filter) {
@@ -118,7 +79,7 @@ export function filterPlaylistItems(playlistID, filter) {
       payload: { playlistID, filter },
     });
 
-    const loadAll = loadPlaylist(playlistID, 0);
+    const loadAll = loadPlaylist({ playlistID, page: 0 });
     const loadFiltered = loadFilteredPlaylistItems(playlistID, 0);
     dispatch(filter === '' ? loadAll : loadFiltered);
   };
@@ -164,7 +125,7 @@ export function cyclePlaylist(playlistID) {
     dispatch(playlistCycled(playlistID));
 
     if (playlist && shouldLoadAfterCycle(playlist)) {
-      dispatch(loadPlaylist(playlistID, 0));
+      dispatch(loadPlaylist({ playlistID, page: 0 }));
     }
   };
 }
@@ -291,7 +252,7 @@ export function shufflePlaylist(playlistID) {
         meta: { playlistID },
       }),
     });
-    const loadOperation = loadPlaylist(playlistID, 0, { sneaky: true });
+    const loadOperation = loadPlaylist({ playlistID, page: 0, sneaky: true });
 
     return dispatch(shuffleOperation)
       .then(() => dispatch(loadOperation))
