@@ -17,6 +17,7 @@ const { useCallback, useState } = React;
 
 function LoginForm({
   supportsSocialAuth,
+  onCloseDialog,
   onLogin,
   onOpenResetPasswordDialog,
 }) {
@@ -26,7 +27,10 @@ function LoginForm({
 
   const handleSubmit = useAsyncCallback(async (event) => {
     event.preventDefault();
-    await onLogin({ email, password });
+    const result = await onLogin({ email, password });
+    if (!result.error) {
+      onCloseDialog();
+    }
   }, [onLogin, email, password]);
 
   const handleResetPassword = useCallback((event) => {
@@ -115,6 +119,7 @@ function LoginForm({
 
 LoginForm.propTypes = {
   supportsSocialAuth: PropTypes.bool,
+  onCloseDialog: PropTypes.func,
   onLogin: PropTypes.func,
   onOpenResetPasswordDialog: PropTypes.func,
 };
