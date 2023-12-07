@@ -10,7 +10,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import SvgIcon from '../SvgIcon';
 import { useSelector } from '../../hooks/useRedux';
-import { playlistsSelector } from '../../selectors/playlistSelectors';
+import { playlistsSelector } from '../../reducers/playlists';
 
 const { useCallback } = React;
 

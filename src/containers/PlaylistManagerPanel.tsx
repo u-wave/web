@@ -1,7 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from '../hooks/useRedux';
 import {
-  selectedPlaylistSelector,
   filteredSelectedPlaylistItemsSelector,
   isSelectedPlaylistLoadingSelector,
   playlistItemFilterSelector,
@@ -20,12 +19,17 @@ import {
   movePlaylistItems,
   type PlaylistItem,
   type InsertTarget,
+  selectedPlaylistSelector,
 } from '../reducers/playlists';
 
 const { useCallback } = React;
 
 function PlaylistPanelContainer() {
   const playlist = useSelector(selectedPlaylistSelector);
+  if (!playlist) {
+    throw new Error('invalid state: playlist panel active without a playlist');
+  }
+
   const playlistItems = useSelector(filteredSelectedPlaylistItemsSelector)!;
   const loading = useSelector(isSelectedPlaylistLoadingSelector);
   const filter = useSelector(playlistItemFilterSelector);

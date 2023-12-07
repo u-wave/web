@@ -12,7 +12,7 @@ import { mdiCheck } from '@mdi/js';
 import UserCard from '../../../components/UserCard/UserCard';
 import SvgIcon from '../../../components/SvgIcon';
 import { useSelector } from '../../../hooks/useRedux';
-import { activePlaylistIDSelector } from '../../../selectors/playlistSelectors';
+import { activePlaylistIDSelector } from '../../../reducers/playlists';
 import useCurrentUser from '../../../hooks/useCurrentUser';
 import uwFetch, { ListResponse } from '../../../utils/fetch';
 

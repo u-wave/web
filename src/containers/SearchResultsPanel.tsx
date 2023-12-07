@@ -2,8 +2,8 @@ import React from 'react';
 import useSWRImmutable from 'swr/immutable';
 import { useSelector } from '../hooks/useRedux';
 import { useMediaSearchStore } from '../stores/MediaSearchStore';
-import { playlistsByIDSelector } from '../selectors/playlistSelectors';
 import SearchResults from '../components/PlaylistManager/SearchResults';
+import { playlistsByIDSelector } from '../reducers/playlists';
 import { Media } from '../reducers/booth';
 import uwFetch, { ListResponse } from '../utils/fetch';
 

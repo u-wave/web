@@ -2,7 +2,6 @@ import { bindActionCreators } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import {
-  selectedPlaylistSelector,
   filteredSelectedPlaylistItemsSelector,
   isSelectedPlaylistLoadingSelector,
   isFilteredSelector,
@@ -20,6 +19,7 @@ import {
   renamePlaylist,
   activatePlaylist,
   movePlaylistItems,
+  selectedPlaylistSelector,
 } from '../../reducers/playlists';
 
 const mapStateToProps = createStructuredSelector({

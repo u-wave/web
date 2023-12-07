@@ -1,9 +1,5 @@
 import React from 'react';
 import { useSelector, useDispatch } from '../hooks/useRedux';
-import {
-  playlistsSelector,
-  selectedPlaylistIDSelector,
-} from '../selectors/playlistSelectors';
 import { useMediaSearchStore } from '../stores/MediaSearchStore';
 import PlaylistsMenu from '../components/PlaylistManager/Menu';
 import {
@@ -15,6 +11,8 @@ import {
   selectPlaylist,
   showImportPanel,
   showSearchResults,
+  playlistsSelector,
+  selectedPlaylistIDSelector,
 } from '../reducers/playlists';
 
 const { useCallback } = React;

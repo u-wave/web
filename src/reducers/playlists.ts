@@ -2,6 +2,7 @@ import type { AnyAction } from 'redux';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import escapeStringRegExp from 'escape-string-regexp';
 import indexBy from 'just-index';
+import naturalCmp from 'natural-compare';
 import { createAsyncThunk } from '../redux/api';
 import uwFetch, { ListResponse } from '../utils/fetch';
 import mergeIncludedModels from '../utils/mergeIncludedModels';
@@ -369,6 +370,10 @@ const updatePlaylistItem = createAsyncThunk('playlists/updatePlaylistItem', asyn
   return data;
 });
 
+function byName(a: Playlist, b: Playlist) {
+  return naturalCmp(a.name.toLowerCase(), b.name.toLowerCase());
+}
+
 const slice = createSlice({
   name: 'playlists',
   initialState,
@@ -684,6 +689,43 @@ const slice = createSlice({
           .filter((media) => media === null || !ids.has(media._id));
       });
   },
+  selectors: {
+    playlistsByID: (state) => state.playlists,
+    playlists: (state) => Object.values(state.playlists).sort(byName),
+    playlist: (state, id: string) => state.playlists[id] ?? null,
+    activePlaylistID: (state) => state.activePlaylistID,
+    selectedPlaylistID: (state) => state.selectedPlaylistID,
+    activePlaylist: (state): Playlist | null => (
+      state.activePlaylistID
+        ? slice.getSelectors().playlist(state, state.activePlaylistID)
+        : null
+    ),
+    selectedPlaylist: (state): Playlist | null => (
+      typeof state.selectedPlaylistID === 'string'
+        ? slice.getSelectors().playlist(state, state.selectedPlaylistID)
+        : null
+    ),
+    // FIXME should be null if it doesn't exist
+    activePlaylistItems: (state): PlaylistItemList => {
+      const { playlistItems, activePlaylistID } = state;
+      if (activePlaylistID && activePlaylistID in playlistItems) {
+        return playlistItems[activePlaylistID] ?? [];
+      }
+      return [];
+    },
+    // FIXME should be null if it doesn't exist
+    selectedPlaylistItems: (state): PlaylistItemList => {
+      const { playlistItems, selectedPlaylistID } = state;
+      if (typeof selectedPlaylistID === 'string' && selectedPlaylistID in playlistItems) {
+        return playlistItems[selectedPlaylistID] ?? [];
+      }
+      return [];
+    },
+    nextMedia: (state): PlaylistItem | null => {
+      const s = slice.getSelectors();
+      return s.activePlaylistItems(state)[0] ?? null;
+    },
+  },
 });
 
 export {
@@ -705,5 +747,15 @@ export const {
   showImportPanel,
   showSearchResults,
 } = slice.actions;
-
+export const {
+  playlistsByID: playlistsByIDSelector,
+  playlists: playlistsSelector,
+  activePlaylistID: activePlaylistIDSelector,
+  activePlaylist: activePlaylistSelector,
+  selectedPlaylistID: selectedPlaylistIDSelector,
+  selectedPlaylist: selectedPlaylistSelector,
+  activePlaylistItems: activePlaylistItemsSelector,
+  selectedPlaylistItems: selectedPlaylistItemsSelector,
+  nextMedia: nextMediaSelector,
+} = slice.selectors;
 export default slice.reducer;
