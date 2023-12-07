@@ -11,7 +11,7 @@ import type { InsertTarget, Playlist, PlaylistItem } from '../../../reducers/pla
 interface PlaylistContextProps extends ContextType<PlaylistItem> {
   playlist: Playlist,
   isFiltered: boolean,
-  onMoveMedia: PlaylistPanelProps['onMoveMedia'],
+  onMoveMedia: (items: PlaylistItem[], target: InsertTarget) => Promise<void>,
 }
 
 export const usePlaylistContext = useMediaListContext<PlaylistContextProps>;
@@ -26,7 +26,7 @@ type PlaylistPanelProps = {
   onActivatePlaylist: () => Promise<void>,
   onRenamePlaylist: (newName: string) => Promise<void>,
   onDeletePlaylist: () => Promise<void>,
-  onNotDeletable: () => Promise<void>,
+  onNotDeletable: () => void,
   onLoadPlaylistPage: (page: number) => Promise<void>,
   onFilterPlaylistItems: (filter: string | null) => void,
   onMoveMedia: (items: PlaylistItem[], target: InsertTarget) => Promise<void>,

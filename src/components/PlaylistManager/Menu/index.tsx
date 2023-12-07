@@ -9,13 +9,13 @@ import { type Playlist, importPanelSymbol, searchPanelSymbol, type NewPlaylistIt
 type PlaylistMenuProps = {
   className?: string,
   playlists: Playlist[],
-  selected: string | symbol,
+  selected: string | symbol | null,
   searchQuery?: string | null,
   onCreatePlaylist: (name: string) => Promise<void>,
   onSelectPlaylist: (id: string) => void,
   onSelectSearchResults: () => void,
   onCloseSearchResults: () => void,
-  onAddToPlaylist: (playlist: Playlist, items: NewPlaylistItem[]) => void,
+  onAddToPlaylist: (playlist: Playlist, items: NewPlaylistItem[], afterID?: string) => Promise<void>,
   onShowImportPanel: () => void,
 };
 function PlaylistMenu({

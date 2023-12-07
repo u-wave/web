@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from '../hooks/useRedux';
 import {
   playlistsSelector,
@@ -8,6 +7,8 @@ import {
 import { useMediaSearchStore } from '../stores/MediaSearchStore';
 import PlaylistsMenu from '../components/PlaylistManager/Menu';
 import {
+  type Playlist,
+  type NewPlaylistItem,
   addPlaylistItems,
   createPlaylist,
   selectActivePlaylist,
@@ -18,19 +19,25 @@ import {
 
 const { useCallback } = React;
 
-function PlaylistsMenuContainer({ className }) {
+type PlaylistMenuContainerProps = {
+  className?: string,
+};
+function PlaylistsMenuContainer({ className }: PlaylistMenuContainerProps) {
   const playlists = useSelector(playlistsSelector);
   const selected = useSelector(selectedPlaylistIDSelector);
   const mediaSearch = useMediaSearchStore();
   const dispatch = useDispatch();
 
-  const onAddToPlaylist = useCallback((playlist, items, afterID) => {
-    dispatch(addPlaylistItems({ playlistID: playlist._id, items, afterID }));
+  const onAddToPlaylist = useCallback(
+    async (playlist: Playlist, items: NewPlaylistItem[], afterID?: string) => {
+      await dispatch(addPlaylistItems({ playlistID: playlist._id, items, afterID }));
+    },
+    [dispatch],
+  );
+  const onCreatePlaylist = useCallback(async (name: string) => {
+    await dispatch(createPlaylist(name));
   }, [dispatch]);
-  const onCreatePlaylist = useCallback((name) => {
-    dispatch(createPlaylist(name));
-  }, [dispatch]);
-  const onSelectPlaylist = useCallback((id) => {
+  const onSelectPlaylist = useCallback((id: string) => {
     dispatch(selectPlaylist(id));
   }, [dispatch]);
   const onSelectSearchResults = useCallback(() => {
@@ -52,7 +59,6 @@ function PlaylistsMenuContainer({ className }) {
       playlists={playlists}
       selected={selected}
       searchQuery={mediaSearch.query}
-      searchResults={mediaSearch.resultsCount}
       onAddToPlaylist={onAddToPlaylist}
       onCreatePlaylist={onCreatePlaylist}
       onSelectPlaylist={onSelectPlaylist}
@@ -62,9 +68,5 @@ function PlaylistsMenuContainer({ className }) {
     />
   );
 }
-
-PlaylistsMenuContainer.propTypes = {
-  className: PropTypes.string,
-};
 
 export default PlaylistsMenuContainer;

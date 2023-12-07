@@ -18,7 +18,7 @@ type PlaylistMetaProps = {
   onActivatePlaylist: () => Promise<void>,
   onRenamePlaylist: (newName: string) => Promise<void>,
   onDeletePlaylist: () => Promise<void>,
-  onNotDeletable: () => Promise<void>,
+  onNotDeletable: () => void,
   onFilter: (filter: string | null) => void,
 };
 function PlaylistMeta({
