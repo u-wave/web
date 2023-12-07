@@ -19,7 +19,7 @@ function createLazyOverlay<TComponent extends React.ElementType>({
   Component,
 }: {
   title: (t: (key: string) => string) => string,
-  OverlayComponent: React.ComponentType<{ children: React.ReactElement }>,
+  OverlayComponent?: React.ComponentType<{ children: React.ReactElement }>,
   Component: TComponent,
 }) {
   function LoadingOverlay() {

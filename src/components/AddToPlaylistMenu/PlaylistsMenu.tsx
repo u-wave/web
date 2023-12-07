@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
 import { mdiPlus, mdiCheck } from '@mdi/js';
 import Popover from '@mui/material/Popover';
@@ -10,21 +9,30 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import SvgIcon from '../SvgIcon';
 import { useSelector } from '../../hooks/useRedux';
-import { playlistsSelector } from '../../reducers/playlists';
+import { type Playlist, playlistsSelector } from '../../reducers/playlists';
 
 const { useCallback } = React;
 
+type PlaylistsMenuProps = {
+  position: { x: number, y: number },
+  onClose: () => void,
+  onCreatePlaylist: () => void,
+  onSelect: (playlist: Playlist) => void,
+};
 function PlaylistsMenu({
   position,
   onClose,
   onCreatePlaylist,
   onSelect,
-}) {
+}: PlaylistsMenuProps) {
   const { t } = useTranslator();
   const playlists = useSelector(playlistsSelector);
-  const handleSelect = useCallback((e, playlistID) => {
-    onClose();
-    onSelect(playlists.find((pl) => pl._id === playlistID));
+  const handleSelect = useCallback((playlistID: string) => {
+    const playlist = playlists.find((pl) => pl._id === playlistID);
+    if (playlist) {
+      onClose();
+      onSelect(playlist);
+    }
   }, [onClose, onSelect, playlists]);
 
   return (
@@ -45,7 +53,7 @@ function PlaylistsMenu({
           <MenuItem
             className="AddToPlaylistMenu-playlist"
             key={playlist._id}
-            onClick={(event) => handleSelect(event, playlist._id)}
+            onClick={() => handleSelect(playlist._id)}
           >
             {!!playlist.active && (
               <ListItemIcon>
@@ -62,15 +70,5 @@ function PlaylistsMenu({
     </Popover>
   );
 }
-
-PlaylistsMenu.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  onSelect: PropTypes.func.isRequired,
-  onCreatePlaylist: PropTypes.func.isRequired,
-  position: PropTypes.shape({
-    x: PropTypes.number,
-    y: PropTypes.number,
-  }),
-};
 
 export default PlaylistsMenu;

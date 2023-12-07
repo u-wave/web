@@ -1,15 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import { useCallback } from 'react';
 import { mdiPlus } from '@mdi/js';
 import { useDispatch } from '../../hooks/useRedux';
 import { open as addMediaMenu } from '../../reducers/addToPlaylistMenu';
-import { useMediaListContext } from '../MediaList/BaseMediaList';
 import MediaAction from '../MediaList/MediaAction';
 import SvgIcon from '../SvgIcon';
+import type { HistoryEntry } from '../../hooks/useRoomHistory';
+import { useRoomHistoryContext } from './context';
 
-const {
-  useCallback,
-} = React;
+type AddToPlaylistActionProps = {
+  historyEntry: HistoryEntry,
+};
 
 /**
  * This is different from the "standard" <AddToPlaylistAction /> because it deals
@@ -17,13 +17,13 @@ const {
  * item, but they _are not_ media items, so we need to unwrap them before adding them
  * to a playlist.
  */
-function AddToPlaylistAction({ historyEntry }) {
-  const { selection } = useMediaListContext();
+function AddToPlaylistAction({ historyEntry }: AddToPlaylistActionProps) {
+  const { selection } = useRoomHistoryContext();
 
   const dispatch = useDispatch();
-  const handleClick = useCallback((event) => {
-    const selectedItems = selection.isSelected(historyEntry) ? selection.get() : [historyEntry];
-    const rect = event.target.getBoundingClientRect();
+  const handleClick = useCallback((event: React.MouseEvent) => {
+    const selectedItems = selection.isSelected(historyEntry) ? selection.get() as HistoryEntry[] : [historyEntry];
+    const rect = event.currentTarget.getBoundingClientRect();
 
     dispatch(addMediaMenu({
       type: 'add',
@@ -38,9 +38,5 @@ function AddToPlaylistAction({ historyEntry }) {
     </MediaAction>
   );
 }
-
-AddToPlaylistAction.propTypes = {
-  historyEntry: PropTypes.object.isRequired,
-};
 
 export default AddToPlaylistAction;
