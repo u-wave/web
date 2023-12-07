@@ -1,6 +1,5 @@
 import cx from 'clsx';
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useAsyncCallback } from 'react-async-hook';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
@@ -9,8 +8,18 @@ import Form from '../../Form';
 import FormGroup from '../../Form/Group';
 import Button from '../../Form/Button';
 
+/**
+ * @param {object} props
+ * @param {string} [props.className]
+ * @param {React.ReactNode} [props.children]
+ * @param {boolean} props.open
+ * @param {string} [props.cancelLabel]
+ * @param {string} [props.confirmLabel]
+ * @param {() => Promise<void> | undefined} props.onConfirm
+ * @param {() => void} props.onCancel
+ */
 function ConfirmDialog({
-  className = undefined,
+  className,
   children,
   open,
   cancelLabel = 'Cancel',
@@ -59,15 +68,5 @@ function ConfirmDialog({
     </Dialog>
   );
 }
-
-ConfirmDialog.propTypes = {
-  children: PropTypes.node,
-  open: PropTypes.bool.isRequired,
-  className: PropTypes.string,
-  confirmLabel: PropTypes.string,
-  cancelLabel: PropTypes.string,
-  onConfirm: PropTypes.func.isRequired,
-  onCancel: PropTypes.func.isRequired,
-};
 
 export default ConfirmDialog;

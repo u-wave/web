@@ -8,7 +8,7 @@ import ConfirmDialog from '../../Dialogs/ConfirmDialog';
 import FormGroup from '../../Form/Group';
 
 type DeletePlaylistButtonProps = {
-  onDelete: (confirmName: string) => Promise<void>,
+  onDelete: () => Promise<void>,
   onNotDeletable: () => void,
   active: boolean,
 };
@@ -32,12 +32,14 @@ function DeletePlaylistButton({
     setDeleting(false);
   }, []);
 
-  const handleConfirm = useCallback((name: string) => (
-    onDelete(name).then(() => {
+  const handleConfirm = useCallback(() => (
+    onDelete().then(() => {
       setDeleting(false);
     })
   ), [onDelete]);
 
+  // FIXME should the confirmation dialog have a title?
+  // title={t('dialogs.deletePlaylist.title')}
   return (
     <>
       <Tooltip title={active ? t('playlists.deleteActive') : t('playlists.delete')} placement="top">
@@ -53,7 +55,6 @@ function DeletePlaylistButton({
       </Tooltip>
       <ConfirmDialog
         open={deleting}
-        title={t('dialogs.deletePlaylist.title')}
         confirmLabel={t('dialogs.deletePlaylist.action')}
         onConfirm={handleConfirm}
         onCancel={handleClose}

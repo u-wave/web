@@ -17,16 +17,32 @@ const {
   useState,
 } = React;
 
+/**
+ * @param {object} props
+ * @param {React.ReactNode} [props.children]
+ * @param {React.ReactNode} [props.icon]
+ * @param {string} [props.inputType]
+ * @param {string} [props.placeholder]
+ * @param {string} [props.submitLabel]
+ * @param {string} props.title
+ * @param {string} [props.bodyClassName]
+ * @param {string} [props.contentClassName]
+ * @param {string} [props.titleClassName]
+ * @param {(value: string) => Promise<void> | undefined} props.onSubmit
+ * @param {() => void} props.onCancel
+ * @param {boolean} props.open
+ * @param {string} [props.defaultValue]
+ */
 function PromptDialog({
-  children = undefined,
-  icon = undefined,
+  children,
+  icon,
   inputType = 'text',
-  placeholder = undefined,
+  placeholder,
   submitLabel = 'OK',
   title,
-  bodyClassName = undefined,
-  contentClassName = undefined,
-  titleClassName = undefined,
+  bodyClassName,
+  contentClassName,
+  titleClassName,
   onSubmit,
   onCancel,
   open,
@@ -87,21 +103,5 @@ function PromptDialog({
     </Dialog>
   );
 }
-
-PromptDialog.propTypes = {
-  children: PropTypes.node,
-  placeholder: PropTypes.string,
-  submitLabel: PropTypes.string,
-  inputType: PropTypes.string,
-  icon: PropTypes.node,
-  defaultValue: PropTypes.string,
-  title: PropTypes.string,
-  open: PropTypes.bool.isRequired,
-  bodyClassName: PropTypes.string,
-  contentClassName: PropTypes.string,
-  titleClassName: PropTypes.string,
-  onSubmit: PropTypes.func.isRequired,
-  onCancel: PropTypes.func.isRequired,
-};
 
 export default PromptDialog;

@@ -17,7 +17,7 @@ type PlaylistMetaProps = {
   onShufflePlaylist: () => Promise<void>,
   onActivatePlaylist: () => Promise<void>,
   onRenamePlaylist: (newName: string) => Promise<void>,
-  onDeletePlaylist: (confirmName: string) => Promise<void>,
+  onDeletePlaylist: () => Promise<void>,
   onNotDeletable: () => Promise<void>,
   onFilter: (filter: string | null) => void,
 };

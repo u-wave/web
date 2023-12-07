@@ -1,18 +1,16 @@
 import cx from 'clsx';
-import React from 'react';
-import PropTypes from 'prop-types';
+import { useCallback, useState } from 'react';
 import { useTranslator } from '@u-wave/react-translate';
 import MenuItem from '@mui/material/MenuItem';
 import { mdiPlus } from '@mdi/js';
 import PromptDialog from '../../Dialogs/PromptDialog';
 import SvgIcon from '../../SvgIcon';
 
-const {
-  useCallback,
-  useState,
-} = React;
-
-function NewPlaylist({ className, onCreatePlaylist }) {
+type NewPlaylistProps = {
+  className?: string,
+  onCreatePlaylist: (name: string) => Promise<void>,
+};
+function NewPlaylist({ className, onCreatePlaylist }: NewPlaylistProps) {
   const { t } = useTranslator();
   const [creating, setCreating] = useState(false);
 
@@ -24,7 +22,7 @@ function NewPlaylist({ className, onCreatePlaylist }) {
     setCreating(false);
   }, []);
 
-  const handleSubmit = useCallback(async (playlistName) => {
+  const handleSubmit = useCallback(async (playlistName: string) => {
     try {
       await onCreatePlaylist(playlistName);
     } finally {
@@ -56,10 +54,5 @@ function NewPlaylist({ className, onCreatePlaylist }) {
     </>
   );
 }
-
-NewPlaylist.propTypes = {
-  className: PropTypes.string,
-  onCreatePlaylist: PropTypes.func.isRequired,
-};
 
 export default NewPlaylist;

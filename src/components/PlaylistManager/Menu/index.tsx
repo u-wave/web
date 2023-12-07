@@ -1,12 +1,23 @@
 import cx from 'clsx';
-import PropTypes from 'prop-types';
 import MenuList from '@mui/material/MenuList';
 import PlaylistRow from './Row';
 import PlaylistCreateRow from './NewPlaylist';
 import SearchResultsRow from './SearchResultsRow';
 import PlaylistImportRow from './PlaylistImportRow';
-import { importPanelSymbol, searchPanelSymbol } from '../../../reducers/playlists';
+import { type Playlist, importPanelSymbol, searchPanelSymbol, type NewPlaylistItem } from '../../../reducers/playlists';
 
+type PlaylistMenuProps = {
+  className?: string,
+  playlists: Playlist[],
+  selected: string | symbol,
+  searchQuery?: string | null,
+  onCreatePlaylist: (name: string) => Promise<void>,
+  onSelectPlaylist: (id: string) => void,
+  onSelectSearchResults: () => void,
+  onCloseSearchResults: () => void,
+  onAddToPlaylist: (playlist: Playlist, items: NewPlaylistItem[]) => void,
+  onShowImportPanel: () => void,
+};
 function PlaylistMenu({
   className,
   playlists,
@@ -18,7 +29,7 @@ function PlaylistMenu({
   onCloseSearchResults,
   onAddToPlaylist,
   onShowImportPanel,
-}) {
+}: PlaylistMenuProps) {
   return (
     <MenuList className={cx('PlaylistMenu', className)} disablePadding>
       <PlaylistCreateRow
@@ -50,21 +61,5 @@ function PlaylistMenu({
     </MenuList>
   );
 }
-
-PlaylistMenu.propTypes = {
-  className: PropTypes.string,
-  playlists: PropTypes.arrayOf(PropTypes.object).isRequired,
-  selected: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.symbol,
-  ]),
-  searchQuery: PropTypes.string,
-  onCreatePlaylist: PropTypes.func.isRequired,
-  onSelectPlaylist: PropTypes.func.isRequired,
-  onSelectSearchResults: PropTypes.func.isRequired,
-  onCloseSearchResults: PropTypes.func.isRequired,
-  onAddToPlaylist: PropTypes.func.isRequired,
-  onShowImportPanel: PropTypes.func.isRequired,
-};
 
 export default PlaylistMenu;

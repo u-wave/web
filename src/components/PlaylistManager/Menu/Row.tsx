@@ -1,30 +1,37 @@
 import cx from 'clsx';
 import omit from 'just-omit';
-import React from 'react';
-import PropTypes from 'prop-types';
 import { useDrop } from 'react-dnd';
 import CircularProgress from '@mui/material/CircularProgress';
 import MenuItem from '@mui/material/MenuItem';
 import { mdiCheck } from '@mdi/js';
 import SvgIcon from '../../SvgIcon';
 import { MEDIA, SEARCH_RESULT } from '../../../constants/DDItemTypes';
+import type { NewPlaylistItem, Playlist, PlaylistItem } from '../../../reducers/playlists';
 
 const itemClasses = {
   root: 'PlaylistMenuRow',
   selected: 'is-selected',
 };
 
+type PlaylistRowProps = {
+  className?: string,
+  playlist: Playlist,
+  selected: boolean,
+  onClick: () => void,
+  onAddToPlaylist: (playlist: Playlist, items: NewPlaylistItem[]) => void,
+};
 function PlaylistRow({
   className,
   playlist,
   selected,
   onClick,
   onAddToPlaylist,
-}) {
+}: PlaylistRowProps) {
   const [{ isOver }, drop] = useDrop(() => ({
     accept: [MEDIA, SEARCH_RESULT],
     drop(_item, monitor) {
-      const { media, type } = monitor.getItem();
+      // FIXME for search results it's not actually a playlist item
+      const { media, type } = monitor.getItem() as { media: PlaylistItem[], type: string };
       if (type === SEARCH_RESULT) {
         onAddToPlaylist(playlist, media.map((item) => omit(item, ['artist', 'title'])));
       } else {
@@ -40,7 +47,7 @@ function PlaylistRow({
   const droppableClass = isOver && 'is-droppable';
 
   let icon;
-  if (playlist.creating) {
+  if (playlist.loading) {
     icon = (
       <div className="PlaylistMenuRow-loading">
         <CircularProgress size="100%" />
@@ -70,13 +77,5 @@ function PlaylistRow({
     </MenuItem>
   );
 }
-
-PlaylistRow.propTypes = {
-  className: PropTypes.string,
-  playlist: PropTypes.object,
-  selected: PropTypes.bool,
-  onClick: PropTypes.func,
-  onAddToPlaylist: PropTypes.func,
-};
 
 export default PlaylistRow;
