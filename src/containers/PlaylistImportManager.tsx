@@ -1,4 +1,4 @@
-import React from 'react';
+import { useCallback } from 'react';
 import { useSelector, useDispatch } from '../hooks/useRedux';
 import {
   showImportSourcePanel,
@@ -7,14 +7,12 @@ import {
 import { selectedSourceTypeSelector } from '../reducers/imports';
 import PlaylistImport from '../components/PlaylistManager/Import';
 
-const { useCallback } = React;
-
 function PlaylistImportContainer() {
   const selectedSourceType = useSelector(selectedSourceTypeSelector);
-  const sourceStates = useSelector((state) => state.sources);
+  const sourceStates = useSelector((state) => state.mediaSources);
   const dispatch = useDispatch();
   const onShowImportPanel = useCallback(
-    (sourceType) => dispatch(showImportSourcePanel(sourceType)),
+    (sourceType: string) => dispatch(showImportSourcePanel(sourceType)),
     [dispatch],
   );
   const onHideImportPanel = useCallback(() => dispatch(hideImportSourcePanel()), [dispatch]);

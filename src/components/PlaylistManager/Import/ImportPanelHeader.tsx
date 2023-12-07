@@ -1,17 +1,20 @@
 import cx from 'clsx';
-import React from 'react';
-import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import { mdiClose } from '@mdi/js';
 import SvgIcon from '../../SvgIcon';
 
+type ImportPanelHeaderProps = {
+  className?: string,
+  children?: React.ReactNode,
+  onClosePanel: () => void,
+};
 function ImportPanelHeader({
   className,
   children,
   onClosePanel,
-}) {
+}: ImportPanelHeaderProps) {
   const { t } = useTranslator();
 
   return (
@@ -27,11 +30,5 @@ function ImportPanelHeader({
     </div>
   );
 }
-
-ImportPanelHeader.propTypes = {
-  className: PropTypes.string,
-  children: PropTypes.node,
-  onClosePanel: PropTypes.func.isRequired,
-};
 
 export default ImportPanelHeader;
