@@ -89,6 +89,8 @@
     "@testing-library/jest-dom": "^6.1.4",
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",
+    "@types/natural-compare": "^1.4.3",
+    "@types/node": "^18.19.3",
     "@types/uuid": "^9.0.1",
     "@typescript-eslint/eslint-plugin": "^6.13.2",
     "@typescript-eslint/parser": "^6.13.2",
@@ -138,7 +140,7 @@
     "prod": "vite build",
     "serve": "u-wave-web",
     "start": "npm run dev",
-    "test": "npm run tests-only && npm run lint",
+    "test": "npm run tests-only && npm run typecheck && npm run lint",
     "typecheck": "tsc",
     "tests-only": "vitest run"
   },
