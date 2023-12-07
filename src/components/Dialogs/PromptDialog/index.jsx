@@ -1,6 +1,6 @@
+/* eslint-disable react/prop-types */
 import cx from 'clsx';
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useAsyncCallback } from 'react-async-hook';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';

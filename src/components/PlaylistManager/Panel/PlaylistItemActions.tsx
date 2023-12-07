@@ -6,7 +6,7 @@ import MoveToFirstAction from './MoveToFirstAction';
 import MoveToLastAction from './MoveToLastAction';
 import RemoveFromPlaylistAction from './RemoveFromPlaylistAction';
 import type { PlaylistItem } from '../../../reducers/playlists';
-import { usePlaylistContext } from '.';
+import { usePlaylistContext } from './context';
 
 function dontBubble(event: React.MouseEvent<unknown>) {
   event.stopPropagation();

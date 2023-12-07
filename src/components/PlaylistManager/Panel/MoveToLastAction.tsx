@@ -4,7 +4,7 @@ import { useDispatch } from '../../../hooks/useRedux';
 import { type PlaylistItem, movePlaylistItems } from '../../../reducers/playlists';
 import SvgIcon from '../../SvgIcon';
 import MediaAction from '../../MediaList/MediaAction';
-import { usePlaylistContext } from '.';
+import { usePlaylistContext } from './context';
 
 type MoveToLastActionProps = {
   media: PlaylistItem,

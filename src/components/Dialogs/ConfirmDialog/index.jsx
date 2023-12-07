@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import cx from 'clsx';
 import React from 'react';
 import { useAsyncCallback } from 'react-async-hook';

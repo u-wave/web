@@ -18,7 +18,8 @@ type PlaylistRowProps = {
   playlist: Playlist,
   selected: boolean,
   onClick: () => void,
-  onAddToPlaylist: (playlist: Playlist, items: NewPlaylistItem[], afterID?: string) => Promise<void>,
+  onAddToPlaylist:
+    (playlist: Playlist, items: NewPlaylistItem[], afterID?: string) => Promise<void>,
 };
 function PlaylistRow({
   className,

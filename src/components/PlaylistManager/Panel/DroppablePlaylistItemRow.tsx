@@ -4,7 +4,7 @@ import { useDrop } from 'react-dnd';
 import { MEDIA } from '../../../constants/DDItemTypes';
 import isDraggingNearTopOfRow from '../../../utils/isDraggingNearTopOfRow';
 import PlaylistItemRow from './PlaylistItemRow';
-import { usePlaylistContext } from '.';
+import { usePlaylistContext } from './context';
 import type { PlaylistItem } from '../../../reducers/playlists';
 
 const {
@@ -16,7 +16,6 @@ type PlaylistItemRowProps = {
   className?: string,
   // For virtual list positioning
   style?: React.CSSProperties,
-  containerRef?: React.RefObject<HTMLDivElement>,
   index: number,
   media: PlaylistItem,
   onClick: () => void,

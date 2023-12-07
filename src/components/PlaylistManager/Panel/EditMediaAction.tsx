@@ -5,7 +5,7 @@ import SvgIcon from '../../SvgIcon';
 import { editMedia } from '../../../actions/PlaylistActionCreators';
 import type { PlaylistItem } from '../../../reducers/playlists';
 import MediaAction from '../../MediaList/MediaAction';
-import { usePlaylistContext } from '.';
+import { usePlaylistContext } from './context';
 
 type EditMediaActionProps = {
   media: PlaylistItem,

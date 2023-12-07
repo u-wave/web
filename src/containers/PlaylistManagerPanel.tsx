@@ -42,7 +42,7 @@ function PlaylistPanelContainer() {
     await dispatch(renamePlaylist({ playlistID, name }));
   }, [dispatch, playlistID]);
   const onDeletePlaylist = useCallback(async () => {
-      await dispatch(deletePlaylist(playlistID));
+    await dispatch(deletePlaylist(playlistID));
   }, [dispatch, playlistID]);
   const onNotDeletable = useCallback(() => {
     dispatch(cannotDeleteActivePlaylist(playlistID));

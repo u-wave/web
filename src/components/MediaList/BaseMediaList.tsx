@@ -26,7 +26,7 @@ export type ContextType<
   selection: ItemSelection<MediaType | null>,
 }
 const MediaListContext = React.createContext<ContextType<Item> | null>(null);
-export function useMediaListContext<T extends ContextType<any> = ContextType<Media>>() {
+export function useMediaListContext<T extends ContextType<Item> = ContextType<Media>>() {
   const context = useContext(MediaListContext);
   if (!context) {
     throw new Error('Missing MediaListContext');

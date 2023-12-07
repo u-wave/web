@@ -1,20 +1,12 @@
 import cx from 'clsx';
 import CircularProgress from '@mui/material/CircularProgress';
-import BaseMediaList, { useMediaListContext, type ContextType } from '../../MediaList/BaseMediaList';
+import BaseMediaList from '../../MediaList/BaseMediaList';
 import PlaylistMeta from './Meta';
 import PlaylistEmpty from './PlaylistEmpty';
 import PlaylistFilterEmpty from './PlaylistFilterEmpty';
 import PlaylistItemRow from './PlaylistItemRow';
 import DroppablePlaylistItemRow from './DroppablePlaylistItemRow';
 import type { InsertTarget, Playlist, PlaylistItem } from '../../../reducers/playlists';
-
-interface PlaylistContextProps extends ContextType<PlaylistItem> {
-  playlist: Playlist,
-  isFiltered: boolean,
-  onMoveMedia: (items: PlaylistItem[], target: InsertTarget) => Promise<void>,
-}
-
-export const usePlaylistContext = useMediaListContext<PlaylistContextProps>;
 
 type PlaylistPanelProps = {
   className?: string,

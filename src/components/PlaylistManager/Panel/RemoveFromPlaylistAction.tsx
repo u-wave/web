@@ -1,10 +1,10 @@
+import { useCallback } from 'react';
 import { mdiDelete } from '@mdi/js';
 import { useDispatch } from '../../../hooks/useRedux';
 import SvgIcon from '../../SvgIcon';
 import MediaAction from '../../MediaList/MediaAction';
 import { type PlaylistItem, removePlaylistItems } from '../../../reducers/playlists';
-import { usePlaylistContext } from '.';
-import { useCallback } from 'react';
+import { usePlaylistContext } from './context';
 
 type RemoveFromPlaylistActionProps = {
   media: PlaylistItem,
