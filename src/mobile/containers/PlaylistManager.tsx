@@ -22,6 +22,12 @@ function PlaylistManagerContainer() {
   const dispatch = useDispatch();
   const onCloseOverlay = useCallback(() => dispatch(closeOverlay()), [dispatch]);
 
+  // This should not happen as you can only open the playlist manager
+  // by selecting a playlist on mobile.
+  if (!selectedPlaylist || !selectedItems) {
+    return null;
+  }
+
   return (
     <PlaylistManager
       selectedPlaylist={selectedPlaylist}

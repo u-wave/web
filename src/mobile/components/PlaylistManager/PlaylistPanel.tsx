@@ -3,16 +3,13 @@ import PlaylistEmpty from '../../../components/PlaylistManager/Panel/PlaylistEmp
 import { PlaylistItem } from '../../../reducers/playlists';
 
 type PlaylistPanelProps = {
-  items: PlaylistItem[],
+  items: (PlaylistItem | null)[],
 };
 function PlaylistPanel({ items }: PlaylistPanelProps) {
   return (
     <div className="PlaylistPanel">
       {items.length > 0 ? (
-        <MediaList
-          className="PlaylistPanel-media"
-          media={items}
-        />
+        <MediaList className="PlaylistPanel-media" media={items} />
       ) : (
         <PlaylistEmpty />
       )}

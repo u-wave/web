@@ -22,7 +22,9 @@ function AddToPlaylistAction({ historyEntry }: AddToPlaylistActionProps) {
 
   const dispatch = useDispatch();
   const handleClick = useCallback((event: React.MouseEvent) => {
-    const selectedItems = selection.isSelected(historyEntry) ? selection.get() as HistoryEntry[] : [historyEntry];
+    const selectedItems = selection.isSelected(historyEntry)
+      ? selection.get() as HistoryEntry[]
+      : [historyEntry];
     const rect = event.currentTarget.getBoundingClientRect();
 
     dispatch(addMediaMenu({
