@@ -1,6 +1,5 @@
 import cx from 'clsx';
-import React from 'react';
-import PropTypes from 'prop-types';
+import { useCallback } from 'react';
 import { useTranslator } from '@u-wave/react-translate';
 import Typography from '@mui/material/Typography';
 import { mdiPlaylistPlus } from '@mdi/js';
@@ -10,11 +9,13 @@ import Button from '../../Form/Button';
 import SvgIcon from '../../SvgIcon';
 import ImportBlock from './ImportBlock';
 
-const { useCallback } = React;
-
-function NoPlaylists({ className, onCreatePlaylist }) {
+type NoPlaylistsProps = {
+  className?: string,
+  onCreatePlaylist: () => void,
+};
+function NoPlaylists({ className, onCreatePlaylist }: NoPlaylistsProps) {
   const { t } = useTranslator();
-  const handleCreatePlaylist = useCallback((event) => {
+  const handleCreatePlaylist = useCallback((event: React.FormEvent) => {
     event.preventDefault();
     return onCreatePlaylist();
   }, [onCreatePlaylist]);
@@ -25,10 +26,7 @@ function NoPlaylists({ className, onCreatePlaylist }) {
       <Typography>{t('playlists.noPlaylistsSub')}</Typography>
 
       <div className="NoPlaylists-create">
-        <Form
-          className="NoPlaylists-block"
-          onSubmit={handleCreatePlaylist}
-        >
+        <Form className="NoPlaylists-block" onSubmit={handleCreatePlaylist}>
           <FormGroup>
             <SvgIcon path={mdiPlaylistPlus} className="NoPlaylists-icon" style={{ width: '240px', height: '240px' }} />
           </FormGroup>
@@ -41,10 +39,5 @@ function NoPlaylists({ className, onCreatePlaylist }) {
     </div>
   );
 }
-
-NoPlaylists.propTypes = {
-  className: PropTypes.string,
-  onCreatePlaylist: PropTypes.func.isRequired,
-};
 
 export default NoPlaylists;

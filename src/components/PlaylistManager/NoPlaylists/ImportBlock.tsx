@@ -11,23 +11,22 @@ function ImportBlock() {
   const { getAllMediaSources } = useMediaSources();
   const dispatch = useDispatch();
 
-  const onShowImportPanel = (...args) => {
+  const onShowImportPanel = (sourceType: string) => {
     dispatch(showImportPanel());
-    return dispatch(showImportSourcePanel(...args));
+    return dispatch(showImportSourcePanel(sourceType));
   };
-  const onHideImportPanel = (...args) => {
-    const result = dispatch(hideImportSourcePanel(...args));
+  const onHideImportPanel = () => {
+    const result = dispatch(hideImportSourcePanel());
     dispatch(hideImportPanel());
     return result;
   };
 
-  const forms = [];
+  const forms: React.ReactElement[] = [];
   const sources = getAllMediaSources();
-  Object.keys(sources).forEach((sourceType) => {
-    const { ImportForm } = sources[sourceType];
-    if (ImportForm) {
+  Object.entries(sources).forEach(([sourceType, source]) => {
+    if (source.ImportForm) {
       forms.push((
-        <ImportForm
+        <source.ImportForm
           key={sourceType}
           onShowImportPanel={() => onShowImportPanel(sourceType)}
           onHideImportPanel={onHideImportPanel}
