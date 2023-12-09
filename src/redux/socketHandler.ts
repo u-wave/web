@@ -11,7 +11,6 @@ import {
 } from '../reducers/chat';
 import * as waitlistActions from '../reducers/waitlist';
 import { receive as receiveMessage } from '../actions/ChatActionCreators';
-import { cyclePlaylist } from '../actions/PlaylistActionCreators';
 import { favorited, receiveVote } from '../actions/VoteActionCreators';
 import { currentTimeSelector } from '../selectors/timeSelectors';
 import {
@@ -23,6 +22,7 @@ import {
   usernameChanged,
 } from '../reducers/users';
 import { socketMessage } from './socket';
+import { cyclePlaylist } from '../reducers/playlists';
 
 function expectType<T>(
   _param: T, // eslint-disable-line @typescript-eslint/no-unused-vars

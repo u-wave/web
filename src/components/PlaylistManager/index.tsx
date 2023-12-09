@@ -17,10 +17,7 @@ type PlaylistManagerProps = {
   className?: string,
   onCloseOverlay: () => void,
 };
-function PlaylistManager({
-  className,
-  onCloseOverlay,
-}: PlaylistManagerProps) {
+function PlaylistManager({ className, onCloseOverlay }: PlaylistManagerProps) {
   const showPanel = useSelector((state) => state.playlists.selectedPlaylistID);
 
   const { t } = useTranslator();

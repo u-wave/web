@@ -1,6 +1,6 @@
+/* eslint-disable react/prop-types */
 import cx from 'clsx';
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useAsyncCallback } from 'react-async-hook';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -17,6 +17,22 @@ const {
   useState,
 } = React;
 
+/**
+ * @param {object} props
+ * @param {React.ReactNode} [props.children]
+ * @param {React.ReactNode} [props.icon]
+ * @param {string} [props.inputType]
+ * @param {string} [props.placeholder]
+ * @param {string} [props.submitLabel]
+ * @param {string} props.title
+ * @param {string} [props.bodyClassName]
+ * @param {string} [props.contentClassName]
+ * @param {string} [props.titleClassName]
+ * @param {(value: string) => Promise<void> | undefined} props.onSubmit
+ * @param {() => void} props.onCancel
+ * @param {boolean} props.open
+ * @param {string} [props.defaultValue]
+ */
 function PromptDialog({
   children,
   icon,
@@ -87,21 +103,5 @@ function PromptDialog({
     </Dialog>
   );
 }
-
-PromptDialog.propTypes = {
-  children: PropTypes.node,
-  placeholder: PropTypes.string,
-  submitLabel: PropTypes.string,
-  inputType: PropTypes.string,
-  icon: PropTypes.node,
-  defaultValue: PropTypes.string,
-  title: PropTypes.string,
-  open: PropTypes.bool.isRequired,
-  bodyClassName: PropTypes.string,
-  contentClassName: PropTypes.string,
-  titleClassName: PropTypes.string,
-  onSubmit: PropTypes.func.isRequired,
-  onCancel: PropTypes.func.isRequired,
-};
 
 export default PromptDialog;

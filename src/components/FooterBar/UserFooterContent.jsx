@@ -18,7 +18,7 @@ import {
 import {
   activePlaylistSelector,
   nextMediaSelector,
-} from '../../selectors/playlistSelectors';
+} from '../../reducers/playlists';
 import { currentVoteStatsSelector } from '../../selectors/voteSelectors';
 import {
   baseEtaSelector,

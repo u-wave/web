@@ -1,16 +1,18 @@
-import React from 'react';
+import { useMemo } from 'react';
 import useSWRImmutable from 'swr/immutable';
+import * as loadingState from '../constants/LoadingStates';
 import { useSelector } from '../hooks/useRedux';
 import { useMediaSearchStore } from '../stores/MediaSearchStore';
-import { playlistsByIDSelector } from '../selectors/playlistSelectors';
 import SearchResults from '../components/PlaylistManager/SearchResults';
-import { Media } from '../reducers/booth';
-import uwFetch, { ListResponse } from '../utils/fetch';
+import { type Playlist, playlistsByIDSelector } from '../reducers/playlists';
+import type { Media } from '../reducers/booth';
+import uwFetch, { type ListResponse } from '../utils/fetch';
 
-const { useMemo } = React;
-
-interface SearchResult extends Media {
+interface ApiSearchResult extends Media {
   inPlaylists?: string[];
+}
+export interface SearchResult extends Media {
+  inPlaylists?: Playlist[],
 }
 
 function SearchResultsContainer() {
@@ -21,7 +23,9 @@ function SearchResultsContainer() {
 
   // Technically this is not immutable but we want to avoid frequent
   // search queries that cost a lot of quota
-  const { data: results, error, isValidating } = useSWRImmutable<ListResponse<SearchResult>>(() => {
+  const {
+    data: results, error, isValidating,
+  } = useSWRImmutable<ListResponse<ApiSearchResult>>(() => {
     if (!query) {
       return null;
     }
@@ -33,30 +37,34 @@ function SearchResultsContainer() {
 
   const playlistsByID = useSelector(playlistsByIDSelector);
 
-  const resultsWithPlaylists = useMemo(() => {
+  const resultsWithPlaylists: SearchResult[] = useMemo(() => {
     if (!results || !Array.isArray(results.data)) {
       return [];
     }
-    return results.data.map((result) => {
-      if (!Array.isArray(result.inPlaylists)) {
+    return results.data.map(({ inPlaylists, ...result }) => {
+      if (!inPlaylists) {
         return result;
       }
-      return {
-        ...result,
-        inPlaylists: result.inPlaylists
-          .map((id) => playlistsByID[id])
-          // If we don't know about a playlist for some reason, ignore it.
-          // That would be a bug, but not showing it is better than crashing!
-          .filter(Boolean),
-      };
+
+      const playlists: Playlist[] = [];
+      inPlaylists.forEach((id) => {
+        const playlist = playlistsByID[id];
+        // If we don't know about a playlist for some reason, ignore it.
+        // That would be a bug, but not showing it is better than crashing!
+        if (playlist != null) {
+          playlists.push(playlist);
+        }
+      });
+
+      return { ...result, inPlaylists: playlists };
     });
   }, [results, playlistsByID]);
 
-  let state = 'loadingState/IDLE';
+  let state: typeof loadingState[keyof typeof loadingState] = loadingState.IDLE;
   if (results || error) {
-    state = 'loadingState/LOADED';
+    state = loadingState.LOADED;
   } else if (isValidating) {
-    state = 'loadingState/LOADING';
+    state = loadingState.LOADING;
   }
 
   return (

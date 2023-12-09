@@ -2,22 +2,11 @@ import type { AnyAction } from 'redux';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import escapeStringRegExp from 'escape-string-regexp';
 import indexBy from 'just-index';
+import naturalCmp from 'natural-compare';
 import { createAsyncThunk } from '../redux/api';
 import uwFetch, { ListResponse } from '../utils/fetch';
 import mergeIncludedModels from '../utils/mergeIncludedModels';
-import {
-  LOAD_PLAYLIST_START,
-  LOAD_PLAYLIST_COMPLETE,
-  PLAYLIST_CYCLED,
-  DELETE_PLAYLIST_START,
-  DELETE_PLAYLIST_COMPLETE,
-  UPDATE_MEDIA_START,
-  UPDATE_MEDIA_COMPLETE,
-  FILTER_PLAYLIST_ITEMS,
-  FILTER_PLAYLIST_ITEMS_COMPLETE,
-  DO_FAVORITE_COMPLETE,
-  LOGOUT_COMPLETE,
-} from '../constants/ActionTypes';
+import { DO_FAVORITE_COMPLETE, LOGOUT_COMPLETE } from '../constants/ActionTypes';
 import type { Media } from './booth';
 import { initState } from './auth';
 
@@ -97,6 +86,11 @@ function mergePlaylistPage(
 ) {
   const media: PlaylistItemList = Array(size).fill(null);
   oldMedia.forEach((item, i) => {
+    // `size` should be the most recent value here
+    // so we should not keep around cached playlist items that exceed the new playlist size
+    if (i >= media.length) {
+      return;
+    }
     media[i] = item;
   });
   newMedia.forEach((item, i) => {
@@ -133,6 +127,100 @@ const createPlaylist = createAsyncThunk('playlists/create', async (name: string)
   return response.data;
 });
 
+const deletePlaylist = createAsyncThunk('playlists/delete', async (playlistID: string) => {
+  await uwFetch([`/playlists/${playlistID}`, {
+    method: 'delete',
+  }]);
+});
+
+const MEDIA_PAGE_SIZE = 50;
+// `sneaky` disables loading indicators.
+const loadPlaylist = createAsyncThunk('playlists/media', async ({
+  playlistID,
+  page = 0,
+  filter = null,
+}: {
+  playlistID: string,
+  page?: number,
+  filter?: string | null,
+  sneaky?: boolean,
+}) => {
+  const response = await uwFetch<{
+    data: object[],
+    meta: {
+      offset: number,
+      pageSize: number,
+      results?: number,
+      total: number,
+    },
+    included: object,
+  }>([`/playlists/${playlistID}/media`, {
+    method: 'get',
+    qs: {
+      // Empty string should not actually filter.
+      filter: filter || null,
+      page,
+      limit: MEDIA_PAGE_SIZE,
+    },
+  }]);
+
+  // TODO specific type
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  function flattenPlaylistItem(item: any): PlaylistItem {
+    return {
+      ...item.media,
+      ...item,
+    };
+  }
+
+  const items: unknown[] = mergeIncludedModels(response);
+  return {
+    items: items.map(flattenPlaylistItem),
+    page: response.meta.offset / response.meta.pageSize,
+    pageSize: response.meta.pageSize,
+    size: response.meta.results ?? response.meta.total,
+  };
+}, {
+  getPendingMeta({ arg }) {
+    return { sneaky: arg.sneaky };
+  },
+});
+
+function shouldLoadAfterCycle(playlist: Playlist, items: PlaylistItemList) {
+  // If the playlist was fully loaded, we can cycle naively
+  if (items.length === playlist.size && items.every(Boolean)) {
+    return false;
+  }
+  // If the first page _after_ cycle is fully loaded, we also don't need to do
+  // anything.
+  if (items.length > MEDIA_PAGE_SIZE
+      && items.slice(1, 1 + MEDIA_PAGE_SIZE).every(Boolean)) {
+    return false;
+  }
+  // Otherwise, there will be unloaded items on the first page after cycling,
+  // so we want to eagerly load the page again.
+  return true;
+}
+
+const cyclePlaylist = createAsyncThunk('playlists/cycle', async (playlistID: string, api) => {
+  const { playlists: state } = api.getState();
+  if (playlistID === state.activePlaylistID || playlistID === state.selectedPlaylistID) {
+    const playlist = state.playlists[playlistID];
+    const items = state.playlistItems[playlistID];
+    if (playlist && items && shouldLoadAfterCycle(playlist, items)) {
+      await api.dispatch(loadPlaylist({ playlistID, page: 0 }));
+    }
+  }
+});
+
+const shufflePlaylist = createAsyncThunk('playlists/shuffle', async (playlistID: string, api) => {
+  await uwFetch([`/playlists/${playlistID}/shuffle`, {
+    method: 'post',
+  }]);
+
+  await api.dispatch(loadPlaylist({ playlistID, page: 0, sneaky: true }));
+});
+
 const renamePlaylist = createAsyncThunk('playlists/rename', async ({ playlistID, name }: {
   playlistID: string,
   name: string,
@@ -160,7 +248,7 @@ const activatePlaylist = createAsyncThunk('playlists/activate', async (playlistI
   }]);
 });
 
-type InsertTarget = { before: string } | { after: string } | { at: 'start' | 'end' };
+export type InsertTarget = { before: string } | { after: string } | { at: 'start' | 'end' };
 function resolveMoveOptions(
   items: (null | { _id: string })[],
   opts: InsertTarget,
@@ -270,6 +358,35 @@ const removePlaylistItems = createAsyncThunk('playlists/removePlaylistItems', as
   return { newSize: meta.playlistSize };
 });
 
+type PlaylistItemUpdate = {
+    artist: string,
+    title: string,
+    start: number,
+    end: number,
+}
+const updatePlaylistItem = createAsyncThunk('playlists/updatePlaylistItem', async ({
+  playlistID,
+  mediaID,
+  props,
+}: {
+  playlistID: string,
+  mediaID: string,
+  props: PlaylistItemUpdate,
+}) => {
+  const { data } = await uwFetch<{
+    data: PlaylistItemUpdate,
+  }>([`/playlists/${playlistID}/media/${mediaID}`, {
+    method: 'put',
+    data: props,
+  }]);
+
+  return data;
+});
+
+function byName(a: Playlist, b: Playlist) {
+  return naturalCmp(a.name.toLowerCase(), b.name.toLowerCase());
+}
+
 const slice = createSlice({
   name: 'playlists',
   initialState,
@@ -285,6 +402,22 @@ const slice = createSlice({
         state.currentFilter = null;
       }
       state.selectedPlaylistID = action.payload;
+    },
+    setPlaylistFilter(state, action: PayloadAction<{ playlistID: string, filter: string | null }>) {
+      const { payload } = action;
+      // Only the selected playlist can be filtered.
+      if (payload.playlistID !== state.selectedPlaylistID) {
+        return;
+      }
+      if (!payload.filter) {
+        state.currentFilter = null;
+        return;
+      }
+      state.currentFilter = {
+        playlistID: payload.playlistID,
+        filter: payload.filter,
+        items: filterCachedPlaylistItems(state, payload.playlistID, payload.filter).concat(null),
+      };
     },
     showImportPanel(state) {
       state.selectedPlaylistID = importPanelSymbol;
@@ -347,79 +480,68 @@ const slice = createSlice({
           state.activePlaylistID = action.meta.arg;
         }
       })
-      .addCase(LOAD_PLAYLIST_START, (state, { payload, meta }: AnyAction) => {
-        const playlist = state.playlists[payload.playlistID];
+      .addCase(loadPlaylist.pending, (state, action) => {
+        const {
+          playlistID, page = 0, sneaky = false, filter,
+        } = action.meta.arg;
+        const playlist = state.playlists[playlistID];
         if (playlist == null) {
           return;
         }
-        // Cases where we don't show a loading anymation
-        if (meta.sneaky || meta.page !== 0 || state.playlistItems[payload.playlistID]) {
+        // Cases where we don't show the whole playlist as loading
+        if (sneaky || page !== 0 || filter || state.playlistItems[playlistID]) {
           return;
         }
 
-        const items = state.playlistItems[payload.playlistID] ?? [];
-        state.playlistItems[payload.playlistID] = Array(playlist.size).fill(null)
+        const items = state.playlistItems[playlistID] ?? [];
+        state.playlistItems[playlistID] = Array(playlist.size).fill(null)
           .map((item, index) => items[index] ?? item);
       })
-      .addCase(LOAD_PLAYLIST_COMPLETE, (state, { payload, meta, error }: AnyAction) => {
-        const playlist = state.playlists[payload.playlistID];
+      .addCase(loadPlaylist.fulfilled, (state, action) => {
+        const {
+          items, size, page, pageSize,
+        } = action.payload;
+        const { playlistID, filter } = action.meta.arg;
+        const playlist = state.playlists[playlistID];
 
         if (playlist == null) {
           return;
         }
 
-        if (error) {
-          playlist.loading = false;
+        // A response came in for an outdated filter
+        if (filter && (state.currentFilter == null || state.currentFilter.filter !== filter)) {
           return;
         }
 
         playlist.loading = false;
-        state.playlistItems[payload.playlistID] = mergePlaylistPage(
-          meta.size ?? playlist.size,
-          state.playlistItems[payload.playlistID],
-          payload.media,
-          meta,
-        );
-      })
-      .addCase(FILTER_PLAYLIST_ITEMS, (state, { payload }: AnyAction) => {
-        // Only the selected playlist can be filtered.
-        if (payload.playlistID !== state.selectedPlaylistID) {
-          return;
+        if (filter && state.currentFilter) {
+          state.currentFilter.items = mergePlaylistPage(
+            size,
+            state.currentFilter.items,
+            items,
+            { page, pageSize },
+          );
+        } else {
+          state.playlistItems[playlistID] = mergePlaylistPage(
+            size,
+            state.playlistItems[playlistID],
+            items,
+            { page, pageSize },
+          );
         }
-        if (!payload.filter) {
-          state.currentFilter = null;
-          return;
-        }
-        state.currentFilter = {
-          playlistID: payload.playlistID,
-          filter: payload.filter,
-          items: filterCachedPlaylistItems(state, payload.playlistID, payload.filter),
-        };
       })
-      .addCase(FILTER_PLAYLIST_ITEMS_COMPLETE, (state, { payload, meta }: AnyAction) => {
-        // Only the selected playlist can be filtered.
-        if (payload.playlistID !== state.selectedPlaylistID || !state.currentFilter) {
-          return;
-        }
-        state.currentFilter.items = mergePlaylistPage(
-          meta.size,
-          state.currentFilter.items,
-          payload.media,
-          meta,
-        );
-      })
-      .addCase(PLAYLIST_CYCLED, (state, { payload }: AnyAction) => {
-        const playlist = state.playlists[payload.playlistID];
+      .addCase(cyclePlaylist.pending, (state, { meta }) => {
+        const playlist = state.playlists[meta.arg];
         if (playlist == null) {
           return;
         }
 
-        const items = state.playlistItems[payload.playlistID] ?? [];
+        const items = state.playlistItems[meta.arg] ?? [];
         if (items.length > 0) {
           const newItems = items.slice(1);
           // eslint-disable-next-line prefer-destructuring
           newItems[playlist.size - 1] = items[0] ?? null;
-          state.playlistItems[payload.playlistID] = newItems;
+          state.playlistItems[meta.arg] = newItems;
         }
       })
       .addCase(createPlaylist.pending, (state, action) => {
@@ -450,29 +572,32 @@ const slice = createSlice({
           playlist.name = action.payload.name;
         }
       })
-      .addCase(DELETE_PLAYLIST_START, (state, { payload }: AnyAction) => {
-        const playlist = state.playlists[payload.playlistID];
+      .addCase(deletePlaylist.pending, (state, { meta }) => {
+        const playlist = state.playlists[meta.arg];
 
         if (playlist != null) {
           playlist.loading = true;
         }
       })
-      .addCase(DELETE_PLAYLIST_COMPLETE, (state, { payload, error }: AnyAction) => {
-        const playlist = state.playlists[payload.playlistID];
+      .addCase(deletePlaylist.fulfilled, (state, { meta }) => {
+        const playlistID = meta.arg;
+        const playlist = state.playlists[playlistID];
         if (playlist == null) {
           return;
         }
 
-        if (error) {
-          playlist.loading = false;
-          return;
-        }
-
         playlist.loading = false;
-        delete state.playlists[payload.playlistID];
-        delete state.playlistItems[payload.playlistID];
-        if (state.selectedPlaylistID === payload.playlistID) {
+        delete state.playlists[playlistID];
+        delete state.playlistItems[playlistID];
+
+        if (state.selectedPlaylistID === playlistID) {
           state.selectedPlaylistID = state.activePlaylistID;
+        }
+      })
+      .addCase(deletePlaylist.rejected, (state, { meta }) => {
+        const playlist = state.playlists[meta.arg];
+        if (playlist != null) {
+          playlist.loading = false;
         }
       })
       .addCase(addPlaylistItems.pending, (state, action) => {
@@ -513,18 +638,26 @@ const slice = createSlice({
           { at: 'end' },
         );
       })
-      .addCase(UPDATE_MEDIA_START, (state, { payload }: AnyAction) => {
-        for (const item of state.playlistItems[payload.playlistID] ?? []) {
-          if (item != null && item._id === payload.mediaID) {
+      .addCase(updatePlaylistItem.pending, (state, { meta }) => {
+        for (const item of state.playlistItems[meta.arg.playlistID] ?? []) {
+          if (item != null && item._id === meta.arg.mediaID) {
             item.loading = true;
           }
         }
       })
-      .addCase(UPDATE_MEDIA_COMPLETE, (state, { payload }: AnyAction) => {
-        for (const item of state.playlistItems[payload.playlistID] ?? []) {
-          if (item != null && item._id === payload.mediaID) {
+      .addCase(updatePlaylistItem.fulfilled, (state, { payload, meta }) => {
+        for (const item of state.playlistItems[meta.arg.playlistID] ?? []) {
+          if (item != null && item._id === meta.arg.mediaID) {
             item.loading = false;
-            Object.assign(item, payload.media);
+            Object.assign(item, payload);
+          }
+        }
+      })
+      .addCase(updatePlaylistItem.rejected, (state, { meta }) => {
+        // Just remove the loading state
+        for (const item of state.playlistItems[meta.arg.playlistID] ?? []) {
+          if (item != null && item._id === meta.arg.mediaID) {
+            item.loading = false;
           }
         }
       })
@@ -569,21 +702,74 @@ const slice = createSlice({
           .filter((media) => media === null || !ids.has(media._id));
       });
   },
+  selectors: {
+    playlistsByID: (state) => state.playlists,
+    playlists: (state) => Object.values(state.playlists).sort(byName),
+    playlist: (state, id: string) => state.playlists[id] ?? null,
+    activePlaylistID: (state) => state.activePlaylistID,
+    selectedPlaylistID: (state) => state.selectedPlaylistID,
+    activePlaylist: (state): Playlist | null => (
+      state.activePlaylistID
+        ? slice.getSelectors().playlist(state, state.activePlaylistID)
+        : null
+    ),
+    selectedPlaylist: (state): Playlist | null => (
+      typeof state.selectedPlaylistID === 'string'
+        ? slice.getSelectors().playlist(state, state.selectedPlaylistID)
+        : null
+    ),
+    // FIXME should be null if it doesn't exist
+    activePlaylistItems: (state): PlaylistItemList => {
+      const { playlistItems, activePlaylistID } = state;
+      if (activePlaylistID && activePlaylistID in playlistItems) {
+        return playlistItems[activePlaylistID] ?? [];
+      }
+      return [];
+    },
+    // FIXME should be null if it doesn't exist
+    selectedPlaylistItems: (state): PlaylistItemList => {
+      const { playlistItems, selectedPlaylistID } = state;
+      if (typeof selectedPlaylistID === 'string' && selectedPlaylistID in playlistItems) {
+        return playlistItems[selectedPlaylistID] ?? [];
+      }
+      return [];
+    },
+    nextMedia: (state): PlaylistItem | null => {
+      const s = slice.getSelectors();
+      return s.activePlaylistItems(state)[0] ?? null;
+    },
+  },
 });
 
 export {
   createPlaylist,
+  deletePlaylist,
+  loadPlaylist,
+  cyclePlaylist,
+  shufflePlaylist,
   renamePlaylist,
   activatePlaylist,
   addPlaylistItems,
   movePlaylistItems,
   removePlaylistItems,
+  updatePlaylistItem,
 };
 export const {
   selectPlaylist,
   selectActivePlaylist,
+  setPlaylistFilter,
   showImportPanel,
   showSearchResults,
 } = slice.actions;
-
+export const {
+  playlistsByID: playlistsByIDSelector,
+  playlists: playlistsSelector,
+  activePlaylistID: activePlaylistIDSelector,
+  activePlaylist: activePlaylistSelector,
+  selectedPlaylistID: selectedPlaylistIDSelector,
+  selectedPlaylist: selectedPlaylistSelector,
+  activePlaylistItems: activePlaylistItemsSelector,
+  selectedPlaylistItems: selectedPlaylistItemsSelector,
+  nextMedia: nextMediaSelector,
+} = slice.selectors;
 export default slice.reducer;
