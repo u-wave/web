@@ -6,20 +6,17 @@ import {
   isSelectedPlaylistLoadingSelector,
   isFilteredSelector,
 } from '../../selectors/playlistSelectors';
-import {
-  filterPlaylistItems,
-  cannotDeleteActivePlaylist,
-  loadPlaylist,
-  loadFilteredPlaylistItems,
-} from '../../actions/PlaylistActionCreators';
+import { cannotDeleteActivePlaylist } from '../../actions/PlaylistActionCreators';
 import PlaylistPanel from '../components/PlaylistManager/PlaylistPanel';
 import {
+  loadPlaylist,
   deletePlaylist,
   shufflePlaylist,
   renamePlaylist,
   activatePlaylist,
   movePlaylistItems,
   selectedPlaylistSelector,
+  setPlaylistFilter,
 } from '../../reducers/playlists';
 
 const mapStateToProps = createStructuredSelector({
@@ -32,9 +29,8 @@ const mapStateToProps = createStructuredSelector({
 const onMoveMedia = (playlistID) => (media, opts) => (
   movePlaylistItems({ playlistID, medias: media, target: opts })
 );
-const onLoadPlaylistPage = ({ isFiltered, playlist }) => (page) => (
-  isFiltered ? loadFilteredPlaylistItems(playlist._id, page)
-    : loadPlaylist(playlist._id, page)
+const onLoadPlaylistPage = ({ filter, playlist }) => (
+  (page) => loadPlaylist({ playlistID: playlist._id, page, filter })
 );
 
 // Most of the playlist-related action creators need to know which playlist to
@@ -58,7 +54,8 @@ const mergeProps = (state, { dispatch }, props) => ({
     onNotDeletable: cannotDeleteActivePlaylist,
     onMoveMedia: onMoveMedia(state.playlist._id),
     onLoadPlaylistPage: onLoadPlaylistPage(state),
-    onFilterPlaylistItems: filterPlaylistItems.bind(null, state.playlist._id),
+    onFilterPlaylistItems:
+      (filter) => setPlaylistFilter({ playlistID: state.playlist._id, filter }),
   }, dispatch),
 });
 

@@ -86,6 +86,11 @@ function mergePlaylistPage(
 ) {
   const media: PlaylistItemList = Array(size).fill(null);
   oldMedia.forEach((item, i) => {
+    // `size` should be the most recent value here
+    // so we should not keep around cached playlist items that exceed the new playlist size
+    if (i >= media.length) {
+      return;
+    }
     media[i] = item;
   });
   newMedia.forEach((item, i) => {
@@ -411,7 +416,7 @@ const slice = createSlice({
       state.currentFilter = {
         playlistID: payload.playlistID,
         filter: payload.filter,
-        items: filterCachedPlaylistItems(state, payload.playlistID, payload.filter),
+        items: filterCachedPlaylistItems(state, payload.playlistID, payload.filter).concat(null),
       };
     },
     showImportPanel(state) {

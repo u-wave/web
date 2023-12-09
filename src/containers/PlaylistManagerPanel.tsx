@@ -6,7 +6,6 @@ import {
   playlistItemFilterSelector,
 } from '../selectors/playlistSelectors';
 import {
-  filterPlaylistItems,
   cannotDeleteActivePlaylist,
 } from '../actions/PlaylistActionCreators';
 import PlaylistPanel from '../components/PlaylistManager/Panel';
@@ -20,6 +19,7 @@ import {
   type PlaylistItem,
   type InsertTarget,
   selectedPlaylistSelector,
+  setPlaylistFilter,
 } from '../reducers/playlists';
 
 const { useCallback } = React;
@@ -63,7 +63,7 @@ function PlaylistPanelContainer() {
     await dispatch(loadPlaylist({ playlistID, page, filter }));
   }, [dispatch, filter, playlistID]);
   const onFilterPlaylistItems = useCallback((newFilter: string | null) => {
-    dispatch(filterPlaylistItems(playlistID, newFilter));
+    dispatch(setPlaylistFilter({ playlistID, filter: newFilter }));
   }, [dispatch, playlistID]);
 
   return (
