@@ -1,3 +1,4 @@
+// TODO move this back to redux
 import React from 'react';
 
 const {

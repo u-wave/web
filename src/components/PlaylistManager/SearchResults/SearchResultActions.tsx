@@ -1,14 +1,17 @@
 import cx from 'clsx';
-import React from 'react';
-import PropTypes from 'prop-types';
 import AddToPlaylistAction from '../../MediaList/AddToPlaylistAction';
 import PreviewMediaAction from '../../MediaList/PreviewMediaAction';
+import type { SearchResult } from '../../../containers/SearchResultsPanel';
 
-function dontBubble(event) {
+function dontBubble(event: React.BaseSyntheticEvent) {
   event.stopPropagation();
 }
 
-function SearchResultActions({ className, media }) {
+type SearchResultActionsProps = {
+  className?: string,
+  media: SearchResult,
+};
+function SearchResultActions({ className, media }: SearchResultActionsProps) {
   return (
     // eslint-disable-next-line max-len
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
@@ -21,10 +24,5 @@ function SearchResultActions({ className, media }) {
     </div>
   );
 }
-
-SearchResultActions.propTypes = {
-  className: PropTypes.string,
-  media: PropTypes.object.isRequired,
-};
 
 export default SearchResultActions;

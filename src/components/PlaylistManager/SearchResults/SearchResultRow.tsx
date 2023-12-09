@@ -1,18 +1,23 @@
 import cx from 'clsx';
-import React from 'react';
-import PropTypes from 'prop-types';
 import { SEARCH_RESULT } from '../../../constants/DDItemTypes';
 import MediaRowBase from '../../MediaList/MediaRowBase';
 import MediaDuration from '../../MediaList/MediaDuration';
 import MediaThumbnail from '../../MediaList/MediaThumbnail';
 import SearchResultActions from './SearchResultActions';
+import type { SearchResult } from '../../../containers/SearchResultsPanel';
 
+type SearchResultRowProps = {
+  className?: string,
+  media: SearchResult,
+  style?: React.CSSProperties,
+  onClick: (event?: React.MouseEvent) => void,
+};
 function SearchResultRow({
   className,
   media,
   style,
   onClick,
-}) {
+}: SearchResultRowProps) {
   let note = null;
   if (media.inPlaylists) {
     note = (
@@ -52,12 +57,5 @@ function SearchResultRow({
     </MediaRowBase>
   );
 }
-
-SearchResultRow.propTypes = {
-  className: PropTypes.string,
-  style: PropTypes.object, // from virtual list positioning
-  media: PropTypes.object,
-  onClick: PropTypes.func,
-};
 
 export default SearchResultRow;

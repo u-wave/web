@@ -1,18 +1,23 @@
 import cx from 'clsx';
-import React from 'react';
-import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
-import { IDLE, LOADING, LOADED } from '../../../constants/LoadingStates';
+import { LOADING, LOADED } from '../../../constants/LoadingStates';
 import NoSearchResults from './NoSearchResults';
 import LoadingSearchResults from './LoadingSearchResults';
 import SearchResultsList from './SearchResultsList';
+import type { SearchResult } from '../../../containers/SearchResultsPanel';
 
+type SearchResultsPanelProps = {
+  className?: string,
+  query: string,
+  loadingState: `loadingState/${'IDLE' | 'LOADING' | 'LOADED'}`
+  results: SearchResult[],
+};
 function SearchResultsPanel({
   className,
   query,
   loadingState,
   results,
-}) {
+}: SearchResultsPanelProps) {
   const { t } = useTranslator();
 
   let list;
@@ -33,12 +38,5 @@ function SearchResultsPanel({
     </div>
   );
 }
-
-SearchResultsPanel.propTypes = {
-  className: PropTypes.string,
-  query: PropTypes.string.isRequired,
-  loadingState: PropTypes.oneOf([IDLE, LOADING, LOADED]).isRequired,
-  results: PropTypes.arrayOf(PropTypes.object),
-};
 
 export default SearchResultsPanel;

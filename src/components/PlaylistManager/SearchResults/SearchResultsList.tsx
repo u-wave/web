@@ -1,9 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import MediaListBase from '../../MediaList/BaseMediaList';
 import SearchResultRow from './SearchResultRow';
+import type { SearchResult } from '../../../containers/SearchResultsPanel';
 
-function SearchResultsList({ results }) {
+type SearchResultsListProps = {
+  results: SearchResult[],
+};
+function SearchResultsList({ results }: SearchResultsListProps) {
   return (
     <MediaListBase
       className="PlaylistPanel-media"
@@ -13,9 +15,5 @@ function SearchResultsList({ results }) {
     />
   );
 }
-
-SearchResultsList.propTypes = {
-  results: PropTypes.array.isRequired,
-};
 
 export default SearchResultsList;
