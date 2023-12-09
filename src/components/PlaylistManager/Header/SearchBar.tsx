@@ -1,11 +1,13 @@
-import PropTypes from 'prop-types';
-import { useDispatch } from '../../../hooks/useRedux';
 import BaseSearchBar from '../../SearchBar';
 import SourcePicker from './SourcePicker';
+import { useDispatch } from '../../../hooks/useRedux';
 import { useMediaSearchStore } from '../../../stores/MediaSearchStore';
 import { showSearchResults } from '../../../reducers/playlists';
 
-function MediaSearchBar({ className }) {
+type MediaSearchBarProps = {
+  className?: string,
+};
+function MediaSearchBar({ className }: MediaSearchBarProps) {
   const {
     activeSource,
     search,
@@ -13,25 +15,20 @@ function MediaSearchBar({ className }) {
   } = useMediaSearchStore();
   const dispatch = useDispatch();
 
-  const handleSubmit = (query) => {
+  const handleSubmit = (query: string) => {
     search(query);
     dispatch(showSearchResults());
   };
-  const handleSourceChange = (newSource) => setSource(newSource);
 
   return (
     <BaseSearchBar className={className} onSubmit={handleSubmit} autoFocus>
       <SourcePicker
         className="SearchBar-source"
         selected={activeSource}
-        onChange={handleSourceChange}
+        onChange={setSource}
       />
     </BaseSearchBar>
   );
 }
-
-MediaSearchBar.propTypes = {
-  className: PropTypes.string,
-};
 
 export default MediaSearchBar;

@@ -1,14 +1,17 @@
 import cx from 'clsx';
-import React from 'react';
-import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
 import OverlayHeader from '../../Overlay/Header';
 
+type PlaylistManagerHeaderProps = {
+  className?: string,
+  children?: React.ReactNode,
+  onCloseOverlay: () => void,
+};
 function PlaylistManagerHeader({
   className,
   children,
   onCloseOverlay,
-}) {
+}: PlaylistManagerHeaderProps) {
   const { t } = useTranslator();
 
   return (
@@ -21,11 +24,5 @@ function PlaylistManagerHeader({
     </OverlayHeader>
   );
 }
-
-PlaylistManagerHeader.propTypes = {
-  className: PropTypes.string,
-  children: PropTypes.node,
-  onCloseOverlay: PropTypes.func.isRequired,
-};
 
 export default PlaylistManagerHeader;

@@ -1,24 +1,22 @@
 import cx from 'clsx';
-import React from 'react';
-import PropTypes from 'prop-types';
-import Popover from '@mui/material/Popover';
+import { useCallback, useRef, useState } from 'react';
+import Popover, { type PopoverProps } from '@mui/material/Popover';
 import { mdiMenuDown } from '@mdi/js';
 import { useMediaSources } from '../../../context/MediaSourceContext';
 import SvgIcon from '../../SvgIcon';
 import SourcePickerElement from './SourcePickerElement';
 
-const {
-  useCallback,
-  useRef,
-  useState,
-} = React;
-
 const popoverPosition = {
   anchorOrigin: { vertical: 'bottom', horizontal: 'left' },
   transformOrigin: { vertical: 'top', horizontal: 'left' },
-};
+} satisfies Partial<PopoverProps>;
 
-function SourcePicker({ className, selected, onChange }) {
+type SourcePickerProps = {
+  className?: string,
+  selected: string,
+  onChange: (sourceName: string) => void,
+};
+function SourcePicker({ className, selected, onChange }: SourcePickerProps) {
   const { getMediaSource, getAllMediaSources } = useMediaSources();
   const [isOpen, setOpen] = useState(false);
   const container = useRef(null);
@@ -29,28 +27,24 @@ function SourcePicker({ className, selected, onChange }) {
   const handleClose = useCallback(() => {
     setOpen(false);
   }, []);
-  const handleChange = useCallback((sourceName) => {
+  const handleChange = useCallback((sourceName: string) => {
     onChange(sourceName);
     setOpen(false);
   }, [onChange]);
 
-  const sourceNames = Object.keys(getAllMediaSources());
-  const sources = sourceNames
-    .filter((name) => name !== selected)
-    .map((name) => (
+  const sources = Object.entries(getAllMediaSources())
+    .filter(([name]) => name !== selected)
+    .map(([name, source]) => (
       <button
         type="button"
         className="SourcePicker-item"
         key={name}
         onClick={() => handleChange(name)}
       >
-        <SourcePickerElement
-          name={name}
-          source={getMediaSource(name)}
-          active={selected === name}
-        />
+        <SourcePickerElement name={name} source={source} active={false} />
       </button>
     ));
+  const selectedSource = getMediaSource(selected)!;
 
   return (
     <div
@@ -62,11 +56,7 @@ function SourcePicker({ className, selected, onChange }) {
         className="SourcePicker-active"
         onClick={handleOpen}
       >
-        <SourcePickerElement
-          name={selected}
-          source={getMediaSource(selected)}
-          active
-        />
+        <SourcePickerElement name={selected} source={selectedSource} active />
         <SvgIcon path={mdiMenuDown} className="SourcePicker-arrow" />
       </button>
       <Popover
@@ -81,11 +71,5 @@ function SourcePicker({ className, selected, onChange }) {
     </div>
   );
 }
-
-SourcePicker.propTypes = {
-  className: PropTypes.string,
-  selected: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
-};
 
 export default SourcePicker;
