@@ -208,6 +208,14 @@ const cyclePlaylist = createAsyncThunk('playlists/cycle', async (playlistID: str
   }
 });
 
+const shufflePlaylist = createAsyncThunk('playlists/shuffle', async (playlistID: string, api) => {
+  await uwFetch([`/playlists/${playlistID}/shuffle`, {
+    method: 'post',
+  }]);
+
+  await api.dispatch(loadPlaylist({ playlistID, page: 0, sneaky: true }));
+});
+
 const renamePlaylist = createAsyncThunk('playlists/rename', async ({ playlistID, name }: {
   playlistID: string,
   name: string,
@@ -733,6 +741,7 @@ export {
   deletePlaylist,
   loadPlaylist,
   cyclePlaylist,
+  shufflePlaylist,
   renamePlaylist,
   activatePlaylist,
   addPlaylistItems,

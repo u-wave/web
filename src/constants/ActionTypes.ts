@@ -6,7 +6,6 @@ export * from './actionTypes/errors';
 export * from './actionTypes/imports';
 export * from './actionTypes/locales';
 export * from './actionTypes/moderation';
-export * from './actionTypes/playlists';
 export * from './actionTypes/request';
 export * from './actionTypes/time';
 export * from './actionTypes/votes';

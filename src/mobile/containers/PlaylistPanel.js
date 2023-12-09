@@ -9,13 +9,13 @@ import {
 import {
   filterPlaylistItems,
   cannotDeleteActivePlaylist,
-  shufflePlaylist,
   loadPlaylist,
   loadFilteredPlaylistItems,
 } from '../../actions/PlaylistActionCreators';
 import PlaylistPanel from '../components/PlaylistManager/PlaylistPanel';
 import {
   deletePlaylist,
+  shufflePlaylist,
   renamePlaylist,
   activatePlaylist,
   movePlaylistItems,
