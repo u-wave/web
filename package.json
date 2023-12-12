@@ -65,7 +65,7 @@
     "react-dom": "^18.0.0",
     "react-google-button": "^0.7.2",
     "react-markdown": "^8.0.2",
-    "react-redux": "^9.0.0",
+    "react-redux": "^9.0.4",
     "react-transition-group": "^4.4.2",
     "redux": "^5.0.0",
     "redux-thunk": "^3.1.0",
