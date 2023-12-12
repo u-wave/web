@@ -1,11 +1,6 @@
 import { bindActionCreators } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
-import {
-  filteredSelectedPlaylistItemsSelector,
-  isSelectedPlaylistLoadingSelector,
-  isFilteredSelector,
-} from '../../selectors/playlistSelectors';
 import { cannotDeleteActivePlaylist } from '../../actions/PlaylistActionCreators';
 import PlaylistPanel from '../components/PlaylistManager/PlaylistPanel';
 import {
@@ -15,15 +10,16 @@ import {
   renamePlaylist,
   activatePlaylist,
   movePlaylistItems,
-  selectedPlaylistSelector,
   setPlaylistFilter,
+  selectedPlaylistSelector,
+  filteredSelectedPlaylistItemsSelector,
+  playlistItemFilterSelector,
 } from '../../reducers/playlists';
 
 const mapStateToProps = createStructuredSelector({
   playlist: selectedPlaylistSelector,
   media: filteredSelectedPlaylistItemsSelector,
-  loading: isSelectedPlaylistLoadingSelector,
-  isFiltered: isFilteredSelector,
+  filter: playlistItemFilterSelector,
 });
 
 const onMoveMedia = (playlistID) => (media, opts) => (

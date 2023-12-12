@@ -1,11 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from '../hooks/useRedux';
 import {
-  filteredSelectedPlaylistItemsSelector,
-  isSelectedPlaylistLoadingSelector,
-  playlistItemFilterSelector,
-} from '../selectors/playlistSelectors';
-import {
   cannotDeleteActivePlaylist,
 } from '../actions/PlaylistActionCreators';
 import PlaylistPanel from '../components/PlaylistManager/Panel';
@@ -19,6 +14,8 @@ import {
   type PlaylistItem,
   type InsertTarget,
   selectedPlaylistSelector,
+  filteredSelectedPlaylistItemsSelector,
+  playlistItemFilterSelector,
   setPlaylistFilter,
 } from '../reducers/playlists';
 
@@ -31,9 +28,9 @@ function PlaylistPanelContainer() {
   }
 
   const playlistItems = useSelector(filteredSelectedPlaylistItemsSelector)!;
-  const loading = useSelector(isSelectedPlaylistLoadingSelector);
   const filter = useSelector(playlistItemFilterSelector);
   const dispatch = useDispatch();
+  const loading = playlist.loading ?? false;
   const playlistID = playlist._id;
 
   const onShufflePlaylist = useCallback(async () => {
