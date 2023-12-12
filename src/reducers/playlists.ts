@@ -437,16 +437,17 @@ const slice = createSlice({
           // Preload the first item in the active playlist so it can be shown in
           // the footer bar immediately. Else it would flash "This playlist is empty"
           // for a moment.
-          if (payload.activePlaylist && payload.firstActivePlaylistItem) {
-            const item = {
-              ...payload.firstActivePlaylistItem.media,
-              ...payload.firstActivePlaylistItem,
-            };
+          if (payload.activePlaylist) {
             const activePlaylist = state.playlists[payload.activePlaylist];
             // Probably overly defensive, but avoid a crash if we got inconsistent data
             const size = activePlaylist ? activePlaylist.size : 1;
             state.playlistItems[payload.activePlaylist] ??= Array(size).fill(null);
-            state.playlistItems[payload.activePlaylist]![0] = item;
+            if (payload.firstActivePlaylistItem) {
+              state.playlistItems[payload.activePlaylist]![0] = {
+                ...payload.firstActivePlaylistItem.media,
+                ...payload.firstActivePlaylistItem,
+              };
+            }
           }
           state.activePlaylistID = payload.activePlaylist;
           // Select the first playlist by default if there is no active playlist.
@@ -706,6 +707,17 @@ const slice = createSlice({
     playlistsByID: (state) => state.playlists,
     playlists: (state) => Object.values(state.playlists).sort(byName),
     playlist: (state, id: string) => state.playlists[id] ?? null,
+    playlistItems: (state, id: string) => {
+      const playlist = state.playlists[id];
+      const playlistItems = state.playlistItems[id];
+      if (playlistItems) {
+        return playlistItems;
+      }
+      if (playlist) {
+        return Array(playlist.size).fill(null) as PlaylistItemList;
+      }
+      return null;
+    },
     activePlaylistID: (state) => state.activePlaylistID,
     selectedPlaylistID: (state) => state.selectedPlaylistID,
     activePlaylist: (state): Playlist | null => (
@@ -718,25 +730,31 @@ const slice = createSlice({
         ? slice.getSelectors().playlist(state, state.selectedPlaylistID)
         : null
     ),
-    // FIXME should be null if it doesn't exist
-    activePlaylistItems: (state): PlaylistItemList => {
-      const { playlistItems, activePlaylistID } = state;
-      if (activePlaylistID && activePlaylistID in playlistItems) {
-        return playlistItems[activePlaylistID] ?? [];
-      }
-      return [];
+    activePlaylistItems: (state): PlaylistItemList | null => {
+      const { activePlaylistID } = state;
+      return typeof activePlaylistID === 'string'
+        ? slice.getSelectors().playlistItems(state, activePlaylistID)
+        : null;
     },
-    // FIXME should be null if it doesn't exist
-    selectedPlaylistItems: (state): PlaylistItemList => {
-      const { playlistItems, selectedPlaylistID } = state;
-      if (typeof selectedPlaylistID === 'string' && selectedPlaylistID in playlistItems) {
-        return playlistItems[selectedPlaylistID] ?? [];
+    selectedPlaylistItems: (state) : PlaylistItemList | null => {
+      const { selectedPlaylistID } = state;
+      return typeof selectedPlaylistID === 'string'
+        ? slice.getSelectors().playlistItems(state, selectedPlaylistID)
+        : null;
+    },
+    playlistItemFilter: (state) => {
+      return state.currentFilter?.filter;
+    },
+    filteredSelectedPlaylistItems: (state) : PlaylistItemList | null => {
+      const { selectedPlaylistID, currentFilter } = state;
+      if (typeof selectedPlaylistID !== 'string') {
+        return null;
       }
-      return [];
+      return currentFilter?.items ?? slice.getSelectors().playlistItems(state, selectedPlaylistID);
     },
     nextMedia: (state): PlaylistItem | null => {
       const s = slice.getSelectors();
-      return s.activePlaylistItems(state)[0] ?? null;
+      return s.activePlaylistItems(state)?.[0] ?? null;
     },
   },
 });
@@ -770,6 +788,8 @@ export const {
   selectedPlaylist: selectedPlaylistSelector,
   activePlaylistItems: activePlaylistItemsSelector,
   selectedPlaylistItems: selectedPlaylistItemsSelector,
+  playlistItemFilter: playlistItemFilterSelector,
+  filteredSelectedPlaylistItems: filteredSelectedPlaylistItemsSelector,
   nextMedia: nextMediaSelector,
 } = slice.selectors;
 export default slice.reducer;

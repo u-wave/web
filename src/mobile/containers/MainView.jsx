@@ -2,12 +2,12 @@ import React from 'react';
 import { useSelector, useDispatch } from '../../hooks/useRedux';
 import { toggleOverlay } from '../../reducers/activeOverlay';
 import { setVideoEnabled, videoEnabledSelector } from '../../reducers/settings';
+import { playlistsSelector } from '../../reducers/playlists';
 import { mediaSelector, startTimeSelector } from '../../selectors/boothSelectors';
 import {
   sizeSelector as waitlistSizeSelector,
   positionSelector as waitlistPositionSelector,
 } from '../../selectors/waitlistSelectors';
-import { playlistsSelector } from '../../selectors/playlistSelectors';
 import { openDrawer, openUsersDrawer } from '../actions/DrawerActionCreators';
 import MainView from '../components/MainView';
 

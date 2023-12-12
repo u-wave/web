@@ -1,13 +1,6 @@
 import createStore from '../../redux/configureStore';
 import { favoriteMediaComplete } from '../../actions/VoteActionCreators';
-import * as s from '../../selectors/playlistSelectors';
-import {
-  activatePlaylist,
-  loadPlaylist,
-  addPlaylistItems,
-  movePlaylistItems,
-  selectPlaylist,
-} from '../playlists';
+import * as p from '../playlists';
 
 function preloadPlaylists(playlists) {
   return {
@@ -36,7 +29,7 @@ const initialisePlaylist = (dispatch) => {
     { _id: 'BeevKCM1NnNeW91leyLZu', artist: 'tricot', title: '99.974°C' },
   ];
   const playlistID = 'ZcU_8-UyI10Tx79R4CjRv';
-  dispatch(loadPlaylist.fulfilled({
+  dispatch(p.loadPlaylist.fulfilled({
     items,
     page: 0,
     pageSize: 5,
@@ -44,35 +37,35 @@ const initialisePlaylist = (dispatch) => {
   }, 'tviXX4Jyv0SUTosPCddWA', {
     playlistID,
   }));
-  dispatch(selectPlaylist(playlistID));
+  dispatch(p.selectPlaylist(playlistID));
   return { items, playlistID };
 };
 
 describe('reducers/playlists', () => {
   it('should not respond to unrelated actions', () => {
     const { dispatch, getState } = createStore();
-    expect(s.playlistsSelector(getState())).toEqual([]);
+    expect(p.playlistsSelector(getState())).toEqual([]);
     dispatch({ type: 'randomOtherAction', payload: {} });
-    expect(s.playlistsSelector(getState())).toEqual([]);
+    expect(p.playlistsSelector(getState())).toEqual([]);
   });
 
   describe('action: playlists/SELECT_PLAYLIST', () => {
     it('sets the given playlist as the current playlist', () => {
       const { dispatch, getState } = createStore(preloadPlaylists(testPlaylists));
 
-      expect(s.selectedPlaylistIDSelector(getState())).toBeNull();
+      expect(p.selectedPlaylistIDSelector(getState())).toBeNull();
 
-      dispatch(selectPlaylist('ZcU_8-UyI10Tx79R4CjRv'));
-      expect(s.selectedPlaylistIDSelector(getState())).toBe('ZcU_8-UyI10Tx79R4CjRv');
-      expect(s.selectedPlaylistSelector(getState())).toHaveProperty('_id', 'ZcU_8-UyI10Tx79R4CjRv');
+      dispatch(p.selectPlaylist('ZcU_8-UyI10Tx79R4CjRv'));
+      expect(p.selectedPlaylistIDSelector(getState())).toBe('ZcU_8-UyI10Tx79R4CjRv');
+      expect(p.selectedPlaylistSelector(getState())).toHaveProperty('_id', 'ZcU_8-UyI10Tx79R4CjRv');
 
-      dispatch(selectPlaylist('Kzy3kUckOgAV7iwrekHSE'));
-      expect(s.selectedPlaylistIDSelector(getState())).toBe('Kzy3kUckOgAV7iwrekHSE');
-      expect(s.selectedPlaylistSelector(getState())).toHaveProperty('_id', 'Kzy3kUckOgAV7iwrekHSE');
+      dispatch(p.selectPlaylist('Kzy3kUckOgAV7iwrekHSE'));
+      expect(p.selectedPlaylistIDSelector(getState())).toBe('Kzy3kUckOgAV7iwrekHSE');
+      expect(p.selectedPlaylistSelector(getState())).toHaveProperty('_id', 'Kzy3kUckOgAV7iwrekHSE');
 
-      dispatch(selectPlaylist(null));
-      expect(s.selectedPlaylistIDSelector(getState())).toBeNull();
-      expect(s.selectedPlaylistSelector(getState())).toBeNull();
+      dispatch(p.selectPlaylist(null));
+      expect(p.selectedPlaylistIDSelector(getState())).toBeNull();
+      expect(p.selectedPlaylistSelector(getState())).toBeNull();
     });
   });
 
@@ -81,9 +74,9 @@ describe('reducers/playlists', () => {
       const { dispatch, getState } = createStore(preloadPlaylists(testPlaylists));
       dispatch(initialisePlaylist);
 
-      expect(s.selectedPlaylistSelector(getState()).media).toHaveLength(5);
+      expect(p.selectedPlaylistItemsSelector(getState())).toHaveLength(5);
 
-      dispatch(addPlaylistItems.fulfilled({
+      dispatch(p.addPlaylistItems.fulfilled({
         playlistSize: 7,
         items: [
           { _id: 'VlaaQAxk_Qy5orK1Vcr2C', artist: 'The Microphones', title: 'I Want Wind To Blow' },
@@ -95,7 +88,7 @@ describe('reducers/playlists', () => {
         items: [],
       }));
 
-      const { media } = s.selectedPlaylistSelector(getState());
+      const media = p.selectedPlaylistItemsSelector(getState());
       expect(media).toHaveLength(7);
       expect(media.map((playlistItem) => playlistItem._id)).toEqual([
         'Cnun9zo6oNr1wMCFRhnaO', 'PD_n42XxNCdQjDy5VB_SE', '66Z6y6JA4m5WmmNF3O7Ii', 'NkwUIwNmraSZ4A4eiC3GQ', 'VlaaQAxk_Qy5orK1Vcr2C', 'T9sdCu_-3o70qWk0YeDxJ', 'BeevKCM1NnNeW91leyLZu',
@@ -106,12 +99,12 @@ describe('reducers/playlists', () => {
       const { dispatch, getState } = createStore(preloadPlaylists(testPlaylists));
       const { playlistID } = dispatch(initialisePlaylist);
       // Test an active, but not selected playlist.
-      dispatch(selectPlaylist(null));
-      dispatch(activatePlaylist.fulfilled(null, '', playlistID));
+      dispatch(p.selectPlaylist(null));
+      dispatch(p.activatePlaylist.fulfilled(null, '', playlistID));
 
-      expect(s.activePlaylistSelector(getState()).media).toHaveLength(5);
+      expect(p.activePlaylistItemsSelector(getState())).toHaveLength(5);
 
-      dispatch(addPlaylistItems.fulfilled({
+      dispatch(p.addPlaylistItems.fulfilled({
         playlistSize: 7,
         items: [
           { _id: 'VlaaQAxk_Qy5orK1Vcr2C', artist: 'The Microphones', title: 'I Want Wind To Blow' },
@@ -123,15 +116,15 @@ describe('reducers/playlists', () => {
         items: [],
       }));
 
-      expect(s.activePlaylistSelector(getState()).media).toHaveLength(7);
-      expect(s.nextMediaSelector(getState())._id).toBe('VlaaQAxk_Qy5orK1Vcr2C');
+      expect(p.activePlaylistItemsSelector(getState())).toHaveLength(7);
+      expect(p.nextMediaSelector(getState())._id).toBe('VlaaQAxk_Qy5orK1Vcr2C');
     });
 
     it('appends favourited items to the end of the playlist', () => {
       const { dispatch, getState } = createStore(preloadPlaylists(testPlaylists));
       const { playlistID } = dispatch(initialisePlaylist);
 
-      expect(s.selectedPlaylistSelector(getState()).media).toHaveLength(5);
+      expect(p.selectedPlaylistItemsSelector(getState())).toHaveLength(5);
 
       dispatch(favoriteMediaComplete(playlistID, 'vGA5mxhJpYkrsHSfxPcqX', {
         playlistSize: 6,
@@ -140,8 +133,8 @@ describe('reducers/playlists', () => {
         ],
       }));
 
-      const { size, media } = s.selectedPlaylistSelector(getState());
-      expect(size).toBe(6);
+      expect(p.selectedPlaylistSelector(getState())).toHaveProperty('size', 6);
+      const media = p.selectedPlaylistItemsSelector(getState());
       expect(media).toHaveLength(6);
       expect(media[5]._id).toBe('RDeVBExmCGXvmT0mN0P3n');
     });
@@ -152,16 +145,16 @@ describe('reducers/playlists', () => {
       const { dispatch, getState } = createStore(preloadPlaylists(testPlaylists));
       const { items } = dispatch(initialisePlaylist);
 
-      expect(s.selectedPlaylistSelector(getState()).media).toHaveLength(5);
+      expect(p.selectedPlaylistItemsSelector(getState())).toHaveLength(5);
 
-      dispatch(movePlaylistItems.fulfilled({
+      dispatch(p.movePlaylistItems.fulfilled({
         location: { after: 'NkwUIwNmraSZ4A4eiC3GQ' },
       }, '', {
         playlistID: 'ZcU_8-UyI10Tx79R4CjRv',
         medias: [items[1], items[2]],
       }));
 
-      const selectedItemIDs = s.selectedPlaylistSelector(getState()).media
+      const selectedItemIDs = p.selectedPlaylistItemsSelector(getState())
         .map((playlistItem) => playlistItem._id);
       expect(selectedItemIDs).toEqual(['Cnun9zo6oNr1wMCFRhnaO', 'NkwUIwNmraSZ4A4eiC3GQ', 'PD_n42XxNCdQjDy5VB_SE', '66Z6y6JA4m5WmmNF3O7Ii', 'BeevKCM1NnNeW91leyLZu']);
     });
@@ -175,7 +168,7 @@ describe('reducers/playlists', () => {
         { _id: 'NkwUIwNmraSZ4A4eiC3GQ', artist: 'Angel Haze', title: 'A Tribe Called Red' },
         { _id: 'BeevKCM1NnNeW91leyLZu', artist: 'tricot', title: '99.974°C' },
       ];
-      dispatch(loadPlaylist.fulfilled({
+      dispatch(p.loadPlaylist.fulfilled({
         items,
         page: 0,
         pageSize: 5,
@@ -183,11 +176,11 @@ describe('reducers/playlists', () => {
       }, 'W34UluniSyaY6UB3Xz1jy', {
         playlistID: 'ZcU_8-UyI10Tx79R4CjRv',
       }));
-      dispatch(selectPlaylist('ZcU_8-UyI10Tx79R4CjRv'));
+      dispatch(p.selectPlaylist('ZcU_8-UyI10Tx79R4CjRv'));
 
-      expect(s.selectedPlaylistSelector(getState()).media).toHaveLength(5);
+      expect(p.selectedPlaylistItemsSelector(getState())).toHaveLength(5);
 
-      dispatch(movePlaylistItems.fulfilled({
+      dispatch(p.movePlaylistItems.fulfilled({
         location: { after: 'NkwUIwNmraSZ4A4eiC3GQ' },
       }, '', {
         playlistID: 'ZcU_8-UyI10Tx79R4CjRv',
@@ -195,7 +188,7 @@ describe('reducers/playlists', () => {
       }));
 
       const getID = (item) => (item ? item._id : null);
-      expect(s.selectedPlaylistSelector(getState()).media.map(getID)).toEqual([
+      expect(p.selectedPlaylistItemsSelector(getState()).map(getID)).toEqual([
         'PD_n42XxNCdQjDy5VB_SE', null, 'NkwUIwNmraSZ4A4eiC3GQ', 'Cnun9zo6oNr1wMCFRhnaO', 'BeevKCM1NnNeW91leyLZu',
       ]);
     });

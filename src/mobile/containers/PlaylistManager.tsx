@@ -1,11 +1,11 @@
 import React from 'react';
 import { useDispatch, useSelector } from '../../hooks/useRedux';
-import {
-  filteredSelectedPlaylistItemsSelector,
-} from '../../selectors/playlistSelectors';
 import createLazyOverlay from '../../components/LazyOverlay';
 import { closeOverlay } from '../../reducers/activeOverlay';
-import { selectedPlaylistSelector } from '../../reducers/playlists';
+import {
+  selectedPlaylistSelector,
+  filteredSelectedPlaylistItemsSelector,
+} from '../../reducers/playlists';
 
 const {
   useCallback,
