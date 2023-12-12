@@ -1,3 +1,4 @@
+// @ts-check
 import { readFile, writeFile } from 'node:fs/promises';
 import { defineConfig, splitVendorChunkPlugin } from 'vite';
 import react from '@vitejs/plugin-react';
@@ -28,8 +29,6 @@ export default defineConfig({
     outDir: 'npm/public/',
     assetsDir: 'static',
     manifest: true,
-    // This will be filled in by the `prerender` plugin.
-    input: {},
   },
   server: {
     port: 6041,
@@ -68,6 +67,9 @@ export default defineConfig({
   test: {
     include: ['**/__tests__/*.{js,jsx,ts,tsx}'],
     globals: true,
+    coverage: {
+      exclude: ['npm/**'],
+    },
     environment: 'jsdom',
     setupFiles: './test/setup.mjs',
   },
