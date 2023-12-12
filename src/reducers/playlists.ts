@@ -430,10 +430,7 @@ const slice = createSlice({
     builder
       .addCase(initState.fulfilled, (state, { payload }) => {
         if (payload.playlists) {
-          state.playlists = indexBy(payload.playlists.map((playlist: Playlist) => ({
-            ...playlist,
-            active: playlist._id === payload.activePlaylist,
-          })), '_id');
+          state.playlists = indexBy(payload.playlists, '_id');
           // Preload the first item in the active playlist so it can be shown in
           // the footer bar immediately. Else it would flash "This playlist is empty"
           // for a moment.
@@ -477,7 +474,6 @@ const slice = createSlice({
         const playlist = state.playlists[action.meta.arg];
         if (playlist != null) {
           playlist.loading = false;
-          playlist.active = true;
           state.activePlaylistID = action.meta.arg;
         }
       })
@@ -705,8 +701,18 @@ const slice = createSlice({
   },
   selectors: {
     playlistsByID: (state) => state.playlists,
-    playlists: (state) => Object.values(state.playlists).sort(byName),
-    playlist: (state, id: string) => state.playlists[id] ?? null,
+    playlists: (state): Playlist[] => {
+      return Object.keys(state.playlists)
+        .map((id) => slice.getSelectors().playlist(state, id)!)
+        .sort(byName);
+    },
+    playlist: (state, id: string) => {
+      const playlist = state.playlists[id] ?? null;
+      if (playlist != null && playlist._id === state.activePlaylistID) {
+        return { ...playlist, active: true };
+      }
+      return playlist;
+    },
     playlistItems: (state, id: string) => {
       const playlist = state.playlists[id];
       const playlistItems = state.playlistItems[id];
