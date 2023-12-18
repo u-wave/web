@@ -138,6 +138,9 @@ const slice = createSlice({
         state.user = null;
       });
   },
+  selectors: {
+    currentUserID: (state) => state.user,
+  },
 });
 
 export default slice.reducer;

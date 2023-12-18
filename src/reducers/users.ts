@@ -69,6 +69,9 @@ const slice = createSlice({
       Object.assign(state.users, indexBy(action.payload.users, '_id'));
     });
   },
+  selectors: {
+    user: (state, id: string) => state.users[id],
+  },
 });
 
 // So other reducers can use them
@@ -78,15 +81,14 @@ export const {
   receiveGuestCount,
   userJoin,
 } = actions;
-
-function selectUser(state: StoreState, userID: string) {
-  return state.users.users[userID];
-}
+export const {
+  user: userSelector,
+} = slice.selectors;
 
 export function userLeave(payload: { userID: string }):
     ThunkAction<unknown, StoreState, never, AnyAction> {
   return (dispatch, getState) => {
-    const user = selectUser(getState(), payload.userID);
+    const user = userSelector(getState(), payload.userID);
     if (user) {
       dispatch(slice.actions.userLeave({
         user,
@@ -99,7 +101,7 @@ export function userLeave(payload: { userID: string }):
 export function addRoles(payload: { userID: string, roles: string[] }):
     ThunkAction<unknown, StoreState, never, AnyAction> {
   return (dispatch, getState) => {
-    const user = selectUser(getState(), payload.userID);
+    const user = userSelector(getState(), payload.userID);
     if (user) {
       dispatch(slice.actions.addRoles({
         user,
@@ -113,7 +115,7 @@ export function addRoles(payload: { userID: string, roles: string[] }):
 export function removeRoles(payload: { userID: string, roles: string[] }):
     ThunkAction<unknown, StoreState, never, AnyAction> {
   return (dispatch, getState) => {
-    const user = selectUser(getState(), payload.userID);
+    const user = userSelector(getState(), payload.userID);
     if (user) {
       dispatch(slice.actions.removeRoles({
         user,
@@ -127,7 +129,7 @@ export function removeRoles(payload: { userID: string, roles: string[] }):
 export function usernameChanged(payload: { userID: string, username: string }):
     ThunkAction<unknown, StoreState, never, AnyAction> {
   return (dispatch, getState) => {
-    const user = selectUser(getState(), payload.userID);
+    const user = userSelector(getState(), payload.userID);
     if (user) {
       dispatch(slice.actions.usernameChanged({
         user,
