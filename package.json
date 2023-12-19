@@ -80,7 +80,7 @@
     "url-polyfill": "^1.1.11",
     "use-debounce": "^10.0.0",
     "uuid": "^9.0.0",
-    "whatwg-fetch": "^3.4.0"
+    "whatwg-fetch": "^3.6.20"
   },
   "devDependencies": {
     "@emotion/css": "^11.10.5",
