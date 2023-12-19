@@ -24,6 +24,36 @@ export interface PlaylistItem extends Media {
   loading?: boolean;
 }
 
+interface ApiMedia {
+  _id: string;
+  sourceID: string;
+  sourceType: string;
+  sourceData: object;
+  artist: string;
+  title: string;
+  thumbnail: string;
+  duration: number;
+  createdAt: string;
+  updatedAt: string;
+}
+interface ApiPlaylistItemMerged {
+  _id: string;
+  artist: string;
+  title: string;
+  start: number;
+  end: number;
+  media: ApiMedia;
+  createdAt: string;
+  updatedAt: string;
+}
+
+function flattenPlaylistItem(item: ApiPlaylistItemMerged): PlaylistItem {
+  return {
+    ...item.media,
+    ...item,
+  };
+}
+
 type PlaylistItemList = (PlaylistItem | null)[];
 
 export const importPanelSymbol = Symbol('import panel');
@@ -164,16 +194,7 @@ const loadPlaylist = createAsyncThunk('playlists/media', async ({
     },
   }]);
 
-  // TODO specific type
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  function flattenPlaylistItem(item: any): PlaylistItem {
-    return {
-      ...item.media,
-      ...item,
-    };
-  }
-
-  const items: unknown[] = mergeIncludedModels(response);
+  const items: ApiPlaylistItemMerged[] = mergeIncludedModels(response);
   return {
     items: items.map(flattenPlaylistItem),
     page: response.meta.offset / response.meta.pageSize,
@@ -310,7 +331,7 @@ const addPlaylistItems = createAsyncThunk('playlists/addPlaylistItems', async ({
     after: afterID,
   };
 
-  const res = await uwFetch<ListResponse<PlaylistItem> & {
+  const response = await uwFetch<ListResponse<object> & {
     meta: {
       playlistSize: number,
     },
@@ -319,9 +340,11 @@ const addPlaylistItems = createAsyncThunk('playlists/addPlaylistItems', async ({
     data: payload,
   }]);
 
+  const newItems: ApiPlaylistItemMerged[] = mergeIncludedModels(response);
+
   return {
-    playlistSize: res.meta.playlistSize,
-    items: mergeIncludedModels(res),
+    playlistSize: response.meta.playlistSize,
+    items: newItems.map(flattenPlaylistItem),
   };
 });
 
@@ -609,31 +632,25 @@ const slice = createSlice({
         const { playlistID, afterID = null } = action.meta.arg;
         const { playlistSize, items } = action.payload;
 
+        const playlistItems = slice.getSelectors().playlistItems(state, playlistID);
         const playlist = state.playlists[playlistID];
-        if (playlist == null) {
+        if (playlist == null || playlistItems == null) {
           return;
         }
 
         playlist.loading = false;
         playlist.size = playlistSize;
-        state.playlistItems[playlistID] = processInsert(
-          state.playlistItems[playlistID] ?? [],
-          items,
-          { after: afterID },
-        );
+        state.playlistItems[playlistID] = processInsert(playlistItems, items, { after: afterID });
       })
       .addCase(DO_FAVORITE_COMPLETE, (state, { payload }: AnyAction) => {
+        const playlistItems = slice.getSelectors().playlistItems(state, payload.playlistID);
         const playlist = state.playlists[payload.playlistID];
-        if (playlist == null) {
+        if (playlist == null || playlistItems == null) {
           return;
         }
 
         playlist.size = payload.newSize;
-        state.playlistItems[payload.playlistID] = processInsert(
-          state.playlistItems[payload.playlistID] ?? [],
-          payload.added,
-          { at: 'end' },
-        );
+        state.playlistItems[payload.playlistID] = processInsert(playlistItems, payload.added, { at: 'end' });
       })
       .addCase(updatePlaylistItem.pending, (state, { meta }) => {
         for (const item of state.playlistItems[meta.arg.playlistID] ?? []) {
