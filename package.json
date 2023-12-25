@@ -106,7 +106,7 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-testing-library": "^6.2.0",
-    "eslint-plugin-vitest": "^0.3.18",
+    "eslint-plugin-vitest": "^0.3.20",
     "get-port": "^7.0.0",
     "jsdom": "^23.0.1",
     "jsonapi-typescript": "^0.1.3",
