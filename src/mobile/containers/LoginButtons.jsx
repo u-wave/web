@@ -1,8 +1,7 @@
-import React from 'react';
 import { useTranslator } from '@u-wave/react-translate';
 import Button from '@mui/material/Button';
 import { useDispatch } from '../../hooks/useRedux';
-import { openLoginDialog, openRegisterDialog } from '../../actions/DialogActionCreators';
+import { openLoginDialog } from '../../reducers/dialogs';
 
 const wrapperStyle = {
   display: 'flex',
@@ -20,8 +19,8 @@ const buttonStyle = {
 function LoginButtons() {
   const { t } = useTranslator();
   const dispatch = useDispatch();
-  const onLogin = () => dispatch(openLoginDialog());
-  const onRegister = () => dispatch(openRegisterDialog());
+  const onLogin = () => dispatch(openLoginDialog({ show: 'login' }));
+  const onRegister = () => dispatch(openLoginDialog({ show: 'register' }));
 
   return (
     <span style={wrapperStyle}>

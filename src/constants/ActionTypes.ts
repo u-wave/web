@@ -1,7 +1,6 @@
 export * from './actionTypes/auth';
 export * from './actionTypes/booth';
 export * from './actionTypes/chat';
-export * from './actionTypes/dialogs';
 export * from './actionTypes/errors';
 export * from './actionTypes/imports';
 export * from './actionTypes/locales';

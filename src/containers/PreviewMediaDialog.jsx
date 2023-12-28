@@ -1,8 +1,10 @@
 import React from 'react';
 import { useSelector, useDispatch } from '../hooks/useRedux';
-import { previewMediaDialogSelector } from '../reducers/dialogs';
+import {
+  closePreviewMediaDialog,
+  previewMediaDialogSelector,
+} from '../reducers/dialogs';
 import { volumeSelector } from '../reducers/settings';
-import { closePreviewMediaDialog } from '../actions/DialogActionCreators';
 import PreviewMediaDialog from '../components/Dialogs/PreviewMediaDialog';
 
 const {

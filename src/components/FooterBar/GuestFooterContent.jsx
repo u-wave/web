@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslator } from '@u-wave/react-translate';
 import Button from '@mui/material/Button';
 import { useDispatch } from '../../hooks/useRedux';
-import { openLoginDialog, openRegisterDialog } from '../../actions/DialogActionCreators';
+import { openLoginDialog } from '../../reducers/dialogs';
 import { toggleOverlay } from '../../reducers/activeOverlay';
 import SettingsButton from './SettingsButton';
 
@@ -17,10 +17,10 @@ function GuestFooterContent() {
     dispatch(toggleOverlay('settings'));
   }, [dispatch]);
   const handleOpenLoginDialog = useCallback(() => {
-    dispatch(openLoginDialog());
+    dispatch(openLoginDialog({ show: 'login' }));
   }, [dispatch]);
   const handleOpenRegisterDialog = useCallback(() => {
-    dispatch(openRegisterDialog());
+    dispatch(openLoginDialog({ show: 'register' }));
   }, [dispatch]);
 
   return (

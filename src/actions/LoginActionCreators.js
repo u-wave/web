@@ -4,6 +4,7 @@ import {
   SET_TOKEN,
 } from '../constants/ActionTypes';
 import { initState } from '../reducers/auth';
+import { openLoginDialog } from '../reducers/dialogs';
 
 export function socketConnect() {
   return { type: SOCKET_CONNECT };
@@ -42,16 +43,13 @@ function socialLogin(service) {
     }
     function oncreate(data) {
       promise = Promise.resolve();
-      dispatch({
-        type: 'auth/OPEN_LOGIN_DIALOG',
-        payload: {
-          show: 'social',
-          service: data.type,
-          id: data.id,
-          suggestedName: data.suggestedName,
-          avatars: data.avatars,
-        },
-      });
+      dispatch(openLoginDialog({
+        show: 'social',
+        service: data.type,
+        id: data.id,
+        suggestedName: data.suggestedName,
+        avatars: data.avatars,
+      }));
     }
 
     const apiOrigin = new URL(apiUrl, window.location.href).origin;

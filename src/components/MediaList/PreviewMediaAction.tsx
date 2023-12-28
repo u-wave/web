@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useDispatch } from '../../hooks/useRedux';
-import { openPreviewMediaDialog } from '../../actions/DialogActionCreators';
+import { openPreviewMediaDialog } from '../../reducers/dialogs';
 import SvgIcon from '../SvgIcon';
 import MediaAction from './MediaAction';
 import { Media } from '../../reducers/booth';
@@ -14,7 +14,7 @@ type PreviewMediaActionProps = {
 function PreviewMediaAction({ media }: PreviewMediaActionProps) {
   const dispatch = useDispatch();
   const handleClick = useCallback(() => {
-    dispatch(openPreviewMediaDialog(media));
+    dispatch(openPreviewMediaDialog({ media }));
   }, [dispatch, media]);
 
   return (

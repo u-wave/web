@@ -1,24 +1,31 @@
-import type { AnyAction } from 'redux';
-import { createSelector } from '@reduxjs/toolkit';
+import { type PayloadAction, createSlice, createSelector } from '@reduxjs/toolkit';
 import type { Media } from './booth';
 import type { StoreState } from '../redux/configureStore';
-import {
-  OPEN_EDIT_MEDIA_DIALOG, CLOSE_EDIT_MEDIA_DIALOG,
-  OPEN_PREVIEW_MEDIA_DIALOG, CLOSE_PREVIEW_MEDIA_DIALOG,
-  OPEN_LOGIN_DIALOG, CLOSE_LOGIN_DIALOG,
-} from '../constants/ActionTypes';
 
 interface EditMediaState {
   playlistID: string;
-  media: Media,
+  media: Media;
 }
 
 interface PreviewMediaState {
-  media: Media,
+  media: Media;
 }
 
 interface LoginState {
-  show: 'login' | 'register' | 'reset',
+  show: 'login';
+}
+interface RegisterState {
+  show: 'register';
+}
+interface ResetPasswordState {
+  show: 'reset';
+}
+interface SocialLoginState {
+  show: 'social';
+  service: string;
+  id: string;
+  suggestedName: string;
+  avatars: string[];
 }
 
 type DialogState<T> =
@@ -26,9 +33,9 @@ type DialogState<T> =
   | { open: true, payload: T };
 
 interface State {
-  editMedia: DialogState<EditMediaState>,
-  previewMedia: DialogState<PreviewMediaState>,
-  login: DialogState<LoginState>,
+  editMedia: DialogState<EditMediaState>;
+  previewMedia: DialogState<PreviewMediaState>;
+  login: DialogState<LoginState | RegisterState | ResetPasswordState | SocialLoginState>;
 }
 
 const initialState: State = {
@@ -61,25 +68,43 @@ const closeDialog = (state: State, name: keyof State) => ({
   },
 });
 
-export default function reduce(state = initialState, action: AnyAction) {
-  const { type, payload } = action;
-  switch (type) {
-    case OPEN_EDIT_MEDIA_DIALOG:
-      return openDialog(state, 'editMedia', payload);
-    case CLOSE_EDIT_MEDIA_DIALOG:
+const slice = createSlice({
+  name: 'dialogs',
+  initialState,
+  reducers: {
+    openEditMediaDialog(state, action: PayloadAction<EditMediaState>) {
+      return openDialog(state, 'editMedia', action.payload);
+    },
+    openPreviewMediaDialog(state, action: PayloadAction<PreviewMediaState>) {
+      return openDialog(state, 'previewMedia', action.payload);
+    },
+    openLoginDialog(state, action: PayloadAction<
+      LoginState | RegisterState | ResetPasswordState | SocialLoginState
+    >) {
+      return openDialog(state, 'login', action.payload);
+    },
+    closeEditMediaDialog(state) {
       return closeDialog(state, 'editMedia');
-    case OPEN_PREVIEW_MEDIA_DIALOG:
-      return openDialog(state, 'previewMedia', payload);
-    case CLOSE_PREVIEW_MEDIA_DIALOG:
+    },
+    closePreviewMediaDialog(state) {
       return closeDialog(state, 'previewMedia');
-    case OPEN_LOGIN_DIALOG:
-      return openDialog(state, 'login', payload);
-    case CLOSE_LOGIN_DIALOG:
+    },
+    closeLoginDialog(state) {
       return closeDialog(state, 'login');
-    default:
-      return state;
-  }
-}
+    },
+  },
+});
+
+export default slice.reducer;
+
+export const {
+  closeEditMediaDialog,
+  closeLoginDialog,
+  closePreviewMediaDialog,
+  openEditMediaDialog,
+  openLoginDialog,
+  openPreviewMediaDialog,
+} = slice.actions;
 
 function baseSelector(state: StoreState) {
   return state.dialogs;

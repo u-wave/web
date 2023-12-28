@@ -7,8 +7,7 @@ import {
   finishSocialLogin,
   resetPassword,
 } from '../reducers/auth';
-import { openResetPasswordDialog, closeLoginDialog } from '../actions/DialogActionCreators';
-import { loginDialogSelector } from '../reducers/dialogs';
+import { loginDialogSelector, openLoginDialog, closeLoginDialog } from '../reducers/dialogs';
 import { reCaptchaSiteKeySelector } from '../reducers/config';
 import { supportsSocialAuthSelector } from '../selectors/userSelectors';
 import LoginDialog from '../components/Dialogs/LoginDialog';
@@ -24,7 +23,7 @@ const selector = createSelector(
 );
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  onOpenResetPasswordDialog: openResetPasswordDialog,
+  onOpenResetPasswordDialog: () => openLoginDialog({ show: 'reset' }),
   onResetPassword: resetPassword,
   onLogin: login,
   onRegister: register,
