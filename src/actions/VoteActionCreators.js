@@ -1,51 +1,7 @@
-import { put, post } from './RequestActionCreators';
-import { historyIDSelector } from '../reducers/booth';
-import {
-  FAVORITE, UPVOTE, DOWNVOTE,
-  DO_FAVORITE_START, DO_FAVORITE_COMPLETE,
-  DO_UPVOTE, DO_DOWNVOTE,
-} from '../constants/ActionTypes';
+import { post } from './RequestActionCreators';
+import { DO_FAVORITE_START, DO_FAVORITE_COMPLETE } from '../constants/ActionTypes';
 import mergeIncludedModels from '../utils/mergeIncludedModels';
 import { flattenPlaylistItem } from './PlaylistActionCreators';
-
-export function favorited({ userID }) {
-  return {
-    type: FAVORITE,
-    payload: { userID },
-  };
-}
-
-export function receiveVote({ userID, vote: direction }) {
-  const type = direction > 0 ? UPVOTE : DOWNVOTE;
-  return {
-    type,
-    payload: { userID },
-  };
-}
-
-export function vote({ historyID, direction }) {
-  const type = direction > 0 ? DO_UPVOTE : DO_DOWNVOTE;
-  return put(`/booth/${historyID}/vote`, { direction }, {
-    onStart: () => ({
-      type,
-      payload: { historyID },
-    }),
-  });
-}
-
-export function doUpvote() {
-  return (dispatch, getState) => {
-    const historyID = historyIDSelector(getState());
-    dispatch(vote({ historyID, direction: 1 }));
-  };
-}
-
-export function doDownvote() {
-  return (dispatch, getState) => {
-    const historyID = historyIDSelector(getState());
-    dispatch(vote({ historyID, direction: -1 }));
-  };
-}
 
 export function favoriteMediaStart(playlistID, historyID) {
   return {

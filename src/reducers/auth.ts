@@ -63,6 +63,11 @@ export type InitialStatePayload = {
     media: Media,
     userID: string,
     playedAt: number,
+    stats: {
+      upvotes: string[],
+      downvotes: string[],
+      favorites: string[],
+    },
   } | null,
   waitlist: string[],
   waitlistLocked: boolean,

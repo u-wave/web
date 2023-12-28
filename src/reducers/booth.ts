@@ -4,11 +4,11 @@ import {
   createSelector,
   createSlice,
 } from '@reduxjs/toolkit';
+import { createStructuredSelector } from 'reselect';
 import { type User, userSelector, currentUserSelector } from './users';
 import { currentTimeSelector } from './time';
 import { initState } from './auth';
 import uwFetch from '../utils/fetch';
-import { currentVotesSelector } from './votes';
 import type { StoreState } from '../redux/configureStore';
 
 export interface Media {
@@ -29,6 +29,7 @@ interface PlayingState {
   djID: string,
   media: Media,
   startTime: number,
+  stats: { upvotes: string[], downvotes: string[], favorites: string[] },
 }
 
 interface EmptyState {
@@ -36,6 +37,7 @@ interface EmptyState {
   djID: null,
   media: null,
   startTime: null,
+  stats: null,
 }
 
 type State = (PlayingState | EmptyState) & {
@@ -47,6 +49,7 @@ const initialState = {
   media: null,
   djID: null,
   startTime: null,
+  stats: null,
   isFullscreen: false,
 } as State;
 
@@ -67,6 +70,14 @@ export const skipSelf = createAsyncThunk('booth/skipSelf', async (
   await uwFetch(['/booth/skip', { method: 'post', data: options }]);
 });
 
+export const upvote = createAsyncThunk('booth/upvote', async ({ historyID }: { historyID: string }) => {
+  await uwFetch([`/booth/${historyID}/vote`, { method: 'put', data: { direction: 1 } }]);
+});
+
+export const downvote = createAsyncThunk('booth/downvote', async ({ historyID }: { historyID: string }) => {
+  await uwFetch([`/booth/${historyID}/vote`, { method: 'put', data: { direction: -1 } }]);
+});
+
 const slice = createSlice({
   name: 'booth',
   initialState,
@@ -84,6 +95,11 @@ const slice = createSlice({
             media: action.payload.media,
             djID: action.payload.userID,
             startTime: action.payload.timestamp,
+            stats: {
+              upvotes: [],
+              downvotes: [],
+              favorites: [],
+            },
           };
         }
         return {
@@ -92,6 +108,7 @@ const slice = createSlice({
           media: null,
           djID: null,
           startTime: null,
+          stats: null,
         };
       },
       prepare(payload: AdvancePayload | null, previous: PreviousBooth | null = null) {
@@ -103,6 +120,48 @@ const slice = createSlice({
     },
     exitFullscreen(state) {
       state.isFullscreen = false;
+    },
+
+    receiveUpvote(state, action: PayloadAction<{ userID: string }>) {
+      if (state.stats == null) {
+        return;
+      }
+
+      const { userID } = action.payload;
+      const downvotes = new Set(state.stats.downvotes);
+      if (downvotes.delete(userID)) {
+        state.stats.downvotes = Array.from(downvotes);
+      }
+      const { upvotes } = state.stats;
+      if (!upvotes.includes(userID)) {
+        upvotes.push(userID);
+      }
+    },
+    receiveDownvote(state, action: PayloadAction<{ userID: string }>) {
+      if (state.stats == null) {
+        return;
+      }
+
+      const { userID } = action.payload;
+      const upvotes = new Set(state.stats.upvotes);
+      if (upvotes.delete(userID)) {
+        state.stats.upvotes = Array.from(upvotes);
+      }
+      const { downvotes } = state.stats;
+      if (!downvotes.includes(userID)) {
+        downvotes.push(userID);
+      }
+    },
+    receiveFavorite(state, action: PayloadAction<{ userID: string }>) {
+      if (state.stats == null) {
+        return;
+      }
+
+      const { userID } = action.payload;
+      const { favorites } = state.stats;
+      if (!favorites.includes(userID)) {
+        favorites.push(userID);
+      }
     },
   },
   extraReducers(builder) {
@@ -119,6 +178,7 @@ const slice = createSlice({
           // Depending on the server version, `playedAt` may be a string or a number
           // This is what we call "not ideal"…
           startTime: new Date(payload.booth.playedAt).getTime(),
+          stats: payload.booth.stats,
         });
       } else {
         Object.assign(state, {
@@ -126,6 +186,7 @@ const slice = createSlice({
           media: null,
           djID: null,
           startTime: null,
+          stats: null,
         });
       }
     });
@@ -141,6 +202,9 @@ export const {
   advance,
   enterFullscreen,
   exitFullscreen,
+  receiveUpvote,
+  receiveDownvote,
+  receiveFavorite,
 } = slice.actions;
 export const {
   historyID: historyIDSelector,
@@ -185,6 +249,54 @@ export const isCurrentDJSelector = (state: StoreState) => {
   const me = currentUserSelector(state);
   return dj && me ? dj._id === me._id : false;
 };
+
+function createIsSelector(votersSelector: (state: StoreState) => string[] | undefined) {
+  return (state: StoreState) => {
+    const voters = votersSelector(state);
+    const user = currentUserSelector(state);
+    return user != null && voters != null && voters.includes(user._id);
+  };
+}
+
+function createCountSelector(votersSelector: (state: StoreState) => string[] | undefined) {
+  return (state: StoreState) => {
+    const voters = votersSelector(state);
+    return voters ? voters.length : 0;
+  };
+}
+
+export function favoritesSelector(state: StoreState) {
+  return state.booth.stats?.favorites;
+}
+export function upvotesSelector(state: StoreState) {
+  return state.booth.stats?.upvotes;
+}
+export function downvotesSelector(state: StoreState) {
+  return state.booth.stats?.downvotes;
+}
+
+export const isFavoriteSelector = createIsSelector(favoritesSelector);
+export const isUpvoteSelector = createIsSelector(upvotesSelector);
+export const isDownvoteSelector = createIsSelector(downvotesSelector);
+
+export const favoritesCountSelector = createCountSelector(favoritesSelector);
+export const upvotesCountSelector = createCountSelector(upvotesSelector);
+export const downvotesCountSelector = createCountSelector(downvotesSelector);
+
+export const currentVotesSelector = createStructuredSelector({
+  favorites: favoritesSelector,
+  upvotes: upvotesSelector,
+  downvotes: downvotesSelector,
+});
+
+export const currentVoteStatsSelector = createStructuredSelector({
+  isFavorite: isFavoriteSelector,
+  isUpvote: isUpvoteSelector,
+  isDownvote: isDownvoteSelector,
+  favoritesCount: favoritesCountSelector,
+  upvotesCount: upvotesCountSelector,
+  downvotesCount: downvotesCountSelector,
+});
 
 export const currentPlaySelector = createSelector(
   [historyIDSelector, mediaSelector, startTimeSelector, djSelector, currentVotesSelector],

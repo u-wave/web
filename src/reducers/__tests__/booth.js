@@ -15,11 +15,12 @@ describe('reducers/booth', () => {
       djID: null,
       media: null,
       startTime: null,
+      stats: null,
       isFullscreen: false,
     });
   });
 
-  describe('action: booth/ADVANCE', () => {
+  describe('action: booth/advance', () => {
     it('should advance to the next song if there is one', () => {
       // Weirdly, there are two different advance object formats in use
       // client-side.
@@ -35,6 +36,11 @@ describe('reducers/booth', () => {
         djID: 'seventeen',
         media: { artist: 'about tess', title: 'Imaginedit' },
         startTime: 1449767164107,
+        stats: {
+          upvotes: [],
+          downvotes: [],
+          favorites: [],
+        },
         isFullscreen: false,
       });
     });
@@ -46,6 +52,7 @@ describe('reducers/booth', () => {
         djID: null,
         media: null,
         startTime: null,
+        stats: null,
         isFullscreen: false,
       });
     });

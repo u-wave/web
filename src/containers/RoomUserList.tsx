@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useSelector } from '../hooks/useRedux';
 import { userListSelector, guestCountSelector } from '../reducers/users';
-import { currentVotesSelector } from '../reducers/votes';
+import { currentVotesSelector } from '../reducers/booth';
 import RoomUserList from '../components/RoomUserList';
 
 type RoomUserListContainerProps = {
@@ -16,9 +16,9 @@ function RoomUserListContainer({ className }: RoomUserListContainerProps) {
     users.map((user) => ({
       ...user,
       votes: {
-        upvote: votes.upvotes.includes(user._id),
-        downvote: votes.downvotes.includes(user._id),
-        favorite: votes.favorites.includes(user._id),
+        upvote: votes.upvotes != null ? votes.upvotes.includes(user._id) : false,
+        downvote: votes.downvotes != null ? votes.downvotes.includes(user._id) : false,
+        favorite: votes.favorites != null ? votes.favorites.includes(user._id) : false,
       },
     }))
   ), [users, votes]);

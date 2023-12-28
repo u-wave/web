@@ -5,20 +5,21 @@ import useCurrentUser from '../../hooks/useCurrentUser';
 import { skipCurrentDJ as modSkipCurrentDJ } from '../../actions/ModerationActionCreators';
 import { toggleOverlay } from '../../reducers/activeOverlay';
 import { joinWaitlist, leaveWaitlist } from '../../actions/WaitlistActionCreators';
-import { doUpvote, doDownvote } from '../../actions/VoteActionCreators';
 import { openFavoriteMenu } from '../../reducers/addToPlaylistMenu';
 import {
   canSkipSelector,
 } from '../../selectors/boothSelectors';
 import {
   skipSelf,
+  upvote,
+  downvote,
   djSelector,
   endTimeSelector,
   historyIDSelector,
   isCurrentDJSelector,
+  currentVoteStatsSelector,
 } from '../../reducers/booth';
 import { activePlaylistSelector, nextMediaSelector } from '../../reducers/playlists';
-import { currentVoteStatsSelector } from '../../reducers/votes';
 import {
   baseEtaSelector,
   userInWaitlistSelector,
@@ -58,11 +59,11 @@ function UserFooterContent() {
     dispatch(openFavoriteMenu(historyID, position));
   }, [historyID, dispatch]);
   const handleUpvote = useCallback(() => {
-    dispatch(doUpvote());
-  }, [dispatch]);
+    dispatch(upvote({ historyID }));
+  }, [dispatch, historyID]);
   const handleDownvote = useCallback(() => {
-    dispatch(doDownvote());
-  }, [dispatch]);
+    dispatch(downvote({ historyID }));
+  }, [dispatch, historyID]);
 
   const handleSkipTurn = useCallback((reason) => {
     if (!userIsDJ) {

@@ -11,7 +11,7 @@ import {
 } from '../reducers/chat';
 import * as waitlistActions from '../reducers/waitlist';
 import { receive as receiveMessage } from '../actions/ChatActionCreators';
-import { favorited, receiveVote } from '../actions/VoteActionCreators';
+import { receiveUpvote, receiveDownvote, receiveFavorite } from '../reducers/booth';
 import { currentTimeSelector } from '../reducers/time';
 import {
   addRoles,
@@ -41,10 +41,12 @@ middleware.startListening({
         api.dispatch(advance(data));
         break;
       case 'favorite':
-        api.dispatch(favorited(data));
+        api.dispatch(receiveFavorite(data));
         break;
       case 'vote':
-        api.dispatch(receiveVote({ userID: data._id, vote: data.value }));
+        api.dispatch(data.value === -1
+          ? receiveDownvote({ userID: data._id })
+          : receiveUpvote({ userID: data._id }));
         break;
       case 'skip':
         api.dispatch(skipped(data));

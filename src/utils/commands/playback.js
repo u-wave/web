@@ -1,5 +1,6 @@
 import { log } from '../../actions/ChatActionCreators';
-import { doUpvote, doDownvote } from '../../actions/VoteActionCreators';
+import { upvote, downvote } from '../../actions/VoteActionCreators';
+import { historyIDSelector } from '../../reducers/booth';
 import {
   setVolume,
   mute,
@@ -34,13 +35,23 @@ export default [
   {
     name: 'upvote',
     description: 'Upvote the current track.',
-    action: () => doUpvote(),
+    action: () => (dispatch, getState) => {
+      const historyID = historyIDSelector(getState());
+      if (historyID != null) {
+        dispatch(upvote({ historyID }));
+      }
+    },
   },
 
   {
     name: 'downvote',
     description: 'Downvote the current track.',
-    action: () => doDownvote(),
+    action: () => (dispatch, getState) => {
+      const historyID = historyIDSelector(getState());
+      if (historyID != null) {
+        dispatch(downvote({ historyID }));
+      }
+    },
   },
 
   {

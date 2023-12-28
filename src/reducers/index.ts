@@ -14,7 +14,6 @@ import settings from './settings';
 import theme from './theme';
 import time from './time';
 import users from './users';
-import votes from './votes';
 import waitlist from './waitlist';
 import mobile from '../mobile/reducers';
 
@@ -35,7 +34,6 @@ export {
   theme,
   time,
   users,
-  votes,
   waitlist,
   mobile,
 };
