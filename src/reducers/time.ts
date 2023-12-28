@@ -40,6 +40,9 @@ const slice = createSlice({
       state.offset = action.payload;
     });
   },
+  selectors: {
+    currentTime: (state) => Date.now() + state.offset,
+  },
 });
 
 export default slice.reducer;
@@ -47,3 +50,7 @@ export default slice.reducer;
 export const {
   syncTimestamps,
 } = slice.actions;
+
+export const {
+  currentTime: currentTimeSelector,
+} = slice.selectors;

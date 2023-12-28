@@ -1,5 +1,5 @@
 import { del, post, put } from './RequestActionCreators';
-import { djSelector } from '../selectors/boothSelectors';
+import { djSelector } from '../reducers/booth';
 import {
   SKIP_DJ_START, SKIP_DJ_COMPLETE,
   MOVE_USER_START, MOVE_USER_COMPLETE,

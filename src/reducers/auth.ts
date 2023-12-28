@@ -6,9 +6,9 @@ import type { Playlist } from './playlists';
 import type { User } from './users';
 import uwFetch from '../utils/fetch';
 import { createAsyncThunk } from '../redux/api';
-import { currentUserSelector } from '../selectors/userSelectors';
 import { syncTimestamps } from './time';
 import * as Session from '../utils/Session';
+import type { StoreState } from '../redux/configureStore';
 
 interface Media {
   media: {
@@ -43,6 +43,14 @@ const initialState: State = {
   token: null,
   user: null,
 };
+
+function selectCurrentUser(state: StoreState) {
+  const userID = state.auth.user;
+  if (userID) {
+    return state.users.users[userID] ?? null;
+  }
+  return null;
+}
 
 export type InitialStatePayload = {
   motd: string | null,
@@ -134,7 +142,7 @@ export const register = createAsyncThunk('auth/register', async (payload: Regist
 });
 
 export const changeUsername = createAsyncThunk('auth/changeUsername', async (username: string, api) => {
-  const user = currentUserSelector(api.getState());
+  const user = selectCurrentUser(api.getState());
   if (!user) {
     throw new Error('Not logged in');
   }
@@ -189,7 +197,24 @@ const slice = createSlice({
   },
   selectors: {
     currentUserID: (state) => state.user,
+    token: (state) => state.token,
+    strategies: (state) => state.strategies,
   },
 });
 
 export default slice.reducer;
+
+export const {
+  currentUserID: currentUserIDSelector,
+  token: tokenSelector,
+  strategies: authStrategiesSelector,
+} = slice.selectors;
+export { selectCurrentUser as currentUserSelector };
+
+export function isLoggedInSelector(state: StoreState) {
+  return selectCurrentUser(state) != null;
+}
+
+export function supportsAuthStrategy(name: string) {
+  return (state: StoreState) => authStrategiesSelector(state).includes(name);
+}

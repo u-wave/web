@@ -3,11 +3,11 @@ import { useSelector, useDispatch } from '../../hooks/useRedux';
 import { toggleOverlay } from '../../reducers/activeOverlay';
 import { setVideoEnabled, videoEnabledSelector } from '../../reducers/settings';
 import { playlistsSelector } from '../../reducers/playlists';
-import { mediaSelector, startTimeSelector } from '../../selectors/boothSelectors';
+import { mediaSelector, startTimeSelector } from '../../reducers/booth';
 import {
   sizeSelector as waitlistSizeSelector,
   positionSelector as waitlistPositionSelector,
-} from '../../selectors/waitlistSelectors';
+} from '../../reducers/waitlist';
 import { openDrawer, openUsersDrawer } from '../actions/DrawerActionCreators';
 import MainView from '../components/MainView';
 

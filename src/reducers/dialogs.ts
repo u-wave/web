@@ -1,5 +1,7 @@
 import type { AnyAction } from 'redux';
+import { createSelector } from '@reduxjs/toolkit';
 import type { Media } from './booth';
+import type { StoreState } from '../redux/configureStore';
 import {
   OPEN_EDIT_MEDIA_DIALOG, CLOSE_EDIT_MEDIA_DIALOG,
   OPEN_PREVIEW_MEDIA_DIALOG, CLOSE_PREVIEW_MEDIA_DIALOG,
@@ -77,4 +79,31 @@ export default function reduce(state = initialState, action: AnyAction) {
     default:
       return state;
   }
+}
+
+function baseSelector(state: StoreState) {
+  return state.dialogs;
+}
+
+function merge<T>(dialog: DialogState<T>) {
+  return { ...dialog.payload, open: dialog.open };
+}
+
+export const loginDialogSelector = createSelector(
+  [baseSelector],
+  (dialogs) => merge(dialogs.login),
+);
+
+export const editMediaDialogSelector = createSelector(
+  [baseSelector],
+  (dialogs) => merge(dialogs.editMedia),
+);
+
+export const previewMediaDialogSelector = createSelector(
+  [baseSelector],
+  (dialogs) => merge(dialogs.previewMedia),
+);
+
+export function isPreviewMediaDialogOpenSelector(state: StoreState) {
+  return state.dialogs.previewMedia && !!state.dialogs.previewMedia.open;
 }

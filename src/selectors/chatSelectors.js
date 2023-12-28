@@ -1,56 +1,20 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import mapValues from 'just-map-values';
-import parseChatMarkup from 'u-wave-parse-chat-markup';
 import { getAvailableGroupMentions } from '../utils/chatMentions';
 import {
   availableEmojiNamesSelector,
   availableEmojiImagesSelector,
   customEmojiNamesSelector,
-} from './configSelectors';
+} from '../reducers/config';
+import { currentUserSelector } from '../reducers/auth';
+import { usersSelector } from '../reducers/users';
 import {
-  usersSelector,
-  currentUserSelector,
   currentUserHasRoleSelector,
   createRoleCheckSelector,
 } from './userSelectors';
-import { notificationSettingsSelector } from './settingSelectors';
 
 /** @param {import('../redux/configureStore').StoreState} state */
-const baseSelector = (state) => state.chat;
-
-export const rawMotdSelector = createSelector(baseSelector, (chat) => chat.motd);
-export const motdSelector = createSelector(
-  rawMotdSelector,
-  (motd) => (motd ? parseChatMarkup(motd) : null),
-);
-
-const MAX_MESSAGES = 500;
-const allMessagesSelector = createSelector(baseSelector, (chat) => chat.messages);
-// Hide notifications that are disabled.
-const applyNotificationSettings = (messages, notificationSettings) => messages.filter((message) => {
-  if (message.type === 'userJoin') return notificationSettings.userJoin;
-  if (message.type === 'userLeave') return notificationSettings.userLeave;
-  if (message.type === 'userNameChanged') return notificationSettings.userNameChanged;
-  if (message.type === 'skip') return notificationSettings.skip;
-  return true;
-});
-// Only show the most recent now playing notification.
-const collapseNowPlayingNotifications = (messages) => messages.filter((message, i) => {
-  if (message.type !== 'nowPlaying') return true;
-  const nextMessage = messages[i + 1];
-  return nextMessage && nextMessage.type !== 'nowPlaying';
-});
-const filteredMessagesSelector = createSelector(
-  allMessagesSelector,
-  notificationSettingsSelector,
-  (messages, notificationSettings) => collapseNowPlayingNotifications(
-    applyNotificationSettings(messages, notificationSettings),
-  ),
-);
-export const messagesSelector = createSelector(
-  filteredMessagesSelector,
-  (messages) => messages.slice(-MAX_MESSAGES),
-);
+export const rawMotdSelector = (state) => state.chat.motd;
 
 export const markupCompilerOptionsSelector = createStructuredSelector({
   availableEmoji: availableEmojiNamesSelector,
@@ -58,7 +22,8 @@ export const markupCompilerOptionsSelector = createStructuredSelector({
   customEmojiNames: customEmojiNamesSelector,
 });
 
-const mutesSelector = createSelector(baseSelector, (chat) => chat.mutedUsers);
+/** @param {import('../redux/configureStore').StoreState} state */
+const mutesSelector = (state) => state.chat.mutedUsers;
 
 export const muteTimeoutsSelector = createSelector(
   mutesSelector,
@@ -76,11 +41,12 @@ export const mutedUsersSelector = createSelector(
   (mutedIDs, users) => mutedIDs.map((userID) => users[userID]),
 );
 
-export const currentUserMuteSelector = createSelector(
-  currentUserSelector,
-  mutesSelector,
-  (user, mutes) => (user ? mutes[user._id] : null),
-);
+/** @param {import('../redux/configureStore').StoreState} state */
+export const currentUserMuteSelector = (state) => {
+  const user = currentUserSelector(state);
+  const mutes = mutesSelector(state);
+  return user ? mutes[user._id] : null;
+};
 
 export const availableGroupMentionsSelector = createSelector(
   currentUserHasRoleSelector,

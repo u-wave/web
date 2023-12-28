@@ -1,6 +1,6 @@
 import { findUser } from '../ChatCommands';
 import { log } from '../../actions/ChatActionCreators';
-import { rolesSelector } from '../../selectors/configSelectors';
+import { rolesSelector } from '../../reducers/config';
 import {
   userListSelector,
   isModeratorSelector,

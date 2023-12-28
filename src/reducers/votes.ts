@@ -1,11 +1,13 @@
-import { AnyAction } from 'redux';
+import type { AnyAction } from 'redux';
+import { createStructuredSelector } from 'reselect';
+import type { StoreState } from '../redux/configureStore';
 import {
   FAVORITE,
   UPVOTE,
   DOWNVOTE,
 } from '../constants/ActionTypes';
-import { advance } from './booth';
 import { initState } from './auth';
+import { currentUserSelector } from './users';
 
 export interface VoteStats {
   upvotes: string[];
@@ -24,7 +26,7 @@ export default function reduce(state = initialState, action: AnyAction): VoteSta
   switch (type) {
     case initState.fulfilled.type:
       return payload.booth?.stats ?? initialState;
-    case advance.type:
+    case 'booth/advance':
       return initialState;
     case UPVOTE:
       if (state.upvotes.includes(payload.userID)) {
@@ -56,3 +58,38 @@ export default function reduce(state = initialState, action: AnyAction): VoteSta
       return state;
   }
 }
+
+function createIsSelector(votersSelector: (state: StoreState) => string[]) {
+  return (state: StoreState) => {
+    const voters = votersSelector(state);
+    const user = currentUserSelector(state);
+    return user != null && voters.includes(user._id);
+  };
+}
+
+export const favoritesSelector = (state: StoreState) => state.votes.favorites;
+export const upvotesSelector = (state: StoreState) => state.votes.upvotes;
+export const downvotesSelector = (state: StoreState) => state.votes.downvotes;
+
+export const isFavoriteSelector = createIsSelector(favoritesSelector);
+export const isUpvoteSelector = createIsSelector(upvotesSelector);
+export const isDownvoteSelector = createIsSelector(downvotesSelector);
+
+export const favoritesCountSelector = (state: StoreState) => state.votes.favorites.length;
+export const upvotesCountSelector = (state: StoreState) => state.votes.upvotes.length;
+export const downvotesCountSelector = (state: StoreState) => state.votes.downvotes.length;
+
+export const currentVotesSelector = createStructuredSelector({
+  favorites: favoritesSelector,
+  upvotes: upvotesSelector,
+  downvotes: downvotesSelector,
+});
+
+export const currentVoteStatsSelector = createStructuredSelector({
+  isFavorite: isFavoriteSelector,
+  isUpvote: isUpvoteSelector,
+  isDownvote: isDownvoteSelector,
+  favoritesCount: favoritesCountSelector,
+  upvotesCount: upvotesCountSelector,
+  downvotesCount: downvotesCountSelector,
+});

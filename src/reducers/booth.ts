@@ -1,7 +1,15 @@
-import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import type { User } from './users';
+import {
+  type PayloadAction,
+  createAsyncThunk,
+  createSelector,
+  createSlice,
+} from '@reduxjs/toolkit';
+import { type User, userSelector, currentUserSelector } from './users';
+import { currentTimeSelector } from './time';
 import { initState } from './auth';
 import uwFetch from '../utils/fetch';
+import { currentVotesSelector } from './votes';
+import type { StoreState } from '../redux/configureStore';
 
 export interface Media {
   _id: string,
@@ -63,6 +71,7 @@ const slice = createSlice({
   name: 'booth',
   initialState,
   reducers: {
+    // NOTE When modifying this action, also update votes.ts
     advance: {
       reducer(
         state,
@@ -121,6 +130,11 @@ const slice = createSlice({
       }
     });
   },
+  selectors: {
+    historyID: (state) => state.historyID,
+    media: (state) => state.media,
+    startTime: (state) => state.startTime ?? 0,
+  },
 });
 
 export const {
@@ -128,5 +142,64 @@ export const {
   enterFullscreen,
   exitFullscreen,
 } = slice.actions;
+export const {
+  historyID: historyIDSelector,
+  media: mediaSelector,
+  startTime: startTimeSelector,
+} = slice.selectors;
+
+export const mediaDurationSelector = (state: StoreState) => {
+  const media = mediaSelector(state);
+  return media ? media.end - media.start : 0;
+};
+
+export const endTimeSelector = (state: StoreState) => {
+  const startTime = startTimeSelector(state);
+  const duration = mediaDurationSelector(state);
+  return startTime + (duration * 1000) || 0;
+};
+
+export const timeElapsedSelector = (state: StoreState) => {
+  const startTime = startTimeSelector(state);
+  const currentTime = currentTimeSelector(state);
+  // in seconds! because media duration is in seconds, too.
+  return startTime ? Math.max((currentTime - startTime) / 1000, 0) : 0;
+};
+
+export const timeRemainingSelector = (state: StoreState) => {
+  const duration = mediaDurationSelector(state);
+  const elapsed = timeElapsedSelector(state);
+  return duration > 0 ? duration - elapsed : 0;
+};
+
+export const djSelector = (state: StoreState) => {
+  const { booth } = state;
+  if (booth.djID) {
+    return userSelector(state, booth.djID);
+  }
+  return null;
+};
+
+export const isCurrentDJSelector = (state: StoreState) => {
+  const dj = djSelector(state);
+  const me = currentUserSelector(state);
+  return dj && me ? dj._id === me._id : false;
+};
+
+export const currentPlaySelector = createSelector(
+  [historyIDSelector, mediaSelector, startTimeSelector, djSelector, currentVotesSelector],
+  (historyID, media, timestamp, dj, stats) => {
+    if (!historyID || !media || !dj || !timestamp || !stats) {
+      return null;
+    }
+    return {
+      _id: historyID,
+      user: dj,
+      media,
+      timestamp,
+      stats,
+    };
+  },
+);
 
 export default slice.reducer;

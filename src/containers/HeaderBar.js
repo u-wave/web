@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { toggleOverlay } from '../reducers/activeOverlay';
-import { djSelector, mediaSelector, startTimeSelector } from '../selectors/boothSelectors';
+import { djSelector, mediaSelector, startTimeSelector } from '../reducers/booth';
 import {
   setVolume,
   mute,

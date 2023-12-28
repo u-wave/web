@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from '../../hooks/useRedux';
-import { roleColorsSelector } from '../../selectors/configSelectors';
+import { roleColorsSelector } from '../../reducers/config';
 
 type RoleColorProps<Base extends React.ElementType = 'span'> = React.ComponentPropsWithoutRef<Base> & {
   component?: Base,

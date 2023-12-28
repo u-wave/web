@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 import { userListSelector, hasRoleSelector } from '../selectors/userSelectors';
-import { djAndWaitlistUsersSelector } from '../selectors/waitlistSelectors';
+import { djAndWaitlistUsersSelector } from '../reducers/waitlist';
 
 export const everyone = userListSelector;
 

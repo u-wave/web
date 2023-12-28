@@ -5,7 +5,7 @@ import {
   timeFormatterSelector,
   dateFormatterSelector,
   dateTimeFormatterSelector,
-} from '../selectors/localeSelectors';
+} from '../reducers/locales';
 
 const intlSelector = createStructuredSelector({
   relativeTimeFormatter: relativeTimeFormatterSelector,

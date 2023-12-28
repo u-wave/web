@@ -6,9 +6,9 @@ import { Provider as BusProvider } from 'react-bus';
 import { TranslateProvider } from '@u-wave/react-translate';
 import { useSelector, useDispatch } from '../hooks/useRedux';
 import { closeOverlay, selectOverlay } from '../reducers/activeOverlay';
-import { themeSelector } from '../selectors/settingSelectors';
-import { translatorSelector } from '../selectors/localeSelectors';
-import { isConnectedSelector } from '../selectors/serverSelectors';
+import { translatorSelector } from '../reducers/locales';
+import { isConnectedSelector } from '../reducers/server';
+import createTheme from '../utils/createTheme';
 import DesktopApp from '../components/App';
 import MobileApp from '../mobile/components/App';
 import FatalError from '../components/FatalError';
@@ -18,7 +18,12 @@ import MediaSourceContext from '../context/MediaSourceContext';
 import { AllStoresProvider } from '../stores';
 import { initState } from '../reducers/auth';
 
-const { useCallback, useEffect, useRef } = React;
+const {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+} = React;
 
 class ErrorWrapper extends React.Component {
   static propTypes = {
@@ -67,7 +72,8 @@ function AppContainer({ uwave, mediaSources }) {
   const isMobile = useMediaQuery('(max-width: 767px)');
   const activeOverlay = useSelector(selectOverlay);
   const isConnected = useSelector(isConnectedSelector);
-  const theme = useSelector(themeSelector);
+  const themeOptions = useSelector((state) => state.theme);
+  const theme = useMemo(() => createTheme(themeOptions), [themeOptions]);
   const translator = useSelector(translatorSelector);
   const dispatch = useDispatch();
   const onCloseOverlay = useCallback(() => dispatch(closeOverlay()), [dispatch]);

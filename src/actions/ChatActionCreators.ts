@@ -8,9 +8,8 @@ import {
   mutedUserIDsSelector,
   currentUserMuteSelector,
 } from '../selectors/chatSelectors';
+import { currentUserSelector } from '../reducers/auth';
 import {
-  currentUserSelector,
-  userListSelector,
   userHasRoleSelector,
   currentUserHasRoleSelector,
 } from '../selectors/userSelectors';
@@ -22,7 +21,10 @@ import {
 import * as actions from '../reducers/chat';
 import { mentionSoundEnabledSelector } from '../reducers/settings';
 import type { StoreState } from '../redux/configureStore';
-import type { User } from '../reducers/users';
+import {
+  type User,
+  userListSelector,
+} from '../reducers/users';
 
 type Thunk = ThunkAction<unknown, StoreState, never, AnyAction>;
 

@@ -1,31 +1,9 @@
-import { createSelector } from 'reselect';
-import naturalCmp from 'natural-compare';
-import { rolesSelector } from './configSelectors';
+import { createSelector } from '@reduxjs/toolkit';
+import { rolesSelector } from '../reducers/config';
+import { currentUserSelector, supportsAuthStrategy } from '../reducers/auth';
 
-/** @param {import('../redux/configureStore').StoreState} state */
-const authSelector = (state) => state.auth;
+export { userListSelector } from '../reducers/users';
 
-/** @param {import('../redux/configureStore').StoreState} state */
-const usersBaseSelector = (state) => state.users;
-export const usersSelector = createSelector(usersBaseSelector, (base) => base.users);
-
-const currentUserIDSelector = createSelector(authSelector, (auth) => auth.user);
-export const currentUserSelector = createSelector(
-  usersSelector,
-  currentUserIDSelector,
-  (users, userID) => {
-    if (userID && userID in users) {
-      return users[userID];
-    }
-    return null;
-  },
-);
-export const isLoggedInSelector = createSelector(currentUserSelector, Boolean);
-export const tokenSelector = createSelector(authSelector, (auth) => auth.token);
-export const authStrategiesSelector = createSelector(authSelector, (auth) => auth.strategies);
-export function supportsAuthStrategy(name) {
-  return createSelector(authStrategiesSelector, (strategies) => strategies.includes(name));
-}
 export const supportsSocialAuthSelector = createSelector(
   supportsAuthStrategy('google'),
   (...support) => support.some(Boolean),
@@ -47,86 +25,44 @@ function getAllUserRoles(roles, user) {
   return user.roles ? user.roles.reduce(getSubRoles, []) : [];
 }
 
-function compareUsers(roles, superuser) {
-  return (a, b) => {
-    const aRoles = getAllUserRoles(roles, a);
-    const bRoles = getAllUserRoles(roles, b);
-    // Sort superusers to the top,
-    if (aRoles.includes(superuser)) {
-      return -1;
-    }
-    if (bRoles.includes(superuser)) {
-      return 1;
-    }
-    // other users by the amount of permissions they have,
-    if (aRoles.length > bRoles.length) {
-      return -1;
-    }
-    if (aRoles.length < bRoles.length) {
-      return 1;
-    }
-    // and sort by username if the roles are equal.
-    return naturalCmp(a.username.toLowerCase(), b.username.toLowerCase());
-  };
+/** @param {import('../redux/configureStore').StoreState} state */
+function userHasRole(state, user, role) {
+  const roles = rolesSelector(state);
+  const userRoles = getAllUserRoles(roles, user);
+
+  // If this is a super user, we always return true.
+  const superUserRole = superUserRoleSelector(state);
+  if (userRoles.includes(superUserRole)) {
+    return true;
+  }
+
+  return userRoles.includes(role);
 }
 
-export const userListSelector = createSelector(
-  rolesSelector,
-  superUserRoleSelector,
-  usersSelector,
-  (roles, superuserRole, users) => Object.values(users).sort(compareUsers(roles, superuserRole)),
-);
-
-export const userCountSelector = createSelector(
-  userListSelector,
-  (users) => users.length,
-);
-
-export const guestCountSelector = createSelector(
-  usersBaseSelector,
-  (base) => base.guests,
-);
-
-export const listenerCountSelector = createSelector(
-  userCountSelector,
-  guestCountSelector,
-  (users, guests) => users + guests,
-);
-
-export const userHasRoleSelector = createSelector(
-  rolesSelector,
-  superUserRoleSelector,
-  (roles, superUserRole) => (user) => {
+export const userHasRoleSelector = (state) => {
+  return (user) => {
     // If there is no authenticated user, we always return false.
-    if (!user) {
+    if (user == null) {
       return () => false;
     }
 
-    const userRoles = getAllUserRoles(roles, user);
-    // If this is a super user, we always return true.
-    if (userRoles.includes(superUserRole)) {
-      return () => true;
-    }
-
-    return (role) => userRoles.includes(role);
-  },
-);
+    return (role) => userHasRole(state, user, role);
+  };
+};
 
 // Selects a function that checks if a user has the given role.
 //
 //   const hasRole = hasRoleSelector(getState());
 //   hasRole(user, 'waitlist.join');
 //
-export const hasRoleSelector = createSelector(
-  userHasRoleSelector,
-  (userHasRole) => (user, role) => userHasRole(user)(role),
-);
+/** @param {import('../redux/configureStore').StoreState} state */
+export const hasRoleSelector = (state) => userHasRole.bind(null, state);
 
-export const currentUserHasRoleSelector = createSelector(
-  userHasRoleSelector,
-  currentUserSelector,
-  (userHasRole, user) => userHasRole(user),
-);
+/** @param {import('../redux/configureStore').StoreState} state */
+export const currentUserHasRoleSelector = (state) => {
+  const user = currentUserSelector(state);
+  return user ? userHasRole.bind(null, state, user) : () => false;
+};
 
 // Creates a selector that will check if the current user has a given role.
 //

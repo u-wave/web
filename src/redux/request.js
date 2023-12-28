@@ -4,8 +4,8 @@ import {
   requestComplete,
   requestCompleteError,
 } from '../actions/RequestActionCreators';
-import { requestOptionsSelector } from '../selectors/configSelectors';
-import { tokenSelector } from '../selectors/userSelectors';
+import { requestOptionsSelector } from '../reducers/config';
+import { tokenSelector } from '../reducers/auth';
 
 function isEmpty(object) {
   return !object || Object.keys(object).length === 0;

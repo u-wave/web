@@ -5,7 +5,7 @@ import {
   DO_LOCK_START, DO_LOCK_COMPLETE,
   DO_CLEAR_START, DO_CLEAR_COMPLETE,
 } from '../constants/ActionTypes';
-import { currentUserSelector } from '../selectors/userSelectors';
+import { currentUserSelector } from '../reducers/users';
 
 // TODO split joining the waitlist and adding another user to the waitlist
 // into two different actions.

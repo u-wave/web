@@ -12,7 +12,7 @@ import {
 import * as waitlistActions from '../reducers/waitlist';
 import { receive as receiveMessage } from '../actions/ChatActionCreators';
 import { favorited, receiveVote } from '../actions/VoteActionCreators';
-import { currentTimeSelector } from '../selectors/timeSelectors';
+import { currentTimeSelector } from '../reducers/time';
 import {
   addRoles,
   receiveGuestCount,

@@ -8,20 +8,22 @@ import { joinWaitlist, leaveWaitlist } from '../../actions/WaitlistActionCreator
 import { doUpvote, doDownvote } from '../../actions/VoteActionCreators';
 import { openFavoriteMenu } from '../../reducers/addToPlaylistMenu';
 import {
-  djSelector,
-  isCurrentDJSelector,
   canSkipSelector,
+} from '../../selectors/boothSelectors';
+import {
+  skipSelf,
+  djSelector,
   endTimeSelector,
   historyIDSelector,
-} from '../../selectors/boothSelectors';
-import { skipSelf } from '../../reducers/booth';
+  isCurrentDJSelector,
+} from '../../reducers/booth';
 import { activePlaylistSelector, nextMediaSelector } from '../../reducers/playlists';
-import { currentVoteStatsSelector } from '../../selectors/voteSelectors';
+import { currentVoteStatsSelector } from '../../reducers/votes';
 import {
   baseEtaSelector,
   userInWaitlistSelector,
   isLockedSelector,
-} from '../../selectors/waitlistSelectors';
+} from '../../reducers/waitlist';
 import NextMedia from './NextMedia';
 import UserInfo from './UserInfo';
 import SkipButton from './SkipButton';

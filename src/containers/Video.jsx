@@ -2,16 +2,12 @@ import React from 'react';
 import { useDispatch, useSelector } from '../hooks/useRedux';
 import useClock from '../hooks/useClock';
 import { enterFullscreen, exitFullscreen } from '../actions/PlaybackActionCreators';
-import {
-  historyIDSelector,
-  mediaSelector,
-  playbackVolumeSelector,
-  timeElapsedSelector,
-} from '../selectors/boothSelectors';
+import { historyIDSelector, mediaSelector, timeElapsedSelector } from '../reducers/booth';
 import {
   isMutedSelector,
-  videoSizeSelector,
+  playbackVolumeSelector,
   videoEnabledSelector,
+  videoSizeSelector,
 } from '../reducers/settings';
 import Video from '../components/Video';
 

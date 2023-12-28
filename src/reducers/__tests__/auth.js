@@ -1,5 +1,5 @@
 import createStore from '../../redux/configureStore';
-import * as s from '../../selectors/userSelectors';
+import * as s from '../auth';
 import { setSessionToken } from '../../actions/LoginActionCreators';
 
 describe('reducers/auth', () => {

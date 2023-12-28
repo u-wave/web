@@ -18,7 +18,7 @@ import {
 import {
   waitlistUsersSelector,
   djAndWaitlistUsersSelector,
-} from '../../selectors/waitlistSelectors';
+} from '../../reducers/waitlist';
 
 export default [
   {

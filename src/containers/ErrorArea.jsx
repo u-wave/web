@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from '../hooks/useRedux';
 import { dismiss } from '../actions/ErrorActionCreators';
-import { firstErrorSelector } from '../selectors/errorSelectors';
+import { firstErrorSelector } from '../reducers/errors';
 import ErrorArea from '../components/ErrorArea';
 
 const {

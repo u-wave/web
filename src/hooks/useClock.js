@@ -1,6 +1,6 @@
 import React from 'react';
 import { useClock as useClockCallbacks } from '../context/ClockContext';
-import { currentTimeSelector } from '../selectors/timeSelectors';
+import { currentTimeSelector } from '../reducers/time';
 import { useStore } from './useRedux';
 
 const {

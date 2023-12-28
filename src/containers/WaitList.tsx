@@ -4,10 +4,10 @@ import {
   moveWaitlistUser,
   removeWaitlistUser,
 } from '../actions/ModerationActionCreators';
-import { waitlistUsersSelector } from '../selectors/waitlistSelectors';
+import { waitlistUsersSelector } from '../reducers/waitlist';
 import { createRoleCheckSelector } from '../selectors/userSelectors';
 import WaitList from '../components/WaitList';
-import { User } from '../reducers/users';
+import { type User } from '../reducers/users';
 
 const canMoveSelector = createRoleCheckSelector('waitlist.move');
 

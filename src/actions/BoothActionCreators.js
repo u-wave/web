@@ -1,13 +1,10 @@
 import { mutate } from 'swr';
 import { BOOTH_SKIP } from '../constants/ActionTypes';
 import { flattenPlaylistItem } from './PlaylistActionCreators';
-import { currentPlaySelector } from '../selectors/boothSelectors';
-import { usersSelector } from '../selectors/userSelectors';
-import * as actions from '../reducers/booth';
+import { usersSelector } from '../reducers/users';
+import { advance as advanceInner, currentPlaySelector } from '../reducers/booth';
 
-/**
- * Set the current song and DJ.
- */
+/** Set the current song and DJ. */
 export function advance(nextBooth) {
   return (dispatch, getState) => {
     let payload = null;
@@ -24,7 +21,7 @@ export function advance(nextBooth) {
       };
     }
 
-    dispatch(actions.advance(payload, currentPlaySelector(getState())));
+    dispatch(advanceInner(payload, currentPlaySelector(getState())));
 
     mutate('/booth/history');
   };

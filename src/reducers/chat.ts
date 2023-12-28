@@ -1,13 +1,21 @@
-import { AnyAction } from 'redux';
+import type { AnyAction } from 'redux';
+import mapValues from 'just-map-values';
 import { v4 as randomUUID } from 'uuid';
-import { MarkupNode } from 'u-wave-parse-chat-markup';
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import parseChatMarkup, { type MarkupNode } from 'u-wave-parse-chat-markup';
+import { type PayloadAction, createSlice, createSelector } from '@reduxjs/toolkit';
 import { BOOTH_SKIP } from '../constants/ActionTypes';
-import { type User, actions as userActions } from './users';
+import {
+  type User,
+  actions as userActions,
+  usersSelector,
+  currentUserSelector,
+} from './users';
 import { advance } from './booth';
 import { initState } from './auth';
 import { createAsyncThunk } from '../redux/api';
 import uwFetch from '../utils/fetch';
+import type { StoreState } from '../redux/configureStore';
+import { type NotificationSettings, notificationSettingsSelector } from './settings';
 
 export interface ChatMessage {
   _id: string;
@@ -294,6 +302,10 @@ const slice = createSlice({
         });
       });
   },
+  selectors: {
+    motd: (state) => state.motd,
+    mutes: (state) => state.mutedUsers,
+  },
 });
 
 export const {
@@ -306,6 +318,65 @@ export const {
   muteUser,
   unmuteUser,
 } = slice.actions;
+
+export const motdSelector = createSelector([slice.selectors.motd], (motd) => {
+  return motd ? parseChatMarkup(motd) : null;
+});
+
+const MAX_MESSAGES = 500;
+const allMessagesSelector = (state: StoreState) => state.chat.messages;
+// Hide notifications that are disabled.
+function applyNotificationSettings(
+  messages: Message[],
+  notificationSettings: NotificationSettings,
+) {
+  return messages.filter((message) => {
+    if (message.type === 'userJoin') return notificationSettings.userJoin;
+    if (message.type === 'userLeave') return notificationSettings.userLeave;
+    if (message.type === 'userNameChanged') return notificationSettings.userNameChanged;
+    if (message.type === 'skip') return notificationSettings.skip;
+    return true;
+  });
+}
+// Only show the most recent now playing notification.
+function collapseNowPlayingNotifications(messages: Message[]) {
+  return messages.filter((message, i) => {
+    if (message.type !== 'nowPlaying') return true;
+    const nextMessage = messages[i + 1];
+    return nextMessage && nextMessage.type !== 'nowPlaying';
+  });
+}
+const filteredMessagesSelector = createSelector(
+  [allMessagesSelector, notificationSettingsSelector],
+  (messages, notificationSettings) => collapseNowPlayingNotifications(
+    applyNotificationSettings(messages, notificationSettings),
+  ),
+);
+export const messagesSelector = createSelector(
+  [filteredMessagesSelector],
+  (messages) => messages.slice(-MAX_MESSAGES),
+);
+
+export const muteTimeoutsSelector = createSelector(
+  [slice.selectors.mutes],
+  (mutes) => mapValues(mutes, (mute) => mute.expirationTimer),
+);
+
+export const mutedUserIDsSelector = createSelector(
+  [slice.selectors.mutes],
+  (mutes) => Object.keys(mutes),
+);
+
+export const mutedUsersSelector = createSelector(
+  [mutedUserIDsSelector, usersSelector],
+  (mutedIDs, users) => mutedIDs.map((userID) => users[userID]),
+);
+
+export const currentUserMuteSelector = (state: StoreState) => {
+  const user = currentUserSelector(state);
+  const mutes = slice.selectors.mutes(state);
+  return user ? mutes[user._id] : null;
+};
 
 export const setMotd = createAsyncThunk('chat/setMotd', async (text: string, api) => {
   const { data } = await uwFetch<{

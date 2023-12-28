@@ -3,7 +3,7 @@ import {
   LOAD_LANGUAGE_START,
   LOAD_LANGUAGE_COMPLETE,
 } from '../constants/ActionTypes';
-import { loadedLanguagesSelector } from '../selectors/localeSelectors';
+import { loadedLanguagesSelector } from '../reducers/locales';
 import { languageSelector as currentLanguageSelector } from '../reducers/settings';
 import { resources } from '../locales';
 

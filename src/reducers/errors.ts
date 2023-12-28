@@ -1,4 +1,5 @@
 import type { AnyAction } from 'redux';
+import type { StoreState } from '../redux/configureStore';
 
 type State = string[];
 
@@ -15,3 +16,5 @@ export default function reduce(state: State = [], action: AnyAction): State {
   }
   return state;
 }
+
+export const firstErrorSelector = (state: StoreState) => state.errors[0];

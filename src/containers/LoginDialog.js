@@ -1,5 +1,6 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { createSelector } from '@reduxjs/toolkit';
 import {
   register,
   login,
@@ -7,8 +8,20 @@ import {
   resetPassword,
 } from '../reducers/auth';
 import { openResetPasswordDialog, closeLoginDialog } from '../actions/DialogActionCreators';
-import { loginDialogSelector } from '../selectors/dialogSelectors';
+import { loginDialogSelector } from '../reducers/dialogs';
+import { reCaptchaSiteKeySelector } from '../reducers/config';
+import { supportsSocialAuthSelector } from '../selectors/userSelectors';
 import LoginDialog from '../components/Dialogs/LoginDialog';
+
+const selector = createSelector(
+  [loginDialogSelector, reCaptchaSiteKeySelector, supportsSocialAuthSelector],
+  (props, siteKey, supportsSocialAuth) => ({
+    ...props,
+    useReCaptcha: !!siteKey,
+    reCaptchaSiteKey: siteKey ?? null,
+    supportsSocialAuth,
+  }),
+);
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   onOpenResetPasswordDialog: openResetPasswordDialog,
@@ -19,4 +32,4 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   onCloseDialog: closeLoginDialog,
 }, dispatch);
 
-export default connect(loginDialogSelector, mapDispatchToProps)(LoginDialog);
+export default connect(selector, mapDispatchToProps)(LoginDialog);

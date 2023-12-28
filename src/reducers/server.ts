@@ -1,4 +1,5 @@
-import { AnyAction } from 'redux';
+import type { AnyAction } from 'redux';
+import type { StoreState } from '../redux/configureStore';
 import { SOCKET_CONNECTED, SOCKET_DISCONNECTED } from '../constants/ActionTypes';
 
 interface State {
@@ -21,3 +22,5 @@ export default function serverReducer(state = initialState, action: AnyAction): 
       return state;
   }
 }
+
+export const isConnectedSelector = (state: StoreState) => state.server.connected;
