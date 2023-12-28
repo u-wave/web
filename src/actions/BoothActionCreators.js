@@ -1,8 +1,7 @@
 import { mutate } from 'swr';
 import { BOOTH_SKIP } from '../constants/ActionTypes';
 import { flattenPlaylistItem } from './PlaylistActionCreators';
-import { post } from './RequestActionCreators';
-import { isCurrentDJSelector, currentPlaySelector } from '../selectors/boothSelectors';
+import { currentPlaySelector } from '../selectors/boothSelectors';
 import { usersSelector } from '../selectors/userSelectors';
 import * as actions from '../reducers/booth';
 
@@ -28,16 +27,6 @@ export function advance(nextBooth) {
     dispatch(actions.advance(payload, currentPlaySelector(getState())));
 
     mutate('/booth/history');
-  };
-}
-
-export function skipSelf(opts = {}) {
-  const remove = !!opts.remove;
-  return (dispatch, getState) => {
-    if (isCurrentDJSelector(getState())) {
-      return dispatch(post('/booth/skip', { remove }));
-    }
-    return Promise.reject(new Error('You\'re not currently playing.'));
   };
 }
 

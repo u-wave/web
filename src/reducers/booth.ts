@@ -1,6 +1,7 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import type { User } from './users';
 import { initState } from './auth';
+import uwFetch from '../utils/fetch';
 
 export interface Media {
   _id: string,
@@ -49,6 +50,14 @@ type PreviousBooth = {
   timestamp: number,
   stats: { upvotes: string[], downvotes: string[], favorites: string[] },
 };
+
+// This action doesn't need further handling because it will cause updates
+// over WebSocket on the server.
+export const skipSelf = createAsyncThunk('booth/skipSelf', async (
+  options: { remove: boolean },
+) => {
+  await uwFetch(['/booth/skip', { method: 'post', data: options }]);
+});
 
 const slice = createSlice({
   name: 'booth',
