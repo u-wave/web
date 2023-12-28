@@ -73,7 +73,10 @@ function SocialForm({
 
   const handleSubmit = useAsyncCallback(async (event) => {
     event.preventDefault();
-    await onSocialFinish(service, { avatar, username });
+    await onSocialFinish({
+      service,
+      params: { avatar, username },
+    });
   }, [avatar, username, service, onSocialFinish]);
 
   const handleTosCheckbox = useCallback((event) => {

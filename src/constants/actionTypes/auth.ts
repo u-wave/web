@@ -5,10 +5,4 @@ export const SOCKET_DISCONNECTED = 'auth/SOCKET_DISCONNECTED';
 
 export const SET_TOKEN = 'auth/SET_TOKEN';
 
-export const REGISTER_START = 'auth/REGISTER_START';
-export const REGISTER_COMPLETE = 'auth/REGISTER_COMPLETE';
-
-export const LOGIN_START = 'auth/LOGIN_START';
-export const LOGIN_COMPLETE = 'auth/LOGIN_COMPLETE';
-
 export const RESET_PASSWORD_COMPLETE = 'auth/RESET_PASSWORD_COMPLETE';

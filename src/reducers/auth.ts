@@ -98,6 +98,41 @@ export const login = createAsyncThunk('auth/login', async (payload: LoginPayload
   };
 });
 
+type FinishSocialLoginPayload = { service: string, params: object };
+export const finishSocialLogin = createAsyncThunk('auth/finishSocialLogin', async (payload: FinishSocialLoginPayload, api) => {
+  const { meta } = await uwFetch<{
+    meta: { jwt: string },
+  }>([`/auth/service/${payload.service}/finish`, { method: 'post', data: payload.params }]);
+
+  const now = await api.dispatch(initState());
+  const { user, socketToken } = now.payload as { user: User, socketToken: string };
+
+  return {
+    user,
+    socketToken,
+    token: meta.jwt,
+  };
+});
+
+type RegisterPayload = {
+  email: string,
+  username: string,
+  password: string,
+  grecaptcha: string,
+};
+export const register = createAsyncThunk('auth/register', async (payload: RegisterPayload, api) => {
+  await uwFetch<{ data: User }>(['/auth/register', {
+    method: 'post',
+    data: payload,
+    signal: api.signal,
+  }]);
+
+  await api.dispatch(login({
+    email: payload.email,
+    password: payload.password,
+  }));
+});
+
 export const changeUsername = createAsyncThunk('auth/changeUsername', async (username: string, api) => {
   const user = currentUserSelector(api.getState());
   if (!user) {
