@@ -1,10 +1,9 @@
 import React from 'react';
 import useSWR from 'swr';
 import { useAsyncCallback } from 'react-async-hook';
-import { useDispatch } from '../../hooks/useRedux';
-import { unbanUser } from '../actions/bans';
 import BansList from '../components/BansList';
 import mergeIncludedModels from '../../utils/mergeIncludedModels';
+import uwFetch from '../../utils/fetch';
 
 const {
   useMemo,
@@ -26,11 +25,10 @@ function BansListContainer() {
   const bans = useMemo(() => mergeIncludedModels(data), [data]);
   const count = data.meta.results;
 
-  const dispatch = useDispatch();
   const onUnbanUser = useAsyncCallback(async (user) => {
-    await dispatch(unbanUser(user));
+    await uwFetch([`/bans/${user._id}`, { method: 'del' }]);
     mutate();
-  }, [dispatch, mutate]);
+  }, [mutate]);
 
   return (
     <BansList
