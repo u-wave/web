@@ -1,23 +1,49 @@
-import { AnyAction } from 'redux';
-import { SET_TIMER, OFFSET } from '../constants/ActionTypes';
+import { type PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import uwFetch from '../utils/fetch';
 
 interface State {
-  timer: ReturnType<typeof setTimeout> | null,
   offset: number,
 }
 
 const initialState: State = {
-  timer: null,
   offset: 0,
 };
 
-export default function reduce(state = initialState, action: AnyAction): State {
-  switch (action.type) {
-    case SET_TIMER:
-      return { ...state, timer: action.payload };
-    case OFFSET:
-      return { ...state, offset: action.payload };
-    default:
-      return state;
-  }
+function calculateOffset(clientTimeBefore: number, serverTime: number) {
+  const clientTimeAfter = Date.now();
+  const offset = Math.round(((serverTime - clientTimeBefore) + (serverTime - clientTimeAfter)) / 2);
+  return offset;
 }
+
+export const sync = createAsyncThunk('time/sync', async () => {
+  const clientTimeBefore = Date.now();
+  const { time: serverTime } = await uwFetch<{ time: number }>(['/now']);
+
+  const offset = calculateOffset(clientTimeBefore, serverTime);
+  return offset;
+});
+
+const slice = createSlice({
+  name: 'time',
+  initialState,
+  reducers: {
+    syncTimestamps: (
+      state,
+      action: PayloadAction<{ clientTimeBefore: number, serverTime: number }>,
+    ) => {
+      const { clientTimeBefore, serverTime } = action.payload;
+      state.offset = calculateOffset(clientTimeBefore, serverTime);
+    },
+  },
+  extraReducers(builder) {
+    builder.addCase(sync.fulfilled, (state, action) => {
+      state.offset = action.payload;
+    });
+  },
+});
+
+export default slice.reducer;
+
+export const {
+  syncTimestamps,
+} = slice.actions;

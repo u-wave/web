@@ -7,7 +7,7 @@ import type { User } from './users';
 import uwFetch from '../utils/fetch';
 import { createAsyncThunk } from '../redux/api';
 import { currentUserSelector } from '../selectors/userSelectors';
-import { syncTimestamps } from '../actions/TickerActionCreators';
+import { syncTimestamps } from './time';
 import * as Session from '../utils/Session';
 
 interface Media {
@@ -66,12 +66,12 @@ export type InitialStatePayload = {
   time: number,
 };
 export const initState = createAsyncThunk('auth/now', async (_payload: void, api) => {
-  const beforeTime = Date.now();
+  const clientTimeBefore = Date.now();
 
   const state = await uwFetch<InitialStatePayload>(['/now', { signal: api.signal }]);
 
   mutate('/booth/history');
-  api.dispatch(syncTimestamps(beforeTime, state.time));
+  api.dispatch(syncTimestamps({ clientTimeBefore, serverTime: state.time }));
 
   return state;
 });
