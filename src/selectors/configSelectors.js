@@ -82,10 +82,11 @@ export const roleSelector = memoizePermanently((roleName) => createSelector(
 ));
 
 // TODO make this configurable.
-export const roleColorsSelector = () => ({
+const DEFAULT_ROLE_COLORS = {
   admin: '#ff3b74',
   manager: '#05daa5',
   moderator: '#00b3dc',
   special: '#fc911d',
   default: '',
-});
+};
+export const roleColorsSelector = () => DEFAULT_ROLE_COLORS;
