@@ -99,11 +99,7 @@ function processInsert(list: PlaylistItemList, insert: PlaylistItem[], position:
   } else if (position.after != null && position.after !== -1) {
     insertIdx = list.findIndex((media) => media !== null && media._id === position.after) + 1;
   }
-  return [
-    ...list.slice(0, insertIdx),
-    ...insert,
-    ...list.slice(insertIdx),
-  ];
+  return list.toSpliced(insertIdx, 0, ...insert);
 }
 
 // Moves a list of media items to a given position in the playlist.
