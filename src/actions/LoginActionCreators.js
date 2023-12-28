@@ -2,9 +2,7 @@ import {
   SOCKET_CONNECT,
   SOCKET_RECONNECT,
   SET_TOKEN,
-  RESET_PASSWORD_COMPLETE,
 } from '../constants/ActionTypes';
-import { post } from './RequestActionCreators';
 import { initState } from '../reducers/auth';
 
 export function socketConnect() {
@@ -20,20 +18,6 @@ export function setSessionToken(token) {
     type: SET_TOKEN,
     payload: { token },
   };
-}
-
-export function resetPassword(email) {
-  return post('/auth/password/reset', email, {
-    onComplete: () => ({
-      type: RESET_PASSWORD_COMPLETE,
-      payload: 'Successfully sent password reset email',
-    }),
-    onError: (error) => ({
-      type: RESET_PASSWORD_COMPLETE,
-      error: true,
-      payload: error,
-    }),
-  });
 }
 
 function whenWindowClosed(window) {
@@ -70,7 +54,6 @@ function socialLogin(service) {
       });
     }
 
-    // eslint-disable-next-line compat/compat
     const apiOrigin = new URL(apiUrl, window.location.href).origin;
     const clientOrigin = window.location.origin;
 

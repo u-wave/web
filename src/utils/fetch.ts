@@ -1,4 +1,5 @@
 import qsStringify from 'qs-stringify';
+import type { Jsonifiable } from 'type-fest';
 import type { DocWithErrors, Errors } from 'jsonapi-typescript';
 import readApplicationConfig from './readApplicationConfig';
 
@@ -28,7 +29,7 @@ class FetchError extends Error {
 
 type FetchOptions = {
   method?: 'get' | 'post' | 'put' | 'patch' | 'delete',
-  data?: object,
+  data?: Jsonifiable,
   qs?: Parameters<typeof qsStringify>[0],
   signal?: AbortSignal,
 };
