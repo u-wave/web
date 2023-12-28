@@ -1,7 +1,6 @@
 import { useSelector, useDispatch } from '../hooks/useRedux';
-import { editMediaDialogSelector } from '../reducers/dialogs';
+import { closeEditMediaDialog, editMediaDialogSelector } from '../reducers/dialogs';
 import { updatePlaylistItem } from '../reducers/playlists';
-import { closeEditMediaDialog } from '../reducers/dialogs';
 import EditMediaDialog from '../components/Dialogs/EditMediaDialog';
 import DialogCloseAnimation from '../components/DialogCloseAnimation';
 
