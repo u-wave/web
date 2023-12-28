@@ -8,17 +8,14 @@ import { joinWaitlist, leaveWaitlist } from '../../actions/WaitlistActionCreator
 import { doUpvote, doDownvote } from '../../actions/VoteActionCreators';
 import { openFavoriteMenu } from '../../reducers/addToPlaylistMenu';
 import {
-  skipSelf,
   djSelector,
   isCurrentDJSelector,
   canSkipSelector,
   endTimeSelector,
   historyIDSelector,
 } from '../../selectors/boothSelectors';
-import {
-  activePlaylistSelector,
-  nextMediaSelector,
-} from '../../reducers/playlists';
+import { skipSelf } from '../../reducers/booth';
+import { activePlaylistSelector, nextMediaSelector } from '../../reducers/playlists';
 import { currentVoteStatsSelector } from '../../selectors/voteSelectors';
 import {
   baseEtaSelector,
