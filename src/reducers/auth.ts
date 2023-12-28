@@ -8,6 +8,7 @@ import uwFetch from '../utils/fetch';
 import { createAsyncThunk } from '../redux/api';
 import { currentUserSelector } from '../selectors/userSelectors';
 import { syncTimestamps } from '../actions/TickerActionCreators';
+import * as Session from '../utils/Session';
 
 interface Media {
   media: {
@@ -114,6 +115,11 @@ export const changeUsername = createAsyncThunk('auth/changeUsername', async (use
   };
 });
 
+export const logout = createAsyncThunk('auth/logout', async () => {
+  await uwFetch<void>(['/auth', { method: 'delete' }]);
+  Session.unset();
+});
+
 const slice = createSlice({
   name: 'auth',
   initialState,
@@ -134,6 +140,10 @@ const slice = createSlice({
         state.user = action.payload.user._id;
       })
       .addCase(login.rejected, (state) => {
+        state.token = null;
+        state.user = null;
+      })
+      .addCase(logout.fulfilled, (state) => {
         state.token = null;
         state.user = null;
       });

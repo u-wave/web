@@ -6,12 +6,10 @@ import {
   LOGIN_START,
   LOGIN_COMPLETE,
   SET_TOKEN,
-  LOGOUT_START,
-  LOGOUT_COMPLETE,
   RESET_PASSWORD_COMPLETE,
 } from '../constants/ActionTypes';
 import * as Session from '../utils/Session';
-import { get, post, del } from './RequestActionCreators';
+import { post } from './RequestActionCreators';
 import { initState } from '../reducers/auth';
 
 export function socketConnect() {
@@ -77,24 +75,6 @@ export function register({
   });
 }
 
-function logoutStart() {
-  return { type: LOGOUT_START };
-}
-
-function logoutComplete() {
-  return { type: LOGOUT_COMPLETE };
-}
-
-export function logout() {
-  return del('/auth', {}, {
-    onStart: () => (dispatch) => {
-      dispatch(logoutStart());
-      Session.unset();
-    },
-    onComplete: logoutComplete,
-  });
-}
-
 export function resetPassword(email) {
   return post('/auth/password/reset', email, {
     onComplete: () => ({
@@ -105,14 +85,6 @@ export function resetPassword(email) {
       type: RESET_PASSWORD_COMPLETE,
       error: true,
       payload: error,
-    }),
-  });
-}
-
-export function getSocketAuthToken() {
-  return get('/auth/socket', {
-    onComplete: (res) => () => ({
-      socketToken: res.data.socketToken,
     }),
   });
 }

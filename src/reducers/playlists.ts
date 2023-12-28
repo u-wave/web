@@ -6,9 +6,9 @@ import naturalCmp from 'natural-compare';
 import { createAsyncThunk } from '../redux/api';
 import uwFetch, { ListResponse } from '../utils/fetch';
 import mergeIncludedModels from '../utils/mergeIncludedModels';
-import { DO_FAVORITE_COMPLETE, LOGOUT_COMPLETE } from '../constants/ActionTypes';
+import { DO_FAVORITE_COMPLETE } from '../constants/ActionTypes';
 import type { Media } from './booth';
-import { initState } from './auth';
+import { initState, logout } from './auth';
 
 export interface Playlist {
   _id: string;
@@ -474,7 +474,7 @@ const slice = createSlice({
           state.selectedPlaylistID ??= payload.activePlaylist ?? payload.playlists[0]?._id ?? null;
         }
       })
-      .addCase(LOGOUT_COMPLETE, () => {
+      .addCase(logout.fulfilled, () => {
         return initialState;
       })
       .addCase(activatePlaylist.pending, (state, action) => {

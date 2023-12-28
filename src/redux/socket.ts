@@ -2,14 +2,18 @@ import type { AnyAction, Middleware } from 'redux';
 import { createAction } from '@reduxjs/toolkit';
 import type { AppDispatch } from './configureStore';
 import {
-  LOGOUT_START,
   SOCKET_CONNECT,
   SOCKET_RECONNECT,
   SOCKET_DISCONNECTED,
   SOCKET_CONNECTED,
 } from '../constants/ActionTypes';
 import { sendMessage } from '../reducers/chat';
-import { type InitialStatePayload, initState, login } from '../reducers/auth';
+import {
+  type InitialStatePayload,
+  initState,
+  login,
+  logout,
+} from '../reducers/auth';
 
 function defaultUrl() {
   const loc = window.location;
@@ -335,7 +339,7 @@ export default function middleware({ url = defaultUrl() } = {}): Middleware {
             socket.sendAuthToken(payload.socketToken);
           }
           break;
-        case LOGOUT_START:
+        case logout.pending.type:
           socket.sentAuthToken = false;
           socket.send('logout', null);
           break;
