@@ -1,6 +1,5 @@
 import { log } from '../../actions/ChatActionCreators';
-import { upvote, downvote } from '../../actions/VoteActionCreators';
-import { historyIDSelector } from '../../reducers/booth';
+import { historyIDSelector, upvote, downvote } from '../../reducers/booth';
 import {
   setVolume,
   mute,
