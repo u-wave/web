@@ -1,4 +1,3 @@
-import React from 'react';
 import cx from 'clsx';
 import PropTypes from 'prop-types';
 import Typography from '@mui/material/Typography';
@@ -10,7 +9,7 @@ import { useSelector } from '../../hooks/useRedux';
 import useIntl from '../../hooks/useIntl';
 import useHasRole from '../../hooks/useHasRole';
 import { djAndWaitlistUsersSelector } from '../../reducers/waitlist';
-import { userHasRoleSelector } from '../../selectors/userSelectors';
+import { currentUserHasRoleSelector, userHasRoleSelector } from '../../reducers/users';
 import Avatar from '../Avatar';
 import UserRoles from './UserRoles';
 import AddToWaitlistButton from './AddToWaitlistButton';
@@ -26,11 +25,13 @@ const waitlistUserIDsSetSelector = (state) => new Set(
 function UserCard({ className, user }) {
   const { dateTimeFormatter } = useIntl();
   const waitlistUsers = useSelector(waitlistUserIDsSetSelector);
-  const userHasRole = useSelector(userHasRoleSelector);
   const canAddToWaitlist = useHasRole('waitlist.add');
   const canRemoveFromWaitlist = useHasRole('waitlist.remove');
   const isInWaitlist = waitlistUsers.has(user._id);
-  const canBan = useHasRole('users.bans.add') && !userHasRole(user)('users.bans.add');
+  const canBan = useSelector((state) => {
+    return currentUserHasRoleSelector(state, 'users.bans.add')
+      && !userHasRoleSelector(state, user, 'users.bans.add');
+  });
 
   const joinDate = new Date(user.createdAt);
 

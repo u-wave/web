@@ -5,13 +5,10 @@ import {
   availableEmojiNamesSelector,
   availableEmojiImagesSelector,
   customEmojiNamesSelector,
+  rolesSelector,
 } from '../reducers/config';
 import { currentUserSelector } from '../reducers/auth';
-import { usersSelector } from '../reducers/users';
-import {
-  currentUserHasRoleSelector,
-  createRoleCheckSelector,
-} from './userSelectors';
+import { usersSelector, userHasRole } from '../reducers/users';
 
 /** @param {import('../redux/configureStore').StoreState} state */
 export const rawMotdSelector = (state) => state.chat.motd;
@@ -49,8 +46,14 @@ export const currentUserMuteSelector = (state) => {
 };
 
 export const availableGroupMentionsSelector = createSelector(
-  currentUserHasRoleSelector,
-  (hasRole) => getAvailableGroupMentions((mention) => hasRole(`chat.mention.${mention}`)),
+  rolesSelector,
+  currentUserSelector,
+  (roleConfig, user) => {
+    if (user == null) {
+      return [];
+    }
+    return getAvailableGroupMentions((mention) => userHasRole(roleConfig, user, `chat.mention.${mention}`));
+  },
 );
 
 export const emojiCompletionsSelector = createSelector(
@@ -60,5 +63,3 @@ export const emojiCompletionsSelector = createSelector(
     image: images[name],
   })),
 );
-
-export const canDeleteMessagesSelector = createRoleCheckSelector('chat.delete');

@@ -4,7 +4,7 @@ import { log } from '../../reducers/chat';
 import {
   userListSelector,
   isModeratorSelector,
-} from '../../selectors/userSelectors';
+} from '../../reducers/users';
 import { banUser } from '../../actions/ModerationActionCreators';
 
 export default [{

@@ -5,7 +5,6 @@ import useCurrentUser from '../../hooks/useCurrentUser';
 import { skipCurrentDJ as modSkipCurrentDJ } from '../../actions/ModerationActionCreators';
 import { toggleOverlay } from '../../reducers/activeOverlay';
 import { openFavoriteMenu } from '../../reducers/addToPlaylistMenu';
-import { canSkipSelector } from '../../selectors/boothSelectors';
 import {
   skipSelf,
   upvote,
@@ -15,6 +14,7 @@ import {
   historyIDSelector,
   isCurrentDJSelector,
   currentVoteStatsSelector,
+  canSkipSelector,
 } from '../../reducers/booth';
 import { activePlaylistSelector, nextMediaSelector } from '../../reducers/playlists';
 import {

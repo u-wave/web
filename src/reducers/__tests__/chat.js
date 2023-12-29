@@ -35,6 +35,7 @@ describe('reducers/chat', () => {
     const testUser = {
       _id: '643abc235',
       username: 'TestUser',
+      roles: [],
     };
 
     it('should add a message to the messages list', () => {
@@ -61,6 +62,7 @@ describe('reducers/chat', () => {
       const inFlightUser = {
         _id: 'a user id',
         username: 'SendingUser',
+        roles: [],
       };
 
       vi.spyOn(authSlice, 'currentUserSelector').mockReturnValue(inFlightUser);
@@ -92,7 +94,7 @@ describe('reducers/chat', () => {
 
   describe('action: chat/SEND_MESSAGE', () => {
     const testMessage = {
-      user: { _id: '643abc235' },
+      user: { _id: '643abc235', roles: [] },
       message: 'Message text',
       parsed: ['Message text'],
     };
@@ -139,10 +141,10 @@ describe('reducers/chat', () => {
     let dispatch;
     let getState;
     const testUsers = [
-      { _id: '1', username: 'User One' },
-      { _id: '2', username: 'User Two' },
-      { _id: '3', username: 'User Three' },
-      { _id: '4', username: 'User Four' },
+      { _id: '1', username: 'User One', roles: [] },
+      { _id: '2', username: 'User Two', roles: [] },
+      { _id: '3', username: 'User Three', roles: [] },
+      { _id: '4', username: 'User Four', roles: [] },
     ];
 
     beforeEach(() => {

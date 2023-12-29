@@ -5,16 +5,14 @@ import {
   removeWaitlistUser,
   waitlistUsersSelector,
 } from '../reducers/waitlist';
-import { createRoleCheckSelector } from '../selectors/userSelectors';
-import WaitList from '../components/WaitList';
 import { type User } from '../reducers/users';
-
-const canMoveSelector = createRoleCheckSelector('waitlist.move');
+import useHasRole from '../hooks/useHasRole';
+import WaitList from '../components/WaitList';
 
 function WaitListContainer() {
   const dispatch = useDispatch();
   const users = useSelector(waitlistUsersSelector);
-  const canMoveUsers = useSelector(canMoveSelector);
+  const canMoveUsers = useHasRole('waitlist.move');
   const onMoveUser = useCallback((user: User, position: number) => {
     dispatch(moveWaitlistUser({ userID: user._id, position }));
   }, [dispatch]);

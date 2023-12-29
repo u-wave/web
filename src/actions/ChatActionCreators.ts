@@ -10,10 +10,6 @@ import {
 } from '../selectors/chatSelectors';
 import { currentUserSelector } from '../reducers/auth';
 import {
-  userHasRoleSelector,
-  currentUserHasRoleSelector,
-} from '../selectors/userSelectors';
-import {
   getAvailableGroupMentions,
   resolveMentions,
   hasMention,
@@ -24,6 +20,7 @@ import type { StoreState } from '../redux/configureStore';
 import {
   type User,
   userListSelector,
+  userHasRoleSelector,
 } from '../reducers/users';
 
 type Thunk = ThunkAction<unknown, StoreState, never, AnyAction>;
@@ -46,7 +43,6 @@ export function sendChat(text: string): Thunk {
   return (dispatch, getState) => {
     const state = getState();
     const sender = currentUserSelector(state);
-    const hasRole = currentUserHasRoleSelector(state);
     const mute = currentUserMuteSelector(state);
     if (mute) {
       const timeLeft = ms(mute.expiresAt - Date.now(), { long: true });
@@ -63,7 +59,7 @@ export function sendChat(text: string): Thunk {
     const message = prepareMessage(state, sender, text, {
       mentions: [
         ...users.map((user) => user.username),
-        ...getAvailableGroupMentions(hasRole),
+        ...getAvailableGroupMentions((mention) => userHasRoleSelector(state, sender, `chat.mention.${mention}`)),
       ],
     });
     dispatch(message);
@@ -90,10 +86,9 @@ export function receive(message: {
       // TODO we should find the user somehow?
       return;
     }
-    const senderHasRole = userHasRoleSelector(state)(sender);
     const mentions = [
       ...users.map((user) => user.username),
-      ...getAvailableGroupMentions((mention) => senderHasRole(`chat.mention.${mention}`)),
+      ...getAvailableGroupMentions((mention) => userHasRoleSelector(state, sender, `chat.mention.${mention}`)),
     ];
 
     if (isMuted(state, message.userID)) {

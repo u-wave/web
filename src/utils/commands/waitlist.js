@@ -9,7 +9,7 @@ import { skipCurrentDJ } from '../../actions/ModerationActionCreators';
 import {
   userListSelector,
   isModeratorSelector,
-} from '../../selectors/userSelectors';
+} from '../../reducers/users';
 import {
   addToWaitlist,
   removeWaitlistUser,

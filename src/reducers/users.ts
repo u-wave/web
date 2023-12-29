@@ -156,6 +156,33 @@ export function listenerCountSelector(state: StoreState) {
   return userCountSelector(state) + guestCountSelector(state);
 }
 
+export function userHasRole(roleConfig: Record<string, string[]>, user: User, role: string) {
+  if (user.roles.includes('*')) {
+    return true;
+  }
+
+  // TODO would be faster to stop iterating as soon as we find it
+  return getAllUserRoles(roleConfig, user).includes(role);
+}
+
+export function userHasRoleSelector(state: StoreState, user: User, role: string) {
+  const roleConfig = rolesSelector(state);
+  return userHasRole(roleConfig, user, role);
+}
+
+export function currentUserHasRoleSelector(state: StoreState, role: string) {
+  const currentUser = currentUserSelector(state);
+  return currentUser != null && userHasRoleSelector(state, currentUser, role);
+}
+
+export function isModeratorSelector(state: StoreState) {
+  return currentUserHasRoleSelector(state, 'moderator');
+}
+
+export function isManagerSelector(state: StoreState) {
+  return currentUserHasRoleSelector(state, 'manager');
+}
+
 // TODO move to prepare()?
 export function userLeave(payload: { userID: string }):
     ThunkAction<unknown, StoreState, never, AnyAction> {

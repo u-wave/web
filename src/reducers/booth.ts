@@ -5,7 +5,12 @@ import {
 } from '@reduxjs/toolkit';
 import { createStructuredSelector } from 'reselect';
 import { mutate } from 'swr';
-import { type User, userSelector, currentUserSelector } from './users';
+import {
+  type User,
+  userSelector,
+  currentUserSelector,
+  currentUserHasRoleSelector,
+} from './users';
 import { currentTimeSelector } from './server';
 import { initState } from './auth';
 import uwFetch from '../utils/fetch';
@@ -319,6 +324,18 @@ export const currentPlaySelector = createSelector(
     };
   },
 );
+
+export function canSkipSelector(state: StoreState) {
+  const historyID = historyIDSelector(state);
+  if (!historyID) {
+    return false;
+  }
+
+  const canSkipSelf = currentUserHasRoleSelector(state, 'booth.skip.self');
+  const canSkipOther = currentUserHasRoleSelector(state, 'booth.skip.other');
+  const isCurrentDJ = isCurrentDJSelector(state);
+  return isCurrentDJ ? canSkipSelf : canSkipOther;
+}
 
 export function advance(nextBooth: SocketMessageParams['advance']): Thunk<void> {
   return (dispatch, getState) => {

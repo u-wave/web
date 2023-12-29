@@ -5,7 +5,7 @@ import {
   userListSelector,
   isModeratorSelector,
   isManagerSelector,
-} from '../../selectors/userSelectors';
+} from '../../reducers/users';
 import {
   addUserRole,
   removeUserRole,

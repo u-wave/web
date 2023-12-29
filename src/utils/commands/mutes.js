@@ -5,7 +5,7 @@ import { mutedUsersSelector } from '../../selectors/chatSelectors';
 import {
   userListSelector,
   isModeratorSelector,
-} from '../../selectors/userSelectors';
+} from '../../reducers/users';
 import { muteUser, unmuteUser } from '../../actions/ModerationActionCreators';
 
 export default [
