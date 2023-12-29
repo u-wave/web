@@ -1,3 +1,4 @@
+import './polyfills-modern';
 import Uwave from './Uwave';
 import load from './loadingUI';
 import experimentalThemePlugin from './experimentalThemePlugin';
