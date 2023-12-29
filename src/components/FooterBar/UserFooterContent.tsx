@@ -21,7 +21,7 @@ import {
   leaveWaitlist,
   baseEtaSelector,
   userInWaitlistSelector,
-  isLockedSelector,
+  waitlistIsLockedSelector,
 } from '../../reducers/waitlist';
 import NextMedia from './NextMedia';
 import UserInfo from './UserInfo';
@@ -43,7 +43,7 @@ function UserFooterContent({ user: currentUser }: UserFooterContentProps) {
   const currentDJ = useSelector(djSelector);
   const historyID = useSelector(historyIDSelector);
   const showSkip = useSelector(canSkipSelector);
-  const waitlistIsLocked = useSelector(isLockedSelector);
+  const waitlistIsLocked = useSelector(waitlistIsLockedSelector);
   const voteStats = useSelector(currentVoteStatsSelector);
   const dispatch = useDispatch();
   const handleTogglePlaylistManager = useCallback(() => {

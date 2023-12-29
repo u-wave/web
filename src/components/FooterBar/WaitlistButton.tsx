@@ -1,23 +1,49 @@
 import cx from 'clsx';
-import { memo } from 'react';
+import { useRef, useState } from 'react';
+import { useAsyncCallback } from 'react-async-hook';
 import { useTranslator } from '@u-wave/react-translate';
+import Popover from '@mui/material/Popover';
+import MenuList from '@mui/material/MenuList';
+import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
-import { mdiLock } from '@mdi/js';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import { mdiCheck, mdiLock, mdiMenuUp } from '@mdi/js';
 import SvgIcon from '../SvgIcon';
+import { useDispatch, useSelector } from '../../hooks/useRedux';
+import {
+  joinWaitlist,
+  leaveWaitlist,
+  userInWaitlistSelector,
+  waitlistIsLockedSelector,
+} from '../../reducers/waitlist';
+import { isCurrentDJSelector, setAutoLeave, skipSelf } from '../../reducers/booth';
+import { ListItemIcon } from '@mui/material';
 
-type WaitlistButtonProps = {
-  userIsDJ: boolean,
-  userInWaitlist: boolean,
-  isLocked: boolean,
-  onClick: () => void,
-};
-function WaitlistButton({
-  userIsDJ,
-  userInWaitlist,
-  isLocked,
-  onClick,
-}: WaitlistButtonProps) {
+function WaitlistButton() {
   const { t } = useTranslator();
+  const isDJ = useSelector(isCurrentDJSelector);
+  const isInWaitlist = useSelector(userInWaitlistSelector);
+  const isLocked = useSelector(waitlistIsLockedSelector);
+  const autoLeave = useSelector((state) => state.booth.autoLeave ?? false);
+  const dispatch = useDispatch();
+  const anchorRef = useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useState(false);
+
+  const handleSkipRemove = useAsyncCallback(async () => {
+    await dispatch(skipSelf({ remove: true }));
+  });
+
+  const handleAutoLeave = useAsyncCallback(async () => {
+    await dispatch(setAutoLeave({ autoLeave: true }));
+  });
+
+  const handleLeave = useAsyncCallback(async () => {
+    await dispatch(leaveWaitlist());
+  });
+
+  const handleJoin = useAsyncCallback(async () => {
+    await dispatch(joinWaitlist());
+  });
 
   let icon;
   if (isLocked) {
@@ -28,19 +54,71 @@ function WaitlistButton({
           'WaitlistButton-icon',
           // The user can still leave the waitlist, if it's locked,
           // but cannot join the waitlist.
-          !userInWaitlist && 'WaitlistButton-icon--locked',
+          !isInWaitlist && 'WaitlistButton-icon--locked',
         )}
       />
     );
   }
 
-  let label;
-  if (userIsDJ) {
-    label = t('waitlist.leaveBooth');
-  } else if (userInWaitlist) {
-    label = t('waitlist.leave');
-  } else {
-    label = t('waitlist.join');
+  if (isDJ) {
+    return (
+      <>
+        <ButtonGroup ref={anchorRef} style={{ height: '100%' }}>
+          <Button
+            classes={{ root: 'WaitlistButton' }}
+            onClick={handleSkipRemove.execute}
+            disabled={handleSkipRemove.loading}
+          >
+            {t('waitlist.leaveBooth')}
+          </Button>
+          <Button
+            classes={{ root: 'WaitlistButton--split' }}
+            onClick={() => setOpen((v) => !v)}
+          >
+            <SvgIcon path={mdiMenuUp} />
+          </Button>
+        </ButtonGroup>
+        <Popover
+          anchorEl={anchorRef.current}
+          open={open}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          transformOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right',
+          }}
+          onClose={() => setOpen(false)}
+        >
+          <MenuList>
+            <MenuItem onClick={handleAutoLeave.execute}>
+              <ListItemIcon>
+                {autoLeave ? <SvgIcon path={mdiCheck} /> : null}
+              </ListItemIcon>
+              {t('waitlist.autoLeave')}
+            </MenuItem>
+          </MenuList>
+        </Popover>
+      </>
+    );
+  }
+
+  if (isInWaitlist) {
+    return (
+      <Button
+        classes={{
+          root: 'WaitlistButton',
+          disabled: 'WaitlistButton--locked',
+        }}
+        onClick={handleLeave.execute}
+        disabled={handleLeave.loading}
+      >
+        {icon}
+        {isLocked ? ' ' : null}
+        {t('waitlist.leave')}
+      </Button>
+    );
   }
 
   return (
@@ -49,14 +127,14 @@ function WaitlistButton({
         root: 'WaitlistButton',
         disabled: 'WaitlistButton--locked',
       }}
-      disabled={isLocked && !userInWaitlist}
-      onClick={() => onClick()}
+      disabled={isLocked || handleJoin.loading}
+      onClick={handleJoin.execute}
     >
       {icon}
-      {isLocked && ' '}
-      {label}
+      {isLocked ? ' ' : null}
+      {t('waitlist.join')}
     </Button>
   );
 }
 
-export default memo(WaitlistButton);
+export default WaitlistButton;
