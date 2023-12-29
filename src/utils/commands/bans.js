@@ -1,6 +1,6 @@
 import ms from 'ms';
 import { findUser } from '../ChatCommands';
-import { log } from '../../actions/ChatActionCreators';
+import { log } from '../../reducers/chat';
 import {
   userListSelector,
   isModeratorSelector,

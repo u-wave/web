@@ -1,4 +1,4 @@
-import { log } from '../../actions/ChatActionCreators';
+import { log } from '../../reducers/chat';
 import { historyIDSelector, upvote, downvote } from '../../reducers/booth';
 import {
   setVolume,

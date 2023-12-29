@@ -1,8 +1,6 @@
-import React from 'react';
+import { useCallback } from 'react';
 import { useSelector, useDispatch } from '../hooks/useRedux';
-import {
-  cannotDeleteActivePlaylist,
-} from '../actions/PlaylistActionCreators';
+import { cannotDeleteActivePlaylist } from '../actions/PlaylistActionCreators';
 import PlaylistPanel from '../components/PlaylistManager/Panel';
 import {
   deletePlaylist,
@@ -18,8 +16,6 @@ import {
   playlistItemFilterSelector,
   setPlaylistFilter,
 } from '../reducers/playlists';
-
-const { useCallback } = React;
 
 function PlaylistPanelContainer() {
   const playlist = useSelector(selectedPlaylistSelector);

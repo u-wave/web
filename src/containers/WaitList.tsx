@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from '../hooks/useRedux';
 import {
   moveWaitlistUser,
   removeWaitlistUser,
-} from '../actions/ModerationActionCreators';
-import { waitlistUsersSelector } from '../reducers/waitlist';
+  waitlistUsersSelector,
+} from '../reducers/waitlist';
 import { createRoleCheckSelector } from '../selectors/userSelectors';
 import WaitList from '../components/WaitList';
 import { type User } from '../reducers/users';
@@ -16,10 +16,10 @@ function WaitListContainer() {
   const users = useSelector(waitlistUsersSelector);
   const canMoveUsers = useSelector(canMoveSelector);
   const onMoveUser = useCallback((user: User, position: number) => {
-    dispatch(moveWaitlistUser(user, position));
+    dispatch(moveWaitlistUser({ userID: user._id, position }));
   }, [dispatch]);
   const onRemoveUser = useCallback((user: User) => {
-    dispatch(removeWaitlistUser(user));
+    dispatch(removeWaitlistUser({ userID: user._id }));
   }, [dispatch]);
 
   return (

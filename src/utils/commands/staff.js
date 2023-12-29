@@ -1,5 +1,5 @@
 import { findUser } from '../ChatCommands';
-import { log } from '../../actions/ChatActionCreators';
+import { log } from '../../reducers/chat';
 import { rolesSelector } from '../../reducers/config';
 import {
   userListSelector,

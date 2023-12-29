@@ -38,6 +38,30 @@ export const addToWaitlist = createAsyncThunk('waitlist/add', async (user: User)
   }]);
 });
 
+export const moveWaitlistUser = createAsyncThunk('waitlist/move', async (
+  { userID, position }: { userID: string, position: number },
+) => {
+  await uwFetch(['/waitlist/move', {
+    method: 'put',
+    data: { userID, position },
+  }]);
+});
+
+export const removeWaitlistUser = createAsyncThunk('waitlist/remove', async (
+  { userID }: { userID: string },
+  api,
+) => {
+  const dj = djSelector(api.getState());
+  if (dj && dj._id === userID) {
+    await uwFetch(['/booth/skip', {
+      method: 'post',
+      data: { userID, reason: '', remove: true },
+    }]);
+  } else {
+    await uwFetch([`/waitlist/${userID}`, { method: 'delete' }]);
+  }
+});
+
 const slice = createSlice({
   name: 'waitlist',
   initialState,

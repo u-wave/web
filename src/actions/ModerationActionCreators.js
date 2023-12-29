@@ -2,8 +2,6 @@ import { del, post, put } from './RequestActionCreators';
 import { djSelector } from '../reducers/booth';
 import {
   SKIP_DJ_START, SKIP_DJ_COMPLETE,
-  MOVE_USER_START, MOVE_USER_COMPLETE,
-  REMOVE_USER_START, REMOVE_USER_COMPLETE,
   MUTE_USER_START, MUTE_USER_COMPLETE,
   UNMUTE_USER_START, UNMUTE_USER_COMPLETE,
   BAN_USER_START, BAN_USER_COMPLETE,
@@ -37,69 +35,6 @@ export function skipCurrentDJ(reason = '', shouldRemove = false) {
 
 export function removeCurrentDJ(reason = '') {
   return skipCurrentDJ(reason, true);
-}
-
-export function removeWaitlistUserStart(user) {
-  return {
-    type: REMOVE_USER_START,
-    payload: { user },
-  };
-}
-
-export function removeWaitlistUserComplete(user) {
-  return {
-    type: REMOVE_USER_COMPLETE,
-    payload: { user },
-  };
-}
-
-export function removeWaitlistUser(user) {
-  return (dispatch, getState) => {
-    dispatch(removeWaitlistUserStart(user));
-
-    const currentDJ = djSelector(getState());
-    let promise;
-    if (currentDJ && currentDJ._id === user._id) {
-      promise = dispatch(removeCurrentDJ());
-    } else {
-      promise = dispatch(del(`/waitlist/${user._id}`));
-    }
-
-    return promise
-      .then(() => dispatch(removeWaitlistUserComplete(user)))
-      .catch((error) => dispatch({
-        type: REMOVE_USER_COMPLETE,
-        error: true,
-        payload: error,
-      }));
-  };
-}
-
-export function moveWaitlistUserStart(user, position) {
-  return {
-    type: MOVE_USER_START,
-    payload: { user, position },
-  };
-}
-
-export function moveWaitlistUserComplete(user, position) {
-  return {
-    type: MOVE_USER_COMPLETE,
-    payload: { user, position },
-  };
-}
-
-export function moveWaitlistUser(user, position) {
-  return put('/waitlist/move', { userID: user._id, position }, {
-    onStart: () => moveWaitlistUserStart(user, position),
-    onComplete: () => moveWaitlistUserComplete(user, position),
-    onError: (error) => ({
-      type: MOVE_USER_COMPLETE,
-      error: true,
-      payload: error,
-      meta: { user, position },
-    }),
-  });
 }
 
 export function addUserRole(user, role) {

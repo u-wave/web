@@ -1,21 +1,19 @@
 import { findUser } from '../ChatCommands';
-import { log } from '../../actions/ChatActionCreators';
+import { log } from '../../reducers/chat';
 import {
   modClearWaitlist,
   modLockWaitlist,
   modUnlockWaitlist,
 } from '../../actions/WaitlistActionCreators';
-import {
-  skipCurrentDJ,
-  removeWaitlistUser,
-  moveWaitlistUser,
-} from '../../actions/ModerationActionCreators';
+import { skipCurrentDJ } from '../../actions/ModerationActionCreators';
 import {
   userListSelector,
   isModeratorSelector,
 } from '../../selectors/userSelectors';
 import {
   addToWaitlist,
+  removeWaitlistUser,
+  moveWaitlistUser,
   waitlistUsersSelector,
   djAndWaitlistUsersSelector,
 } from '../../reducers/waitlist';
@@ -59,7 +57,7 @@ export default [
         username,
       );
       if (user) {
-        return dispatch(removeWaitlistUser(user));
+        return dispatch(removeWaitlistUser({ userID: user._id }));
       }
       return dispatch(log(`User ${username} is not in the waitlist.`));
     },
@@ -105,7 +103,7 @@ export default [
         username,
       );
       if (user) {
-        return dispatch(moveWaitlistUser(user, position));
+        return dispatch(moveWaitlistUser({ userID: user._id, position }));
       }
       return dispatch(log(`User ${username} is not in the waitlist.`));
     },

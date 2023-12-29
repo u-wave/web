@@ -5,7 +5,7 @@ import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import SvgIcon from '../SvgIcon';
 import { useDispatch } from '../../hooks/useRedux';
-import { removeWaitlistUser } from '../../actions/ModerationActionCreators';
+import { removeWaitlistUser } from '../../reducers/waitlist';
 
 const { useCallback } = React;
 
@@ -15,7 +15,9 @@ const mdiGroupRemove = 'M24,9v2h-6V9H24z M8,4C5.79,4,4,5.79,4,8s1.79,4,4,4s4-1.7
 function RemoveFromWaitlistButton({ user }) {
   const { t } = useTranslator();
   const dispatch = useDispatch();
-  const onClick = useCallback(() => dispatch(removeWaitlistUser(user)), [dispatch, user]);
+  const onClick = useCallback(() => {
+    return dispatch(removeWaitlistUser({ userID: user._id }));
+  }, [dispatch, user]);
 
   return (
     <Tooltip title={t('waitlist.remove')}>
