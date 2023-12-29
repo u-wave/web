@@ -121,12 +121,12 @@ export const loginDialogSelector = createSelector(
 
 export const editMediaDialogSelector = createSelector(
   [baseSelector],
-  (dialogs) => merge(dialogs.editMedia),
+  (dialogs) => dialogs.editMedia,
 );
 
 export const previewMediaDialogSelector = createSelector(
   [baseSelector],
-  (dialogs) => merge(dialogs.previewMedia),
+  (dialogs) => dialogs.previewMedia,
 );
 
 export function isPreviewMediaDialogOpenSelector(state: StoreState) {

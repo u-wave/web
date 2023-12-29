@@ -8,11 +8,9 @@ const DIALOG_ANIMATION_DURATION = 450; // ms
 
 function EditMediaDialogContainer() {
   const dispatch = useDispatch();
-  const { open, playlistID, media } = useSelector(editMediaDialogSelector);
-  const onEditedMedia = (props) => {
-    return dispatch(updatePlaylistItem({ playlistID, mediaID: media._id, props }));
-  };
-  const onCloseDialog = () => dispatch(closeEditMediaDialog());
+  const { open, payload } = useSelector(editMediaDialogSelector);
+  const { playlistID, media } = payload ?? {};
+
   return (
     <DialogCloseAnimation delay={DIALOG_ANIMATION_DURATION}>
       {media && (
@@ -20,8 +18,14 @@ function EditMediaDialogContainer() {
           key={media._id}
           open={open}
           media={media}
-          onEditedMedia={onEditedMedia}
-          onCloseDialog={onCloseDialog}
+          onEditedMedia={(props) => {
+            return dispatch(updatePlaylistItem({
+              playlistID: playlistID!,
+              mediaID: media._id,
+              props,
+            }));
+          }}
+          onCloseDialog={() => dispatch(closeEditMediaDialog())}
         />
       )}
     </DialogCloseAnimation>
