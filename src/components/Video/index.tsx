@@ -28,7 +28,7 @@ type VideoProps = {
   size: string,
   volume: number,
   isMuted: boolean,
-  media: Media,
+  media: Media | null,
   seek: number,
   onFullscreenEnter: () => void,
   onFullscreenExit: () => void,

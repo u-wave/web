@@ -1,8 +1,12 @@
 import React from 'react';
 import { useDispatch, useSelector } from '../hooks/useRedux';
 import useClock from '../hooks/useClock';
-import { enterFullscreen, exitFullscreen } from '../actions/PlaybackActionCreators';
-import { historyIDSelector, mediaSelector, timeElapsedSelector } from '../reducers/booth';
+import {
+  enterFullscreen,
+  exitFullscreen,
+  mediaSelector,
+  timeElapsedSelector,
+} from '../reducers/booth';
 import {
   isMutedSelector,
   playbackVolumeSelector,
@@ -21,7 +25,6 @@ function VideoContainer() {
 
   const videoEnabled = useSelector(videoEnabledSelector);
   const videoSize = useSelector(videoSizeSelector);
-  const historyID = useSelector(historyIDSelector);
   const media = useSelector(mediaSelector);
   const seek = useSelector((s) => timeElapsedSelector(s));
   const isMuted = useSelector(isMutedSelector);
@@ -36,7 +39,6 @@ function VideoContainer() {
     <Video
       enabled={videoEnabled}
       size={videoSize}
-      historyID={historyID}
       media={media}
       seek={seek}
       isMuted={isMuted}
