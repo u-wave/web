@@ -5,9 +5,7 @@ import useCurrentUser from '../../hooks/useCurrentUser';
 import { skipCurrentDJ as modSkipCurrentDJ } from '../../actions/ModerationActionCreators';
 import { toggleOverlay } from '../../reducers/activeOverlay';
 import { openFavoriteMenu } from '../../reducers/addToPlaylistMenu';
-import {
-  canSkipSelector,
-} from '../../selectors/boothSelectors';
+import { canSkipSelector } from '../../selectors/boothSelectors';
 import {
   skipSelf,
   upvote,

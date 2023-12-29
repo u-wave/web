@@ -9,8 +9,7 @@ import CardContent from '@mui/material/CardContent';
 import { useSelector } from '../../hooks/useRedux';
 import useIntl from '../../hooks/useIntl';
 import useHasRole from '../../hooks/useHasRole';
-import { djSelector } from '../../reducers/booth';
-import { waitlistUsersSelector } from '../../reducers/waitlist';
+import { djAndWaitlistUsersSelector } from '../../reducers/waitlist';
 import { userHasRoleSelector } from '../../selectors/userSelectors';
 import Avatar from '../Avatar';
 import UserRoles from './UserRoles';
@@ -18,15 +17,15 @@ import AddToWaitlistButton from './AddToWaitlistButton';
 import RemoveFromWaitlistButton from './RemoveFromWaitlistButton';
 import BanButton from './BanButton';
 
-const allWaitlistUsersSelector = (state) => new Set(
-  [djSelector(state), ...waitlistUsersSelector(state)]
+const waitlistUserIDsSetSelector = (state) => new Set(
+  djAndWaitlistUsersSelector(state)
     .filter(Boolean)
     .map((user) => user._id),
 );
 
 function UserCard({ className, user }) {
   const { dateTimeFormatter } = useIntl();
-  const waitlistUsers = useSelector(allWaitlistUsersSelector);
+  const waitlistUsers = useSelector(waitlistUserIDsSetSelector);
   const userHasRole = useSelector(userHasRoleSelector);
   const canAddToWaitlist = useHasRole('waitlist.add');
   const canRemoveFromWaitlist = useHasRole('waitlist.remove');
