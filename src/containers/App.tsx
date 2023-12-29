@@ -1,8 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { ThemeProvider } from '@mui/material/styles';
 import { Provider as BusProvider } from 'react-bus';
+// @ts-expect-error TS7016: Untyped, not worth it as will likely move to fluent
 import { TranslateProvider } from '@u-wave/react-translate';
 import { useSelector, useDispatch } from '../hooks/useRedux';
 import { closeOverlay, selectOverlay } from '../reducers/activeOverlay';
@@ -14,9 +14,10 @@ import MobileApp from '../mobile/components/App';
 import FatalError from '../components/FatalError';
 import UwaveContext from '../context/UwaveContext';
 import { ClockProvider } from '../context/ClockContext';
-import MediaSourceContext from '../context/MediaSourceContext';
+import MediaSourceContext, { MediaSource } from '../context/MediaSourceContext';
 import { AllStoresProvider } from '../stores';
 import { initState } from '../reducers/auth';
+import type Uwave from '../Uwave';
 
 const {
   useCallback,
@@ -25,12 +26,11 @@ const {
   useRef,
 } = React;
 
-class ErrorWrapper extends React.Component {
-  static propTypes = {
-    children: PropTypes.element.isRequired,
-  };
-
-  constructor(props) {
+class ErrorWrapper extends React.Component<
+  { children: React.ReactNode },
+  { error: object | null }
+> {
+  constructor(props: { children: React.ReactNode }) {
     super(props);
 
     this.state = {
@@ -38,7 +38,8 @@ class ErrorWrapper extends React.Component {
     };
   }
 
-  static getDerivedStateFromError(error) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  static getDerivedStateFromError(error: any) {
     return { error };
   }
 
@@ -56,7 +57,7 @@ class ErrorWrapper extends React.Component {
   }
 }
 
-function usePageVisibility(fn) {
+function usePageVisibility(fn: (visible: boolean) => void) {
   useEffect(() => {
     const handler = () => {
       fn(!document.hidden);
@@ -68,7 +69,11 @@ function usePageVisibility(fn) {
   }, [fn]);
 }
 
-function AppContainer({ uwave, mediaSources }) {
+type AppContainerProps = {
+  uwave: Uwave,
+  mediaSources: Record<string, MediaSource>,
+};
+function AppContainer({ uwave, mediaSources }: AppContainerProps) {
   const isMobile = useMediaQuery('(max-width: 767px)');
   const activeOverlay = useSelector(selectOverlay);
   const isConnected = useSelector(isConnectedSelector);
@@ -83,9 +88,9 @@ function AppContainer({ uwave, mediaSources }) {
     html.dir = theme.direction;
 
     const root = document.body;
-    Object.keys(theme.cssProperties).forEach((prop) => {
-      root.style.setProperty(prop, theme.cssProperties[prop]);
-    });
+    for (const [prop, value] of Object.entries(theme.cssProperties)) {
+      root.style.setProperty(prop, value);
+    }
   }, [theme]);
 
   const hiddenTime = useRef(0);
@@ -127,10 +132,5 @@ function AppContainer({ uwave, mediaSources }) {
     </ThemeProvider>
   );
 }
-
-AppContainer.propTypes = {
-  mediaSources: PropTypes.object.isRequired,
-  uwave: PropTypes.object,
-};
 
 export default AppContainer;
