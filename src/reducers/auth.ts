@@ -6,7 +6,7 @@ import type { Playlist } from './playlists';
 import type { User } from './users';
 import uwFetch from '../utils/fetch';
 import { createAsyncThunk } from '../redux/api';
-import { syncTimestamps } from './time';
+import { syncTimestamps } from './server';
 import * as Session from '../utils/Session';
 import type { StoreState } from '../redux/configureStore';
 

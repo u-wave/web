@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from '../hooks/useRedux';
-import { sync } from '../reducers/time';
+import { sync } from '../reducers/server';
 
 const {
   useContext,

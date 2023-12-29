@@ -6,7 +6,7 @@ import {
 } from '@reduxjs/toolkit';
 import { createStructuredSelector } from 'reselect';
 import { type User, userSelector, currentUserSelector } from './users';
-import { currentTimeSelector } from './time';
+import { currentTimeSelector } from './server';
 import { initState } from './auth';
 import uwFetch from '../utils/fetch';
 import type { StoreState } from '../redux/configureStore';
