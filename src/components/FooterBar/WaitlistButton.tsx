@@ -5,6 +5,7 @@ import { useTranslator } from '@u-wave/react-translate';
 import Popover from '@mui/material/Popover';
 import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import { mdiCheck, mdiLock, mdiMenuUp } from '@mdi/js';
@@ -17,7 +18,6 @@ import {
   waitlistIsLockedSelector,
 } from '../../reducers/waitlist';
 import { isCurrentDJSelector, setAutoLeave, skipSelf } from '../../reducers/booth';
-import { ListItemIcon } from '@mui/material';
 
 function WaitlistButton() {
   const { t } = useTranslator();
@@ -34,7 +34,7 @@ function WaitlistButton() {
   });
 
   const handleAutoLeave = useAsyncCallback(async () => {
-    await dispatch(setAutoLeave({ autoLeave: true }));
+    await dispatch(setAutoLeave({ autoLeave: !autoLeave }));
   });
 
   const handleLeave = useAsyncCallback(async () => {

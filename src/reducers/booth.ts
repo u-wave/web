@@ -103,11 +103,13 @@ export const setAutoLeave = createAsyncThunk('booth/setAutoLeave', async (
   options: { autoLeave: boolean },
   api,
 ) => {
-  if (!options.autoLeave) {
-    throw new Error('cannot disable autoLeave currently');
-  }
   const userID = currentUserIDSelector(api.getState());
-  await uwFetch(['/booth/leave', { method: 'post', data: { userID } }]);
+  const { data } = await uwFetch<{ data: { autoLeave: boolean } }>(['/booth/leave', {
+    method: 'put',
+    data: { userID, autoLeave: options.autoLeave },
+  }]);
+
+  return data;
 });
 
 export const upvote = createAsyncThunk('booth/upvote', async ({ historyID }: { historyID: string }) => {
@@ -256,9 +258,9 @@ const slice = createSlice({
         });
       }
     });
-    builder.addCase(setAutoLeave.fulfilled, (state) => {
+    builder.addCase(setAutoLeave.fulfilled, (state, { payload }) => {
       if (state.djID != null) {
-        state.autoLeave = true;
+        state.autoLeave = payload.autoLeave;
       }
     });
   },
