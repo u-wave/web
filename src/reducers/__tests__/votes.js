@@ -1,5 +1,5 @@
 import { initState } from '../auth';
-import booth, { advance } from '../booth';
+import booth, { advanceInner } from '../booth';
 
 const EMPTY_STATE = {
   upvotes: [],
@@ -64,7 +64,7 @@ describe('reducers/votes', () => {
         upvotes: ['nFy0Ts_UqrsUx8ddipZG9', 'OAxkeiBoNXWnejk9bPjpp'],
         downvotes: ['HE1HhtApndA-kpB8KeI6m'],
         favorites: ['JL2G9-1Hc8p80_AxlcwZC', '0slaUXdWdE3Pz4cbjocYV'],
-      }, advance({
+      }, advanceInner({
         historyID: 'E1YirtFAC9erLKDION4J0',
         userID: 'kxZex8C4IQ97YnPuOQezB',
         media: { artist: 'about tess', title: 'Imaginedit' },

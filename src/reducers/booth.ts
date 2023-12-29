@@ -1,15 +1,17 @@
 import {
   type PayloadAction,
-  createAsyncThunk,
   createSelector,
   createSlice,
 } from '@reduxjs/toolkit';
 import { createStructuredSelector } from 'reselect';
+import { mutate } from 'swr';
 import { type User, userSelector, currentUserSelector } from './users';
 import { currentTimeSelector } from './server';
 import { initState } from './auth';
 import uwFetch from '../utils/fetch';
+import { createAsyncThunk, type Thunk } from '../redux/api';
 import type { StoreState } from '../redux/configureStore';
+import type { SocketMessageParams } from '../redux/socket';
 
 export interface Media {
   _id: string,
@@ -82,8 +84,7 @@ const slice = createSlice({
   name: 'booth',
   initialState,
   reducers: {
-    // NOTE When modifying this action, also update votes.ts
-    advance: {
+    advanceInner: {
       reducer(
         state,
         action: PayloadAction<AdvancePayload | null>,
@@ -199,13 +200,14 @@ const slice = createSlice({
 });
 
 export const {
-  advance,
+  advanceInner,
   enterFullscreen,
   exitFullscreen,
   receiveUpvote,
   receiveDownvote,
   receiveFavorite,
 } = slice.actions;
+
 export const {
   historyID: historyIDSelector,
   media: mediaSelector,
@@ -283,11 +285,15 @@ export const favoritesCountSelector = createCountSelector(favoritesSelector);
 export const upvotesCountSelector = createCountSelector(upvotesSelector);
 export const downvotesCountSelector = createCountSelector(downvotesSelector);
 
-export const currentVotesSelector = createStructuredSelector({
-  favorites: favoritesSelector,
-  upvotes: upvotesSelector,
-  downvotes: downvotesSelector,
-});
+export const currentVotesSelector = createSelector(
+  [favoritesSelector, upvotesSelector, downvotesSelector],
+  (favorites, upvotes, downvotes) => {
+    if (favorites == null || upvotes == null || downvotes == null) {
+      return null;
+    }
+    return { upvotes, downvotes, favorites };
+  },
+);
 
 export const currentVoteStatsSelector = createStructuredSelector({
   isFavorite: isFavoriteSelector,
@@ -301,7 +307,7 @@ export const currentVoteStatsSelector = createStructuredSelector({
 export const currentPlaySelector = createSelector(
   [historyIDSelector, mediaSelector, startTimeSelector, djSelector, currentVotesSelector],
   (historyID, media, timestamp, dj, stats) => {
-    if (!historyID || !media || !dj || !timestamp || !stats) {
+    if (historyID == null || media == null || dj == null || timestamp == null || stats == null) {
       return null;
     }
     return {
@@ -313,5 +319,26 @@ export const currentPlaySelector = createSelector(
     };
   },
 );
+
+export function advance(nextBooth: SocketMessageParams['advance']): Thunk<void> {
+  return (dispatch, getState) => {
+    let payload = null;
+    if (nextBooth && nextBooth.historyID) {
+      payload = {
+        userID: nextBooth.userID,
+        historyID: nextBooth.historyID,
+        media: {
+          ...nextBooth.media.media,
+          ...nextBooth.media,
+        },
+        timestamp: nextBooth.playedAt,
+      };
+    }
+
+    dispatch(advanceInner(payload, currentPlaySelector(getState())));
+
+    mutate('/booth/history');
+  };
+}
 
 export default slice.reducer;

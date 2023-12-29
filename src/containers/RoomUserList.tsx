@@ -16,9 +16,9 @@ function RoomUserListContainer({ className }: RoomUserListContainerProps) {
     users.map((user) => ({
       ...user,
       votes: {
-        upvote: votes.upvotes != null ? votes.upvotes.includes(user._id) : false,
-        downvote: votes.downvotes != null ? votes.downvotes.includes(user._id) : false,
-        favorite: votes.favorites != null ? votes.favorites.includes(user._id) : false,
+        upvote: votes != null ? votes.upvotes.includes(user._id) : false,
+        downvote: votes != null ? votes.downvotes.includes(user._id) : false,
+        favorite: votes != null ? votes.favorites.includes(user._id) : false,
       },
     }))
   ), [users, votes]);

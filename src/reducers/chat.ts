@@ -1,16 +1,14 @@
-import type { AnyAction } from 'redux';
 import mapValues from 'just-map-values';
 import { v4 as randomUUID } from 'uuid';
 import parseChatMarkup, { type MarkupNode } from 'u-wave-parse-chat-markup';
 import { type PayloadAction, createSlice, createSelector } from '@reduxjs/toolkit';
-import { BOOTH_SKIP } from '../constants/ActionTypes';
 import {
   type User,
   actions as userActions,
   usersSelector,
   currentUserSelector,
 } from './users';
-import { advance } from './booth';
+import { advanceInner } from './booth';
 import { initState } from './auth';
 import { createAsyncThunk } from '../redux/api';
 import uwFetch from '../utils/fetch';
@@ -87,7 +85,7 @@ export interface SkipMessage {
   type: 'skip',
   _id: string,
   user: User,
-  moderator: User,
+  moderator?: User | undefined,
   reason: string,
   timestamp: number,
 }
@@ -228,6 +226,21 @@ const slice = createSlice({
       }
       delete state.mutedUsers[payload.userID];
     },
+    receiveSkip(state, action: PayloadAction<{
+      user: User,
+      moderator?: User | undefined,
+      reason: string,
+      timestamp: number,
+    }>) {
+      state.messages.push({
+        type: 'skip',
+        _id: randomUUID(),
+        user: action.payload.user,
+        moderator: action.payload.moderator,
+        reason: action.payload.reason,
+        timestamp: action.payload.timestamp,
+      });
+    },
   },
   extraReducers(builder) {
     builder
@@ -279,7 +292,7 @@ const slice = createSlice({
           timestamp: Date.now(),
         });
       })
-      .addCase(advance, (state, action) => {
+      .addCase(advanceInner, (state, action) => {
         if (action.payload === null) {
           return;
         }
@@ -288,16 +301,6 @@ const slice = createSlice({
           type: 'nowPlaying',
           _id: randomUUID(),
           entry: action.payload.media,
-          timestamp: action.payload.timestamp,
-        });
-      })
-      .addCase(BOOTH_SKIP, (state, action: AnyAction) => {
-        state.messages.push({
-          type: 'skip',
-          _id: randomUUID(),
-          user: action.payload.user,
-          moderator: action.payload.moderator,
-          reason: action.payload.reason,
           timestamp: action.payload.timestamp,
         });
       });
@@ -317,6 +320,7 @@ export const {
   deleteAllMessages,
   muteUser,
   unmuteUser,
+  receiveSkip,
 } = slice.actions;
 
 export const { motdSource: motdSourceSelector } = slice.selectors;

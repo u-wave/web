@@ -1,17 +1,22 @@
 import { createListenerMiddleware } from '@reduxjs/toolkit';
 import { mutate } from 'swr';
 import type { AppDispatch, StoreState } from './configureStore';
-import { advance, skipped } from '../actions/BoothActionCreators';
 import {
   deleteMessageByID,
   deleteMessagesByUser,
   deleteAllMessages,
   muteUser,
   unmuteUser,
+  receiveSkip,
 } from '../reducers/chat';
 import * as waitlistActions from '../reducers/waitlist';
 import { receive as receiveMessage } from '../actions/ChatActionCreators';
-import { receiveUpvote, receiveDownvote, receiveFavorite } from '../reducers/booth';
+import {
+  advance,
+  receiveUpvote,
+  receiveDownvote,
+  receiveFavorite,
+} from '../reducers/booth';
 import { currentTimeSelector } from '../reducers/server';
 import {
   addRoles,
@@ -19,6 +24,7 @@ import {
   removeRoles,
   userJoin,
   userLeave,
+  userSelector,
   usernameChanged,
 } from '../reducers/users';
 import { socketMessage } from './socket';
@@ -48,9 +54,19 @@ middleware.startListening({
           ? receiveDownvote({ userID: data._id })
           : receiveUpvote({ userID: data._id }));
         break;
-      case 'skip':
-        api.dispatch(skipped(data));
+      case 'skip': {
+        const state = api.getState();
+        const user = userSelector(state, data.userID);
+        if (user != null) {
+          api.dispatch(receiveSkip({
+            user,
+            moderator: userSelector(state, data.moderatorID),
+            reason: data.reason,
+            timestamp: Date.now(),
+          }));
+        }
         break;
+      }
       // Users
       case 'join':
         api.dispatch(userJoin({ user: data }));
