@@ -40,7 +40,7 @@ function Chapters({
         </span>
       </MenuItem>
       {available.map((chapter, index) => (
-        <MenuItem className="ChapterItem" value={index}>
+        <MenuItem className="ChapterItem" value={index} key={`${chapter.start}-${chapter.end}`}>
           <span className="ChapterItem-title">
             {chapter.title}
           </span>
