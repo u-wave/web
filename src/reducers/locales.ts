@@ -1,6 +1,8 @@
 import type { AnyAction } from 'redux';
 import { createSelector } from '@reduxjs/toolkit';
+// @ts-expect-error TS7016: Untyped, not worth it as will likely move to fluent
 import Translator from '@u-wave/translate';
+// @ts-expect-error TS7016: Untyped, not worth it as will likely move to fluent
 import * as plurals from '@u-wave/translate/plurals';
 import type { StoreState } from '../redux/configureStore';
 import {
