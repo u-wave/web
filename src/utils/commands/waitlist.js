@@ -1,7 +1,6 @@
 import { findUser } from '../ChatCommands';
 import { log } from '../../actions/ChatActionCreators';
 import {
-  joinWaitlist,
   modClearWaitlist,
   modLockWaitlist,
   modUnlockWaitlist,
@@ -16,6 +15,7 @@ import {
   isModeratorSelector,
 } from '../../selectors/userSelectors';
 import {
+  addToWaitlist,
   waitlistUsersSelector,
   djAndWaitlistUsersSelector,
 } from '../../reducers/waitlist';
@@ -39,7 +39,7 @@ export default [
 
       const user = findUser(userListSelector(getState()), username);
       if (user) {
-        return dispatch(joinWaitlist(user));
+        return dispatch(addToWaitlist(user));
       }
       return dispatch(log(`User ${username} is not online right now.`));
     },

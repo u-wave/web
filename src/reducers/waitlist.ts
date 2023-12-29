@@ -1,9 +1,11 @@
 import { type PayloadAction, createSelector, createSlice } from '@reduxjs/toolkit';
 import { createStructuredSelector } from 'reselect';
 import type { StoreState } from '../redux/configureStore';
-import { initState } from './auth';
-import { currentUserSelector, usersSelector } from './users';
+import { currentUserIDSelector, initState } from './auth';
+import { type User, usersSelector } from './users';
 import { djSelector, isCurrentDJSelector, timeRemainingSelector } from './booth';
+import { createAsyncThunk } from '../redux/api';
+import uwFetch from '../utils/fetch';
 
 interface State {
   waitlist: string[];
@@ -15,20 +17,41 @@ const initialState: State = {
   locked: false,
 };
 
+export const joinWaitlist = createAsyncThunk('waitlist/join', async (_: void, api) => {
+  const userID = currentUserIDSelector(api.getState());
+  await uwFetch<{ data: string[] }>(['/waitlist', {
+    method: 'post',
+    data: { userID },
+  }]);
+});
+
+export const leaveWaitlist = createAsyncThunk('waitlist/join', async (_: void, api) => {
+  const userID = currentUserIDSelector(api.getState());
+  await uwFetch<{ data: string[] }>([`/waitlist/${userID}`, { method: 'delete' }]);
+});
+
+export const addToWaitlist = createAsyncThunk('waitlist/add', async (user: User) => {
+  const userID = user._id;
+  await uwFetch<{ data: string[] }>(['/waitlist', {
+    method: 'post',
+    data: { userID },
+  }]);
+});
+
 const slice = createSlice({
   name: 'waitlist',
   initialState,
   reducers: {
-    lock(state, action: PayloadAction<{ locked: boolean }>) {
+    lockChanged(state, action: PayloadAction<{ locked: boolean }>) {
       state.locked = action.payload.locked;
     },
     clear(state) {
       state.waitlist = [];
     },
-    join(state, action: PayloadAction<{ userID: string, waitlist: string[] }>) {
+    receiveJoin(state, action: PayloadAction<{ userID: string, waitlist: string[] }>) {
       state.waitlist = action.payload.waitlist;
     },
-    leave(state, action: PayloadAction<{ userID: string, waitlist: string[] }>) {
+    receiveLeave(state, action: PayloadAction<{ userID: string, waitlist: string[] }>) {
       state.waitlist = action.payload.waitlist;
     },
     moved(state, action: PayloadAction<{
@@ -39,7 +62,7 @@ const slice = createSlice({
     }>) {
       state.waitlist = action.payload.waitlist;
     },
-    update(state, action: PayloadAction<{ waitlist: string[] }>) {
+    waitlistUpdated(state, action: PayloadAction<{ waitlist: string[] }>) {
       state.waitlist = action.payload.waitlist;
     },
   },
@@ -52,12 +75,12 @@ const slice = createSlice({
 });
 
 export const {
-  lock,
+  lockChanged,
   clear,
-  join,
-  leave,
+  receiveJoin,
+  receiveLeave,
   moved,
-  update,
+  waitlistUpdated,
 } = slice.actions;
 
 export function isLockedSelector(state: StoreState) {
@@ -83,11 +106,11 @@ export const djAndWaitlistUsersSelector = createSelector(
 );
 
 export function positionSelector(state: StoreState) {
-  const user = currentUserSelector(state);
-  if (user == null) {
+  const userID = currentUserIDSelector(state);
+  if (userID == null) {
     return -1;
   }
-  return waitlistIDsSelector(state).indexOf(user._id);
+  return waitlistIDsSelector(state).indexOf(userID);
 }
 
 export function userInWaitlistSelector(state: StoreState) {

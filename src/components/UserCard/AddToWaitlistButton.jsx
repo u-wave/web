@@ -5,7 +5,7 @@ import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import SvgIcon from '../SvgIcon';
 import { useDispatch } from '../../hooks/useRedux';
-import { joinWaitlist } from '../../actions/WaitlistActionCreators';
+import { addToWaitlist } from '../../reducers/waitlist';
 
 const { useCallback } = React;
 
@@ -23,7 +23,7 @@ const groupAddIcon = (
 function AddToWaitlistButton({ user }) {
   const { t } = useTranslator();
   const dispatch = useDispatch();
-  const onClick = useCallback(() => dispatch(joinWaitlist(user)), [dispatch, user]);
+  const onClick = useCallback(() => dispatch(addToWaitlist(user)), [dispatch, user]);
 
   return (
     <Tooltip title={t('waitlist.add')}>

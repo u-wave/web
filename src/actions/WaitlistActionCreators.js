@@ -1,51 +1,8 @@
-import { del, post, put } from './RequestActionCreators';
+import { del, put } from './RequestActionCreators';
 import {
-  DO_JOIN_START, DO_JOIN_COMPLETE,
-  DO_LEAVE_START, DO_LEAVE_COMPLETE,
   DO_LOCK_START, DO_LOCK_COMPLETE,
   DO_CLEAR_START, DO_CLEAR_COMPLETE,
 } from '../constants/ActionTypes';
-import { currentUserSelector } from '../reducers/users';
-
-// TODO split joining the waitlist and adding another user to the waitlist
-// into two different actions.
-export function joinWaitlist(otherUser) {
-  return (dispatch, getState) => {
-    const user = otherUser ?? currentUserSelector(getState());
-
-    return dispatch(post('/waitlist', { userID: user._id }, {
-      onStart: () => ({ type: DO_JOIN_START }),
-      onComplete: ({ data }) => ({
-        type: DO_JOIN_COMPLETE,
-        payload: { waitlist: data },
-      }),
-      onError: (error) => ({
-        type: DO_JOIN_COMPLETE,
-        error: true,
-        payload: error,
-      }),
-    }));
-  };
-}
-
-export function leaveWaitlist(otherUser) {
-  return (dispatch, getState) => {
-    const user = otherUser ?? currentUserSelector(getState());
-
-    return dispatch(del(`/waitlist/${user._id}`, {}, {
-      onStart: () => ({ type: DO_LEAVE_START }),
-      onComplete: ({ data }) => ({
-        type: DO_LEAVE_COMPLETE,
-        payload: { waitlist: data },
-      }),
-      onError: (error) => ({
-        type: DO_LEAVE_COMPLETE,
-        error: true,
-        payload: error,
-      }),
-    }));
-  };
-}
 
 function putLock(status) {
   return put('/waitlist/lock', { lock: status, clear: false }, {

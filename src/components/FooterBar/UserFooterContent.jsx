@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from '../../hooks/useRedux';
 import useCurrentUser from '../../hooks/useCurrentUser';
 import { skipCurrentDJ as modSkipCurrentDJ } from '../../actions/ModerationActionCreators';
 import { toggleOverlay } from '../../reducers/activeOverlay';
-import { joinWaitlist, leaveWaitlist } from '../../actions/WaitlistActionCreators';
 import { openFavoriteMenu } from '../../reducers/addToPlaylistMenu';
 import {
   canSkipSelector,
@@ -21,6 +20,8 @@ import {
 } from '../../reducers/booth';
 import { activePlaylistSelector, nextMediaSelector } from '../../reducers/playlists';
 import {
+  joinWaitlist,
+  leaveWaitlist,
   baseEtaSelector,
   userInWaitlistSelector,
   isLockedSelector,
@@ -73,16 +74,16 @@ function UserFooterContent() {
   }, [userIsDJ, dispatch]);
 
   const handleJoinWaitlist = useCallback(() => {
-    dispatch(joinWaitlist(currentUser)).catch(() => {
+    dispatch(joinWaitlist()).catch(() => {
       // error is already reported
     });
-  }, [dispatch, currentUser]);
+  }, [dispatch]);
   const handleLeaveWaitlist = useCallback(() => {
     if (userIsDJ) {
       return dispatch(skipSelf({ remove: true }));
     }
-    return dispatch(leaveWaitlist(currentUser));
-  }, [userIsDJ, dispatch, currentUser]);
+    return dispatch(leaveWaitlist());
+  }, [userIsDJ, dispatch]);
 
   const canVote = !userIsDJ && !!currentDJ;
 

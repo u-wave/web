@@ -303,7 +303,7 @@ const slice = createSlice({
       });
   },
   selectors: {
-    motd: (state) => state.motd,
+    motdSource: (state) => state.motd,
     mutes: (state) => state.mutedUsers,
   },
 });
@@ -319,8 +319,9 @@ export const {
   unmuteUser,
 } = slice.actions;
 
-export const motdSelector = createSelector([slice.selectors.motd], (motd) => {
-  return motd ? parseChatMarkup(motd) : null;
+export const { motdSource: motdSourceSelector } = slice.selectors;
+export const motdSelector = createSelector([slice.selectors.motdSource], (source) => {
+  return source ? parseChatMarkup(source) : null;
 });
 
 const MAX_MESSAGES = 500;

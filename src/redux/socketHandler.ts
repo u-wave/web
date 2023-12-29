@@ -110,16 +110,16 @@ middleware.startListening({
         api.dispatch(cyclePlaylist(data.playlistID));
         break;
       case 'waitlistJoin':
-        api.dispatch(waitlistActions.join(data));
+        api.dispatch(waitlistActions.receiveJoin(data));
         break;
       case 'waitlistLeave':
-        api.dispatch(waitlistActions.leave(data));
+        api.dispatch(waitlistActions.receiveLeave(data));
         break;
       case 'waitlistUpdate':
-        api.dispatch(waitlistActions.update({ waitlist: data }));
+        api.dispatch(waitlistActions.waitlistUpdated({ waitlist: data }));
         break;
       case 'waitlistLock':
-        api.dispatch(waitlistActions.lock(data));
+        api.dispatch(waitlistActions.lockChanged(data));
         break;
       case 'waitlistMove':
         api.dispatch(waitlistActions.moved(data));
@@ -127,10 +127,10 @@ middleware.startListening({
       // TODO Treat moderator force-add and force-remove differently from voluntary
       // joins and leaves.
       case 'waitlistAdd':
-        api.dispatch(waitlistActions.join(data));
+        api.dispatch(waitlistActions.receiveJoin(data));
         break;
       case 'waitlistRemove':
-        api.dispatch(waitlistActions.leave(data));
+        api.dispatch(waitlistActions.receiveLeave(data));
         break;
       case 'waitlistClear':
         api.dispatch(waitlistActions.clear());

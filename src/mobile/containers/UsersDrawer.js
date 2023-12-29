@@ -1,6 +1,8 @@
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import {
+  joinWaitlist,
+  leaveWaitlist,
   waitlistUsersSelector,
   userInWaitlistSelector,
   isLockedSelector,
@@ -8,10 +10,6 @@ import {
 import { isLoggedInSelector } from '../../reducers/auth';
 import { djSelector } from '../../reducers/booth';
 import { listenersSelector } from '../selectors/userSelectors';
-import {
-  joinWaitlist,
-  leaveWaitlist,
-} from '../../actions/WaitlistActionCreators';
 import { usersDrawerIsOpenSelector } from '../selectors/drawerSelectors';
 import { setUsersDrawer } from '../actions/DrawerActionCreators';
 import UsersDrawer from '../components/UsersDrawer';
