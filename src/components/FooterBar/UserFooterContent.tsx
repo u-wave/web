@@ -16,13 +16,7 @@ import {
   canSkipSelector,
 } from '../../reducers/booth';
 import { activePlaylistSelector, nextMediaSelector } from '../../reducers/playlists';
-import {
-  joinWaitlist,
-  leaveWaitlist,
-  baseEtaSelector,
-  userInWaitlistSelector,
-  waitlistIsLockedSelector,
-} from '../../reducers/waitlist';
+import { baseEtaSelector, userInWaitlistSelector } from '../../reducers/waitlist';
 import NextMedia from './NextMedia';
 import UserInfo from './UserInfo';
 import SkipButton from './SkipButton';
@@ -43,7 +37,6 @@ function UserFooterContent({ user: currentUser }: UserFooterContentProps) {
   const currentDJ = useSelector(djSelector);
   const historyID = useSelector(historyIDSelector);
   const showSkip = useSelector(canSkipSelector);
-  const waitlistIsLocked = useSelector(waitlistIsLockedSelector);
   const voteStats = useSelector(currentVoteStatsSelector);
   const dispatch = useDispatch();
   const handleTogglePlaylistManager = useCallback(() => {
@@ -73,18 +66,6 @@ function UserFooterContent({ user: currentUser }: UserFooterContentProps) {
       return dispatch(modSkipCurrentDJ({ reason }));
     }
     return dispatch(skipSelf({ remove: false }));
-  }, [userIsDJ, dispatch]);
-
-  const handleJoinWaitlist = useCallback(() => {
-    dispatch(joinWaitlist()).catch(() => {
-      // error is already reported
-    });
-  }, [dispatch]);
-  const handleLeaveWaitlist = useCallback(() => {
-    if (userIsDJ) {
-      return dispatch(skipSelf({ remove: true }));
-    }
-    return dispatch(leaveWaitlist());
   }, [userIsDJ, dispatch]);
 
   const canVote = !userIsDJ && !!currentDJ;
@@ -135,12 +116,7 @@ function UserFooterContent({ user: currentUser }: UserFooterContentProps) {
         </div>
       )}
       <div className="FooterBar-join">
-        <WaitlistButton
-          isLocked={waitlistIsLocked}
-          userIsDJ={userIsDJ}
-          userInWaitlist={userInWaitlist}
-          onClick={userInWaitlist ? handleLeaveWaitlist : handleJoinWaitlist}
-        />
+        <WaitlistButton />
       </div>
     </>
   );
