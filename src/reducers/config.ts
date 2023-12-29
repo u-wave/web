@@ -40,7 +40,7 @@ function configSelector(state: StoreState) {
 export const requestOptionsSelector = createSelector(
   [configSelector],
   (config) => {
-    const options = {};
+    const options: { apiUrl?: string } = {};
     if (config.apiUrl) {
       options.apiUrl = config.apiUrl;
     }
