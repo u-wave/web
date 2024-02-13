@@ -1,5 +1,5 @@
 import createStore from '../../redux/configureStore';
-import { favoriteMediaComplete } from '../../actions/VoteActionCreators';
+import { favorite } from '../booth';
 import * as p from '../playlists';
 
 function preloadPlaylists(playlists) {
@@ -126,7 +126,10 @@ describe('reducers/playlists', () => {
 
       expect(p.selectedPlaylistItemsSelector(getState())).toHaveLength(5);
 
-      dispatch(favoriteMediaComplete(playlistID, 'vGA5mxhJpYkrsHSfxPcqX', {
+      dispatch(favorite.fulfilled({
+        playlistID,
+        historyID: 'vGA5mxhJpYkrsHSfxPcqX',
+      }, '', {
         playlistSize: 6,
         added: [
           { _id: 'RDeVBExmCGXvmT0mN0P3n', artist: 'SHINee', title: 'Odd Eye' },

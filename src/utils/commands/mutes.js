@@ -1,12 +1,15 @@
 import ms from 'ms';
 import { findUser } from '../ChatCommands';
-import { log } from '../../reducers/chat';
+import {
+  log,
+  muteUser,
+  unmuteUser,
+} from '../../reducers/chat';
 import { mutedUsersSelector } from '../../selectors/chatSelectors';
 import {
   userListSelector,
   isModeratorSelector,
 } from '../../reducers/users';
-import { muteUser, unmuteUser } from '../../actions/ModerationActionCreators';
 
 export default [
   {
@@ -24,7 +27,10 @@ export default [
       if (!user) {
         return dispatch(log(`User "${username}" is not online.`));
       }
-      return dispatch(muteUser(user, ms(`${duration}`)));
+      return dispatch(muteUser({
+        userID: user._id,
+        duration: ms(`${duration}`),
+      }));
     },
   },
   {
@@ -39,7 +45,7 @@ export default [
       if (!user) {
         return dispatch(log(`User "${username}" is not muted.`));
       }
-      return dispatch(unmuteUser(user));
+      return dispatch(unmuteUser({ userID: user._id }));
     },
   },
 ];

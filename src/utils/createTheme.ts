@@ -3,14 +3,41 @@ import {
   alpha,
   decomposeColor,
   recomposeColor,
+  type ThemeOptions,
 } from '@mui/material/styles';
+
+declare module '@mui/material/styles' {
+  /** @deprecated Move to CSS variables */
+  interface UwaveThemeOptions {
+    scrollbar: string,
+    background: string,
+    backgroundHover: string,
+    link: string,
+    sidePanel: {
+      background: string,
+      alternate: string,
+    },
+    mediaList: {
+      background: string,
+      alternate: string,
+    },
+    mutedText: string,
+  }
+
+  interface ThemeOptions { // eslint-disable-line no-shadow
+    uwave: UwaveThemeOptions,
+  }
+  interface Theme {
+    uwave: UwaveThemeOptions,
+  }
+}
 
 const AVERAGE_COLOR = 'rgb(127, 127, 127)';
 
 // Taken from the color module:
 // https://github.com/Qix-/color/blob/99266cebff6d898fc6a783a483812e322b03d5fa/index.js#L366
 // Without the alpha stuff
-function blend(a, b, weight) {
+function blend(a: string, b: string, weight: number) {
   const aColor = decomposeColor(a);
   const bColor = decomposeColor(b);
 
@@ -18,8 +45,7 @@ function blend(a, b, weight) {
   const w1 = (w + 1) / 2.0;
   const w2 = 1 - w1;
 
-  /** @type {[number, number, number, number?]} */
-  const values = [
+  const values: [number, number, number, number] = [
     (w1 * aColor.values[0]) + (w2 * bColor.values[0]),
     (w1 * aColor.values[1]) + (w2 * bColor.values[1]),
     (w1 * aColor.values[2]) + (w2 * bColor.values[2]),
@@ -29,7 +55,7 @@ function blend(a, b, weight) {
   return recomposeColor({ type: 'rgba', values });
 }
 
-export default function createTheme(base) {
+export default function createTheme(base: ThemeOptions) {
   const muiTheme = createMuiTheme(base);
 
   const { palette, typography, uwave } = muiTheme;

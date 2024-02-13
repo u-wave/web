@@ -62,6 +62,17 @@ export const removeWaitlistUser = createAsyncThunk('waitlist/remove', async (
   }
 });
 
+export const lockWaitlist = createAsyncThunk('waitlist/lock', async (lock: boolean) => {
+  await uwFetch(['/waitlist/lock', {
+    method: 'put',
+    data: { lock, clear: false },
+  }]);
+});
+
+export const clearWaitlist = createAsyncThunk('waitlist/clear', async () => {
+  await uwFetch(['/waitlist', { method: 'delete' }]);
+});
+
 const slice = createSlice({
   name: 'waitlist',
   initialState,

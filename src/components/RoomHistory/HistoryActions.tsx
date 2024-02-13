@@ -1,13 +1,17 @@
 import cx from 'clsx';
-import PropTypes from 'prop-types';
 import { useSelector } from '../../hooks/useRedux';
 import { isLoggedInSelector } from '../../reducers/auth';
 import PreviewMediaAction from '../MediaList/PreviewMediaAction';
 import AddToPlaylistAction from './AddToPlaylistAction';
+import type { HistoryEntry } from '../../hooks/useRoomHistory';
 
-const dontBubble = (event) => event.stopPropagation();
+const dontBubble = (event: React.MouseEvent) => event.stopPropagation();
 
-function HistoryActions({ className, historyEntry }) {
+type HistoryActionsProps = {
+  className?: string,
+  historyEntry: HistoryEntry,
+};
+function HistoryActions({ className, historyEntry }: HistoryActionsProps) {
   const isLoggedIn = useSelector(isLoggedInSelector);
 
   return (
@@ -22,10 +26,5 @@ function HistoryActions({ className, historyEntry }) {
     </div>
   );
 }
-
-HistoryActions.propTypes = {
-  className: PropTypes.string,
-  historyEntry: PropTypes.object.isRequired,
-};
 
 export default HistoryActions;

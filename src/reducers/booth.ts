@@ -17,6 +17,8 @@ import uwFetch from '../utils/fetch';
 import { createAsyncThunk, type Thunk } from '../redux/api';
 import type { StoreState } from '../redux/configureStore';
 import type { SocketMessageParams } from '../redux/socket';
+import mergeIncludedModels from '../utils/mergeIncludedModels';
+import { flattenPlaylistItem } from './playlists';
 
 export interface Media {
   _id: string,
@@ -77,12 +79,45 @@ export const skipSelf = createAsyncThunk('booth/skipSelf', async (
   await uwFetch(['/booth/skip', { method: 'post', data: options }]);
 });
 
+export const skipCurrentDJ = createAsyncThunk('booth/skip', async (options: { remove?: boolean, reason?: string }, api) => {
+  const { djID } = api.getState().booth;
+  if (djID == null) {
+    return;
+  }
+  const payload = {
+    userID: djID,
+    reason: options.reason ?? '',
+    remove: options.remove ?? false,
+  };
+  await uwFetch(['/booth/skip', {
+    method: 'post',
+    data: payload,
+  }]);
+});
+
 export const upvote = createAsyncThunk('booth/upvote', async ({ historyID }: { historyID: string }) => {
   await uwFetch([`/booth/${historyID}/vote`, { method: 'put', data: { direction: 1 } }]);
 });
 
 export const downvote = createAsyncThunk('booth/downvote', async ({ historyID }: { historyID: string }) => {
   await uwFetch([`/booth/${historyID}/vote`, { method: 'put', data: { direction: -1 } }]);
+});
+
+export const favorite = createAsyncThunk('booth/favorite', async ({ historyID, playlistID }: { historyID: string, playlistID: string }) => {
+  const res = await uwFetch<{
+    data: Array<object>,
+    included: object,
+    meta: { playlistSize: number },
+  }>(['/booth/favorite', {
+    method: 'post',
+    data: { historyID, playlistID },
+  }]);
+
+  const added = mergeIncludedModels(res).map(flattenPlaylistItem);
+  return {
+    added,
+    playlistSize: res.meta.playlistSize,
+  };
 });
 
 const slice = createSlice({
@@ -219,43 +254,43 @@ export const {
   startTime: startTimeSelector,
 } = slice.selectors;
 
-export const mediaDurationSelector = (state: StoreState) => {
+export function mediaDurationSelector(state: StoreState) {
   const media = mediaSelector(state);
   return media ? media.end - media.start : 0;
-};
+}
 
-export const endTimeSelector = (state: StoreState) => {
+export function endTimeSelector(state: StoreState) {
   const startTime = startTimeSelector(state);
   const duration = mediaDurationSelector(state);
   return startTime + (duration * 1000) || 0;
-};
+}
 
-export const timeElapsedSelector = (state: StoreState) => {
+export function timeElapsedSelector(state: StoreState) {
   const startTime = startTimeSelector(state);
   const currentTime = currentTimeSelector(state);
   // in seconds! because media duration is in seconds, too.
   return startTime ? Math.max((currentTime - startTime) / 1000, 0) : 0;
-};
+}
 
-export const timeRemainingSelector = (state: StoreState) => {
+export function timeRemainingSelector(state: StoreState) {
   const duration = mediaDurationSelector(state);
   const elapsed = timeElapsedSelector(state);
   return duration > 0 ? duration - elapsed : 0;
-};
+}
 
-export const djSelector = (state: StoreState) => {
+export function djSelector(state: StoreState) {
   const { booth } = state;
   if (booth.djID) {
     return userSelector(state, booth.djID);
   }
   return null;
-};
+}
 
-export const isCurrentDJSelector = (state: StoreState) => {
+export function isCurrentDJSelector(state: StoreState) {
   const dj = djSelector(state);
   const me = currentUserSelector(state);
   return dj && me ? dj._id === me._id : false;
-};
+}
 
 function createIsSelector(votersSelector: (state: StoreState) => string[] | undefined) {
   return (state: StoreState) => {

@@ -1,7 +1,5 @@
-import type { AnyAction } from 'redux';
-import { createSlice } from '@reduxjs/toolkit';
+import { type PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { mutate } from 'swr';
-import { SET_TOKEN } from '../constants/ActionTypes';
 import type { Playlist } from './playlists';
 import type { User } from './users';
 import uwFetch from '../utils/fetch';
@@ -175,17 +173,17 @@ export const resetPassword = createAsyncThunk('auth/resetPassword', async (email
 const slice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    setSessionToken(state, { payload }: PayloadAction<string>) {
+      state.token = payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(initState.fulfilled, (state, action) => {
         const { payload } = action;
         state.strategies = payload.authStrategies;
         state.user = payload.user?._id ?? null;
-      })
-      .addCase(SET_TOKEN, (state, action: AnyAction) => {
-        const { payload } = action;
-        state.token = payload.token;
       })
       .addCase(login.fulfilled, (state, action) => {
         state.token = action.payload.token;
@@ -209,6 +207,9 @@ const slice = createSlice({
 
 export default slice.reducer;
 
+export const {
+  setSessionToken,
+} = slice.actions;
 export const {
   currentUserID: currentUserIDSelector,
   token: tokenSelector,

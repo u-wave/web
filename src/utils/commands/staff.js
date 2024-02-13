@@ -5,11 +5,9 @@ import {
   userListSelector,
   isModeratorSelector,
   isManagerSelector,
-} from '../../reducers/users';
-import {
   addUserRole,
   removeUserRole,
-} from '../../actions/ModerationActionCreators';
+} from '../../reducers/users';
 import { toggleOverlay } from '../../reducers/activeOverlay';
 
 export default [

@@ -4,6 +4,7 @@ import merge from 'deepmerge';
 
 /**
  * @param {{ data: any[], meta: object, included: object }} response
+ * @returns {any[]}
  */
 function mergeIncludedModels({ data: input, meta, included }) {
   const data = merge({}, input, { clone: true });

@@ -1,18 +1,25 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Modal from '@mui/material/Modal';
 import UserCard from './UserCard';
+import type { User } from '../../reducers/users';
 
-class UserCardWrapper extends React.Component {
-  static propTypes = {
-    onClose: PropTypes.func.isRequired,
-    position: PropTypes.shape({
-      x: PropTypes.number.isRequired,
-      y: PropTypes.number.isRequired,
-    }).isRequired,
-  };
+// TODO use floating-ui or radix-ui
 
-  constructor(props) {
+type UserCardWrapperProps = {
+  onClose: () => void,
+  position: { x: number, y: number },
+  user: User,
+};
+type UserCardWrapperState = {
+  positionDiffX: number,
+  positionDiffY: number,
+}
+class UserCardWrapper extends React.Component<UserCardWrapperProps, UserCardWrapperState> {
+  container: HTMLDivElement | null = null;
+
+  shouldFit = true;
+
+  constructor(props: UserCardWrapperProps) {
     super(props);
 
     this.state = {
@@ -29,7 +36,7 @@ class UserCardWrapper extends React.Component {
     this.shouldFit = true;
   }
 
-  refContainer = (container) => {
+  refContainer = (container: HTMLDivElement | null) => {
     this.container = container;
     if (this.shouldFit && container) {
       this.fitInsideWindow();
@@ -41,7 +48,7 @@ class UserCardWrapper extends React.Component {
       return;
     }
 
-    const card = this.container.firstChild;
+    const card = this.container.firstChild as HTMLElement;
     const rect = card.getBoundingClientRect();
     const offsetBottom = window.innerHeight - rect.bottom;
     if (offsetBottom < 0) {

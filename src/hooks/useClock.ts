@@ -1,29 +1,24 @@
-import React from 'react';
+import { useEffect, useReducer } from 'react';
 import { useClock as useClockCallbacks } from '../context/ClockContext';
 import { currentTimeSelector } from '../reducers/server';
 import { useStore } from './useRedux';
 
-const {
-  useEffect,
-  useReducer,
-} = React;
-
 export default function useClock() {
   const timerCallbacks = useClockCallbacks();
-  const [, rerender] = useReducer((i) => i + 1, 0);
+  if (timerCallbacks == null) {
+    throw new Error('useClock: clock context not found');
+  }
+
+  const [, rerender] = useReducer((s: number) => s + 1, 0);
 
   // Avoid useSelector's memoization since this selector relies
   // on Date.now() under the hood.
   const store = useStore();
   const currentTime = currentTimeSelector(store.getState());
 
-  function tick() {
-    rerender({});
-  }
-
   useEffect(() => {
-    timerCallbacks.add(tick);
-    return () => timerCallbacks.remove(tick);
+    timerCallbacks.add(rerender);
+    return () => timerCallbacks.remove(rerender);
   }, [timerCallbacks]);
 
   return currentTime;

@@ -5,8 +5,8 @@ import {
   deleteMessageByID,
   deleteMessagesByUser,
   deleteAllMessages,
-  muteUser,
-  unmuteUser,
+  userMuted,
+  userUnmuted,
   receiveSkip,
 } from '../reducers/chat';
 import * as waitlistActions from '../reducers/waitlist';
@@ -102,16 +102,16 @@ middleware.startListening({
         const currentTime = currentTimeSelector(api.getState());
         const expireIn = data.expiresAt - currentTime;
         const expirationTimer = expireIn > 0
-          ? setTimeout(() => api.dispatch(unmuteUser({ userID: data.userID })), expireIn)
+          ? setTimeout(() => api.dispatch(userUnmuted({ userID: data.userID })), expireIn)
           : null;
-        api.dispatch(muteUser({
+        api.dispatch(userMuted({
           ...data,
           expirationTimer,
         }));
         break;
       }
       case 'chatUnmute':
-        api.dispatch(unmuteUser(data));
+        api.dispatch(userUnmuted(data));
         break;
       case 'acl:allow':
         api.dispatch(addRoles(data));

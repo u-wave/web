@@ -1,10 +1,6 @@
 import { useDispatch } from '../../../hooks/useRedux';
 import { useMediaSources } from '../../../context/MediaSourceContext';
-import {
-  hideImportPanel,
-  showImportSourcePanel,
-  hideImportSourcePanel,
-} from '../../../actions/ImportActionCreators';
+import { showImportSourcePanel, hideImportSourcePanel } from '../../../reducers/imports';
 import { showImportPanel } from '../../../reducers/playlists';
 
 function ImportBlock() {
@@ -16,9 +12,7 @@ function ImportBlock() {
     return dispatch(showImportSourcePanel(sourceType));
   };
   const onHideImportPanel = () => {
-    const result = dispatch(hideImportSourcePanel());
-    dispatch(hideImportPanel());
-    return result;
+    dispatch(hideImportSourcePanel());
   };
 
   const forms: React.ReactElement[] = [];

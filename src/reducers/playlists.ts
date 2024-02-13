@@ -1,4 +1,3 @@
-import type { AnyAction } from 'redux';
 import { type PayloadAction, createSelector, createSlice } from '@reduxjs/toolkit';
 import escapeStringRegExp from 'escape-string-regexp';
 import indexBy from 'just-index';
@@ -6,8 +5,7 @@ import naturalCmp from 'natural-compare';
 import { createAsyncThunk } from '../redux/api';
 import uwFetch, { ListResponse } from '../utils/fetch';
 import mergeIncludedModels from '../utils/mergeIncludedModels';
-import { DO_FAVORITE_COMPLETE } from '../constants/ActionTypes';
-import type { Media } from './booth';
+import { favorite, type Media } from './booth';
 import { initState, logout } from './auth';
 
 export interface Playlist {
@@ -47,7 +45,8 @@ interface ApiPlaylistItemMerged {
   updatedAt: string;
 }
 
-function flattenPlaylistItem(item: ApiPlaylistItemMerged): PlaylistItem {
+/** TODO don't export */
+export function flattenPlaylistItem(item: ApiPlaylistItemMerged): PlaylistItem {
   return {
     ...item.media,
     ...item,
@@ -650,15 +649,17 @@ const slice = createSlice({
         playlist.size = playlistSize;
         state.playlistItems[playlistID] = processInsert(playlistItems, items, { after: afterID });
       })
-      .addCase(DO_FAVORITE_COMPLETE, (state, { payload }: AnyAction) => {
-        const playlistItems = state.playlistItems[payload.playlistID];
-        const playlist = state.playlists[payload.playlistID];
+      .addCase(favorite.fulfilled, (state, action) => {
+        const { payload } = action;
+        const { playlistID } = action.meta.arg;
+        const playlistItems = state.playlistItems[playlistID];
+        const playlist = state.playlists[playlistID];
         if (playlist == null || playlistItems == null) {
           return;
         }
 
-        playlist.size = payload.newSize;
-        state.playlistItems[payload.playlistID] = processInsert(playlistItems, payload.added, { at: 'end' });
+        playlist.size = payload.playlistSize;
+        state.playlistItems[playlistID] = processInsert(playlistItems, payload.added, { at: 'end' });
       })
       .addCase(updatePlaylistItem.pending, (state, { meta }) => {
         const playlistItems = state.playlistItems[meta.arg.playlistID];

@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from '../hooks/useRedux';
 import {
   showImportSourcePanel,
   hideImportSourcePanel,
-} from '../actions/ImportActionCreators';
-import { selectedSourceTypeSelector } from '../reducers/imports';
+  selectedSourceTypeSelector,
+} from '../reducers/imports';
 import PlaylistImport from '../components/PlaylistManager/Import';
 
 function PlaylistImportContainer() {

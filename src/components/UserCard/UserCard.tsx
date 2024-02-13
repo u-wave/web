@@ -1,5 +1,4 @@
 import cx from 'clsx';
-import PropTypes from 'prop-types';
 import Typography from '@mui/material/Typography';
 import Card from '@mui/material/Card/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -9,20 +8,27 @@ import { useSelector } from '../../hooks/useRedux';
 import useIntl from '../../hooks/useIntl';
 import useHasRole from '../../hooks/useHasRole';
 import { djAndWaitlistUsersSelector } from '../../reducers/waitlist';
-import { currentUserHasRoleSelector, userHasRoleSelector } from '../../reducers/users';
+import { type User, currentUserHasRoleSelector, userHasRoleSelector } from '../../reducers/users';
+import type { StoreState } from '../../redux/configureStore';
 import Avatar from '../Avatar';
 import UserRoles from './UserRoles';
 import AddToWaitlistButton from './AddToWaitlistButton';
 import RemoveFromWaitlistButton from './RemoveFromWaitlistButton';
 import BanButton from './BanButton';
 
-const waitlistUserIDsSetSelector = (state) => new Set(
-  djAndWaitlistUsersSelector(state)
-    .filter(Boolean)
-    .map((user) => user._id),
-);
+function waitlistUserIDsSetSelector(state: StoreState) {
+  return new Set(
+    djAndWaitlistUsersSelector(state)
+      .filter(Boolean)
+      .map((user) => user!._id),
+  );
+}
 
-function UserCard({ className, user }) {
+type UserCardProps = {
+  className?: string,
+  user: User,
+};
+function UserCard({ className, user }: UserCardProps) {
   const { dateTimeFormatter } = useIntl();
   const waitlistUsers = useSelector(waitlistUserIDsSetSelector);
   const canAddToWaitlist = useHasRole('waitlist.add');
@@ -62,10 +68,5 @@ function UserCard({ className, user }) {
     </Card>
   );
 }
-
-UserCard.propTypes = {
-  className: PropTypes.string,
-  user: PropTypes.object.isRequired,
-};
 
 export default UserCard;

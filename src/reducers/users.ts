@@ -7,7 +7,9 @@ import {
 } from '@reduxjs/toolkit';
 import indexBy from 'just-index';
 import naturalCmp from 'natural-compare';
+import { createAsyncThunk } from '../redux/api';
 import type { StoreState } from '../redux/configureStore';
+import uwFetch from '../utils/fetch';
 import { currentUserIDSelector, initState } from './auth';
 import { rolesSelector } from './config';
 
@@ -18,6 +20,7 @@ export interface User {
   username: string;
   avatar: string;
   roles: string[];
+  createdAt: string,
 }
 
 interface State {
@@ -29,6 +32,27 @@ const initialState: State = {
   users: {},
   guests: 0,
 };
+
+export const addUserRole = createAsyncThunk('users/addRole', async (param: { userID: string, role: string }) => {
+  const url = `/users/${encodeURIComponent(param.userID)}/roles/${encodeURIComponent(param.role)}`;
+  await uwFetch([url, { method: 'put' }]);
+});
+
+export const removeUserRole = createAsyncThunk('users/removeRole', async (param: { userID: string, role: string }) => {
+  const url = `/users/${encodeURIComponent(param.userID)}/roles/${encodeURIComponent(param.role)}`;
+  await uwFetch([url, { method: 'delete' }]);
+});
+
+export const banUser = createAsyncThunk('users/ban', async (param: { userID: string, duration?: number, permanent?: boolean }) => {
+  await uwFetch(['/bans', {
+    method: 'post',
+    data: {
+      userID: param.userID,
+      duration: param.duration ?? undefined,
+      permanent: param.permanent ?? true,
+    },
+  }]);
+});
 
 const slice = createSlice({
   name: 'users',

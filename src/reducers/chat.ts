@@ -207,7 +207,7 @@ const slice = createSlice({
     deleteAllMessages(state) {
       state.messages = [];
     },
-    muteUser(state, { payload }: PayloadAction<{
+    userMuted(state, { payload }: PayloadAction<{
       moderatorID: string,
       userID: string,
       expiresAt: number,
@@ -219,7 +219,7 @@ const slice = createSlice({
         expirationTimer: payload.expirationTimer,
       };
     },
-    unmuteUser(state, { payload }: PayloadAction<{ userID: string, moderatorID?: string }>) {
+    userUnmuted(state, { payload }: PayloadAction<{ userID: string, moderatorID?: string }>) {
       const muted = state.mutedUsers[payload.userID];
       if (muted?.expirationTimer) {
         clearTimeout(muted.expirationTimer);
@@ -318,8 +318,8 @@ export const {
   deleteMessageByID,
   deleteMessagesByUser,
   deleteAllMessages,
-  muteUser,
-  unmuteUser,
+  userMuted,
+  userUnmuted,
   receiveSkip,
 } = slice.actions;
 
@@ -392,6 +392,32 @@ export const setMotd = createAsyncThunk('chat/setMotd', async (text: string, api
   }]);
 
   api.dispatch(log(`Message of the Day is now: ${data.motd}`));
+});
+
+export const deleteChatMessage = createAsyncThunk('chat/deleteMessage', async (id: string) => {
+  await uwFetch([`/chat/${id}`, { method: 'delete' }]);
+});
+
+export const deleteChatMessagesByUser = createAsyncThunk('chat/deleteMessage', async (userID: string) => {
+  await uwFetch([`/chat/user/${userID}`, { method: 'delete' }]);
+});
+
+export const deleteAllChatMessages = createAsyncThunk('chat/deleteMessage', async () => {
+  await uwFetch(['/chat', { method: 'delete' }]);
+});
+
+export const muteUser = createAsyncThunk('chat/muteUser', async (param: { userID: string, duration?: number }) => {
+  const time = param.duration ?? 600_000; // 10 minutes
+  await uwFetch([`/users/${param.userID}/mute`, {
+    method: 'post',
+    data: { time },
+  }]);
+});
+
+export const unmuteUser = createAsyncThunk('chat/muteUser', async (param: { userID: string }) => {
+  await uwFetch([`/users/${param.userID}/mute`, {
+    method: 'delete',
+  }]);
 });
 
 export default slice.reducer;

@@ -15,7 +15,7 @@ const BUILTIN_EMOJI_BASE_PATH = '/static/emoji/';
  * @param {string} filenameOrUrl - The file name for a local emoji or a full URL to a remote one.
  * @param {boolean} isCustom
  */
-function emojiUrl(filenameOrUrl, isCustom) {
+function emojiUrl(filenameOrUrl: string | URL, isCustom: boolean = false) {
   const basePath = isCustom ? CUSTOM_EMOJI_BASE_PATH : BUILTIN_EMOJI_BASE_PATH;
   const baseUrl = new URL(basePath, window.location.href);
   return new URL(filenameOrUrl, baseUrl);

@@ -5,12 +5,10 @@ import {
   isManagerSelector,
 } from '../../reducers/users';
 import {
-  deleteChatMessagesByUser,
-  deleteAllChatMessages,
-} from '../../actions/ModerationActionCreators';
-import {
   log,
   setMotd,
+  deleteChatMessagesByUser,
+  deleteAllChatMessages,
 } from '../../reducers/chat';
 
 export default [

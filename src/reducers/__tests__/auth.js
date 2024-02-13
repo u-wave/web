@@ -1,6 +1,5 @@
 import createStore from '../../redux/configureStore';
 import * as s from '../auth';
-import { setSessionToken } from '../../actions/LoginActionCreators';
 
 describe('reducers/auth', () => {
   it('should not respond to unrelated actions', () => {
@@ -18,7 +17,7 @@ describe('reducers/auth', () => {
   describe('action: auth/SET_TOKEN', () => {
     const { dispatch, getState } = createStore();
     it('should set the current session token', () => {
-      dispatch(setSessionToken('test token'));
+      dispatch(s.setSessionToken('test token'));
       expect(s.tokenSelector(getState())).toBe('test token');
     });
   });

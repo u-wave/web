@@ -88,7 +88,7 @@ function AppContainer({ uwave, mediaSources }: AppContainerProps) {
     html.dir = theme.direction;
 
     const root = document.body;
-    for (const [prop, value] of Object.entries(theme.cssProperties)) {
+    for (const [prop, value = null] of Object.entries(theme.cssProperties)) {
       root.style.setProperty(prop, value);
     }
   }, [theme]);

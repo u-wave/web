@@ -2,12 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { mdiFormatListBulleted } from '@mdi/js';
 import SvgIcon from '../SvgIcon';
-import transformStyle from '../../utils/transformStyle';
 
 const getItemStyles = (offset) => (
   offset ? ({
     display: 'inline-block',
-    ...transformStyle(`translate(${offset.x}px, ${offset.y}px)`),
+    transform: `translate(${offset.x}px, ${offset.y}px)`,
   }) : { display: 'none' }
 );
 

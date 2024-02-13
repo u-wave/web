@@ -1,10 +1,13 @@
 import cx from 'clsx';
-import React from 'react';
-import PropTypes from 'prop-types';
 import formatDuration from 'format-duration';
 import useClock from '../../hooks/useClock';
 
-function Eta({ className, base, endTime }) {
+type EtaProps = {
+  className?: string,
+  base: number,
+  endTime: number,
+};
+function Eta({ className, base, endTime }: EtaProps) {
   const currentTime = useClock();
   const currentRemaining = endTime - currentTime;
   return (
@@ -14,10 +17,4 @@ function Eta({ className, base, endTime }) {
   );
 }
 
-Eta.propTypes = {
-  className: PropTypes.string,
-  endTime: PropTypes.number.isRequired,
-  base: PropTypes.number.isRequired,
-};
-
-export default React.memo(Eta);
+export default Eta;

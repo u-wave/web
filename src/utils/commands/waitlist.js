@@ -1,11 +1,6 @@
 import { findUser } from '../ChatCommands';
 import { log } from '../../reducers/chat';
-import {
-  modClearWaitlist,
-  modLockWaitlist,
-  modUnlockWaitlist,
-} from '../../actions/WaitlistActionCreators';
-import { skipCurrentDJ } from '../../actions/ModerationActionCreators';
+import { skipCurrentDJ } from '../../reducers/booth';
 import {
   userListSelector,
   isModeratorSelector,
@@ -16,6 +11,8 @@ import {
   moveWaitlistUser,
   waitlistUsersSelector,
   djAndWaitlistUsersSelector,
+  clearWaitlist,
+  lockWaitlist,
 } from '../../reducers/waitlist';
 
 export default [
@@ -23,7 +20,7 @@ export default [
     name: 'skip',
     description: 'Skip the current DJ.',
     guard: isModeratorSelector,
-    action: (_commander, ...args) => skipCurrentDJ(args.length > 0 ? args.join(' ') : '[No reason given]'),
+    action: (_commander, ...args) => skipCurrentDJ({ reason: args.length > 0 ? args.join(' ') : '[No reason given]' }),
   },
 
   {
@@ -67,21 +64,21 @@ export default [
     name: 'wlclear',
     description: 'Remove everyone from the waitlist.',
     guard: isModeratorSelector,
-    action: () => modClearWaitlist(),
+    action: () => clearWaitlist(),
   },
 
   {
     name: 'wllock',
     description: 'Lock the waitlist.',
     guard: isModeratorSelector,
-    action: () => modLockWaitlist(),
+    action: () => lockWaitlist(true),
   },
 
   {
     name: 'wlunlock',
     description: 'Unlock the waitlist.',
     guard: isModeratorSelector,
-    action: () => modUnlockWaitlist(),
+    action: () => lockWaitlist(false),
   },
 
   {

@@ -1,8 +1,4 @@
-import {
-  SOCKET_CONNECT,
-  SOCKET_RECONNECT,
-  SET_TOKEN,
-} from '../constants/ActionTypes';
+import { SOCKET_CONNECT, SOCKET_RECONNECT } from '../constants/ActionTypes';
 import { initState } from '../reducers/auth';
 import { openLoginDialog } from '../reducers/dialogs';
 
@@ -12,13 +8,6 @@ export function socketConnect() {
 
 export function socketReconnect() {
   return { type: SOCKET_RECONNECT };
-}
-
-export function setSessionToken(token) {
-  return {
-    type: SET_TOKEN,
-    payload: { token },
-  };
 }
 
 function whenWindowClosed(window) {

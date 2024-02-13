@@ -1,6 +1,5 @@
 import { useCallback } from 'react';
 import { useSelector, useDispatch } from '../hooks/useRedux';
-import { cannotDeleteActivePlaylist } from '../actions/PlaylistActionCreators';
 import PlaylistPanel from '../components/PlaylistManager/Panel';
 import {
   deletePlaylist,
@@ -41,9 +40,6 @@ function PlaylistPanelContainer() {
   const onDeletePlaylist = useCallback(async () => {
     await dispatch(deletePlaylist(playlistID));
   }, [dispatch, playlistID]);
-  const onNotDeletable = useCallback(() => {
-    dispatch(cannotDeleteActivePlaylist(playlistID));
-  }, [dispatch, playlistID]);
 
   const onMoveMedia = useCallback(async (media: PlaylistItem[], opts: InsertTarget) => {
     await dispatch(movePlaylistItems({
@@ -69,7 +65,6 @@ function PlaylistPanelContainer() {
       onActivatePlaylist={onActivatePlaylist}
       onRenamePlaylist={onRenamePlaylist}
       onDeletePlaylist={onDeletePlaylist}
-      onNotDeletable={onNotDeletable}
       onMoveMedia={onMoveMedia}
       onLoadPlaylistPage={onLoadPlaylistPage}
       onFilterPlaylistItems={onFilterPlaylistItems}

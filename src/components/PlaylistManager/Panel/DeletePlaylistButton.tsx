@@ -9,24 +9,17 @@ import FormGroup from '../../Form/Group';
 
 type DeletePlaylistButtonProps = {
   onDelete: () => Promise<void>,
-  onNotDeletable: () => void,
   active: boolean,
 };
-function DeletePlaylistButton({
-  onDelete,
-  onNotDeletable,
-  active,
-}: DeletePlaylistButtonProps) {
+function DeletePlaylistButton({ onDelete, active }: DeletePlaylistButtonProps) {
   const { t } = useTranslator();
   const [deleting, setDeleting] = useState(false);
 
   const handleOpen = useCallback(() => {
-    if (active) {
-      onNotDeletable();
-    } else {
+    if (!active) {
       setDeleting(true);
     }
-  }, [active, onNotDeletable]);
+  }, [active]);
 
   const handleClose = useCallback(() => {
     setDeleting(false);

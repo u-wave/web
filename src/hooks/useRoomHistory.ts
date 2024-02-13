@@ -78,10 +78,11 @@ function useRoomHistory() {
   }, [data]);
 
   const media = useMemo(() => {
-    if (!currentPlay) {
+    if (currentPlay == null) {
       return historyEntries;
     }
-    if (historyEntries[0]._id === currentPlay._id) {
+    // Use up-to-date state for the current play.
+    if (historyEntries[0] != null && historyEntries[0]._id === currentPlay._id) {
       return [currentPlay, ...historyEntries.slice(1)];
     }
     return [currentPlay, ...historyEntries];

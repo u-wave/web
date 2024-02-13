@@ -2,10 +2,10 @@ import ms from 'ms';
 import { findUser } from '../ChatCommands';
 import { log } from '../../reducers/chat';
 import {
+  banUser,
   userListSelector,
   isModeratorSelector,
 } from '../../reducers/users';
-import { banUser } from '../../actions/ModerationActionCreators';
 
 export default [{
   name: 'ban',
@@ -23,7 +23,8 @@ export default [{
       return dispatch(log(`User "${username}" is not online.`));
     }
     const permanent = duration === 'perma';
-    return dispatch(banUser(user, {
+    return dispatch(banUser({
+      userID: user._id,
       duration: permanent ? undefined : ms(`${duration}`),
       permanent,
     }));

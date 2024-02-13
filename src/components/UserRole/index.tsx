@@ -1,10 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
 import upperCaseFirst from '../../utils/upperCaseFirst';
 import RoleColor from '../RoleColor';
 
-function UserRole({ roleName }) {
+type UserRoleProps = {
+  roleName: string,
+};
+function UserRole({ roleName }: UserRoleProps) {
   const { t } = useTranslator();
 
   let name;
@@ -21,9 +22,5 @@ function UserRole({ roleName }) {
     </RoleColor>
   );
 }
-
-UserRole.propTypes = {
-  roleName: PropTypes.string.isRequired,
-};
 
 export default UserRole;

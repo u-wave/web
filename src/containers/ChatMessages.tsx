@@ -1,8 +1,7 @@
 import { useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from '../hooks/useRedux';
-import { motdSelector, messagesSelector } from '../reducers/chat';
+import { deleteChatMessage, motdSelector, messagesSelector } from '../reducers/chat';
 import { customEmojiNamesSelector } from '../reducers/config';
-import { deleteChatMessage } from '../actions/ModerationActionCreators';
 import ChatMessages from '../components/Chat/ChatMessages';
 import useEmotes from '../hooks/useEmotes';
 import type { CompileOptions } from '../components/Chat/Markup';

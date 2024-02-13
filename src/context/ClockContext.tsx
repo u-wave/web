@@ -1,20 +1,27 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { useDispatch } from '../hooks/useRedux';
-import { sync } from '../reducers/server';
-
-const {
+import {
+  createContext,
   useContext,
   useEffect,
   useMemo,
   useRef,
   useState,
-} = React;
+} from 'react';
+import { useDispatch } from '../hooks/useRedux';
+import { sync } from '../reducers/server';
 
-const ClockContext = React.createContext(null);
+type TimerCallback = () => void;
+interface TimerCallbacks {
+  add: (onTick: TimerCallback) => void;
+  remove: (onTick: TimerCallback) => void;
+}
 
-function ClockProvider({ children }) {
-  const [callbacks, setCallbacks] = useState([]);
+const ClockContext = createContext<TimerCallbacks | null>(null);
+
+type ClockProviderProps = {
+  children: React.ReactNode,
+};
+function ClockProvider({ children }: ClockProviderProps) {
+  const [callbacks, setCallbacks] = useState<TimerCallback[]>([]);
   const callbacksRef = useRef(callbacks);
   const dispatch = useDispatch();
 
@@ -25,7 +32,7 @@ function ClockProvider({ children }) {
     remove: (onTick) => {
       setCallbacks((list) => list.filter((entry) => entry !== onTick));
     },
-  }), [setCallbacks]);
+  } satisfies TimerCallbacks), [setCallbacks]);
 
   // Make sure the callbacks are up to date for the setInterval() tick function.
   // This way we don't have to re-configure the timer every time, so it can keep
@@ -65,10 +72,6 @@ function ClockProvider({ children }) {
     </ClockContext.Provider>
   );
 }
-
-ClockProvider.propTypes = {
-  children: PropTypes.element.isRequired,
-};
 
 function useClock() {
   return useContext(ClockContext);

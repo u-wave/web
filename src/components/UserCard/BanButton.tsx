@@ -1,30 +1,25 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import { mdiCancel } from '@mdi/js';
 import { useDispatch } from '../../hooks/useRedux';
 import SvgIcon from '../SvgIcon';
-import { banUser } from '../../actions/ModerationActionCreators';
+import { banUser, type User } from '../../reducers/users';
 
-const { useCallback } = React;
-
-function BanButton({ user }) {
+type BanButtonProps = {
+  user: User,
+};
+function BanButton({ user }: BanButtonProps) {
   const { t } = useTranslator();
   const dispatch = useDispatch();
-  const onClick = useCallback(() => dispatch(banUser(user)), [dispatch, user]);
 
   return (
     <Tooltip title={t('users.ban')}>
-      <IconButton onClick={onClick}>
+      <IconButton onClick={() => dispatch(banUser({ userID: user._id }))}>
         <SvgIcon path={mdiCancel} />
       </IconButton>
     </Tooltip>
   );
 }
-BanButton.propTypes = {
-  user: PropTypes.object.isRequired,
-};
 
 export default BanButton;

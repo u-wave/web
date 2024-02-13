@@ -1,13 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import SvgIcon from '../SvgIcon';
 import { useDispatch } from '../../hooks/useRedux';
 import { addToWaitlist } from '../../reducers/waitlist';
-
-const { useCallback } = React;
+import type { User } from '../../reducers/users';
 
 // From https://fonts.google.com/icons?selected=Material%20Icons%3Agroup_add%3A
 const groupAddIcon = (
@@ -20,21 +17,20 @@ const groupAddIcon = (
   </SvgIcon>
 );
 
-function AddToWaitlistButton({ user }) {
+type AddToWaitlistButtonProps = {
+  user: User,
+};
+function AddToWaitlistButton({ user }: AddToWaitlistButtonProps) {
   const { t } = useTranslator();
   const dispatch = useDispatch();
-  const onClick = useCallback(() => dispatch(addToWaitlist(user)), [dispatch, user]);
 
   return (
     <Tooltip title={t('waitlist.add')}>
-      <IconButton onClick={onClick}>
+      <IconButton onClick={() => dispatch(addToWaitlist(user))}>
         {groupAddIcon}
       </IconButton>
     </Tooltip>
   );
 }
-AddToWaitlistButton.propTypes = {
-  user: PropTypes.object.isRequired,
-};
 
 export default AddToWaitlistButton;

@@ -152,7 +152,7 @@ describe('reducers/chat', () => {
     });
 
     const addTestMute = () => {
-      dispatch(s.muteUser({
+      dispatch(s.userMuted({
         userID: '1',
         moderatorID: '4',
         expiresAt: Date.now() + 3000,
@@ -162,7 +162,7 @@ describe('reducers/chat', () => {
     it('chat/MUTE_USER should register muted users', () => {
       expect(s.mutedUsersSelector(getState())).toHaveLength(0);
 
-      dispatch(s.muteUser({
+      dispatch(s.userMuted({
         userID: '1',
         moderatorID: '4',
         expiresAt: Date.now() + 3000,
@@ -188,7 +188,7 @@ describe('reducers/chat', () => {
       addTestMute();
 
       expect(s.mutedUsersSelector(getState())).toHaveLength(1);
-      dispatch(s.unmuteUser({ userID: '1', moderatorID: '3' }));
+      dispatch(s.userUnmuted({ userID: '1', moderatorID: '3' }));
       expect(s.mutedUsersSelector(getState())).toHaveLength(0);
 
       expect(s.messagesSelector(getState())).toHaveLength(0);

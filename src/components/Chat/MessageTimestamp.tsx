@@ -1,8 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import useIntl from '../../hooks/useIntl';
 
-function MessageTimestamp({ date }) {
+type MessageTimestampProps = {
+  date: Date,
+};
+function MessageTimestamp({ date }: MessageTimestampProps) {
   const { timeFormatter } = useIntl();
 
   return (
@@ -14,9 +15,5 @@ function MessageTimestamp({ date }) {
     </time>
   );
 }
-
-MessageTimestamp.propTypes = {
-  date: PropTypes.instanceOf(Date).isRequired,
-};
 
 export default MessageTimestamp;

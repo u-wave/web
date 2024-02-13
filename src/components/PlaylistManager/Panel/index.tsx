@@ -18,7 +18,6 @@ type PlaylistPanelProps = {
   onActivatePlaylist: () => Promise<void>,
   onRenamePlaylist: (newName: string) => Promise<void>,
   onDeletePlaylist: () => Promise<void>,
-  onNotDeletable: () => void,
   onLoadPlaylistPage: (page: number) => Promise<void>,
   onFilterPlaylistItems: (filter: string | null) => void,
   onMoveMedia: (items: PlaylistItem[], target: InsertTarget) => Promise<void>,
@@ -34,7 +33,6 @@ function PlaylistPanel(props: PlaylistPanelProps) {
     onActivatePlaylist,
     onRenamePlaylist,
     onDeletePlaylist,
-    onNotDeletable,
     onLoadPlaylistPage,
     onFilterPlaylistItems,
     onMoveMedia,
@@ -77,7 +75,6 @@ function PlaylistPanel(props: PlaylistPanelProps) {
         onActivatePlaylist={onActivatePlaylist}
         onRenamePlaylist={onRenamePlaylist}
         onDeletePlaylist={onDeletePlaylist}
-        onNotDeletable={onNotDeletable}
         onFilter={onFilterPlaylistItems}
       />
       {list}

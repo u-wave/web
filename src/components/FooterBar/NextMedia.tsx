@@ -1,10 +1,18 @@
 import cx from 'clsx';
-import React from 'react';
-import PropTypes from 'prop-types';
 import { useTranslator, Interpolate } from '@u-wave/react-translate';
 import SongTitle from '../SongTitle';
 import Eta from './Eta';
+import type { Playlist, PlaylistItem } from '../../reducers/playlists';
 
+type NextMediaProps = {
+  className?: string,
+  playlist: Playlist | null,
+  nextMedia: PlaylistItem,
+  userInWaitlist: boolean,
+  userIsDJ: boolean,
+  baseEta: number | null,
+  mediaEndTime: number | null,
+};
 function NextMedia({
   className,
   playlist,
@@ -13,7 +21,7 @@ function NextMedia({
   userIsDJ,
   baseEta,
   mediaEndTime,
-}) {
+}: NextMediaProps) {
   const { t } = useTranslator();
 
   if (!playlist) {
@@ -37,9 +45,9 @@ function NextMedia({
   const playlistEl = (
     <span className="NextMedia-playlist">{playlist.name}</span>
   );
-  const etaEl = (
+  const etaEl = baseEta != null && mediaEndTime != null ? (
     <Eta className="NextMedia-eta" base={baseEta} endTime={mediaEndTime} />
-  );
+  ) : null;
   return (
     <div className={cx('NextMedia', className)}>
       {mediaEl}
@@ -52,14 +60,4 @@ function NextMedia({
   );
 }
 
-NextMedia.propTypes = {
-  className: PropTypes.string,
-  playlist: PropTypes.object,
-  nextMedia: PropTypes.object,
-  userInWaitlist: PropTypes.bool.isRequired,
-  userIsDJ: PropTypes.bool.isRequired,
-  baseEta: PropTypes.number,
-  mediaEndTime: PropTypes.number,
-};
-
-export default React.memo(NextMedia);
+export default NextMedia;

@@ -2,11 +2,11 @@ import cx from 'clsx';
 import React from 'react';
 import { useDispatch, useSelector } from '../../hooks/useRedux';
 import useCurrentUser from '../../hooks/useCurrentUser';
-import { skipCurrentDJ as modSkipCurrentDJ } from '../../actions/ModerationActionCreators';
 import { toggleOverlay } from '../../reducers/activeOverlay';
 import { openFavoriteMenu } from '../../reducers/addToPlaylistMenu';
 import {
   skipSelf,
+  skipCurrentDJ as modSkipCurrentDJ,
   upvote,
   downvote,
   djSelector,
@@ -28,7 +28,7 @@ import NextMedia from './NextMedia';
 import UserInfo from './UserInfo';
 import SkipButton from './SkipButton';
 import WaitlistButton from './WaitlistButton';
-import ResponseBar from './Responses/Bar';
+import ResponseBar from './ResponseBar';
 
 const {
   useCallback,
@@ -66,7 +66,7 @@ function UserFooterContent() {
 
   const handleSkipTurn = useCallback((reason) => {
     if (!userIsDJ) {
-      return dispatch(modSkipCurrentDJ(reason));
+      return dispatch(modSkipCurrentDJ({ reason }));
     }
     return dispatch(skipSelf({ remove: false }));
   }, [userIsDJ, dispatch]);
