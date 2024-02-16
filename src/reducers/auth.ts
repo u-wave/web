@@ -224,3 +224,9 @@ export function isLoggedInSelector(state: StoreState) {
 export function supportsAuthStrategy(name: string) {
   return (state: StoreState) => authStrategiesSelector(state).includes(name);
 }
+
+const SOCIAL_STRATEGIES = ['google'];
+export function supportsSocialAuthSelector(state: StoreState) {
+  const strategies = authStrategiesSelector(state);
+  return SOCIAL_STRATEGIES.some((strategy) => strategies.includes(strategy))
+}

@@ -6,10 +6,10 @@ import {
   login,
   finishSocialLogin,
   resetPassword,
+  supportsSocialAuthSelector,
 } from '../reducers/auth';
 import { loginDialogSelector, openLoginDialog, closeLoginDialog } from '../reducers/dialogs';
 import { reCaptchaSiteKeySelector } from '../reducers/config';
-import { supportsSocialAuthSelector } from '../selectors/userSelectors';
 import LoginDialog from '../components/Dialogs/LoginDialog';
 
 const selector = createSelector(
