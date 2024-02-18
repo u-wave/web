@@ -308,6 +308,12 @@ const slice = createSlice({
   selectors: {
     motdSource: (state) => state.motd,
     mutes: (state) => state.mutedUsers,
+    mutedUser: (state, userID: string) => {
+      if (Object.hasOwn(state.mutedUsers, userID)) {
+        return state.mutedUsers[userID]!
+      }
+      return null;
+    },
   },
 });
 
@@ -323,7 +329,10 @@ export const {
   receiveSkip,
 } = slice.actions;
 
-export const { motdSource: motdSourceSelector } = slice.selectors;
+export const {
+  motdSource: motdSourceSelector,
+  mutedUser: mutedUserSelector,
+} = slice.selectors;
 export const motdSelector = createSelector([slice.selectors.motdSource], (source) => {
   return source ? parseChatMarkup(source) : null;
 });

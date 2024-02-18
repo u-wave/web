@@ -4,8 +4,8 @@ import {
   log,
   muteUser,
   unmuteUser,
+  mutedUserSelector,
 } from '../../reducers/chat';
-import { mutedUsersSelector } from '../../selectors/chatSelectors';
 import {
   userListSelector,
   isModeratorSelector,
@@ -41,8 +41,9 @@ export default [
       if (!username) {
         return dispatch(log('Provide a user to unmute.'));
       }
-      const user = findUser(mutedUsersSelector(getState()), username);
-      if (!user) {
+      const user = findUser(userListSelector(getState()), username);
+      const mute = mutedUserSelector(getState(), user._id);
+      if (mute == null) {
         return dispatch(log(`User "${username}" is not muted.`));
       }
       return dispatch(unmuteUser({ userID: user._id }));
