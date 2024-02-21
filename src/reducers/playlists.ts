@@ -81,7 +81,7 @@ function getPlaylistItems(
   playlistItems: Record<string, PlaylistItemList>,
   playlist: Playlist,
 ): PlaylistItemList {
-  return playlistItems[playlist._id] ?? Array(playlist.size).fill(0);
+  return playlistItems[playlist._id] ?? Array(playlist.size).fill(null);
 }
 
 type InsertPosition =
@@ -770,13 +770,18 @@ export const playlistSelector = (state: RootState, id: string) => {
 export const playlistsSelector = createSelector([playlistsByIDSelector], (playlists) => {
   return Object.values(playlists).sort(byName);
 });
-export const playlistItemsSelector = (state: RootState, id: string) => {
-  const playlist = state.playlists.playlists[id];
-  if (playlist != null) {
-    return getPlaylistItems(state.playlists.playlistItems, playlist);
-  }
-  return null;
-};
+export const playlistItemsSelector = createSelector(
+  [
+    (state: RootState, id: string) => state.playlists.playlists[id],
+    (state: RootState, id: string) => state.playlists.playlistItems[id],
+  ],
+  (playlist, playlistItems) => {
+    if (playlist != null) {
+      return playlistItems ?? Array(playlist.size).fill(null);
+    }
+    return null;
+  },
+);
 export const activePlaylistIDSelector = (state: RootState) => state.playlists.activePlaylistID;
 export const selectedPlaylistIDSelector = (state: RootState) => state.playlists.selectedPlaylistID;
 export const activePlaylistSelector = (state: RootState) => {
