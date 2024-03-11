@@ -30,7 +30,7 @@ jobs:
       env:
         VITE_DEMO: 1
     - name: Deploy to Netlify
-      uses: nwtgck/actions-netlify@v2.1
+      uses: nwtgck/actions-netlify@v3.0
       with:
         publish-dir: './npm/public'
         production-branch: 'default'
