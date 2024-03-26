@@ -87,7 +87,7 @@
     "@emotion/css": "^11.10.5",
     "@emotion/server": "^11.0.0",
     "@rollup/plugin-yaml": "^4.0.1",
-    "@testing-library/jest-dom": "^6.1.4",
+    "@testing-library/jest-dom": "^6.2.0",
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",
     "@types/natural-compare": "^1.4.3",
@@ -120,7 +120,7 @@
     "twemoji-emojis": "^14.1.0",
     "type-fest": "^4.9.0",
     "typescript": "^5.0.2",
-    "vite": "^5.0.5",
+    "vite": "^5.0.12",
     "vitest": "^1.0.4"
   },
   "engines": {
