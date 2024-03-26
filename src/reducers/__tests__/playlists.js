@@ -127,13 +127,13 @@ describe('reducers/playlists', () => {
       expect(p.selectedPlaylistItemsSelector(getState())).toHaveLength(5);
 
       dispatch(favorite.fulfilled({
-        playlistID,
-        historyID: 'vGA5mxhJpYkrsHSfxPcqX',
-      }, '', {
         playlistSize: 6,
         added: [
           { _id: 'RDeVBExmCGXvmT0mN0P3n', artist: 'SHINee', title: 'Odd Eye' },
         ],
+      }, '', {
+        playlistID,
+        historyID: 'vGA5mxhJpYkrsHSfxPcqX',
       }));
 
       expect(p.selectedPlaylistSelector(getState())).toHaveProperty('size', 6);
