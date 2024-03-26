@@ -1,12 +1,15 @@
 import ms from 'ms';
 import { findUser } from '../ChatCommands';
-import { log } from '../../actions/ChatActionCreators';
-import { mutedUsersSelector } from '../../selectors/chatSelectors';
+import {
+  log,
+  muteUser,
+  unmuteUser,
+  mutedUserSelector,
+} from '../../reducers/chat';
 import {
   userListSelector,
   isModeratorSelector,
-} from '../../selectors/userSelectors';
-import { muteUser, unmuteUser } from '../../actions/ModerationActionCreators';
+} from '../../reducers/users';
 
 export default [
   {
@@ -24,7 +27,10 @@ export default [
       if (!user) {
         return dispatch(log(`User "${username}" is not online.`));
       }
-      return dispatch(muteUser(user, ms(`${duration}`)));
+      return dispatch(muteUser({
+        userID: user._id,
+        duration: ms(`${duration}`),
+      }));
     },
   },
   {
@@ -35,11 +41,12 @@ export default [
       if (!username) {
         return dispatch(log('Provide a user to unmute.'));
       }
-      const user = findUser(mutedUsersSelector(getState()), username);
-      if (!user) {
+      const user = findUser(userListSelector(getState()), username);
+      const mute = mutedUserSelector(getState(), user._id);
+      if (mute == null) {
         return dispatch(log(`User "${username}" is not muted.`));
       }
-      return dispatch(unmuteUser(user));
+      return dispatch(unmuteUser({ userID: user._id }));
     },
   },
 ];

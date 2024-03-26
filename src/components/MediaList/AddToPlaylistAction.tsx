@@ -5,9 +5,9 @@ import { useDispatch } from '../../hooks/useRedux';
 import { useMediaListContext } from './BaseMediaList';
 import SvgIcon from '../SvgIcon';
 import MediaAction from './MediaAction';
-import { Media } from '../../reducers/booth';
+import type { Media } from '../../reducers/booth';
 import { open as addMediaMenu } from '../../reducers/addToPlaylistMenu';
-import { NewPlaylistItem } from '../../reducers/playlists';
+import type { NewPlaylistItem } from '../../reducers/playlists';
 
 function filterNulls<T>(array: (T|null)[]): T[] {
   return array.filter((item) => item != null) as T[];

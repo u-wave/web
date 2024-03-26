@@ -1,6 +1,6 @@
 import cx from 'clsx';
 import { useMediaSources } from '../../context/MediaSourceContext';
-import { Media } from '../../reducers/booth';
+import type { Media } from '../../reducers/booth';
 
 type PlayerProps = {
   enabled: boolean,

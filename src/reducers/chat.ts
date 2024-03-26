@@ -1,13 +1,19 @@
-import { AnyAction } from 'redux';
+import mapValues from 'just-map-values';
 import { v4 as randomUUID } from 'uuid';
-import { MarkupNode } from 'u-wave-parse-chat-markup';
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { BOOTH_SKIP } from '../constants/ActionTypes';
-import { type User, actions as userActions } from './users';
-import { advance } from './booth';
+import parseChatMarkup, { type MarkupNode } from 'u-wave-parse-chat-markup';
+import { type PayloadAction, createSlice, createSelector } from '@reduxjs/toolkit';
+import {
+  type User,
+  actions as userActions,
+  usersSelector,
+  currentUserSelector,
+} from './users';
+import { advanceInner } from './booth';
 import { initState } from './auth';
 import { createAsyncThunk } from '../redux/api';
 import uwFetch from '../utils/fetch';
+import type { StoreState } from '../redux/configureStore';
+import { type NotificationSettings, notificationSettingsSelector } from './settings';
 
 export interface ChatMessage {
   _id: string;
@@ -79,7 +85,7 @@ export interface SkipMessage {
   type: 'skip',
   _id: string,
   user: User,
-  moderator: User,
+  moderator?: User | undefined,
   reason: string,
   timestamp: number,
 }
@@ -201,7 +207,7 @@ const slice = createSlice({
     deleteAllMessages(state) {
       state.messages = [];
     },
-    muteUser(state, { payload }: PayloadAction<{
+    userMuted(state, { payload }: PayloadAction<{
       moderatorID: string,
       userID: string,
       expiresAt: number,
@@ -213,12 +219,27 @@ const slice = createSlice({
         expirationTimer: payload.expirationTimer,
       };
     },
-    unmuteUser(state, { payload }: PayloadAction<{ userID: string, moderatorID?: string }>) {
+    userUnmuted(state, { payload }: PayloadAction<{ userID: string, moderatorID?: string }>) {
       const muted = state.mutedUsers[payload.userID];
       if (muted?.expirationTimer) {
         clearTimeout(muted.expirationTimer);
       }
       delete state.mutedUsers[payload.userID];
+    },
+    receiveSkip(state, action: PayloadAction<{
+      user: User,
+      moderator?: User | undefined,
+      reason: string,
+      timestamp: number,
+    }>) {
+      state.messages.push({
+        type: 'skip',
+        _id: randomUUID(),
+        user: action.payload.user,
+        moderator: action.payload.moderator,
+        reason: action.payload.reason,
+        timestamp: action.payload.timestamp,
+      });
     },
   },
   extraReducers(builder) {
@@ -271,7 +292,7 @@ const slice = createSlice({
           timestamp: Date.now(),
         });
       })
-      .addCase(advance, (state, action) => {
+      .addCase(advanceInner, (state, action) => {
         if (action.payload === null) {
           return;
         }
@@ -282,17 +303,17 @@ const slice = createSlice({
           entry: action.payload.media,
           timestamp: action.payload.timestamp,
         });
-      })
-      .addCase(BOOTH_SKIP, (state, action: AnyAction) => {
-        state.messages.push({
-          type: 'skip',
-          _id: randomUUID(),
-          user: action.payload.user,
-          moderator: action.payload.moderator,
-          reason: action.payload.reason,
-          timestamp: action.payload.timestamp,
-        });
       });
+  },
+  selectors: {
+    motdSource: (state) => state.motd,
+    mutes: (state) => state.mutedUsers,
+    mutedUser: (state, userID: string) => {
+      if (Object.hasOwn(state.mutedUsers, userID)) {
+        return state.mutedUsers[userID]!;
+      }
+      return null;
+    },
   },
 });
 
@@ -303,9 +324,73 @@ export const {
   deleteMessageByID,
   deleteMessagesByUser,
   deleteAllMessages,
-  muteUser,
-  unmuteUser,
+  userMuted,
+  userUnmuted,
+  receiveSkip,
 } = slice.actions;
+
+export const {
+  motdSource: motdSourceSelector,
+  mutedUser: mutedUserSelector,
+} = slice.selectors;
+export const motdSelector = createSelector([slice.selectors.motdSource], (source) => {
+  return source ? parseChatMarkup(source) : null;
+});
+
+const MAX_MESSAGES = 500;
+const allMessagesSelector = (state: StoreState) => state.chat.messages;
+// Hide notifications that are disabled.
+function applyNotificationSettings(
+  messages: Message[],
+  notificationSettings: NotificationSettings,
+) {
+  return messages.filter((message) => {
+    if (message.type === 'userJoin') return notificationSettings.userJoin;
+    if (message.type === 'userLeave') return notificationSettings.userLeave;
+    if (message.type === 'userNameChanged') return notificationSettings.userNameChanged;
+    if (message.type === 'skip') return notificationSettings.skip;
+    return true;
+  });
+}
+// Only show the most recent now playing notification.
+function collapseNowPlayingNotifications(messages: Message[]) {
+  return messages.filter((message, i) => {
+    if (message.type !== 'nowPlaying') return true;
+    const nextMessage = messages[i + 1];
+    return nextMessage && nextMessage.type !== 'nowPlaying';
+  });
+}
+const filteredMessagesSelector = createSelector(
+  [allMessagesSelector, notificationSettingsSelector],
+  (messages, notificationSettings) => collapseNowPlayingNotifications(
+    applyNotificationSettings(messages, notificationSettings),
+  ),
+);
+export const messagesSelector = createSelector(
+  [filteredMessagesSelector],
+  (messages) => messages.slice(-MAX_MESSAGES),
+);
+
+export const muteTimeoutsSelector = createSelector(
+  [slice.selectors.mutes],
+  (mutes) => mapValues(mutes, (mute) => mute.expirationTimer),
+);
+
+export const mutedUserIDsSelector = createSelector(
+  [slice.selectors.mutes],
+  (mutes) => Object.keys(mutes),
+);
+
+export const mutedUsersSelector = createSelector(
+  [mutedUserIDsSelector, usersSelector],
+  (mutedIDs, users) => mutedIDs.map((userID) => users[userID]),
+);
+
+export const currentUserMuteSelector = (state: StoreState) => {
+  const user = currentUserSelector(state);
+  const mutes = slice.selectors.mutes(state);
+  return user ? mutes[user._id] : null;
+};
 
 export const setMotd = createAsyncThunk('chat/setMotd', async (text: string, api) => {
   const { data } = await uwFetch<{
@@ -316,6 +401,32 @@ export const setMotd = createAsyncThunk('chat/setMotd', async (text: string, api
   }]);
 
   api.dispatch(log(`Message of the Day is now: ${data.motd}`));
+});
+
+export const deleteChatMessage = createAsyncThunk('chat/deleteMessage', async (id: string) => {
+  await uwFetch([`/chat/${id}`, { method: 'delete' }]);
+});
+
+export const deleteChatMessagesByUser = createAsyncThunk('chat/deleteMessage', async (userID: string) => {
+  await uwFetch([`/chat/user/${userID}`, { method: 'delete' }]);
+});
+
+export const deleteAllChatMessages = createAsyncThunk('chat/deleteMessage', async () => {
+  await uwFetch(['/chat', { method: 'delete' }]);
+});
+
+export const muteUser = createAsyncThunk('chat/muteUser', async (param: { userID: string, duration?: number }) => {
+  const time = param.duration ?? 600_000; // 10 minutes
+  await uwFetch([`/users/${param.userID}/mute`, {
+    method: 'post',
+    data: { time },
+  }]);
+});
+
+export const unmuteUser = createAsyncThunk('chat/muteUser', async (param: { userID: string }) => {
+  await uwFetch([`/users/${param.userID}/mute`, {
+    method: 'delete',
+  }]);
 });
 
 export default slice.reducer;

@@ -1,7 +1,7 @@
 import cx from 'clsx';
 import Avatar from '../Avatar';
 import Username from '../Username';
-import { User } from '../../reducers/users';
+import type { User } from '../../reducers/users';
 
 type UserRowProps = {
   className?: string,

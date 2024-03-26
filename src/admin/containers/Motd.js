@@ -1,17 +1,12 @@
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import Motd from '../components/Motd';
-import { setMotd } from '../../reducers/chat';
-import {
-  rawMotdSelector,
-  markupCompilerOptionsSelector,
-} from '../../selectors/chatSelectors';
-import { canChangeMotdSelector } from '../selectors/authSelectors';
+import { motdSourceSelector, setMotd } from '../../reducers/chat';
+import { markupCompilerOptionsSelector } from '../../selectors/chatSelectors';
 
 const mapStateToProps = createStructuredSelector({
-  initialMotd: rawMotdSelector,
+  initialMotd: motdSourceSelector,
   compileOptions: markupCompilerOptionsSelector,
-  canChangeMotd: canChangeMotdSelector,
 });
 
 const mapDispatchToProps = {

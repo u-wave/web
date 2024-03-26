@@ -1,6 +1,5 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import persistSettings from './persistSettings';
-import webApiRequest from './request';
 import webApiSocket from './socket';
 import webApiSocketHandler from './socketHandler';
 import * as reducers from '../reducers';
@@ -17,9 +16,6 @@ function createUwaveStore(preloadedState = {}, options = {}) {
   const store = configureStore({
     reducer,
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(
-      // This allows dispatching REQUEST_START actions to the store, which will
-      // then be executed and handled as HTTP requests by the middleware.
-      webApiRequest(),
       webApiSocket({ url: options.socketUrl }),
       webApiSocketHandler.middleware,
     ),

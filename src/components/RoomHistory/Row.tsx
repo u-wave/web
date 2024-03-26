@@ -8,7 +8,7 @@ import SongTitle from '../SongTitle';
 import TimeAgo from '../TimeAgo';
 import HistoryActions from './HistoryActions';
 import HistoryVotes from './Votes';
-import { HistoryEntry } from '../../hooks/useRoomHistory';
+import type { HistoryEntry } from '../../hooks/useRoomHistory';
 
 const {
   useCallback,

@@ -11,6 +11,7 @@ import { mdiPencil } from '@mdi/js';
 import parse from 'u-wave-parse-chat-markup';
 import SvgIcon from '../../../components/SvgIcon';
 import Markup from '../../../components/Chat/Markup';
+import useHasRole from '../../../hooks/useHasRole';
 
 const {
   useCallback,
@@ -23,11 +24,11 @@ const {
 function Motd({
   initialMotd,
   compileOptions,
-  canChangeMotd = false,
   onSetMotd,
 }) {
   const [newMotd, setMotd] = useState(initialMotd);
   const [expanded, setExpanded] = useState(false);
+  const canChangeMotd = useHasRole('moderator'); // TODO narrow?
   const parsedMotd = useMemo(() => {
     if (newMotd == null) {
       return null;
@@ -90,7 +91,6 @@ function Motd({
 Motd.propTypes = {
   initialMotd: PropTypes.string,
   compileOptions: PropTypes.object.isRequired,
-  canChangeMotd: PropTypes.bool,
   onSetMotd: PropTypes.func.isRequired,
 };
 

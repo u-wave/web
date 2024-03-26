@@ -1,6 +1,5 @@
 import { useCallback } from 'react';
 import { useSelector, useDispatch } from '../hooks/useRedux';
-import { favoriteMedia } from '../actions/VoteActionCreators';
 import {
   close,
   isFavoriteSelector,
@@ -10,7 +9,12 @@ import {
   historyIDSelector,
 } from '../reducers/addToPlaylistMenu';
 import AddToPlaylistMenu from '../components/AddToPlaylistMenu';
-import { addPlaylistItems, createPlaylist, Playlist } from '../reducers/playlists';
+import { favorite as favoriteMedia } from '../reducers/booth';
+import {
+  addPlaylistItems,
+  createPlaylist,
+  type Playlist,
+} from '../reducers/playlists';
 
 function AddToPlaylistMenuContainer() {
   const dispatch = useDispatch();
@@ -28,7 +32,7 @@ function AddToPlaylistMenuContainer() {
   }, [dispatch]);
   const onSelect = useCallback((playlist: Playlist) => {
     if (isFavorite) {
-      return dispatch(favoriteMedia(playlist, historyID!));
+      return dispatch(favoriteMedia({ playlistID: playlist._id, historyID: historyID! }));
     }
     return dispatch(addPlaylistItems({ playlistID: playlist._id, items: media! }));
   }, [dispatch, isFavorite, historyID, media]);

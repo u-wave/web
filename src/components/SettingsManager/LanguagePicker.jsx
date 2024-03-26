@@ -1,9 +1,8 @@
-import React from 'react';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { useTranslator } from '@u-wave/react-translate';
 import { useSelector } from '../../hooks/useRedux';
-import { availableLanguagesSelector } from '../../selectors/localeSelectors';
+import { availableLanguagesSelector } from '../../reducers/locales';
 
 function LanguagePicker(props) {
   const { t } = useTranslator();

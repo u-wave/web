@@ -22,6 +22,10 @@ declare module '@u-wave/react-translate' {
   import { Translator } from '@u-wave/translate';
 
   export function useTranslator(): Translator;
+  export function Interpolate(props: {
+    i18nKey: string,
+    [props: string]: React.ReactNode,
+  }): JSX.Element;
 }
 
 declare module 'item-selection/immutable' {

@@ -1,7 +1,7 @@
 import cx from 'clsx';
 import { useCallback } from 'react';
 import useUserCard from '../../hooks/useUserCard';
-import { User } from '../../reducers/users';
+import type { User } from '../../reducers/users';
 import Avatar from '../Avatar';
 import Username from '../Username';
 import Position from './Position';

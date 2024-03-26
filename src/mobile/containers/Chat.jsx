@@ -1,6 +1,5 @@
-import React from 'react';
 import { useSelector } from '../../hooks/useRedux';
-import { isLoggedInSelector } from '../../selectors/userSelectors';
+import { isLoggedInSelector } from '../../reducers/auth';
 import ChatMessages from '../../containers/ChatMessages';
 import ChatInput from '../../containers/ChatInput';
 import LoginButtons from './LoginButtons';

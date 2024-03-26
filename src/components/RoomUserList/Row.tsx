@@ -8,7 +8,7 @@ import useUserCard from '../../hooks/useUserCard';
 import Avatar from '../Avatar';
 import Username from '../Username';
 import SvgIcon from '../SvgIcon';
-import { User } from '../../reducers/users';
+import type { User } from '../../reducers/users';
 
 export interface RoomUser extends User {
   votes: {

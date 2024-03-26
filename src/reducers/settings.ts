@@ -1,8 +1,16 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { type PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { dset } from 'dset';
 import deepmerge from 'deepmerge';
 import type { StoreState } from '../redux/configureStore';
 import { availableLanguages } from '../locales';
+import { isPreviewMediaDialogOpenSelector } from './dialogs';
+
+export interface NotificationSettings {
+  userJoin: boolean;
+  userLeave: boolean;
+  userNameChanged: boolean;
+  skip: boolean;
+}
 
 const initialState = {
   language: null as null | string,
@@ -117,6 +125,22 @@ export function videoEnabledSelector(state: StoreState) {
 
 export function mentionSoundEnabledSelector(state: StoreState) {
   return state.settings.mentionSound;
+}
+
+export function notificationSettingsSelector(state: StoreState) {
+  return state.settings.notifications;
+}
+
+export function playbackMutedSelector(state: StoreState) {
+  return isMutedSelector(state) || isPreviewMediaDialogOpenSelector(state);
+}
+
+export function playbackVolumeSelector(state: StoreState) {
+  return playbackMutedSelector(state) ? 0 : volumeSelector(state);
+}
+
+export function mobilePlaybackVolumeSelector(state: StoreState) {
+  return playbackMutedSelector(state) ? 0 : 100;
 }
 
 export default slice.reducer;

@@ -7,10 +7,10 @@ import createCache from '@emotion/cache';
 import AppContainer from './containers/App';
 import { get as readSession } from './utils/Session';
 import configureStore from './redux/configureStore';
-import { socketConnect, setSessionToken } from './actions/LoginActionCreators';
+import { socketConnect } from './actions/LoginActionCreators';
 import { loadCurrentLanguage } from './actions/LocaleActionCreators';
-import { MediaSource } from './context/MediaSourceContext';
-import { initState } from './reducers/auth';
+import type { MediaSource } from './context/MediaSourceContext';
+import { initState, setSessionToken } from './reducers/auth';
 
 interface UwaveOptions {
   apiUrl?: string;

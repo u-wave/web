@@ -1,14 +1,26 @@
 import type { AnyAction } from 'redux';
-import { type PayloadAction, createSlice, ThunkAction } from '@reduxjs/toolkit';
+import {
+  type PayloadAction,
+  createSelector,
+  createSlice,
+  type ThunkAction,
+} from '@reduxjs/toolkit';
 import indexBy from 'just-index';
+import naturalCmp from 'natural-compare';
+import { createAsyncThunk } from '../redux/api';
 import type { StoreState } from '../redux/configureStore';
-import { initState } from './auth';
+import uwFetch from '../utils/fetch';
+import { currentUserIDSelector, initState } from './auth';
+import { rolesSelector } from './config';
+
+const SUPERUSER_ROLE = '*';
 
 export interface User {
   _id: string;
   username: string;
   avatar: string;
   roles: string[];
+  createdAt: string,
 }
 
 interface State {
@@ -20,6 +32,27 @@ const initialState: State = {
   users: {},
   guests: 0,
 };
+
+export const addUserRole = createAsyncThunk('users/addRole', async (param: { userID: string, role: string }) => {
+  const url = `/users/${encodeURIComponent(param.userID)}/roles/${encodeURIComponent(param.role)}`;
+  await uwFetch([url, { method: 'put' }]);
+});
+
+export const removeUserRole = createAsyncThunk('users/removeRole', async (param: { userID: string, role: string }) => {
+  const url = `/users/${encodeURIComponent(param.userID)}/roles/${encodeURIComponent(param.role)}`;
+  await uwFetch([url, { method: 'delete' }]);
+});
+
+export const banUser = createAsyncThunk('users/ban', async (param: { userID: string, duration?: number, permanent?: boolean }) => {
+  await uwFetch(['/bans', {
+    method: 'post',
+    data: {
+      userID: param.userID,
+      duration: param.duration ?? undefined,
+      permanent: param.permanent ?? true,
+    },
+  }]);
+});
 
 const slice = createSlice({
   name: 'users',
@@ -69,6 +102,10 @@ const slice = createSlice({
       Object.assign(state.users, indexBy(action.payload.users, '_id'));
     });
   },
+  selectors: {
+    usersByID: (state) => state.users,
+    user: (state, id: string) => state.users[id],
+  },
 });
 
 // So other reducers can use them
@@ -78,15 +115,103 @@ export const {
   receiveGuestCount,
   userJoin,
 } = actions;
+export const {
+  user: userSelector,
+  usersByID: usersSelector,
+} = slice.selectors;
 
-function selectUser(state: StoreState, userID: string) {
-  return state.users.users[userID];
+export function currentUserSelector(state: StoreState) {
+  const userID = currentUserIDSelector(state);
+  if (userID) {
+    return userSelector(state, userID);
+  }
+  return null;
 }
 
+// Flatten a user's roles.
+function getAllUserRoles(roles: Record<string, string[]>, user: User) {
+  function getSubRoles(subRoles: string[], role: string): string[] {
+    // Recursive Reduce!
+    return roles[role]!.reduce(
+      getSubRoles,
+      [role, ...subRoles],
+    );
+  }
+  return user.roles ? user.roles.reduce(getSubRoles, []) : [];
+}
+
+function compareUsers(roles: Record<string, string[]>) {
+  return (a: User, b: User) => {
+    const aRoles = getAllUserRoles(roles, a);
+    const bRoles = getAllUserRoles(roles, b);
+    // Sort superusers to the top,
+    if (aRoles.includes(SUPERUSER_ROLE)) {
+      return -1;
+    }
+    if (bRoles.includes(SUPERUSER_ROLE)) {
+      return 1;
+    }
+    // other users by the amount of permissions they have,
+    if (aRoles.length > bRoles.length) {
+      return -1;
+    }
+    if (aRoles.length < bRoles.length) {
+      return 1;
+    }
+    // and sort by username if the roles are equal.
+    return naturalCmp(a.username.toLowerCase(), b.username.toLowerCase());
+  };
+}
+
+export const userListSelector = createSelector(
+  [rolesSelector, usersSelector],
+  (roles, users) => Object.values(users).sort(compareUsers(roles)),
+);
+
+export function userCountSelector(state: StoreState) {
+  return Object.keys(state.users.users).length;
+}
+
+export function guestCountSelector(state: StoreState) {
+  return state.users.guests;
+}
+
+export function listenerCountSelector(state: StoreState) {
+  return userCountSelector(state) + guestCountSelector(state);
+}
+
+export function userHasRole(roleConfig: Record<string, string[]>, user: User, role: string) {
+  if (user.roles.includes('*')) {
+    return true;
+  }
+
+  // TODO would be faster to stop iterating as soon as we find it
+  return getAllUserRoles(roleConfig, user).includes(role);
+}
+
+export function userHasRoleSelector(state: StoreState, user: User, role: string) {
+  const roleConfig = rolesSelector(state);
+  return userHasRole(roleConfig, user, role);
+}
+
+export function currentUserHasRoleSelector(state: StoreState, role: string) {
+  const currentUser = currentUserSelector(state);
+  return currentUser != null && userHasRoleSelector(state, currentUser, role);
+}
+
+export function isModeratorSelector(state: StoreState) {
+  return currentUserHasRoleSelector(state, 'moderator');
+}
+
+export function isManagerSelector(state: StoreState) {
+  return currentUserHasRoleSelector(state, 'manager');
+}
+
+// TODO move to prepare()?
 export function userLeave(payload: { userID: string }):
     ThunkAction<unknown, StoreState, never, AnyAction> {
   return (dispatch, getState) => {
-    const user = selectUser(getState(), payload.userID);
+    const user = userSelector(getState(), payload.userID);
     if (user) {
       dispatch(slice.actions.userLeave({
         user,
@@ -99,7 +224,7 @@ export function userLeave(payload: { userID: string }):
 export function addRoles(payload: { userID: string, roles: string[] }):
     ThunkAction<unknown, StoreState, never, AnyAction> {
   return (dispatch, getState) => {
-    const user = selectUser(getState(), payload.userID);
+    const user = userSelector(getState(), payload.userID);
     if (user) {
       dispatch(slice.actions.addRoles({
         user,
@@ -113,7 +238,7 @@ export function addRoles(payload: { userID: string, roles: string[] }):
 export function removeRoles(payload: { userID: string, roles: string[] }):
     ThunkAction<unknown, StoreState, never, AnyAction> {
   return (dispatch, getState) => {
-    const user = selectUser(getState(), payload.userID);
+    const user = userSelector(getState(), payload.userID);
     if (user) {
       dispatch(slice.actions.removeRoles({
         user,
@@ -127,7 +252,7 @@ export function removeRoles(payload: { userID: string, roles: string[] }):
 export function usernameChanged(payload: { userID: string, username: string }):
     ThunkAction<unknown, StoreState, never, AnyAction> {
   return (dispatch, getState) => {
-    const user = selectUser(getState(), payload.userID);
+    const user = userSelector(getState(), payload.userID);
     if (user) {
       dispatch(slice.actions.usernameChanged({
         user,

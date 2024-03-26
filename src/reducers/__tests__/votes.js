@@ -1,6 +1,5 @@
 import { initState } from '../auth';
-import { advance } from '../booth';
-import votes from '../votes';
+import booth, { advanceInner } from '../booth';
 
 const EMPTY_STATE = {
   upvotes: [],
@@ -8,25 +7,33 @@ const EMPTY_STATE = {
   favorites: [],
 };
 
+// NOTE this whole test is super janky because it didn't use to be
+// part of the booth state. The state objects in this test are very incomplete
+// and tied to what the booth reducer minimally expects.
 describe('reducers/votes', () => {
-  const initialState = () => votes(undefined, { type: '@@redux/INIT' });
+  const initialState = () => booth(undefined, { type: '@@redux/INIT' });
   it('should not respond to unrelated actions', () => {
-    let state = { upvotes: ['JL2G9-1Hc8p80_AxlcwZC'] };
-    state = votes(state, { type: 'randomOtherAction', payload: {} });
-    expect(state.upvotes).toEqual(['JL2G9-1Hc8p80_AxlcwZC']);
+    let state = {
+      stats: {
+        upvotes: ['JL2G9-1Hc8p80_AxlcwZC'],
+      },
+    };
+    state = booth(state, { type: 'randomOtherAction', payload: {} });
+    expect(state.stats.upvotes).toEqual(['JL2G9-1Hc8p80_AxlcwZC']);
   });
 
-  it('should default to empty vote arrays', () => {
-    const state = votes(undefined, { type: '@@redux/INIT' });
-    expect(state).toEqual(EMPTY_STATE);
+  it('should be null if the booth is empty', () => {
+    const state = booth(undefined, { type: '@@redux/INIT' });
+    expect(state.stats).toEqual(null);
   });
 
-  describe('action: auth/INIT_STATE', () => {
+  describe('action: auth/initState', () => {
     let state = initialState();
 
     it('should load in votes from the init endpoint', () => {
-      state = votes(state, initState.fulfilled({
+      state = booth(state, initState.fulfilled({
         booth: {
+          media: {},
           stats: {
             upvotes: ['JL2G9-1Hc8p80_AxlcwZC'],
             downvotes: [],
@@ -35,35 +42,35 @@ describe('reducers/votes', () => {
         },
       }));
 
-      expect(state).toEqual({
+      expect(state.stats).toEqual({
         upvotes: ['JL2G9-1Hc8p80_AxlcwZC'],
         downvotes: [],
         favorites: ['0slaUXdWdE3Pz4cbjocYV'],
       });
     });
 
-    it('should clear votes if init endpoint has empty booth', () => {
-      state = votes(state, initState.fulfilled({
+    it('should be null if the booth is empty', () => {
+      state = booth(state, initState.fulfilled({
         booth: null,
       }));
 
-      expect(state).toEqual(EMPTY_STATE);
+      expect(state.stats).toEqual(null);
     });
   });
 
   describe('action: booth/advance', () => {
     it('should reset votes state', () => {
-      const state = votes({
+      const state = booth({
         upvotes: ['nFy0Ts_UqrsUx8ddipZG9', 'OAxkeiBoNXWnejk9bPjpp'],
         downvotes: ['HE1HhtApndA-kpB8KeI6m'],
         favorites: ['JL2G9-1Hc8p80_AxlcwZC', '0slaUXdWdE3Pz4cbjocYV'],
-      }, advance({
+      }, advanceInner({
         historyID: 'E1YirtFAC9erLKDION4J0',
         userID: 'kxZex8C4IQ97YnPuOQezB',
         media: { artist: 'about tess', title: 'Imaginedit' },
         timestamp: 1449767164107,
       }));
-      expect(state).toEqual(EMPTY_STATE);
+      expect(state.stats).toEqual(EMPTY_STATE);
     });
   });
 });

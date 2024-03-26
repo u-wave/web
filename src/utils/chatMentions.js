@@ -1,4 +1,4 @@
-import { userListSelector } from '../selectors/userSelectors';
+import { userListSelector } from '../reducers/users';
 import * as groupMentions from './groupMentions';
 
 export { groupMentions };

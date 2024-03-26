@@ -1,6 +1,6 @@
 import MediaList from '../MediaList';
 import PlaylistEmpty from '../../../components/PlaylistManager/Panel/PlaylistEmpty';
-import { PlaylistItem } from '../../../reducers/playlists';
+import type { PlaylistItem } from '../../../reducers/playlists';
 
 type PlaylistPanelProps = {
   items: (PlaylistItem | null)[],

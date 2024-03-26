@@ -1,9 +1,8 @@
 import { vi } from 'vitest';
 import createStore from '../../redux/configureStore';
-import * as actions from '../chat';
+import * as s from '../chat';
 import * as a from '../../actions/ChatActionCreators';
-import * as s from '../../selectors/chatSelectors';
-import * as userSelectors from '../../selectors/userSelectors';
+import * as authSlice from '../auth';
 
 function preloadUsers(users) {
   return {
@@ -36,6 +35,7 @@ describe('reducers/chat', () => {
     const testUser = {
       _id: '643abc235',
       username: 'TestUser',
+      roles: [],
     };
 
     it('should add a message to the messages list', () => {
@@ -62,9 +62,10 @@ describe('reducers/chat', () => {
       const inFlightUser = {
         _id: 'a user id',
         username: 'SendingUser',
+        roles: [],
       };
 
-      vi.spyOn(userSelectors, 'currentUserSelector').mockReturnValue(inFlightUser);
+      vi.spyOn(authSlice, 'currentUserSelector').mockReturnValue(inFlightUser);
 
       const { dispatch, getState } = createStore(preloadUsers([testUser, inFlightUser]));
 
@@ -93,7 +94,7 @@ describe('reducers/chat', () => {
 
   describe('action: chat/SEND_MESSAGE', () => {
     const testMessage = {
-      user: { _id: '643abc235' },
+      user: { _id: '643abc235', roles: [] },
       message: 'Message text',
       parsed: ['Message text'],
     };
@@ -109,7 +110,7 @@ describe('reducers/chat', () => {
 
     it('should add an in-flight message to the messages list immediately', () => {
       const { dispatch, getState } = createStore();
-      vi.spyOn(userSelectors, 'currentUserSelector').mockReturnValue(testMessage.user);
+      vi.spyOn(authSlice, 'currentUserSelector').mockReturnValue(testMessage.user);
 
       dispatch(a.sendChat(testMessage.message));
       expect(s.messagesSelector(getState())).toHaveLength(1);
@@ -130,7 +131,7 @@ describe('reducers/chat', () => {
       const MESSAGES = 100;
       const { dispatch, getState } = createStore();
       for (let i = 0; i < MESSAGES; i += 1) {
-        dispatch(actions.log(`Test message ${i}`));
+        dispatch(s.log(`Test message ${i}`));
       }
       expect(s.messagesSelector(getState())).toHaveLength(MESSAGES);
     });
@@ -140,10 +141,10 @@ describe('reducers/chat', () => {
     let dispatch;
     let getState;
     const testUsers = [
-      { _id: '1', username: 'User One' },
-      { _id: '2', username: 'User Two' },
-      { _id: '3', username: 'User Three' },
-      { _id: '4', username: 'User Four' },
+      { _id: '1', username: 'User One', roles: [] },
+      { _id: '2', username: 'User Two', roles: [] },
+      { _id: '3', username: 'User Three', roles: [] },
+      { _id: '4', username: 'User Four', roles: [] },
     ];
 
     beforeEach(() => {
@@ -151,7 +152,7 @@ describe('reducers/chat', () => {
     });
 
     const addTestMute = () => {
-      dispatch(actions.muteUser({
+      dispatch(s.userMuted({
         userID: '1',
         moderatorID: '4',
         expiresAt: Date.now() + 3000,
@@ -161,7 +162,7 @@ describe('reducers/chat', () => {
     it('chat/MUTE_USER should register muted users', () => {
       expect(s.mutedUsersSelector(getState())).toHaveLength(0);
 
-      dispatch(actions.muteUser({
+      dispatch(s.userMuted({
         userID: '1',
         moderatorID: '4',
         expiresAt: Date.now() + 3000,
@@ -187,7 +188,7 @@ describe('reducers/chat', () => {
       addTestMute();
 
       expect(s.mutedUsersSelector(getState())).toHaveLength(1);
-      dispatch(actions.unmuteUser({ userID: '1', moderatorID: '3' }));
+      dispatch(s.userUnmuted({ userID: '1', moderatorID: '3' }));
       expect(s.mutedUsersSelector(getState())).toHaveLength(0);
 
       expect(s.messagesSelector(getState())).toHaveLength(0);

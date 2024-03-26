@@ -6,7 +6,7 @@ import MediaLoadingIndicator from './MediaLoadingIndicator';
 import MediaSourceIcon from './MediaSourceIcon';
 import MediaThumbnail from './MediaThumbnail';
 import MediaActions from './MediaActions';
-import { Media } from '../../reducers/booth';
+import type { Media } from '../../reducers/booth';
 
 type MediaRowProps = {
   className?: string,

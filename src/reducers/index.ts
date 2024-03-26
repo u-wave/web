@@ -12,9 +12,7 @@ import playlists from './playlists';
 import server from './server';
 import settings from './settings';
 import theme from './theme';
-import time from './time';
 import users from './users';
-import votes from './votes';
 import waitlist from './waitlist';
 import mobile from '../mobile/reducers';
 
@@ -33,9 +31,7 @@ export {
   server,
   settings,
   theme,
-  time,
   users,
-  votes,
   waitlist,
   mobile,
 };

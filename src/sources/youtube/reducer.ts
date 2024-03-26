@@ -1,4 +1,4 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { type PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { createAsyncThunk } from '../../redux/api';
 import uwFetch from '../../utils/fetch';
 import { createPlaylist } from '../../reducers/playlists';

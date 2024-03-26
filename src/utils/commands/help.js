@@ -1,4 +1,4 @@
-import { log } from '../../actions/ChatActionCreators';
+import { log } from '../../reducers/chat';
 
 export default [{
   name: 'help',

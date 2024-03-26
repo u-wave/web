@@ -1,14 +1,12 @@
-import type { AnyAction } from 'redux';
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { type PayloadAction, createSelector, createSlice } from '@reduxjs/toolkit';
 import escapeStringRegExp from 'escape-string-regexp';
 import indexBy from 'just-index';
 import naturalCmp from 'natural-compare';
 import { createAsyncThunk } from '../redux/api';
-import uwFetch, { ListResponse } from '../utils/fetch';
+import uwFetch, { type ListResponse } from '../utils/fetch';
 import mergeIncludedModels from '../utils/mergeIncludedModels';
-import { DO_FAVORITE_COMPLETE, LOGOUT_COMPLETE } from '../constants/ActionTypes';
-import type { Media } from './booth';
-import { initState } from './auth';
+import { favorite, type Media } from './booth';
+import { initState, logout } from './auth';
 
 export interface Playlist {
   _id: string;
@@ -36,7 +34,8 @@ interface ApiMedia {
   createdAt: string;
   updatedAt: string;
 }
-interface ApiPlaylistItemMerged {
+/** TODO don't export? */
+export interface ApiPlaylistItemMerged {
   _id: string;
   artist: string;
   title: string;
@@ -47,6 +46,7 @@ interface ApiPlaylistItemMerged {
   updatedAt: string;
 }
 
+/** TODO remove */
 function flattenPlaylistItem(item: ApiPlaylistItemMerged): PlaylistItem {
   return {
     ...item.media,
@@ -78,6 +78,13 @@ const initialState: State = {
   currentFilter: null,
 };
 
+function getPlaylistItems(
+  playlistItems: Record<string, PlaylistItemList>,
+  playlist: Playlist,
+): PlaylistItemList {
+  return playlistItems[playlist._id] ?? Array(playlist.size).fill(null);
+}
+
 type InsertPosition =
   | { at: 'start', after?: undefined }
   | { at: 'end', after?: undefined }
@@ -92,11 +99,7 @@ function processInsert(list: PlaylistItemList, insert: PlaylistItem[], position:
   } else if (position.after != null && position.after !== -1) {
     insertIdx = list.findIndex((media) => media !== null && media._id === position.after) + 1;
   }
-  return [
-    ...list.slice(0, insertIdx),
-    ...insert,
-    ...list.slice(insertIdx),
-  ];
+  return list.toSpliced(insertIdx, 0, ...insert);
 }
 
 // Moves a list of media items to a given position in the playlist.
@@ -353,7 +356,12 @@ const movePlaylistItems = createAsyncThunk('playlists/movePlaylistItems', async 
   medias: PlaylistItem[],
   target: InsertTarget,
 }, api) => {
-  const playlistItems = api.getState().playlists.playlistItems[playlistID] ?? [];
+  const state = api.getState().playlists;
+  const playlist = state.playlists[playlistID];
+  if (playlist == null) {
+    throw new Error('Attempt to move items in an unknown playlist');
+  }
+  const playlistItems = getPlaylistItems(state.playlistItems, playlist);
   const location = resolveMoveOptions(playlistItems, target);
   const items = medias.map((media) => media._id);
 
@@ -474,7 +482,7 @@ const slice = createSlice({
           state.selectedPlaylistID ??= payload.activePlaylist ?? payload.playlists[0]?._id ?? null;
         }
       })
-      .addCase(LOGOUT_COMPLETE, () => {
+      .addCase(logout.fulfilled, () => {
         return initialState;
       })
       .addCase(activatePlaylist.pending, (state, action) => {
@@ -632,35 +640,52 @@ const slice = createSlice({
         const { playlistID, afterID = null } = action.meta.arg;
         const { playlistSize, items } = action.payload;
 
-        const playlistItems = slice.getSelectors().playlistItems(state, playlistID);
         const playlist = state.playlists[playlistID];
-        if (playlist == null || playlistItems == null) {
+        if (playlist == null) {
           return;
         }
-
         playlist.loading = false;
         playlist.size = playlistSize;
-        state.playlistItems[playlistID] = processInsert(playlistItems, items, { after: afterID });
-      })
-      .addCase(DO_FAVORITE_COMPLETE, (state, { payload }: AnyAction) => {
-        const playlistItems = slice.getSelectors().playlistItems(state, payload.playlistID);
-        const playlist = state.playlists[payload.playlistID];
-        if (playlist == null || playlistItems == null) {
+
+        const playlistItems = state.playlistItems[playlistID];
+        if (playlistItems == null) {
           return;
         }
 
-        playlist.size = payload.newSize;
-        state.playlistItems[payload.playlistID] = processInsert(playlistItems, payload.added, { at: 'end' });
+        state.playlistItems[playlistID] = processInsert(playlistItems, items, { after: afterID });
+      })
+      .addCase(favorite.fulfilled, (state, action) => {
+        const { payload } = action;
+        const { playlistID } = action.meta.arg;
+        const playlist = state.playlists[playlistID];
+        if (playlist == null) {
+          return;
+        }
+        playlist.size = payload.playlistSize;
+
+        const playlistItems = state.playlistItems[playlistID];
+        if (playlistItems == null) {
+          return;
+        }
+        state.playlistItems[playlistID] = processInsert(playlistItems, payload.added, { at: 'end' });
       })
       .addCase(updatePlaylistItem.pending, (state, { meta }) => {
-        for (const item of state.playlistItems[meta.arg.playlistID] ?? []) {
+        const playlistItems = state.playlistItems[meta.arg.playlistID];
+        if (playlistItems == null) {
+          return;
+        }
+        for (const item of playlistItems) {
           if (item != null && item._id === meta.arg.mediaID) {
             item.loading = true;
           }
         }
       })
       .addCase(updatePlaylistItem.fulfilled, (state, { payload, meta }) => {
-        for (const item of state.playlistItems[meta.arg.playlistID] ?? []) {
+        const playlistItems = state.playlistItems[meta.arg.playlistID];
+        if (playlistItems == null) {
+          return;
+        }
+        for (const item of playlistItems) {
           if (item != null && item._id === meta.arg.mediaID) {
             item.loading = false;
             Object.assign(item, payload);
@@ -668,8 +693,12 @@ const slice = createSlice({
         }
       })
       .addCase(updatePlaylistItem.rejected, (state, { meta }) => {
+        const playlistItems = state.playlistItems[meta.arg.playlistID];
+        if (playlistItems == null) {
+          return;
+        }
         // Just remove the loading state
-        for (const item of state.playlistItems[meta.arg.playlistID] ?? []) {
+        for (const item of playlistItems) {
           if (item != null && item._id === meta.arg.mediaID) {
             item.loading = false;
           }
@@ -677,8 +706,12 @@ const slice = createSlice({
       })
       .addCase(movePlaylistItems.pending, (state, action) => {
         const { playlistID, medias } = action.meta.arg;
+        const playlistItems = state.playlistItems[playlistID];
+        if (playlistItems == null) {
+          return;
+        }
         const ids = new Set(medias.map((media) => media._id));
-        for (const item of state.playlistItems[playlistID] ?? []) {
+        for (const item of playlistItems) {
           if (item != null && ids.has(item._id)) {
             item.loading = true;
           }
@@ -687,16 +720,23 @@ const slice = createSlice({
       .addCase(movePlaylistItems.fulfilled, (state, action) => {
         const { playlistID, medias } = action.meta.arg;
         const { location } = action.payload;
-        state.playlistItems[playlistID] = processMove(
-          state.playlistItems[playlistID] ?? [],
-          medias,
-          location,
-        );
+        const playlist = state.playlists[playlistID];
+        if (playlist != null) {
+          state.playlistItems[playlistID] = processMove(
+            getPlaylistItems(state.playlistItems, playlist),
+            medias,
+            location,
+          );
+        }
       })
       .addCase(removePlaylistItems.pending, (state, action) => {
         const { playlistID, medias } = action.meta.arg;
+        const playlistItems = state.playlistItems[playlistID];
+        if (playlistItems == null) {
+          return;
+        }
         const ids = new Set(medias.map((media) => media._id));
-        for (const item of state.playlistItems[playlistID] ?? []) {
+        for (const item of playlistItems) {
           if (item != null && ids.has(item._id)) {
             item.loading = true;
           }
@@ -712,75 +752,79 @@ const slice = createSlice({
 
         const ids = new Set(medias.map((media) => media._id));
         playlist.size = newSize;
-        state.playlistItems[playlistID] = (state.playlistItems[playlistID] ?? [])
+        state.playlistItems[playlistID] = getPlaylistItems(state.playlistItems, playlist)
           .filter((media) => media === null || !ids.has(media._id));
       });
   },
   selectors: {
-    playlistsByID: (state) => state.playlists,
-    playlists: (state): Playlist[] => {
-      return Object.keys(state.playlists)
-        .map((id) => slice.getSelectors().playlist(state, id)!)
-        .sort(byName);
-    },
-    playlist: (state, id: string) => {
-      const playlist = state.playlists[id] ?? null;
-      if (playlist != null && playlist._id === state.activePlaylistID) {
-        return { ...playlist, active: true };
-      }
-      return playlist;
-    },
-    playlistItems: (state, id: string) => {
-      const playlist = state.playlists[id];
-      const playlistItems = state.playlistItems[id];
-      if (playlistItems) {
-        return playlistItems;
-      }
-      if (playlist) {
-        return Array(playlist.size).fill(null) as PlaylistItemList;
-      }
-      return null;
-    },
-    activePlaylistID: (state) => state.activePlaylistID,
-    selectedPlaylistID: (state) => state.selectedPlaylistID,
-    activePlaylist: (state): Playlist | null => (
-      state.activePlaylistID
-        ? slice.getSelectors().playlist(state, state.activePlaylistID)
-        : null
-    ),
-    selectedPlaylist: (state): Playlist | null => (
-      typeof state.selectedPlaylistID === 'string'
-        ? slice.getSelectors().playlist(state, state.selectedPlaylistID)
-        : null
-    ),
-    activePlaylistItems: (state): PlaylistItemList | null => {
-      const { activePlaylistID } = state;
-      return typeof activePlaylistID === 'string'
-        ? slice.getSelectors().playlistItems(state, activePlaylistID)
-        : null;
-    },
-    selectedPlaylistItems: (state) : PlaylistItemList | null => {
-      const { selectedPlaylistID } = state;
-      return typeof selectedPlaylistID === 'string'
-        ? slice.getSelectors().playlistItems(state, selectedPlaylistID)
-        : null;
-    },
-    playlistItemFilter: (state) => {
-      return state.currentFilter?.filter;
-    },
-    filteredSelectedPlaylistItems: (state) : PlaylistItemList | null => {
-      const { selectedPlaylistID, currentFilter } = state;
-      if (typeof selectedPlaylistID !== 'string') {
-        return null;
-      }
-      return currentFilter?.items ?? slice.getSelectors().playlistItems(state, selectedPlaylistID);
-    },
-    nextMedia: (state): PlaylistItem | null => {
-      const s = slice.getSelectors();
-      return s.activePlaylistItems(state)?.[0] ?? null;
-    },
+    base: (state) => state,
   },
 });
+
+const baseSelector = slice.selectors.base;
+type RootState = Parameters<typeof baseSelector>[0];
+export const playlistsByIDSelector = createSelector([baseSelector], (state) => {
+  return Object.fromEntries(
+    Object.entries(state.playlists)
+      .map(([id, playlist]) => [
+        id,
+        playlist._id === state.activePlaylistID ? { ...playlist, active: true } : playlist,
+      ]),
+  );
+});
+export const playlistSelector = (state: RootState, id: string) => {
+  return playlistsByIDSelector(state)[id] ?? null;
+};
+export const playlistsSelector = createSelector([playlistsByIDSelector], (playlists) => {
+  return Object.values(playlists).sort(byName);
+});
+export const playlistItemsSelector = createSelector(
+  [
+    (state: RootState, id: string) => state.playlists.playlists[id],
+    (state: RootState, id: string) => state.playlists.playlistItems[id],
+  ],
+  (playlist, playlistItems) => {
+    if (playlist != null) {
+      return playlistItems ?? Array(playlist.size).fill(null);
+    }
+    return null;
+  },
+);
+export const activePlaylistIDSelector = (state: RootState) => state.playlists.activePlaylistID;
+export const selectedPlaylistIDSelector = (state: RootState) => state.playlists.selectedPlaylistID;
+export const activePlaylistSelector = (state: RootState) => {
+  const activePlaylistID = activePlaylistIDSelector(state);
+  return activePlaylistID ? playlistSelector(state, activePlaylistID) : null;
+};
+export const selectedPlaylistSelector = (state: RootState) => {
+  const selectedPlaylistID = selectedPlaylistIDSelector(state);
+  return typeof selectedPlaylistID === 'string' ? playlistSelector(state, selectedPlaylistID) : null;
+};
+export const activePlaylistItemsSelector = (state: RootState) => {
+  const { activePlaylistID } = state.playlists;
+  return typeof activePlaylistID === 'string'
+    ? playlistItemsSelector(state, activePlaylistID)
+    : null;
+};
+export const selectedPlaylistItemsSelector = (state: RootState) => {
+  const { selectedPlaylistID } = state.playlists;
+  return typeof selectedPlaylistID === 'string'
+    ? playlistItemsSelector(state, selectedPlaylistID)
+    : null;
+};
+export const playlistItemFilterSelector = (state: RootState) => {
+  return state.playlists.currentFilter?.filter;
+};
+export const filteredSelectedPlaylistItemsSelector = (state: RootState) => {
+  const { selectedPlaylistID, currentFilter } = state.playlists;
+  if (typeof selectedPlaylistID !== 'string') {
+    return null;
+  }
+  return currentFilter?.items ?? playlistItemsSelector(state, selectedPlaylistID);
+};
+export const nextMediaSelector = (state: RootState): PlaylistItem | null => {
+  return activePlaylistItemsSelector(state)?.[0] ?? null;
+};
 
 export {
   createPlaylist,
@@ -802,17 +846,4 @@ export const {
   showImportPanel,
   showSearchResults,
 } = slice.actions;
-export const {
-  playlistsByID: playlistsByIDSelector,
-  playlists: playlistsSelector,
-  activePlaylistID: activePlaylistIDSelector,
-  activePlaylist: activePlaylistSelector,
-  selectedPlaylistID: selectedPlaylistIDSelector,
-  selectedPlaylist: selectedPlaylistSelector,
-  activePlaylistItems: activePlaylistItemsSelector,
-  selectedPlaylistItems: selectedPlaylistItemsSelector,
-  playlistItemFilter: playlistItemFilterSelector,
-  filteredSelectedPlaylistItems: filteredSelectedPlaylistItemsSelector,
-  nextMedia: nextMediaSelector,
-} = slice.selectors;
 export default slice.reducer;

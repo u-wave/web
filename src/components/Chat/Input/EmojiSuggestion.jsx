@@ -2,7 +2,7 @@ import cx from 'clsx';
 import PropTypes from 'prop-types';
 import { useSelector } from '../../../hooks/useRedux';
 import emojiUrl from '../../../utils/emojiUrl';
-import { customEmojiNamesSelector } from '../../../selectors/configSelectors';
+import { customEmojiNamesSelector } from '../../../reducers/config';
 
 const shortcode = (emoji) => `:${emoji.shortcode}:`;
 

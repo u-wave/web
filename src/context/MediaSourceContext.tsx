@@ -1,6 +1,6 @@
 import React from 'react';
 import type { AnyAction } from 'redux';
-import { Media } from '../reducers/booth';
+import type { Media } from '../reducers/booth';
 
 const {
   createContext,

@@ -7,7 +7,7 @@ import useUserCard from '../../hooks/useUserCard';
 import useIntl from '../../hooks/useIntl';
 import Avatar from '../Avatar';
 import Username from '../Username';
-import Markup, { CompileOptions } from './Markup';
+import Markup, { type CompileOptions } from './Markup';
 
 type DeleteButtonProps = {
   onDelete: () => void,

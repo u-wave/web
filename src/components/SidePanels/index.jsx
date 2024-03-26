@@ -7,11 +7,11 @@ import Chat from '../Chat';
 import RoomUserList from '../../containers/RoomUserList';
 import WaitList from '../../containers/WaitList';
 import PanelContainer from './PanelContainer';
-import { listenerCountSelector } from '../../selectors/userSelectors';
+import { listenerCountSelector } from '../../reducers/users';
 import {
   sizeSelector as waitlistSizeSelector,
   positionSelector as waitlistPositionSelector,
-} from '../../selectors/waitlistSelectors';
+} from '../../reducers/waitlist';
 
 const { useState, useCallback } = React;
 

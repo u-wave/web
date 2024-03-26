@@ -1,7 +1,6 @@
 import { bindActionCreators } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
-import { cannotDeleteActivePlaylist } from '../../actions/PlaylistActionCreators';
 import PlaylistPanel from '../components/PlaylistManager/PlaylistPanel';
 import {
   loadPlaylist,
@@ -47,7 +46,6 @@ const mergeProps = (state, { dispatch }, props) => ({
     onActivatePlaylist: activatePlaylist.bind(null, state.playlist._id),
     onRenamePlaylist: (name) => renamePlaylist({ playlistID: state.playlist._id, name }),
     onDeletePlaylist: deletePlaylist.bind(null, state.playlist._id),
-    onNotDeletable: cannotDeleteActivePlaylist,
     onMoveMedia: onMoveMedia(state.playlist._id),
     onLoadPlaylistPage: onLoadPlaylistPage(state),
     onFilterPlaylistItems:

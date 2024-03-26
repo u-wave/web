@@ -2,34 +2,33 @@ import cx from 'clsx';
 import React from 'react';
 import { useDispatch, useSelector } from '../../hooks/useRedux';
 import useCurrentUser from '../../hooks/useCurrentUser';
-import { skipSelf } from '../../actions/BoothActionCreators';
-import { skipCurrentDJ as modSkipCurrentDJ } from '../../actions/ModerationActionCreators';
 import { toggleOverlay } from '../../reducers/activeOverlay';
-import { joinWaitlist, leaveWaitlist } from '../../actions/WaitlistActionCreators';
-import { doUpvote, doDownvote } from '../../actions/VoteActionCreators';
 import { openFavoriteMenu } from '../../reducers/addToPlaylistMenu';
 import {
+  skipSelf,
+  skipCurrentDJ as modSkipCurrentDJ,
+  upvote,
+  downvote,
   djSelector,
-  isCurrentDJSelector,
-  canSkipSelector,
   endTimeSelector,
   historyIDSelector,
-} from '../../selectors/boothSelectors';
+  isCurrentDJSelector,
+  currentVoteStatsSelector,
+  canSkipSelector,
+} from '../../reducers/booth';
+import { activePlaylistSelector, nextMediaSelector } from '../../reducers/playlists';
 import {
-  activePlaylistSelector,
-  nextMediaSelector,
-} from '../../reducers/playlists';
-import { currentVoteStatsSelector } from '../../selectors/voteSelectors';
-import {
+  joinWaitlist,
+  leaveWaitlist,
   baseEtaSelector,
   userInWaitlistSelector,
   isLockedSelector,
-} from '../../selectors/waitlistSelectors';
+} from '../../reducers/waitlist';
 import NextMedia from './NextMedia';
 import UserInfo from './UserInfo';
 import SkipButton from './SkipButton';
 import WaitlistButton from './WaitlistButton';
-import ResponseBar from './Responses/Bar';
+import ResponseBar from './ResponseBar';
 
 const {
   useCallback,
@@ -59,30 +58,30 @@ function UserFooterContent() {
     dispatch(openFavoriteMenu(historyID, position));
   }, [historyID, dispatch]);
   const handleUpvote = useCallback(() => {
-    dispatch(doUpvote());
-  }, [dispatch]);
+    dispatch(upvote({ historyID }));
+  }, [dispatch, historyID]);
   const handleDownvote = useCallback(() => {
-    dispatch(doDownvote());
-  }, [dispatch]);
+    dispatch(downvote({ historyID }));
+  }, [dispatch, historyID]);
 
   const handleSkipTurn = useCallback((reason) => {
     if (!userIsDJ) {
-      return dispatch(modSkipCurrentDJ(reason));
+      return dispatch(modSkipCurrentDJ({ reason }));
     }
     return dispatch(skipSelf({ remove: false }));
   }, [userIsDJ, dispatch]);
 
   const handleJoinWaitlist = useCallback(() => {
-    dispatch(joinWaitlist(currentUser)).catch(() => {
+    dispatch(joinWaitlist()).catch(() => {
       // error is already reported
     });
-  }, [dispatch, currentUser]);
+  }, [dispatch]);
   const handleLeaveWaitlist = useCallback(() => {
     if (userIsDJ) {
       return dispatch(skipSelf({ remove: true }));
     }
-    return dispatch(leaveWaitlist(currentUser));
-  }, [userIsDJ, dispatch, currentUser]);
+    return dispatch(leaveWaitlist());
+  }, [userIsDJ, dispatch]);
 
   const canVote = !userIsDJ && !!currentDJ;
 

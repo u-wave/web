@@ -4,31 +4,23 @@ import ms from 'ms';
 import parseChatMarkup from 'u-wave-parse-chat-markup';
 import flashDocumentTitle from 'flash-document-title';
 import playMentionSound from '../utils/playMentionSound';
-import {
-  mutedUserIDsSelector,
-  currentUserMuteSelector,
-} from '../selectors/chatSelectors';
-import {
-  currentUserSelector,
-  userListSelector,
-  userHasRoleSelector,
-  currentUserHasRoleSelector,
-} from '../selectors/userSelectors';
+import { currentUserSelector } from '../reducers/auth';
 import {
   getAvailableGroupMentions,
   resolveMentions,
   hasMention,
 } from '../utils/chatMentions';
+import { mutedUserSelector } from '../reducers/chat';
 import * as actions from '../reducers/chat';
 import { mentionSoundEnabledSelector } from '../reducers/settings';
 import type { StoreState } from '../redux/configureStore';
-import type { User } from '../reducers/users';
+import {
+  type User,
+  userListSelector,
+  userHasRoleSelector,
+} from '../reducers/users';
 
 type Thunk = ThunkAction<unknown, StoreState, never, AnyAction>;
-
-export function log(text: string) {
-  return actions.log(text);
-}
 
 export function prepareMessage(state: StoreState, user: User, text: string, parseOpts = {}) {
   const parsed = parseChatMarkup(text, parseOpts);
@@ -40,15 +32,22 @@ export function prepareMessage(state: StoreState, user: User, text: string, pars
   });
 }
 
+function mentionsForSender(state: StoreState, sender: User) {
+  const users = userListSelector(state);
+  return [
+    ...users.map((user) => user.username),
+    ...getAvailableGroupMentions((mention) => userHasRoleSelector(state, sender, `chat.mention.${mention}`)),
+  ];
+}
+
 export function sendChat(text: string): Thunk {
   return (dispatch, getState) => {
     const state = getState();
     const sender = currentUserSelector(state);
-    const hasRole = currentUserHasRoleSelector(state);
-    const mute = currentUserMuteSelector(state);
-    if (mute) {
+    const mute = sender != null ? mutedUserSelector(state, sender._id) : null;
+    if (mute != null) {
       const timeLeft = ms(mute.expiresAt - Date.now(), { long: true });
-      dispatch(log(`You have been muted, and cannot chat for another ${timeLeft}.`));
+      dispatch(actions.log(`You have been muted, and cannot chat for another ${timeLeft}.`));
       return;
     }
 
@@ -57,19 +56,11 @@ export function sendChat(text: string): Thunk {
       return;
     }
 
-    const users = userListSelector(state);
     const message = prepareMessage(state, sender, text, {
-      mentions: [
-        ...users.map((user) => user.username),
-        ...getAvailableGroupMentions(hasRole),
-      ],
+      mentions: mentionsForSender(state, sender),
     });
     dispatch(message);
   };
-}
-
-function isMuted(state: StoreState, userID: string) {
-  return mutedUserIDsSelector(state).includes(userID);
 }
 
 export function receive(message: {
@@ -88,17 +79,14 @@ export function receive(message: {
       // TODO we should find the user somehow?
       return;
     }
-    const senderHasRole = userHasRoleSelector(state)(sender);
-    const mentions = [
-      ...users.map((user) => user.username),
-      ...getAvailableGroupMentions((mention) => senderHasRole(`chat.mention.${mention}`)),
-    ];
 
-    if (isMuted(state, message.userID)) {
+    if (mutedUserSelector(state, message.userID) != null) {
       return;
     }
 
-    const parsed = parseChatMarkup(message.text, { mentions });
+    const parsed = parseChatMarkup(message.text, {
+      mentions: mentionsForSender(state, sender),
+    });
     resolveMentions(parsed, state);
 
     const isMention = currentUser ? hasMention(parsed, currentUser._id) : false;

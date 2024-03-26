@@ -3,14 +3,12 @@ import {
   userListSelector,
   isModeratorSelector,
   isManagerSelector,
-} from '../../selectors/userSelectors';
-import {
-  deleteChatMessagesByUser,
-  deleteAllChatMessages,
-} from '../../actions/ModerationActionCreators';
+} from '../../reducers/users';
 import {
   log,
   setMotd,
+  deleteChatMessagesByUser,
+  deleteAllChatMessages,
 } from '../../reducers/chat';
 
 export default [

@@ -1,8 +1,9 @@
-import {
-  OPEN_EDIT_MEDIA_DIALOG, CLOSE_EDIT_MEDIA_DIALOG,
-  OPEN_LOGIN_DIALOG, CLOSE_LOGIN_DIALOG,
-} from '../../constants/ActionTypes';
-import dialogs from '../dialogs';
+import dialogs, {
+  openEditMediaDialog,
+  openLoginDialog,
+  closeEditMediaDialog,
+  closeLoginDialog,
+} from '../dialogs';
 
 const closedDialog = {
   open: false,
@@ -11,11 +12,11 @@ const closedDialog = {
 
 const initialState = () => dialogs(undefined, { type: '@@redux/INIT' });
 
-const testDialogOpen = (type, prop, text) => {
+const testDialogOpen = (actionCreator, prop, text) => {
   it(`${text}`, () => {
     let state = initialState();
     const testPayload = { test: 'payload' };
-    state = dialogs(state, { type, payload: testPayload });
+    state = dialogs(state, actionCreator(testPayload));
     expect(state[prop]).toEqual({
       open: true,
       payload: testPayload,
@@ -23,10 +24,10 @@ const testDialogOpen = (type, prop, text) => {
   });
 };
 
-const testDialogClose = (type, prop, text) => {
+const testDialogClose = (actionCreator, prop, text) => {
   it(`${text}`, () => {
     let state = initialState();
-    state = dialogs(state, { type });
+    state = dialogs(state, actionCreator());
     expect(state[prop]).toEqual({
       open: false,
       payload: null,
@@ -44,31 +45,31 @@ describe('reducers/dialogs', () => {
     expect(state.login).toEqual(closedDialog);
   });
 
-  describe('action: OPEN_EDIT_MEDIA_DIALOG', () => {
+  describe('action: openEditMediaDialog', () => {
     testDialogOpen(
-      OPEN_EDIT_MEDIA_DIALOG,
+      openEditMediaDialog,
       'editMedia',
       'should open the media edit dialog w/ the given payload',
     );
   });
-  describe('action: CLOSE_EDIT_MEDIA_DIALOG', () => {
+  describe('action: closeEditMediaDialog', () => {
     testDialogClose(
-      CLOSE_EDIT_MEDIA_DIALOG,
+      closeEditMediaDialog,
       'editMedia',
       'should close the media edit dialog w/ the given payload',
     );
   });
 
-  describe('action: OPEN_LOGIN_DIALOG', () => {
+  describe('action: openLoginDialog', () => {
     testDialogOpen(
-      OPEN_LOGIN_DIALOG,
+      openLoginDialog,
       'login',
       'should open the login dialog w/ the given payload',
     );
   });
-  describe('action: CLOSE_LOGIN_DIALOG', () => {
+  describe('action: closeLoginDialog', () => {
     testDialogClose(
-      CLOSE_LOGIN_DIALOG,
+      closeLoginDialog,
       'login',
       'should close the login dialog w/ the given payload',
     );

@@ -18,7 +18,6 @@ type PlaylistMetaProps = {
   onActivatePlaylist: () => Promise<void>,
   onRenamePlaylist: (newName: string) => Promise<void>,
   onDeletePlaylist: () => Promise<void>,
-  onNotDeletable: () => void,
   onFilter: (filter: string | null) => void,
 };
 function PlaylistMeta({
@@ -29,7 +28,6 @@ function PlaylistMeta({
   onActivatePlaylist,
   onRenamePlaylist,
   onDeletePlaylist,
-  onNotDeletable,
   onFilter,
 }: PlaylistMetaProps) {
   const { t } = useTranslator();
@@ -62,7 +60,6 @@ function PlaylistMeta({
       />
       <DeletePlaylistButton
         active={active}
-        onNotDeletable={onNotDeletable}
         onDelete={onDeletePlaylist}
       />
     </div>

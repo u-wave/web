@@ -1,15 +1,11 @@
 import { useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from '../hooks/useRedux';
-import {
-  motdSelector,
-  messagesSelector,
-  canDeleteMessagesSelector,
-} from '../selectors/chatSelectors';
-import { customEmojiNamesSelector } from '../selectors/configSelectors';
-import { deleteChatMessage } from '../actions/ModerationActionCreators';
+import { deleteChatMessage, motdSelector, messagesSelector } from '../reducers/chat';
+import { customEmojiNamesSelector } from '../reducers/config';
 import ChatMessages from '../components/Chat/ChatMessages';
 import useEmotes from '../hooks/useEmotes';
-import { CompileOptions } from '../components/Chat/Markup';
+import type { CompileOptions } from '../components/Chat/Markup';
+import useHasRole from '../hooks/useHasRole';
 
 function ChatMessagesContainer() {
   const dispatch = useDispatch();
@@ -22,7 +18,7 @@ function ChatMessagesContainer() {
     emojiImages: emotes,
     customEmojiNames,
   }), [emotes, customEmojiNames]);
-  const canDeleteMessages = useSelector(canDeleteMessagesSelector);
+  const canDeleteMessages = useHasRole('chat.delete');
   const onDeleteMessage = useCallback((id: string) => {
     dispatch(deleteChatMessage(id));
   }, [dispatch]);

@@ -1,18 +1,6 @@
-import {
-  SOCKET_CONNECT,
-  SOCKET_RECONNECT,
-  REGISTER_START,
-  REGISTER_COMPLETE,
-  LOGIN_START,
-  LOGIN_COMPLETE,
-  SET_TOKEN,
-  LOGOUT_START,
-  LOGOUT_COMPLETE,
-  RESET_PASSWORD_COMPLETE,
-} from '../constants/ActionTypes';
-import * as Session from '../utils/Session';
-import { get, post, del } from './RequestActionCreators';
+import { SOCKET_CONNECT, SOCKET_RECONNECT } from '../constants/ActionTypes';
 import { initState } from '../reducers/auth';
+import { openLoginDialog } from '../reducers/dialogs';
 
 export function socketConnect() {
   return { type: SOCKET_CONNECT };
@@ -20,101 +8,6 @@ export function socketConnect() {
 
 export function socketReconnect() {
   return { type: SOCKET_RECONNECT };
-}
-
-export function setSessionToken(token) {
-  return {
-    type: SET_TOKEN,
-    payload: { token },
-  };
-}
-
-function loginStart() {
-  return { type: LOGIN_START };
-}
-
-export function login({ email, password }) {
-  const sessionType = Session.preferredSessionType();
-  return post(`/auth/login?session=${sessionType}`, { email, password }, {
-    onStart: loginStart,
-    onComplete: (res) => (dispatch) => {
-      Session.set(res.meta.jwt);
-      dispatch(setSessionToken(res.meta.jwt));
-      return dispatch(initState());
-    },
-    onError: (error) => ({
-      type: LOGIN_COMPLETE,
-      error: true,
-      payload: error,
-    }),
-  });
-}
-
-export function registerCompleteError(error) {
-  return {
-    type: REGISTER_COMPLETE,
-    error: true,
-    payload: error,
-  };
-}
-
-export function register({
-  email, username, password, grecaptcha,
-}) {
-  return post('/auth/register', {
-    email, username, password, grecaptcha,
-  }, {
-    onStart: () => ({ type: REGISTER_START }),
-    onComplete: (res) => (dispatch) => {
-      const user = res.data;
-      dispatch({
-        type: REGISTER_COMPLETE,
-        payload: { user },
-      });
-      return dispatch(login({ email, password }));
-    },
-    onError: registerCompleteError,
-  });
-}
-
-function logoutStart() {
-  return { type: LOGOUT_START };
-}
-
-function logoutComplete() {
-  return { type: LOGOUT_COMPLETE };
-}
-
-export function logout() {
-  return del('/auth', {}, {
-    onStart: () => (dispatch) => {
-      dispatch(logoutStart());
-      Session.unset();
-    },
-    onComplete: logoutComplete,
-  });
-}
-
-export function resetPassword(email) {
-  return post('/auth/password/reset', email, {
-    onComplete: () => ({
-      type: RESET_PASSWORD_COMPLETE,
-      payload: 'Successfully sent password reset email',
-    }),
-    onError: (error) => ({
-      type: RESET_PASSWORD_COMPLETE,
-      error: true,
-      payload: error,
-    }),
-  });
-}
-
-export function getSocketAuthToken() {
-  return get('/auth/socket', {
-    onComplete: (res) => () => ({
-      socketToken: res.data.socketToken,
-    }),
-  });
 }
 
 function whenWindowClosed(window) {
@@ -139,19 +32,15 @@ function socialLogin(service) {
     }
     function oncreate(data) {
       promise = Promise.resolve();
-      dispatch({
-        type: 'auth/OPEN_LOGIN_DIALOG',
-        payload: {
-          show: 'social',
-          service: data.type,
-          id: data.id,
-          suggestedName: data.suggestedName,
-          avatars: data.avatars,
-        },
-      });
+      dispatch(openLoginDialog({
+        show: 'social',
+        service: data.type,
+        id: data.id,
+        suggestedName: data.suggestedName,
+        avatars: data.avatars,
+      }));
     }
 
-    // eslint-disable-next-line compat/compat
     const apiOrigin = new URL(apiUrl, window.location.href).origin;
     const clientOrigin = window.location.origin;
 
@@ -181,20 +70,4 @@ function socialLogin(service) {
 }
 export function loginWithGoogle() {
   return socialLogin('google');
-}
-
-export function finishSocialLogin(service, params) {
-  return post(`/auth/service/${service}/finish`, params, {
-    onStart: loginStart,
-    onComplete: (res) => (dispatch) => {
-      Session.set(res.meta.jwt);
-      dispatch(setSessionToken(res.meta.jwt));
-      dispatch(initState());
-    },
-    onError: (error) => ({
-      type: LOGIN_COMPLETE,
-      error: true,
-      payload: error,
-    }),
-  });
 }

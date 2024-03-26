@@ -2,10 +2,9 @@ import useSWR from 'swr';
 import { useMemo } from 'react';
 import { useSelector } from './useRedux';
 import mergeIncludedModels from '../utils/mergeIncludedModels';
-import { currentPlaySelector } from '../selectors/boothSelectors';
-import type { Media } from '../reducers/booth';
-import type { User } from '../reducers/users';
-import uwFetch, { ListResponse } from '../utils/fetch';
+import { type Media, currentPlaySelector } from '../reducers/booth';
+import { type User } from '../reducers/users';
+import uwFetch, { type ListResponse } from '../utils/fetch';
 
 interface ApiMedia {
   _id: string
@@ -79,10 +78,11 @@ function useRoomHistory() {
   }, [data]);
 
   const media = useMemo(() => {
-    if (!currentPlay) {
+    if (currentPlay == null) {
       return historyEntries;
     }
-    if (historyEntries[0]._id === currentPlay._id) {
+    // Use up-to-date state for the current play.
+    if (historyEntries[0] != null && historyEntries[0]._id === currentPlay._id) {
       return [currentPlay, ...historyEntries.slice(1)];
     }
     return [currentPlay, ...historyEntries];

@@ -1,7 +1,6 @@
 import React from 'react';
 import useSWR from 'swr';
-import { useDispatch } from '../../hooks/useRedux';
-import { put } from '../../actions/RequestActionCreators';
+import uwFetch from '../../utils/fetch';
 import ServerConfig from '../components/ServerConfig';
 
 const {
@@ -9,18 +8,16 @@ const {
 } = React;
 
 function ServerConfigContainer() {
-  const { data, mutate } = useSWR('/server/config?schema', { suspense: true });
+  const { data, mutate } = useSWR(['/server/config?schema'], { suspense: true });
   const {
     data: config,
     meta: { schema: configSchema },
   } = data;
 
-  const dispatch = useDispatch();
   const handleSaveConfig = useCallback(async (key, value) => {
-    const request = put(`/server/config/${key}`, value);
-    await dispatch(request);
+    await uwFetch([`/server/config/${key}`, { method: 'put', data: value }]);
     mutate();
-  }, [dispatch, mutate]);
+  }, [mutate]);
 
   return (
     <ServerConfig

@@ -1,4 +1,4 @@
-import Base, { BaseMediaListProps } from './BaseMediaList';
+import Base, { type BaseMediaListProps } from './BaseMediaList';
 import Row from './Row';
 
 type MediaListProps = Omit<BaseMediaListProps, 'listComponent' | 'rowComponent'>
