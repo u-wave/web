@@ -310,7 +310,7 @@ const slice = createSlice({
     mutes: (state) => state.mutedUsers,
     mutedUser: (state, userID: string) => {
       if (Object.hasOwn(state.mutedUsers, userID)) {
-        return state.mutedUsers[userID]!
+        return state.mutedUsers[userID]!;
       }
       return null;
     },

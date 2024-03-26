@@ -1,4 +1,4 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { type PayloadAction, createSlice } from '@reduxjs/toolkit';
 import type { StoreState } from '../redux/configureStore';
 import type { NewPlaylistItem } from './playlists';
 

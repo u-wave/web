@@ -1,7 +1,7 @@
 import cx from 'clsx';
 import { useRef } from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
-import RoomUserRow, { RoomUser } from './Row';
+import RoomUserRow, { type RoomUser } from './Row';
 import GuestsRow from './GuestsRow';
 
 function estimateSize() {

@@ -1,7 +1,7 @@
 import cx from 'clsx';
 import YouTube from '@u-wave/react-youtube';
 import { useCallback } from 'react';
-import { Media } from '../../reducers/booth';
+import type { Media } from '../../reducers/booth';
 
 type YouTubePlayerProps = {
   active: boolean,

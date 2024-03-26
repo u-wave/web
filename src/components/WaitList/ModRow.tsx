@@ -9,7 +9,7 @@ import Avatar from '../Avatar';
 import SvgIcon from '../SvgIcon';
 import Username from '../Username';
 import Position from './Position';
-import { User } from '../../reducers/users';
+import type { User } from '../../reducers/users';
 
 type DropResult = { position: number };
 

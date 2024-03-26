@@ -228,5 +228,5 @@ export function supportsAuthStrategy(name: string) {
 const SOCIAL_STRATEGIES = ['google'];
 export function supportsSocialAuthSelector(state: StoreState) {
   const strategies = authStrategiesSelector(state);
-  return SOCIAL_STRATEGIES.some((strategy) => strategies.includes(strategy))
+  return SOCIAL_STRATEGIES.some((strategy) => strategies.includes(strategy));
 }

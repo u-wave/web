@@ -1,4 +1,4 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { type PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { dset } from 'dset';
 import deepmerge from 'deepmerge';
 import type { StoreState } from '../redux/configureStore';

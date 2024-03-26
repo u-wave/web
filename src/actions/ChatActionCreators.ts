@@ -37,7 +37,7 @@ function mentionsForSender(state: StoreState, sender: User) {
   return [
     ...users.map((user) => user.username),
     ...getAvailableGroupMentions((mention) => userHasRoleSelector(state, sender, `chat.mention.${mention}`)),
-  ]
+  ];
 }
 
 export function sendChat(text: string): Thunk {

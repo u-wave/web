@@ -3,7 +3,7 @@ import shortenUrl from 'shorten-url';
 import type { MarkupNode, MentionNode } from 'u-wave-parse-chat-markup';
 import Tooltip from '@mui/material/Tooltip';
 import emojiUrl from '../../utils/emojiUrl';
-import { User } from '../../reducers/users';
+import type { User } from '../../reducers/users';
 
 export type CompileOptions = {
   availableEmoji?: Set<string>,

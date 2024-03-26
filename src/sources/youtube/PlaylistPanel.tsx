@@ -5,7 +5,7 @@ import { mdiPlaylistPlus } from '@mdi/js';
 import SvgIcon from '../../components/SvgIcon';
 import MediaListBase from '../../components/MediaList/BaseMediaList';
 import ImportPanelHeader from '../../components/PlaylistManager/Import/ImportPanelHeader';
-import ImportRow, { YouTubeMedia } from './ImportRow';
+import ImportRow, { type YouTubeMedia } from './ImportRow';
 import uwFetch from '../../utils/fetch';
 
 type YouTubeImportPlaylistPanelProps = {

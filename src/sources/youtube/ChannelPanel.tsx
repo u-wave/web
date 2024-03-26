@@ -3,7 +3,7 @@ import useSWRImmutable from 'swr/immutable';
 import { useRef } from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import ImportPanelHeader from '../../components/PlaylistManager/Import/ImportPanelHeader';
-import PlaylistRow, { YouTubePlaylist } from './PlaylistRow';
+import PlaylistRow, { type YouTubePlaylist } from './PlaylistRow';
 import uwFetch from '../../utils/fetch';
 
 function estimateSize() {

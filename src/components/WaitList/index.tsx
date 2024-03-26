@@ -3,7 +3,7 @@ import { useRef } from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import ModRow from './ModRow';
 import SimpleRow from './SimpleRow';
-import { User } from '../../reducers/users';
+import type { User } from '../../reducers/users';
 
 function estimateSize() {
   return 40;

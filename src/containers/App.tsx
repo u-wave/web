@@ -14,7 +14,7 @@ import MobileApp from '../mobile/components/App';
 import FatalError from '../components/FatalError';
 import UwaveContext from '../context/UwaveContext';
 import { ClockProvider } from '../context/ClockContext';
-import MediaSourceContext, { MediaSource } from '../context/MediaSourceContext';
+import MediaSourceContext, { type MediaSource } from '../context/MediaSourceContext';
 import { AllStoresProvider } from '../stores';
 import { initState } from '../reducers/auth';
 import type Uwave from '../Uwave';

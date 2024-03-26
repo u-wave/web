@@ -14,7 +14,7 @@ import SvgIcon from '../../../components/SvgIcon';
 import { useSelector } from '../../../hooks/useRedux';
 import { activePlaylistIDSelector } from '../../../reducers/playlists';
 import useCurrentUser from '../../../hooks/useCurrentUser';
-import uwFetch, { ListResponse } from '../../../utils/fetch';
+import uwFetch, { type ListResponse } from '../../../utils/fetch';
 
 const classes = {
   paper: 'DrawerMenu',

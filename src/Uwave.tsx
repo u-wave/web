@@ -9,7 +9,7 @@ import { get as readSession } from './utils/Session';
 import configureStore from './redux/configureStore';
 import { socketConnect } from './actions/LoginActionCreators';
 import { loadCurrentLanguage } from './actions/LocaleActionCreators';
-import { MediaSource } from './context/MediaSourceContext';
+import type { MediaSource } from './context/MediaSourceContext';
 import { initState, setSessionToken } from './reducers/auth';
 
 interface UwaveOptions {

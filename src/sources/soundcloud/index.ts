@@ -1,4 +1,4 @@
-import { MediaSource } from '../../context/MediaSourceContext';
+import type { MediaSource } from '../../context/MediaSourceContext';
 import Player from './PlayerWrapper';
 
 const logo = new URL('../../../assets/img/soundcloud.png', import.meta.url);

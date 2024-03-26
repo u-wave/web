@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import useSWR from 'swr';
 import defaultEmoji from 'virtual:emoji-shortcodes';
 import { useSelector } from './useRedux';
-import uwFetch, { ListResponse } from '../utils/fetch';
+import uwFetch, { type ListResponse } from '../utils/fetch';
 
 type ServerEmote = {
   name: string,

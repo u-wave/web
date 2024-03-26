@@ -12,7 +12,7 @@ import Typography from '@mui/material/Typography';
 import { mdiAlertCircle } from '@mdi/js';
 import SvgIcon from '../../components/SvgIcon';
 import SongInfo from './SongInfo';
-import { Media } from '../../reducers/booth';
+import type { Media } from '../../reducers/booth';
 
 const soundcloudLogo = new URL('../../../assets/img/soundcloud-inline.png', import.meta.url);
 

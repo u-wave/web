@@ -1,5 +1,5 @@
 import { useMediaSources } from '../../context/MediaSourceContext';
-import { Media } from '../../reducers/booth';
+import type { Media } from '../../reducers/booth';
 
 type PreviewPlayerProps = {
   media: Media,

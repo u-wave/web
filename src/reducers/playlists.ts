@@ -3,7 +3,7 @@ import escapeStringRegExp from 'escape-string-regexp';
 import indexBy from 'just-index';
 import naturalCmp from 'natural-compare';
 import { createAsyncThunk } from '../redux/api';
-import uwFetch, { ListResponse } from '../utils/fetch';
+import uwFetch, { type ListResponse } from '../utils/fetch';
 import mergeIncludedModels from '../utils/mergeIncludedModels';
 import { favorite, type Media } from './booth';
 import { initState, logout } from './auth';
