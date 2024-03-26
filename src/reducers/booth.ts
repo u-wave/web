@@ -18,7 +18,7 @@ import { createAsyncThunk, type Thunk } from '../redux/api';
 import type { StoreState } from '../redux/configureStore';
 import type { SocketMessageParams } from '../redux/socket';
 import mergeIncludedModels from '../utils/mergeIncludedModels';
-import { flattenPlaylistItem } from './playlists';
+import type { ApiPlaylistItemMerged, PlaylistItem } from './playlists';
 
 export interface Media {
   _id: string,
@@ -102,6 +102,14 @@ export const upvote = createAsyncThunk('booth/upvote', async ({ historyID }: { h
 export const downvote = createAsyncThunk('booth/downvote', async ({ historyID }: { historyID: string }) => {
   await uwFetch([`/booth/${historyID}/vote`, { method: 'put', data: { direction: -1 } }]);
 });
+
+/** TODO remove */
+function flattenPlaylistItem(item: ApiPlaylistItemMerged): PlaylistItem {
+  return {
+    ...item.media,
+    ...item,
+  };
+}
 
 export const favorite = createAsyncThunk('booth/favorite', async ({ historyID, playlistID }: { historyID: string, playlistID: string }) => {
   const res = await uwFetch<{

@@ -34,7 +34,8 @@ interface ApiMedia {
   createdAt: string;
   updatedAt: string;
 }
-interface ApiPlaylistItemMerged {
+/** TODO don't export? */
+export interface ApiPlaylistItemMerged {
   _id: string;
   artist: string;
   title: string;
@@ -45,8 +46,8 @@ interface ApiPlaylistItemMerged {
   updatedAt: string;
 }
 
-/** TODO don't export */
-export function flattenPlaylistItem(item: ApiPlaylistItemMerged): PlaylistItem {
+/** TODO remove */
+function flattenPlaylistItem(item: ApiPlaylistItemMerged): PlaylistItem {
   return {
     ...item.media,
     ...item,
