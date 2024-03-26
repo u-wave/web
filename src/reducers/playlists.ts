@@ -640,26 +640,33 @@ const slice = createSlice({
         const { playlistID, afterID = null } = action.meta.arg;
         const { playlistSize, items } = action.payload;
 
-        const playlistItems = state.playlistItems[playlistID];
         const playlist = state.playlists[playlistID];
-        if (playlist == null || playlistItems == null) {
+        if (playlist == null) {
+          return;
+        }
+        playlist.loading = false;
+        playlist.size = playlistSize;
+
+        const playlistItems = state.playlistItems[playlistID];
+        if (playlistItems == null) {
           return;
         }
 
-        playlist.loading = false;
-        playlist.size = playlistSize;
         state.playlistItems[playlistID] = processInsert(playlistItems, items, { after: afterID });
       })
       .addCase(favorite.fulfilled, (state, action) => {
         const { payload } = action;
         const { playlistID } = action.meta.arg;
-        const playlistItems = state.playlistItems[playlistID];
         const playlist = state.playlists[playlistID];
-        if (playlist == null || playlistItems == null) {
+        if (playlist == null) {
           return;
         }
-
         playlist.size = payload.playlistSize;
+
+        const playlistItems = state.playlistItems[playlistID];
+        if (playlistItems == null) {
+          return;
+        }
         state.playlistItems[playlistID] = processInsert(playlistItems, payload.added, { at: 'end' });
       })
       .addCase(updatePlaylistItem.pending, (state, { meta }) => {
