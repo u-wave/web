@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.0-alpha.32 / 29 Mar 2024
+While this is an alpha release, new servers should use this rather than an older "stable" version.
+
+Fixes:
+ * Fix playlist loading issues. (#2809)
+
+Internal:
+ * Continue Redux Toolkit migration. (#2816)
+
 ## 2.0.0-alpha.31 / 18 Dec 2023
 While this is an alpha release, new servers should use this rather than an older "stable" version.
 
