@@ -289,7 +289,7 @@ export function timeRemainingSelector(state: StoreState) {
 export function djSelector(state: StoreState) {
   const { booth } = state;
   if (booth.djID) {
-    return userSelector(state, booth.djID);
+    return userSelector(state, booth.djID) ?? null;
   }
   return null;
 }

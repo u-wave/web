@@ -1,12 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import { mdiHistory } from '@mdi/js';
 import SvgIcon from '../SvgIcon';
 
-function HistoryButton({ onClick }) {
+type HistoryButtonProps = {
+  onClick: React.MouseEventHandler<HTMLButtonElement>,
+};
+
+function HistoryButton({ onClick }: HistoryButtonProps) {
   const { t } = useTranslator();
 
   return (
@@ -21,9 +24,5 @@ function HistoryButton({ onClick }) {
     </Tooltip>
   );
 }
-
-HistoryButton.propTypes = {
-  onClick: PropTypes.func.isRequired,
-};
 
 export default React.memo(HistoryButton);

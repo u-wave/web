@@ -1,7 +1,5 @@
 import cx from 'clsx';
-import React from 'react';
 import { useTranslator } from '@u-wave/react-translate';
-import PropTypes from 'prop-types';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import Slider from '@mui/material/Slider';
@@ -13,6 +11,16 @@ import {
 } from '@mdi/js';
 import SvgIcon from '../SvgIcon';
 
+type VolumeProps = {
+  className?: string,
+  volume: number,
+  muted: boolean,
+
+  onVolumeChange: (volume: number) => void,
+  onMute: () => void,
+  onUnmute: () => void,
+};
+
 function Volume({
   className,
   volume,
@@ -20,7 +28,7 @@ function Volume({
   onVolumeChange,
   onMute,
   onUnmute,
-}) {
+}: VolumeProps) {
   const { t } = useTranslator();
 
   let volumeIcon = mdiVolumeHigh;
@@ -34,8 +42,8 @@ function Volume({
 
   const label = muted ? t('booth.unmute') : t('booth.mute');
   const handleMuteClick = muted ? onUnmute : onMute;
-  const handleVolumeChange = (e, newVolume) => {
-    onVolumeChange(newVolume);
+  const handleVolumeChange = (_event: unknown, newVolume: number | number[]) => {
+    onVolumeChange(newVolume as number);
   };
 
   return (
@@ -61,15 +69,5 @@ function Volume({
     </div>
   );
 }
-
-Volume.propTypes = {
-  className: PropTypes.string,
-  volume: PropTypes.number,
-  muted: PropTypes.bool,
-
-  onVolumeChange: PropTypes.func,
-  onMute: PropTypes.func,
-  onUnmute: PropTypes.func,
-};
 
 export default Volume;

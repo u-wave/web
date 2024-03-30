@@ -1,9 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
 import SongTitle from '../SongTitle';
+import type { Media } from '../../reducers/booth';
 
-function CurrentMedia({ className, media }) {
+type CurrentMediaProps = {
+  className?: string,
+  media?: Media | null,
+};
+
+function CurrentMedia({ className, media }: CurrentMediaProps) {
   const { t } = useTranslator();
 
   return (
@@ -14,13 +18,5 @@ function CurrentMedia({ className, media }) {
     </div>
   );
 }
-
-CurrentMedia.propTypes = {
-  className: PropTypes.string,
-  media: PropTypes.shape({
-    artist: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-  }),
-};
 
 export default CurrentMedia;
