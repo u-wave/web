@@ -1,4 +1,5 @@
-/** @type {import('@mui/material/styles').ThemeOptions} */
+import type { ThemeOptions } from '@mui/material';
+
 export default {
   palette: {
     mode: 'dark',
@@ -9,9 +10,6 @@ export default {
     },
     background: {
       paper: '#303030',
-    },
-    white: {
-      main: '#fff',
     },
   },
   typography: {
@@ -56,4 +54,4 @@ export default {
       },
     },
   },
-};
+} satisfies ThemeOptions;

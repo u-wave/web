@@ -1,7 +1,6 @@
 import cx from 'clsx';
-import React from 'react';
+import { useCallback } from 'react';
 import { useDispatch, useSelector } from '../../hooks/useRedux';
-import useCurrentUser from '../../hooks/useCurrentUser';
 import { toggleOverlay } from '../../reducers/activeOverlay';
 import { openFavoriteMenu } from '../../reducers/addToPlaylistMenu';
 import {
@@ -29,13 +28,12 @@ import UserInfo from './UserInfo';
 import SkipButton from './SkipButton';
 import WaitlistButton from './WaitlistButton';
 import ResponseBar from './ResponseBar';
+import type { User } from '../../reducers/users';
 
-const {
-  useCallback,
-} = React;
-
-function UserFooterContent() {
-  const currentUser = useCurrentUser();
+type UserFooterContentProps = {
+  user: User,
+};
+function UserFooterContent({ user: currentUser }: UserFooterContentProps) {
   const baseEta = useSelector(baseEtaSelector);
   const mediaEndTime = useSelector(endTimeSelector);
   const playlist = useSelector(activePlaylistSelector);
@@ -54,17 +52,23 @@ function UserFooterContent() {
   const handleToggleSettings = useCallback(() => {
     dispatch(toggleOverlay('settings'));
   }, [dispatch]);
-  const handleFavorite = useCallback((position) => {
-    dispatch(openFavoriteMenu(historyID, position));
+  const handleFavorite = useCallback((position: { x: number, y: number }) => {
+    if (historyID != null) {
+      dispatch(openFavoriteMenu(historyID, position));
+    }
   }, [historyID, dispatch]);
   const handleUpvote = useCallback(() => {
-    dispatch(upvote({ historyID }));
+    if (historyID != null) {
+      dispatch(upvote({ historyID }));
+    }
   }, [dispatch, historyID]);
   const handleDownvote = useCallback(() => {
-    dispatch(downvote({ historyID }));
+    if (historyID != null) {
+      dispatch(downvote({ historyID }));
+    }
   }, [dispatch, historyID]);
 
-  const handleSkipTurn = useCallback((reason) => {
+  const handleSkipTurn = useCallback((reason: string) => {
     if (!userIsDJ) {
       return dispatch(modSkipCurrentDJ({ reason }));
     }

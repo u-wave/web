@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import { memo, useCallback, useRef, useState } from 'react';
 import { useTranslator } from '@u-wave/react-translate';
 import Popover from '@mui/material/Popover';
 import Tooltip from '@mui/material/Tooltip';
@@ -8,18 +7,13 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { mdiSkipNext } from '@mdi/js';
 import SvgIcon from '../SvgIcon';
 import SkipReasonsList from './SkipReasonsList';
-
-const {
-  useCallback,
-  useRef,
-  useState,
-} = React;
+import type { User } from '../../reducers/users';
 
 const popoverPosition = {
   marginThreshold: 0,
   anchorOrigin: { horizontal: 'center', vertical: 'bottom' },
   transformOrigin: { horizontal: 'center', vertical: 'bottom' },
-};
+} as const;
 
 // TODO not hardcode these maybe?
 const reasons = [
@@ -32,7 +26,14 @@ const reasons = [
   'other',
 ];
 
-function SkipButton({ userIsDJ, currentDJ, onSkip }) {
+type SkipButtonProps = {
+  userIsDJ: boolean,
+  // Technically `currentDJ` is not inherently bound to `historyID`,
+  // though it should be. In error cases it may be absent.
+  currentDJ: User | null,
+  onSkip: (reason: string) => void,
+};
+function SkipButton({ userIsDJ, currentDJ, onSkip }: SkipButtonProps) {
   const { t } = useTranslator();
   const [isSkipping, setSkipping] = useState(false);
   const [isOpen, setOpen] = useState(false);
@@ -45,7 +46,7 @@ function SkipButton({ userIsDJ, currentDJ, onSkip }) {
     setOpen(false);
   }, []);
 
-  const handleSkip = useCallback((reason) => {
+  const handleSkip = useCallback((reason: string) => {
     setSkipping(true);
     Promise.resolve(onSkip(reason)).finally(() => {
       setSkipping(false);
@@ -67,8 +68,6 @@ function SkipButton({ userIsDJ, currentDJ, onSkip }) {
   let message = t('booth.skip.self');
   if (!userIsDJ) {
     message = t('booth.skip.other', {
-      // Technically `currentDJ` is not inherently bound to `historyID`,
-      // though it should be. In error cases it may be absent.
       user: currentDJ?.username ?? '…',
     });
   }
@@ -103,10 +102,4 @@ function SkipButton({ userIsDJ, currentDJ, onSkip }) {
   );
 }
 
-SkipButton.propTypes = {
-  userIsDJ: PropTypes.bool.isRequired,
-  currentDJ: PropTypes.object.isRequired,
-  onSkip: PropTypes.func.isRequired,
-};
-
-export default React.memo(SkipButton);
+export default memo(SkipButton);

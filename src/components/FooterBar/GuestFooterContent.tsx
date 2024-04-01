@@ -1,14 +1,10 @@
-import React from 'react';
+import { useCallback } from 'react';
 import { useTranslator } from '@u-wave/react-translate';
 import Button from '@mui/material/Button';
 import { useDispatch } from '../../hooks/useRedux';
 import { openLoginDialog } from '../../reducers/dialogs';
 import { toggleOverlay } from '../../reducers/activeOverlay';
 import SettingsButton from './SettingsButton';
-
-const {
-  useCallback,
-} = React;
 
 function GuestFooterContent() {
   const { t } = useTranslator();

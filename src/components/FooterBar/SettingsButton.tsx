@@ -1,18 +1,20 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import { memo } from 'react';
 import { useTranslator } from '@u-wave/react-translate';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import { mdiCog } from '@mdi/js';
 import SvgIcon from '../SvgIcon';
 
-function SettingsButton({ onClick }) {
+type SettingsButtonProps = {
+  onClick: () => void,
+};
+function SettingsButton({ onClick }: SettingsButtonProps) {
   const { t } = useTranslator();
 
   return (
     <span>
       <Tooltip title={t('settings.title')}>
-        <IconButton className="SettingsButton" onClick={onClick}>
+        <IconButton className="SettingsButton" onClick={() => onClick()}>
           <SvgIcon path={mdiCog} />
         </IconButton>
       </Tooltip>
@@ -20,8 +22,4 @@ function SettingsButton({ onClick }) {
   );
 }
 
-SettingsButton.propTypes = {
-  onClick: PropTypes.func.isRequired,
-};
-
-export default React.memo(SettingsButton);
+export default memo(SettingsButton);

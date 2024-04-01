@@ -7,7 +7,7 @@ import type { Playlist, PlaylistItem } from '../../reducers/playlists';
 type NextMediaProps = {
   className?: string,
   playlist: Playlist | null,
-  nextMedia: PlaylistItem,
+  nextMedia: PlaylistItem | null,
   userInWaitlist: boolean,
   userIsDJ: boolean,
   baseEta: number | null,

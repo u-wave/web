@@ -20,7 +20,7 @@ export interface User {
   username: string;
   avatar: string;
   roles: string[];
-  createdAt: string,
+  createdAt: string;
 }
 
 interface State {

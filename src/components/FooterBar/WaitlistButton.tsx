@@ -1,17 +1,23 @@
 import cx from 'clsx';
-import React from 'react';
+import { memo } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
 import Button from '@mui/material/Button';
 import { mdiLock } from '@mdi/js';
 import SvgIcon from '../SvgIcon';
 
+type WaitlistButtonProps = {
+  userIsDJ: boolean,
+  userInWaitlist: boolean,
+  isLocked: boolean,
+  onClick: () => void,
+};
 function WaitlistButton({
   userIsDJ,
   userInWaitlist,
   isLocked,
   onClick,
-}) {
+}: WaitlistButtonProps) {
   const { t } = useTranslator();
 
   let icon;
@@ -45,7 +51,7 @@ function WaitlistButton({
         disabled: 'WaitlistButton--locked',
       }}
       disabled={isLocked && !userInWaitlist}
-      onClick={onClick}
+      onClick={() => onClick()}
     >
       {icon}
       {isLocked && ' '}
@@ -54,11 +60,4 @@ function WaitlistButton({
   );
 }
 
-WaitlistButton.propTypes = {
-  userIsDJ: PropTypes.bool,
-  userInWaitlist: PropTypes.bool,
-  isLocked: PropTypes.bool,
-  onClick: PropTypes.func.isRequired,
-};
-
-export default React.memo(WaitlistButton);
+export default memo(WaitlistButton);
