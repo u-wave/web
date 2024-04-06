@@ -1,6 +1,5 @@
 import cx from 'clsx';
 import { memo } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
 import Button from '@mui/material/Button';
 import { mdiLock } from '@mdi/js';

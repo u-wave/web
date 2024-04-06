@@ -1,25 +1,27 @@
-import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
 import Username from '../../Username';
 import UserNotificationMessage from './UserNotificationMessage';
+import type { User } from '../../../reducers/users';
 
-const toUsername = (user) => (
-  <Username user={user} />
-);
-
-const getLangKey = (hasModerator, hasReason) => {
+function getLangKey(hasModerator: boolean, hasReason: boolean) {
   if (hasReason) {
     return hasModerator ? 'chat.modSkipReason' : 'chat.selfSkipReason';
   }
   return hasModerator ? 'chat.modSkip' : 'chat.selfSkip';
-};
+}
 
+type SkipMessageProps = {
+  user: User,
+  moderator?: User | null,
+  reason: string,
+  timestamp: number,
+};
 function SkipMessage({
   user,
   moderator,
   reason,
   timestamp,
-}) {
+}: SkipMessageProps) {
   const { t } = useTranslator();
 
   return (
@@ -27,19 +29,14 @@ function SkipMessage({
       type="skip"
       className="ChatMessage--skip"
       i18nKey={getLangKey(!!moderator, !!reason)}
+      i18nProps={{
+        djName: <Username user={user} />,
+        reason: reason ? t(`booth.skip.reasons.${reason}`) : undefined,
+      }}
       user={moderator ?? user}
-      djName={toUsername(user)}
-      reason={reason ? t(`booth.skip.reasons.${reason}`) : undefined}
       timestamp={timestamp}
     />
   );
 }
-
-SkipMessage.propTypes = {
-  user: PropTypes.object.isRequired,
-  moderator: PropTypes.object,
-  timestamp: PropTypes.number.isRequired,
-  reason: PropTypes.string,
-};
 
 export default SkipMessage;

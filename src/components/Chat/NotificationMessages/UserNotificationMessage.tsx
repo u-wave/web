@@ -1,26 +1,31 @@
 import cx from 'clsx';
-import React from 'react';
-import PropTypes from 'prop-types';
+import { useCallback, useMemo } from 'react';
 import { Interpolate } from '@u-wave/react-translate';
 import useUserCard from '../../../hooks/useUserCard';
 import Avatar from '../../Avatar';
 import Username from '../../Username';
 import MessageTimestamp from '../MessageTimestamp';
+import type { User } from '../../../reducers/users';
 
-const {
-  useCallback,
-  useMemo,
-} = React;
+type UserNotificationMessageProps = {
+  className?: string,
+  user: User,
+  timestamp: number,
+  type: string,
+  i18nKey: string,
+  i18nProps?: Record<string, React.ReactNode>,
+};
 
 function UserNotificationMessage({
   className,
   user,
   timestamp,
-  ...props
-}) {
+  i18nKey,
+  i18nProps,
+}: UserNotificationMessageProps) {
   const userCard = useUserCard(user);
   const date = useMemo(() => new Date(timestamp), [timestamp]);
-  const onClick = useCallback((event) => {
+  const onClick = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     userCard.open();
     // The `userCard.open` reference never changes.
@@ -51,17 +56,12 @@ function UserNotificationMessage({
               <Username user={user} />
             </button>
           )}
-          {...props}
+          {...i18nProps}
+          i18nKey={i18nKey}
         />
       </div>
     </div>
   );
 }
-
-UserNotificationMessage.propTypes = {
-  className: PropTypes.string.isRequired,
-  user: PropTypes.object.isRequired,
-  timestamp: PropTypes.number.isRequired,
-};
 
 export default UserNotificationMessage;

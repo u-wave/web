@@ -1,9 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import Divider from '@mui/material/Divider';
 import MessageTimestamp from '../MessageTimestamp';
+import type { Media } from '../../../reducers/booth';
 
-function NowPlayingMessage({ entry, timestamp }) {
+type NowPlayingMessageProps = {
+  entry: Media,
+  timestamp: number,
+};
+function NowPlayingMessage({ entry, timestamp }: NowPlayingMessageProps) {
   return (
     <div className="NowPlayingMessage">
       <Divider>
@@ -15,10 +18,5 @@ function NowPlayingMessage({ entry, timestamp }) {
     </div>
   );
 }
-
-NowPlayingMessage.propTypes = {
-  entry: PropTypes.object.isRequired,
-  timestamp: PropTypes.number.isRequired,
-};
 
 export default NowPlayingMessage;

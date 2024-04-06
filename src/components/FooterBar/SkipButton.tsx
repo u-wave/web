@@ -1,4 +1,9 @@
-import { memo, useCallback, useRef, useState } from 'react';
+import {
+  memo,
+  useCallback,
+  useRef,
+  useState,
+} from 'react';
 import { useTranslator } from '@u-wave/react-translate';
 import Popover from '@mui/material/Popover';
 import Tooltip from '@mui/material/Tooltip';
