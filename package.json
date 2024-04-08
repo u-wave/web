@@ -88,7 +88,7 @@
     "@emotion/server": "^11.0.0",
     "@rollup/plugin-yaml": "^4.0.1",
     "@testing-library/jest-dom": "^6.2.0",
-    "@testing-library/react": "^14.0.0",
+    "@testing-library/react": "^14.3.0",
     "@testing-library/user-event": "^14.4.3",
     "@types/natural-compare": "^1.4.3",
     "@types/node": "^18.19.3",
