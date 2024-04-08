@@ -91,7 +91,7 @@
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",
     "@types/natural-compare": "^1.4.3",
-    "@types/node": "^18.19.3",
+    "@types/node": "^20.12.5",
     "@types/uuid": "^9.0.1",
     "@typescript-eslint/eslint-plugin": "^7.4.0",
     "@typescript-eslint/parser": "^7.4.0",
