@@ -119,7 +119,7 @@
     "stylelint-config-standard": "^36.0.0",
     "twemoji-emojis": "^14.1.0",
     "type-fest": "^4.9.0",
-    "typescript": "^5.0.2",
+    "typescript": "^5.4.5",
     "vite": "^5.0.12",
     "vitest": "^1.0.4"
   },
