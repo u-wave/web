@@ -64,7 +64,7 @@
     "react-dnd": "^16.0.0",
     "react-dnd-html5-backend": "^16.0.0",
     "react-dom": "^18.0.0",
-    "react-google-button": "^0.7.2",
+    "react-google-button": "^0.8.0",
     "react-markdown": "^8.0.2",
     "react-redux": "^9.1.1",
     "react-transition-group": "^4.4.2",
