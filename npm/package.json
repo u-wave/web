@@ -26,7 +26,7 @@
     "npm": ">= 7"
   },
   "dependencies": {
-    "env-schema": "^5.0.0",
+    "env-schema": "^6.0.0",
     "express": "^4.19.2",
     "hstream": "^3.0.0",
     "minimist": "^1.2.7",
