@@ -80,7 +80,7 @@
     "u-wave-parse-chat-markup": "^2.5.0",
     "url-polyfill": "^1.1.11",
     "use-debounce": "^10.0.0",
-    "uuid": "^9.0.0",
+    "uuid": "^10.0.0",
     "whatwg-fetch": "^3.4.0"
   },
   "devDependencies": {
@@ -92,7 +92,7 @@
     "@testing-library/user-event": "^14.4.3",
     "@types/natural-compare": "^1.4.3",
     "@types/node": "^18.19.3",
-    "@types/uuid": "^9.0.1",
+    "@types/uuid": "^10.0.0",
     "@typescript-eslint/eslint-plugin": "^7.4.0",
     "@typescript-eslint/parser": "^7.4.0",
     "@vitejs/plugin-react": "^4.3.1",
