@@ -539,6 +539,7 @@ module.exports = {
     'eslint-plugin-compat',
     'eslint-plugin-import',
     'eslint-plugin-react',
+    'eslint-plugin-react-compiler',
     'eslint-plugin-react-hooks',
     'eslint-plugin-jsx-a11y',
   ],
@@ -576,9 +577,9 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     // Nobody cares
     'react/display-name': 'off',
-    'react/no-unused-prop-types': ['error', { skipShapeProps: true }],
-    'react/forbid-prop-types': 'off',
-    'react/jsx-props-no-spreading': 'off',
+    // 'react/no-unused-prop-types': ['error', { skipShapeProps: true }],
+    // 'react/forbid-prop-types': 'off',
+    // 'react/jsx-props-no-spreading': 'off',
     'react/require-default-props': 'off',
     'react/static-property-placement': 'off',
     'react/jsx-one-expression-per-line': 'off',
@@ -589,6 +590,7 @@ module.exports = {
     'react/jsx-filename-extension': ['error', { extensions: ['.jsx', '.tsx'] }],
     // Not following this at the moment
     'jsx-a11y/no-autofocus': 'warn',
+    'react-compiler/react-compiler': 'warn',
   },
 
   settings: {
