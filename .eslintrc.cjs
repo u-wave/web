@@ -574,6 +574,8 @@ module.exports = {
     'react/no-is-mounted': 'off',
     // Not true anymore
     'react/react-in-jsx-scope': 'off',
+    // Nobody cares
+    'react/display-name': 'off',
     'react/no-unused-prop-types': ['error', { skipShapeProps: true }],
     'react/forbid-prop-types': 'off',
     'react/jsx-props-no-spreading': 'off',
@@ -585,6 +587,8 @@ module.exports = {
       unnamedComponents: 'arrow-function',
     }],
     'react/jsx-filename-extension': ['error', { extensions: ['.jsx', '.tsx'] }],
+    // Not following this at the moment
+    'jsx-a11y/no-autofocus': 'warn',
   },
 
   settings: {
