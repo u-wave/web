@@ -1,11 +1,31 @@
 'use strict';
 
 module.exports = {
-  extends: ['airbnb', 'airbnb/hooks', 'plugin:import/typescript'],
+  extends: [
+    'eslint:recommended',
+    'plugin:import/recommended',
+    'plugin:import/typescript',
+    'plugin:react/recommended',
+    'plugin:react-hooks/recommended',
+    'plugin:jsx-a11y/recommended',
+  ],
 
-  plugins: ['compat', 'react-hooks'],
+  plugins: [
+    'eslint-plugin-compat',
+    'eslint-plugin-import',
+    'eslint-plugin-react',
+    'eslint-plugin-react-hooks',
+    'eslint-plugin-jsx-a11y',
+  ],
+  env: {
+    es6: true,
+  },
   parserOptions: {
     ecmaVersion: 2022,
+    sourceType: 'module',
+    ecmaFeatures: {
+      jsx: true,
+    },
   },
 
   rules: {
