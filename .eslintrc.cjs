@@ -542,15 +542,19 @@ module.exports = {
     'eslint-plugin-react-hooks',
     'eslint-plugin-jsx-a11y',
   ],
-  env: {
-    es6: true,
-  },
   parserOptions: {
     ecmaVersion: 2022,
     sourceType: 'module',
     ecmaFeatures: {
       jsx: true,
     },
+  },
+
+  env: {
+    es6: true,
+  },
+  globals: {
+    process: 'readonly',
   },
 
   rules: {
