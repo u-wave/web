@@ -1,14 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import { useState } from 'react';
 import { useTranslator } from '@u-wave/react-translate';
 import IconButton from '@mui/material/IconButton';
 import { mdiPencil } from '@mdi/js';
 import SvgIcon from '../SvgIcon';
 import PromptDialog from '../Dialogs/PromptDialog';
 
-const { useState } = React;
-
-function ChangeUsernameButton({ initialUsername, onChangeUsername }) {
+type ChangeUsernameButtonProps = {
+  initialUsername: string,
+  onChangeUsername: (username: string) => undefined | Promise<void>,
+};
+function ChangeUsernameButton({ initialUsername, onChangeUsername }: ChangeUsernameButtonProps) {
   const { t } = useTranslator();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -20,7 +21,7 @@ function ChangeUsernameButton({ initialUsername, onChangeUsername }) {
     setIsOpen(false);
   };
 
-  const handleSubmit = async (name) => {
+  const handleSubmit = async (name: string) => {
     try {
       if (name === initialUsername) {
         return;
@@ -48,10 +49,5 @@ function ChangeUsernameButton({ initialUsername, onChangeUsername }) {
     </>
   );
 }
-
-ChangeUsernameButton.propTypes = {
-  onChangeUsername: PropTypes.func.isRequired,
-  initialUsername: PropTypes.string,
-};
 
 export default ChangeUsernameButton;

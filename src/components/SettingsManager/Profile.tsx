@@ -1,12 +1,16 @@
 import cx from 'clsx';
-import React from 'react';
-import PropTypes from 'prop-types';
 import useIntl from '../../hooks/useIntl';
 import Avatar from '../Avatar';
 import UserRoles from '../UserCard/UserRoles';
 import ChangeUsernameButton from './ChangeUsernameButton';
+import type { User } from '../../reducers/users';
 
-function Profile({ className, user, onChangeUsername }) {
+type ProfileProps = {
+  className?: string,
+  user: User,
+  onChangeUsername: (name: string) => undefined | Promise<void>,
+};
+function Profile({ className, user, onChangeUsername }: ProfileProps) {
   const { dateTimeFormatter } = useIntl();
 
   return (
@@ -31,11 +35,5 @@ function Profile({ className, user, onChangeUsername }) {
     </div>
   );
 }
-
-Profile.propTypes = {
-  className: PropTypes.string,
-  user: PropTypes.object.isRequired,
-  onChangeUsername: PropTypes.func.isRequired,
-};
 
 export default Profile;

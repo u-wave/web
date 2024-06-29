@@ -1,7 +1,7 @@
 import cx from 'clsx';
 import React from 'react';
 
-export interface SvgIconProps extends React.ComponentProps<'svg'> {
+export interface SvgIconProps extends Omit<React.ComponentProps<'svg'>, 'ref'> {
   path?: string;
 }
 

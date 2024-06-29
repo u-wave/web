@@ -1,17 +1,22 @@
-import React from 'react';
 import { useTranslator } from '@u-wave/react-translate';
 import Button from '@mui/material/Button';
 import { mdiCopyright } from '@mdi/js';
 import SvgIcon from '../SvgIcon';
 import GithubIcon from './GithubIcon';
 
-function Link(props) {
+type LinkProps = {
+  href: string,
+  children: React.ReactNode,
+};
+function Link({ href, children }: LinkProps) {
   return (
     <Button
       className="SettingsPanel-link"
       target="_blank"
-      {...props}
-    />
+      href={href}
+    >
+      {children}
+    </Button>
   );
 }
 

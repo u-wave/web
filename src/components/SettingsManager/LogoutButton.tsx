@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import { useState } from 'react';
 import { useTranslator } from '@u-wave/react-translate';
 import Button from '@mui/material/Button';
 import { mdiPower } from '@mdi/js';
@@ -7,9 +6,10 @@ import SvgIcon from '../SvgIcon';
 import ConfirmDialog from '../Dialogs/ConfirmDialog';
 import FormGroup from '../Form/Group';
 
-const { useState } = React;
-
-function LogoutButton({ onLogout }) {
+type LogoutButtonProps = {
+  onLogout: () => undefined | Promise<void>,
+};
+function LogoutButton({ onLogout }: LogoutButtonProps) {
   const { t } = useTranslator();
   const [showDialog, setShowDialog] = useState(false);
 
@@ -34,7 +34,6 @@ function LogoutButton({ onLogout }) {
       </Button>
       <ConfirmDialog
         open={showDialog}
-        title=""
         confirmLabel={t('dialogs.logout.action')}
         onConfirm={handleConfirm}
         onCancel={handleClose}
@@ -44,9 +43,5 @@ function LogoutButton({ onLogout }) {
     </>
   );
 }
-
-LogoutButton.propTypes = {
-  onLogout: PropTypes.func.isRequired,
-};
 
 export default LogoutButton;
