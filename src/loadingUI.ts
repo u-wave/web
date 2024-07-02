@@ -2,14 +2,19 @@
 // loading indicators, even if only one is visible: one for the desktop loading
 // screen and one for the mobile loading screen.
 
-function setLoadingText(text) {
+import type Uwave from './Uwave';
+
+function setLoadingText(text: string) {
   Array.from(document.querySelectorAll('.LoadingIndicator-notice')).forEach((notice) => {
     // eslint-disable-next-line no-param-reassign
     notice.textContent = text;
   });
 }
 
-export default async function load(uw) {
+export default async function load(uw: Uwave) {
+  const appRoot = document.querySelector('#app')! as HTMLDivElement;
+  const loadingRoot = document.querySelector('#app-loading')! as HTMLDivElement;
+
   setLoadingText('Loading üWave...');
   const longBuildTimer = setTimeout(() => {
     setLoadingText('Loading is taking a long time, stand by...');
@@ -17,23 +22,20 @@ export default async function load(uw) {
 
   try {
     await uw.build();
-
-    uw.renderToDOM(document.querySelector('#app'));
+    uw.renderToDOM(appRoot);
 
     document.querySelector('#critical')?.remove();
-    Object.assign(document.querySelector('#app-loading'), {
-      innerHTML: '',
-      hidden: true,
-    });
+    loadingRoot.innerHTML = '';
+    loadingRoot.hidden = true;
   } catch (err) {
-    setLoadingText(`Error: ${err.message}`);
+    setLoadingText(`Error: ${err instanceof Error ? err.message : err}`);
     Array.from(document.querySelectorAll('.LoadingIndicator-loader')).forEach((el) => {
       // eslint-disable-next-line no-param-reassign
-      el.hidden = true;
+      (el as HTMLDivElement).hidden = true;
     });
     Array.from(document.querySelectorAll('.LoadingIndicator-warning')).forEach((el) => {
       // eslint-disable-next-line no-param-reassign
-      el.hidden = false;
+      (el as HTMLDivElement).hidden = false;
     });
     throw err;
   } finally {
