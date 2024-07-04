@@ -1,0 +1,77 @@
+.ChatInputWrapper {
+  background: var(--chat-background-color);
+}
+
+.ChatInput {
+  font-size: .875rem;
+  height: 100%;
+  width: 100%;
+  padding: 0 1rem;
+  display: grid;
+  align-content: center;
+  justify-content: stretch;
+}
+
+/* Awkward wrapper */
+.ChatInput > span {
+  width: 100%;
+}
+
+.ChatInput-suggestions {
+  position: absolute;
+  bottom: 100%;
+  inset-inline: 0;
+}
+
+.ChatInput-input {
+  height: 2rem;
+  padding: 0 .5rem;
+  border: 1px solid var(--chat-border-color);
+  border-radius: .25rem;
+  background: #222;
+  color: var(--text-color);
+  font-size: .875rem;
+  width: 100%;
+}
+
+.ChatInput-input.is-focused {
+  border-color: var(--highlight-color);
+  outline: none;
+}
+
+.SuggestionItem {
+  display: grid;
+  grid-template-areas: "icon label";
+  grid-template-columns: 24px 1fr;
+  width: 100%;
+  cursor: pointer;
+  gap: 1rem;
+  padding: .75rem 1rem;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+}
+
+.SuggestionItem:where(:hover, .is-focused) {
+  background-color: var(--chat-suggestion-selected);
+}
+
+.SuggestionItem-icon {
+  grid-area: icon;
+}
+
+.SuggestionItem-label {
+  grid-area: label;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.EmojiSuggestion-image {
+  width: 24px;
+  height: 24px;
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+  display: inline-block;
+}
