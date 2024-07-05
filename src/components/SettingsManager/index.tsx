@@ -1,21 +1,22 @@
 import cx from 'clsx';
-import React from 'react';
-import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
 import OverlayHeader from '../Overlay/Header';
 import OverlayContent from '../Overlay/Content';
-import SettingsPanel from './SettingsPanel';
+import SettingsPanel, { type SettingsPanelProps } from './SettingsPanel';
 
+type SettingsManagerProps = SettingsPanelProps & {
+  onCloseOverlay: () => void,
+};
 function SettingsManager({
-  className = null,
+  className = undefined,
   onCloseOverlay,
   onLogout,
   ...props
-}) {
+}: SettingsManagerProps) {
   const { t } = useTranslator();
   const handleLogout = () => {
     onCloseOverlay();
-    onLogout();
+    return onLogout();
   };
 
   return (
@@ -33,11 +34,5 @@ function SettingsManager({
     </div>
   );
 }
-
-SettingsManager.propTypes = {
-  className: PropTypes.string,
-  onCloseOverlay: PropTypes.func.isRequired,
-  onLogout: PropTypes.func.isRequired,
-};
 
 export default SettingsManager;

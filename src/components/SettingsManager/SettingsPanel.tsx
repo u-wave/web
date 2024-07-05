@@ -1,6 +1,6 @@
 import cx from 'clsx';
-import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
+import type { SelectChangeEvent, Theme } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import FormGroup from '@mui/material/FormGroup';
 import Switch from '@mui/material/Switch';
@@ -24,13 +24,18 @@ import {
 } from '../../reducers/settings';
 import useCurrentUser from '../../hooks/useCurrentUser';
 
+export type SettingsPanelProps = {
+  className?: string,
+  onChangeUsername: (username: string) => undefined | Promise<void>,
+  onLogout: () => undefined | Promise<void>,
+};
 function SettingsPanel({
   className,
   onChangeUsername,
   onLogout,
-}) {
+}: SettingsPanelProps) {
   const { t } = useTranslator();
-  const isWide = useMediaQuery((theme) => theme.breakpoints.up('lg'));
+  const isWide = useMediaQuery<Theme>((theme) => theme.breakpoints.up('lg'));
 
   const user = useCurrentUser();
   const dispatch = useDispatch();
@@ -39,20 +44,17 @@ function SettingsPanel({
   const mentionSoundEnabled = useSelector(mentionSoundEnabledSelector);
   const language = useSelector(languageSelector);
 
-  const handleVideoEnabledChange = (event) => {
+  const handleVideoEnabledChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setVideoEnabled(event.target.checked));
   };
-  const handleVideoSizeChange = (event) => {
+  const handleVideoSizeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setVideoSize(event.target.checked ? 'large' : 'small'));
   };
-  const handleMentionSoundChange = (event) => {
+  const handleMentionSoundChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setMentionSoundEnabled(event.target.checked));
   };
-  const handleLanguageChange = (event) => {
-    dispatch(setLanguage(event.target.value));
-  };
-  const handleSettingChange = (name, value) => {
-    dispatch(set(name, value));
+  const handleLanguageChange = (event: SelectChangeEvent<unknown>) => {
+    dispatch(setLanguage(event.target.value as string));
   };
 
   const profileSection = user && (
@@ -90,10 +92,7 @@ function SettingsPanel({
           />
         </SettingControl>
         <SettingControl label={t('settings.language')}>
-          <LanguagePicker
-            value={language}
-            onChange={handleLanguageChange}
-          />
+          <LanguagePicker value={language} onChange={handleLanguageChange} />
         </SettingControl>
       </FormGroup>
     </div>
@@ -113,7 +112,7 @@ function SettingsPanel({
 
   const notificationsSection = (
     <div key="notifications" className="SettingsPanel-section SettingsPanel-notificationSettings">
-      <NotificationSettings onSettingChange={handleSettingChange} />
+      <NotificationSettings onSettingChange={(name, value) => dispatch(set(name, value))} />
     </div>
   );
 
@@ -145,11 +144,5 @@ function SettingsPanel({
     </div>
   );
 }
-
-SettingsPanel.propTypes = {
-  className: PropTypes.string,
-  onChangeUsername: PropTypes.func.isRequired,
-  onLogout: PropTypes.func.isRequired,
-};
 
 export default SettingsPanel;

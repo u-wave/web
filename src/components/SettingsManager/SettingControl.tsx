@@ -1,5 +1,3 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -9,7 +7,12 @@ const labelClasses = {
   label: 'SettingControl-labelText',
 };
 
-function SettingControl({ label, helpText, children }) {
+type SettingControlProps = {
+  label: string,
+  helpText?: React.ReactNode,
+  children: React.ReactElement,
+};
+function SettingControl({ label, helpText, children }: SettingControlProps) {
   return (
     <FormControl className="SettingControl">
       <FormControlLabel
@@ -22,11 +25,5 @@ function SettingControl({ label, helpText, children }) {
     </FormControl>
   );
 }
-
-SettingControl.propTypes = {
-  label: PropTypes.node.isRequired,
-  helpText: PropTypes.node,
-  children: PropTypes.element.isRequired,
-};
 
 export default SettingControl;

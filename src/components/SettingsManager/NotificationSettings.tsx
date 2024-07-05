@@ -1,19 +1,19 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import { useCallback } from 'react';
 import { useTranslator } from '@u-wave/react-translate';
 import FormGroup from '@mui/material/FormGroup';
 import Switch from '@mui/material/Switch';
 import SettingControl from './SettingControl';
 import { useSelector } from '../../hooks/useRedux';
 
-const { useCallback } = React;
-
-function NotificationSettings({ onSettingChange }) {
+type NotificationSettingsProps = {
+  onSettingChange: (name: string, value: boolean) => void,
+};
+function NotificationSettings({ onSettingChange }: NotificationSettingsProps) {
   const { t } = useTranslator();
   const notifications = useSelector((state) => state.settings.notifications);
 
-  function useToggleSetting(name) {
-    return useCallback((event) => {
+  function useToggleSetting(name: string) {
+    return useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
       onSettingChange(name, event.target.checked);
       // `name` is a constant.
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -62,9 +62,5 @@ function NotificationSettings({ onSettingChange }) {
     </div>
   );
 }
-
-NotificationSettings.propTypes = {
-  onSettingChange: PropTypes.func.isRequired,
-};
 
 export default NotificationSettings;

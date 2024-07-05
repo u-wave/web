@@ -7,7 +7,7 @@ const modules = process.env.NODE_ENV === 'test'
 export const resources = Object.fromEntries(
   [['en', () => en]].concat(
     Object.entries(modules)
-      .map(([path, loader]) => [/\/(\w+)\.yaml$/.exec(path)[1], loader]),
+      .map(([path, loader]) => [/\/(\w+)\.yaml$/.exec(path)![1]!, loader]),
   ),
 );
 

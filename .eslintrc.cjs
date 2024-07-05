@@ -9,6 +9,8 @@ module.exports = {
   },
 
   rules: {
+    // Makes no sense
+    'max-classes-per-file': 'off',
     'arrow-body-style': 'off',
     'no-underscore-dangle': ['error', { allow: ['_id'] }],
     // Modify eslint-config-airbnb's rule to allow ForOfStatement

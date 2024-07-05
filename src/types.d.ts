@@ -1,12 +1,4 @@
-declare module '*.ico' {
-  const url: string;
-  export default url;
-}
-
-declare module '*.png' {
-  const url: string;
-  export default url;
-}
+/// <reference types="vite/client" />
 
 declare module '*.yaml' {
   const data: object;
@@ -21,11 +13,13 @@ declare module 'virtual:emoji-shortcodes' {
 declare module '@u-wave/react-translate' {
   import { Translator } from '@u-wave/translate';
 
+  export { Translator };
   export function useTranslator(): Translator;
   export function Interpolate(props: {
     i18nKey: string,
     [props: string]: React.ReactNode,
   }): JSX.Element;
+  export function translate(): <P extends { t: Translator['t'] }>(component: React.ComponentClass<P>) => React.ComponentClass<Omit<P, 't'>>;
 }
 
 declare module 'item-selection/immutable' {
@@ -55,4 +49,30 @@ declare module 'splitargs' {
 declare module 'flash-document-title' {
   function flashDocumentTitle(input: string): void;
   export = flashDocumentTitle;
+}
+
+declare module 'react-abstract-autocomplete' {
+  export type CompletionProps<C> = {
+    trigger: string,
+    minLength?: number,
+    completions: C[],
+    getCompletions?: (text: string, props: CompletionProps<C>) => C[],
+    getText?: (completion: C, props: CompletionProps<C>) => string,
+    renderSuggestion?: (props: {
+      value: C,
+      select: () => void,
+      selected: boolean,
+    }) => JSX.Element,
+  }
+  export type AutoCompleteProps = {
+    inputProps?: React.ComponentPropsWithoutRef<'input'>,
+    onUpdate: (value: string) => void,
+    value: string,
+    renderSuggestions?: (node: React.ReactNode) => JSX.Element,
+    limit?: number,
+    /** Must be Completion elements, technically */
+    children: JSX.Element | JSX.Element[],
+  }
+  export function Completion<C>(props: CompletionProps<C>): JSX.Element;
+  export default function AutoComplete(props: AutoCompleteProps): JSX.Element;
 }
