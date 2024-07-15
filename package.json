@@ -117,7 +117,7 @@
     "postcss": "^8.4.32",
     "postcss-preset-env": "^9.6.0",
     "rimraf": "^5.0.0",
-    "stylelint": "^16.6.1",
+    "stylelint": "^16.7.0",
     "stylelint-config-standard": "^36.0.1",
     "twemoji-emojis": "^14.1.0",
     "type-fest": "^4.9.0",
