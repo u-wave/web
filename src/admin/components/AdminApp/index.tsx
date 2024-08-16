@@ -1,25 +1,31 @@
-import React from 'react';
+import { Suspense, lazy, useEffect, useState, useTransition } from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import List, { ListItem, ListItemText } from '../../../components/List';
-import CurrentPage from './CurrentPage';
+import Main from '../Main';
 import '../../index.css';
 
-const {
-  useEffect,
-  useState,
-  useTransition,
-} = React;
+function Fallback() {
+  return <CircularProgress size="100%" />;
+}
 
-const Fallback = () => <CircularProgress size="100%" />;
-const Pending = () => (
-  <ListItemIcon>
-    <CircularProgress color="inherit" size={24} />
-  </ListItemIcon>
-);
+function Pending() {
+  return (
+    <ListItemIcon>
+      <CircularProgress color="inherit" size={24} />
+    </ListItemIcon>
+  );
+}
+
+const pages = {
+  main: Main,
+  users: lazy(() => import('../../containers/UsersList')),
+  bans: lazy(() => import('../../containers/BansList')),
+  config: lazy(() => import('../../containers/ServerConfig')),
+};
 
 function AdminApp() {
-  const [currentView, setCurrentView] = useState('main');
+  const [currentView, setCurrentView] = useState<keyof typeof pages>('main');
   const [nextView, setNextView] = useState(currentView);
   const [isPending, startTransition] = useTransition();
 
@@ -32,6 +38,8 @@ function AdminApp() {
       setCurrentView(nextView);
     });
   }, [currentView, nextView]);
+
+  const CurrentPage = pages[currentView];
 
   return (
     <div className="AdminApp">
@@ -72,9 +80,9 @@ function AdminApp() {
         </List>
       </div>
       <div className="AdminApp-page">
-        <React.Suspense fallback={<Fallback />}>
-          <CurrentPage page={currentView} />
-        </React.Suspense>
+        <Suspense fallback={<Fallback />}>
+          <CurrentPage />
+        </Suspense>
       </div>
     </div>
   );
