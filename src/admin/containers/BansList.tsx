@@ -1,14 +1,10 @@
-import React from 'react';
+import { useMemo, useState } from 'react';
 import useSWR from 'swr';
 import { useAsyncCallback } from 'react-async-hook';
 import BansList from '../components/BansList';
 import mergeIncludedModels from '../../utils/mergeIncludedModels';
 import uwFetch from '../../utils/fetch';
-
-const {
-  useMemo,
-  useState,
-} = React;
+import type { User } from '../../reducers/users';
 
 const PAGE_SIZE = 25;
 
@@ -17,18 +13,16 @@ function BansListContainer() {
   const [filter, setFilter] = useState('');
   const qs = {
     page: { offset: currentPage * PAGE_SIZE, limit: PAGE_SIZE },
+    filter: filter || undefined,
   };
-  if (filter) {
-    qs.filter = filter;
-  }
   const { data, mutate } = useSWR(['/bans', { qs }], { suspense: true, revalidateOnFocus: false });
   const bans = useMemo(() => mergeIncludedModels(data), [data]);
   const count = data.meta.results;
 
-  const onUnbanUser = useAsyncCallback(async (user) => {
-    await uwFetch([`/bans/${user._id}`, { method: 'del' }]);
-    mutate();
-  }, [mutate]);
+  const onUnbanUser = useAsyncCallback(async (user: User) => {
+    await uwFetch([`/bans/${user._id}`, { method: 'delete' }]);
+    await mutate();
+  });
 
   return (
     <BansList
