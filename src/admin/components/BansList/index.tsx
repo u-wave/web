@@ -1,5 +1,3 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
 import Table from '@mui/material/Table';
 import TableContainer from '@mui/material/TableContainer';
@@ -10,13 +8,14 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 import BanRow from './Row';
+import type { User } from '../../../reducers/users';
 
 const headerStyle = {
   background: '#9d2053',
   padding: '12px 24px',
   lineHeight: '35px',
 };
-function Header(props) {
+function Header(props: React.ComponentPropsWithoutRef<'div'>) {
   return <div style={headerStyle} {...props} />;
 }
 
@@ -28,9 +27,24 @@ const filterStyle = {
   paddingLeft: 12,
   height: 35,
 };
-function Filter(props) {
+function Filter(props: React.ComponentPropsWithoutRef<'input'>) {
   return <input type="text" style={filterStyle} {...props} />;
 }
+
+type BansListProps = {
+  bans: {
+    user: User,
+    duration: number,
+    reason: string | null,
+    moderator: User,
+  }[],
+  count: number,
+  pageSize: number,
+  currentPage: number,
+  onUnbanUser: (user: User) => void,
+  onPageChange: (page: number) => void,
+  onFilter: (filter: string) => void,
+};
 
 function BansList({
   bans,
@@ -40,7 +54,7 @@ function BansList({
   onUnbanUser,
   onPageChange,
   onFilter,
-}) {
+}: BansListProps) {
   const { t } = useTranslator();
 
   return (
@@ -49,7 +63,7 @@ function BansList({
         <span>Managing Bans:</span>
         <span style={{ float: 'right' }}>
           Filter User:
-          <Filter onFilter={onFilter} />
+          <Filter onInput={(event) => onFilter(event.currentTarget.value)} />
         </span>
       </Header>
       <Table size="small">
@@ -87,15 +101,5 @@ function BansList({
     </TableContainer>
   );
 }
-
-BansList.propTypes = {
-  bans: PropTypes.array.isRequired,
-  count: PropTypes.number.isRequired,
-  pageSize: PropTypes.number.isRequired,
-  currentPage: PropTypes.number.isRequired,
-  onUnbanUser: PropTypes.func.isRequired,
-  onPageChange: PropTypes.func.isRequired,
-  onFilter: PropTypes.func.isRequired,
-};
 
 export default BansList;

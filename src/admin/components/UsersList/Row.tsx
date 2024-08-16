@@ -1,42 +1,31 @@
 import cx from 'clsx';
-import React from 'react';
-import PropTypes from 'prop-types';
+import { useCallback, useId, useState } from 'react';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import TableRow from '@mui/material/TableRow';
-import MuiTableCell from '@mui/material/TableCell';
+import MuiTableCell, { type TableCellProps } from '@mui/material/TableCell';
 import { mdiDotsVertical } from '@mdi/js';
 import useIntl from '../../../hooks/useIntl';
 import Avatar from '../../../components/Avatar';
 import Username from '../../../components/Username/WithCard';
 import UserRole from '../../../components/UserRole';
 import SvgIcon from '../../../components/SvgIcon';
+import type { User } from '../../../reducers/users';
 
-const {
-  useCallback,
-  useId,
-  useState,
-} = React;
-
-function TableCell({ className, ...props }) {
+function TableCell({ className, ...props }: TableCellProps) {
   return (
     <MuiTableCell className={cx('AdminUserRow-cell', className)} {...props} />
   );
 }
 
-TableCell.propTypes = {
-  className: PropTypes.string,
+type JoinDateProps = {
+  date: Date,
 };
-
-function JoinDate({ date }) {
+function JoinDate({ date }: JoinDateProps) {
   const { dateFormatter } = useIntl();
   return Number.isNaN(date.getTime()) ? 'Invalid Date' : dateFormatter.format(date);
 }
-
-JoinDate.propTypes = {
-  date: PropTypes.instanceOf(Date).isRequired,
-};
 
 const actionsStyle = {
   width: 48,
@@ -44,12 +33,15 @@ const actionsStyle = {
   paddingRight: 0,
 };
 
-function UserRow({ user }) {
+type UserRowProps = {
+  user: User,
+};
+function UserRow({ user }: UserRowProps) {
   const ariaMenu = useId();
   const [open, setOpen] = useState(false);
-  const [anchorEl, setAnchorEl] = useState(false);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const handleOpenMenu = useCallback((event) => {
+  const handleOpenMenu = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
     setOpen(true);
     setAnchorEl(event.currentTarget);
   }, []);
@@ -74,14 +66,14 @@ function UserRow({ user }) {
       <TableCell>
         {user.roles.length > 0 && (
           /* Only show the primary role here for space reasons. */
-          <UserRole roleName={user.roles[0]} />
+          <UserRole roleName={user.roles[0]!} />
         )}
       </TableCell>
       <TableCell style={actionsStyle}>
         <IconButton
           onClick={handleOpenMenu}
           aria-haspopup="true"
-          aria-owns={open ? ariaMenu : null}
+          aria-owns={open ? ariaMenu : undefined}
           size="small"
         >
           <SvgIcon path={mdiDotsVertical} />
@@ -98,9 +90,5 @@ function UserRow({ user }) {
     </TableRow>
   );
 }
-
-UserRow.propTypes = {
-  user: PropTypes.object.isRequired,
-};
 
 export default UserRow;

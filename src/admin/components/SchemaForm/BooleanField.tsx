@@ -1,10 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormHelperText from '@mui/material/FormHelperText';
 import Checkbox from '@mui/material/Checkbox';
+import type { JSONSchema7 } from 'json-schema';
 
-function BooleanField({ schema, value, onChange }) {
+type BooleanFieldProps = {
+  schema: JSONSchema7,
+  value: boolean,
+  onChange: (value: boolean) => void,
+};
+function BooleanField({ schema, value, onChange }: BooleanFieldProps) {
   return (
     <>
       <FormControlLabel
@@ -20,11 +24,5 @@ function BooleanField({ schema, value, onChange }) {
     </>
   );
 }
-
-BooleanField.propTypes = {
-  schema: PropTypes.object.isRequired,
-  value: PropTypes.bool,
-  onChange: PropTypes.func.isRequired,
-};
 
 export default BooleanField;

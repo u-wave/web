@@ -1,5 +1,3 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
 import Table from '@mui/material/Table';
 import TableContainer from '@mui/material/TableContainer';
@@ -11,7 +9,16 @@ import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 import UserRow from './Row';
 import Header from './Header';
+import type { User } from '../../../reducers/users';
 
+type UsersListProps = {
+  users: User[],
+  totalUsers: number,
+  pageSize: number,
+  currentPage: number,
+  onPageChange: (page: number) => void,
+  onFilter: (value: string) => void,
+};
 function UsersList({
   pageSize,
   currentPage,
@@ -19,7 +26,7 @@ function UsersList({
   users,
   onPageChange,
   onFilter,
-}) {
+}: UsersListProps) {
   const { t } = useTranslator();
 
   return (
@@ -48,7 +55,7 @@ function UsersList({
               rowsPerPage={pageSize}
               rowsPerPageOptions={[pageSize]}
               page={currentPage}
-              onPageChange={onPageChange}
+              onPageChange={(_event, page) => onPageChange(page)}
             />
           </TableRow>
         </TableFooter>
@@ -56,14 +63,5 @@ function UsersList({
     </TableContainer>
   );
 }
-
-UsersList.propTypes = {
-  pageSize: PropTypes.number.isRequired,
-  currentPage: PropTypes.number.isRequired,
-  totalUsers: PropTypes.number.isRequired,
-  users: PropTypes.array.isRequired,
-  onPageChange: PropTypes.func.isRequired,
-  onFilter: PropTypes.func.isRequired,
-};
 
 export default UsersList;

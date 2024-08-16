@@ -392,7 +392,7 @@ export const currentUserMuteSelector = (state: StoreState) => {
   return user ? mutes[user._id] : null;
 };
 
-export const setMotd = createAsyncThunk('chat/setMotd', async (text: string, api) => {
+export const setMotd = createAsyncThunk('chat/setMotd', async (text: string | null, api) => {
   const { data } = await uwFetch<{
     data: { motd: string },
   }>(['/motd', {
@@ -400,7 +400,11 @@ export const setMotd = createAsyncThunk('chat/setMotd', async (text: string, api
     data: { motd: text },
   }]);
 
-  api.dispatch(log(`Message of the Day is now: ${data.motd}`));
+  if (data.motd == null) {
+    api.dispatch(log('Message of the Day cleared'));
+  } else {
+    api.dispatch(log(`Message of the Day is now: ${data.motd}`));
+  }
 });
 
 export const deleteChatMessage = createAsyncThunk('chat/deleteMessage', async (id: string) => {

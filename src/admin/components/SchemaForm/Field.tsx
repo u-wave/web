@@ -1,15 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import { useContext } from 'react';
+import type { JSONSchema7, JSONSchema7Type } from 'json-schema';
 import ControlsContext from './ControlsContext';
-
-const {
-  useContext,
-} = React;
 
 const errstyle = { background: 'red', color: 'white' };
 
-function getControlName(schema) {
-  if (schema['uw:control']) {
+function getControlName(schema: JSONSchema7) {
+  if ('uw:control' in schema && typeof schema['uw:control'] === 'string') {
     return schema['uw:control'];
   }
 
@@ -17,23 +13,39 @@ function getControlName(schema) {
     return 'enum';
   }
 
+  // Not sure what to do with this!
+  if (Array.isArray(schema.type)) {
+    return undefined;
+  }
+
   return schema.type;
 }
 
+type FieldProps = {
+  className?: string,
+  schema: JSONSchema7,
+  value: JSONSchema7Type,
+  onChange: (value: JSONSchema7Type) => void,
+};
+
 function Field({
+  className,
   schema,
   value,
   onChange,
-  ...props
-}) {
+}: FieldProps) {
   const controls = useContext(ControlsContext);
 
   const controlName = getControlName(schema);
+  if (controlName == null) {
+    return <p style={errstyle}>Unsupported type</p>;
+  }
+
   const Control = controls.get(controlName); // eslint-disable-line react/destructuring-assignment
   if (Control) {
     return (
       <Control
-        {...props}
+        className={className}
         schema={schema}
         value={value}
         onChange={onChange}
@@ -48,11 +60,5 @@ function Field({
     </p>
   );
 }
-
-Field.propTypes = {
-  schema: PropTypes.object.isRequired,
-  value: PropTypes.any,
-  onChange: PropTypes.func.isRequired,
-};
 
 export default Field;

@@ -1,15 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import { useCallback, useMemo } from 'react';
 import debounce from 'just-debounce';
 
-const {
-  useCallback,
-  useMemo,
-} = React;
-
-function Filter({ onFilter }) {
+type FilterProps = {
+  onFilter: (value: string) => void,
+};
+function Filter({ onFilter }: FilterProps) {
   const onFilterDebounced = useMemo(() => debounce(onFilter, 200), [onFilter]);
-  const onChange = useCallback((event) => {
+  const onChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     onFilterDebounced(event.target.value);
   }, [onFilterDebounced]);
 
@@ -22,11 +19,10 @@ function Filter({ onFilter }) {
   );
 }
 
-Filter.propTypes = {
-  onFilter: PropTypes.func.isRequired,
+type HeaderProps = {
+  onFilter: (value: string) => void,
 };
-
-function Header({ onFilter }) {
+function Header({ onFilter }: HeaderProps) {
   return (
     <div className="AdminUserHeader">
       <span>Managing Users:</span>
@@ -37,9 +33,5 @@ function Header({ onFilter }) {
     </div>
   );
 }
-
-Header.propTypes = {
-  onFilter: PropTypes.func.isRequired,
-};
 
 export default Header;
