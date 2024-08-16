@@ -1,5 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
@@ -10,22 +15,20 @@ import Collapse from '@mui/material/Collapse';
 import { mdiPencil } from '@mdi/js';
 import parse from 'u-wave-parse-chat-markup';
 import SvgIcon from '../../../components/SvgIcon';
-import Markup from '../../../components/Chat/Markup';
+import Markup, { type CompileOptions } from '../../../components/Chat/Markup';
 import useHasRole from '../../../hooks/useHasRole';
 
-const {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} = React;
-
+type MotdProps = {
+  initialMotd: string | null,
+  // TODO: CompileOptions should probably be on the context
+  compileOptions: CompileOptions,
+  onSetMotd: (newMotd: string | null) => void,
+};
 function Motd({
   initialMotd,
   compileOptions,
   onSetMotd,
-}) {
+}: MotdProps) {
   const [newMotd, setMotd] = useState(initialMotd);
   const [expanded, setExpanded] = useState(false);
   const canChangeMotd = useHasRole('moderator'); // TODO narrow?
@@ -38,15 +41,15 @@ function Motd({
   const onExpand = useCallback(() => {
     setExpanded(!expanded);
   }, [expanded]);
-  const onChange = useCallback((event) => {
+  const onChange = useCallback((event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setMotd(event.target.value);
   }, []);
-  const onSubmit = useCallback((event) => {
+  const onSubmit = useCallback((event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     onSetMotd(newMotd);
     setExpanded(false);
   }, [newMotd, onSetMotd]);
-  const input = useRef(null);
+  const input = useRef<HTMLTextAreaElement>(null);
   useEffect(() => {
     if (input.current) {
       input.current.focus();
@@ -87,11 +90,5 @@ function Motd({
     </Card>
   );
 }
-
-Motd.propTypes = {
-  initialMotd: PropTypes.string,
-  compileOptions: PropTypes.object.isRequired,
-  onSetMotd: PropTypes.func.isRequired,
-};
 
 export default Motd;
