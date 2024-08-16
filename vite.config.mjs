@@ -1,6 +1,7 @@
 // @ts-check
+/// <reference types="vitest">
 import { readFile, writeFile } from 'node:fs/promises';
-import { defineConfig, splitVendorChunkPlugin } from 'vite';
+import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import yaml from '@rollup/plugin-yaml';
 import emoji from './tasks/emoji.mjs';
@@ -46,7 +47,6 @@ export default defineConfig({
     },
   },
   plugins: [
-    splitVendorChunkPlugin(),
     react(),
     yaml(),
     prerender({ file: 'index.html', source: 'src/index.tsx' }),
