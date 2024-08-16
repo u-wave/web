@@ -181,12 +181,13 @@ export function listenerCountSelector(state: StoreState) {
 }
 
 export function userHasRole(roleConfig: Record<string, string[]>, user: User, role: string) {
-  if (user.roles.includes('*')) {
+  const allRoles = getAllUserRoles(roleConfig, user);
+  if (allRoles.includes(SUPERUSER_ROLE)) {
     return true;
   }
 
   // TODO would be faster to stop iterating as soon as we find it
-  return getAllUserRoles(roleConfig, user).includes(role);
+  return allRoles.includes(role);
 }
 
 export function userHasRoleSelector(state: StoreState, user: User, role: string) {
