@@ -3,7 +3,6 @@ import {
   createSelector,
   createSlice,
 } from '@reduxjs/toolkit';
-import { createStructuredSelector } from 'reselect';
 import { mutate } from 'swr';
 import {
   type User,
@@ -343,14 +342,32 @@ export const currentVotesSelector = createSelector(
   },
 );
 
-export const currentVoteStatsSelector = createStructuredSelector({
-  isFavorite: isFavoriteSelector,
-  isUpvote: isUpvoteSelector,
-  isDownvote: isDownvoteSelector,
-  favoritesCount: favoritesCountSelector,
-  upvotesCount: upvotesCountSelector,
-  downvotesCount: downvotesCountSelector,
-});
+const EMPTY_VOTES = {
+  isFavorite: false,
+  isUpvote: false,
+  isDownvote: false,
+  favoritesCount: 0,
+  upvotesCount: 0,
+  downvotesCount: 0,
+};
+export function currentVoteStatsSelector(state: StoreState) {
+  const { stats } = state.booth;
+  if (stats == null) {
+    return EMPTY_VOTES;
+  }
+
+  const { favorites, upvotes, downvotes } = stats;
+  const user = currentUserSelector(state);
+
+  return {
+    isFavorite: user != null && favorites.includes(user._id),
+    isUpvote: user != null && upvotes.includes(user._id),
+    isDownvote: user != null && downvotes.includes(user._id),
+    favoritesCount: favorites.length,
+    upvotesCount: upvotes.length,
+    downvotesCount: downvotes.length,
+  };
+}
 
 export const currentPlaySelector = createSelector(
   [historyIDSelector, mediaSelector, startTimeSelector, djSelector, currentVotesSelector],
@@ -374,10 +391,11 @@ export function canSkipSelector(state: StoreState) {
     return false;
   }
 
-  const canSkipSelf = currentUserHasRoleSelector(state, 'booth.skip.self');
-  const canSkipOther = currentUserHasRoleSelector(state, 'booth.skip.other');
   const isCurrentDJ = isCurrentDJSelector(state);
-  return isCurrentDJ ? canSkipSelf : canSkipOther;
+  return currentUserHasRoleSelector(
+    state,
+    isCurrentDJ ? 'booth.skip.self' : 'booth.skip.other',
+  );
 }
 
 export function advance(nextBooth: SocketMessageParams['advance']): Thunk<void> {
