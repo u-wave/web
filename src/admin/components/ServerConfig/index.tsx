@@ -42,7 +42,7 @@ function Section({
 
   let startIcon = null;
   if (save.loading) {
-    startIcon = <CircularProgress color="white" size={16} />;
+    startIcon = <CircularProgress color="inherit" size={16} />;
   }
   if (save.status === 'success') {
     startIcon = <SvgIcon path={mdiCheck} />;

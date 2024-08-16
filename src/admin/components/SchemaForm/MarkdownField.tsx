@@ -1,12 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import Typography from '@mui/material/Typography';
 import FormHelperText from '@mui/material/FormHelperText';
 import Markdown from '../../../components/Markdown';
+import type { JSONSchema7 } from 'json-schema';
 
+type MarkdownFieldProps = {
+  className?: string,
+  schema: JSONSchema7,
+  value: string,
+  onChange: (value: string) => void,
+};
 function MarkdownField({
   className, schema, value, onChange,
-}) {
+}: MarkdownFieldProps) {
   return (
     <div className={className} style={{ marginBottom: '8px' }}>
       {schema.title && <Typography gutterBottom>{schema.title}</Typography>}
@@ -15,7 +20,7 @@ function MarkdownField({
           className="TextField-input"
           value={value}
           disabled={schema.readOnly}
-          onChange={(event) => onChange(event.target.value ?? undefined)}
+          onChange={(event) => onChange(event.target.value)}
         />
       </div>
       {schema.description && <FormHelperText>{schema.description}</FormHelperText>}
@@ -23,12 +28,5 @@ function MarkdownField({
     </div>
   );
 }
-
-MarkdownField.propTypes = {
-  className: PropTypes.string,
-  schema: PropTypes.object.isRequired,
-  value: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
-};
 
 export default MarkdownField;

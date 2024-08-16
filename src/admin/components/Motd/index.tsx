@@ -76,7 +76,7 @@ function Motd({
               className="AdminMotd-field"
               rows={4}
               onChange={onChange}
-              value={newMotd}
+              value={newMotd ?? undefined}
               ref={input}
             />
           </CardContent>

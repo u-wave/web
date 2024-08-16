@@ -1,5 +1,3 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
@@ -8,17 +6,23 @@ import FormHelperText from '@mui/material/FormHelperText';
 import { mdiClose } from '@mdi/js';
 import SvgIcon from '../../../components/SvgIcon';
 import Field from './Field';
+import type { JSONSchema7, JSONSchema7Array, JSONSchema7Type } from 'json-schema';
 
-function ArrayField({ schema, value, onChange }) {
+type ArrayFieldProps = {
+  schema: JSONSchema7,
+  value: JSONSchema7Array,
+  onChange: (value: JSONSchema7Array) => void,
+};
+function ArrayField({ schema, value, onChange }: ArrayFieldProps) {
   const { t } = useTranslator();
 
-  const remove = (index) => {
+  const remove = (index: number) => {
     onChange([
       ...value.slice(0, index),
       ...value.slice(index + 1),
     ]);
   };
-  const replace = (index, newValue) => {
+  const replace = (index: number, newValue: JSONSchema7Type) => {
     onChange([
       ...value.slice(0, index),
       newValue,
@@ -26,10 +30,7 @@ function ArrayField({ schema, value, onChange }) {
     ]);
   };
   const append = () => {
-    onChange([
-      ...value,
-      undefined,
-    ]);
+    onChange([...value, null]);
   };
 
   return (
@@ -40,7 +41,7 @@ function ArrayField({ schema, value, onChange }) {
         <div key={index} className="ArrayFieldElement">
           <Field
             className="ArrayFieldElement-field"
-            schema={schema.items}
+            schema={schema.items as JSONSchema7}
             value={subValue}
             onChange={(newValue) => replace(index, newValue)}
           />
@@ -56,11 +57,5 @@ function ArrayField({ schema, value, onChange }) {
     </>
   );
 }
-
-ArrayField.propTypes = {
-  schema: PropTypes.object.isRequired,
-  value: PropTypes.array.isRequired,
-  onChange: PropTypes.func.isRequired,
-};
 
 export default ArrayField;

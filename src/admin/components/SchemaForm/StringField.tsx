@@ -1,12 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import Typography from '@mui/material/Typography';
 import FormHelperText from '@mui/material/FormHelperText';
 import TextField from '../../../components/Form/TextField';
+import type { JSONSchema7 } from 'json-schema';
 
+type StringFieldProps = {
+  className?: string,
+  schema: JSONSchema7,
+  value: string,
+  onChange: (value: string) => void,
+};
 function StringField({
   className, schema, value, onChange,
-}) {
+}: StringFieldProps) {
   return (
     <div className={className} style={{ marginBottom: '8px' }}>
       {schema.title && <Typography gutterBottom>{schema.title}</Typography>}
@@ -20,12 +25,5 @@ function StringField({
     </div>
   );
 }
-
-StringField.propTypes = {
-  className: PropTypes.string,
-  schema: PropTypes.object.isRequired,
-  value: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
-};
 
 export default StringField;

@@ -1,7 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import Form from '../../../components/Form';
-import ControlsContext from './ControlsContext';
+import ControlsContext, { type ControlComponent } from './ControlsContext';
 import ArrayField from './ArrayField';
 import BooleanField from './BooleanField';
 import NumberField from './NumberField';
@@ -9,23 +7,30 @@ import ObjectField, { ObjectProperties } from './ObjectField';
 import StringField from './StringField';
 import MarkdownField from './MarkdownField';
 import EnumField from './EnumField';
+import type { JSONSchema7, JSONSchema7Object } from 'json-schema';
 
-const controls = new Map([
-  ['array', ArrayField],
-  ['boolean', BooleanField],
-  ['number', NumberField],
-  ['object', ObjectField],
-  ['string', StringField],
-  ['enum', EnumField],
-  ['markdown', MarkdownField],
+const controls = new Map<string, ControlComponent>([
+  ['array', ArrayField as ControlComponent],
+  ['boolean', BooleanField as ControlComponent],
+  ['number', NumberField as ControlComponent],
+  ['object', ObjectField as ControlComponent],
+  ['string', StringField as ControlComponent],
+  ['enum', EnumField as ControlComponent],
+  ['markdown', MarkdownField as ControlComponent],
 ]);
 
+type SchemaFormProps = {
+  schema: JSONSchema7,
+  value: JSONSchema7Object,
+  onChange: (value: JSONSchema7Object) => void,
+  unwrapRoot?: boolean,
+};
 function SchemaForm({
   schema,
   value,
   onChange,
   unwrapRoot = false,
-}) {
+}: SchemaFormProps) {
   const form = unwrapRoot
     ? <ObjectProperties schema={schema} value={value} onChange={onChange} />
     : <ObjectField schema={schema} value={value} onChange={onChange} />;
@@ -38,12 +43,5 @@ function SchemaForm({
     </Form>
   );
 }
-
-SchemaForm.propTypes = {
-  schema: PropTypes.object.isRequired,
-  value: PropTypes.object.isRequired,
-  onChange: PropTypes.func.isRequired,
-  unwrapRoot: PropTypes.bool,
-};
 
 export default SchemaForm;

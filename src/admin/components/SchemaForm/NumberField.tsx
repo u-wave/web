@@ -1,27 +1,25 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import Typography from '@mui/material/Typography';
 import FormHelperText from '@mui/material/FormHelperText';
 import TextField from '../../../components/Form/TextField';
+import type { JSONSchema7 } from 'json-schema';
 
-function NumberField({ schema, value, onChange }) {
+type NumberFieldProps = {
+  schema: JSONSchema7,
+  value: number,
+  onChange: (value: number) => void,
+};
+function NumberField({ schema, value, onChange }: NumberFieldProps) {
   return (
     <>
       {schema.title && <Typography gutterBottom>{schema.title}</Typography>}
       <TextField
         type="number"
         value={value}
-        onChange={(event) => onChange(event.target.value)}
+        onChange={(event) => onChange(Number(event.target.value))}
       />
       {schema.description && <FormHelperText>{schema.description}</FormHelperText>}
     </>
   );
 }
-
-NumberField.propTypes = {
-  schema: PropTypes.object.isRequired,
-  value: PropTypes.number,
-  onChange: PropTypes.func.isRequired,
-};
 
 export default NumberField;
