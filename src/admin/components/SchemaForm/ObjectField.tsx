@@ -1,8 +1,8 @@
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import FormHelperText from '@mui/material/FormHelperText';
-import Field from './Field';
 import type { JSONSchema7, JSONSchema7Object, JSONSchema7Type } from 'json-schema';
+import Field from './Field';
 
 type ObjectPropertiesProps = {
   schema: JSONSchema7,

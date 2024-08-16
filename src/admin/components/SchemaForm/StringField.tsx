@@ -1,7 +1,7 @@
 import Typography from '@mui/material/Typography';
 import FormHelperText from '@mui/material/FormHelperText';
-import TextField from '../../../components/Form/TextField';
 import type { JSONSchema7 } from 'json-schema';
+import TextField from '../../../components/Form/TextField';
 
 type StringFieldProps = {
   className?: string,

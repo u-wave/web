@@ -1,7 +1,7 @@
 import Typography from '@mui/material/Typography';
 import FormHelperText from '@mui/material/FormHelperText';
-import Markdown from '../../../components/Markdown';
 import type { JSONSchema7 } from 'json-schema';
+import Markdown from '../../../components/Markdown';
 
 type MarkdownFieldProps = {
   className?: string,

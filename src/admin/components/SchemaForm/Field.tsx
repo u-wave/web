@@ -1,6 +1,6 @@
 import { useContext } from 'react';
-import ControlsContext from './ControlsContext';
 import type { JSONSchema7, JSONSchema7Type } from 'json-schema';
+import ControlsContext from './ControlsContext';
 
 const errstyle = { background: 'red', color: 'white' };
 

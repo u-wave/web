@@ -1,8 +1,8 @@
 import { useCallback } from 'react';
 import useSWR from 'swr';
+import type { JSONSchema7Object } from 'json-schema';
 import uwFetch from '../../utils/fetch';
 import ServerConfig from '../components/ServerConfig';
-import type { JSONSchema7Object } from 'json-schema';
 
 function ServerConfigContainer() {
   const { data, mutate } = useSWR(['/server/config?schema'], { suspense: true });

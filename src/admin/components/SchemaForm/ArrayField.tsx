@@ -4,9 +4,9 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import FormHelperText from '@mui/material/FormHelperText';
 import { mdiClose } from '@mdi/js';
+import type { JSONSchema7, JSONSchema7Array, JSONSchema7Type } from 'json-schema';
 import SvgIcon from '../../../components/SvgIcon';
 import Field from './Field';
-import type { JSONSchema7, JSONSchema7Array, JSONSchema7Type } from 'json-schema';
 
 type ArrayFieldProps = {
   schema: JSONSchema7,

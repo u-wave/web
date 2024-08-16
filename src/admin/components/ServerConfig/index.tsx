@@ -9,9 +9,9 @@ import AccordionActions from '@mui/material/AccordionActions';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import { mdiCheck, mdiAlert, mdiUnfoldMoreHorizontal } from '@mdi/js';
+import type { JSONSchema7, JSONSchema7Object } from 'json-schema';
 import SvgIcon from '../../../components/SvgIcon';
 import SchemaForm from '../SchemaForm';
-import type { JSONSchema7, JSONSchema7Object } from 'json-schema';
 
 type SectionProps = {
   schema: JSONSchema7,
@@ -88,11 +88,11 @@ function Section({
   );
 }
 
-function partial<A, F extends (first: A, ...args: any[]) => any>(fn: F, arg: A) {
-  return (...args: (F extends (first: any, ...args: infer R) => any ? R : unknown[])) => fn(arg, ...args);
-}
-
-function renderSections(allSchema: JSONSchema7, allValues: JSONSchema7Object, onSave: (key: string, value: JSONSchema7Object) => Promise<void>) {
+function renderSections(
+  allSchema: JSONSchema7,
+  allValues: JSONSchema7Object,
+  onSave: (key: string, value: JSONSchema7Object) => Promise<void>,
+) {
   if (allSchema.properties == null) {
     return null;
   }
@@ -103,7 +103,7 @@ function renderSections(allSchema: JSONSchema7, allValues: JSONSchema7Object, on
       key={key}
       schema={schema as JSONSchema7}
       defaultValue={allValues[key] as JSONSchema7Object}
-      onSave={partial(onSave, key)}
+      onSave={onSave.bind(null, key)} // eslint-disable-line react/jsx-no-bind
     />
   ));
 }

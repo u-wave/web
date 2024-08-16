@@ -10,11 +10,11 @@ function MotdContainer() {
   const onSetMotd = (motd: string | null) => dispatch(setMotd(motd));
 
   return (
-      <Motd
-        initialMotd={initialMotd}
-        compileOptions={compileOptions}
-        onSetMotd={onSetMotd}
-      />
+    <Motd
+      initialMotd={initialMotd}
+      compileOptions={compileOptions}
+      onSetMotd={onSetMotd}
+    />
   );
 }
 

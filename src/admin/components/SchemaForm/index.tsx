@@ -1,3 +1,4 @@
+import type { JSONSchema7, JSONSchema7Object } from 'json-schema';
 import Form from '../../../components/Form';
 import ControlsContext, { type ControlComponent } from './ControlsContext';
 import ArrayField from './ArrayField';
@@ -7,7 +8,6 @@ import ObjectField, { ObjectProperties } from './ObjectField';
 import StringField from './StringField';
 import MarkdownField from './MarkdownField';
 import EnumField from './EnumField';
-import type { JSONSchema7, JSONSchema7Object } from 'json-schema';
 
 const controls = new Map<string, ControlComponent>([
   ['array', ArrayField as ControlComponent],
