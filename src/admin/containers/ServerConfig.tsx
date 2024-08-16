@@ -1,11 +1,8 @@
-import React from 'react';
+import { useCallback } from 'react';
 import useSWR from 'swr';
 import uwFetch from '../../utils/fetch';
 import ServerConfig from '../components/ServerConfig';
-
-const {
-  useCallback,
-} = React;
+import type { JSONSchema7Object } from 'json-schema';
 
 function ServerConfigContainer() {
   const { data, mutate } = useSWR(['/server/config?schema'], { suspense: true });
@@ -14,9 +11,9 @@ function ServerConfigContainer() {
     meta: { schema: configSchema },
   } = data;
 
-  const handleSaveConfig = useCallback(async (key, value) => {
+  const handleSaveConfig = useCallback(async (key: string, value: JSONSchema7Object) => {
     await uwFetch([`/server/config/${key}`, { method: 'put', data: value }]);
-    mutate();
+    await mutate();
   }, [mutate]);
 
   return (

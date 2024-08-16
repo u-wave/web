@@ -90,6 +90,7 @@
     "@testing-library/jest-dom": "^6.2.0",
     "@testing-library/react": "^16.0.0",
     "@testing-library/user-event": "^14.4.3",
+    "@types/json-schema": "^7.0.15",
     "@types/natural-compare": "^1.4.3",
     "@types/node": "^18.19.3",
     "@types/react": "^18.3.3",

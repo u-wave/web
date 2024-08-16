@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import { useCallback, useState } from 'react';
 import { useTranslator } from '@u-wave/react-translate';
 import { useAsyncCallback } from 'react-async-hook';
 import Typography from '@mui/material/Typography';
@@ -12,17 +11,18 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { mdiCheck, mdiAlert, mdiUnfoldMoreHorizontal } from '@mdi/js';
 import SvgIcon from '../../../components/SvgIcon';
 import SchemaForm from '../SchemaForm';
+import type { JSONSchema7, JSONSchema7Object } from 'json-schema';
 
-const {
-  useCallback,
-  useState,
-} = React;
-
+type SectionProps = {
+  schema: JSONSchema7,
+  defaultValue: JSONSchema7Object,
+  onSave: (value: JSONSchema7Object) => Promise<void>,
+};
 function Section({
   schema,
   defaultValue,
   onSave,
-}) {
+}: SectionProps) {
   const { t } = useTranslator();
   const [value, setValue] = useState(defaultValue);
   const [edited, setEdited] = useState(false);
@@ -34,7 +34,7 @@ function Section({
     setEdited(false);
   });
 
-  const handleChange = useCallback((newValue) => {
+  const handleChange = useCallback((newValue: JSONSchema7Object) => {
     setValue(newValue);
     setEdited(true);
     save.reset();
@@ -88,36 +88,36 @@ function Section({
   );
 }
 
-Section.propTypes = {
-  schema: PropTypes.shape({
-    type: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-  }).isRequired,
-  defaultValue: PropTypes.object.isRequired,
-  onSave: PropTypes.func.isRequired,
-};
-
-function partial(fn, arg) {
-  return (...args) => fn(arg, ...args);
+function partial<A, F extends (first: A, ...args: any[]) => any>(fn: F, arg: A) {
+  return (...args: (F extends (first: any, ...args: infer R) => any ? R : unknown[])) => fn(arg, ...args);
 }
 
-function renderSections(allSchema, allValues, onSave) {
-  return Object.keys(allSchema.properties).map((key) => (
+function renderSections(allSchema: JSONSchema7, allValues: JSONSchema7Object, onSave: (key: string, value: JSONSchema7Object) => Promise<void>) {
+  if (allSchema.properties == null) {
+    return null;
+  }
+
+  // Some casting: at the top level we know all properties are other schema objects
+  return Object.entries(allSchema.properties).map(([key, schema]) => (
     <Section
       key={key}
-      schema={allSchema.properties[key]}
-      defaultValue={allValues[key]}
+      schema={schema as JSONSchema7}
+      defaultValue={allValues[key] as JSONSchema7Object}
       onSave={partial(onSave, key)}
     />
   ));
 }
 
+type ServerConfigProps = {
+  config: JSONSchema7Object,
+  configSchema: JSONSchema7,
+  onSaveConfig: (key: string, value: JSONSchema7Object) => Promise<void>,
+};
 function ServerConfig({
   config,
   configSchema,
   onSaveConfig,
-}) {
+}: ServerConfigProps) {
   return (
     <div>
       {configSchema ? (
@@ -126,11 +126,5 @@ function ServerConfig({
     </div>
   );
 }
-
-ServerConfig.propTypes = {
-  config: PropTypes.object,
-  configSchema: PropTypes.object,
-  onSaveConfig: PropTypes.func.isRequired,
-};
 
 export default ServerConfig;
