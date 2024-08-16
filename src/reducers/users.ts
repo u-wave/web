@@ -181,7 +181,7 @@ export function listenerCountSelector(state: StoreState) {
 }
 
 export function userHasRole(roleConfig: Record<string, string[]>, user: User, role: string) {
-  const allRoles = getAllUserRoles(roleConfig, user)
+  const allRoles = getAllUserRoles(roleConfig, user);
   if (allRoles.includes(SUPERUSER_ROLE)) {
     return true;
   }
