@@ -41,13 +41,13 @@ function PlaylistPanel(props: PlaylistPanelProps) {
   const size = media.length;
 
   let list;
-  if (loading) {
+  if (loading && size > 0 && media.every((item) => item == null)) {
     list = (
       <div className="PlaylistPanel-loading">
         <CircularProgress size="100%" />
       </div>
     );
-  } else if (isFiltered && media.length === 0) {
+  } else if (isFiltered && size === 0) {
     list = <PlaylistFilterEmpty />;
   } else if (size === 0) {
     list = <PlaylistEmpty />;

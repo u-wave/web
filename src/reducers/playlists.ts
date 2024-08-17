@@ -486,8 +486,6 @@ const slice = createSlice({
         return initialState;
       })
       .addCase(activatePlaylist.pending, (state, action) => {
-        // TODO use a different property here so we can show a loading icon on
-        // the "Active" button only, instead of on top of the entire playlist
         const playlist = state.playlists[action.meta.arg];
         if (playlist != null) {
           playlist.loading = true;
@@ -500,8 +498,6 @@ const slice = createSlice({
         }
       })
       .addCase(activatePlaylist.fulfilled, (state, action) => {
-        // TODO use a different property here so we can show a loading icon on
-        // the "Active" button only, instead of on top of the entire playlist
         const playlist = state.playlists[action.meta.arg];
         if (playlist != null) {
           playlist.loading = false;
