@@ -51,12 +51,9 @@ function PlaylistsMenuContainer({ className }: PlaylistMenuContainerProps) {
   const onShowImportPanel = useCallback(() => {
     dispatch(showImportPanel());
   }, [dispatch]);
-  const onActivatePlaylist = useCallback(
-    (id: string) => {
+  const onActivatePlaylist = useCallback((id: string) => {
       dispatch(activatePlaylist(id));
-    },
-    [dispatch]
-  );
+  }, [dispatch]);
 
   return (
     <PlaylistsMenu
