@@ -28,7 +28,7 @@ function AddToPlaylistMenuContainer() {
     dispatch(close());
   }, [dispatch]);
   const onCreatePlaylist = useCallback((name: string) => {
-    dispatch(createPlaylist(name));
+    return dispatch(createPlaylist(name));
   }, [dispatch]);
   const onSelect = useCallback((playlist: Playlist) => {
     if (isFavorite) {

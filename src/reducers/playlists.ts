@@ -157,7 +157,7 @@ const createPlaylist = createAsyncThunk('playlists/create', async (name: string)
     data: { name },
   }]);
 
-  return response.data;
+  return response.data satisfies Playlist;
 });
 
 const deletePlaylist = createAsyncThunk('playlists/delete', async (playlistID: string) => {

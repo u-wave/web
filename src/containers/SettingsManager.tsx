@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { lazy, useCallback } from 'react';
 import { changeLanguage } from '../actions/LocaleActionCreators';
 import { changeUsername, logout } from '../reducers/auth';
@@ -10,18 +9,21 @@ const SettingsManager = createLazyOverlay({
   title: (t) => t('settings.title'),
 });
 
-function SettingsManagerContainer({ onCloseOverlay }) {
+type SettingsManagerContainerProps = {
+  onCloseOverlay: () => void,
+};
+function SettingsManagerContainer({ onCloseOverlay }: SettingsManagerContainerProps) {
   const dispatch = useDispatch();
   const onChangeUsername = useCallback(
-    (name) => dispatch(changeUsername(name)),
+    (name: string) => dispatch(changeUsername(name)),
     [dispatch],
   );
   const onChangeLanguage = useCallback(
-    (language) => dispatch(changeLanguage(language)),
+    (language: string) => dispatch(changeLanguage(language)),
     [dispatch],
   );
-  const onLogout = useCallback(() => {
-    dispatch(logout());
+  const onLogout = useCallback(async () => {
+    await dispatch(logout());
   }, [dispatch]);
 
   return (
@@ -33,9 +35,5 @@ function SettingsManagerContainer({ onCloseOverlay }) {
     />
   );
 }
-
-SettingsManagerContainer.propTypes = {
-  onCloseOverlay: PropTypes.func.isRequired,
-};
 
 export default SettingsManagerContainer;
