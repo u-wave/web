@@ -13,6 +13,7 @@ import {
   showSearchResults,
   playlistsSelector,
   selectedPlaylistIDSelector,
+  activatePlaylist,
 } from '../reducers/playlists';
 
 const { useCallback } = React;
@@ -50,6 +51,12 @@ function PlaylistsMenuContainer({ className }: PlaylistMenuContainerProps) {
   const onShowImportPanel = useCallback(() => {
     dispatch(showImportPanel());
   }, [dispatch]);
+  const onActivatePlaylist = useCallback(
+    (id: string) => {
+      dispatch(activatePlaylist(id));
+    },
+    [dispatch]
+  );
 
   return (
     <PlaylistsMenu
@@ -63,6 +70,7 @@ function PlaylistsMenuContainer({ className }: PlaylistMenuContainerProps) {
       onSelectSearchResults={onSelectSearchResults}
       onCloseSearchResults={onCloseSearchResults}
       onShowImportPanel={onShowImportPanel}
+      onActivatePlaylist={onActivatePlaylist}
     />
   );
 }
