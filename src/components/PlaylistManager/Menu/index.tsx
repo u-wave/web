@@ -20,6 +20,7 @@ type PlaylistMenuProps = {
   onAddToPlaylist:
     (playlist: Playlist, items: NewPlaylistItem[], afterID?: string) => Promise<void>,
   onShowImportPanel: () => void,
+  onActivatePlaylist: (id: string) => void;
 };
 function PlaylistMenu({
   className,
@@ -32,6 +33,7 @@ function PlaylistMenu({
   onCloseSearchResults,
   onAddToPlaylist,
   onShowImportPanel,
+  onActivatePlaylist,
 }: PlaylistMenuProps) {
   return (
     <MenuList className={cx('PlaylistMenu', className)} disablePadding>
@@ -54,6 +56,7 @@ function PlaylistMenu({
           playlist={pl}
           selected={selected === pl._id}
           onClick={() => onSelectPlaylist(pl._id)}
+          onDoubleClick={() => onActivatePlaylist(pl._id)}
           onAddToPlaylist={onAddToPlaylist}
         />
       ))}
