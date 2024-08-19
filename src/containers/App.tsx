@@ -28,7 +28,7 @@ const {
 
 class ErrorWrapper extends React.Component<
   { children: React.ReactNode },
-  { error: object | null }
+  { error: Error | null }
 > {
   constructor(props: { children: React.ReactNode }) {
     super(props);
@@ -47,7 +47,7 @@ class ErrorWrapper extends React.Component<
     const { children } = this.props;
     const { error } = this.state;
 
-    if (error) {
+    if (error != null) {
       return (
         <FatalError error={error} />
       );
