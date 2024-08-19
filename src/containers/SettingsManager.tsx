@@ -15,11 +15,9 @@ type SettingsManagerContainerProps = {
 function SettingsManagerContainer({ onCloseOverlay }: SettingsManagerContainerProps) {
   const dispatch = useDispatch();
   const onChangeUsername = useCallback(
-    (name: string) => dispatch(changeUsername(name)),
-    [dispatch],
-  );
-  const onChangeLanguage = useCallback(
-    (language: string) => dispatch(changeLanguage(language)),
+    async (name: string) => {
+      await dispatch(changeUsername(name));
+    },
     [dispatch],
   );
   const onLogout = useCallback(async () => {

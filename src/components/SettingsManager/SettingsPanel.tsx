@@ -26,7 +26,7 @@ import useCurrentUser from '../../hooks/useCurrentUser';
 
 export type SettingsPanelProps = {
   className?: string,
-  onChangeUsername: (username: string) => undefined | Promise<void>,
+  onChangeUsername: (username: string) => Promise<void>,
   onLogout: () => undefined | Promise<void>,
 };
 function SettingsPanel({
