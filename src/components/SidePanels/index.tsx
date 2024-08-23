@@ -1,4 +1,5 @@
-import React from 'react';
+import cx from 'clsx';
+import { useState } from 'react';
 import { useTranslator } from '@u-wave/react-translate';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -6,14 +7,11 @@ import { useSelector } from '../../hooks/useRedux';
 import Chat from '../Chat';
 import RoomUserList from '../../containers/RoomUserList';
 import WaitList from '../../containers/WaitList';
-import PanelContainer from './PanelContainer';
 import { listenerCountSelector } from '../../reducers/users';
 import {
   sizeSelector as waitlistSizeSelector,
   positionSelector as waitlistPositionSelector,
 } from '../../reducers/waitlist';
-
-const { useState, useCallback } = React;
 
 const subHeaderStyle = {
   fontSize: '125%',
@@ -24,16 +22,20 @@ const tabClasses = {
   wrapper: 'SidePanel-tabLabel',
 };
 
-const getUsersLabel = (t, listenerCount) => (
-  <>
-    {t('users.title')}
-    <span key="sub" style={subHeaderStyle}>
-      {listenerCount}
-    </span>
-  </>
-);
+type Translate = (key: string) => string;
 
-const getWaitlistLabel = (t, size, position) => {
+function getUsersLabel(t: Translate, listenerCount: number) {
+  return (
+    <>
+      {t('users.title')}
+      <span key="sub" style={subHeaderStyle}>
+        {listenerCount}
+      </span>
+    </>
+  );
+}
+
+function getWaitlistLabel(t: Translate, size: number, position: number) {
   if (size > 0) {
     const posText = position !== -1
       ? `${position + 1} / ${size}`
@@ -47,12 +49,23 @@ const getWaitlistLabel = (t, size, position) => {
     );
   }
   return t('waitlist.title');
+}
+
+type PanelContainerProps = {
+  selected: boolean,
+  children: React.ReactNode,
 };
+function PanelContainer({ selected, children }: PanelContainerProps) {
+  return (
+    <div className={cx('SidePanel-panel', selected && 'is-selected')} aria-hidden={!selected}>
+      {children}
+    </div>
+  );
+}
 
 function SidePanels() {
   const { t } = useTranslator();
   const [selected, setTab] = useState(0);
-  const handleChange = useCallback((event, value) => setTab(value), [setTab]);
   const waitlistPosition = useSelector(waitlistPositionSelector);
   const waitlistSize = useSelector(waitlistSizeSelector);
   const listenerCount = useSelector(listenerCountSelector);
@@ -61,7 +74,7 @@ function SidePanels() {
     <div className="SidePanels">
       <Tabs
         value={selected}
-        onChange={handleChange}
+        onChange={(_event, value: number) => setTab(value)}
         variant="fullWidth"
         classes={{
           root: 'SidePanel-tabs',

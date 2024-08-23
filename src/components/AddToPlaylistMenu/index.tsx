@@ -1,27 +1,28 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import { useCallback, useState } from 'react';
 import { useTranslator } from '@u-wave/react-translate';
 import { mdiPlus } from '@mdi/js';
 import PromptDialog from '../Dialogs/PromptDialog';
 import SvgIcon from '../SvgIcon';
 import PlaylistsMenu from './PlaylistsMenu';
+import type { Playlist } from '../../reducers/playlists';
 
-const {
-  useCallback,
-  useState,
-} = React;
-
+type AddToPlaylistMenuProps = {
+  onClose: () => void,
+  onSelect: (playlist: Playlist) => void,
+  onCreatePlaylist: (name: string) => Promise<Playlist>,
+  position: { x: number, y: number },
+};
 function AddToPlaylistMenu({
   onClose,
   onSelect,
   onCreatePlaylist,
   position,
-}) {
+}: AddToPlaylistMenuProps) {
   const { t } = useTranslator();
   const [creating, setCreating] = useState(false);
   const handleOpen = useCallback(() => setCreating(true), []);
   const handleClose = useCallback(() => setCreating(false), []);
-  const handleSubmit = useCallback(async (playlistName) => {
+  const handleSubmit = useCallback(async (playlistName: string) => {
     const playlist = await onCreatePlaylist(playlistName);
     onSelect(playlist);
     onClose();
@@ -48,15 +49,5 @@ function AddToPlaylistMenu({
     </>
   );
 }
-
-AddToPlaylistMenu.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  onSelect: PropTypes.func.isRequired,
-  onCreatePlaylist: PropTypes.func.isRequired,
-  position: PropTypes.shape({
-    x: PropTypes.number,
-    y: PropTypes.number,
-  }),
-};
 
 export default AddToPlaylistMenu;

@@ -1,5 +1,3 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
@@ -10,7 +8,10 @@ function reload() {
   window.location.reload();
 }
 
-function FatalError({ error }) {
+type FatalErrorProps = {
+  error: Error,
+};
+function FatalError({ error }: FatalErrorProps) {
   return (
     <div className="FatalError">
       <Card
@@ -18,7 +19,7 @@ function FatalError({ error }) {
         className="FatalError-paper"
       >
         <CardContent>
-          <Typography variant="headline">üWave Crashed</Typography>
+          <Typography variant="h6" component="h1">üWave Crashed</Typography>
           <Typography component="p">
             {error.message}
           </Typography>
@@ -42,9 +43,5 @@ function FatalError({ error }) {
     </div>
   );
 }
-
-FatalError.propTypes = {
-  error: PropTypes.object.isRequired,
-};
 
 export default FatalError;

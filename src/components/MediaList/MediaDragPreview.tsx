@@ -1,19 +1,25 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { mdiFormatListBulleted } from '@mdi/js';
 import SvgIcon from '../SvgIcon';
+import type { Media } from '../../reducers/booth';
 
-const getItemStyles = (offset) => (
-  offset ? ({
-    display: 'inline-block',
-    transform: `translate(${offset.x}px, ${offset.y}px)`,
-  }) : { display: 'none' }
-);
+function getItemStyles(offset: { x: number, y: number } | null) {
+  if (offset != null) {
+    return {
+      display: 'inline-block',
+      transform: `translate(${offset.x}px, ${offset.y}px)`,
+    };
+  }
+  return { display: 'none' };
+}
 
+type MediaDragPreviewProps = {
+  items?: { media?: Media[] | null } | null,
+  currentOffset: { x: number, y: number } | null,
+};
 function MediaDragPreview({
   items,
   currentOffset,
-}) {
+}: MediaDragPreviewProps) {
   if (!items || !items.media) {
     return null;
   }
@@ -27,13 +33,5 @@ function MediaDragPreview({
     </div>
   );
 }
-
-MediaDragPreview.propTypes = {
-  items: PropTypes.object,
-  currentOffset: PropTypes.shape({
-    x: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired,
-  }),
-};
 
 export default MediaDragPreview;
