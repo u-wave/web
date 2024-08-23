@@ -28,7 +28,6 @@ function SettingsManagerContainer({ onCloseOverlay }: SettingsManagerContainerPr
     <SettingsManager
       onCloseOverlay={onCloseOverlay}
       onChangeUsername={onChangeUsername}
-      onChangeLanguage={onChangeLanguage}
       onLogout={onLogout}
     />
   );
