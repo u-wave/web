@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.0-alpha.33 / 17 Aug 2024
+While this is an alpha release, new servers should use this rather than an older "stable" version.
+
+Features:
+ * Activate playlist on double click in playlist menu. (@pledi in #2972)
+
+Fixes:
+ * Fix superuser role permissions. (#2968)
+   In particular this lets admins skip their own turn again ;)
+
 ## 2.0.0-alpha.32 / 29 Mar 2024
 While this is an alpha release, new servers should use this rather than an older "stable" version.
 

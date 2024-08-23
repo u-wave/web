@@ -20,6 +20,7 @@ type PlaylistRowProps = {
   onClick: () => void,
   onAddToPlaylist:
     (playlist: Playlist, items: NewPlaylistItem[], afterID?: string) => Promise<void>,
+  onDoubleClick: () => void;
 };
 function PlaylistRow({
   className,
@@ -27,6 +28,7 @@ function PlaylistRow({
   selected,
   onClick,
   onAddToPlaylist,
+  onDoubleClick,
 }: PlaylistRowProps) {
   const [{ isOver }, drop] = useDrop(() => ({
     accept: [MEDIA, SEARCH_RESULT],
@@ -68,6 +70,7 @@ function PlaylistRow({
       className={cx(className, activeClass, droppableClass)}
       classes={itemClasses}
       onClick={onClick}
+      onDoubleClick={onDoubleClick}
       ref={drop}
     >
       <div className="PlaylistMenuRow-title">
