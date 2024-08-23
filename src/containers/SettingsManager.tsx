@@ -1,5 +1,4 @@
 import { lazy, useCallback } from 'react';
-import { changeLanguage } from '../actions/LocaleActionCreators';
 import { changeUsername, logout } from '../reducers/auth';
 import { useDispatch } from '../hooks/useRedux';
 import createLazyOverlay from '../components/LazyOverlay';
