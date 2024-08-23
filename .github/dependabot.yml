@@ -39,6 +39,11 @@ updates:
     mui:
       patterns:
       - "@mui/*"
+    markdown:
+      patterns:
+      - "react-markdown"
+      - "remark-*"
+      - "rehype-*"
     babel:
       patterns:
       - "@babel/*"
