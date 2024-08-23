@@ -174,7 +174,8 @@ function ServerThumbnail({ server, media }: ServerThumbnailProps) {
 
         {server.description != null ? (
           <DescriptionDialog
-            server={server}
+            // Not sure why the `.description != null` check doesn't narrow the type
+            server={server as Server & { description: string }}
             isOpen={isOpen}
             onCloseDescription={onCloseDescription}
           />
