@@ -19,7 +19,7 @@ function FatalError({ error }: FatalErrorProps) {
         className="FatalError-paper"
       >
         <CardContent>
-          <Typography variant="h1">üWave Crashed</Typography>
+          <Typography variant="h6" component="h1">üWave Crashed</Typography>
           <Typography component="p">
             {error.message}
           </Typography>
