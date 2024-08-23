@@ -8,8 +8,8 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import { intlFormatDistance } from 'date-fns';
 import useSWR from 'swr';
-import uwFetch from '../../utils/fetch';
 import { mdiAlert, mdiMenu } from '@mdi/js';
+import uwFetch from '../../utils/fetch';
 import SvgIcon from '../SvgIcon';
 import DescriptionDialog from './DescriptionDialog';
 
@@ -106,12 +106,6 @@ function ServerThumbnail({ server, media }: ServerThumbnailProps) {
   const onCloseDescription = useCallback(() => {
     setDescriptionOpen(false);
   }, []);
-
-  media = {
-    title: 'AbcDef',
-    artist: 'Ghhihihi',
-    thumbnail: 'https://i.ytimg.com/vi/oNsB-qXQ0xU/hqdefault.jpg',
-  }
 
   return (
     <div className="usl-ServerThumbnail">
