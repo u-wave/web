@@ -146,6 +146,7 @@ function ServerThumbnail({ server, media }: ServerThumbnailProps) {
               <Button
                 variant="contained"
                 color="primary"
+                style={{ color: 'var(--text-color)' }}
                 href={server.url}
               >
                 Join
