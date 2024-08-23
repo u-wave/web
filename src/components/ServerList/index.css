@@ -8,3 +8,72 @@
   justify-content: center;
   height: 100%;
 }
+
+.usl-ServerList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.usl-CurrentMedia {
+  position: relative;
+}
+.usl-CurrentMedia-image {
+  width: 100%;
+  padding-bottom: 75%;
+  background-color: black;
+  background-position: center center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.usl-CurrentMedia-nowPlaying {
+  box-sizing: border-box;
+  position: absolute;
+  width: 100%;
+  bottom: 0px;
+  color: white;
+  background: rgba(0, 0, 0, 0.75);
+  padding: 16px;
+  padding-top: 24px;
+}
+.usl-CurrentMedia-title {
+  margin: 0px;
+  font-size: 150%;
+}
+.usl-CurrentMedia-artist {
+  margin: 0px;
+}
+
+.usl-ServerThumbnail {
+  width: 360px;
+  margin: 0px 20px 20px 20px;
+  position: relative;
+}
+
+.usl-ServerThumbnail-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.usl-ServerThumbnail-link {
+  text-decoration: none;
+}
+
+.usl-ServerThumbnail-nobodyPlaying {
+  background: black;
+  color: white;
+  text-decoration: none;
+}
+
+.usl-ServerThumbnail-actions {
+  justify-content: end;
+}
+
+.usl-DescriptionDialog-markdown {
+  max-width: 100%;
+  line-height: calc(1em + 1ex);
+}
+
+.usl-DescriptionDialog-markdown a:any-link {
+  color: var(--link-color);
+}
