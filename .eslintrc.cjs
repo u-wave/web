@@ -38,6 +38,8 @@ module.exports = {
       ts: 'never',
       tsx: 'never',
     }],
+    // Not sure what this is doing internally but it's not doing the right thing
+    'react/no-is-mounted': 'off',
     // Not true anymore
     'react/react-in-jsx-scope': 'off',
     'react/no-unused-prop-types': ['error', { skipShapeProps: true }],
