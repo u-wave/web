@@ -56,7 +56,7 @@ function blend(a: string, b: string, weight: number) {
 }
 
 export default function createTheme(base: ThemeOptions) {
-  const muiTheme = createMuiTheme(base);
+  const muiTheme = createMuiTheme({ ...base, cssVariables: true });
 
   const { palette, typography, uwave } = muiTheme;
 
