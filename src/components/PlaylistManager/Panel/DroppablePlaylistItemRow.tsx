@@ -48,7 +48,7 @@ function DroppablePlaylistItemRow({
     return combine(
       dropTargetForElements({
         element: droppableRef.current,
-        canDrop: ({ source }) => isMediaDrag(source.data),
+        canDrop: ({ source, element }) => isMediaDrag(source.data) && source.element !== element,
         // getIsSticky: () => true,
         getData({ input, element }) {
           return attachClosestEdge(createPlaylistItemData(media), {
