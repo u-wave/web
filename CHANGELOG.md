@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.0-alpha.34 / 28 Sep 2024
+While this is an alpha release, new servers should use this rather than an older "stable" version.
+
+Features:
+ * Drag and drop YouTube video URLs from other windows into a playlist. (#3043)
+ * Automatically leave the booth after your current turn by enabling auto-leave. (#2989)
+
+Fixes:
+ * Show playlist panel after creating first playlist. (#3044)
+
 ## 2.0.0-alpha.33 / 17 Aug 2024
 While this is an alpha release, new servers should use this rather than an older "stable" version.
 
