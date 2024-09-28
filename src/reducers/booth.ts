@@ -11,7 +11,7 @@ import {
   currentUserHasRoleSelector,
 } from './users';
 import { currentTimeSelector } from './server';
-import { initState } from './auth';
+import { currentUserIDSelector, initState } from './auth';
 import uwFetch from '../utils/fetch';
 import { createAsyncThunk, type Thunk } from '../redux/api';
 import type { StoreState } from '../redux/configureStore';
@@ -38,6 +38,7 @@ interface PlayingState {
   media: Media,
   startTime: number,
   stats: { upvotes: string[], downvotes: string[], favorites: string[] },
+  autoLeave?: boolean | null,
 }
 
 interface EmptyState {
@@ -46,6 +47,7 @@ interface EmptyState {
   media: null,
   startTime: null,
   stats: null,
+  autoLeave?: null,
 }
 
 type State = (PlayingState | EmptyState) & {
@@ -58,6 +60,7 @@ const initialState = {
   djID: null,
   startTime: null,
   stats: null,
+  autoLeave: null,
   isFullscreen: false,
 } as State;
 
@@ -92,6 +95,21 @@ export const skipCurrentDJ = createAsyncThunk('booth/skip', async (options: { re
     method: 'post',
     data: payload,
   }]);
+});
+
+// This action doesn't need further handling because it will cause updates
+// over WebSocket on the server.
+export const setAutoLeave = createAsyncThunk('booth/setAutoLeave', async (
+  options: { autoLeave: boolean },
+  api,
+) => {
+  const userID = currentUserIDSelector(api.getState());
+  const { data } = await uwFetch<{ data: { autoLeave: boolean } }>(['/booth/leave', {
+    method: 'put',
+    data: { userID, autoLeave: options.autoLeave },
+  }]);
+
+  return data;
 });
 
 export const upvote = createAsyncThunk('booth/upvote', async ({ historyID }: { historyID: string }) => {
@@ -148,6 +166,7 @@ const slice = createSlice({
               downvotes: [],
               favorites: [],
             },
+            autoLeave: null,
           };
         }
         return {
@@ -157,6 +176,7 @@ const slice = createSlice({
           djID: null,
           startTime: null,
           stats: null,
+          autoLeave: null,
         };
       },
       prepare(payload: AdvancePayload | null, previous: PreviousBooth | null = null) {
@@ -236,6 +256,13 @@ const slice = createSlice({
           startTime: null,
           stats: null,
         });
+      }
+
+      state.autoLeave = payload.autoLeave ?? false;
+    });
+    builder.addCase(setAutoLeave.fulfilled, (state, { payload }) => {
+      if (state.djID != null) {
+        state.autoLeave = payload.autoLeave;
       }
     });
   },

@@ -7,7 +7,6 @@
   width: 125px;
   background: var(--highlight-color);
   color: var(--text-color);
-  cursor: pointer;
   font-size: 11pt;
   text-transform: uppercase;
 
@@ -16,6 +15,13 @@
   line-height: 24px;
   padding: 8px 4px;
 
+  &:hover {
+    background: var(--highbright-color);
+  }
+}
+.WaitlistButton--split {
+  background: var(--highlight-color);
+  color: var(--text-color);
   &:hover {
     background: var(--highbright-color);
   }

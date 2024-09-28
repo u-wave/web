@@ -11,6 +11,7 @@ describe('reducers/booth', () => {
   it('should default to an empty DJ booth', () => {
     const state = booth(undefined, { type: '@@redux/INIT' });
     expect(state).toEqual({
+      autoLeave: null,
       historyID: null,
       djID: null,
       media: null,
@@ -32,6 +33,7 @@ describe('reducers/booth', () => {
         timestamp: 1449767164107,
       }));
       expect(state).toEqual({
+        autoLeave: null,
         historyID: 'someRandomID',
         djID: 'seventeen',
         media: { artist: 'about tess', title: 'Imaginedit' },
@@ -48,6 +50,7 @@ describe('reducers/booth', () => {
     it('should stop playing if there is no next song', () => {
       const state = booth(initialState(), advanceInner(null));
       expect(state).toEqual({
+        autoLeave: null,
         historyID: null,
         djID: null,
         media: null,

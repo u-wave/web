@@ -118,7 +118,7 @@ export const {
   waitlistUpdated,
 } = slice.actions;
 
-export function isLockedSelector(state: StoreState) {
+export function waitlistIsLockedSelector(state: StoreState) {
   return state.waitlist.locked;
 }
 
@@ -158,7 +158,7 @@ export function userInWaitlistSelector(state: StoreState) {
 }
 
 export const waitlistSelector = createStructuredSelector({
-  locked: isLockedSelector,
+  locked: waitlistIsLockedSelector,
   users: waitlistUsersSelector,
 });
 

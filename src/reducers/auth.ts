@@ -67,6 +67,7 @@ export type InitialStatePayload = {
       favorites: string[],
     },
   } | null,
+  autoLeave?: boolean, // Only on recent u-wave-core
   waitlist: string[],
   waitlistLocked: boolean,
   activePlaylist: string | null,

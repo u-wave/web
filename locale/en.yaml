@@ -132,6 +132,7 @@ uwave:
     join: Join Waitlist
     leave: Leave Waitlist
     leaveBooth: Stop playing
+    autoLeave: Stop playing after this
     add: Add to waitlist
     remove: Remove from waitlist
 
