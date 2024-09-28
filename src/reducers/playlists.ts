@@ -152,12 +152,18 @@ const createPlaylist = createAsyncThunk('playlists/create', async (name: string)
       createdAt: string,
       size: number,
     },
+    meta: {
+      active: boolean,
+    },
   }>(['/playlists', {
     method: 'post',
     data: { name },
   }]);
 
-  return response.data satisfies Playlist;
+  const playlist = response.data satisfies Playlist;
+  const { active } = response.meta;
+
+  return { playlist, active };
 });
 
 const deletePlaylist = createAsyncThunk('playlists/delete', async (playlistID: string) => {
@@ -584,10 +590,13 @@ const slice = createSlice({
       .addCase(createPlaylist.fulfilled, (state, action) => {
         delete state.playlists[action.meta.requestId];
 
-        const playlist = action.payload;
+        const { playlist, active } = action.payload;
         state.playlists[playlist._id] = playlist;
-        if (state.selectedPlaylistID === action.meta.requestId) {
+        if (state.selectedPlaylistID === action.meta.requestId || active) {
           state.selectedPlaylistID = playlist._id;
+        }
+        if (active) {
+          state.activePlaylistID = playlist._id;
         }
       })
       .addCase(renamePlaylist.fulfilled, (state, action) => {
