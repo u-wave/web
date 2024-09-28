@@ -32,7 +32,7 @@ function AddToPlaylistMenuContainer() {
     if ('error' in result) {
       throw result.error;
     }
-    return result.payload;
+    return result.payload.playlist;
   }, [dispatch]);
   const onSelect = useCallback((playlist: Playlist) => {
     if (isFavorite) {
