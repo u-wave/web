@@ -29,6 +29,7 @@ export interface MediaSource<State extends object = Record<never, never>> {
     onClosePanel: () => void,
   } & State>;
   reducer?: (state: State, action: AnyAction) => State;
+  getMediaUrl?: (media: Media) => URL | null | undefined;
 }
 
 interface MediaSourceContextApi {
