@@ -1,6 +1,4 @@
 import PropTypes from 'prop-types';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
 import FooterBar from '../FooterBar';
 import HeaderBar from '../../containers/HeaderBar';
 import Video from '../../containers/Video';
@@ -15,14 +13,13 @@ import ConnectionIndicator from '../ConnectionIndicator';
 import SidePanels from '../SidePanels';
 import Dialogs from '../Dialogs';
 import AddToPlaylistMenu from '../../containers/AddToPlaylistMenu';
-import DragLayer from '../../containers/DragLayer';
 
 function App({
   activeOverlay,
   isConnected,
   onCloseOverlay,
 }) {
-  const el = (
+  return (
     <div className="App">
       <div className="AppColumn AppColumn--left">
         <div className="AppRow AppRow--top">
@@ -53,14 +50,7 @@ function App({
       <Dialogs />
 
       <AddToPlaylistMenu />
-      <DragLayer />
     </div>
-  );
-
-  return (
-    <DndProvider backend={HTML5Backend}>
-      {el}
-    </DndProvider>
   );
 }
 

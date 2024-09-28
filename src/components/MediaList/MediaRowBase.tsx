@@ -1,16 +1,25 @@
 import cx from 'clsx';
-import React from 'react';
-import { useDrag } from 'react-dnd';
-import { getEmptyImage } from 'react-dnd-html5-backend';
+import React, { useMemo } from 'react';
+import { draggable } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
+import { pointerOutsideOfPreview } from '@atlaskit/pragmatic-drag-and-drop/element/pointer-outside-of-preview';
+import { setCustomNativeDragPreview } from '@atlaskit/pragmatic-drag-and-drop/element/set-custom-native-drag-preview';
+import { createRoot } from 'react-dom/client';
 import { MEDIA } from '../../constants/DDItemTypes';
 import { useMediaListContext } from './BaseMediaList';
 import type { Media } from '../../reducers/booth';
+import MediaDragPreview from './MediaDragPreview';
 
 const {
   useCallback,
   useEffect,
   useRef,
 } = React;
+
+function renderDragPreview(container: HTMLElement, count: number) {
+  const root = createRoot(container);
+  root.render(<MediaDragPreview count={count} />);
+  return () => root.unmount();
+}
 
 interface MediaRowBaseProps extends React.ComponentProps<'div'> {
   className?: string,
@@ -32,22 +41,9 @@ function MediaRowBase({
   ...props
 }: MediaRowBaseProps) {
   const { selection } = useMediaListContext();
-  const selected = selection.isSelected(media);
 
   const localRef = useRef<HTMLDivElement>(null);
   const ref = containerRef ?? localRef;
-
-  const [, drag, connectDragPreview] = useDrag({
-    type: dragType,
-    item: () => ({
-      type: dragType,
-      media: selected ? selection.get() : [media],
-    }),
-  });
-
-  useEffect(() => {
-    connectDragPreview(getEmptyImage());
-  }, [connectDragPreview]);
 
   const handleKeyPress = useCallback((event: React.KeyboardEvent) => {
     if (event.code === 'Space') {
@@ -55,7 +51,28 @@ function MediaRowBase({
     }
   }, [onClick]);
 
-  drag(ref);
+  const mediaForDrag = useMemo(() => {
+    return selection.isSelected(media) ? selection.get() : [media];
+  }, [selection, media]);
+  useEffect(() => {
+    if (ref.current == null) return undefined;
+
+    return draggable({
+      element: ref.current,
+      getInitialData: () => {
+        return { type: dragType, media: mediaForDrag };
+      },
+      onGenerateDragPreview: ({ nativeSetDragImage }) => {
+        setCustomNativeDragPreview({
+          getOffset: pointerOutsideOfPreview({ x: '0px', y: '0px' }),
+          render: ({ container }) => renderDragPreview(container, mediaForDrag.length),
+          nativeSetDragImage,
+        });
+      },
+    });
+  }, [dragType, mediaForDrag, ref]);
+
+  const selected = selection.isSelected(media);
   return (
     <div
       role="checkbox"

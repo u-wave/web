@@ -1,9 +1,10 @@
 import cx from 'clsx';
 import omit from 'just-omit';
-import { useDrop } from 'react-dnd';
+import { dropTargetForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
 import CircularProgress from '@mui/material/CircularProgress';
 import MenuItem from '@mui/material/MenuItem';
 import { mdiCheck } from '@mdi/js';
+import { useEffect, useRef, useState } from 'react';
 import SvgIcon from '../../SvgIcon';
 import { MEDIA, SEARCH_RESULT } from '../../../constants/DDItemTypes';
 import type { NewPlaylistItem, Playlist, PlaylistItem } from '../../../reducers/playlists';
@@ -30,21 +31,46 @@ function PlaylistRow({
   onAddToPlaylist,
   onDoubleClick,
 }: PlaylistRowProps) {
-  const [{ isOver }, drop] = useDrop(() => ({
-    accept: [MEDIA, SEARCH_RESULT],
-    drop(_item, monitor) {
-      // FIXME for search results it's not actually a playlist item
-      const { media, type } = monitor.getItem() as { media: PlaylistItem[], type: string };
-      if (type === SEARCH_RESULT) {
-        onAddToPlaylist(playlist, media.map((item) => omit(item, ['artist', 'title'])));
-      } else {
+  const droppableRef = useRef<HTMLLIElement>(null);
+  const [isOver, setOver] = useState(false);
+  useEffect(() => {
+    if (droppableRef.current == null) return undefined;
+
+    return dropTargetForElements({
+      element: droppableRef.current,
+      canDrop: ({ source }) => source.data.type === MEDIA || source.data.type === SEARCH_RESULT,
+      getIsSticky: () => true,
+      onDragEnter: () => {
+        setOver(true);
+      },
+      onDragLeave: () => {
+        setOver(false);
+      },
+      onDrop: ({ source }) => {
+        setOver(false);
+
+        let media;
+        if (source.data.type === MEDIA) {
+          media = source.data.media as PlaylistItem[];
+        } else if (source.data.type === SEARCH_RESULT) {
+          media = (source.data.media as PlaylistItem[]).map((item) => omit(item, ['artist', 'title']));
+        } else {
+          return;
+        }
+
         onAddToPlaylist(playlist, media);
-      }
-    },
-    collect(monitor) {
-      return { isOver: monitor.isOver() };
-    },
-  }), [playlist]);
+      },
+      // getData: ({ input, element }) => {
+      //   return attachClosestEdge({
+      //     media,
+      //   }, {
+      //     input,
+      //     element,
+      //     allowedEdges: ['top', 'bottom'],
+      //   });
+      // },
+    });
+  }, [onAddToPlaylist, playlist]);
 
   const activeClass = playlist.active && 'is-active';
   const droppableClass = isOver && 'is-droppable';
@@ -71,7 +97,7 @@ function PlaylistRow({
       classes={itemClasses}
       onClick={onClick}
       onDoubleClick={onDoubleClick}
-      ref={drop}
+      ref={droppableRef}
     >
       <div className="PlaylistMenuRow-title">
         {icon}

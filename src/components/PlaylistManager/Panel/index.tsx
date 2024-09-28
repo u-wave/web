@@ -1,12 +1,20 @@
 import cx from 'clsx';
+import { useEffect } from 'react';
+import { extractClosestEdge } from '@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge';
+import { monitorForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
 import CircularProgress from '@mui/material/CircularProgress';
 import BaseMediaList from '../../MediaList/BaseMediaList';
 import PlaylistMeta from './Meta';
 import PlaylistEmpty from './PlaylistEmpty';
 import PlaylistFilterEmpty from './PlaylistFilterEmpty';
 import PlaylistItemRow from './PlaylistItemRow';
-import DroppablePlaylistItemRow from './DroppablePlaylistItemRow';
+import DroppablePlaylistItemRow, { isPlaylistItemData } from './DroppablePlaylistItemRow';
 import type { InsertTarget, Playlist, PlaylistItem } from '../../../reducers/playlists';
+import { MEDIA } from '../../../constants/DDItemTypes';
+
+function isMediaDrag(x: Record<string, unknown>): x is { media: PlaylistItem[] } {
+  return x.type === MEDIA;
+}
 
 type PlaylistPanelProps = {
   className?: string,
@@ -64,6 +72,26 @@ function PlaylistPanel(props: PlaylistPanelProps) {
       />
     );
   }
+
+  useEffect(() => {
+    if (isFiltered) {
+      return undefined;
+    }
+
+    return monitorForElements({
+      canMonitor: (event) => {
+        return isMediaDrag(event.source.data);
+      },
+      onDrop: ({ source, location }) => {
+        const [target] = location.current.dropTargets;
+        if (!isMediaDrag(source.data)) return;
+        if (target == null || !isPlaylistItemData(target.data)) return;
+
+        const edge = extractClosestEdge(target.data);
+        onMoveMedia(source.data.media, edge === 'top' ? { before: target.data.media._id } : { after: target.data.media._id });
+      },
+    });
+  }, [isFiltered, onMoveMedia]);
 
   return (
     <div className={cx('PlaylistPanel', className)}>
