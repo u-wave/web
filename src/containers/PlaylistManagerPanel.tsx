@@ -45,11 +45,7 @@ function PlaylistPanelContainer() {
 
   const onAddToPlaylist = useCallback(
     async (items: NewPlaylistItem[], target: InsertTarget) => {
-      // TODO: make addPlaylistItems use InsertTarget
-      let afterID;
-      if ('after' in target) afterID = target.after;
-      if ('before' in target) afterID = target.before;
-      await dispatch(addPlaylistItems({ playlistID, items, afterID }));
+      await dispatch(addPlaylistItems({ playlistID, items, target }));
     },
     [dispatch, playlistID],
   );

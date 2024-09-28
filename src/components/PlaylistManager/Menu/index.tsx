@@ -17,8 +17,7 @@ type PlaylistMenuProps = {
   onSelectPlaylist: (id: string) => void,
   onSelectSearchResults: () => void,
   onCloseSearchResults: () => void,
-  onAddToPlaylist:
-    (playlist: Playlist, items: NewPlaylistItem[], afterID?: string) => Promise<void>,
+  onAddToPlaylist: (playlist: Playlist, items: NewPlaylistItem[]) => Promise<void>,
   onShowImportPanel: () => void,
   onActivatePlaylist: (id: string) => void;
 };

@@ -20,7 +20,7 @@ type PlaylistRowProps = {
   selected: boolean,
   onClick: () => void,
   onAddToPlaylist:
-    (playlist: Playlist, items: NewPlaylistItem[], afterID?: string) => Promise<void>,
+    (playlist: Playlist, items: NewPlaylistItem[]) => Promise<void>,
   onDoubleClick: () => void;
 };
 function PlaylistRow({
@@ -60,15 +60,6 @@ function PlaylistRow({
 
         onAddToPlaylist(playlist, media);
       },
-      // getData: ({ input, element }) => {
-      //   return attachClosestEdge({
-      //     media,
-      //   }, {
-      //     input,
-      //     element,
-      //     allowedEdges: ['top', 'bottom'],
-      //   });
-      // },
     });
   }, [onAddToPlaylist, playlist]);
 
