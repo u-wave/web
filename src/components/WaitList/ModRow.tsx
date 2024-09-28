@@ -12,21 +12,13 @@ import SvgIcon from '../SvgIcon';
 import Username from '../Username';
 import Position from './Position';
 import type { User } from '../../reducers/users';
-import { WAITLIST_USER } from '../../constants/DDItemTypes';
-
-function createWaitlistData(data: { position: number }) {
-  return Object.assign(data, { type: WAITLIST_USER });
-}
-function isWaitlistData(data: Record<string, unknown>): data is { position: number } {
-  return data.type === WAITLIST_USER;
-}
+import { createWaitlistDrag, createWaitlistDrop, isWaitlistDrag } from './drag';
 
 type ModRowProps = {
   className?: string,
   style?: React.CSSProperties,
   position: number,
   user: User,
-  onMoveUser: (position: number) => void,
   onRemoveUser: () => void,
 };
 
@@ -38,7 +30,6 @@ function ModRow({
   style,
   position,
   user,
-  onMoveUser,
   onRemoveUser,
 }: ModRowProps) {
   const userCard = useUserCard(user);
@@ -62,36 +53,34 @@ function ModRow({
       draggable({
         element: userCard.refAnchor.current,
         dragHandle: handleRef.current,
-        onGenerateDragPreview: ({ nativeSetDragImage }) => {
-          nativeSetDragImage?.(dragPreviewRef.current!, 0, 0);
+        getInitialData() {
+          return createWaitlistDrag({ user });
         },
-        onDrag: () => {
+        onGenerateDragPreview({ nativeSetDragImage }) {
+          nativeSetDragImage?.(
+            dragPreviewRef.current!,
+            dragPreviewRef.current!.getBoundingClientRect().width,
+            0,
+          );
+        },
+        onDrag() {
           setDragging(true);
         },
-        onDrop: ({ location }) => {
+        onDrop() {
           setDragging(false);
-
-          const [target] = location.current.dropTargets;
-          if (target == null || !isWaitlistData(target.data)) return;
-
-          if (extractClosestEdge(target.data) === 'top') {
-            onMoveUser(target.data.position);
-          } else {
-            onMoveUser(target.data.position + 1);
-          }
         },
       }),
       dropTargetForElements({
         element: userCard.refAnchor.current,
-        canDrop: ({ source }) => isWaitlistData(source.data),
+        canDrop: ({ source, element }) => isWaitlistDrag(source.data) && source.element !== element,
         getData({ input, element }) {
-          return attachClosestEdge(createWaitlistData({ position }), {
+          return attachClosestEdge(createWaitlistDrop({ position }), {
             input,
             element,
             allowedEdges: ['top', 'bottom'],
           });
         },
-        onDragEnter({ self }) {
+        onDrag({ self }) {
           setDropState(extractClosestEdge(self.data));
         },
         onDragLeave() {
@@ -102,7 +91,7 @@ function ModRow({
         },
       }),
     );
-  }, [position, onMoveUser, userCard.refAnchor]);
+  }, [user, position, userCard.refAnchor]);
 
   const rowClassName = cx(className, {
     UserRow: true,

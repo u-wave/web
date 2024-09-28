@@ -57,7 +57,7 @@ function DroppablePlaylistItemRow({
             allowedEdges: ['top', 'bottom'],
           });
         },
-        onDragEnter({ self }) {
+        onDrag({ self }) {
           setDragState(extractClosestEdge(self.data));
         },
         onDragLeave() {
