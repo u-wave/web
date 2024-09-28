@@ -257,6 +257,8 @@ const slice = createSlice({
           stats: null,
         });
       }
+
+      state.autoLeave = payload.autoLeave ?? false;
     });
     builder.addCase(setAutoLeave.fulfilled, (state, { payload }) => {
       if (state.djID != null) {
