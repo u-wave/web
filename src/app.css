@@ -3,7 +3,6 @@
 @import url("./vars.css");
 @import url("./components/index.css");
 @import url("./sources/index.css");
-@import url("./containers/DragLayer.css");
 @import url("./mobile") (max-width: 768px);
 
 /* None of our buttons have a use for browser defaults! */

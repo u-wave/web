@@ -1,16 +1,28 @@
 import cx from 'clsx';
-import React from 'react';
-import { useDrop } from 'react-dnd';
-import { MEDIA } from '../../../constants/DDItemTypes';
-import isDraggingNearTopOfRow from '../../../utils/isDraggingNearTopOfRow';
+import { useEffect, useRef, useState } from 'react';
+import { attachClosestEdge, extractClosestEdge, type Edge } from '@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge';
+import { combine } from '@atlaskit/pragmatic-drag-and-drop/combine';
+import { dropTargetForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
+import { dropTargetForExternal } from '@atlaskit/pragmatic-drag-and-drop/external/adapter';
+import { containsURLs } from '@atlaskit/pragmatic-drag-and-drop/external/url';
 import PlaylistItemRow from './PlaylistItemRow';
-import { usePlaylistContext } from './context';
 import type { PlaylistItem } from '../../../reducers/playlists';
+import { MEDIA } from '../../../constants/DDItemTypes';
 
-const {
-  useRef,
-  useState,
-} = React;
+function isMediaDrag(x: Record<string, unknown>): x is { media: PlaylistItem[] } {
+  return x.type === MEDIA;
+}
+
+const PLAYLIST_ITEM = 'dd/PLAYLIST_ITEM';
+function createPlaylistItemData(media: PlaylistItem) {
+  return {
+    type: PLAYLIST_ITEM,
+    media,
+  };
+}
+export function isPlaylistItemData(data: Record<string, unknown>): data is { media: PlaylistItem } {
+  return data.type === PLAYLIST_ITEM;
+}
 
 type PlaylistItemRowProps = {
   className?: string,
@@ -27,40 +39,62 @@ function DroppablePlaylistItemRow({
   media,
   onClick,
 }: PlaylistItemRowProps) {
-  const { onMoveMedia } = usePlaylistContext();
-  const [insertingAbove, setInsertAbove] = useState(false);
   const droppableRef = useRef(null);
-  const [{ isOver }, drop] = useDrop(() => ({
-    accept: MEDIA,
-    drop(_item, monitor) {
-      const { media: droppedItems } = monitor.getItem<{ media: PlaylistItem[] }>();
-      if (droppedItems) {
-        // Do not attempt to move when the selection is dropped on top of an item
-        // that is in the selection.
-        if (droppedItems.some((playlistItem) => playlistItem._id === media._id)) {
-          return;
-        }
-        const insertBefore = isDraggingNearTopOfRow(monitor, droppableRef.current);
-        onMoveMedia(
-          droppedItems,
-          insertBefore ? { before: media._id } : { after: media._id },
-        );
-      }
-    },
-    hover(_item, monitor) {
-      setInsertAbove(isDraggingNearTopOfRow(monitor, droppableRef.current));
-    },
-    collect(monitor) {
-      return { isOver: monitor.isOver() };
-    },
-  }), [media]);
 
-  drop(droppableRef);
+  const [dragState, setDragState] = useState<Edge | null>(null);
+  useEffect(() => {
+    if (droppableRef.current == null) return undefined;
+
+    return combine(
+      dropTargetForElements({
+        element: droppableRef.current,
+        // Prevent dropping in the selection being dragged, unclear what to do in that case
+        canDrop: ({ source }) => isMediaDrag(source.data) && !source.data.media.includes(media),
+        getData({ input, element }) {
+          return attachClosestEdge(createPlaylistItemData(media), {
+            input,
+            element,
+            allowedEdges: ['top', 'bottom'],
+          });
+        },
+        onDrag({ self }) {
+          setDragState(extractClosestEdge(self.data));
+        },
+        onDragLeave() {
+          setDragState(null);
+        },
+        onDrop() {
+          setDragState(null);
+        },
+      }),
+      dropTargetForExternal({
+        element: droppableRef.current,
+        canDrop: containsURLs,
+        getData({ input, element }) {
+          return attachClosestEdge(createPlaylistItemData(media), {
+            input,
+            element,
+            allowedEdges: ['top', 'bottom'],
+          });
+        },
+        onDragEnter({ self }) {
+          setDragState(extractClosestEdge(self.data));
+        },
+        onDragLeave() {
+          setDragState(null);
+        },
+        onDrop() {
+          setDragState(null);
+        },
+      }),
+    );
+  }, [media]);
+
   return (
     <PlaylistItemRow
       className={cx(className, {
-        'PlaylistItemRow--dropAbove': isOver && insertingAbove,
-        'PlaylistItemRow--dropBelow': isOver && !insertingAbove,
+        'PlaylistItemRow--dropAbove': dragState === 'top',
+        'PlaylistItemRow--dropBelow': dragState === 'bottom',
       })}
       style={style}
       index={index}

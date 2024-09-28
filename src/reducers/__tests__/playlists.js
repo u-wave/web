@@ -84,8 +84,8 @@ describe('reducers/playlists', () => {
         ],
       }, '66Z6y6JA4m5WmmNF3O7Ii', {
         playlistID: 'ZcU_8-UyI10Tx79R4CjRv',
-        afterID: 'NkwUIwNmraSZ4A4eiC3GQ',
         items: [],
+        target: { after: 'NkwUIwNmraSZ4A4eiC3GQ' },
       }));
 
       const media = p.selectedPlaylistItemsSelector(getState());
@@ -112,7 +112,6 @@ describe('reducers/playlists', () => {
         ],
       }, '66Z6y6JA4m5WmmNF3O7Ii', {
         playlistID: 'ZcU_8-UyI10Tx79R4CjRv',
-        afterID: null,
         items: [],
       }));
 
@@ -151,7 +150,7 @@ describe('reducers/playlists', () => {
       expect(p.selectedPlaylistItemsSelector(getState())).toHaveLength(5);
 
       dispatch(p.movePlaylistItems.fulfilled({
-        location: { after: 'NkwUIwNmraSZ4A4eiC3GQ' },
+        target: { after: 'NkwUIwNmraSZ4A4eiC3GQ' },
       }, '', {
         playlistID: 'ZcU_8-UyI10Tx79R4CjRv',
         medias: [items[1], items[2]],
@@ -184,7 +183,7 @@ describe('reducers/playlists', () => {
       expect(p.selectedPlaylistItemsSelector(getState())).toHaveLength(5);
 
       dispatch(p.movePlaylistItems.fulfilled({
-        location: { after: 'NkwUIwNmraSZ4A4eiC3GQ' },
+        target: { after: 'NkwUIwNmraSZ4A4eiC3GQ' },
       }, '', {
         playlistID: 'ZcU_8-UyI10Tx79R4CjRv',
         medias: [items[0], items[4]],

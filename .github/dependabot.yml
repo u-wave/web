@@ -57,3 +57,7 @@ updates:
       patterns:
       - "stylelint"
       - "stylelint-config-*"
+    pragmatic-dnd:
+      patterns:
+      - "@atlaskit/pragmatic-drag-and-drop"
+      - "@atlaskit/pragmatic-drag-and-drop-*"

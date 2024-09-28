@@ -1,9 +1,12 @@
 import cx from 'clsx';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
+import { extractClosestEdge } from '@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge';
+import { monitorForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
 import ModRow from './ModRow';
 import SimpleRow from './SimpleRow';
 import type { User } from '../../reducers/users';
+import { isWaitlistDrag, isWaitlistDrop } from './drag';
 
 function estimateSize() {
   return 40;
@@ -33,6 +36,26 @@ function WaitList({
     overscan: 12, // not that expensive to render
   });
 
+  useEffect(() => {
+    return monitorForElements({
+      canMonitor: ({ source }) => isWaitlistDrag(source.data),
+      onDrop({ source, location }) {
+        if (!isWaitlistDrag(source.data)) return;
+        const [target] = location.current.dropTargets;
+        if (target == null || !isWaitlistDrop(target.data)) return;
+
+        const { user } = source.data;
+        const { position } = target.data;
+
+        if (extractClosestEdge(target.data) === 'top') {
+          onMoveUser(user, position);
+        } else {
+          onMoveUser(user, position + 1);
+        }
+      },
+    });
+  }, [onMoveUser]);
+
   return (
     <div
       className={cx(
@@ -60,7 +83,6 @@ function WaitList({
               style={style}
               position={index}
               user={user}
-              onMoveUser={(position) => onMoveUser(user, position)}
               onRemoveUser={() => onRemoveUser(user)}
             />
           );

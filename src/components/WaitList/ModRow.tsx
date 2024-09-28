@@ -1,24 +1,24 @@
 import cx from 'clsx';
-import { useCallback, useRef, useState } from 'react';
-import { useDrag, useDrop } from 'react-dnd';
+import {
+  useCallback, useEffect, useRef, useState,
+} from 'react';
+import { attachClosestEdge, type Edge, extractClosestEdge } from '@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge';
+import { combine } from '@atlaskit/pragmatic-drag-and-drop/combine';
+import { draggable, dropTargetForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
 import { mdiClose, mdiDragHorizontalVariant } from '@mdi/js';
-import { WAITLIST_USER } from '../../constants/DDItemTypes';
-import isDraggingNearTopOfRow from '../../utils/isDraggingNearTopOfRow';
 import useUserCard from '../../hooks/useUserCard';
 import Avatar from '../Avatar';
 import SvgIcon from '../SvgIcon';
 import Username from '../Username';
 import Position from './Position';
 import type { User } from '../../reducers/users';
-
-type DropResult = { position: number };
+import { createWaitlistDrag, createWaitlistDrop, isWaitlistDrag } from './drag';
 
 type ModRowProps = {
   className?: string,
   style?: React.CSSProperties,
   position: number,
   user: User,
-  onMoveUser: (position: number) => void,
   onRemoveUser: () => void,
 };
 
@@ -30,7 +30,6 @@ function ModRow({
   style,
   position,
   user,
-  onMoveUser,
   onRemoveUser,
 }: ModRowProps) {
   const userCard = useUserCard(user);
@@ -43,47 +42,63 @@ function ModRow({
 
   // Drag-drop interactions
   const handleRef = useRef<HTMLDivElement>(null);
-  const [insertAbove, setInsertAbove] = useState(false);
-  const [{ isDragging }, connectDragSource, connectDragPreview] = useDrag({
-    type: WAITLIST_USER,
-    item() {
-      return { user };
-    },
-    end(item, monitor) {
-      const result = monitor.getDropResult<DropResult>();
-      if (item.user && result) {
-        onMoveUser(result.position);
-      }
-    },
-    collect(monitor) {
-      return { isDragging: monitor.isDragging() };
-    },
-  });
-  const [{ isOver }, connectDropTarget] = useDrop(() => ({
-    accept: WAITLIST_USER,
-    hover(_item, monitor) {
-      setInsertAbove(isDraggingNearTopOfRow(monitor, userCard.refAnchor.current));
-    },
-    drop(_item, monitor): DropResult {
-      const insertAfter = !isDraggingNearTopOfRow(monitor, userCard.refAnchor.current);
-      return {
-        position: insertAfter ? position + 1 : position,
-      };
-    },
-    collect(monitor) {
-      return { isOver: monitor.isOver() };
-    },
-  }), [position]);
+  const dragPreviewRef = useRef<HTMLButtonElement>(null);
+  const [isDragging, setDragging] = useState(false);
+  const [dropState, setDropState] = useState<Edge | null>(null);
+  useEffect(() => {
+    if (handleRef.current == null) return undefined;
+    if (userCard.refAnchor.current == null) return undefined;
 
-  connectDropTarget(userCard.refAnchor);
-  connectDragSource(handleRef);
+    return combine(
+      draggable({
+        element: userCard.refAnchor.current,
+        dragHandle: handleRef.current,
+        getInitialData() {
+          return createWaitlistDrag({ user });
+        },
+        onGenerateDragPreview({ nativeSetDragImage }) {
+          nativeSetDragImage?.(
+            dragPreviewRef.current!,
+            dragPreviewRef.current!.getBoundingClientRect().width,
+            0,
+          );
+        },
+        onDrag() {
+          setDragging(true);
+        },
+        onDrop() {
+          setDragging(false);
+        },
+      }),
+      dropTargetForElements({
+        element: userCard.refAnchor.current,
+        canDrop: ({ source, element }) => isWaitlistDrag(source.data) && source.element !== element,
+        getData({ input, element }) {
+          return attachClosestEdge(createWaitlistDrop({ position }), {
+            input,
+            element,
+            allowedEdges: ['top', 'bottom'],
+          });
+        },
+        onDrag({ self }) {
+          setDropState(extractClosestEdge(self.data));
+        },
+        onDragLeave() {
+          setDropState(null);
+        },
+        onDrop() {
+          setDropState(null);
+        },
+      }),
+    );
+  }, [user, position, userCard.refAnchor]);
 
   const rowClassName = cx(className, {
     UserRow: true,
     WaitlistRow: true,
     'WaitlistRow--moderate': true,
-    'WaitlistRow--dropAbove': isOver && insertAbove,
-    'WaitlistRow--dropBelow': isOver && !insertAbove,
+    'WaitlistRow--dropAbove': dropState === 'top',
+    'WaitlistRow--dropBelow': dropState === 'bottom',
     'is-dragging': isDragging,
   });
 
@@ -99,7 +114,7 @@ function ModRow({
         type="button"
         className="WaitlistRow-card"
         onClick={onOpenCard}
-        ref={connectDragPreview}
+        ref={dragPreviewRef}
       >
 
         <Avatar
