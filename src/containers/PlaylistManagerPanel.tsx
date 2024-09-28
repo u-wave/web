@@ -2,6 +2,8 @@ import { useCallback } from 'react';
 import { useSelector, useDispatch } from '../hooks/useRedux';
 import PlaylistPanel from '../components/PlaylistManager/Panel';
 import {
+  type NewPlaylistItem,
+  addPlaylistItems,
   deletePlaylist,
   loadPlaylist,
   shufflePlaylist,
@@ -41,6 +43,16 @@ function PlaylistPanelContainer() {
     await dispatch(deletePlaylist(playlistID));
   }, [dispatch, playlistID]);
 
+  const onAddToPlaylist = useCallback(
+    async (items: NewPlaylistItem[], target: InsertTarget) => {
+      // TODO: make addPlaylistItems use InsertTarget
+      let afterID;
+      if ('after' in target) afterID = target.after;
+      if ('before' in target) afterID = target.before;
+      await dispatch(addPlaylistItems({ playlistID, items, afterID }));
+    },
+    [dispatch, playlistID],
+  );
   const onMoveMedia = useCallback(async (media: PlaylistItem[], opts: InsertTarget) => {
     await dispatch(movePlaylistItems({
       playlistID,
@@ -65,6 +77,7 @@ function PlaylistPanelContainer() {
       onActivatePlaylist={onActivatePlaylist}
       onRenamePlaylist={onRenamePlaylist}
       onDeletePlaylist={onDeletePlaylist}
+      onAddToPlaylist={onAddToPlaylist}
       onMoveMedia={onMoveMedia}
       onLoadPlaylistPage={onLoadPlaylistPage}
       onFilterPlaylistItems={onFilterPlaylistItems}

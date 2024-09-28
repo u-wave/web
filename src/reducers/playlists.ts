@@ -301,8 +301,8 @@ export interface NewPlaylistItem {
   artist?: string | undefined;
   /** Leave empty to use global default for this media. */
   title?: string | undefined;
-  start: number;
-  end: number;
+  start?: number | undefined;
+  end?: number | undefined;
 }
 
 /**

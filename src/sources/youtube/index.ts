@@ -17,6 +17,34 @@ function getMediaUrl(media: Media) {
   return url;
 }
 
+function getStartTime(url: URL) {
+  const t = url.searchParams.get('t');
+  if (t == null) return 0;
+
+  const seconds = Number(t);
+  if (Number.isNaN(seconds)) return 0;
+  return seconds;
+}
+
+function fromMediaUrl(url: URL) {
+  let sourceID;
+  if (url.hostname === 'youtu.be' || url.hostname === 'www.youtu.be') {
+    sourceID = url.pathname;
+  }
+  if ((url.hostname === 'youtube.com' || url.hostname === 'www.youtube.com') && url.pathname === '/watch') {
+    sourceID = url.searchParams.get('v');
+  }
+
+  if (sourceID != null) {
+    return {
+      sourceType: 'youtube',
+      sourceID,
+      start: getStartTime(url),
+    };
+  }
+  return null;
+}
+
 export default function youtube(): MediaSource<State> {
   return {
     name: 'youtube',
@@ -27,5 +55,6 @@ export default function youtube(): MediaSource<State> {
     ImportPanel,
     reducer,
     getMediaUrl,
+    fromMediaUrl,
   };
 }

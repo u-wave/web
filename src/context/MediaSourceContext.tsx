@@ -1,6 +1,7 @@
 import React from 'react';
 import type { AnyAction } from 'redux';
 import type { Media } from '../reducers/booth';
+import type { NewPlaylistItem } from '../reducers/playlists';
 
 const {
   createContext,
@@ -30,6 +31,7 @@ export interface MediaSource<State extends object = Record<never, never>> {
   } & State>;
   reducer?: (state: State, action: AnyAction) => State;
   getMediaUrl?: (media: Media) => URL | null | undefined;
+  fromMediaUrl?: (url: URL) => NewPlaylistItem | null | undefined;
 }
 
 interface MediaSourceContextApi {

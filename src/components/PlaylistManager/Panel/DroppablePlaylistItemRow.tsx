@@ -1,7 +1,10 @@
 import cx from 'clsx';
 import { useEffect, useRef, useState } from 'react';
 import { attachClosestEdge, extractClosestEdge, type Edge } from '@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge';
+import { combine } from '@atlaskit/pragmatic-drag-and-drop/combine';
 import { dropTargetForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
+import { dropTargetForExternal } from '@atlaskit/pragmatic-drag-and-drop/external/adapter';
+import { containsURLs } from '@atlaskit/pragmatic-drag-and-drop/external/url';
 import PlaylistItemRow from './PlaylistItemRow';
 import type { PlaylistItem } from '../../../reducers/playlists';
 import { MEDIA } from '../../../constants/DDItemTypes';
@@ -42,27 +45,49 @@ function DroppablePlaylistItemRow({
   useEffect(() => {
     if (droppableRef.current == null) return undefined;
 
-    return dropTargetForElements({
-      element: droppableRef.current,
-      canDrop: ({ source }) => isMediaDrag(source.data),
-      // getIsSticky: () => true,
-      getData({ input, element }) {
-        return attachClosestEdge(createPlaylistItemData(media), {
-          input,
-          element,
-          allowedEdges: ['top', 'bottom'],
-        });
-      },
-      onDragEnter({ self }) {
-        setDragState(extractClosestEdge(self.data));
-      },
-      onDragLeave() {
-        setDragState(null);
-      },
-      onDrop() {
-        setDragState(null);
-      },
-    });
+    return combine(
+      dropTargetForElements({
+        element: droppableRef.current,
+        canDrop: ({ source }) => isMediaDrag(source.data),
+        // getIsSticky: () => true,
+        getData({ input, element }) {
+          return attachClosestEdge(createPlaylistItemData(media), {
+            input,
+            element,
+            allowedEdges: ['top', 'bottom'],
+          });
+        },
+        onDragEnter({ self }) {
+          setDragState(extractClosestEdge(self.data));
+        },
+        onDragLeave() {
+          setDragState(null);
+        },
+        onDrop() {
+          setDragState(null);
+        },
+      }),
+      dropTargetForExternal({
+        element: droppableRef.current,
+        canDrop: containsURLs,
+        getData({ input, element }) {
+          return attachClosestEdge(createPlaylistItemData(media), {
+            input,
+            element,
+            allowedEdges: ['top', 'bottom'],
+          });
+        },
+        onDragEnter({ self }) {
+          setDragState(extractClosestEdge(self.data));
+        },
+        onDragLeave() {
+          setDragState(null);
+        },
+        onDrop() {
+          setDragState(null);
+        },
+      }),
+    );
   }, [media]);
 
   return (
