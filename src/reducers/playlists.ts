@@ -85,25 +85,24 @@ function getPlaylistItems(
   return playlistItems[playlist._id] ?? Array(playlist.size).fill(null);
 }
 
-type InsertPosition =
-  | { at: 'start', after?: undefined }
-  | { at: 'end', after?: undefined }
-  | { at?: undefined, after: null | -1 | string }
+export type InsertTarget = { before: string } | { after: string } | { at: 'start' | 'end' };
 
-function processInsert(list: PlaylistItemList, insert: PlaylistItem[], position: InsertPosition) {
+function processInsert(list: PlaylistItemList, insert: PlaylistItem[], position: InsertTarget) {
   let insertIdx = 0;
-  if (position.at === 'end') {
+  if ('after' in position) {
+    insertIdx = list.findIndex((media) => media !== null && media._id === position.after) + 1;
+  } else if ('before' in position) {
+    insertIdx = list.findIndex((media) => media !== null && media._id === position.before);
+  } else if (position.at === 'end') {
     insertIdx = list.length;
   } else if (position.at === 'start') {
     insertIdx = 0;
-  } else if (position.after != null && position.after !== -1) {
-    insertIdx = list.findIndex((media) => media !== null && media._id === position.after) + 1;
   }
   return list.toSpliced(insertIdx, 0, ...insert);
 }
 
-// Moves a list of media items to a given position in the playlist.
-function processMove(list: PlaylistItemList, movedMedia: PlaylistItem[], location: InsertPosition) {
+/** Moves a list of media items to a given position in the playlist. */
+function processMove(list: PlaylistItemList, movedMedia: PlaylistItem[], location: InsertTarget) {
   // Take all moved media items out of the playlist…
   const wasMoved = indexBy(movedMedia, '_id');
   const newPlaylist = list.filter((media) => media === null || !wasMoved[media._id]);
@@ -111,6 +110,27 @@ function processMove(list: PlaylistItemList, movedMedia: PlaylistItem[], locatio
   return processInsert(newPlaylist, movedMedia, location);
 }
 
+/** Returns a server-supported insert target structure. */
+function resolveMoveOptions(
+  items: (null | { _id: string })[],
+  opts: InsertTarget,
+) {
+  if ('after' in opts) {
+    return { after: opts.after };
+  }
+  if ('before' in opts) {
+    for (let i = 0, l = items.length; i < l; i += 1) {
+      if (items[i] && items[i]?._id === opts.before) {
+        if (i === 0) {
+          return { at: 'start' as const };
+        }
+        return { after: items[i - 1]?._id ?? null };
+      }
+    }
+    return { at: 'end' as const };
+  }
+  return { at: opts.at };
+}
 function mergePlaylistPage(
   size: number,
   oldMedia: PlaylistItemList = [],
@@ -152,12 +172,18 @@ const createPlaylist = createAsyncThunk('playlists/create', async (name: string)
       createdAt: string,
       size: number,
     },
+    meta: {
+      active: boolean,
+    },
   }>(['/playlists', {
     method: 'post',
     data: { name },
   }]);
 
-  return response.data satisfies Playlist;
+  const playlist = response.data satisfies Playlist;
+  const { active } = response.meta;
+
+  return { playlist, active };
 });
 
 const deletePlaylist = createAsyncThunk('playlists/delete', async (playlistID: string) => {
@@ -272,28 +298,6 @@ const activatePlaylist = createAsyncThunk('playlists/activate', async (playlistI
   }]);
 });
 
-export type InsertTarget = { before: string } | { after: string } | { at: 'start' | 'end' };
-function resolveMoveOptions(
-  items: (null | { _id: string })[],
-  opts: InsertTarget,
-) {
-  if ('after' in opts) {
-    return { after: opts.after };
-  }
-  if ('before' in opts) {
-    for (let i = 0, l = items.length; i < l; i += 1) {
-      if (items[i] && items[i]?._id === opts.before) {
-        if (i === 0) {
-          return { at: 'start' as const };
-        }
-        return { after: items[i - 1]?._id ?? null };
-      }
-    }
-    return { at: 'end' as const };
-  }
-  return { at: opts.at };
-}
-
 export interface NewPlaylistItem {
   sourceType: string;
   sourceID: string;
@@ -301,8 +305,8 @@ export interface NewPlaylistItem {
   artist?: string | undefined;
   /** Leave empty to use global default for this media. */
   title?: string | undefined;
-  start: number;
-  end: number;
+  start?: number | undefined;
+  end?: number | undefined;
 }
 
 /**
@@ -323,15 +327,20 @@ function minimizePlaylistItem(item: NewPlaylistItem) {
 const addPlaylistItems = createAsyncThunk('playlists/addPlaylistItems', async ({
   playlistID,
   items,
-  afterID = null,
+  target = { at: 'start' },
 }: {
   playlistID: string,
   items: NewPlaylistItem[],
-  afterID?: string | null,
-}) => {
+  target?: InsertTarget,
+}, api) => {
+  // If there's no playlist items, we should not have a `target.before` in normal operation,
+  // so providing an empty list is fine. If we do get an empty list, this will at least do
+  // *something* and not crash, even if it's a bit wrong.
+  /* eslint-disable-next-line no-use-before-define */
+  const existingItems = playlistItemsSelector(api.getState(), playlistID) ?? [];
   const payload = {
     items: items.map(minimizePlaylistItem),
-    after: afterID,
+    ...resolveMoveOptions(existingItems, target),
   };
 
   const response = await uwFetch<ListResponse<object> & {
@@ -370,7 +379,7 @@ const movePlaylistItems = createAsyncThunk('playlists/movePlaylistItems', async 
     data: { items, ...location },
   }]);
 
-  return { location };
+  return { target };
 });
 
 const removePlaylistItems = createAsyncThunk('playlists/removePlaylistItems', async ({ playlistID, medias }: {
@@ -584,10 +593,13 @@ const slice = createSlice({
       .addCase(createPlaylist.fulfilled, (state, action) => {
         delete state.playlists[action.meta.requestId];
 
-        const playlist = action.payload;
+        const { playlist, active } = action.payload;
         state.playlists[playlist._id] = playlist;
-        if (state.selectedPlaylistID === action.meta.requestId) {
+        if (state.selectedPlaylistID === action.meta.requestId || active) {
           state.selectedPlaylistID = playlist._id;
+        }
+        if (active) {
+          state.activePlaylistID = playlist._id;
         }
       })
       .addCase(renamePlaylist.fulfilled, (state, action) => {
@@ -633,7 +645,7 @@ const slice = createSlice({
         }
       })
       .addCase(addPlaylistItems.fulfilled, (state, action) => {
-        const { playlistID, afterID = null } = action.meta.arg;
+        const { playlistID, target } = action.meta.arg;
         const { playlistSize, items } = action.payload;
 
         const playlist = state.playlists[playlistID];
@@ -648,7 +660,7 @@ const slice = createSlice({
           return;
         }
 
-        state.playlistItems[playlistID] = processInsert(playlistItems, items, { after: afterID });
+        state.playlistItems[playlistID] = processInsert(playlistItems, items, target ?? { at: 'start' });
       })
       .addCase(favorite.fulfilled, (state, action) => {
         const { payload } = action;
@@ -715,13 +727,13 @@ const slice = createSlice({
       })
       .addCase(movePlaylistItems.fulfilled, (state, action) => {
         const { playlistID, medias } = action.meta.arg;
-        const { location } = action.payload;
+        const { target } = action.payload;
         const playlist = state.playlists[playlistID];
         if (playlist != null) {
           state.playlistItems[playlistID] = processMove(
             getPlaylistItems(state.playlistItems, playlist),
             medias,
-            location,
+            target,
           );
         }
       })

@@ -31,7 +31,8 @@ const importPlaylist = createAsyncThunk('youtube/importPlaylist', async (
     data: { id: sourceID, name },
   }]);
 
-  api.dispatch(createPlaylist.fulfilled(playlist, api.requestId, name));
+  // TODO: `active: false` is definitely a lie here!
+  api.dispatch(createPlaylist.fulfilled({ playlist, active: false }, api.requestId, name));
 });
 
 const slice = createSlice({

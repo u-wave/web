@@ -7,7 +7,7 @@ import PasswordResetPage from '../components/PasswordResetPage';
 import PasswordResetSuccessPage from '../components/PasswordResetSuccessPage';
 import theme from '../../theme';
 
-const muiTheme = createTheme(theme);
+const muiTheme = createTheme({ ...theme, cssVariables: true });
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Translator = any; // from @u-wave/translate

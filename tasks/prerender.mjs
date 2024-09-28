@@ -23,7 +23,7 @@ function renderToHtmlThemed(element) {
   const wrapped = createElement(
     CacheProvider,
     { value: cache },
-    createElement(ThemeProvider, { theme: createTheme(theme) }, element),
+    createElement(ThemeProvider, { theme: createTheme({ ...theme, cssVariables: true }) }, element),
   );
   const html = renderToStaticMarkup(wrapped);
   const { css } = extractCritical(html);

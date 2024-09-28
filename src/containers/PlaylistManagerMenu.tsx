@@ -1,4 +1,4 @@
-import React from 'react';
+import { useCallback } from 'react';
 import { useSelector, useDispatch } from '../hooks/useRedux';
 import { useMediaSearchStore } from '../stores/MediaSearchStore';
 import PlaylistsMenu from '../components/PlaylistManager/Menu';
@@ -16,8 +16,6 @@ import {
   activatePlaylist,
 } from '../reducers/playlists';
 
-const { useCallback } = React;
-
 type PlaylistMenuContainerProps = {
   className?: string,
 };
@@ -28,8 +26,8 @@ function PlaylistsMenuContainer({ className }: PlaylistMenuContainerProps) {
   const dispatch = useDispatch();
 
   const onAddToPlaylist = useCallback(
-    async (playlist: Playlist, items: NewPlaylistItem[], afterID?: string) => {
-      await dispatch(addPlaylistItems({ playlistID: playlist._id, items, afterID }));
+    async (playlist: Playlist, items: NewPlaylistItem[]) => {
+      await dispatch(addPlaylistItems({ playlistID: playlist._id, items }));
     },
     [dispatch],
   );

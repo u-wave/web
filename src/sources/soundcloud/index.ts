@@ -10,5 +10,12 @@ export default function soundcloud(): MediaSource {
     Player,
     logo,
     icon,
+    getMediaUrl: (media) => {
+      const { permalinkUrl } = media.sourceData as { permalinkUrl?: string };
+      if (permalinkUrl != null && URL.canParse(permalinkUrl)) {
+        return new URL(permalinkUrl);
+      }
+      return null;
+    },
   };
 }

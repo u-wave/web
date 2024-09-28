@@ -1,35 +1,14 @@
 import { mdiFormatListBulleted } from '@mdi/js';
 import SvgIcon from '../SvgIcon';
-import type { Media } from '../../reducers/booth';
-
-function getItemStyles(offset: { x: number, y: number } | null) {
-  if (offset != null) {
-    return {
-      display: 'inline-block',
-      transform: `translate(${offset.x}px, ${offset.y}px)`,
-    };
-  }
-  return { display: 'none' };
-}
 
 type MediaDragPreviewProps = {
-  items?: { media?: Media[] | null } | null,
-  currentOffset: { x: number, y: number } | null,
+  count: number,
 };
-function MediaDragPreview({
-  items,
-  currentOffset,
-}: MediaDragPreviewProps) {
-  if (!items || !items.media) {
-    return null;
-  }
+function MediaDragPreview({ count }: MediaDragPreviewProps) {
   return (
-    <div
-      className="MediaDragPreview"
-      style={getItemStyles(currentOffset)}
-    >
+    <div className="MediaDragPreview">
       <SvgIcon path={mdiFormatListBulleted} className="MediaDragPreview-icon" />
-      {items.media.length}
+      {count}
     </div>
   );
 }
