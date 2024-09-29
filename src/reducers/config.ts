@@ -74,7 +74,7 @@ export function reCaptchaSiteKeySelector(state: StoreState) {
   return configSelector(state).recaptcha?.key;
 }
 
-const EMPTY_ROLES = {};
+const EMPTY_ROLES: Record<string, string[]> = {};
 export function rolesSelector(state: StoreState) {
   return state.config.roles ?? EMPTY_ROLES;
 }
