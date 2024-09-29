@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import { useCallback, useState } from 'react';
 import { useTranslator, Interpolate } from '@u-wave/react-translate';
 import { useAsyncCallback } from 'react-async-hook';
 import Alert from '@mui/material/Alert';
@@ -18,12 +17,12 @@ import TextField from '../../Form/TextField';
 import Button from '../../Form/Button';
 import SvgIcon from '../../SvgIcon';
 
-const {
-  useCallback,
-  useState,
-} = React;
-
-function AvatarList({ avatars, selected, onChange }) {
+type AvatarListProps = {
+  avatars: Record<string, string>,
+  selected: string,
+  onChange: (avatar: string) => void,
+};
+function AvatarList({ avatars, selected, onChange }: AvatarListProps) {
   const avatarNames = Object.keys(avatars);
 
   return (
@@ -54,18 +53,23 @@ function AvatarList({ avatars, selected, onChange }) {
   );
 }
 
-AvatarList.propTypes = {
-  avatars: PropTypes.objectOf(PropTypes.string).isRequired,
-  selected: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
+export type SocialFormProps = {
+  show: 'social', // eslint-disable-line react/no-unused-prop-types
+  service: string,
+  avatars: Record<string, string>,
+  suggestedName?: string,
+  onCloseDialog: () => void, // eslint-disable-line react/no-unused-prop-types
+  onSocialFinish: (data: {
+    service: string,
+    params: { avatar: string, username: string }
+  }) => Promise<void>,
 };
-
 function SocialForm({
   service,
   avatars,
   suggestedName = '',
   onSocialFinish,
-}) {
+}: SocialFormProps) {
   const { t } = useTranslator();
   const [agreed, setAgreed] = useState(false);
   const [avatar, setAvatar] = useState('sigil');
@@ -77,18 +81,18 @@ function SocialForm({
       service,
       params: { avatar, username },
     });
-  }, [avatar, username, service, onSocialFinish]);
+  });
 
-  const handleTosCheckbox = useCallback((event) => {
+  const handleTosCheckbox = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     setAgreed(event.target.checked);
   }, []);
 
-  const handleChangeAvatar = useCallback((name) => {
+  const handleChangeAvatar = useCallback((name: string) => {
     setAvatar(name);
   }, []);
 
-  const handleChangeUsername = useCallback((event) => {
-    setUsername(event.target.value);
+  const handleChangeUsername = useCallback((event: React.FormEvent<HTMLInputElement>) => {
+    setUsername(event.currentTarget.value);
   }, []);
 
   return (
@@ -101,7 +105,7 @@ function SocialForm({
       <FormGroup>
         <TextField
           className="RegisterForm-field"
-          autocomplete="nickname"
+          autoComplete="nickname"
           placeholder={t('login.username')}
           icon={<SvgIcon path={mdiAccount} />}
           autoFocus
@@ -155,12 +159,5 @@ function SocialForm({
     </Form>
   );
 }
-
-SocialForm.propTypes = {
-  service: PropTypes.string.isRequired,
-  avatars: PropTypes.objectOf(PropTypes.string).isRequired,
-  suggestedName: PropTypes.string,
-  onSocialFinish: PropTypes.func.isRequired,
-};
 
 export default SocialForm;

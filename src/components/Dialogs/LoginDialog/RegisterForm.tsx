@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import { useState, Suspense } from 'react';
 import { useTranslator, Interpolate } from '@u-wave/react-translate';
 import { useAsyncCallback } from 'react-async-hook';
 import Alert from '@mui/material/Alert';
@@ -16,17 +15,24 @@ import SvgIcon from '../../SvgIcon';
 import ReCaptcha from '../../ReCaptcha';
 import SocialLogin from './SocialLogin';
 
-const {
-  useState,
-} = React;
-
+export type RegisterFormProps = {
+  show: 'register', // eslint-disable-line react/no-unused-prop-types
+  reCaptchaSiteKey?: string,
+  supportsSocialAuth: boolean,
+  onCloseDialog: () => void,
+  onRegister: (credentials: {
+    username: string,
+    email: string,
+    password: string,
+    grecaptcha?: string | null | undefined,
+  }) => Promise<void>,
+};
 function RegisterForm({
-  useReCaptcha,
   reCaptchaSiteKey,
   supportsSocialAuth,
   onCloseDialog,
   onRegister,
-}) {
+}: RegisterFormProps) {
   const { t } = useTranslator();
   const [agreed, setAgreed] = useState(false);
   const [captchaResponse, setCaptchaResponse] = useState(null);
@@ -49,16 +55,13 @@ function RegisterForm({
       grecaptcha: captchaResponse,
     });
     onCloseDialog();
-  }, [
-    t, onRegister, onCloseDialog,
-    username, email, password, passwordConfirmation, captchaResponse,
-  ]);
+  });
 
-  const handleTosCheckbox = (event) => {
-    setAgreed(event.target.checked);
+  const handleTosCheckbox = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setAgreed(event.currentTarget.checked);
   };
 
-  const captchaOk = !useReCaptcha || !!captchaResponse;
+  const captchaOk = reCaptchaSiteKey == null || !!captchaResponse;
 
   return (
     <Form className="RegisterForm" onSubmit={handleSubmit.execute}>
@@ -132,15 +135,15 @@ function RegisterForm({
         />
       </FormGroup>
 
-      {useReCaptcha ? (
+      {reCaptchaSiteKey != null ? (
         <FormGroup>
-          <React.Suspense fallback={<CircularProgress className="ReCaptcha-spinner" />}>
+          <Suspense fallback={<CircularProgress className="ReCaptcha-spinner" />}>
             <ReCaptcha
               sitekey={reCaptchaSiteKey}
               onResponse={setCaptchaResponse}
               theme="dark"
             />
-          </React.Suspense>
+          </Suspense>
         </FormGroup>
       ) : null}
 
@@ -178,13 +181,5 @@ function RegisterForm({
     </Form>
   );
 }
-
-RegisterForm.propTypes = {
-  useReCaptcha: PropTypes.bool,
-  reCaptchaSiteKey: PropTypes.string,
-  supportsSocialAuth: PropTypes.bool,
-  onCloseDialog: PropTypes.func,
-  onRegister: PropTypes.func,
-};
 
 export default RegisterForm;

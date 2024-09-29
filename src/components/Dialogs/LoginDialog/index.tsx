@@ -1,6 +1,5 @@
 import cx from 'clsx';
-import React from 'react';
-import PropTypes from 'prop-types';
+import { useId } from 'react';
 import { useTranslator } from '@u-wave/react-translate';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Dialog from '@mui/material/Dialog';
@@ -8,22 +7,23 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import IconButton from '@mui/material/IconButton';
 import { mdiClose } from '@mdi/js';
+import { useTheme } from '@mui/material/styles';
 import SvgIcon from '../../SvgIcon';
-import LoginForm from './LoginForm';
-import RegisterForm from './RegisterForm';
-import SocialForm from './SocialForm';
-import ResetPasswordForm from './ResetPasswordForm';
+import LoginForm, { type LoginFormProps } from './LoginForm';
+import RegisterForm, { type RegisterFormProps } from './RegisterForm';
+import SocialForm, { type SocialFormProps } from './SocialForm';
+import ResetPasswordForm, { type ResetPasswordFormProps } from './ResetPasswordForm';
 import HeightTransition from './HeightTransition';
 
-const {
-  useId,
-} = React;
-
+type LoginDialogProps = { open: boolean } & (
+  RegisterFormProps | SocialFormProps | ResetPasswordFormProps | LoginFormProps
+);
 /* eslint-disable react/jsx-props-no-spreading */
-function LoginDialog(props) {
+function LoginDialog(props: LoginDialogProps) {
   const { t } = useTranslator();
   const titleId = useId();
-  const isFullScreen = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+  const theme = useTheme();
+  const isFullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   const {
     open,
@@ -73,11 +73,5 @@ function LoginDialog(props) {
     </Dialog>
   );
 }
-
-LoginDialog.propTypes = {
-  open: PropTypes.bool,
-  show: PropTypes.string,
-  onCloseDialog: PropTypes.func,
-};
 
 export default LoginDialog;

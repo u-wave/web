@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import { useCallback, useState } from 'react';
 import { useTranslator } from '@u-wave/react-translate';
 import { useAsyncCallback } from 'react-async-hook';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -13,14 +12,19 @@ import Button from '../../Form/Button';
 import SvgIcon from '../../SvgIcon';
 import SocialLogin from './SocialLogin';
 
-const { useCallback, useState } = React;
-
+export type LoginFormProps = {
+  show: 'login', // eslint-disable-line react/no-unused-prop-types
+  supportsSocialAuth: boolean,
+  onCloseDialog: () => void,
+  onLogin: (credentials: { email: string, password: string }) => Promise<{ error?: boolean }>,
+  onOpenResetPasswordDialog: () => void,
+};
 function LoginForm({
   supportsSocialAuth,
   onCloseDialog,
   onLogin,
   onOpenResetPasswordDialog,
-}) {
+}: LoginFormProps) {
   const { t } = useTranslator();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -31,18 +35,18 @@ function LoginForm({
     if (!result.error) {
       onCloseDialog();
     }
-  }, [onLogin, email, password]);
+  });
 
-  const handleResetPassword = useCallback((event) => {
+  const handleResetPassword = useCallback((event: React.MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
     onOpenResetPasswordDialog();
   }, [onOpenResetPasswordDialog]);
 
-  const handleEmailChange = useCallback((event) => {
-    setEmail(event.target.value);
+  const handleEmailChange = useCallback((event: React.FormEvent<HTMLInputElement>) => {
+    setEmail(event.currentTarget.value);
   }, []);
-  const handlePasswordChange = useCallback((event) => {
-    setPassword(event.target.value);
+  const handlePasswordChange = useCallback((event: React.FormEvent<HTMLInputElement>) => {
+    setPassword(event.currentTarget.value);
   }, []);
 
   return (
@@ -116,12 +120,5 @@ function LoginForm({
     </Form>
   );
 }
-
-LoginForm.propTypes = {
-  supportsSocialAuth: PropTypes.bool,
-  onCloseDialog: PropTypes.func,
-  onLogin: PropTypes.func,
-  onOpenResetPasswordDialog: PropTypes.func,
-};
 
 export default LoginForm;

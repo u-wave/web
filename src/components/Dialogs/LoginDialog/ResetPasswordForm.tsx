@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import { useState } from 'react';
 import { useTranslator } from '@u-wave/react-translate';
 import { useAsyncCallback } from 'react-async-hook';
 import Alert from '@mui/material/Alert';
@@ -11,18 +10,19 @@ import TextField from '../../Form/TextField';
 import SvgIcon from '../../SvgIcon';
 import Button from '../../Form/Button';
 
-const {
-  useState,
-} = React;
-
-function ResetPasswordForm({ onResetPassword, onCloseDialog }) {
+export type ResetPasswordFormProps = {
+  show: 'reset', // eslint-disable-line react/no-unused-prop-types
+  onResetPassword: (credentials: { email: string }) => Promise<void>,
+  onCloseDialog: () => void,
+};
+function ResetPasswordForm({ onResetPassword, onCloseDialog }: ResetPasswordFormProps) {
   const { t } = useTranslator();
   const [email, setEmail] = useState('');
 
   const handleSubmit = useAsyncCallback(async (event) => {
     event.preventDefault();
     await onResetPassword({ email });
-  }, [onResetPassword, email]);
+  });
 
   if (handleSubmit.status === 'success') {
     return (
@@ -72,10 +72,5 @@ function ResetPasswordForm({ onResetPassword, onCloseDialog }) {
     </Form>
   );
 }
-
-ResetPasswordForm.propTypes = {
-  onResetPassword: PropTypes.func.isRequired,
-  onCloseDialog: PropTypes.func.isRequired,
-};
 
 export default ResetPasswordForm;

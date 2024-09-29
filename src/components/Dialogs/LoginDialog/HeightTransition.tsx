@@ -1,22 +1,19 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-
-const {
-  useEffect,
-  useRef,
-} = React;
+import { useEffect, useRef } from 'react';
 
 const style = {
   overflow: 'hidden',
   transition: 'height 300ms ease',
 };
 
-function HeightTransition({ children }) {
-  const wrapper = useRef(null);
-  const activeChild = useRef(null);
+type HeightTransitionProps = {
+  children: React.ReactNode,
+};
+function HeightTransition({ children }: HeightTransitionProps) {
+  const wrapper = useRef<HTMLDivElement>(null);
+  const activeChild = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (activeChild.current) {
+    if (activeChild.current != null && wrapper.current != null) {
       wrapper.current.style.height = `${activeChild.current.scrollHeight}px`;
     }
   }, [children]);
@@ -27,9 +24,5 @@ function HeightTransition({ children }) {
     </div>
   );
 }
-
-HeightTransition.propTypes = {
-  children: PropTypes.node,
-};
 
 export default HeightTransition;
