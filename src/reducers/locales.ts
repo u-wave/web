@@ -1,9 +1,9 @@
 import type { AnyAction } from 'redux';
 import { createSelector } from '@reduxjs/toolkit';
-// @ts-expect-error TS7016: Untyped, not worth it as will likely move to fluent
 import Translator from '@u-wave/translate';
 // @ts-expect-error TS7016: Untyped, not worth it as will likely move to fluent
 import * as plurals from '@u-wave/translate/plurals';
+import type { JsonObject, JsonValue } from 'type-fest';
 import type { StoreState } from '../redux/configureStore';
 import {
   CHANGE_LANGUAGE,
@@ -18,7 +18,7 @@ const DEFAULT_LANGUAGE = 'en';
 interface State {
   current: string;
   loading: string[];
-  loaded: { en: typeof en } & Record<string, object>;
+  loaded: { en: typeof en } & Record<string, JsonValue>;
 }
 
 const initialState: State = {
@@ -56,7 +56,7 @@ const loadedSelector = (state: StoreState) => state.locales.loaded;
 
 const defaultTranslatorSelector = createSelector(
   [loadedSelector],
-  (loaded) => new Translator((loaded[DEFAULT_LANGUAGE] as { uwave: object }).uwave),
+  (loaded) => new Translator((loaded[DEFAULT_LANGUAGE] as { uwave: JsonObject }).uwave),
 );
 
 export const availableLanguagesSelector = () => availableLanguages;
@@ -73,7 +73,7 @@ export const translatorSelector = createSelector(
   defaultTranslatorSelector,
   (langs, current, defaultTranslator) => {
     if (langs[current]) {
-      return new Translator(langs[current].uwave, {
+      return new Translator((langs[current] as { uwave: JsonObject }).uwave, {
         plural: plurals[current],
         default: defaultTranslator,
       });

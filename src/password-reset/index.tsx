@@ -1,5 +1,3 @@
-import React from 'react';
-
 function PasswordResetPage() {
   return (
     <html lang="en" dir="ltr">

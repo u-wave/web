@@ -51,7 +51,7 @@ function MainView({
 }: MainViewProps) {
   const { t } = useTranslator();
 
-  let title = t('booth.empty');
+  let title: React.ReactNode = t('booth.empty');
   if (media) {
     title = <SongTitle artist={media.artist} title={media.title} />;
   }
