@@ -1,5 +1,6 @@
 import { type PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { mutate } from 'swr';
+import type { JsonObject } from 'type-fest';
 import type { Playlist } from './playlists';
 import type { User } from './users';
 import uwFetch from '../utils/fetch';
@@ -110,7 +111,7 @@ export const login = createAsyncThunk('auth/login', async (payload: LoginPayload
   };
 });
 
-type FinishSocialLoginPayload = { service: string, params: object };
+type FinishSocialLoginPayload = { service: string, params: JsonObject };
 export const finishSocialLogin = createAsyncThunk('auth/finishSocialLogin', async (payload: FinishSocialLoginPayload, api) => {
   const { meta } = await uwFetch<{
     meta: { jwt: string },
@@ -130,7 +131,7 @@ type RegisterPayload = {
   email: string,
   username: string,
   password: string,
-  grecaptcha: string,
+  grecaptcha?: string | null,
 };
 export const register = createAsyncThunk('auth/register', async (payload: RegisterPayload, api) => {
   await uwFetch<{ data: User }>(['/auth/register', {

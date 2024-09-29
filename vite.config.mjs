@@ -50,7 +50,7 @@ export default defineConfig({
     react(),
     yaml(),
     prerender({ file: 'index.html', source: 'src/index.tsx' }),
-    prerender({ file: 'password-reset.html', source: 'src/password-reset/index.jsx' }),
+    prerender({ file: 'password-reset.html', source: 'src/password-reset/index.tsx' }),
     prerender({ file: 'privacy.html', source: 'src/markdown.tsx', props: { path: 'static/privacy.md' } }),
     emoji(),
     {

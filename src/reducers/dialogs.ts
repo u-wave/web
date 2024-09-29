@@ -110,8 +110,11 @@ function baseSelector(state: StoreState) {
   return state.dialogs;
 }
 
-function merge<T>(dialog: DialogState<T>) {
-  return { ...dialog.payload, open: dialog.open };
+function merge<T>(dialog: DialogState<T>): Partial<T> & { open: boolean } {
+  if (dialog.payload != null) {
+    return { ...dialog.payload, open: dialog.open };
+  }
+  return { open: dialog.open } as Partial<T> & { open: boolean };
 }
 
 export const loginDialogSelector = createSelector(

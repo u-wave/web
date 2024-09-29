@@ -1,5 +1,7 @@
 import cx from 'clsx';
-import { memo, useCallback, useMemo } from 'react';
+import {
+  memo, useCallback, useMemo, useRef,
+} from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
 import type { MarkupNode } from 'u-wave-parse-chat-markup';
 import type { User } from '../../reducers/users';
@@ -66,13 +68,12 @@ function ChatMessage({
   deletable,
   onDelete,
 }: ChatMessageProps) {
-  const userCard = useUserCard(user);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const { card, open: openCard } = useUserCard(user, rootRef);
   const onUsernameClick = useCallback((event: React.MouseEvent) => {
     event.preventDefault();
-    userCard.open();
-    // The `userCard.open` reference never changes.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    openCard();
+  }, [openCard]);
 
   let avatar: React.ReactNode;
   if (inFlight) {
@@ -100,8 +101,8 @@ function ChatMessage({
     'ChatMessage--mention': isMention,
   });
   return (
-    <div className={className} ref={userCard.refAnchor}>
-      {userCard.card}
+    <div className={className} ref={rootRef}>
+      {card}
       {avatar}
       <div className="ChatMessage-content">
         <div className="ChatMessage-hover">

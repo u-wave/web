@@ -1,7 +1,9 @@
 /// <reference types="vite/client" />
 
 declare module '*.yaml' {
-  const data: object;
+  import type { JsonValue } from 'type-fest';
+
+  const data: JsonValue;
   export default data;
 }
 
@@ -10,8 +12,25 @@ declare module 'virtual:emoji-shortcodes' {
   export default emojiShortcodes;
 }
 
+declare module '@f/cookies-enabled' {
+  export default function cookiesEnabled(): boolean;
+}
+
+declare module '@u-wave/translate' {
+  import type { JsonObject } from 'type-fest';
+
+  export default class Translator {
+    constructor(values: JsonObject, options?: {
+      plural?: (n: number) => number,
+      default?: Translator,
+    });
+
+    t(i18nKey: string, props?: Record<string, string | number>): string;
+  }
+}
+
 declare module '@u-wave/react-translate' {
-  import { Translator } from '@u-wave/translate';
+  import Translator from '@u-wave/translate';
 
   export { Translator };
   export function useTranslator(): Translator;

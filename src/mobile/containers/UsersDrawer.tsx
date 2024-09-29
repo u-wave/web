@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import {
   joinWaitlist,
   waitlistUsersSelector,
@@ -7,38 +7,50 @@ import {
 } from '../../reducers/waitlist';
 import { isLoggedInSelector } from '../../reducers/auth';
 import { djSelector } from '../../reducers/booth';
-import { listenersSelector } from '../selectors/userSelectors';
-import { usersDrawerIsOpenSelector } from '../selectors/drawerSelectors';
-import { setUsersDrawer } from '../actions/DrawerActionCreators';
+import { userListSelector } from '../../reducers/users';
 import UsersDrawer from '../components/UsersDrawer';
 import { useDispatch, useSelector } from '../../hooks/useRedux';
 
-function UsersDrawerContainer() {
+type UsersDrawerContainerProps = {
+  open: boolean,
+  onClose: () => void,
+};
+function UsersDrawerContainer({ open, onClose }: UsersDrawerContainerProps) {
   const currentDJ = useSelector(djSelector);
-  const users = useSelector(listenersSelector);
+  const users = useSelector(userListSelector);
   const waitlist = useSelector(waitlistUsersSelector);
-  const open = useSelector(usersDrawerIsOpenSelector);
   const userIsLoggedIn = useSelector(isLoggedInSelector);
   const userInWaitlist = useSelector(userInWaitlistSelector);
   const isLockedWaitlist = useSelector(waitlistIsLockedSelector);
   const dispatch = useDispatch();
-  const handleDrawerClose = useCallback(() => {
-    dispatch(setUsersDrawer(false));
-  }, [dispatch]);
   const handleJoinWaitlist = useCallback(() => {
     return dispatch(joinWaitlist());
   }, [dispatch]);
 
+  const listeners = useMemo(() => {
+    const waitlistIDs = new Set();
+    for (const user of waitlist) {
+      if (user != null) {
+        waitlistIDs.add(user._id);
+      }
+    }
+    if (currentDJ != null) {
+      waitlistIDs.add(currentDJ._id);
+    }
+
+    return users.filter((user) => !waitlistIDs.has(user._id));
+  }, [users, currentDJ, waitlist]);
+
   return (
     <UsersDrawer
       currentDJ={currentDJ}
-      users={users}
+      users={listeners}
       waitlist={waitlist}
       open={open}
       userIsLoggedIn={userIsLoggedIn}
       userInWaitlist={userInWaitlist}
       isLockedWaitlist={isLockedWaitlist}
-      onDrawerClose={handleDrawerClose}
+      onDrawerClose={onClose}
       onJoinWaitlist={handleJoinWaitlist}
     />
   );

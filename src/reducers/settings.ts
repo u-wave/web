@@ -12,12 +12,13 @@ export interface NotificationSettings {
   skip: boolean;
 }
 
+type VideoSize = 'small' | 'large'
 const initialState = {
   language: null as null | string,
   mentionSound: true,
   muted: false,
   videoEnabled: true,
-  videoSize: 'large',
+  videoSize: 'large' as VideoSize,
   volume: 0,
   notifications: {
     userJoin: true,

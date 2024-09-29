@@ -1,5 +1,5 @@
 import cx from 'clsx';
-import { useCallback } from 'react';
+import { useCallback, useRef } from 'react';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
@@ -24,22 +24,21 @@ type RoomUserRowProps = {
   user: RoomUser,
 };
 function RoomUserRow({ className, user, style }: RoomUserRowProps) {
-  const userCard = useUserCard(user);
+  const buttonRef = useRef<HTMLDivElement>(null);
+  const { card, open: openCard } = useUserCard(user, buttonRef);
   const onOpenCard = useCallback((event: React.MouseEvent) => {
     event.preventDefault();
-    userCard.open();
-    // The `userCard.open` reference never changes.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    openCard();
+  }, [openCard]);
 
   return (
     <>
-      {userCard.card}
+      {card}
       <ListItemButton
         className={cx('UserRow', 'UserRow--cardable', className)}
         style={style}
         onClick={onOpenCard}
-        ref={userCard.refAnchor}
+        ref={buttonRef}
       >
         <ListItemAvatar>
           <Avatar className="UserRow-avatar" user={user} />

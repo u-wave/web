@@ -1,7 +1,14 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { StoreState } from '../redux/configureStore';
 
-type OverlayName = 'about' | 'admin' | 'playlistManager' | 'roomHistory' | 'settings';
+type OverlayName =
+  | 'about'
+  | 'admin'
+  | 'playlistManager'
+  | 'roomHistory'
+  | 'settings'
+  // Mobile only
+  | 'serverList';
 const initialState: {
   current: OverlayName | null,
 } = {

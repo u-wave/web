@@ -1,5 +1,5 @@
 import cx from 'clsx';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 import { Interpolate } from '@u-wave/react-translate';
 import useUserCard from '../../../hooks/useUserCard';
 import Avatar from '../../Avatar';
@@ -23,21 +23,20 @@ function UserNotificationMessage({
   i18nKey,
   i18nProps,
 }: UserNotificationMessageProps) {
-  const userCard = useUserCard(user);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const { card, open: openCard } = useUserCard(user, rootRef);
   const date = useMemo(() => new Date(timestamp), [timestamp]);
   const onClick = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    userCard.open();
-    // The `userCard.open` reference never changes.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    openCard();
+  }, [openCard]);
 
   return (
     <div
       className={cx('ChatMessage', 'ChatMessage--userNotification', className)}
-      ref={userCard.refAnchor}
+      ref={rootRef}
     >
-      {userCard.card}
+      {card}
       <Avatar
         className="ChatMessage-avatar"
         user={user}

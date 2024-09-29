@@ -7,7 +7,6 @@ import {
   sizeSelector as waitlistSizeSelector,
   positionSelector as waitlistPositionSelector,
 } from '../../reducers/waitlist';
-import { openDrawer, openUsersDrawer } from '../actions/DrawerActionCreators';
 import MainView from '../components/MainView';
 
 function MainViewContainer() {
@@ -17,8 +16,6 @@ function MainViewContainer() {
   const waitlistSize = useSelector(waitlistSizeSelector);
   const dispatch = useDispatch();
   const onOpenRoomHistory = useCallback(() => dispatch(toggleOverlay('roomHistory')), [dispatch]);
-  const onOpenDrawer = useCallback(() => dispatch(openDrawer()), [dispatch]);
-  const onOpenWaitlist = useCallback(() => dispatch(openUsersDrawer()), [dispatch]);
   const onEnableVideo = useCallback(() => dispatch(setVideoEnabled(true)), [dispatch]);
 
   return (
@@ -28,8 +25,6 @@ function MainViewContainer() {
       waitlistPosition={waitlistPosition}
       waitlistSize={waitlistSize}
       onOpenRoomHistory={onOpenRoomHistory}
-      onOpenDrawer={onOpenDrawer}
-      onOpenWaitlist={onOpenWaitlist}
       onEnableVideo={onEnableVideo}
     />
   );
