@@ -58,7 +58,7 @@ function SoundCloudPlayer({
   const needsTap = error?.name === 'NotAllowedError';
 
   const audioUrl = useMemo(() => {
-    if ('streamUrl' in media.sourceData && typeof media.sourceData.streamUrl === 'string'
+    if (media.sourceData != null && typeof media.sourceData.streamUrl === 'string'
         && enabled && active) {
       const { streamUrl } = media.sourceData;
       return `${streamUrl}?client_id=${CLIENT_ID}`;

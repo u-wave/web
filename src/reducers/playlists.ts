@@ -2,6 +2,7 @@ import { type PayloadAction, createSelector, createSlice } from '@reduxjs/toolki
 import escapeStringRegExp from 'escape-string-regexp';
 import indexBy from 'just-index';
 import naturalCmp from 'natural-compare';
+import type { JsonObject } from 'type-fest';
 import { createAsyncThunk } from '../redux/api';
 import uwFetch, { type ListResponse } from '../utils/fetch';
 import mergeIncludedModels from '../utils/mergeIncludedModels';
@@ -26,7 +27,7 @@ interface ApiMedia {
   _id: string;
   sourceID: string;
   sourceType: string;
-  sourceData: object;
+  sourceData: JsonObject | null;
   artist: string;
   title: string;
   thumbnail: string;

@@ -10,7 +10,7 @@ interface ApiMedia {
   _id: string
   sourceID: string
   sourceType: string
-  sourceData: object
+  sourceData: Record<string, unknown> | null
   artist: string
   title: string
   duration: number
@@ -30,7 +30,7 @@ interface ApiHistoryEntry {
     title: string,
     start: number,
     end: number,
-    sourceData: object,
+    sourceData: Record<string, unknown> | null,
   },
   playedAt: string,
   upvotes: string[],
