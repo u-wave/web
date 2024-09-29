@@ -1,4 +1,4 @@
-import { findUser } from '../ChatCommands';
+import { findUser, type Command } from '../ChatCommands';
 import { log } from '../../reducers/chat';
 import { rolesSelector } from '../../reducers/config';
 import {
@@ -38,7 +38,10 @@ export default [
         userListSelector(getState()),
         username,
       );
-      return dispatch(addUserRole(user, role));
+      if (user == null) {
+        return dispatch(log('Provide a user to promote or demote.'));
+      }
+      return dispatch(addUserRole({ userID: user._id, role }));
     },
   },
   {
@@ -56,7 +59,10 @@ export default [
         userListSelector(getState()),
         username,
       );
-      return dispatch(removeUserRole(user, role));
+      if (user == null) {
+        return dispatch(log('Provide a user to promote or demote.'));
+      }
+      return dispatch(removeUserRole({ userID: user._id, role }));
     },
   },
   {
@@ -65,4 +71,4 @@ export default [
     guard: isModeratorSelector,
     action: () => toggleOverlay('admin'),
   },
-];
+] satisfies Command[];

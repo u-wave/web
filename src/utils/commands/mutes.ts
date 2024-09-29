@@ -1,5 +1,5 @@
 import ms from 'ms';
-import { findUser } from '../ChatCommands';
+import { findUser, type Command } from '../ChatCommands';
 import {
   log,
   muteUser,
@@ -42,6 +42,9 @@ export default [
         return dispatch(log('Provide a user to unmute.'));
       }
       const user = findUser(userListSelector(getState()), username);
+      if (user == null) {
+        return dispatch(log(`User "${username}" not found.`));
+      }
       const mute = mutedUserSelector(getState(), user._id);
       if (mute == null) {
         return dispatch(log(`User "${username}" is not muted.`));
@@ -49,4 +52,4 @@ export default [
       return dispatch(unmuteUser({ userID: user._id }));
     },
   },
-];
+] satisfies Command[];

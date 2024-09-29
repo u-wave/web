@@ -1,5 +1,6 @@
 import { log } from '../../reducers/chat';
 import { changeUsername } from '../../reducers/auth';
+import type { Command } from '../ChatCommands';
 
 export default [{
   name: 'nick',
@@ -11,4 +12,4 @@ export default [{
 
     return changeUsername(name);
   },
-}];
+}] satisfies Command[];

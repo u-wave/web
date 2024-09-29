@@ -12,6 +12,10 @@ declare module 'virtual:emoji-shortcodes' {
   export default emojiShortcodes;
 }
 
+declare module '@f/cookies-enabled' {
+  export default function cookiesEnabled(): boolean;
+}
+
 declare module '@u-wave/translate' {
   import type { JsonObject } from 'type-fest';
 

@@ -1,4 +1,4 @@
-import { findUser } from '../ChatCommands';
+import { findUser, type Command } from '../ChatCommands';
 import { log } from '../../reducers/chat';
 import { skipCurrentDJ } from '../../reducers/booth';
 import {
@@ -50,7 +50,7 @@ export default [
       }
 
       const user = findUser(
-        djAndWaitlistUsersSelector(getState()),
+        djAndWaitlistUsersSelector(getState()).filter((item) => item != null),
         username,
       );
       if (user) {
@@ -96,7 +96,7 @@ export default [
       }
 
       const user = findUser(
-        waitlistUsersSelector(getState()),
+        waitlistUsersSelector(getState()).filter((item) => item != null),
         username,
       );
       if (user) {
@@ -105,4 +105,4 @@ export default [
       return dispatch(log(`User ${username} is not in the waitlist.`));
     },
   },
-];
+] satisfies Command[];

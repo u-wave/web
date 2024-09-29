@@ -1,5 +1,5 @@
 import ms from 'ms';
-import { findUser } from '../ChatCommands';
+import { findUser, type Command } from '../ChatCommands';
 import { log } from '../../reducers/chat';
 import {
   banUser,
@@ -29,4 +29,4 @@ export default [{
       permanent,
     }));
   },
-}];
+}] satisfies Command[];

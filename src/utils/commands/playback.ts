@@ -6,6 +6,7 @@ import {
   unmute,
   setVideoEnabled,
 } from '../../reducers/settings';
+import type { Command } from '../ChatCommands';
 
 export default [
   {
@@ -66,4 +67,4 @@ export default [
       return log('Use "/playback on" to enable media playback or "/playback off" to disable it.');
     },
   },
-];
+] satisfies Command[];

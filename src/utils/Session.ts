@@ -19,7 +19,7 @@ export function preferredSessionType() {
 export function set(key: string) {
   try {
     localStorage.setItem(SESSION_KEY, key);
-  } catch (e) {
+  } catch {
     // cookies disabled
   }
 }
@@ -27,7 +27,7 @@ export function set(key: string) {
 export function unset() {
   try {
     localStorage.removeItem(SESSION_KEY);
-  } catch (e) {
+  } catch {
     // cookies disabled
   }
 }
@@ -35,7 +35,7 @@ export function unset() {
 export function get() {
   try {
     return localStorage.getItem(SESSION_KEY);
-  } catch (e) {
+  } catch {
     // cookies disabled
   }
   return null;

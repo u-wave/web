@@ -1,4 +1,4 @@
-import { findUser } from '../ChatCommands';
+import { findUser, type Command } from '../ChatCommands';
 import {
   userListSelector,
   isModeratorSelector,
@@ -38,4 +38,4 @@ export default [
       return dispatch(deleteAllChatMessages());
     },
   },
-];
+] satisfies Command[];
