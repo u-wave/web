@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import FooterBar from '../FooterBar';
 import HeaderBar from '../../containers/HeaderBar';
 import Video from '../../containers/Video';
@@ -14,11 +13,16 @@ import SidePanels from '../SidePanels';
 import Dialogs from '../Dialogs';
 import AddToPlaylistMenu from '../../containers/AddToPlaylistMenu';
 
+type AppProps = {
+  isConnected: boolean,
+  activeOverlay: string | null,
+  onCloseOverlay: () => void,
+};
 function App({
-  activeOverlay,
   isConnected,
+  activeOverlay,
   onCloseOverlay,
-}) {
+}: AppProps) {
   return (
     <div className="App">
       <div className="AppColumn AppColumn--left">
@@ -33,7 +37,7 @@ function App({
           <ErrorArea />
           <ConnectionIndicator isConnected={isConnected} />
         </div>
-        <Overlays transitionName="Overlay" active={activeOverlay}>
+        <Overlays active={activeOverlay}>
           <About key="about" onCloseOverlay={onCloseOverlay} />
           <AdminProxy key="admin" onCloseOverlay={onCloseOverlay} />
           <PlaylistManager key="playlistManager" onCloseOverlay={onCloseOverlay} />
@@ -53,11 +57,5 @@ function App({
     </div>
   );
 }
-
-App.propTypes = {
-  activeOverlay: PropTypes.string,
-  isConnected: PropTypes.bool.isRequired,
-  onCloseOverlay: PropTypes.func.isRequired,
-};
 
 export default App;
