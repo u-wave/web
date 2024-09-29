@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 import cx from 'clsx';
-import React from 'react';
 import { useAsyncCallback } from 'react-async-hook';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
@@ -9,16 +8,15 @@ import Form from '../../Form';
 import FormGroup from '../../Form/Group';
 import Button from '../../Form/Button';
 
-/**
- * @param {object} props
- * @param {string} [props.className]
- * @param {React.ReactNode} [props.children]
- * @param {boolean} props.open
- * @param {string} [props.cancelLabel]
- * @param {string} [props.confirmLabel]
- * @param {() => Promise<void> | undefined} props.onConfirm
- * @param {() => void} props.onCancel
- */
+type ConfirmDialogProps = {
+  className?: string,
+  children?: React.ReactNode,
+  open: boolean,
+  cancelLabel?: string,
+  confirmLabel?: string,
+  onConfirm: () => Promise<void> | undefined,
+  onCancel: () => void,
+};
 function ConfirmDialog({
   className,
   children,
@@ -27,18 +25,18 @@ function ConfirmDialog({
   confirmLabel = 'OK',
   onConfirm,
   onCancel,
-}) {
-  const handleConfirm = useAsyncCallback(async (event) => {
+}: ConfirmDialogProps) {
+  const handleConfirm = useAsyncCallback(async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     await onConfirm();
-  }, [onConfirm]);
+  });
 
-  const handleClose = (event) => {
+  const handleClose = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     onCancel();
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
   };
 

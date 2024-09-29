@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import cx from 'clsx';
-import React from 'react';
+import { useCallback, useId, useState } from 'react';
 import { useAsyncCallback } from 'react-async-hook';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -11,28 +11,21 @@ import FormGroup from '../../Form/Group';
 import TextField from '../../Form/TextField';
 import Button from '../../Form/Button';
 
-const {
-  useCallback,
-  useId,
-  useState,
-} = React;
-
-/**
- * @param {object} props
- * @param {React.ReactNode} [props.children]
- * @param {React.ReactNode} [props.icon]
- * @param {string} [props.inputType]
- * @param {string} [props.placeholder]
- * @param {string} [props.submitLabel]
- * @param {string} props.title
- * @param {string} [props.bodyClassName]
- * @param {string} [props.contentClassName]
- * @param {string} [props.titleClassName]
- * @param {(value: string) => Promise<void> | undefined} props.onSubmit
- * @param {() => void} props.onCancel
- * @param {boolean} props.open
- * @param {string} [props.defaultValue]
- */
+type PromptDialogProps = {
+  children?: React.ReactNode,
+  icon?: React.ReactNode,
+  inputType?: string,
+  placeholder?: string,
+  submitLabel?: string,
+  title: string,
+  bodyClassName?: string,
+  contentClassName?: string,
+  titleClassName?: string,
+  onSubmit: (value: string) => Promise<void> | undefined,
+  onCancel: () => void,
+  open: boolean,
+  defaultValue?: string,
+};
 function PromptDialog({
   children,
   icon,
@@ -48,26 +41,25 @@ function PromptDialog({
   open,
   defaultValue = '',
   ...props
-}) {
+}: PromptDialogProps) {
   const ariaTitle = useId();
   const [value, setValue] = useState(defaultValue);
 
-  const handleSubmit = useAsyncCallback(async (event) => {
+  const handleSubmit = useAsyncCallback(async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     await onSubmit(value);
-  }, [value, onSubmit]);
+  });
 
   const handleClose = useCallback(() => {
     onCancel();
   }, [onCancel]);
 
-  const handleInputChange = useCallback((event) => {
-    setValue(event.target.value);
+  const handleInputChange = useCallback((event: React.FormEvent<HTMLInputElement>) => {
+    setValue(event.currentTarget.value);
   }, []);
 
   return (
     <Dialog
-      variant="fullWidth"
       {...props}
       open={open}
       classes={{
