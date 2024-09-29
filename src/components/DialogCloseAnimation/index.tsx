@@ -1,27 +1,42 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+type DialogCloseAnimationProps = {
+  children: React.ReactElement | null | false | undefined,
+  delay: number,
+};
+
+type DialogCloseAnimationState = {
+  cachedChildren: React.ReactElement | null,
+};
+
 /**
  * Component that handles the material-ui/Dialog close animation when a Dialog unmounts.
  */
-export default class DialogCloseAnimation extends React.Component {
-  timeout = null;
+export default class DialogCloseAnimation extends React.Component<
+  DialogCloseAnimationProps,
+  DialogCloseAnimationState
+> {
+  timeout: ReturnType<typeof setTimeout> | null = null;
 
   static propTypes = {
     children: PropTypes.element,
     delay: PropTypes.number.isRequired,
   };
 
-  constructor(props) {
+  constructor(props: DialogCloseAnimationProps) {
     super(props);
 
     const { children } = this.props;
     this.state = {
-      cachedChildren: children,
+      cachedChildren: children || null,
     };
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
+  static getDerivedStateFromProps(
+    nextProps: DialogCloseAnimationProps,
+    prevState: DialogCloseAnimationState,
+  ) {
     const { children } = nextProps;
     const { cachedChildren } = prevState;
 
