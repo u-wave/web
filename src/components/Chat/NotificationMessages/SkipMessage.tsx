@@ -25,11 +25,11 @@ function SkipMessage({
   const { t } = useTranslator();
 
   try {
+    // eslint-disable-next-line no-param-reassign
     reason = t(`booth.skip.reasons.${reason}`);
   } catch {
     // Not great to use try/catch for this, but not adding new APIs to `@u-wave/translate`
   }
-
 
   return (
     <UserNotificationMessage
