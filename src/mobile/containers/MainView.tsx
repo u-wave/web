@@ -1,9 +1,8 @@
-import React from 'react';
+import { useCallback } from 'react';
 import { useSelector, useDispatch } from '../../hooks/useRedux';
 import { toggleOverlay } from '../../reducers/activeOverlay';
 import { setVideoEnabled, videoEnabledSelector } from '../../reducers/settings';
-import { playlistsSelector } from '../../reducers/playlists';
-import { mediaSelector, startTimeSelector } from '../../reducers/booth';
+import { mediaSelector } from '../../reducers/booth';
 import {
   sizeSelector as waitlistSizeSelector,
   positionSelector as waitlistPositionSelector,
@@ -11,17 +10,11 @@ import {
 import { openDrawer, openUsersDrawer } from '../actions/DrawerActionCreators';
 import MainView from '../components/MainView';
 
-const {
-  useCallback,
-} = React;
-
 function MainViewContainer() {
   const videoEnabled = useSelector(videoEnabledSelector);
   const media = useSelector(mediaSelector);
-  const startTime = useSelector(startTimeSelector);
   const waitlistPosition = useSelector(waitlistPositionSelector);
   const waitlistSize = useSelector(waitlistSizeSelector);
-  const playlists = useSelector(playlistsSelector);
   const dispatch = useDispatch();
   const onOpenRoomHistory = useCallback(() => dispatch(toggleOverlay('roomHistory')), [dispatch]);
   const onOpenDrawer = useCallback(() => dispatch(openDrawer()), [dispatch]);
@@ -32,10 +25,8 @@ function MainViewContainer() {
     <MainView
       videoEnabled={videoEnabled}
       media={media}
-      startTime={startTime}
       waitlistPosition={waitlistPosition}
       waitlistSize={waitlistSize}
-      playlists={playlists}
       onOpenRoomHistory={onOpenRoomHistory}
       onOpenDrawer={onOpenDrawer}
       onOpenWaitlist={onOpenWaitlist}

@@ -8,7 +8,7 @@ type PlayerProps = {
   mode?: 'preview' | undefined,
   volume: number,
   isMuted: boolean,
-  media: Media,
+  media: Media | null,
   seek: number,
   onPlay?: () => void,
 };

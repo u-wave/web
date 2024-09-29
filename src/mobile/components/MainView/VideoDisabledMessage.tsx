@@ -1,9 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
 import Button from '@mui/material/Button';
 
-function VideoDisabledMessage({ onEnableVideo }) {
+type VideoDisabledMessageProps = {
+  onEnableVideo: () => void,
+};
+function VideoDisabledMessage({ onEnableVideo }: VideoDisabledMessageProps) {
   const { t } = useTranslator();
 
   return (
@@ -15,9 +16,5 @@ function VideoDisabledMessage({ onEnableVideo }) {
     </div>
   );
 }
-
-VideoDisabledMessage.propTypes = {
-  onEnableVideo: PropTypes.func.isRequired,
-};
 
 export default VideoDisabledMessage;

@@ -1,8 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
-const Overlays = ({ children, active }) => {
+type OverlaysProps = {
+  children: React.ReactElement | React.ReactElement[],
+  active?: string | null,
+};
+function Overlays({ children, active }: OverlaysProps) {
   let view;
   if (Array.isArray(children)) {
     view = children.find((child) => child.key === active);
@@ -31,11 +33,6 @@ const Overlays = ({ children, active }) => {
       {view}
     </TransitionGroup>
   );
-};
-
-Overlays.propTypes = {
-  children: PropTypes.node,
-  active: PropTypes.string,
-};
+}
 
 export default Overlays;

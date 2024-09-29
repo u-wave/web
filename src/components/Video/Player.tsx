@@ -5,13 +5,11 @@ type PreviewPlayerProps = {
   media: Media,
   seek?: number,
   volume: number,
-  isMuted: boolean,
 };
 function PreviewPlayer({
   media,
   seek = 0,
   volume,
-  isMuted,
 }: PreviewPlayerProps) {
   const { getMediaSource } = useMediaSources();
   const source = getMediaSource(media.sourceType);
@@ -27,7 +25,7 @@ function PreviewPlayer({
       active
       seek={seek}
       media={media}
-      volume={isMuted ? 0 : volume}
+      volume={volume}
       mode="preview"
     />
   );

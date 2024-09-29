@@ -1,6 +1,5 @@
 import type { AnyAction, Middleware } from 'redux';
 import { createAction } from '@reduxjs/toolkit';
-import type { JsonObject } from 'type-fest';
 import type { AppDispatch } from './configureStore';
 import {
   SOCKET_CONNECT,
@@ -54,7 +53,7 @@ export type SocketMessageParams = {
         title: string,
         thumbnail: string,
         duration: number,
-        sourceData: JsonObject,
+        sourceData: Record<string, unknown> | null,
       },
     },
     playedAt: number,

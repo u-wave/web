@@ -1,23 +1,36 @@
 import clsx from 'clsx';
-import React from 'react';
-import PropTypes from 'prop-types';
 import formatDuration from 'format-duration';
 import { useTranslator } from '@u-wave/react-translate';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '../../Form/Select';
 
+type Chapter = {
+  start: number,
+  end: number,
+  title: string,
+};
+type ChaptersProps = {
+  className?: string,
+  available: Chapter[],
+  start: number,
+  end: number,
+  tabIndex: number,
+  onChange: (value: Chapter) => void,
+};
 function Chapters({
   className,
   available,
   start,
   end,
+  tabIndex,
   onChange,
-  ...props
-}) {
+}: ChaptersProps) {
   const { t } = useTranslator();
-  const handleChange = (event) => {
-    const newIndex = event.target.value;
-    onChange(available[newIndex]);
+  const handleChange = (event: React.FormEvent<{ value: number }>) => {
+    const newIndex = event.currentTarget.value;
+    if (available[newIndex] != null) {
+      onChange(available[newIndex]);
+    }
   };
 
   const selectedIndex = available.findIndex(
@@ -32,7 +45,7 @@ function Chapters({
       }}
       onChange={handleChange}
       value={selectedIndex}
-      {...props}
+      tabIndex={tabIndex}
     >
       <MenuItem disabled value={-1}>
         <span className="Chapters-placeholder">
@@ -52,17 +65,5 @@ function Chapters({
     </Select>
   );
 }
-
-Chapters.propTypes = {
-  className: PropTypes.string,
-  available: PropTypes.arrayOf(PropTypes.shape({
-    start: PropTypes.number.isRequired,
-    end: PropTypes.number.isRequired,
-    title: PropTypes.string.isRequired,
-  })).isRequired,
-  start: PropTypes.number.isRequired,
-  end: PropTypes.number.isRequired,
-  onChange: PropTypes.func.isRequired,
-};
 
 export default Chapters;

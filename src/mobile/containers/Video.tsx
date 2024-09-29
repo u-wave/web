@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from '../../hooks/useRedux';
 import useClock from '../../hooks/useClock';
 import { openFavoriteMenu } from '../../reducers/addToPlaylistMenu';
-import { mobilePlaybackVolumeSelector } from '../../reducers/settings';
+import { isMutedSelector, mobilePlaybackVolumeSelector } from '../../reducers/settings';
 import {
   upvote,
   downvote,
@@ -17,7 +17,11 @@ const {
   useCallback,
 } = React;
 
-function VideoContainer(props) {
+type VideoContainerProps = {
+  enabled: boolean,
+  size: string,
+};
+function VideoContainer(props: VideoContainerProps) {
   // Update `seek` every tick.
   useClock();
 
@@ -25,25 +29,33 @@ function VideoContainer(props) {
   const media = useSelector(mediaSelector);
   const seek = useSelector((s) => timeElapsedSelector(s));
   const volume = useSelector(mobilePlaybackVolumeSelector);
+  const isMuted = useSelector(isMutedSelector);
   const voteStats = useSelector(currentVoteStatsSelector);
   const dispatch = useDispatch();
   const onUpvote = useCallback(() => {
-    dispatch(upvote({ historyID }));
+    if (historyID != null) {
+      dispatch(upvote({ historyID }));
+    }
   }, [dispatch, historyID]);
   const onDownvote = useCallback(() => {
-    dispatch(downvote({ historyID }));
+    if (historyID != null) {
+      dispatch(downvote({ historyID }));
+    }
   }, [dispatch, historyID]);
-  const onFavorite = useCallback((position) => {
-    dispatch(openFavoriteMenu(historyID, position));
+  const onFavorite = useCallback(() => {
+    if (historyID != null) {
+      // TODO: position is wrong
+      dispatch(openFavoriteMenu(historyID, { x: 0, y: 0 }));
+    }
   }, [historyID, dispatch]);
 
   return (
     <Video
       {...props}
-      historyID={historyID}
       media={media}
       seek={seek}
       volume={volume}
+      isMuted={isMuted}
       voteStats={voteStats}
       onUpvote={onUpvote}
       onDownvote={onDownvote}

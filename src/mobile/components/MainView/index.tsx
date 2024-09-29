@@ -1,5 +1,3 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -13,13 +11,14 @@ import Chat from '../../containers/Chat';
 import DrawerMenu from '../../containers/DrawerMenu';
 import UsersDrawer from '../../containers/UsersDrawer';
 import VideoDisabledMessage from './VideoDisabledMessage';
+import type { Media } from '../../../reducers/booth';
 
-const waitlistIconStyle = {
+const waitlistIconStyle: React.CSSProperties = {
   fontSize: '125%',
   textAlign: 'center',
 };
 
-const getWaitlistLabel = (size, position) => {
+function getWaitlistLabel(size: number, position: number) {
   if (size > 0) {
     const posText = position !== -1
       ? `${position + 1}/${size}`
@@ -28,8 +27,18 @@ const getWaitlistLabel = (size, position) => {
     return posText;
   }
   return '0';
-};
+}
 
+type MainViewProps = {
+  media: Media | null,
+  videoEnabled: boolean,
+  waitlistPosition: number,
+  waitlistSize: number,
+  onOpenRoomHistory: () => void,
+  onOpenDrawer: () => void,
+  onOpenWaitlist: () => void,
+  onEnableVideo: () => void,
+};
 function MainView({
   media,
   videoEnabled,
@@ -39,7 +48,7 @@ function MainView({
   onOpenDrawer,
   onOpenWaitlist,
   onEnableVideo,
-}) {
+}: MainViewProps) {
   const { t } = useTranslator();
 
   let title = t('booth.empty');
@@ -86,16 +95,5 @@ function MainView({
     </div>
   );
 }
-
-MainView.propTypes = {
-  media: PropTypes.object,
-  videoEnabled: PropTypes.bool.isRequired,
-  waitlistPosition: PropTypes.number.isRequired,
-  waitlistSize: PropTypes.number.isRequired,
-  onOpenRoomHistory: PropTypes.func.isRequired,
-  onOpenWaitlist: PropTypes.func.isRequired,
-  onOpenDrawer: PropTypes.func.isRequired,
-  onEnableVideo: PropTypes.func.isRequired,
-};
 
 export default MainView;

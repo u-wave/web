@@ -13,7 +13,7 @@ interface Media {
     _id: string,
     sourceType: string,
     sourceID: string,
-    sourceData: object,
+    sourceData: Record<string, unknown> | null,
     artist: string,
     title: string,
     duration: number,

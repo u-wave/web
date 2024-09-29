@@ -1,12 +1,16 @@
 import cx from 'clsx';
-import PropTypes from 'prop-types';
 import {
   mdiHeart, mdiHeartOutline, mdiThumbDown, mdiThumbUp,
 } from '@mdi/js';
 import SvgIcon from '../../../components/SvgIcon';
 import useCurrentUser from '../../../hooks/useCurrentUser';
 
-function Votes({ upvotes, downvotes, favorites }) {
+type VotesProps = {
+  upvotes: string[],
+  downvotes: string[],
+  favorites: string[],
+};
+function Votes({ upvotes, downvotes, favorites }: VotesProps) {
   const user = useCurrentUser();
   const isUpvote = user ? upvotes.includes(user._id) : false;
   const isDownvote = user ? downvotes.includes(user._id) : false;
@@ -29,11 +33,5 @@ function Votes({ upvotes, downvotes, favorites }) {
     </div>
   );
 }
-
-Votes.propTypes = {
-  upvotes: PropTypes.array.isRequired,
-  favorites: PropTypes.array.isRequired,
-  downvotes: PropTypes.array.isRequired,
-};
 
 export default Votes;

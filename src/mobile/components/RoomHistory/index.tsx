@@ -1,16 +1,14 @@
 import cx from 'clsx';
-import React from 'react';
-import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
 import OverlayHeader from '../../../components/Overlay/Header';
 import OverlayContent from '../../../components/Overlay/Content';
 import HistoryList from './HistoryList';
 
-function RoomHistory({
-  className,
-  onCloseOverlay,
-  ...props
-}) {
+type RoomHistoryProps = {
+  className?: string,
+  onCloseOverlay: () => void,
+};
+function RoomHistory({ className, onCloseOverlay }: RoomHistoryProps) {
   const { t } = useTranslator();
 
   return (
@@ -22,15 +20,10 @@ function RoomHistory({
         onCloseOverlay={onCloseOverlay}
       />
       <OverlayContent className="RoomHistory-body">
-        <HistoryList {...props} />
+        <HistoryList />
       </OverlayContent>
     </div>
   );
 }
-
-RoomHistory.propTypes = {
-  className: PropTypes.string,
-  onCloseOverlay: PropTypes.func.isRequired,
-};
 
 export default RoomHistory;

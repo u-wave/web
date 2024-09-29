@@ -3,13 +3,13 @@ import Button from '@mui/material/Button';
 import { useDispatch } from '../../hooks/useRedux';
 import { openLoginDialog } from '../../reducers/dialogs';
 
-const wrapperStyle = {
+const wrapperStyle: React.CSSProperties = {
   display: 'flex',
   justifyContent: 'stretch',
   height: '100%',
 };
 
-const buttonStyle = {
+const buttonStyle: React.CSSProperties = {
   height: '100%',
   fontSize: '11pt',
   textTransform: 'uppercase',

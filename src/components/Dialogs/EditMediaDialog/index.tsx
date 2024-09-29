@@ -1,6 +1,5 @@
 import cx from 'clsx';
-import React from 'react';
-import PropTypes from 'prop-types';
+import { useCallback, useId, useState } from 'react';
 import { useTranslator } from '@u-wave/react-translate';
 import formatDuration from 'format-duration';
 import Dialog from '@mui/material/Dialog';
@@ -22,20 +21,49 @@ import FormGroup from '../../Form/Group';
 import Button from '../../Form/Button';
 import TextField from '../../Form/TextField';
 import Chapters from './Chapters';
-
-const {
-  useCallback,
-  useId,
-  useState,
-} = React;
+import type { Media } from '../../../reducers/booth';
 
 // naive HH:mm:ss → seconds
-const parseDuration = (str) => str.split(':')
-  .map((part) => parseInt(part.trim(), 10))
-  .reduce((duration, part) => (duration * 60) + part, 0);
+function parseDuration(str: string) {
+  return str.split(':')
+    .map((part) => parseInt(part.trim(), 10))
+    .reduce((duration, part) => (duration * 60) + part, 0);
+}
 
 const BASE_TAB_INDEX = 1000;
 
+type Chapter = {
+  start: number,
+  end: number,
+  title: string,
+};
+
+function hasChapters(
+  sourceData: Record<string, unknown> | null,
+): sourceData is { chapters: Chapter[] } {
+  return sourceData != null
+    && Array.isArray(sourceData.chapters)
+    && sourceData.chapters.every((chapter) => (
+      typeof chapter === 'object'
+        && chapter != null
+        && 'start' in chapter
+        && typeof chapter.start === 'number'
+        && 'end' in chapter
+        && typeof chapter.end === 'number'
+        && 'title' in chapter
+        && typeof chapter.title === 'string'
+    ));
+}
+
+type EditMediaDialogProps = {
+  media: Media,
+  open: boolean,
+  bodyClassName?: string,
+  contentClassName?: string,
+  titleClassName?: string,
+  onEditedMedia: (update: { artist: string, title: string, start: number, end: number }) => void,
+  onCloseDialog: () => void,
+};
 function EditMediaDialog({
   media,
   open,
@@ -44,20 +72,20 @@ function EditMediaDialog({
   titleClassName,
   onEditedMedia,
   onCloseDialog,
-}) {
+}: EditMediaDialogProps) {
   const { t } = useTranslator();
   const id = useId();
   const ariaTitle = `${id}-title`;
   const startFieldId = `${id}-start`;
   const endFieldId = `${id}-end`;
 
-  const [errors, setErrors] = useState(null);
+  const [errors, setErrors] = useState<string[] | null>(null);
   const [artist, setArtist] = useState(media.artist);
   const [title, setTitle] = useState(media.title);
   const [start, setStart] = useState(formatDuration(media.start * 1000));
   const [end, setEnd] = useState(formatDuration(media.end * 1000));
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const startSeconds = parseDuration(start);
@@ -89,23 +117,23 @@ function EditMediaDialog({
     onCloseDialog();
   };
 
-  const handleChangeArtist = useCallback((event) => {
-    setArtist(event.target.value);
+  const handleChangeArtist = useCallback((event: React.FormEvent<HTMLInputElement>) => {
+    setArtist(event.currentTarget.value);
   }, []);
 
-  const handleChangeTitle = useCallback((event) => {
-    setTitle(event.target.value);
+  const handleChangeTitle = useCallback((event: React.FormEvent<HTMLInputElement>) => {
+    setTitle(event.currentTarget.value);
   }, []);
 
-  const handleChangeStart = useCallback((event) => {
-    setStart(event.target.value);
+  const handleChangeStart = useCallback((event: React.FormEvent<HTMLInputElement>) => {
+    setStart(event.currentTarget.value);
   }, []);
 
-  const handleChangeEnd = useCallback((event) => {
-    setEnd(event.target.value);
+  const handleChangeEnd = useCallback((event: React.FormEvent<HTMLInputElement>) => {
+    setEnd(event.currentTarget.value);
   }, []);
 
-  const handleChangeChapter = useCallback((chapter) => {
+  const handleChangeChapter = useCallback((chapter: Chapter) => {
     setStart(formatDuration(chapter.start * 1000));
     setEnd(formatDuration(chapter.end * 1000));
   }, []);
@@ -181,8 +209,7 @@ function EditMediaDialog({
     />
   );
 
-  const chapterCount = media.sourceData?.chapters?.length ?? 0;
-  const chapters = chapterCount > 0 ? (
+  const chapters = hasChapters(media.sourceData) && media.sourceData.chapters.length > 0 ? (
     <FormGroup className="FormGroup--noSpacing EditMediaDialog-chapters">
       <p className="EditMediaDialog-chaptersLabel">
         {t('dialogs.editMedia.chapterLabel')}
@@ -269,15 +296,5 @@ function EditMediaDialog({
     </DialogCloseAnimation>
   );
 }
-
-EditMediaDialog.propTypes = {
-  open: PropTypes.bool,
-  media: PropTypes.object,
-  bodyClassName: PropTypes.string,
-  contentClassName: PropTypes.string,
-  titleClassName: PropTypes.string,
-  onEditedMedia: PropTypes.func.isRequired,
-  onCloseDialog: PropTypes.func.isRequired,
-};
 
 export default EditMediaDialog;
