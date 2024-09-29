@@ -1,5 +1,5 @@
 import cx from 'clsx';
-import { useCallback } from 'react';
+import { useCallback, useRef } from 'react';
 import useUserCard from '../../hooks/useUserCard';
 import type { User } from '../../reducers/users';
 import Avatar from '../Avatar';
@@ -18,17 +18,16 @@ function SimpleRow({
   position,
   user,
 }: SimpleRowProps) {
-  const userCard = useUserCard(user);
+  const rootRef = useRef<HTMLButtonElement>(null);
+  const { card, open: openCard } = useUserCard(user, rootRef);
   const onOpenCard = useCallback((event: React.MouseEvent) => {
     event.preventDefault();
-    userCard.open();
-    // The `userCard.open` reference never changes.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    openCard();
+  }, [openCard]);
 
   return (
     <>
-      {userCard.card}
+      {card}
       <button
         type="button"
         className={cx(
@@ -39,7 +38,7 @@ function SimpleRow({
         )}
         style={style}
         onClick={onOpenCard}
-        ref={userCard.refAnchor}
+        ref={rootRef}
       >
         <div>
           <Position position={position + 1} />

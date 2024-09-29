@@ -32,13 +32,12 @@ function ModRow({
   user,
   onRemoveUser,
 }: ModRowProps) {
-  const userCard = useUserCard(user);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const { card, open: openCard } = useUserCard(user, rootRef);
   const onOpenCard = useCallback((event: React.MouseEvent) => {
     event.preventDefault();
-    userCard.open();
-    // The `userCard.open` reference never changes.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    openCard();
+  }, [openCard]);
 
   // Drag-drop interactions
   const handleRef = useRef<HTMLDivElement>(null);
@@ -46,12 +45,12 @@ function ModRow({
   const [isDragging, setDragging] = useState(false);
   const [dropState, setDropState] = useState<Edge | null>(null);
   useEffect(() => {
+    if (rootRef.current == null) return undefined;
     if (handleRef.current == null) return undefined;
-    if (userCard.refAnchor.current == null) return undefined;
 
     return combine(
       draggable({
-        element: userCard.refAnchor.current,
+        element: rootRef.current,
         dragHandle: handleRef.current,
         getInitialData() {
           return createWaitlistDrag({ user });
@@ -71,7 +70,7 @@ function ModRow({
         },
       }),
       dropTargetForElements({
-        element: userCard.refAnchor.current,
+        element: rootRef.current,
         canDrop: ({ source, element }) => isWaitlistDrag(source.data) && source.element !== element,
         getData({ input, element }) {
           return attachClosestEdge(createWaitlistDrop({ position }), {
@@ -91,7 +90,7 @@ function ModRow({
         },
       }),
     );
-  }, [user, position, userCard.refAnchor]);
+  }, [user, position]);
 
   const rowClassName = cx(className, {
     UserRow: true,
@@ -103,12 +102,8 @@ function ModRow({
   });
 
   return (
-    <div
-      className={rowClassName}
-      style={style}
-      ref={userCard.refAnchor}
-    >
-      {userCard.card}
+    <div className={rowClassName} style={style} ref={rootRef}>
+      {card}
       <Position position={position + 1} />
       <button
         type="button"
