@@ -24,6 +24,13 @@ function SkipMessage({
 }: SkipMessageProps) {
   const { t } = useTranslator();
 
+  try {
+    // eslint-disable-next-line no-param-reassign
+    reason = t(`booth.skip.reasons.${reason}`);
+  } catch {
+    // Not great to use try/catch for this, but not adding new APIs to `@u-wave/translate`
+  }
+
   return (
     <UserNotificationMessage
       type="skip"
@@ -31,7 +38,7 @@ function SkipMessage({
       i18nKey={getLangKey(!!moderator, !!reason)}
       i18nProps={{
         djName: <Username user={user} />,
-        reason: reason ? t(`booth.skip.reasons.${reason}`) : undefined,
+        reason,
       }}
       user={moderator ?? user}
       timestamp={timestamp}
