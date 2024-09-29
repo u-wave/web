@@ -16,7 +16,7 @@ export function preferredSessionType() {
     : 'token';
 }
 
-export function set(key) {
+export function set(key: string) {
   try {
     localStorage.setItem(SESSION_KEY, key);
   } catch (e) {

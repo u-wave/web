@@ -13,10 +13,11 @@ const uw = new Uwave(clientOptions);
 uw.use(experimentalThemePlugin);
 
 // Configure the Media sources to be used by this üWave client instance.
+// @ts-expect-error: TS2345 - TODO
 uw.source(youTubeSource());
 uw.source(soundCloudSource());
 
-window.uw = uw;
+Object.defineProperty(window, 'uw', { value: uw });
 
 load(uw).catch((err) => {
   setTimeout(() => {

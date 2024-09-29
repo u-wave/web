@@ -1,14 +1,13 @@
-/** @typedef {import('../reducers/config').State} Config */
+import type { State as Config } from '../reducers/config';
 
 export default function readApplicationConfig(container = '#u-wave-config') {
-  /** @type {Config} */
-  const config = {
+  const config: Config = {
     roles: undefined,
     emoji: {},
   };
 
   try {
-    Object.assign(config, JSON.parse(document.querySelector(container).textContent));
+    Object.assign(config, JSON.parse(document.querySelector(container)?.textContent ?? '{}'));
   } catch {
     // ignore
   }
