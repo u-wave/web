@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useTranslator } from '@u-wave/react-translate';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -35,8 +36,6 @@ type MainViewProps = {
   waitlistPosition: number,
   waitlistSize: number,
   onOpenRoomHistory: () => void,
-  onOpenDrawer: () => void,
-  onOpenWaitlist: () => void,
   onEnableVideo: () => void,
 };
 function MainView({
@@ -45,11 +44,16 @@ function MainView({
   waitlistPosition,
   waitlistSize,
   onOpenRoomHistory,
-  onOpenDrawer,
-  onOpenWaitlist,
   onEnableVideo,
 }: MainViewProps) {
   const { t } = useTranslator();
+  const [isMenuOpen, setMenuOpen] = useState(false);
+  const [isWaitlistOpen, setWaitlistOpen] = useState(false);
+
+  const onOpenDrawer = () => setMenuOpen(true);
+  const onCloseDrawer = () => setMenuOpen(false);
+  const onOpenWaitlist = () => setWaitlistOpen(true);
+  const onCloseWaitlist = () => setWaitlistOpen(false);
 
   let title: React.ReactNode = t('booth.empty');
   if (media) {
@@ -90,8 +94,8 @@ function MainView({
         </div>
       </div>
 
-      <DrawerMenu />
-      <UsersDrawer />
+      <DrawerMenu open={isMenuOpen} onClose={onCloseDrawer} />
+      <UsersDrawer open={isWaitlistOpen} onClose={onCloseWaitlist} />
     </div>
   );
 }
