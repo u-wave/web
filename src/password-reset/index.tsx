@@ -11,7 +11,7 @@ function PasswordResetPage() {
         <div id="app" />
         <script id="u-wave-config" type="application/json">{}</script>
         <script id="reset-data" type="text/plain">{}</script>
-        <script type="module" src="./src/password-reset/app.jsx" />
+        <script type="module" src="./src/password-reset/app.tsx" />
       </body>
     </html>
   );
