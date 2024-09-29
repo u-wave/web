@@ -1,8 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import Snackbar from '@mui/material/Snackbar';
 
-function ErrorArea({ error, onDismiss }) {
+type ErrorAreaProps = {
+  error?: string | null,
+  onDismiss: () => void,
+};
+function ErrorArea({ error, onDismiss }: ErrorAreaProps) {
   return (
     <div className="ErrorArea">
       <Snackbar
@@ -14,10 +16,5 @@ function ErrorArea({ error, onDismiss }) {
     </div>
   );
 }
-
-ErrorArea.propTypes = {
-  error: PropTypes.string,
-  onDismiss: PropTypes.func.isRequired,
-};
 
 export default ErrorArea;

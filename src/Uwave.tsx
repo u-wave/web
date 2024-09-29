@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { StyledEngineProvider } from '@mui/material/styles';
 import { CacheProvider } from '@emotion/react';
 import createCache from '@emotion/cache';
+import type { EmptyObject } from 'type-fest';
 import AppContainer from './containers/App';
 import { get as readSession } from './utils/Session';
 import configureStore from './redux/configureStore';
@@ -27,7 +28,7 @@ export default class Uwave {
 
   #renderTarget: Element | null = null;
 
-  #aboutPageComponent: React.ComponentType | null = null;
+  #aboutPageComponent: React.ComponentType<EmptyObject> | null = null;
 
   #emotionCache = createCache({
     key: 'emc',
@@ -70,7 +71,7 @@ export default class Uwave {
     return source;
   }
 
-  setAboutPageComponent(AboutPageComponent: React.ComponentType) {
+  setAboutPageComponent(AboutPageComponent: React.ComponentType<EmptyObject>) {
     this.#aboutPageComponent = AboutPageComponent;
   }
 

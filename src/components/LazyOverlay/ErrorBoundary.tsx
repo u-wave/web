@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
@@ -8,7 +7,10 @@ import OverlayContent from '../Overlay/Content';
 import OverlayHeader from '../Overlay/Header';
 import { closeOverlay } from '../../reducers/activeOverlay';
 
-function ErrorOverlay({ error }) {
+type ErrorOverlayProps = {
+  error: Error,
+};
+function ErrorOverlay({ error }: ErrorOverlayProps) {
   const dispatch = useDispatch();
   const onCloseOverlay = () => dispatch(closeOverlay());
 
@@ -22,7 +24,7 @@ function ErrorOverlay({ error }) {
         <div className="FatalError">
           <Card raised>
             <CardContent>
-              <Typography variant="headline">
+              <Typography variant="h6">
                 This area could not be displayed because of an error:
               </Typography>
               <Typography component="p">
@@ -40,19 +42,14 @@ function ErrorOverlay({ error }) {
   );
 }
 
-ErrorOverlay.propTypes = {
-  error: PropTypes.shape({
-    message: PropTypes.string.isRequired,
-  }).isRequired,
+type ErrorBoundaryProps = {
+  children: React.ReactNode,
 };
-
-export default class ErrorBoundary extends React.Component {
-  static propTypes = {
-    // onCloseOverlay: PropTypes.func.isRequired,
-    children: PropTypes.element.isRequired,
-  };
-
-  constructor(props) {
+type ErrorBoundaryState = {
+  error: Error | null,
+};
+export default class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  constructor(props: ErrorBoundaryProps) {
     super(props);
 
     this.state = {
@@ -60,8 +57,11 @@ export default class ErrorBoundary extends React.Component {
     };
   }
 
-  static getDerivedStateFromError(error) {
-    return { error };
+  static getDerivedStateFromError(error: unknown) {
+    if (error instanceof Error) {
+      return { error };
+    }
+    return new Error(String(error || 'Unknown error'));
   }
 
   render() {

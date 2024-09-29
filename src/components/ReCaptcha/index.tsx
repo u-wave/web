@@ -1,13 +1,21 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import {
+  lazy, useEffect, useLayoutEffect, useRef,
+} from 'react';
 
-const {
-  useEffect,
-  useLayoutEffect,
-  useRef,
-} = React;
+const onloadCallbackName = 'grecaptchaOnload__$' as const;
 
-const onloadCallbackName = 'grecaptchaOnload__$';
+declare global {
+  interface Window {
+    grecaptchaOnload__$?: () => void;
+    grecaptcha: {
+      render: (element: HTMLElement, options: {
+        sitekey: string,
+        theme: 'light' | 'dark',
+        callback: (response: string) => void,
+      }) => void,
+    }
+  }
+}
 
 function loadGrecaptcha() {
   return new Promise((resolve, reject) => {
@@ -44,8 +52,13 @@ function getGrecaptcha() {
   return grecaptchaPromise;
 }
 
-function ReCaptcha({ sitekey, theme = 'light', onResponse }) {
-  const refContainer = useRef(null);
+type ReCaptchaProps = {
+  sitekey: string,
+  theme?: 'light' | 'dark',
+  onResponse: (response: string) => void,
+};
+function ReCaptcha({ sitekey, theme = 'light', onResponse }: ReCaptchaProps) {
+  const refContainer = useRef<HTMLDivElement>(null);
   const onResponseRef = useRef(onResponse);
 
   useEffect(() => {
@@ -53,6 +66,7 @@ function ReCaptcha({ sitekey, theme = 'light', onResponse }) {
   });
 
   useLayoutEffect(() => {
+    if (refContainer.current == null) return;
     try {
       window.grecaptcha.render(refContainer.current, {
         sitekey,
@@ -67,10 +81,4 @@ function ReCaptcha({ sitekey, theme = 'light', onResponse }) {
   return <div ref={refContainer} />;
 }
 
-ReCaptcha.propTypes = {
-  sitekey: PropTypes.string.isRequired,
-  theme: PropTypes.string,
-  onResponse: PropTypes.func.isRequired,
-};
-
-export default React.lazy(() => getGrecaptcha().then(() => ({ default: ReCaptcha })));
+export default lazy(() => getGrecaptcha().then(() => ({ default: ReCaptcha })));
