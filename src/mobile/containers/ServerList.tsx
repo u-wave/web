@@ -1,12 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
 import Overlay from '../../components/Overlay';
 import OverlayContent from '../../components/Overlay/Content';
 import OverlayHeader from '../../components/Overlay/Header';
 import ServerList from '../../components/ServerList';
 
-function ServerListContainer({ onCloseOverlay }) {
+type ServerListContainerProps = {
+  onCloseOverlay: () => void,
+};
+function ServerListContainer({ onCloseOverlay }: ServerListContainerProps) {
   const { t } = useTranslator();
 
   return (
@@ -18,9 +19,5 @@ function ServerListContainer({ onCloseOverlay }) {
     </Overlay>
   );
 }
-
-ServerListContainer.propTypes = {
-  onCloseOverlay: PropTypes.func.isRequired,
-};
 
 export default ServerListContainer;

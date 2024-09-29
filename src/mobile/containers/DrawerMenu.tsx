@@ -1,4 +1,4 @@
-import React from 'react';
+import { useCallback } from 'react';
 import { useSelector, useDispatch } from '../../hooks/useRedux';
 import { toggleOverlay } from '../../reducers/activeOverlay';
 import { drawerIsOpenSelector } from '../selectors/drawerSelectors';
@@ -6,10 +6,6 @@ import { setDrawer } from '../actions/DrawerActionCreators';
 import { toggleServerList, openPlaylist } from '../actions/OverlayActionCreators';
 import DrawerMenu from '../components/DrawerMenu';
 import { useUwave } from '../../context/UwaveContext';
-
-const {
-  useCallback,
-} = React;
 
 function DrawerMenuContainer() {
   const uwave = useUwave();
@@ -20,7 +16,7 @@ function DrawerMenuContainer() {
   const onShowServerList = useCallback(() => dispatch(toggleServerList()), [dispatch]);
   const onShowSettings = useCallback(() => dispatch(toggleOverlay('settings')), [dispatch]);
   const onShowPlaylist = useCallback(
-    (playlistID) => dispatch(openPlaylist(playlistID)),
+    (playlistID: string) => dispatch(openPlaylist(playlistID)),
     [dispatch],
   );
   const onDrawerClose = useCallback(() => dispatch(setDrawer(false)), [dispatch]);

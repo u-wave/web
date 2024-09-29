@@ -1,3 +1,7 @@
+.MobileMediaRow {
+  position: absolute;
+}
+
 .MobileMediaRow-artist,
 .MobileMediaRow-title {
   max-width: 100%;

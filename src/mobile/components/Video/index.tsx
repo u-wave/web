@@ -1,14 +1,25 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
 import Player from '../../../components/Player';
 import VideoBackdrop from '../../../components/Video/VideoBackdrop';
 import VoteButtons from './VoteButtons';
+import type { Media } from '../../../reducers/booth';
 
-const {
-  useEffect,
-  useState,
-} = React;
-
+type VideoProps = {
+  media: Media | null,
+  size: string,
+  enabled: boolean,
+  volume: number,
+  isMuted: boolean,
+  seek: number,
+  voteStats: {
+    isUpvote: boolean,
+    isDownvote: boolean,
+    isFavorite: boolean,
+  },
+  onUpvote: () => void,
+  onDownvote: () => void,
+  onFavorite: () => void,
+};
 function Video({
   media,
   voteStats,
@@ -16,7 +27,7 @@ function Video({
   onDownvote,
   onFavorite,
   ...props
-}) {
+}: VideoProps) {
   const [enableOverlay, setEnableOverlay] = useState(false);
   const [showVoteButtons, setShowVoteButtons] = useState(false);
 
@@ -67,21 +78,5 @@ function Video({
     </div>
   );
 }
-
-Video.propTypes = {
-  media: PropTypes.shape({
-    sourceType: PropTypes.string.isRequired,
-    thumbnail: PropTypes.string.isRequired,
-  }),
-  voteStats: PropTypes.shape({
-    isUpvote: PropTypes.bool,
-    isFavorite: PropTypes.bool,
-    isDownvote: PropTypes.bool,
-  }),
-
-  onUpvote: PropTypes.func.isRequired,
-  onDownvote: PropTypes.func.isRequired,
-  onFavorite: PropTypes.func.isRequired,
-};
 
 export default Video;

@@ -1,6 +1,5 @@
 import cx from 'clsx';
-import React from 'react';
-import PropTypes from 'prop-types';
+import { useState } from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import { useSelector } from '../../../hooks/useRedux';
 import ErrorArea from '../../../containers/ErrorArea';
@@ -15,12 +14,14 @@ import ServerList from '../../containers/ServerList';
 import { videoEnabledSelector } from '../../../reducers/settings';
 import Overlays from './Overlays';
 
-const { useState } = React;
-
+type MobileAppProps = {
+  activeOverlay?: string | null,
+  onCloseOverlay: () => void,
+};
 function MobileApp({
   activeOverlay,
   onCloseOverlay,
-}) {
+}: MobileAppProps) {
   const [dismissedWarning, dismissWarning] = useState(false);
   const videoEnabled = useSelector(videoEnabledSelector);
 
@@ -36,7 +37,7 @@ function MobileApp({
 
       <ErrorArea />
 
-      <Overlays transitionName="Overlay" active={activeOverlay}>
+      <Overlays active={activeOverlay}>
         <About key="about" onCloseOverlay={onCloseOverlay} />
         <ServerList key="serverList" onCloseOverlay={onCloseOverlay} />
         <PlaylistManager key="playlistManager" onCloseOverlay={onCloseOverlay} />
@@ -50,10 +51,5 @@ function MobileApp({
     </div>
   );
 }
-
-MobileApp.propTypes = {
-  activeOverlay: PropTypes.string,
-  onCloseOverlay: PropTypes.func.isRequired,
-};
 
 export default MobileApp;

@@ -1,16 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
 import List from '@mui/material/List';
 import ListSubheader from '@mui/material/ListSubheader';
 import Divider from '@mui/material/Divider';
-import Button from '@mui/material/Button';
+import Button, { type ButtonProps } from '@mui/material/Button';
 import { mdiPlay } from '@mdi/js';
 import SvgIcon from '../../../components/SvgIcon';
 import UserRow from './UserRow';
 import WaitlistPosition from './WaitlistPosition';
+import type { User } from '../../../reducers/users';
 
-function JoinWaitlistButton(props) {
+function JoinWaitlistButton(props: ButtonProps) {
   return (
     <Button
       variant="contained"
@@ -20,6 +19,15 @@ function JoinWaitlistButton(props) {
   );
 }
 
+type UserListProps = {
+  currentDJ: User | null,
+  users: User[],
+  waitlist: (User | undefined)[],
+  isLockedWaitlist: boolean,
+  userIsLoggedIn: boolean,
+  userInWaitlist: boolean,
+  onJoinWaitlist: () => void,
+};
 function UserList({
   currentDJ,
   users,
@@ -28,7 +36,7 @@ function UserList({
   userIsLoggedIn,
   userInWaitlist,
   onJoinWaitlist,
-}) {
+}: UserListProps) {
   const { t } = useTranslator();
 
   return (
@@ -44,7 +52,7 @@ function UserList({
             icon={<SvgIcon path={mdiPlay} style={{ margin: 5 }} />}
           />
         )}
-        {waitlist.map((user, position) => (
+        {waitlist.map((user, position) => user && (
           <UserRow
             key={user._id}
             user={user}
@@ -73,15 +81,5 @@ function UserList({
     </div>
   );
 }
-
-UserList.propTypes = {
-  currentDJ: PropTypes.object,
-  users: PropTypes.arrayOf(PropTypes.object).isRequired,
-  waitlist: PropTypes.arrayOf(PropTypes.object).isRequired,
-  userIsLoggedIn: PropTypes.bool.isRequired,
-  userInWaitlist: PropTypes.bool,
-  isLockedWaitlist: PropTypes.bool,
-  onJoinWaitlist: PropTypes.func.isRequired,
-};
 
 export default UserList;
