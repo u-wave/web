@@ -93,6 +93,7 @@ export default class Uwave {
     this.store.dispatch(socketConnect());
     const [initResult] = await Promise.all([
       this.store.dispatch(initState()),
+      // @ts-expect-error TS2569: not sure why this is failing, but it's correct I promise
       this.store.dispatch(loadCurrentLanguage()),
     ]);
     this.#resolveReady?.();

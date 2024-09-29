@@ -1,6 +1,7 @@
 import { SOCKET_CONNECT, SOCKET_RECONNECT } from '../constants/ActionTypes';
 import { initState } from '../reducers/auth';
 import { openLoginDialog } from '../reducers/dialogs';
+import type { Thunk } from '../redux/api';
 
 export function socketConnect() {
   return { type: SOCKET_CONNECT };
@@ -10,8 +11,14 @@ export function socketReconnect() {
   return { type: SOCKET_RECONNECT };
 }
 
-function whenWindowClosed(window) {
-  return new Promise((resolve) => {
+type CreateCallbackData = {
+  type: string,
+  id: string,
+  suggestedName: string,
+  avatars: string[],
+};
+function whenWindowClosed(window: Window) {
+  return new Promise<void>((resolve) => {
     const i = setInterval(() => {
       if (window.closed) {
         clearInterval(i);
@@ -20,17 +27,17 @@ function whenWindowClosed(window) {
     }, 50);
   });
 }
-function socialLogin(service) {
-  return (dispatch, getState) => {
+function socialLogin(service: string): Thunk<Promise<void>> {
+  return async (dispatch, getState) => {
     const { apiUrl } = getState().config;
     let messageHandlerCalled = false;
-    let promise;
+    let promise: Promise<void> | undefined;
 
     function onlogin() {
       // Check login state after the window closed.
-      promise = dispatch(initState());
+      promise = dispatch(initState()).then(() => {});
     }
-    function oncreate(data) {
+    function oncreate(data: CreateCallbackData) {
       promise = Promise.resolve();
       dispatch(openLoginDialog({
         show: 'social',
@@ -41,7 +48,7 @@ function socialLogin(service) {
       }));
     }
 
-    const apiOrigin = new URL(apiUrl, window.location.href).origin;
+    const apiOrigin = new URL(apiUrl!, window.location.href).origin;
     const clientOrigin = window.location.origin;
 
     window.addEventListener('message', (event) => {
@@ -62,10 +69,16 @@ function socialLogin(service) {
     });
 
     const loginWindow = window.open(`${apiUrl}/auth/service/${service}?origin=${clientOrigin}`);
-    return whenWindowClosed(loginWindow).then(() => {
-      if (messageHandlerCalled) return promise;
-      return onlogin();
-    });
+    if (loginWindow == null) {
+      throw new Error('Could not open OAuth window');
+    }
+
+    await whenWindowClosed(loginWindow);
+    if (messageHandlerCalled) {
+      await promise;
+    } else {
+      onlogin();
+    }
   };
 }
 export function loginWithGoogle() {

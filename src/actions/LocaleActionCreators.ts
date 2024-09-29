@@ -6,18 +6,23 @@ import {
 import { loadedLanguagesSelector } from '../reducers/locales';
 import { languageSelector as currentLanguageSelector } from '../reducers/settings';
 import { resources } from '../locales';
+import type { Thunk } from '../redux/api';
 
-const inFlight = {};
+const inFlight: Record<string, undefined | Promise<void>> = {};
 
-function setLanguage(language) {
+function setLanguage(language: string) {
   return {
     type: CHANGE_LANGUAGE,
     payload: language,
   };
 }
 
-function loadLanguage(language) {
-  return (dispatch) => {
+function loadLanguage(language: string): Thunk<Promise<void>> {
+  return async (dispatch) => {
+    if (!Object.hasOwn(resources, language) || typeof resources[language] !== 'function') {
+      return;
+    }
+
     dispatch({
       type: LOAD_LANGUAGE_START,
       payload: language,
@@ -32,29 +37,28 @@ function loadLanguage(language) {
       delete inFlight[language];
     });
 
-    return inFlight[language];
+    await inFlight[language];
   };
 }
 
-export function loadCurrentLanguage() {
-  return (dispatch, getState) => {
+export function loadCurrentLanguage(): Thunk<Promise<void>> {
+  return async (dispatch, getState) => {
     const loadedLanguages = loadedLanguagesSelector(getState());
     const currentLanguage = currentLanguageSelector(getState());
     if (loadedLanguages.has(currentLanguage)) {
-      return Promise.resolve();
+      return;
     }
 
-    return dispatch(loadLanguage(currentLanguage));
+    await dispatch(loadLanguage(currentLanguage));
   };
 }
 
-export function changeLanguage(language) {
-  return (dispatch, getState) => {
+export function changeLanguage(language: string): Thunk<Promise<void>> {
+  return async (dispatch, getState) => {
     const loadedLanguages = loadedLanguagesSelector(getState());
-    if (loadedLanguages.has(language)) {
-      return dispatch(setLanguage(language));
+    if (!loadedLanguages.has(language)) {
+      await dispatch(loadLanguage(language));
     }
-    return dispatch(loadLanguage(language))
-      .then(() => dispatch(setLanguage(language)));
+    dispatch(setLanguage(language));
   };
 }

@@ -31,7 +31,7 @@ function UsersDrawerContainer({ open, onClose }: UsersDrawerContainerProps) {
     const waitlistIDs = new Set();
     for (const user of waitlist) {
       if (user != null) {
-      waitlistIDs.add(user._id);
+        waitlistIDs.add(user._id);
       }
     }
     if (currentDJ != null) {
