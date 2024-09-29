@@ -1,5 +1,3 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { useTranslator } from '@u-wave/react-translate';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
@@ -7,12 +5,19 @@ import { mdiFullscreen, mdiFullscreenExit } from '@mdi/js';
 import SvgIcon from '../SvgIcon';
 import VideoSizeButton from './VideoSizeButton';
 
+type VideoToolbarProps = {
+  isFullscreen: boolean,
+  /** Optional further video tools. */
+  children?: React.ReactNode,
+  onFullscreenEnter: () => void,
+  onFullscreenExit: () => void,
+};
 function VideoToolbar({
   children,
   isFullscreen,
   onFullscreenEnter,
   onFullscreenExit,
-}) {
+}: VideoToolbarProps) {
   const { t } = useTranslator();
 
   return (
@@ -32,15 +37,5 @@ function VideoToolbar({
     </div>
   );
 }
-
-VideoToolbar.propTypes = {
-  onFullscreenEnter: PropTypes.func.isRequired,
-  onFullscreenExit: PropTypes.func.isRequired,
-  isFullscreen: PropTypes.bool,
-  /**
-   * Optional further video tools.
-   */
-  children: PropTypes.node,
-};
 
 export default VideoToolbar;
