@@ -12,24 +12,20 @@ const outputPkg = new URL('./npm/package.json', import.meta.url);
 
 export default defineConfig({
   clearScreen: false,
-  legacy: {
-    // For the prerender plugin
-    proxySsrExternalModules: true,
-  },
-  resolve: {
-    alias: {
-      '@mui/base': '@mui/base/modern',
-      '@mui/icons-material': '@mui/icons-material/esm',
-      '@mui/material': '@mui/material/modern',
-      '@mui/styled-engine': '@mui/styled-engine/modern',
-      '@mui/system': '@mui/system/modern',
-      '@mui/utils': '@mui/utils/modern',
-    },
-  },
   build: {
     outDir: 'npm/public/',
     assetsDir: 'static',
     manifest: true,
+  },
+  ssr: {
+    noExternal: [
+      '@mui/base',
+      '@mui/icons-material',
+      '@mui/material',
+      '@mui/styled-engine',
+      '@mui/system',
+      '@mui/utils',
+    ],
   },
   server: {
     port: 6041,
