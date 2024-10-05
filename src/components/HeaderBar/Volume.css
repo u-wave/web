@@ -4,8 +4,31 @@
   height: 100%;
 }
 
-.VolumeSlider-slider {
+.VolumeSlider-range {
   display: inline-block;
   width: 160px;
   margin-left: 6px;
+  accent-color: var(--highlight-color);
+}
+
+.VolumeSlider-range {
+  -webkit-appearance: none;
+  height: 2px;
+  background: var(--highlight-color);
+}
+
+.VolumeSlider-range::-webkit-slider-thumb, .VolumeSlider-range::-moz-range-thumb {
+  -webkit-appearance: none;
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+  border: none;
+  background: var(--highlight-color);
+}
+
+.VolumeSlider-range::-webkit-slider-runnable-track  {
+  -webkit-appearance: none;
+  box-shadow: none;
+  border: none;
+  background: transparent;
 }

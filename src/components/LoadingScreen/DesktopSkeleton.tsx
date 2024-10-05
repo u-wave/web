@@ -1,6 +1,5 @@
 import { mdiHistory, mdiVolumeOff } from '@mdi/js';
 import IconButton from '@mui/material/IconButton';
-import Slider from '@mui/material/Slider';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import AppTitle from '../HeaderBar/AppTitle';
@@ -15,15 +14,14 @@ function FakeVolume() {
       <IconButton>
         <SvgIcon path={mdiVolumeOff} />
       </IconButton>
-      <div className="VolumeSlider-slider">
-        <Slider
-          size="small"
-          min={0}
-          max={100}
-          step={1}
-          value={0}
-        />
-      </div>
+      <input
+        className="VolumeSlider-slider"
+        type="range"
+        min={0}
+        max={100}
+        step={1}
+        value={0}
+      />
     </div>
   );
 }
