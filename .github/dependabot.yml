@@ -8,7 +8,7 @@ updates:
   commit-message:
     prefix: "ci"
 - package-ecosystem: npm
-  directory: "/"
+  directories: ["/", "/npm"]
   schedule:
     interval: weekly
   open-pull-requests-limit: 10
