@@ -1,7 +1,7 @@
 import type { MarkupNode, MentionNode } from 'u-wave-parse-chat-markup';
 import { userListSelector, type User } from '../reducers/users';
 import type { StoreState } from '../redux/configureStore';
-import * as groupMentions from './groupMentions';
+import groupMentions from './groupMentions';
 
 export { groupMentions };
 

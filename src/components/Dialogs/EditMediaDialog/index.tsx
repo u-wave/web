@@ -230,6 +230,7 @@ function EditMediaDialog({
       {errors && errors.length > 0 && (
         <FormGroup>
           {errors.map((error) => (
+            // eslint-disable-next-line react/jsx-key
             <div>{t(`dialogs.editMedia.errors.${error}`)}</div>
           ))}
 

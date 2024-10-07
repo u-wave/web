@@ -2,13 +2,13 @@ import { userListSelector, userHasRoleSelector } from '../reducers/users';
 import { djAndWaitlistUsersSelector } from '../reducers/waitlist';
 import type { StoreState } from '../redux/configureStore';
 
-export const everyone = userListSelector;
+const everyone = userListSelector;
 
 // plug.dj-like.
-export const djs = djAndWaitlistUsersSelector;
-export const waitlist = djs;
+const djs = djAndWaitlistUsersSelector;
+const waitlist = djs;
 
-export function staff(state: StoreState) {
+function staff(state: StoreState) {
   const users = userListSelector(state);
   return users.filter((user) => {
     // TODO should this maybe not hardcode the 'moderator' role? How to do it
@@ -16,3 +16,10 @@ export function staff(state: StoreState) {
     return userHasRoleSelector(state, user, 'moderator');
   });
 }
+
+export default {
+  everyone,
+  djs,
+  waitlist,
+  staff,
+};
