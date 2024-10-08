@@ -1,4 +1,14 @@
-'use strict';
+import js from '@eslint/js';
+import ts from 'typescript-eslint';
+import react from 'eslint-plugin-react';
+import reactHooks from 'eslint-plugin-react-hooks';
+import reactCompiler from 'eslint-plugin-react-compiler';
+import jsxA11y from 'eslint-plugin-jsx-a11y';
+import compat from 'eslint-plugin-compat';
+import importPlugin from 'eslint-plugin-import';
+import vitest from 'eslint-plugin-vitest';
+import jestDom from 'eslint-plugin-jest-dom';
+import testingLibrary from 'eslint-plugin-testing-library';
 
 // Mostly based on eslint-config-airbnb.
 // TODO(@goto-bus-stop): perhaps replace by prettier :shrug:
@@ -369,7 +379,7 @@ const styleRules = {
   // disallow dangling underscores in identifiers
   // https://eslint.org/docs/rules/no-underscore-dangle
   'no-underscore-dangle': ['error', {
-    allow: [],
+    allow: ['_id'],
     allowAfterThis: false,
     allowAfterSuper: false,
     enforceInMethodNames: true,
@@ -525,137 +535,154 @@ const styleRules = {
   'wrap-regex': 'off'
 };
 
-module.exports = {
-  extends: [
-    'eslint:recommended',
-    'plugin:import/recommended',
-    'plugin:import/typescript',
-    'plugin:react/recommended',
-    'plugin:react-hooks/recommended',
-    'plugin:jsx-a11y/recommended',
-  ],
+export default [
+  { ignores: ['coverage/**', 'npm/public/**'] },
 
-  plugins: [
-    'eslint-plugin-compat',
-    'eslint-plugin-import',
-    'eslint-plugin-react',
-    'eslint-plugin-react-compiler',
-    'eslint-plugin-react-hooks',
-    'eslint-plugin-jsx-a11y',
-  ],
-  parserOptions: {
-    ecmaVersion: 2022,
-    sourceType: 'module',
-    ecmaFeatures: {
-      jsx: true,
-    },
-  },
+  js.configs.recommended,
+  react.configs.flat.recommended,
+  react.configs.flat['jsx-runtime'],
+  jsxA11y.flatConfigs.recommended,
+  importPlugin.flatConfigs.recommended,
+  importPlugin.flatConfigs.typescript,
+  compat.configs['flat/recommended'],
 
-  env: {
-    es6: true,
-  },
-  globals: {
-    process: 'readonly',
-  },
-
-  rules: {
-    ...styleRules,
-    'arrow-body-style': 'off',
-    'no-underscore-dangle': ['error', { allow: ['_id'] }],
-
-    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
-    'import/extensions': ['error', 'ignorePackages', {
-      js: 'never',
-      mjs: 'never',
-      jsx: 'never',
-      ts: 'never',
-      tsx: 'never',
-    }],
-    // Not sure what this is doing internally but it's not doing the right thing
-    'react/no-is-mounted': 'off',
-    // Not true anymore
-    'react/react-in-jsx-scope': 'off',
-    // Nobody cares
-    'react/display-name': 'off',
-    // 'react/no-unused-prop-types': ['error', { skipShapeProps: true }],
-    // 'react/forbid-prop-types': 'off',
-    // 'react/jsx-props-no-spreading': 'off',
-    'react/require-default-props': 'off',
-    'react/static-property-placement': 'off',
-    'react/jsx-one-expression-per-line': 'off',
-    'react/function-component-definition': ['off', {
-      namedComponents: 'function-declaration',
-      unnamedComponents: 'arrow-function',
-    }],
-    'react/jsx-filename-extension': ['error', { extensions: ['.jsx', '.tsx'] }],
-    // Not following this at the moment
-    'jsx-a11y/no-autofocus': 'warn',
-    'react-compiler/react-compiler': 'warn',
-  },
-
-  settings: {
-    polyfills: [
-      'Array.from',
-      'Number.isFinite',
-      'Number.isNaN',
-      'Object.assign',
-      'Object.is',
-      'Object.values',
-      'Promise',
-      'AbortController',
-      'fetch',
-      'Headers',
-      'URL',
-      'CSS.escape',
-    ],
-    'import/core-modules': [
-      'virtual:emoji-shortcodes',
-    ],
-  },
-
-  overrides: [
-    {
-      files: ['**/*.{ts,tsx}'],
-      parser: '@typescript-eslint/parser',
-      plugins: ['@typescript-eslint'],
-      extends: ['plugin:@typescript-eslint/recommended'],
-    },
-
-    {
-      files: ['src/reducers/*'],
-      rules: {
-        // Reducers use default params differently
-        'default-param-last': 'off',
-        'no-param-reassign': ['error', {
-          props: true,
-          ignorePropertyModificationsFor: ['state'],
-        }],
-      },
-    },
-
-    {
-      files: ['src/**/*.{js,jsx}'],
-      rules: {
-        'compat/compat': 'error',
-      },
-    },
-    {
-      files: ['tasks/**/*.{js,jsx}', '*.config.js', '.eslintrc.js', 'test/*.js'],
+  {
+    files: ['**/*.{mjs,js,ts,mts,jsx,tsx}'],
+    languageOptions: {
       parserOptions: {
-        sourceType: 'script',
-      },
-      rules: {
-        strict: ['error', 'global'],
-        'no-console': 'off',
+        sourceType: 'module',
       },
     },
-    {
-      files: ['**/__tests__/**/*.{js,jsx}'],
-      plugins: ['eslint-plugin-vitest', 'eslint-plugin-jest-dom', 'eslint-plugin-testing-library'],
-      extends: ['plugin:vitest/recommended', 'plugin:jest-dom/recommended', 'plugin:testing-library/react'],
-      env: {
-        jest: true,
+  },
+  {
+    files: ['**/*.{jsx,tsx}'],
+    languageOptions: {
+      parserOptions: {
+        ecmaFeatures: {
+          jsx: true,
+        },
       },
     },
-  ],
-};
+  },
+
+  {
+    files: ['**/*.{mjs,cjs,js,ts,mts,cts,jsx,tsx}'],
+
+    languageOptions: {
+      parserOptions: {
+        ecmaVersion: 2022,
+      },
+
+      globals: {
+        process: 'readonly',
+      },
+    },
+
+    rules: {
+      'arrow-body-style': 'off',
+      'no-underscore-dangle': ['error', { allow: ['_id'] }],
+
+      'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+      'import/extensions': ['error', 'ignorePackages', {
+        js: 'never',
+        mjs: 'never',
+        jsx: 'never',
+        ts: 'never',
+        tsx: 'never',
+      }],
+      // Not sure what this is doing internally but it's not doing the right thing
+      'react/no-is-mounted': 'off',
+      // Not true anymore
+      'react/react-in-jsx-scope': 'off',
+      // Nobody cares
+      'react/display-name': 'off',
+      // 'react/no-unused-prop-types': ['error', { skipShapeProps: true }],
+      // 'react/forbid-prop-types': 'off',
+      // 'react/jsx-props-no-spreading': 'off',
+      'react/require-default-props': 'off',
+      'react/static-property-placement': 'off',
+      'react/jsx-one-expression-per-line': 'off',
+      'react/function-component-definition': ['off', {
+        namedComponents: 'function-declaration',
+        unnamedComponents: 'arrow-function',
+      }],
+      'react/jsx-filename-extension': ['error', { extensions: ['.jsx', '.tsx'] }],
+      // Not following this at the moment
+      'jsx-a11y/no-autofocus': 'warn',
+      'react-compiler/react-compiler': 'warn',
+    },
+
+    settings: {
+      polyfills: [
+        'Array.from',
+        'Number.isFinite',
+        'Number.isNaN',
+        'Object.assign',
+        'Object.is',
+        'Object.values',
+        'Promise',
+        'AbortController',
+        'fetch',
+        'Headers',
+        'URL',
+        'CSS.escape',
+      ],
+      'import/core-modules': [
+        'virtual:emoji-shortcodes',
+      ],
+    },
+  },
+
+  { rules: styleRules },
+
+  {
+    plugins: {
+      'react-hooks': reactHooks,
+      'react-compiler': reactCompiler,
+    },
+    rules: {
+      'react-hooks/rules-of-hooks': 'error',
+      'react-hooks/exhaustive-deps': 'error',
+      'react-compiler/react-compiler': 'warn',
+    },
+  },
+
+  ts.configs.eslintRecommended,
+  ...ts.configs.recommended,
+
+  {
+    files: ['src/reducers/*'],
+    rules: {
+      // Reducers use default params differently
+      'default-param-last': 'off',
+      'no-param-reassign': ['error', {
+        props: true,
+        ignorePropertyModificationsFor: ['state'],
+      }],
+    },
+  },
+
+  {
+    files: ['src/**/*.{mjs,cjs,js,ts,mts,cts,jsx,tsx}'],
+    rules: {
+      'compat/compat': 'error',
+    },
+  },
+
+  {
+    files: ['**/__tests__/**/*.{js,jsx}'],
+    plugins: {
+      vitest,
+      'jest-dom': jestDom,
+      'testing-library': testingLibrary,
+    },
+    languageOptions: {
+      globals: vitest.environments.env.globals,
+    },
+    rules: {
+      ...vitest.configs.recommended.rules,
+      ...jestDom.configs.recommended.rules,
+      // testingLibrary.configs['flat/react'].rules,
+    },
+  },
+];
