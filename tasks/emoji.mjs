@@ -13,8 +13,8 @@ const twemojiDir = new URL('../node_modules/twemoji-emojis/vendor/svg/', import.
  * Collect twemoji images, determine their shortcodes, build a map of shortcode to file names.
  *
  * Images are output in the build.
- * Joypixels shortcodes are used if available: this is for backwards compatibility. Emojibase shortcodes
- * are used for emoji that do not have a Joypixel shortcode.
+ * Joypixels shortcodes are used if available: this is for backwards compatibility. Emojibase
+ * shortcodes are used for emoji that do not have a Joypixel shortcode.
  * The mapping of shortcodes to file names can be imported by JS as `virtual:emoji-shortcodes`.
  */
 export default function emojiPlugin() {
@@ -69,17 +69,20 @@ export default function emojiPlugin() {
       if (this.meta.watchMode) {
         shortcodeToOutName = Object.entries(shortcodes);
       } else {
-        shortcodeToOutName = await pMap(Object.entries(shortcodes), async ([shortcode, filename]) => {
-          const bytes = await fs.readFile(new URL(filename, twemojiDir));
-          const hash = crypto.createHash('sha1').update(bytes).digest('hex').slice(0, 7);
-          const outName = `${hash}.svg`;
-          if (filesToEmit.has(outName)) {
-            assert(filesToEmit.get(outName).equals(bytes));
-          } else {
-            filesToEmit.set(outName, bytes);
-          }
-          return [shortcode, outName];
-        });
+        shortcodeToOutName = await pMap(
+          Object.entries(shortcodes),
+          async ([shortcode, filename]) => {
+            const bytes = await fs.readFile(new URL(filename, twemojiDir));
+            const hash = crypto.createHash('sha1').update(bytes).digest('hex').slice(0, 7);
+            const outName = `${hash}.svg`;
+            if (filesToEmit.has(outName)) {
+              assert(filesToEmit.get(outName).equals(bytes));
+            } else {
+              filesToEmit.set(outName, bytes);
+            }
+            return [shortcode, outName];
+          },
+        );
       }
     },
     async generateBundle() {
