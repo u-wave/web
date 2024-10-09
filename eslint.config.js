@@ -71,7 +71,7 @@ const styleRules = {
       ObjectPattern: false,
       VariableDeclaration: false,
       NewExpression: false,
-    }
+    },
   }],
 
   // disallow padding inside computed properties
@@ -135,14 +135,14 @@ const styleRules = {
     // MemberExpression: null,
     FunctionDeclaration: {
       parameters: 1,
-      body: 1
+      body: 1,
     },
     FunctionExpression: {
       parameters: 1,
-      body: 1
+      body: 1,
     },
     CallExpression: {
-      arguments: 1
+      arguments: 1,
     },
     ArrayExpression: 1,
     ObjectExpression: 1,
@@ -150,7 +150,7 @@ const styleRules = {
     flatTernaryExpressions: false,
     // list derived from https://github.com/benjamn/ast-types/blob/HEAD/def/jsx.js
     ignoredNodes: ['JSXElement', 'JSXElement > *', 'JSXAttribute', 'JSXIdentifier', 'JSXNamespacedName', 'JSXMemberExpression', 'JSXSpreadAttribute', 'JSXExpressionContainer', 'JSXOpeningElement', 'JSXClosingElement', 'JSXFragment', 'JSXOpeningFragment', 'JSXClosingFragment', 'JSXText', 'JSXEmptyExpression', 'JSXSpreadChild'],
-    ignoreComments: false
+    ignoreComments: false,
   }],
 
   // specify whether double or single quotes should be used in JSX attributes
@@ -167,8 +167,8 @@ const styleRules = {
     overrides: {
       return: { after: true },
       throw: { after: true },
-      case: { after: true }
-    }
+      case: { after: true },
+    },
   }],
 
   // enforce position of line comments
@@ -223,7 +223,7 @@ const styleRules = {
   'max-lines': ['off', {
     max: 300,
     skipBlankLines: true,
-    skipComments: true
+    skipComments: true,
   }],
 
   // enforce a maximum function length
@@ -314,7 +314,7 @@ const styleRules = {
       ['==', '!=', '===', '!=='],
       ['&&', '||'],
     ],
-    allowSamePrecedence: false
+    allowSamePrecedence: false,
   }],
 
   // disallow mixed spaces and tabs for indentation
@@ -437,8 +437,8 @@ const styleRules = {
     classes: 'never',
     switches: 'never',
   }, {
-      allowSingleLineBlocks: true,
-    }],
+    allowSingleLineBlocks: true,
+  }],
 
   // Require or disallow padding lines between statements
   // https://eslint.org/docs/rules/padding-line-between-statements
@@ -487,7 +487,7 @@ const styleRules = {
   'space-before-function-paren': ['error', {
     anonymous: 'always',
     named: 'never',
-    asyncArrow: 'always'
+    asyncArrow: 'always',
   }],
 
   // require or disallow spaces inside parentheses
@@ -516,7 +516,7 @@ const styleRules = {
       exceptions: ['-', '+'],
       markers: ['=', '!', ':', '::'], // space here to support sprockets directives and flow comment types
       balanced: true,
-    }
+    },
   }],
 
   // Enforce spacing around colons of switch statements
@@ -532,7 +532,7 @@ const styleRules = {
   'unicode-bom': ['error', 'never'],
 
   // require regex literals to be wrapped in parentheses
-  'wrap-regex': 'off'
+  'wrap-regex': 'off',
 };
 
 export default [

@@ -17,16 +17,16 @@ const twemojiDir = new URL('../node_modules/twemoji-emojis/vendor/svg/', import.
  * are used for emoji that do not have a Joypixel shortcode.
  * The mapping of shortcodes to file names can be imported by JS as `virtual:emoji-shortcodes`.
  */
-export default function emojiPlugin () {
+export default function emojiPlugin() {
   let shortcodeToOutName;
   const filesToEmit = new Map();
 
   return {
     name: 'emoji',
-    async configureServer (server) {
+    async configureServer(server) {
       server.middlewares.use('/static/emoji', serveStatic(fileURLToPath(twemojiDir)));
     },
-    async buildStart () {
+    async buildStart() {
       const emojibaseShortcodes = JSON.parse(await fs.readFile(emojibaseShortcodesPath, { encoding: 'utf8' }));
       const joypixelShortcodes = JSON.parse(await fs.readFile(joypixelShortcodesPath, { encoding: 'utf8' }));
 
@@ -35,7 +35,7 @@ export default function emojiPlugin () {
 
       const shortcodes = {};
       function appendShortcode(hex, shortcode) {
-        const imageName = `${hex.toLowerCase()}.svg`
+        const imageName = `${hex.toLowerCase()}.svg`;
         if (Array.isArray(shortcode)) {
           for (const c of shortcode) {
             shortcodes[c] = imageName;
@@ -82,7 +82,7 @@ export default function emojiPlugin () {
         });
       }
     },
-    async generateBundle () {
+    async generateBundle() {
       for (const [outName, bytes] of filesToEmit) {
         this.emitFile({
           type: 'asset',
@@ -91,17 +91,17 @@ export default function emojiPlugin () {
         });
       }
     },
-    async resolveId (id) {
+    async resolveId(id) {
       if (id === 'virtual:emoji-shortcodes') {
-        return '\0virtual:emoji-shortcodes'
+        return '\0virtual:emoji-shortcodes';
       }
     },
-    async load (id) {
+    async load(id) {
       if (id === '\0virtual:emoji-shortcodes') {
         return `export default JSON.parse(${
           JSON.stringify(JSON.stringify(Object.fromEntries(shortcodeToOutName)))
         })`;
       }
     },
-  }
+  };
 }
