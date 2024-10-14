@@ -1,4 +1,6 @@
 import js from '@eslint/js';
+// FIXME: not sure why this happens
+// eslint-disable-next-line import/no-unresolved
 import ts from 'typescript-eslint';
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';

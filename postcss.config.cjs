@@ -1,5 +1,6 @@
 'use strict';
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const presetEnv = require('postcss-preset-env');
 
 const preset = presetEnv({
