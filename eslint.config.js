@@ -9,6 +9,7 @@ import importPlugin from 'eslint-plugin-import';
 import vitest from 'eslint-plugin-vitest';
 import jestDom from 'eslint-plugin-jest-dom';
 import testingLibrary from 'eslint-plugin-testing-library';
+import globals from 'globals';
 
 // Mostly based on eslint-config-airbnb.
 // TODO(@goto-bus-stop): perhaps replace by prettier :shrug:
@@ -615,6 +616,14 @@ export default [
         'URL',
         'CSS.escape',
       ],
+    },
+  },
+
+  {
+    files: ['**/*.{cjs,cts}'],
+    languageOptions: {
+      sourceType: 'script',
+      globals: globals.commonjs,
     },
   },
 
