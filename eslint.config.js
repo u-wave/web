@@ -578,14 +578,6 @@ export default [
       'arrow-body-style': 'off',
       'no-underscore-dangle': ['error', { allow: ['_id'] }],
 
-      'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
-      'import/extensions': ['error', 'ignorePackages', {
-        js: 'never',
-        mjs: 'never',
-        jsx: 'never',
-        ts: 'never',
-        tsx: 'never',
-      }],
       // Not sure what this is doing internally but it's not doing the right thing
       'react/no-is-mounted': 'off',
       // Not true anymore
@@ -623,6 +615,22 @@ export default [
         'URL',
         'CSS.escape',
       ],
+    },
+  },
+
+  {
+    files: ['src/**/*.{mjs,cjs,js,ts,mts,cts,jsx,tsx}'],
+    rules: {
+      'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+      'import/extensions': ['error', 'ignorePackages', {
+        js: 'never',
+        mjs: 'never',
+        jsx: 'never',
+        ts: 'never',
+        tsx: 'never',
+      }],
+    },
+    settings: {
       'import/core-modules': [
         'virtual:emoji-shortcodes',
       ],
