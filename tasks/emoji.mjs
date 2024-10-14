@@ -13,20 +13,20 @@ const twemojiDir = new URL('../node_modules/twemoji-emojis/vendor/svg/', import.
  * Collect twemoji images, determine their shortcodes, build a map of shortcode to file names.
  *
  * Images are output in the build.
- * Joypixels shortcodes are used if available: this is for backwards compatibility. Emojibase shortcodes
- * are used for emoji that do not have a Joypixel shortcode.
+ * Joypixels shortcodes are used if available: this is for backwards compatibility. Emojibase
+ * shortcodes are used for emoji that do not have a Joypixel shortcode.
  * The mapping of shortcodes to file names can be imported by JS as `virtual:emoji-shortcodes`.
  */
-export default function emojiPlugin () {
+export default function emojiPlugin() {
   let shortcodeToOutName;
   const filesToEmit = new Map();
 
   return {
     name: 'emoji',
-    async configureServer (server) {
+    async configureServer(server) {
       server.middlewares.use('/static/emoji', serveStatic(fileURLToPath(twemojiDir)));
     },
-    async buildStart () {
+    async buildStart() {
       const emojibaseShortcodes = JSON.parse(await fs.readFile(emojibaseShortcodesPath, { encoding: 'utf8' }));
       const joypixelShortcodes = JSON.parse(await fs.readFile(joypixelShortcodesPath, { encoding: 'utf8' }));
 
@@ -35,7 +35,7 @@ export default function emojiPlugin () {
 
       const shortcodes = {};
       function appendShortcode(hex, shortcode) {
-        const imageName = `${hex.toLowerCase()}.svg`
+        const imageName = `${hex.toLowerCase()}.svg`;
         if (Array.isArray(shortcode)) {
           for (const c of shortcode) {
             shortcodes[c] = imageName;
@@ -69,20 +69,23 @@ export default function emojiPlugin () {
       if (this.meta.watchMode) {
         shortcodeToOutName = Object.entries(shortcodes);
       } else {
-        shortcodeToOutName = await pMap(Object.entries(shortcodes), async ([shortcode, filename]) => {
-          const bytes = await fs.readFile(new URL(filename, twemojiDir));
-          const hash = crypto.createHash('sha1').update(bytes).digest('hex').slice(0, 7);
-          const outName = `${hash}.svg`;
-          if (filesToEmit.has(outName)) {
-            assert(filesToEmit.get(outName).equals(bytes));
-          } else {
-            filesToEmit.set(outName, bytes);
-          }
-          return [shortcode, outName];
-        });
+        shortcodeToOutName = await pMap(
+          Object.entries(shortcodes),
+          async ([shortcode, filename]) => {
+            const bytes = await fs.readFile(new URL(filename, twemojiDir));
+            const hash = crypto.createHash('sha1').update(bytes).digest('hex').slice(0, 7);
+            const outName = `${hash}.svg`;
+            if (filesToEmit.has(outName)) {
+              assert(filesToEmit.get(outName).equals(bytes));
+            } else {
+              filesToEmit.set(outName, bytes);
+            }
+            return [shortcode, outName];
+          },
+        );
       }
     },
-    async generateBundle () {
+    async generateBundle() {
       for (const [outName, bytes] of filesToEmit) {
         this.emitFile({
           type: 'asset',
@@ -91,17 +94,17 @@ export default function emojiPlugin () {
         });
       }
     },
-    async resolveId (id) {
+    async resolveId(id) {
       if (id === 'virtual:emoji-shortcodes') {
-        return '\0virtual:emoji-shortcodes'
+        return '\0virtual:emoji-shortcodes';
       }
     },
-    async load (id) {
+    async load(id) {
       if (id === '\0virtual:emoji-shortcodes') {
         return `export default JSON.parse(${
           JSON.stringify(JSON.stringify(Object.fromEntries(shortcodeToOutName)))
         })`;
       }
     },
-  }
+  };
 }

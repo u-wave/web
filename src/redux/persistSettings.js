@@ -5,7 +5,7 @@ const SETTINGS_KEY = 'uwaveSettings';
 const attempt = (fn) => {
   try {
     return fn();
-  } catch (e) {
+  } catch {
     return undefined;
   }
 };

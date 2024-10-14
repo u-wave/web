@@ -1,5 +1,4 @@
 import { readFileSync } from 'node:fs';
-import React from 'react';
 import Markdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 
