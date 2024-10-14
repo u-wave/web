@@ -15,14 +15,6 @@ updates:
   commit-message:
     prefix: "deps"
   groups:
-    vite:
-      patterns:
-      - "@vitejs/*"
-      - "vite"
-    vitest:
-      patterns:
-      - "@vitest/*"
-      - "vitest"
     react:
       patterns:
       - "react"
@@ -44,6 +36,10 @@ updates:
       - "react-markdown"
       - "remark-*"
       - "rehype-*"
+    pragmatic-dnd:
+      patterns:
+      - "@atlaskit/pragmatic-drag-and-drop"
+      - "@atlaskit/pragmatic-drag-and-drop-*"
     babel:
       patterns:
       - "@babel/*"
@@ -52,12 +48,17 @@ updates:
       - "eslint"
       - "eslint-plugin-*"
       - "eslint-config-*"
+      - "@vitest/eslint-plugin"
       - "@typescript-eslint/*"
     stylelint:
       patterns:
       - "stylelint"
       - "stylelint-config-*"
-    pragmatic-dnd:
+    vite:
       patterns:
-      - "@atlaskit/pragmatic-drag-and-drop"
-      - "@atlaskit/pragmatic-drag-and-drop-*"
+      - "@vitejs/*"
+      - "vite"
+    vitest:
+      patterns:
+      - "@vitest/*"
+      - "vitest"
