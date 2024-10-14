@@ -4,7 +4,7 @@ import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import getPort from 'get-port';
-import theme from '../src/theme.js';
+import theme from '../src/theme.ts';
 
 const require = createRequire(import.meta.url);
 
