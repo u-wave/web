@@ -43,7 +43,13 @@ export default defineConfig({
     },
   },
   plugins: [
-    react(),
+    react({
+      babel: {
+        plugins: [
+          ['react-compiler', { target: '18' }],
+        ],
+      },
+    }),
     yaml(),
     prerender({ file: 'index.html', source: 'src/index.tsx' }),
     prerender({ file: 'password-reset.html', source: 'src/password-reset/index.tsx' }),
