@@ -17,7 +17,7 @@
     "@mui/system": "^6.1.0",
     "@mui/utils": "^6.1.0",
     "@openfonts/open-sans_all": "^1.44.2",
-    "@reduxjs/toolkit": "^2.2.3",
+    "@reduxjs/toolkit": "^2.3.0",
     "@tanstack/react-virtual": "^3.10.8",
     "@u-wave/react-translate": "^2.0.2",
     "@u-wave/react-youtube": "^1.0.0-alpha.3",
