@@ -8,7 +8,7 @@ import reactCompiler from 'eslint-plugin-react-compiler';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
 import compat from 'eslint-plugin-compat';
 import importPlugin from 'eslint-plugin-import';
-import vitest from 'eslint-plugin-vitest';
+import vitest from '@vitest/eslint-plugin';
 import jestDom from 'eslint-plugin-jest-dom';
 import testingLibrary from 'eslint-plugin-testing-library';
 import globals from 'globals';
