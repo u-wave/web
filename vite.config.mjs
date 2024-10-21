@@ -16,6 +16,10 @@ export default defineConfig({
     outDir: 'npm/public/',
     assetsDir: 'static',
     manifest: true,
+    cssMinify: 'lightningcss',
+  },
+  css: {
+    transformer: 'lightningcss',
   },
   ssr: {
     noExternal: [
