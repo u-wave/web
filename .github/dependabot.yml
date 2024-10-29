@@ -44,6 +44,11 @@ updates:
       - "react-markdown"
       - "remark-*"
       - "rehype-*"
+    react-compiler:
+      patterns:
+      - "react-compiler-runtime"
+      - "babel-plugin-react-compiler"
+      - "eslint-plugin-react-compiler"
     babel:
       patterns:
       - "@babel/*"
