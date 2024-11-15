@@ -26,12 +26,22 @@ function getStartTime(url: URL) {
   return seconds;
 }
 
+const SHORT_HOSTNAMES = new Set([
+  'youtu.be',
+  'www.youtu.be',
+]);
+const LONG_HOSTNAMES = new Set([
+  'youtube.com',
+  'www.youtube.com',
+  'music.youtube.com',
+]);
+
 function fromMediaUrl(url: URL) {
   let sourceID;
-  if (url.hostname === 'youtu.be' || url.hostname === 'www.youtu.be') {
+  if (SHORT_HOSTNAMES.has(url.hostname)) {
     sourceID = url.pathname;
   }
-  if ((url.hostname === 'youtube.com' || url.hostname === 'www.youtube.com') && url.pathname === '/watch') {
+  if (LONG_HOSTNAMES.has(url.hostname) && url.pathname === '/watch') {
     sourceID = url.searchParams.get('v');
   }
 
