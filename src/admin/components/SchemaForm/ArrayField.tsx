@@ -37,7 +37,6 @@ function ArrayField({ schema, value, onChange }: ArrayFieldProps) {
     <>
       <Typography gutterBottom>{schema.title}</Typography>
       {value.map((subValue, index) => (
-        // eslint-disable-next-line react/no-array-index-key
         <div key={index} className="ArrayFieldElement">
           <Field
             className="ArrayFieldElement-field"

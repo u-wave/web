@@ -13,7 +13,7 @@ import SvgIcon from '../../SvgIcon';
 import SocialLogin from './SocialLogin';
 
 export type LoginFormProps = {
-  show: 'login', // eslint-disable-line react/no-unused-prop-types
+  show: 'login',
   supportsSocialAuth: boolean,
   onCloseDialog: () => void,
   onLogin: (credentials: { email: string, password: string }) => Promise<{ error?: boolean }>,

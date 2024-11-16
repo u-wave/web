@@ -11,7 +11,7 @@ import SvgIcon from '../../SvgIcon';
 import Button from '../../Form/Button';
 
 export type ResetPasswordFormProps = {
-  show: 'reset', // eslint-disable-line react/no-unused-prop-types
+  show: 'reset',
   onResetPassword: (credentials: { email: string }) => Promise<void>,
   onCloseDialog: () => void,
 };

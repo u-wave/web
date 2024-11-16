@@ -337,7 +337,6 @@ const addPlaylistItems = createAsyncThunk('playlists/addPlaylistItems', async ({
   // If there's no playlist items, we should not have a `target.before` in normal operation,
   // so providing an empty list is fine. If we do get an empty list, this will at least do
   // *something* and not crash, even if it's a bit wrong.
-  /* eslint-disable-next-line no-use-before-define */
   const existingItems = playlistItemsSelector(api.getState(), playlistID) ?? [];
   const payload = {
     items: items.map(minimizePlaylistItem),
@@ -573,7 +572,6 @@ const slice = createSlice({
         const items = state.playlistItems[meta.arg] ?? [];
         if (items.length > 0) {
           const newItems = items.slice(1);
-          // eslint-disable-next-line prefer-destructuring
           newItems[playlist.size - 1] = items[0] ?? null;
           state.playlistItems[meta.arg] = newItems;
         }

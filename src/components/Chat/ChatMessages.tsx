@@ -37,7 +37,6 @@ function useScrolledToBottom(ref: React.RefObject<HTMLElement>, initialValue = t
 }
 
 function scrollToBottom(el: HTMLElement) {
-  // eslint-disable-next-line no-param-reassign
   el.scrollTop = el.scrollHeight;
 }
 

@@ -13,7 +13,6 @@ export interface Command {
   name: string,
   description?: string,
   guard?: (state: StoreState) => boolean,
-  // eslint-disable-next-line no-use-before-define
   action: (commander: ChatCommands, ...args: string[]) => Action | Thunk<unknown>,
 }
 

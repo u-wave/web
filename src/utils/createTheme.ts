@@ -24,7 +24,7 @@ declare module '@mui/material/styles' {
     mutedText: string,
   }
 
-  interface ThemeOptions { // eslint-disable-line no-shadow
+  interface ThemeOptions {
     uwave: UwaveThemeOptions,
   }
   interface Theme {

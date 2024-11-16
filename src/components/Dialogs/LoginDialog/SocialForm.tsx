@@ -54,11 +54,11 @@ function AvatarList({ avatars, selected, onChange }: AvatarListProps) {
 }
 
 export type SocialFormProps = {
-  show: 'social', // eslint-disable-line react/no-unused-prop-types
+  show: 'social',
   service: string,
   avatars: Record<string, string>,
   suggestedName?: string,
-  onCloseDialog: () => void, // eslint-disable-line react/no-unused-prop-types
+  onCloseDialog: () => void,
   onSocialFinish: (data: {
     service: string,
     params: { avatar: string, username: string }

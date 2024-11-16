@@ -41,7 +41,7 @@ function Field({
     return <p style={errstyle}>Unsupported type</p>;
   }
 
-  const Control = controls.get(controlName); // eslint-disable-line react/destructuring-assignment
+  const Control = controls.get(controlName);
   if (Control) {
     return (
       <Control

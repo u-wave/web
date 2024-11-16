@@ -103,7 +103,7 @@ function renderSections(
       key={key}
       schema={schema as JSONSchema7}
       defaultValue={allValues[key] as JSONSchema7Object}
-      onSave={onSave.bind(null, key)} // eslint-disable-line react/jsx-no-bind
+      onSave={onSave.bind(null, key)}
     />
   ));
 }

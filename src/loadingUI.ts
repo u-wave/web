@@ -6,7 +6,6 @@ import type Uwave from './Uwave';
 
 function setLoadingText(text: string) {
   Array.from(document.querySelectorAll('.LoadingIndicator-notice')).forEach((notice) => {
-    // eslint-disable-next-line no-param-reassign
     notice.textContent = text;
   });
 }
@@ -30,11 +29,9 @@ export default async function load(uw: Uwave) {
   } catch (err) {
     setLoadingText(`Error: ${err instanceof Error ? err.message : err}`);
     Array.from(document.querySelectorAll('.LoadingIndicator-loader')).forEach((el) => {
-      // eslint-disable-next-line no-param-reassign
       (el as HTMLDivElement).hidden = true;
     });
     Array.from(document.querySelectorAll('.LoadingIndicator-warning')).forEach((el) => {
-      // eslint-disable-next-line no-param-reassign
       (el as HTMLDivElement).hidden = false;
     });
     throw err;
