@@ -43,6 +43,7 @@ Select.propTypes = {
   className: PropTypes.string,
   tabIndex: PropTypes.number,
   classes: PropTypes.object,
+  onChange: PropTypes.func,
 };
 
 export default Select;
