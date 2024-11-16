@@ -14,6 +14,7 @@ function Select({
   className,
   classes,
   tabIndex,
+  onChange,
   ...props
 }) {
   return (
@@ -24,6 +25,7 @@ function Select({
       inputComponent={SelectInput}
       {...props}
       inputProps={{
+        onChange,
         children,
         IconComponent: SvgIcon,
         iconProps: { path: mdiMenuDown },
