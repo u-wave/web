@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import formatDuration from 'format-duration';
 import { useTranslator } from '@u-wave/react-translate';
 import MenuItem from '@mui/material/MenuItem';
+import type { SelectChangeEvent } from '@mui/material';
 import Select from '../../Form/Select';
 
 type Chapter = {
@@ -26,8 +27,8 @@ function Chapters({
   onChange,
 }: ChaptersProps) {
   const { t } = useTranslator();
-  const handleChange = (event: React.FormEvent<{ value: number }>) => {
-    const newIndex = event.currentTarget.value;
+  const handleChange = (event: SelectChangeEvent<number>) => {
+    const newIndex = Number(event.target.value);
     if (available[newIndex] != null) {
       onChange(available[newIndex]);
     }
