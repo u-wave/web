@@ -175,7 +175,6 @@ function EditMediaDialog({
   );
 
   const fromLabel = (
-    // eslint-disable-next-line jsx-a11y/label-has-for
     <label htmlFor={startFieldId} className="EditMediaDialogGroup-label">
       {t('dialogs.editMedia.playFromLabel')}
     </label>
@@ -192,7 +191,6 @@ function EditMediaDialog({
     />
   );
   const toLabel = (
-    // eslint-disable-next-line jsx-a11y/label-has-for
     <label htmlFor={endFieldId} className="EditMediaDialogGroup-label">
       {t('dialogs.editMedia.playToLabel')}
     </label>

@@ -16,7 +16,7 @@ import ReCaptcha from '../../ReCaptcha';
 import SocialLogin from './SocialLogin';
 
 export type RegisterFormProps = {
-  show: 'register', // eslint-disable-line react/no-unused-prop-types
+  show: 'register',
   reCaptchaSiteKey?: string,
   supportsSocialAuth: boolean,
   onCloseDialog: () => void,

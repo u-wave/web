@@ -6,7 +6,6 @@ function supportsBlur() {
   }
 
   return (
-    // eslint-disable-next-line compat/compat
     CSS.supports('filter', 'blur(1em)') || CSS.supports('-webkit-filter', 'blur(1em)')
   );
 }

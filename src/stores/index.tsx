@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import { MediaSearchStoreProvider } from './MediaSearchStore';
 
 type AllStoresProvider = {

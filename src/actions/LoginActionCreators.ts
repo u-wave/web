@@ -54,7 +54,6 @@ function socialLogin(service: string): Thunk<Promise<void>> {
     window.addEventListener('message', (event) => {
       const { data, origin } = event;
       if (apiOrigin !== origin) {
-        // eslint-disable-next-line no-console
         console.warn('Incorrect origin, discarding', apiUrl, origin, data);
         return;
       }

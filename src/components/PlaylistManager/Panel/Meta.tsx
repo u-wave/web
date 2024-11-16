@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/label-has-for */
 import cx from 'clsx';
 import { useId } from 'react';
 import { useTranslator } from '@u-wave/react-translate';

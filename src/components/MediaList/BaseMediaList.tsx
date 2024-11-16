@@ -42,7 +42,6 @@ export function useMediaListContext<T extends ContextType<Item> = ContextType<Me
  * previous one, and decide that the list is not really different.
  */
 function didMediaChange(prev: (Item | null)[], next: (Item | null)[]) {
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   return prev.some((item, i) => item && next[i] && item._id !== next[i]!._id);
 }
 

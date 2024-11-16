@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import cx from 'clsx';
 import { useAsyncCallback } from 'react-async-hook';
 import Dialog from '@mui/material/Dialog';

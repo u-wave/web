@@ -39,7 +39,6 @@ export function resolveMentions(tree: MarkupNode[], state: StoreState) {
       const groupSelector = node.mention in groupMentions
         ? groupMentions[node.mention as keyof typeof groupMentions]
         : null;
-      /* eslint-disable no-param-reassign */
       if (groupSelector != null) {
         const group = groupSelector(state).filter((user) => user != null);
         if (group.length > 0) {
@@ -51,7 +50,6 @@ export function resolveMentions(tree: MarkupNode[], state: StoreState) {
           tagWithUser(node, mentionedUser);
         }
       }
-      /* eslint-enable no-param-reassign */
     } else if ('content' in node) {
       resolveMentions(node.content, state);
     }

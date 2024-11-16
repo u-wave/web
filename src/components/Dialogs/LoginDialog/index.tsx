@@ -18,7 +18,7 @@ import HeightTransition from './HeightTransition';
 type LoginDialogProps = { open: boolean } & (
   RegisterFormProps | SocialFormProps | ResetPasswordFormProps | LoginFormProps
 );
-/* eslint-disable react/jsx-props-no-spreading */
+
 function LoginDialog(props: LoginDialogProps) {
   const { t } = useTranslator();
   const titleId = useId();
