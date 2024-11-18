@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.0-alpha.36 / 18 Nov 2024
+While this is an alpha release, new servers should use this rather than an older "stable" version.
+
+Features:
+ * Support dropping YouTube music links into a playlist. (#3116)
+
+Fixes:
+ * Fix selecting chapters in the media edit dialog. (#3117)
+
 ## 2.0.0-alpha.35 / 07 Oct 2024
 While this is an alpha release, new servers should use this rather than an older "stable" version.
 
