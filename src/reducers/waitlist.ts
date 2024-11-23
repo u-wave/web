@@ -25,7 +25,7 @@ export const joinWaitlist = createAsyncThunk('waitlist/join', async (_: void, ap
   }]);
 });
 
-export const leaveWaitlist = createAsyncThunk('waitlist/join', async (_: void, api) => {
+export const leaveWaitlist = createAsyncThunk('waitlist/leave', async (_: void, api) => {
   const userID = currentUserIDSelector(api.getState());
   await uwFetch<{ data: string[] }>([`/waitlist/${userID}`, { method: 'delete' }]);
 });
