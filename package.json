@@ -9,7 +9,7 @@
     "@atlaskit/pragmatic-drag-and-drop-hitbox": "^1.0.3",
     "@emotion/cache": "^11.6.0",
     "@emotion/core": "^11.0.0",
-    "@emotion/react": "^11.13.3",
+    "@emotion/react": "^11.13.5",
     "@emotion/styled": "^11.6.0",
     "@f/cookies-enabled": "^1.1.1",
     "@mdi/js": "^7.0.96",
