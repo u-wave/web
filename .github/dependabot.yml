@@ -59,6 +59,7 @@ updates:
       - "eslint-config-*"
       - "@eslint/*"
       - "@typescript-eslint/*"
+      - "typescript-eslint"
     stylelint:
       patterns:
       - "stylelint"
