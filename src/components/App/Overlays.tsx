@@ -2,7 +2,7 @@ import { AnimatePresence } from 'motion/react';
 
 type OverlaysProps = {
   children: React.ReactElement | React.ReactElement[],
-  active: string | null,
+  active: string | null | undefined,
 };
 function Overlays({ children, active }: OverlaysProps) {
   let view;
