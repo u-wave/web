@@ -11,8 +11,8 @@ import AddToPlaylistMenu from '../../../containers/AddToPlaylistMenu';
 import MainView from '../../containers/MainView';
 import About from '../../containers/About';
 import ServerList from '../../containers/ServerList';
+import Overlays from '../../components/App/Overlays';
 import { videoEnabledSelector } from '../../../reducers/settings';
-import Overlays from './Overlays';
 
 type MobileAppProps = {
   activeOverlay?: string | null,
