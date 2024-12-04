@@ -8,11 +8,11 @@ import RoomHistory from '../../containers/RoomHistory';
 import SettingsManager from '../../../containers/SettingsManager';
 import Dialogs from '../../../components/Dialogs';
 import AddToPlaylistMenu from '../../../containers/AddToPlaylistMenu';
+import Overlays from '../../../components/App/Overlays';
 import MainView from '../../containers/MainView';
 import About from '../../containers/About';
 import ServerList from '../../containers/ServerList';
 import { videoEnabledSelector } from '../../../reducers/settings';
-import Overlays from './Overlays';
 
 type MobileAppProps = {
   activeOverlay?: string | null,
