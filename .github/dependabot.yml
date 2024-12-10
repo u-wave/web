@@ -36,6 +36,9 @@ updates:
       - "react-redux"
       - "@reduxjs/*"
       - "reselect"
+    emotion:
+      patterns:
+      - "@emotion/*"
     mui:
       patterns:
       - "@mui/*"
