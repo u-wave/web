@@ -9,8 +9,8 @@ env:
   NODE_OPTIONS: '--unhandled-rejections=strict'
 
 jobs:
-  lint:
-    name: Code style
+  types:
+    name: TypeScript
     runs-on: ubuntu-latest
     steps:
       - name: Checkout sources
@@ -20,16 +20,29 @@ jobs:
         with:
           node-version: lts/*
       - name: Install dependencies
-        run: npm ci --verbose
+        run: npm ci
       - name: Check types
         run: npm run typecheck
+
+  lint:
+    name: Code style
+    runs-on: ubuntu-latest
+    needs: [test, types]
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v4
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+      - name: Install dependencies
+        run: npm ci
       - name: Check code style
         run: npm run lint
 
   test:
     name: Tests
     strategy:
-      fail-fast: false
       matrix:
         node-version: [18.x, 20.x, 22.x]
     runs-on: ubuntu-latest
@@ -42,7 +55,67 @@ jobs:
           node-version: ${{matrix.node-version}}
       - name: Install dependencies
         run: npm ci
-      - name: Build
-        run: npm run prod
       - name: Run tests
         run: npm run tests-only -- --coverage
+
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      security-events: write
+    needs: [test, types]
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [javascript]
+
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v4
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+      - name: Install dependencies
+        run: npm ci
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+
+  netlify:
+    name: Deploy demo
+    runs-on: ubuntu-latest
+    needs: [test, types]
+    permissions:
+      checks: write
+      statuses: write
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: lts/*
+    - name: Install dependencies
+      run: npm ci
+    - name: Build
+      run: npm run prod
+      env:
+        VITE_DEMO: 1
+    - name: Deploy to Netlify
+      uses: nwtgck/actions-netlify@v3.0
+      with:
+        publish-dir: './npm/public'
+        production-branch: 'default'
+        github-token: ${{secrets.GITHUB_TOKEN}}
+        deploy-message: "Deploy from GitHub Actions"
+        enable-pull-request-comment: false
+        enable-commit-comment: false
+      env:
+        NETLIFY_AUTH_TOKEN: ${{secrets.NETLIFY_AUTH_TOKEN}}
+        NETLIFY_SITE_ID: ${{secrets.NETLIFY_SITE_ID}}
+      timeout-minutes: 1
