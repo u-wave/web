@@ -83,7 +83,8 @@ function ChatMessages({
 
   // Accept externally controlled scrolling using the global event bus, so the chat input box
   // can tell us to scroll up or down.
-  const handleExternalScroll = useCallback((direction?: number | 'start' | 'end') => {
+  const handleExternalScroll = useCallback((arg: unknown) => {
+    const direction = arg as number | 'start' | 'end';
     const el = container.current;
     if (!el || direction == null) {
       return;
