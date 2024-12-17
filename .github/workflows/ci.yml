@@ -1,6 +1,10 @@
 name: CI
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [default]
+  pull_request:
+    branches: [default]
 
 permissions:
   contents: read
