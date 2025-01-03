@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import UserCard from '../components/UserCard';
 import type { User } from '../reducers/users';
 
-export default function useUserCard(user: User, refAnchor: React.RefObject<HTMLElement>) {
+export default function useUserCard(user: User, refAnchor: React.RefObject<HTMLElement | null>) {
   const [isOpen, setOpen] = useState(false);
   const [position, setPosition] = useState<{ x: number, y: number } | null>(null);
 

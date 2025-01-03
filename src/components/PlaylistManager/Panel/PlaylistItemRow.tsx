@@ -12,7 +12,7 @@ type PlaylistItemRowProps = {
   className?: string,
   // For virtual list positioning
   style?: React.CSSProperties,
-  containerRef?: React.RefObject<HTMLDivElement>,
+  containerRef?: React.RefObject<HTMLDivElement | null>,
   index: number,
   media: PlaylistItem,
   onClick: () => void,

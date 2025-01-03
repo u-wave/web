@@ -30,7 +30,7 @@ interface MediaRowBaseProps extends React.ComponentProps<'div'> {
   media: Media,
   children: React.ReactNode,
   onClick?: (event?: React.MouseEvent) => void,
-  containerRef?: React.RefObject<HTMLDivElement>,
+  containerRef?: React.RefObject<HTMLDivElement | null>,
 }
 function MediaRowBase({
   className,
