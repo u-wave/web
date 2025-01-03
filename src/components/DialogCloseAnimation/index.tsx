@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 type DialogCloseAnimationProps = {
-  children: React.ReactElement | null | false | undefined,
+  children: React.ReactElement<{ open: boolean }> | null | false | undefined,
   delay: number,
 };
 
 type DialogCloseAnimationState = {
-  cachedChildren: React.ReactElement | null,
+  cachedChildren: React.ReactElement<{ open: boolean }> | null,
 };
 
 /**
