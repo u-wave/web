@@ -66,7 +66,7 @@
     "react-bus": "^4.0.0",
     "react-dom": "^19.0.0",
     "react-google-button": "^0.8.0",
-    "react-markdown": "^9.0.1",
+    "react-markdown": "^9.0.3",
     "react-redux": "^9.2.0",
     "redux": "^5.0.1",
     "redux-thunk": "^3.1.0",
