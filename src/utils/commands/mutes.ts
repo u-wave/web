@@ -29,7 +29,7 @@ export default [
       }
       return dispatch(muteUser({
         userID: user._id,
-        duration: ms(`${duration}`),
+        duration: ms(`${duration}` as ms.StringValue),
       }));
     },
   },

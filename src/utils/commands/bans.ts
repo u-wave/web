@@ -25,7 +25,7 @@ export default [{
     const permanent = duration === 'perma';
     return dispatch(banUser({
       userID: user._id,
-      duration: permanent ? undefined : ms(`${duration}`),
+      duration: permanent ? undefined : ms(`${duration}` as ms.StringValue),
       permanent,
     }));
   },
