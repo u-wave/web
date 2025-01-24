@@ -118,7 +118,7 @@
     "lightningcss": "^1.28.1",
     "p-map": "^7.0.0",
     "stylelint": "^16.11.0",
-    "stylelint-config-standard": "^36.0.1",
+    "stylelint-config-standard": "^37.0.0",
     "twemoji-emojis": "^14.1.0",
     "type-fest": "^4.30.0",
     "typescript": "^5.7.2",
