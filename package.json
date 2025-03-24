@@ -63,7 +63,7 @@
     "react": "^19.0.0",
     "react-abstract-autocomplete": "^2.0.4",
     "react-async-hook": "^4.0.0",
-    "react-bus": "^4.0.0",
+    "react-bus": "^4.0.1",
     "react-dom": "^19.0.0",
     "react-google-button": "^0.8.0",
     "react-markdown": "^10.1.0",
