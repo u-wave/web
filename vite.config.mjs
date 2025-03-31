@@ -21,16 +21,6 @@ export default defineConfig({
   css: {
     transformer: 'lightningcss',
   },
-  ssr: {
-    noExternal: [
-      '@mui/base',
-      '@mui/icons-material',
-      '@mui/material',
-      '@mui/styled-engine',
-      '@mui/system',
-      '@mui/utils',
-    ],
-  },
   server: {
     port: 6041,
     allowedHosts: process.env.VITE_ALLOWED_HOST ? [process.env.VITE_ALLOWED_HOST] : undefined,
