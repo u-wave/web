@@ -2,8 +2,7 @@ import clsx from 'clsx';
 import formatDuration from 'format-duration';
 import { useTranslator } from '@u-wave/react-translate';
 import MenuItem from '@mui/material/MenuItem';
-import type { SelectChangeEvent } from '@mui/material';
-import Select from '../../Form/Select';
+import Select, { type SelectChangeEvent } from '@mui/material/Select';
 
 type Chapter = {
   start: number,

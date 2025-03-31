@@ -1,6 +1,6 @@
 import cx from 'clsx';
 import Typography from '@mui/material/Typography';
-import Card from '@mui/material/Card/Card';
+import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';

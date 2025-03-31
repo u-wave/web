@@ -1,5 +1,5 @@
 import { useTranslator } from '@u-wave/react-translate';
-import Card from '@mui/material/Card/Card';
+import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CircularProgress from '@mui/material/CircularProgress';
 
