@@ -4,11 +4,23 @@ import { readFile, writeFile } from 'node:fs/promises';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import yaml from '@rollup/plugin-yaml';
+import { pigment } from '@pigment-css/vite-plugin';
+import { createTheme } from '@mui/material';
 import emoji from './tasks/emoji.mjs';
 import prerender from './tasks/prerender.mjs';
 
 const inputPkg = new URL('./package.json', import.meta.url);
 const outputPkg = new URL('./npm/package.json', import.meta.url);
+
+/**
+ * @type {import('@pigment-css/vite-plugin').PigmentOptions}
+ */
+const pigmentConfig = {
+  transformLibraries: ['@mui/material'],
+  theme: createTheme({
+    cssVariables: true,
+  }),
+};
 
 export default defineConfig({
   clearScreen: false,
@@ -38,6 +50,7 @@ export default defineConfig({
     },
   },
   plugins: [
+    pigment(pigmentConfig),
     react(),
     yaml(),
     prerender({ file: 'index.html', source: 'src/index.tsx' }),
