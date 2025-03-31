@@ -23,6 +23,7 @@ export default defineConfig({
   },
   server: {
     port: 6041,
+    allowedHosts: process.env.VITE_ALLOWED_HOST ? [process.env.VITE_ALLOWED_HOST] : undefined,
     proxy: {
       '/api/socket': {
         target: 'http://127.0.0.1:6042',
