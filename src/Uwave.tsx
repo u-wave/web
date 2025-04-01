@@ -1,9 +1,6 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
-import { StyledEngineProvider } from '@mui/material/styles';
-import { CacheProvider } from '@emotion/react';
-import createCache from '@emotion/cache';
 import type { EmptyObject } from 'type-fest';
 import AppContainer from './containers/App';
 import { get as readSession } from './utils/Session';
@@ -29,11 +26,6 @@ export default class Uwave {
   #renderTarget: Element | null = null;
 
   #aboutPageComponent: React.ComponentType<EmptyObject> | null = null;
-
-  #emotionCache = createCache({
-    key: 'emc',
-    prepend: true,
-  });
 
   #resolveReady: null | (() => void) = null;
 
@@ -109,14 +101,10 @@ export default class Uwave {
 
     return (
       <Provider store={this.store}>
-        <StyledEngineProvider injectFirst>
-          <CacheProvider value={this.#emotionCache}>
-            <AppContainer
-              mediaSources={this.#sources}
-              uwave={this}
-            />
-          </CacheProvider>
-        </StyledEngineProvider>
+        <AppContainer
+          mediaSources={this.#sources}
+          uwave={this}
+        />
       </Provider>
     );
   }

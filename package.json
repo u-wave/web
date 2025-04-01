@@ -7,10 +7,6 @@
   "dependencies": {
     "@atlaskit/pragmatic-drag-and-drop": "^1.5.0",
     "@atlaskit/pragmatic-drag-and-drop-hitbox": "^1.0.3",
-    "@emotion/cache": "^11.14.0",
-    "@emotion/core": "^11.0.0",
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.0",
     "@f/cookies-enabled": "^1.1.1",
     "@mdi/js": "^7.0.96",
     "@mui/material": "^7.0.1",
@@ -87,8 +83,6 @@
     "whatwg-fetch": "^3.4.0"
   },
   "devDependencies": {
-    "@emotion/css": "^11.10.5",
-    "@emotion/server": "^11.0.0",
     "@eslint/js": "^9.23.0",
     "@pigment-css/vite-plugin": "^0.0.30",
     "@rollup/plugin-yaml": "^4.0.1",

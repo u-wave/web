@@ -1,4 +1,3 @@
-import { createRequire } from 'node:module';
 import { createServer } from 'vite';
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
@@ -6,28 +5,13 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import getPort from 'get-port';
 import theme from '../src/theme.ts';
 
-const require = createRequire(import.meta.url);
-
-const createCache = require('@emotion/cache').default;
-const createEmotionServer = require('@emotion/server/create-instance').default;
-const { CacheProvider } = require('@emotion/react');
-
 /** Render a React element to plain HTML, with mui theming. */
 function renderToHtmlThemed(element) {
-  const cache = createCache({
-    key: 'emc',
-    prepend: true,
-  });
-  const { extractCritical } = createEmotionServer(cache);
-
-  const wrapped = createElement(
-    CacheProvider,
-    { value: cache },
-    createElement(ThemeProvider, { theme: createTheme({ ...theme, cssVariables: true }) }, element),
-  );
-  const html = renderToStaticMarkup(wrapped);
-  const { css } = extractCritical(html);
-  return html.replace('</head>', `<style id="critical">${css}</style></head>`);
+  return renderToStaticMarkup(createElement(
+    ThemeProvider,
+    { theme: createTheme({ ...theme, cssVariables: true }) },
+    element,
+  ));
 }
 
 function prerender(options) {
