@@ -12,6 +12,7 @@ function Index() {
         <link rel="shortcut icon" href={favicon} />
         <link rel="dns-prefetch" href="https://www.youtube.com" />
         <link rel="dns-prefetch" href="https://i.ytimg.com" />
+        <link rel="stylesheet" href="@mui/material-pigment-css/styles.css" />
         <link rel="stylesheet" href="./src/app.css" />
       </head>
       <body>
