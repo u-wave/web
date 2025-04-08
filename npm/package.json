@@ -30,7 +30,7 @@
     "express": "^5.0.0",
     "hstream": "^3.0.0",
     "minimist": "^1.2.7",
-    "router": "^2.0.0",
+    "router": "^2.2.0",
     "serve-static": "^2.2.0"
   }
 }
