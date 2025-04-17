@@ -1,5 +1,4 @@
 import { Suspense, useCallback, useState } from 'react';
-import CircularProgress from '@mui/material/CircularProgress';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -10,6 +9,7 @@ import { intlFormatDistance } from 'date-fns';
 import useSWR from 'swr';
 import { mdiAlert, mdiMenu } from '@mdi/js';
 import uwFetch from '../../utils/fetch';
+import CircularProgress from '../CircularProgress';
 import SvgIcon from '../SvgIcon';
 import DescriptionDialog from './DescriptionDialog';
 

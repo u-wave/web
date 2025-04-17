@@ -2,12 +2,12 @@ import cx from 'clsx';
 import {
   memo, useCallback, useMemo, useRef,
 } from 'react';
-import CircularProgress from '@mui/material/CircularProgress';
 import type { MarkupNode } from 'u-wave-parse-chat-markup';
 import type { User } from '../../reducers/users';
 import useUserCard from '../../hooks/useUserCard';
 import useIntl from '../../hooks/useIntl';
 import Avatar from '../Avatar';
+import CircularProgress from '../CircularProgress';
 import Username from '../Username';
 import Markup, { type CompileOptions } from './Markup';
 

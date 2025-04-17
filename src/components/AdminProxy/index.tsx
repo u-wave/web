@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react';
-import CircularProgress from '@mui/material/CircularProgress';
+import CircularProgress from '../CircularProgress';
 import Overlay from '../Overlay';
 import OverlayHeader from '../Overlay/Header';
 

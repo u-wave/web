@@ -1,5 +1,5 @@
-import CircularProgress from '@mui/material/CircularProgress';
 import { mdiAlert } from '@mdi/js';
+import CircularProgress from '../CircularProgress';
 import SvgIcon from '../SvgIcon';
 
 function LoadingIndicator() {

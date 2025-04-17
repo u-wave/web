@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslator } from '@u-wave/react-translate';
-import CircularProgress from '@mui/material/CircularProgress';
 import { useDispatch } from '../../hooks/useRedux';
+import CircularProgress from '../CircularProgress';
 import Overlay from '../Overlay';
 import OverlayContent from '../Overlay/Content';
 import OverlayHeader from '../Overlay/Header';

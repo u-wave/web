@@ -2,11 +2,11 @@ import { useState } from 'react';
 import { useTranslator } from '@u-wave/react-translate';
 import { useAsyncCallback } from 'react-async-hook';
 import Alert from '@mui/material/Alert';
-import CircularProgress from '@mui/material/CircularProgress';
 import { mdiEmail } from '@mdi/js';
 import Form from '../../Form';
 import FormGroup from '../../Form/Group';
 import TextField from '../../Form/TextField';
+import CircularProgress from '../../CircularProgress';
 import SvgIcon from '../../SvgIcon';
 import Button from '../../Form/Button';
 

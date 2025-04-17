@@ -1,4 +1,4 @@
-import CircularProgress from '@mui/material/CircularProgress';
+import CircularProgress from '../../components/CircularProgress';
 import ImportPanelHeader from '../../components/PlaylistManager/Import/ImportPanelHeader';
 
 type LoadingPanelProps = {
