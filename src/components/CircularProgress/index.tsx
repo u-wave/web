@@ -1,5 +1,11 @@
 import cx from 'clsx';
 
+declare module 'react' {
+  interface CSSProperties {
+    '--spinner-color'?: string;
+  }
+}
+
 type CircularProgressProps = {
   className?: string,
   size?: number | string,
@@ -10,7 +16,7 @@ function CircularProgress({ className, size, color }: CircularProgressProps) {
     <svg
       fill="none"
       className={cx('CircularProgress', className)}
-      style={size != null || color != null ? { width: size, height: size, color } : undefined}
+      style={size != null || color != null ? { width: size, height: size, '--spinner-color': color } : undefined}
       viewBox="0 0 66 66"
     >
       <circle

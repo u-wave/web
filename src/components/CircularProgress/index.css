@@ -1,6 +1,8 @@
 .CircularProgress {
+  --spinner-color: var(--highlight-color);
+
   width: 300px;
-  color: #9d2053;
+  color: var(--spinner-color);
 }
 
 /* From spinners-react, (c) 2020 Adexin, MIT License

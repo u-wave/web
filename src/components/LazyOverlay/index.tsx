@@ -42,10 +42,8 @@ function createLazyOverlay<TComponent extends React.ElementType>({
         />
         <OverlayContent className="LoadingOverlay-body">
           {pastDelay && (
-            <CircularProgress
-              className="LoadingOverlay-spinner"
-              thickness={1.6}
-            />
+            // TODO Might want to make this line thinner
+            <CircularProgress className="LoadingOverlay-spinner" />
           )}
         </OverlayContent>
       </>
