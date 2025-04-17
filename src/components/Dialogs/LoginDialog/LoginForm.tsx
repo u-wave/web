@@ -1,7 +1,6 @@
 import { useCallback, useState } from 'react';
 import { useTranslator } from '@u-wave/react-translate';
 import { useAsyncCallback } from 'react-async-hook';
-import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
 import Divider from '@mui/material/Divider';
 import { mdiEmail, mdiLock } from '@mdi/js';
@@ -9,6 +8,7 @@ import Form from '../../Form';
 import FormGroup from '../../Form/Group';
 import TextField from '../../Form/TextField';
 import Button from '../../Form/Button';
+import CircularProgress from '../../CircularProgress';
 import SvgIcon from '../../SvgIcon';
 import SocialLogin from './SocialLogin';
 

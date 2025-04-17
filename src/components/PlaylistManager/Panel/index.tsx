@@ -6,7 +6,7 @@ import { monitorForElements } from '@atlaskit/pragmatic-drag-and-drop/element/ad
 import { monitorForExternal } from '@atlaskit/pragmatic-drag-and-drop/external/adapter';
 import { containsURLs, getURLs } from '@atlaskit/pragmatic-drag-and-drop/external/url';
 import type { BaseEventPayload, ExternalDragType } from '@atlaskit/pragmatic-drag-and-drop/types';
-import CircularProgress from '@mui/material/CircularProgress';
+import CircularProgress from '../../CircularProgress';
 import BaseMediaList from '../../MediaList/BaseMediaList';
 import PlaylistMeta from './Meta';
 import PlaylistEmpty from './PlaylistEmpty';

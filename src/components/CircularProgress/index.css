@@ -1,0 +1,26 @@
+.CircularProgress {
+  --spinner-color: var(--highlight-color);
+
+  width: 300px;
+  color: var(--spinner-color);
+}
+
+/* From spinners-react, (c) 2020 Adexin, MIT License
+ * https://github.com/adexin/spinners-react/blob/95da6441af2b4177594972f24de5b56974f0b267/src/SpinnerCircular.tsx
+ * https://github.com/adexin/spinners-react/blob/95da6441af2b4177594972f24de5b56974f0b267/src/SpinnerCircular.css
+ */
+
+@keyframes CircularProgress-animation {
+  0% { stroke-dashoffset: 306; }
+  50% { stroke-dasharray: 40, 134; }
+  100% {
+    stroke-dasharray: 1, 174;
+    stroke-dashoffset: 132;
+  }
+}
+
+.CircularProgress-spin {
+  animation: CircularProgress-animation 1.4s linear infinite;
+  stroke-dasharray: 1, 174;
+  stroke-dashoffset: 306;
+}

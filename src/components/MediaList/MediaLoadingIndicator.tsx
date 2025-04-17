@@ -1,5 +1,5 @@
 import cx from 'clsx';
-import CircularProgress from '@mui/material/CircularProgress';
+import CircularProgress from '../CircularProgress';
 
 type MediaLoadingIndicatorProps = {
   className?: string,

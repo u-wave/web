@@ -7,9 +7,9 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionActions from '@mui/material/AccordionActions';
 import Button from '@mui/material/Button';
-import CircularProgress from '@mui/material/CircularProgress';
 import { mdiCheck, mdiAlert, mdiUnfoldMoreHorizontal } from '@mdi/js';
 import type { JSONSchema7, JSONSchema7Object } from 'json-schema';
+import CircularProgress from '../../../components/CircularProgress';
 import SvgIcon from '../../../components/SvgIcon';
 import SchemaForm from '../SchemaForm';
 

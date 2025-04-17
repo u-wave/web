@@ -1,8 +1,8 @@
 import {
   Suspense, lazy, useEffect, useState, useTransition,
 } from 'react';
-import CircularProgress from '@mui/material/CircularProgress';
 import ListItemIcon from '@mui/material/ListItemIcon';
+import CircularProgress from '../../../components/CircularProgress';
 import List, { ListItem, ListItemText } from '../../../components/List';
 import Main from '../Main';
 import '../../index.css';

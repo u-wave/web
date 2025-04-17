@@ -1,10 +1,10 @@
 import cx from 'clsx';
 import omit from 'just-omit';
 import { dropTargetForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
-import CircularProgress from '@mui/material/CircularProgress';
 import MenuItem from '@mui/material/MenuItem';
 import { mdiCheck } from '@mdi/js';
 import { useEffect, useRef, useState } from 'react';
+import CircularProgress from '../../CircularProgress';
 import SvgIcon from '../../SvgIcon';
 import { MEDIA, SEARCH_RESULT } from '../../../constants/DDItemTypes';
 import type { NewPlaylistItem, Playlist, PlaylistItem } from '../../../reducers/playlists';
