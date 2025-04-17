@@ -21,9 +21,9 @@ function CircularProgress({
   const style: React.CSSProperties = {
     width: size,
     height: size,
-  }
+  };
   if (color != null) {
-    style['--spinner-color'] = color
+    style['--spinner-color'] = color;
   }
 
   return (
