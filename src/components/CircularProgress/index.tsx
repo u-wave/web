@@ -32,6 +32,7 @@ function CircularProgress({
       className={cx('CircularProgress', className)}
       style={style}
       viewBox="0 0 66 66"
+      role="progressbar"
     >
       <circle
         className="CircularProgress-spin"
