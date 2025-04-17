@@ -10,13 +10,27 @@ type CircularProgressProps = {
   className?: string,
   size?: number | string,
   color?: string,
+  thickness?: number,
 };
-function CircularProgress({ className, size, color }: CircularProgressProps) {
+function CircularProgress({
+  className,
+  size = 40,
+  color,
+  thickness = 3.6,
+}: CircularProgressProps) {
+  const style: React.CSSProperties = {
+    width: size,
+    height: size,
+  }
+  if (color != null) {
+    style['--spinner-color'] = color
+  }
+
   return (
     <svg
       fill="none"
       className={cx('CircularProgress', className)}
-      style={size != null || color != null ? { width: size, height: size, '--spinner-color': color } : undefined}
+      style={style}
       viewBox="0 0 66 66"
     >
       <circle
@@ -27,7 +41,7 @@ function CircularProgress({ className, size, color }: CircularProgressProps) {
         r="28"
         stroke="currentColor"
         strokeLinecap="round"
-        strokeWidth="4"
+        strokeWidth={thickness}
       />
     </svg>
   );
