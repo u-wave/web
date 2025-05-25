@@ -78,18 +78,21 @@ function SoundCloudPlayer({
     });
   }, []);
 
+  // `seek` / `media.start` should only be taken into account when
+  // the media changes.
+  const computedSeek = useRef(0);
+  computedSeek.current = seek + media.start;
+
   useEffect(() => {
     setError(null);
     if (!audioRef.current || !audioUrl) {
-      return () => {
-        // dummy
-      };
+      return;
     }
     const audio = audioRef.current;
     audio.src = audioUrl;
     audio.play().catch(setError);
     const doSeek = () => {
-      audio.currentTime = seek + (media.start ?? 0);
+      audio.currentTime = computedSeek.current;
       audio.removeEventListener('canplaythrough', doSeek, false);
     };
     audio.addEventListener('canplaythrough', doSeek, false);
@@ -98,10 +101,6 @@ function SoundCloudPlayer({
       audio.pause();
       audio.removeEventListener('canplaythrough', doSeek, false);
     };
-
-    // `seek` / `media.start` should only be taken into account when
-    // the media changes.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [audioUrl]);
 
   useEffect(() => {
