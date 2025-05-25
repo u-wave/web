@@ -40,12 +40,11 @@ function PlaylistsMenuContainer({ className }: PlaylistMenuContainerProps) {
   const onSelectSearchResults = useCallback(() => {
     dispatch(showSearchResults());
   }, [dispatch]);
+  const resetSearch = mediaSearch.reset;
   const onCloseSearchResults = useCallback(() => {
-    mediaSearch.reset();
+    resetSearch();
     dispatch(selectActivePlaylist());
-    // The `mediaSearch.reset` reference never changes.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch]);
+  }, [resetSearch, dispatch]);
   const onShowImportPanel = useCallback(() => {
     dispatch(showImportPanel());
   }, [dispatch]);
