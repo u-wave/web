@@ -1,5 +1,3 @@
-import { memo } from 'react';
-
 type LogMessageProps = {
   text: string,
 };
@@ -13,4 +11,4 @@ function LogMessage({ text }: LogMessageProps) {
   );
 }
 
-export default memo(LogMessage);
+export default LogMessage;

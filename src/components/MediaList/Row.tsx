@@ -1,5 +1,4 @@
 import cx from 'clsx';
-import React from 'react';
 import MediaRowBase from './MediaRowBase';
 import MediaDuration from './MediaDuration';
 import MediaLoadingIndicator from './MediaLoadingIndicator';
@@ -56,4 +55,4 @@ function MediaRow({
   );
 }
 
-export default React.memo(MediaRow);
+export default MediaRow;

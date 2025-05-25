@@ -1,5 +1,4 @@
 import cx from 'clsx';
-import React from 'react';
 
 export interface SvgIconProps extends Omit<React.ComponentProps<'svg'>, 'ref'> {
   path?: string;
@@ -18,4 +17,4 @@ function SvgIcon({
   );
 }
 
-export default React.memo(SvgIcon);
+export default SvgIcon;

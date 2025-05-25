@@ -1,7 +1,5 @@
 import cx from 'clsx';
-import {
-  memo, useCallback, useMemo, useRef,
-} from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 import type { MarkupNode } from 'u-wave-parse-chat-markup';
 import type { User } from '../../reducers/users';
 import useUserCard from '../../hooks/useUserCard';
@@ -29,7 +27,7 @@ function DeleteButton({ onDelete }: DeleteButtonProps) {
 type MessageTimestampProps = {
   date: Date,
 };
-function MessageTimestampImpl({ date }: MessageTimestampProps) {
+function MessageTimestamp({ date }: MessageTimestampProps) {
   const { timeFormatter } = useIntl();
 
   return (
@@ -41,7 +39,6 @@ function MessageTimestampImpl({ date }: MessageTimestampProps) {
     </time>
   );
 }
-const MessageTimestamp = memo(MessageTimestampImpl);
 
 type ChatMessageProps = {
   _id: string,

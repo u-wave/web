@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { useMediaSources } from '../../context/MediaSourceContext';
 
 type MediaSourceIconProps = {
@@ -22,4 +21,4 @@ function MediaSourceIcon({ sourceType }: MediaSourceIconProps) {
   );
 }
 
-export default memo(MediaSourceIcon);
+export default MediaSourceIcon;

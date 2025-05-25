@@ -1,5 +1,3 @@
-import { memo } from 'react';
-
 type MediaThumbnailProps = {
   url: string,
 };
@@ -16,4 +14,4 @@ function MediaThumbnail({ url }: MediaThumbnailProps) {
   );
 }
 
-export default memo(MediaThumbnail);
+export default MediaThumbnail;

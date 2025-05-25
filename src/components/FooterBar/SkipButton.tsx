@@ -1,5 +1,4 @@
 import {
-  memo,
   useCallback,
   useRef,
   useState,
@@ -107,4 +106,4 @@ function SkipButton({ userIsDJ, currentDJ, onSkip }: SkipButtonProps) {
   );
 }
 
-export default memo(SkipButton);
+export default SkipButton;

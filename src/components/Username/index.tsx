@@ -1,5 +1,4 @@
 import cx from 'clsx';
-import React from 'react';
 import RoleColor from '../RoleColor';
 
 type UsernameProps = {
@@ -18,4 +17,4 @@ function Username({ className, user }: UsernameProps) {
   );
 }
 
-export default React.memo(Username);
+export default Username;
