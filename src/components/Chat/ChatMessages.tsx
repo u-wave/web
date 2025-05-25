@@ -72,13 +72,13 @@ function ChatMessages({
 
   // Scroll to bottom again if the last message changes.
   const lastMessage = messages.length > 0 ? messages[messages.length - 1] : undefined;
+  // Use a ref to avoid triggering the effect repeatedly when scrolling _up_ from the bottom.
+  const scrolledToBottomRef = useRef(isScrolledToBottom);
+  scrolledToBottomRef.current = isScrolledToBottom;
   useEffect(() => {
-    if (isScrolledToBottom && container.current) {
+    if (scrolledToBottomRef.current && container.current) {
       scrollToBottom(container.current);
     }
-    // We need to scroll to the bottom only if a new message comes in, not when the scroll-to-bottom
-    // state changed.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lastMessage]);
 
   // Accept externally controlled scrolling using the global event bus, so the chat input box
