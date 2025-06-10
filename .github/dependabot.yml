@@ -18,13 +18,12 @@ updates:
     # Minimum node.js version is updated manually
     - dependency-name: "@types/node"
   groups:
-    stable:
-      versions: [">=1.0.0"]
-      update-type: ["version-update:minor", "version-update:patch"]
     vite:
       patterns:
       - "@vitejs/*"
       - "vite"
+    vitest:
+      patterns:
       - "@vitest/*"
       - "vitest"
     react:
