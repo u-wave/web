@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import cx from 'clsx';
 import formatDuration from 'format-duration';
 import { useTranslator } from '@u-wave/react-translate';
 import MenuItem from '@mui/material/MenuItem';
@@ -39,7 +39,7 @@ function Chapters({
 
   return (
     <Select
-      className={clsx('Chapters', className)}
+      className={cx('Chapters', className)}
       classes={{
         select: 'Chapters-select',
       }}
