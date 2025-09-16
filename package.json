@@ -79,7 +79,7 @@
     "strip-indent": "^4.1.0",
     "swr": "^2.3.3",
     "u-wave-parse-chat-markup": "^2.5.0",
-    "url-polyfill": "^1.1.13",
+    "url-polyfill": "^1.1.14",
     "use-debounce": "^10.0.4",
     "uuid": "^11.1.0",
     "whatwg-fetch": "^3.4.0"
