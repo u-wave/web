@@ -95,7 +95,7 @@
     "@types/json-schema": "^7.0.15",
     "@types/natural-compare": "^1.4.3",
     "@types/node": "^20.19.1",
-    "@types/react": "^19.1.10",
+    "@types/react": "^19.1.15",
     "@types/react-dom": "^19.1.7",
     "@types/uuid": "^10.0.0",
     "@vitejs/plugin-react": "^4.7.0",
