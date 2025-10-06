@@ -538,9 +538,18 @@ export default [
   { ignores: ['coverage/**', 'npm/public/**'] },
 
   js.configs.recommended,
+
   react.configs.flat.recommended,
   react.configs.flat['jsx-runtime'],
   jsxA11y.flatConfigs.recommended,
+  {
+    settings: {
+      react: {
+        version: 'detect',
+      },
+    },
+  },
+
   importPlugin.flatConfigs.recommended,
   importPlugin.flatConfigs.typescript,
   compat.configs['flat/recommended'],
