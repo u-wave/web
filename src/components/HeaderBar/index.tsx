@@ -54,7 +54,7 @@ function HeaderBar({
       {media && (
         <Progress
           className="HeaderBar-progress"
-          duration={media.duration}
+          duration={media.end - media.start}
           startTime={mediaStartTime}
         />
       )}
