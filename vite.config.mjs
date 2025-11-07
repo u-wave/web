@@ -2,7 +2,7 @@
 /// <reference types="vitest">
 import { readFile, writeFile } from 'node:fs/promises';
 import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+import react from '@vitejs/plugin-react'; // eslint-disable-line import/no-unresolved
 import yaml from '@rollup/plugin-yaml';
 import emoji from './tasks/emoji.mjs';
 import prerender from './tasks/prerender.mjs';
