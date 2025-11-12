@@ -81,7 +81,6 @@
     "u-wave-parse-chat-markup": "^2.5.0",
     "url-polyfill": "^1.1.13",
     "use-debounce": "^10.0.4",
-    "uuid": "^11.1.0",
     "whatwg-fetch": "^3.4.0"
   },
   "devDependencies": {
