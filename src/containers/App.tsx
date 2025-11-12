@@ -93,12 +93,12 @@ function AppContainer({ uwave, mediaSources }: AppContainerProps) {
     }
   }, [theme]);
 
-  const hiddenTime = useRef(0);
+  const hiddenTimeRef = useRef(0);
   usePageVisibility((visible) => {
-    if (visible && (Date.now() - hiddenTime.current) > 60_000) {
+    if (visible && (Date.now() - hiddenTimeRef.current) > 60_000) {
       dispatch(initState());
     } else {
-      hiddenTime.current = Date.now();
+      hiddenTimeRef.current = Date.now();
     }
   });
 

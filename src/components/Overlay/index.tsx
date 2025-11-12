@@ -1,5 +1,5 @@
 import cx from 'clsx';
-import { useEffect, useState } from 'react';
+import { useEffect, useEffectEvent, useState } from 'react';
 import { usePresence } from 'motion/react';
 
 type OverlayProps = {
@@ -14,12 +14,16 @@ function Overlay({ direction = 'bottom', children, className }: OverlayProps) {
   // - Overlay-enter + Overlay-enter-active post-mount (visible state)
   // - Overlay-exit before unmount (new hidden state)
   const [animState, setAnimState] = useState(() => isPresent ? 'Overlay-enter' : 'Overlay-exit');
-  useEffect(() => {
+
+  const onPresentChange = useEffectEvent(() => {
     if (isPresent) {
       setAnimState('Overlay-enter Overlay-enter-active');
     } else {
       setAnimState('Overlay-exit');
     }
+  });
+  useEffect(() => {
+    onPresentChange();
   }, [isPresent]);
 
   return (

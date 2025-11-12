@@ -16,11 +16,15 @@ function AboutOverlay({ onCloseOverlay }: AboutOverlayProps) {
     return null;
   }
 
+  // This is actually a (mostly) static component
+  // eslint-disable-next-line react-hooks/static-components
+  const page = <AboutPage />;
+
   return (
     <Overlay>
       <OverlayHeader title={t('about.about')} onCloseOverlay={onCloseOverlay} />
       <OverlayContent className="AboutPanel">
-        <AboutPage />
+        {page}
       </OverlayContent>
     </Overlay>
   );

@@ -44,6 +44,9 @@ function Field({
   const Control = controls.get(controlName);
   if (Control) {
     return (
+      // This is actually a static component.
+      // This could (should?) be rewritten as a switch statement.
+      // eslint-disable-next-line react-hooks/static-components
       <Control
         className={className}
         schema={schema}

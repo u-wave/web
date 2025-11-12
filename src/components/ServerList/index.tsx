@@ -94,6 +94,7 @@ type ServerThumbnailProps = {
   media: Media | null,
 };
 function ServerThumbnail({ server, media }: ServerThumbnailProps) {
+  const [currentTime] = useState(() => Date.now());
   const [isOpen, setDescriptionOpen] = useState(false);
   const onOpenDescription = useCallback(
     (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -160,7 +161,7 @@ function ServerThumbnail({ server, media }: ServerThumbnailProps) {
             <WarningText>
               <WarningIcon />
               {timedOutMessage(intlFormatDistance(
-                new Date(Date.now() - server.timeSincePing),
+                new Date(currentTime - server.timeSincePing),
                 new Date(),
               ))}
             </WarningText>

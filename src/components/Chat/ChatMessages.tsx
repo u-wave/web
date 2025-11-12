@@ -54,16 +54,16 @@ function ChatMessages({
   onDeleteMessage,
   compileOptions,
 }: ChatMessagesProps) {
-  const container = useRef<HTMLDivElement>(null);
-  const [isScrolledToBottom, updateScroll] = useScrolledToBottom(container, true);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isScrolledToBottom, updateScroll] = useScrolledToBottom(containerRef, true);
 
   // Scroll to bottom on window resizes, if we were scrolled to bottom before.
   useEffect(() => {
     if (typeof window === 'undefined') return undefined;
 
     const handleResize = () => {
-      if (isScrolledToBottom && container.current) {
-        scrollToBottom(container.current);
+      if (isScrolledToBottom && containerRef.current) {
+        scrollToBottom(containerRef.current);
       }
     };
     window.addEventListener('resize', handleResize);
@@ -73,11 +73,14 @@ function ChatMessages({
   // Scroll to bottom again if the last message changes.
   const lastMessage = messages.length > 0 ? messages[messages.length - 1] : undefined;
   // Use a ref to avoid triggering the effect repeatedly when scrolling _up_ from the bottom.
+  // TODO: This can probably nowadays be improved with `useEffectEvent`?
   const scrolledToBottomRef = useRef(isScrolledToBottom);
-  scrolledToBottomRef.current = isScrolledToBottom;
   useEffect(() => {
-    if (scrolledToBottomRef.current && container.current) {
-      scrollToBottom(container.current);
+    scrolledToBottomRef.current = isScrolledToBottom;
+  }, [isScrolledToBottom]);
+  useEffect(() => {
+    if (scrolledToBottomRef.current && containerRef.current) {
+      scrollToBottom(containerRef.current);
     }
   }, [lastMessage]);
 
@@ -85,7 +88,7 @@ function ChatMessages({
   // can tell us to scroll up or down.
   const handleExternalScroll = useCallback((arg: unknown) => {
     const direction = arg as number | 'start' | 'end';
-    const el = container.current;
+    const el = containerRef.current;
     if (!el || direction == null) {
       return;
     }
@@ -132,13 +135,13 @@ function ChatMessages({
 
   return (
     <div
-      ref={container}
+      ref={containerRef}
       className="ChatMessages"
       onScroll={updateScroll}
     >
       <ScrollDownNotice
         show={!isScrolledToBottom}
-        onClick={() => container.current && scrollToBottom(container.current)}
+        onClick={() => containerRef.current && scrollToBottom(containerRef.current)}
       />
       {motd ? (
         <Motd compileOptions={compileOptions}>

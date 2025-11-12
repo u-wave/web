@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useEffectEvent, useState } from 'react';
 import Player from '../../../components/Player';
 import VideoBackdrop from '../../../components/Video/VideoBackdrop';
 import VoteButtons from './VoteButtons';
@@ -31,10 +31,13 @@ function Video({
   const [enableOverlay, setEnableOverlay] = useState(false);
   const [showVoteButtons, setShowVoteButtons] = useState(false);
 
-  useEffect(() => {
+  const onSourceTypeChange = useEffectEvent(() => {
     // Switching to a different source type may require an autoplay tap again.
     // Disable the vote buttons until the media source reports playback started.
     setEnableOverlay(media?.sourceType === undefined);
+  });
+  useEffect(() => {
+    onSourceTypeChange();
   }, [media?.sourceType]);
 
   const handleClick = () => {
