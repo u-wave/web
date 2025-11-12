@@ -1,5 +1,4 @@
 import mapValues from 'just-map-values';
-import { v4 as randomUUID } from 'uuid';
 import parseChatMarkup, { type MarkupNode } from 'u-wave-parse-chat-markup';
 import { type PayloadAction, createSlice, createSelector } from '@reduxjs/toolkit';
 import {
@@ -14,6 +13,8 @@ import { createAsyncThunk } from '../redux/api';
 import uwFetch from '../utils/fetch';
 import type { StoreState } from '../redux/configureStore';
 import { type NotificationSettings, notificationSettingsSelector } from './settings';
+
+const randomUUID = globalThis.crypto.randomUUID.bind(globalThis.crypto);
 
 export interface ChatMessage {
   _id: string;

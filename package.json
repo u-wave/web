@@ -81,7 +81,6 @@
     "u-wave-parse-chat-markup": "^2.5.0",
     "url-polyfill": "^1.1.13",
     "use-debounce": "^10.0.4",
-    "uuid": "^11.1.0",
     "whatwg-fetch": "^3.4.0"
   },
   "devDependencies": {
@@ -97,7 +96,6 @@
     "@types/node": "^20.19.1",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
-    "@types/uuid": "^10.0.0",
     "@vitejs/plugin-react": "^5.1.0",
     "@vitest/coverage-v8": "^4.0.7",
     "@vitest/eslint-plugin": "^1.4.0",
