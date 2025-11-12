@@ -4,11 +4,17 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased
+## 2.0.0-alpha.37 / 12 Nov 2025
 While this is an alpha release, new servers should use this rather than an older "stable" version.
+
+Fixes:
+ * Prevent occasional transparent lingering element after closing room history or playlist manager. (#3149)
+ * Fix media progress bar with custom start/end times. (#3462)
 
 Internal:
  * **Breaking:** u-wave-web now requires Node.js 20.x or higher.
+ * **Breaking:** Use native `crypto.randomUUID`, meaning u-wave-web must be served over HTTPS. (#3472)
+ * Enable React Compiler. (#3348)
 
 ## 2.0.0-alpha.36 / 18 Nov 2024
 While this is an alpha release, new servers should use this rather than an older "stable" version.
