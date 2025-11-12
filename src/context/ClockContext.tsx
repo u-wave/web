@@ -2,8 +2,8 @@ import {
   createContext,
   useContext,
   useEffect,
+  useEffectEvent,
   useMemo,
-  useRef,
   useState,
 } from 'react';
 import { useDispatch } from '../hooks/useRedux';
@@ -22,7 +22,6 @@ type ClockProviderProps = {
 };
 function ClockProvider({ children }: ClockProviderProps) {
   const [callbacks, setCallbacks] = useState<TimerCallback[]>([]);
-  const callbacksRef = useRef(callbacks);
   const dispatch = useDispatch();
 
   const timerCallbacks = useMemo(() => ({
@@ -37,7 +36,9 @@ function ClockProvider({ children }: ClockProviderProps) {
   // Make sure the callbacks are up to date for the setInterval() tick function.
   // This way we don't have to re-configure the timer every time, so it can keep
   // ticking consistently.
-  callbacksRef.current = callbacks;
+  const callCallbacks = useEffectEvent(() => {
+    callbacks.forEach((cb) => cb());
+  });
   useEffect(() => {
     // Start the clock! üWave stores the current time in the application state
     // primarily to make sure that different timers in the UI update simultaneously.
@@ -53,10 +54,10 @@ function ClockProvider({ children }: ClockProviderProps) {
             .finally(() => {
               syncing = false;
 
-              callbacksRef.current.forEach((cb) => cb());
+              callCallbacks();
             });
         } else {
-          callbacksRef.current.forEach((cb) => cb());
+          callCallbacks();
         }
       }
       last = now;

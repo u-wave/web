@@ -1,5 +1,5 @@
 import cx from 'clsx';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { useAsyncCallback } from 'react-async-hook';
 import { useTranslator } from '@u-wave/react-translate';
 import Popover from '@mui/material/Popover';
@@ -26,7 +26,7 @@ function WaitlistButton() {
   const isLocked = useSelector(waitlistIsLockedSelector);
   const autoLeave = useSelector((state) => state.booth.autoLeave ?? false);
   const dispatch = useDispatch();
-  const anchorRef = useRef<HTMLDivElement>(null);
+  const [anchor, setAnchor] = useState<HTMLElement | null>(null);
   const [open, setOpen] = useState(false);
 
   const handleSkipRemove = useAsyncCallback(async () => {
@@ -63,7 +63,7 @@ function WaitlistButton() {
   if (isDJ) {
     return (
       <>
-        <ButtonGroup ref={anchorRef} style={{ height: '100%' }}>
+        <ButtonGroup ref={setAnchor} style={{ height: '100%' }}>
           <Button
             classes={{ root: 'WaitlistButton' }}
             onClick={handleSkipRemove.execute}
@@ -79,7 +79,7 @@ function WaitlistButton() {
           </Button>
         </ButtonGroup>
         <Popover
-          anchorEl={anchorRef.current}
+          anchorEl={anchor}
           open={open}
           anchorOrigin={{
             vertical: 'top',

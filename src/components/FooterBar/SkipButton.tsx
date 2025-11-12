@@ -1,8 +1,4 @@
-import {
-  useCallback,
-  useRef,
-  useState,
-} from 'react';
+import { useCallback, useState } from 'react';
 import { useTranslator } from '@u-wave/react-translate';
 import Popover from '@mui/material/Popover';
 import Tooltip from '@mui/material/Tooltip';
@@ -41,7 +37,7 @@ function SkipButton({ userIsDJ, currentDJ, onSkip }: SkipButtonProps) {
   const { t } = useTranslator();
   const [isSkipping, setSkipping] = useState(false);
   const [isOpen, setOpen] = useState(false);
-  const anchor = useRef(null);
+  const [anchor, setAnchor] = useState<HTMLElement | null>(null);
 
   const handleOpen = useCallback(() => {
     setOpen(true);
@@ -80,7 +76,7 @@ function SkipButton({ userIsDJ, currentDJ, onSkip }: SkipButtonProps) {
     <span>
       <Tooltip title={message}>
         <IconButton
-          ref={anchor}
+          ref={setAnchor}
           className="SkipButton"
           onClick={userIsDJ ? handleSelfSkip : handleOpen}
         >
@@ -89,7 +85,7 @@ function SkipButton({ userIsDJ, currentDJ, onSkip }: SkipButtonProps) {
       </Tooltip>
       <Popover
         open={isOpen}
-        anchorEl={anchor.current}
+        anchorEl={anchor}
         onClose={handleClose}
         classes={{ paper: 'SkipButton-list' }}
         {...popoverPosition}

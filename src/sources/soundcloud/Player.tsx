@@ -1,6 +1,7 @@
 import cx from 'clsx';
 import {
   useEffect,
+  useEffectEvent,
   useMemo,
   useRef,
   useState,
@@ -78,13 +79,16 @@ function SoundCloudPlayer({
     });
   }, []);
 
-  // `seek` / `media.start` should only be taken into account when
-  // the media changes.
-  const computedSeek = useRef(0);
-  computedSeek.current = seek + media.start;
+  const onCanPlayThrough = useEffectEvent((audio: HTMLAudioElement) => {
+    audio.currentTime = media.start + seek;
+  });
 
   useEffect(() => {
+    // This state _should_ be cleared whenever the URL changes,
+    // and the `error` state is not a dependency of this effect.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setError(null);
+
     if (!audioRef.current || !audioUrl) {
       return;
     }
@@ -92,7 +96,7 @@ function SoundCloudPlayer({
     audio.src = audioUrl;
     audio.play().catch(setError);
     const doSeek = () => {
-      audio.currentTime = computedSeek.current;
+      onCanPlayThrough(audio);
       audio.removeEventListener('canplaythrough', doSeek, false);
     };
     audio.addEventListener('canplaythrough', doSeek, false);
@@ -109,22 +113,17 @@ function SoundCloudPlayer({
     }
   }, [volume]);
 
+  const onPlayHandler = useEffectEvent(() => {
+    setError(null);
+    onPlay?.();
+  });
   useEffect(() => {
-    const handler = () => {
-      setError(null);
-      onPlay?.();
-    };
-
     const audio = audioRef.current;
-    if (audio) {
-      audio.addEventListener('play', handler, false);
-    }
+    audio?.addEventListener('play', onPlayHandler, false);
     return () => {
-      if (audio) {
-        audio.removeEventListener('play', handler);
-      }
+      audio?.removeEventListener('play', onPlayHandler);
     };
-  }, [onPlay]);
+  }, []);
 
   const sourceData = media.sourceData as undefined | {
     username: string,
