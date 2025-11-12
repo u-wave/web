@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { useTranslator } from '@u-wave/react-translate';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
@@ -22,4 +21,4 @@ function SettingsButton({ onClick }: SettingsButtonProps) {
   );
 }
 
-export default memo(SettingsButton);
+export default SettingsButton;

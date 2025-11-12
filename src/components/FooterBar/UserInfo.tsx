@@ -1,5 +1,4 @@
 import cx from 'clsx';
-import { memo } from 'react';
 import { mdiCog } from '@mdi/js';
 import Avatar from '../Avatar';
 import SvgIcon from '../SvgIcon';
@@ -28,4 +27,4 @@ function UserInfo({ className, user, onClick }: UserInfoProps) {
   );
 }
 
-export default memo(UserInfo);
+export default UserInfo;

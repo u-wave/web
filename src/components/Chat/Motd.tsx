@@ -1,4 +1,3 @@
-import React from 'react';
 import type { MarkupNode } from 'u-wave-parse-chat-markup';
 import Markup, { type CompileOptions } from './Markup';
 
@@ -16,4 +15,4 @@ function Motd({ children, compileOptions }: MotdProps) {
   );
 }
 
-export default React.memo(Motd);
+export default Motd;

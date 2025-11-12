@@ -51,7 +51,7 @@ function Video(props: VideoProps) {
   const [shouldShowToolbar, setShowToolbar] = useState(false);
   const activeOverlay = useSelector(selectOverlay);
   const container = useRef<HTMLDivElement>(null);
-  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleRequestFullscreenEnter = useCallback(() => {
     if (screenfull.isEnabled && container.current) {
@@ -67,21 +67,21 @@ function Video(props: VideoProps) {
   }, [onFullscreenExit]);
 
   const handleMouseMoveEnd = useCallback(() => {
-    if (timer.current) {
-      clearTimeout(timer.current);
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
     }
-    timer.current = null;
+    timerRef.current = null;
     setShowToolbar(false);
   }, []);
 
   // Show toolbar if the user mouses over the video.
   const handleMouseMove = useCallback(() => {
-    if (timer.current) {
-      clearTimeout(timer.current);
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
     } else {
       setShowToolbar(true);
     }
-    timer.current = setTimeout(handleMouseMoveEnd, 5000);
+    timerRef.current = setTimeout(handleMouseMoveEnd, 5000);
   }, [handleMouseMoveEnd]);
 
   // Attach fullscreen exit event listener.

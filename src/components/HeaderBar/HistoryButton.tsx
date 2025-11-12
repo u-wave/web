@@ -1,4 +1,3 @@
-import React from 'react';
 import { useTranslator } from '@u-wave/react-translate';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
@@ -25,4 +24,4 @@ function HistoryButton({ onClick }: HistoryButtonProps) {
   );
 }
 
-export default React.memo(HistoryButton);
+export default HistoryButton;

@@ -1,5 +1,4 @@
 import cx from 'clsx';
-import React from 'react';
 
 type SongTitleProps = {
   className?: string,
@@ -29,4 +28,4 @@ function SongTitle({
   );
 }
 
-export default React.memo(SongTitle);
+export default SongTitle;

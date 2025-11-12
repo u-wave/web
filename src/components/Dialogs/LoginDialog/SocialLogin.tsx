@@ -1,11 +1,9 @@
-import React from 'react';
+import { lazy, Suspense } from 'react';
 import { useTranslator } from '@u-wave/react-translate';
 import { useDispatch } from '../../../hooks/useRedux';
 import { loginWithGoogle } from '../../../actions/LoginActionCreators';
 
-const GoogleButton = React.lazy(() => (
-  import('react-google-button')
-));
+const GoogleButton = lazy(() => import('react-google-button'));
 const loadingGoogleButton = <div style={{ height: 50 }} />;
 
 function SocialLogin() {
@@ -13,14 +11,14 @@ function SocialLogin() {
   const dispatch = useDispatch();
 
   return (
-    <React.Suspense fallback={loadingGoogleButton}>
+    <Suspense fallback={loadingGoogleButton}>
       <GoogleButton
         style={{ width: '100%' }}
         label={t('login.social.loginWithGoogle')}
         onClick={() => dispatch(loginWithGoogle())}
       />
-    </React.Suspense>
+    </Suspense>
   );
 }
 
-export default React.memo(SocialLogin);
+export default SocialLogin;

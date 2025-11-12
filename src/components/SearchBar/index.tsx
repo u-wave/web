@@ -30,12 +30,11 @@ function SearchBar({
     }
   }, [onSubmit]);
 
+  const initialAutoFocus = useRef(autoFocus ?? false);
   useEffect(() => {
-    if (autoFocus && inputRef.current) {
+    if (initialAutoFocus.current && inputRef.current != null) {
       inputRef.current.focus();
     }
-    // `autoFocus` is only checked on mount on purpose.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

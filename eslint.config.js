@@ -4,7 +4,6 @@ import js from '@eslint/js';
 import ts from 'typescript-eslint';
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
-import reactCompiler from 'eslint-plugin-react-compiler';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
 import compat from 'eslint-plugin-compat';
 import importPlugin from 'eslint-plugin-import';
@@ -541,6 +540,7 @@ export default [
 
   react.configs.flat.recommended,
   react.configs.flat['jsx-runtime'],
+  reactHooks.configs.flat['recommended-latest'],
   jsxA11y.flatConfigs.recommended,
   {
     settings: {
@@ -609,7 +609,6 @@ export default [
       'react/jsx-filename-extension': ['error', { extensions: ['.jsx', '.tsx'] }],
       // Not following this at the moment
       'jsx-a11y/no-autofocus': 'warn',
-      'react-compiler/react-compiler': 'warn',
     },
 
     settings: {
@@ -658,18 +657,6 @@ export default [
   },
 
   { rules: styleRules },
-
-  {
-    plugins: {
-      'react-hooks': reactHooks,
-      'react-compiler': reactCompiler,
-    },
-    rules: {
-      'react-hooks/rules-of-hooks': 'error',
-      'react-hooks/exhaustive-deps': 'error',
-      'react-compiler/react-compiler': 'warn',
-    },
-  },
 
   ts.configs.eslintRecommended,
   ...ts.configs.recommended,

@@ -1,5 +1,5 @@
 import cx from 'clsx';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useState } from 'react';
 import Popover, { type PopoverProps } from '@mui/material/Popover';
 import { mdiMenuDown } from '@mdi/js';
 import { useMediaSources } from '../../../context/MediaSourceContext';
@@ -19,7 +19,7 @@ type SourcePickerProps = {
 function SourcePicker({ className, selected, onChange }: SourcePickerProps) {
   const { getMediaSource, getAllMediaSources } = useMediaSources();
   const [isOpen, setOpen] = useState(false);
-  const container = useRef(null);
+  const [container, setContainer] = useState<HTMLElement | null>(null);
 
   const handleOpen = useCallback(() => {
     setOpen(true);
@@ -49,7 +49,7 @@ function SourcePicker({ className, selected, onChange }: SourcePickerProps) {
   return (
     <div
       className={cx('SourcePicker', className)}
-      ref={container}
+      ref={setContainer}
     >
       <button
         type="button"
@@ -62,7 +62,7 @@ function SourcePicker({ className, selected, onChange }: SourcePickerProps) {
       <Popover
         classes={{ paper: 'SourcePicker-list' }}
         open={isOpen}
-        anchorEl={container.current}
+        anchorEl={container}
         onClose={handleClose}
         {...popoverPosition}
       >
