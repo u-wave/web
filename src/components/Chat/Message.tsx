@@ -48,7 +48,6 @@ type ChatMessageProps = {
   inFlight?: boolean,
   isMention?: boolean,
   timestamp: number,
-  deletable?: boolean,
   onDelete?: (id: string) => void,
 };
 
@@ -60,7 +59,6 @@ function ChatMessage({
   inFlight = false,
   isMention = false,
   timestamp,
-  deletable,
   onDelete,
 }: ChatMessageProps) {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -101,7 +99,7 @@ function ChatMessage({
       {avatar}
       <div className="ChatMessage-content">
         <div className="ChatMessage-hover">
-          {deletable && <DeleteButton onDelete={() => onDelete?.(id)} />}
+          {onDelete != null && <DeleteButton onDelete={() => onDelete(id)} />}
           <MessageTimestamp date={date} />
         </div>
         <button
