@@ -3,7 +3,7 @@ import MessageTimestamp from '../MessageTimestamp';
 import type { Media } from '../../../reducers/booth';
 
 type NowPlayingMessageProps = {
-  entry: Media,
+  entry: Pick<Media, 'sourceType' | 'sourceID' | 'artist' | 'title'>,
   timestamp: number,
 };
 function NowPlayingMessage({ entry, timestamp }: NowPlayingMessageProps) {

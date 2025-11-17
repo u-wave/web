@@ -7,7 +7,7 @@ import useIntl from '../../hooks/useIntl';
 import Avatar from '../Avatar';
 import CircularProgress from '../CircularProgress';
 import Username from '../Username';
-import Markup, { type CompileOptions } from './Markup';
+import Markup from './Markup';
 
 type DeleteButtonProps = {
   onDelete: () => void,
@@ -48,8 +48,6 @@ type ChatMessageProps = {
   inFlight?: boolean,
   isMention?: boolean,
   timestamp: number,
-  compileOptions: CompileOptions,
-  deletable?: boolean,
   onDelete?: (id: string) => void,
 };
 
@@ -61,8 +59,6 @@ function ChatMessage({
   inFlight = false,
   isMention = false,
   timestamp,
-  compileOptions,
-  deletable,
   onDelete,
 }: ChatMessageProps) {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -88,7 +84,7 @@ function ChatMessage({
     );
   }
 
-  const children = parsedText ? <Markup tree={parsedText} compileOptions={compileOptions} /> : text;
+  const children = parsedText ? <Markup tree={parsedText} /> : text;
 
   const date = useMemo(() => new Date(timestamp), [timestamp]);
 
@@ -103,7 +99,7 @@ function ChatMessage({
       {avatar}
       <div className="ChatMessage-content">
         <div className="ChatMessage-hover">
-          {deletable && <DeleteButton onDelete={() => onDelete?.(id)} />}
+          {onDelete != null && <DeleteButton onDelete={() => onDelete(id)} />}
           <MessageTimestamp date={date} />
         </div>
         <button
