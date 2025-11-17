@@ -1,6 +1,7 @@
 import { motdSourceSelector, setMotd } from '../../reducers/chat';
 import { markupCompilerOptionsSelector } from '../../selectors/chatSelectors';
 import { useDispatch, useSelector } from '../../hooks/useRedux';
+import { CompileOptionsContext } from '../../components/Chat/Markup';
 import Motd from '../components/Motd';
 
 function MotdContainer() {
@@ -10,11 +11,9 @@ function MotdContainer() {
   const onSetMotd = (motd: string | null) => dispatch(setMotd(motd));
 
   return (
-    <Motd
-      initialMotd={initialMotd}
-      compileOptions={compileOptions}
-      onSetMotd={onSetMotd}
-    />
+    <CompileOptionsContext value={compileOptions}>
+      <Motd initialMotd={initialMotd} onSetMotd={onSetMotd} />
+    </CompileOptionsContext>
   );
 }
 

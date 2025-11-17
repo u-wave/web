@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { createContext, use } from 'react';
 import { useListener } from 'react-bus';
 import type { MarkupNode } from 'u-wave-parse-chat-markup';
-import Message from './Message';
-import Motd from './Motd';
-import ScrollDownNotice from './ScrollDownNotice';
-import specialMessages from './specialMessages';
 import type { Message as TMessage } from '../../reducers/chat';
-import type { CompileOptions } from './Markup';
+import ScrollDownNotice from './ScrollDownNotice';
+import { CompileOptionsContext, type CompileOptions } from './Markup';
+import ChatMessage from './Message';
+import LogMessage from './LogMessage';
+import Motd from './Motd';
+import SkipMessage from './NotificationMessages/SkipMessage';
+import JoinMessage from './NotificationMessages/JoinMessage';
+import LeaveMessage from './NotificationMessages/LeaveMessage';
+import NameChangedMessage from './NotificationMessages/NameChangedMessage';
+import NowPlayingMessage from './NotificationMessages/NowPlayingMessage';
+import RoleUpdateMessage from './NotificationMessages/RoleUpdateMessage';
 
 const {
   useCallback,
@@ -40,17 +46,79 @@ function scrollToBottom(el: HTMLElement) {
   el.scrollTop = el.scrollHeight;
 }
 
+interface ChatMessageContext {
+  onDeleteMessage: undefined | ((id: string) => void);
+}
+const ChatMessageContext = createContext<ChatMessageContext>({
+  onDeleteMessage: undefined,
+});
+
+type MessageProps = {
+  message: TMessage,
+};
+function Message({ message: msg }: MessageProps) {
+  switch (msg.type) {
+    case 'chat': {
+      const { onDeleteMessage } = use(ChatMessageContext);
+      return (
+        <ChatMessage
+          _id={msg._id}
+          user={msg.user}
+          text={msg.text}
+          parsedText={msg.parsedText}
+          inFlight={msg.inFlight}
+          isMention={msg.isMention}
+          timestamp={msg.timestamp}
+          onDelete={onDeleteMessage}
+        />
+      );
+    }
+    case 'log':
+      return <LogMessage text={msg.text} />;
+    case 'nowPlaying':
+      return <NowPlayingMessage entry={msg.entry} timestamp={msg.timestamp} />;
+    case 'skip':
+      return (
+        <SkipMessage
+          user={msg.user}
+          moderator={msg.moderator}
+          reason={msg.reason}
+          timestamp={msg.timestamp}
+        />
+      );
+    case 'userJoin':
+      return <JoinMessage user={msg.user} timestamp={msg.timestamp} />;
+    case 'userLeave':
+      return <LeaveMessage user={msg.user} timestamp={msg.timestamp} />;
+    case 'userNameChanged':
+      return (
+        <NameChangedMessage
+          user={msg.user}
+          newUsername={msg.newUsername}
+          timestamp={msg.timestamp}
+        />
+      );
+    case 'roleUpdate':
+      return (
+        <RoleUpdateMessage
+          user={msg.user}
+          updateType={msg.updateType}
+          roles={msg.roles}
+          timestamp={msg.timestamp}
+        />
+      );
+  }
+}
+
 type ChatMessagesProps = {
   motd: MarkupNode[] | null,
   messages: TMessage[],
-  canDeleteMessages?: boolean,
   onDeleteMessage?: (id: string) => void,
   compileOptions: CompileOptions,
 };
 function ChatMessages({
   messages,
   motd,
-  canDeleteMessages = false,
   onDeleteMessage,
   compileOptions,
 }: ChatMessagesProps) {
@@ -104,52 +172,34 @@ function ChatMessages({
 
   useListener('chat:scroll', handleExternalScroll);
 
-  function renderMessage(msg: TMessage) {
-    if (msg.type !== 'chat') {
-      // TODO this could just use a switch
-      const SpecialMessage = specialMessages[msg.type] as React.FC<unknown>;
-      return (
-        <SpecialMessage
-          key={msg._id}
-          {...msg}
-        />
-      );
-    }
-
-    return (
-      <Message
-        key={msg._id}
-        _id={msg._id}
-        user={msg.user}
-        text={msg.text}
-        parsedText={msg.parsedText}
-        inFlight={msg.inFlight}
-        isMention={msg.isMention}
-        timestamp={msg.timestamp}
-        compileOptions={compileOptions}
-        deletable={canDeleteMessages}
-        onDelete={onDeleteMessage}
-      />
-    );
-  }
+  const compileOptionsWithDefaults: Required<CompileOptions> = {
+    availableEmoji: new Set(),
+    customEmojiNames: new Set(),
+    emojiImages: {},
+    ...compileOptions,
+  };
 
   return (
-    <div
-      ref={containerRef}
-      className="ChatMessages"
-      onScroll={updateScroll}
-    >
-      <ScrollDownNotice
-        show={!isScrolledToBottom}
-        onClick={() => containerRef.current && scrollToBottom(containerRef.current)}
-      />
-      {motd ? (
-        <Motd compileOptions={compileOptions}>
-          {motd}
-        </Motd>
-      ) : null}
-      {messages.map(renderMessage)}
-    </div>
+    <CompileOptionsContext value={compileOptionsWithDefaults}>
+      <div
+        ref={containerRef}
+        className="ChatMessages"
+        onScroll={updateScroll}
+      >
+        <ScrollDownNotice
+          show={!isScrolledToBottom}
+          onClick={() => containerRef.current && scrollToBottom(containerRef.current)}
+        />
+        {motd ? (
+          <Motd>
+            {motd}
+          </Motd>
+        ) : null}
+        <ChatMessageContext value={{ onDeleteMessage }}>
+          {messages.map((message) => <Message key={message._id} message={message} />)}
+        </ChatMessageContext>
+      </div>
+    </CompileOptionsContext>
   );
 }
 

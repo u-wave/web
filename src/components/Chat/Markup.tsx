@@ -1,4 +1,5 @@
 import cx from 'clsx';
+import { createContext, use } from 'react';
 import shortenUrl from 'shorten-url';
 import type { MarkupNode, MentionNode } from 'u-wave-parse-chat-markup';
 import Tooltip from '@mui/material/Tooltip';
@@ -10,6 +11,12 @@ export type CompileOptions = {
   customEmojiNames?: Set<string>,
   emojiImages?: Record<string, string>,
 };
+
+export const CompileOptionsContext = createContext<Required<CompileOptions>>({
+  availableEmoji: new Set(),
+  customEmojiNames: new Set(),
+  emojiImages: {},
+});
 
 type EmoteProps = {
   name: string,
@@ -132,15 +139,9 @@ function RenderMarkup({ tree, compileOptions, useLargeEmoji }: RenderMarkupProps
 
 type MarkupProps = {
   tree: MarkupNode[],
-  compileOptions: CompileOptions,
 };
-function Markup({ tree, compileOptions }: MarkupProps) {
-  const compileOptionsWithDefaults: Required<CompileOptions> = {
-    availableEmoji: new Set(),
-    customEmojiNames: new Set(),
-    emojiImages: {},
-    ...compileOptions,
-  };
+function Markup({ tree }: MarkupProps) {
+  const compileOptions = use(CompileOptionsContext);
 
   // Display large emoji if a message only contains emoji and separating whitespace
   const useLargeEmoji = tree.length < 10 && tree.every((node) => (
@@ -150,7 +151,7 @@ function Markup({ tree, compileOptions }: MarkupProps) {
   return (
     <RenderMarkup
       tree={tree}
-      compileOptions={compileOptionsWithDefaults}
+      compileOptions={compileOptions}
       useLargeEmoji={useLargeEmoji}
     />
   );

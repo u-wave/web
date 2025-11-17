@@ -15,20 +15,14 @@ import Collapse from '@mui/material/Collapse';
 import { mdiPencil } from '@mdi/js';
 import parse from 'u-wave-parse-chat-markup';
 import SvgIcon from '../../../components/SvgIcon';
-import Markup, { type CompileOptions } from '../../../components/Chat/Markup';
+import Markup from '../../../components/Chat/Markup';
 import useHasRole from '../../../hooks/useHasRole';
 
 type MotdProps = {
   initialMotd: string | null,
-  // TODO: CompileOptions should probably be on the context
-  compileOptions: CompileOptions,
   onSetMotd: (newMotd: string | null) => void,
 };
-function Motd({
-  initialMotd,
-  compileOptions,
-  onSetMotd,
-}: MotdProps) {
+function Motd({ initialMotd, onSetMotd }: MotdProps) {
   const [newMotd, setMotd] = useState(initialMotd);
   const [expanded, setExpanded] = useState(false);
   const canChangeMotd = useHasRole('moderator'); // TODO narrow?
@@ -67,7 +61,7 @@ function Motd({
         )}
       />
       <CardContent>
-        {parsedMotd ? <Markup tree={parsedMotd} compileOptions={compileOptions} /> : null}
+        {parsedMotd ? <Markup tree={parsedMotd} /> : null}
       </CardContent>
       <Collapse in={expanded} unmountOnExit>
         <form onSubmit={onSubmit}>
