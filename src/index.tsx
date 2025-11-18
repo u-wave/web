@@ -1,5 +1,5 @@
 import favicon from '../assets/favicon.ico';
-import LoadingScreen from './components/LoadingScreen';
+import LoadingScreen from './components/LoadingScreen'
 
 function Index() {
   return (
