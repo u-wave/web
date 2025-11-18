@@ -28,8 +28,7 @@ function ChatMessagesContainer() {
       motd={motd}
       messages={messages}
       compileOptions={compileOptions}
-      canDeleteMessages={canDeleteMessages}
-      onDeleteMessage={onDeleteMessage}
+      onDeleteMessage={canDeleteMessages ? onDeleteMessage : undefined}
     />
   );
 }
