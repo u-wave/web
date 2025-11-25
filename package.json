@@ -94,7 +94,7 @@
     "@types/json-schema": "^7.0.15",
     "@types/natural-compare": "^1.4.3",
     "@types/node": "^20.19.1",
-    "@types/react": "^19.2.2",
+    "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.2",
     "@vitejs/plugin-react": "^5.1.1",
     "@vitest/coverage-v8": "^4.0.13",
