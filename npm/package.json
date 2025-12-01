@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "env-schema": "^7.0.0",
-    "express": "^5.1.0",
+    "express": "^5.2.0",
     "hstream": "^3.0.0",
     "minimist": "^1.2.7",
     "router": "^2.2.0",
