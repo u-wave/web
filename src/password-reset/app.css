@@ -2,7 +2,9 @@
 @import url("@openfonts/open-sans_all");
 @import url("../vars.css");
 @import url("../components/App/index.css");
+@import url("../components/FatalError/index.css");
 @import url("../components/Form/index.css");
+@import url("../components/SvgIcon/index.css");
 @import url("./components/PasswordResetPage/index.css");
 
 body {
