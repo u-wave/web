@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.0-alpha.39 / 10 Dec 2025
+While this is an alpha release, new servers should use this rather than an older "stable" version.
+
+Fixes:
+ * Fix requesting a password reset. (#3511, #3512)
+
 ## 2.0.0-alpha.38 / 18 Nov 2025
 While this is an alpha release, new servers should use this rather than an older "stable" version.
 
