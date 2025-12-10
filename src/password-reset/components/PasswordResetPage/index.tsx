@@ -22,7 +22,9 @@ function PasswordResetPage({ resetKey, email, onSuccess }: PasswordResetPageProp
   const [newPasswordConfirm, setNewPasswordConfirm] = useState('');
 
   const valid = newPassword.length >= 6 && newPassword === newPasswordConfirm;
-  const handleSubmit = useAsyncCallback(async () => {
+  const handleSubmit = useAsyncCallback(async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
     if (!valid) {
       return;
     }

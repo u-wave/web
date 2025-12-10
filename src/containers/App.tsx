@@ -11,7 +11,7 @@ import { isConnectedSelector } from '../reducers/server';
 import createTheme from '../utils/createTheme';
 import DesktopApp from '../components/App';
 import MobileApp from '../mobile/components/App';
-import FatalError from '../components/FatalError';
+import CrashHandler from '../components/CrashHandler';
 import UwaveContext from '../context/UwaveContext';
 import { ClockProvider } from '../context/ClockContext';
 import MediaSourceContext, { type MediaSource } from '../context/MediaSourceContext';
@@ -25,37 +25,6 @@ const {
   useMemo,
   useRef,
 } = React;
-
-class ErrorWrapper extends React.Component<
-  { children: React.ReactNode },
-  { error: Error | null }
-> {
-  constructor(props: { children: React.ReactNode }) {
-    super(props);
-
-    this.state = {
-      error: null,
-    };
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  static getDerivedStateFromError(error: any) {
-    return { error };
-  }
-
-  render() {
-    const { children } = this.props;
-    const { error } = this.state;
-
-    if (error != null) {
-      return (
-        <FatalError error={error} />
-      );
-    }
-
-    return children;
-  }
-}
 
 function usePageVisibility(fn: (visible: boolean) => void) {
   useEffect(() => {
@@ -114,7 +83,7 @@ function AppContainer({ uwave, mediaSources }: AppContainerProps) {
 
   return (
     <ThemeProvider theme={theme}>
-      <ErrorWrapper>
+      <CrashHandler>
         <TranslateProvider translator={translator}>
           <BusProvider>
             <ClockProvider>
@@ -128,7 +97,7 @@ function AppContainer({ uwave, mediaSources }: AppContainerProps) {
             </ClockProvider>
           </BusProvider>
         </TranslateProvider>
-      </ErrorWrapper>
+      </CrashHandler>
     </ThemeProvider>
   );
 }
