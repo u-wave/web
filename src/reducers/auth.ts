@@ -168,8 +168,12 @@ export const logout = createAsyncThunk('auth/logout', async () => {
   Session.unset();
 });
 
-export const resetPassword = createAsyncThunk('auth/resetPassword', async (email: string) => {
-  await uwFetch<void>(['/auth/password/reset', { method: 'post', data: email }]);
+export const resetPassword = createAsyncThunk('auth/resetPassword', async (email: string, api) => {
+  await uwFetch<void>(['/auth/password/reset', {
+    method: 'post',
+    data: { email },
+    signal: api.signal,
+  }]);
 });
 
 const slice = createSlice({
