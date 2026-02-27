@@ -40,7 +40,6 @@ function YouTubePlayer({
           width="100%"
           height="100%"
           autoplay
-          modestBranding
           volume={volume / 100}
           playbackRate={1}
           controls={controllable}

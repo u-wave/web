@@ -20,7 +20,7 @@
     "@reduxjs/toolkit": "^2.11.2",
     "@tanstack/react-virtual": "^3.13.18",
     "@u-wave/react-translate": "^2.0.3",
-    "@u-wave/react-youtube": "^1.0.0-alpha.5",
+    "@u-wave/react-youtube": "^1.0.0-rc.1",
     "@u-wave/translate": "^1.0.0",
     "abortcontroller-polyfill": "^1.7.3",
     "array-includes": "^3.1.1",
