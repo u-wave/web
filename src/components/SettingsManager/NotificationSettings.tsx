@@ -1,7 +1,7 @@
 import { useTranslator } from '@u-wave/react-translate';
 import FormGroup from '@mui/material/FormGroup';
-import Switch from '@mui/material/Switch';
 import { useSelector } from '../../hooks/useRedux';
+import Switch from '../Switch';
 import SettingControl from './SettingControl';
 
 type NotificationSettingsProps = {
@@ -18,37 +18,33 @@ function NotificationSettings({ onSettingChange }: NotificationSettingsProps) {
       <FormGroup>
         <SettingControl label={t('settings.notifications.userJoin')}>
           <Switch
-            color="primary"
             checked={notifications.userJoin}
-            onChange={(_event, checked) => {
-              onSettingChange('notifications.userJoin', checked);
+            onChange={(event) => {
+              onSettingChange('notifications.userJoin', event.target.checked);
             }}
           />
         </SettingControl>
         <SettingControl label={t('settings.notifications.userLeave')}>
           <Switch
-            color="primary"
             checked={notifications.userLeave}
-            onChange={(_event, checked) => {
-              onSettingChange('notifications.userLeave', checked);
+            onChange={(event) => {
+              onSettingChange('notifications.userLeave', event.target.checked);
             }}
           />
         </SettingControl>
         <SettingControl label={t('settings.notifications.userNameChanged')}>
           <Switch
-            color="primary"
             checked={notifications.userNameChanged}
-            onChange={(_event, checked) => {
-              onSettingChange('notifications.userNameChanged', checked);
+            onChange={(event) => {
+              onSettingChange('notifications.userNameChanged', event.target.checked);
             }}
           />
         </SettingControl>
         <SettingControl label={t('settings.notifications.skip')}>
           <Switch
-            color="primary"
             checked={notifications.skip}
-            onChange={(_event, checked) => {
-              onSettingChange('notifications.skip', checked);
+            onChange={(event) => {
+              onSettingChange('notifications.skip', event.target.checked);
             }}
           />
         </SettingControl>
