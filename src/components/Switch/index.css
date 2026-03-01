@@ -52,7 +52,16 @@ input.Switch[type="checkbox"] {
     transform: translateX(16px);
   }
 
-  &:not(:checked):hover::after {
-    outline: 9px solid rgba(var(--mui-palette-action-activeChannel) / calc(var(--mui-palette-action-hoverOpacity)));
+  /* Draw a hover ring; :where to lower specificity */
+  &:where(:not(:checked)):hover::after {
+    outline: 9px solid rgb(from currentColor r g b / calc(var(--mui-palette-action-hoverOpacity)));
+  }
+
+  /* Draw a keyboard focus ring on the thumb */
+  &:focus-visible {
+    outline: none;
+  }
+  &:focus-visible::after {
+    outline: 9px solid rgb(from currentColor r g b / 30%);
   }
 }
