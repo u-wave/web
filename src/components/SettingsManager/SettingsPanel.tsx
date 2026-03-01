@@ -3,7 +3,7 @@ import { useTranslator } from '@u-wave/react-translate';
 import type { SelectChangeEvent, Theme } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import FormGroup from '@mui/material/FormGroup';
-import Switch from '@mui/material/Switch';
+import Switch from '../Switch';
 import Profile from './Profile';
 import SettingControl from './SettingControl';
 import LanguagePicker from './LanguagePicker';
@@ -71,25 +71,13 @@ function SettingsPanel({
           label={t('settings.videoEnabled')}
           helpText={t('settings.videoEnabledHelp')}
         >
-          <Switch
-            color="primary"
-            checked={videoEnabled}
-            onChange={handleVideoEnabledChange}
-          />
+          <Switch checked={videoEnabled} onChange={handleVideoEnabledChange} />
         </SettingControl>
         <SettingControl label={t('settings.videoSize')}>
-          <Switch
-            color="primary"
-            checked={videoSize === 'large'}
-            onChange={handleVideoSizeChange}
-          />
+          <Switch checked={videoSize === 'large'} onChange={handleVideoSizeChange} />
         </SettingControl>
         <SettingControl label={t('settings.mentionSound')}>
-          <Switch
-            color="primary"
-            checked={mentionSoundEnabled}
-            onChange={handleMentionSoundChange}
-          />
+          <Switch checked={mentionSoundEnabled} onChange={handleMentionSoundChange} />
         </SettingControl>
         <SettingControl label={t('settings.language')}>
           <LanguagePicker value={language} onChange={handleLanguageChange} />
