@@ -1,7 +1,7 @@
 import cx from 'clsx';
-import { useCallback, useEffect, useId, useLayoutEffect, useRef } from 'react';
-import Paper from '@mui/material/Paper';
+import { useCallback, useRef } from 'react';
 import { mdiMenuDown } from '@mdi/js';
+import * as Popover from '../../../components/Popover';
 import { useMediaSources } from '../../../context/MediaSourceContext';
 import SvgIcon from '../../SvgIcon';
 import SourcePickerElement from './SourcePickerElement';
@@ -12,9 +12,8 @@ type SourcePickerProps = {
   onChange: (sourceName: string) => void,
 };
 function SourcePicker({ className, selected, onChange }: SourcePickerProps) {
-  const id = useId();
   const { getMediaSource, getAllMediaSources } = useMediaSources();
-  const popoverRef = useRef<HTMLDivElement | null>(null);
+  const popoverRef = useRef<Popover.ContentRef | null>(null);
 
   const handleChange = useCallback((sourceName: string) => {
     onChange(sourceName);
@@ -37,22 +36,15 @@ function SourcePicker({ className, selected, onChange }: SourcePickerProps) {
 
   return (
     <div className={cx('SourcePicker', className)}>
-      <button
-        type="button"
-        className="SourcePicker-active"
-        popoverTarget={id}
-      >
-        <SourcePickerElement name={selected} source={selectedSource} active />
-        <SvgIcon path={mdiMenuDown} className="SourcePicker-arrow" />
-      </button>
-      <Paper
-        className="SourcePicker-list"
-        ref={popoverRef}
-        id={id}
-        popover="auto"
-      >
-        {sources}
-      </Paper>
+      <Popover.Root>
+        <Popover.Trigger type="button" className="SourcePicker-active">
+          <SourcePickerElement name={selected} source={selectedSource} active />
+          <SvgIcon path={mdiMenuDown} className="SourcePicker-arrow" />
+        </Popover.Trigger>
+        <Popover.Content className="SourcePicker-list" ref={popoverRef}>
+          {sources}
+        </Popover.Content>
+      </Popover.Root>
     </div>
   );
 }
