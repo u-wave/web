@@ -1,15 +1,10 @@
 import cx from 'clsx';
-import { useCallback, useState } from 'react';
-import Popover, { type PopoverProps } from '@mui/material/Popover';
+import { useCallback, useEffect, useId, useLayoutEffect, useRef } from 'react';
+import Paper from '@mui/material/Paper';
 import { mdiMenuDown } from '@mdi/js';
 import { useMediaSources } from '../../../context/MediaSourceContext';
 import SvgIcon from '../../SvgIcon';
 import SourcePickerElement from './SourcePickerElement';
-
-const popoverPosition = {
-  anchorOrigin: { vertical: 'bottom', horizontal: 'left' },
-  transformOrigin: { vertical: 'top', horizontal: 'left' },
-} satisfies Partial<PopoverProps>;
 
 type SourcePickerProps = {
   className?: string,
@@ -17,19 +12,13 @@ type SourcePickerProps = {
   onChange: (sourceName: string) => void,
 };
 function SourcePicker({ className, selected, onChange }: SourcePickerProps) {
+  const id = useId();
   const { getMediaSource, getAllMediaSources } = useMediaSources();
-  const [isOpen, setOpen] = useState(false);
-  const [container, setContainer] = useState<HTMLElement | null>(null);
+  const popoverRef = useRef<HTMLDivElement | null>(null);
 
-  const handleOpen = useCallback(() => {
-    setOpen(true);
-  }, []);
-  const handleClose = useCallback(() => {
-    setOpen(false);
-  }, []);
   const handleChange = useCallback((sourceName: string) => {
     onChange(sourceName);
-    setOpen(false);
+    popoverRef.current?.hidePopover();
   }, [onChange]);
 
   const sources = Object.entries(getAllMediaSources())
@@ -47,27 +36,23 @@ function SourcePicker({ className, selected, onChange }: SourcePickerProps) {
   const selectedSource = getMediaSource(selected)!;
 
   return (
-    <div
-      className={cx('SourcePicker', className)}
-      ref={setContainer}
-    >
+    <div className={cx('SourcePicker', className)}>
       <button
         type="button"
         className="SourcePicker-active"
-        onClick={handleOpen}
+        popoverTarget={id}
       >
         <SourcePickerElement name={selected} source={selectedSource} active />
         <SvgIcon path={mdiMenuDown} className="SourcePicker-arrow" />
       </button>
-      <Popover
-        classes={{ paper: 'SourcePicker-list' }}
-        open={isOpen}
-        anchorEl={container}
-        onClose={handleClose}
-        {...popoverPosition}
+      <Paper
+        className="SourcePicker-list"
+        ref={popoverRef}
+        id={id}
+        popover="auto"
       >
         {sources}
-      </Popover>
+      </Paper>
     </div>
   );
 }
