@@ -1,0 +1,12 @@
+.Popover {
+  margin: 0;
+  inset: auto;
+  border: none;
+
+  &[data-side="bottom"] {
+    top: calc(anchor(bottom));
+  }
+  &[data-side="top"] {
+    bottom: calc(anchor(top));
+  }
+}

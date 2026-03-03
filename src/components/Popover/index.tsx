@@ -1,3 +1,4 @@
+import cx from 'clsx';
 import {
   createContext, use, useId, useImperativeHandle, useState, type SetStateAction,
 } from 'react';
@@ -61,14 +62,22 @@ function MuiTrigger(props: TriggerProps) {
 export type ContentRef = { hidePopover(): void };
 
 type ContentProps = Omit<PaperProps, 'id' | 'ref'> & {
-  ref: React.RefObject<ContentRef | null>,
+  ref?: React.RefObject<ContentRef | null>,
+  direction?: 'top' | 'bottom',
 };
-function NativeContent({ ref, ...props }: ContentProps) {
+function NativeContent({
+  ref,
+  className,
+  direction = 'bottom',
+  ...props
+}: ContentProps) {
   const { id } = usePopoverContext();
 
   return (
     <Paper
       id={id}
+      className={cx('Popover', className)}
+      data-side={direction}
       popover="auto"
       // Cast the ref object: it's populated by `Paper`, and has _more_ properties
       // than required by `ref`'s type, so it's actually safe.
@@ -78,7 +87,12 @@ function NativeContent({ ref, ...props }: ContentProps) {
   );
 }
 
-function MuiContent({ className, ref, ...props }: ContentProps) {
+function MuiContent({
+  ref,
+  className,
+  direction = 'bottom',
+  ...props
+}: ContentProps) {
   const { open, button, setOpen } = usePopoverContext();
 
   useImperativeHandle(ref, () => {
@@ -91,8 +105,14 @@ function MuiContent({ className, ref, ...props }: ContentProps) {
       onClose={() => setOpen(false)}
       classes={{ paper: className }}
       anchorEl={button}
-      anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-      transformOrigin={{ vertical: 'top', horizontal: 'left' }}
+      anchorOrigin={{
+        vertical: direction,
+        horizontal: 'left',
+      }}
+      transformOrigin={{
+        vertical: direction === 'top' ? 'bottom' : 'top',
+        horizontal: 'left',
+      }}
       {...props}
     />
   );

@@ -22,11 +22,6 @@
 
 .SourcePicker-list {
   width: var(--source-picker-width);
-  margin: 0;
-  inset: auto;
-  border: none;
-  position: absolute;
-  top: calc(anchor(bottom));
 }
 
 .SourcePicker-item {
