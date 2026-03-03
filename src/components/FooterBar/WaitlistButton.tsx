@@ -2,13 +2,13 @@ import cx from 'clsx';
 import { useState } from 'react';
 import { useAsyncCallback } from 'react-async-hook';
 import { useTranslator } from '@u-wave/react-translate';
-import Popover from '@mui/material/Popover';
 import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import { mdiCheck, mdiLock, mdiMenuUp } from '@mdi/js';
+import * as Popover from '../Popover';
 import SvgIcon from '../SvgIcon';
 import { useDispatch, useSelector } from '../../hooks/useRedux';
 import {
@@ -61,8 +61,9 @@ function WaitlistButton() {
   }
 
   if (isDJ) {
+    // TODO(@goto-bus-stop): correct positioning for the popover
     return (
-      <>
+      <Popover.Root>
         <ButtonGroup ref={setAnchor} style={{ height: '100%' }}>
           <Button
             classes={{ root: 'WaitlistButton' }}
@@ -71,26 +72,11 @@ function WaitlistButton() {
           >
             {t('waitlist.leaveBooth')}
           </Button>
-          <Button
-            classes={{ root: 'WaitlistButton--split' }}
-            onClick={() => setOpen((v) => !v)}
-          >
+          <Popover.Trigger className="WaitlistButton--split">
             <SvgIcon path={mdiMenuUp} />
-          </Button>
+          </Popover.Trigger>
         </ButtonGroup>
-        <Popover
-          anchorEl={anchor}
-          open={open}
-          anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
-          transformOrigin={{
-            vertical: 'bottom',
-            horizontal: 'right',
-          }}
-          onClose={() => setOpen(false)}
-        >
+        <Popover.Content direction="top">
           <MenuList>
             <MenuItem onClick={handleAutoLeave.execute}>
               <ListItemIcon>
@@ -99,8 +85,8 @@ function WaitlistButton() {
               {t('waitlist.autoLeave')}
             </MenuItem>
           </MenuList>
-        </Popover>
-      </>
+        </Popover.Content>
+      </Popover.Root>
     );
   }
 
