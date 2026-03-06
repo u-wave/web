@@ -7,11 +7,11 @@ import {
   useState,
 } from 'react';
 import { useTranslator } from '@u-wave/react-translate';
-import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { mdiAlertCircle } from '@mdi/js';
 import SvgIcon from '../../components/SvgIcon';
+import Paper from '../../components/Paper';
 import SongInfo from './SongInfo';
 import type { Media } from '../../reducers/booth';
 

@@ -1,12 +1,12 @@
 import cx from 'clsx';
 import React from 'react';
 import { mdiAccountMultiple } from '@mdi/js';
-import Paper from '@mui/material/Paper';
 import { type Translator, translate } from '@u-wave/react-translate';
 import AutoComplete, { Completion, type CompletionProps } from 'react-abstract-autocomplete';
 import { matchSorter } from 'match-sorter';
 import SvgIcon from '../SvgIcon';
 import Avatar from '../Avatar';
+import Paper from '../Paper';
 import type { User } from '../../reducers/users';
 import { useSelector } from '../../hooks/useRedux';
 import emojiUrl from '../../utils/emojiUrl';
@@ -135,11 +135,9 @@ type SuggestionsListProps = {
 };
 function SuggestionsList({ children }: SuggestionsListProps) {
   return (
-    <div className="ChatInput-suggestions">
-      <Paper>
-        {children}
-      </Paper>
-    </div>
+    <Paper className="ChatInput-suggestions">
+      {children}
+    </Paper>
   );
 }
 

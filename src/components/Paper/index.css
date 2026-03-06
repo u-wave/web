@@ -1,0 +1,9 @@
+/* simplified based on https://github.com/mui/material-ui/blob/fbde8a699f36c4793982199a9adaaeeb7bf8a2cb/packages/mui-material/src/Paper/Paper.js#L30-L74 */
+
+.Paper {
+  color: var(--mui-palette-text-primary);
+  background-color: var(--mui-palette-background-paper);
+  background-image: var(--Paper-overlay);
+  box-shadow: var(--Paper-shadow);
+  border-radius: 4px;
+}

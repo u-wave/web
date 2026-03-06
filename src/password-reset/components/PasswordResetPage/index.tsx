@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useAsyncCallback } from 'react-async-hook';
 import { useTranslator } from '@u-wave/react-translate';
-import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import { mdiEmail, mdiLock } from '@mdi/js';
+import Paper from '../../../components/Paper';
 import Form from '../../../components/Form';
 import FormGroup from '../../../components/Form/Group';
 import TextField from '../../../components/Form/TextField';
