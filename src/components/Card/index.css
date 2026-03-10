@@ -1,0 +1,57 @@
+/*
+ * Styling mostly from MUI:
+ * - https://github.com/mui/material-ui/blob/e9e152f339a00289c32a144e2087ac8bbf4a7aaa/packages/mui-material/src/Card/Card.js
+ * - https://github.com/mui/material-ui/blob/e9e152f339a00289c32a144e2087ac8bbf4a7aaa/packages/mui-material/src/CardHeader/CardHeader.js
+ * - https://github.com/mui/material-ui/blob/e9e152f339a00289c32a144e2087ac8bbf4a7aaa/packages/mui-material/src/CardContent/CardContent.js
+ * - https://github.com/mui/material-ui/blob/e9e152f339a00289c32a144e2087ac8bbf4a7aaa/packages/mui-material/src/CardActions/CardActions.js
+ */
+
+.Card {
+  --card-padding: 16px;
+}
+
+.CardHeader {
+  display: flex;
+  align-items: center;
+  padding: var(--card-padding, 16px);
+}
+.CardHeader-content {
+  flex: 1 1 auto;
+}
+.CardHeader-title {
+  display: block;
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1.43;
+}
+.CardHeader-smallTitle {
+  display: block;
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1.43;
+}
+.CardHeader-subheader {
+  display: block;
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1.43;
+}
+.CardHeader-avatar {
+  display: flex;
+  flex: 0 0 auto;
+  margin-right: var(--card-padding, 16px);
+}
+
+.CardContent {
+  padding: var(--card-padding, 16px);
+
+  &:last-child {
+    padding-bottom: 24px;
+  }
+}
+
+.CardActions {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+}

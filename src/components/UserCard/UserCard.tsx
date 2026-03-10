@@ -1,9 +1,5 @@
 import cx from 'clsx';
 import Typography from '@mui/material/Typography';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
 import { useSelector } from '../../hooks/useRedux';
 import useIntl from '../../hooks/useIntl';
 import useHasRole from '../../hooks/useHasRole';
@@ -15,6 +11,7 @@ import UserRoles from './UserRoles';
 import AddToWaitlistButton from './AddToWaitlistButton';
 import RemoveFromWaitlistButton from './RemoveFromWaitlistButton';
 import BanButton from './BanButton';
+import Card, { CardActions, CardContent, CardHeader } from '../Card';
 
 function waitlistUserIDsSetSelector(state: StoreState) {
   return new Set(

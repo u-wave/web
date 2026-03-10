@@ -1,10 +1,9 @@
 import React from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { useDispatch } from '../../hooks/useRedux';
 import OverlayContent from '../Overlay/Content';
 import OverlayHeader from '../Overlay/Header';
+import Card, { CardContent } from '../Card';
 import { closeOverlay } from '../../reducers/activeOverlay';
 
 type ErrorOverlayProps = {
