@@ -55,9 +55,7 @@ function UserCard({ className, user }: UserCardProps) {
         avatar={<Avatar className="UserCard-avatar" user={user} />}
       />
       <CardContent className="UserCard-joinDate">
-        <Typography>
-          Joined: {dateTimeFormatter.format(joinDate)}
-        </Typography>
+        {`Joined: ${dateTimeFormatter.format(joinDate)}`}
       </CardContent>
       <CardActions className="UserCard-actions">
         {actions}
