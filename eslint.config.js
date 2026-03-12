@@ -1,12 +1,9 @@
 import js from '@eslint/js';
-// FIXME: not sure why this happens
-// eslint-disable-next-line import/no-unresolved
 import ts from 'typescript-eslint';
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
 import compat from 'eslint-plugin-compat';
-import importPlugin from 'eslint-plugin-import';
 import vitest from '@vitest/eslint-plugin';
 import jestDom from 'eslint-plugin-jest-dom';
 import testingLibrary from 'eslint-plugin-testing-library';
@@ -550,8 +547,6 @@ export default [
     },
   },
 
-  importPlugin.flatConfigs.recommended,
-  importPlugin.flatConfigs.typescript,
   compat.configs['flat/recommended'],
 
   {
@@ -634,25 +629,6 @@ export default [
     languageOptions: {
       sourceType: 'script',
       globals: globals.commonjs,
-    },
-  },
-
-  {
-    files: ['src/**/*.{mjs,cjs,js,ts,mts,cts,jsx,tsx}'],
-    rules: {
-      'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
-      'import/extensions': ['error', 'ignorePackages', {
-        js: 'never',
-        mjs: 'never',
-        jsx: 'never',
-        ts: 'never',
-        tsx: 'never',
-      }],
-    },
-    settings: {
-      'import/core-modules': [
-        'virtual:emoji-shortcodes',
-      ],
     },
   },
 
