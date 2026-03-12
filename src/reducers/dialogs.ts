@@ -25,7 +25,7 @@ interface SocialLoginState {
   service: string;
   id: string;
   suggestedName: string;
-  avatars: string[];
+  avatars: Record<string, string>;
 }
 
 type DialogState<T> =
