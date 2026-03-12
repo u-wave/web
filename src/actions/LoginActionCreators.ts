@@ -15,7 +15,7 @@ type CreateCallbackData = {
   type: string,
   id: string,
   suggestedName: string,
-  avatars: string[],
+  avatars: Record<string, string>,
 };
 function whenWindowClosed(window: Window) {
   return new Promise<void>((resolve) => {

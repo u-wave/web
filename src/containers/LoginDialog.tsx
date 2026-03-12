@@ -13,6 +13,10 @@ import LoginDialog from '../components/Dialogs/LoginDialog';
 import { useDispatch, useSelector } from '../hooks/useRedux';
 
 function LoginDialogContainer() {
+  // TODO: This is setting up all state for all dialogs and then branching,
+  // but the state is only used a few levels down. It would be nicer to set
+  // up the state & actions where they're actually used.
+
   const state = useSelector(loginDialogSelector);
   const reCaptchaSiteKey = useSelector(reCaptchaSiteKeySelector);
   const supportsSocialAuth = useSelector(supportsSocialAuthSelector);
@@ -44,21 +48,54 @@ function LoginDialogContainer() {
   }, [dispatch]);
   const onCloseDialog = useCallback(() => dispatch(closeLoginDialog()), [dispatch]);
 
-  return (
-    <LoginDialog
-      reCaptchaSiteKey={reCaptchaSiteKey ?? undefined}
-      supportsSocialAuth={supportsSocialAuth}
-      {...state}
-      onOpenResetPasswordDialog={onOpenResetPasswordDialog}
-      // @ts-expect-error TS2322: should refactor this to not use the state spreading
-      // from the redux store
-      onResetPassword={onResetPassword}
-      onLogin={onLogin}
-      onRegister={onRegister}
-      onSocialFinish={onSocialFinish}
-      onCloseDialog={onCloseDialog}
-    />
-  );
+  switch (state.show) {
+    case 'login':
+      return (
+        <LoginDialog
+          show="login"
+          open={state.open}
+          supportsSocialAuth={supportsSocialAuth}
+          onCloseDialog={onCloseDialog}
+          onLogin={onLogin}
+          onOpenResetPasswordDialog={onOpenResetPasswordDialog}
+        />
+      );
+    case 'register':
+      return (
+        <LoginDialog
+          show="register"
+          open={state.open}
+          reCaptchaSiteKey={reCaptchaSiteKey ?? undefined}
+          supportsSocialAuth={supportsSocialAuth}
+          onCloseDialog={onCloseDialog}
+          onRegister={onRegister}
+        />
+      );
+    case 'reset':
+      return (
+        <LoginDialog
+          show="reset"
+          open={state.open}
+          onCloseDialog={onCloseDialog}
+          onResetPassword={onResetPassword}
+        />
+      );
+    case 'social':
+      return (
+        <LoginDialog
+          show="social"
+          open={state.open}
+          // These ! are a bit weird, but in src/reducers/dialogs.ts
+          // `merge` returns a `Partial<T>`? not sure why that was.
+          service={state.service!}
+          avatars={state.avatars!}
+          onCloseDialog={onCloseDialog}
+          onSocialFinish={onSocialFinish}
+        />
+      );
+    default:
+      return null;
+  }
 }
 
 export default LoginDialogContainer;
