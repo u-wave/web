@@ -3,7 +3,7 @@
 @import url("./vars.css");
 @import url("./components/index.css");
 @import url("./sources/index.css");
-@import url("./mobile") (max-width: 768px);
+@import url("./mobile/index.css") (max-width: 768px);
 
 /* None of our buttons have a use for browser defaults! */
 button {
