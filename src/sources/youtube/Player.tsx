@@ -1,3 +1,4 @@
+/// <reference types="youtube">
 import cx from 'clsx';
 import YouTube from '@u-wave/react-youtube';
 import { useCallback } from 'react';
