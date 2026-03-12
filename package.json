@@ -96,6 +96,7 @@
     "@types/node": "^20.19.1",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.2",
+    "@typescript/native-preview": "^7.0.0-dev.20260312.1",
     "@vitejs/plugin-react": "^6.0.0",
     "@vitest/coverage-v8": "^4.1.0",
     "@vitest/eslint-plugin": "^1.6.9",
@@ -119,7 +120,6 @@
     "stylelint-config-standard": "^40.0.0",
     "twemoji-emojis": "^14.1.0",
     "type-fest": "^5.4.4",
-    "typescript": "^5.9.2",
     "typescript-eslint": "^8.56.1",
     "vite": "^8.0.0",
     "vitest": "^4.1.0"
@@ -143,7 +143,7 @@
     "serve": "u-wave-web",
     "start": "npm run dev",
     "test": "npm run tests-only && npm run typecheck && npm run lint",
-    "typecheck": "tsc",
+    "typecheck": "tsgo",
     "tests-only": "vitest run"
   },
   "workspaces": {
