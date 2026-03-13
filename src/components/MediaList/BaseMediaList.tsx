@@ -1,7 +1,7 @@
 import cx from 'clsx';
 import React from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
-import itemSelection, { type ItemSelection } from 'item-selection/immutable';
+import itemSelection, { type ItemSelection } from 'item-selection/es/immutable';
 import LoadingRow from './LoadingRow';
 import type { Media } from '../../reducers/booth';
 

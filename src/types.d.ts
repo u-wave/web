@@ -41,7 +41,7 @@ declare module '@u-wave/react-translate' {
   export function translate(): <P extends { t: Translator['t'] }>(component: React.ComponentClass<P>) => React.ComponentClass<Omit<P, 't'>>;
 }
 
-declare module 'item-selection/immutable' {
+declare module 'item-selection/es/immutable' {
   export interface ItemSelection<T> {
     getIndices(): number[];
     get(): T[];
