@@ -15,7 +15,7 @@
     "@mdi/js": "^7.0.96",
     "@mui/material": "^7.3.9",
     "@mui/system": "^7.0.1",
-    "@mui/utils": "^7.0.1",
+    "@mui/utils": "^9.0.0",
     "@openfonts/open-sans_all": "^1.44.2",
     "@reduxjs/toolkit": "^2.11.2",
     "@tanstack/react-virtual": "^3.13.23",
