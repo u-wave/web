@@ -69,7 +69,7 @@ class UserCardWrapper extends React.Component<UserCardWrapperProps, UserCardWrap
     return (
       <Modal
         open
-        BackdropProps={{ invisible: true }}
+        slotProps={{ backdrop: { invisible: true } }}
         onClose={onClose}
       >
         <div
