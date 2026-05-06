@@ -21,8 +21,10 @@ function MediaRow({ media, style }: MediaRowProps) {
         />
       </ListItemAvatar>
       <ListItemText
-        primaryTypographyProps={noWrap}
-        secondaryTypographyProps={noWrap}
+        slotProps={{
+          primary: noWrap,
+          secondary: noWrap,
+        }}
         primary={media.title}
         secondary={media.artist}
       />

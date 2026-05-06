@@ -8,7 +8,9 @@ function ErrorArea({ error, onDismiss }: ErrorAreaProps) {
   return (
     <div className="ErrorArea">
       <Snackbar
-        ContentProps={{ className: 'ErrorArea-snackbar' }}
+        slotProps={{
+          content: { className: 'ErrorArea-snackbar' },
+        }}
         open={!!error}
         message={error ?? ''}
         onClose={onDismiss}

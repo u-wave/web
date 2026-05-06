@@ -31,8 +31,10 @@ function PreviewMediaDialog({
         root: 'AppColumn AppColumn--left',
         paper: 'Dialog PreviewMediaDialog',
       }}
-      BackdropProps={{
-        className: 'AppColumn AppColumn--left',
+      slotProps={{
+        backdrop: {
+          className: 'AppColumn AppColumn--left',
+        },
       }}
     >
       <DialogContent className="Dialog-body PreviewMediaDialog-content">

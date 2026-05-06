@@ -139,7 +139,7 @@ function SoundCloudPlayer({
     return (
       <div className={cx('src-soundcloud-Player', className)}>
         <Paper className="src-soundcloud-Player-message">
-          <Typography component="p" paragraph>
+          <Typography component="p">
             {t('booth.autoplayBlocked')}
           </Typography>
           <Button variant="contained" onClick={() => audioRef.current?.play()}>
