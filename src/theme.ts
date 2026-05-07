@@ -48,8 +48,10 @@ export default {
     MuiDialog: {
       // Disable elevation brightening in dialogs
       defaultProps: {
-        PaperProps: {
-          elevation: 0,
+        slotProps: {
+          paper: {
+            elevation: 0,
+          },
         },
       },
     },

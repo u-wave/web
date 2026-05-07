@@ -69,7 +69,7 @@ function Playlists({
               <SvgIcon path={mdiCheck} />
             </ListItemIcon>
           )}
-          <ListItemText primaryTypographyProps={{ noWrap: true }}>
+          <ListItemText slotProps={{ primary: { noWrap: true } }}>
             {playlist.name}
           </ListItemText>
         </MenuItem>

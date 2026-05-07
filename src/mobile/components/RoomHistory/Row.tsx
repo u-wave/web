@@ -22,8 +22,10 @@ function HistoryRow({ media, style }: HistoryRowProps) {
         />
       </ListItemAvatar>
       <ListItemText
-        primaryTypographyProps={noWrap}
-        secondaryTypographyProps={noWrap}
+        slotProps={{
+          primary: noWrap,
+          secondary: noWrap,
+        }}
         primary={media.media.title}
         secondary={media.media.artist}
       />
