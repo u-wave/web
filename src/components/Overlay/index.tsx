@@ -23,6 +23,7 @@ function Overlay({ direction = 'bottom', children, className }: OverlayProps) {
     }
   });
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     onPresentChange();
   }, [isPresent]);
 
