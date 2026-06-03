@@ -37,6 +37,7 @@ function Video({
     setEnableOverlay(media?.sourceType === undefined);
   });
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     onSourceTypeChange();
   }, [media?.sourceType]);
 
