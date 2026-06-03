@@ -87,7 +87,7 @@
     "@emotion/css": "^11.10.5",
     "@emotion/server": "^11.0.0",
     "@eslint/js": "^9.39.2",
-    "@rollup/plugin-yaml": "^4.0.1",
+    "@rollup/plugin-yaml": "^5.0.0",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.4.3",
