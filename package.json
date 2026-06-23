@@ -96,7 +96,7 @@
     "@types/node": "^20.19.1",
     "@types/react": "^19.2.16",
     "@types/react-dom": "^19.2.2",
-    "@typescript/native-preview": "^7.0.0-dev.20260501.1",
+    "@typescript/native-preview": "^7.0.0-dev.20260623.1",
     "@vitejs/plugin-react": "^6.0.2",
     "@vitest/coverage-v8": "^4.1.8",
     "@vitest/eslint-plugin": "^1.6.19",
