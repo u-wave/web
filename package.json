@@ -6,7 +6,7 @@
   "type": "module",
   "dependencies": {
     "@atlaskit/pragmatic-drag-and-drop": "^2.0.1",
-    "@atlaskit/pragmatic-drag-and-drop-hitbox": "^1.2.0",
+    "@atlaskit/pragmatic-drag-and-drop-hitbox": "^2.0.0",
     "@emotion/cache": "^11.14.0",
     "@emotion/core": "^11.0.0",
     "@emotion/react": "^11.14.0",
