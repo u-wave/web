@@ -20,7 +20,7 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@v7
       - name: Install Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: lts/*
           cache: npm
@@ -37,7 +37,7 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@v7
       - name: Install Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: lts/*
           cache: npm
@@ -56,7 +56,7 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@v7
       - name: Install Node.js ${{matrix.node-version}}
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: ${{matrix.node-version}}
           cache: npm
@@ -85,7 +85,7 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@v7
       - name: Install Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: lts/*
           cache: npm
@@ -108,7 +108,7 @@ jobs:
     steps:
     - uses: actions/checkout@v7
     - name: Install Node.js
-      uses: actions/setup-node@v6
+      uses: actions/setup-node@v7
       with:
         node-version: lts/*
         cache: npm
