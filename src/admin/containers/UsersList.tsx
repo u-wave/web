@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import useSWR from 'swr';
-import UsersList from '../components/UsersList';
 import mergeIncludedModels from '../../utils/mergeIncludedModels';
+import UsersList from '../components/UsersList';
 
 const PAGE_SIZE = 50;
 

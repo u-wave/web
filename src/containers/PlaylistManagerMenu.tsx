@@ -1,20 +1,20 @@
 import { useCallback } from 'react';
-import { useSelector, useDispatch } from '../hooks/useRedux';
-import { useMediaSearchStore } from '../stores/MediaSearchStore';
 import PlaylistsMenu from '../components/PlaylistManager/Menu';
+import { useDispatch, useSelector } from '../hooks/useRedux';
 import {
-  type Playlist,
-  type NewPlaylistItem,
+  activatePlaylist,
   addPlaylistItems,
   createPlaylist,
+  type NewPlaylistItem,
+  type Playlist,
+  playlistsSelector,
   selectActivePlaylist,
+  selectedPlaylistIDSelector,
   selectPlaylist,
   showImportPanel,
   showSearchResults,
-  playlistsSelector,
-  selectedPlaylistIDSelector,
-  activatePlaylist,
 } from '../reducers/playlists';
+import { useMediaSearchStore } from '../stores/MediaSearchStore';
 
 type PlaylistMenuContainerProps = {
   className?: string,

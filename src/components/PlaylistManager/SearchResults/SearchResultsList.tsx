@@ -1,6 +1,6 @@
+import type { SearchResult } from '../../../containers/SearchResultsPanel';
 import MediaListBase from '../../MediaList/BaseMediaList';
 import SearchResultRow from './SearchResultRow';
-import type { SearchResult } from '../../../containers/SearchResultsPanel';
 
 type SearchResultsListProps = {
   results: SearchResult[],

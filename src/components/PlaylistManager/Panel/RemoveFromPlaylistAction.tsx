@@ -1,9 +1,9 @@
-import { useCallback } from 'react';
 import { mdiDelete } from '@mdi/js';
+import { useCallback } from 'react';
 import { useDispatch } from '../../../hooks/useRedux';
-import SvgIcon from '../../SvgIcon';
-import MediaAction from '../../MediaList/MediaAction';
 import { type PlaylistItem, removePlaylistItems } from '../../../reducers/playlists';
+import MediaAction from '../../MediaList/MediaAction';
+import SvgIcon from '../../SvgIcon';
 import { usePlaylistContext } from './context';
 
 type RemoveFromPlaylistActionProps = {

@@ -1,6 +1,6 @@
+import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormHelperText from '@mui/material/FormHelperText';
-import Checkbox from '@mui/material/Checkbox';
 import type { JSONSchema7 } from 'json-schema';
 
 type BooleanFieldProps = {

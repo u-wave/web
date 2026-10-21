@@ -1,4 +1,4 @@
-import { type PayloadAction, createSelector, createSlice } from '@reduxjs/toolkit';
+import { createSelector, createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import escapeStringRegExp from 'escape-string-regexp';
 import indexBy from 'just-index';
 import naturalCmp from 'natural-compare';
@@ -6,8 +6,8 @@ import type { JsonObject } from 'type-fest';
 import { createAsyncThunk } from '../redux/api';
 import uwFetch, { type ListResponse } from '../utils/fetch';
 import mergeIncludedModels from '../utils/mergeIncludedModels';
-import { favorite, type Media } from './booth';
 import { initState, logout } from './auth';
+import { favorite, type Media } from './booth';
 
 export interface Playlist {
   _id: string;
@@ -157,9 +157,11 @@ function filterCachedPlaylistItems(state: State, playlistID: string, filter: str
   const rx = new RegExp(escapeStringRegExp(filter), 'i');
   const playlist = state.playlistItems[playlistID];
   if (playlist) {
-    return playlist.filter((item) => item && (
-      rx.test(item.artist) || rx.test(item.title)
-    ));
+    return playlist.filter((item) =>
+      item && (
+        rx.test(item.artist) || rx.test(item.title)
+      )
+    );
   }
   return [];
 }
@@ -244,8 +246,10 @@ function shouldLoadAfterCycle(playlist: Playlist, items: PlaylistItemList) {
   }
   // If the first page _after_ cycle is fully loaded, we also don't need to do
   // anything.
-  if (items.length > MEDIA_PAGE_SIZE
-      && items.slice(1, 1 + MEDIA_PAGE_SIZE).every(Boolean)) {
+  if (
+    items.length > MEDIA_PAGE_SIZE
+    && items.slice(1, 1 + MEDIA_PAGE_SIZE).every(Boolean)
+  ) {
     return false;
   }
   // Otherwise, there will be unloaded items on the first page after cycling,
@@ -343,11 +347,13 @@ const addPlaylistItems = createAsyncThunk('playlists/addPlaylistItems', async ({
     ...resolveMoveOptions(existingItems, target),
   };
 
-  const response = await uwFetch<ListResponse<object> & {
-    meta: {
-      playlistSize: number,
-    },
-  }>([`/playlists/${playlistID}/media`, {
+  const response = await uwFetch<
+    ListResponse<object> & {
+      meta: {
+        playlistSize: number,
+      },
+    }
+  >([`/playlists/${playlistID}/media`, {
     method: 'post',
     data: payload,
   }]);
@@ -389,7 +395,7 @@ const removePlaylistItems = createAsyncThunk('playlists/removePlaylistItems', as
   const items = medias.map((media) => media._id);
 
   const { meta } = await uwFetch<{
-      meta: { playlistSize: number },
+    meta: { playlistSize: number },
   }>([`/playlists/${playlistID}/media`, {
     method: 'delete',
     data: { items },
@@ -399,11 +405,11 @@ const removePlaylistItems = createAsyncThunk('playlists/removePlaylistItems', as
 });
 
 type PlaylistItemUpdate = {
-    artist: string,
-    title: string,
-    start: number,
-    end: number,
-}
+  artist: string,
+  title: string,
+  start: number,
+  end: number,
+};
 const updatePlaylistItem = createAsyncThunk('playlists/updatePlaylistItem', async ({
   playlistID,
   mediaID,
@@ -515,7 +521,10 @@ const slice = createSlice({
       })
       .addCase(loadPlaylist.pending, (state, action) => {
         const {
-          playlistID, page = 0, sneaky = false, filter,
+          playlistID,
+          page = 0,
+          sneaky = false,
+          filter,
         } = action.meta.arg;
         const playlist = state.playlists[playlistID];
         if (playlist == null) {
@@ -532,7 +541,10 @@ const slice = createSlice({
       })
       .addCase(loadPlaylist.fulfilled, (state, action) => {
         const {
-          items, size, page, pageSize,
+          items,
+          size,
+          page,
+          pageSize,
         } = action.payload;
         const { playlistID, filter } = action.meta.arg;
         const playlist = state.playlists[playlistID];
@@ -834,16 +846,16 @@ export const nextMediaSelector = (state: RootState): PlaylistItem | null => {
 };
 
 export {
-  createPlaylist,
-  deletePlaylist,
-  loadPlaylist,
-  cyclePlaylist,
-  shufflePlaylist,
-  renamePlaylist,
   activatePlaylist,
   addPlaylistItems,
+  createPlaylist,
+  cyclePlaylist,
+  deletePlaylist,
+  loadPlaylist,
   movePlaylistItems,
   removePlaylistItems,
+  renamePlaylist,
+  shufflePlaylist,
   updatePlaylistItem,
 };
 export const {

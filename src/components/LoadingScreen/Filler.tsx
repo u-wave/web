@@ -1,6 +1,6 @@
 export type FillerProps = {
   width: number,
-}
+};
 
 function Filler({ width }: FillerProps) {
   const style = { width };

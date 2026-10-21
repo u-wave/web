@@ -1,7 +1,7 @@
-import cx from 'clsx';
-import ListItem from '@mui/material/ListItem';
-import IconButton from '@mui/material/IconButton';
 import { mdiClose, mdiMagnify } from '@mdi/js';
+import IconButton from '@mui/material/IconButton';
+import ListItem from '@mui/material/ListItem';
+import cx from 'clsx';
 import SvgIcon from '../../SvgIcon';
 
 type SearchResultsRowProps = {

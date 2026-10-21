@@ -1,9 +1,9 @@
-import React from 'react';
 import Avatar from '@mui/material/Avatar';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
-import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import React from 'react';
 import Username from '../../../components/Username';
 import type { User } from '../../../reducers/users';
 
@@ -20,9 +20,7 @@ function UserRow({ user, icon }: UserRowProps) {
       <ListItemText>
         <Username user={user} />
       </ListItemText>
-      {icon && (
-        <ListItemIcon>{icon}</ListItemIcon>
-      )}
+      {icon && <ListItemIcon>{icon}</ListItemIcon>}
     </ListItem>
   );
 }

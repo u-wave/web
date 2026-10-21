@@ -1,15 +1,15 @@
-import React from 'react';
-import { useTranslator } from '@u-wave/react-translate';
-import { mdiPlus, mdiCheck } from '@mdi/js';
-import Popover from '@mui/material/Popover';
-import Typography from '@mui/material/Typography';
-import MenuList from '@mui/material/MenuList';
-import MenuItem from '@mui/material/MenuItem';
+import { mdiCheck, mdiPlus } from '@mdi/js';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import SvgIcon from '../SvgIcon';
+import MenuItem from '@mui/material/MenuItem';
+import MenuList from '@mui/material/MenuList';
+import Popover from '@mui/material/Popover';
+import Typography from '@mui/material/Typography';
+import { useTranslator } from '@u-wave/react-translate';
+import React from 'react';
 import { useSelector } from '../../hooks/useRedux';
 import { type Playlist, playlistsSelector } from '../../reducers/playlists';
+import SvgIcon from '../SvgIcon';
 
 const { useCallback } = React;
 

@@ -1,20 +1,20 @@
-import { useCallback, useState } from 'react';
-import { useTranslator, Interpolate } from '@u-wave/react-translate';
-import { useAsyncCallback } from 'react-async-hook';
-import Alert from '@mui/material/Alert';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import RadioGroup from '@mui/material/RadioGroup';
-import Radio from '@mui/material/Radio';
 import { mdiAccount } from '@mdi/js';
+import Alert from '@mui/material/Alert';
+import Checkbox from '@mui/material/Checkbox';
+import FormControl from '@mui/material/FormControl';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormLabel from '@mui/material/FormLabel';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import { Interpolate, useTranslator } from '@u-wave/react-translate';
+import { useCallback, useState } from 'react';
+import { useAsyncCallback } from 'react-async-hook';
 import upperCaseFirst from '../../../utils/upperCaseFirst';
+import CircularProgress from '../../CircularProgress';
 import Form from '../../Form';
+import Button from '../../Form/Button';
 import FormGroup from '../../Form/Group';
 import TextField from '../../Form/TextField';
-import Button from '../../Form/Button';
-import CircularProgress from '../../CircularProgress';
 import SvgIcon from '../../SvgIcon';
 
 type AvatarListProps = {
@@ -61,7 +61,7 @@ export type SocialFormProps = {
   onCloseDialog: () => void,
   onSocialFinish: (data: {
     service: string,
-    params: { avatar: string, username: string }
+    params: { avatar: string, username: string },
   }) => Promise<void>,
 };
 function SocialForm({
@@ -152,7 +152,11 @@ function SocialForm({
           disabled={handleSubmit.loading || !agreed}
         >
           {handleSubmit.loading
-            ? <div className="Button-loading"><CircularProgress size="100%" /></div>
+            ? (
+              <div className="Button-loading">
+                <CircularProgress size="100%" />
+              </div>
+            )
             : t('login.register')}
         </Button>
       </FormGroup>

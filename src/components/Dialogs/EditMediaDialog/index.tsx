@@ -1,27 +1,21 @@
-import cx from 'clsx';
-import { useCallback, useId, useState } from 'react';
-import { useTranslator } from '@u-wave/react-translate';
-import formatDuration from 'format-duration';
+import { mdiHeadphones, mdiMusicNote, mdiPlay, mdiStop, mdiSwapHorizontal } from '@mdi/js';
 import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import {
-  mdiHeadphones,
-  mdiMusicNote,
-  mdiPlay,
-  mdiStop,
-  mdiSwapHorizontal,
-} from '@mdi/js';
-import SvgIcon from '../../SvgIcon';
+import { useTranslator } from '@u-wave/react-translate';
+import cx from 'clsx';
+import formatDuration from 'format-duration';
+import { useCallback, useId, useState } from 'react';
+import type { Media } from '../../../reducers/booth';
 import DialogCloseAnimation from '../../DialogCloseAnimation';
 import Form from '../../Form';
-import FormGroup from '../../Form/Group';
 import Button from '../../Form/Button';
+import FormGroup from '../../Form/Group';
 import TextField from '../../Form/TextField';
+import SvgIcon from '../../SvgIcon';
 import Chapters from './Chapters';
-import type { Media } from '../../../reducers/booth';
 
 // naive HH:mm:ss → seconds
 function parseDuration(str: string) {
@@ -45,13 +39,13 @@ function hasChapters(
     && Array.isArray(sourceData.chapters)
     && sourceData.chapters.every((chapter) => (
       typeof chapter === 'object'
-        && chapter != null
-        && 'start' in chapter
-        && typeof chapter.start === 'number'
-        && 'end' in chapter
-        && typeof chapter.end === 'number'
-        && 'title' in chapter
-        && typeof chapter.title === 'string'
+      && chapter != null
+      && 'start' in chapter
+      && typeof chapter.start === 'number'
+      && 'end' in chapter
+      && typeof chapter.end === 'number'
+      && 'title' in chapter
+      && typeof chapter.title === 'string'
     ));
 }
 
@@ -207,31 +201,32 @@ function EditMediaDialog({
     />
   );
 
-  const chapters = hasChapters(media.sourceData) && media.sourceData.chapters.length > 0 ? (
-    <FormGroup className="FormGroup--noSpacing EditMediaDialog-chapters">
-      <p className="EditMediaDialog-chaptersLabel">
-        {t('dialogs.editMedia.chapterLabel')}
-      </p>
-      <Chapters
-        className="EditMediaDialog-chaptersList"
-        available={media.sourceData.chapters}
-        start={parseDuration(start)}
-        end={parseDuration(end)}
-        onChange={handleChangeChapter}
-        tabIndex={BASE_TAB_INDEX + 5}
-      />
-    </FormGroup>
-  ) : null;
+  const chapters = hasChapters(media.sourceData) && media.sourceData.chapters.length > 0
+    ? (
+      <FormGroup className="FormGroup--noSpacing EditMediaDialog-chapters">
+        <p className="EditMediaDialog-chaptersLabel">
+          {t('dialogs.editMedia.chapterLabel')}
+        </p>
+        <Chapters
+          className="EditMediaDialog-chaptersList"
+          available={media.sourceData.chapters}
+          start={parseDuration(start)}
+          end={parseDuration(end)}
+          onChange={handleChangeChapter}
+          tabIndex={BASE_TAB_INDEX + 5}
+        />
+      </FormGroup>
+    )
+    : null;
 
   const form = (
     <Form onSubmit={handleSubmit}>
       {errors && errors.length > 0 && (
         <FormGroup>
-          {errors.map((error) => (
-            // eslint-disable-next-line react/jsx-key
-            <div>{t(`dialogs.editMedia.errors.${error}`)}</div>
-          ))}
-
+          {
+            /* eslint-disable-next-line react/jsx-key */
+            errors.map((error) => <div>{t(`dialogs.editMedia.errors.${error}`)}</div>)
+          }
         </FormGroup>
       )}
 
@@ -275,23 +270,25 @@ function EditMediaDialog({
 
   return (
     <DialogCloseAnimation delay={450}>
-      {open ? (
-        <Dialog
-          classes={{
-            paper: cx('Dialog', 'EditMediaDialog', contentClassName),
-          }}
-          open={open}
-          onClose={onCloseDialog}
-          aria-labelledby={ariaTitle}
-        >
-          <DialogTitle id={ariaTitle} className={cx('Dialog-title', titleClassName)}>
-            {t('dialogs.editMedia.title')}
-          </DialogTitle>
-          <DialogContent className={cx('Dialog-body', bodyClassName)}>
-            {form}
-          </DialogContent>
-        </Dialog>
-      ) : null}
+      {open
+        ? (
+          <Dialog
+            classes={{
+              paper: cx('Dialog', 'EditMediaDialog', contentClassName),
+            }}
+            open={open}
+            onClose={onCloseDialog}
+            aria-labelledby={ariaTitle}
+          >
+            <DialogTitle id={ariaTitle} className={cx('Dialog-title', titleClassName)}>
+              {t('dialogs.editMedia.title')}
+            </DialogTitle>
+            <DialogContent className={cx('Dialog-body', bodyClassName)}>
+              {form}
+            </DialogContent>
+          </Dialog>
+        )
+        : null}
     </DialogCloseAnimation>
   );
 }

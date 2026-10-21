@@ -1,5 +1,5 @@
-import ChatMessages from '../../containers/ChatMessages';
 import ChatInput from '../../containers/ChatInput';
+import ChatMessages from '../../containers/ChatMessages';
 
 function Chat() {
   return (

@@ -1,7 +1,7 @@
 import List from '@mui/material/List';
 import MediaListBase from '../../../components/MediaList/BaseMediaList';
-import HistoryRow from './Row';
 import useRoomHistory from '../../../hooks/useRoomHistory';
+import HistoryRow from './Row';
 
 function HistoryList() {
   const media = useRoomHistory();

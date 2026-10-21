@@ -1,20 +1,20 @@
-import cx from 'clsx';
-import Typography from '@mui/material/Typography';
 import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import { useSelector } from '../../hooks/useRedux';
-import useIntl from '../../hooks/useIntl';
+import CardHeader from '@mui/material/CardHeader';
+import Typography from '@mui/material/Typography';
+import cx from 'clsx';
 import useHasRole from '../../hooks/useHasRole';
+import useIntl from '../../hooks/useIntl';
+import { useSelector } from '../../hooks/useRedux';
+import { currentUserHasRoleSelector, type User, userHasRoleSelector } from '../../reducers/users';
 import { djAndWaitlistUsersSelector } from '../../reducers/waitlist';
-import { type User, currentUserHasRoleSelector, userHasRoleSelector } from '../../reducers/users';
 import type { StoreState } from '../../redux/configureStore';
 import Avatar from '../Avatar';
-import UserRoles from './UserRoles';
 import AddToWaitlistButton from './AddToWaitlistButton';
-import RemoveFromWaitlistButton from './RemoveFromWaitlistButton';
 import BanButton from './BanButton';
+import RemoveFromWaitlistButton from './RemoveFromWaitlistButton';
+import UserRoles from './UserRoles';
 
 function waitlistUserIDsSetSelector(state: StoreState) {
   return new Set(

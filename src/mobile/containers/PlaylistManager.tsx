@@ -1,10 +1,7 @@
 import React from 'react';
-import { useSelector } from '../../hooks/useRedux';
 import createLazyOverlay from '../../components/LazyOverlay';
-import {
-  selectedPlaylistSelector,
-  filteredSelectedPlaylistItemsSelector,
-} from '../../reducers/playlists';
+import { useSelector } from '../../hooks/useRedux';
+import { filteredSelectedPlaylistItemsSelector, selectedPlaylistSelector } from '../../reducers/playlists';
 
 const PlaylistManager = createLazyOverlay({
   Component: React.lazy(() => import('../components/PlaylistManager')),

@@ -1,14 +1,14 @@
-import { useState } from 'react';
-import { useTranslator } from '@u-wave/react-translate';
-import { useAsyncCallback } from 'react-async-hook';
-import Alert from '@mui/material/Alert';
 import { mdiEmail } from '@mdi/js';
+import Alert from '@mui/material/Alert';
+import { useTranslator } from '@u-wave/react-translate';
+import { useState } from 'react';
+import { useAsyncCallback } from 'react-async-hook';
+import CircularProgress from '../../CircularProgress';
 import Form from '../../Form';
+import Button from '../../Form/Button';
 import FormGroup from '../../Form/Group';
 import TextField from '../../Form/TextField';
-import CircularProgress from '../../CircularProgress';
 import SvgIcon from '../../SvgIcon';
-import Button from '../../Form/Button';
 
 export type ResetPasswordFormProps = {
   show: 'reset',
@@ -64,9 +64,13 @@ function ResetPasswordForm({ onResetPassword, onCloseDialog }: ResetPasswordForm
           className="ResetPasswordForm-submit"
           disabled={handleSubmit.loading}
         >
-          {handleSubmit.loading ? (
-            <div className="Button-loading"><CircularProgress size="100%" /></div>
-          ) : t('login.requestPasswordReset')}
+          {handleSubmit.loading
+            ? (
+              <div className="Button-loading">
+                <CircularProgress size="100%" />
+              </div>
+            )
+            : t('login.requestPasswordReset')}
         </Button>
       </FormGroup>
     </Form>

@@ -1,15 +1,7 @@
 import ms from 'ms';
-import { findUser, type Command } from '../ChatCommands';
-import {
-  log,
-  muteUser,
-  unmuteUser,
-  mutedUserSelector,
-} from '../../reducers/chat';
-import {
-  userListSelector,
-  isModeratorSelector,
-} from '../../reducers/users';
+import { log, mutedUserSelector, muteUser, unmuteUser } from '../../reducers/chat';
+import { isModeratorSelector, userListSelector } from '../../reducers/users';
+import { type Command, findUser } from '../ChatCommands';
 
 export default [
   {

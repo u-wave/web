@@ -1,7 +1,7 @@
-import cx from 'clsx';
-import { useTranslator } from '@u-wave/react-translate';
 import { mdiArrowDown } from '@mdi/js';
 import Fab from '@mui/material/Fab';
+import { useTranslator } from '@u-wave/react-translate';
+import cx from 'clsx';
 import SvgIcon from '../SvgIcon';
 
 type ScrollDownNoticeProps = {

@@ -1,13 +1,13 @@
-import { useTranslator } from '@u-wave/react-translate';
+import { mdiPlay } from '@mdi/js';
+import Button, { type ButtonProps } from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
 import ListSubheader from '@mui/material/ListSubheader';
-import Divider from '@mui/material/Divider';
-import Button, { type ButtonProps } from '@mui/material/Button';
-import { mdiPlay } from '@mdi/js';
+import { useTranslator } from '@u-wave/react-translate';
 import SvgIcon from '../../../components/SvgIcon';
+import type { User } from '../../../reducers/users';
 import UserRow from './UserRow';
 import WaitlistPosition from './WaitlistPosition';
-import type { User } from '../../../reducers/users';
 
 function JoinWaitlistButton(props: ButtonProps) {
   return (
@@ -52,13 +52,15 @@ function UserList({
             icon={<SvgIcon path={mdiPlay} style={{ margin: 5 }} />}
           />
         )}
-        {waitlist.map((user, position) => user && (
-          <UserRow
-            key={user._id}
-            user={user}
-            icon={<WaitlistPosition position={position + 1} />}
-          />
-        ))}
+        {waitlist.map((user, position) =>
+          user && (
+            <UserRow
+              key={user._id}
+              user={user}
+              icon={<WaitlistPosition position={position + 1} />}
+            />
+          )
+        )}
       </List>
       {userIsLoggedIn && !userInWaitlist && (
         <JoinWaitlistButton
@@ -74,9 +76,7 @@ function UserList({
       <List
         subheader={<ListSubheader>{t('users.listeners')}</ListSubheader>}
       >
-        {users.map((user) => (
-          <UserRow key={user._id} user={user} />
-        ))}
+        {users.map((user) => <UserRow key={user._id} user={user} />)}
       </List>
     </div>
   );

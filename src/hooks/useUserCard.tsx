@@ -18,13 +18,15 @@ export default function useUserCard(user: User, refAnchor: React.RefObject<HTMLE
     setOpen(false);
   }, []);
 
-  const card = isOpen && position != null ? (
-    <UserCard
-      user={user}
-      position={position}
-      onClose={close}
-    />
-  ) : null;
+  const card = isOpen && position != null
+    ? (
+      <UserCard
+        user={user}
+        position={position}
+        onClose={close}
+      />
+    )
+    : null;
 
   return {
     card,

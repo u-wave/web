@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
-import { useSelector } from '../hooks/useRedux';
-import { userListSelector, guestCountSelector } from '../reducers/users';
-import { currentVotesSelector } from '../reducers/booth';
 import RoomUserList from '../components/RoomUserList';
+import { useSelector } from '../hooks/useRedux';
+import { currentVotesSelector } from '../reducers/booth';
+import { guestCountSelector, userListSelector } from '../reducers/users';
 
 type RoomUserListContainerProps = {
   className?: string,

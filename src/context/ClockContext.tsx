@@ -1,11 +1,4 @@
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useEffectEvent,
-  useMemo,
-  useState,
-} from 'react';
+import { createContext, useContext, useEffect, useEffectEvent, useMemo, useState } from 'react';
 import { useDispatch } from '../hooks/useRedux';
 import { sync } from '../reducers/server';
 

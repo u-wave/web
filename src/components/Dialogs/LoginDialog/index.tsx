@@ -1,23 +1,25 @@
+import { mdiClose } from '@mdi/js';
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import IconButton from '@mui/material/IconButton';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTranslator } from '@u-wave/react-translate';
 import cx from 'clsx';
 import { useId } from 'react';
-import { useTranslator } from '@u-wave/react-translate';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import IconButton from '@mui/material/IconButton';
-import { mdiClose } from '@mdi/js';
-import { useTheme } from '@mui/material/styles';
 import SvgIcon from '../../SvgIcon';
+import HeightTransition from './HeightTransition';
 import LoginForm, { type LoginFormProps } from './LoginForm';
 import RegisterForm, { type RegisterFormProps } from './RegisterForm';
-import SocialForm, { type SocialFormProps } from './SocialForm';
 import ResetPasswordForm, { type ResetPasswordFormProps } from './ResetPasswordForm';
-import HeightTransition from './HeightTransition';
+import SocialForm, { type SocialFormProps } from './SocialForm';
 
-type LoginDialogProps = { open: boolean } & (
-  RegisterFormProps | SocialFormProps | ResetPasswordFormProps | LoginFormProps
-);
+type LoginDialogProps =
+  & { open: boolean }
+  & (
+    RegisterFormProps | SocialFormProps | ResetPasswordFormProps | LoginFormProps
+  );
 
 function LoginDialog(props: LoginDialogProps) {
   const { t } = useTranslator();

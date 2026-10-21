@@ -31,16 +31,19 @@ describe('reducers/votes', () => {
     let state = initialState();
 
     it('should load in votes from the init endpoint', () => {
-      state = booth(state, initState.fulfilled({
-        booth: {
-          media: {},
-          stats: {
-            upvotes: ['JL2G9-1Hc8p80_AxlcwZC'],
-            downvotes: [],
-            favorites: ['0slaUXdWdE3Pz4cbjocYV'],
+      state = booth(
+        state,
+        initState.fulfilled({
+          booth: {
+            media: {},
+            stats: {
+              upvotes: ['JL2G9-1Hc8p80_AxlcwZC'],
+              downvotes: [],
+              favorites: ['0slaUXdWdE3Pz4cbjocYV'],
+            },
           },
-        },
-      }));
+        }),
+      );
 
       expect(state.stats).toEqual({
         upvotes: ['JL2G9-1Hc8p80_AxlcwZC'],
@@ -50,9 +53,12 @@ describe('reducers/votes', () => {
     });
 
     it('should be null if the booth is empty', () => {
-      state = booth(state, initState.fulfilled({
-        booth: null,
-      }));
+      state = booth(
+        state,
+        initState.fulfilled({
+          booth: null,
+        }),
+      );
 
       expect(state.stats).toEqual(null);
     });
@@ -60,16 +66,19 @@ describe('reducers/votes', () => {
 
   describe('action: booth/advance', () => {
     it('should reset votes state', () => {
-      const state = booth({
-        upvotes: ['nFy0Ts_UqrsUx8ddipZG9', 'OAxkeiBoNXWnejk9bPjpp'],
-        downvotes: ['HE1HhtApndA-kpB8KeI6m'],
-        favorites: ['JL2G9-1Hc8p80_AxlcwZC', '0slaUXdWdE3Pz4cbjocYV'],
-      }, advanceInner({
-        historyID: 'E1YirtFAC9erLKDION4J0',
-        userID: 'kxZex8C4IQ97YnPuOQezB',
-        media: { artist: 'about tess', title: 'Imaginedit' },
-        timestamp: 1449767164107,
-      }));
+      const state = booth(
+        {
+          upvotes: ['nFy0Ts_UqrsUx8ddipZG9', 'OAxkeiBoNXWnejk9bPjpp'],
+          downvotes: ['HE1HhtApndA-kpB8KeI6m'],
+          favorites: ['JL2G9-1Hc8p80_AxlcwZC', '0slaUXdWdE3Pz4cbjocYV'],
+        },
+        advanceInner({
+          historyID: 'E1YirtFAC9erLKDION4J0',
+          userID: 'kxZex8C4IQ97YnPuOQezB',
+          media: { artist: 'about tess', title: 'Imaginedit' },
+          timestamp: 1449767164107,
+        }),
+      );
       expect(state.stats).toEqual(EMPTY_STATE);
     });
   });

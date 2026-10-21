@@ -1,17 +1,17 @@
+import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
+import { useTranslator } from '@u-wave/react-translate';
 import cx from 'clsx';
 import { useState } from 'react';
-import { useTranslator } from '@u-wave/react-translate';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import { useSelector } from '../../hooks/useRedux';
-import Chat from '../Chat';
 import RoomUserList from '../../containers/RoomUserList';
 import WaitList from '../../containers/WaitList';
+import { useSelector } from '../../hooks/useRedux';
 import { listenerCountSelector } from '../../reducers/users';
 import {
-  sizeSelector as waitlistSizeSelector,
   positionSelector as waitlistPositionSelector,
+  sizeSelector as waitlistSizeSelector,
 } from '../../reducers/waitlist';
+import Chat from '../Chat';
 
 const subHeaderStyle = {
   fontSize: '125%',

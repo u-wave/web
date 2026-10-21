@@ -1,7 +1,7 @@
 import cx from 'clsx';
+import type { SearchResult } from '../../../containers/SearchResultsPanel';
 import AddToPlaylistAction from '../../MediaList/AddToPlaylistAction';
 import PreviewMediaAction from '../../MediaList/PreviewMediaAction';
-import type { SearchResult } from '../../../containers/SearchResultsPanel';
 
 function dontBubble(event: React.BaseSyntheticEvent) {
   event.stopPropagation();

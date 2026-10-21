@@ -1,5 +1,5 @@
-import ms from 'ms';
 import { useTranslator } from '@u-wave/react-translate';
+import ms from 'ms';
 import useClock from '../../hooks/useClock';
 import useIntl from '../../hooks/useIntl';
 

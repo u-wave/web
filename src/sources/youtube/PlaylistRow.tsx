@@ -1,6 +1,6 @@
-import cx from 'clsx';
-import IconButton from '@mui/material/IconButton';
 import { mdiPlaylistPlus } from '@mdi/js';
+import IconButton from '@mui/material/IconButton';
+import cx from 'clsx';
 import SvgIcon from '../../components/SvgIcon';
 
 export interface YouTubePlaylist {
@@ -16,7 +16,7 @@ type PlaylistRowProps = {
   style?: React.CSSProperties,
   playlist: YouTubePlaylist,
   onImport: () => void,
-}
+};
 function PlaylistRow({
   className,
   style,

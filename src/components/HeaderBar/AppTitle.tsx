@@ -1,8 +1,8 @@
-import cx from 'clsx';
-import IconButton from '@mui/material/IconButton';
 import { mdiMenuDown } from '@mdi/js';
-import SvgIcon from '../SvgIcon';
+import IconButton from '@mui/material/IconButton';
+import cx from 'clsx';
 import logo from '../../../assets/img/logo-white.png';
+import SvgIcon from '../SvgIcon';
 
 type AppTitleTypes = {
   className?: string,

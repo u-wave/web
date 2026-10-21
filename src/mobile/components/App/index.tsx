@@ -1,18 +1,18 @@
+import Snackbar from '@mui/material/Snackbar';
 import cx from 'clsx';
 import { useState } from 'react';
-import Snackbar from '@mui/material/Snackbar';
-import { useSelector } from '../../../hooks/useRedux';
-import ErrorArea from '../../../containers/ErrorArea';
-import PlaylistManager from '../../containers/PlaylistManager';
-import RoomHistory from '../../containers/RoomHistory';
-import SettingsManager from '../../../containers/SettingsManager';
+import Overlays from '../../../components/App/Overlays';
 import Dialogs from '../../../components/Dialogs';
 import AddToPlaylistMenu from '../../../containers/AddToPlaylistMenu';
-import Overlays from '../../../components/App/Overlays';
-import MainView from '../../containers/MainView';
-import About from '../../containers/About';
-import ServerList from '../../containers/ServerList';
+import ErrorArea from '../../../containers/ErrorArea';
+import SettingsManager from '../../../containers/SettingsManager';
+import { useSelector } from '../../../hooks/useRedux';
 import { videoEnabledSelector } from '../../../reducers/settings';
+import About from '../../containers/About';
+import MainView from '../../containers/MainView';
+import PlaylistManager from '../../containers/PlaylistManager';
+import RoomHistory from '../../containers/RoomHistory';
+import ServerList from '../../containers/ServerList';
 
 type MobileAppProps = {
   activeOverlay?: string | null,

@@ -1,16 +1,10 @@
 import { useCallback } from 'react';
 import type { JsonObject } from 'type-fest';
-import {
-  register,
-  login,
-  finishSocialLogin,
-  resetPassword,
-  supportsSocialAuthSelector,
-} from '../reducers/auth';
-import { loginDialogSelector, openLoginDialog, closeLoginDialog } from '../reducers/dialogs';
-import { reCaptchaSiteKeySelector } from '../reducers/config';
 import LoginDialog from '../components/Dialogs/LoginDialog';
 import { useDispatch, useSelector } from '../hooks/useRedux';
+import { finishSocialLogin, login, register, resetPassword, supportsSocialAuthSelector } from '../reducers/auth';
+import { reCaptchaSiteKeySelector } from '../reducers/config';
+import { closeLoginDialog, loginDialogSelector, openLoginDialog } from '../reducers/dialogs';
 
 function LoginDialogContainer() {
   // TODO: This is setting up all state for all dialogs and then branching,

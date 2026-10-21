@@ -1,21 +1,21 @@
 import { useCallback } from 'react';
-import { useSelector, useDispatch } from '../hooks/useRedux';
 import PlaylistPanel from '../components/PlaylistManager/Panel';
+import { useDispatch, useSelector } from '../hooks/useRedux';
 import {
-  type NewPlaylistItem,
+  activatePlaylist,
   addPlaylistItems,
   deletePlaylist,
-  loadPlaylist,
-  shufflePlaylist,
-  renamePlaylist,
-  activatePlaylist,
-  movePlaylistItems,
-  type PlaylistItem,
-  type InsertTarget,
-  selectedPlaylistSelector,
   filteredSelectedPlaylistItemsSelector,
+  type InsertTarget,
+  loadPlaylist,
+  movePlaylistItems,
+  type NewPlaylistItem,
+  type PlaylistItem,
   playlistItemFilterSelector,
+  renamePlaylist,
+  selectedPlaylistSelector,
   setPlaylistFilter,
+  shufflePlaylist,
 } from '../reducers/playlists';
 
 function PlaylistPanelContainer() {

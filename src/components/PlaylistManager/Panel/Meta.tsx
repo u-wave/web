@@ -1,13 +1,13 @@
+import { mdiCheckboxBlankOutline, mdiCheckboxMarked } from '@mdi/js';
+import Checkbox from '@mui/material/Checkbox';
+import { useTranslator } from '@u-wave/react-translate';
 import cx from 'clsx';
 import { useId } from 'react';
-import { useTranslator } from '@u-wave/react-translate';
-import Checkbox from '@mui/material/Checkbox';
-import { mdiCheckboxMarked, mdiCheckboxBlankOutline } from '@mdi/js';
 import SvgIcon from '../../SvgIcon';
-import RenamePlaylistButton from './RenamePlaylistButton';
 import DeletePlaylistButton from './DeletePlaylistButton';
-import ShufflePlaylistButton from './ShufflePlaylistButton';
 import PlaylistFilter from './PlaylistFilter';
+import RenamePlaylistButton from './RenamePlaylistButton';
+import ShufflePlaylistButton from './ShufflePlaylistButton';
 
 type PlaylistMetaProps = {
   className?: string,

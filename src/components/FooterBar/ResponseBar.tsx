@@ -1,12 +1,7 @@
-import cx from 'clsx';
-import { useTranslator } from '@u-wave/react-translate';
-import {
-  mdiHeart,
-  mdiHeartOutline,
-  mdiThumbDown,
-  mdiThumbUp,
-} from '@mdi/js';
+import { mdiHeart, mdiHeartOutline, mdiThumbDown, mdiThumbUp } from '@mdi/js';
 import Tooltip from '@mui/material/Tooltip';
+import { useTranslator } from '@u-wave/react-translate';
+import cx from 'clsx';
 import SvgIcon from '../SvgIcon';
 
 type ButtonProps = {
@@ -54,12 +49,18 @@ type ResponseBarProps = {
   isFavorite: boolean,
   favoritesCount: number,
   onFavorite: (position: { x: number, y: number }) => void,
-}
+};
 function ResponseBar({
   disabled = false,
-  isUpvote, upvotesCount, onUpvote,
-  isDownvote, downvotesCount, onDownvote,
-  isFavorite, favoritesCount, onFavorite,
+  isUpvote,
+  upvotesCount,
+  onUpvote,
+  isDownvote,
+  downvotesCount,
+  onDownvote,
+  isFavorite,
+  favoritesCount,
+  onFavorite,
 }: ResponseBarProps) {
   const { t } = useTranslator();
 

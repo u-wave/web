@@ -1,6 +1,6 @@
-import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import FormHelperText from '@mui/material/FormHelperText';
 
 const labelClasses = {
   root: 'SettingControl-label',
@@ -21,7 +21,7 @@ function SettingControl({ label, helpText, children }: SettingControlProps) {
         labelPlacement="start"
         control={children}
       />
-      {helpText ? (<FormHelperText>{helpText}</FormHelperText>) : null}
+      {helpText ? <FormHelperText>{helpText}</FormHelperText> : null}
     </FormControl>
   );
 }

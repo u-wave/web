@@ -1,11 +1,11 @@
+import { Interpolate } from '@u-wave/react-translate';
 import cx from 'clsx';
 import { useCallback, useMemo, useRef } from 'react';
-import { Interpolate } from '@u-wave/react-translate';
 import useUserCard from '../../../hooks/useUserCard';
+import type { User } from '../../../reducers/users';
 import Avatar from '../../Avatar';
 import Username from '../../Username';
 import MessageTimestamp from '../MessageTimestamp';
-import type { User } from '../../../reducers/users';
 
 type UserNotificationMessageProps = {
   className?: string,

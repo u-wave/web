@@ -1,29 +1,29 @@
-import useSWR from 'swr';
 import { useMemo } from 'react';
-import { useSelector } from './useRedux';
-import mergeIncludedModels from '../utils/mergeIncludedModels';
-import { type Media, currentPlaySelector } from '../reducers/booth';
+import useSWR from 'swr';
+import { currentPlaySelector, type Media } from '../reducers/booth';
 import { type User } from '../reducers/users';
 import uwFetch, { type ListResponse } from '../utils/fetch';
+import mergeIncludedModels from '../utils/mergeIncludedModels';
+import { useSelector } from './useRedux';
 
 interface ApiMedia {
-  _id: string
-  sourceID: string
-  sourceType: string
-  sourceData: Record<string, unknown> | null
-  artist: string
-  title: string
-  duration: number
-  thumbnail: string
-  createdAt: string
-  updatedAt: string
+  _id: string;
+  sourceID: string;
+  sourceType: string;
+  sourceData: Record<string, unknown> | null;
+  artist: string;
+  title: string;
+  duration: number;
+  thumbnail: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 interface ApiHistoryEntry {
-  _id: string,
-  user: User,
-  playlist: string,
-  item: string,
+  _id: string;
+  user: User;
+  playlist: string;
+  item: string;
   media: {
     media: ApiMedia,
     artist: string,
@@ -31,23 +31,23 @@ interface ApiHistoryEntry {
     start: number,
     end: number,
     sourceData: Record<string, unknown> | null,
-  },
-  playedAt: string,
-  upvotes: string[],
-  downvotes: string[],
-  favorites: string[],
+  };
+  playedAt: string;
+  upvotes: string[];
+  downvotes: string[];
+  favorites: string[];
 }
 
 export interface HistoryEntry {
   _id: string;
-  user: User,
-  media: Media,
-  timestamp: number,
+  user: User;
+  media: Media;
+  timestamp: number;
   stats: {
     upvotes: string[],
     downvotes: string[],
     favorites: string[],
-  },
+  };
 }
 
 export function normalizeFromApi(entry: ApiHistoryEntry) {

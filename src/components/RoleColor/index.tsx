@@ -2,12 +2,12 @@ import React from 'react';
 import { useSelector } from '../../hooks/useRedux';
 import { roleColorsSelector } from '../../reducers/config';
 
-type RoleColorPropsOwn = { roles: string[] }
+type RoleColorPropsOwn = { roles: string[] };
 // there's probably a better way to do this but if it works it works
-type RoleColorPropsSpan =
-  React.ComponentPropsWithoutRef<'span'> & RoleColorPropsOwn & { component?: undefined }
-type RoleColorPropsBase<Base extends React.ElementType> =
-  React.ComponentPropsWithoutRef<Base> & RoleColorPropsOwn & { component?: Base }
+type RoleColorPropsSpan = React.ComponentPropsWithoutRef<'span'> & RoleColorPropsOwn & { component?: undefined };
+type RoleColorPropsBase<Base extends React.ElementType> = React.ComponentPropsWithoutRef<Base> & RoleColorPropsOwn & {
+  component?: Base,
+};
 
 function RoleColor<Base extends React.ElementType = 'span'>({
   component: CustomComponent,

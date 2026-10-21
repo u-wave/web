@@ -1,18 +1,18 @@
-import { useState } from 'react';
-import { useTranslator } from '@u-wave/react-translate';
+import { mdiHistory, mdiMenu } from '@mdi/js';
 import AppBar from '@mui/material/AppBar';
+import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import { mdiHistory, mdiMenu } from '@mdi/js';
-import SvgIcon from '../../../components/SvgIcon';
+import { useTranslator } from '@u-wave/react-translate';
+import { useState } from 'react';
 import SongTitle from '../../../components/SongTitle';
-import Video from '../../containers/Video';
+import SvgIcon from '../../../components/SvgIcon';
+import type { Media } from '../../../reducers/booth';
 import Chat from '../../containers/Chat';
 import DrawerMenu from '../../containers/DrawerMenu';
 import UsersDrawer from '../../containers/UsersDrawer';
+import Video from '../../containers/Video';
 import VideoDisabledMessage from './VideoDisabledMessage';
-import type { Media } from '../../../reducers/booth';
 
 const waitlistIconStyle: React.CSSProperties = {
   fontSize: '125%',
@@ -85,9 +85,7 @@ function MainView({
             enabled={videoEnabled}
             size="large"
           />
-          {!videoEnabled && (
-            <VideoDisabledMessage onEnableVideo={onEnableVideo} />
-          )}
+          {!videoEnabled && <VideoDisabledMessage onEnableVideo={onEnableVideo} />}
         </div>
         <div className="MobileApp-chat">
           <Chat />

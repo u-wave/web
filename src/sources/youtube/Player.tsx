@@ -1,6 +1,6 @@
 /// <reference types="youtube">
-import cx from 'clsx';
 import YouTube from '@u-wave/react-youtube';
+import cx from 'clsx';
 import { useCallback } from 'react';
 import type { Media } from '../../reducers/booth';
 

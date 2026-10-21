@@ -1,12 +1,12 @@
-import cx from 'clsx';
-import { useEffect, useRef } from 'react';
-import { useVirtualizer } from '@tanstack/react-virtual';
 import { extractClosestEdge } from '@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge';
 import { monitorForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
-import ModRow from './ModRow';
-import SimpleRow from './SimpleRow';
+import { useVirtualizer } from '@tanstack/react-virtual';
+import cx from 'clsx';
+import { useEffect, useRef } from 'react';
 import type { User } from '../../reducers/users';
 import { isWaitlistDrag, isWaitlistDrop } from './drag';
+import ModRow from './ModRow';
+import SimpleRow from './SimpleRow';
 
 function estimateSize() {
   return 40;

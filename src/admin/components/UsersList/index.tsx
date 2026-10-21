@@ -1,15 +1,15 @@
-import { useTranslator } from '@u-wave/react-translate';
 import Table from '@mui/material/Table';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
 import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
 import TableFooter from '@mui/material/TableFooter';
+import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import TableCell from '@mui/material/TableCell';
-import UserRow from './Row';
-import Header from './Header';
+import { useTranslator } from '@u-wave/react-translate';
 import type { User } from '../../../reducers/users';
+import Header from './Header';
+import UserRow from './Row';
 
 type UsersListProps = {
   users: User[],
@@ -44,9 +44,7 @@ function UsersList({
           </TableRow>
         </TableHead>
         <TableBody>
-          {users.map((user) => (
-            <UserRow key={user._id} user={user} />
-          ))}
+          {users.map((user) => <UserRow key={user._id} user={user} />)}
         </TableBody>
         <TableFooter>
           <TableRow>

@@ -1,9 +1,9 @@
 import cx from 'clsx';
 import { useSelector } from '../../hooks/useRedux';
+import type { HistoryEntry } from '../../hooks/useRoomHistory';
 import { isLoggedInSelector } from '../../reducers/auth';
 import PreviewMediaAction from '../MediaList/PreviewMediaAction';
 import AddToPlaylistAction from './AddToPlaylistAction';
-import type { HistoryEntry } from '../../hooks/useRoomHistory';
 
 const dontBubble = (event: React.MouseEvent) => event.stopPropagation();
 

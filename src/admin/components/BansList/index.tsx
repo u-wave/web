@@ -1,14 +1,14 @@
-import { useTranslator } from '@u-wave/react-translate';
 import Table from '@mui/material/Table';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
 import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
 import TableFooter from '@mui/material/TableFooter';
+import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import TableCell from '@mui/material/TableCell';
-import BanRow from './Row';
+import { useTranslator } from '@u-wave/react-translate';
 import type { User } from '../../../reducers/users';
+import BanRow from './Row';
 
 const headerStyle = {
   background: '#9d2053',

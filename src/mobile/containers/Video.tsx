@@ -1,16 +1,16 @@
 import React from 'react';
-import { useSelector, useDispatch } from '../../hooks/useRedux';
 import useClock from '../../hooks/useClock';
+import { useDispatch, useSelector } from '../../hooks/useRedux';
 import { openFavoriteMenu } from '../../reducers/addToPlaylistMenu';
-import { isMutedSelector, mobilePlaybackVolumeSelector } from '../../reducers/settings';
 import {
-  upvote,
+  currentVoteStatsSelector,
   downvote,
   historyIDSelector,
   mediaSelector,
   timeElapsedSelector,
-  currentVoteStatsSelector,
+  upvote,
 } from '../../reducers/booth';
+import { isMutedSelector, mobilePlaybackVolumeSelector } from '../../reducers/settings';
 import Video from '../components/Video';
 
 const {

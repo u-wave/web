@@ -1,5 +1,5 @@
-import { log } from '../../reducers/chat';
 import { changeUsername } from '../../reducers/auth';
+import { log } from '../../reducers/chat';
 import type { Command } from '../ChatCommands';
 
 export default [{

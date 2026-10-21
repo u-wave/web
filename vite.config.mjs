@@ -1,9 +1,9 @@
 // @ts-check
 /// <reference types="vitest">
+import yaml from '@rollup/plugin-yaml';
+import react from '@vitejs/plugin-react';
 import { readFile, writeFile } from 'node:fs/promises';
 import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
-import yaml from '@rollup/plugin-yaml';
 import emoji from './tasks/emoji.mjs';
 import prerender from './tasks/prerender.mjs';
 

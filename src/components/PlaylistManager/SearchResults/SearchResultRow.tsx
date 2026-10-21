@@ -1,10 +1,10 @@
 import cx from 'clsx';
 import { SEARCH_RESULT } from '../../../constants/DDItemTypes';
-import MediaRowBase from '../../MediaList/MediaRowBase';
+import type { SearchResult } from '../../../containers/SearchResultsPanel';
 import MediaDuration from '../../MediaList/MediaDuration';
+import MediaRowBase from '../../MediaList/MediaRowBase';
 import MediaThumbnail from '../../MediaList/MediaThumbnail';
 import SearchResultActions from './SearchResultActions';
-import type { SearchResult } from '../../../containers/SearchResultsPanel';
 
 type SearchResultRowProps = {
   className?: string,
@@ -22,8 +22,7 @@ function SearchResultRow({
   if (media.inPlaylists) {
     note = (
       <>
-        In playlists:{' '}
-        {media.inPlaylists.map((playlist) => playlist.name).join(', ')}
+        In playlists: {media.inPlaylists.map((playlist) => playlist.name).join(', ')}
       </>
     );
   }
@@ -44,11 +43,13 @@ function SearchResultRow({
         <div className="MediaListRow-title" title={media.title}>
           {media.title}
         </div>
-        {note ? (
-          <div className="MediaListRow-note">
-            {note}
-          </div>
-        ) : null}
+        {note
+          ? (
+            <div className="MediaListRow-note">
+              {note}
+            </div>
+          )
+          : null}
       </div>
       <div className="MediaListRow-duration">
         <MediaDuration media={media} />

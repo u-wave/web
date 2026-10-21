@@ -1,14 +1,14 @@
-import { useCallback, useState } from 'react';
-import { useTranslator } from '@u-wave/react-translate';
-import { useAsyncCallback } from 'react-async-hook';
+import { mdiEmail, mdiLock } from '@mdi/js';
 import Alert from '@mui/material/Alert';
 import Divider from '@mui/material/Divider';
-import { mdiEmail, mdiLock } from '@mdi/js';
+import { useTranslator } from '@u-wave/react-translate';
+import { useCallback, useState } from 'react';
+import { useAsyncCallback } from 'react-async-hook';
+import CircularProgress from '../../CircularProgress';
 import Form from '../../Form';
+import Button from '../../Form/Button';
 import FormGroup from '../../Form/Group';
 import TextField from '../../Form/TextField';
-import Button from '../../Form/Button';
-import CircularProgress from '../../CircularProgress';
 import SvgIcon from '../../SvgIcon';
 import SocialLogin from './SocialLogin';
 
@@ -100,11 +100,13 @@ function LoginForm({
           className="LoginForm-submit"
           disabled={handleSubmit.loading}
         >
-          {handleSubmit.loading ? (
-            <div className="Button-loading">
-              <CircularProgress size="100%" />
-            </div>
-          ) : t('login.login')}
+          {handleSubmit.loading
+            ? (
+              <div className="Button-loading">
+                <CircularProgress size="100%" />
+              </div>
+            )
+            : t('login.login')}
         </Button>
       </FormGroup>
 

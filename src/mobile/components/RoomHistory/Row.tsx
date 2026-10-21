@@ -2,8 +2,8 @@ import Avatar from '@mui/material/Avatar';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
-import Votes from './Votes';
 import type { HistoryEntry } from '../../../hooks/useRoomHistory';
+import Votes from './Votes';
 
 const noWrap = { noWrap: true };
 

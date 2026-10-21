@@ -1,7 +1,7 @@
-import OverlayHeader from '../../../components/Overlay/Header';
 import OverlayContent from '../../../components/Overlay/Content';
-import PlaylistPanel from './PlaylistPanel';
+import OverlayHeader from '../../../components/Overlay/Header';
 import type { Playlist, PlaylistItem } from '../../../reducers/playlists';
+import PlaylistPanel from './PlaylistPanel';
 
 type PlaylistManagerProps = {
   selectedPlaylist: Playlist,

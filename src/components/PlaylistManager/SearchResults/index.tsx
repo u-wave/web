@@ -1,15 +1,15 @@
-import cx from 'clsx';
 import { useTranslator } from '@u-wave/react-translate';
-import { LOADING, LOADED } from '../../../constants/LoadingStates';
-import NoSearchResults from './NoSearchResults';
-import LoadingSearchResults from './LoadingSearchResults';
-import SearchResultsList from './SearchResultsList';
+import cx from 'clsx';
+import { LOADED, LOADING } from '../../../constants/LoadingStates';
 import type { SearchResult } from '../../../containers/SearchResultsPanel';
+import LoadingSearchResults from './LoadingSearchResults';
+import NoSearchResults from './NoSearchResults';
+import SearchResultsList from './SearchResultsList';
 
 type SearchResultsPanelProps = {
   className?: string,
   query: string,
-  loadingState: `loadingState/${'IDLE' | 'LOADING' | 'LOADED'}`
+  loadingState: `loadingState/${'IDLE' | 'LOADING' | 'LOADED'}`,
   results: SearchResult[],
 };
 function SearchResultsPanel({

@@ -1,8 +1,8 @@
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
+import type { Media } from '../../../reducers/booth';
 import DialogCloseAnimation from '../../DialogCloseAnimation';
 import PreviewPlayer from '../../Video/Player';
-import type { Media } from '../../../reducers/booth';
 
 function getTitle(media: Media) {
   return `${media.artist} – ${media.title}`;
@@ -20,28 +20,30 @@ function PreviewMediaDialog({
   volume,
   onCloseDialog,
 }: PreviewMediaDialogProps) {
-  const dialog = open && media != null ? (
-    <Dialog
-      onClose={onCloseDialog}
-      aria-label={getTitle(media)}
-      open
-      disableEnforceFocus
-      maxWidth={false}
-      classes={{
-        root: 'AppColumn AppColumn--left',
-        paper: 'Dialog PreviewMediaDialog',
-      }}
-      slotProps={{
-        backdrop: {
-          className: 'AppColumn AppColumn--left',
-        },
-      }}
-    >
-      <DialogContent className="Dialog-body PreviewMediaDialog-content">
-        <PreviewPlayer media={media} volume={volume} />
-      </DialogContent>
-    </Dialog>
-  ) : null;
+  const dialog = open && media != null
+    ? (
+      <Dialog
+        onClose={onCloseDialog}
+        aria-label={getTitle(media)}
+        open
+        disableEnforceFocus
+        maxWidth={false}
+        classes={{
+          root: 'AppColumn AppColumn--left',
+          paper: 'Dialog PreviewMediaDialog',
+        }}
+        slotProps={{
+          backdrop: {
+            className: 'AppColumn AppColumn--left',
+          },
+        }}
+      >
+        <DialogContent className="Dialog-body PreviewMediaDialog-content">
+          <PreviewPlayer media={media} volume={volume} />
+        </DialogContent>
+      </Dialog>
+    )
+    : null;
 
   return (
     <DialogCloseAnimation delay={450}>

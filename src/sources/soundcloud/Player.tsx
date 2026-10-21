@@ -1,19 +1,13 @@
-import cx from 'clsx';
-import {
-  useEffect,
-  useEffectEvent,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
-import { useTranslator } from '@u-wave/react-translate';
-import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import { mdiAlertCircle } from '@mdi/js';
+import Button from '@mui/material/Button';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
+import { useTranslator } from '@u-wave/react-translate';
+import cx from 'clsx';
+import { useEffect, useEffectEvent, useMemo, useRef, useState } from 'react';
 import SvgIcon from '../../components/SvgIcon';
-import SongInfo from './SongInfo';
 import type { Media } from '../../reducers/booth';
+import SongInfo from './SongInfo';
 
 const soundcloudLogo = new URL('../../../assets/img/soundcloud-inline.png', import.meta.url);
 
@@ -54,13 +48,15 @@ function SoundCloudPlayer({
   onPlay,
 }: SoundCloudPlayerProps) {
   const { t } = useTranslator();
-  const audioRef = useRef<HTMLAudioElement|null>(null);
-  const [error, setError] = useState<Error|null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [error, setError] = useState<Error | null>(null);
   const needsTap = error?.name === 'NotAllowedError';
 
   const audioUrl = useMemo(() => {
-    if (media.sourceData != null && typeof media.sourceData.streamUrl === 'string'
-        && enabled && active) {
+    if (
+      media.sourceData != null && typeof media.sourceData.streamUrl === 'string'
+      && enabled && active
+    ) {
       const { streamUrl } = media.sourceData;
       return `${streamUrl}?client_id=${CLIENT_ID}`;
     }
@@ -189,8 +185,7 @@ function SoundCloudPlayer({
           rel="noopener noreferrer"
           className="src-soundcloud-Player-permalink"
         >
-          View on{' '}
-          <img src={soundcloudLogo.href} alt="SoundCloud" />
+          View on <img src={soundcloudLogo.href} alt="SoundCloud" />
         </a>
       </div>
     </div>

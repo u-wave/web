@@ -1,7 +1,7 @@
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 
 function reload() {
@@ -24,8 +24,7 @@ function FatalError({ error }: FatalErrorProps) {
             {error.message}
           </Typography>
           <Typography component="p">
-            The admins have been made aware of this issue.
-            Please reload the page.
+            The admins have been made aware of this issue. Please reload the page.
           </Typography>
         </CardContent>
         <CardActions>

@@ -1,18 +1,13 @@
+import { createSelector, createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import mapValues from 'just-map-values';
 import parseChatMarkup, { type MarkupNode } from 'u-wave-parse-chat-markup';
-import { type PayloadAction, createSlice, createSelector } from '@reduxjs/toolkit';
-import {
-  type User,
-  actions as userActions,
-  usersSelector,
-  currentUserSelector,
-} from './users';
-import { advanceInner } from './booth';
-import { initState } from './auth';
 import { createAsyncThunk } from '../redux/api';
-import uwFetch from '../utils/fetch';
 import type { StoreState } from '../redux/configureStore';
+import uwFetch from '../utils/fetch';
+import { initState } from './auth';
+import { advanceInner } from './booth';
 import { type NotificationSettings, notificationSettingsSelector } from './settings';
+import { actions as userActions, currentUserSelector, type User, usersSelector } from './users';
 
 const randomUUID = globalThis.crypto.randomUUID.bind(globalThis.crypto);
 
@@ -35,39 +30,39 @@ export interface LogMessage {
 }
 
 export interface UserJoinMessage {
-  type: 'userJoin',
-  _id: string,
-  user: User,
-  timestamp: number,
+  type: 'userJoin';
+  _id: string;
+  user: User;
+  timestamp: number;
 }
 
 export interface UserLeaveMessage {
-  type: 'userLeave',
-  _id: string,
-  user: User,
-  timestamp: number,
+  type: 'userLeave';
+  _id: string;
+  user: User;
+  timestamp: number;
 }
 
 export interface UserNameChangedMessage {
-  type: 'userNameChanged',
-  _id: string,
-  user: User,
-  newUsername: string,
-  timestamp: number,
+  type: 'userNameChanged';
+  _id: string;
+  user: User;
+  newUsername: string;
+  timestamp: number;
 }
 
 export interface RoleUpdateMessage {
-  type: 'roleUpdate',
-  _id: string,
-  user: User,
-  updateType: 'add' | 'remove',
-  roles: string[],
-  timestamp: number,
+  type: 'roleUpdate';
+  _id: string;
+  user: User;
+  updateType: 'add' | 'remove';
+  roles: string[];
+  timestamp: number;
 }
 
 export interface NowPlayingMessage {
-  type: 'nowPlaying',
-  _id: string,
+  type: 'nowPlaying';
+  _id: string;
   entry: {
     _id: string,
     sourceType: string,
@@ -78,17 +73,17 @@ export interface NowPlayingMessage {
     title: string,
     start: number,
     end: number,
-  },
-  timestamp: number,
+  };
+  timestamp: number;
 }
 
 export interface SkipMessage {
-  type: 'skip',
-  _id: string,
-  user: User,
-  moderator?: User | undefined,
-  reason: string,
-  timestamp: number,
+  type: 'skip';
+  _id: string;
+  user: User;
+  moderator?: User | undefined;
+  reason: string;
+  timestamp: number;
 }
 
 export type Message =
@@ -110,7 +105,7 @@ interface State {
   /**
    * All messages, including log messages and in-flight messages.
    */
-  messages: Message[],
+  messages: Message[];
   /**
    * Mutes and their expiration times.
    */
@@ -149,17 +144,20 @@ const slice = createSlice({
         isMention: false,
       });
     },
-    receiveMessage(state, action: PayloadAction<{
-      message: {
-        _id: string,
-        user: User,
-        userID: string,
-        text: string,
-        timestamp: number,
-      },
-      isMention: boolean,
-      parsed: MarkupNode[],
-    }>) {
+    receiveMessage(
+      state,
+      action: PayloadAction<{
+        message: {
+          _id: string,
+          user: User,
+          userID: string,
+          text: string,
+          timestamp: number,
+        },
+        isMention: boolean,
+        parsed: MarkupNode[],
+      }>,
+    ) {
       const index = state.messages.findIndex((message) => {
         return message.type === 'chat'
           && message.inFlight
@@ -227,12 +225,15 @@ const slice = createSlice({
       }
       delete state.mutedUsers[payload.userID];
     },
-    receiveSkip(state, action: PayloadAction<{
-      user: User,
-      moderator?: User | undefined,
-      reason: string,
-      timestamp: number,
-    }>) {
+    receiveSkip(
+      state,
+      action: PayloadAction<{
+        user: User,
+        moderator?: User | undefined,
+        reason: string,
+        timestamp: number,
+      }>,
+    ) {
       state.messages.push({
         type: 'skip',
         _id: randomUUID(),
@@ -363,9 +364,10 @@ function collapseNowPlayingNotifications(messages: Message[]) {
 }
 const filteredMessagesSelector = createSelector(
   [allMessagesSelector, notificationSettingsSelector],
-  (messages, notificationSettings) => collapseNowPlayingNotifications(
-    applyNotificationSettings(messages, notificationSettings),
-  ),
+  (messages, notificationSettings) =>
+    collapseNowPlayingNotifications(
+      applyNotificationSettings(messages, notificationSettings),
+    ),
 );
 export const messagesSelector = createSelector(
   [filteredMessagesSelector],

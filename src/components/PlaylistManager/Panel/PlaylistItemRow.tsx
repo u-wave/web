@@ -1,12 +1,12 @@
 import cx from 'clsx';
 import { useCallback, useState } from 'react';
+import type { PlaylistItem } from '../../../reducers/playlists';
 import MediaDuration from '../../MediaList/MediaDuration';
 import MediaLoadingIndicator from '../../MediaList/MediaLoadingIndicator';
 import MediaRowBase from '../../MediaList/MediaRowBase';
 import MediaSourceIcon from '../../MediaList/MediaSourceIcon';
 import MediaThumbnail from '../../MediaList/MediaThumbnail';
 import PlaylistItemActions from './PlaylistItemActions';
-import type { PlaylistItem } from '../../../reducers/playlists';
 
 type PlaylistItemRowProps = {
   className?: string,
@@ -49,11 +49,9 @@ function PlaylistItemRow({
       onMouseLeave={handleMouseLeave}
       onClick={onClick}
     >
-      {media.loading ? (
-        <MediaLoadingIndicator className="MediaListRow-loader" />
-      ) : (
-        <MediaThumbnail url={media.thumbnail} />
-      )}
+      {media.loading
+        ? <MediaLoadingIndicator className="MediaListRow-loader" />
+        : <MediaThumbnail url={media.thumbnail} />}
       <div className="MediaListRow-data">
         <div className="MediaListRow-artist" title={media.artist}>
           {media.artist}
@@ -68,13 +66,15 @@ function PlaylistItemRow({
       <div className="MediaListRow-icon">
         <MediaSourceIcon sourceType={media.sourceType} />
       </div>
-      {showActions ? (
-        <PlaylistItemActions
-          className="MediaListRow-actions"
-          index={index}
-          media={media}
-        />
-      ) : null}
+      {showActions
+        ? (
+          <PlaylistItemActions
+            className="MediaListRow-actions"
+            index={index}
+            media={media}
+          />
+        )
+        : null}
     </MediaRowBase>
   );
 }

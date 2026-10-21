@@ -1,11 +1,11 @@
 import cx from 'clsx';
-import MediaRowBase from './MediaRowBase';
+import type { Media } from '../../reducers/booth';
+import MediaActions from './MediaActions';
 import MediaDuration from './MediaDuration';
 import MediaLoadingIndicator from './MediaLoadingIndicator';
+import MediaRowBase from './MediaRowBase';
 import MediaSourceIcon from './MediaSourceIcon';
 import MediaThumbnail from './MediaThumbnail';
-import MediaActions from './MediaActions';
-import type { Media } from '../../reducers/booth';
 
 type MediaRowProps = {
   className?: string,
@@ -28,11 +28,7 @@ function MediaRow({
       style={style}
       onClick={onClick}
     >
-      {isLoading ? (
-        <MediaLoadingIndicator className="MediaListRow-loader" />
-      ) : (
-        <MediaThumbnail url={media.thumbnail} />
-      )}
+      {isLoading ? <MediaLoadingIndicator className="MediaListRow-loader" /> : <MediaThumbnail url={media.thumbnail} />}
       <div className="MediaListRow-data">
         <div className="MediaListRow-artist" title={media.artist}>
           {media.artist}

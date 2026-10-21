@@ -2,17 +2,17 @@ import React, { createContext, use } from 'react';
 import { useListener } from 'react-bus';
 import type { MarkupNode } from 'u-wave-parse-chat-markup';
 import type { Message as TMessage } from '../../reducers/chat';
-import ScrollDownNotice from './ScrollDownNotice';
-import { CompileOptionsContext, type CompileOptions } from './Markup';
-import ChatMessage from './Message';
 import LogMessage from './LogMessage';
+import { type CompileOptions, CompileOptionsContext } from './Markup';
+import ChatMessage from './Message';
 import Motd from './Motd';
-import SkipMessage from './NotificationMessages/SkipMessage';
 import JoinMessage from './NotificationMessages/JoinMessage';
 import LeaveMessage from './NotificationMessages/LeaveMessage';
 import NameChangedMessage from './NotificationMessages/NameChangedMessage';
 import NowPlayingMessage from './NotificationMessages/NowPlayingMessage';
 import RoleUpdateMessage from './NotificationMessages/RoleUpdateMessage';
+import SkipMessage from './NotificationMessages/SkipMessage';
+import ScrollDownNotice from './ScrollDownNotice';
 
 const {
   useCallback,
@@ -190,11 +190,13 @@ function ChatMessages({
           show={!isScrolledToBottom}
           onClick={() => containerRef.current && scrollToBottom(containerRef.current)}
         />
-        {motd ? (
-          <Motd>
-            {motd}
-          </Motd>
-        ) : null}
+        {motd
+          ? (
+            <Motd>
+              {motd}
+            </Motd>
+          )
+          : null}
         <ChatMessageContext value={{ onDeleteMessage }}>
           {messages.map((message) => <Message key={message._id} message={message} />)}
         </ChatMessageContext>

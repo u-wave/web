@@ -1,11 +1,11 @@
 import { createStructuredSelector } from 'reselect';
-import { useSelector } from './useRedux';
 import {
-  relativeTimeFormatterSelector,
-  timeFormatterSelector,
   dateFormatterSelector,
   dateTimeFormatterSelector,
+  relativeTimeFormatterSelector,
+  timeFormatterSelector,
 } from '../reducers/locales';
+import { useSelector } from './useRedux';
 
 const intlSelector = createStructuredSelector({
   relativeTimeFormatter: relativeTimeFormatterSelector,

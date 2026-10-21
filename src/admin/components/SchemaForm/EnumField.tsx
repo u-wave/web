@@ -1,7 +1,7 @@
-import Typography from '@mui/material/Typography';
 import FormHelperText from '@mui/material/FormHelperText';
-import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import Typography from '@mui/material/Typography';
 import type { JSONSchema7 } from 'json-schema';
 
 /** Actually-supported enum value types. */
@@ -14,7 +14,10 @@ type EnumFieldProps = {
   onChange: (value: EnumValue) => void,
 };
 function EnumField({
-  className, schema, value, onChange,
+  className,
+  schema,
+  value,
+  onChange,
 }: EnumFieldProps) {
   return (
     <div className={className} style={{ marginBottom: '8px' }}>

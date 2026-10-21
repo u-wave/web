@@ -1,24 +1,22 @@
-import cx from 'clsx';
-import { useEffect } from 'react';
 import { extractClosestEdge } from '@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge';
 import { combine } from '@atlaskit/pragmatic-drag-and-drop/combine';
 import { monitorForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
 import { monitorForExternal } from '@atlaskit/pragmatic-drag-and-drop/external/adapter';
+import type { BaseEventPayload, ExternalDragType } from '@atlaskit/pragmatic-drag-and-drop/types';
 import { containsURLs } from '@atlaskit/pragmatic-drag-and-drop/utils/contains-ur-ls';
 import { getURLs } from '@atlaskit/pragmatic-drag-and-drop/utils/get-ur-ls';
-import type { BaseEventPayload, ExternalDragType } from '@atlaskit/pragmatic-drag-and-drop/types';
+import cx from 'clsx';
+import { useEffect } from 'react';
+import { MEDIA } from '../../../constants/DDItemTypes';
+import { useMediaSources } from '../../../context/MediaSourceContext';
+import type { InsertTarget, NewPlaylistItem, Playlist, PlaylistItem } from '../../../reducers/playlists';
 import CircularProgress from '../../CircularProgress';
 import BaseMediaList from '../../MediaList/BaseMediaList';
+import DroppablePlaylistItemRow, { isPlaylistItemData } from './DroppablePlaylistItemRow';
 import PlaylistMeta from './Meta';
 import PlaylistEmpty from './PlaylistEmpty';
 import PlaylistFilterEmpty from './PlaylistFilterEmpty';
 import PlaylistItemRow from './PlaylistItemRow';
-import DroppablePlaylistItemRow, { isPlaylistItemData } from './DroppablePlaylistItemRow';
-import type {
-  InsertTarget, NewPlaylistItem, Playlist, PlaylistItem,
-} from '../../../reducers/playlists';
-import { MEDIA } from '../../../constants/DDItemTypes';
-import { useMediaSources } from '../../../context/MediaSourceContext';
 
 function isMediaDrag(x: Record<string, unknown>): x is { media: PlaylistItem[] } {
   return x.type === MEDIA;
@@ -115,7 +113,10 @@ function PlaylistPanel(props: PlaylistPanelProps) {
           if (target == null || !isPlaylistItemData(target.data)) return;
 
           const edge = extractClosestEdge(target.data);
-          onMoveMedia(source.data.media, edge === 'top' ? { before: target.data.media._id } : { after: target.data.media._id });
+          onMoveMedia(
+            source.data.media,
+            edge === 'top' ? { before: target.data.media._id } : { after: target.data.media._id },
+          );
         },
       }),
       monitorForExternal({
@@ -127,7 +128,10 @@ function PlaylistPanel(props: PlaylistPanelProps) {
           if (insert == null) return;
 
           const edge = extractClosestEdge(target.data);
-          onAddToPlaylist([insert], edge === 'top' ? { before: target.data.media._id } : { after: target.data.media._id });
+          onAddToPlaylist(
+            [insert],
+            edge === 'top' ? { before: target.data.media._id } : { after: target.data.media._id },
+          );
         },
       }),
     );

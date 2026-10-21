@@ -1,6 +1,6 @@
-import { useTranslator } from '@u-wave/react-translate';
-import Typography from '@mui/material/Typography';
 import { mdiPlaylistPlus } from '@mdi/js';
+import Typography from '@mui/material/Typography';
+import { useTranslator } from '@u-wave/react-translate';
 import SvgIcon from '../../SvgIcon';
 
 function PlaylistEmpty() {

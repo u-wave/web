@@ -1,8 +1,8 @@
 import { useEffect, useEffectEvent, useState } from 'react';
 import Player from '../../../components/Player';
 import VideoBackdrop from '../../../components/Video/VideoBackdrop';
-import VoteButtons from './VoteButtons';
 import type { Media } from '../../../reducers/booth';
+import VoteButtons from './VoteButtons';
 
 type VideoProps = {
   media: Media | null,

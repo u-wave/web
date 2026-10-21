@@ -1,5 +1,5 @@
-import cx from 'clsx';
 import MuiButton, { type ButtonProps } from '@mui/material/Button';
+import cx from 'clsx';
 
 function Button({ children, className, ...props }: ButtonProps) {
   return (

@@ -1,16 +1,16 @@
 import cx from 'clsx';
-import { SEARCH_RESULT } from '../../constants/DDItemTypes';
-import MediaRowBase from '../../components/MediaList/MediaRowBase';
-import MediaDuration from '../../components/MediaList/MediaDuration';
-import MediaThumbnail from '../../components/MediaList/MediaThumbnail';
 import AddToPlaylistAction from '../../components/MediaList/AddToPlaylistAction';
+import MediaDuration from '../../components/MediaList/MediaDuration';
+import MediaRowBase from '../../components/MediaList/MediaRowBase';
+import MediaThumbnail from '../../components/MediaList/MediaThumbnail';
 import PreviewMediaAction from '../../components/MediaList/PreviewMediaAction';
+import { SEARCH_RESULT } from '../../constants/DDItemTypes';
 
 export interface YouTubeMedia {
   _id: string;
   sourceType: 'youtube';
   sourceID: string;
-  sourceData: Record<never, never>,
+  sourceData: Record<never, never>;
   artist: string;
   title: string;
   duration: number;

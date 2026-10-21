@@ -1,11 +1,11 @@
 import { useCallback } from 'react';
-import { useSelector, useDispatch } from '../../hooks/useRedux';
+import { useDispatch, useSelector } from '../../hooks/useRedux';
 import { toggleOverlay } from '../../reducers/activeOverlay';
-import { setVideoEnabled, videoEnabledSelector } from '../../reducers/settings';
 import { mediaSelector } from '../../reducers/booth';
+import { setVideoEnabled, videoEnabledSelector } from '../../reducers/settings';
 import {
-  sizeSelector as waitlistSizeSelector,
   positionSelector as waitlistPositionSelector,
+  sizeSelector as waitlistSizeSelector,
 } from '../../reducers/waitlist';
 import MainView from '../components/MainView';
 

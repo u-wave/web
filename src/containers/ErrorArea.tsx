@@ -1,7 +1,7 @@
 import React from 'react';
-import { useSelector, useDispatch } from '../hooks/useRedux';
-import { dismissError, firstErrorSelector } from '../reducers/errors';
 import ErrorArea from '../components/ErrorArea';
+import { useDispatch, useSelector } from '../hooks/useRedux';
+import { dismissError, firstErrorSelector } from '../reducers/errors';
 
 const {
   useCallback,

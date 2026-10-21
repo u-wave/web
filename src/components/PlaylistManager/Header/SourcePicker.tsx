@@ -1,7 +1,7 @@
+import { mdiMenuDown } from '@mdi/js';
+import Popover, { type PopoverProps } from '@mui/material/Popover';
 import cx from 'clsx';
 import { useCallback, useState } from 'react';
-import Popover, { type PopoverProps } from '@mui/material/Popover';
-import { mdiMenuDown } from '@mdi/js';
 import { useMediaSources } from '../../../context/MediaSourceContext';
 import SvgIcon from '../../SvgIcon';
 import SourcePickerElement from './SourcePickerElement';

@@ -1,41 +1,47 @@
-import { vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { vi } from 'vitest';
 import ErrorArea from '..';
 
 describe('<ErrorArea />', () => {
   it('should not show if there is no error', () => {
-    render((
-      <ErrorArea
-        error={null}
-        onDismiss={() => {}}
-      />
-    ));
+    render(
+      (
+        <ErrorArea
+          error={null}
+          onDismiss={() => {}}
+        />
+      ),
+    );
     expect(screen.queryByRole('alert')).not.toBeInTheDocument();
   });
 
   it('should open if there is an error', () => {
-    render((
-      <ErrorArea
-        error="Something is WRONG!"
-        onDismiss={() => {}}
-      />
-    ));
+    render(
+      (
+        <ErrorArea
+          error="Something is WRONG!"
+          onDismiss={() => {}}
+        />
+      ),
+    );
     expect(screen.getByRole('alert')).toBeInTheDocument();
   });
 
   it('closes when user clicks anywhere on the page', async () => {
     const spy = vi.fn();
 
-    render((
-      <main>
-        <div data-testid="anywhere-else" />
-        <ErrorArea
-          error="Message"
-          onDismiss={spy}
-        />
-      </main>
-    ));
+    render(
+      (
+        <main>
+          <div data-testid="anywhere-else" />
+          <ErrorArea
+            error="Message"
+            onDismiss={spy}
+          />
+        </main>
+      ),
+    );
 
     const snackbar = screen.getByRole('alert');
 

@@ -1,7 +1,8 @@
 import Base, { type BaseMediaListProps } from './BaseMediaList';
 import Row from './Row';
 
-type MediaListProps = Omit<BaseMediaListProps, 'listComponent' | 'rowComponent'>
+type MediaListProps =
+  & Omit<BaseMediaListProps, 'listComponent' | 'rowComponent'>
   & Partial<Pick<BaseMediaListProps, 'listComponent' | 'rowComponent'>>;
 function MediaList(props: MediaListProps) {
   return (

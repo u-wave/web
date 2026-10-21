@@ -1,5 +1,5 @@
-import { useTranslator } from '@u-wave/react-translate';
 import Button from '@mui/material/Button';
+import { useTranslator } from '@u-wave/react-translate';
 import { useDispatch } from '../../hooks/useRedux';
 import { openLoginDialog } from '../../reducers/dialogs';
 

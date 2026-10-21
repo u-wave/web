@@ -1,9 +1,9 @@
-import cx from 'clsx';
-import React from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
+import cx from 'clsx';
 import itemSelection, { type ItemSelection } from 'item-selection/es/immutable';
-import LoadingRow from './LoadingRow';
+import React from 'react';
 import type { Media } from '../../reducers/booth';
+import LoadingRow from './LoadingRow';
 
 const {
   useContext,
@@ -24,7 +24,7 @@ export type ContextType<
 > = {
   media: (MediaType | null)[],
   selection: ItemSelection<MediaType | null>,
-}
+};
 const MediaListContext = React.createContext<ContextType<Item> | null>(null);
 export function useMediaListContext<T extends ContextType<Item> = ContextType<Media>>() {
   const context = useContext(MediaListContext);
@@ -56,7 +56,7 @@ type RowProps<MediaType extends Item = Media> = {
   media: MediaType,
   selected: boolean,
   onClick: (event?: React.MouseEvent) => void,
-}
+};
 
 export type BaseMediaListProps<MediaType extends Item = Media> = {
   className?: string,

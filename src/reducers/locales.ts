@@ -1,17 +1,13 @@
-import type { AnyAction } from 'redux';
 import { createSelector } from '@reduxjs/toolkit';
 import Translator from '@u-wave/translate';
+import type { AnyAction } from 'redux';
 // @ts-expect-error TS7016: Untyped, not worth it as will likely move to fluent
 import * as plurals from '@u-wave/translate/plurals';
 import type { JsonObject, JsonValue } from 'type-fest';
-import type { StoreState } from '../redux/configureStore';
-import {
-  CHANGE_LANGUAGE,
-  LOAD_LANGUAGE_START,
-  LOAD_LANGUAGE_COMPLETE,
-} from '../constants/ActionTypes';
-import { availableLanguages } from '../locales';
 import en from '../../locale/en.yaml';
+import { CHANGE_LANGUAGE, LOAD_LANGUAGE_COMPLETE, LOAD_LANGUAGE_START } from '../constants/ActionTypes';
+import { availableLanguages } from '../locales';
+import type { StoreState } from '../redux/configureStore';
 import { languageSelector as currentLanguageSelector } from './settings';
 
 const DEFAULT_LANGUAGE = 'en';
@@ -132,8 +128,9 @@ export const dateFormatterSelector = createSelector(
 
 export const dateTimeFormatterSelector = createSelector(
   [currentLanguageSelector],
-  (current) => new Intl.DateTimeFormat(current, {
-    ...DATE_FORMAT_OPTIONS,
-    ...TIME_FORMAT_OPTIONS,
-  }),
+  (current) =>
+    new Intl.DateTimeFormat(current, {
+      ...DATE_FORMAT_OPTIONS,
+      ...TIME_FORMAT_OPTIONS,
+    }),
 );

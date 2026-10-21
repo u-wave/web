@@ -1,9 +1,9 @@
 import { useCallback } from 'react';
+import { useUwave } from '../../context/UwaveContext';
 import { useDispatch } from '../../hooks/useRedux';
 import { toggleOverlay } from '../../reducers/activeOverlay';
-import { toggleServerList, openPlaylist } from '../actions/OverlayActionCreators';
+import { openPlaylist, toggleServerList } from '../actions/OverlayActionCreators';
 import DrawerMenu from '../components/DrawerMenu';
-import { useUwave } from '../../context/UwaveContext';
 
 type DrawerMenuContainerProps = {
   open: boolean,

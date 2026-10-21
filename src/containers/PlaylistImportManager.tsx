@@ -1,11 +1,7 @@
 import { useCallback } from 'react';
-import { useSelector, useDispatch } from '../hooks/useRedux';
-import {
-  showImportSourcePanel,
-  hideImportSourcePanel,
-  selectedSourceTypeSelector,
-} from '../reducers/imports';
 import PlaylistImport from '../components/PlaylistManager/Import';
+import { useDispatch, useSelector } from '../hooks/useRedux';
+import { hideImportSourcePanel, selectedSourceTypeSelector, showImportSourcePanel } from '../reducers/imports';
 
 function PlaylistImportContainer() {
   const selectedSourceType = useSelector(selectedSourceTypeSelector);

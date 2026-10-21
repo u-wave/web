@@ -1,11 +1,11 @@
-import React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
+import React from 'react';
 import { useDispatch } from '../../hooks/useRedux';
+import { closeOverlay } from '../../reducers/activeOverlay';
 import OverlayContent from '../Overlay/Content';
 import OverlayHeader from '../Overlay/Header';
-import { closeOverlay } from '../../reducers/activeOverlay';
 
 type ErrorOverlayProps = {
   error: Error,
@@ -31,8 +31,7 @@ function ErrorOverlay({ error }: ErrorOverlayProps) {
                 {error.message}
               </Typography>
               <Typography component="p">
-                The admins have been made aware of this issue.
-                Please try again later.
+                The admins have been made aware of this issue. Please try again later.
               </Typography>
             </CardContent>
           </Card>

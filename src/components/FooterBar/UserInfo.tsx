@@ -1,8 +1,8 @@
-import cx from 'clsx';
 import { mdiCog } from '@mdi/js';
+import cx from 'clsx';
+import type { User } from '../../reducers/users';
 import Avatar from '../Avatar';
 import SvgIcon from '../SvgIcon';
-import type { User } from '../../reducers/users';
 
 type UserInfoProps = {
   className?: string,

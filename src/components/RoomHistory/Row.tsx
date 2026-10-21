@@ -1,6 +1,7 @@
 import cx from 'clsx';
 import React from 'react';
 import { HISTORY_ENTRY } from '../../constants/DDItemTypes';
+import type { HistoryEntry } from '../../hooks/useRoomHistory';
 import MediaRowBase from '../MediaList/MediaRowBase';
 import MediaSourceIcon from '../MediaList/MediaSourceIcon';
 import MediaThumbnail from '../MediaList/MediaThumbnail';
@@ -8,7 +9,6 @@ import SongTitle from '../SongTitle';
 import TimeAgo from '../TimeAgo';
 import HistoryActions from './HistoryActions';
 import HistoryVotes from './Votes';
-import type { HistoryEntry } from '../../hooks/useRoomHistory';
 
 const {
   useCallback,
@@ -28,7 +28,10 @@ function HistoryRow({
   onClick,
 }: HistoryRowProps) {
   const {
-    media, timestamp, user, stats,
+    media,
+    timestamp,
+    user,
+    stats,
   } = historyEntry;
 
   const [showActions, setShowActions] = useState(false);
@@ -72,9 +75,7 @@ function HistoryRow({
         <MediaSourceIcon sourceType={media.sourceType} />
       </div>
 
-      {showActions && (
-        <HistoryActions className="MediaListRow-actions" historyEntry={historyEntry} />
-      )}
+      {showActions && <HistoryActions className="MediaListRow-actions" historyEntry={historyEntry} />}
     </MediaRowBase>
   );
 }

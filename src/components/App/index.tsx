@@ -1,17 +1,17 @@
-import FooterBar from '../FooterBar';
-import HeaderBar from '../../containers/HeaderBar';
-import Video from '../../containers/Video';
+import About from '../../containers/About';
+import AddToPlaylistMenu from '../../containers/AddToPlaylistMenu';
 import ErrorArea from '../../containers/ErrorArea';
-import Overlays from './Overlays';
+import HeaderBar from '../../containers/HeaderBar';
 import PlaylistManager from '../../containers/PlaylistManager';
 import RoomHistory from '../../containers/RoomHistory';
 import SettingsManager from '../../containers/SettingsManager';
+import Video from '../../containers/Video';
 import AdminProxy from '../AdminProxy';
-import About from '../../containers/About';
 import ConnectionIndicator from '../ConnectionIndicator';
-import SidePanels from '../SidePanels';
 import Dialogs from '../Dialogs';
-import AddToPlaylistMenu from '../../containers/AddToPlaylistMenu';
+import FooterBar from '../FooterBar';
+import SidePanels from '../SidePanels';
+import Overlays from './Overlays';
 
 type AppProps = {
   isConnected: boolean,

@@ -1,10 +1,10 @@
-import cx from 'clsx';
-import useSWRImmutable from 'swr/immutable';
-import { useRef } from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
+import cx from 'clsx';
+import { useRef } from 'react';
+import useSWRImmutable from 'swr/immutable';
 import ImportPanelHeader from '../../components/PlaylistManager/Import/ImportPanelHeader';
-import PlaylistRow, { type YouTubePlaylist } from './PlaylistRow';
 import uwFetch from '../../utils/fetch';
+import PlaylistRow, { type YouTubePlaylist } from './PlaylistRow';
 
 function estimateSize() {
   return 56;

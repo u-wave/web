@@ -1,19 +1,19 @@
-import { useCallback, useMemo } from 'react';
-import useSWR from 'swr';
-import { useTranslator } from '@u-wave/react-translate';
+import { mdiCheck } from '@mdi/js';
+import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
-import MenuList from '@mui/material/MenuList';
-import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import ListSubheader from '@mui/material/ListSubheader';
-import Divider from '@mui/material/Divider';
-import { mdiCheck } from '@mdi/js';
-import UserCard from '../../../components/UserCard/UserCard';
+import MenuItem from '@mui/material/MenuItem';
+import MenuList from '@mui/material/MenuList';
+import { useTranslator } from '@u-wave/react-translate';
+import { useCallback, useMemo } from 'react';
+import useSWR from 'swr';
 import SvgIcon from '../../../components/SvgIcon';
+import UserCard from '../../../components/UserCard/UserCard';
+import useCurrentUser from '../../../hooks/useCurrentUser';
 import { useSelector } from '../../../hooks/useRedux';
 import { activePlaylistIDSelector } from '../../../reducers/playlists';
-import useCurrentUser from '../../../hooks/useCurrentUser';
 import uwFetch, { type ListResponse } from '../../../utils/fetch';
 
 const classes = {

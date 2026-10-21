@@ -1,10 +1,10 @@
 import './polyfills-modern';
-import Uwave from './Uwave';
-import load from './loadingUI';
 import experimentalThemePlugin from './experimentalThemePlugin';
-import youTubeSource from './sources/youtube';
+import load from './loadingUI';
 import soundCloudSource from './sources/soundcloud';
+import youTubeSource from './sources/youtube';
 import readApplicationConfig from './utils/readApplicationConfig';
+import Uwave from './Uwave';
 
 const clientOptions = readApplicationConfig();
 const uw = new Uwave(clientOptions);

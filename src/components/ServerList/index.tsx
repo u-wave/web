@@ -1,13 +1,14 @@
-import { Suspense, useCallback, useState } from 'react';
+import { mdiAlert, mdiMenu } from '@mdi/js';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
-import Typography from '@mui/material/Typography';
+import CardContent from '@mui/material/CardContent';
 import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
 import { intlFormatDistance } from 'date-fns';
+import { Suspense, useCallback, useState } from 'react';
 import useSWR from 'swr';
-import { mdiAlert, mdiMenu } from '@mdi/js';
+import useClock from '../../hooks/useClock';
 import uwFetch from '../../utils/fetch';
 import CircularProgress from '../CircularProgress';
 import SvgIcon from '../SvgIcon';
@@ -43,7 +44,7 @@ export type Server = {
   /** Time in milliseconds since the most recent update from this server. */
   timeSincePing: number,
   booth?: Booth | null,
-}
+};
 
 type CurrentMediaProps = {
   media: Media,
@@ -69,9 +70,7 @@ function CurrentMedia({ media }: CurrentMediaProps) {
 }
 
 function WarningIcon() {
-  return (
-    <SvgIcon style={{ height: 16, width: 16, verticalAlign: 'sub' }} path={mdiAlert} />
-  );
+  return <SvgIcon style={{ height: 16, width: 16, verticalAlign: 'sub' }} path={mdiAlert} />;
 }
 
 type WarningTextProps = {
@@ -94,7 +93,7 @@ type ServerThumbnailProps = {
   media: Media | null,
 };
 function ServerThumbnail({ server, media }: ServerThumbnailProps) {
-  const [currentTime] = useState(() => Date.now());
+  const currentTime = useClock();
   const [isOpen, setDescriptionOpen] = useState(false);
   const onOpenDescription = useCallback(
     (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -132,57 +131,65 @@ function ServerThumbnail({ server, media }: ServerThumbnailProps) {
           </div>
         </CardContent>
 
-        {media ? (
-          <a href={server.url} className="usl-ServerThumbnail-link" aria-label="Join">
-            <CurrentMedia media={media} />
-          </a>
-        ) : (
-          <>
-            <a href={server.url} className="usl-ServerThumbnail-link">
-              <CardContent className="usl-ServerThumbnail-nobodyPlaying">
-                <Typography>Nobody is playing!</Typography>
-              </CardContent>
+        {media
+          ? (
+            <a href={server.url} className="usl-ServerThumbnail-link" aria-label="Join">
+              <CurrentMedia media={media} />
             </a>
-            <CardActions className="usl-ServerThumbnail-actions">
-              <Button
-                variant="contained"
-                color="primary"
-                style={{ color: 'var(--text-color)' }}
-                href={server.url}
-              >
-                Join
-              </Button>
-            </CardActions>
-          </>
-        )}
+          )
+          : (
+            <>
+              <a href={server.url} className="usl-ServerThumbnail-link" aria-label="Join">
+                <CardContent className="usl-ServerThumbnail-nobodyPlaying">
+                  <Typography>Nobody is playing!</Typography>
+                </CardContent>
+              </a>
+              <CardActions className="usl-ServerThumbnail-actions">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  style={{ color: 'var(--text-color)' }}
+                  href={server.url}
+                >
+                  Join
+                </Button>
+              </CardActions>
+            </>
+          )}
 
-        {server.timeSincePing >= downTimeout ? (
-          <CardContent>
-            <WarningText>
-              <WarningIcon />
-              {timedOutMessage(intlFormatDistance(
-                new Date(currentTime - server.timeSincePing),
-                new Date(),
-              ))}
-            </WarningText>
-          </CardContent>
-        ) : null}
+        {server.timeSincePing >= downTimeout
+          ? (
+            <CardContent>
+              <WarningText>
+                <WarningIcon />
+                {timedOutMessage(intlFormatDistance(
+                  new Date(currentTime - server.timeSincePing),
+                  new Date(currentTime),
+                ))}
+              </WarningText>
+            </CardContent>
+          )
+          : null}
 
-        {server.description != null ? (
-          <DescriptionDialog
-            // Not sure why the `.description != null` check doesn't narrow the type
-            server={server as Server & { description: string }}
-            isOpen={isOpen}
-            onCloseDescription={onCloseDescription}
-          />
-        ) : null}
+        {server.description != null
+          ? (
+            <DescriptionDialog
+              // Not sure why the `.description != null` check doesn't narrow the type
+              server={server as Server & { description: string }}
+              isOpen={isOpen}
+              onCloseDescription={onCloseDescription}
+            />
+          )
+          : null}
       </Card>
     </div>
   );
 }
 
 function ServerList() {
-  const { data: { servers } } = useSWR('https://announce.u-wave.net/', uwFetch<{ servers: Server[] }>, { suspense: true });
+  const { data: { servers } } = useSWR('https://announce.u-wave.net/', uwFetch<{ servers: Server[] }>, {
+    suspense: true,
+  });
 
   if (servers.length === 0) {
     return <Typography>No servers are currently available.</Typography>;

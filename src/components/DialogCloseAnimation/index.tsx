@@ -1,5 +1,5 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 type DialogCloseAnimationProps = {
   children: React.ReactElement<{ open: boolean }> | null | false | undefined,

@@ -14,7 +14,8 @@ function SongTitle({
   size = 'large',
 }: SongTitleProps) {
   const hoverTitle = typeof artist === 'string' && typeof title === 'string'
-    ? `${artist} – ${title}` : undefined;
+    ? `${artist} – ${title}`
+    : undefined;
 
   return (
     <div
@@ -22,7 +23,7 @@ function SongTitle({
       title={hoverTitle}
     >
       <span className="SongTitle-artist">{artist}</span>
-      <span className="SongTitle-separator"> – </span>
+      <span className="SongTitle-separator">–</span>
       <span className="SongTitle-title">{title}</span>
     </div>
   );

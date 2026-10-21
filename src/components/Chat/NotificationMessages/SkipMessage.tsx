@@ -1,7 +1,7 @@
 import { useTranslator } from '@u-wave/react-translate';
+import type { User } from '../../../reducers/users';
 import Username from '../../Username';
 import UserNotificationMessage from './UserNotificationMessage';
-import type { User } from '../../../reducers/users';
 
 function getLangKey(hasModerator: boolean, hasReason: boolean) {
   if (hasReason) {

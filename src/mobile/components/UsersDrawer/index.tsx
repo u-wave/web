@@ -1,6 +1,6 @@
 import Drawer from '@mui/material/Drawer';
-import UserList from './UserList';
 import type { User } from '../../../reducers/users';
+import UserList from './UserList';
 
 const classes = {
   paper: 'UsersDrawer',

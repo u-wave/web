@@ -1,5 +1,5 @@
-import { useCallback, useMemo } from 'react';
 import debounce from 'just-debounce';
+import { useCallback, useMemo } from 'react';
 
 type FilterProps = {
   onFilter: (value: string) => void,

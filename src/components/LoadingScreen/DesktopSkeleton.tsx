@@ -1,13 +1,13 @@
+import { mdiHistory, mdiVolumeOff } from '@mdi/js';
+import IconButton from '@mui/material/IconButton';
 import Slider from '@mui/material/Slider';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
-import IconButton from '@mui/material/IconButton';
-import { mdiHistory, mdiVolumeOff } from '@mdi/js';
 import AppTitle from '../HeaderBar/AppTitle';
-import SvgIcon from '../SvgIcon';
 import SongTitle from '../SongTitle';
-import LoadingIndicator from './LoadingIndicator';
+import SvgIcon from '../SvgIcon';
 import Filler from './Filler';
+import LoadingIndicator from './LoadingIndicator';
 
 function FakeVolume() {
   return (

@@ -1,6 +1,6 @@
 import cx from 'clsx';
-import { useEffect, useEffectEvent, useState } from 'react';
 import { usePresence } from 'motion/react';
+import { useEffect, useEffectEvent, useState } from 'react';
 
 type OverlayProps = {
   className?: string,

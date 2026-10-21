@@ -1,7 +1,7 @@
+import ChatInput from '../../containers/ChatInput';
+import ChatMessages from '../../containers/ChatMessages';
 import { useSelector } from '../../hooks/useRedux';
 import { isLoggedInSelector } from '../../reducers/auth';
-import ChatMessages from '../../containers/ChatMessages';
-import ChatInput from '../../containers/ChatInput';
 import LoginButtons from './LoginButtons';
 
 function ChatContainer() {
@@ -13,11 +13,7 @@ function ChatContainer() {
         <ChatMessages />
       </div>
       <div className="ChatContainer-input ChatInputWrapper">
-        {isLoggedIn ? (
-          <ChatInput />
-        ) : (
-          <LoginButtons />
-        )}
+        {isLoggedIn ? <ChatInput /> : <LoginButtons />}
       </div>
     </div>
   );

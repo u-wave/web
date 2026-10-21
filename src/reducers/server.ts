@@ -1,4 +1,4 @@
-import { type PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import { SOCKET_CONNECTED, SOCKET_DISCONNECTED } from '../constants/ActionTypes';
 import { createAsyncThunk } from '../redux/api';
 import uwFetch from '../utils/fetch';

@@ -1,6 +1,4 @@
-import {
-  lazy, useEffect, useLayoutEffect, useRef,
-} from 'react';
+import { lazy, useEffect, useLayoutEffect, useRef } from 'react';
 
 const onloadCallbackName = 'grecaptchaOnload__$' as const;
 
@@ -13,7 +11,7 @@ declare global {
         theme: 'light' | 'dark',
         callback: (response: string) => void,
       }) => void,
-    }
+    };
   }
 }
 

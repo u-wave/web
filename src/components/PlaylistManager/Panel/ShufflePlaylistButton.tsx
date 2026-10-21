@@ -1,8 +1,8 @@
-import { useAsyncCallback } from 'react-async-hook';
-import { useTranslator } from '@u-wave/react-translate';
-import Tooltip from '@mui/material/Tooltip';
-import IconButton from '@mui/material/IconButton';
 import { mdiShuffle } from '@mdi/js';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+import { useTranslator } from '@u-wave/react-translate';
+import { useAsyncCallback } from 'react-async-hook';
 import CircularProgress from '../../CircularProgress';
 import SvgIcon from '../../SvgIcon';
 
@@ -22,11 +22,7 @@ function ShuffleButton({ onShuffle }: ShuffleButtonProps) {
         onClick={onClick.execute}
         disabled={onClick.loading}
       >
-        {onClick.loading ? (
-          <CircularProgress size={HARDCODED_LOADING_SIZE} />
-        ) : (
-          <SvgIcon path={mdiShuffle} />
-        )}
+        {onClick.loading ? <CircularProgress size={HARDCODED_LOADING_SIZE} /> : <SvgIcon path={mdiShuffle} />}
       </IconButton>
     </Tooltip>
   );

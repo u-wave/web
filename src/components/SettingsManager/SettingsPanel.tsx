@@ -1,28 +1,28 @@
-import cx from 'clsx';
-import { useTranslator } from '@u-wave/react-translate';
 import type { SelectChangeEvent, Theme } from '@mui/material';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import FormGroup from '@mui/material/FormGroup';
-import Switch from '../Switch';
-import Profile from './Profile';
-import SettingControl from './SettingControl';
-import LanguagePicker from './LanguagePicker';
-import LogoutButton from './LogoutButton';
-import NotificationSettings from './NotificationSettings';
-import Links from './Links';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTranslator } from '@u-wave/react-translate';
+import cx from 'clsx';
+import useCurrentUser from '../../hooks/useCurrentUser';
 import { useDispatch, useSelector } from '../../hooks/useRedux';
 import {
   languageSelector,
   mentionSoundEnabledSelector,
-  videoEnabledSelector,
-  videoSizeSelector,
+  set,
+  setLanguage,
+  setMentionSoundEnabled,
   setVideoEnabled,
   setVideoSize,
-  setMentionSoundEnabled,
-  setLanguage,
-  set,
+  videoEnabledSelector,
+  videoSizeSelector,
 } from '../../reducers/settings';
-import useCurrentUser from '../../hooks/useCurrentUser';
+import Switch from '../Switch';
+import LanguagePicker from './LanguagePicker';
+import Links from './Links';
+import LogoutButton from './LogoutButton';
+import NotificationSettings from './NotificationSettings';
+import Profile from './Profile';
+import SettingControl from './SettingControl';
 
 export type SettingsPanelProps = {
   className?: string,
@@ -100,35 +100,40 @@ function SettingsPanel({
 
   const notificationsSection = (
     <div key="notifications" className="SettingsPanel-section SettingsPanel-notificationSettings">
-      <NotificationSettings onSettingChange={(name, value) => dispatch(set(name, value))} />
+      <NotificationSettings
+        onSettingChange={(name, value) =>
+          dispatch(set(name, value))}
+      />
     </div>
   );
 
   return (
     <div className={cx('SettingsPanel', isWide && 'is-wide', className)}>
-      {isWide ? (
-        // On wider screens, use two columns
-        <>
-          {profileSection}
-          <div className="SettingsPanel-column SettingsPanel-column--left">
+      {isWide
+        ? (
+          // On wider screens, use two columns
+          <>
+            {profileSection}
+            <div className="SettingsPanel-column SettingsPanel-column--left">
+              {settingsSection}
+              {linksSection}
+              {signoutSection}
+            </div>
+            <div className="SettingsPanel-column SettingsPanel-column--right">
+              {notificationsSection}
+            </div>
+          </>
+        )
+        : (
+          // On narrower screens, use a single-column layout
+          <>
+            {profileSection}
             {settingsSection}
+            {notificationsSection}
             {linksSection}
             {signoutSection}
-          </div>
-          <div className="SettingsPanel-column SettingsPanel-column--right">
-            {notificationsSection}
-          </div>
-        </>
-      ) : (
-        // On narrower screens, use a single-column layout
-        <>
-          {profileSection}
-          {settingsSection}
-          {notificationsSection}
-          {linksSection}
-          {signoutSection}
-        </>
-      )}
+          </>
+        )}
     </div>
   );
 }

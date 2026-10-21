@@ -1,11 +1,11 @@
-import React from 'react';
 import { useTranslator } from '@u-wave/react-translate';
+import React from 'react';
 import { useDispatch } from '../../hooks/useRedux';
+import { closeOverlay } from '../../reducers/activeOverlay';
 import CircularProgress from '../CircularProgress';
 import Overlay from '../Overlay';
 import OverlayContent from '../Overlay/Content';
 import OverlayHeader from '../Overlay/Header';
-import { closeOverlay } from '../../reducers/activeOverlay';
 import ErrorBoundary from './ErrorBoundary';
 
 const {
@@ -41,9 +41,7 @@ function createLazyOverlay<TComponent extends React.ElementType>({
           onCloseOverlay={onCloseOverlay}
         />
         <OverlayContent className="LoadingOverlay-body">
-          {pastDelay && (
-            <CircularProgress className="LoadingOverlay-spinner" thickness={1.6} />
-          )}
+          {pastDelay && <CircularProgress className="LoadingOverlay-spinner" thickness={1.6} />}
         </OverlayContent>
       </>
     );

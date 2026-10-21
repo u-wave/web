@@ -1,6 +1,6 @@
-import { type PayloadAction, createSlice, createSelector } from '@reduxjs/toolkit';
-import type { Media } from './booth';
+import { createSelector, createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { StoreState } from '../redux/configureStore';
+import type { Media } from './booth';
 
 interface EditMediaState {
   playlistID: string;
@@ -78,9 +78,12 @@ const slice = createSlice({
     openPreviewMediaDialog(state, action: PayloadAction<PreviewMediaState>) {
       return openDialog(state, 'previewMedia', action.payload);
     },
-    openLoginDialog(state, action: PayloadAction<
-      LoginState | RegisterState | ResetPasswordState | SocialLoginState
-    >) {
+    openLoginDialog(
+      state,
+      action: PayloadAction<
+        LoginState | RegisterState | ResetPasswordState | SocialLoginState
+      >,
+    ) {
       return openDialog(state, 'login', action.payload);
     },
     closeEditMediaDialog(state) {

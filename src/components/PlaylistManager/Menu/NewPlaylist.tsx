@@ -1,8 +1,8 @@
+import { mdiPlus } from '@mdi/js';
+import MenuItem from '@mui/material/MenuItem';
+import { useTranslator } from '@u-wave/react-translate';
 import cx from 'clsx';
 import { useCallback, useState } from 'react';
-import { useTranslator } from '@u-wave/react-translate';
-import MenuItem from '@mui/material/MenuItem';
-import { mdiPlus } from '@mdi/js';
 import PromptDialog from '../../Dialogs/PromptDialog';
 import SvgIcon from '../../SvgIcon';
 

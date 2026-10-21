@@ -1,6 +1,6 @@
 import { useTranslator } from '@u-wave/react-translate';
-import SongTitle from '../SongTitle';
 import type { Media } from '../../reducers/booth';
+import SongTitle from '../SongTitle';
 
 type CurrentMediaProps = {
   className?: string,

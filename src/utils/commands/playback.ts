@@ -1,11 +1,6 @@
+import { downvote, historyIDSelector, upvote } from '../../reducers/booth';
 import { log } from '../../reducers/chat';
-import { historyIDSelector, upvote, downvote } from '../../reducers/booth';
-import {
-  setVolume,
-  mute,
-  unmute,
-  setVideoEnabled,
-} from '../../reducers/settings';
+import { mute, setVideoEnabled, setVolume, unmute } from '../../reducers/settings';
 import type { Command } from '../ChatCommands';
 
 export default [

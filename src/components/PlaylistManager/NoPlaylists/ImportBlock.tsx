@@ -1,6 +1,6 @@
-import { useDispatch } from '../../../hooks/useRedux';
 import { useMediaSources } from '../../../context/MediaSourceContext';
-import { showImportSourcePanel, hideImportSourcePanel } from '../../../reducers/imports';
+import { useDispatch } from '../../../hooks/useRedux';
+import { hideImportSourcePanel, showImportSourcePanel } from '../../../reducers/imports';
 import { showImportPanel } from '../../../reducers/playlists';
 
 function ImportBlock() {
@@ -19,13 +19,15 @@ function ImportBlock() {
   const sources = getAllMediaSources();
   Object.entries(sources).forEach(([sourceType, source]) => {
     if (source.ImportForm) {
-      forms.push((
-        <source.ImportForm
-          key={sourceType}
-          onShowImportPanel={() => onShowImportPanel(sourceType)}
-          onHideImportPanel={onHideImportPanel}
-        />
-      ));
+      forms.push(
+        (
+          <source.ImportForm
+            key={sourceType}
+            onShowImportPanel={() => onShowImportPanel(sourceType)}
+            onHideImportPanel={onHideImportPanel}
+          />
+        ),
+      );
     }
   });
 

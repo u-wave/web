@@ -1,12 +1,7 @@
-import type { AnyAction } from 'redux';
-import {
-  type PayloadAction,
-  createSelector,
-  createSlice,
-  type ThunkAction,
-} from '@reduxjs/toolkit';
+import { createSelector, createSlice, type PayloadAction, type ThunkAction } from '@reduxjs/toolkit';
 import indexBy from 'just-index';
 import naturalCmp from 'natural-compare';
+import type { AnyAction } from 'redux';
 import { createAsyncThunk } from '../redux/api';
 import type { StoreState } from '../redux/configureStore';
 import uwFetch from '../utils/fetch';
@@ -43,16 +38,19 @@ export const removeUserRole = createAsyncThunk('users/removeRole', async (param:
   await uwFetch([url, { method: 'delete' }]);
 });
 
-export const banUser = createAsyncThunk('users/ban', async (param: { userID: string, duration?: number, permanent?: boolean }) => {
-  await uwFetch(['/bans', {
-    method: 'post',
-    data: {
-      userID: param.userID,
-      duration: param.duration ?? undefined,
-      permanent: param.permanent ?? true,
-    },
-  }]);
-});
+export const banUser = createAsyncThunk(
+  'users/ban',
+  async (param: { userID: string, duration?: number, permanent?: boolean }) => {
+    await uwFetch(['/bans', {
+      method: 'post',
+      data: {
+        userID: param.userID,
+        duration: param.duration ?? undefined,
+        permanent: param.permanent ?? true,
+      },
+    }]);
+  },
+);
 
 const slice = createSlice({
   name: 'users',
@@ -80,11 +78,14 @@ const slice = createSlice({
         user.roles = user.roles.filter((role) => !remove.has(role));
       }
     },
-    usernameChanged(state, action: PayloadAction<{
-      user: User,
-      userID: string,
-      username: string,
-    }>) {
+    usernameChanged(
+      state,
+      action: PayloadAction<{
+        user: User,
+        userID: string,
+        username: string,
+      }>,
+    ) {
       const user = state.users[action.payload.userID];
       if (user) {
         user.username = action.payload.username;
@@ -209,8 +210,7 @@ export function isManagerSelector(state: StoreState) {
 }
 
 // TODO move to prepare()?
-export function userLeave(payload: { userID: string }):
-    ThunkAction<unknown, StoreState, never, AnyAction> {
+export function userLeave(payload: { userID: string }): ThunkAction<unknown, StoreState, never, AnyAction> {
   return (dispatch, getState) => {
     const user = userSelector(getState(), payload.userID);
     if (user) {
@@ -222,8 +222,9 @@ export function userLeave(payload: { userID: string }):
   };
 }
 
-export function addRoles(payload: { userID: string, roles: string[] }):
-    ThunkAction<unknown, StoreState, never, AnyAction> {
+export function addRoles(
+  payload: { userID: string, roles: string[] },
+): ThunkAction<unknown, StoreState, never, AnyAction> {
   return (dispatch, getState) => {
     const user = userSelector(getState(), payload.userID);
     if (user) {
@@ -236,8 +237,9 @@ export function addRoles(payload: { userID: string, roles: string[] }):
   };
 }
 
-export function removeRoles(payload: { userID: string, roles: string[] }):
-    ThunkAction<unknown, StoreState, never, AnyAction> {
+export function removeRoles(
+  payload: { userID: string, roles: string[] },
+): ThunkAction<unknown, StoreState, never, AnyAction> {
   return (dispatch, getState) => {
     const user = userSelector(getState(), payload.userID);
     if (user) {
@@ -250,8 +252,9 @@ export function removeRoles(payload: { userID: string, roles: string[] }):
   };
 }
 
-export function usernameChanged(payload: { userID: string, username: string }):
-    ThunkAction<unknown, StoreState, never, AnyAction> {
+export function usernameChanged(
+  payload: { userID: string, username: string },
+): ThunkAction<unknown, StoreState, never, AnyAction> {
   return (dispatch, getState) => {
     const user = userSelector(getState(), payload.userID);
     if (user) {

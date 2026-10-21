@@ -1,8 +1,8 @@
+import Button from '@mui/material/Button';
+import TableCell from '@mui/material/TableCell';
+import TableRow from '@mui/material/TableRow';
 import { useTranslator } from '@u-wave/react-translate';
 import ms from 'ms';
-import Button from '@mui/material/Button';
-import TableRow from '@mui/material/TableRow';
-import TableCell from '@mui/material/TableCell';
 import Avatar from '../../../components/Avatar';
 import Username from '../../../components/Username/WithCard';
 import type { User } from '../../../reducers/users';
@@ -36,9 +36,7 @@ function BanRow({ ban, onUnbanUser }: BanRowProps) {
         {ms(ban.duration, { long: true })}
       </TableCell>
       <TableCell>
-        {ban.reason ?? (
-          <em>{t('admin.bans.noReason')}</em>
-        )}
+        {ban.reason ?? <em>{t('admin.bans.noReason')}</em>}
       </TableCell>
       <TableCell>
         <Username user={ban.moderator} />

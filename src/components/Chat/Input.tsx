@@ -1,16 +1,16 @@
-import cx from 'clsx';
-import React from 'react';
 import { mdiAccountMultiple } from '@mdi/js';
 import Paper from '@mui/material/Paper';
-import { type Translator, translate } from '@u-wave/react-translate';
-import AutoComplete, { Completion, type CompletionProps } from 'react-abstract-autocomplete';
+import { translate, type Translator } from '@u-wave/react-translate';
+import cx from 'clsx';
 import { matchSorter } from 'match-sorter';
-import SvgIcon from '../SvgIcon';
-import Avatar from '../Avatar';
-import type { User } from '../../reducers/users';
+import React from 'react';
+import AutoComplete, { Completion, type CompletionProps } from 'react-abstract-autocomplete';
 import { useSelector } from '../../hooks/useRedux';
-import emojiUrl from '../../utils/emojiUrl';
 import { customEmojiNamesSelector } from '../../reducers/config';
+import type { User } from '../../reducers/users';
+import emojiUrl from '../../utils/emojiUrl';
+import Avatar from '../Avatar';
+import SvgIcon from '../SvgIcon';
 
 /**
  * Filter an array down to unique elements, keyed by a function.
@@ -144,9 +144,7 @@ function SuggestionsList({ children }: SuggestionsListProps) {
 }
 
 function renderSuggestions(children: React.ReactNode) {
-  return (
-    <SuggestionsList>{children}</SuggestionsList>
-  );
+  return <SuggestionsList>{children}</SuggestionsList>;
 }
 
 const enhance = translate();
