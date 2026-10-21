@@ -22,8 +22,8 @@
     "u-wave-web": "server/bin.js"
   },
   "engines": {
-    "node": ">= 18",
-    "npm": ">= 7"
+    "node": ">= 22",
+    "npm": ">= 11"
   },
   "dependencies": {
     "env-schema": "^8.0.0",
