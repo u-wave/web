@@ -1,7 +1,7 @@
 // @ts-check
 /// <reference types="vitest">
-import yaml from '@rollup/plugin-yaml';
 import babel from '@rolldown/plugin-babel';
+import yaml from '@rollup/plugin-yaml';
 import react, { reactCompilerPreset } from '@vitejs/plugin-react';
 import { readFile, writeFile } from 'node:fs/promises';
 import { defineConfig } from 'vite';
