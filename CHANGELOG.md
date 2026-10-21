@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.0-alpha.40 / 21 Oct 2026
+While this is an alpha release, new servers should use this rather than an older "stable" version.
+
+Features:
+ * Update the emoji pack to support Unicode 17.0. (#3630)
+
+Internal:
+ *  Replace MUI `<Switch />` by a simple CSS-styled `<input />`. (#3524)
+
 ## 2.0.0-alpha.39 / 10 Dec 2025
 While this is an alpha release, new servers should use this rather than an older "stable" version.
 
