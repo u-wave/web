@@ -93,7 +93,7 @@
     "@testing-library/user-event": "^14.6.7",
     "@types/json-schema": "^7.0.15",
     "@types/natural-compare": "^1.4.3",
-    "@types/node": "^20.19.1",
+    "@types/node": "^22.20.5",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@typescript/native-preview": "^7.0.0-dev.20260707.2",
@@ -125,8 +125,8 @@
     "vitest": "^4.1.0"
   },
   "engines": {
-    "node": ">= 20",
-    "npm": ">= 7"
+    "node": ">= 22",
+    "npm": ">= 11"
   },
   "license": "MIT",
   "private": true,
@@ -152,5 +152,8 @@
       "./npm"
     ]
   },
-  "packageManager": "npm@11.6.0+sha512.77f3fb0dbbd881835d7bd1217deabdf7ed77fc4ec4f363df64fc3cb986404abf6c437661041080f5c5d225103508e7c9ea30cb2742b7e942675d05a10af2d7b9"
+  "packageManager": "npm@11.6.0+sha512.77f3fb0dbbd881835d7bd1217deabdf7ed77fc4ec4f363df64fc3cb986404abf6c437661041080f5c5d225103508e7c9ea30cb2742b7e942675d05a10af2d7b9",
+  "allowScripts": {
+    "twemoji-emojis@14.1.0": true
+  }
 }
