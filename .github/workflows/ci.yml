@@ -23,6 +23,7 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: lts/*
+          cache: npm
       - name: Install dependencies
         run: npm ci
       - name: Check types
@@ -39,6 +40,7 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: lts/*
+          cache: npm
       - name: Install dependencies
         run: npm ci
       - name: Check code style
@@ -57,6 +59,7 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: ${{matrix.node-version}}
+          cache: npm
       - name: Update npm
         if: ${{matrix.node-version == '22.x'}}
         run: npm install -g npm@11
@@ -85,6 +88,7 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: lts/*
+          cache: npm
       - name: Install dependencies
         run: npm ci
       - name: Initialize CodeQL
@@ -107,6 +111,7 @@ jobs:
       uses: actions/setup-node@v6
       with:
         node-version: lts/*
+        cache: npm
     - name: Install dependencies
       run: npm ci
     - name: Build
