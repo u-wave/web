@@ -223,10 +223,10 @@ function EditMediaDialog({
     <Form onSubmit={handleSubmit}>
       {errors && errors.length > 0 && (
         <FormGroup>
-          {errors.map((error) => (
-            // eslint-disable-next-line react/jsx-key
-            <div>{t(`dialogs.editMedia.errors.${error}`)}</div>
-          ))}
+          {
+            /* eslint-disable-next-line react/jsx-key */
+            errors.map((error) => <div>{t(`dialogs.editMedia.errors.${error}`)}</div>)
+          }
         </FormGroup>
       )}
 

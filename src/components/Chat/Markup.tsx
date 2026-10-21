@@ -51,6 +51,7 @@ type RenderMarkupProps = {
 function RenderMarkup({ tree, compileOptions, useLargeEmoji }: RenderMarkupProps) {
   const { availableEmoji, customEmojiNames, emojiImages } = compileOptions;
 
+  /* eslint-disable react/jsx-key */
   return (
     <>
       {tree.map((node) => {
@@ -133,6 +134,7 @@ function RenderMarkup({ tree, compileOptions, useLargeEmoji }: RenderMarkupProps
       })}
     </>
   );
+  /* eslint-enable react/jsx-key */
 }
 
 type MarkupProps = {

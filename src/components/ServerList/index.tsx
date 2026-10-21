@@ -139,7 +139,7 @@ function ServerThumbnail({ server, media }: ServerThumbnailProps) {
           )
           : (
             <>
-              <a href={server.url} className="usl-ServerThumbnail-link">
+              <a href={server.url} className="usl-ServerThumbnail-link" aria-label="Join">
                 <CardContent className="usl-ServerThumbnail-nobodyPlaying">
                   <Typography>Nobody is playing!</Typography>
                 </CardContent>
