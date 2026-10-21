@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import { intlFormatDistance } from 'date-fns';
 import { Suspense, useCallback, useState } from 'react';
 import useSWR from 'swr';
+import useClock from '../../hooks/useClock';
 import uwFetch from '../../utils/fetch';
 import CircularProgress from '../CircularProgress';
 import SvgIcon from '../SvgIcon';
@@ -92,7 +93,7 @@ type ServerThumbnailProps = {
   media: Media | null,
 };
 function ServerThumbnail({ server, media }: ServerThumbnailProps) {
-  const [currentTime] = useState(() => Date.now());
+  const currentTime = useClock();
   const [isOpen, setDescriptionOpen] = useState(false);
   const onOpenDescription = useCallback(
     (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -163,7 +164,7 @@ function ServerThumbnail({ server, media }: ServerThumbnailProps) {
                 <WarningIcon />
                 {timedOutMessage(intlFormatDistance(
                   new Date(currentTime - server.timeSincePing),
-                  new Date(),
+                  new Date(currentTime),
                 ))}
               </WarningText>
             </CardContent>
