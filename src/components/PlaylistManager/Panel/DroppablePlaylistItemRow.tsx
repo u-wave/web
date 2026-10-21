@@ -4,7 +4,7 @@ import { attachClosestEdge, extractClosestEdge, type Edge } from '@atlaskit/prag
 import { combine } from '@atlaskit/pragmatic-drag-and-drop/combine';
 import { dropTargetForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
 import { dropTargetForExternal } from '@atlaskit/pragmatic-drag-and-drop/external/adapter';
-import { containsURLs } from '@atlaskit/pragmatic-drag-and-drop/external/url';
+import { containsURLs } from '@atlaskit/pragmatic-drag-and-drop/utils/contains-ur-ls';
 import PlaylistItemRow from './PlaylistItemRow';
 import type { PlaylistItem } from '../../../reducers/playlists';
 import { MEDIA } from '../../../constants/DDItemTypes';

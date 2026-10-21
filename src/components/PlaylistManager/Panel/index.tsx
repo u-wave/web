@@ -4,7 +4,8 @@ import { extractClosestEdge } from '@atlaskit/pragmatic-drag-and-drop-hitbox/clo
 import { combine } from '@atlaskit/pragmatic-drag-and-drop/combine';
 import { monitorForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
 import { monitorForExternal } from '@atlaskit/pragmatic-drag-and-drop/external/adapter';
-import { containsURLs, getURLs } from '@atlaskit/pragmatic-drag-and-drop/external/url';
+import { containsURLs } from '@atlaskit/pragmatic-drag-and-drop/utils/contains-ur-ls';
+import { getURLs } from '@atlaskit/pragmatic-drag-and-drop/utils/get-ur-ls';
 import type { BaseEventPayload, ExternalDragType } from '@atlaskit/pragmatic-drag-and-drop/types';
 import CircularProgress from '../../CircularProgress';
 import BaseMediaList from '../../MediaList/BaseMediaList';
