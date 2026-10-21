@@ -3,7 +3,7 @@ import React, { useMemo } from 'react';
 import { draggable } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
 import { pointerOutsideOfPreview } from '@atlaskit/pragmatic-drag-and-drop/element/pointer-outside-of-preview';
 import { setCustomNativeDragPreview } from '@atlaskit/pragmatic-drag-and-drop/element/set-custom-native-drag-preview';
-import { formatURLsForExternal } from '@atlaskit/pragmatic-drag-and-drop/element/format-urls-for-external';
+import { formatURLsForExternal } from '@atlaskit/pragmatic-drag-and-drop/utils/format-urls-for-external';
 import { createRoot } from 'react-dom/client';
 import { MEDIA } from '../../constants/DDItemTypes';
 import { useMediaListContext } from './BaseMediaList';
