@@ -99,6 +99,7 @@
     "@vitejs/plugin-react": "^6.1.1",
     "@vitest/coverage-v8": "^5.0.5",
     "babel-plugin-react-compiler": "^1.0.0",
+    "dprint": "^0.64.1",
     "emojibase-data": "^17.0.0",
     "eslint-plugin-compat": "^7.0.2",
     "get-port": "^7.2.0",
@@ -127,7 +128,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "lint": "oxlint && stylelint --cache src/**/*.css",
+    "lint": "oxlint && dprint check && stylelint --cache src/**/*.css",
     "postpublish": "npm publish -w ./npm",
     "prerelease": "npm test && npm run prod",
     "prod": "vite build",
