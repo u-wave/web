@@ -111,7 +111,7 @@
     "p-map": "^7.0.8",
     "stylelint": "^17.15.0",
     "stylelint-config-standard": "^40.0.0",
-    "twemoji-emojis": "^14.1.0",
+    "twemoji-emojis": "0.0.0",
     "type-fest": "^5.10.0",
     "vite": "^8.3.3",
     "vitest": "^5.0.5"
@@ -141,11 +141,9 @@
   "workspaces": {
     "packages": [
       ".",
-      "./npm"
+      "./npm",
+      "./packages/*"
     ]
   },
-  "packageManager": "npm@11.6.0+sha512.77f3fb0dbbd881835d7bd1217deabdf7ed77fc4ec4f363df64fc3cb986404abf6c437661041080f5c5d225103508e7c9ea30cb2742b7e942675d05a10af2d7b9",
-  "allowScripts": {
-    "twemoji-emojis@14.1.0": true
-  }
+  "packageManager": "npm@11.6.0+sha512.77f3fb0dbbd881835d7bd1217deabdf7ed77fc4ec4f363df64fc3cb986404abf6c437661041080f5c5d225103508e7c9ea30cb2742b7e942675d05a10af2d7b9"
 }
