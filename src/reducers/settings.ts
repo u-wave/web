@@ -1,8 +1,8 @@
-import { type PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { dset } from 'dset';
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import deepmerge from 'deepmerge';
-import type { StoreState } from '../redux/configureStore';
+import { dset } from 'dset';
 import { availableLanguages } from '../locales';
+import type { StoreState } from '../redux/configureStore';
 import { isPreviewMediaDialogOpenSelector } from './dialogs';
 
 export interface NotificationSettings {
@@ -12,7 +12,7 @@ export interface NotificationSettings {
   skip: boolean;
 }
 
-type VideoSize = 'small' | 'large'
+type VideoSize = 'small' | 'large';
 const initialState = {
   language: null as null | string,
   mentionSound: true,
@@ -28,7 +28,7 @@ const initialState = {
   },
 };
 
-type State = typeof initialState
+type State = typeof initialState;
 
 const slice = createSlice({
   name: 'settings',

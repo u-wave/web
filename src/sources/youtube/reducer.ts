@@ -1,12 +1,12 @@
-import { type PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import { createPlaylist } from '../../reducers/playlists';
 import { createAsyncThunk } from '../../redux/api';
 import uwFetch from '../../utils/fetch';
-import { createPlaylist } from '../../reducers/playlists';
 
 export type State =
   | { type: null, url: null }
   | { type: 'playlist', url: string }
-  | { type: 'channel', url: string }
+  | { type: 'channel', url: string };
 
 const initialState = {
   type: null,

@@ -1,18 +1,18 @@
-import { useRef, useTransition } from 'react';
-import { useTranslator } from '@u-wave/react-translate';
 import { mdiPlaylistPlay } from '@mdi/js';
-import { useDispatch } from '../../hooks/useRedux';
-import ImportSourceBlock from '../../components/PlaylistManager/Import/ImportSourceBlock';
+import { useTranslator } from '@u-wave/react-translate';
+import { useRef, useTransition } from 'react';
 import Form from '../../components/Form';
+import Button from '../../components/Form/Button';
 import FormGroup from '../../components/Form/Group';
 import TextField from '../../components/Form/TextField';
-import Button from '../../components/Form/Button';
+import ImportSourceBlock from '../../components/PlaylistManager/Import/ImportSourceBlock';
 import SvgIcon from '../../components/SvgIcon';
+import { useDispatch } from '../../hooks/useRedux';
 import { importFromChannel, importFromPlaylist } from './reducer';
 
 type YoutubeImportFormProps = {
   onShowImportPanel: () => void,
-}
+};
 function YoutubeImportForm({
   onShowImportPanel,
 }: YoutubeImportFormProps) {

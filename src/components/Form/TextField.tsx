@@ -8,10 +8,10 @@ const {
 } = React;
 
 interface TextFieldProps extends React.ComponentProps<'input'> {
-  className?: string,
-  type?: string,
-  icon?: React.ReactNode,
-  autoFocus?: boolean,
+  className?: string;
+  type?: string;
+  icon?: React.ReactNode;
+  autoFocus?: boolean;
 }
 const TextField = React.forwardRef(({
   className,
@@ -22,7 +22,9 @@ const TextField = React.forwardRef(({
 }: TextFieldProps, ref) => {
   const refInput = useRef<HTMLInputElement>(null);
   useImperativeHandle(ref, () => ({
-    get value() { return refInput.current?.value; },
+    get value() {
+      return refInput.current?.value;
+    },
   }));
   useEffect(() => {
     if (autoFocus) {
@@ -38,9 +40,7 @@ const TextField = React.forwardRef(({
         type={type}
         {...props}
       />
-      {icon ? (
-        <div className="TextField-icon">{icon}</div>
-      ) : null}
+      {icon ? <div className="TextField-icon">{icon}</div> : null}
     </div>
   );
 });

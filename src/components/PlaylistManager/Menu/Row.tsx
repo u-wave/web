@@ -1,13 +1,13 @@
+import { dropTargetForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
+import { mdiCheck } from '@mdi/js';
+import MenuItem from '@mui/material/MenuItem';
 import cx from 'clsx';
 import omit from 'just-omit';
-import { dropTargetForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
-import MenuItem from '@mui/material/MenuItem';
-import { mdiCheck } from '@mdi/js';
 import { useEffect, useRef, useState } from 'react';
-import CircularProgress from '../../CircularProgress';
-import SvgIcon from '../../SvgIcon';
 import { MEDIA, SEARCH_RESULT } from '../../../constants/DDItemTypes';
 import type { NewPlaylistItem, Playlist, PlaylistItem } from '../../../reducers/playlists';
+import CircularProgress from '../../CircularProgress';
+import SvgIcon from '../../SvgIcon';
 
 const itemClasses = {
   root: 'PlaylistMenuRow',
@@ -19,9 +19,8 @@ type PlaylistRowProps = {
   playlist: Playlist,
   selected: boolean,
   onClick: () => void,
-  onAddToPlaylist:
-    (playlist: Playlist, items: NewPlaylistItem[]) => Promise<void>,
-  onDoubleClick: () => void;
+  onAddToPlaylist: (playlist: Playlist, items: NewPlaylistItem[]) => Promise<void>,
+  onDoubleClick: () => void,
 };
 function PlaylistRow({
   className,

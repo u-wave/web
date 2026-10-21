@@ -1,18 +1,18 @@
 import { useMemo } from 'react';
 import useSWRImmutable from 'swr/immutable';
+import SearchResults from '../components/PlaylistManager/SearchResults';
 import * as loadingState from '../constants/LoadingStates';
 import { useSelector } from '../hooks/useRedux';
-import { useMediaSearchStore } from '../stores/MediaSearchStore';
-import SearchResults from '../components/PlaylistManager/SearchResults';
-import { type Playlist, playlistsByIDSelector } from '../reducers/playlists';
 import type { Media } from '../reducers/booth';
+import { type Playlist, playlistsByIDSelector } from '../reducers/playlists';
+import { useMediaSearchStore } from '../stores/MediaSearchStore';
 import uwFetch, { type ListResponse } from '../utils/fetch';
 
 interface ApiSearchResult extends Media {
   inPlaylists?: string[];
 }
 export interface SearchResult extends Media {
-  inPlaylists?: Playlist[],
+  inPlaylists?: Playlist[];
 }
 
 function SearchResultsContainer() {
@@ -24,7 +24,9 @@ function SearchResultsContainer() {
   // Technically this is not immutable but we want to avoid frequent
   // search queries that cost a lot of quota
   const {
-    data: results, error, isValidating,
+    data: results,
+    error,
+    isValidating,
   } = useSWRImmutable<ListResponse<ApiSearchResult>>(() => {
     if (!query) {
       return null;

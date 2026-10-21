@@ -1,10 +1,10 @@
-import { useTranslator } from '@u-wave/react-translate';
-import Tooltip from '@mui/material/Tooltip';
-import IconButton from '@mui/material/IconButton';
 import { mdiCancel } from '@mdi/js';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+import { useTranslator } from '@u-wave/react-translate';
 import { useDispatch } from '../../hooks/useRedux';
-import SvgIcon from '../SvgIcon';
 import { banUser, type User } from '../../reducers/users';
+import SvgIcon from '../SvgIcon';
 
 type BanButtonProps = {
   user: User,

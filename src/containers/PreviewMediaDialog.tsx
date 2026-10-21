@@ -1,8 +1,8 @@
 import { useCallback } from 'react';
-import { useSelector, useDispatch } from '../hooks/useRedux';
+import PreviewMediaDialog from '../components/Dialogs/PreviewMediaDialog';
+import { useDispatch, useSelector } from '../hooks/useRedux';
 import { closePreviewMediaDialog, previewMediaDialogSelector } from '../reducers/dialogs';
 import { volumeSelector } from '../reducers/settings';
-import PreviewMediaDialog from '../components/Dialogs/PreviewMediaDialog';
 
 function PreviewMediaDialogContainer() {
   const { open, payload } = useSelector(previewMediaDialogSelector);

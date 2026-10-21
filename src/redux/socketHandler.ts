@@ -1,22 +1,16 @@
 import { createListenerMiddleware } from '@reduxjs/toolkit';
 import { mutate } from 'swr';
-import type { AppDispatch, StoreState } from './configureStore';
+import { receive as receiveMessage } from '../actions/ChatActionCreators';
+import { advance, receiveDownvote, receiveFavorite, receiveUpvote } from '../reducers/booth';
 import {
+  deleteAllMessages,
   deleteMessageByID,
   deleteMessagesByUser,
-  deleteAllMessages,
+  receiveSkip,
   userMuted,
   userUnmuted,
-  receiveSkip,
 } from '../reducers/chat';
-import * as waitlistActions from '../reducers/waitlist';
-import { receive as receiveMessage } from '../actions/ChatActionCreators';
-import {
-  advance,
-  receiveUpvote,
-  receiveDownvote,
-  receiveFavorite,
-} from '../reducers/booth';
+import { cyclePlaylist } from '../reducers/playlists';
 import { currentTimeSelector } from '../reducers/server';
 import {
   addRoles,
@@ -24,11 +18,12 @@ import {
   removeRoles,
   userJoin,
   userLeave,
-  userSelector,
   usernameChanged,
+  userSelector,
 } from '../reducers/users';
+import * as waitlistActions from '../reducers/waitlist';
+import type { AppDispatch, StoreState } from './configureStore';
 import { socketMessage } from './socket';
-import { cyclePlaylist } from '../reducers/playlists';
 
 function expectType<T>(
   _param: T, // eslint-disable-line @typescript-eslint/no-unused-vars
@@ -50,9 +45,11 @@ middleware.startListening({
         api.dispatch(receiveFavorite(data));
         break;
       case 'vote':
-        api.dispatch(data.value === -1
-          ? receiveDownvote({ userID: data._id })
-          : receiveUpvote({ userID: data._id }));
+        api.dispatch(
+          data.value === -1
+            ? receiveDownvote({ userID: data._id })
+            : receiveUpvote({ userID: data._id }),
+        );
         break;
       case 'skip': {
         const state = api.getState();

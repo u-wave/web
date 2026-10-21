@@ -38,7 +38,9 @@ declare module '@u-wave/react-translate' {
     i18nKey: string,
     [props: string]: React.ReactNode,
   }): JSX.Element;
-  export function translate(): <P extends { t: Translator['t'] }>(component: React.ComponentClass<P>) => React.ComponentClass<Omit<P, 't'>>;
+  export function translate(): <P extends { t: Translator['t'] }>(
+    component: React.ComponentClass<P>,
+  ) => React.ComponentClass<Omit<P, 't'>>;
 }
 
 declare module 'item-selection/es/immutable' {
@@ -82,7 +84,7 @@ declare module 'react-abstract-autocomplete' {
       select: () => void,
       selected: boolean,
     }) => JSX.Element,
-  }
+  };
   export type AutoCompleteProps = {
     inputProps?: React.ComponentPropsWithoutRef<'input'>,
     onUpdate: (value: string) => void,
@@ -91,7 +93,7 @@ declare module 'react-abstract-autocomplete' {
     limit?: number,
     /** Must be Completion elements, technically */
     children: JSX.Element | JSX.Element[],
-  }
+  };
   export function Completion<C>(props: CompletionProps<C>): JSX.Element;
   export default function AutoComplete(props: AutoCompleteProps): JSX.Element;
 }

@@ -1,10 +1,10 @@
-import { useCallback } from 'react';
 import { mdiPencil } from '@mdi/js';
+import { useCallback } from 'react';
 import { useDispatch } from '../../../hooks/useRedux';
-import SvgIcon from '../../SvgIcon';
 import { openEditMediaDialog } from '../../../reducers/dialogs';
 import type { PlaylistItem } from '../../../reducers/playlists';
 import MediaAction from '../../MediaList/MediaAction';
+import SvgIcon from '../../SvgIcon';
 import { usePlaylistContext } from './context';
 
 type EditMediaActionProps = {

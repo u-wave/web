@@ -1,9 +1,4 @@
-import dialogs, {
-  openEditMediaDialog,
-  openLoginDialog,
-  closeEditMediaDialog,
-  closeLoginDialog,
-} from '../dialogs';
+import dialogs, { closeEditMediaDialog, closeLoginDialog, openEditMediaDialog, openLoginDialog } from '../dialogs';
 
 const closedDialog = {
   open: false,

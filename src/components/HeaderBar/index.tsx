@@ -1,12 +1,12 @@
 import cx from 'clsx';
-import AppTitle from './AppTitle';
-import Progress from './Progress';
-import CurrentMedia from './CurrentMedia';
-import Volume from './Volume';
-import HistoryButton from './HistoryButton';
-import CurrentDJ from './CurrentDJ';
-import type { User } from '../../reducers/users';
 import type { Media } from '../../reducers/booth';
+import type { User } from '../../reducers/users';
+import AppTitle from './AppTitle';
+import CurrentDJ from './CurrentDJ';
+import CurrentMedia from './CurrentMedia';
+import HistoryButton from './HistoryButton';
+import Progress from './Progress';
+import Volume from './Volume';
 
 type HeaderBarProps = {
   className?: string,

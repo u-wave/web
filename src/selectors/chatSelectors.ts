@@ -1,13 +1,13 @@
 import { createSelector, createStructuredSelector } from 'reselect';
-import { getAvailableGroupMentions } from '../utils/chatMentions';
+import { currentUserSelector } from '../reducers/auth';
 import {
-  availableEmojiNamesSelector,
   availableEmojiImagesSelector,
+  availableEmojiNamesSelector,
   customEmojiNamesSelector,
   rolesSelector,
 } from '../reducers/config';
-import { currentUserSelector } from '../reducers/auth';
 import { userHasRole } from '../reducers/users';
+import { getAvailableGroupMentions } from '../utils/chatMentions';
 
 export const markupCompilerOptionsSelector = createStructuredSelector({
   availableEmoji: availableEmojiNamesSelector,

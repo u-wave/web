@@ -1,7 +1,7 @@
 import cx from 'clsx';
+import type { Media } from '../../reducers/booth';
 import AddToPlaylistAction from './AddToPlaylistAction';
 import PreviewMediaAction from './PreviewMediaAction';
-import type { Media } from '../../reducers/booth';
 
 function dontBubble(event: React.MouseEvent) {
   event.stopPropagation();

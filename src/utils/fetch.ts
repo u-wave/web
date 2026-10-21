@@ -1,6 +1,6 @@
+import type { DocWithErrors, Errors } from 'jsonapi-typescript';
 import qsStringify from 'qs-stringify';
 import type { Jsonifiable } from 'type-fest';
-import type { DocWithErrors, Errors } from 'jsonapi-typescript';
 import readApplicationConfig from './readApplicationConfig';
 
 const clientOptions = readApplicationConfig();
@@ -19,7 +19,7 @@ export type ListResponse<Data> = {
     next?: string,
     prev?: string,
   },
-}
+};
 
 class FetchError extends Error {
   response?: Response;

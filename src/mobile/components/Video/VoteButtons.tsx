@@ -1,7 +1,5 @@
+import { mdiHeart, mdiHeartOutline, mdiThumbDown, mdiThumbUp } from '@mdi/js';
 import IconButton from '@mui/material/IconButton';
-import {
-  mdiHeart, mdiHeartOutline, mdiThumbDown, mdiThumbUp,
-} from '@mdi/js';
 import SvgIcon from '../../../components/SvgIcon';
 
 type VoteButtonsProps = {
@@ -13,9 +11,12 @@ type VoteButtonsProps = {
   onFavorite: () => void,
 };
 function VoteButtons({
-  isUpvote, onUpvote,
-  isDownvote, onDownvote,
-  isFavorite, onFavorite,
+  isUpvote,
+  onUpvote,
+  isDownvote,
+  onDownvote,
+  isFavorite,
+  onFavorite,
 }: VoteButtonsProps) {
   return (
     <div className="VoteButtons">
@@ -23,11 +24,9 @@ function VoteButtons({
         <SvgIcon path={mdiThumbUp} className={isUpvote ? 'ResponseButton-icon--upvoted' : undefined} />
       </IconButton>
       <IconButton onClick={onFavorite} className="VoteButtons-button">
-        {isFavorite ? (
-          <SvgIcon path={mdiHeart} className="ResponseButton-icon--favorite" />
-        ) : (
-          <SvgIcon path={mdiHeartOutline} />
-        )}
+        {isFavorite
+          ? <SvgIcon path={mdiHeart} className="ResponseButton-icon--favorite" />
+          : <SvgIcon path={mdiHeartOutline} />}
       </IconButton>
       <IconButton onClick={onDownvote} className="VoteButtons-button">
         <SvgIcon path={mdiThumbDown} className={isDownvote ? 'ResponseButton-icon--downvoted' : undefined} />

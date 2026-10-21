@@ -1,6 +1,6 @@
 import {
-  createTheme as createMuiTheme,
   alpha,
+  createTheme as createMuiTheme,
   decomposeColor,
   recomposeColor,
   type ThemeOptions,
@@ -9,26 +9,26 @@ import {
 declare module '@mui/material/styles' {
   /** @deprecated Move to CSS variables */
   interface UwaveThemeOptions {
-    scrollbar: string,
-    background: string,
-    backgroundHover: string,
-    link: string,
+    scrollbar: string;
+    background: string;
+    backgroundHover: string;
+    link: string;
     sidePanel: {
       background: string,
       alternate: string,
-    },
+    };
     mediaList: {
       background: string,
       alternate: string,
-    },
-    mutedText: string,
+    };
+    mutedText: string;
   }
 
   interface ThemeOptions {
-    uwave: UwaveThemeOptions,
+    uwave: UwaveThemeOptions;
   }
   interface Theme {
-    uwave: UwaveThemeOptions,
+    uwave: UwaveThemeOptions;
   }
 }
 

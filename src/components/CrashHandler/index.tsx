@@ -23,9 +23,7 @@ export default class CrashHandler extends React.Component<
     const { error } = this.state;
 
     if (error != null) {
-      return (
-        <FatalError error={error} />
-      );
+      return <FatalError error={error} />;
     }
 
     return children;

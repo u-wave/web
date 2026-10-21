@@ -1,12 +1,7 @@
-import cx from 'clsx';
-import {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
-import { useTranslator } from '@u-wave/react-translate';
 import { mdiMagnify } from '@mdi/js';
+import { useTranslator } from '@u-wave/react-translate';
+import cx from 'clsx';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import SvgIcon from '../SvgIcon';
 
 type SearchBarProps = {
@@ -17,7 +12,10 @@ type SearchBarProps = {
 };
 
 function SearchBar({
-  children, className, autoFocus, onSubmit,
+  children,
+  className,
+  autoFocus,
+  onSubmit,
 }: SearchBarProps) {
   const { t } = useTranslator();
   const inputRef = useRef<HTMLInputElement>(null);

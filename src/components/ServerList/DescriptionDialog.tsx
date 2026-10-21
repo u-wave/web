@@ -1,12 +1,12 @@
-import { lazy, Suspense } from 'react';
-import stripIndent from 'strip-indent';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { lazy, Suspense } from 'react';
+import stripIndent from 'strip-indent';
 import type { Server } from '.';
 
 const Markdown = lazy(() => import('react-markdown'));

@@ -1,4 +1,4 @@
-import reducer, { load, apply } from '../settings';
+import reducer, { apply, load } from '../settings';
 
 describe('reducers/settings', () => {
   const initialState = () => reducer(undefined, { type: '@@redux/INIT' });
@@ -15,10 +15,13 @@ describe('reducers/settings', () => {
 
   describe('action: settings/LOAD_SETTINGS', () => {
     it('should load all passed in settings', () => {
-      const state = reducer(initialState(), load({
-        setting: 'value',
-        volume: 20,
-      }));
+      const state = reducer(
+        initialState(),
+        load({
+          setting: 'value',
+          volume: 20,
+        }),
+      );
       expect(state.setting).toBe('value');
       expect(state.volume).toBe(20);
     });

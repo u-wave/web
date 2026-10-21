@@ -1,24 +1,16 @@
+import flashDocumentTitle from 'flash-document-title';
+import ms from 'ms';
 import type { AnyAction } from 'redux';
 import type { ThunkAction } from 'redux-thunk';
-import ms from 'ms';
 import parseChatMarkup from 'u-wave-parse-chat-markup';
-import flashDocumentTitle from 'flash-document-title';
-import playMentionSound from '../utils/playMentionSound';
 import { currentUserSelector } from '../reducers/auth';
-import {
-  getAvailableGroupMentions,
-  resolveMentions,
-  hasMention,
-} from '../utils/chatMentions';
 import { mutedUserSelector } from '../reducers/chat';
 import * as actions from '../reducers/chat';
 import { mentionSoundEnabledSelector } from '../reducers/settings';
+import { type User, userHasRoleSelector, userListSelector } from '../reducers/users';
 import type { StoreState } from '../redux/configureStore';
-import {
-  type User,
-  userListSelector,
-  userHasRoleSelector,
-} from '../reducers/users';
+import { getAvailableGroupMentions, hasMention, resolveMentions } from '../utils/chatMentions';
+import playMentionSound from '../utils/playMentionSound';
 
 type Thunk = ThunkAction<unknown, StoreState, never, AnyAction>;
 

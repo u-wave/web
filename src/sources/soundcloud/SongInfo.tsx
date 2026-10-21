@@ -12,7 +12,10 @@ type SongInfoProps = {
   trackUrl: string,
 };
 function SongInfo({
-  artist, title, artistUrl, trackUrl,
+  artist,
+  title,
+  artistUrl,
+  trackUrl,
 }: SongInfoProps) {
   return (
     <div className="src-soundcloud-SongInfo">

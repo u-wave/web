@@ -1,17 +1,17 @@
+import createCache from '@emotion/cache';
+import { CacheProvider } from '@emotion/react';
+import { StyledEngineProvider } from '@mui/material/styles';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
-import { StyledEngineProvider } from '@mui/material/styles';
-import { CacheProvider } from '@emotion/react';
-import createCache from '@emotion/cache';
 import type { EmptyObject } from 'type-fest';
-import AppContainer from './containers/App';
-import { get as readSession } from './utils/Session';
-import configureStore from './redux/configureStore';
-import { socketConnect } from './actions/LoginActionCreators';
 import { loadCurrentLanguage } from './actions/LocaleActionCreators';
+import { socketConnect } from './actions/LoginActionCreators';
+import AppContainer from './containers/App';
 import type { MediaSource } from './context/MediaSourceContext';
 import { initState, setSessionToken } from './reducers/auth';
+import configureStore from './redux/configureStore';
+import { get as readSession } from './utils/Session';
 
 interface UwaveOptions {
   apiUrl?: string;
@@ -131,10 +131,12 @@ export default class Uwave {
 
     const root = createRoot(this.#renderTarget);
 
-    root.render((
-      <React.StrictMode>
-        {this.getComponent()}
-      </React.StrictMode>
-    ));
+    root.render(
+      (
+        <React.StrictMode>
+          {this.getComponent()}
+        </React.StrictMode>
+      ),
+    );
   }
 }

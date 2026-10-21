@@ -26,12 +26,15 @@ describe('reducers/booth', () => {
       // Weirdly, there are two different advance object formats in use
       // client-side.
       // TODO fix that? :P
-      const state = booth(initialState(), advanceInner({
-        historyID: 'someRandomID',
-        userID: 'seventeen',
-        media: { artist: 'about tess', title: 'Imaginedit' },
-        timestamp: 1449767164107,
-      }));
+      const state = booth(
+        initialState(),
+        advanceInner({
+          historyID: 'someRandomID',
+          userID: 'seventeen',
+          media: { artist: 'about tess', title: 'Imaginedit' },
+          timestamp: 1449767164107,
+        }),
+      );
       expect(state).toEqual({
         autoLeave: null,
         historyID: 'someRandomID',

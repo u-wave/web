@@ -1,11 +1,11 @@
-import { useCallback, useState } from 'react';
-import { useTranslator } from '@u-wave/react-translate';
-import Tooltip from '@mui/material/Tooltip';
-import IconButton from '@mui/material/IconButton';
 import { mdiDelete } from '@mdi/js';
-import SvgIcon from '../../SvgIcon';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+import { useTranslator } from '@u-wave/react-translate';
+import { useCallback, useState } from 'react';
 import ConfirmDialog from '../../Dialogs/ConfirmDialog';
 import FormGroup from '../../Form/Group';
+import SvgIcon from '../../SvgIcon';
 
 type DeletePlaylistButtonProps = {
   onDelete: () => Promise<void>,

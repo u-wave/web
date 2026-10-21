@@ -1,5 +1,5 @@
-import { useTranslator } from '@u-wave/react-translate';
 import Button from '@mui/material/Button';
+import { useTranslator } from '@u-wave/react-translate';
 
 type VideoDisabledMessageProps = {
   onEnableVideo: () => void,

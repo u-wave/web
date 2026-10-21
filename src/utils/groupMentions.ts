@@ -1,4 +1,4 @@
-import { userListSelector, userHasRoleSelector } from '../reducers/users';
+import { userHasRoleSelector, userListSelector } from '../reducers/users';
 import { djAndWaitlistUsersSelector } from '../reducers/waitlist';
 import type { StoreState } from '../redux/configureStore';
 

@@ -1,5 +1,5 @@
-import Typography from '@mui/material/Typography';
 import FormHelperText from '@mui/material/FormHelperText';
+import Typography from '@mui/material/Typography';
 import type { JSONSchema7 } from 'json-schema';
 import TextField from '../../../components/Form/TextField';
 
@@ -10,7 +10,10 @@ type StringFieldProps = {
   onChange: (value: string) => void,
 };
 function StringField({
-  className, schema, value, onChange,
+  className,
+  schema,
+  value,
+  onChange,
 }: StringFieldProps) {
   return (
     <div className={className} style={{ marginBottom: '8px' }}>

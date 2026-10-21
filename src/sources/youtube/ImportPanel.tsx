@@ -1,9 +1,9 @@
 import { useCallback } from 'react';
 import { useDispatch } from '../../hooks/useRedux';
-import { importPlaylist, type State } from './reducer';
 import ChannelPanel from './ChannelPanel';
-import PlaylistPanel from './PlaylistPanel';
 import LoadingPanel from './LoadingPanel';
+import PlaylistPanel from './PlaylistPanel';
+import { importPlaylist, type State } from './reducer';
 
 type YouTubeImportPanelProps = State & {
   onClosePanel: () => void,

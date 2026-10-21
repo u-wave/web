@@ -1,23 +1,18 @@
+import { mdiCheck, mdiLock, mdiMenuUp } from '@mdi/js';
+import Button from '@mui/material/Button';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import MenuItem from '@mui/material/MenuItem';
+import MenuList from '@mui/material/MenuList';
+import Popover from '@mui/material/Popover';
+import { useTranslator } from '@u-wave/react-translate';
 import cx from 'clsx';
 import { useState } from 'react';
 import { useAsyncCallback } from 'react-async-hook';
-import { useTranslator } from '@u-wave/react-translate';
-import Popover from '@mui/material/Popover';
-import MenuList from '@mui/material/MenuList';
-import MenuItem from '@mui/material/MenuItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import Button from '@mui/material/Button';
-import ButtonGroup from '@mui/material/ButtonGroup';
-import { mdiCheck, mdiLock, mdiMenuUp } from '@mdi/js';
-import SvgIcon from '../SvgIcon';
 import { useDispatch, useSelector } from '../../hooks/useRedux';
-import {
-  joinWaitlist,
-  leaveWaitlist,
-  userInWaitlistSelector,
-  waitlistIsLockedSelector,
-} from '../../reducers/waitlist';
 import { isCurrentDJSelector, setAutoLeave, skipSelf } from '../../reducers/booth';
+import { joinWaitlist, leaveWaitlist, userInWaitlistSelector, waitlistIsLockedSelector } from '../../reducers/waitlist';
+import SvgIcon from '../SvgIcon';
 
 function WaitlistButton() {
   const { t } = useTranslator();

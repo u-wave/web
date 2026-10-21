@@ -1,8 +1,8 @@
+import { Interpolate, useTranslator } from '@u-wave/react-translate';
 import cx from 'clsx';
-import { useTranslator, Interpolate } from '@u-wave/react-translate';
+import type { Playlist, PlaylistItem } from '../../reducers/playlists';
 import SongTitle from '../SongTitle';
 import Eta from './Eta';
-import type { Playlist, PlaylistItem } from '../../reducers/playlists';
 
 type NextMediaProps = {
   className?: string,
@@ -42,12 +42,10 @@ function NextMedia({
   const mediaEl = nextMedia
     ? <SongTitle {...nextMedia} />
     : <div className="SongTitle">{t('playlists.empty')}</div>;
-  const playlistEl = (
-    <span className="NextMedia-playlist">{playlist.name}</span>
-  );
-  const etaEl = baseEta != null && mediaEndTime != null ? (
-    <Eta className="NextMedia-eta" base={baseEta} endTime={mediaEndTime} />
-  ) : null;
+  const playlistEl = <span className="NextMedia-playlist">{playlist.name}</span>;
+  const etaEl = baseEta != null && mediaEndTime != null
+    ? <Eta className="NextMedia-eta" base={baseEta} endTime={mediaEndTime} />
+    : null;
   return (
     <div className={cx('NextMedia', className)}>
       {mediaEl}

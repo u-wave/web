@@ -26,9 +26,11 @@ export interface MediaSource<State extends object = Record<never, never>> {
     onShowImportPanel: () => void,
     onHideImportPanel: () => void,
   }>;
-  ImportPanel?: React.ComponentType<{
-    onClosePanel: () => void,
-  } & State>;
+  ImportPanel?: React.ComponentType<
+    {
+      onClosePanel: () => void,
+    } & State
+  >;
   reducer?: (state: State, action: AnyAction) => State;
   getMediaUrl?: (media: Media) => URL | null | undefined;
   fromMediaUrl?: (url: URL) => NewPlaylistItem | null | undefined;

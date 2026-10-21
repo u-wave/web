@@ -1,15 +1,9 @@
 import { useCallback } from 'react';
+import HeaderBar from '../components/HeaderBar';
 import { useDispatch, useSelector } from '../hooks/useRedux';
 import { toggleOverlay } from '../reducers/activeOverlay';
 import { djSelector, mediaSelector, startTimeSelector } from '../reducers/booth';
-import {
-  setVolume,
-  mute,
-  unmute,
-  volumeSelector,
-  isMutedSelector,
-} from '../reducers/settings';
-import HeaderBar from '../components/HeaderBar';
+import { isMutedSelector, mute, setVolume, unmute, volumeSelector } from '../reducers/settings';
 
 type HeaderBarContainerProps = {
   className?: string,

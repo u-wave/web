@@ -1,21 +1,15 @@
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import Collapse from '@mui/material/Collapse';
 import { mdiPencil } from '@mdi/js';
+import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardHeader from '@mui/material/CardHeader';
+import Collapse from '@mui/material/Collapse';
+import IconButton from '@mui/material/IconButton';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import parse from 'u-wave-parse-chat-markup';
-import SvgIcon from '../../../components/SvgIcon';
 import Markup from '../../../components/Chat/Markup';
+import SvgIcon from '../../../components/SvgIcon';
 import useHasRole from '../../../hooks/useHasRole';
 
 type MotdProps = {

@@ -1,12 +1,10 @@
-import cx from 'clsx';
 import MenuList from '@mui/material/MenuList';
-import PlaylistRow from './Row';
+import cx from 'clsx';
+import { importPanelSymbol, type NewPlaylistItem, type Playlist, searchPanelSymbol } from '../../../reducers/playlists';
 import PlaylistCreateRow from './NewPlaylist';
-import SearchResultsRow from './SearchResultsRow';
 import PlaylistImportRow from './PlaylistImportRow';
-import {
-  type Playlist, importPanelSymbol, searchPanelSymbol, type NewPlaylistItem,
-} from '../../../reducers/playlists';
+import PlaylistRow from './Row';
+import SearchResultsRow from './SearchResultsRow';
 
 type PlaylistMenuProps = {
   className?: string,
@@ -19,7 +17,7 @@ type PlaylistMenuProps = {
   onCloseSearchResults: () => void,
   onAddToPlaylist: (playlist: Playlist, items: NewPlaylistItem[]) => Promise<void>,
   onShowImportPanel: () => void,
-  onActivatePlaylist: (id: string) => void;
+  onActivatePlaylist: (id: string) => void,
 };
 function PlaylistMenu({
   className,

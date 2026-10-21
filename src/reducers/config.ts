@@ -1,15 +1,15 @@
-import type { AnyAction } from 'redux';
 import { createSelector } from '@reduxjs/toolkit';
+import type { AnyAction } from 'redux';
 import defaultEmoji from 'virtual:emoji-shortcodes';
 import type { StoreState } from '../redux/configureStore';
 import { initState } from './auth';
 
 export interface State {
   roles: undefined | Record<string, string[]>;
-  apiUrl?: string,
-  socketUrl?: string,
-  emoji: Record<string, string>,
-  recaptcha?: { key: string | null },
+  apiUrl?: string;
+  socketUrl?: string;
+  emoji: Record<string, string>;
+  recaptcha?: { key: string | null };
 }
 
 export const initialState: State = {

@@ -1,8 +1,8 @@
-import { useSelector, useDispatch } from '../hooks/useRedux';
+import DialogCloseAnimation from '../components/DialogCloseAnimation';
+import EditMediaDialog from '../components/Dialogs/EditMediaDialog';
+import { useDispatch, useSelector } from '../hooks/useRedux';
 import { closeEditMediaDialog, editMediaDialogSelector } from '../reducers/dialogs';
 import { updatePlaylistItem } from '../reducers/playlists';
-import EditMediaDialog from '../components/Dialogs/EditMediaDialog';
-import DialogCloseAnimation from '../components/DialogCloseAnimation';
 
 const DIALOG_ANIMATION_DURATION = 450; // ms
 

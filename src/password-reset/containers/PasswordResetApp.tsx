@@ -1,15 +1,15 @@
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { useState } from 'react';
 import { Provider } from 'react-redux';
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 // @ts-expect-error TS2305: no types
 import { TranslateProvider } from '@u-wave/react-translate';
+import CrashHandler from '../../components/CrashHandler';
 import ErrorArea from '../../containers/ErrorArea';
+import errors from '../../reducers/errors';
+import theme from '../../theme';
 import PasswordResetPage from '../components/PasswordResetPage';
 import PasswordResetSuccessPage from '../components/PasswordResetSuccessPage';
-import theme from '../../theme';
-import CrashHandler from '../../components/CrashHandler';
-import errors from '../../reducers/errors';
 
 const muiTheme = createTheme({ ...theme, cssVariables: true });
 
@@ -31,9 +31,7 @@ function PasswordResetApp({ translator, resetKey }: PasswordResetAppProps) {
       <ThemeProvider theme={muiTheme}>
         <CrashHandler>
           <TranslateProvider translator={translator}>
-            {success ? (
-              <PasswordResetSuccessPage />
-            ) : (
+            {success ? <PasswordResetSuccessPage /> : (
               <PasswordResetPage
                 resetKey={resetKey}
                 onSuccess={() => setSuccess(true)}

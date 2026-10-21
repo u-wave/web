@@ -1,15 +1,15 @@
 import { useCallback, useMemo } from 'react';
-import {
-  joinWaitlist,
-  waitlistUsersSelector,
-  userInWaitlistSelector,
-  waitlistIsLockedSelector,
-} from '../../reducers/waitlist';
+import { useDispatch, useSelector } from '../../hooks/useRedux';
 import { isLoggedInSelector } from '../../reducers/auth';
 import { djSelector } from '../../reducers/booth';
 import { userListSelector } from '../../reducers/users';
+import {
+  joinWaitlist,
+  userInWaitlistSelector,
+  waitlistIsLockedSelector,
+  waitlistUsersSelector,
+} from '../../reducers/waitlist';
 import UsersDrawer from '../components/UsersDrawer';
-import { useDispatch, useSelector } from '../../hooks/useRedux';
 
 type UsersDrawerContainerProps = {
   open: boolean,

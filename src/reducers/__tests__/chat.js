@@ -1,8 +1,8 @@
 import { vi } from 'vitest';
-import createStore from '../../redux/configureStore';
-import * as s from '../chat';
 import * as a from '../../actions/ChatActionCreators';
+import createStore from '../../redux/configureStore';
 import * as authSlice from '../auth';
+import * as s from '../chat';
 
 function preloadUsers(users) {
   return {

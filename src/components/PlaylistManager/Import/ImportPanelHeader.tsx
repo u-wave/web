@@ -1,8 +1,8 @@
-import cx from 'clsx';
-import { useTranslator } from '@u-wave/react-translate';
-import Tooltip from '@mui/material/Tooltip';
-import IconButton from '@mui/material/IconButton';
 import { mdiClose } from '@mdi/js';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+import { useTranslator } from '@u-wave/react-translate';
+import cx from 'clsx';
 import SvgIcon from '../../SvgIcon';
 
 type ImportPanelHeaderProps = {

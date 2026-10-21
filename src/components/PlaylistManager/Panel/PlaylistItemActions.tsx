@@ -1,12 +1,12 @@
 import cx from 'clsx';
+import type { PlaylistItem } from '../../../reducers/playlists';
 import AddToPlaylistAction from '../../MediaList/AddToPlaylistAction';
 import PreviewMediaAction from '../../MediaList/PreviewMediaAction';
+import { usePlaylistContext } from './context';
 import EditMediaAction from './EditMediaAction';
 import MoveToFirstAction from './MoveToFirstAction';
 import MoveToLastAction from './MoveToLastAction';
 import RemoveFromPlaylistAction from './RemoveFromPlaylistAction';
-import type { PlaylistItem } from '../../../reducers/playlists';
-import { usePlaylistContext } from './context';
 
 function dontBubble(event: React.MouseEvent<unknown>) {
   event.stopPropagation();
@@ -28,15 +28,13 @@ function PlaylistItemActions({ className, index, media }: PlaylistItemActionsPro
     <div className={cx('MediaActions', className)} onClick={dontBubble}>
       <PreviewMediaAction media={media} />
       <AddToPlaylistAction media={media} />
-      {/* Don't show the "move to first" action on the first item in the playlist.
+      {
+        /* Don't show the "move to first" action on the first item in the playlist.
         * If the playlist is filtered we don't know if the first item to show is
-        * also the first in the playlist, so just show it always in that case. */}
-      {(!isFirst || isFiltered) && (
-        <MoveToFirstAction media={media} />
-      )}
-      {(!isLast || isFiltered) && (
-        <MoveToLastAction media={media} />
-      )}
+        * also the first in the playlist, so just show it always in that case. */
+      }
+      {(!isFirst || isFiltered) && <MoveToFirstAction media={media} />}
+      {(!isLast || isFiltered) && <MoveToLastAction media={media} />}
       <EditMediaAction media={media} />
       <RemoveFromPlaylistAction media={media} />
     </div>

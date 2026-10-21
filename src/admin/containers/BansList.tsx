@@ -1,10 +1,10 @@
 import { useMemo, useState } from 'react';
-import useSWR from 'swr';
 import { useAsyncCallback } from 'react-async-hook';
-import BansList from '../components/BansList';
-import mergeIncludedModels from '../../utils/mergeIncludedModels';
-import uwFetch from '../../utils/fetch';
+import useSWR from 'swr';
 import type { User } from '../../reducers/users';
+import uwFetch from '../../utils/fetch';
+import mergeIncludedModels from '../../utils/mergeIncludedModels';
+import BansList from '../components/BansList';
 
 const PAGE_SIZE = 25;
 

@@ -1,8 +1,8 @@
-import { vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { vi } from 'vitest';
 import PromptDialog from '..';
 
 const cache = createCache({ key: 'emc' });
@@ -14,16 +14,18 @@ describe('<PromptDialog />', () => {
     });
     const onCancel = vi.fn();
 
-    render((
-      <CacheProvider value={cache}>
-        <PromptDialog
-          open
-          title="Test Prompt"
-          onSubmit={onSubmit}
-          onCancel={onCancel}
-        />
-      </CacheProvider>
-    ));
+    render(
+      (
+        <CacheProvider value={cache}>
+          <PromptDialog
+            open
+            title="Test Prompt"
+            onSubmit={onSubmit}
+            onCancel={onCancel}
+          />
+        </CacheProvider>
+      ),
+    );
 
     // Type "test" into the prompt input
     const input = screen.getByRole('textbox');

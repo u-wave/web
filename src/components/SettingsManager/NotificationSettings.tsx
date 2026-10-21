@@ -1,5 +1,5 @@
-import { useTranslator } from '@u-wave/react-translate';
 import FormGroup from '@mui/material/FormGroup';
+import { useTranslator } from '@u-wave/react-translate';
 import { useSelector } from '../../hooks/useRedux';
 import Switch from '../Switch';
 import SettingControl from './SettingControl';

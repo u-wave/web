@@ -1,7 +1,7 @@
+import { CompileOptionsContext } from '../../components/Chat/Markup';
+import { useDispatch, useSelector } from '../../hooks/useRedux';
 import { motdSourceSelector, setMotd } from '../../reducers/chat';
 import { markupCompilerOptionsSelector } from '../../selectors/chatSelectors';
-import { useDispatch, useSelector } from '../../hooks/useRedux';
-import { CompileOptionsContext } from '../../components/Chat/Markup';
 import Motd from '../components/Motd';
 
 function MotdContainer() {

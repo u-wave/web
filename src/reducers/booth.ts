@@ -1,58 +1,49 @@
-import {
-  type PayloadAction,
-  createSelector,
-  createSlice,
-} from '@reduxjs/toolkit';
+import { createSelector, createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import { mutate } from 'swr';
-import {
-  type User,
-  userSelector,
-  currentUserSelector,
-  currentUserHasRoleSelector,
-} from './users';
-import { currentTimeSelector } from './server';
-import { currentUserIDSelector, initState } from './auth';
-import uwFetch from '../utils/fetch';
 import { createAsyncThunk, type Thunk } from '../redux/api';
 import type { StoreState } from '../redux/configureStore';
 import type { SocketMessageParams } from '../redux/socket';
+import uwFetch from '../utils/fetch';
 import mergeIncludedModels from '../utils/mergeIncludedModels';
+import { currentUserIDSelector, initState } from './auth';
 import type { ApiPlaylistItemMerged, PlaylistItem } from './playlists';
+import { currentTimeSelector } from './server';
+import { currentUserHasRoleSelector, currentUserSelector, type User, userSelector } from './users';
 
 export interface Media {
-  _id: string,
-  sourceType: string,
-  sourceID: string,
-  sourceData: Record<string, unknown> | null,
-  artist: string,
-  title: string,
-  thumbnail: string,
-  duration: number,
-  start: number,
-  end: number,
+  _id: string;
+  sourceType: string;
+  sourceID: string;
+  sourceData: Record<string, unknown> | null;
+  artist: string;
+  title: string;
+  thumbnail: string;
+  duration: number;
+  start: number;
+  end: number;
 }
 
 interface PlayingState {
-  historyID: string,
-  djID: string,
-  media: Media,
-  startTime: number,
-  stats: { upvotes: string[], downvotes: string[], favorites: string[] },
-  autoLeave?: boolean | null,
+  historyID: string;
+  djID: string;
+  media: Media;
+  startTime: number;
+  stats: { upvotes: string[], downvotes: string[], favorites: string[] };
+  autoLeave?: boolean | null;
 }
 
 interface EmptyState {
-  historyID: null,
-  djID: null,
-  media: null,
-  startTime: null,
-  stats: null,
-  autoLeave?: null,
+  historyID: null;
+  djID: null;
+  media: null;
+  startTime: null;
+  stats: null;
+  autoLeave?: null;
 }
 
 type State = (PlayingState | EmptyState) & {
   isFullscreen: boolean,
-}
+};
 
 const initialState = {
   historyID: null,
@@ -81,21 +72,24 @@ export const skipSelf = createAsyncThunk('booth/skipSelf', async (
   await uwFetch(['/booth/skip', { method: 'post', data: options }]);
 });
 
-export const skipCurrentDJ = createAsyncThunk('booth/skip', async (options: { remove?: boolean, reason?: string }, api) => {
-  const { djID } = api.getState().booth;
-  if (djID == null) {
-    return;
-  }
-  const payload = {
-    userID: djID,
-    reason: options.reason ?? '',
-    remove: options.remove ?? false,
-  };
-  await uwFetch(['/booth/skip', {
-    method: 'post',
-    data: payload,
-  }]);
-});
+export const skipCurrentDJ = createAsyncThunk(
+  'booth/skip',
+  async (options: { remove?: boolean, reason?: string }, api) => {
+    const { djID } = api.getState().booth;
+    if (djID == null) {
+      return;
+    }
+    const payload = {
+      userID: djID,
+      reason: options.reason ?? '',
+      remove: options.remove ?? false,
+    };
+    await uwFetch(['/booth/skip', {
+      method: 'post',
+      data: payload,
+    }]);
+  },
+);
 
 // This action doesn't need further handling because it will cause updates
 // over WebSocket on the server.
@@ -128,22 +122,25 @@ function flattenPlaylistItem(item: ApiPlaylistItemMerged): PlaylistItem {
   };
 }
 
-export const favorite = createAsyncThunk('booth/favorite', async ({ historyID, playlistID }: { historyID: string, playlistID: string }) => {
-  const res = await uwFetch<{
-    data: Array<object>,
-    included: object,
-    meta: { playlistSize: number },
-  }>(['/booth/favorite', {
-    method: 'post',
-    data: { historyID, playlistID },
-  }]);
+export const favorite = createAsyncThunk(
+  'booth/favorite',
+  async ({ historyID, playlistID }: { historyID: string, playlistID: string }) => {
+    const res = await uwFetch<{
+      data: Array<object>,
+      included: object,
+      meta: { playlistSize: number },
+    }>(['/booth/favorite', {
+      method: 'post',
+      data: { historyID, playlistID },
+    }]);
 
-  const added = mergeIncludedModels(res).map(flattenPlaylistItem);
-  return {
-    added,
-    playlistSize: res.meta.playlistSize,
-  };
-});
+    const added = mergeIncludedModels(res).map(flattenPlaylistItem);
+    return {
+      added,
+      playlistSize: res.meta.playlistSize,
+    };
+  },
+);
 
 const slice = createSlice({
   name: 'booth',

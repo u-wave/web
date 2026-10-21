@@ -1,7 +1,7 @@
 import { useCallback, useRef } from 'react';
 import useUserCard from '../../hooks/useUserCard';
-import UsernameBase from '.';
 import type { User } from '../../reducers/users';
+import UsernameBase from '.';
 
 type UsernameWithCardProps = {
   user: User,

@@ -1,7 +1,7 @@
-import cx from 'clsx';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import { useTranslator } from '@u-wave/react-translate';
+import cx from 'clsx';
 
 type GuestsRowProps = {
   className?: string,

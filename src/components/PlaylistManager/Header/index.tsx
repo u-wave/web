@@ -1,5 +1,5 @@
-import cx from 'clsx';
 import { useTranslator } from '@u-wave/react-translate';
+import cx from 'clsx';
 import OverlayHeader from '../../Overlay/Header';
 
 type PlaylistManagerHeaderProps = {

@@ -1,5 +1,5 @@
-import UserNotificationMessage from './UserNotificationMessage';
 import type { User } from '../../../reducers/users';
+import UserNotificationMessage from './UserNotificationMessage';
 
 type UserNameChangedProps = {
   user: User,

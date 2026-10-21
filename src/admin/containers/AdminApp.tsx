@@ -1,6 +1,6 @@
 import { SWRConfig } from 'swr';
-import AdminApp from '../components/AdminApp';
 import uwFetch from '../../utils/fetch';
+import AdminApp from '../components/AdminApp';
 
 const swrConfig = { fetcher: uwFetch };
 

@@ -1,7 +1,7 @@
-import { lazy, Suspense } from 'react';
 import { useTranslator } from '@u-wave/react-translate';
-import { useDispatch } from '../../../hooks/useRedux';
+import { lazy, Suspense } from 'react';
 import { loginWithGoogle } from '../../../actions/LoginActionCreators';
+import { useDispatch } from '../../../hooks/useRedux';
 
 const GoogleButton = lazy(() => import('react-google-button'));
 const loadingGoogleButton = <div style={{ height: 50 }} />;

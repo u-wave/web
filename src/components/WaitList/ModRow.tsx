@@ -1,18 +1,20 @@
-import cx from 'clsx';
 import {
-  useCallback, useEffect, useRef, useState,
-} from 'react';
-import { attachClosestEdge, type Edge, extractClosestEdge } from '@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge';
+  attachClosestEdge,
+  type Edge,
+  extractClosestEdge,
+} from '@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge';
 import { combine } from '@atlaskit/pragmatic-drag-and-drop/combine';
 import { draggable, dropTargetForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
 import { mdiClose, mdiDragHorizontalVariant } from '@mdi/js';
+import cx from 'clsx';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import useUserCard from '../../hooks/useUserCard';
+import type { User } from '../../reducers/users';
 import Avatar from '../Avatar';
 import SvgIcon from '../SvgIcon';
 import Username from '../Username';
-import Position from './Position';
-import type { User } from '../../reducers/users';
 import { createWaitlistDrag, createWaitlistDrop, isWaitlistDrag } from './drag';
+import Position from './Position';
 
 type ModRowProps = {
   className?: string,
@@ -111,7 +113,6 @@ function ModRow({
         onClick={onOpenCard}
         ref={dragPreviewRef}
       >
-
         <Avatar
           className="UserRow-avatar"
           user={user}

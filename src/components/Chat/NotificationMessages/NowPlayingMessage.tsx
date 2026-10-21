@@ -1,6 +1,6 @@
 import Divider from '@mui/material/Divider';
-import MessageTimestamp from '../MessageTimestamp';
 import type { Media } from '../../../reducers/booth';
+import MessageTimestamp from '../MessageTimestamp';
 
 type NowPlayingMessageProps = {
   entry: Pick<Media, 'sourceType' | 'sourceID' | 'artist' | 'title'>,

@@ -1,20 +1,16 @@
 import { useCallback } from 'react';
-import { useSelector, useDispatch } from '../hooks/useRedux';
+import AddToPlaylistMenu from '../components/AddToPlaylistMenu';
+import { useDispatch, useSelector } from '../hooks/useRedux';
 import {
   close,
+  historyIDSelector,
   isFavoriteSelector,
   isOpenSelector,
-  positionSelector,
   mediaSelector,
-  historyIDSelector,
+  positionSelector,
 } from '../reducers/addToPlaylistMenu';
-import AddToPlaylistMenu from '../components/AddToPlaylistMenu';
 import { favorite as favoriteMedia } from '../reducers/booth';
-import {
-  addPlaylistItems,
-  createPlaylist,
-  type Playlist,
-} from '../reducers/playlists';
+import { addPlaylistItems, createPlaylist, type Playlist } from '../reducers/playlists';
 
 function AddToPlaylistMenuContainer() {
   const dispatch = useDispatch();

@@ -1,9 +1,7 @@
+import { mdiHeart, mdiHeartOutline, mdiThumbDown, mdiThumbUp } from '@mdi/js';
 import cx from 'clsx';
-import {
-  mdiHeart, mdiHeartOutline, mdiThumbDown, mdiThumbUp,
-} from '@mdi/js';
-import SvgIcon from '../SvgIcon';
 import useCurrentUser from '../../hooks/useCurrentUser';
+import SvgIcon from '../SvgIcon';
 
 type VotesProps = {
   upvotes: string[],
@@ -35,7 +33,10 @@ function Votes({ upvotes, downvotes, favorites }: VotesProps) {
       </div>
       <div className="ResponseButton ResponseButton--static">
         <div className="ResponseButton-content">
-          <SvgIcon path={mdiThumbDown} className={cx('HistoryVotes-icon', isDownvote && 'ResponseButton-icon--downvoted')} />
+          <SvgIcon
+            path={mdiThumbDown}
+            className={cx('HistoryVotes-icon', isDownvote && 'ResponseButton-icon--downvoted')}
+          />
           <span className="ResponseButton-count">{downvotes.length}</span>
         </div>
       </div>

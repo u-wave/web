@@ -1,18 +1,18 @@
-import { useState, Suspense } from 'react';
-import { useTranslator, Interpolate } from '@u-wave/react-translate';
-import { useAsyncCallback } from 'react-async-hook';
+import { mdiAccount, mdiEmail, mdiLock } from '@mdi/js';
 import Alert from '@mui/material/Alert';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Divider from '@mui/material/Divider';
-import { mdiEmail, mdiLock, mdiAccount } from '@mdi/js';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import { Interpolate, useTranslator } from '@u-wave/react-translate';
+import { Suspense, useState } from 'react';
+import { useAsyncCallback } from 'react-async-hook';
+import CircularProgress from '../../CircularProgress';
 import Form from '../../Form';
+import Button from '../../Form/Button';
 import FormGroup from '../../Form/Group';
 import TextField from '../../Form/TextField';
-import Button from '../../Form/Button';
-import CircularProgress from '../../CircularProgress';
-import SvgIcon from '../../SvgIcon';
 import ReCaptcha from '../../ReCaptcha';
+import SvgIcon from '../../SvgIcon';
 import SocialLogin from './SocialLogin';
 
 export type RegisterFormProps = {
@@ -135,17 +135,19 @@ function RegisterForm({
         />
       </FormGroup>
 
-      {reCaptchaSiteKey != null ? (
-        <FormGroup>
-          <Suspense fallback={<CircularProgress className="ReCaptcha-spinner" />}>
-            <ReCaptcha
-              sitekey={reCaptchaSiteKey}
-              onResponse={setCaptchaResponse}
-              theme="dark"
-            />
-          </Suspense>
-        </FormGroup>
-      ) : null}
+      {reCaptchaSiteKey != null
+        ? (
+          <FormGroup>
+            <Suspense fallback={<CircularProgress className="ReCaptcha-spinner" />}>
+              <ReCaptcha
+                sitekey={reCaptchaSiteKey}
+                onResponse={setCaptchaResponse}
+                theme="dark"
+              />
+            </Suspense>
+          </FormGroup>
+        )
+        : null}
 
       <FormGroup>
         <FormControlLabel
@@ -174,7 +176,11 @@ function RegisterForm({
           disabled={handleSubmit.loading || !agreed || !captchaOk}
         >
           {handleSubmit.loading
-            ? <div className="Button-loading"><CircularProgress size="100%" /></div>
+            ? (
+              <div className="Button-loading">
+                <CircularProgress size="100%" />
+              </div>
+            )
             : t('login.register')}
         </Button>
       </FormGroup>

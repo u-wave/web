@@ -1,21 +1,21 @@
+import { mdiHeart, mdiThumbDown, mdiThumbUp } from '@mdi/js';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
 import cx from 'clsx';
 import { useCallback, useRef } from 'react';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import ListItemText from '@mui/material/ListItemText';
-import { mdiHeart, mdiThumbDown, mdiThumbUp } from '@mdi/js';
 import useUserCard from '../../hooks/useUserCard';
-import Avatar from '../Avatar';
-import Username from '../Username';
-import SvgIcon from '../SvgIcon';
 import type { User } from '../../reducers/users';
+import Avatar from '../Avatar';
+import SvgIcon from '../SvgIcon';
+import Username from '../Username';
 
 export interface RoomUser extends User {
   votes: {
     upvote: boolean,
     downvote: boolean,
     favorite: boolean,
-  },
+  };
 }
 
 type RoomUserRowProps = {
@@ -47,12 +47,8 @@ function RoomUserRow({ className, user, style }: RoomUserRowProps) {
           <Username className="UserRow-username" user={user} />
         </ListItemText>
         <div className="UserRow-votes">
-          {user.votes.favorite && (
-            <SvgIcon path={mdiHeart} className="UserRow-voteIcon UserRow-voteIcon--favorite" />
-          )}
-          {user.votes.upvote && (
-            <SvgIcon path={mdiThumbUp} className="UserRow-voteIcon UserRow-voteIcon--upvote" />
-          )}
+          {user.votes.favorite && <SvgIcon path={mdiHeart} className="UserRow-voteIcon UserRow-voteIcon--favorite" />}
+          {user.votes.upvote && <SvgIcon path={mdiThumbUp} className="UserRow-voteIcon UserRow-voteIcon--upvote" />}
           {user.votes.downvote && (
             <SvgIcon path={mdiThumbDown} className="UserRow-voteIcon UserRow-voteIcon--downvote" />
           )}

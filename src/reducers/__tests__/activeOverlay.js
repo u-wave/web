@@ -1,10 +1,5 @@
-import {
-  openOverlay,
-  closeOverlay,
-  toggleOverlay,
-  selectOverlay,
-} from '../activeOverlay';
 import createStore from '../../redux/configureStore';
+import { closeOverlay, openOverlay, selectOverlay, toggleOverlay } from '../activeOverlay';
 
 describe('reducers/activeOverlay', () => {
   it('should not respond to unrelated actions', () => {

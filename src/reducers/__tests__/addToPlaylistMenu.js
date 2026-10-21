@@ -1,12 +1,5 @@
 import createStore from '../../redux/configureStore';
-import {
-  open,
-  close,
-  isOpenSelector,
-  isFavoriteSelector,
-  positionSelector,
-  mediaSelector,
-} from '../addToPlaylistMenu';
+import { close, isFavoriteSelector, isOpenSelector, mediaSelector, open, positionSelector } from '../addToPlaylistMenu';
 
 describe('reducers/addToPlaylistMenu', () => {
   it('should default to a closed context menu', () => {

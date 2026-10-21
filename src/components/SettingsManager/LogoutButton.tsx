@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import { useTranslator } from '@u-wave/react-translate';
-import Button from '@mui/material/Button';
 import { mdiPower } from '@mdi/js';
-import SvgIcon from '../SvgIcon';
+import Button from '@mui/material/Button';
+import { useTranslator } from '@u-wave/react-translate';
+import { useState } from 'react';
 import ConfirmDialog from '../Dialogs/ConfirmDialog';
 import FormGroup from '../Form/Group';
+import SvgIcon from '../SvgIcon';
 
 type LogoutButtonProps = {
   onLogout: () => undefined | Promise<void>,

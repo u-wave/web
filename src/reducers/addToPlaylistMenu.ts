@@ -1,20 +1,20 @@
-import { type PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { StoreState } from '../redux/configureStore';
 import type { NewPlaylistItem } from './playlists';
 
 interface ClosedState {
-  type: null,
-  data: null,
+  type: null;
+  data: null;
 }
 interface AddState {
-  type: 'add',
+  type: 'add';
   data: {
     media: NewPlaylistItem[],
-  },
+  };
 }
 interface FavoriteState {
-  type: 'favorite',
-  data: { historyID: string },
+  type: 'favorite';
+  data: { historyID: string };
 }
 
 type State = {
@@ -33,9 +33,14 @@ const slice = createSlice({
   name: 'addToPlaylistMenu',
   initialState,
   reducers: {
-    open(state, action: PayloadAction<{
-      position: { x: number, y: number },
-    } & (AddState | FavoriteState)>) {
+    open(
+      state,
+      action: PayloadAction<
+        {
+          position: { x: number, y: number },
+        } & (AddState | FavoriteState)
+      >,
+    ) {
       state.open = true;
       Object.assign(state, action.payload);
     },

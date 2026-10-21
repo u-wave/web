@@ -1,7 +1,7 @@
 import type { Action, Store } from 'redux';
 import type { User } from '../reducers/users';
-import type { StoreState } from '../redux/configureStore';
 import type { Thunk } from '../redux/api';
+import type { StoreState } from '../redux/configureStore';
 
 /** Helper to consistently find online users in command handlers. */
 export function findUser(users: User[], username: string) {
@@ -10,10 +10,10 @@ export function findUser(users: User[], username: string) {
 }
 
 export interface Command {
-  name: string,
-  description?: string,
-  guard?: (state: StoreState) => boolean,
-  action: (commander: ChatCommands, ...args: string[]) => Action | Thunk<unknown>,
+  name: string;
+  description?: string;
+  guard?: (state: StoreState) => boolean;
+  action: (commander: ChatCommands, ...args: string[]) => Action | Thunk<unknown>;
 }
 
 type CommandInternal = Omit<Command, 'name'>;

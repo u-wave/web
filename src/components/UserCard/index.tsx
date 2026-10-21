@@ -1,7 +1,7 @@
-import React from 'react';
 import Modal from '@mui/material/Modal';
-import UserCard from './UserCard';
+import React from 'react';
 import type { User } from '../../reducers/users';
+import UserCard from './UserCard';
 
 // TODO use floating-ui or radix-ui
 
@@ -13,7 +13,7 @@ type UserCardWrapperProps = {
 type UserCardWrapperState = {
   positionDiffX: number,
   positionDiffY: number,
-}
+};
 class UserCardWrapper extends React.Component<UserCardWrapperProps, UserCardWrapperState> {
   container: HTMLDivElement | null = null;
 

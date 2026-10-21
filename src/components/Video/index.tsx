@@ -2,13 +2,13 @@ import cx from 'clsx';
 import React from 'react';
 import screenfull from 'screenfull';
 import { useSelector } from '../../hooks/useRedux';
-import VideoBackdrop from './VideoBackdrop';
-import VideoProgressBar from './VideoProgressBar';
-import VideoToolbar from './VideoToolbar';
-import MouseMoveCapture from './VideoMouseMoveCapture';
-import Player from '../Player';
 import { selectOverlay } from '../../reducers/activeOverlay';
 import type { Media } from '../../reducers/booth';
+import Player from '../Player';
+import VideoBackdrop from './VideoBackdrop';
+import MouseMoveCapture from './VideoMouseMoveCapture';
+import VideoProgressBar from './VideoProgressBar';
+import VideoToolbar from './VideoToolbar';
 
 // Overlays over the video (even tiny in the corner like ours) violate TOS,
 // so we can not show them. Toggling it off with a conditional for now until
@@ -32,7 +32,7 @@ type VideoProps = {
   seek: number,
   onFullscreenEnter: () => void,
   onFullscreenExit: () => void,
-}
+};
 // TODO the split between this and Player is a bit weird
 // could use a rethink (and a rename)
 function Video(props: VideoProps) {
@@ -112,7 +112,9 @@ function Video(props: VideoProps) {
   return (
     <div
       ref={container}
-      className={cx('Video', `Video--${media.sourceType}`, `Video--${size}`, { 'Video--nonInteractive': activeOverlay })}
+      className={cx('Video', `Video--${media.sourceType}`, `Video--${size}`, {
+        'Video--nonInteractive': activeOverlay,
+      })}
     >
       <VideoBackdrop url={media.thumbnail} />
       <Player

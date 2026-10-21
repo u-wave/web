@@ -1,22 +1,22 @@
-import React from 'react';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import { ThemeProvider } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import React from 'react';
 import { Provider as BusProvider } from 'react-bus';
 // @ts-expect-error TS7016: Untyped, not worth it as will likely move to fluent
 import { TranslateProvider } from '@u-wave/react-translate';
-import { useSelector, useDispatch } from '../hooks/useRedux';
-import { closeOverlay, selectOverlay } from '../reducers/activeOverlay';
-import { translatorSelector } from '../reducers/locales';
-import { isConnectedSelector } from '../reducers/server';
-import createTheme from '../utils/createTheme';
 import DesktopApp from '../components/App';
-import MobileApp from '../mobile/components/App';
 import CrashHandler from '../components/CrashHandler';
-import UwaveContext from '../context/UwaveContext';
 import { ClockProvider } from '../context/ClockContext';
 import MediaSourceContext, { type MediaSource } from '../context/MediaSourceContext';
-import { AllStoresProvider } from '../stores';
+import UwaveContext from '../context/UwaveContext';
+import { useDispatch, useSelector } from '../hooks/useRedux';
+import MobileApp from '../mobile/components/App';
+import { closeOverlay, selectOverlay } from '../reducers/activeOverlay';
 import { initState } from '../reducers/auth';
+import { translatorSelector } from '../reducers/locales';
+import { isConnectedSelector } from '../reducers/server';
+import { AllStoresProvider } from '../stores';
+import createTheme from '../utils/createTheme';
 import type Uwave from '../Uwave';
 
 const {

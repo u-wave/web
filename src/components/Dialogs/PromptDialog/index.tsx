@@ -1,14 +1,14 @@
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
 import cx from 'clsx';
 import { useCallback, useId, useState } from 'react';
 import { useAsyncCallback } from 'react-async-hook';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
 import CircularProgress from '../../CircularProgress';
 import Form from '../../Form';
+import Button from '../../Form/Button';
 import FormGroup from '../../Form/Group';
 import TextField from '../../Form/TextField';
-import Button from '../../Form/Button';
 
 type PromptDialogProps = {
   children?: React.ReactNode,
@@ -86,7 +86,13 @@ function PromptDialog({
           </FormGroup>
           <FormGroup>
             <Button disabled={handleSubmit.loading}>
-              {handleSubmit.loading ? <div className="Button-loading"><CircularProgress size="100%" /></div> : submitLabel}
+              {handleSubmit.loading
+                ? (
+                  <div className="Button-loading">
+                    <CircularProgress size="100%" />
+                  </div>
+                )
+                : submitLabel}
             </Button>
           </FormGroup>
         </Form>

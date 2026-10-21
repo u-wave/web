@@ -1,19 +1,9 @@
 import React from 'react';
-import { useDispatch, useSelector } from '../hooks/useRedux';
-import useClock from '../hooks/useClock';
-import {
-  enterFullscreen,
-  exitFullscreen,
-  mediaSelector,
-  timeElapsedSelector,
-} from '../reducers/booth';
-import {
-  isMutedSelector,
-  playbackVolumeSelector,
-  videoEnabledSelector,
-  videoSizeSelector,
-} from '../reducers/settings';
 import Video from '../components/Video';
+import useClock from '../hooks/useClock';
+import { useDispatch, useSelector } from '../hooks/useRedux';
+import { enterFullscreen, exitFullscreen, mediaSelector, timeElapsedSelector } from '../reducers/booth';
+import { isMutedSelector, playbackVolumeSelector, videoEnabledSelector, videoSizeSelector } from '../reducers/settings';
 
 const {
   useCallback,

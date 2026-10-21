@@ -1,11 +1,11 @@
 import { useCallback, useMemo } from 'react';
-import { useDispatch, useSelector } from '../hooks/useRedux';
-import { deleteChatMessage, motdSelector, messagesSelector } from '../reducers/chat';
-import { customEmojiNamesSelector } from '../reducers/config';
 import ChatMessages from '../components/Chat/ChatMessages';
-import useEmotes from '../hooks/useEmotes';
 import type { CompileOptions } from '../components/Chat/Markup';
+import useEmotes from '../hooks/useEmotes';
 import useHasRole from '../hooks/useHasRole';
+import { useDispatch, useSelector } from '../hooks/useRedux';
+import { deleteChatMessage, messagesSelector, motdSelector } from '../reducers/chat';
+import { customEmojiNamesSelector } from '../reducers/config';
 
 function ChatMessagesContainer() {
   const dispatch = useDispatch();

@@ -1,9 +1,9 @@
 import cx from 'clsx';
 import useIntl from '../../hooks/useIntl';
+import type { User } from '../../reducers/users';
 import Avatar from '../Avatar';
 import UserRoles from '../UserCard/UserRoles';
 import ChangeUsernameButton from './ChangeUsernameButton';
-import type { User } from '../../reducers/users';
 
 type ProfileProps = {
   className?: string,

@@ -36,13 +36,15 @@ function PlaylistImport({
   const sources = getAllMediaSources();
   Object.entries(sources).forEach(([sourceType, source]) => {
     if (source.ImportForm != null) {
-      forms.push((
-        <source.ImportForm
-          key={sourceType}
-          onShowImportPanel={() => onShowImportPanel(sourceType)}
-          onHideImportPanel={onHideImportPanel}
-        />
-      ));
+      forms.push(
+        (
+          <source.ImportForm
+            key={sourceType}
+            onShowImportPanel={() => onShowImportPanel(sourceType)}
+            onHideImportPanel={onHideImportPanel}
+          />
+        ),
+      );
     }
   });
 

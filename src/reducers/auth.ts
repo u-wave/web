@@ -1,13 +1,13 @@
-import { type PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import { mutate } from 'swr';
 import type { JsonObject } from 'type-fest';
-import type { Playlist } from './playlists';
-import type { User } from './users';
-import uwFetch from '../utils/fetch';
 import { createAsyncThunk } from '../redux/api';
-import { syncTimestamps } from './server';
-import * as Session from '../utils/Session';
 import type { StoreState } from '../redux/configureStore';
+import uwFetch from '../utils/fetch';
+import * as Session from '../utils/Session';
+import type { Playlist } from './playlists';
+import { syncTimestamps } from './server';
+import type { User } from './users';
 
 interface Media {
   media: {
@@ -19,16 +19,16 @@ interface Media {
     title: string,
     duration: number,
     thumbnail: string,
-  },
-  artist: string,
-  title: string,
-  start: number,
-  end: number,
+  };
+  artist: string;
+  title: string;
+  start: number;
+  end: number;
 }
 interface PlaylistItem extends Media {
-  _id: string,
-  createdAt: string,
-  updatedAt: string,
+  _id: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 interface State {
@@ -112,20 +112,23 @@ export const login = createAsyncThunk('auth/login', async (payload: LoginPayload
 });
 
 type FinishSocialLoginPayload = { service: string, params: JsonObject };
-export const finishSocialLogin = createAsyncThunk('auth/finishSocialLogin', async (payload: FinishSocialLoginPayload, api) => {
-  const { meta } = await uwFetch<{
-    meta: { jwt: string },
-  }>([`/auth/service/${payload.service}/finish`, { method: 'post', data: payload.params }]);
+export const finishSocialLogin = createAsyncThunk(
+  'auth/finishSocialLogin',
+  async (payload: FinishSocialLoginPayload, api) => {
+    const { meta } = await uwFetch<{
+      meta: { jwt: string },
+    }>([`/auth/service/${payload.service}/finish`, { method: 'post', data: payload.params }]);
 
-  const now = await api.dispatch(initState());
-  const { user, socketToken } = now.payload as { user: User, socketToken: string };
+    const now = await api.dispatch(initState());
+    const { user, socketToken } = now.payload as { user: User, socketToken: string };
 
-  return {
-    user,
-    socketToken,
-    token: meta.jwt,
-  };
-});
+    return {
+      user,
+      socketToken,
+      token: meta.jwt,
+    };
+  },
+);
 
 type RegisterPayload = {
   email: string,

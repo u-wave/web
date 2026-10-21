@@ -1,13 +1,9 @@
 import { useCallback } from 'react';
-import { useSelector, useDispatch } from '../hooks/useRedux';
-import {
-  moveWaitlistUser,
-  removeWaitlistUser,
-  waitlistUsersSelector,
-} from '../reducers/waitlist';
-import { type User } from '../reducers/users';
-import useHasRole from '../hooks/useHasRole';
 import WaitList from '../components/WaitList';
+import useHasRole from '../hooks/useHasRole';
+import { useDispatch, useSelector } from '../hooks/useRedux';
+import { type User } from '../reducers/users';
+import { moveWaitlistUser, removeWaitlistUser, waitlistUsersSelector } from '../reducers/waitlist';
 
 function WaitListContainer() {
   const dispatch = useDispatch();

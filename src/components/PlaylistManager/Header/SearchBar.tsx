@@ -1,8 +1,8 @@
+import { useDispatch } from '../../../hooks/useRedux';
+import { showSearchResults } from '../../../reducers/playlists';
+import { useMediaSearchStore } from '../../../stores/MediaSearchStore';
 import BaseSearchBar from '../../SearchBar';
 import SourcePicker from './SourcePicker';
-import { useDispatch } from '../../../hooks/useRedux';
-import { useMediaSearchStore } from '../../../stores/MediaSearchStore';
-import { showSearchResults } from '../../../reducers/playlists';
 
 type MediaSearchBarProps = {
   className?: string,

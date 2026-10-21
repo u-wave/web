@@ -1,6 +1,6 @@
 import { lazy } from 'react';
-import Overlay from '../../components/Overlay';
 import createLazyOverlay from '../../components/LazyOverlay';
+import Overlay from '../../components/Overlay';
 
 type RoomHistoryOverlayProps = {
   className?: string,

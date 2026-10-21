@@ -1,11 +1,7 @@
 import ms from 'ms';
-import { findUser, type Command } from '../ChatCommands';
 import { log } from '../../reducers/chat';
-import {
-  banUser,
-  userListSelector,
-  isModeratorSelector,
-} from '../../reducers/users';
+import { banUser, isModeratorSelector, userListSelector } from '../../reducers/users';
+import { type Command, findUser } from '../ChatCommands';
 
 export default [{
   name: 'ban',

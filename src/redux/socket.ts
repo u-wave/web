@@ -1,19 +1,9 @@
-import type { AnyAction, Middleware } from 'redux';
 import { createAction } from '@reduxjs/toolkit';
-import type { AppDispatch } from './configureStore';
-import {
-  SOCKET_CONNECT,
-  SOCKET_RECONNECT,
-  SOCKET_DISCONNECTED,
-  SOCKET_CONNECTED,
-} from '../constants/ActionTypes';
+import type { AnyAction, Middleware } from 'redux';
+import { SOCKET_CONNECT, SOCKET_CONNECTED, SOCKET_DISCONNECTED, SOCKET_RECONNECT } from '../constants/ActionTypes';
+import { type InitialStatePayload, initState, login, logout } from '../reducers/auth';
 import { sendMessage } from '../reducers/chat';
-import {
-  type InitialStatePayload,
-  initState,
-  login,
-  logout,
-} from '../reducers/auth';
+import type { AppDispatch } from './configureStore';
 
 function defaultUrl() {
   const loc = window.location;
@@ -145,7 +135,7 @@ export type SocketMessageParams = {
   },
 
   reloadEmotes: void,
-}
+};
 
 export type SocketMessage = {
   [K in keyof SocketMessageParams]: {

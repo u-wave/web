@@ -1,6 +1,6 @@
-import { useUwave } from '../context/UwaveContext';
-import Overlay from '../components/Overlay';
 import About from '../components/About';
+import Overlay from '../components/Overlay';
+import { useUwave } from '../context/UwaveContext';
 
 type AboutContainerProps = {
   onCloseOverlay: () => void,

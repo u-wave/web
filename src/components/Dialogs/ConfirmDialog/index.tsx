@@ -1,11 +1,11 @@
-import cx from 'clsx';
-import { useAsyncCallback } from 'react-async-hook';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
+import cx from 'clsx';
+import { useAsyncCallback } from 'react-async-hook';
 import CircularProgress from '../../CircularProgress';
 import Form from '../../Form';
-import FormGroup from '../../Form/Group';
 import Button from '../../Form/Button';
+import FormGroup from '../../Form/Group';
 
 type ConfirmDialogProps = {
   className?: string,
@@ -57,7 +57,13 @@ function ConfirmDialog({
             <div className="ConfirmDialog-spacer" />
             <div className="ConfirmDialog-button">
               <Button disabled={handleConfirm.loading} onClick={handleConfirm.execute}>
-                {handleConfirm.loading ? <div className="Button-loading"><CircularProgress size="100%" /></div> : confirmLabel}
+                {handleConfirm.loading
+                  ? (
+                    <div className="Button-loading">
+                      <CircularProgress size="100%" />
+                    </div>
+                  )
+                  : confirmLabel}
               </Button>
             </div>
           </FormGroup>

@@ -1,5 +1,5 @@
-import { type PayloadAction, createSlice } from '@reduxjs/toolkit';
 import type { ThemeOptions } from '@mui/material/styles';
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import merge from 'deepmerge';
 import initialState from '../theme';
 

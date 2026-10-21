@@ -1,6 +1,6 @@
+import merge from 'deepmerge';
 import dlv from 'dlv';
 import { dset } from 'dset';
-import merge from 'deepmerge';
 
 /**
  * @param {{ data: any[], meta: object, included: object }} response

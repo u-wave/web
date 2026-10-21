@@ -1,16 +1,16 @@
+import { useTranslator } from '@u-wave/react-translate';
 import cx from 'clsx';
 import { useCallback } from 'react';
-import { useTranslator } from '@u-wave/react-translate';
-import OverlayContent from '../Overlay/Content';
+import PlaylistImport from '../../containers/PlaylistImportManager';
 import PlaylistMenu from '../../containers/PlaylistManagerMenu';
 import PlaylistPanel from '../../containers/PlaylistManagerPanel';
-import PlaylistImport from '../../containers/PlaylistImportManager';
 import SearchResults from '../../containers/SearchResultsPanel';
-import MediaSearchBar from './Header/SearchBar';
-import PlaylistHeader from './Header';
-import NoPlaylists from './NoPlaylists';
 import { useDispatch, useSelector } from '../../hooks/useRedux';
 import { createPlaylist, importPanelSymbol, searchPanelSymbol } from '../../reducers/playlists';
+import OverlayContent from '../Overlay/Content';
+import PlaylistHeader from './Header';
+import MediaSearchBar from './Header/SearchBar';
+import NoPlaylists from './NoPlaylists';
 import './index.css';
 
 type PlaylistManagerProps = {
@@ -58,9 +58,7 @@ function PlaylistManager({ className, onCloseOverlay }: PlaylistManagerProps) {
       </PlaylistHeader>
 
       <OverlayContent>
-        {empty ? (
-          <NoPlaylists onCreatePlaylist={onCreatePlaylist} />
-        ) : (
+        {empty ? <NoPlaylists onCreatePlaylist={onCreatePlaylist} /> : (
           <>
             <PlaylistMenu className="PlaylistManager-menu" />
             <div className="PlaylistManager-panel">

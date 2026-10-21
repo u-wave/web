@@ -1,19 +1,16 @@
-import { findUser, type Command } from '../ChatCommands';
-import { log } from '../../reducers/chat';
 import { skipCurrentDJ } from '../../reducers/booth';
-import {
-  userListSelector,
-  isModeratorSelector,
-} from '../../reducers/users';
+import { log } from '../../reducers/chat';
+import { isModeratorSelector, userListSelector } from '../../reducers/users';
 import {
   addToWaitlist,
-  removeWaitlistUser,
-  moveWaitlistUser,
-  waitlistUsersSelector,
-  djAndWaitlistUsersSelector,
   clearWaitlist,
+  djAndWaitlistUsersSelector,
   lockWaitlist,
+  moveWaitlistUser,
+  removeWaitlistUser,
+  waitlistUsersSelector,
 } from '../../reducers/waitlist';
+import { type Command, findUser } from '../ChatCommands';
 
 export default [
   {

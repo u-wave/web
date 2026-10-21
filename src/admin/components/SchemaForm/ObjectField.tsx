@@ -1,6 +1,6 @@
 import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
 import FormHelperText from '@mui/material/FormHelperText';
+import FormLabel from '@mui/material/FormLabel';
 import type { JSONSchema7, JSONSchema7Object, JSONSchema7Type } from 'json-schema';
 import Field from './Field';
 
@@ -16,10 +16,11 @@ function ObjectProperties({
 }: ObjectPropertiesProps) {
   const fields = Object.entries(schema.properties!).map(([key, subSchema]) => {
     const subValue = value[key]!;
-    const subChange = (newValue: JSONSchema7Type) => onChange({
-      ...value,
-      [key]: newValue,
-    });
+    const subChange = (newValue: JSONSchema7Type) =>
+      onChange({
+        ...value,
+        [key]: newValue,
+      });
 
     // Internal fields can be skipped.
     // TODO this should really be done server-side for security…

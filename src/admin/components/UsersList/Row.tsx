@@ -1,22 +1,20 @@
-import cx from 'clsx';
-import { useCallback, useId, useState } from 'react';
+import { mdiDotsVertical } from '@mdi/js';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import TableRow from '@mui/material/TableRow';
 import MuiTableCell, { type TableCellProps } from '@mui/material/TableCell';
-import { mdiDotsVertical } from '@mdi/js';
-import useIntl from '../../../hooks/useIntl';
+import TableRow from '@mui/material/TableRow';
+import cx from 'clsx';
+import { useCallback, useId, useState } from 'react';
 import Avatar from '../../../components/Avatar';
+import SvgIcon from '../../../components/SvgIcon';
 import Username from '../../../components/Username/WithCard';
 import UserRole from '../../../components/UserRole';
-import SvgIcon from '../../../components/SvgIcon';
+import useIntl from '../../../hooks/useIntl';
 import type { User } from '../../../reducers/users';
 
 function TableCell({ className, ...props }: TableCellProps) {
-  return (
-    <MuiTableCell className={cx('AdminUserRow-cell', className)} {...props} />
-  );
+  return <MuiTableCell className={cx('AdminUserRow-cell', className)} {...props} />;
 }
 
 type JoinDateProps = {

@@ -1,4 +1,4 @@
-import { type UnknownAction, createSlice } from '@reduxjs/toolkit';
+import { createSlice, type UnknownAction } from '@reduxjs/toolkit';
 
 const slice = createSlice({
   name: 'errors',

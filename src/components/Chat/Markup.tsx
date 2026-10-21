@@ -1,10 +1,10 @@
+import Tooltip from '@mui/material/Tooltip';
 import cx from 'clsx';
 import { createContext, use } from 'react';
 import shortenUrl from 'shorten-url';
 import type { MarkupNode, MentionNode } from 'u-wave-parse-chat-markup';
-import Tooltip from '@mui/material/Tooltip';
-import emojiUrl from '../../utils/emojiUrl';
 import type { User } from '../../reducers/users';
+import emojiUrl from '../../utils/emojiUrl';
 
 export type CompileOptions = {
   availableEmoji?: Set<string>,
@@ -116,9 +116,7 @@ function RenderMarkup({ tree, compileOptions, useLargeEmoji }: RenderMarkupProps
               </strong>
             );
           case 'code':
-            return (
-              <code>{node.content[0]}</code>
-            );
+            return <code>{node.content[0]}</code>;
           case 'strike':
             return (
               <s>

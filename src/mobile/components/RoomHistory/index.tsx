@@ -1,7 +1,7 @@
-import cx from 'clsx';
 import { useTranslator } from '@u-wave/react-translate';
-import OverlayHeader from '../../../components/Overlay/Header';
+import cx from 'clsx';
 import OverlayContent from '../../../components/Overlay/Content';
+import OverlayHeader from '../../../components/Overlay/Header';
 import HistoryList from './HistoryList';
 
 type RoomHistoryProps = {

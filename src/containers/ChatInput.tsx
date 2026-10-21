@@ -1,14 +1,14 @@
 import React from 'react';
 import { useBus } from 'react-bus';
 import splitargs from 'splitargs';
-import { useDispatch, useStore, useSelector } from '../hooks/useRedux';
 import { sendChat } from '../actions/ChatActionCreators';
-import { availableGroupMentionsSelector } from '../selectors/chatSelectors';
+import useEmotes from '../hooks/useEmotes';
+import { useDispatch, useSelector, useStore } from '../hooks/useRedux';
 import { isLoggedInSelector } from '../reducers/auth';
 import { userListSelector } from '../reducers/users';
-import commandList from '../utils/commands';
+import { availableGroupMentionsSelector } from '../selectors/chatSelectors';
 import ChatCommands from '../utils/ChatCommands';
-import useEmotes from '../hooks/useEmotes';
+import commandList from '../utils/commands';
 
 const ChatInput = React.lazy(() => import('../components/Chat/Input'));
 

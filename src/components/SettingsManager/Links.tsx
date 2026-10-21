@@ -1,6 +1,6 @@
-import { useTranslator } from '@u-wave/react-translate';
-import Button from '@mui/material/Button';
 import { mdiCopyright } from '@mdi/js';
+import Button from '@mui/material/Button';
+import { useTranslator } from '@u-wave/react-translate';
 import SvgIcon from '../SvgIcon';
 import GithubIcon from './GithubIcon';
 

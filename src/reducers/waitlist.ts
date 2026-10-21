@@ -1,11 +1,11 @@
-import { type PayloadAction, createSelector, createSlice } from '@reduxjs/toolkit';
+import { createSelector, createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import { createStructuredSelector } from 'reselect';
-import type { StoreState } from '../redux/configureStore';
-import { currentUserIDSelector, initState } from './auth';
-import { type User, usersSelector } from './users';
-import { djSelector, isCurrentDJSelector, timeRemainingSelector } from './booth';
 import { createAsyncThunk } from '../redux/api';
+import type { StoreState } from '../redux/configureStore';
 import uwFetch from '../utils/fetch';
+import { currentUserIDSelector, initState } from './auth';
+import { djSelector, isCurrentDJSelector, timeRemainingSelector } from './booth';
+import { type User, usersSelector } from './users';
 
 interface State {
   waitlist: string[];
@@ -89,12 +89,15 @@ const slice = createSlice({
     receiveLeave(state, action: PayloadAction<{ userID: string, waitlist: string[] }>) {
       state.waitlist = action.payload.waitlist;
     },
-    moved(state, action: PayloadAction<{
-      userID: string,
-      moderatorID: string,
-      position: number,
-      waitlist: string[],
-    }>) {
+    moved(
+      state,
+      action: PayloadAction<{
+        userID: string,
+        moderatorID: string,
+        position: number,
+        waitlist: string[],
+      }>,
+    ) {
       state.waitlist = action.payload.waitlist;
     },
     waitlistUpdated(state, action: PayloadAction<{ waitlist: string[] }>) {

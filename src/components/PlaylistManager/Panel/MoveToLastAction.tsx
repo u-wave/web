@@ -1,14 +1,14 @@
-import { useCallback } from 'react';
 import { mdiChevronDown } from '@mdi/js';
+import { useCallback } from 'react';
 import { useDispatch } from '../../../hooks/useRedux';
-import { type PlaylistItem, movePlaylistItems } from '../../../reducers/playlists';
-import SvgIcon from '../../SvgIcon';
+import { movePlaylistItems, type PlaylistItem } from '../../../reducers/playlists';
 import MediaAction from '../../MediaList/MediaAction';
+import SvgIcon from '../../SvgIcon';
 import { usePlaylistContext } from './context';
 
 type MoveToLastActionProps = {
   media: PlaylistItem,
-}
+};
 function MoveToLastAction({ media }: MoveToLastActionProps) {
   const { playlist, selection } = usePlaylistContext();
   const dispatch = useDispatch();

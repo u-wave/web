@@ -1,5 +1,5 @@
-import Select, { type SelectProps } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
+import Select, { type SelectProps } from '@mui/material/Select';
 import { useTranslator } from '@u-wave/react-translate';
 import { useSelector } from '../../hooks/useRedux';
 import { availableLanguagesSelector } from '../../reducers/locales';

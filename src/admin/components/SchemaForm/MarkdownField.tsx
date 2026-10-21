@@ -1,5 +1,5 @@
-import Typography from '@mui/material/Typography';
 import FormHelperText from '@mui/material/FormHelperText';
+import Typography from '@mui/material/Typography';
 import type { JSONSchema7 } from 'json-schema';
 import Markdown from '../../../components/Markdown';
 
@@ -10,7 +10,10 @@ type MarkdownFieldProps = {
   onChange: (value: string) => void,
 };
 function MarkdownField({
-  className, schema, value, onChange,
+  className,
+  schema,
+  value,
+  onChange,
 }: MarkdownFieldProps) {
   return (
     <div className={className} style={{ marginBottom: '8px' }}>

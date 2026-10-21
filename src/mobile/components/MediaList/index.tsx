@@ -1,7 +1,7 @@
 import List from '@mui/material/List';
 import Base from '../../../components/MediaList/BaseMediaList';
-import MediaRow from './Row';
 import type { Media } from '../../../reducers/booth';
+import MediaRow from './Row';
 
 type MediaListProps = {
   className?: string,

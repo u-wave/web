@@ -1,6 +1,6 @@
+import type { JSONSchema7Object } from 'json-schema';
 import { useCallback } from 'react';
 import useSWR from 'swr';
-import type { JSONSchema7Object } from 'json-schema';
 import uwFetch from '../../utils/fetch';
 import ServerConfig from '../components/ServerConfig';
 

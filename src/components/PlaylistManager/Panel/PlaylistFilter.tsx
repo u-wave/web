@@ -1,10 +1,10 @@
+import { mdiMagnify } from '@mdi/js';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+import { useTranslator } from '@u-wave/react-translate';
 import cx from 'clsx';
 import { useEffect, useRef, useState } from 'react';
-import { useTranslator } from '@u-wave/react-translate';
 import { useDebounce } from 'use-debounce';
-import Tooltip from '@mui/material/Tooltip';
-import IconButton from '@mui/material/IconButton';
-import { mdiMagnify } from '@mdi/js';
 import SvgIcon from '../../SvgIcon';
 
 type PlaylistFilterProps = {

@@ -1,9 +1,9 @@
-import { useState } from 'react';
 import { useTranslator } from '@u-wave/react-translate';
+import { useState } from 'react';
 import type { EmptyObject } from 'type-fest';
 import List, { ListItem, ListItemText } from '../List';
-import OverlayHeader from '../Overlay/Header';
 import OverlayContent from '../Overlay/Content';
+import OverlayHeader from '../Overlay/Header';
 import ServerList from '../ServerList';
 
 type AboutProps = {

@@ -1,15 +1,6 @@
-import { findUser, type Command } from '../ChatCommands';
-import {
-  userListSelector,
-  isModeratorSelector,
-  isManagerSelector,
-} from '../../reducers/users';
-import {
-  log,
-  setMotd,
-  deleteChatMessagesByUser,
-  deleteAllChatMessages,
-} from '../../reducers/chat';
+import { deleteAllChatMessages, deleteChatMessagesByUser, log, setMotd } from '../../reducers/chat';
+import { isManagerSelector, isModeratorSelector, userListSelector } from '../../reducers/users';
+import { type Command, findUser } from '../ChatCommands';
 
 export default [
   {

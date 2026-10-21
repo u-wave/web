@@ -1,14 +1,14 @@
-import { findUser, type Command } from '../ChatCommands';
+import { toggleOverlay } from '../../reducers/activeOverlay';
 import { log } from '../../reducers/chat';
 import { rolesSelector } from '../../reducers/config';
 import {
-  userListSelector,
-  isModeratorSelector,
-  isManagerSelector,
   addUserRole,
+  isManagerSelector,
+  isModeratorSelector,
   removeUserRole,
+  userListSelector,
 } from '../../reducers/users';
-import { toggleOverlay } from '../../reducers/activeOverlay';
+import { type Command, findUser } from '../ChatCommands';
 
 export default [
   {

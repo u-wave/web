@@ -1,7 +1,7 @@
 import { lazy, useCallback } from 'react';
-import { changeUsername, logout } from '../reducers/auth';
-import { useDispatch } from '../hooks/useRedux';
 import createLazyOverlay from '../components/LazyOverlay';
+import { useDispatch } from '../hooks/useRedux';
+import { changeUsername, logout } from '../reducers/auth';
 
 const SettingsManager = createLazyOverlay({
   Component: lazy(() => import('../components/SettingsManager')),

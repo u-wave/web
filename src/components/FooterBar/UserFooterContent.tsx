@@ -4,25 +4,25 @@ import { useDispatch, useSelector } from '../../hooks/useRedux';
 import { toggleOverlay } from '../../reducers/activeOverlay';
 import { openFavoriteMenu } from '../../reducers/addToPlaylistMenu';
 import {
-  skipSelf,
-  skipCurrentDJ as modSkipCurrentDJ,
-  upvote,
-  downvote,
+  canSkipSelector,
+  currentVoteStatsSelector,
   djSelector,
+  downvote,
   endTimeSelector,
   historyIDSelector,
   isCurrentDJSelector,
-  currentVoteStatsSelector,
-  canSkipSelector,
+  skipCurrentDJ as modSkipCurrentDJ,
+  skipSelf,
+  upvote,
 } from '../../reducers/booth';
 import { activePlaylistSelector, nextMediaSelector } from '../../reducers/playlists';
+import type { User } from '../../reducers/users';
 import { baseEtaSelector, userInWaitlistSelector } from '../../reducers/waitlist';
 import NextMedia from './NextMedia';
-import UserInfo from './UserInfo';
-import SkipButton from './SkipButton';
-import WaitlistButton from './WaitlistButton';
 import ResponseBar from './ResponseBar';
-import type { User } from '../../reducers/users';
+import SkipButton from './SkipButton';
+import UserInfo from './UserInfo';
+import WaitlistButton from './WaitlistButton';
 
 type UserFooterContentProps = {
   user: User,

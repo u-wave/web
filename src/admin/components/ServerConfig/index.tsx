@@ -1,14 +1,14 @@
-import { useCallback, useState } from 'react';
-import { useTranslator } from '@u-wave/react-translate';
-import { useAsyncCallback } from 'react-async-hook';
-import Typography from '@mui/material/Typography';
+import { mdiAlert, mdiCheck, mdiUnfoldMoreHorizontal } from '@mdi/js';
 import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionActions from '@mui/material/AccordionActions';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import AccordionSummary from '@mui/material/AccordionSummary';
 import Button from '@mui/material/Button';
-import { mdiCheck, mdiAlert, mdiUnfoldMoreHorizontal } from '@mdi/js';
+import Typography from '@mui/material/Typography';
+import { useTranslator } from '@u-wave/react-translate';
 import type { JSONSchema7, JSONSchema7Object } from 'json-schema';
+import { useCallback, useState } from 'react';
+import { useAsyncCallback } from 'react-async-hook';
 import CircularProgress from '../../../components/CircularProgress';
 import SvgIcon from '../../../components/SvgIcon';
 import SchemaForm from '../SchemaForm';
@@ -58,12 +58,14 @@ function Section({
           <Typography>{schema.title}</Typography>
           <Typography color="textSecondary">{schema.description}</Typography>
         </div>
-        {edited ? (
-          <div className="ServerConfigGroupHeader-saveWarning">
-            <SvgIcon path={mdiAlert} style={{ marginRight: '.25rem' }} />
-            {t('admin.config.unsavedChanges')}
-          </div>
-        ) : null}
+        {edited
+          ? (
+            <div className="ServerConfigGroupHeader-saveWarning">
+              <SvgIcon path={mdiAlert} style={{ marginRight: '.25rem' }} />
+              {t('admin.config.unsavedChanges')}
+            </div>
+          )
+          : null}
       </AccordionSummary>
       <AccordionDetails>
         <SchemaForm
@@ -120,9 +122,11 @@ function ServerConfig({
 }: ServerConfigProps) {
   return (
     <div>
-      {configSchema ? (
-        renderSections(configSchema, config, onSaveConfig)
-      ) : null}
+      {configSchema
+        ? (
+          renderSections(configSchema, config, onSaveConfig)
+        )
+        : null}
     </div>
   );
 }

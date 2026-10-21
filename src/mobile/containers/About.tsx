@@ -1,9 +1,9 @@
-import { useContext } from 'react';
 import { useTranslator } from '@u-wave/react-translate';
-import UwaveContext from '../../context/UwaveContext';
+import { useContext } from 'react';
 import Overlay from '../../components/Overlay';
-import OverlayHeader from '../../components/Overlay/Header';
 import OverlayContent from '../../components/Overlay/Content';
+import OverlayHeader from '../../components/Overlay/Header';
+import UwaveContext from '../../context/UwaveContext';
 
 type AboutOverlayProps = {
   onCloseOverlay: () => void,

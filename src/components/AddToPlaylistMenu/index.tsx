@@ -1,10 +1,10 @@
-import { useCallback, useState } from 'react';
-import { useTranslator } from '@u-wave/react-translate';
 import { mdiPlus } from '@mdi/js';
+import { useTranslator } from '@u-wave/react-translate';
+import { useCallback, useState } from 'react';
+import type { Playlist } from '../../reducers/playlists';
 import PromptDialog from '../Dialogs/PromptDialog';
 import SvgIcon from '../SvgIcon';
 import PlaylistsMenu from './PlaylistsMenu';
-import type { Playlist } from '../../reducers/playlists';
 
 type AddToPlaylistMenuProps = {
   onClose: () => void,
