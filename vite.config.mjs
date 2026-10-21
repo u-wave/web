@@ -1,7 +1,8 @@
 // @ts-check
 /// <reference types="vitest">
 import yaml from '@rollup/plugin-yaml';
-import react from '@vitejs/plugin-react';
+import babel from '@rolldown/plugin-babel';
+import react, { reactCompilerPreset } from '@vitejs/plugin-react';
 import { readFile, writeFile } from 'node:fs/promises';
 import { defineConfig } from 'vite';
 import emoji from './tasks/emoji.mjs';
@@ -38,12 +39,11 @@ export default defineConfig({
     },
   },
   plugins: [
-    react({
-      babel: {
-        plugins: [
-          ['react-compiler', { target: '19' }],
-        ],
-      },
+    react(),
+    babel({
+      presets: [
+        reactCompilerPreset({ target: '19' }),
+      ],
     }),
     yaml(),
     prerender({ file: 'index.html', source: 'src/index.tsx' }),
