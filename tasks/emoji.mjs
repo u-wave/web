@@ -1,13 +1,13 @@
 import crypto from 'node:crypto';
 import fs from 'node:fs/promises';
-import { fileURLToPath } from 'node:url';
+import { pathToFileURL } from 'node:url';
 import assert from 'node:assert';
 import pMap from 'p-map';
 import serveStatic from 'serve-static';
+import twemojiDir from 'twemoji-emojis';
 
 const emojibaseShortcodesPath = new URL('../node_modules/emojibase-data/en/shortcodes/emojibase.json', import.meta.url);
 const joypixelShortcodesPath = new URL('../node_modules/emojibase-data/en/shortcodes/joypixels.json', import.meta.url);
-const twemojiDir = new URL('../node_modules/twemoji-emojis/vendor/svg/', import.meta.url);
 
 /**
  * Collect twemoji images, determine their shortcodes, build a map of shortcode to file names.
@@ -24,7 +24,7 @@ export default function emojiPlugin() {
   return {
     name: 'emoji',
     async configureServer(server) {
-      server.middlewares.use('/static/emoji', serveStatic(fileURLToPath(twemojiDir)));
+      server.middlewares.use('/static/emoji', serveStatic(twemojiDir));
     },
     async buildStart() {
       const emojibaseShortcodes = JSON.parse(await fs.readFile(emojibaseShortcodesPath, { encoding: 'utf8' }));
@@ -72,7 +72,7 @@ export default function emojiPlugin() {
         shortcodeToOutName = await pMap(
           Object.entries(shortcodes),
           async ([shortcode, filename]) => {
-            const bytes = await fs.readFile(new URL(filename, twemojiDir));
+            const bytes = await fs.readFile(new URL(filename, pathToFileURL(twemojiDir)));
             const hash = crypto.createHash('sha1').update(bytes).digest('hex').slice(0, 7);
             const outName = `${hash}.svg`;
             if (filesToEmit.has(outName)) {
