@@ -26,8 +26,8 @@
     "npm": ">= 11"
   },
   "dependencies": {
-    "env-schema": "^8.0.0",
-    "express": "^5.1.0",
+    "env-schema": "^8.0.1",
+    "express": "^5.3.0",
     "hstream": "^3.0.0",
     "minimist": "^1.2.7",
     "router": "^2.2.0",
