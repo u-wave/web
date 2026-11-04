@@ -20,7 +20,7 @@
     "@reduxjs/toolkit": "^2.13.0",
     "@tanstack/react-virtual": "^3.14.24",
     "@u-wave/react-translate": "^2.0.3",
-    "@u-wave/react-youtube": "^1.0.0-rc.1",
+    "@u-wave/react-youtube": "^1.0.0",
     "@u-wave/translate": "^1.0.0",
     "clsx": "^2.0.0",
     "date-fns": "^4.4.0",
