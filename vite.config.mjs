@@ -5,6 +5,7 @@ import yaml from '@rollup/plugin-yaml';
 import react, { reactCompilerPreset } from '@vitejs/plugin-react';
 import { readFile, writeFile } from 'node:fs/promises';
 import { defineConfig } from 'vite';
+import sonda from 'sonda/vite';
 import emoji from './tasks/emoji.mjs';
 import prerender from './tasks/prerender.mjs';
 
@@ -18,6 +19,7 @@ export default defineConfig({
     assetsDir: 'static',
     manifest: true,
     cssMinify: 'lightningcss',
+    sourcemap: true,
   },
   css: {
     transformer: 'lightningcss',
@@ -60,6 +62,7 @@ export default defineConfig({
         await writeFile(outputPkg, `${JSON.stringify(pkg, null, 2)}\n`);
       },
     },
+    sonda({ gzip: true }),
   ],
   test: {
     include: ['**/__tests__/*.{js,jsx,ts,tsx}'],

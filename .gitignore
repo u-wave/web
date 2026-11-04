@@ -30,3 +30,4 @@ node_modules
 .eslintcache
 .stylelintcache
 .nyc_output
+.sonda
