@@ -1,4 +1,3 @@
-import './polyfills-modern';
 import experimentalThemePlugin from './experimentalThemePlugin';
 import load from './loadingUI';
 import soundCloudSource from './sources/soundcloud';
