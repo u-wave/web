@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.0-alpha.41 / 04 Nov 2026
+While this is an alpha release, new servers should use this rather than an older "stable" version.
+
+Fixes:
+ * Update the emoji pack to support Unicode 17.0. In the alpha.40 release, the icons were added
+   but the metadata was not.
+
 ## 2.0.0-alpha.40 / 21 Oct 2026
 While this is an alpha release, new servers should use this rather than an older "stable" version.
 
