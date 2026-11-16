@@ -56,7 +56,7 @@ function Chapters({
           <span className="ChapterItem-title">
             {chapter.title}
           </span>
-          <span className="ChapterItem-hidden">(</span>
+          <span className="ChapterItem-hidden">{' ('}</span>
           <span className="ChapterItem-duration">
             {formatDuration((chapter.end - chapter.start) * 1000)}
           </span>
