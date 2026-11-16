@@ -1,12 +1,16 @@
 @import url("../../../vars.css");
 
+.Chapters {
+  padding-block: 8px;
+  display: flex;
+}
+
 .Chapters-placeholder {
   color: var(--muted-text-color);
 }
 
-.Chapters-select {
-  padding-block: 8px;
-  display: flex;
+.ChapterItem-hidden {
+  display: none;
 }
 
 .ChapterItem-title {

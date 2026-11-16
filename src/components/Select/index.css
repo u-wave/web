@@ -7,8 +7,6 @@
   line-height: 1.4375em;
   position: relative;
   cursor: pointer;
-  display: inline-flex;
-  align-items: center;
 
   border: 0;
   background: none;
@@ -26,6 +24,13 @@
   > button {
     border: 0;
     background: none;
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+
+    selectedcontent {
+      flex-grow: 1;
+    }
   }
 
   .Select-icon {
