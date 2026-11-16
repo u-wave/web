@@ -1,4 +1,4 @@
-import type { SelectChangeEvent, Theme } from '@mui/material';
+import type { Theme } from '@mui/material';
 import FormGroup from '@mui/material/FormGroup';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTranslator } from '@u-wave/react-translate';
@@ -53,8 +53,8 @@ function SettingsPanel({
   const handleMentionSoundChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setMentionSoundEnabled(event.target.checked));
   };
-  const handleLanguageChange = (event: SelectChangeEvent<unknown>) => {
-    dispatch(setLanguage(event.target.value as string));
+  const handleLanguageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    dispatch(setLanguage(event.target.value));
   };
 
   const profileSection = user && (
