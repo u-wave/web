@@ -62,7 +62,10 @@ export default defineConfig({
     },
   ],
   test: {
-    include: ['**/__tests__/*.{js,jsx,ts,tsx}'],
+    include: [
+      '**/__tests__/*.{js,jsx,ts,tsx}',
+      '**/*.test.{js,jsx,ts,tsx}',
+    ],
     globals: true,
     coverage: {
       exclude: ['npm/**'],
