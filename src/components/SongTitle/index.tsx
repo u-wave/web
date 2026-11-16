@@ -19,11 +19,12 @@ function SongTitle({
 
   return (
     <div
+      data-testid="SongTitle"
       className={cx('SongTitle', `SongTitle--${size}`, className)}
       title={hoverTitle}
     >
       <span className="SongTitle-artist">{artist}</span>
-      <span className="SongTitle-separator">–</span>
+      <span className="SongTitle-separator">{' – '}</span>
       <span className="SongTitle-title">{title}</span>
     </div>
   );
