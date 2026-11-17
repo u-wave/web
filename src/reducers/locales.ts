@@ -5,20 +5,18 @@ import type { AnyAction } from 'redux';
 import * as plurals from '@u-wave/translate/plurals';
 import type { JsonObject, JsonValue } from 'type-fest';
 import en from '../../locale/en.yaml';
-import { CHANGE_LANGUAGE, LOAD_LANGUAGE_COMPLETE, LOAD_LANGUAGE_START } from '../constants/ActionTypes';
+import { LOAD_LANGUAGE_COMPLETE, LOAD_LANGUAGE_START } from '../constants/ActionTypes';
 import { availableLanguages } from '../locales';
 import type { StoreState } from '../redux/configureStore';
 import { languageSelector as currentLanguageSelector } from './settings';
 
 const DEFAULT_LANGUAGE = 'en';
 interface State {
-  current: string;
   loading: string[];
   loaded: { en: typeof en } & Record<string, JsonValue>;
 }
 
 const initialState: State = {
-  current: DEFAULT_LANGUAGE,
   loading: [],
   loaded: { en },
 };
@@ -41,8 +39,6 @@ export default function reduce(state = initialState, action: AnyAction): State {
         },
       };
     }
-    case CHANGE_LANGUAGE:
-      return { ...state, current: action.payload };
     default:
       return state;
   }
