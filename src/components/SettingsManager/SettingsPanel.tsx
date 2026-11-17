@@ -3,13 +3,13 @@ import FormGroup from '@mui/material/FormGroup';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTranslator } from '@u-wave/react-translate';
 import cx from 'clsx';
+import { changeLanguage } from '../../actions/LocaleActionCreators';
 import useCurrentUser from '../../hooks/useCurrentUser';
 import { useDispatch, useSelector } from '../../hooks/useRedux';
 import {
   languageSelector,
   mentionSoundEnabledSelector,
   set,
-  setLanguage,
   setMentionSoundEnabled,
   setVideoEnabled,
   setVideoSize,
@@ -54,7 +54,7 @@ function SettingsPanel({
     dispatch(setMentionSoundEnabled(event.target.checked));
   };
   const handleLanguageChange = (event: SelectChangeEvent<unknown>) => {
-    dispatch(setLanguage(event.target.value as string));
+    dispatch(changeLanguage(event.target.value as string));
   };
 
   const profileSection = user && (
