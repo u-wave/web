@@ -1,17 +1,10 @@
-import { CHANGE_LANGUAGE, LOAD_LANGUAGE_COMPLETE, LOAD_LANGUAGE_START } from '../constants/ActionTypes';
+import { LOAD_LANGUAGE_COMPLETE, LOAD_LANGUAGE_START } from '../constants/ActionTypes';
 import { resources } from '../locales';
 import { loadedLanguagesSelector } from '../reducers/locales';
-import { languageSelector as currentLanguageSelector } from '../reducers/settings';
+import { languageSelector as currentLanguageSelector, setLanguage } from '../reducers/settings';
 import type { Thunk } from '../redux/api';
 
 const inFlight: Record<string, undefined | Promise<void>> = {};
-
-function setLanguage(language: string) {
-  return {
-    type: CHANGE_LANGUAGE,
-    payload: language,
-  };
-}
 
 function loadLanguage(language: string): Thunk<Promise<void>> {
   return async (dispatch) => {
