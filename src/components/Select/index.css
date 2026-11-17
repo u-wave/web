@@ -47,7 +47,6 @@
   }
 
   &::picker(select) {
-    /* maybe todo: align with center of trigger by default? */
     position: fixed;
     overflow-x: hidden;
     overflow-y: auto;
@@ -61,7 +60,27 @@
     border: none;
 
     padding: 8px 0;
+
+  /* positioning and animation */
+    /* align with the center of the trigger, downward */
+    position-area: block-end;
+    position-try-fallbacks: flip-block;
+    transform-origin: top center;
+
+    transition: opacity 150ms, transform 150ms, overlay 150ms allow-discrete, display 150ms allow-discrete;
+    opacity: 0;
+    transform: scaleY(0.75);
   }
+
+  &:open::picker(select) {
+    opacity: 1;
+    transform: scale(1);
+    @starting-style {
+      opacity: 0;
+      transform: scaleY(0.75);
+    }
+  }
+
 
   option {
     padding: 6px 16px;
@@ -79,23 +98,6 @@
       outline: 0;
       background-color: var(--mui-palette-action-hover);
     }
-  }
-}
-
-/* For the animation, we need to specify the starting style twice */
-.Select::picker(select) {
-  transition: opacity 150ms, transform 150ms, overlay 150ms allow-discrete, display 150ms allow-discrete;
-  opacity: 0;
-  transform: scaleY(0.75);
-}
-.Select:open::picker(select) {
-  opacity: 1;
-  transform: scale(1);
-}
-@starting-style {
-  .Select:open::picker(select) {
-    opacity: 0;
-    transform: scaleY(0.75);
   }
 }
 
