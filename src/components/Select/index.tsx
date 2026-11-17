@@ -1,12 +1,19 @@
-import type { SelectProps as MuiSelectProps } from '@mui/material/Select';
 import cx from 'clsx';
 import { createElement } from 'react';
 import SvgIcon from '../SvgIcon';
 
 const selectedContent = createElement('selectedcontent');
 
-export type SelectProps<V extends string> = Omit<MuiSelectProps<V>, 'onChange'> & {
+export type SelectProps<V extends string> = {
+  className?: string,
+  variant?: 'standard' | 'outlined',
+  value?: V,
+  defaultValue?: V,
   onChange?: (event: React.ChangeEvent<Omit<HTMLSelectElement, 'value'> & { value: V }>) => void,
+  disabled?: boolean,
+  tabIndex?: number,
+  children?: React.ReactNode,
+  ref?: React.Ref<HTMLSelectElement>,
 };
 
 function Select<V extends string>({
@@ -15,8 +22,10 @@ function Select<V extends string>({
   children,
   value,
   defaultValue,
+  disabled,
   tabIndex,
   onChange,
+  ref,
 }: SelectProps<V>) {
   return (
     <select
@@ -24,7 +33,9 @@ function Select<V extends string>({
       defaultValue={defaultValue}
       onChange={onChange as any}
       className={cx('Select', `Select--${variant}`, className)}
+      disabled={disabled}
       tabIndex={tabIndex}
+      ref={ref}
     >
       <button>
         {selectedContent}
