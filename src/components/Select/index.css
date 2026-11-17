@@ -82,12 +82,16 @@
   }
 }
 
-.Select:open::picker(select) {
+/* For the animation, we need to specify the starting style twice */
+.Select::picker(select) {
   transition: opacity 150ms, transform 150ms, overlay 150ms allow-discrete, display 150ms allow-discrete;
+  opacity: 0;
+  transform: scaleY(0.75);
+}
+.Select:open::picker(select) {
   opacity: 1;
   transform: scale(1);
 }
-
 @starting-style {
   .Select:open::picker(select) {
     opacity: 0;
