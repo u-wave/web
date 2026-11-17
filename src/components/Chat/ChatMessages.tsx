@@ -1,4 +1,4 @@
-import React, { createContext, use } from 'react';
+import { createContext, use, useCallback, useEffect, useEffectEvent, useRef, useState } from 'react';
 import { useListener } from 'react-bus';
 import type { MarkupNode } from 'u-wave-parse-chat-markup';
 import type { Message as TMessage } from '../../reducers/chat';
@@ -13,13 +13,6 @@ import NowPlayingMessage from './NotificationMessages/NowPlayingMessage';
 import RoleUpdateMessage from './NotificationMessages/RoleUpdateMessage';
 import SkipMessage from './NotificationMessages/SkipMessage';
 import ScrollDownNotice from './ScrollDownNotice';
-
-const {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} = React;
 
 function checkIsScrolledToBottom(el: HTMLElement) {
   const lastMessage = el.lastElementChild;
@@ -139,17 +132,14 @@ function ChatMessages({
   }, [isScrolledToBottom]);
 
   // Scroll to bottom again if the last message changes.
-  const lastMessage = messages.length > 0 ? messages[messages.length - 1] : undefined;
-  // Use a ref to avoid triggering the effect repeatedly when scrolling _up_ from the bottom.
-  // TODO: This can probably nowadays be improved with `useEffectEvent`?
-  const scrolledToBottomRef = useRef(isScrolledToBottom);
-  useEffect(() => {
-    scrolledToBottomRef.current = isScrolledToBottom;
-  }, [isScrolledToBottom]);
-  useEffect(() => {
-    if (scrolledToBottomRef.current && containerRef.current) {
+  const onScrollToBottom = useEffectEvent(() => {
+    if (isScrolledToBottom && containerRef.current) {
       scrollToBottom(containerRef.current);
     }
+  });
+  const lastMessage = messages.length > 0 ? messages[messages.length - 1] : undefined;
+  useEffect(() => {
+    onScrollToBottom();
   }, [lastMessage]);
 
   // Accept externally controlled scrolling using the global event bus, so the chat input box
