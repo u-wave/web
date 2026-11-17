@@ -42,6 +42,7 @@ function Chapters({
   return (
     <Select
       className={cx('Chapters', className)}
+      variant="outlined"
       onChange={handleChange}
       value={String(selectedIndex)}
       tabIndex={tabIndex}

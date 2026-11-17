@@ -11,10 +11,11 @@ export type SelectProps<V extends string> = Omit<MuiSelectProps<V>, 'onChange'> 
 
 function Select<V extends string>({
   className,
-  variant,
+  variant = 'standard',
   children,
   value,
   defaultValue,
+  tabIndex,
   onChange,
 }: SelectProps<V>) {
   return (
@@ -23,6 +24,7 @@ function Select<V extends string>({
       defaultValue={defaultValue}
       onChange={onChange as any}
       className={cx('Select', `Select--${variant}`, className)}
+      tabIndex={tabIndex}
     >
       <button>
         {selectedContent}

@@ -2,7 +2,10 @@
 
 .Chapters {
   padding-block: 8px;
-  display: flex;
+
+  selectedcontent {
+    display: flex;
+  }
 }
 
 .Chapters-placeholder {

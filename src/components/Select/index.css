@@ -75,7 +75,8 @@
       background-color: rgba(var(--mui-palette-primary-mainChannel) / calc(var(--mui-palette-action-selectedOpacity)));
     }
 
-    &:hover {
+    &:hover, &:focus-visible {
+      outline: 0;
       background-color: var(--mui-palette-action-hover);
     }
   }
@@ -132,4 +133,16 @@
 }
 
 .Select--outlined {
+  position: relative;
+  border-radius: var(--mui-shape-borderRadius);
+  border: 1px solid rgba(var(--mui-palette-common-onBackgroundChannel) / 0.23);
+  padding-inline: 8px;
+
+  &:hover {
+    border-color: var(--mui-palette-text-primary);
+  }
+  &:focus-within {
+    border-color: var(--mui-palette-primary-main);
+    outline: 1px solid var(--mui-palette-primary-main);
+  }
 }
