@@ -12,6 +12,8 @@ import emojiUrl from '../../utils/emojiUrl';
 import Avatar from '../Avatar';
 import SvgIcon from '../SvgIcon';
 
+const MAX_SUGGESTIONS = 64;
+
 function setCursorPosition(input: HTMLInputElement, position: number) {
   input.setSelectionRange(position, position);
 }
@@ -94,7 +96,7 @@ function getEmojiCompletions(value: string, { completions }: CompletionProps<Emo
     baseSort: (a, b) => a.rankedValue.length - b.rankedValue.length,
   });
 
-  return uniqBy(results, (emoji) => emoji.image).slice(0, 16);
+  return uniqBy(results, (emoji) => emoji.image).slice(0, MAX_SUGGESTIONS);
 }
 function getEmojiText(value: Emoji) {
   return `:${value.shortcode}: `;
