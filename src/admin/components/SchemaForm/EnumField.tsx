@@ -1,11 +1,10 @@
 import FormHelperText from '@mui/material/FormHelperText';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
 import Typography from '@mui/material/Typography';
 import type { JSONSchema7 } from 'json-schema';
+import Select, { MenuItem } from '../../../components/Select';
 
 /** Actually-supported enum value types. */
-type EnumValue = string | number;
+type EnumValue = string;
 
 type EnumFieldProps = {
   className?: string,

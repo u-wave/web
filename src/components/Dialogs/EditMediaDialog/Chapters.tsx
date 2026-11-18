@@ -1,8 +1,7 @@
-import MenuItem from '@mui/material/MenuItem';
-import Select, { type SelectChangeEvent } from '@mui/material/Select';
 import { useTranslator } from '@u-wave/react-translate';
 import cx from 'clsx';
 import formatDuration from 'format-duration';
+import Select, { MenuItem } from '../../Select';
 
 type Chapter = {
   start: number,
@@ -26,7 +25,7 @@ function Chapters({
   onChange,
 }: ChaptersProps) {
   const { t } = useTranslator();
-  const handleChange = (event: SelectChangeEvent<number>) => {
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const newIndex = Number(event.target.value);
     if (available[newIndex] != null) {
       onChange(available[newIndex]);
@@ -37,14 +36,15 @@ function Chapters({
     (chapter) => chapter.start === start && chapter.end === end,
   );
 
+  // Elements with `ChapterItem-hidden` classes are for browsers that don't support styled select,
+  // so it reads like "Chapter (1:22)" instead of "Chapter1:22"
+
   return (
     <Select
       className={cx('Chapters', className)}
-      classes={{
-        select: 'Chapters-select',
-      }}
+      variant="outlined"
       onChange={handleChange}
-      value={selectedIndex}
+      value={String(selectedIndex)}
       tabIndex={tabIndex}
     >
       <MenuItem disabled value={-1}>
@@ -57,9 +57,11 @@ function Chapters({
           <span className="ChapterItem-title">
             {chapter.title}
           </span>
+          <span className="ChapterItem-hidden">{' ('}</span>
           <span className="ChapterItem-duration">
             {formatDuration((chapter.end - chapter.start) * 1000)}
           </span>
+          <span className="ChapterItem-hidden">)</span>
         </MenuItem>
       ))}
     </Select>

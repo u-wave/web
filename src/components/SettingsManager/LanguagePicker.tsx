@@ -1,15 +1,15 @@
-import MenuItem from '@mui/material/MenuItem';
-import Select, { type SelectProps } from '@mui/material/Select';
 import { useTranslator } from '@u-wave/react-translate';
+import Select, { MenuItem, type SelectProps } from '../../components/Select';
 import { useSelector } from '../../hooks/useRedux';
 import { availableLanguagesSelector } from '../../reducers/locales';
 
-function LanguagePicker(props: SelectProps) {
+export type LanguagePickerProps = Pick<SelectProps<string>, 'value' | 'onChange'>;
+function LanguagePicker({ value, onChange }: LanguagePickerProps) {
   const { t } = useTranslator();
   const availableLanguages = useSelector(availableLanguagesSelector);
 
   return (
-    <Select variant="standard" className="LanguagePicker" {...props}>
+    <Select variant="standard" className="LanguagePicker" value={value} onChange={onChange}>
       {availableLanguages.map((lang) => (
         <MenuItem key={lang} value={lang}>
           {t(`locales.${lang}`)}

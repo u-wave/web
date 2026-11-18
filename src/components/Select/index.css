@@ -1,0 +1,159 @@
+.Select, .Select::picker(select) {
+  appearance: base-select;
+}
+
+.Select {
+  color: var(--mui-palette-text-primary);
+  line-height: 1.4375em;
+  position: relative;
+  cursor: pointer;
+
+  border: 0;
+  background: none;
+  padding: 4px 0 5px;
+
+  &:disabled {
+    color: var(--mui-palette-text-disabled);
+    cursor: default;
+  }
+
+  &::picker-icon {
+    display: none;
+  }
+
+  > button {
+    border: 0;
+    background: none;
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+
+    selectedcontent {
+      flex-grow: 1;
+    }
+  }
+
+  .Select-icon {
+    content: '';
+    display: inline-block;
+    pointer-events: none;
+    color: var(--mui-palette-action-active);
+  }
+  &:open .Select-icon {
+    transform: rotate(180deg);
+  }
+  &:disabled .Select-icon {
+    color: var(--mui-palette-action-disabled);
+  }
+
+  &::picker(select) {
+    position: fixed;
+    overflow-x: hidden;
+    overflow-y: auto;
+    outline: 0;
+
+    background-color: var(--mui-palette-background-paper);
+    color: var(--mui-palette-text-primary);
+    box-shadow: var(--mui-shadows-8);
+    background-image: var(--mui-overlays-8);
+    border-radius: var(--mui-shape-borderRadius);
+    border: none;
+
+    padding: 8px 0;
+
+    /* positioning and animation */
+
+    /* align with the center of the trigger, downward */
+    position-area: block-end;
+    position-try-fallbacks: flip-block;
+
+    transition: opacity 150ms, transform 150ms, overlay 150ms allow-discrete, display 150ms allow-discrete;
+    opacity: 0;
+
+    /* This transform would improve the animation, but I think I need anchored container queries
+     * to be able to change the transform-origin when the `flip-block` position is used.
+     * lightningcss doesn't support parsing those yet. */
+    /* transform-origin: top center; */
+    /* transform: scaleY(0.75); */
+  }
+
+  &:open::picker(select) {
+    opacity: 1;
+    /* transform: scale(1); */
+    @starting-style {
+      opacity: 0;
+      /* transform: scaleY(0.75); */
+    }
+  }
+
+
+  option {
+    padding: 6px 16px;
+    line-height: 1.5;
+
+    &::checkmark {
+      display: none;
+    }
+
+    &:checked {
+      background-color: rgba(var(--mui-palette-primary-mainChannel) / calc(var(--mui-palette-action-selectedOpacity)));
+    }
+
+    &:hover, &:focus-visible {
+      outline: 0;
+      background-color: var(--mui-palette-action-hover);
+    }
+  }
+}
+
+.Select--standard {
+  position: relative;
+
+  &:hover:not(:disabled):before {
+    border-bottom: 2px solid var(--mui-palette-text-primary);
+  }
+
+  &::after {
+    left: 0px;
+    bottom: 0px;
+    content: '';
+    position: absolute;
+    right: 0px;
+    transform: scaleX(0);
+    transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+    pointer-events: none;
+  }
+
+  &:focus-visible:after {
+    transform: scaleX(1) translateX(0);
+  }
+
+  &::before {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+    left: 0px;
+    bottom: 0px;
+    content: '';
+    position: absolute;
+    right: 0px;
+    transition: border-bottom-color 200ms;
+    pointer-events: none;
+  }
+}
+
+.Select--filled {
+}
+
+.Select--outlined {
+  position: relative;
+  border-radius: var(--mui-shape-borderRadius);
+  border: 1px solid rgba(var(--mui-palette-common-onBackgroundChannel) / 0.23);
+  padding-inline: 8px;
+
+  &:hover {
+    border-color: var(--mui-palette-text-primary);
+  }
+  &:focus-within {
+    border-color: var(--mui-palette-primary-main);
+    outline: 1px solid var(--mui-palette-primary-main);
+  }
+}
