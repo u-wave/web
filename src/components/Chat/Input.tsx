@@ -146,6 +146,9 @@ function ChatInput(props: ChatInputProps) {
     }
   }
 
+  // I think I have to control `isOpen`, based on whether there are any suggestions for the current
+  // matching text? Or just based on if a completion trigger is currently active?
+  // That would then let me select the top highlighted element on initial open
   const combobox = useCombobox({
     inputValue: value,
     isOpen: isOpen && suggestions.length > 0,
@@ -214,7 +217,7 @@ function ChatInput(props: ChatInputProps) {
     onKeyDown: handleKeyDown,
   });
 
-  console.log({
+  console.log('state:', {
     isOpen: combobox.isOpen,
     highlightedIndex: combobox.highlightedIndex,
     inputValue: combobox.inputValue,
