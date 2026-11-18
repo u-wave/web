@@ -1,6 +1,5 @@
 import { mdiVolumeHigh, mdiVolumeLow, mdiVolumeMedium, mdiVolumeOff } from '@mdi/js';
 import IconButton from '@mui/material/IconButton';
-import Slider from '@mui/material/Slider';
 import Tooltip from '@mui/material/Tooltip';
 import { useTranslator } from '@u-wave/react-translate';
 import cx from 'clsx';
@@ -37,8 +36,8 @@ function Volume({
 
   const label = muted ? t('booth.unmute') : t('booth.mute');
   const handleMuteClick = muted ? onUnmute : onMute;
-  const handleVolumeChange = (_event: unknown, newVolume: number | number[]) => {
-    onVolumeChange(newVolume as number);
+  const handleVolumeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    onVolumeChange(Number(event.currentTarget.value));
   };
 
   return (
@@ -51,16 +50,15 @@ function Volume({
           <SvgIcon path={volumeIcon} />
         </IconButton>
       </Tooltip>
-      <div className="VolumeSlider-slider">
-        <Slider
-          size="small"
-          min={0}
-          max={100}
-          step={1}
-          value={volume}
-          onChange={handleVolumeChange}
-        />
-      </div>
+      <input
+        className="VolumeSlider-range"
+        type="range"
+        min={0}
+        max={100}
+        step={1}
+        value={volume}
+        onChange={handleVolumeChange}
+      />
     </div>
   );
 }
