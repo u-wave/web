@@ -34,7 +34,6 @@
   }
 
   .Select-icon {
-    content: '';
     display: inline-block;
     pointer-events: none;
     color: var(--mui-palette-action-active);

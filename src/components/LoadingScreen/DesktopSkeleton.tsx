@@ -15,7 +15,7 @@ function FakeVolume() {
         <SvgIcon path={mdiVolumeOff} />
       </IconButton>
       <input
-        className="VolumeSlider-slider"
+        className="VolumeSlider-range"
         type="range"
         min={0}
         max={100}
