@@ -1,16 +1,20 @@
 import { mdiAccountMultiple } from '@mdi/js';
 import Paper from '@mui/material/Paper';
-import { translate, type Translator } from '@u-wave/react-translate';
+import { useTranslator } from '@u-wave/react-translate';
 import cx from 'clsx';
+import { useCombobox } from 'downshift';
 import { matchSorter } from 'match-sorter';
-import React from 'react';
-import AutoComplete, { Completion, type CompletionProps } from 'react-abstract-autocomplete';
+import React, { useRef, useState } from 'react';
 import { useSelector } from '../../hooks/useRedux';
 import { customEmojiNamesSelector } from '../../reducers/config';
 import type { User } from '../../reducers/users';
 import emojiUrl from '../../utils/emojiUrl';
 import Avatar from '../Avatar';
 import SvgIcon from '../SvgIcon';
+
+function setCursorPosition(input: HTMLInputElement, position: number) {
+  input.setSelectionRange(position, position);
+}
 
 /**
  * Filter an array down to unique elements, keyed by a function.
@@ -26,6 +30,9 @@ function uniqBy<T, K>(array: T[], key: (element: T) => K): T[] {
     return false;
   });
 }
+
+/** @deprecated */
+type CompletionProps<T> = { trigger: string, completions: T[] };
 
 // User suggestions:
 function getUserCompletions(value: string, { trigger, completions }: CompletionProps<User>) {
@@ -56,10 +63,6 @@ function UserSuggestion({ value, select, selected }: UserSuggestionProps) {
   );
 }
 
-function renderUser(props: UserSuggestionProps) {
-  return <UserSuggestion {...props} />;
-}
-
 // Group suggestions:
 type GroupSuggestionProps = {
   value: string,
@@ -81,198 +84,173 @@ function GroupSuggestion({ value, select, selected }: GroupSuggestionProps) {
   );
 }
 
-function renderGroup(props: GroupSuggestionProps) {
-  return <GroupSuggestion {...props} />;
-}
-
 // Emoji suggestions:
 type Emoji = { shortcode: string, image: string };
 
-function getEmojiCompletions(value: string, { trigger, completions }: CompletionProps<Emoji>) {
-  const compare = value.slice(trigger.length).toLowerCase();
+function getEmojiCompletions(value: string, { completions }: CompletionProps<Emoji>) {
+  const compare = value.toLowerCase();
   const results = matchSorter(completions, compare, {
     keys: ['shortcode'],
     baseSort: (a, b) => a.rankedValue.length - b.rankedValue.length,
   });
 
-  return uniqBy(results, (emoji) => emoji.image);
+  return uniqBy(results, (emoji) => emoji.image).slice(0, 16);
 }
 function getEmojiText(value: Emoji) {
   return `:${value.shortcode}: `;
 }
 
-type EmojiSuggestionProps = {
-  value: Emoji,
-  select: () => void,
-  selected: boolean,
-};
-function EmojiSuggestion({ value, select, selected }: EmojiSuggestionProps) {
+type EmojiSuggestionProps = React.ComponentPropsWithRef<'button'> & { emoji: Emoji };
+function EmojiSuggestion({ emoji, ...props }: EmojiSuggestionProps) {
   const customEmojiNames = useSelector(customEmojiNamesSelector);
-  const isCustom = customEmojiNames.has(value.shortcode);
-  const url = emojiUrl(value.image, isCustom);
+  const isCustom = customEmojiNames.has(emoji.shortcode);
+  const url = emojiUrl(emoji.image, isCustom);
 
   return (
-    <button
-      type="button"
-      onClick={select}
-      className={cx('SuggestionItem', selected && 'is-focused')}
-    >
+    <button {...props} className={cx('SuggestionItem', props['aria-selected'] && 'is-focused')}>
       <span
         className="SuggestionItem-icon EmojiSuggestion-image"
         style={{ backgroundImage: `url(${CSS.escape(url.href)})` }}
       />
-      <span className="SuggestionItem-label">{getEmojiText(value)}</span>
+      <span className="SuggestionItem-label">{getEmojiText(emoji)}</span>
     </button>
   );
 }
 
-function renderEmoji(props: EmojiSuggestionProps) {
-  return <EmojiSuggestion {...props} />;
-}
-
-type SuggestionsListProps = {
-  children: React.ReactNode,
-};
-function SuggestionsList({ children }: SuggestionsListProps) {
-  return (
-    <div className="ChatInput-suggestions">
-      <Paper>
-        {children}
-      </Paper>
-    </div>
-  );
-}
-
-function renderSuggestions(children: React.ReactNode) {
-  return <SuggestionsList>{children}</SuggestionsList>;
-}
-
-const enhance = translate();
+const completionRx = /(.*)([:@])(.*?)$/;
 
 type ChatInputProps = {
-  t: Translator['t'],
   onSend: (message: string) => void,
   onScroll: (by: -1 | 1 | 'start' | 'end') => void,
   mentionableUsers: User[],
   mentionableGroups: string[],
   availableEmoji: Emoji[],
 };
-type ChatInputState = {
-  focused: boolean,
-  value: string,
-};
-class ChatInput extends React.Component<ChatInputProps, ChatInputState> {
-  constructor(props: ChatInputProps) {
-    super(props);
+function ChatInput(props: ChatInputProps) {
+  const { t } = useTranslator();
 
-    this.state = {
-      focused: false,
-      value: '',
-    };
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [value, setValue] = useState('');
+  const [selectionEnd, setSelectionEnd] = useState<number | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
+
+  let suggestions: Emoji[] = [];
+  const m = selectionEnd != null ? completionRx.exec(value.slice(0, selectionEnd)) : null;
+  if (m != null) {
+    const trigger = m[2]!;
+    const matchingValue = m[3]!;
+    if (matchingValue.length > 2) {
+      suggestions = getEmojiCompletions(matchingValue, { trigger, completions: props.availableEmoji });
+    }
   }
 
-  handleFocus = () => {
-    this.setState({ focused: true });
-  };
+  const combobox = useCombobox({
+    inputValue: value,
+    isOpen: isOpen && suggestions.length > 0,
+    items: suggestions,
+    itemToString: (emoji) => emoji == null ? '' : getEmojiText(emoji),
+    onSelectedItemChange: (changes) => {
+      if (selectionEnd != null) {
+        const m = completionRx.exec(value.slice(0, selectionEnd));
+        if (m) {
+          const before = m[1]!;
+          const after = value.slice(selectionEnd);
+          const newValue = `${before}${changes.inputValue}${after}`;
 
-  handleBlur = () => {
-    this.setState({ focused: false });
-  };
+          // Set value manually through the ref before setting it through state,
+          // this way the cursor position is maintained
+          inputRef.current!.value = newValue;
+          setCursorPosition(inputRef.current!, before.length + changes.inputValue!.length);
 
-  handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    const { onSend, onScroll } = this.props;
-
-    e.stopPropagation();
-    if (e.key === 'Enter') {
-      const value = e.currentTarget.value.trim();
-      if (value.length > 0) {
-        onSend(value);
+          setValue(newValue);
+        }
       }
-      this.clear();
-    }
-    if (e.key === 'PageUp') {
-      e.preventDefault();
-      onScroll(-1);
-    }
-    if (e.key === 'PageDown') {
-      e.preventDefault();
-      onScroll(1);
-    }
-    if (e.key === 'End' && e.ctrlKey) {
-      e.preventDefault();
-      onScroll('end');
-    }
-    if (e.key === 'Home' && e.ctrlKey) {
-      e.preventDefault();
-      onScroll('start');
+    },
+    onIsOpenChange: ({ isOpen }) => {
+      setIsOpen(isOpen);
+    },
+  });
+
+  const [focused, setFocused] = useState(false);
+
+  const handleFocus = () => {
+    setFocused(true);
+  };
+  const handleBlur = () => {
+    setFocused(false);
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    const input = event.currentTarget;
+    if (event.key === 'End' && event.ctrlKey) {
+      props.onScroll('end');
+    } else if (event.key === 'Home' && event.ctrlKey) {
+      props.onScroll('start');
+    } else if (event.key === 'Home') {
+      setCursorPosition(input, 0);
+    } else if (event.key === 'End') {
+      setCursorPosition(input, input.value.length);
+    } else if (event.key === 'Enter' && combobox.isOpen === false) {
+      props.onSend(value);
+      setValue('');
+      setSelectionEnd(0);
+      combobox.reset();
+    } else if (event.key === 'PageUp' && combobox.isOpen === false) {
+      props.onScroll(-1);
+    } else if (event.key === 'PageDown' && combobox.isOpen === false) {
+      props.onScroll(1);
     }
   };
 
-  handleUpdate = (newValue: string) => {
-    this.setState({ value: newValue });
-  };
+  const inputProps = combobox.getInputProps({
+    ref: inputRef,
+    onChange: (event) => {
+      setValue(event.target.value);
+      setSelectionEnd(event.target.selectionEnd);
+    },
+    onKeyDown: handleKeyDown,
+  });
 
-  clear() {
-    this.setState({ value: '' });
-  }
+  console.log({
+    isOpen: combobox.isOpen,
+    highlightedIndex: combobox.highlightedIndex,
+    inputValue: combobox.inputValue,
+    selectedItem: combobox.selectedItem,
+  });
 
-  render() {
-    const {
-      focused,
-      value,
-    } = this.state;
-    const {
-      t,
-      mentionableUsers,
-      mentionableGroups,
-      availableEmoji,
-    } = this.props;
+  return (
+    <div className={cx('ChatInput', focused ? 'is-focused' : '')}>
+      <input
+        type="text"
+        className={cx('ChatInput-input', focused ? 'is-focused' : '')}
+        placeholder={focused ? '' : t('chat.placeholder')}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+        {...inputProps}
+        value={value}
+        // aria-label= {t('chat.label')}
+      />
 
-    const focusClass = focused ? 'is-focused' : '';
-
-    // TODO(@goto-bus-stop) Use downshift for accessibility
-    return (
-      <div className={cx('ChatInput', focusClass)}>
-        <AutoComplete
-          inputProps={{
-            type: 'text',
-            className: cx('ChatInput-input', focusClass),
-            placeholder: focused ? '' : t('chat.placeholder'),
-            'aria-label': t('chat.label'),
-            onFocus: this.handleFocus,
-            onBlur: this.handleBlur,
-            onKeyDown: this.handleKeyDown,
-          }}
-          onUpdate={this.handleUpdate}
-          value={value}
-          renderSuggestions={renderSuggestions}
-          limit={6}
-        >
-          <Completion
-            trigger="@"
-            minLength={2}
-            completions={mentionableUsers}
-            getCompletions={getUserCompletions}
-            getText={getUserText}
-            renderSuggestion={renderUser}
-          />
-          <Completion
-            trigger="@"
-            minLength={2}
-            completions={mentionableGroups}
-            renderSuggestion={renderGroup}
-          />
-          <Completion
-            trigger=":"
-            completions={availableEmoji}
-            getCompletions={getEmojiCompletions}
-            getText={getEmojiText}
-            renderSuggestion={renderEmoji}
-          />
-        </AutoComplete>
+      <div className="ChatInput-suggestions" {...combobox.getMenuProps()}>
+        {suggestions.length > 0
+          ? (
+            <Paper>
+              {suggestions.map((suggestion, index) => (
+                <EmojiSuggestion
+                  key={suggestion.shortcode}
+                  emoji={suggestion}
+                  {...combobox.getItemProps({
+                    item: suggestion,
+                    index,
+                  })}
+                />
+              ))}
+            </Paper>
+          )
+          : null}
       </div>
-    );
-  }
+    </div>
+  );
 }
 
-export default enhance(ChatInput);
+export default ChatInput;

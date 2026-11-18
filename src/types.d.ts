@@ -71,29 +71,3 @@ declare module 'flash-document-title' {
   function flashDocumentTitle(input: string): void;
   export = flashDocumentTitle;
 }
-
-declare module 'react-abstract-autocomplete' {
-  export type CompletionProps<C> = {
-    trigger: string,
-    minLength?: number,
-    completions: C[],
-    getCompletions?: (text: string, props: CompletionProps<C>) => C[],
-    getText?: (completion: C, props: CompletionProps<C>) => string,
-    renderSuggestion?: (props: {
-      value: C,
-      select: () => void,
-      selected: boolean,
-    }) => JSX.Element,
-  };
-  export type AutoCompleteProps = {
-    inputProps?: React.ComponentPropsWithoutRef<'input'>,
-    onUpdate: (value: string) => void,
-    value: string,
-    renderSuggestions?: (node: React.ReactNode) => JSX.Element,
-    limit?: number,
-    /** Must be Completion elements, technically */
-    children: JSX.Element | JSX.Element[],
-  };
-  export function Completion<C>(props: CompletionProps<C>): JSX.Element;
-  export default function AutoComplete(props: AutoCompleteProps): JSX.Element;
-}
