@@ -152,11 +152,12 @@ function ChatInput(props: ChatInputProps) {
     items: suggestions,
     itemToString: (emoji) => emoji == null ? '' : getEmojiText(emoji),
     onSelectedItemChange: (changes) => {
-      if (selectionEnd != null) {
+      if (selectionEnd != null && changes.selectedItem != null) {
         const m = completionRx.exec(value.slice(0, selectionEnd));
         if (m) {
           const before = m[1]!;
           const after = value.slice(selectionEnd);
+          // inputValue is an already-stringified version of `selectedItem` at this point
           const newValue = `${before}${changes.inputValue}${after}`;
 
           // Set value manually through the ref before setting it through state,
