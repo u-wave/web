@@ -4,7 +4,6 @@ import type { JSONSchema7 } from 'json-schema';
 import Select, { MenuItem } from '../../../components/Select';
 
 /** Actually-supported enum value types. */
-// TODO(@goto-bus-stop): should `number` be supported?
 type EnumValue = string;
 
 type EnumFieldProps = {
