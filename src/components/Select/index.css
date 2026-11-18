@@ -61,23 +61,28 @@
 
     padding: 8px 0;
 
-  /* positioning and animation */
+    /* positioning and animation */
+
     /* align with the center of the trigger, downward */
     position-area: block-end;
     position-try-fallbacks: flip-block;
-    transform-origin: top center;
 
     transition: opacity 150ms, transform 150ms, overlay 150ms allow-discrete, display 150ms allow-discrete;
     opacity: 0;
-    transform: scaleY(0.75);
+
+    /* This transform would improve the animation, but I think I need anchored container queries
+     * to be able to change the transform-origin when the `flip-block` position is used.
+     * lightningcss doesn't support parsing those yet. */
+    /* transform-origin: top center; */
+    /* transform: scaleY(0.75); */
   }
 
   &:open::picker(select) {
     opacity: 1;
-    transform: scale(1);
+    /* transform: scale(1); */
     @starting-style {
       opacity: 0;
-      transform: scaleY(0.75);
+      /* transform: scaleY(0.75); */
     }
   }
 
