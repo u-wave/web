@@ -40,7 +40,7 @@
   font-size: .875rem;
   width: 100%;
 
-  &[aria-selected="true"] {
+  &:focus-visible {
     border-color: var(--highlight-color);
     outline: none;
   }
