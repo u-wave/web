@@ -23,6 +23,11 @@
   inset-inline: 0;
   max-height: 320px;
   overflow-y: auto;
+  display: none;
+
+  &.is-open {
+    display: block;
+  }
 }
 
 .ChatInput-input {
@@ -34,11 +39,11 @@
   color: var(--text-color);
   font-size: .875rem;
   width: 100%;
-}
 
-.ChatInput-input.is-focused {
-  border-color: var(--highlight-color);
-  outline: none;
+  &:focus, &.is-focused {
+    border-color: var(--highlight-color);
+    outline: none;
+  }
 }
 
 .SuggestionItem {
@@ -52,10 +57,10 @@
   justify-content: center;
   align-items: center;
   font-size: 1rem;
-}
 
-.SuggestionItem:where(:hover, .is-focused) {
-  background-color: var(--chat-suggestion-selected);
+  &:hover, &.is-focused {
+    background-color: var(--chat-suggestion-selected);
+  }
 }
 
 .SuggestionItem-icon {

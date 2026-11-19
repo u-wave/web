@@ -132,52 +132,60 @@ function ChatInput(props: ChatInputProps) {
   const { t } = useTranslator();
 
   const inputRef = useRef<HTMLInputElement>(null);
-  const [value, setValue] = useState('');
+  const [focused, setFocused] = useState(false);
+  const [inputValue, setValue] = useState('');
   const [selectionEnd, setSelectionEnd] = useState<number | null>(null);
-  const [isOpen, setIsOpen] = useState(false);
+  const [highlightedIndex, setHighlightedIndex] = useState(-1);
 
-  let suggestions: Emoji[] = [];
-  const m = selectionEnd != null ? completionRx.exec(value.slice(0, selectionEnd)) : null;
+  let items: Emoji[] = [];
+  const m = selectionEnd != null ? completionRx.exec(inputValue.slice(0, selectionEnd)) : null;
   if (m != null) {
     const trigger = m[2]!;
     const matchingValue = m[3]!;
     if (matchingValue.length > 2) {
-      suggestions = getEmojiCompletions(matchingValue, { trigger, completions: props.availableEmoji });
+      items = getEmojiCompletions(matchingValue, { trigger, completions: props.availableEmoji });
     }
   }
 
-  // I think I have to control `isOpen`, based on whether there are any suggestions for the current
-  // matching text? Or just based on if a completion trigger is currently active?
-  // That would then let me select the top highlighted element on initial open
+  const isOpen = focused && items.length > 0;
+
   const combobox = useCombobox({
-    inputValue: value,
-    isOpen: isOpen && suggestions.length > 0,
-    items: suggestions,
+    inputValue,
+    items,
+
+    // Because we only open the suggestions box when focused, we can always require
+    // one of the items to be highlighted
+    isOpen,
+    highlightedIndex: isOpen && highlightedIndex === -1 ? 0 : highlightedIndex,
+
     itemToString: (emoji) => emoji == null ? '' : getEmojiText(emoji),
     onSelectedItemChange: (changes) => {
-      if (selectionEnd != null && changes.selectedItem != null) {
-        const m = completionRx.exec(value.slice(0, selectionEnd));
-        if (m) {
-          const before = m[1]!;
-          const after = value.slice(selectionEnd);
-          // inputValue is an already-stringified version of `selectedItem` at this point
-          const newValue = `${before}${changes.inputValue}${after}`;
-
-          // Set value manually through the ref before setting it through state,
-          // this way the cursor position is maintained
-          inputRef.current!.value = newValue;
-          setCursorPosition(inputRef.current!, before.length + changes.inputValue!.length);
-
-          setValue(newValue);
-        }
+      if (changes.selectedItem == null || selectionEnd == null) {
+        return;
       }
+
+      const m = completionRx.exec(inputValue.slice(0, selectionEnd));
+      if (m == null) {
+        return;
+      }
+
+      const before = m[1]!;
+      const after = inputValue.slice(selectionEnd);
+      // inputValue is an already-stringified version of `selectedItem` at this point
+      const newValue = `${before}${changes.inputValue}${after}`;
+
+      // Set value manually through the ref before setting it through state,
+      // this way the cursor position is maintained
+      inputRef.current!.value = newValue;
+      setCursorPosition(inputRef.current!, before.length + changes.inputValue!.length);
+
+      setValue(newValue);
+      setSelectionEnd(null);
     },
-    onIsOpenChange: ({ isOpen }) => {
-      setIsOpen(isOpen);
+    onHighlightedIndexChange: ({ highlightedIndex }) => {
+      setHighlightedIndex(highlightedIndex);
     },
   });
-
-  const [focused, setFocused] = useState(false);
 
   const handleFocus = () => {
     setFocused(true);
@@ -192,24 +200,27 @@ function ChatInput(props: ChatInputProps) {
       props.onScroll('end');
     } else if (event.key === 'Home' && event.ctrlKey) {
       props.onScroll('start');
+    } else if (event.key === 'PageUp' && combobox.isOpen === false) {
+      props.onScroll(-1);
+    } else if (event.key === 'PageDown' && combobox.isOpen === false) {
+      props.onScroll(1);
     } else if (event.key === 'Home') {
       setCursorPosition(input, 0);
     } else if (event.key === 'End') {
       setCursorPosition(input, input.value.length);
     } else if (event.key === 'Enter' && combobox.isOpen === false) {
-      props.onSend(value);
+      props.onSend(inputValue);
       setValue('');
       setSelectionEnd(0);
       combobox.reset();
-    } else if (event.key === 'PageUp' && combobox.isOpen === false) {
-      props.onScroll(-1);
-    } else if (event.key === 'PageDown' && combobox.isOpen === false) {
-      props.onScroll(1);
     }
   };
 
   const inputProps = combobox.getInputProps({
+    role: 'textbox', // It's not a combobox, it just has completions
     ref: inputRef,
+    onFocus: handleFocus,
+    onBlur: handleBlur,
     onChange: (event) => {
       setValue(event.target.value);
       setSelectionEnd(event.target.selectionEnd);
@@ -217,31 +228,28 @@ function ChatInput(props: ChatInputProps) {
     onKeyDown: handleKeyDown,
   });
 
-  console.log('state:', {
-    isOpen: combobox.isOpen,
-    highlightedIndex: combobox.highlightedIndex,
-    inputValue: combobox.inputValue,
-    selectedItem: combobox.selectedItem,
-  });
-
   return (
-    <div className={cx('ChatInput', focused ? 'is-focused' : '')}>
+    <div className="ChatInput">
       <input
         type="text"
         className={cx('ChatInput-input', focused ? 'is-focused' : '')}
         placeholder={focused ? '' : t('chat.placeholder')}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
         {...inputProps}
-        value={value}
-        // aria-label= {t('chat.label')}
+        value={inputValue}
+        aria-labelledby={undefined}
+        aria-label={t('chat.label')}
       />
 
-      <div className="ChatInput-suggestions" {...combobox.getMenuProps()}>
-        {suggestions.length > 0
+      <div
+        className={cx('ChatInput-suggestions', isOpen ? 'is-open' : '')}
+        {...combobox.getMenuProps()}
+        aria-labelledby={undefined}
+        aria-label={t('chat.suggestionsLabel')}
+      >
+        {items.length > 0
           ? (
             <Paper>
-              {suggestions.map((suggestion, index) => (
+              {items.map((suggestion, index) => (
                 <EmojiSuggestion
                   key={suggestion.shortcode}
                   emoji={suggestion}
