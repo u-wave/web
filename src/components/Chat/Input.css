@@ -40,7 +40,7 @@
   font-size: .875rem;
   width: 100%;
 
-  &:focus, &.is-focused {
+  &[aria-selected="true"] {
     border-color: var(--highlight-color);
     outline: none;
   }
@@ -58,7 +58,7 @@
   align-items: center;
   font-size: 1rem;
 
-  &:hover, &.is-focused {
+  &[aria-selected="true"] {
     background-color: var(--chat-suggestion-selected);
   }
 }

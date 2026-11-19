@@ -4,7 +4,7 @@ import { useTranslator } from '@u-wave/react-translate';
 import cx from 'clsx';
 import { useCombobox } from 'downshift';
 import { matchSorter } from 'match-sorter';
-import React, { useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { useSelector } from '../../hooks/useRedux';
 import { customEmojiNamesSelector } from '../../reducers/config';
 import type { User } from '../../reducers/users';
@@ -14,9 +14,13 @@ import SvgIcon from '../SvgIcon';
 
 const MAX_SUGGESTIONS = 64;
 
+/** Set the cursor position in an input element. */
 function setCursorPosition(input: HTMLInputElement, position: number) {
   input.setSelectionRange(position, position);
 }
+
+type UserGroup = { role: string };
+type ChatCompletionSuggestion = User | UserGroup | Emoji;
 
 /**
  * Filter an array down to unique elements, keyed by a function.
@@ -33,55 +37,47 @@ function uniqBy<T, K>(array: T[], key: (element: T) => K): T[] {
   });
 }
 
-/** @deprecated */
-type CompletionProps<T> = { trigger: string, completions: T[] };
-
 // User suggestions:
-function getUserCompletions(value: string, { trigger, completions }: CompletionProps<User>) {
-  const compare = value.slice(trigger.length);
-  return matchSorter(completions, compare, { keys: ['username'] });
+function isUserCompletion(value: ChatCompletionSuggestion): value is User {
+  return 'username' in value;
 }
-function getUserText(user: User, { trigger }: CompletionProps<User>) {
-  return `${trigger}${user.username} `;
+function getUserCompletions(value: string, completions: User[]) {
+  return matchSorter(completions, value, { keys: ['username'] });
+}
+function getUserText(user: User) {
+  return `@${user.username} `;
 }
 
-type UserSuggestionProps = {
-  value: User,
-  select: () => void,
-  selected: boolean,
-};
-function UserSuggestion({ value, select, selected }: UserSuggestionProps) {
+type UserSuggestionProps = React.ComponentPropsWithRef<'button'> & { user: User };
+function UserSuggestion({ user, ...props }: UserSuggestionProps) {
   return (
-    <button
-      type="button"
-      onClick={select}
-      className={cx('SuggestionItem', selected && 'is-focused')}
-    >
+    <button className="SuggestionItem" {...props}>
       <span className="SuggestionItem-icon">
-        <Avatar user={value} />
+        <Avatar user={user} />
       </span>
-      <span className="SuggestionItem-label">{value.username}</span>
+      <span className="SuggestionItem-label">{user.username}</span>
     </button>
   );
 }
 
 // Group suggestions:
-type GroupSuggestionProps = {
-  value: string,
-  select: () => void,
-  selected: boolean,
-};
-function GroupSuggestion({ value, select, selected }: GroupSuggestionProps) {
+function isGroupCompletion(value: ChatCompletionSuggestion): value is UserGroup {
+  return 'role' in value;
+}
+function getGroupCompletions(value: string, completions: string[]): UserGroup[] {
+  return matchSorter(completions, value).map((role) => ({ role }));
+}
+function getGroupText(value: UserGroup) {
+  return `@${value.role} `;
+}
+type GroupSuggestionProps = React.ComponentPropsWithRef<'button'> & { userGroup: UserGroup };
+function GroupSuggestion({ userGroup, ...props }: GroupSuggestionProps) {
   return (
-    <button
-      type="button"
-      onClick={select}
-      className={cx('SuggestionItem', selected && 'is-focused')}
-    >
+    <button className="SuggestionItem" {...props}>
       <span className="SuggestionItem-icon">
         <SvgIcon path={mdiAccountMultiple} />
       </span>
-      <span className="SuggestionItem-label">{value}</span>
+      <span className="SuggestionItem-label">{userGroup.role}</span>
     </button>
   );
 }
@@ -89,7 +85,10 @@ function GroupSuggestion({ value, select, selected }: GroupSuggestionProps) {
 // Emoji suggestions:
 type Emoji = { shortcode: string, image: string };
 
-function getEmojiCompletions(value: string, { completions }: CompletionProps<Emoji>) {
+function isEmojiCompletion(value: ChatCompletionSuggestion): value is Emoji {
+  return 'shortcode' in value;
+}
+function getEmojiCompletions(value: string, completions: Emoji[]) {
   const compare = value.toLowerCase();
   const results = matchSorter(completions, compare, {
     keys: ['shortcode'],
@@ -109,7 +108,7 @@ function EmojiSuggestion({ emoji, ...props }: EmojiSuggestionProps) {
   const url = emojiUrl(emoji.image, isCustom);
 
   return (
-    <button {...props} className={cx('SuggestionItem', props['aria-selected'] && 'is-focused')}>
+    <button className="SuggestionItem" {...props}>
       <span
         className="SuggestionItem-icon EmojiSuggestion-image"
         style={{ backgroundImage: `url(${CSS.escape(url.href)})` }}
@@ -131,21 +130,34 @@ type ChatInputProps = {
 function ChatInput(props: ChatInputProps) {
   const { t } = useTranslator();
 
+  // In the future, maybe we can pull this out to a `useTextCompletions` hook that
+  // doesn't include the specifics of emoji vs. users vs. groups
+
   const inputRef = useRef<HTMLInputElement>(null);
   const [focused, setFocused] = useState(false);
   const [inputValue, setValue] = useState('');
   const [selectionEnd, setSelectionEnd] = useState<number | null>(null);
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
 
-  let items: Emoji[] = [];
   const m = selectionEnd != null ? completionRx.exec(inputValue.slice(0, selectionEnd)) : null;
-  if (m != null) {
-    const trigger = m[2]!;
-    const matchingValue = m[3]!;
-    if (matchingValue.length > 2) {
-      items = getEmojiCompletions(matchingValue, { trigger, completions: props.availableEmoji });
+  const trigger = m?.[2];
+  const matchingValue = m?.[3];
+  const items = useMemo(() => {
+    if (trigger == null || matchingValue == null) {
+      return [];
     }
-  }
+
+    if (trigger === ':' && matchingValue.length > 1) {
+      return getEmojiCompletions(matchingValue, props.availableEmoji);
+    }
+    if (trigger === '@' && matchingValue.length > 0) {
+      return (getUserCompletions(matchingValue, props.mentionableUsers) as ChatCompletionSuggestion[]).concat(
+        getGroupCompletions(matchingValue, props.mentionableGroups),
+      );
+    }
+
+    return [];
+  }, [trigger, matchingValue, props.availableEmoji, props.mentionableUsers, props.mentionableGroups]);
 
   const isOpen = focused && items.length > 0;
 
@@ -158,7 +170,22 @@ function ChatInput(props: ChatInputProps) {
     isOpen,
     highlightedIndex: isOpen && highlightedIndex === -1 ? 0 : highlightedIndex,
 
-    itemToString: (emoji) => emoji == null ? '' : getEmojiText(emoji),
+    itemToString: (completion) => {
+      if (completion == null) {
+        return '';
+      }
+      if (isEmojiCompletion(completion)) {
+        return getEmojiText(completion);
+      }
+      if (isUserCompletion(completion)) {
+        return getUserText(completion);
+      }
+      if (isGroupCompletion(completion)) {
+        return getGroupText(completion);
+      }
+      const _: never = completion;
+      return '';
+    },
     onSelectedItemChange: (changes) => {
       if (changes.selectedItem == null || selectionEnd == null) {
         return;
@@ -216,6 +243,8 @@ function ChatInput(props: ChatInputProps) {
     }
   };
 
+  // downshift handles the ref correctly during render.
+  // eslint-disable-next-line react/refs
   const inputProps = combobox.getInputProps({
     role: 'textbox', // It's not a combobox, it just has completions
     ref: inputRef,
@@ -249,16 +278,44 @@ function ChatInput(props: ChatInputProps) {
         {items.length > 0
           ? (
             <Paper>
-              {items.map((suggestion, index) => (
-                <EmojiSuggestion
-                  key={suggestion.shortcode}
-                  emoji={suggestion}
-                  {...combobox.getItemProps({
-                    item: suggestion,
-                    index,
-                  })}
-                />
-              ))}
+              {items.map((suggestion, index) => {
+                if (isEmojiCompletion(suggestion)) {
+                  return (
+                    <EmojiSuggestion
+                      key={suggestion.shortcode}
+                      emoji={suggestion}
+                      {...combobox.getItemProps({
+                        item: suggestion,
+                        index,
+                      })}
+                    />
+                  );
+                }
+                if (isUserCompletion(suggestion)) {
+                  return (
+                    <UserSuggestion
+                      key={suggestion._id}
+                      user={suggestion}
+                      {...combobox.getItemProps({
+                        item: suggestion,
+                        index,
+                      })}
+                    />
+                  );
+                }
+                if (isGroupCompletion(suggestion)) {
+                  return (
+                    <GroupSuggestion
+                      key={suggestion.role}
+                      userGroup={suggestion}
+                      {...combobox.getItemProps({
+                        item: suggestion,
+                        index,
+                      })}
+                    />
+                  );
+                }
+              })}
             </Paper>
           )
           : null}
