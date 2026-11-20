@@ -75,10 +75,6 @@
 }
 
 .EmojiSuggestion-image {
-  width: 24px;
-  height: 24px;
-  background-size: contain;
-  background-position: center center;
-  background-repeat: no-repeat;
-  display: inline-block;
+  max-width: 24px;
+  max-height: 24px;
 }
