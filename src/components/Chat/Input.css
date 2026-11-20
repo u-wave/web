@@ -21,6 +21,13 @@
   position: absolute;
   bottom: 100%;
   inset-inline: 0;
+  max-height: 320px;
+  overflow-y: auto;
+  display: none;
+
+  &.is-open {
+    display: block;
+  }
 }
 
 .ChatInput-input {
@@ -32,11 +39,11 @@
   color: var(--text-color);
   font-size: .875rem;
   width: 100%;
-}
 
-.ChatInput-input.is-focused {
-  border-color: var(--highlight-color);
-  outline: none;
+  &:focus-visible {
+    border-color: var(--highlight-color);
+    outline: none;
+  }
 }
 
 .SuggestionItem {
@@ -50,10 +57,10 @@
   justify-content: center;
   align-items: center;
   font-size: 1rem;
-}
 
-.SuggestionItem:where(:hover, .is-focused) {
-  background-color: var(--chat-suggestion-selected);
+  &[aria-selected="true"] {
+    background-color: var(--chat-suggestion-selected);
+  }
 }
 
 .SuggestionItem-icon {
@@ -68,10 +75,6 @@
 }
 
 .EmojiSuggestion-image {
-  width: 24px;
-  height: 24px;
-  background-size: contain;
-  background-position: center center;
-  background-repeat: no-repeat;
-  display: inline-block;
+  max-width: 24px;
+  max-height: 24px;
 }
