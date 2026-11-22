@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.0-alpha.42 / 22 Nov 2026
+While this is an alpha release, new servers should use this rather than an older "stable" version.
+
+Fixes:
+ * Fix whitespace around song title/artist separator. (#3645)
+ * Fix ETA timers being stuck. (#3646)
+
+Internal:
+ * Replace MUI `<Select />` by a CSS-styled `<select />`. (#3644)
+ * Replace MUI `<Slider />` by a CSS-styled `<input />`. (#3653)
+ * Use the downshift library for chat completions. (#3653)
+
 ## 2.0.0-alpha.41 / 04 Nov 2026
 While this is an alpha release, new servers should use this rather than an older "stable" version.
 
@@ -18,7 +30,7 @@ Features:
  * Update the emoji pack to support Unicode 17.0. (#3630)
 
 Internal:
- *  Replace MUI `<Switch />` by a simple CSS-styled `<input />`. (#3524)
+ * Replace MUI `<Switch />` by a simple CSS-styled `<input />`. (#3524)
 
 ## 2.0.0-alpha.39 / 10 Dec 2025
 While this is an alpha release, new servers should use this rather than an older "stable" version.
