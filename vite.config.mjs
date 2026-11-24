@@ -21,6 +21,9 @@ export default defineConfig({
   },
   css: {
     transformer: 'lightningcss',
+    lightningcss: {
+      errorRecovery: true,
+    },
   },
   server: {
     port: 6041,
