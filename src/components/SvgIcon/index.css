@@ -5,3 +5,7 @@
   fill: currentcolor;
   font-size: 1.5rem;
 }
+
+.SvgIcon--small {
+  font-size: 1.25rem;
+}

@@ -1,6 +1,6 @@
 import { mdiPlaylistPlus } from '@mdi/js';
-import IconButton from '@mui/material/IconButton';
 import cx from 'clsx';
+import IconButton from '../../components/IconButton';
 import SvgIcon from '../../components/SvgIcon';
 
 export interface YouTubePlaylist {

@@ -1,5 +1,4 @@
 import { mdiDotsVertical } from '@mdi/js';
-import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MuiTableCell, { type TableCellProps } from '@mui/material/TableCell';
@@ -7,6 +6,7 @@ import TableRow from '@mui/material/TableRow';
 import cx from 'clsx';
 import { useCallback, useId, useState } from 'react';
 import Avatar from '../../../components/Avatar';
+import IconButton from '../../../components/IconButton';
 import SvgIcon from '../../../components/SvgIcon';
 import Username from '../../../components/Username/WithCard';
 import UserRole from '../../../components/UserRole';
@@ -72,9 +72,8 @@ function UserRow({ user }: UserRowProps) {
           onClick={handleOpenMenu}
           aria-haspopup="true"
           aria-owns={open ? ariaMenu : undefined}
-          size="small"
         >
-          <SvgIcon path={mdiDotsVertical} />
+          <SvgIcon size="small" path={mdiDotsVertical} />
         </IconButton>
         <Menu
           id={ariaMenu}

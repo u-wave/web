@@ -3,7 +3,6 @@ import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { intlFormatDistance } from 'date-fns';
 import { Suspense, useCallback, useState } from 'react';
@@ -11,6 +10,7 @@ import useSWR from 'swr';
 import useClock from '../../hooks/useClock';
 import uwFetch from '../../utils/fetch';
 import CircularProgress from '../CircularProgress';
+import IconButton from '../IconButton';
 import SvgIcon from '../SvgIcon';
 import DescriptionDialog from './DescriptionDialog';
 

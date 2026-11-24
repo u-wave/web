@@ -1,10 +1,10 @@
 import { mdiClose } from '@mdi/js';
 import Button from '@mui/material/Button';
 import FormHelperText from '@mui/material/FormHelperText';
-import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { useTranslator } from '@u-wave/react-translate';
 import type { JSONSchema7, JSONSchema7Array, JSONSchema7Type } from 'json-schema';
+import IconButton from '../../../components/IconButton';
 import SvgIcon from '../../../components/SvgIcon';
 import Field from './Field';
 

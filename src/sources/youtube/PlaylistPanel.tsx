@@ -1,7 +1,7 @@
 import { mdiPlaylistPlus } from '@mdi/js';
-import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import useSWRImmutable from 'swr/immutable';
+import IconButton from '../../components/IconButton';
 import MediaListBase from '../../components/MediaList/BaseMediaList';
 import ImportPanelHeader from '../../components/PlaylistManager/Import/ImportPanelHeader';
 import SvgIcon from '../../components/SvgIcon';

@@ -1,9 +1,9 @@
-import IconButton from '@mui/material/IconButton';
 import SvgIcon from '@mui/material/SvgIcon';
 import Tooltip from '@mui/material/Tooltip';
 import { useTranslator } from '@u-wave/react-translate';
 import { useDispatch, useSelector } from '../../hooks/useRedux';
 import { toggleVideoSize, videoSizeSelector } from '../../reducers/settings';
+import IconButton from '../IconButton';
 
 // Stolen from YouTube
 const paths = {

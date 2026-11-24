@@ -1,7 +1,7 @@
 import { mdiClose, mdiMagnify } from '@mdi/js';
-import IconButton from '@mui/material/IconButton';
 import ListItem from '@mui/material/ListItem';
 import cx from 'clsx';
+import IconButton from '../../IconButton';
 import SvgIcon from '../../SvgIcon';
 
 type SearchResultsRowProps = {

@@ -1,10 +1,10 @@
 import { mdiHistory, mdiMenu } from '@mdi/js';
 import AppBar from '@mui/material/AppBar';
-import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { useTranslator } from '@u-wave/react-translate';
 import { useState } from 'react';
+import IconButton from '../../../components/IconButton';
 import SongTitle from '../../../components/SongTitle';
 import SvgIcon from '../../../components/SvgIcon';
 import type { Media } from '../../../reducers/booth';

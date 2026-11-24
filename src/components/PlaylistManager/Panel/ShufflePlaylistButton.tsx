@@ -1,9 +1,9 @@
 import { mdiShuffle } from '@mdi/js';
-import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import { useTranslator } from '@u-wave/react-translate';
 import { useAsyncCallback } from 'react-async-hook';
 import CircularProgress from '../../CircularProgress';
+import IconButton from '../../IconButton';
 import SvgIcon from '../../SvgIcon';
 
 const HARDCODED_LOADING_SIZE = 24; // FIXME derive this from some mui property?

@@ -1,7 +1,7 @@
 import { mdiMenuDown } from '@mdi/js';
-import IconButton from '@mui/material/IconButton';
 import cx from 'clsx';
 import logo from '../../../assets/img/logo-white.png';
+import IconButton from '../IconButton';
 import SvgIcon from '../SvgIcon';
 
 type AppTitleTypes = {

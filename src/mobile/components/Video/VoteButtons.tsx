@@ -1,5 +1,5 @@
 import { mdiHeart, mdiHeartOutline, mdiThumbDown, mdiThumbUp } from '@mdi/js';
-import IconButton from '@mui/material/IconButton';
+import IconButton from '../../../components/IconButton';
 import SvgIcon from '../../../components/SvgIcon';
 
 type VoteButtonsProps = {

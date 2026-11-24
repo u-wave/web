@@ -5,10 +5,10 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
 import Collapse from '@mui/material/Collapse';
-import IconButton from '@mui/material/IconButton';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import parse from 'u-wave-parse-chat-markup';
 import Markup from '../../../components/Chat/Markup';
+import IconButton from '../../../components/IconButton';
 import SvgIcon from '../../../components/SvgIcon';
 import useHasRole from '../../../hooks/useHasRole';
 

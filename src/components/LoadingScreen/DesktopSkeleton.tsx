@@ -1,8 +1,8 @@
 import { mdiHistory, mdiVolumeOff } from '@mdi/js';
-import IconButton from '@mui/material/IconButton';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import AppTitle from '../HeaderBar/AppTitle';
+import IconButton from '../IconButton';
 import SongTitle from '../SongTitle';
 import SvgIcon from '../SvgIcon';
 import Filler from './Filler';

@@ -1,4 +1,4 @@
-import IconButton, { type IconButtonProps } from '@mui/material/IconButton';
+import IconButton, { type IconButtonProps } from '../IconButton';
 
 function Action({ children, ...props }: IconButtonProps) {
   return (

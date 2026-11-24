@@ -1,9 +1,9 @@
-import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import { useTranslator } from '@u-wave/react-translate';
 import { useDispatch } from '../../hooks/useRedux';
 import type { User } from '../../reducers/users';
 import { addToWaitlist } from '../../reducers/waitlist';
+import IconButton from '../IconButton';
 import SvgIcon from '../SvgIcon';
 
 // From https://fonts.google.com/icons?selected=Material%20Icons%3Agroup_add%3A

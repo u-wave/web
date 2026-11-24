@@ -1,8 +1,8 @@
 import { mdiVolumeHigh, mdiVolumeLow, mdiVolumeMedium, mdiVolumeOff } from '@mdi/js';
-import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import { useTranslator } from '@u-wave/react-translate';
 import cx from 'clsx';
+import IconButton from '../IconButton';
 import SvgIcon from '../SvgIcon';
 
 type VolumeProps = {

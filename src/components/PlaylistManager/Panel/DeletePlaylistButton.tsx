@@ -1,10 +1,10 @@
 import { mdiDelete } from '@mdi/js';
-import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import { useTranslator } from '@u-wave/react-translate';
 import { useCallback, useState } from 'react';
 import ConfirmDialog from '../../Dialogs/ConfirmDialog';
 import FormGroup from '../../Form/Group';
+import IconButton from '../../IconButton';
 import SvgIcon from '../../SvgIcon';
 
 type DeletePlaylistButtonProps = {

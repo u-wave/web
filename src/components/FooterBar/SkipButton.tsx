@@ -1,11 +1,11 @@
 import { mdiSkipNext } from '@mdi/js';
-import IconButton from '@mui/material/IconButton';
 import Popover from '@mui/material/Popover';
 import Tooltip from '@mui/material/Tooltip';
 import { useTranslator } from '@u-wave/react-translate';
 import { useCallback, useState } from 'react';
 import type { User } from '../../reducers/users';
 import CircularProgress from '../CircularProgress';
+import IconButton from '../IconButton';
 import SvgIcon from '../SvgIcon';
 import SkipReasonsList from './SkipReasonsList';
 

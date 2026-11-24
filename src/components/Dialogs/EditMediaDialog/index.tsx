@@ -2,7 +2,6 @@ import { mdiHeadphones, mdiMusicNote, mdiPlay, mdiStop, mdiSwapHorizontal } from
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import { useTranslator } from '@u-wave/react-translate';
 import cx from 'clsx';
@@ -14,6 +13,7 @@ import Form from '../../Form';
 import Button from '../../Form/Button';
 import FormGroup from '../../Form/Group';
 import TextField from '../../Form/TextField';
+import IconButton from '../../IconButton';
 import SvgIcon from '../../SvgIcon';
 import Chapters from './Chapters';
 

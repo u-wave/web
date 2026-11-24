@@ -1,8 +1,8 @@
 import { mdiPencil } from '@mdi/js';
-import IconButton from '@mui/material/IconButton';
 import { useTranslator } from '@u-wave/react-translate';
 import { useState } from 'react';
 import PromptDialog from '../Dialogs/PromptDialog';
+import IconButton from '../IconButton';
 import SvgIcon from '../SvgIcon';
 
 type ChangeUsernameButtonProps = {

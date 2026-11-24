@@ -1,6 +1,6 @@
 import { mdiChevronDown, mdiChevronUp } from '@mdi/js';
-import IconButton from '@mui/material/IconButton';
 import cx from 'clsx';
+import IconButton from '../../IconButton';
 import SvgIcon from '../../SvgIcon';
 
 const icons = {

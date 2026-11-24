@@ -1,13 +1,13 @@
 import { mdiHistory, mdiMenu } from '@mdi/js';
 import AppBar from '@mui/material/AppBar';
-import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import IconButton from '../IconButton';
 import SvgIcon from '../SvgIcon';
 import Filler from './Filler';
 import LoadingIndicator from './LoadingIndicator';
 
-const waitlistIconStyle = {
+const waitlistIconStyle: React.CSSProperties = {
   fontSize: '125%',
   textAlign: 'center',
 };
@@ -27,7 +27,7 @@ function MobileSkeleton() {
             <IconButton>
               <SvgIcon path={mdiHistory} />
             </IconButton>
-            <IconButton sx={waitlistIconStyle}>
+            <IconButton style={waitlistIconStyle}>
               <Filler width={20} />
             </IconButton>
           </Toolbar>

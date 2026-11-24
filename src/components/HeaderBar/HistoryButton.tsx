@@ -1,7 +1,7 @@
 import { mdiHistory } from '@mdi/js';
-import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import { useTranslator } from '@u-wave/react-translate';
+import IconButton from '../IconButton';
 import SvgIcon from '../SvgIcon';
 
 type HistoryButtonProps = {
