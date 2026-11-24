@@ -110,7 +110,7 @@ function EmojiSuggestion({ emoji, ...props }: EmojiSuggestionProps) {
   return (
     <button className="SuggestionItem" {...props}>
       <span className="SuggestionItem-icon">
-        <img loading="lazy" className="EmojiSuggestion-image" src={url.href} />
+        <img loading="lazy" alt="" className="EmojiSuggestion-image" src={url.href} />
       </span>
       <span className="SuggestionItem-label">{getEmojiText(emoji)}</span>
     </button>
