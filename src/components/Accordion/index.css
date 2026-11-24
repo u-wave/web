@@ -1,0 +1,80 @@
+.Accordion {
+  /* TODO: this is just paper styles */
+  background-color: var(--mui-palette-background-paper);
+  color: var(--mui-palette-text-primary);
+  box-shadow: var(--mui-shadows-1);
+  background-image: var(--mui-overlays-1);
+
+  border-block-start: 1px solid var(--mui-palette-divider);
+  &:first-of-type {
+    border-start-start-radius: var(--mui-shape-borderRadius);
+    border-start-end-radius: var(--mui-shape-borderRadius);
+  }
+  &:last-of-type {
+    border-end-start-radius: var(--mui-shape-borderRadius);
+    border-end-end-radius: var(--mui-shape-borderRadius);
+  }
+
+  &::marker { list-style: none; }
+
+  &:open {
+    border-block-start-color: transparent;
+    margin-block: 1rem;
+    &:first-of-type { margin-block-start: 0; }
+    &:last-of-type { margin-block-end: 0; }
+  }
+
+  /* Open animation, per https://austingil.com/animating-details-element-with-only-css/
+   * At time of writing animating the content height doesn't work yet on Firefox,
+   * but it will eventually and it's not a huge deal. */
+  --Accordion-transition-duration: 268ms;
+  transition: margin var(--Accordion-transition-duration) cubic-bezier(0.4, 0, 0.2, 1);
+
+  &::details-content {
+    block-size: 0;
+    overflow: hidden;
+    transition: block-size var(--Accordion-transition-duration) allow-discrete,
+      content-visibility var(--Accordion-transition-duration) allow-discrete;
+  }
+  &:open::details-content {
+    block-size: auto;
+    block-size: calc-size(auto, size);
+  }
+}
+
+.Accordion-summary {
+  cursor: pointer;
+  padding-inline: calc(2 * var(--mui-spacing));
+  display: flex;
+  align-items: center;
+}
+
+.Accordion-summaryContent {
+  margin-block: 12px;
+  flex-grow: 1;
+  transition: margin var(--Accordion-transition-duration) cubic-bezier(0.4, 0, 0.2, 1);
+
+  .Accordion:open & {
+    margin-block: 20px;
+  }
+}
+
+.Accordion-details {
+  padding: var(--mui-spacing) calc(2 * var(--mui-spacing)) calc(2 * var(--mui-spacing));
+}
+
+.Accordion-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: var(--mui-spacing);
+}
+
+.Accordion-expandIconAnimation {
+  transition: transform var(--Accordion-transition-duration);
+  transform: rotate(0deg);
+
+  .Accordion:open & {
+    transform: rotate(180deg);
+  }
+}

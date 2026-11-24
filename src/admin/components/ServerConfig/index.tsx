@@ -1,14 +1,11 @@
 import { mdiAlert, mdiCheck, mdiUnfoldMoreHorizontal } from '@mdi/js';
-import Accordion from '@mui/material/Accordion';
-import AccordionActions from '@mui/material/AccordionActions';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import AccordionSummary from '@mui/material/AccordionSummary';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useTranslator } from '@u-wave/react-translate';
 import type { JSONSchema7, JSONSchema7Object } from 'json-schema';
 import { useCallback, useState } from 'react';
 import { useAsyncCallback } from 'react-async-hook';
+import Accordion, { AccordionActions, AccordionDetails, AccordionSummary } from '../../../components/Accordion';
 import CircularProgress from '../../../components/CircularProgress';
 import SvgIcon from '../../../components/SvgIcon';
 import SchemaForm from '../SchemaForm';
